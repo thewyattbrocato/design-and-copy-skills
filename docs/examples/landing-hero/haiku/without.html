@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fernwick - Get Paid Faster</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #fafbfc;
+            color: #1a2332;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 24px 40px;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #fafbfc 0%, #f5f7fa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -300px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 56px;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .hero-content h1 .highlight {
+            color: #3b82f6;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 420px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            padding: 14px 32px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            padding: 14px 24px;
+            background: transparent;
+            color: #3b82f6;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .trust-text {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .invoice-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 380px;
+            position: relative;
+            z-index: 2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .invoice-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .invoice-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: #fef3c7;
+            color: #92400e;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .invoice-status::before {
+            content: '⚠';
+            font-size: 14px;
+        }
+
+        .invoice-details {
+            margin-bottom: 28px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 24px;
+            padding: 16px 0;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .reminder-badge {
+            background: #dbeafe;
+            border: 1px solid #7dd3fc;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .reminder-icon {
+            width: 24px;
+            height: 24px;
+            background: #0284c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .reminder-text {
+            font-size: 12px;
+            color: #0c4a6e;
+            font-weight: 600;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .cta-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Fernwick</div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Get paid <span class="highlight">on time</span></h1>
+                <p>Fernwick sends polite, automatic reminders when invoices go unpaid. Stop chasing payments and focus on what you do best.</p>
+                
+                <div class="cta-group">
+                    <button class="btn-primary">Start Free Trial</button>
+                    <button class="btn-secondary">View Demo</button>
+                </div>
+
+                <div class="trust-text">No credit card required • 14-day free trial</div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="invoice-card">
+                    <div class="invoice-header">
+                        <div class="invoice-label">Invoice #2841</div>
+                        <div class="invoice-status">Overdue</div>
+                    </div>
+
+                    <div class="invoice-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Client</span>
+                            <span class="detail-value">Acme Corp</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Due Date</span>
+                            <span class="detail-value">Oct 5, 2026</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Days Overdue</span>
+                            <span class="detail-value">2 days</span>
+                        </div>
+                    </div>
+
+                    <div class="amount">$2,850</div>
+
+                    <div class="reminder-badge">
+                        <div class="reminder-icon">✓</div>
+                        <div class="reminder-text">Polite reminder sent today</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

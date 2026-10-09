@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to Kilnbook</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --card: #ffffff;
+    --ink: #2b2521;
+    --muted: #6b5f56;
+    --line: #e4dbd0;
+    --accent: #a4502f;
+    --accent-ink: #ffffff;
+    --soft: #f3ebe1;
+    --focus: #1d5fa8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1815;
+      --card: #26201c;
+      --ink: #f2ebe3;
+      --muted: #b5a89b;
+      --line: #3d342d;
+      --accent: #e08a62;
+      --accent-ink: #1c1815;
+      --soft: #322a24;
+      --focus: #8ab8ec;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--line);
+    background: var(--card);
+  }
+  .brand { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.01em; }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--soft); color: var(--ink);
+    display: grid; place-items: center; font-weight: 600; font-size: 0.9rem;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+  h1 { font-size: 1.6rem; margin: 0 0 6px; }
+  h2 { font-size: 1.1rem; margin: 0 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 24px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .step-label {
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--muted); margin: 0 0 6px;
+  }
+  .summary {
+    font-size: 0.9rem; color: var(--muted);
+    margin: 0 0 14px; min-height: 1.4em;
+  }
+  .summary strong { color: var(--ink); }
+  .options { display: grid; gap: 10px; }
+  .option {
+    display: block; width: 100%; text-align: left;
+    background: var(--card); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; font: inherit; cursor: pointer;
+  }
+  .option[aria-pressed="true"] { border-color: var(--accent); background: var(--soft); }
+  .option .name { font-weight: 600; display: block; }
+  .option .desc { color: var(--muted); font-size: 0.9rem; display: block; }
+  .sample-tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 600;
+    background: var(--soft); color: var(--muted);
+    border-radius: 4px; padding: 1px 6px; margin-left: 6px; vertical-align: middle;
+  }
+  .btn {
+    background: var(--accent); color: var(--accent-ink);
+    border: 0; border-radius: 8px; padding: 10px 18px;
+    font: inherit; font-weight: 600; cursor: pointer; margin-top: 14px;
+  }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .link {
+    background: none; border: 0; padding: 0; margin-top: 14px; margin-left: 14px;
+    color: var(--accent); font: inherit; cursor: pointer; text-decoration: underline;
+  }
+  .hidden { display: none; }
+  .confirmed {
+    border-left: 4px solid var(--accent);
+  }
+  .confirmed p { margin: 6px 0; }
+  .empty {
+    border: 1px dashed var(--line); border-radius: 12px;
+    padding: 18px; color: var(--muted); margin-bottom: 0;
+  }
+  .empty strong { color: var(--ink); }
+  .terms { font-size: 0.9rem; color: var(--muted); margin: 0; padding-left: 18px; }
+  .terms li { margin-bottom: 4px; }
+  .note { font-size: 0.85rem; color: var(--muted); margin-top: 10px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Kilnbook</div>
+  <div class="avatar" aria-label="Your account">MR</div>
+</header>
+
+<main>
+  <h1>Welcome, Maya.</h1>
+  <p class="lead">Book your first session at Harbor Clay Studio in about two minutes. Afterwards you'll know how to reserve a wheel or a kiln slot yourself.</p>
+
+  <section class="card" aria-labelledby="step1-title">
+    <p class="step-label">Step 1 of 3</p>
+    <h2 id="step1-title">Choose what you want to book</h2>
+    <ul class="terms" style="margin-bottom:14px">
+      <li><strong>Wheel time</strong>: a reserved wheel for throwing, with a studio member on hand.</li>
+      <li><strong>Kiln slot</strong>: a reserved firing. Staff load and unload it for you on the day listed.</li>
+    </ul>
+    <div class="options" role="group" aria-label="Session type">
+      <button class="option" type="button" data-type="Wheel time" aria-pressed="false">
+        <span class="name">Wheel time</span>
+        <span class="desc">Two hours at a wheel. Best for a first visit.</span>
+      </button>
+      <button class="option" type="button" data-type="Kiln slot" aria-pressed="false">
+        <span class="name">Kiln slot</span>
+        <span class="desc">Get your finished work fired. Book this once you have pieces to fire.</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="card" id="step2" aria-labelledby="step2-title">
+    <p class="step-label">Step 2 of 3</p>
+    <h2 id="step2-title">Pick a time</h2>
+    <p class="summary" id="summary-type">Choose a type above to see times.</p>
+    <div class="options" id="times" role="group" aria-label="Available times"></div>
+    <p class="note"><span class="sample-tag">Sample</span> These times are example data. Your studio's real schedule replaces them.</p>
+  </section>
+
+  <section class="card" id="step3" aria-labelledby="step3-title">
+    <p class="step-label">Step 3 of 3</p>
+    <h2 id="step3-title">Confirm</h2>
+    <p class="summary" id="summary-choice">Your choice will appear here.</p>
+    <button class="btn" type="button" id="confirm" disabled>Book this session</button>
+    <button class="link" type="button" id="skip">Skip for now and browse the schedule</button>
+  </section>
+
+  <section class="card confirmed hidden" id="done" aria-live="polite">
+    <p class="step-label">Booked</p>
+    <h2 id="done-title"></h2>
+    <p id="done-body"></p>
+    <p class="note">You'll find it under Upcoming below. To change or cancel it, open the session from there.</p>
+  </section>
+
+  <section aria-labelledby="upcoming-title">
+    <h2 id="upcoming-title">Your upcoming sessions</h2>
+    <div class="empty" id="empty">
+      <strong>Nothing booked yet.</strong> Sessions you book will be listed here so you can find them before you visit.
+      <br>
+      <button class="btn" type="button" id="start">Book your first session</button>
+    </div>
+  </section>
+</main>
+
+<script>
+  const times = {
+    "Wheel time": [
+      { id: "w2-tue", label: "Tuesday 6:30pm, Wheel 2" },
+      { id: "w4-thu", label: "Thursday 10:00am, Wheel 4" },
+      { id: "w1-sat", label: "Saturday 1:00pm, Wheel 1" }
+    ],
+    "Kiln slot": [
+      { id: "k-sat", label: "Saturday firing, loaded Friday 5:00pm" },
+      { id: "k-wed", label: "Wednesday firing, loaded Tuesday 5:00pm" }
+    ]
+  };
+
+  let chosenType = null;
+  let chosenTime = null;
+
+  const el = id => document.getElementById(id);
+
+  function render() {
+    const choiceText = chosenType && chosenTime
+      ? `<strong>${chosenType}</strong>, ${chosenTime.label}`
+      : chosenType ? `<strong>${chosenType}</strong>, no time picked yet` : "Your choice will appear here.";
+    el("summary-choice").innerHTML = "Your choice: " + choiceText;
+    el("confirm").disabled = !(chosenType && chosenTime);
+  }
+
+  function renderTimes() {
+    const box = el("times");
+    box.innerHTML = "";
+    if (!chosenType) {
+      el("summary-type").textContent = "Choose a type above to see times.";
+      return;
+    }
+    el("summary-type").innerHTML = `Showing <strong>${chosenType}</strong> times.`;
+    times[chosenType].forEach(t => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "option";
+      b.textContent = t.label;
+      b.setAttribute("aria-pressed", chosenTime && chosenTime.id === t.id ? "true" : "false");
+      b.addEventListener("click", () => {
+        chosenTime = t;
+        renderTimes();
+        render();
+      });
+      box.appendChild(b);
+    });
+  }
+
+  document.querySelectorAll(".option[data-type]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      chosenType = btn.dataset.type;
+      chosenTime = null;
+      document.querySelectorAll(".option[data-type]").forEach(b =>
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+      renderTimes();
+      render();
+    });
+  });
+
+  el("confirm").addEventListener("click", () => {
+    el("done-title").textContent = `${chosenType} booked: ${chosenTime.label}`;
+    el("done-body").textContent = chosenType === "Kiln slot"
+      ? "Bring your dried, unfired pieces on the loading day. Staff will confirm what goes in."
+      : "Arrive a few minutes early to get your apron and find your wheel.";
+    el("done").classList.remove("hidden");
+    el("empty").classList.add("hidden");
+    el("done").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+
+  el("skip").addEventListener("click", () => {
+    alert("Schedule browsing is not part of this screen yet.");
+  });
+
+  el("start").addEventListener("click", () => {
+    el("step2").previousElementSibling && document.querySelector(".option[data-type]").focus();
+    document.querySelector(".option[data-type]").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  render();
+</script>
+</body>
+</html>

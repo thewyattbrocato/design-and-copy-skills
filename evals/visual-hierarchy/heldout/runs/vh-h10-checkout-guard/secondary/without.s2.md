@@ -1,0 +1,1 @@
+**Place order** should be the filled, prominent button, since it's the primary action on the final step. **Back to cart** should be a secondary or outlined style so it stays available without competing for attention.

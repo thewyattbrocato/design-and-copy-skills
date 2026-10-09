@@ -1,0 +1,1 @@
+An empty state helps when it tells the user what this space is for and gives them a concrete first action, such as a button that starts the core workflow or a short example of what to create. It should also set expectations about what will appear once they act, so the blank screen reads as an invitation rather than a dead end.

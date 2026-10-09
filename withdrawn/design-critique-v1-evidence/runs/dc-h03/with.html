@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tern &amp; Spoke — Mobile Bike Repair in Portland</title>
+<meta name="description" content="Tern &amp; Spoke is a mobile bike repair service in Portland. We come to your house or office. Tune-ups from $75. Book by text at 503-555-0142.">
+<style>
+  :root {
+    --ink: #1c2b2a;
+    --muted: #4d5f5d;
+    --bg: #f7f4ee;
+    --card: #ffffff;
+    --accent: #0f6b5e;
+    --accent-dark: #0a4d43;
+    --warm: #e8a33d;
+    --line: #dcd6c8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    font-size: 1.0625rem;
+  }
+  a { color: var(--accent-dark); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 1.25rem; }
+
+  header { padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em; text-decoration: none; color: var(--ink); }
+  .logo span { color: var(--accent); }
+  header a.tel { font-weight: 600; text-decoration: none; }
+  header a.tel:hover { text-decoration: underline; }
+
+  .hero { padding: 4rem 0 3.5rem; }
+  .eyebrow {
+    display: inline-block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent-dark);
+    background: #e3efe9; padding: 0.3rem 0.75rem; border-radius: 999px; margin-bottom: 1.25rem;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.75rem); line-height: 1.08; letter-spacing: -0.03em;
+    max-width: 14em; margin-bottom: 1.25rem;
+  }
+  .lead { font-size: 1.2rem; color: var(--muted); max-width: 34em; margin-bottom: 2rem; }
+  .btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-weight: 700; padding: 0.9rem 1.6rem; border-radius: 10px; font-size: 1.05rem;
+    border-bottom: 3px solid var(--accent-dark);
+  }
+  .btn:hover { background: var(--accent-dark); }
+  .btn:focus-visible, a:focus-visible { outline: 3px solid var(--warm); outline-offset: 3px; }
+  .hero small { display: block; margin-top: 0.9rem; color: var(--muted); font-size: 0.95rem; }
+
+  section { padding: 3rem 0; }
+  h2 { font-size: 1.75rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+  .sub { color: var(--muted); margin-bottom: 2rem; }
+
+  .prices { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1.75rem;
+    display: flex; flex-direction: column;
+  }
+  .card.featured { border: 2px solid var(--accent); }
+  .card h3 { font-size: 1.15rem; margin-bottom: 0.25rem; }
+  .price { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; color: var(--accent-dark); line-height: 1.2; }
+  .price small { font-size: 1rem; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+  .card p { color: var(--muted); margin-top: 0.75rem; font-size: 1rem; }
+
+  .how { background: var(--ink); color: #f3efe6; }
+  .how h2 { color: #fff; }
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; counter-reset: s; margin-top: 1.5rem; }
+  .steps li { counter-increment: s; padding-top: 3rem; position: relative; }
+  .steps li::before {
+    content: counter(s); position: absolute; top: 0; left: 0; width: 2.2rem; height: 2.2rem;
+    border-radius: 50%; background: var(--warm); color: var(--ink); font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .steps strong { display: block; color: #fff; font-size: 1.1rem; }
+  .steps span { color: #c9d3d0; }
+
+  .info { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+  .info .card h3 { margin-bottom: 0.5rem; }
+  table { border-collapse: collapse; width: 100%; }
+  td { padding: 0.25rem 0; }
+  td:last-child { text-align: right; font-weight: 600; }
+  .closed td { color: var(--muted); font-weight: 400 !important; }
+
+  .cta { text-align: center; }
+  .cta .box { background: #e3efe9; border-radius: 18px; padding: 3rem 1.5rem; }
+  .cta .phone { display: block; font-size: clamp(1.8rem, 6vw, 2.75rem); font-weight: 800; letter-spacing: -0.02em; margin: 0.5rem 0 1.5rem; color: var(--accent-dark); text-decoration: none; }
+
+  footer { padding: 2rem 0 3rem; color: var(--muted); font-size: 0.95rem; text-align: center; border-top: 1px solid var(--line); }
+
+  @media (max-width: 520px) {
+    .hero { padding: 2.5rem 0; }
+    .btn { display: block; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">Tern <span>&amp;</span> Spoke</a>
+    <a class="tel" href="sms:+15035550142">Text 503-555-0142</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Mobile bike repair · Portland</span>
+      <h1>We bring the bike shop to your door.</h1>
+      <p class="lead">Skip the drop-off and the wait. Tern &amp; Spoke comes to your house or office, fixes your bike on the spot, and gets you rolling again.</p>
+      <a class="btn" href="sms:+15035550142?&body=Hi%20Tern%20%26%20Spoke%2C%20I%27d%20like%20to%20book%20a%20repair.">Book by text: 503-555-0142</a>
+      <small>Monday–Saturday, 8am–6pm</small>
+    </div>
+  </div>
+
+  <section id="pricing">
+    <div class="wrap">
+      <h2>Simple, flat pricing</h2>
+      <p class="sub">Travel to your home or office is part of the service.</p>
+      <div class="prices">
+        <div class="card">
+          <h3>Flat fix</h3>
+          <div class="price">$25 <small>+ parts</small></div>
+          <p>Punctured tire? We patch or replace the tube and get you back on the road.</p>
+        </div>
+        <div class="card featured">
+          <h3>Basic tune-up</h3>
+          <div class="price">$75</div>
+          <p>Brake and gear adjustment, tire pressure, chain lube, and a safety check of the essentials.</p>
+        </div>
+        <div class="card">
+          <h3>Full service</h3>
+          <div class="price">$160</div>
+          <p>The complete overhaul for bikes that have put in serious miles or sat a while.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><strong>Send a text</strong><span>Tell us what's wrong and where you are.</span></li>
+        <li><strong>Pick a time</strong><span>We'll confirm a slot that fits your day.</span></li>
+        <li><strong>We come to you</strong><span>Home or office, we handle the repair on site.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap info">
+      <div class="card">
+        <h3>Hours</h3>
+        <table>
+          <tr><td>Monday – Friday</td><td>8am – 6pm</td></tr>
+          <tr><td>Saturday</td><td>8am – 6pm</td></tr>
+          <tr class="closed"><td>Sunday</td><td>Closed</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Where we work</h3>
+        <p>We serve Portland, visiting your house or office. Text us your address when you book.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div class="box">
+        <h2>Ready to ride?</h2>
+        <a class="phone" href="sms:+15035550142">503-555-0142</a>
+        <a class="btn" href="sms:+15035550142">Send a text to book</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© Tern &amp; Spoke · Mobile bike repair in Portland · Mon–Sat 8am–6pm</div>
+</footer>
+
+</body>
+</html>

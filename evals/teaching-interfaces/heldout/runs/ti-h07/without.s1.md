@@ -1,0 +1,1 @@
+A good empty state tells the user what this space is for and gives them one clear action to fill it, such as a "Create your first project" button, a template picker, or an import option. It also shows what success looks like, using a sample task or a preview of the populated view, so the user can picture the payoff instead of facing a blank screen.

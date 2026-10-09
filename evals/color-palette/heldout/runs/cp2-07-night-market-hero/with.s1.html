@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern Row Night Market</title>
+<!-- Note: Oct 17-19 falls on Fri-Sun in 2025, but Sat-Mon in 2026. Please confirm the weekdays against the event year. -->
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #130f2e;
+    color: #fff;
+  }
+
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: clamp(2rem, 6vw, 5rem) 1.5rem clamp(8rem, 22vw, 14rem);
+    overflow: hidden;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 90% 40% at 50% 100%, rgba(255, 170, 90, .75), transparent 70%),
+      linear-gradient(180deg,
+        #120e2e 0%,
+        #2a1850 30%,
+        #5b2a74 55%,
+        #b2406f 75%,
+        #f2784b 90%,
+        #ffb25e 100%);
+  }
+
+  /* stars */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 45% 0;
+    z-index: -3;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 27% 40%, #fff, transparent 60%),
+      radial-gradient(1.5px 1.5px at 41% 12%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 58% 30%, #fff, transparent 60%),
+      radial-gradient(1.5px 1.5px at 72% 16%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 86% 36%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 94% 10%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 6% 46%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 66% 48%, #fff, transparent 60%);
+    opacity: .8;
+    animation: twinkle 6s ease-in-out infinite alternate;
+  }
+
+  /* hanging string of lanterns */
+  .lights {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 90px;
+    z-index: -2;
+    pointer-events: none;
+  }
+  .lights::before {
+    content: "";
+    position: absolute;
+    top: 18px; left: -5%; right: -5%;
+    height: 40px;
+    border-bottom: 2px solid rgba(20, 10, 40, .7);
+    border-radius: 50%;
+  }
+  .lights::after {
+    content: "";
+    position: absolute;
+    top: 38px; left: 0; right: 0;
+    height: 40px;
+    background:
+      radial-gradient(circle 9px at 50% 50%, #ffd27a 0 35%, rgba(255, 150, 60, .55) 60%, transparent 100%) 0 0 / 9% 100% repeat-x;
+    filter: drop-shadow(0 0 8px rgba(255, 170, 70, .8));
+    animation: glow 4s ease-in-out infinite alternate;
+  }
+
+  /* skyline silhouette: stalls and rooftops */
+  .skyline {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: clamp(110px, 20vw, 190px);
+    z-index: -1;
+    background:
+      linear-gradient(#150d2a, #150d2a) 0 100% / 100% 28% no-repeat,
+      conic-gradient(from 135deg at 50% 0, transparent 90deg, #1b1033 90deg 270deg, transparent 270deg) 0 100% / 160px 55% repeat-x,
+      linear-gradient(#1b1033, #1b1033) 20px 100% / 70px 70% no-repeat,
+      linear-gradient(#1b1033, #1b1033) 55% 100% / 90px 85% no-repeat,
+      linear-gradient(#1b1033, #1b1033) 85% 100% / 60px 62% no-repeat;
+  }
+  /* warm stall windows */
+  .skyline::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 6%;
+    height: 12%;
+    background: radial-gradient(circle 5px, #ffc46b 0 40%, transparent 100%) 0 0 / 56px 100% repeat-x;
+    opacity: .85;
+  }
+
+  .content {
+    position: relative;
+    max-width: 52rem;
+    padding: clamp(1rem, 3vw, 2rem);
+  }
+  /* soft scrim keeps text legible over the brighter sky */
+  .content::before {
+    content: "";
+    position: absolute;
+    inset: -10% -15%;
+    z-index: -1;
+    background: radial-gradient(ellipse at center, rgba(18, 10, 44, .6), rgba(18, 10, 44, 0) 70%);
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    font-size: clamp(.8rem, 1.6vw, .95rem);
+    font-weight: 600;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: #ffd9a0;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    font-weight: 700;
+    line-height: .95;
+    letter-spacing: -.01em;
+    font-size: clamp(3.2rem, 12vw, 8rem);
+    text-shadow: 0 2px 24px rgba(20, 8, 50, .6), 0 0 40px rgba(255, 170, 80, .25);
+  }
+  h1 span {
+    display: block;
+    margin-top: .15em;
+    font-size: .45em;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: .04em;
+    color: #ffe2b3;
+  }
+
+  .dates {
+    margin: clamp(1.25rem, 3vw, 2rem) 0 0;
+    font-size: clamp(1.25rem, 3.4vw, 2rem);
+    font-weight: 600;
+    text-shadow: 0 1px 12px rgba(20, 8, 50, .7);
+  }
+  .dates small {
+    display: block;
+    margin-top: .2rem;
+    font-size: .6em;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #ffd9a0;
+  }
+
+  .tagline {
+    margin: 1rem auto 0;
+    max-width: 30ch;
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    line-height: 1.45;
+    color: #fff3e0;
+    text-shadow: 0 1px 12px rgba(20, 8, 50, .7);
+  }
+
+  .cta {
+    display: inline-block;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+    padding: .95rem 2.2rem;
+    border-radius: 999px;
+    background: #ffc46b;
+    color: #2a1238;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    text-decoration: none;
+    box-shadow: 0 6px 28px rgba(255, 160, 60, .45);
+    transition: transform .15s ease, background-color .15s ease, box-shadow .15s ease;
+  }
+  .cta:hover { background: #ffd48f; transform: translateY(-2px); }
+  .cta:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+
+  @keyframes twinkle { from { opacity: .45; } to { opacity: .9; } }
+  @keyframes glow { from { opacity: .8; } to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero::before, .lights::after { animation: none; }
+    .cta { transition: none; }
+    .cta:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="lights" aria-hidden="true"></div>
+    <div class="skyline" aria-hidden="true"></div>
+
+    <div class="content">
+      <p class="eyebrow">Friday – Sunday</p>
+      <h1>Lantern Row <span>Night Market</span></h1>
+      <p class="dates">October 17 – 19<small>Gates open at dusk</small></p>
+      <p class="tagline">Food, crafts and live music after dark.</p>
+      <a class="cta" href="#tickets">Get tickets</a>
+    </div>
+  </header>
+</body>
+</html>

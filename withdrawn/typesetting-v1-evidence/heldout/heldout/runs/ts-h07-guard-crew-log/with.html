@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crew Logs · Halvorsen &amp; Sons</title>
+<style>
+  :root {
+    --bg: #f4f2ee;
+    --panel: #fffdf9;
+    --ink: #1e2328;
+    --muted: #59616a;
+    --line: #dcd7cd;
+    --accent: #9a3b12;
+    --accent-bg: #f6e4d8;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 1rem/1.5 var(--sans);
+  }
+  .wrap { max-width: 120rem; margin: 0 auto; padding: 2rem 2.5rem 3rem; }
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  h1 { margin: 0; font-size: 1.5rem; line-height: 1.2; font-weight: 650; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); font-size: 0.875rem; }
+  .tools {
+    display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;
+    margin: 1.25rem 0 1rem;
+  }
+  .tools input, .tools select {
+    font: inherit; color: inherit;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #b9b2a4; border-radius: 6px; background: var(--panel);
+  }
+  .tools input { flex: 0 1 26rem; min-width: 12rem; }
+  .tools input:focus, .tools select:focus, .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .count { margin-left: auto; color: var(--muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+  .chip {
+    font: inherit; font-size: 0.875rem; cursor: pointer;
+    background: var(--accent-bg); color: var(--accent);
+    border: 1px solid transparent; border-radius: 999px; padding: 0.25rem 0.75rem;
+  }
+  .chip[hidden] { display: none; }
+
+  .log { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .row {
+    display: grid;
+    grid-template-columns: 5rem 7.5rem 9rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+    align-items: baseline;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .row:first-child { border-top: 0; }
+  .row:hover { background: #faf5ec; }
+  .head {
+    background: #ece8df; position: sticky; top: 0;
+    font-size: 0.75rem; font-weight: 650; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); padding-block: 0.625rem;
+  }
+  .head:hover { background: #ece8df; }
+  .time { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 0.9375rem; }
+  .job {
+    font-family: var(--mono); font-size: 0.9375rem; font-weight: 600;
+    color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-align: left;
+  }
+  .job:hover { text-decoration: underline; }
+  .who { white-space: nowrap; }
+  .note { overflow-wrap: anywhere; }
+  mark { background: #ffe08a; color: inherit; border-radius: 2px; }
+  .empty { padding: 2rem 1.25rem; color: var(--muted); }
+
+  @media (max-width: 52rem) {
+    .wrap { padding: 1.25rem 1rem 2rem; }
+    .head { display: none; }
+    .row { grid-template-columns: auto auto 1fr; row-gap: 0.25rem; }
+    .note { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Daily crew logs</h1>
+    <span class="sub">Halvorsen &amp; Sons · entries from foremen’s tablets</span>
+  </header>
+
+  <div class="tools">
+    <input id="q" type="search" placeholder="Search job code, time, foreman or note" aria-label="Search logs">
+    <select id="foreman" aria-label="Filter by foreman"><option value="">All foremen</option></select>
+    <button class="chip" id="clear" hidden>Job filter: <span id="chipjob"></span> ✕</button>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+
+  <div class="log" id="log" role="table" aria-label="Crew log entries">
+    <div class="row head" role="row">
+      <span role="columnheader">Time</span><span role="columnheader">Job</span><span role="columnheader">Foreman</span><span role="columnheader">Note</span>
+    </div>
+    <div id="rows"></div>
+  </div>
+</div>
+
+<script>
+const entries = [
+  ["06:42","JOB-3381","R. Alvarez","Crew of 5 on site, tear-off on north slope started, tarped the open section before the afternoon rain, two bundles of 30-year shingles damaged in transit and set aside for return."],
+  ["09:15","JOB-3377","M. Osei","Flashing at chimney re-set and sealed; homeowner asked about adding a ridge vent, quoted verbally, will send written estimate Thursday."],
+  ["11:03","JOB-3381","R. Alvarez","Found soft decking along the eave, roughly 14 linear feet, replaced with 5/8 ply; photographed before and after and uploaded to the job folder."],
+  ["13:30","JOB-3392","T. Brandt","Gutter apron installed on the east side; one downspout bracket missing from the truck, picking up tomorrow morning."],
+  ["15:48","JOB-3377","M. Osei","Site cleaned, magnet sweep done twice, final walk-through with homeowner, no punch list items."]
+];
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let jobFilter = "";
+
+[...new Set(entries.map(e => e[2]))].sort().forEach(n => {
+  const o = document.createElement("option"); o.value = o.textContent = n; $("foreman").appendChild(o);
+});
+
+function hl(text, q) {
+  const safe = esc(text);
+  if (!q) return safe;
+  const re = new RegExp("(" + esc(q).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
+  return safe.replace(re, "<mark>$1</mark>");
+}
+
+function render() {
+  const q = $("q").value.trim(), f = $("foreman").value;
+  const list = entries.filter(e =>
+    (!f || e[2] === f) && (!jobFilter || e[1] === jobFilter) &&
+    (!q || e.join(" ").toLowerCase().includes(q.toLowerCase())));
+  $("rows").innerHTML = list.length ? list.map(e =>
+    `<div class="row" role="row">
+      <span class="time" role="cell">${hl(e[0], q)}</span>
+      <span role="cell"><button class="job" data-job="${e[1]}" title="Show only ${e[1]}">${hl(e[1], q)}</button></span>
+      <span class="who" role="cell">${hl(e[2], q)}</span>
+      <span class="note" role="cell">${hl(e[3], q)}</span>
+    </div>`).join("") : `<div class="empty">No entries match.</div>`;
+  $("count").textContent = `${list.length} of ${entries.length} entries`;
+  $("clear").hidden = !jobFilter;
+  $("chipjob").textContent = jobFilter;
+}
+
+$("q").addEventListener("input", render);
+$("foreman").addEventListener("change", render);
+$("clear").addEventListener("click", () => { jobFilter = ""; render(); });
+$("rows").addEventListener("click", e => {
+  const b = e.target.closest(".job");
+  if (b) { jobFilter = b.dataset.job; render(); }
+});
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes: light, dark, high contrast</title>
+<style>
+  /*
+    Each theme only redefines design tokens. Components below reference
+    tokens exclusively, so adding a theme means adding one block.
+  */
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 32px 24px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #f3f3f1;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .intro { margin: 0 0 24px; color: #555; font-size: 14px; }
+
+  .themes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+
+  .theme-label {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #555;
+  }
+
+  /* ---- Theme tokens ---- */
+
+  .theme-light {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --frame: #d9dcda;
+    --border: #d9dcda;
+    --border-w: 1px;
+    --text: #1a1a1a;
+    --text-muted: #5c5c5c;
+    --primary: #1f7a4d;
+    --primary-hover: #186140;
+    --on-primary: #ffffff;
+    --gain: #1f7a4d;
+    --spend: #b3412f;
+    --focus: #1f7a4d;
+  }
+
+  .theme-dark {
+    color-scheme: dark;
+    --bg: #121412;
+    --surface: #1a1d1b;
+    --frame: #353b37;
+    --border: #353b37;
+    --border-w: 1px;
+    --text: #ecefed;
+    --text-muted: #a3aaa6;
+    --primary: #3a9d6c;
+    --primary-hover: #46ac7a;
+    --on-primary: #0b0f0c;
+    --gain: #5fc38f;
+    --spend: #e0735f;
+    --focus: #7fd6a8;
+  }
+
+  .theme-contrast {
+    color-scheme: dark;
+    --bg: #000000;
+    --surface: #000000;
+    --frame: #ffffff;
+    --border: #ffffff;
+    --border-w: 2px;
+    --text: #ffffff;
+    --text-muted: #d9d9d9;
+    --primary: #7ff0b4;
+    --primary-hover: #c2f9dc;
+    --on-primary: #000000;
+    --gain: #7ff0b4;
+    --spend: #ff8a7a;
+    --focus: #ffe14d;
+  }
+
+  /* ---- Shared components (token-only) ---- */
+
+  .theme {
+    background: var(--bg);
+    color: var(--text);
+    border: var(--border-w) solid var(--frame);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: var(--border-w) solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .balance-label { font-size: 13px; color: var(--text-muted); }
+
+  .balance-value {
+    margin: 4px 0 12px;
+    font-size: 32px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .summary { display: flex; gap: 24px; font-size: 14px; }
+  .summary-label { display: block; font-size: 12px; color: var(--text-muted); }
+
+  .tx-list { list-style: none; margin: 16px 0 0; padding: 0; }
+
+  .tx {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+  }
+
+  .tx + .tx { border-top: var(--border-w) solid var(--border); }
+
+  .tx-name { font-size: 14px; font-weight: 600; }
+  .tx-meta { font-size: 12px; color: var(--text-muted); }
+
+  .amt {
+    font-size: 14px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .amt.gain { color: var(--gain); }
+  .amt.spend { color: var(--spend); }
+
+  .btn {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px 16px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--on-primary);
+    background: var(--primary);
+    border: var(--border-w) solid var(--primary);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+  .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<h1>Kelpie</h1>
+<p class="intro">Same sample screen rendered in three themes.</p>
+
+<div class="themes">
+
+  <div>
+    <p class="theme-label">Light</p>
+    <section class="theme theme-light" aria-label="Light theme sample">
+      <div class="card">
+        <div class="balance-label">Total balance</div>
+        <div class="balance-value">$4,812.40</div>
+        <div class="summary">
+          <div>
+            <span class="summary-label">In this month</span>
+            <span class="amt gain">+$3,200.00</span>
+          </div>
+          <div>
+            <span class="summary-label">Out this month</span>
+            <span class="amt spend">&minus;$1,184.15</span>
+          </div>
+        </div>
+
+        <ul class="tx-list">
+          <li class="tx">
+            <div>
+              <div class="tx-name">Paycheck</div>
+              <div class="tx-meta">Income &middot; Oct 1</div>
+            </div>
+            <span class="amt gain">+$2,100.00</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Trader Joe's</div>
+              <div class="tx-meta">Groceries &middot; Today</div>
+            </div>
+            <span class="amt spend">&minus;$86.42</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Electric utility</div>
+              <div class="tx-meta">Bills &middot; Sep 30</div>
+            </div>
+            <span class="amt spend">&minus;$142.07</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Refund, outdoor shop</div>
+              <div class="tx-meta">Shopping &middot; Sep 28</div>
+            </div>
+            <span class="amt gain">+$38.00</span>
+          </li>
+        </ul>
+
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+  </div>
+
+  <div>
+    <p class="theme-label">Dark</p>
+    <section class="theme theme-dark" aria-label="Dark theme sample">
+      <div class="card">
+        <div class="balance-label">Total balance</div>
+        <div class="balance-value">$4,812.40</div>
+        <div class="summary">
+          <div>
+            <span class="summary-label">In this month</span>
+            <span class="amt gain">+$3,200.00</span>
+          </div>
+          <div>
+            <span class="summary-label">Out this month</span>
+            <span class="amt spend">&minus;$1,184.15</span>
+          </div>
+        </div>
+
+        <ul class="tx-list">
+          <li class="tx">
+            <div>
+              <div class="tx-name">Paycheck</div>
+              <div class="tx-meta">Income &middot; Oct 1</div>
+            </div>
+            <span class="amt gain">+$2,100.00</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Trader Joe's</div>
+              <div class="tx-meta">Groceries &middot; Today</div>
+            </div>
+            <span class="amt spend">&minus;$86.42</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Electric utility</div>
+              <div class="tx-meta">Bills &middot; Sep 30</div>
+            </div>
+            <span class="amt spend">&minus;$142.07</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Refund, outdoor shop</div>
+              <div class="tx-meta">Shopping &middot; Sep 28</div>
+            </div>
+            <span class="amt gain">+$38.00</span>
+          </li>
+        </ul>
+
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+  </div>
+
+  <div>
+    <p class="theme-label">High contrast</p>
+    <section class="theme theme-contrast" aria-label="High contrast theme sample">
+      <div class="card">
+        <div class="balance-label">Total balance</div>
+        <div class="balance-value">$4,812.40</div>
+        <div class="summary">
+          <div>
+            <span class="summary-label">In this month</span>
+            <span class="amt gain">+$3,200.00</span>
+          </div>
+          <div>
+            <span class="summary-label">Out this month</span>
+            <span class="amt spend">&minus;$1,184.15</span>
+          </div>
+        </div>
+
+        <ul class="tx-list">
+          <li class="tx">
+            <div>
+              <div class="tx-name">Paycheck</div>
+              <div class="tx-meta">Income &middot; Oct 1</div>
+            </div>
+            <span class="amt gain">+$2,100.00</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Trader Joe's</div>
+              <div class="tx-meta">Groceries &middot; Today</div>
+            </div>
+            <span class="amt spend">&minus;$86.42</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Electric utility</div>
+              <div class="tx-meta">Bills &middot; Sep 30</div>
+            </div>
+            <span class="amt spend">&minus;$142.07</span>
+          </li>
+          <li class="tx">
+            <div>
+              <div class="tx-name">Refund, outdoor shop</div>
+              <div class="tx-meta">Shopping &middot; Sep 28</div>
+            </div>
+            <span class="amt gain">+$38.00</span>
+          </li>
+        </ul>
+
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+  </div>
+
+</div>
+
+</body>
+</html>

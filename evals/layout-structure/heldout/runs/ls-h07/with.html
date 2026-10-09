@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stillwater</title>
+<style>
+  :root {
+    --bg-top: #0f2a30;
+    --bg-bot: #0a1a1f;
+    --ink: #e8f1ef;
+    --ink-soft: #9db5b3;
+    --line: rgba(232, 241, 239, 0.12);
+    --card: rgba(232, 241, 239, 0.05);
+    --accent: #7fd1c2;
+    --accent-deep: #3a9c8e;
+    --on-accent: #06211e;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg-top: #eaf4f1;
+      --bg-bot: #d5e8e4;
+      --ink: #12302e;
+      --ink-soft: #4a6866;
+      --line: rgba(18, 48, 46, 0.14);
+      --card: rgba(255, 255, 255, 0.6);
+      --accent: #2f8f82;
+      --accent-deep: #1f6f65;
+      --on-accent: #ffffff;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: #05100f;
+    display: grid;
+    place-items: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .screen {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    padding: max(28px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, var(--bg-top), var(--bg-bot));
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  @media (min-height: 860px) and (min-width: 460px) {
+    .screen { min-height: 860px; max-height: 860px; border-radius: 36px; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+  }
+
+  header { display: flex; justify-content: space-between; align-items: baseline; }
+  .brand { font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+  .date { font-size: 14px; color: var(--ink-soft); }
+
+  .greeting { font-family: Georgia, "Times New Roman", serif; font-size: 30px; line-height: 1.2; font-weight: 400; }
+  .streak {
+    margin-top: 10px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 15px; color: var(--ink-soft);
+  }
+  .streak strong { color: var(--ink); font-weight: 600; }
+  .dots { display: flex; gap: 5px; }
+  .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .dots i.on { background: var(--accent); }
+  .dots i.today { outline: 2px solid var(--accent); outline-offset: 2px; background: transparent; }
+
+  .start-wrap { display: grid; place-items: center; padding: 8px 0; }
+  .start {
+    position: relative;
+    width: 188px; height: 188px; border-radius: 50%;
+    border: 0; cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, var(--accent), var(--accent-deep));
+    color: var(--on-accent);
+    font: inherit;
+    display: grid; place-content: center; gap: 2px; text-align: center;
+    box-shadow: 0 12px 40px rgba(58, 156, 142, 0.35);
+    transition: transform .2s ease;
+  }
+  .start:active { transform: scale(.97); }
+  .start:focus-visible { outline: 3px solid var(--ink); outline-offset: 6px; }
+  .start::before, .start::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    opacity: 0; animation: ripple 5s ease-out infinite;
+  }
+  .start::after { animation-delay: 2.5s; }
+  @keyframes ripple {
+    0% { transform: scale(1); opacity: .5; }
+    100% { transform: scale(1.55); opacity: 0; }
+  }
+  .start .label { font-size: 26px; font-weight: 600; letter-spacing: 0.02em; }
+  .start .sub { font-size: 14px; opacity: .8; }
+
+  .durations {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+    padding: 5px; border-radius: 999px; background: var(--card); border: 1px solid var(--line);
+    border: 1px solid var(--line);
+  }
+  .durations input { position: absolute; opacity: 0; pointer-events: none; }
+  .durations label {
+    text-align: center; padding: 12px 0; border-radius: 999px;
+    font-size: 16px; color: var(--ink-soft); cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .durations label small { font-size: 12px; margin-left: 2px; }
+  .durations input:checked + label { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+  .durations input:focus-visible + label { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; margin-bottom: 10px; }
+  ul { list-style: none; padding: 0; background: var(--card); border: 1px solid var(--line); border-radius: 20px; }
+  li { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
+  li + li { border-top: 1px solid var(--line); }
+  .ico { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: rgba(127,209,194,.15); color: var(--accent); flex: none; }
+  .ico svg { width: 18px; height: 18px; }
+  .meta { flex: 1; min-width: 0; }
+  .meta b { display: block; font-weight: 600; font-size: 16px; }
+  .meta span { font-size: 13px; color: var(--ink-soft); }
+  .len { font-size: 15px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .start::before, .start::after { animation: none; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="screen">
+  <header>
+    <span class="brand">Stillwater</span>
+    <span class="date">Mon, Oct 5</span>
+  </header>
+
+  <section>
+    <h1 class="greeting">Take a quiet<br>moment.</h1>
+    <p class="streak" aria-label="Streak: 6 days, today not yet completed">
+      <span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="today"></i></span>
+      <span><strong>6-day streak</strong> · sit today to make it 7</span>
+    </p>
+  </section>
+
+  <section class="start-wrap">
+    <button class="start" type="button" id="start">
+      <span class="label">Begin</span>
+      <span class="sub" id="sub">10 minutes</span>
+    </button>
+  </section>
+
+  <fieldset style="border:0;padding:0" >
+    <legend style="position:absolute;opacity:0">Duration</legend>
+    <div class="durations" role="radiogroup">
+      <input type="radio" name="d" id="d5" value="5"><label for="d5">5<small>min</small></label>
+      <input type="radio" name="d" id="d10" value="10" checked><label for="d10">10<small>min</small></label>
+      <input type="radio" name="d" id="d20" value="20"><label for="d20">20<small>min</small></label>
+    </div>
+  </fieldset>
+
+  <section>
+    <h2>Recent sessions</h2>
+    <ul>
+      <li>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span class="meta"><b>Yesterday</b><span>7:40 AM</span></span>
+        <span class="len">10 min</span>
+      </li>
+      <li>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span class="meta"><b>Saturday</b><span>9:15 PM</span></span>
+        <span class="len">20 min</span>
+      </li>
+      <li>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span class="meta"><b>Friday</b><span>6:55 AM</span></span>
+        <span class="len">5 min</span>
+      </li>
+    </ul>
+  </section>
+</main>
+<script>
+  document.querySelectorAll('input[name="d"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      document.getElementById('sub').textContent = r.value + ' minutes';
+    });
+  });
+</script>
+</body>
+</html>

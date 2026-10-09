@@ -1,0 +1,1 @@
+Slide it in from the right. The panel lives on the right edge, so a short slide (about 200ms, ease-out) shows where it came from and where it went, and a plain fade doesn't. Add a light fade during the slide if you want it softer, and respect `prefers-reduced-motion` by falling back to just the fade.

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create a refund — Ledgerline API</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #f7f8fa;
+    --border: #e4e7ec;
+    --text: #1c2230;
+    --muted: #5d6677;
+    --accent: #0b6b5d;
+    --accent-bg: #e4f3f0;
+    --code-bg: #12171f;
+    --code-text: #dfe5ee;
+    --post: #0b6b5d;
+    --warn-bg: #fff6e0;
+    --warn-border: #e8c76a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    font-size: 15px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+  }
+  code, pre, .mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  /* Top bar */
+  header.top {
+    height: 56px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+  .brand .mark {
+    width: 24px; height: 24px; border-radius: 6px; background: var(--accent);
+    position: relative;
+  }
+  .brand .mark::before, .brand .mark::after {
+    content: ""; position: absolute; left: 5px; right: 5px; height: 2px; background: #fff; border-radius: 1px;
+  }
+  .brand .mark::before { top: 8px; }
+  .brand .mark::after { top: 14px; right: 9px; }
+  .top nav { display: flex; gap: 20px; font-size: 14px; }
+  .top nav a { color: var(--muted); text-decoration: none; }
+  .top nav a.active { color: var(--text); font-weight: 600; }
+  .top .spacer { flex: 1; }
+  .search {
+    width: 240px; height: 32px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--panel); color: var(--muted); font-size: 13px;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 10px;
+  }
+  .search kbd { font-family: inherit; font-size: 11px; border: 1px solid var(--border); border-radius: 4px; padding: 0 5px; background: #fff; }
+  .version { font-size: 12px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; }
+
+  /* Layout */
+  .layout {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr) 208px;
+  }
+  aside.left, aside.right { overflow-y: auto; padding: 24px 0; }
+  aside.left { border-right: 1px solid var(--border); background: var(--panel); padding-left: 20px; padding-right: 12px; }
+  aside.right { padding-left: 24px; padding-right: 20px; }
+  main { overflow-y: auto; padding: 36px 48px 64px; }
+
+  /* Left nav */
+  .group { margin-bottom: 20px; }
+  .group h4 {
+    margin: 0 0 6px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600;
+  }
+  .group ul { list-style: none; margin: 0; padding: 0; }
+  .group a {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 5px 10px; border-radius: 6px; color: #2c3445; text-decoration: none; font-size: 14px;
+  }
+  .group a:hover { background: #eceef2; }
+  .group a.current { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+  .m { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; color: var(--muted); }
+  .current .m { color: var(--accent); }
+
+  /* Article */
+  .crumbs { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+  .crumbs span { margin: 0 6px; }
+  h1 { font-size: 32px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 14px; }
+  .endpoint {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid var(--border); background: var(--panel); border-radius: 8px;
+    padding: 6px 12px; margin: 4px 0 18px; font-size: 14px;
+  }
+  .endpoint .verb { color: #fff; background: var(--post); font-weight: 700; font-size: 11px; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+  .lede { font-size: 16.5px; color: #333c4d; margin: 0 0 12px; max-width: 64ch; }
+  p { margin: 0 0 12px; max-width: 68ch; }
+  h2 { font-size: 21px; letter-spacing: -0.01em; margin: 40px 0 12px; padding-top: 4px; scroll-margin-top: 16px; }
+  :not(pre) > code {
+    background: #eef0f4; border-radius: 4px; padding: 1px 5px; font-size: 0.88em;
+  }
+  .note {
+    background: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 8px;
+    padding: 10px 14px; font-size: 14px; max-width: 68ch; margin: 14px 0;
+  }
+
+  /* Parameters */
+  .params { border-top: 1px solid var(--border); max-width: 720px; }
+  .param { padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .param .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+  .param .name { font-weight: 600; font-size: 14px; }
+  .param .type { color: var(--muted); font-size: 12.5px; }
+  .tag { font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 999px; }
+  .tag.req { background: #fde8e8; color: #9b1c1c; }
+  .tag.opt { background: #eceef2; color: var(--muted); }
+  .param p { margin: 4px 0 0; font-size: 14px; color: #2f3748; }
+
+  /* Code */
+  .sample { max-width: 720px; border-radius: 10px; overflow: hidden; background: var(--code-bg); margin: 12px 0 8px; }
+  .sample .bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px; background: #1b2230; color: #9aa5b8; font-size: 12px; border-bottom: 1px solid #263044;
+  }
+  .sample .bar b { color: #dfe5ee; font-weight: 600; }
+  pre { margin: 0; padding: 14px 16px; overflow-x: auto; color: var(--code-text); font-size: 13px; line-height: 1.55; }
+  .k { color: #7fd1c2; }
+  .s { color: #f2c98a; }
+  .n { color: #b8a4f5; }
+  .c { color: #7b869a; }
+
+  /* Right outline */
+  aside.right h5 { margin: 0 0 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  aside.right ul { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--border); }
+  aside.right a {
+    display: block; padding: 4px 0 4px 14px; margin-left: -1px; border-left: 2px solid transparent;
+    color: var(--muted); text-decoration: none; font-size: 13.5px;
+  }
+  aside.right a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  aside.right a.sub { padding-left: 26px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><div class="mark"></div>Ledgerline</div>
+  <nav>
+    <a href="#">Guides</a>
+    <a href="#" class="active">API reference</a>
+    <a href="#">SDKs</a>
+    <a href="#">Changelog</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="search"><span>Search docs</span><kbd>/</kbd></div>
+  <span class="version">v1 · 2026-09-01</span>
+</header>
+
+<div class="layout">
+  <aside class="left" aria-label="API sections">
+    <div class="group">
+      <h4>Getting started</h4>
+      <ul>
+        <li><a href="#">Introduction</a></li>
+        <li><a href="#">Authentication</a></li>
+        <li><a href="#">Errors</a></li>
+        <li><a href="#">Idempotency</a></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h4>Payments</h4>
+      <ul>
+        <li><a href="#">Create a payment <span class="m">POST</span></a></li>
+        <li><a href="#">Retrieve a payment <span class="m">GET</span></a></li>
+        <li><a href="#">Capture a payment <span class="m">POST</span></a></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h4>Refunds</h4>
+      <ul>
+        <li><a href="#" class="current" aria-current="page">Create a refund <span class="m">POST</span></a></li>
+        <li><a href="#">Retrieve a refund <span class="m">GET</span></a></li>
+        <li><a href="#">List refunds <span class="m">GET</span></a></li>
+        <li><a href="#">Cancel a refund <span class="m">POST</span></a></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h4>Payouts</h4>
+      <ul>
+        <li><a href="#">Create a payout <span class="m">POST</span></a></li>
+        <li><a href="#">List payouts <span class="m">GET</span></a></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h4>Webhooks</h4>
+      <ul>
+        <li><a href="#">Event types</a></li>
+        <li><a href="#">Verifying signatures</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <div class="crumbs">API reference<span>/</span>Refunds<span>/</span>Create</div>
+    <h1>Create a refund</h1>
+    <div class="endpoint mono"><span class="verb">POST</span>https://api.ledgerline.example/v1/refunds</div>
+
+    <section id="overview">
+      <p class="lede">Return funds from a captured payment to the customer's original payment method. You can refund a payment in full or in part, and issue several partial refunds until the payment's remaining balance reaches zero.</p>
+      <p>Refunds start in the <code>pending</code> state and usually settle within 5–10 business days, depending on the card network or bank. Ledgerline sends a <code>refund.succeeded</code> or <code>refund.failed</code> webhook when the outcome is known.</p>
+      <div class="note"><strong>Heads up:</strong> refunds can't be edited once created. To stop one that is still <code>pending</code>, use <a href="#" style="color:var(--accent)">Cancel a refund</a>.</div>
+    </section>
+
+    <section id="parameters">
+      <h2>Parameters</h2>
+      <div class="params">
+        <div class="param">
+          <div class="head"><span class="name mono">payment_id</span><span class="type mono">string</span><span class="tag req">required</span></div>
+          <p>The ID of the captured payment to refund, for example <code>pay_8Kd2mQ41xT</code>.</p>
+        </div>
+        <div class="param">
+          <div class="head"><span class="name mono">amount</span><span class="type mono">integer</span><span class="tag opt">optional</span></div>
+          <p>Amount to refund in the smallest currency unit (cents for USD). Defaults to the full remaining balance. Must not exceed what is still refundable.</p>
+        </div>
+        <div class="param">
+          <div class="head"><span class="name mono">reason</span><span class="type mono">enum</span><span class="tag opt">optional</span></div>
+          <p>One of <code>duplicate</code>, <code>fraudulent</code>, <code>requested_by_customer</code>, or <code>other</code>. Used in reporting and shown on the customer's statement where supported.</p>
+        </div>
+        <div class="param">
+          <div class="head"><span class="name mono">metadata</span><span class="type mono">object</span><span class="tag opt">optional</span></div>
+          <p>Up to 20 key-value string pairs for your own records. Keys are limited to 40 characters and values to 500.</p>
+        </div>
+        <div class="param">
+          <div class="head"><span class="name mono">notify_customer</span><span class="type mono">boolean</span><span class="tag opt">optional</span></div>
+          <p>When <code>true</code>, Ledgerline emails the customer a receipt. Defaults to <code>false</code>.</p>
+        </div>
+      </div>
+      <p style="margin-top:14px;font-size:14px;color:var(--muted)">Send an <code>Idempotency-Key</code> header to safely retry requests without creating duplicate refunds.</p>
+    </section>
+
+    <section id="examples">
+      <h2>Examples</h2>
+
+      <h3 id="ex-curl" style="font-size:16px;margin:18px 0 0">Request</h3>
+      <div class="sample">
+        <div class="bar"><b>cURL</b><span>POST /v1/refunds</span></div>
+<pre><span class="k">curl</span> https://api.ledgerline.example/v1/refunds \
+  -H <span class="s">"Authorization: Bearer $LEDGERLINE_SECRET_KEY"</span> \
+  -H <span class="s">"Idempotency-Key: 6f1c2a9e-order-4417"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{
+    "payment_id": "pay_8Kd2mQ41xT",
+    "amount": 2500,
+    "reason": "requested_by_customer",
+    "metadata": { "order": "4417" }
+  }'</span></pre>
+      </div>
+
+      <h3 id="ex-response" style="font-size:16px;margin:22px 0 0">Response</h3>
+      <div class="sample">
+        <div class="bar"><b>201 Created</b><span>application/json</span></div>
+<pre>{
+  <span class="k">"id"</span>: <span class="s">"re_3Wq90vLcA7"</span>,
+  <span class="k">"object"</span>: <span class="s">"refund"</span>,
+  <span class="k">"payment_id"</span>: <span class="s">"pay_8Kd2mQ41xT"</span>,
+  <span class="k">"amount"</span>: <span class="n">2500</span>,
+  <span class="k">"currency"</span>: <span class="s">"usd"</span>,
+  <span class="k">"status"</span>: <span class="s">"pending"</span>,
+  <span class="k">"reason"</span>: <span class="s">"requested_by_customer"</span>,
+  <span class="k">"metadata"</span>: { <span class="k">"order"</span>: <span class="s">"4417"</span> },
+  <span class="k">"created_at"</span>: <span class="s">"2026-10-04T14:22:08Z"</span>
+}</pre>
+      </div>
+    </section>
+
+    <section id="errors">
+      <h2>Errors</h2>
+      <p><code>409 payment_not_captured</code> is returned if the payment hasn't been captured yet. <code>422 amount_exceeds_balance</code> is returned when <code>amount</code> is larger than the remaining refundable balance.</p>
+    </section>
+  </main>
+
+  <aside class="right" aria-label="On this page">
+    <h5>On this page</h5>
+    <ul>
+      <li><a href="#overview" class="active">Overview</a></li>
+      <li><a href="#parameters">Parameters</a></li>
+      <li><a href="#examples">Examples</a></li>
+      <li><a href="#ex-curl" class="sub">Request</a></li>
+      <li><a href="#ex-response" class="sub">Response</a></li>
+      <li><a href="#errors">Errors</a></li>
+    </ul>
+  </aside>
+</div>
+
+</body>
+</html>

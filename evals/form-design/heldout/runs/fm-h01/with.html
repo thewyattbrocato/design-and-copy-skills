@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volunteer sign-up – Pawprint Animal Rescue</title>
+<style>
+  :root {
+    --ink: #1f2933;
+    --muted: #52606d;
+    --bg: #f6f1ea;
+    --card: #ffffff;
+    --line: #8b96a1;
+    --accent: #9a3f12;
+    --accent-dark: #7a300d;
+    --error: #b42318;
+    --focus: #1d4ed8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px 48px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  main {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 32px 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12);
+  }
+  .brand { font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0 0 4px; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px; }
+  .intro { margin: 0 0 28px; color: var(--muted); }
+  .field { margin: 0 0 28px; padding: 0; border: 0; min-width: 0; }
+  label, legend { display: block; font-weight: 600; padding: 0; margin: 0 0 4px; }
+  .opt { font-weight: 400; color: var(--muted); }
+  .hint { margin: 0 0 8px; color: var(--muted); font-size: 15px; }
+  input[type=text], input[type=email], input[type=tel], textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  input.short { max-width: 280px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .days { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+  .choice {
+    display: flex; align-items: center; gap: 10px;
+    min-height: 44px; padding: 8px 12px;
+    border: 1.5px solid var(--line); border-radius: 8px;
+    font-weight: 400; margin: 0; cursor: pointer; background: #fff;
+  }
+  .choice input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); flex: none; }
+  .choice:has(input:checked) { border-color: var(--accent); background: #fbeee6; }
+  .choice:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .radios { display: flex; flex-direction: column; gap: 8px; }
+  .error { display: none; margin: 6px 0 0; color: var(--error); font-weight: 600; font-size: 15px; }
+  .error::before { content: "⚠ "; }
+  .has-error .error { display: block; }
+  .has-error input[type=text], .has-error input[type=email], .has-error input[type=tel] { border-color: var(--error); border-width: 2px; }
+  .summary {
+    display: none; margin: 0 0 28px; padding: 16px 18px;
+    border: 2px solid var(--error); border-radius: 8px; background: #fef3f2;
+  }
+  .summary.show { display: block; }
+  .summary h2 { margin: 0 0 6px; font-size: 18px; color: var(--error); }
+  .summary ul { margin: 0; padding-left: 20px; }
+  .summary a { color: var(--error); font-weight: 600; }
+  button {
+    font: inherit; font-weight: 700; color: #fff; background: var(--accent);
+    border: 0; border-radius: 8px; min-height: 48px; padding: 10px 28px; cursor: pointer;
+  }
+  button:hover { background: var(--accent-dark); }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  .confirm { display: none; }
+  .confirm.show { display: block; }
+  .confirm h2 { margin-top: 0; font-size: 24px; }
+  form.hidden { display: none; }
+  @media (max-width: 480px) { main { padding: 24px 18px; } button { width: 100%; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">Pawprint Animal Rescue</p>
+  <h1 id="title">Volunteer sign-up</h1>
+
+  <form id="form" novalidate>
+    <p class="intro">Tell us a little about yourself and when you're free. A volunteer coordinator will email you to set up an orientation. Fields are required unless marked optional.</p>
+
+    <div class="summary" id="summary" role="alert" tabindex="-1">
+      <h2 id="summary-title">Please fix the following</h2>
+      <ul id="summary-list"></ul>
+    </div>
+
+    <div class="field" id="f-name">
+      <label for="name">Full name</label>
+      <input type="text" id="name" name="name" autocomplete="name" aria-describedby="e-name">
+      <p class="error" id="e-name"></p>
+    </div>
+
+    <div class="field" id="f-email">
+      <label for="email">Email</label>
+      <p class="hint" id="h-email">We'll use this to schedule your orientation.</p>
+      <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="h-email e-email">
+      <p class="error" id="e-email"></p>
+    </div>
+
+    <div class="field" id="f-phone">
+      <label for="phone">Phone <span class="opt">(optional)</span></label>
+      <p class="hint" id="h-phone">Only used if we need to reach you quickly about a shift.</p>
+      <input type="tel" id="phone" name="phone" class="short" autocomplete="tel" inputmode="tel" aria-describedby="h-phone">
+    </div>
+
+    <fieldset class="field" id="f-days" aria-describedby="h-days e-days">
+      <legend>Days you can help</legend>
+      <p class="hint" id="h-days">Select every day that usually works for you.</p>
+      <div class="days">
+        <label class="choice"><input type="checkbox" name="days" value="Monday"> Monday</label>
+        <label class="choice"><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+        <label class="choice"><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+        <label class="choice"><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+        <label class="choice"><input type="checkbox" name="days" value="Friday"> Friday</label>
+        <label class="choice"><input type="checkbox" name="days" value="Saturday"> Saturday</label>
+        <label class="choice"><input type="checkbox" name="days" value="Sunday"> Sunday</label>
+      </div>
+      <p class="error" id="e-days"></p>
+    </fieldset>
+
+    <fieldset class="field" id="f-dogs" aria-describedby="e-dogs">
+      <legend>Have you handled large dogs before?</legend>
+      <div class="radios">
+        <label class="choice"><input type="radio" name="dogs" value="Yes"> Yes</label>
+        <label class="choice"><input type="radio" name="dogs" value="No"> No</label>
+      </div>
+      <p class="error" id="e-dogs"></p>
+    </fieldset>
+
+    <div class="field" id="f-notes">
+      <label for="notes">Anything else you'd like us to know? <span class="opt">(optional)</span></label>
+      <p class="hint" id="h-notes">Experience, interests, availability details, or questions.</p>
+      <textarea id="notes" name="notes" aria-describedby="h-notes"></textarea>
+    </div>
+
+    <button type="submit">Sign up to volunteer</button>
+  </form>
+
+  <section class="confirm" id="confirm" tabindex="-1" aria-live="polite">
+    <h2>Thank you, <span id="c-name"></span>!</h2>
+    <p>We've received your volunteer sign-up. A coordinator will email you at <strong id="c-email"></strong> within a few business days to schedule an orientation.</p>
+    <p>If you don't hear from us, check your spam folder or contact Pawprint Animal Rescue directly.</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById('form');
+  var summary = document.getElementById('summary');
+  var list = document.getElementById('summary-list');
+  var baseTitle = document.title;
+  var attempted = false;
+
+  var rules = [
+    { id: 'name', field: 'f-name', focus: 'name', err: 'e-name',
+      check: function () { return form.name.value.trim() ? '' : 'Enter your full name.'; } },
+    { id: 'email', field: 'f-email', focus: 'email', err: 'e-email',
+      check: function () {
+        var v = form.email.value.trim();
+        if (!v) return 'Enter your email address.';
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Enter an email address with an @, like name@example.com.';
+      } },
+    { id: 'days', field: 'f-days', focus: null, err: 'e-days',
+      check: function () {
+        return form.querySelectorAll('input[name=days]:checked').length ? '' : 'Select at least one day you can help.';
+      } },
+    { id: 'dogs', field: 'f-dogs', focus: null, err: 'e-dogs',
+      check: function () {
+        return form.querySelector('input[name=dogs]:checked') ? '' : 'Choose Yes or No.';
+      } }
+  ];
+
+  function firstInput(r) {
+    return r.focus ? document.getElementById(r.focus)
+      : document.getElementById(r.field).querySelector('input');
+  }
+
+  function run() {
+    var problems = [];
+    rules.forEach(function (r) {
+      var msg = r.check();
+      var wrap = document.getElementById(r.field);
+      var el = document.getElementById(r.err);
+      el.textContent = msg;
+      wrap.classList.toggle('has-error', !!msg);
+      var inp = r.focus ? document.getElementById(r.focus) : null;
+      if (inp) inp.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      if (msg) problems.push({ r: r, msg: msg });
+    });
+    return problems;
+  }
+
+  function renderSummary(problems) {
+    list.innerHTML = '';
+    problems.forEach(function (p) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#' + (firstInput(p.r).id || p.r.field);
+      a.textContent = p.msg;
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        firstInput(p.r).focus();
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    summary.classList.toggle('show', problems.length > 0);
+    document.title = problems.length
+      ? '(' + problems.length + (problems.length === 1 ? ' error) ' : ' errors) ') + baseTitle
+      : baseTitle;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    attempted = true;
+    var problems = run();
+    renderSummary(problems);
+    if (problems.length) {
+      summary.focus();
+      return;
+    }
+    // Replace with a real submission to the rescue's backend.
+    document.getElementById('c-name').textContent = form.name.value.trim();
+    document.getElementById('c-email').textContent = form.email.value.trim();
+    form.classList.add('hidden');
+    document.getElementById('title').textContent = 'You're signed up';
+    var c = document.getElementById('confirm');
+    c.classList.add('show');
+    c.focus();
+    document.title = 'Signed up – ' + baseTitle;
+  });
+
+  // After a first submit attempt, re-check as the person edits.
+  function recheck() { if (attempted) renderSummary(run()); }
+  form.addEventListener('input', recheck);
+  form.addEventListener('change', recheck);
+})();
+</script>
+</body>
+</html>

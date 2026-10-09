@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spokeline – Saved routes</title>
+<style>
+  :root{
+    --ink:#161c19;
+    --muted:#586360;
+    --line:#e3e8e5;
+    --bg:#f6f8f7;
+    --card:#ffffff;
+    --accent:#0b6b4f;
+    --accent-ink:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:#dfe5e2;
+    color:var(--ink);
+    display:flex;justify-content:center;
+    -webkit-font-smoothing:antialiased;
+  }
+  .screen{
+    width:100%;max-width:390px;min-height:100vh;
+    background:var(--bg);
+    display:flex;flex-direction:column;
+    position:relative;
+  }
+  header{padding:56px 20px 8px}
+  header h1{font-size:15px;font-weight:600;color:var(--muted);letter-spacing:.01em}
+
+  main{flex:1;padding:0 20px 96px;overflow-y:auto}
+
+  .empty{text-align:center;padding:36px 8px 32px}
+  .mark{
+    width:56px;height:56px;margin:0 auto 20px;border-radius:50%;
+    background:#e1efe9;color:var(--accent);
+    display:grid;place-items:center;
+  }
+  .mark svg{width:26px;height:26px}
+  .empty h2{font-size:26px;line-height:1.15;font-weight:750;letter-spacing:-.015em}
+  .empty p{
+    margin:10px auto 0;max-width:300px;
+    font-size:16px;line-height:1.45;color:var(--muted);
+  }
+  .btn-primary{
+    margin-top:24px;width:100%;height:52px;border:0;border-radius:14px;
+    background:var(--accent);color:var(--accent-ink);
+    font:inherit;font-size:17px;font-weight:650;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    cursor:pointer;
+  }
+  .btn-primary svg{width:20px;height:20px}
+  .btn-primary:focus-visible,.row:focus-visible,.tab:focus-visible{outline:3px solid #7cc4a9;outline-offset:2px}
+  .hint{margin-top:10px;font-size:13px;color:var(--muted)}
+
+  .nearby h3{
+    font-size:17px;font-weight:650;margin-bottom:10px;
+    display:flex;justify-content:space-between;align-items:baseline;
+  }
+  .nearby h3 span{font-size:13px;font-weight:500;color:var(--muted)}
+  .list{background:var(--card);border-radius:14px;border:1px solid var(--line);overflow:hidden}
+  .row{
+    display:flex;align-items:center;gap:12px;width:100%;
+    padding:14px 14px 14px 16px;background:none;border:0;text-align:left;
+    font:inherit;color:inherit;cursor:pointer;
+  }
+  .row + .row{border-top:1px solid var(--line)}
+  .row .info{flex:1;min-width:0}
+  .row .name{font-size:16px;font-weight:600;line-height:1.25}
+  .row .meta{font-size:13.5px;color:var(--muted);margin-top:3px}
+  .save{
+    flex:none;font-size:14px;font-weight:600;color:var(--accent);
+    padding:7px 12px;border-radius:999px;border:1.5px solid #b9d9cd;
+  }
+
+  nav{
+    position:fixed;bottom:0;width:100%;max-width:390px;
+    background:var(--card);border-top:1px solid var(--line);
+    display:grid;grid-template-columns:repeat(4,1fr);
+    padding:8px 4px 26px;
+  }
+  .tab{
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    background:none;border:0;font:inherit;font-size:11.5px;font-weight:500;
+    color:#66716d;padding:4px 0;cursor:pointer;border-radius:10px;
+  }
+  .tab svg{width:24px;height:24px}
+  .tab[aria-current="page"]{color:var(--accent);font-weight:700}
+</style>
+</head>
+<body>
+<div class="screen">
+  <header><h1>Saved routes</h1></header>
+
+  <main>
+    <section class="empty" aria-labelledby="empty-title">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+      </div>
+      <h2 id="empty-title">No saved routes yet</h2>
+      <p>Saving a route keeps it for offline use and shows it on your watch.</p>
+      <button class="btn-primary" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 14v5h14v-5"/></svg>
+        Import a route file
+      </button>
+      <div class="hint">GPX or TCX files</div>
+    </section>
+
+    <section class="nearby" aria-labelledby="nearby-title">
+      <h3 id="nearby-title">Popular nearby <span>Sample routes</span></h3>
+      <div class="list">
+        <button class="row" type="button">
+          <div class="info">
+            <div class="name">Riverside Loop</div>
+            <div class="meta">32 km · 240 m climbing</div>
+          </div>
+          <span class="save">Save</span>
+        </button>
+        <button class="row" type="button">
+          <div class="info">
+            <div class="name">Ridge Road Climb</div>
+            <div class="meta">48 km · 910 m climbing</div>
+          </div>
+          <span class="save">Save</span>
+        </button>
+        <button class="row" type="button">
+          <div class="info">
+            <div class="name">Old Mill Gravel</div>
+            <div class="meta">27 km · 380 m climbing</div>
+          </div>
+          <span class="save">Save</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <nav aria-label="Main">
+    <button class="tab" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg>
+      Home
+    </button>
+    <button class="tab" type="button" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+      Saved routes
+    </button>
+    <button class="tab" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5" fill="currentColor"/></svg>
+      Record
+    </button>
+    <button class="tab" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-4 3.7-6 7.5-6s6.700 2 7.500 6"/></svg>
+      Profile
+    </button>
+  </nav>
+</div>
+</body>
+</html>

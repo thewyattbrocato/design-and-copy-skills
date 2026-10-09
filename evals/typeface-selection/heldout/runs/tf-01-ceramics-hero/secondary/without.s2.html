@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiln & Fern | Ceramics Studio in Asheville</title>
+  <meta name="description" content="Kiln & Fern is a small ceramics studio in Asheville, NC. Take a class, shop handmade pottery, or book a studio visit.">
+  <style>
+    :root {
+      --cream: #f7f1e8;
+      --sand: #efe4d4;
+      --clay: #c46a4a;
+      --clay-dark: #a4533a;
+      --fern: #3f5e4a;
+      --ink: #2b2420;
+      --muted: #6e6259;
+      --card: #fffaf3;
+      --line: rgba(43, 36, 32, 0.1);
+      --radius: 20px;
+      --shadow: 0 1px 2px rgba(43, 36, 32, 0.06), 0 12px 30px -12px rgba(43, 36, 32, 0.18);
+      --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 85% -10%, rgba(196, 106, 74, 0.18), transparent 60%),
+        radial-gradient(900px 500px at -10% 110%, rgba(63, 94, 74, 0.16), transparent 60%),
+        var(--cream);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 4vw, 48px);
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* Top bar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--fern);
+      font-size: 1rem;
+    }
+
+    .topbar nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 20px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .topbar nav a:hover,
+    .topbar nav a:focus-visible {
+      color: var(--ink);
+      border-bottom-color: var(--clay);
+      outline: none;
+    }
+
+    /* Hero */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(48px, 9vw, 110px) 0 clamp(40px, 6vw, 72px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--clay-dark);
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(3.2rem, 9vw, 6.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      margin: 0 0 24px;
+      color: var(--ink);
+    }
+
+    h1 .amp {
+      font-style: italic;
+      color: var(--clay);
+    }
+
+    h1 .fern {
+      color: var(--fern);
+    }
+
+    .lede {
+      font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+      color: var(--muted);
+      max-width: 36ch;
+      margin: 0 0 36px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--clay);
+      color: #fffdf9;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 16px 30px;
+      border-radius: 999px;
+      box-shadow: 0 10px 24px -10px rgba(164, 83, 58, 0.7);
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--clay-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -12px rgba(164, 83, 58, 0.8);
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid var(--fern);
+      outline-offset: 3px;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      padding-bottom: 16px;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 26px 26px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: 0 2px 4px rgba(43, 36, 32, 0.06), 0 22px 40px -16px rgba(43, 36, 32, 0.25);
+      outline: none;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      background: var(--sand);
+      color: var(--fern);
+    }
+
+    .card:nth-child(1) .card-icon { color: var(--clay-dark); background: #f6dccf; }
+    .card:nth-child(2) .card-icon { color: var(--fern); background: #dfe9dd; }
+    .card:nth-child(3) .card-icon { color: #7a5a3a; background: var(--sand); }
+
+    .card-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card h2 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.4rem;
+      margin: 0 0 8px;
+    }
+
+    .card p {
+      margin: 0 0 18px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .card .more {
+      margin-top: auto;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--fern);
+      letter-spacing: 0.02em;
+    }
+
+    .card .more::after {
+      content: " \2192";
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover .more::after {
+      transform: translateX(4px);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+    }
+
+    @media (max-width: 640px) {
+      .topbar nav a { margin-left: 14px; }
+      .btn { width: 100%; text-align: center; }
+      .actions { flex-direction: column; align-items: stretch; }
+      .note { text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="topbar">
+      <span class="brand-mark">Kiln &amp; Fern</span>
+      <nav aria-label="Primary">
+        <a href="#classes">Classes</a>
+        <a href="#shop">Shop</a>
+        <a href="#visit">Visit</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <p class="eyebrow">Asheville, North Carolina</p>
+
+      <h1>Kiln <span class="amp">&amp;</span> <span class="fern">Fern</span></h1>
+
+      <p class="lede">Small-batch, hand-thrown ceramics and clay classes, made slowly in our Asheville studio.</p>
+
+      <div class="actions">
+        <a class="btn" href="#book">Book a studio visit</a>
+        <span class="note">Come see the wheels, the glaze shelves, and the kiln.</span>
+      </div>
+    </main>
+
+    <section class="cards" aria-label="Explore Kiln &amp; Fern">
+
+      <a class="card" id="classes" href="#classes">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v4M12 16v4M4 12h4M16 12h4"/></svg>
+        </span>
+        <h2>Classes</h2>
+        <p>Wheel throwing and hand-building for beginners and returning potters.</p>
+        <span class="more">See the schedule</span>
+      </a>
+
+      <a class="card" id="shop" href="#shop">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M5 9h14l-1.2 9.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 9z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+        </span>
+        <h2>Shop</h2>
+        <p>Mugs, bowls, and vases, each one made by hand and glazed to be used.</p>
+        <span class="more">Browse pieces</span>
+      </a>
+
+      <a class="card" id="visit" href="#visit">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/></svg>
+        </span>
+        <h2>Visit</h2>
+        <p>Drop by the studio to meet the makers and see work in progress.</p>
+        <span class="more">Plan your visit</span>
+      </a>
+
+    </section>
+
+    <footer>
+      <span>&copy; Kiln &amp; Fern, Asheville, NC</span>
+      <span>Handmade in small batches</span>
+    </footer>
+
+  </div>
+</body>
+</html>

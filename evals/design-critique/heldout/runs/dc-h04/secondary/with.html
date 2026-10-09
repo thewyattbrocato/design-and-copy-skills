@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larkspur Bike Co-op · Repair Subscription</title>
+<style>
+  :root {
+    --bg: #f7f5ef;
+    --card: #ffffff;
+    --ink: #1f2a24;
+    --muted: #5b6660;
+    --accent: #3d7a4f;
+    --accent-ink: #ffffff;
+    --highlight: #e8f1e6;
+    --border: #d9d6cb;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+  header.hero { padding: 72px 0 40px; text-align: center; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.15;
+    margin: 0 0 16px;
+    font-weight: 750;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    max-width: 640px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    color: var(--muted);
+  }
+
+  section.plans { padding: 16px 0 56px; }
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+  .plan {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .plan.featured {
+    border: 2px solid var(--accent);
+    background: var(--highlight);
+    box-shadow: 0 12px 30px rgba(61, 122, 79, 0.15);
+  }
+  .badge {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .plan h2 { margin: 0 0 4px; font-size: 1.4rem; }
+  .plan .tagline { margin: 0 0 20px; color: var(--muted); font-size: 0.95rem; }
+  .price { margin: 0 0 20px; font-size: 2.6rem; font-weight: 750; line-height: 1; }
+  .price span { font-size: 1rem; font-weight: 500; color: var(--muted); }
+  .plan ul { list-style: none; padding: 0; margin: 0 0 28px; flex: 1; }
+  .plan li {
+    padding: 9px 0 9px 28px;
+    position: relative;
+    border-top: 1px solid var(--border);
+  }
+  .plan li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 16px;
+    width: 12px;
+    height: 7px;
+    border-left: 2.5px solid var(--accent);
+    border-bottom: 2.5px solid var(--accent);
+    transform: rotate(-45deg);
+  }
+  .btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 13px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--accent); color: var(--accent-ink); }
+  .btn.solid { background: var(--accent); color: var(--accent-ink); }
+  .btn.solid:hover { filter: brightness(1.08); }
+  .btn:focus-visible { outline: 3px solid #9cc5a5; outline-offset: 2px; }
+
+  section.signup {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 56px 0;
+  }
+  section.signup h2 { margin: 0 0 10px; font-size: 1.8rem; text-align: center; }
+  section.signup p.sub { margin: 0 auto 28px; max-width: 560px; text-align: center; color: var(--muted); }
+  form.signup-form {
+    max-width: 520px;
+    margin: 0 auto;
+    display: grid;
+    gap: 16px;
+  }
+  form label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
+  form input, form select {
+    font: inherit;
+    font-weight: 400;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--ink);
+  }
+  form input:focus, form select:focus {
+    outline: 3px solid #9cc5a5;
+    outline-offset: 1px;
+    border-color: var(--accent);
+  }
+  form .btn { margin-top: 4px; }
+  .fineprint { font-size: 0.85rem; color: var(--muted); text-align: center; margin: 0; }
+
+  footer {
+    padding: 32px 0 48px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 640px) {
+    header.hero { padding: 48px 0 28px; }
+    .plans-grid { grid-template-columns: 1fr; }
+    .plan { padding: 28px 22px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Larkspur Bike Co-op</span>
+    <h1>Keep your bike riding, all year long.</h1>
+    <p class="lede">
+      Our repair subscription takes the guesswork out of bike maintenance. Pick a monthly plan,
+      get regular tune-ups, and save on parts, with flat-rate repairs included on our higher tiers.
+      Every dollar stays in our community co-op.
+    </p>
+  </div>
+</header>
+
+<main>
+  <section class="plans" aria-label="Subscription plans">
+    <div class="wrap">
+      <div class="plans-grid">
+
+        <article class="plan">
+          <h2>Basic</h2>
+          <p class="tagline">Essential care for casual riders.</p>
+          <p class="price">$12<span> / month</span></p>
+          <ul>
+            <li>Two tune-ups per year</li>
+            <li>10% off parts</li>
+          </ul>
+          <a class="btn" href="#signup" data-plan="Basic">Choose Basic</a>
+        </article>
+
+        <article class="plan featured">
+          <span class="badge">Most popular</span>
+          <h2>Plus</h2>
+          <p class="tagline">The one most riders pick.</p>
+          <p class="price">$24<span> / month</span></p>
+          <ul>
+            <li>Four tune-ups per year</li>
+            <li>15% off parts</li>
+            <li>Free flat repairs</li>
+          </ul>
+          <a class="btn solid" href="#signup" data-plan="Plus">Choose Plus</a>
+        </article>
+
+        <article class="plan">
+          <h2>Pro</h2>
+          <p class="tagline">Unlimited care for committed riders.</p>
+          <p class="price">$39<span> / month</span></p>
+          <ul>
+            <li>Unlimited tune-ups</li>
+            <li>20% off parts</li>
+            <li>Free flat repairs</li>
+            <li>Loaner bike while yours is in the shop</li>
+          </ul>
+          <a class="btn" href="#signup" data-plan="Pro">Choose Pro</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="signup" id="signup">
+    <div class="wrap">
+      <h2>Sign up for a plan</h2>
+      <p class="sub">Tell us who you are and which plan fits your riding. We'll be in touch to set up your first tune-up.</p>
+      <form class="signup-form" action="#" method="post">
+        <label>
+          Full name
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label>
+          Plan
+          <select name="plan" required>
+            <option value="Basic">Basic · $12/mo</option>
+            <option value="Plus" selected>Plus · $24/mo (most popular)</option>
+            <option value="Pro">Pro · $39/mo</option>
+          </select>
+        </label>
+        <button class="btn solid" type="submit">Start my subscription</button>
+        <p class="fineprint">Cancel anytime. Plans renew monthly.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Larkspur Bike Co-op · Repair subscriptions renew monthly.
+  </div>
+</footer>
+
+<script>
+  // Preselect the plan a visitor clicked on the pricing cards.
+  document.querySelectorAll('[data-plan]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var select = document.querySelector('select[name="plan"]');
+      if (select) select.value = link.getAttribute('data-plan');
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Running payroll · Crumb &amp; Kettle</title>
+<style>
+  :root {
+    --bg: #f7f1e8;
+    --card: #fffdf9;
+    --ink: #2d2118;
+    --muted: #7a6a5c;
+    --line: #e6dccd;
+    --accent: #b5601f;
+    --accent-soft: #f6e3d0;
+    --done: #3f7d4e;
+    --done-soft: #dff0e2;
+    --ease-out: cubic-bezier(.2, .7, .2, 1);
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1612;
+      --card: #251e18;
+      --ink: #f3e9dc;
+      --muted: #b0a090;
+      --line: #3a3027;
+      --accent: #e69a5a;
+      --accent-soft: #3c2a1c;
+      --done: #7cc48c;
+      --done-soft: #1f3526;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .card {
+    width: 100%;
+    max-width: 520px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px 28px 22px;
+    box-shadow: 0 1px 2px rgba(60, 35, 10, .05), 0 12px 32px rgba(60, 35, 10, .08);
+  }
+  .brand {
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+
+  /* Header */
+  .head { display: flex; gap: 16px; align-items: center; min-height: 72px; }
+  .badge {
+    flex: none;
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: grid; place-items: center;
+    position: relative;
+    transition: background-color .3s, color .3s;
+  }
+  .badge svg { position: absolute; transition: opacity .25s, transform .3s var(--ease-out); }
+  .badge .ok { opacity: 0; transform: scale(.7); }
+  .steam path {
+    fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round;
+    opacity: 0;
+    animation: steam 2.4s ease-out infinite;
+  }
+  .steam path:nth-child(2) { animation-delay: .8s; }
+  .steam path:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes steam {
+    0%   { opacity: 0; transform: translateY(3px); }
+    30%  { opacity: .9; }
+    100% { opacity: 0; transform: translateY(-5px); }
+  }
+  h1 { font-size: 22px; line-height: 1.25; margin: 0; font-weight: 650; }
+  .sub { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+  .head-text { transition: opacity .2s; }
+  .head-text.swap { opacity: 0; }
+
+  /* Overall progress */
+  .overall { margin: 22px 0 6px; }
+  .bar {
+    height: 8px; border-radius: 99px; background: var(--line); overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; width: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform .4s linear, background-color .3s;
+  }
+  .bar-meta {
+    display: flex; justify-content: space-between;
+    font-size: 13px; color: var(--muted); margin-top: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Steps */
+  ol { list-style: none; margin: 18px 0 0; padding: 0; }
+  li.step { display: grid; grid-template-columns: 28px 1fr auto; column-gap: 14px; position: relative; padding-bottom: 18px; }
+  li.step:last-child { padding-bottom: 0; }
+  .mark {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--line);
+    display: grid; place-items: center;
+    background: var(--card);
+    position: relative; z-index: 1;
+    transition: border-color .25s, background-color .25s;
+  }
+  .mark svg { position: absolute; inset: -2px; width: 28px; height: 28px; }
+  .mark .tick {
+    fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 20; stroke-dashoffset: 20;
+    transition: stroke-dashoffset .3s var(--ease-out) .05s;
+  }
+  .mark .spin { opacity: 0; transition: opacity .2s; transform-origin: center; }
+  .mark .spin circle { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 22 70; }
+  .rail { position: absolute; left: 13px; top: 28px; bottom: 0; width: 2px; background: var(--line); }
+  .rail i {
+    display: block; width: 100%; height: 100%;
+    background: var(--done);
+    transform-origin: top; transform: scaleY(0);
+    transition: transform .4s var(--ease-out);
+  }
+  li.step:last-child .rail { display: none; }
+  .body { padding-top: 3px; min-width: 0; }
+  .name { font-size: 16px; font-weight: 600; color: var(--muted); transition: color .25s; }
+  .desc { font-size: 13.5px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .count {
+    font-size: 13px; color: var(--muted); padding-top: 5px;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+    opacity: 0; transition: opacity .25s;
+  }
+  .step.active .name, .step.done .name { color: var(--ink); }
+  .step.active .mark { border-color: var(--accent); }
+  .step.active .mark .spin { opacity: 1; animation: spin 1s linear infinite; }
+  .step.active .count { opacity: 1; color: var(--accent); font-weight: 600; }
+  .step.done .mark { border-color: var(--done); background: var(--done); }
+  .step.done .mark .tick { stroke-dashoffset: 0; }
+  .step.done .rail i { transform: scaleY(1); }
+  .step.done .count { opacity: 1; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Footer */
+  .foot {
+    margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    font-size: 13px; color: var(--muted); min-height: 44px;
+  }
+  button {
+    font: inherit; font-size: 13px; color: var(--accent);
+    background: none; border: 1px solid var(--line); border-radius: 10px;
+    padding: 7px 12px; cursor: pointer;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s, background-color .15s;
+  }
+  button:hover { background: var(--accent-soft); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .finished button { opacity: 1; pointer-events: auto; }
+
+  /* Finished state */
+  .finished .badge { background: var(--done-soft); color: var(--done); }
+  .finished .badge .kettle { opacity: 0; transform: scale(.7); }
+  .finished .badge .ok { opacity: 1; transform: scale(1); }
+  .finished .bar-fill { background: var(--done); }
+  .finished .count { color: var(--done); }
+
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 420px) {
+    .card { padding: 22px 18px 18px; }
+    h1 { font-size: 19px; }
+    li.step { grid-template-columns: 28px 1fr; }
+    .count { grid-column: 2; padding-top: 2px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .steam path { animation: none; opacity: 0; }
+    .step.active .mark .spin { animation: none; }
+    .badge svg, .mark .tick, .rail i { transition-duration: .01s; transition-delay: 0s; }
+    .bar-fill { transition: background-color .3s; }
+  }
+</style>
+</head>
+<body>
+  <main class="card" id="card">
+    <p class="brand">Crumb &amp; Kettle · Payroll</p>
+
+    <div class="head">
+      <div class="badge" aria-hidden="true">
+        <svg class="kettle" width="32" height="32" viewBox="0 0 32 32">
+          <g class="steam">
+            <path d="M11 9c-1.5-1.5 1.5-3 0-5"/>
+            <path d="M16 9c-1.5-1.5 1.5-3 0-5"/>
+            <path d="M21 9c-1.5-1.5 1.5-3 0-5"/>
+          </g>
+          <path d="M8 14h16l-1.2 10a3 3 0 0 1-3 2.6h-7.6a3 3 0 0 1-3-2.6L8 14z" fill="currentColor"/>
+          <path d="M24 16.5h1.5a2.5 2.5 0 0 1 0 5H23.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg class="ok" width="30" height="30" viewBox="0 0 30 30">
+          <path d="M8 15.5l5 5 9-10.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="head-text" id="headText">
+        <h1 id="title">Running payroll</h1>
+        <p class="sub" id="sub">Pay period Oct 1-15 · 23 employees · 3 locations</p>
+      </div>
+    </div>
+
+    <div class="overall">
+      <div class="bar" role="progressbar" aria-label="Payroll progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
+        <div class="bar-fill" id="fill"></div>
+      </div>
+      <div class="bar-meta"><span id="stepOf">Step 3 of 5</span><span id="eta"></span></div>
+    </div>
+
+    <ol id="steps"></ol>
+
+    <div class="foot">
+      <span id="note">Keep this tab open until payroll finishes.</span>
+      <button type="button" id="replay">Replay</button>
+    </div>
+
+    <div class="sr" aria-live="polite" id="live"></div>
+  </main>
+
+<script>
+(function () {
+  var TOTAL_EMP = 23;
+  var steps = [
+    { name: "Collecting timesheets",      desc: "Gathering hours from all three locations", dur: 8,  n: 3,         unit: "locations" },
+    { name: "Checking overtime",          desc: "Flagging hours that earn overtime pay",    dur: 7,  n: TOTAL_EMP, unit: "employees" },
+    { name: "Calculating tax withholding",desc: "Federal, state and local, per employee",   dur: 12, n: TOTAL_EMP, unit: "employees" },
+    { name: "Preparing direct deposits",  desc: "Building the bank file for each paycheck", dur: 8,  n: TOTAL_EMP, unit: "employees" },
+    { name: "Sending pay stubs",          desc: "Delivering each employee their stub",      dur: 5,  n: TOTAL_EMP, unit: "employees" }
+  ];
+  var total = steps.reduce(function (a, s) { return a + s.dur; }, 0); // 40s
+  var starts = [], acc = 0;
+  steps.forEach(function (s) { starts.push(acc); acc += s.dur; });
+
+  // Load mid-run: 4 seconds into step 3
+  var START_AT = starts[2] + 4;
+
+  var list = document.getElementById("steps");
+  var rows = steps.map(function (s) {
+    var li = document.createElement("li");
+    li.className = "step";
+    li.innerHTML =
+      '<div class="mark"><svg viewBox="0 0 28 28" aria-hidden="true">' +
+        '<g class="spin"><circle cx="14" cy="14" r="12"/></g>' +
+        '<path class="tick" d="M8.5 14.5l3.8 3.8 7.2-8"/></svg>' +
+        '<div class="rail"><i></i></div></div>' +
+      '<div class="body"><div class="name"></div><div class="desc"></div></div>' +
+      '<div class="count"></div>';
+    li.querySelector(".name").textContent = s.name;
+    li.querySelector(".desc").textContent = s.desc;
+    list.appendChild(li);
+    return { li: li, count: li.querySelector(".count"), state: "" };
+  });
+  // rail sits outside .mark visually: move it to li so it spans the gap
+  rows.forEach(function (r) { r.li.appendChild(r.li.querySelector(".rail")); });
+
+  var card = document.getElementById("card");
+  var fill = document.getElementById("fill");
+  var bar = document.getElementById("bar");
+  var eta = document.getElementById("eta");
+  var stepOf = document.getElementById("stepOf");
+  var live = document.getElementById("live");
+  var headText = document.getElementById("headText");
+  var title = document.getElementById("title");
+  var sub = document.getElementById("sub");
+  var note = document.getElementById("note");
+
+  var t = START_AT, last = performance.now(), finished = false, lastStep = -1, timer;
+
+  function setHead(h, s) {
+    headText.classList.add("swap");
+    setTimeout(function () {
+      title.textContent = h; sub.textContent = s;
+      headText.classList.remove("swap");
+    }, 180);
+  }
+
+  function render() {
+    var pct = Math.min(t / total, 1);
+    fill.style.transform = "scaleX(" + pct.toFixed(4) + ")";
+    bar.setAttribute("aria-valuenow", Math.round(pct * 100));
+
+    var cur = 0;
+    for (var i = 0; i < steps.length; i++) if (t >= starts[i]) cur = i;
+    if (t >= total) cur = steps.length;
+
+    rows.forEach(function (r, i) {
+      var s = steps[i], state = i < cur ? "done" : i === cur ? "active" : "pending";
+      if (r.state !== state) {
+        r.state = state;
+        r.li.className = "step " + state;
+      }
+      if (state === "active") {
+        var p = (t - starts[i]) / s.dur;
+        var c = Math.min(s.n, Math.max(1, Math.floor(p * s.n) + (s.n === 3 ? 1 : 0)));
+        if (s.n !== 3) c = Math.min(s.n, Math.floor(p * s.n));
+        r.count.textContent = c + " of " + s.n + " " + s.unit;
+      } else if (state === "done") {
+        r.count.textContent = s.n + " of " + s.n;
+      }
+    });
+
+    if (cur < steps.length) {
+      var left = Math.ceil(total - t);
+      eta.textContent = left <= 4 ? "Almost done" : "About " + left + " seconds left";
+      stepOf.textContent = "Step " + (cur + 1) + " of 5";
+      if (cur !== lastStep) {
+        live.textContent = "Step " + (cur + 1) + " of 5: " + steps[cur].name;
+        lastStep = cur;
+      }
+    } else if (!finished) {
+      finished = true;
+      card.classList.add("finished");
+      eta.textContent = "100%";
+      stepOf.textContent = "All 5 steps complete";
+      setHead("Payroll for Oct 1-15 is done.", "23 employees paid.");
+      note.textContent = "Pay stubs are on their way to everyone.";
+      live.textContent = "Payroll for Oct 1-15 is done. 23 employees paid.";
+      clearInterval(timer);
+    }
+  }
+
+  function tick() {
+    var now = performance.now();
+    t += Math.min((now - last) / 1000, 1); // clamp so a background tab doesn't skip ahead
+    last = now;
+    render();
+  }
+
+  function start(from) {
+    clearInterval(timer);
+    t = from; last = performance.now(); finished = false; lastStep = -1;
+    card.classList.remove("finished");
+    rows.forEach(function (r) { r.state = ""; });
+    note.textContent = "Keep this tab open until payroll finishes.";
+    title.textContent = "Running payroll";
+    sub.textContent = "Pay period Oct 1-15 · 23 employees · 3 locations";
+    render();
+    timer = setInterval(tick, 250);
+  }
+
+  document.getElementById("replay").addEventListener("click", function () { start(0); });
+  start(START_AT);
+})();
+</script>
+</body>
+</html>

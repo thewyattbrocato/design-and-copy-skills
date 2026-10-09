@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brightwater Freight · Inbound Shipments</title>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --surface: #ffffff;
+    --ink: #111827;
+    --muted: #4b5563;
+    --line: #d1d5db;
+    --stripe: #f1f4f7;
+    --hover: #e0ecff;
+    --head-bg: #0f2a43;
+    --head-ink: #ffffff;
+    --brand: #0b6bcb;
+
+    --ok-bg: #dcfce7;   --ok-ink: #14532d;
+    --warn-bg: #fef3c7; --warn-ink: #78350f;
+    --bad-bg: #fee2e2;  --bad-ink: #7f1d1d;
+    --info-bg: #dbeafe; --info-ink: #1e3a8a;
+    --idle-bg: #e5e7eb; --idle-ink: #374151;
+
+    --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1220;
+      --surface: #111a2b;
+      --ink: #f3f4f6;
+      --muted: #9ca3af;
+      --line: #263248;
+      --stripe: #15203a;
+      --hover: #1e3358;
+      --head-bg: #050b16;
+      --head-ink: #e5e7eb;
+      --brand: #60a5fa;
+
+      --ok-bg: #14532d;   --ok-ink: #bbf7d0;
+      --warn-bg: #78350f; --warn-ink: #fde68a;
+      --bad-bg: #7f1d1d;  --bad-ink: #fecaca;
+      --info-bg: #1e3a8a; --info-ink: #bfdbfe;
+      --idle-bg: #334155; --idle-ink: #e2e8f0;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 18px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 32px 40px;
+  }
+
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    border-bottom: 3px solid var(--brand);
+    padding-bottom: 12px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .sub {
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background: var(--head-bg);
+    color: var(--head-ink);
+    text-align: left;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 14px 18px;
+  }
+
+  tbody td {
+    padding: 16px 18px;
+    border-top: 1px solid var(--line);
+    font-size: 18px;
+    vertical-align: middle;
+  }
+
+  tbody tr:nth-child(even) { background: var(--stripe); }
+  tbody tr:hover { background: var(--hover); }
+
+  .id {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .door {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .door.none { color: var(--muted); font-weight: 500; }
+
+  .eta {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .eta .date {
+    display: block;
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .pill.ok    { background: var(--ok-bg);   color: var(--ok-ink); }
+  .pill.warn  { background: var(--warn-bg); color: var(--warn-ink); }
+  .pill.bad   { background: var(--bad-bg);  color: var(--bad-ink); }
+  .pill.info  { background: var(--info-bg); color: var(--info-ink); }
+  .pill.idle  { background: var(--idle-bg); color: var(--idle-ink); }
+
+  footer {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 760px) {
+    .page { padding: 16px; }
+    thead { display: none; }
+    tbody td { display: block; padding: 10px 16px; border-top: none; }
+    tbody tr { display: block; border-top: 1px solid var(--line); padding: 8px 0; }
+    tbody td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header>
+    <h1>Inbound Shipments</h1>
+    <div class="sub">Brightwater Freight · Warehouse Floor</div>
+  </header>
+
+  <section class="card" aria-label="Inbound shipments">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Shipment ID</th>
+          <th scope="col">Carrier</th>
+          <th scope="col">Dock Door</th>
+          <th scope="col">ETA</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="id" data-label="Shipment ID">BW-20418</td>
+          <td data-label="Carrier">Northline Freight</td>
+          <td class="door" data-label="Dock Door">D-04</td>
+          <td class="eta" data-label="ETA"><time datetime="2026-10-08T06:15">06:15</time><span class="date">Today</span></td>
+          <td data-label="Status"><span class="pill ok">Arrived</span></td>
+        </tr>
+        <tr>
+          <td class="id" data-label="Shipment ID">BW-20419</td>
+          <td data-label="Carrier">Ridgeback Logistics</td>
+          <td class="door" data-label="Dock Door">D-01</td>
+          <td class="eta" data-label="ETA"><time datetime="2026-10-08T07:30">07:30</time><span class="date">Today</span></td>
+          <td data-label="Status"><span class="pill info">Unloading</span></td>
+        </tr>
+        <tr>
+          <td class="id" data-label="Shipment ID">BW-20421</td>
+          <td data-label="Carrier">Calder &amp; Sons Trucking</td>
+          <td class="door" data-label="Dock Door">D-07</td>
+          <td class="eta" data-label="ETA"><time datetime="2026-10-08T09:00">09:00</time><span class="date">Today</span></td>
+          <td data-label="Status"><span class="pill idle">Scheduled</span></td>
+        </tr>
+        <tr>
+          <td class="id" data-label="Shipment ID">BW-20425</td>
+          <td data-label="Carrier">Harbor Express</td>
+          <td class="door none" data-label="Dock Door">Unassigned</td>
+          <td class="eta" data-label="ETA"><time datetime="2026-10-08T10:45">10:45</time><span class="date">Today</span></td>
+          <td data-label="Status"><span class="pill warn">Delayed 2h</span></td>
+        </tr>
+        <tr>
+          <td class="id" data-label="Shipment ID">BW-20427</td>
+          <td data-label="Carrier">Northline Freight</td>
+          <td class="door" data-label="Dock Door">D-02</td>
+          <td class="eta" data-label="ETA"><time datetime="2026-10-08T11:20">11:20</time><span class="date">Today</span></td>
+          <td data-label="Status"><span class="pill idle">Scheduled</span></td>
+        </tr>
+        <tr>
+          <td class="id" data-label="Shipment ID">BW-20430</td>
+          <td data-label="Carrier">Summit Carriers</td>
+          <td class="door" data-label="Dock Door">D-05</td>
+          <td class="eta" data-label="ETA"><time datetime="2026-10-08T13:10">13:10</time><span class="date">Today</span></td>
+          <td data-label="Status"><span class="pill idle">Scheduled</span></td>
+        </tr>
+        <tr>
+          <td class="id" data-label="Shipment ID">BW-20433</td>
+          <td data-label="Carrier">Ridgeback Logistics</td>
+          <td class="door" data-label="Dock Door">D-03</td>
+          <td class="eta" data-label="ETA"><time datetime="2026-10-08T14:40">14:40</time><span class="date">Today</span></td>
+          <td data-label="Status"><span class="pill bad">Exception</span></td>
+        </tr>
+        <tr>
+          <td class="id" data-label="Shipment ID">BW-20436</td>
+          <td data-label="Carrier">Calder &amp; Sons Trucking</td>
+          <td class="door none" data-label="Dock Door">Unassigned</td>
+          <td class="eta" data-label="ETA"><time datetime="2026-10-09T06:00">06:00</time><span class="date">Tomorrow</span></td>
+          <td data-label="Status"><span class="pill idle">Scheduled</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <span>8 inbound shipments</span>
+    <span>Times are local to the facility</span>
+  </footer>
+</main>
+</body>
+</html>

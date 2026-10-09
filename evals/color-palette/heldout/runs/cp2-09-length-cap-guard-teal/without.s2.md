@@ -1,0 +1,1 @@
+Use a very light, slightly cool off-white like #f7fafa for backgrounds and a deep teal-tinted charcoal like #1a2a2b for body text. Tinting both neutrals toward your teal's hue keeps the page cohesive, and the text color gives about 14:1 contrast on that background, well above WCAG AAA.

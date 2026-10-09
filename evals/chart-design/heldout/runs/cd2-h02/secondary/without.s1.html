@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rent in Fenwick Falls, 2016–2025</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface-1: #1a1a19;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --series-1: #3987e5;
+      --series-2: #d95926;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+  }
+
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 24px; }
+  .card {
+    background: var(--surface-1);
+    border: 1px solid rgba(11, 11, 11, 0.10);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  h1 { font-size: 24px; font-weight: 600; margin: 0 0 4px; }
+  .sub { color: var(--text-secondary); font-size: 15px; margin: 0 0 16px; }
+  .hero { color: var(--text-secondary); font-size: 15px; margin-bottom: 12px; }
+  .hero strong { color: var(--text-primary); font-size: 28px; font-weight: 600; margin-right: 6px; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 20px;
+    font-size: 13px; color: var(--text-secondary); margin: 8px 0 0;
+  }
+  .key {
+    display: inline-block; width: 14px; height: 3px;
+    border-radius: 2px; vertical-align: middle; margin-right: 6px;
+  }
+  .k1 { background: var(--series-1); }
+  .k2 { background: var(--series-2); }
+
+  .wrap { position: relative; }
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .grid { stroke: var(--grid); stroke-width: 1; }
+  .axis { stroke: var(--axis); stroke-width: 1; }
+  .tick { fill: var(--muted); font-size: 12px; }
+  .end { font-size: 13px; font-weight: 600; }
+  .end-1 { fill: var(--series-1); }
+  .end-2 { fill: var(--series-2); }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .s1 { stroke: var(--series-1); }
+  .s2 { stroke: var(--series-2); }
+  .dot { stroke: var(--surface-1); stroke-width: 2; }
+  .f1 { fill: var(--series-1); }
+  .f2 { fill: var(--series-2); }
+  .hit { fill: transparent; cursor: default; }
+  .hit:focus { outline: none; }
+
+  .tip {
+    position: absolute; pointer-events: none;
+    transform: translate(-50%, -100%);
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid rgba(11, 11, 11, 0.10); border-radius: 6px;
+    padding: 6px 8px; font-size: 12px; white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    opacity: 0; transition: opacity 0.1s;
+  }
+
+  table {
+    width: 100%; border-collapse: collapse; font-size: 14px;
+    margin-top: 20px; font-variant-numeric: tabular-nums;
+  }
+  th, td { padding: 6px 8px; text-align: right; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-secondary); font-weight: 500; }
+
+  .note { font-size: 12px; color: var(--muted); margin-top: 16px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<main>
+  <section class="card">
+    <h1>How much has rent gone up?</h1>
+    <p class="sub">Average monthly rent in Fenwick Falls, 2016–2025, compared with the regional price index. Both series start at 100 in 2016.</p>
+    <p class="hero"><strong>$1,745</strong>average monthly rent in 2025, up from $1,180 in 2016.</p>
+
+    <div class="wrap" id="wrap">
+      <svg id="chart" viewBox="0 0 680 340" role="img"
+           aria-label="Line chart. Rent index rose from 100 in 2016 to 147.9 in 2025. Regional price index rose from 100 to 132.5 over the same years."></svg>
+      <div class="tip" id="tip"></div>
+    </div>
+
+    <div class="legend">
+      <span><span class="key k1"></span>Average rent (2016 = 100)</span>
+      <span><span class="key k2"></span>Regional price index (2016 = 100)</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Year</th><th>Avg. monthly rent</th><th>Rent index</th><th>Regional index</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2016</td><td>$1,180</td><td>100.0</td><td>100.0</td></tr>
+        <tr><td>2017</td><td>$1,215</td><td>103.0</td><td>102.1</td></tr>
+        <tr><td>2018</td><td>$1,260</td><td>106.8</td><td>104.6</td></tr>
+        <tr><td>2019</td><td>$1,310</td><td>111.0</td><td>106.5</td></tr>
+        <tr><td>2020</td><td>$1,325</td><td>112.3</td><td>107.8</td></tr>
+        <tr><td>2021</td><td>$1,390</td><td>117.8</td><td>112.9</td></tr>
+        <tr><td>2022</td><td>$1,530</td><td>129.7</td><td>121.8</td></tr>
+        <tr><td>2023</td><td>$1,640</td><td>139.0</td><td>126.5</td></tr>
+        <tr><td>2024</td><td>$1,700</td><td>144.1</td><td>130.0</td></tr>
+        <tr><td>2025</td><td>$1,745</td><td>147.9</td><td>132.5</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note">Rent index = average monthly rent ÷ 2016 average rent × 100. Rent rose 48% from 2016 to 2025; the regional price index rose 32.5% over the same period. Figures as provided.</p>
+  </section>
+</main>
+
+<script>
+  const years = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
+  const rent = [1180, 1215, 1260, 1310, 1325, 1390, 1530, 1640, 1700, 1745];
+  const regional = [100, 102.1, 104.6, 106.5, 107.8, 112.9, 121.8, 126.5, 130.0, 132.5];
+  const rentIndex = rent.map(v => v / rent[0] * 100);
+
+  const series = [
+    { cls: '1', name: 'Average rent', vals: rentIndex, label: 'Rent +48%' },
+    { cls: '2', name: 'Regional price index', vals: regional, label: 'Regional prices +32.5%' }
+  ];
+
+  const W = 680, H = 340, L = 48, R = 150, T = 16, B = 36;
+  const lo = 95, hi = 155;
+  const iw = W - L - R, ih = H - T - B;
+  const x = i => L + i * iw / (years.length - 1);
+  const y = v => T + (hi - v) / (hi - lo) * ih;
+
+  let s = '';
+
+  for (const t of [100, 110, 120, 130, 140, 150]) {
+    s += `<line class="grid" x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}"/>`;
+    s += `<text class="tick" x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${t}</text>`;
+  }
+  s += `<line class="axis" x1="${L}" x2="${W - R}" y1="${y(lo)}" y2="${y(lo)}"/>`;
+
+  years.forEach((yr, i) => {
+    s += `<text class="tick" x="${x(i)}" y="${H - 12}" text-anchor="middle">${yr}</text>`;
+  });
+
+  for (const ser of series) {
+    const d = ser.vals.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+    s += `<path class="line s${ser.cls}" d="${d}"/>`;
+  }
+
+  for (const ser of series) {
+    ser.vals.forEach((v, i) => {
+      const cx = x(i).toFixed(1), cy = y(v).toFixed(1);
+      const text = ser.cls === '1'
+        ? `${years[i]}: rent $${rent[i].toLocaleString('en-US')} (index ${v.toFixed(1)})`
+        : `${years[i]}: regional index ${v.toFixed(1)}`;
+      s += `<circle class="hit" cx="${cx}" cy="${cy}" r="12" tabindex="0" data-tip="${text}"/>`;
+      s += `<circle class="dot f${ser.cls}" cx="${cx}" cy="${cy}" r="4" pointer-events="none"/>`;
+    });
+  }
+
+  const last = years.length - 1;
+  series.forEach(ser => {
+    s += `<text class="end end-${ser.cls}" x="${x(last) + 12}" y="${y(ser.vals[last]) + 4}">${ser.label}</text>`;
+  });
+
+  const svg = document.getElementById('chart');
+  svg.innerHTML = s;
+
+  const tip = document.getElementById('tip');
+  const wrap = document.getElementById('wrap');
+
+  function showTip(el) {
+    const b = el.getBoundingClientRect();
+    const r = wrap.getBoundingClientRect();
+    tip.textContent = el.dataset.tip;
+    tip.style.left = (b.left - r.left + b.width / 2) + 'px';
+    tip.style.top = (b.top - r.top - 8) + 'px';
+    tip.style.opacity = '1';
+  }
+  function hideTip() { tip.style.opacity = '0'; }
+
+  svg.querySelectorAll('.hit').forEach(el => {
+    el.addEventListener('mouseenter', () => showTip(el));
+    el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('focus', () => showTip(el));
+    el.addEventListener('blur', hideTip);
+  });
+</script>
+</body>
+</html>

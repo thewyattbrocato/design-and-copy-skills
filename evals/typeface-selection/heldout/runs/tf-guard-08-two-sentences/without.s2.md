@@ -1,0 +1,1 @@
+Use **Cormorant Garamond** (Google Fonts), ideally in light or regular weight with generous letter-spacing and all caps or small caps for the names. It's an elegant, high-contrast serif that feels romantic without being a script, and it pairs well with a simple sans like Jost or Lato for the schedule and RSVP form.

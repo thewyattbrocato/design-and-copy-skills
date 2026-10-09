@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln &amp; Fern — Ceramics Studio in Asheville</title>
+<meta name="description" content="Kiln & Fern is a small ceramics studio in Asheville, North Carolina. Handmade pottery, classes, and studio visits.">
+<style>
+  :root {
+    --clay: #b8583a;
+    --clay-dark: #8f3f27;
+    --fern: #4f6b52;
+    --fern-dark: #34493a;
+    --cream: #f7efe4;
+    --sand: #ecdcc6;
+    --ink: #2f241e;
+    --muted: #6b5a4e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 6vw, 5rem);
+    background:
+      radial-gradient(60rem 40rem at 90% -10%, #f2c9a8 0%, transparent 60%),
+      radial-gradient(45rem 35rem at -10% 110%, #cfdcc6 0%, transparent 60%),
+      var(--cream);
+  }
+  /* soft organic shapes, pure CSS */
+  .blob {
+    position: absolute;
+    border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob.one {
+    width: clamp(220px, 34vw, 460px);
+    height: clamp(220px, 34vw, 460px);
+    right: -6%;
+    top: 8%;
+    background: var(--clay);
+    opacity: .16;
+  }
+  .blob.two {
+    width: clamp(140px, 20vw, 280px);
+    height: clamp(140px, 20vw, 280px);
+    right: 14%;
+    bottom: 30%;
+    background: var(--fern);
+    opacity: .14;
+    border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%;
+  }
+  .inner {
+    position: relative;
+    z-index: 1;
+    max-width: 68rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--fern-dark);
+    margin-bottom: 1.25rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 2rem;
+    height: 2px;
+    background: var(--clay);
+    border-radius: 2px;
+  }
+  h1 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    color: var(--ink);
+  }
+  h1 .amp {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--clay);
+    padding: 0 .04em;
+  }
+  .tagline {
+    margin-top: 1.5rem;
+    max-width: 34rem;
+    font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+    color: var(--muted);
+  }
+  .cta {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1rem 1.9rem;
+    background: var(--clay);
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 999px;
+    box-shadow: 0 10px 24px -10px rgba(143, 63, 39, .7);
+    transition: background .2s ease, transform .2s ease;
+  }
+  .cta:hover { background: var(--clay-dark); transform: translateY(-2px); }
+  .cta:focus-visible, .card:focus-visible {
+    outline: 3px solid var(--fern);
+    outline-offset: 3px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 7vw, 4.5rem);
+  }
+  .card {
+    display: block;
+    padding: 1.25rem 1.4rem;
+    background: rgba(255, 252, 247, .75);
+    border: 1px solid var(--sand);
+    border-radius: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--fern);
+    box-shadow: 0 14px 28px -16px rgba(47, 36, 30, .35);
+  }
+  .card .dot {
+    display: block;
+    width: .7rem;
+    height: .7rem;
+    border-radius: 50%;
+    background: var(--clay);
+    margin-bottom: .8rem;
+  }
+  .card:nth-child(2) .dot { background: var(--fern); }
+  .card:nth-child(3) .dot { background: #d9a441; }
+  .card h2 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+  }
+  .card p {
+    margin-top: .25rem;
+    font-size: .95rem;
+    color: var(--muted);
+  }
+  .card .arrow {
+    display: inline-block;
+    margin-top: .6rem;
+    font-weight: 600;
+    color: var(--clay-dark);
+    transition: transform .2s ease;
+  }
+  .card:hover .arrow { transform: translateX(4px); }
+  @media (max-width: 40rem) {
+    .cards { grid-template-columns: 1fr; }
+    .cta { display: block; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="hero">
+    <div class="blob one" aria-hidden="true"></div>
+    <div class="blob two" aria-hidden="true"></div>
+
+    <div class="inner">
+      <div class="eyebrow">Ceramics studio · Asheville, NC</div>
+      <h1>Kiln <span class="amp">&amp;</span> Fern</h1>
+      <p class="tagline">Handmade pottery for everyday rituals, made, fired, and taught in the heart of the Blue Ridge.</p>
+      <a class="cta" href="#book">Book a studio visit</a>
+
+      <nav class="cards" aria-label="Explore the studio">
+        <a class="card" href="#classes">
+          <span class="dot" aria-hidden="true"></span>
+          <h2>Classes</h2>
+          <p>Wheel, hand-building, and glazing for all levels.</p>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="card" href="#shop">
+          <span class="dot" aria-hidden="true"></span>
+          <h2>Shop</h2>
+          <p>Mugs, bowls, and vases from our latest firing.</p>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="card" href="#visit">
+          <span class="dot" aria-hidden="true"></span>
+          <h2>Visit</h2>
+          <p>Stop by the studio, see the kilns, meet the makers.</p>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </nav>
+    </div>
+  </main>
+</body>
+</html>

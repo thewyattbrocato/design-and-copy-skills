@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weather Bingo – Maple Street Elementary</title>
+<style>
+  :root {
+    --ink: #17324d;
+    --sky: #e8f4fc;
+    --blue: #1f6fb2;
+    --blue-dark: #14507f;
+    --sun: #ffc83d;
+    --line: #9cc3e0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(180deg, #cfe8f7 0%, #f4faff 60%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px 24px;
+  }
+  header { text-align: center; margin-bottom: 8px; }
+  header p {
+    margin: 0;
+    font-size: clamp(0.8rem, 2.4vw, 1.1rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue-dark);
+  }
+  header h1 {
+    margin: 2px 0 0;
+    font-size: clamp(1.3rem, 4.5vw, 2.4rem);
+    line-height: 1.1;
+  }
+
+  .card {
+    width: min(100%, 720px, 74vh);
+    min-width: 280px;
+    container-type: inline-size;
+    background: #fff;
+    border: 3px solid var(--blue-dark);
+    border-radius: 14px;
+    padding: 2cqw;
+    box-shadow: 0 6px 18px rgba(20, 80, 127, 0.25);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.2cqw;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .grid li { margin: 0; padding: 0; }
+
+  .head li {
+    background: var(--blue);
+    color: #fff;
+    text-align: center;
+    font-weight: 800;
+    font-size: 8cqw;
+    line-height: 1.25;
+    border-radius: 8px;
+    margin-bottom: 1.2cqw;
+    letter-spacing: 0.03em;
+  }
+
+  .cell { display: block; position: relative; aspect-ratio: 1; cursor: pointer; }
+  .cell input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .cell span {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2px;
+    background: var(--sky);
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    font-size: clamp(9px, 2.9cqw, 22px);
+    font-weight: 700;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+    transition: background 0.15s, transform 0.1s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cell:active span { transform: scale(0.96); }
+  .cell input:focus-visible + span { outline: 4px solid var(--ink); outline-offset: 2px; }
+  .cell input:checked + span {
+    background: var(--sun);
+    border-color: #b57f00;
+    color: #3a2800;
+  }
+  .cell input:checked + span::after {
+    content: "\2713";
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    font-size: 4.5cqw;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .free span {
+    background: var(--sun);
+    border-color: #b57f00;
+    color: #3a2800;
+    font-size: clamp(12px, 4.4cqw, 34px);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+  }
+  .free { cursor: default; }
+  .free input { cursor: default; }
+
+  .controls { margin-top: 16px; text-align: center; }
+  button {
+    font: inherit;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    font-weight: 800;
+    color: #fff;
+    background: var(--blue);
+    border: 0;
+    border-bottom: 4px solid var(--blue-dark);
+    border-radius: 999px;
+    padding: 0.7em 1.8em;
+    min-height: 48px;
+    cursor: pointer;
+  }
+  button:hover { background: #2a7cc2; }
+  button:active { transform: translateY(2px); border-bottom-width: 2px; }
+  button:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  .note {
+    margin: 10px 0 0;
+    font-size: clamp(0.95rem, 2.6vw, 1.25rem);
+    color: var(--ink);
+  }
+
+  @media (max-width: 400px) {
+    .cell span { border-width: 1.5px; border-radius: 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cell span { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <p>Maple Street Elementary</p>
+    <h1>Weather Bingo</h1>
+  </header>
+
+  <main class="card" aria-label="Weather bingo card">
+    <ul class="grid head" aria-hidden="true">
+      <li>B</li><li>I</li><li>N</li><li>G</li><li>O</li>
+    </ul>
+    <ul class="grid" id="board">
+      <li><label class="cell"><input type="checkbox"><span>cloud</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>rain</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>thunder</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>front</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>humidity</span></label></li>
+
+      <li><label class="cell"><input type="checkbox"><span>wind</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>snow</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>lightning</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>forecast</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>tornado</span></label></li>
+
+      <li><label class="cell"><input type="checkbox"><span>hail</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>fog</span></label></li>
+      <li><label class="cell free"><input type="checkbox" checked disabled aria-label="Free space"><span>FREE</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>temperature</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>sleet</span></label></li>
+
+      <li><label class="cell"><input type="checkbox"><span>hurricane</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>rainbow</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>evaporation</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>drought</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>climate</span></label></li>
+
+      <li><label class="cell"><input type="checkbox"><span>storm</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>season</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>condensation</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>breeze</span></label></li>
+      <li><label class="cell"><input type="checkbox"><span>sunny</span></label></li>
+    </ul>
+  </main>
+
+  <div class="controls">
+    <button type="button" id="new-card">New card</button>
+    <p class="note">Tap a square to mark it</p>
+  </div>
+
+<script>
+  // Optional: shuffles the words and clears marks. The card works without it.
+  document.getElementById('new-card').addEventListener('click', function () {
+    var cells = Array.prototype.slice.call(document.querySelectorAll('#board .cell:not(.free)'));
+    var words = cells.map(function (c) { return c.querySelector('span').textContent; });
+    for (var i = words.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = words[i]; words[i] = words[j]; words[j] = t;
+    }
+    cells.forEach(function (c, k) {
+      c.querySelector('span').textContent = words[k];
+      c.querySelector('input').checked = false;
+    });
+  });
+</script>
+</body>
+</html>

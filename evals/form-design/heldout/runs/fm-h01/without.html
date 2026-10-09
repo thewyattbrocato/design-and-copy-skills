@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volunteer Sign-Up | Pawprint Animal Rescue</title>
+<style>
+  :root {
+    --bg: #faf5ee;
+    --card: #ffffff;
+    --ink: #2b2420;
+    --muted: #6b5f56;
+    --line: #d9cfc3;
+    --accent: #b5532a;
+    --accent-dark: #8f3f1d;
+    --focus: #1d5fa8;
+    --error: #b3261e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px 48px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 24px; }
+  .brand {
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: .8rem;
+    color: var(--accent-dark);
+  }
+  h1 { margin: 4px 0 8px; font-size: 1.9rem; line-height: 1.2; }
+  header p { margin: 0; color: var(--muted); }
+  form {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(60, 40, 20, .06);
+  }
+  .field { margin-bottom: 22px; }
+  label, legend {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    padding: 0;
+  }
+  .opt { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  .req { color: var(--error); }
+  .hint { color: var(--muted); font-size: .9rem; margin: 0 0 8px; }
+  input[type="text"], input[type="email"], input[type="tel"], textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #8c7f74;
+    border-radius: 8px;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  input:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 1px;
+  }
+  fieldset { border: 0; margin: 0 0 22px; padding: 0; min-width: 0; }
+  .days { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px; }
+  .chip, .radio {
+    position: relative;
+  }
+  .chip input, .radio input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+  .chip span, .radio span {
+    display: block;
+    text-align: center;
+    padding: 10px 8px;
+    border: 1px solid #8c7f74;
+    border-radius: 8px;
+    background: #fff;
+    font-weight: 500;
+  }
+  .chip input:checked + span, .radio input:checked + span {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .chip input:focus-visible + span, .radio input:focus-visible + span {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; }
+  .choices .radio { flex: 1 1 140px; }
+  button {
+    width: 100%;
+    padding: 14px;
+    font: inherit;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button:hover { background: var(--accent-dark); }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .error { color: var(--error); font-size: .9rem; margin: 6px 0 0; display: none; }
+  .invalid .error { display: block; }
+  .invalid input[type="text"], .invalid input[type="email"] { border-color: var(--error); }
+  .thanks {
+    display: none;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 40px 24px;
+  }
+  .thanks h2 { margin-top: 0; }
+  .thanks:focus { outline: none; }
+  @media (max-width: 480px) {
+    form { padding: 18px; }
+    h1 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="brand">Pawprint Animal Rescue</span>
+    <h1>Volunteer Sign-Up</h1>
+    <p>Thank you for offering your time. Tell us a bit about yourself and when you can help.</p>
+  </header>
+
+  <form id="form" novalidate>
+    <div class="field" id="f-name">
+      <label for="name">Full name <span class="req" aria-hidden="true">*</span></label>
+      <input type="text" id="name" name="name" autocomplete="name" required aria-describedby="e-name">
+      <p class="error" id="e-name">Please enter your name.</p>
+    </div>
+
+    <div class="field" id="f-email">
+      <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="e-email">
+      <p class="error" id="e-email">Please enter a valid email address.</p>
+    </div>
+
+    <div class="field">
+      <label for="phone">Phone <span class="opt">(optional)</span></label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel">
+    </div>
+
+    <fieldset id="f-days">
+      <legend>Days you can help <span class="req" aria-hidden="true">*</span></legend>
+      <p class="hint">Select all that apply.</p>
+      <div class="days">
+        <label class="chip"><input type="checkbox" name="days" value="Monday"><span>Mon</span></label>
+        <label class="chip"><input type="checkbox" name="days" value="Tuesday"><span>Tue</span></label>
+        <label class="chip"><input type="checkbox" name="days" value="Wednesday"><span>Wed</span></label>
+        <label class="chip"><input type="checkbox" name="days" value="Thursday"><span>Thu</span></label>
+        <label class="chip"><input type="checkbox" name="days" value="Friday"><span>Fri</span></label>
+        <label class="chip"><input type="checkbox" name="days" value="Saturday"><span>Sat</span></label>
+        <label class="chip"><input type="checkbox" name="days" value="Sunday"><span>Sun</span></label>
+      </div>
+      <p class="error" id="e-days" role="alert">Please choose at least one day.</p>
+    </fieldset>
+
+    <fieldset id="f-dogs">
+      <legend>Have you handled large dogs before? <span class="req" aria-hidden="true">*</span></legend>
+      <div class="choices">
+        <label class="radio"><input type="radio" name="largeDogs" value="Yes"><span>Yes</span></label>
+        <label class="radio"><input type="radio" name="largeDogs" value="No"><span>No</span></label>
+        <label class="radio"><input type="radio" name="largeDogs" value="A little"><span>A little</span></label>
+      </div>
+      <p class="error" id="e-dogs" role="alert">Please select an option.</p>
+    </fieldset>
+
+    <div class="field">
+      <label for="notes">Anything else you'd like us to know? <span class="opt">(optional)</span></label>
+      <textarea id="notes" name="notes" placeholder="Experience, interests, scheduling notes, questions…"></textarea>
+    </div>
+
+    <button type="submit">Submit Sign-Up</button>
+  </form>
+
+  <section class="thanks" id="thanks" tabindex="-1" aria-live="polite">
+    <h2>Thank you, <span id="thanks-name"></span>!</h2>
+    <p>We've received your volunteer sign-up. A member of the Pawprint team will be in touch soon.</p>
+  </section>
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('form');
+    var thanks = document.getElementById('thanks');
+
+    function setInvalid(id, bad) {
+      var el = document.getElementById(id);
+      if (el) el.classList.toggle('invalid', bad);
+    }
+
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var name = form.name.value.trim();
+      var email = form.email.value.trim();
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      var daysOk = form.querySelectorAll('input[name="days"]:checked').length > 0;
+      var dogsOk = !!form.querySelector('input[name="largeDogs"]:checked');
+
+      setInvalid('f-name', !name);
+      setInvalid('f-email', !emailOk);
+      setInvalid('f-days', !daysOk);
+      setInvalid('f-dogs', !dogsOk);
+
+      if (!name) return form.name.focus();
+      if (!emailOk) return form.email.focus();
+      if (!daysOk) return form.querySelector('input[name="days"]').focus();
+      if (!dogsOk) return form.querySelector('input[name="largeDogs"]').focus();
+
+      // No backend is wired up: connect form submission here (e.g. fetch to your endpoint).
+      document.getElementById('thanks-name').textContent = name.split(' ')[0];
+      form.style.display = 'none';
+      thanks.style.display = 'block';
+      thanks.focus();
+    });
+  })();
+</script>
+</body>
+</html>

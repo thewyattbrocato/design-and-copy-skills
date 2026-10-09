@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parent Portal – Sign In</title>
+<style>
+  :root {
+    --navy: #1f3a5f;
+    --navy-dark: #162b47;
+    --accent: #e8a33d;
+    --bg: #eef2f7;
+    --text: #1d2733;
+    --muted: #5b6776;
+    --border: #c3ccd8;
+    --error: #b3261e;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    background: linear-gradient(160deg, var(--bg) 0%, #dde6f1 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(31, 58, 95, 0.15);
+    overflow: hidden;
+  }
+  .brand {
+    background: var(--navy);
+    color: #fff;
+    padding: 28px 32px 24px;
+    text-align: center;
+    border-bottom: 4px solid var(--accent);
+  }
+  .logo {
+    width: 52px; height: 52px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .brand h1 { margin: 0; font-size: 1.35rem; letter-spacing: 0.01em; }
+  .brand p { margin: 4px 0 0; font-size: 0.9rem; color: #cfdaea; }
+  form { padding: 28px 32px 8px; }
+  .field { margin-bottom: 18px; }
+  label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 6px; }
+  .input-wrap { position: relative; }
+  input[type="email"], input[type="password"], input[type="text"] {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    padding: 11px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:hover { border-color: #9aa8ba; }
+  input:focus {
+    outline: none;
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(31, 58, 95, 0.2);
+  }
+  input[aria-invalid="true"] { border-color: var(--error); }
+  .input-wrap input { padding-right: 64px; }
+  .toggle {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    background: none; border: 0; cursor: pointer;
+    font: inherit; font-size: 0.8rem; font-weight: 600;
+    color: var(--navy); padding: 6px 8px; border-radius: 6px;
+  }
+  .toggle:hover { background: #eef2f7; }
+  .toggle:focus-visible, a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--accent); outline-offset: 2px;
+  }
+  .error { display: none; color: var(--error); font-size: 0.8rem; margin-top: 5px; }
+  .field.invalid .error { display: block; }
+  .row {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px;
+    margin: -4px 0 22px; font-size: 0.875rem;
+  }
+  .remember { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  .remember input { width: 16px; height: 16px; accent-color: var(--navy); margin: 0; }
+  a { color: var(--navy); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  a:hover { color: var(--navy-dark); }
+  .submit {
+    width: 100%;
+    font: inherit; font-size: 1rem; font-weight: 600;
+    padding: 12px;
+    background: var(--navy); color: #fff;
+    border: 0; border-radius: 8px; cursor: pointer;
+    transition: background .15s, transform .05s;
+  }
+  .submit:hover { background: var(--navy-dark); }
+  .submit:active { transform: translateY(1px); }
+  .status { min-height: 1.4em; margin: 12px 0 0; font-size: 0.875rem; text-align: center; color: var(--muted); }
+  .footer {
+    text-align: center;
+    padding: 18px 32px 26px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    border-top: 1px solid #e6ebf2;
+    margin-top: 16px;
+  }
+  @media (max-width: 420px) {
+    body { padding: 12px; }
+    .brand, form, .footer { padding-left: 20px; padding-right: 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <header class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5L2 9z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg>
+      </div>
+      <h1>Parent Portal</h1>
+      <p>Sign in to follow your child's school life</p>
+    </header>
+
+    <form id="login" novalidate>
+      <div class="field" id="f-email">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" autocomplete="email" placeholder="parent@example.com" required aria-describedby="email-err">
+        <div class="error" id="email-err">Please enter a valid email address.</div>
+      </div>
+
+      <div class="field" id="f-pass">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password" autocomplete="current-password" required aria-describedby="pass-err">
+          <button type="button" class="toggle" id="toggle" aria-label="Show password" aria-pressed="false">Show</button>
+        </div>
+        <div class="error" id="pass-err">Please enter your password.</div>
+      </div>
+
+      <div class="row">
+        <label class="remember" style="margin:0;font-weight:400">
+          <input type="checkbox" name="remember"> Keep me signed in
+        </label>
+        <a href="#forgot">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="submit">Sign In</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="footer">
+      New to the portal? <a href="#create-account">Create an account</a>
+    </div>
+  </main>
+
+<script>
+  (function () {
+    var form = document.getElementById('login');
+    var email = document.getElementById('email');
+    var pass = document.getElementById('password');
+    var toggle = document.getElementById('toggle');
+    var status = document.getElementById('status');
+
+    toggle.addEventListener('click', function () {
+      var show = pass.type === 'password';
+      pass.type = show ? 'text' : 'password';
+      toggle.textContent = show ? 'Hide' : 'Show';
+      toggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+      toggle.setAttribute('aria-pressed', String(show));
+    });
+
+    function check(input, field, ok) {
+      field.classList.toggle('invalid', !ok);
+      input.setAttribute('aria-invalid', String(!ok));
+      return ok;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var okE = check(email, document.getElementById('f-email'), /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()));
+      var okP = check(pass, document.getElementById('f-pass'), pass.value.length > 0);
+      if (!okE) { email.focus(); }
+      else if (!okP) { pass.focus(); }
+      status.textContent = (okE && okP) ? 'Signing in…' : '';
+    });
+  })();
+</script>
+</body>
+</html>

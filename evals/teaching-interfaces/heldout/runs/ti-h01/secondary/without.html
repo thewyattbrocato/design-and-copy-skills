@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Kilnbook</title>
+<style>
+  :root {
+    --bg: #f7f3ee;
+    --surface: #ffffff;
+    --ink: #2b2420;
+    --muted: #6e625a;
+    --line: #e4dbd1;
+    --accent: #b5562e;
+    --accent-ink: #ffffff;
+    --accent-soft: #f6e4da;
+    --ok: #3f7a55;
+    --radius: 14px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1714;
+      --surface: #26201c;
+      --ink: #f2ebe4;
+      --muted: #b1a498;
+      --line: #3b322c;
+      --accent: #e0825a;
+      --accent-ink: #1b1714;
+      --accent-soft: #3a2a22;
+      --ok: #7fc195;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px 56px;
+  }
+  header.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .brand { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; }
+  .brand span { color: var(--accent); }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; font-weight: 600; font-size: 0.9rem;
+  }
+
+  .hero {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 20px;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-size: 1.85rem;
+    line-height: 1.2;
+    margin: 0 0 10px;
+    letter-spacing: -0.02em;
+  }
+  .hero p { color: var(--muted); margin: 0 0 22px; max-width: 58ch; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    font: inherit;
+    font-weight: 600;
+    padding: 11px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero { padding: 24px; }
+    h1 { font-size: 1.5rem; }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .card h2 {
+    font-size: 1.05rem;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .card .sub { color: var(--muted); font-size: 0.9rem; margin: 0 0 16px; }
+
+  .progress {
+    height: 8px;
+    background: var(--accent-soft);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .progress > div { height: 100%; width: 0%; background: var(--accent); border-radius: 999px; }
+  .progress-label { font-size: 0.85rem; color: var(--muted); margin-bottom: 18px; }
+
+  ol.steps { list-style: none; padding: 0; margin: 0; }
+  ol.steps li {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+  ol.steps li:first-child { border-top: 0; padding-top: 0; }
+  .step-num {
+    flex: 0 0 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--line);
+    display: grid; place-items: center;
+    font-size: 0.85rem; font-weight: 700; color: var(--muted);
+  }
+  .step.current .step-num { border-color: var(--accent); color: var(--accent); }
+  .step.done .step-num { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .step-body { flex: 1; min-width: 0; }
+  .step-title { font-weight: 600; margin: 0 0 2px; }
+  .step-desc { color: var(--muted); font-size: 0.88rem; margin: 0 0 10px; }
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+    margin-left: 6px;
+    vertical-align: 2px;
+  }
+  .step.done .step-title { color: var(--muted); text-decoration: line-through; }
+
+  .slot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .slot:first-of-type { border-top: 0; padding-top: 0; }
+  .slot-when { font-weight: 600; }
+  .slot-meta { color: var(--muted); font-size: 0.85rem; }
+  .slot .btn { padding: 8px 14px; font-size: 0.9rem; }
+
+  .explainer {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 560px) { .explainer { grid-template-columns: 1fr; } }
+  .explainer div {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .explainer strong { display: block; color: var(--ink); margin-bottom: 4px; font-size: 0.95rem; }
+
+  .note {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .note a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">Kiln<span>book</span></div>
+    <div class="avatar" aria-label="Signed in as Sam Ortega">SO</div>
+  </header>
+
+  <section class="hero" aria-labelledby="welcome">
+    <p class="eyebrow">Harbor Clay Co-op · New member</p>
+    <h1 id="welcome">Welcome, Sam. Your first session is one booking away.</h1>
+    <p>Most members start with a wheel session, then book a kiln firing once they have greenware to fire. Here is the quickest path from signing up to your first piece coming out of the kiln.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="#book-intro">Book an intro wheel session</a>
+      <a class="btn" href="#orientation">Start safety orientation</a>
+    </div>
+  </section>
+
+  <div class="grid">
+
+    <section class="card" aria-labelledby="path">
+      <h2 id="path">Your first three steps</h2>
+      <p class="sub">About 2 hours spread over a week. You can do them in any order.</p>
+
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1" aria-label="Setup progress">
+        <div style="width: 33%;"></div>
+      </div>
+      <p class="progress-label">1 of 3 complete</p>
+
+      <ol class="steps">
+        <li class="step done">
+          <div class="step-num" aria-hidden="true">✓</div>
+          <div class="step-body">
+            <p class="step-title">Create your account</p>
+            <p class="step-desc">Done. Welcome aboard.</p>
+          </div>
+        </li>
+
+        <li class="step current" id="orientation">
+          <div class="step-num" aria-hidden="true">2</div>
+          <div class="step-body">
+            <p class="step-title">Complete studio safety orientation <span class="tag">Required</span></p>
+            <p class="step-desc">A 15-minute video covering wheel safety, glaze handling, and kiln rules. You need this before you can book any wheel or kiln time.</p>
+            <a class="btn" href="#orientation">Watch orientation</a>
+          </div>
+        </li>
+
+        <li class="step" id="book-intro">
+          <div class="step-num" aria-hidden="true">3</div>
+          <div class="step-body">
+            <p class="step-title">Book an intro wheel session</p>
+            <p class="step-desc">Two hours with a studio tech. Bring nothing, we supply clay, aprons, and tools. Your first kiln booking can come after this.</p>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num" aria-hidden="true">4</div>
+          <div class="step-body">
+            <p class="step-title">Book a kiln firing <span class="tag">Later</span></p>
+            <p class="step-desc">Once your piece has dried fully, reserve a bisque or glaze firing. Slots are typically 3 to 5 days out.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="explainer">
+        <div>
+          <strong>Wheel sessions</strong>
+          Hands-on throwing with a tech nearby. Good for trying the clay and learning centering.
+        </div>
+        <div>
+          <strong>Kiln firings</strong>
+          Members load and unload their own work. Pieces must be bone dry and labeled before drop-off.
+        </div>
+      </div>
+    </section>
+
+    <aside class="card" aria-labelledby="slots">
+      <h2 id="slots">Open intro slots this week</h2>
+      <p class="sub">Times at Harbor Clay Co-op, Studio B.</p>
+
+      <div class="slot">
+        <div>
+          <div class="slot-when">Thu, Oct 9 · 6:00 pm</div>
+          <div class="slot-meta">2 hrs · 3 spots left</div>
+        </div>
+        <a class="btn" href="#book-intro">Book</a>
+      </div>
+
+      <div class="slot">
+        <div>
+          <div class="slot-when">Sat, Oct 11 · 10:00 am</div>
+          <div class="slot-meta">2 hrs · 5 spots left</div>
+        </div>
+        <a class="btn" href="#book-intro">Book</a>
+      </div>
+
+      <div class="slot">
+        <div>
+          <div class="slot-when">Sun, Oct 12 · 1:30 pm</div>
+          <div class="slot-meta">2 hrs · 1 spot left</div>
+        </div>
+        <a class="btn" href="#book-intro">Book</a>
+      </div>
+
+      <p class="note">Can't make these? <a href="#book-intro">See all intro times</a>. Cancel up to 12 hours ahead at no charge.</p>
+    </aside>
+
+  </div>
+
+</div>
+</body>
+</html>

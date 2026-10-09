@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Visit · Willowmere Veterinary</title>
+<style>
+  :root {
+    --cream: #faf6ef;
+    --paper: #fffdf9;
+    --sage-50: #eef3ee;
+    --sage-200: #cddbd0;
+    --sage-600: #4a7360;
+    --sage-700: #3b5f4e;
+    --sage-900: #25382f;
+    --ink: #2b3a33;
+    --muted: #5d6b63;
+    --clay-100: #f8e9dc;
+    --clay-300: #e3b793;
+    --clay-800: #6e3f22;
+    --radius: 16px;
+    --shadow: 0 1px 2px rgba(37,56,47,.06), 0 8px 24px rgba(37,56,47,.07);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    font-family: ui-serif, "New York", Georgia, "Iowan Old Style", "Times New Roman", serif;
+    color: var(--sage-900);
+    line-height: 1.25;
+    margin: 0;
+    font-weight: 600;
+  }
+  a { color: var(--sage-700); }
+  :focus-visible { outline: 3px solid var(--sage-600); outline-offset: 3px; border-radius: 6px; }
+
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 1.25rem; }
+
+  header {
+    background: var(--paper);
+    border-bottom: 1px solid var(--sage-200);
+  }
+  .bar {
+    display: flex; flex-wrap: wrap; gap: .5rem 1.5rem;
+    align-items: center; justify-content: space-between;
+    padding: 1.1rem 0;
+  }
+  .brand { display: flex; align-items: center; gap: .7rem; text-decoration: none; }
+  .brand svg { flex: none; }
+  .brand span {
+    font-family: ui-serif, "New York", Georgia, serif;
+    font-size: 1.4rem; font-weight: 600; color: var(--sage-900);
+  }
+  .brand small { display: block; font-family: system-ui, sans-serif; font-size: .8rem; font-weight: 400; color: var(--muted); letter-spacing: .04em; }
+  .phone {
+    font-weight: 600; text-decoration: none; color: var(--sage-700);
+    padding: .5rem 1rem; border: 1.5px solid var(--sage-200); border-radius: 999px;
+    background: var(--sage-50); white-space: nowrap;
+  }
+  .phone:hover { border-color: var(--sage-600); }
+
+  .hero { padding: 3rem 0 1.5rem; }
+  .hero h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); max-width: 22ch; }
+  .hero p { max-width: 52ch; color: var(--muted); margin: .9rem 0 0; font-size: 1.15rem; }
+
+  section { margin: 2.5rem 0; }
+  section > h2 { font-size: 1.5rem; margin-bottom: .35rem; }
+  .lede { color: var(--muted); margin: 0 0 1.25rem; }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--sage-200);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  /* Booking */
+  form.card { padding: 1.5rem; }
+  fieldset { border: 0; padding: 0; margin: 0 0 1.75rem; min-width: 0; }
+  legend {
+    display: flex; align-items: center; gap: .65rem;
+    font-family: ui-serif, Georgia, serif; font-size: 1.2rem; font-weight: 600;
+    color: var(--sage-900); padding: 0; margin-bottom: .8rem;
+  }
+  .num {
+    display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%;
+    background: var(--sage-700); color: #fff; font-family: system-ui, sans-serif; font-size: .95rem; font-weight: 600;
+  }
+  .choices { display: grid; gap: .65rem; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .choice { position: relative; }
+  .choice input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .choice label {
+    display: block; height: 100%; padding: .85rem 1rem;
+    border: 1.5px solid var(--sage-200); border-radius: 12px; background: #fff;
+    transition: border-color .15s, background .15s, box-shadow .15s;
+  }
+  .choice label b { display: block; color: var(--sage-900); }
+  .choice label span { color: var(--muted); font-size: .95rem; }
+  .choice input:hover + label { border-color: var(--sage-600); }
+  .choice input:checked + label {
+    border-color: var(--sage-700); background: var(--sage-50);
+    box-shadow: inset 0 0 0 1px var(--sage-700);
+  }
+  .choice input:focus-visible + label { outline: 3px solid var(--sage-600); outline-offset: 2px; }
+  .days { grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); }
+  .days label { text-align: center; padding: .7rem .5rem; }
+  .days label b { font-size: 1.3rem; font-weight: 600; }
+
+  .summary {
+    background: var(--sage-50); border-radius: 12px; padding: 1rem 1.15rem; margin-bottom: 1rem;
+    color: var(--sage-900);
+  }
+  .summary p { margin: 0; }
+  .note { font-size: .95rem; color: var(--muted); margin: .6rem 0 0; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    background: var(--sage-700); color: #fff; border: 0; border-radius: 999px;
+    padding: .8rem 1.8rem; min-height: 48px;
+    transition: background .15s;
+  }
+  button:hover:not(:disabled) { background: var(--sage-900); }
+  button:disabled { background: #b9c6bd; color: #fff; cursor: not-allowed; }
+  .done { display: none; background: var(--sage-50); border: 1.5px solid var(--sage-600); border-radius: 12px; padding: 1rem 1.15rem; margin-top: 1rem; }
+  .done.show { display: block; }
+
+  /* Services */
+  .services { list-style: none; padding: 0; margin: 0; }
+  .services li {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    padding: 1.1rem 1.4rem; border-bottom: 1px solid var(--sage-200);
+  }
+  .services li:last-child { border-bottom: 0; }
+  .services h3 { font-size: 1.15rem; }
+  .services p { margin: .15rem 0 0; color: var(--muted); font-size: .98rem; }
+  .price { font-weight: 600; color: var(--sage-700); white-space: nowrap; font-size: 1.1rem; }
+
+  /* Emergency */
+  .emergency {
+    background: var(--clay-100); border: 1.5px solid var(--clay-300);
+    border-radius: var(--radius); padding: 1.4rem 1.5rem; color: var(--clay-800);
+  }
+  .emergency h2 { color: var(--clay-800); font-size: 1.3rem; margin-bottom: .4rem; }
+  .emergency p { margin: .3rem 0 0; color: #4d2d19; }
+  .emergency a { color: var(--clay-800); font-weight: 700; }
+
+  footer { padding: 2rem 0 3rem; color: var(--muted); font-size: .95rem; text-align: center; }
+
+  @media (max-width: 520px) {
+    form.card { padding: 1.1rem; }
+    .services li { flex-direction: column; gap: .2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Willowmere Veterinary, home">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="20" fill="#3b5f4e"/>
+        <path d="M20 31c0-9 1-14 8-18M20 31c0-7-2-11-8-14M20 31V11" stroke="#faf6ef" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="28" cy="13" r="2" fill="#e3b793"/><circle cx="12" cy="17" r="2" fill="#e3b793"/><circle cx="20" cy="10" r="2" fill="#e3b793"/>
+      </svg>
+      <span>Willowmere Veterinary<small>Your neighborhood animal clinic</small></span>
+    </a>
+    <a class="phone" href="tel:5550142" aria-label="Call us at 555-0142">Call 555-0142</a>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+  <div class="hero">
+    <h1>Gentle care for the ones who share your home.</h1>
+    <p>Welcome. We're glad you're here. Choose a visit below and we'll take it from there, with no rush and no fuss.</p>
+  </div>
+
+  <section aria-labelledby="book-h">
+    <h2 id="book-h">Book a visit</h2>
+    <p class="lede">Three quick steps. Nothing is final until we confirm with you.</p>
+
+    <form class="card" id="form">
+      <fieldset>
+        <legend><span class="num" aria-hidden="true">1</span> Pick a service</legend>
+        <div class="choices">
+          <div class="choice"><input type="radio" name="service" id="s1" value="Wellness exam" data-price="$68"><label for="s1"><b>Wellness exam</b><span>$68</span></label></div>
+          <div class="choice"><input type="radio" name="service" id="s2" value="Vaccinations" data-price="from $32"><label for="s2"><b>Vaccinations</b><span>from $32</span></label></div>
+          <div class="choice"><input type="radio" name="service" id="s3" value="Dental cleaning" data-price="from $245"><label for="s3"><b>Dental cleaning</b><span>from $245</span></label></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="num" aria-hidden="true">2</span> Pick a day</legend>
+        <div class="choices days" id="days"></div>
+      </fieldset>
+
+      <fieldset style="margin-bottom:0">
+        <legend><span class="num" aria-hidden="true">3</span> Confirm</legend>
+        <div class="summary" aria-live="polite"><p id="summary">Choose a service and a day to see your visit here.</p></div>
+        <button type="submit" id="go" disabled>Request this visit</button>
+        <p class="note">This sends a request. We'll call to confirm a time that suits you.</p>
+        <div class="done" id="done" role="status"></div>
+      </fieldset>
+    </form>
+  </section>
+
+  <section aria-labelledby="svc-h">
+    <h2 id="svc-h">Our services</h2>
+    <p class="lede">Clear prices, so there are no surprises.</p>
+    <ul class="card services">
+      <li><div><h3>Wellness exam</h3><p>A thorough, unhurried check-up from nose to tail.</p></div><span class="price">$68</span></li>
+      <li><div><h3>Vaccinations</h3><p>Keeping your pet protected, with a gentle touch.</p></div><span class="price">from $32</span></li>
+      <li><div><h3>Dental cleaning</h3><p>Healthier teeth and fresher breath for your companion.</p></div><span class="price">from $245</span></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="em-h">
+    <div class="emergency" role="note">
+      <h2 id="em-h">Emergency after hours?</h2>
+      <p>If your pet needs urgent help when we're closed, call us at <a href="tel:5550142">555-0142</a> for guidance, or go straight to your nearest 24-hour emergency animal hospital. Please don't wait for a booking.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Willowmere Veterinary · <a href="tel:5550142">555-0142</a></div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('form');
+  var daysEl = document.getElementById('days');
+  var summary = document.getElementById('summary');
+  var go = document.getElementById('go');
+  var done = document.getElementById('done');
+  var wd = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var long = {
+    weekday: 'long', month: 'long', day: 'numeric'
+  };
+  var now = new Date();
+  for (var i = 1; i <= 7; i++) {
+    var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+    var id = 'd' + i;
+    var div = document.createElement('div');
+    div.className = 'choice';
+    div.innerHTML = '<input type="radio" name="day" id="' + id + '"><label for="' + id + '"><span>' +
+      wd[d.getDay()] + '</span><br><b>' + d.getDate() + '</b><br><span>' +
+      d.toLocaleDateString(undefined, { month: 'short' }) + '</span></label>';
+    var input = div.firstChild;
+    input.value = d.toLocaleDateString(undefined, long);
+    daysEl.appendChild(div);
+  }
+  function update() {
+    var s = form.querySelector('input[name=service]:checked');
+    var d = form.querySelector('input[name=day]:checked');
+    done.className = 'done';
+    if (s && d) {
+      summary.textContent = s.value + ' (' + s.getAttribute('data-price') + ') on ' + d.value + '.';
+      go.disabled = false;
+    } else if (s) {
+      summary.textContent = s.value + ' selected. Now pick a day.';
+      go.disabled = true;
+    } else if (d) {
+      summary.textContent = d.value + ' selected. Now pick a service.';
+      go.disabled = true;
+    } else {
+      summary.textContent = 'Choose a service and a day to see your visit here.';
+      go.disabled = true;
+    }
+  }
+  form.addEventListener('change', update);
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var s = form.querySelector('input[name=service]:checked');
+    var d = form.querySelector('input[name=day]:checked');
+    if (!s || !d) return;
+    done.textContent = 'Thank you. Your request for ' + s.value + ' on ' + d.value +
+      ' is noted. To finalize it, please call us at 555-0142 and we\u2019ll find a time that works.';
+    done.className = 'done show';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes: light, dark, high contrast</title>
+<style>
+/* ---------- Page chrome (not themed) ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 32px;
+  background: #e9ecea;
+  color: #161a18;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.page-title {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.page-note {
+  margin: 0 0 24px;
+  font-size: 14px;
+  color: #44504a;
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.theme-label {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #44504a;
+}
+
+/* ---------- Theme tokens ----------
+   Components only read these semantic tokens. Themes change values, never rules. */
+.theme {
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --surface: #ffffff;
+  --surface-raised: #f4f6f5;
+  --text: #161a18;
+  --text-muted: #55605a;
+  --border: #d6dcd8;
+  --border-width: 1px;
+  --accent: #1f7a4d;
+  --accent-text: #ffffff;
+  --gain: #1f7a4d;
+  --spend: #b3412f;
+  --focus: #1f5fbf;
+  --focus-width: 3px;
+  --radius: 10px;
+
+  color-scheme: light;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-ui);
+  border: var(--border-width) solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.theme-dark {
+  --surface: #111513;
+  --surface-raised: #1b201d;
+  --text: #e6ebe8;
+  --text-muted: #a7b1ab;
+  --border: #2e3732;
+  --accent: #5fc992;
+  --accent-text: #0d1a13;
+  --gain: #5fc992;
+  --spend: #f08a74;
+  --focus: #8ab4ff;
+
+  color-scheme: dark;
+}
+
+.theme-contrast {
+  --surface: #000000;
+  --surface-raised: #000000;
+  --text: #ffffff;
+  --text-muted: #d4d4d4;
+  --border: #ffffff;
+  --border-width: 2px;
+  --accent: #6cf5a8;
+  --accent-text: #000000;
+  --gain: #6cf5a8;
+  --spend: #ff9a85;
+  --focus: #ffd60a;
+  --focus-width: 4px;
+  --radius: 4px;
+
+  color-scheme: dark;
+}
+
+/* ---------- Components (token-only, no per-theme rules) ---------- */
+.k-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+
+.k-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.k-meta {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.k-balance {
+  background: var(--surface-raised);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.k-label {
+  margin: 0 0 4px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.k-value {
+  margin: 0 0 12px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.k-deltas {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.k-section-title {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.k-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.k-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+.k-row:last-child {
+  border-bottom: 0;
+}
+
+.k-merchant {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.k-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.k-amount {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.is-gain { color: var(--gain); }
+.is-spend { color: var(--spend); }
+
+.k-button {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border: var(--border-width) solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-text);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.k-button:focus-visible {
+  outline: var(--focus-width) solid var(--focus);
+  outline-offset: 2px;
+}
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Kelpie themes</h1>
+<p class="page-note">Same sample screen, three themes. Each theme only redefines the color and border tokens on <code>.theme</code>.</p>
+
+<main class="theme-grid">
+
+  <div>
+    <h2 class="theme-label">Light</h2>
+    <section class="theme" aria-label="Light theme sample">
+      <div class="k-header">
+        <h3 class="k-title">Kelpie</h3>
+        <span class="k-meta">October</span>
+      </div>
+
+      <div class="k-balance">
+        <p class="k-label">Available balance</p>
+        <p class="k-value">$4,286.40</p>
+        <div class="k-deltas">
+          <span class="is-gain">+$2,190.00 in</span>
+          <span class="is-spend">&minus;$1,094.25 out</span>
+        </div>
+      </div>
+
+      <h4 class="k-section-title">Recent transactions</h4>
+      <ul class="k-list">
+        <li class="k-row">
+          <div><div class="k-merchant">Harvest Market</div><div class="k-sub">Groceries &middot; Oct 6</div></div>
+          <span class="k-amount is-spend">&minus;$86.42</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Paycheck</div><div class="k-sub">Income &middot; Oct 5</div></div>
+          <span class="k-amount is-gain">+$2,150.00</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Trailhead Coffee</div><div class="k-sub">Dining &middot; Oct 4</div></div>
+          <span class="k-amount is-spend">&minus;$4.75</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Outdoor Co. refund</div><div class="k-sub">Returns &middot; Oct 2</div></div>
+          <span class="k-amount is-gain">+$39.99</span>
+        </li>
+      </ul>
+
+      <button class="k-button" type="button">Add transaction</button>
+    </section>
+  </div>
+
+  <div>
+    <h2 class="theme-label">Dark</h2>
+    <section class="theme theme-dark" aria-label="Dark theme sample">
+      <div class="k-header">
+        <h3 class="k-title">Kelpie</h3>
+        <span class="k-meta">October</span>
+      </div>
+
+      <div class="k-balance">
+        <p class="k-label">Available balance</p>
+        <p class="k-value">$4,286.40</p>
+        <div class="k-deltas">
+          <span class="is-gain">+$2,190.00 in</span>
+          <span class="is-spend">&minus;$1,094.25 out</span>
+        </div>
+      </div>
+
+      <h4 class="k-section-title">Recent transactions</h4>
+      <ul class="k-list">
+        <li class="k-row">
+          <div><div class="k-merchant">Harvest Market</div><div class="k-sub">Groceries &middot; Oct 6</div></div>
+          <span class="k-amount is-spend">&minus;$86.42</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Paycheck</div><div class="k-sub">Income &middot; Oct 5</div></div>
+          <span class="k-amount is-gain">+$2,150.00</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Trailhead Coffee</div><div class="k-sub">Dining &middot; Oct 4</div></div>
+          <span class="k-amount is-spend">&minus;$4.75</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Outdoor Co. refund</div><div class="k-sub">Returns &middot; Oct 2</div></div>
+          <span class="k-amount is-gain">+$39.99</span>
+        </li>
+      </ul>
+
+      <button class="k-button" type="button">Add transaction</button>
+    </section>
+  </div>
+
+  <div>
+    <h2 class="theme-label">High contrast</h2>
+    <section class="theme theme-contrast" aria-label="High contrast theme sample">
+      <div class="k-header">
+        <h3 class="k-title">Kelpie</h3>
+        <span class="k-meta">October</span>
+      </div>
+
+      <div class="k-balance">
+        <p class="k-label">Available balance</p>
+        <p class="k-value">$4,286.40</p>
+        <div class="k-deltas">
+          <span class="is-gain">+$2,190.00 in</span>
+          <span class="is-spend">&minus;$1,094.25 out</span>
+        </div>
+      </div>
+
+      <h4 class="k-section-title">Recent transactions</h4>
+      <ul class="k-list">
+        <li class="k-row">
+          <div><div class="k-merchant">Harvest Market</div><div class="k-sub">Groceries &middot; Oct 6</div></div>
+          <span class="k-amount is-spend">&minus;$86.42</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Paycheck</div><div class="k-sub">Income &middot; Oct 5</div></div>
+          <span class="k-amount is-gain">+$2,150.00</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Trailhead Coffee</div><div class="k-sub">Dining &middot; Oct 4</div></div>
+          <span class="k-amount is-spend">&minus;$4.75</span>
+        </li>
+        <li class="k-row">
+          <div><div class="k-merchant">Outdoor Co. refund</div><div class="k-sub">Returns &middot; Oct 2</div></div>
+          <span class="k-amount is-gain">+$39.99</span>
+        </li>
+      </ul>
+
+      <button class="k-button" type="button">Add transaction</button>
+    </section>
+  </div>
+
+</main>
+
+</body>
+</html>

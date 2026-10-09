@@ -1,0 +1,1 @@
+Pair it with teal-tinted neutrals: a page background of `#f5f9f9` and body text of `#14201f` (a dark teal-gray, not pure black). That text is about 15:1 on the background and the brand teal is about 4.6:1, so it also works for links. Both ratios are my estimates, not run through a checker.

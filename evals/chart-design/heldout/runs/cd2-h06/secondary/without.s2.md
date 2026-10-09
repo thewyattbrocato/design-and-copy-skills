@@ -1,0 +1,1 @@
+Lines. They show trends over time clearly, and with 5 regions across 36 months a line per region keeps each series readable. Use a small multiples layout or a legend with distinct colors so the regions don't blur together.

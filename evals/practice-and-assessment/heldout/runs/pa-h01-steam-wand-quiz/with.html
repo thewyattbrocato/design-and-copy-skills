@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewater Coffee – Milk Steaming Quiz</title>
+<style>
+  :root {
+    --bg: #f6f1ea; --card: #ffffff; --ink: #2b2118; --muted: #6a5b4d;
+    --line: #d9cdbf; --accent: #1f5f6b; --accent-ink: #ffffff;
+    --good-bg: #e4f2e6; --good-ink: #1b4d27;
+    --bad-bg: #fbeadf; --bad-ink: #7a3410;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1713; --card: #28211b; --ink: #f2e9df; --muted: #bdae9e;
+      --line: #4a3f35; --accent: #7cc3cf; --accent-ink: #12272b;
+      --good-bg: #1d3524; --good-ink: #bfe6c7;
+      --bad-bg: #402518; --bad-ink: #f5c9ae;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 20px; line-height: 1.45;
+  }
+  header { padding: 18px 24px; border-bottom: 1px solid var(--line); }
+  header h1 { margin: 0; font-size: 1.15rem; letter-spacing: .02em; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: .85rem; }
+  main {
+    max-width: 1060px; margin: 0 auto; padding: 20px 24px 48px;
+    display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start;
+  }
+  @media (max-width: 820px) { main { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 22px;
+  }
+  aside.card { font-size: .9rem; position: sticky; top: 12px; }
+  @media (max-width: 820px) { aside.card { position: static; order: -1; } }
+  aside h2 { margin: 0 0 8px; font-size: 1rem; }
+  aside ul { margin: 0; padding-left: 1.1em; }
+  aside li { margin-bottom: 8px; }
+  .progress { color: var(--muted); font-size: .85rem; margin-bottom: 4px; }
+  .bar { height: 6px; background: var(--line); border-radius: 3px; margin-bottom: 16px; overflow: hidden; }
+  .bar span { display: block; height: 100%; background: var(--accent); }
+  .area { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-weight: 700; }
+  .scenario { margin: 6px 0 10px; }
+  .question { font-weight: 700; margin: 0 0 16px; }
+  .opts { display: grid; gap: 10px; border: 0; padding: 0; margin: 0; }
+  .opt {
+    display: block; width: 100%; text-align: left; font: inherit; color: inherit;
+    background: var(--card); border: 2px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; min-height: 56px; cursor: pointer;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); }
+  .opt:focus-visible, .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .opt:disabled { cursor: default; }
+  .opt.picked { border-color: var(--accent); }
+  .opt.best { border-color: var(--good-ink); background: var(--good-bg); }
+  .opt.picked.worse { border-color: var(--bad-ink); background: var(--bad-bg); }
+  .tag { display: block; font-size: .78rem; font-weight: 700; margin-bottom: 2px; }
+  .feedback { margin-top: 16px; padding: 16px; border-radius: 12px; font-size: .95rem; }
+  .feedback.good { background: var(--good-bg); color: var(--good-ink); }
+  .feedback.bad { background: var(--bad-bg); color: var(--bad-ink); }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback p { margin: 6px 0 0; }
+  .btn {
+    font: inherit; font-weight: 700; background: var(--accent); color: var(--accent-ink);
+    border: 0; border-radius: 12px; padding: 14px 26px; min-height: 52px; cursor: pointer; margin-top: 18px;
+  }
+  .btn.ghost { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+  h2.big { margin: 0 0 8px; font-size: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .95rem; }
+  th, td { text-align: left; padding: 10px 6px; border-bottom: 1px solid var(--line); }
+  .note { color: var(--muted); font-size: .9rem; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Tidewater Coffee · Milk Steaming Quiz</h1>
+  <p>Take it right after your half-day. The reference card stays on screen, so use it.</p>
+</header>
+<main>
+  <section class="card" id="stage" aria-live="polite"></section>
+  <aside class="card" aria-label="Steaming reference">
+    <h2>Steaming reference</h2>
+    <ul>
+      <li><strong>Temperature:</strong> target 55–65 °C. Over 70 °C scalds the milk and kills the sweetness.</li>
+      <li><strong>Air:</strong> add air early, while the milk is still cold. Then lower the tip and let it roll.</li>
+      <li><strong>Wand:</strong> purge before and after steaming. Wipe it right after steaming.</li>
+      <li><strong>Oat milk:</strong> heats faster than dairy, and its foam falls apart sooner.</li>
+    </ul>
+  </aside>
+</main>
+
+<script>
+(function () {
+  var QUESTIONS = [
+    {
+      area: "Temperature",
+      scenario: "Dana steams dairy milk for a latte and shuts the wand off when the thermometer reads 72 °C. The customer takes a sip and says it tastes flat, not sweet.",
+      q: "What should Dana do?",
+      options: [
+        { t: "Make a fresh pitcher and stop it between 55 and 65 °C.", ok: true,
+          fb: "The customer gets a latte with its sweetness intact. Milk over 70 °C is scalded and the sweetness is gone, so the fix is fresh milk stopped inside the target range." },
+        { t: "Let the pitcher cool to 65 °C, then pour it again.", ok: false,
+          fb: "The reading will look right, but the customer still gets flat milk. Scalding already happened at 72 °C and cooling does not undo it. Remake it with fresh milk." },
+        { t: "Explain that hot milk is the standard and serve it as it is.", ok: false,
+          fb: "The customer leaves with a drink that tastes flat, and they may not come back. Over 70 °C is past the line, not the standard. Remake it and stop in 55–65 °C." }
+      ]
+    },
+    {
+      area: "Temperature",
+      scenario: "Sam is steaming dairy milk for a cappuccino. The thermometer reads 58 °C. The customer asked for it \"nice and hot.\"",
+      q: "What does Sam do next?",
+      options: [
+        { t: "Stop steaming and pour. 58 °C is inside the 55–65 °C target.", ok: true,
+          fb: "The cappuccino is hot enough and still sweet. 58 °C is already in the target range, so the extra heat the customer wants isn't worth the risk to the milk." },
+        { t: "Keep steaming past 70 °C so it stays hot on the walk out.", ok: false,
+          fb: "It will stay hot, but over 70 °C the milk scalds and the sweetness is gone. The customer gets a hot drink that tastes worse. Stop in range." },
+        { t: "Pour out the milk and start over, because 58 °C is too cool.", ok: false,
+          fb: "This wastes a good pitcher and slows the line. 58 °C sits inside 55–65 °C, so it is ready to pour." }
+      ]
+    },
+    {
+      area: "Air and texture",
+      scenario: "Priya has just started steaming a pitcher of cold dairy milk. The tip is sitting right at the surface of the milk, and the milk has barely warmed.",
+      q: "When should Priya add air?",
+      options: [
+        { t: "Now, while the milk is cold. Then lower the tip and let it roll.", ok: true,
+          fb: "Air goes in at the right moment, and lowering the tip afterward lets the milk roll and mix. Early air while cold is the rule from the half-day." },
+        { t: "Wait until the pitcher feels warm, then add the air.", ok: false,
+          fb: "By then the early window has passed, and the foam will not come out the way it should. Add air first, while the milk is still cold." },
+        { t: "Keep the tip at the surface the whole time so the milk gets plenty of air.", ok: false,
+          fb: "Air is only for the early, cold stage. Staying at the surface means the milk never settles into a roll. Add air early, then lower the tip." }
+      ]
+    },
+    {
+      area: "Air and texture",
+      scenario: "Marcus has added air to a pitcher of dairy milk while it was still cold. He has stopped adding air and the milk is starting to swirl.",
+      q: "What is the right next move?",
+      options: [
+        { t: "Lower the tip and let the milk roll while it heats to the target.", ok: true,
+          fb: "The milk keeps rolling and heats toward 55–65 °C. After the early air, lowering the tip and letting it roll is the second half of the technique." },
+        { t: "Raise the tip back to the surface and keep adding air until the pitcher is hot.", ok: false,
+          fb: "Air added as the milk heats is the opposite of the early-air rule. Add it early while cold, then lower the tip." },
+        { t: "Pull the pitcher away from the wand and let it sit until the milk warms up.", ok: false,
+          fb: "The milk will not heat without the wand, and the roll that blends the air in stops. Keep the tip low and let it roll." }
+      ]
+    },
+    {
+      area: "Wand care",
+      scenario: "Lee has just poured a dairy latte. There are three drinks queued, and the next one is a cappuccino.",
+      q: "What does Lee do with the wand before starting that cappuccino?",
+      options: [
+        { t: "Wipe it and purge it right away, then start the next drink.", ok: true,
+          fb: "The next drink starts with a clean wand. Wiping right after steaming, plus a purge, keeps milk from drying on the wand." },
+        { t: "Start the cappuccino and wipe both times after the next drink.", ok: false,
+          fb: "Milk sits on the wand through a whole extra drink and dries. Wipe right after steaming, not later." },
+        { t: "Purge it but skip the wipe, since the steam clears it.", ok: false,
+          fb: "A purge does part of the job, but the wand still needs a wipe right after steaming. Do both." }
+      ]
+    },
+    {
+      area: "Wand care",
+      scenario: "Noor is about to steam her first pitcher of the morning. Yesterday's closer wiped and purged the wand after the last drink.",
+      q: "What should Noor do before steaming?",
+      options: [
+        { t: "Purge the wand, then start steaming.", ok: true,
+          fb: "The pitcher starts with a freshly purged wand. Purge before and after is the habit, even when the last person already cleaned up." },
+        { t: "Start steaming. It was purged and wiped last night, so it's clean.", ok: false,
+          fb: "It was probably fine, but the habit is to purge before every drink, and skipping it makes the habit unreliable. Purge first." },
+        { t: "Wipe the wand and start steaming, since wiping covers the purge.", ok: false,
+          fb: "A wipe handles the outside only. The purge before steaming is a separate step, so do both." }
+      ]
+    },
+    {
+      area: "Oat milk",
+      scenario: "Tomi usually steams dairy and knows how long it takes to reach 60 °C. A customer orders an oat latte.",
+      q: "How does Tomi steam it?",
+      options: [
+        { t: "Watch the thermometer closely, because oat will reach 55–65 °C faster than dairy.", ok: true,
+          fb: "Tomi stops in range. Oat heats faster than dairy, so the dairy timing would overshoot. The thermometer is what to follow." },
+        { t: "Use the same timing as dairy, since the target temperature is the same.", ok: false,
+          fb: "The target is the same, but oat gets there sooner. Dairy timing would carry it past 70 °C and scald it. Follow the thermometer." },
+        { t: "Steam it longer than dairy so the oat milk gets properly hot.", ok: false,
+          fb: "Oat already heats faster, so going longer pushes it past 70 °C, where it scalds. Stop in 55–65 °C." }
+      ]
+    },
+    {
+      area: "Oat milk",
+      scenario: "It is a quiet moment, and an oat cappuccino has just been ordered. Alex thinks about steaming the oat milk now and finishing the espresso shots afterward.",
+      q: "What is the better plan?",
+      options: [
+        { t: "Get the shots ready first, then steam the oat milk and pour right away.", ok: true,
+          fb: "The foam is fresh when the customer gets it. Oat foam falls apart sooner than dairy, so steam it last and pour right away." },
+        { t: "Steam the oat milk now. Foam holds the same as dairy.", ok: false,
+          fb: "Oat foam falls apart sooner than dairy, so milk that sits while the shots finish arrives flat. Steam last." },
+        { t: "Steam the oat milk now, then re-steam it once the shots are done.", ok: false,
+          fb: "Steaming again heats the milk further and risks going over 70 °C. Time the steaming for just before the pour." }
+      ]
+    }
+  ];
+
+  var stage = document.getElementById("stage");
+  var order, idx, picks;
+
+  function shuffle(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function start() {
+    order = shuffle(QUESTIONS.map(function (_, i) { return i; }));
+    idx = 0; picks = [];
+    showIntro();
+  }
+
+  function showIntro() {
+    stage.innerHTML = "";
+    stage.appendChild(el("h2", "big", "Milk steaming check"));
+    stage.appendChild(el("p", "", "Eight short situations from the bar. Pick what you would do next. You'll see what happens with every choice, right away."));
+    stage.appendChild(el("p", "note", "No timer. Use the reference card whenever you like."));
+    var b = el("button", "btn", "Start");
+    b.onclick = function () { showQuestion(); };
+    stage.appendChild(b);
+    b.focus();
+  }
+
+  function showQuestion() {
+    var q = QUESTIONS[order[idx]];
+    var opts = shuffle(q.options);
+    stage.innerHTML = "";
+    stage.appendChild(el("div", "progress", "Question " + (idx + 1) + " of " + QUESTIONS.length));
+    var bar = el("div", "bar"); var fill = el("span");
+    fill.style.width = (idx / QUESTIONS.length * 100) + "%";
+    bar.appendChild(fill); stage.appendChild(bar);
+    stage.appendChild(el("div", "area", q.area));
+    stage.appendChild(el("p", "scenario", q.scenario));
+
+    var fs = el("fieldset", "opts");
+    var lg = el("legend", "question", q.q);
+    lg.style.padding = "0";
+    fs.appendChild(lg);
+    var fbBox = el("div");
+    var buttons = [];
+
+    opts.forEach(function (o) {
+      var b = el("button", "opt", o.t);
+      b.type = "button";
+      b.onclick = function () { choose(o, b, buttons, opts, fbBox, q); };
+      buttons.push(b); fs.appendChild(b);
+    });
+    stage.appendChild(fs);
+    stage.appendChild(fbBox);
+    window.scrollTo(0, 0);
+  }
+
+  function tagIt(btn, text) {
+    var t = el("span", "tag", text);
+    btn.insertBefore(t, btn.firstChild);
+  }
+
+  function choose(o, btn, buttons, opts, fbBox, q) {
+    picks.push({ area: q.area, ok: o.ok });
+    buttons.forEach(function (b, i) {
+      b.disabled = true;
+      if (opts[i].ok) { b.classList.add("best"); tagIt(b, "Best move"); }
+      else if (b === btn) { b.classList.add("picked", "worse"); tagIt(b, "Your pick: not the best move"); }
+    });
+    if (o.ok) btn.classList.add("picked");
+    var box = el("div", "feedback " + (o.ok ? "good" : "bad"));
+    box.appendChild(el("strong", "", o.ok ? "That works." : "Not quite."));
+    box.appendChild(el("span", "", o.fb));
+    if (!o.ok) {
+      var best = opts.filter(function (x) { return x.ok; })[0];
+      box.appendChild(el("p", "", "Better move: " + best.t));
+    }
+    fbBox.appendChild(box);
+    var last = idx === QUESTIONS.length - 1;
+    var next = el("button", "btn", last ? "See my results" : "Next question");
+    next.onclick = function () { idx++; last ? showResults() : showQuestion(); };
+    fbBox.appendChild(next);
+    next.focus();
+  }
+
+  function showResults() {
+    var areas = {}, names = [], total = 0;
+    picks.forEach(function (p) {
+      if (!areas[p.area]) { areas[p.area] = { ok: 0, n: 0 }; names.push(p.area); }
+      areas[p.area].n++;
+      if (p.ok) { areas[p.area].ok++; total++; }
+    });
+    stage.innerHTML = "";
+    stage.appendChild(el("h2", "big", total + " of " + picks.length + " best moves"));
+    stage.appendChild(el("p", "", "This is one sitting, so it shows where you are today. It isn't a final verdict."));
+
+    var table = el("table");
+    var head = el("tr");
+    ["Area", "Best moves", "What to do"].forEach(function (h) { head.appendChild(el("th", "", h)); });
+    table.appendChild(head);
+    var weak = [];
+    names.forEach(function (n) {
+      var a = areas[n], r = el("tr");
+      r.appendChild(el("td", "", n));
+      r.appendChild(el("td", "", a.ok + " of " + a.n));
+      var full = a.ok === a.n;
+      if (!full) weak.push(n);
+      r.appendChild(el("td", "", full ? "Solid today" : "Reread this on the card and ask your trainer"));
+      table.appendChild(r);
+    });
+    stage.appendChild(table);
+
+    stage.appendChild(el("p", "",
+      weak.length
+        ? "Focus first on: " + weak.join(", ") + ". Next time you steam, try it on the bar with your trainer watching."
+        : "Every area went well today."));
+    stage.appendChild(el("p", "note",
+      "Take the quiz again on another shift. The questions come in a new order, and the real test is whether you still make these calls a few days later."));
+    var b = el("button", "btn", "Take it again");
+    b.onclick = start;
+    stage.appendChild(b);
+    b.focus();
+  }
+
+  start();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+**Lines.** Monthly revenue over time is a trend question, and line charts show the trend across 36 points per region better than bars do. Five lines stay readable if you use distinct colors or small multiples, one panel per region.

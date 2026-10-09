@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2 errors – Create your account – Plateful</title>
+<style>
+  :root {
+    --ink: #1f2a24;
+    --muted: #55625a;
+    --line: #8a968e;
+    --brand: #2f6b3f;
+    --brand-dark: #234f2f;
+    --bg: #f6f3ec;
+    --card: #ffffff;
+    --error: #b3261e;
+    --error-bg: #fdf0ee;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  header { padding: 24px 20px 0; max-width: 480px; margin: 0 auto; }
+  .logo { font-weight: 800; font-size: 22px; color: var(--brand); letter-spacing: -0.02em; }
+  main {
+    max-width: 480px;
+    margin: 16px auto 48px;
+    background: var(--card);
+    padding: 28px 24px 32px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  @media (max-width: 520px) { main { margin: 12px 0 0; border-radius: 0; } }
+  h1 { font-size: 26px; line-height: 1.2; margin: 0 0 6px; }
+  .lede { margin: 0 0 22px; color: var(--muted); }
+
+  .summary {
+    border: 2px solid var(--error);
+    background: var(--error-bg);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+  }
+  .summary:focus { outline: 3px solid #1a5fb4; outline-offset: 2px; }
+  .summary h2 { font-size: 17px; margin: 0 0 6px; color: var(--error); }
+  .summary ul { margin: 0; padding-left: 20px; }
+  .summary a { color: var(--error); font-weight: 600; }
+
+  .field { margin-bottom: 22px; }
+  label, .label { display: block; font-weight: 600; margin-bottom: 4px; }
+  .opt { font-weight: 400; color: var(--muted); }
+  .hint { margin: 0 0 6px; color: var(--muted); font-size: 15px; }
+  input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+    width: 100%;
+    min-height: 46px;
+    padding: 9px 12px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+  }
+  input:focus-visible, button:focus-visible, .check input:focus-visible {
+    outline: 3px solid #1a5fb4;
+    outline-offset: 2px;
+  }
+  input[aria-invalid="true"] { border: 2px solid var(--error); background: var(--error-bg); }
+  .short { width: 110px !important; }
+
+  .pw-row { display: flex; gap: 8px; }
+  .pw-row input { flex: 1; min-width: 0; }
+  .toggle {
+    min-height: 46px;
+    padding: 0 14px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--brand-dark);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .error {
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    margin: 6px 0 0;
+    color: var(--error);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .error svg { flex: none; margin-top: 3px; }
+
+  .check { display: flex; gap: 12px; align-items: flex-start; }
+  .check input {
+    flex: none;
+    width: 24px; height: 24px;
+    margin: 2px 0 0;
+    accent-color: var(--brand);
+  }
+  .check input[aria-invalid="true"] { outline: 2px solid var(--error); outline-offset: 1px; }
+  .check label { font-weight: 400; margin: 0; }
+  .check a { color: var(--brand-dark); }
+  .terms.has-error { border-left: 4px solid var(--error); padding-left: 12px; }
+
+  .submit {
+    width: 100%;
+    min-height: 50px;
+    font: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--brand);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .submit:hover { background: var(--brand-dark); }
+  .signin { text-align: center; margin: 18px 0 0; color: var(--muted); }
+  .signin a { color: var(--brand-dark); font-weight: 600; }
+</style>
+</head>
+<body>
+<header><div class="logo">Plateful</div></header>
+<main>
+  <h1>Create your account</h1>
+  <p class="lede">Plan a week of meals and get one shopping list. All fields are required.</p>
+
+  <div class="summary" id="error-summary" role="alert" tabindex="-1" aria-labelledby="summary-title">
+    <h2 id="summary-title">There are 2 problems</h2>
+    <ul>
+      <li><a href="#email">Enter an email address with an @, like name@example.com</a></li>
+      <li><a href="#terms">Tick the box to agree to the Terms and Privacy Policy</a></li>
+    </ul>
+  </div>
+
+  <form novalidate action="#" method="post">
+    <div class="field">
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" autocomplete="name" value="Maria Lopez">
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" autocomplete="email" autocapitalize="none" autocorrect="off" spellcheck="false" inputmode="email"
+             value="maria.lopez.example.com" aria-invalid="true" aria-describedby="email-error">
+      <p class="error" id="email-error">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#b3261e"/><rect x="7.2" y="3.5" width="1.6" height="5.6" fill="#fff"/><rect x="7.2" y="10.4" width="1.6" height="1.8" fill="#fff"/></svg>
+        <span><span style="position:absolute;left:-9999px">Error: </span>Enter an email address with an @, like name@example.com</span>
+      </p>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <p class="hint" id="pw-hint">At least 8 characters. Pasting from a password manager is fine.</p>
+      <div class="pw-row">
+        <input type="password" id="password" name="password" autocomplete="new-password" aria-describedby="pw-hint" value="simmer-slowly-42">
+        <button type="button" class="toggle" id="pw-toggle" aria-controls="password" aria-pressed="false">Show</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="people">How many people do you cook for?</label>
+      <p class="hint" id="people-hint">We use this to scale recipe portions.</p>
+      <input type="number" class="short" id="people" name="people" min="1" max="20" step="1" inputmode="numeric" value="2" aria-describedby="people-hint">
+    </div>
+
+    <div class="field terms has-error" id="terms-wrap">
+      <div class="check">
+        <input type="checkbox" id="terms" name="terms" aria-invalid="true" aria-describedby="terms-error">
+        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+      </div>
+      <p class="error" id="terms-error">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#b3261e"/><rect x="7.2" y="3.5" width="1.6" height="5.6" fill="#fff"/><rect x="7.2" y="10.4" width="1.6" height="1.8" fill="#fff"/></svg>
+        <span><span style="position:absolute;left:-9999px">Error: </span>Tick the box to agree to the Terms and Privacy Policy</span>
+      </p>
+    </div>
+
+    <button type="submit" class="submit">Create account</button>
+    <p class="signin">Already have an account? <a href="#">Log in</a></p>
+  </form>
+</main>
+<script>
+  document.getElementById('error-summary').focus();
+  var pw = document.getElementById('password'), t = document.getElementById('pw-toggle');
+  t.addEventListener('click', function () {
+    var show = pw.type === 'password';
+    pw.type = show ? 'text' : 'password';
+    t.textContent = show ? 'Hide' : 'Show';
+    t.setAttribute('aria-pressed', show);
+  });
+</script>
+</body>
+</html>

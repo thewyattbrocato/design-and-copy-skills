@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollowbrook Vet Care – Design Foundation</title>
+<style>
+/* =========================================================
+   HOLLOWBROOK DESIGN FOUNDATION
+   Layer 1: primitives  (raw values; never used in components)
+   Layer 2: semantic    (what things MEAN; components use only these)
+   Layer 3: components  (.btn, .field, .badge, .alert, .card)
+   Rule: if you need a new colour/size, add a token, not a hex.
+   ========================================================= */
+
+:root {
+  /* ---- Layer 1: primitives ---- */
+  --teal-900:#0b3f3e; --teal-700:#0f5c5a; --teal-600:#17736f; --teal-100:#dcefed; --teal-50:#eef7f6;
+  --sand-50:#f8f6f1;  --sand-100:#f0ece3; --sand-300:#d9d3c5; --sand-500:#8a8372;
+  --ink-900:#1c2a29;  --ink-700:#41504e; --ink-600:#586664;
+  --white:#fff;
+  --green-700:#1e6a3a; --green-100:#e3f2e8;
+  --amber-800:#74470a; --amber-100:#fcf0d6;
+  --red-700:#9a2227;   --red-100:#fbe6e5;
+  --blue-700:#1c4f7c;  --blue-100:#e3eef8;
+  --clay-500:#c2673a;
+
+  /* ---- Layer 2: semantic ---- */
+  --bg-page:var(--sand-50);
+  --bg-surface:var(--white);
+  --bg-subtle:var(--sand-100);
+  --bg-brand-subtle:var(--teal-50);
+  --text:var(--ink-900);
+  --text-muted:var(--ink-600);
+  --text-on-brand:var(--white);
+  --text-brand:var(--teal-700);
+  --border:var(--sand-300);
+  --border-strong:var(--sand-500);
+  --brand:var(--teal-700);
+  --brand-hover:var(--teal-900);
+  --accent:var(--clay-500);
+  --focus:#1a62c9;
+
+  --success-bg:var(--green-100); --success-fg:var(--green-700);
+  --warning-bg:var(--amber-100); --warning-fg:var(--amber-800);
+  --danger-bg:var(--red-100);    --danger-fg:var(--red-700);
+  --info-bg:var(--blue-100);     --info-fg:var(--blue-700);
+
+  /* type */
+  --font-sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --fs-xs:.8125rem; --fs-sm:.9375rem; --fs-md:1.0625rem; --fs-lg:1.3125rem; --fs-xl:1.75rem; --fs-2xl:2.375rem;
+  --lh-tight:1.2; --lh-base:1.55;
+  --fw-regular:400; --fw-medium:550; --fw-bold:700;
+
+  /* space (4px base) */
+  --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem; --sp-5:1.5rem; --sp-6:2rem; --sp-7:3rem; --sp-8:4.5rem;
+
+  /* shape + depth */
+  --radius-sm:6px; --radius-md:10px; --radius-lg:16px; --radius-pill:999px;
+  --shadow-1:0 1px 2px rgba(28,42,41,.08),0 1px 1px rgba(28,42,41,.04);
+  --shadow-2:0 4px 14px rgba(28,42,41,.10),0 1px 3px rgba(28,42,41,.06);
+
+  /* interaction */
+  --tap:2.75rem;               /* 44px minimum target */
+  --ring:0 0 0 3px var(--bg-surface),0 0 0 5px var(--focus);
+  --ease:140ms ease-out;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-page:#101a19; --bg-surface:#172524; --bg-subtle:#1e2f2d; --bg-brand-subtle:#17302f;
+    --text:#eaf0ee; --text-muted:#a9b8b5; --text-brand:#7fd0c9; --text-on-brand:#06201f;
+    --border:#33474446; --border:#35494a; --border-strong:#6d8481;
+    --brand:#6cc4bc; --brand-hover:#92d8d1; --accent:#e08a5c; --focus:#7db3ff;
+    --success-bg:#17321f; --success-fg:#8fd6a4;
+    --warning-bg:#392a0e; --warning-fg:#f0c776;
+    --danger-bg:#3d1b1c;  --danger-fg:#f4a1a3;
+    --info-bg:#172b40;    --info-fg:#9cc8f0;
+    --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-2:0 4px 14px rgba(0,0,0,.45);
+  }
+}
+
+/* ---- base ---- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg-page);color:var(--text);font-family:var(--font-sans);font-size:var(--fs-md);line-height:var(--lh-base)}
+h1,h2,h3,h4{line-height:var(--lh-tight);margin:0;font-weight:var(--fw-bold);letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--text-brand);text-underline-offset:3px}
+code{font-family:var(--font-mono);font-size:.875em;background:var(--bg-subtle);padding:.1em .35em;border-radius:var(--radius-sm)}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--radius-sm)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.icon{width:1.25em;height:1.25em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- layout helpers ---- */
+.wrap{max-width:68rem;margin:0 auto;padding:0 var(--sp-5)}
+.stack>*+*{margin-top:var(--stack,var(--sp-4))}
+.grid{display:grid;gap:var(--sp-5)}
+.g-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))}
+.g-sw{grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr));gap:var(--sp-4)}
+.row{display:flex;flex-wrap:wrap;gap:var(--sp-3);align-items:center}
+
+/* ---- components ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-2);min-height:var(--tap);padding:0 var(--sp-5);
+  font:inherit;font-size:var(--fs-sm);font-weight:var(--fw-bold);border-radius:var(--radius-md);border:2px solid transparent;cursor:pointer;text-decoration:none;
+  transition:background var(--ease),border-color var(--ease),color var(--ease)}
+.btn-primary{background:var(--brand);color:var(--text-on-brand)}
+.btn-primary:hover{background:var(--brand-hover)}
+.btn-secondary{background:transparent;color:var(--text-brand);border-color:var(--brand)}
+.btn-secondary:hover{background:var(--bg-brand-subtle)}
+.btn-quiet{background:transparent;color:var(--text-brand);padding:0 var(--sp-3)}
+.btn-quiet:hover{background:var(--bg-brand-subtle)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+
+.field{display:flex;flex-direction:column;gap:var(--sp-2)}
+.label{font-size:var(--fs-sm);font-weight:var(--fw-medium)}
+.label .opt{color:var(--text-muted);font-weight:var(--fw-regular)}
+.hint{font-size:var(--fs-xs);color:var(--text-muted)}
+.input{width:100%;min-height:var(--tap);padding:var(--sp-2) var(--sp-3);font:inherit;font-size:var(--fs-md);color:var(--text);
+  background:var(--bg-surface);border:1.5px solid var(--border-strong);border-radius:var(--radius-md);transition:border-color var(--ease)}
+textarea.input{min-height:5.5rem;resize:vertical}
+.input:hover{border-color:var(--text-muted)}
+.input:focus-visible{border-color:var(--focus);box-shadow:var(--ring)}
+.input[aria-invalid="true"]{border-color:var(--danger-fg);background:var(--danger-bg)}
+.error-msg{display:none;align-items:center;gap:var(--sp-2);font-size:var(--fs-xs);font-weight:var(--fw-medium);color:var(--danger-fg)}
+.input[aria-invalid="true"]~.error-msg{display:flex}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+legend{padding:0;margin-bottom:var(--sp-2)}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:var(--sp-2)}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.choice span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:var(--tap);padding:var(--sp-2) var(--sp-3);
+  font-size:var(--fs-sm);font-weight:var(--fw-medium);border:1.5px solid var(--border-strong);border-radius:var(--radius-md);background:var(--bg-surface);transition:var(--ease)}
+.choice input:hover+span{border-color:var(--brand)}
+.choice input:checked+span{background:var(--bg-brand-subtle);border-color:var(--brand);color:var(--text-brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.choice input:focus-visible+span{box-shadow:var(--ring)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:var(--sp-4)}
+
+.badge{display:inline-flex;align-items:center;gap:var(--sp-1);padding:.2rem .65rem;border-radius:var(--radius-pill);font-size:var(--fs-xs);font-weight:var(--fw-bold)}
+.badge .icon{width:1em;height:1em}
+.b-success{background:var(--success-bg);color:var(--success-fg)}
+.b-warning{background:var(--warning-bg);color:var(--warning-fg)}
+.b-danger{background:var(--danger-bg);color:var(--danger-fg)}
+.b-info{background:var(--info-bg);color:var(--info-fg)}
+
+.alert{display:flex;gap:var(--sp-3);padding:var(--sp-4);border-radius:var(--radius-md);border-left:5px solid currentColor;font-size:var(--fs-sm)}
+.alert .icon{margin-top:.1em;width:1.4em;height:1.4em}
+.alert strong{display:block;font-size:var(--fs-md);margin-bottom:var(--sp-1)}
+.alert p{color:var(--text)}
+.a-success{background:var(--success-bg);color:var(--success-fg)}
+.a-warning{background:var(--warning-bg);color:var(--warning-fg)}
+.a-danger{background:var(--danger-bg);color:var(--danger-fg)}
+.a-info{background:var(--info-bg);color:var(--info-fg)}
+
+.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-1);padding:var(--sp-5)}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--sp-3)}
+.meta{display:grid;gap:var(--sp-3);margin:var(--sp-4) 0 0;padding:0;list-style:none}
+.meta li{display:flex;gap:var(--sp-3);align-items:flex-start;font-size:var(--fs-sm)}
+.meta .icon{color:var(--text-brand);margin-top:.15em}
+.meta small{display:block;color:var(--text-muted);font-size:var(--fs-xs)}
+.card-actions{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-5);padding-top:var(--sp-4);border-top:1px solid var(--border)}
+.pet-avatar{width:3rem;height:3rem;border-radius:50%;background:var(--bg-brand-subtle);color:var(--text-brand);display:grid;place-items:center;flex:none}
+
+/* ---- doc page chrome ---- */
+.site-head{background:var(--brand);color:var(--text-on-brand)}
+.site-head .wrap{display:flex;align-items:center;gap:var(--sp-3);min-height:4rem}
+.logo{display:flex;align-items:center;gap:var(--sp-2);font-weight:var(--fw-bold);font-size:var(--fs-lg)}
+.hero{padding:var(--sp-7) 0 var(--sp-5)}
+.hero h1{font-size:var(--fs-2xl);max-width:20ch}
+.hero p{margin-top:var(--sp-4);max-width:60ch;color:var(--text-muted);font-size:var(--fs-lg);line-height:1.45}
+section.doc{padding:var(--sp-6) 0;border-top:1px solid var(--border)}
+section.doc>.wrap>h2{font-size:var(--fs-xl);margin-bottom:var(--sp-2)}
+.lede{color:var(--text-muted);max-width:62ch;margin-bottom:var(--sp-5)}
+h3.sub{font-size:var(--fs-md);margin:var(--sp-6) 0 var(--sp-3)}
+.sw{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;font-size:var(--fs-xs)}
+.sw i{display:block;height:3.5rem;border-bottom:1px solid var(--border)}
+.sw div{padding:var(--sp-2) var(--sp-3)}
+.sw b{display:block;font-size:var(--fs-sm)}
+.sw code{background:none;padding:0;color:var(--text-muted)}
+.sw .on{display:block;margin-top:2px;color:var(--text-muted)}
+.rules{display:grid;gap:var(--sp-3);padding:0;margin:0;list-style:none}
+.rules li{display:flex;gap:var(--sp-3);background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--sp-3) var(--sp-4);font-size:var(--fs-sm)}
+.rules .icon{color:var(--text-brand);margin-top:.15em}
+table.spec{width:100%;border-collapse:collapse;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;font-size:var(--fs-sm)}
+.spec th,.spec td{text-align:left;padding:var(--sp-3) var(--sp-4);border-bottom:1px solid var(--border);vertical-align:baseline}
+.spec th{background:var(--bg-subtle);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)}
+.spec tr:last-child td{border-bottom:0}
+.scroll{overflow-x:auto}
+.space-row{display:flex;align-items:center;gap:var(--sp-4);font-size:var(--fs-sm);margin-bottom:var(--sp-2)}
+.space-row code{min-width:7rem}
+.space-bar{height:1rem;background:var(--brand);border-radius:3px}
+.shape{width:6.5rem;height:4.5rem;background:var(--bg-brand-subtle);border:1.5px solid var(--brand);display:grid;place-items:center;font-size:var(--fs-xs);font-weight:var(--fw-bold);color:var(--text-brand)}
+.elev{width:9rem;height:4.5rem;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);display:grid;place-items:center;font-size:var(--fs-xs);font-weight:var(--fw-bold)}
+footer{padding:var(--sp-6) 0 var(--sp-7);color:var(--text-muted);font-size:var(--fs-sm);border-top:1px solid var(--border)}
+@media (max-width:40rem){.hero h1{font-size:var(--fs-xl)}.wrap{padding:0 var(--sp-4)}.card{padding:var(--sp-4)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- Icon sprite: one source, referenced everywhere -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="6" cy="10" r="1.8"/><circle cx="10" cy="6" r="1.8"/><circle cx="14.5" cy="6" r="1.8"/><circle cx="18.5" cy="10" r="1.8"/><path d="M12 12.5c-3 0-5.5 3-5 5.2.4 1.7 2.4 1.8 5 1.8s4.6-.1 5-1.8c.5-2.2-2-5.2-5-5.2z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.800"/><path d="M4.500 20c.8-3.800 3.800-5.500 7.500-5.500s6.700 1.700 7.500 5.500"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.300 2.800 2.800L16.300 9.500"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.500M12 7.700v.1"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.500 2.800 19.500h18.400L12 3.500z"/><path d="M12 10v4.500M12 17.200v.1"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.500V11a6 6 0 0 1 12 0v5.500l1.500 2h-15L6 16.500z"/><path d="M10 21h4"/></symbol>
+</svg>
+
+<header class="site-head">
+  <div class="wrap">
+    <div class="logo"><svg class="icon" aria-hidden="true"><use href="#i-paw"/></svg> Hollowbrook Vet Care</div>
+    <span style="margin-left:auto;font-size:var(--fs-sm);opacity:.9">Design foundation v1</span>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <h1>Calm, clear, and careful with every patient.</h1>
+  <p>This page is the single source of truth for how the Hollowbrook web app looks and behaves. Build every screen from the tokens and components below, so booking, records, and reminders feel like one product.</p>
+</div>
+
+<!-- PRINCIPLES -->
+<section class="doc"><div class="wrap">
+  <h2>Principles</h2>
+  <p class="lede">Our users are often worried about a pet. The interface should lower stress, never add to it.</p>
+  <ul class="rules">
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span><b>Warm, but professional.</b> Deep teal and soft sand, generous space, rounded corners. No cartoon styling, no exclamation-mark copy.</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span><b>Never colour alone.</b> Every status pairs colour with an icon and a word.</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span><b>Tokens, not values.</b> Components use semantic tokens (<code>--text-muted</code>), never hex codes or pixel values. Dark mode and future rebrands then come free.</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span><b>Easy on every device.</b> 44px minimum touch targets, visible focus rings, text at 17px by default, WCAG AA contrast.</span></li>
+  </ul>
+</div></section>
+
+<!-- COLOUR -->
+<section class="doc"><div class="wrap">
+  <h2>Colour</h2>
+  <p class="lede">Components use the <b>semantic</b> layer. Primitives exist only to define it. This page also adapts to dark mode through the same tokens.</p>
+
+  <h3 class="sub" style="margin-top:0">Brand &amp; surfaces</h3>
+  <div class="grid g-sw">
+    <div class="sw"><i style="background:var(--brand)"></i><div><b>Brand</b><code>--brand</code><span class="on">Buttons, links, selection</span></div></div>
+    <div class="sw"><i style="background:var(--brand-hover)"></i><div><b>Brand hover</b><code>--brand-hover</code><span class="on">Pressed / hover</span></div></div>
+    <div class="sw"><i style="background:var(--bg-brand-subtle)"></i><div><b>Brand subtle</b><code>--bg-brand-subtle</code><span class="on">Selected, soft highlight</span></div></div>
+    <div class="sw"><i style="background:var(--accent)"></i><div><b>Accent</b><code>--accent</code><span class="on">Sparingly: decoration only</span></div></div>
+    <div class="sw"><i style="background:var(--bg-page)"></i><div><b>Page</b><code>--bg-page</code><span class="on">App background</span></div></div>
+    <div class="sw"><i style="background:var(--bg-surface)"></i><div><b>Surface</b><code>--bg-surface</code><span class="on">Cards, inputs</span></div></div>
+    <div class="sw"><i style="background:var(--bg-subtle)"></i><div><b>Subtle</b><code>--bg-subtle</code><span class="on">Table heads, wells</span></div></div>
+    <div class="sw"><i style="background:var(--border)"></i><div><b>Border</b><code>--border</code><span class="on">Dividers, card edges</span></div></div>
+  </div>
+
+  <h3 class="sub">Text</h3>
+  <div class="grid g-sw">
+    <div class="sw"><i style="background:var(--text)"></i><div><b>Text</b><code>--text</code><span class="on">Body, headings</span></div></div>
+    <div class="sw"><i style="background:var(--text-muted)"></i><div><b>Muted</b><code>--text-muted</code><span class="on">Hints, metadata</span></div></div>
+    <div class="sw"><i style="background:var(--text-brand)"></i><div><b>Brand text</b><code>--text-brand</code><span class="on">Links, quiet actions</span></div></div>
+    <div class="sw"><i style="background:var(--focus)"></i><div><b>Focus</b><code>--focus</code><span class="on">Keyboard focus ring</span></div></div>
+  </div>
+
+  <h3 class="sub">Status</h3>
+  <p class="lede" style="margin-bottom:var(--sp-4)">Each status has a background and a foreground token that are guaranteed to pair legibly.</p>
+  <div class="row">
+    <span class="badge b-success"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Success · confirmed, saved</span>
+    <span class="badge b-warning"><svg class="icon" aria-hidden="true"><use href="#i-warn"/></svg>Warning · needs attention</span>
+    <span class="badge b-danger"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>Danger · error, cancelled</span>
+    <span class="badge b-info"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>Info · neutral news</span>
+  </div>
+</div></section>
+
+<!-- TYPE -->
+<section class="doc"><div class="wrap">
+  <h2>Typography</h2>
+  <p class="lede">System font stack: fast, familiar, and legible on every device. Use the scale; don't invent sizes.</p>
+  <div class="scroll"><table class="spec">
+    <thead><tr><th>Token</th><th>Size</th><th>Use</th><th>Sample</th></tr></thead>
+    <tbody>
+      <tr><td><code>--fs-2xl</code></td><td>38px</td><td>Page title (once per page)</td><td style="font-size:var(--fs-2xl);font-weight:700;line-height:1.1">Welcome</td></tr>
+      <tr><td><code>--fs-xl</code></td><td>28px</td><td>Section heading</td><td style="font-size:var(--fs-xl);font-weight:700">Your pets</td></tr>
+      <tr><td><code>--fs-lg</code></td><td>21px</td><td>Card title, lead text</td><td style="font-size:var(--fs-lg);font-weight:700">Biscuit’s visit</td></tr>
+      <tr><td><code>--fs-md</code></td><td>17px</td><td>Body, inputs (default)</td><td>Annual wellness exam</td></tr>
+      <tr><td><code>--fs-sm</code></td><td>15px</td><td>Labels, buttons, dense lists</td><td style="font-size:var(--fs-sm)">Preferred time</td></tr>
+      <tr><td><code>--fs-xs</code></td><td>13px</td><td>Hints, badges, captions (never below)</td><td style="font-size:var(--fs-xs)">We’ll text you a reminder</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<!-- SPACE / SHAPE / DEPTH -->
+<section class="doc"><div class="wrap">
+  <h2>Space, shape &amp; depth</h2>
+  <p class="lede">A 4px base grid. Use <code>--sp-3</code> to <code>--sp-5</code> inside components and <code>--sp-6</code> and up between sections.</p>
+  <div class="grid g-2">
+    <div>
+      <div class="space-row"><code>--sp-1 · 4</code><span class="space-bar" style="width:var(--sp-1)"></span></div>
+      <div class="space-row"><code>--sp-2 · 8</code><span class="space-bar" style="width:var(--sp-2)"></span></div>
+      <div class="space-row"><code>--sp-3 · 12</code><span class="space-bar" style="width:var(--sp-3)"></span></div>
+      <div class="space-row"><code>--sp-4 · 16</code><span class="space-bar" style="width:var(--sp-4)"></span></div>
+      <div class="space-row"><code>--sp-5 · 24</code><span class="space-bar" style="width:var(--sp-5)"></span></div>
+      <div class="space-row"><code>--sp-6 · 32</code><span class="space-bar" style="width:var(--sp-6)"></span></div>
+      <div class="space-row"><code>--sp-7 · 48</code><span class="space-bar" style="width:var(--sp-7)"></span></div>
+      <div class="space-row"><code>--sp-8 · 72</code><span class="space-bar" style="width:var(--sp-8)"></span></div>
+    </div>
+    <div class="stack" style="--stack:var(--sp-5)">
+      <div class="row" style="align-items:flex-end;gap:var(--sp-4)">
+        <div class="shape" style="border-radius:var(--radius-sm)">sm · 6<br>inputs’ chips</div>
+        <div class="shape" style="border-radius:var(--radius-md)">md · 10<br>buttons, fields</div>
+        <div class="shape" style="border-radius:var(--radius-lg)">lg · 16<br>cards</div>
+        <div class="shape" style="border-radius:var(--radius-pill);height:3rem;width:6rem">pill<br></div>
+      </div>
+      <div class="row" style="gap:var(--sp-4);padding:var(--sp-3)">
+        <div class="elev" style="box-shadow:var(--shadow-1)">shadow-1 · cards</div>
+        <div class="elev" style="box-shadow:var(--shadow-2)">shadow-2 · menus, dialogs</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BUTTONS -->
+<section class="doc"><div class="wrap">
+  <h2>Buttons &amp; focus</h2>
+  <p class="lede">One primary action per view. Secondary for alternatives, quiet for low-emphasis actions. Tab through these to see the focus ring.</p>
+  <div class="row">
+    <button class="btn btn-primary" type="button">Book appointment</button>
+    <button class="btn btn-secondary" type="button">Reschedule</button>
+    <button class="btn btn-quiet" type="button">Cancel</button>
+    <button class="btn btn-primary" type="button" disabled>Unavailable</button>
+  </div>
+</div></section>
+
+<!-- SAMPLES -->
+<section class="doc"><div class="wrap">
+  <h2>Pieces built from the foundation</h2>
+  <p class="lede">A booking form, an appointment card, and status messages. Nothing here uses a value that isn’t a token.</p>
+
+  <div class="grid g-2" style="align-items:start">
+
+    <!-- BOOKING FORM -->
+    <form class="card stack" id="booking" novalidate style="--stack:var(--sp-5)" aria-labelledby="bk-title">
+      <div>
+        <h3 id="bk-title" style="font-size:var(--fs-lg)">Book an appointment</h3>
+        <p class="hint" style="margin-top:var(--sp-1);font-size:var(--fs-sm)">Takes about a minute. Fields marked * are required.</p>
+      </div>
+
+      <div id="form-status" tabindex="-1"></div>
+
+      <div class="field">
+        <label class="label" for="pet">Pet *</label>
+        <select class="input" id="pet" name="pet" required aria-describedby="pet-err">
+          <option value="">Choose a pet…</option>
+          <option>Biscuit (Dog)</option>
+          <option>Juniper (Cat)</option>
+          <option>Add a new pet…</option>
+        </select>
+        <span class="error-msg" id="pet-err"><svg class="icon" style="width:1.1em;height:1.1em" aria-hidden="true"><use href="#i-x"/></svg>Please choose which pet is coming in.</span>
+      </div>
+
+      <fieldset class="field">
+        <legend class="label">Reason for visit *</legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="reason" value="wellness" checked><span>Wellness exam</span></label>
+          <label class="choice"><input type="radio" name="reason" value="vaccine"><span>Vaccination</span></label>
+          <label class="choice"><input type="radio" name="reason" value="sick"><span>Not feeling well</span></label>
+        </div>
+      </fieldset>
+
+      <div class="form-grid">
+        <div class="field">
+          <label class="label" for="date">Preferred date *</label>
+          <input class="input" type="date" id="date" name="date" required min="2026-10-09" aria-describedby="date-err">
+          <span class="error-msg" id="date-err"><svg class="icon" style="width:1.1em;height:1.1em" aria-hidden="true"><use href="#i-x"/></svg>Please pick a date.</span>
+        </div>
+        <div class="field">
+          <label class="label" for="time">Time of day</label>
+          <select class="input" id="time" name="time">
+            <option>Morning (8–12)</option>
+            <option>Afternoon (12–5)</option>
+            <option>Evening (5–7)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="notes">Anything we should know? <span class="opt">(optional)</span></label>
+        <textarea class="input" id="notes" name="notes" aria-describedby="notes-hint"></textarea>
+        <span class="hint" id="notes-hint">Symptoms, behaviour changes, or medications. Call us right away for emergencies.</span>
+      </div>
+
+      <div class="row">
+        <button class="btn btn-primary" type="submit">Request appointment</button>
+        <button class="btn btn-quiet" type="reset">Clear form</button>
+      </div>
+    </form>
+
+    <!-- RIGHT COLUMN -->
+    <div class="stack" style="--stack:var(--sp-5)">
+
+      <!-- APPOINTMENT CARD -->
+      <article class="card" aria-labelledby="ap-title">
+        <div class="card-head">
+          <div class="row" style="flex-wrap:nowrap;gap:var(--sp-3)">
+            <div class="pet-avatar"><svg class="icon" style="width:1.6rem;height:1.6rem" aria-hidden="true"><use href="#i-paw"/></svg></div>
+            <div>
+              <h3 id="ap-title" style="font-size:var(--fs-lg)">Biscuit</h3>
+              <p class="hint" style="font-size:var(--fs-sm)">Annual wellness exam</p>
+            </div>
+          </div>
+          <span class="badge b-success"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Confirmed</span>
+        </div>
+        <ul class="meta">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg><span>Thursday, October 15, 2026</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>10:30 AM<small>Please arrive 10 minutes early</small></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-user"/></svg><span>Dr. Amara Okafor</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Hollowbrook Clinic, Main Street</span></li>
+        </ul>
+        <div class="card-actions">
+          <button class="btn btn-secondary" type="button">Reschedule</button>
+          <button class="btn btn-quiet" type="button">Cancel appointment</button>
+        </div>
+      </article>
+
+      <!-- STATUS MESSAGES -->
+      <div class="stack" style="--stack:var(--sp-3)">
+        <div class="alert a-success" role="status">
+          <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+          <div><strong>Appointment confirmed</strong><p>Biscuit is booked for Oct 15 at 10:30 AM. We’ve emailed the details.</p></div>
+        </div>
+        <div class="alert a-info" role="status">
+          <svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg>
+          <div><strong>Reminder set</strong><p>We’ll text you 24 hours before the visit.</p></div>
+        </div>
+        <div class="alert a-warning" role="status">
+          <svg class="icon" aria-hidden="true"><use href="#i-warn"/></svg>
+          <div><strong>Vaccination due soon</strong><p>Juniper’s rabies vaccine expires on Nov 2. Book a visit to stay up to date.</p></div>
+        </div>
+        <div class="alert a-danger" role="alert">
+          <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+          <div><strong>That time is no longer available</strong><p>Please choose another time. Nothing has been booked yet.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- HOW TO EXTEND -->
+<section class="doc"><div class="wrap">
+  <h2>Adding to the system</h2>
+  <ul class="rules">
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span><b>Need a new colour?</b> Add a semantic token (e.g. <code>--bg-overdue</code>) with a dark-mode value. Don’t paste a hex into a component.</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span><b>New component?</b> Compose it from existing tokens, check keyboard focus, and make sure its states (hover, disabled, error) are covered.</span></li>
+    <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span><b>Writing copy?</b> Plain, kind, specific. Say what happened and what to do next (“Please choose which pet is coming in”, not “Invalid input”).</span></li>
+  </ul>
+</div></section>
+</main>
+
+<footer><div class="wrap">Hollowbrook Vet Care · Design foundation v1 · For emergencies, always call the clinic directly.</div></footer>
+
+<script>
+(function () {
+  var form = document.getElementById('booking');
+  var status = document.getElementById('form-status');
+  var required = ['pet', 'date'];
+  function check(el) {
+    var bad = !el.value;
+    el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    return !bad;
+  }
+  required.forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('change', function () { check(el); });
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var firstBad = null;
+    required.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!check(el) && !firstBad) firstBad = el;
+    });
+    var icon = function (n) { return '<svg class="icon" aria-hidden="true"><use href="#' + n + '"/></svg>'; };
+    if (firstBad) {
+      status.innerHTML = '<div class="alert a-danger" role="alert">' + icon('i-x') +
+        '<div><strong>Please check the form</strong><p>A couple of details are missing. They’re marked below.</p></div></div>';
+      firstBad.focus();
+    } else {
+      status.innerHTML = '<div class="alert a-success" role="status">' + icon('i-check') +
+        '<div><strong>Request received</strong><p>We’ll confirm your appointment by email within one business day.</p></div></div>';
+      status.focus();
+    }
+  });
+  form.addEventListener('reset', function () {
+    status.innerHTML = '';
+    required.forEach(function (id) { document.getElementById(id).setAttribute('aria-invalid', 'false'); });
+  });
+})();
+</script>
+</body>
+</html>

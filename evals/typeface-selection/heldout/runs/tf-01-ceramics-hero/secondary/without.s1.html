@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiln &amp; Fern · Asheville Ceramics Studio</title>
+<meta name="description" content="Kiln & Fern is a ceramics studio in Asheville, NC. Take a class, shop handmade pieces, or book a studio visit.">
+<style>
+  :root {
+    --cream: #f7f1e8;
+    --paper: #fffaf3;
+    --clay: #b8583a;
+    --clay-deep: #8f3f26;
+    --fern: #3f5b47;
+    --fern-soft: #dfe7dc;
+    --ink: #2b2420;
+    --muted: #6e625a;
+    --line: rgba(43, 36, 32, 0.12);
+    --radius: 18px;
+    --shadow: 0 1px 2px rgba(43, 36, 32, 0.06), 0 12px 32px -12px rgba(143, 63, 38, 0.25);
+    --font: ui-rounded, "SF Pro Rounded", "Avenir Next", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    --font-serif: ui-serif, "New York", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--cream);
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 1.5rem 3rem;
+    overflow: hidden;
+    background:
+      radial-gradient(900px 500px at 85% 10%, rgba(184, 88, 58, 0.22), transparent 60%),
+      radial-gradient(700px 480px at 5% 95%, rgba(63, 91, 71, 0.18), transparent 60%),
+      linear-gradient(180deg, var(--cream), #f3e8da);
+  }
+
+  /* soft decorative blobs, pure CSS */
+  .hero::before,
+  .hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(2px);
+  }
+  .hero::before {
+    width: 340px; height: 340px;
+    top: -120px; right: -90px;
+    background: radial-gradient(circle at 35% 35%, #e9a583, var(--clay) 70%);
+    opacity: 0.35;
+  }
+  .hero::after {
+    width: 220px; height: 220px;
+    bottom: -70px; left: -60px;
+    background: radial-gradient(circle at 40% 40%, #a9c3ab, var(--fern) 75%);
+    opacity: 0.28;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fern);
+    background: var(--fern-soft);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  h1 .amp {
+    font-style: italic;
+    color: var(--clay);
+  }
+
+  h1 .fern {
+    color: var(--fern);
+  }
+
+  .tagline {
+    margin-top: 1.4rem;
+    max-width: 34rem;
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+    color: var(--muted);
+  }
+
+  .actions {
+    margin-top: 2.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.25rem;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.7rem;
+    font: inherit;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--paper);
+    background: linear-gradient(135deg, var(--clay), var(--clay-deep));
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 10px 24px -10px rgba(143, 63, 38, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -12px rgba(143, 63, 38, 0.65);
+  }
+
+  .btn:focus-visible,
+  .card:focus-visible,
+  .text-link:focus-visible {
+    outline: 3px solid var(--fern);
+    outline-offset: 3px;
+  }
+
+  .btn .arrow {
+    transition: transform 0.2s ease;
+  }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  .text-link {
+    color: var(--fern);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1.5px solid currentColor;
+    padding-bottom: 2px;
+  }
+
+  .cards {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.6rem 1.5rem 1.5rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(184, 88, 58, 0.4);
+  }
+
+  .card .dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+  .card--classes .dot { background: #f4d9c9; color: var(--clay-deep); }
+  .card--shop .dot    { background: var(--fern-soft); color: var(--fern); }
+  .card--visit .dot   { background: #f1e3b8; color: #7a5b12; }
+
+  .card h2 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.45rem;
+    letter-spacing: -0.01em;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  .card .more {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--clay-deep);
+  }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 3.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (max-width: 760px) {
+    .hero { padding: 3rem 1.25rem 2.5rem; min-height: auto; }
+    .cards { grid-template-columns: 1fr; margin-top: 3rem; }
+    .btn { width: 100%; justify-content: center; }
+    .actions { flex-direction: column; align-items: stretch; }
+    .actions .text-link { align-self: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Asheville, NC &middot; Ceramics Studio</span>
+
+    <h1>Kiln <span class="amp">&amp;</span> <span class="fern">Fern</span></h1>
+
+    <p class="tagline">Hand-built and wheel-thrown pottery, made slowly in the mountains, with room for you to get your hands in the clay.</p>
+
+    <div class="actions">
+      <a class="btn" href="#book">Book a studio visit <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <a class="text-link" href="#classes">See what's on</a>
+    </div>
+
+    <nav class="cards" aria-label="Explore Kiln &amp; Fern">
+      <a class="card card--classes" href="#classes">
+        <div class="dot" aria-hidden="true">&#9671;</div>
+        <h2>Classes</h2>
+        <p>Beginner wheel, hand-building, and glaze workshops for all skill levels.</p>
+        <span class="more">Browse classes &rarr;</span>
+      </a>
+
+      <a class="card card--shop" href="#shop">
+        <div class="dot" aria-hidden="true">&#10047;</div>
+        <h2>Shop</h2>
+        <p>Mugs, bowls, and vases from our studio, each one made by hand.</p>
+        <span class="more">Shop the collection &rarr;</span>
+      </a>
+
+      <a class="card card--visit" href="#visit">
+        <div class="dot" aria-hidden="true">&#9750;</div>
+        <h2>Visit</h2>
+        <p>Come see the studio, meet the makers, and watch the kiln at work.</p>
+        <span class="more">Plan your visit &rarr;</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<footer>
+  &copy; Kiln &amp; Fern &middot; Asheville, North Carolina
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+A single-page poster for the Lantern Night festival: a left-aligned title over a dark band with the date, time, place and admission as labelled facts, then a schedule list with the parade row highlighted.

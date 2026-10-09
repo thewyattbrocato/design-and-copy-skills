@@ -1,0 +1,1 @@
+Not quite: the light gray (#b5b5b5) 11px "/month billed annually" text and the white 13px text on the mid-gray (#9aa0a6) button both have poor contrast (roughly 2:1 and 2.6:1, well under the 4.5:1 target). The "Growth" button also looks disabled next to Starter's blue one, so darken the text and give the button a real brand color, ideally the same blue as Starter's.

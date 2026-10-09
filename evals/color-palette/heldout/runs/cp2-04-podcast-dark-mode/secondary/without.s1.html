@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallowcast: Light vs Dark</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 32px 24px;
+    font-family: var(--font);
+    background: #ece8e1;
+    color: #1d1b19;
+  }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .column-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6e6862;
+    margin: 0 0 10px 4px;
+  }
+
+  /* Light theme (Tallowcast) */
+  .theme-light {
+    --bg: #faf7f2;
+    --card: #ffffff;
+    --text: #1d1b19;
+    --muted: #6e6862;
+    --accent: #e0492b;
+    --accent-ink: #ffffff;
+    --border: #e8e1d7;
+  }
+
+  /* Dark theme (new). Accent is lifted so it holds contrast on dark surfaces. */
+  .theme-dark {
+    --bg: #141210;
+    --card: #1d1b19;
+    --text: #f3efe9;
+    --muted: #a39b93;
+    --accent: #ff6a4d;
+    --accent-ink: #1d1b19;
+    --border: #322d28;
+  }
+
+  .app {
+    background: var(--bg);
+    color: var(--text);
+    border-radius: 18px;
+    padding: 24px 20px 28px;
+    border: 1px solid var(--border);
+    min-height: 100%;
+  }
+
+  .app-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .app-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .app-sub {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .episode-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .episode {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 14px 14px 16px;
+  }
+
+  .episode-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .episode-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .episode-length {
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .play-btn {
+    flex: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent);
+    color: var(--accent-ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.12s ease, opacity 0.12s ease;
+  }
+
+  .play-btn:hover { opacity: 0.9; }
+  .play-btn:active { transform: scale(0.95); }
+  .play-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .play-btn svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 760px) {
+    .compare { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="compare">
+
+  <section>
+    <p class="column-label">Light</p>
+    <div class="app theme-light">
+      <header class="app-header">
+        <h1 class="app-title">Tallowcast</h1>
+        <span class="app-sub">Episodes</span>
+      </header>
+      <ul class="episode-list">
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">The Quiet Economics of Night Markets</p>
+            <span class="episode-length">42:18</span>
+          </div>
+          <button class="play-btn" aria-label="Play The Quiet Economics of Night Markets">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">Why Bridges Sing in the Wind</p>
+            <span class="episode-length">28:05</span>
+          </div>
+          <button class="play-btn" aria-label="Play Why Bridges Sing in the Wind">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">Letters to a Lighthouse Keeper</p>
+            <span class="episode-length">55:32</span>
+          </div>
+          <button class="play-btn" aria-label="Play Letters to a Lighthouse Keeper">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">Salt, Iron, and the Kitchen Table</p>
+            <span class="episode-length">36:47</span>
+          </div>
+          <button class="play-btn" aria-label="Play Salt, Iron, and the Kitchen Table">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">Notes From a Cartographer Who Got Lost</p>
+            <span class="episode-length">19:09</span>
+          </div>
+          <button class="play-btn" aria-label="Play Notes From a Cartographer Who Got Lost">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <p class="column-label">Dark</p>
+    <div class="app theme-dark">
+      <header class="app-header">
+        <h1 class="app-title">Tallowcast</h1>
+        <span class="app-sub">Episodes</span>
+      </header>
+      <ul class="episode-list">
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">The Quiet Economics of Night Markets</p>
+            <span class="episode-length">42:18</span>
+          </div>
+          <button class="play-btn" aria-label="Play The Quiet Economics of Night Markets">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">Why Bridges Sing in the Wind</p>
+            <span class="episode-length">28:05</span>
+          </div>
+          <button class="play-btn" aria-label="Play Why Bridges Sing in the Wind">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">Letters to a Lighthouse Keeper</p>
+            <span class="episode-length">55:32</span>
+          </div>
+          <button class="play-btn" aria-label="Play Letters to a Lighthouse Keeper">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">Salt, Iron, and the Kitchen Table</p>
+            <span class="episode-length">36:47</span>
+          </div>
+          <button class="play-btn" aria-label="Play Salt, Iron, and the Kitchen Table">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+        <li class="episode">
+          <div class="episode-info">
+            <p class="episode-title">Notes From a Cartographer Who Got Lost</p>
+            <span class="episode-length">19:09</span>
+          </div>
+          <button class="play-btn" aria-label="Play Notes From a Cartographer Who Got Lost">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

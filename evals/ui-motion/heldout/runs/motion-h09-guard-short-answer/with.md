@@ -1,0 +1,1 @@
+Slide it in from the right. The panel lives on the right edge, so the motion shows where it comes from and where it goes, and a fade alone would look like it appeared from nowhere. Use about 200–250ms with an ease-out on open and a slightly faster close. Also drop the slide for users with `prefers-reduced-motion` and use a plain fade instead.

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lantern Row Night Market</title>
+<style>
+  /* Placeholder dusk sky until the photo arrives. Swap .hero background for a background-image later. */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #fff7ec;
+    --ink-muted: #f6d9b5;
+    --lantern: #ffb347;
+    --lantern-deep: #f2803a;
+    --night: #1b1437;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--night);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 1.5rem;
+    overflow: hidden;
+    /* Sky: deep indigo at the top, violet midway, warm amber at the horizon */
+    background:
+      /* Horizon glow */
+      radial-gradient(ellipse 70% 35% at 50% 100%, rgba(255, 179, 71, 0.85) 0%, rgba(242, 128, 58, 0.4) 45%, transparent 75%),
+      /* Sun just above the horizon */
+      radial-gradient(circle at 50% 78%, rgba(255, 214, 140, 0.9) 0%, rgba(255, 170, 90, 0.35) 8%, transparent 20%),
+      /* Base sky */
+      linear-gradient(
+        180deg,
+        #0d0a24 0%,
+        #241a4f 30%,
+        #5b2f74 58%,
+        #b8526a 78%,
+        #f08a4b 92%,
+        #ffb567 100%
+      );
+  }
+
+  /* Faint stars in the upper sky */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 28% 9%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 47% 14%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 63% 6%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 81% 17%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 91% 30%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 7% 36%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 72% 35%, rgba(255,255,255,0.4), transparent);
+    pointer-events: none;
+  }
+
+  /* Dark silhouette strip standing in for the skyline */
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 14%;
+    background: linear-gradient(180deg, rgba(20, 12, 34, 0) 0%, rgba(20, 12, 34, 0.85) 100%);
+    pointer-events: none;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 52rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-shadow: 0 2px 30px rgba(20, 8, 40, 0.45);
+  }
+
+  .dates {
+    margin-top: 1.5rem;
+    font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+    font-weight: 600;
+    color: var(--lantern);
+    letter-spacing: 0.02em;
+  }
+
+  .tagline {
+    margin-top: 0.75rem;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--ink-muted);
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: 2.5rem;
+    padding: 1rem 2.4rem;
+    font: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2a1505;
+    background: linear-gradient(135deg, #ffd27a 0%, var(--lantern) 55%, var(--lantern-deep) 100%);
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(242, 128, 58, 0.45);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(242, 128, 58, 0.55);
+    outline: none;
+  }
+
+  .btn:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <!-- Note: October 17 is a Saturday in 2026 (Friday in 2025). Dates below use the requested "Friday to Sunday" wording; please confirm. -->
+  <section class="hero" aria-labelledby="event-title">
+    <div class="content">
+      <span class="eyebrow">Night Market</span>
+      <h1 id="event-title">Lantern Row<br>Night Market</h1>
+      <p class="dates">Friday to Sunday, October 17 to 19</p>
+      <p class="tagline">Food, crafts and live music after dark</p>
+      <a class="btn" href="#tickets">Get tickets</a>
+    </div>
+  </section>
+</body>
+</html>

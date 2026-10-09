@@ -1,0 +1,122 @@
+[
+  {
+    "id": "motion-h01-payroll-progress",
+    "kind": "build",
+    "prompt": "I run a three-location bakery called Crumb & Kettle and I'm tired of our payroll software, which just shows a blank screen for about 40 seconds while it works. Can you build me a single self-contained HTML file (inline CSS and JS, system fonts only, no external assets) for a \"Running payroll\" screen? It should walk through five steps: Collecting timesheets, Checking overtime, Calculating tax withholding, Preparing direct deposits, Sending pay stubs. Make it clear what's happening while it runs and what happens when it finishes (\"Payroll for Oct 1-15 is done. 23 employees paid.\"). Show the screen in the middle of the run, around step 3, when the page first loads. Make it feel good to watch.",
+    "rubric": [
+      "In the screenshot the five steps are all readable, with the two completed steps, the active step and the two pending steps visually distinct from one another.",
+      "The active step is identifiable without relying on colour alone (for example an indicator, label or position cue).",
+      "All text content is visible and legible in the static screenshot; nothing is hidden, faded out or offset because of an entrance effect that has not played.",
+      "The layout is calm and uncluttered for a screen people watch for 40 seconds: one clear focal area, no decorative elements competing with the step list.",
+      "The screen communicates overall progress (for example a step count or bar) as well as the per-step state."
+    ]
+  },
+  {
+    "id": "motion-h02-quiz-critique",
+    "kind": "critique",
+    "prompt": "We built a quiz screen for our fifth-grade reading app, and a teacher said it feels \"busy and a little exhausting\" after a few questions, but I can't tell why. Here's the relevant CSS. Can you review the motion and tell me what you'd change?\n\n```css\n.answer-btn {\n  transition: all 1.2s ease-in-out;\n}\n.answer-btn:hover {\n  transform: scale(1.12) rotate(-2deg);\n  background: #ffd166;\n}\n.answer-btn.correct {\n  animation: bounce 1.5s infinite;\n}\n@keyframes bounce {\n  0%, 100% { transform: translateY(0); }\n  50% { transform: translateY(-14px); }\n}\n.question-card {\n  animation: slideIn 0.9s ease-in-out both;\n}\n@keyframes slideIn {\n  from { opacity: 0; transform: translateX(-120px); }\n  to { opacity: 1; transform: none; }\n}\n.progress-bar-fill {\n  transition: width 2s linear;\n}\n.star-reward {\n  animation: spin 1s linear infinite;\n}\n@keyframes spin { to { transform: rotate(360deg); } }\n```\n\nKids tap an answer, see right/wrong, then the next question slides in. Each session is about 20 questions.",
+    "rubric": [
+      "Identifies at least three specific problems in the supplied CSS (such as the hover scale/rotate, durations that are too long for a repeated action, looping animations on the correct answer and star, or the slide-in on every question) and ties each to the tired, busy feeling the teacher described.",
+      "Gives replacement values or code for the main offenders, with concrete durations rather than just saying 'make it faster'.",
+      "Recognises that the same animation repeats about 20 times per session and adjusts the advice for that repetition.",
+      "Notes that some motion is worth keeping, such as a short reward moment for a correct answer, instead of recommending removing all animation.",
+      "Mentions what should happen for users who are sensitive to motion or who have asked their device to reduce it."
+    ]
+  },
+  {
+    "id": "motion-h03-donation-loading",
+    "kind": "choose",
+    "prompt": "I'm building the donation page for a river cleanup nonprofit. After someone taps \"Give $25\", we charge the card and update the running total on the page (\"$41,860 raised of $60,000\"). The card charge takes anywhere from 1 to 6 seconds depending on the bank. Three options I'm weighing for what the person sees during that wait:\n\nA. Replace the button label with a small spinner and disable the button.\nB. Show a full-width progress bar across the top of the page that fills over about 3 seconds.\nC. Gray out the whole form and show a centered modal that says \"Processing your gift...\" with a spinner.\n\nWhich would you pick and why? Also tell me what should happen the moment the charge succeeds and the total updates.",
+    "rubric": [
+      "Picks one option clearly, and the reasoning is tied to the situation (a wait that varies from 1 to 6 seconds and a payment that must not be submitted twice).",
+      "Explains the weakness of the fake or fixed-length progress bar when the real duration is unknown.",
+      "Explains why the heavy modal is more than a short, uncertain wait needs, or otherwise addresses its cost.",
+      "Describes the success moment concretely, including what changes (button state, total) and a modest duration or style, and does not suggest a celebratory effect that blocks the person.",
+      "Addresses what the person sees if the charge fails or takes longer than expected."
+    ]
+  },
+  {
+    "id": "motion-h04-order-tracker",
+    "kind": "layout",
+    "prompt": "We run a ghost-kitchen delivery app and I'm designing the order tracking screen. It has a header with the restaurant name, a status area, a map placeholder, an order summary list (3 to 8 items) and a \"Contact courier\" button. The order moves through four states: Order received, Being prepared, Out for delivery, Delivered. Statuses update from the server every 20 to 60 seconds, and people leave the screen open while they wait.\n\nDescribe how the screen should behave visually when it first opens and when the status changes. I want a specific plan, not a general discussion: what moves, what stays still, roughly how long things take, and what you'd leave out.",
+    "rubric": [
+      "Gives a concrete plan for both the first open and a status change, naming which elements animate and which stay still.",
+      "Provides approximate durations or timing values and an easing description for the animated parts, in plausible ranges for a screen this simple.",
+      "Treats the screen as one people leave open for many minutes: avoids continuous or looping motion that would distract during a long wait, or confines it to something small and meaningful such as a live courier indicator.",
+      "Includes at least one explicit 'leave out' decision, such as no animation on the order summary or the contact button.",
+      "Covers how a status update should arrive when it comes in while the person is looking at the screen, so the change is noticeable without being jarring."
+    ]
+  },
+  {
+    "id": "motion-h05-bottom-sheet",
+    "kind": "polish",
+    "prompt": "Our travel app has a bottom sheet where people pick a flight seat class. It works but feels janky and a bit cheap. Make it feel smoother. Here's the code; send back the improved version.\n\n```html\n<div class=\"backdrop\" id=\"backdrop\"></div>\n<div class=\"sheet\" id=\"sheet\">\n  <h3>Choose your cabin</h3>\n  <button class=\"cabin\">Economy &middot; $212</button>\n  <button class=\"cabin\">Premium Economy &middot; $388</button>\n  <button class=\"cabin\">Business &middot; $946</button>\n</div>\n```\n\n```css\n.backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; }\n.backdrop.open { display: block; }\n.sheet {\n  position: fixed; left: 0; right: 0; bottom: -320px; height: 320px;\n  background: #fff; border-radius: 16px 16px 0 0; padding: 24px;\n  transition: all 0.8s ease-in-out;\n}\n.sheet.open { bottom: 0; }\n.cabin { display: block; width: 100%; padding: 14px; margin-bottom: 10px; transition: all 0.6s; }\n.cabin:hover { padding: 18px; margin-bottom: 14px; }\n```\n\n```js\nbackdrop.onclick = () => { sheet.classList.remove('open'); backdrop.classList.remove('open'); };\nopenBtn.onclick = () => { sheet.classList.add('open'); backdrop.classList.add('open'); };\n```",
+    "rubric": [
+      "The revised code animates the sheet with a transform (and the backdrop with opacity) rather than the position property, or otherwise clearly avoids layout-triggering motion.",
+      "The sheet's open and close durations are short (roughly 200 to 400ms) and the easing differs sensibly between entering and leaving, or at least is not a slow ease-in-out.",
+      "The hover effect that changes padding and margin, which shifts the buttons below it, is removed or replaced with something that does not move layout.",
+      "The backdrop now fades instead of popping in and out via display, and it still works for closing the sheet.",
+      "The revised code is complete enough to paste in and includes a reduced-motion fallback.",
+      "The answer is brief: the code plus a short explanation of what changed, not a long lecture."
+    ]
+  },
+  {
+    "id": "motion-h06-number-ticker",
+    "kind": "explain",
+    "prompt": "I'm a designer at a small budgeting app. Our engineer built a balance screen where, every time you open it, the account total counts up from $0 to the real figure over about 2.5 seconds, with the digits rolling. Our PM loves it. One of our testers said it made her a bit queasy, and another said he kept waiting for it to finish before he could read his balance. Can you explain what's going on with these reactions, and whether the animation is worth keeping? If you'd keep some version of it, say what it would look like.",
+    "rubric": [
+      "Explains the two reactions as separate issues: a motion-sensitivity problem and a problem with information being delayed or unreliable while it animates.",
+      "Gives a clear stance on whether to keep it, and the stance accounts for the fact that the screen is opened many times a day.",
+      "If it recommends a version to keep, specifies it concretely (a much shorter duration, a one-time or first-view-only effect, or the final value shown immediately with a subtle change cue) rather than saying 'tone it down'.",
+      "Mentions that people can set their device to reduce motion and says what the screen should do in that case.",
+      "Is written for a designer and PM audience: plain language, no unexplained jargon, and no long detour into unrelated animation theory."
+    ]
+  },
+  {
+    "id": "motion-h07-guard-good-modal",
+    "kind": "polish",
+    "prompt": "This is the booking confirmation modal for a small plumbing company's scheduling page. I just finished it and I'm about to ship, but I wanted to ask whether there's anything you'd improve about the motion before I do. It's already something I've tested on a few phones.\n\n```css\n.modal-overlay {\n  position: fixed; inset: 0; background: rgba(15, 23, 32, .5);\n  opacity: 0; pointer-events: none;\n  transition: opacity 160ms ease-out;\n}\n.modal-overlay.open { opacity: 1; pointer-events: auto; }\n.modal {\n  background: #fff; border-radius: 12px; padding: 24px; max-width: 420px;\n  transform: translateY(8px) scale(.98); opacity: 0;\n  transition: transform 200ms cubic-bezier(.2, .8, .2, 1), opacity 160ms ease-out;\n}\n.modal-overlay.open .modal { transform: none; opacity: 1; }\n.modal-overlay:not(.open) .modal { transition-duration: 120ms; }\n.confirm-btn { transition: background-color 120ms ease-out; }\n.confirm-btn:active { transform: scale(.98); }\n\n@media (prefers-reduced-motion: reduce) {\n  .modal { transform: none; transition: opacity 120ms linear; }\n  .confirm-btn:active { transform: none; }\n}\n```",
+    "rubric": [
+      "Concludes that the motion is in good shape and says so plainly, rather than inventing problems to justify a response.",
+      "Does not rewrite the CSS wholesale or propose a new animation system; any changes suggested are small and optional.",
+      "Names at least one or two specific things done well (for example short durations, transform and opacity only, faster exit than entrance, reduced-motion handling).",
+      "Any suggestion offered is accurate for this code and not a misreading of it.",
+      "The answer is short, a handful of sentences or a short list, and not padded with generic motion advice."
+    ]
+  },
+  {
+    "id": "motion-h08-guard-invoice-page",
+    "kind": "build",
+    "prompt": "Please build a single self-contained HTML file (inline CSS, system fonts only, no external assets) for a printable-looking invoice page for Ridgeline Roofing & Gutters. Details:\n\nInvoice #2041, issued Oct 3, due Oct 17. Billed to Dana Okafor, 88 Alder Court. Line items: Tear-off and disposal of old shingles, 1 job, $1,850.00; Architectural shingles, 28 squares at $142.00, $3,976.00; Ice and water shield, 6 rolls at $64.00, $384.00; Replace 40 ft of gutter, 40 ft at $9.50, $380.00. Subtotal $6,590.00, tax 0% (labor and materials exempt), total due $6,590.00. A \"Pay invoice\" button and a \"Download PDF\" link.\n\nThe customer will mostly open it from a text message on their phone. Add a little polish so it feels modern, but it should still be a document.",
+    "rubric": [
+      "In the screenshot every line item, amount, the subtotal, the total due and both actions are visible and legible; nothing is hidden or transparent because of an entrance effect that has not played.",
+      "The page reads as a document: the line items are in an aligned table or list with right-aligned amounts, and the total due stands out from the subtotal.",
+      "The 'Pay invoice' button is clearly the primary action and is distinguishable from the secondary 'Download PDF' link.",
+      "Any added polish is restrained (a short effect on the button or a quick page fade) and does not make the figures animate, count up or wait on a sequence before they can be read.",
+      "The numbers on the page are the ones given and are arithmetically consistent: the four line items sum to $6,590.00."
+    ]
+  },
+  {
+    "id": "motion-h09-guard-short-answer",
+    "kind": "choose",
+    "prompt": "Quick one, answer in two or three sentences max. In our tutoring app's session screen there's a notes panel on the right. When the tutor clicks the \"Notes\" button it opens and closes. Should it slide in from the right or just fade? I don't want to overthink it.",
+    "rubric": [
+      "The answer is two or three sentences, with no headings or bullet lists and no preamble.",
+      "It picks one option (slide or fade) outright rather than saying it depends.",
+      "The reason given is specific to a panel that opens from a side button and is opened and closed repeatedly during a session.",
+      "It includes a rough duration (roughly 150 to 300ms) or a similarly concrete detail, not just a style choice."
+    ]
+  },
+  {
+    "id": "motion-h10-guard-waiting-room",
+    "kind": "polish",
+    "prompt": "The front desk at our urgent care clinic has a TV in the waiting room showing the queue. Patients glance at it from across the room to see their ticket number get called. Currently it works fine but a coworker said it looks \"static and dated\". Please add some polish so it feels alive and modern. Return the full updated file.\n\n```html\n<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Queue</title>\n<style>\n  body { margin:0; background:#0f1b2d; color:#fff; font-family: system-ui, sans-serif; }\n  .now { padding:48px; text-align:center; background:#16294a; }\n  .now small { font-size:28px; letter-spacing:.1em; color:#9bb3d6; }\n  .now .num { font-size:160px; font-weight:800; line-height:1; }\n  .now .room { font-size:44px; color:#7fd6a8; }\n  .next { display:flex; gap:24px; padding:32px 48px; }\n  .next div { flex:1; background:#1b2f55; border-radius:12px; padding:24px; text-align:center; }\n  .next .n { font-size:64px; font-weight:700; }\n  .next .l { font-size:22px; color:#9bb3d6; }\n</style></head>\n<body>\n  <div class=\"now\"><small>NOW SERVING</small><div class=\"num\" id=\"num\">A-117</div><div class=\"room\" id=\"room\">Go to Room 3</div></div>\n  <div class=\"next\">\n    <div><div class=\"n\">A-118</div><div class=\"l\">Next</div></div>\n    <div><div class=\"n\">A-119</div><div class=\"l\">Then</div></div>\n    <div><div class=\"n\">A-120</div><div class=\"l\">Then</div></div>\n  </div>\n</body></html>\n```\n\nThe number and room change every few minutes when the front desk calls the next patient (script not shown).",
+    "rubric": [
+      "Keeps the numbers instantly readable: the new ticket number is present at full legibility as soon as it changes and is not delayed by a counting, rolling or long fading animation.",
+      "Any motion added is limited to the moment of change (for example a brief highlight or a short fade on the number and room) and is not continuous or looping, since the screen is on all day.",
+      "Does not add decorative looping effects, gradients that shift, pulsing or particles to a screen people glance at from across a room.",
+      "Preserves the large type, contrast and layout of the supplied file rather than redesigning it.",
+      "Notes briefly, in a sentence or two, why it held back, rather than silently doing little: the answer says what the screen needs instead of motion."
+    ]
+  }
+]

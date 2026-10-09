@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bird Species by Trail Site, Spring Count</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0; padding: 24px 16px;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #f9f9f7; color: #0b0b0b;
+  }
+  .viz-root {
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6;
+    max-width: 680px; margin: 0 auto; padding: 24px 24px 18px;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    color: var(--text-primary);
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0d0d0d; color: #fff; }
+    .viz-root {
+      --surface-1: #1a1a19; --text-primary: #fff; --text-secondary: #c3c2b7;
+      --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+    }
+  }
+  h1 { font-size: 20px; line-height: 1.25; margin: 0 0 4px; font-weight: 600; }
+  p.sub { margin: 0 0 20px; font-size: 14px; color: var(--text-secondary); }
+  .chart { display: grid; grid-template-columns: 104px 1fr; row-gap: 10px; align-items: center; }
+  .name { font-size: 14px; color: var(--text-primary); text-align: right; padding-right: 12px; }
+  .track { position: relative; height: 24px; }
+  .bar {
+    position: absolute; left: 0; top: 0; height: 24px;
+    background: var(--series-1); border-radius: 0 4px 4px 0;
+    outline-offset: 2px; cursor: default;
+  }
+  .bar:hover, .bar:focus-visible { filter: brightness(1.12); outline: 2px solid var(--text-secondary); }
+  .val {
+    position: absolute; top: 0; height: 24px; line-height: 24px; margin-left: 8px;
+    font-size: 14px; font-weight: 600; color: var(--text-primary); pointer-events: none;
+  }
+  /* gridlines live behind all rows */
+  .plot { position: relative; grid-column: 2; grid-row: 1 / span 6; pointer-events: none; }
+  .grid { position: absolute; top: -4px; bottom: -4px; width: 1px; background: var(--grid); }
+  .grid.base { background: var(--baseline); }
+  .row-name, .row-track { position: relative; z-index: 1; }
+  .axis { grid-column: 2; position: relative; height: 18px; margin-top: 2px; }
+  .axis span { position: absolute; transform: translateX(-50%); font-size: 12px; color: var(--text-muted); }
+  .axis-title { grid-column: 2; font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  details { margin-top: 16px; font-size: 13px; color: var(--text-secondary); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; margin-top: 8px; width: 100%; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+  th:last-child, td:last-child { text-align: right; }
+  .tip {
+    position: fixed; z-index: 10; pointer-events: none; display: none;
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--baseline); border-radius: 6px; padding: 6px 10px;
+    font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .tip b { font-weight: 600; }
+  @media (max-width: 480px) { .chart { grid-template-columns: 84px 1fr; } .name { font-size: 13px; } }
+</style>
+</head>
+<body>
+<figure class="viz-root" style="margin:0 auto">
+  <h1>Willow Flats led the spring bird count with 74 species</h1>
+  <p class="sub">Bird species recorded at each of six trail sites, spring count</p>
+
+  <div class="chart" id="chart" role="img" aria-label="Horizontal bar chart of bird species counted at six trail sites: Willow Flats 74, Heron Point 67, North Ridge 52, Alder Run 41, Millpond 38, Quarry Loop 29."></div>
+
+  <details>
+    <summary>View as table</summary>
+    <table>
+      <thead><tr><th>Trail site</th><th>Species counted</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </details>
+</figure>
+<div class="tip" id="tip"></div>
+
+<script>
+  const data = [
+    ["Willow Flats", 74], ["Heron Point", 67], ["North Ridge", 52],
+    ["Alder Run", 41], ["Millpond", 38], ["Quarry Loop", 29]
+  ];
+  const MAX = 80, ticks = [0, 20, 40, 60, 80];
+  const chart = document.getElementById("chart");
+  const tip = document.getElementById("tip");
+
+  // gridline layer spans all six rows in column 2
+  const plot = document.createElement("div");
+  plot.className = "plot";
+  ticks.forEach(t => {
+    const g = document.createElement("div");
+    g.className = "grid" + (t === 0 ? " base" : "");
+    g.style.left = (t / MAX * 100) + "%";
+    plot.appendChild(g);
+  });
+  chart.appendChild(plot);
+
+  data.forEach(([n, v], i) => {
+    const name = document.createElement("div");
+    name.className = "name row-name";
+    name.textContent = n;
+    name.style.gridColumn = 1; name.style.gridRow = i + 1;
+    const track = document.createElement("div");
+    track.className = "track row-track";
+    track.style.gridColumn = 2; track.style.gridRow = i + 1;
+    const pct = v / MAX * 100;
+    track.innerHTML = `<div class="bar" tabindex="0" style="width:${pct}%" data-n="${n}" data-v="${v}"></div>` +
+                      `<span class="val" style="left:${pct}%">${v}</span>`;
+    chart.append(name, track);
+  });
+
+  const axis = document.createElement("div");
+  axis.className = "axis"; axis.style.gridRow = 7;
+  ticks.forEach(t => {
+    const s = document.createElement("span");
+    s.style.left = (t / MAX * 100) + "%"; s.textContent = t;
+    axis.appendChild(s);
+  });
+  const at = document.createElement("div");
+  at.className = "axis-title"; at.style.gridRow = 8;
+  at.textContent = "Number of species";
+  chart.append(axis, at);
+
+  document.getElementById("rows").innerHTML =
+    data.map(([n, v]) => `<tr><td>${n}</td><td>${v}</td></tr>`).join("");
+
+  function show(el, x, y) {
+    tip.innerHTML = `<b>${el.dataset.n}</b><br>${el.dataset.v} species`;
+    tip.style.display = "block";
+    tip.style.left = Math.min(x + 12, innerWidth - tip.offsetWidth - 8) + "px";
+    tip.style.top = (y - tip.offsetHeight - 12) + "px";
+  }
+  chart.addEventListener("mousemove", e => {
+    const b = e.target.closest(".bar");
+    b ? show(b, e.clientX, e.clientY) : (tip.style.display = "none");
+  });
+  chart.addEventListener("mouseleave", () => tip.style.display = "none");
+  chart.addEventListener("focusin", e => {
+    const b = e.target.closest(".bar");
+    if (b) { const r = b.getBoundingClientRect(); show(b, r.right, r.top); }
+  });
+  chart.addEventListener("focusout", () => tip.style.display = "none");
+</script>
+</body>
+</html>

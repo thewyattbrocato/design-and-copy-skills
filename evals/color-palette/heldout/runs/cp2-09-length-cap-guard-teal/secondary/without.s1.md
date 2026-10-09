@@ -1,0 +1,1 @@
+Use a cool slate-gray tinted slightly toward your teal, such as #f5f8f8 for page backgrounds and #1c2a2b for body text, which gives about 15:1 contrast. Your teal #0f7c80 is only about 5:1 against white, so keep it for accents, buttons, and links rather than long body copy.

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing – Quill Notes</title>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --ink: #1d1c1a;
+    --muted: #615f59;
+    --line: #dedbd2;
+    --accent: #3b3fd8;
+    --accent-ink: #ffffff;
+    --accent-soft: #ecedfd;
+    --ok: #1f7a4d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16151a;
+      --surface: #1f1e25;
+      --ink: #f1f0ec;
+      --muted: #a7a5ae;
+      --line: #35333f;
+      --accent: #8f93ff;
+      --accent-ink: #12121a;
+      --accent-soft: #272850;
+      --ok: #6fd3a0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+  }
+  section.pricing {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 72px 24px 80px;
+  }
+  header { text-align: center; max-width: 620px; margin: 0 auto 48px; }
+  .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.1; margin: 10px 0 14px; letter-spacing: -.02em; }
+  header p { color: var(--muted); font-size: 18px; margin: 0; }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: stretch;
+    list-style: none; padding: 0; margin: 0;
+  }
+  .plan {
+    position: relative;
+    display: flex; flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 32px 28px 28px;
+  }
+  .plan.featured {
+    border: 2px solid var(--accent);
+    padding: 40px 28px 28px;
+    box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  @media (min-width: 861px) { .plan.featured { margin: -12px 0; } }
+  .badge {
+    position: absolute; top: 0; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--accent); color: var(--accent-ink);
+    font-size: 13px; font-weight: 700;
+    padding: 5px 14px; border-radius: 999px; white-space: nowrap;
+  }
+  h2 { font-size: 20px; margin: 0 0 6px; }
+  .tagline { color: var(--muted); font-size: 15px; margin: 0 0 24px; min-height: 46px; }
+  .price { display: flex; align-items: baseline; gap: 6px; margin: 0; }
+  .price .amount { font-size: 48px; font-weight: 750; letter-spacing: -.03em; line-height: 1; }
+  .price .per { color: var(--muted); font-size: 15px; }
+  .billed { color: var(--muted); font-size: 14px; margin: 6px 0 24px; }
+
+  .cta {
+    display: block; text-align: center; text-decoration: none;
+    font: inherit; font-weight: 600;
+    padding: 12px 16px; border-radius: 10px;
+    border: 1px solid var(--line); color: var(--ink); background: transparent;
+  }
+  .cta:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .cta:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .featured .cta { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .featured .cta:hover { filter: brightness(1.08); }
+
+  .features { list-style: none; padding: 0; margin: 28px 0 0; border-top: 1px solid var(--line); padding-top: 24px; display: grid; gap: 12px; font-size: 15px; }
+  .features li { display: flex; gap: 10px; align-items: flex-start; }
+  .features li::before {
+    content: ""; flex: none; width: 16px; height: 16px; margin-top: 4px;
+    background: var(--ok);
+    clip-path: polygon(14% 52%, 0 66%, 38% 100%, 100% 22%, 86% 8%, 38% 72%);
+  }
+  .features .lead { font-weight: 600; }
+  .features .lead::before { display: none; }
+  .features .lead { display: block; color: var(--muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; }
+
+  .note { text-align: center; color: var(--muted); font-size: 14px; margin: 36px 0 0; }
+
+  @media (max-width: 860px) {
+    .plans { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; gap: 28px; }
+    .tagline { min-height: 0; }
+    .plan.featured { order: -1; }
+  }
+</style>
+</head>
+<body>
+<section class="pricing" aria-labelledby="pricing-title">
+  <header>
+    <div class="eyebrow">Pricing</div>
+    <h1 id="pricing-title">Simple plans for every kind of thinker</h1>
+    <p>Start free. Upgrade when your notes outgrow your notebook. Cancel anytime.</p>
+  </header>
+
+  <ul class="plans">
+    <li class="plan">
+      <h2>Free</h2>
+      <p class="tagline">For jotting down ideas and trying Quill out.</p>
+      <p class="price"><span class="amount">$0</span><span class="per">forever</span></p>
+      <p class="billed">No credit card needed</p>
+      <a class="cta" href="#free" aria-label="Get started with Free plan">Get started</a>
+      <ul class="features">
+        <li class="lead">Includes</li>
+        <li>Up to 200 notes</li>
+        <li>Sync across 2 devices</li>
+        <li>Basic search and tags</li>
+        <li>7-day version history</li>
+      </ul>
+    </li>
+
+    <li class="plan featured">
+      <span class="badge">Recommended</span>
+      <h2>Pro</h2>
+      <p class="tagline">For students and professionals who live in their notes.</p>
+      <p class="price"><span class="amount">$8</span><span class="per">/ month</span></p>
+      <p class="billed">Billed yearly at $96 · or $10 monthly</p>
+      <a class="cta" href="#pro" aria-label="Start free trial of Pro plan">Start 14-day free trial</a>
+      <ul class="features">
+        <li class="lead">Everything in Free, plus</li>
+        <li>Unlimited notes and notebooks</li>
+        <li>Sync across unlimited devices</li>
+        <li>Offline mode and full-text search in attachments</li>
+        <li>Handwriting and PDF annotation</li>
+        <li>1-year version history</li>
+      </ul>
+    </li>
+
+    <li class="plan">
+      <h2>Team</h2>
+      <p class="tagline">For groups that share knowledge and need control.</p>
+      <p class="price"><span class="amount">$14</span><span class="per">/ user / month</span></p>
+      <p class="billed">Billed yearly · minimum 3 users</p>
+      <a class="cta" href="#team" aria-label="Choose Team plan">Choose Team</a>
+      <ul class="features">
+        <li class="lead">Everything in Pro, plus</li>
+        <li>Shared workspaces and real-time editing</li>
+        <li>Roles, permissions and audit log</li>
+        <li>Single sign-on (SSO)</li>
+        <li>Unlimited version history</li>
+        <li>Priority support</li>
+      </ul>
+    </li>
+  </ul>
+
+  <p class="note">Prices in USD. Taxes may apply. Students get 50% off Pro with a school email.</p>
+</section>
+</body>
+</html>

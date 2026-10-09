@@ -1,0 +1,1 @@
+Most sans-serif fonts use proportional digits, so "1" is narrower than "8." When the number changes, the span's width changes and the text beside it moves. Fix it with `font-variant-numeric: tabular-nums;` on the span, which gives every digit the same width. If the counter is centered or the digit count changes, also give it a fixed `min-width` (e.g., `min-width: 6ch;`).

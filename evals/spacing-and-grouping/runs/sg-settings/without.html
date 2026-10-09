@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Account settings · Marlowe Cloud</title>
+<style>
+  :root {
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --ink: #172033;
+    --muted: #5d6779;
+    --line: #e3e7ee;
+    --accent: #2b5fd9;
+    --accent-ink: #ffffff;
+    --off: #b8c0cd;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  header.top {
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+  .logo {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: var(--accent); color: #fff;
+    display: grid; place-items: center; font-size: 14px;
+  }
+  .who { color: var(--muted); font-size: 13px; }
+  main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 20px 24px 28px;
+  }
+  h1 { font-size: 22px; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  section {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 6px 20px 8px;
+  }
+  section h2 {
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 14px 0 4px;
+  }
+  .row {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 0; }
+  .row.inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .label { font-weight: 600; display: block; }
+  .desc { color: var(--muted); font-size: 12.5px; margin-top: 2px; display: block; }
+  input[type=text], input[type=email], select {
+    width: 100%;
+    margin-top: 6px;
+    padding: 8px 10px;
+    font: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid #c9d0db;
+    border-radius: 8px;
+  }
+  input:focus-visible, select:focus-visible, button:focus-visible, .switch input:focus-visible + .track {
+    outline: 3px solid #9db8f5;
+    outline-offset: 1px;
+  }
+  /* toggle */
+  .switch { position: relative; flex: none; width: 42px; height: 24px; }
+  .switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .track {
+    position: absolute; inset: 0; border-radius: 12px;
+    background: var(--off); transition: background .15s;
+  }
+  .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 18px; height: 18px; border-radius: 50%; background: #fff;
+    transition: transform .15s; box-shadow: 0 1px 2px rgba(0,0,0,.25);
+  }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(18px); }
+  .seg { display: flex; margin-top: 8px; border: 1px solid #c9d0db; border-radius: 8px; overflow: hidden; }
+  .seg label { flex: 1; text-align: center; cursor: pointer; }
+  .seg input { position: absolute; opacity: 0; }
+  .seg span { display: block; padding: 7px 4px; font-size: 13px; color: var(--muted); }
+  .seg label + label span { border-left: 1px solid #c9d0db; }
+  .seg input:checked + span { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .seg input:focus-visible + span { outline: 3px solid #9db8f5; outline-offset: -3px; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    border-radius: 8px; padding: 8px 14px;
+    border: 1px solid #c9d0db; background: #fff; color: var(--ink);
+  }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .actions {
+    display: flex; justify-content: flex-end; align-items: center; gap: 10px;
+    margin-top: 16px;
+  }
+  .actions .note { margin-right: auto; color: var(--muted); font-size: 12.5px; }
+  @media (max-width: 960px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand"><span class="logo" aria-hidden="true">M</span> Marlowe Cloud</div>
+    <div class="who">Signed in as ada@example.com</div>
+  </div>
+</header>
+
+<main>
+  <h1>Account settings</h1>
+  <p class="sub">Manage your profile, how we contact you, and who can see your activity.</p>
+
+  <form onsubmit="return false">
+    <div class="grid">
+
+      <section aria-labelledby="h-profile">
+        <h2 id="h-profile">Profile</h2>
+        <div class="row">
+          <label class="label" for="name">Display name</label>
+          <span class="desc">Shown to collaborators on shared folders.</span>
+          <input type="text" id="name" value="Ada Marlowe" autocomplete="name">
+        </div>
+        <div class="row">
+          <label class="label" for="email">Email</label>
+          <span class="desc">Used for sign-in and account notices.</span>
+          <input type="email" id="email" value="ada@example.com" autocomplete="email">
+        </div>
+        <div class="row">
+          <label class="label" for="tz">Time zone</label>
+          <span class="desc">Controls sync timestamps and digest delivery time.</span>
+          <select id="tz">
+            <option>(UTC−08:00) Pacific Time</option>
+            <option>(UTC−07:00) Mountain Time</option>
+            <option>(UTC−06:00) Central Time</option>
+            <option selected>(UTC−05:00) Eastern Time</option>
+            <option>(UTC+00:00) London</option>
+            <option>(UTC+01:00) Berlin, Paris</option>
+            <option>(UTC+05:30) Mumbai</option>
+            <option>(UTC+09:00) Tokyo</option>
+          </select>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-notif">
+        <h2 id="h-notif">Notifications</h2>
+        <div class="row">
+          <label class="label" for="digest">Email digest</label>
+          <span class="desc">A roundup of file changes and shares.</span>
+          <select id="digest">
+            <option>Instantly</option>
+            <option selected>Daily</option>
+            <option>Weekly</option>
+            <option>Never</option>
+          </select>
+        </div>
+        <div class="row inline">
+          <div>
+            <label class="label" for="push">Mobile push</label>
+            <span class="desc">Sync errors and new shares on your phone.</span>
+          </div>
+          <span class="switch"><input type="checkbox" id="push" checked><span class="track"></span></span>
+        </div>
+        <div class="row inline">
+          <div>
+            <label class="label" for="mention">Mention alerts</label>
+            <span class="desc">Notify me when someone @mentions me.</span>
+          </div>
+          <span class="switch"><input type="checkbox" id="mention" checked><span class="track"></span></span>
+        </div>
+        <div class="row inline">
+          <div>
+            <label class="label" for="weekly">Weekly summary</label>
+            <span class="desc">Storage use and activity, every Monday.</span>
+          </div>
+          <span class="switch"><input type="checkbox" id="weekly"><span class="track"></span></span>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-priv">
+        <h2 id="h-priv">Privacy</h2>
+        <div class="row">
+          <span class="label" id="vis-l">Profile visibility</span>
+          <span class="desc">Who can view your profile.</span>
+          <div class="seg" role="radiogroup" aria-labelledby="vis-l">
+            <label><input type="radio" name="vis" value="public"><span>Public</span></label>
+            <label><input type="radio" name="vis" value="team" checked><span>Team</span></label>
+            <label><input type="radio" name="vis" value="private"><span>Only me</span></label>
+          </div>
+        </div>
+        <div class="row inline">
+          <div>
+            <label class="label" for="status">Activity status</label>
+            <span class="desc">Show when you're online or syncing.</span>
+          </div>
+          <span class="switch"><input type="checkbox" id="status" checked><span class="track"></span></span>
+        </div>
+        <div class="row inline">
+          <div>
+            <span class="label">Data export</span>
+            <span class="desc">Download a copy of your files and account data. We'll email a link.</span>
+          </div>
+          <button type="button">Request export</button>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="actions">
+      <span class="note">Changes apply to this account only.</span>
+      <button type="reset">Discard</button>
+      <button type="submit" class="primary">Save changes</button>
+    </div>
+  </form>
+</main>
+</body>
+</html>

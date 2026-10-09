@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forklift Safety Check</title>
+<style>
+  :root {
+    --bg: #f4f2ec;
+    --card: #ffffff;
+    --ink: #1d1d1b;
+    --muted: #5c5b55;
+    --line: #d9d6cb;
+    --accent: #f2a900;
+    --accent-ink: #1d1d1b;
+    --good: #1b6e3a;
+    --good-bg: #e6f4ea;
+    --bad: #a62626;
+    --bad-bg: #fbe9e9;
+    --focus: #0b57d0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  header {
+    background: var(--accent);
+    color: var(--accent-ink);
+    padding: 20px 16px;
+    border-bottom: 6px solid var(--ink);
+  }
+  header .inner, main { max-width: 720px; margin: 0 auto; }
+  h1 { margin: 0; font-size: 1.6rem; }
+  header p { margin: 4px 0 0; }
+  main { padding: 20px 16px 48px; }
+  fieldset {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin: 0 0 16px;
+    padding: 16px;
+  }
+  legend {
+    font-weight: 700;
+    padding: 0 6px;
+    font-size: 1.05rem;
+  }
+  .qnum { color: var(--muted); font-weight: 600; font-size: .85rem; display: block; }
+  label {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    margin-top: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  label:hover { background: #faf8f2; }
+  label:has(input:checked) { border-color: var(--ink); background: #fff7df; }
+  input[type=radio] { margin-top: 5px; accent-color: var(--ink); }
+  input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  button {
+    font: inherit;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 2px solid var(--ink);
+    background: var(--accent);
+    color: var(--accent-ink);
+    cursor: pointer;
+  }
+  button.secondary { background: var(--card); }
+  #msg { color: var(--bad); font-weight: 600; }
+  #result[hidden] { display: none; }
+  #result { margin-top: 8px; }
+  .score {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .score .big { font-size: 2rem; font-weight: 800; margin: 0; }
+  .item {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border: 1px solid;
+  }
+  .item.wrong { background: var(--bad-bg); border-color: var(--bad); }
+  .item.right { background: var(--good-bg); border-color: var(--good); }
+  .item h3 { margin: 0 0 6px; font-size: 1rem; }
+  .item p { margin: 4px 0; }
+  .tag { font-weight: 700; }
+  .wrong .tag { color: var(--bad); }
+  .right .tag { color: var(--good); }
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>Forklift Safety Check</h1>
+    <p>New hire quiz &middot; 5 questions &middot; choose one answer for each</p>
+  </div>
+</header>
+<main>
+  <form id="quiz" novalidate></form>
+  <div id="result" hidden aria-live="polite"></div>
+</main>
+
+<script>
+(function () {
+  var questions = [
+    {
+      q: "What should you do before lifting a load?",
+      options: [
+        "Lift it and see if the truck feels stable",
+        "Check the capacity plate and make sure the load is within the rated limit",
+        "Ask a coworker to stand on the back as a counterweight",
+        "Only check the weight if the load looks heavy"
+      ],
+      answer: 1,
+      why: "The capacity plate shows the maximum load the truck can safely carry. Exceeding it can cause a tip-over."
+    },
+    {
+      q: "A pedestrian is walking across your path. What do you do?",
+      options: [
+        "Sound the horn and keep moving so you stay on schedule",
+        "Flash your lights and drive around them quickly",
+        "Stop, make eye contact, and wait until they have clearly acknowledged you and moved away",
+        "Wave them across and keep rolling slowly"
+      ],
+      answer: 2,
+      why: "Always yield to pedestrians. Stop and confirm they have seen you before moving."
+    },
+    {
+      q: "How should you travel when carrying a load?",
+      options: [
+        "At a slow, controlled speed with forks low (about 4 to 6 inches off the floor) and the mast tilted back",
+        "At full speed on straight aisles, since there is less risk",
+        "With forks raised high for a better view",
+        "With the load tilted forward so it stays put"
+      ],
+      answer: 0,
+      why: "Low forks and a back-tilted mast keep the center of gravity low and the load stable. Obey posted speed limits and slow down at corners and blind spots."
+    },
+    {
+      q: "You are done with the forklift for now. What is the correct way to park it?",
+      options: [
+        "Leave it in the aisle with the forks raised so it is easy to find",
+        "Park it at the end of a row with the engine running for a quick restart",
+        "Park in the designated area, lower the forks flat to the floor, neutralize the controls, set the brake, and turn it off",
+        "Park it in front of the emergency exit so it is close to the door"
+      ],
+      answer: 2,
+      why: "Forks must be fully lowered, controls neutral, brake set, and power off. Never block aisles, exits, or fire equipment."
+    },
+    {
+      q: "Which of these is the safest way to take a corner or approach a blind spot?",
+      options: [
+        "Speed up to clear the intersection quickly",
+        "Slow down, sound the horn, and look in the direction of travel",
+        "Stay on your phone and watch for movement on the screen",
+        "Rely on others to get out of your way"
+      ],
+      answer: 1,
+      why: "Slow down, use the horn, and keep looking where you are going. If the load blocks your view, travel in reverse."
+    }
+  ];
+
+  var form = document.getElementById("quiz");
+  var result = document.getElementById("result");
+  var letters = ["A", "B", "C", "D"];
+
+  function el(tag, props, text) {
+    var e = document.createElement(tag);
+    if (props) for (var k in props) e[k] = props[k];
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function build() {
+    form.innerHTML = "";
+    questions.forEach(function (item, i) {
+      var fs = el("fieldset");
+      var lg = el("legend");
+      lg.appendChild(el("span", { className: "qnum" }, "Question " + (i + 1) + " of " + questions.length));
+      lg.appendChild(document.createTextNode(item.q));
+      fs.appendChild(lg);
+      item.options.forEach(function (opt, j) {
+        var label = el("label");
+        var input = el("input", { type: "radio", name: "q" + i, value: String(j) });
+        label.appendChild(input);
+        label.appendChild(el("span", null, letters[j] + ". " + opt));
+        fs.appendChild(label);
+      });
+      form.appendChild(fs);
+    });
+    var actions = el("div", { className: "actions" });
+    actions.appendChild(el("button", { type: "submit" }, "Submit answers"));
+    actions.appendChild(el("span", { id: "msg", role: "alert" }));
+    form.appendChild(actions);
+  }
+
+  function selected(i) {
+    var r = form.querySelector('input[name="q' + i + '"]:checked');
+    return r ? parseInt(r.value, 10) : -1;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var msg = document.getElementById("msg");
+    var picks = questions.map(function (_, i) { return selected(i); });
+    var missing = [];
+    picks.forEach(function (p, i) { if (p < 0) missing.push(i + 1); });
+    if (missing.length) {
+      msg.textContent = "Please answer question" + (missing.length > 1 ? "s " : " ") + missing.join(", ") + ".";
+      return;
+    }
+    msg.textContent = "";
+
+    var score = 0;
+    picks.forEach(function (p, i) { if (p === questions[i].answer) score++; });
+
+    result.innerHTML = "";
+    var box = el("div", { className: "score" });
+    box.appendChild(el("p", { className: "big" }, score + " / " + questions.length));
+    var verdict = score === questions.length
+      ? "Perfect score. Nice work."
+      : score >= 4
+        ? "Good job. Review the question you missed below."
+        : "Please review the answers below and retake the quiz.";
+    box.appendChild(el("p", null, verdict));
+    result.appendChild(box);
+
+    var wrongCount = 0;
+    picks.forEach(function (p, i) {
+      var item = questions[i];
+      if (p === item.answer) return;
+      wrongCount++;
+      var d = el("div", { className: "item wrong" });
+      d.appendChild(el("h3", null, "Question " + (i + 1) + ": " + item.q));
+      var yours = el("p");
+      yours.appendChild(el("span", { className: "tag" }, "Your answer: "));
+      yours.appendChild(document.createTextNode(letters[p] + ". " + item.options[p]));
+      d.appendChild(yours);
+      var right = el("p");
+      right.appendChild(el("span", { className: "tag" }, "Correct answer: "));
+      right.appendChild(document.createTextNode(letters[item.answer] + ". " + item.options[item.answer]));
+      d.appendChild(right);
+      d.appendChild(el("p", null, item.why));
+      result.appendChild(d);
+    });
+
+    if (!wrongCount) {
+      result.appendChild(el("div", { className: "item right" }, "You answered every question correctly."));
+    }
+
+    var retry = el("button", { type: "button", className: "secondary" }, "Retake quiz");
+    retry.addEventListener("click", function () {
+      result.hidden = true;
+      result.innerHTML = "";
+      build();
+      window.scrollTo(0, 0);
+    });
+    result.appendChild(retry);
+
+    result.hidden = false;
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  build();
+})();
+</script>
+</body>
+</html>

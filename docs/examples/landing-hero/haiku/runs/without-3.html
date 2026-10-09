@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fernwick - Polite Invoice Reminders for Freelancers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #5b6eff 0%, #7b5bff 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 52px;
+            line-height: 1.15;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #666;
+            max-width: 500px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #5b6eff 0%, #7b5bff 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(91, 110, 255, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(91, 110, 255, 0.4);
+        }
+
+        .cta-secondary {
+            color: #666;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+        }
+
+        .cta-secondary:hover {
+            color: #5b6eff;
+        }
+
+        .visual {
+            position: relative;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .invoice-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+            width: 100%;
+            max-width: 380px;
+            position: relative;
+            z-index: 2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .invoice-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .invoice-number {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-top: 4px;
+        }
+
+        .status {
+            background: #fff3cd;
+            color: #856404;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .invoice-detail {
+            margin-bottom: 20px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #5b6eff;
+            margin-top: 4px;
+        }
+
+        .reminder-badge {
+            background: linear-gradient(135deg, #5b6eff 0%, #7b5bff 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 24px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .reminder-icon {
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            background: linear-gradient(135deg, rgba(91, 110, 255, 0.05) 0%, rgba(123, 91, 255, 0.05) 100%);
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            animation: blobAnimation 6s infinite;
+        }
+
+        @keyframes blobAnimation {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .visual {
+                height: 350px;
+            }
+
+            .invoice-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="logo">
+                <div class="logo-icon">⏱</div>
+                Fernwick
+            </div>
+            <h1>Get Paid On Time, Automatically</h1>
+            <p class="subtitle">Send polite, professional payment reminders to clients automatically. Fernwick takes the awkwardness out of follow-ups, so you can focus on your work.</p>
+            <div class="cta-group">
+                <button class="cta-primary">Start Free Trial</button>
+                <button class="cta-secondary">Watch Demo →</button>
+            </div>
+        </div>
+
+        <div class="visual">
+            <div class="blob"></div>
+            <div class="invoice-card">
+                <div class="invoice-header">
+                    <div>
+                        <div class="invoice-label">Invoice</div>
+                        <div class="invoice-number">#INV-2024-1847</div>
+                    </div>
+                    <div class="status">UNPAID</div>
+                </div>
+
+                <div class="invoice-detail">
+                    <div class="detail-label">Client</div>
+                    <div class="detail-value">Acme Creative Co.</div>
+                </div>
+
+                <div class="invoice-detail">
+                    <div class="detail-label">Due Date</div>
+                    <div class="detail-value">Oct 5, 2024</div>
+                </div>
+
+                <div class="invoice-detail">
+                    <div class="detail-label">Amount Due</div>
+                    <div class="amount">$2,400</div>
+                </div>
+
+                <div class="reminder-badge">
+                    <span class="reminder-icon">📧</span>
+                    Reminder sent today
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

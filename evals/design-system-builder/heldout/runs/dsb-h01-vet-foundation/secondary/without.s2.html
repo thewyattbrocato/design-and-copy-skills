@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollowbrook Vet Care · Design Foundation</title>
+<style>
+/* =========================================================
+   1. TOKENS
+   Every color, size, space, radius, and shadow lives here.
+   Components reference tokens only. Never hard-code values.
+   ========================================================= */
+:root {
+  /* Brand (teal: calm, clinical, trustworthy) */
+  --color-brand-50: #eef7f6;
+  --color-brand-100: #dcefed;
+  --color-brand-600: #1d6b66;
+  --color-brand-700: #155550;
+
+  /* Neutrals (ink for text, canvas and surface for backgrounds) */
+  --color-ink-900: #1c2a29;
+  --color-ink-700: #3e4f4d;
+  --color-ink-500: #5a6b69;
+  --color-line: #d3dedc;
+  --color-canvas: #f5f8f7;
+  --color-surface: #ffffff;
+
+  /* Status (always paired with a text label or icon, never color alone) */
+  --color-success-bg: #e4f3ec;
+  --color-success-ink: #1d5a3c;
+  --color-warning-bg: #fcf1dc;
+  --color-warning-ink: #6b4500;
+  --color-danger-bg: #fbe7e4;
+  --color-danger-ink: #8a2a1e;
+  --color-danger-600: #a83a2c;
+  --color-info-bg: #e6f0fa;
+  --color-info-ink: #1f4d75;
+
+  /* Focus */
+  --color-focus: #1f6fb2;
+
+  /* Type: system font stacks only, no web fonts */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-xs: 0.8125rem;   /* 13px: hints, meta */
+  --text-sm: 0.875rem;    /* 14px: labels, badges */
+  --text-base: 1rem;      /* 16px: body, inputs */
+  --text-lg: 1.125rem;    /* 18px: lead text */
+  --text-xl: 1.375rem;    /* 22px: card titles */
+  --text-2xl: 1.75rem;    /* 28px: section titles */
+  --text-3xl: 2.25rem;    /* 36px: page title */
+
+  --leading-tight: 1.2;
+  --leading-body: 1.55;
+
+  /* Space: 4px base scale */
+  --space-1: 0.25rem;  /* 4 */
+  --space-2: 0.5rem;   /* 8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 2.5rem;   /* 40 */
+  --space-8: 3rem;     /* 48 */
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Elevation */
+  --shadow-1: 0 1px 2px rgba(28, 42, 41, 0.06), 0 1px 3px rgba(28, 42, 41, 0.08);
+  --shadow-2: 0 4px 12px rgba(28, 42, 41, 0.08), 0 2px 4px rgba(28, 42, 41, 0.05);
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--color-ink-900);
+  background: var(--color-canvas);
+}
+
+h1, h2, h3, h4 {
+  line-height: var(--leading-tight);
+  margin: 0 0 var(--space-3);
+  color: var(--color-ink-900);
+}
+h1 { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 600; }
+h2 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; }
+h3 { font-size: var(--text-xl); font-weight: 600; }
+h4 { font-size: var(--text-lg); font-weight: 600; }
+
+p { margin: 0 0 var(--space-3); }
+code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* =========================================================
+   3. LAYOUT
+   ========================================================= */
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5) var(--space-8);
+}
+
+.doc-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-line);
+}
+.doc-header p { margin: 0; color: var(--color-ink-500); }
+
+.logo-mark { width: 44px; height: 44px; flex: none; }
+
+.section {
+  margin-bottom: var(--space-7);
+}
+.section > p.lead {
+  font-size: var(--text-lg);
+  color: var(--color-ink-700);
+  max-width: 68ch;
+}
+
+.grid { display: grid; gap: var(--space-4); }
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+.split {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .split { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   4. FOUNDATION DISPLAYS (color, type, space)
+   ========================================================= */
+.swatch {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.swatch__chip { height: 56px; }
+.swatch__meta { padding: var(--space-3); font-size: var(--text-sm); }
+.swatch__name { font-weight: 600; display: block; }
+.swatch__value { color: var(--color-ink-500); font-family: var(--font-mono); font-size: var(--text-xs); }
+
+.type-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.type-row:last-child { border-bottom: 0; }
+.type-row__token { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-ink-500); }
+
+.space-bar {
+  height: 12px;
+  background: var(--color-brand-600);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+}
+
+/* =========================================================
+   5. COMPONENTS
+   Naming: .block, .block__element, .block--modifier
+   ========================================================= */
+
+/* Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-5);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+.btn--primary { background: var(--color-brand-600); color: #fff; }
+.btn--primary:hover { background: var(--color-brand-700); }
+.btn--secondary {
+  background: var(--color-surface);
+  color: var(--color-brand-700);
+  border-color: var(--color-brand-600);
+}
+.btn--secondary:hover { background: var(--color-brand-50); }
+.btn--ghost { background: transparent; color: var(--color-brand-700); padding-left: var(--space-3); padding-right: var(--space-3); }
+.btn--ghost:hover { background: var(--color-brand-50); }
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn--block { width: 100%; }
+
+/* Badge (appointment and record status) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.badge--success { background: var(--color-success-bg); color: var(--color-success-ink); }
+.badge--warning { background: var(--color-warning-bg); color: var(--color-warning-ink); }
+.badge--danger  { background: var(--color-danger-bg);  color: var(--color-danger-ink); }
+.badge--info    { background: var(--color-info-bg);    color: var(--color-info-ink); }
+.badge--neutral { background: var(--color-canvas);     color: var(--color-ink-700); border: 1px solid var(--color-line); }
+
+/* Alert (status messages: inline, persistent, announced) */
+.alert {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border-left: 4px solid currentColor;
+  font-size: var(--text-base);
+}
+.alert__title { display: block; font-weight: 600; margin-bottom: var(--space-1); }
+.alert p:last-child { margin-bottom: 0; }
+.alert--success { background: var(--color-success-bg); color: var(--color-success-ink); }
+.alert--warning { background: var(--color-warning-bg); color: var(--color-warning-ink); }
+.alert--danger  { background: var(--color-danger-bg);  color: var(--color-danger-ink); }
+.alert--info    { background: var(--color-info-bg);    color: var(--color-info-ink); }
+.alert--danger .alert__title { color: var(--color-danger-ink); }
+
+/* Form field */
+.field { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); }
+.field__label { font-size: var(--text-sm); font-weight: 600; color: var(--color-ink-900); }
+.field__required { color: var(--color-danger-600); margin-left: 2px; }
+.field__hint { font-size: var(--text-xs); color: var(--color-ink-500); }
+.field__error { font-size: var(--text-sm); color: var(--color-danger-ink); font-weight: 600; }
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  font-size: var(--text-base);
+  color: var(--color-ink-900);
+  background: var(--color-surface);
+  border: 1px solid #8a9b98;
+  border-radius: var(--radius-sm);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+.textarea { min-height: 96px; resize: vertical; }
+.input:hover, .select:hover, .textarea:hover { border-color: var(--color-ink-500); }
+.input:focus, .select:focus, .textarea:focus {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 0;
+  border-color: var(--color-focus);
+}
+.field--invalid .input,
+.field--invalid .select,
+.field--invalid .textarea { border-color: var(--color-danger-600); border-width: 2px; }
+
+/* Fieldset grouping (for related inputs) */
+.fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--space-5);
+}
+.fieldset__legend {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: var(--space-3);
+}
+
+/* Card (any grouped content) */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  padding: var(--space-5);
+}
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.card__header h3 { margin: 0; }
+.card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-line);
+}
+
+/* Appointment card (domain component built from card) */
+.appointment { border-left: 4px solid var(--color-brand-600); }
+.appointment--cancelled { border-left-color: var(--color-danger-600); }
+.appointment__pet { display: flex; align-items: center; gap: var(--space-3); }
+.appointment__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-100);
+  color: var(--color-brand-700);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex: none;
+}
+.appointment__name { font-weight: 600; font-size: var(--text-lg); line-height: 1.2; }
+.appointment__species { font-size: var(--text-sm); color: var(--color-ink-500); }
+.appointment__dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  font-size: var(--text-sm);
+}
+.appointment__dl dt { color: var(--color-ink-500); }
+.appointment__dl dd { margin: 0; font-weight: 600; color: var(--color-ink-900); }
+
+/* Page-level section heading inside a sample */
+.sample-title {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--color-ink-500);
+  margin-bottom: var(--space-3);
+}
+
+/* Guidance list */
+.rules { margin: 0; padding-left: var(--space-5); }
+.rules li { margin-bottom: var(--space-2); }
+.rules strong { color: var(--color-ink-900); }
+
+/* Visually hidden (screen reader only) */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="doc-header">
+    <svg class="logo-mark" viewBox="0 0 44 44" aria-hidden="true">
+      <circle cx="22" cy="22" r="22" fill="#1d6b66"/>
+      <ellipse cx="22" cy="27" rx="7" ry="6" fill="#ffffff"/>
+      <circle cx="14.5" cy="18" r="2.8" fill="#ffffff"/>
+      <circle cx="19" cy="13.5" r="2.8" fill="#ffffff"/>
+      <circle cx="25" cy="13.5" r="2.8" fill="#ffffff"/>
+      <circle cx="29.5" cy="18" r="2.8" fill="#ffffff"/>
+    </svg>
+    <div>
+      <h1 style="margin:0;font-size:var(--text-2xl)">Hollowbrook Vet Care</h1>
+      <p>Design foundation · tokens, components, and a working sample</p>
+    </div>
+  </header>
+
+  <!-- ============ PRINCIPLES ============ -->
+  <section class="section" aria-labelledby="principles">
+    <h2 id="principles">Principles</h2>
+    <p class="lead">Every screen should feel calm, clear, and competent. Friendly in tone, precise in information. When in doubt, choose the option that makes a worried pet owner feel informed.</p>
+    <div class="grid grid--3">
+      <div class="card">
+        <h3>Clear over clever</h3>
+        <p>Plain labels, specific dates, and one primary action per view.</p>
+      </div>
+      <div class="card">
+        <h3>Calm, never alarming</h3>
+        <p>Use warm, reassuring language. Reserve red for things that need action now.</p>
+      </div>
+      <div class="card">
+        <h3>Accessible by default</h3>
+        <p>Visible focus, labels on every input, and status that is never color-only.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COLOR ============ -->
+  <section class="section" aria-labelledby="color">
+    <h2 id="color">Color</h2>
+    <p class="lead">Teal anchors the brand and drives primary actions. Neutrals carry text and structure. Status colors are reserved for meaning and always appear with a label.</p>
+    <div class="grid grid--3" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+      <div class="swatch"><div class="swatch__chip" style="background:#1d6b66"></div><div class="swatch__meta"><span class="swatch__name">brand-600</span><span class="swatch__value">#1d6b66 · primary actions</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#155550"></div><div class="swatch__meta"><span class="swatch__name">brand-700</span><span class="swatch__value">#155550 · hover, text links</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#dcefed"></div><div class="swatch__meta"><span class="swatch__name">brand-100</span><span class="swatch__value">#dcefed · tints, avatars</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#1c2a29"></div><div class="swatch__meta"><span class="swatch__name">ink-900</span><span class="swatch__value">#1c2a29 · body text</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#5a6b69"></div><div class="swatch__meta"><span class="swatch__name">ink-500</span><span class="swatch__value">#5a6b69 · hints, meta</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#e4f3ec"></div><div class="swatch__meta"><span class="swatch__name">success</span><span class="swatch__value">#e4f3ec / #1d5a3c</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#fcf1dc"></div><div class="swatch__meta"><span class="swatch__name">warning</span><span class="swatch__value">#fcf1dc / #6b4500</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#fbe7e4"></div><div class="swatch__meta"><span class="swatch__name">danger</span><span class="swatch__value">#fbe7e4 / #8a2a1e</span></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#e6f0fa"></div><div class="swatch__meta"><span class="swatch__name">info</span><span class="swatch__value">#e6f0fa / #1f4d75</span></div></div>
+    </div>
+  </section>
+
+  <!-- ============ TYPE & SPACE ============ -->
+  <section class="section split">
+    <div>
+      <h2>Typography</h2>
+      <p class="lead">System fonts only. Fast to load, native to each device, and easy to read at every size. Serif is reserved for headings and page titles.</p>
+      <div class="card">
+        <div class="type-row"><span class="type-row__token">--text-3xl</span><span style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:600">Book a visit</span></div>
+        <div class="type-row"><span class="type-row__token">--text-2xl</span><span style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:600">Upcoming appointments</span></div>
+        <div class="type-row"><span class="type-row__token">--text-xl</span><span style="font-size:var(--text-xl);font-weight:600">Biscuit's annual checkup</span></div>
+        <div class="type-row"><span class="type-row__token">--text-lg</span><span style="font-size:var(--text-lg)">Please arrive 10 minutes early.</span></div>
+        <div class="type-row"><span class="type-row__token">--text-base</span><span>Bring any medication your pet is currently taking.</span></div>
+        <div class="type-row"><span class="type-row__token">--text-sm</span><span style="font-size:var(--text-sm)">Labels and secondary information</span></div>
+        <div class="type-row"><span class="type-row__token">--text-xs</span><span style="font-size:var(--text-xs);color:var(--color-ink-500)">Hints and timestamps</span></div>
+      </div>
+    </div>
+    <div>
+      <h2>Spacing, shape, elevation</h2>
+      <p class="lead">A 4px base scale. Every margin and padding uses a token, so rhythm stays consistent across screens.</p>
+      <div class="card">
+        <div style="display:grid;gap:var(--space-3)">
+          <div><span class="type-row__token">--space-2 · 8px</span><div class="space-bar" style="width:8px"></div></div>
+          <div><span class="type-row__token">--space-4 · 16px</span><div class="space-bar" style="width:16px"></div></div>
+          <div><span class="type-row__token">--space-5 · 24px</span><div class="space-bar" style="width:24px"></div></div>
+          <div><span class="type-row__token">--space-6 · 32px</span><div class="space-bar" style="width:32px"></div></div>
+          <div><span class="type-row__token">--space-8 · 48px</span><div class="space-bar" style="width:48px"></div></div>
+        </div>
+        <div class="grid grid--2" style="margin-top:var(--space-4)">
+          <div class="card" style="border-radius:var(--radius-sm);box-shadow:none;padding:var(--space-3)"><span class="type-row__token">radius-sm · 6px</span></div>
+          <div class="card" style="border-radius:var(--radius-lg);box-shadow:var(--shadow-2);padding:var(--space-3)"><span class="type-row__token">radius-lg · shadow-2</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPONENTS ============ -->
+  <section class="section" aria-labelledby="components">
+    <h2 id="components">Components</h2>
+    <p class="lead">Build screens from these pieces. If something you need is missing, add it here first, then use it.</p>
+
+    <div class="grid grid--2">
+      <div class="card">
+        <p class="sample-title">Buttons</p>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center">
+          <button class="btn btn--primary" type="button">Book appointment</button>
+          <button class="btn btn--secondary" type="button">Reschedule</button>
+          <button class="btn btn--ghost" type="button">Cancel</button>
+          <button class="btn btn--primary" type="button" disabled>Unavailable</button>
+        </div>
+        <p class="field__hint" style="margin-top:var(--space-3)">One primary action per view. Secondary for alternatives. Ghost for low-stakes actions.</p>
+      </div>
+
+      <div class="card">
+        <p class="sample-title">Badges</p>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+          <span class="badge badge--success">Confirmed</span>
+          <span class="badge badge--warning">Awaiting pickup</span>
+          <span class="badge badge--danger">Cancelled</span>
+          <span class="badge badge--info">Reminder sent</span>
+          <span class="badge badge--neutral">Past visit</span>
+        </div>
+        <p class="field__hint" style="margin-top:var(--space-3)">Always include a text label. Color supports meaning but never carries it alone.</p>
+      </div>
+
+      <div class="card" style="grid-column: 1 / -1;">
+        <p class="sample-title">Status messages</p>
+        <div class="grid grid--2">
+          <div class="alert alert--success" role="status">
+            <div><span class="alert__title">Appointment confirmed</span><p>We'll text you a reminder 24 hours before.</p></div>
+          </div>
+          <div class="alert alert--info" role="status">
+            <div><span class="alert__title">Vaccination due soon</span><p>Biscuit's rabies booster is due in 3 weeks.</p></div>
+          </div>
+          <div class="alert alert--warning" role="status">
+            <div><span class="alert__title">Fasting required</span><p>No food after midnight before the bloodwork visit.</p></div>
+          </div>
+          <div class="alert alert--danger" role="alert">
+            <div><span class="alert__title">Time slot no longer available</span><p>Please choose another time. Your details are saved.</p></div>
+          </div>
+        </div>
+        <p class="field__hint" style="margin-top:var(--space-3)">Use role="alert" only for errors that need immediate attention. Use role="status" for everything else.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SAMPLE SCREEN ============ -->
+  <section class="section" aria-labelledby="sample">
+    <h2 id="sample">Sample screens</h2>
+    <p class="lead">A booking form and an appointment card, both built only from the parts above.</p>
+
+    <div class="split">
+      <!-- Booking form -->
+      <form class="card" id="booking-form" novalidate>
+        <p class="sample-title">Book a visit</p>
+        <h3>Who is coming in?</h3>
+        <p class="field__hint" style="margin-bottom:var(--space-4)">Fields marked with * are required.</p>
+
+        <div class="field" id="field-pet">
+          <label class="field__label" for="pet">Pet name<span class="field__required" aria-hidden="true">*</span></label>
+          <input class="input" id="pet" name="pet" type="text" autocomplete="off" required aria-describedby="pet-hint pet-error">
+          <span class="field__hint" id="pet-hint">As it appears on your pet's record.</span>
+          <span class="field__error" id="pet-error" hidden>Enter your pet's name.</span>
+        </div>
+
+        <div class="field" id="field-service">
+          <label class="field__label" for="service">Reason for visit<span class="field__required" aria-hidden="true">*</span></label>
+          <select class="select input" id="service" name="service" required aria-describedby="service-error">
+            <option value="">Choose a service</option>
+            <option>Wellness exam</option>
+            <option>Vaccinations</option>
+            <option>Sick visit</option>
+            <option>Dental cleaning</option>
+            <option>Surgery consultation</option>
+          </select>
+          <span class="field__error" id="service-error" hidden>Choose a reason for the visit.</span>
+        </div>
+
+        <div class="grid grid--2">
+          <div class="field" id="field-date">
+            <label class="field__label" for="date">Preferred date<span class="field__required" aria-hidden="true">*</span></label>
+            <input class="input" id="date" name="date" type="date" required aria-describedby="date-error">
+            <span class="field__error" id="date-error" hidden>Pick a date.</span>
+          </div>
+          <div class="field">
+            <label class="field__label" for="time">Preferred time</label>
+            <select class="select input" id="time" name="time">
+              <option>Morning (8–11 am)</option>
+              <option>Midday (11 am–2 pm)</option>
+              <option>Afternoon (2–5 pm)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="notes">Anything we should know?</label>
+          <textarea class="textarea" id="notes" name="notes" rows="3" aria-describedby="notes-hint"></textarea>
+          <span class="field__hint" id="notes-hint">Symptoms, medications, or behavior concerns. Optional.</span>
+        </div>
+
+        <div id="form-status" aria-live="polite"></div>
+
+        <div style="margin-top:var(--space-4)">
+          <button class="btn btn--primary btn--block" type="submit">Request appointment</button>
+        </div>
+        <p class="field__hint" style="margin-top:var(--space-3);text-align:center">We'll confirm by text within one business hour.</p>
+      </form>
+
+      <!-- Appointment card -->
+      <div>
+        <p class="sample-title">Upcoming</p>
+        <article class="card appointment" aria-labelledby="appt-title">
+          <div class="card__header">
+            <div class="appointment__pet">
+              <div class="appointment__avatar" aria-hidden="true">BI</div>
+              <div>
+                <div class="appointment__name" id="appt-title">Biscuit</div>
+                <div class="appointment__species">Beagle · 6 years</div>
+              </div>
+            </div>
+            <span class="badge badge--success">Confirmed</span>
+          </div>
+
+          <dl class="appointment__dl">
+            <dt>When</dt><dd>Tue, 14 Oct · 9:30 am</dd>
+            <dt>Reason</dt><dd>Wellness exam</dd>
+            <dt>Veterinarian</dt><dd>Dr. Okafor</dd>
+            <dt>Location</dt><dd>Hollowbrook, Room 2</dd>
+          </dl>
+
+          <div class="alert alert--warning" style="margin-top:var(--space-4);padding:var(--space-3)">
+            <div><span class="alert__title">Please arrive 10 minutes early</span></div>
+          </div>
+
+          <div class="card__footer">
+            <button class="btn btn--secondary" type="button">Reschedule</button>
+            <button class="btn btn--ghost" type="button">View pet record</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RULES ============ -->
+  <section class="section" aria-labelledby="rules">
+    <h2 id="rules">Using this foundation</h2>
+    <div class="card">
+      <ul class="rules">
+        <li><strong>Use tokens, never raw values.</strong> If you need a color, size, or space that isn't here, add a token first.</li>
+        <li><strong>Name by role, not appearance.</strong> Write <code>--color-danger-ink</code>, not <code>--red-dark</code>.</li>
+        <li><strong>Compose, don't restyle.</strong> Build screens from existing components. Add a modifier only if the variant will be reused.</li>
+        <li><strong>Every input has a visible label.</strong> Hints and errors are linked with <code>aria-describedby</code>.</li>
+        <li><strong>Every touch target is at least 44px.</strong> Keep focus rings visible. Never remove <code>:focus-visible</code>.</li>
+        <li><strong>Status is never color alone.</strong> Pair every color with a word.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('booking-form');
+  var status = document.getElementById('form-status');
+
+  function setError(fieldId, errorId, show) {
+    var field = document.getElementById(fieldId);
+    var error = document.getElementById(errorId);
+    var input = field.querySelector('input, select, textarea');
+    error.hidden = !show;
+    field.classList.toggle('field--invalid', show);
+    input.setAttribute('aria-invalid', show ? 'true' : 'false');
+    return !show;
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var pet = form.pet.value.trim();
+    var service = form.service.value;
+    var date = form.date.value;
+
+    var ok = true;
+    ok = setError('field-pet', 'pet-error', !pet) && ok;
+    ok = setError('field-service', 'service-error', !service) && ok;
+    ok = setError('field-date', 'date-error', !date) && ok;
+
+    status.textContent = '';
+    status.className = '';
+
+    if (!ok) {
+      var first = form.querySelector('.field--invalid input, .field--invalid select');
+      if (first) first.focus();
+      return;
+    }
+
+    var wrap = document.createElement('div');
+    wrap.className = 'alert alert--success';
+    wrap.setAttribute('role', 'status');
+    var body = document.createElement('div');
+    var title = document.createElement('span');
+    title.className = 'alert__title';
+    title.textContent = 'Request received for ' + pet;
+    var msg = document.createElement('p');
+    msg.textContent = service + ' on ' + date + '. We\u2019ll confirm by text within one business hour.';
+    body.appendChild(title);
+    body.appendChild(msg);
+    wrap.appendChild(body);
+    status.appendChild(wrap);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbound Shipments — Brightwater Freight</title>
+<style>
+  :root {
+    --bg: #0f1a24;
+    --panel: #162431;
+    --row-alt: #1a2a38;
+    --line: #2a3d4e;
+    --text: #e8eff5;
+    --muted: #8fa5b8;
+    --accent: #5cc8e8;
+    --ok: #4cd08a;
+    --warn: #ffc247;
+    --bad: #ff6b6b;
+    --info: #6ea8ff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Helvetica Neue", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    padding: 2vh 3vw;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.6vh;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 1.2vh;
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(24px, 2.6vw, 48px);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  h1 span { color: var(--accent); }
+  .clock {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: clamp(18px, 1.8vw, 34px);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    font-size: clamp(18px, 1.9vw, 36px);
+  }
+  th {
+    text-align: left;
+    font-size: 0.6em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    padding: 0.7em 0.9em;
+    border-bottom: 2px solid var(--line);
+  }
+  td {
+    padding: 0.62em 0.9em;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  .mono {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .id { color: var(--accent); }
+  .door { text-align: center; }
+  th.door { text-align: center; }
+  .door .mono {
+    display: inline-block;
+    min-width: 2.4em;
+    padding: 0.05em 0.4em;
+    border: 2px solid var(--line);
+    border-radius: 6px;
+    background: var(--bg);
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 600;
+  }
+  .status::before {
+    content: "";
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .s-arrived { color: var(--ok); }
+  .s-unloading { color: var(--info); }
+  .s-enroute { color: var(--text); }
+  .s-delayed { color: var(--warn); }
+  .s-delayed::before { border-radius: 2px; transform: rotate(45deg); }
+  .s-late { color: var(--bad); }
+  .s-late::before { border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .s-arrived::before { background: none; border: 0.18em solid currentColor; }
+</style>
+</head>
+<body>
+  <header>
+    <h1><span>Brightwater Freight</span> · Inbound Shipments</h1>
+    <div class="clock" id="clock">--:--</div>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Shipment ID</th>
+        <th>Carrier</th>
+        <th class="door">Dock Door</th>
+        <th>ETA</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono id">BW-20412</td><td>Northline Transport</td><td class="door"><span class="mono">04</span></td><td class="mono">07:45</td><td><span class="status s-unloading">Unloading</span></td></tr>
+      <tr><td class="mono id">BW-20413</td><td>Harbor &amp; Rail Logistics</td><td class="door"><span class="mono">07</span></td><td class="mono">08:20</td><td><span class="status s-arrived">Arrived</span></td></tr>
+      <tr><td class="mono id">BW-20415</td><td>Summit Freightways</td><td class="door"><span class="mono">02</span></td><td class="mono">09:10</td><td><span class="status s-enroute">En route</span></td></tr>
+      <tr><td class="mono id">BW-20418</td><td>Pioneer Carriers</td><td class="door"><span class="mono">11</span></td><td class="mono">09:35</td><td><span class="status s-delayed">Delayed</span></td></tr>
+      <tr><td class="mono id">BW-20421</td><td>Northline Transport</td><td class="door"><span class="mono">05</span></td><td class="mono">10:15</td><td><span class="status s-enroute">En route</span></td></tr>
+      <tr><td class="mono id">BW-20424</td><td>BlueRidge Express</td><td class="door"><span class="mono">09</span></td><td class="mono">10:50</td><td><span class="status s-late">Late</span></td></tr>
+      <tr><td class="mono id">BW-20427</td><td>Summit Freightways</td><td class="door"><span class="mono">03</span></td><td class="mono">11:30</td><td><span class="status s-enroute">En route</span></td></tr>
+      <tr><td class="mono id">BW-20430</td><td>Harbor &amp; Rail Logistics</td><td class="door"><span class="mono">08</span></td><td class="mono">12:05</td><td><span class="status s-enroute">En route</span></td></tr>
+    </tbody>
+  </table>
+
+<script>
+  (function () {
+    var el = document.getElementById("clock");
+    function tick() {
+      var d = new Date();
+      el.textContent = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
+    tick();
+    setInterval(tick, 30000);
+  })();
+</script>
+</body>
+</html>

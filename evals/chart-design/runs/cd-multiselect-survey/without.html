@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which features do you use?</title>
+<style>
+  :root {
+    --surface: #ffffff;
+    --ink: #1f2430;
+    --ink-2: #4a5263;
+    --muted: #6b7385;
+    --grid: #e6e9ef;
+    --bar: #2b6cb0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #1b1f27;
+      --ink: #eef0f4;
+      --ink-2: #b9bfcc;
+      --muted: #9097a8;
+      --grid: #2f3542;
+      --bar: #6aa6e8;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.4;
+  }
+  .card { max-width: 560px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; font-weight: 650; }
+  .sub { margin: 0 0 24px; color: var(--ink-2); font-size: 14px; }
+  .chart { position: relative; margin: 0; padding: 0; list-style: none; }
+  .chart::before, .chart::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+  }
+  .name { font-size: 15px; color: var(--ink); text-align: right; }
+  .track { display: flex; align-items: center; gap: 8px; }
+  .bar {
+    height: 22px;
+    background: var(--bar);
+    border-radius: 0 4px 4px 0;
+    min-width: 2px;
+  }
+  .val { font-size: 15px; font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .axis {
+    display: grid; grid-template-columns: 92px 1fr; gap: 12px; margin-top: 6px;
+    font-size: 12px; color: var(--muted);
+  }
+  .axis div { display: flex; justify-content: space-between; }
+  .note { margin: 20px 0 0; font-size: 13px; color: var(--muted); }
+  .takeaway { margin: 0 0 20px; font-size: 15px; color: var(--ink); }
+  /* the chart's baseline sits at the left edge of the bar column */
+  .plot { position: relative; }
+  .plot::before {
+    content: ""; position: absolute; left: 104px; top: 0; bottom: 0; width: 1px; background: var(--grid);
+  }
+  .chart::before, .chart::after { display: none; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <h1>Which features do you use?</h1>
+    <p class="sub">Share of respondents who use each feature · 420 responses, multiple answers allowed</p>
+    <p class="takeaway"><strong>Search</strong> is the clear favorite at 71%. Fewer than one in four use Export or Templates.</p>
+
+    <div class="plot">
+      <ul class="chart" role="list">
+        <li class="row" title="Search: 71% of respondents">
+          <span class="name">Search</span>
+          <span class="track"><span class="bar" style="width:calc(71% * 0.88)"></span><span class="val">71%</span></span>
+        </li>
+        <li class="row" title="Tags: 48% of respondents">
+          <span class="name">Tags</span>
+          <span class="track"><span class="bar" style="width:calc(48% * 0.88)"></span><span class="val">48%</span></span>
+        </li>
+        <li class="row" title="Sharing: 35% of respondents">
+          <span class="name">Sharing</span>
+          <span class="track"><span class="bar" style="width:calc(35% * 0.88)"></span><span class="val">35%</span></span>
+        </li>
+        <li class="row" title="Export: 22% of respondents">
+          <span class="name">Export</span>
+          <span class="track"><span class="bar" style="width:calc(22% * 0.88)"></span><span class="val">22%</span></span>
+        </li>
+        <li class="row" title="Templates: 15% of respondents">
+          <span class="name">Templates</span>
+          <span class="track"><span class="bar" style="width:calc(15% * 0.88)"></span><span class="val">15%</span></span>
+        </li>
+      </ul>
+    </div>
+
+    <p class="note">Percentages are of all 420 respondents, so they add up to more than 100%.</p>
+  </main>
+</body>
+</html>

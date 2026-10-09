@@ -1,0 +1,1 @@
+"Place order" should be the filled, prominent button, because it's the one action that finishes the step and the page should have one primary action. Make "Back to cart" a quiet outline or text link so it's still easy to find but doesn't compete with it.

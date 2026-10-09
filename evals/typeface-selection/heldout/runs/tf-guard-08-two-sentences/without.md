@@ -1,0 +1,1 @@
+Use **Cormorant Garamond** (light or regular weight, in all caps with a little letter-spacing) for the names. It's an elegant, high-contrast serif that feels romantic without a script font, and it's free on Google Fonts and handles the accent in "Inés" well.

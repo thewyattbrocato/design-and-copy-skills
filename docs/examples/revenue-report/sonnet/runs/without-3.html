@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember &amp; Oak: September 2026 Report</title>
+<style>
+  :root {
+    --surface: #fbf7f1;
+    --card: #ffffff;
+    --ink: #2a1f19;
+    --ink-2: #6b5b50;
+    --ink-3: #8f7f73;
+    --line: #e8dfd4;
+    --grid: #efe8de;
+    --ember: #b4491f;
+    --ember-soft: #d99a7c;
+    --good: #2f6b3f;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 28px 40px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 100vh;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+  .brand { font-family: Georgia, "Times New Roman", serif; font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
+  .brand span { color: var(--ember); }
+  .meta { text-align: right; font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+  .meta strong { display: block; color: var(--ink); font-size: 16px; }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; }
+  .kpi .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); }
+  .kpi .value { font-size: 30px; font-weight: 650; margin-top: 4px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .kpi .sub { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+  .kpi .up { color: var(--good); font-weight: 600; }
+
+  .main { display: grid; grid-template-columns: 1.35fr 1fr; gap: 14px; flex: 1; min-height: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; min-width: 0; }
+  .card h2 { font-size: 15px; font-weight: 650; }
+  .card .desc { font-size: 12px; color: var(--ink-2); margin: 2px 0 10px; }
+
+  .chart-wrap { position: relative; flex: 1; min-height: 0; }
+  svg { width: 100%; height: 100%; display: block; }
+  svg text { font-family: inherit; fill: var(--ink-2); font-size: 11px; }
+  .bar { fill: var(--ember-soft); }
+  .bar.last, .bar:hover { fill: var(--ember); }
+  .tip {
+    position: absolute; pointer-events: none; background: var(--ink); color: #fff;
+    font-size: 12px; padding: 6px 10px; border-radius: 6px; opacity: 0;
+    transform: translate(-50%, -100%); white-space: nowrap; transition: opacity .1s;
+  }
+  .tip b { font-variant-numeric: tabular-nums; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th { text-align: right; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); font-weight: 600; padding: 0 0 8px; border-bottom: 1px solid var(--ink); }
+  th:first-child, td:first-child { text-align: left; }
+  td { text-align: right; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  td:first-child { width: 100%; }
+  .rank { display: inline-block; width: 18px; color: var(--ink-3); font-size: 12px; }
+  .pname { font-weight: 600; }
+  .psub { display: block; font-size: 11px; color: var(--ink-3); margin-left: 18px; }
+  th:not(:first-child), td:not(:first-child) { padding-left: 18px; white-space: nowrap; }
+  tfoot td { border-bottom: none; font-weight: 650; padding-top: 12px; }
+  .note { font-size: 12px; color: var(--ink-3); margin-top: auto; padding-top: 10px; }
+  footer { font-size: 11px; color: var(--ink-3); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand">Ember <span>&amp;</span> Oak</div>
+    <div class="meta"><strong>Monthly Report: September 2026</strong>Small-batch coffee roasters · Prepared Oct 7, 2026</div>
+  </header>
+
+  <section class="kpis">
+    <div class="kpi"><div class="label">Revenue, last 4 weeks</div><div class="value">$33,930</div><div class="sub"><span class="up">▲ 11.9%</span> vs. prior 4 weeks ($30,330)</div></div>
+    <div class="kpi"><div class="label">Revenue, last 12 weeks</div><div class="value">$92,290</div><div class="sub">Jul 13 – Oct 4</div></div>
+    <div class="kpi"><div class="label">Avg. weekly revenue</div><div class="value">$7,691</div><div class="sub">Best week: $9,040 (Sep 28)</div></div>
+    <div class="kpi"><div class="label">Bags &amp; boxes sold</div><div class="value">1,343</div><div class="sub">Top 6 products, last 4 weeks</div></div>
+  </section>
+
+  <section class="main">
+    <div class="card">
+      <h2>Weekly revenue</h2>
+      <div class="desc">Last 12 weeks, by week starting Monday</div>
+      <div class="chart-wrap" id="wrap">
+        <svg id="chart" viewBox="0 0 640 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bar chart of weekly revenue for the last 12 weeks, rising from $6,820 to $9,040"></svg>
+        <div class="tip" id="tip"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Top 6 products</h2>
+      <div class="desc">Last 4 weeks (Sep 7 – Oct 4), ranked by revenue</div>
+      <table>
+        <thead><tr><th>Product</th><th>Units</th><th>Revenue</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank">1</span><span class="pname">House Blend</span><span class="psub">12 oz bag · $16</span></td><td>312</td><td>$4,992</td></tr>
+          <tr><td><span class="rank">2</span><span class="pname">Espresso Roast</span><span class="psub">12 oz bag · $17</span></td><td>268</td><td>$4,556</td></tr>
+          <tr><td><span class="rank">3</span><span class="pname">Ethiopia Yirgacheffe</span><span class="psub">12 oz bag · $19</span></td><td>238</td><td>$4,522</td></tr>
+          <tr><td><span class="rank">4</span><span class="pname">Colombia Huila</span><span class="psub">12 oz bag · $17</span></td><td>205</td><td>$3,485</td></tr>
+          <tr><td><span class="rank">5</span><span class="pname">Monthly Subscription Box</span><span class="psub">2 × 12 oz · $38</span></td><td>84</td><td>$3,192</td></tr>
+          <tr><td><span class="rank">6</span><span class="pname">Guatemala Antigua</span><span class="psub">12 oz bag · $18</span></td><td>176</td><td>$3,168</td></tr>
+        </tbody>
+        <tfoot><tr><td>Top 6 total</td><td>1,283</td><td>$23,915</td></tr></tfoot>
+      </table>
+      <div class="note">Top 6 account for 70% of 4-week revenue.</div>
+    </div>
+  </section>
+
+  <footer><span>Ember &amp; Oak · Confidential</span><span>Figures are unaudited</span></footer>
+
+<script>
+(function () {
+  var data = [
+    ["Jul 13", 6820], ["Jul 20", 7040], ["Jul 27", 6910], ["Aug 3", 7260],
+    ["Aug 10", 7480], ["Aug 17", 7210], ["Aug 24", 7690], ["Aug 31", 7950],
+    ["Sep 7", 8120], ["Sep 14", 8460], ["Sep 21", 8310], ["Sep 28", 9040]
+  ];
+  var W = 640, H = 300, L = 44, R = 8, T = 22, B = 28, max = 10000;
+  var pw = W - L - R, ph = H - T - B, slot = pw / data.length, bw = 28;
+  var ns = "http://www.w3.org/2000/svg", svg = document.getElementById("chart");
+  var wrap = document.getElementById("wrap"), tip = document.getElementById("tip");
+  function el(n, a, t) {
+    var e = document.createElementNS(ns, n);
+    for (var k in a) e.setAttribute(k, a[k]);
+    if (t) e.textContent = t;
+    svg.appendChild(e); return e;
+  }
+  function y(v) { return T + ph - v / max * ph; }
+  [0, 2500, 5000, 7500, 10000].forEach(function (v) {
+    el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), stroke: v === 0 ? "#8f7f73" : "#efe8de", "stroke-width": 1 });
+    el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end" }, v === 0 ? "$0" : "$" + (v / 1000) + "k");
+  });
+  data.forEach(function (d, i) {
+    var x = L + i * slot + (slot - bw) / 2, top = y(d[1]), h = T + ph - top;
+    var last = i === data.length - 1;
+    var path = "M" + x + "," + (T + ph) + "V" + (top + 4) + "Q" + x + "," + top + " " + (x + 4) + "," + top +
+      "H" + (x + bw - 4) + "Q" + (x + bw) + "," + top + " " + (x + bw) + "," + (top + 4) + "V" + (T + ph) + "Z";
+    var b = el("path", { d: path, "class": "bar" + (last ? " last" : "") });
+    el("text", { x: x + bw / 2, y: H - 9, "text-anchor": "middle" }, d[0]);
+    if (last) el("text", { x: x + bw / 2, y: top - 6, "text-anchor": "middle", style: "fill:#2a1f19;font-weight:600;font-size:12px" }, "$" + d[1].toLocaleString("en-US"));
+    var hit = el("rect", { x: L + i * slot, y: T, width: slot, height: ph + B, fill: "transparent" });
+    hit.addEventListener("mousemove", function () {
+      var sx = wrap.clientWidth / (svg.getBoundingClientRect().width || 1);
+      var r = svg.getBoundingClientRect(), wr = wrap.getBoundingClientRect();
+      var scale = Math.min(r.width / W, r.height / H);
+      var offX = (r.width - W * scale) / 2, offY = (r.height - H * scale) / 2;
+      tip.style.left = (r.left - wr.left + offX + (x + bw / 2) * scale) + "px";
+      tip.style.top = (r.top - wr.top + offY + top * scale - 6) + "px";
+      tip.innerHTML = "Week of " + d[0] + "<br><b>$" + d[1].toLocaleString("en-US") + "</b>";
+      tip.style.opacity = 1;
+      b.style.fill = "#b4491f";
+    });
+    hit.addEventListener("mouseleave", function () { tip.style.opacity = 0; b.style.fill = ""; });
+  });
+})();
+</script>
+</body>
+</html>

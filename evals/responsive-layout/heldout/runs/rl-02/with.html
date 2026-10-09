@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbor Line Freight – Dispatch</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #f3f5f7;
+    --surface: #ffffff;
+    --ink: #17212b;
+    --muted: #5b6875;
+    --line: #d9dfe5;
+    --brand: #0b3d5c;
+    --brand-ink: #ffffff;
+    --accent: #e8f1f7;
+    --ok-bg: #dff3e6;   --ok-ink: #17592d;
+    --warn-bg: #fdf0cf; --warn-ink: #6b4b00;
+    --bad-bg: #fbe1df;  --bad-ink: #8a1c14;
+    --info-bg: #dfeaf8; --info-ink: #1b4a85;
+    --gap: 1rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11171d;
+      --surface: #1a232c;
+      --ink: #e6ebf0;
+      --muted: #9aa8b5;
+      --line: #2c3945;
+      --brand: #0a2a3f;
+      --accent: #24394a;
+      --ok-bg: #1d3a28;   --ok-ink: #9be0b1;
+      --warn-bg: #43361a; --warn-ink: #f0d58a;
+      --bad-bg: #4a2522;  --bad-ink: #f5aaa4;
+      --info-bg: #213650; --info-ink: #a9c8f2;
+    }
+  }
+
+  body { margin: 0; line-height: 1.4; }
+
+  .app {
+    min-block-size: 100vh;
+    min-block-size: 100dvh;
+    display: grid;
+    grid-template-columns: minmax(11rem, 14rem) minmax(0, 1fr);
+  }
+
+  /* ---------- Sidebar ---------- */
+  .side {
+    background: var(--brand);
+    color: var(--brand-ink);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem 0.75rem;
+  }
+  .brand {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 0.5rem;
+    overflow-wrap: anywhere;
+  }
+  .brand strong { font-size: 1.1rem; letter-spacing: 0.01em; }
+  .brand span { font-size: 0.8rem; opacity: 0.75; }
+
+  .nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .nav a {
+    display: block;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.4rem;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .nav a:hover { background: rgb(255 255 255 / 0.12); }
+  .nav a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+  .nav a[aria-current="page"] { background: rgb(255 255 255 / 0.2); font-weight: 600; }
+
+  /* Viewport question (primary navigation pattern): sidebar becomes a top bar.
+     Nav wraps instead of scrolling, so every item stays visible. */
+  @media (max-width: 40em) {
+    .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+    .side { padding: 0.75rem; gap: 0.5rem; }
+    .nav { flex-direction: row; flex-wrap: wrap; }
+    .nav a { padding: 0.45rem 0.7rem; }
+  }
+
+  /* ---------- Main ---------- */
+  .main {
+    min-inline-size: 0;
+    padding: clamp(0.75rem, 3vw, 1.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+  }
+  .head h1 { margin: 0; font-size: 1.4rem; }
+  .head p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+  /* ---------- Loads list ---------- */
+  .loads {
+    container-type: inline-size;
+    container-name: loads;
+    min-inline-size: 0;
+  }
+  .list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .row {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    display: grid;
+    gap: 0.6rem 1rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .row > * { min-inline-size: 0; overflow-wrap: anywhere; }
+
+  .cell { display: flex; flex-direction: column; gap: 0.1rem; }
+  .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .val { font-size: 0.95rem; }
+  .num { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .badge {
+    display: inline-block;
+    align-self: start;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ok   { background: var(--ok-bg);   color: var(--ok-ink); }
+  .warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .bad  { background: var(--bad-bg);  color: var(--bad-ink); }
+  .info { background: var(--info-bg); color: var(--info-ink); }
+
+  /* Header row only appears in the table layout */
+  .cols { display: none; }
+
+  /* Wide container: true table-like layout */
+  @container loads (min-width: 46rem) {
+    .cols, .row {
+      grid-template-columns:
+        minmax(5.5rem, 0.8fr) minmax(0, 1.3fr) minmax(0, 1.3fr)
+        minmax(0, 1.1fr) minmax(6.5rem, 0.9fr) minmax(4.5rem, 0.7fr);
+      align-items: center;
+    }
+    .cols {
+      display: grid;
+      gap: 1rem;
+      padding: 0 1rem 0.4rem;
+    }
+    .cols span {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .row .label { display: none; }
+  }
+
+  /* Very narrow container: single column cards */
+  @container loads (max-width: 22rem) {
+    .row { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <strong>Harbor Line Freight</strong>
+      <span>Dispatch</span>
+    </div>
+    <nav aria-label="Primary">
+      <ul class="nav">
+        <li><a href="#loads" aria-current="page">Loads</a></li>
+        <li><a href="#drivers">Drivers</a></li>
+        <li><a href="#trucks">Trucks</a></li>
+        <li><a href="#invoices">Invoices</a></li>
+        <li><a href="#reports">Reports</a></li>
+        <li><a href="#settings">Settings</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="head">
+      <h1>Today's Loads</h1>
+      <p>Tuesday, October 6, 2026 · 6 loads</p>
+    </div>
+
+    <section class="loads" aria-label="Today's loads">
+      <div class="cols" aria-hidden="true">
+        <span>Load</span><span>Origin</span><span>Destination</span><span>Driver</span><span>Status</span><span>ETA</span>
+      </div>
+      <ul class="list">
+        <li class="row">
+          <div class="cell"><span class="label">Load</span><span class="val num">HL-24817</span></div>
+          <div class="cell"><span class="label">Origin</span><span class="val">Columbus, OH</span></div>
+          <div class="cell"><span class="label">Destination</span><span class="val">Indianapolis, IN</span></div>
+          <div class="cell"><span class="label">Driver</span><span class="val">Marcus Reyes</span></div>
+          <div class="cell"><span class="label">Status</span><span class="badge info">In transit</span></div>
+          <div class="cell"><span class="label">ETA</span><span class="val">1:45 PM</span></div>
+        </li>
+        <li class="row">
+          <div class="cell"><span class="label">Load</span><span class="val num">HL-24818</span></div>
+          <div class="cell"><span class="label">Origin</span><span class="val">Toledo, OH</span></div>
+          <div class="cell"><span class="label">Destination</span><span class="val">Fort Wayne, IN</span></div>
+          <div class="cell"><span class="label">Driver</span><span class="val">Dana Whitfield</span></div>
+          <div class="cell"><span class="label">Status</span><span class="badge ok">Delivered</span></div>
+          <div class="cell"><span class="label">ETA</span><span class="val">10:20 AM</span></div>
+        </li>
+        <li class="row">
+          <div class="cell"><span class="label">Load</span><span class="val num">HL-24819</span></div>
+          <div class="cell"><span class="label">Origin</span><span class="val">Cincinnati, OH</span></div>
+          <div class="cell"><span class="label">Destination</span><span class="val">Evansville, IN</span></div>
+          <div class="cell"><span class="label">Driver</span><span class="val">Tomasz Kowalski</span></div>
+          <div class="cell"><span class="label">Status</span><span class="badge warn">Delayed</span></div>
+          <div class="cell"><span class="label">ETA</span><span class="val">4:10 PM</span></div>
+        </li>
+        <li class="row">
+          <div class="cell"><span class="label">Load</span><span class="val num">HL-24820</span></div>
+          <div class="cell"><span class="label">Origin</span><span class="val">Dayton, OH</span></div>
+          <div class="cell"><span class="label">Destination</span><span class="val">South Bend, IN</span></div>
+          <div class="cell"><span class="label">Driver</span><span class="val">Priya Nair</span></div>
+          <div class="cell"><span class="label">Status</span><span class="badge info">Loading</span></div>
+          <div class="cell"><span class="label">ETA</span><span class="val">5:30 PM</span></div>
+        </li>
+        <li class="row">
+          <div class="cell"><span class="label">Load</span><span class="val num">HL-24821</span></div>
+          <div class="cell"><span class="label">Origin</span><span class="val">Akron, OH</span></div>
+          <div class="cell"><span class="label">Destination</span><span class="val">Muncie, IN</span></div>
+          <div class="cell"><span class="label">Driver</span><span class="val">Elijah Brooks</span></div>
+          <div class="cell"><span class="label">Status</span><span class="badge bad">Breakdown</span></div>
+          <div class="cell"><span class="label">ETA</span><span class="val">TBD</span></div>
+        </li>
+        <li class="row">
+          <div class="cell"><span class="label">Load</span><span class="val num">HL-24822</span></div>
+          <div class="cell"><span class="label">Origin</span><span class="val">Lima, OH</span></div>
+          <div class="cell"><span class="label">Destination</span><span class="val">Lafayette, IN</span></div>
+          <div class="cell"><span class="label">Driver</span><span class="val">Sam Okafor</span></div>
+          <div class="cell"><span class="label">Status</span><span class="badge ok">On time</span></div>
+          <div class="cell"><span class="label">ETA</span><span class="val">2:55 PM</span></div>
+        </li>
+      </ul>
+    </section>
+  </main>
+</div>
+</body>
+</html>

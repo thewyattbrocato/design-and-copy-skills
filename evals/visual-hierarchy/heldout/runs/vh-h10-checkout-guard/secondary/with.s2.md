@@ -1,0 +1,1 @@
+Make **Place order** the filled, prominent button, since it's the one action that completes the flow. **Back to cart** should be a secondary style, such as an outlined or text button, so it's available without competing for attention.

@@ -1,0 +1,1 @@
+Not quite. The gray #9aa0a6 button with white 13px text is about 2.6:1 contrast (below WCAG AA) and reads as disabled, and the 11px #b5b5b5 billing note is about 2:1, so it's hard to read. Also, Starter gets the blue button and "Most popular" badge while Growth, the pricier plan, looks de-emphasized, so you may want to swap that emphasis.

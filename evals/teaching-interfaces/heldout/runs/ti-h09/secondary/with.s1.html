@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forklift Safety Check</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --text: #1d2330;
+    --muted: #5b6270;
+    --accent: #1f6feb;
+    --ok: #1a7f37;
+    --ok-bg: #dafbe1;
+    --bad: #cf222e;
+    --bad-bg: #ffebe9;
+    --border: #d0d7de;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+  .question {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .question.correct { border-color: var(--ok); background: var(--ok-bg); }
+  .question.wrong { border-color: var(--bad); background: var(--bad-bg); }
+  .question legend {
+    font-weight: 600;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  .question fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .option:hover { background: rgba(31, 111, 235, 0.06); }
+  .option input { margin-top: 4px; }
+  .feedback {
+    margin-top: 10px;
+    font-size: 0.95rem;
+  }
+  .feedback strong { font-weight: 600; }
+  .feedback.correct-text { color: var(--ok); }
+  .feedback.wrong-text { color: var(--bad); }
+  .actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 6px;
+  }
+  button {
+    font: inherit;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.08); }
+  button.secondary {
+    background: var(--card);
+    color: var(--accent);
+  }
+  #warning {
+    color: var(--bad);
+    font-size: 0.95rem;
+  }
+  #result {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-top: 18px;
+  }
+  #result h2 {
+    margin: 0 0 6px;
+    font-size: 1.3rem;
+  }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Forklift Safety Check</h1>
+  <p class="subtitle">Answer all five questions, then submit to see your score.</p>
+
+  <form id="quiz" novalidate>
+    <fieldset class="question" id="q1">
+      <legend>1. A pallet is labeled 2,500 lb, but the forklift's data plate shows a rated capacity of 2,000 lb at its load center. What should you do?</legend>
+      <label class="option"><input type="radio" name="q1" value="a"> <span>Lift it, since the pallet weight is within a few hundred pounds of the limit.</span></label>
+      <label class="option"><input type="radio" name="q1" value="b"> <span>Lift it slowly with the forks spread wide.</span></label>
+      <label class="option"><input type="radio" name="q1" value="c"> <span>Do not lift it. Get a higher-capacity truck or a different method.</span></label>
+      <label class="option"><input type="radio" name="q1" value="d"> <span>Lift it only if a coworker stands on the other side to balance it.</span></label>
+      <div class="feedback hidden"></div>
+    </fieldset>
+
+    <fieldset class="question" id="q2">
+      <legend>2. You are driving toward a blind intersection in the warehouse aisle. What is the correct action?</legend>
+      <label class="option"><input type="radio" name="q2" value="a"> <span>Speed up so you clear the intersection quickly.</span></label>
+      <label class="option"><input type="radio" name="q2" value="b"> <span>Sound the horn, slow down, and stop if you cannot see clearly.</span></label>
+      <label class="option"><input type="radio" name="q2" value="c"> <span>Honk only if you see a pedestrian already in the path.</span></label>
+      <label class="option"><input type="radio" name="q2" value="d"> <span>Assume the other person will stop because they can see you.</span></label>
+      <div class="feedback hidden"></div>
+    </fieldset>
+
+    <fieldset class="question" id="q3">
+      <legend>3. What is the correct way to handle your travel speed in the warehouse?</legend>
+      <label class="option"><input type="radio" name="q3" value="a"> <span>Drive as fast as the truck allows when the aisle is clear.</span></label>
+      <label class="option"><input type="radio" name="q3" value="b"> <span>Follow the posted site speed limit (commonly 5 mph / 8 km/h) and slow down further in congested areas, turns, and ramps.</span></label>
+      <label class="option"><input type="radio" name="q3" value="c"> <span>Match the speed of the forklift in front of you, whatever it is.</span></label>
+      <label class="option"><input type="radio" name="q3" value="d"> <span>Speed up when you are carrying a load so it arrives sooner.</span></label>
+      <div class="feedback hidden"></div>
+    </fieldset>
+
+    <fieldset class="question" id="q4">
+      <legend>4. You need to park the forklift and step away. Which sequence is correct?</legend>
+      <label class="option"><input type="radio" name="q4" value="a"> <span>Leave the forks raised so you can get to the truck faster next time.</span></label>
+      <label class="option"><input type="radio" name="q4" value="b"> <span>Lower the forks fully to the floor, neutralize the controls, set the parking brake, turn off the engine, and remove the key.</span></label>
+      <label class="option"><input type="radio" name="q4" value="c"> <span>Park on the slope of the ramp so it is out of the aisle.</span></label>
+      <label class="option"><input type="radio" name="q4" value="d"> <span>Leave the engine running and just step off the truck.</span></label>
+      <div class="feedback hidden"></div>
+    </fieldset>
+
+    <fieldset class="question" id="q5">
+      <legend>5. When traveling with a load, how should you carry it?</legend>
+      <label class="option"><input type="radio" name="q5" value="a"> <span>Raise the forks high so you can see over the load.</span></label>
+      <label class="option"><input type="radio" name="q5" value="b"> <span>Keep the load low and tilted back, with the forks a few inches off the floor.</span></label>
+      <label class="option"><input type="radio" name="q5" value="c"> <span>Tilt the load forward so it sits more securely on the forks.</span></label>
+      <label class="option"><input type="radio" name="q5" value="d"> <span>Let a coworker ride on the forks to steady the load.</span></label>
+      <div class="feedback hidden"></div>
+    </fieldset>
+
+    <div class="actions">
+      <button type="submit">Submit</button>
+      <span id="warning" class="hidden">Please answer all five questions before submitting.</span>
+    </div>
+  </form>
+
+  <section id="result" class="hidden" aria-live="polite">
+    <h2 id="score"></h2>
+    <p id="summary"></p>
+    <button type="button" id="retry" class="secondary">Try again</button>
+  </section>
+</main>
+
+<script>
+  const answerKey = {
+    q1: "c",
+    q2: "b",
+    q3: "b",
+    q4: "b",
+    q5: "b"
+  };
+
+  const explanations = {
+    q1: "Never exceed the rated capacity on the data plate. Capacity drops as the load center moves further out, so a load that seems close can still be unsafe.",
+    q2: "Blind intersections call for sounding the horn, slowing down, and stopping if you cannot see. Pedestrians and other trucks may not see you.",
+    q3: "Follow the posted site speed limit and slow down for turns, ramps, and congested areas. Speed increases the risk of tip-overs and collisions.",
+    q4: "Lowering the forks, neutralizing controls, setting the brake, and removing the key prevents the truck from moving or being used by someone else.",
+    q5: "A low, tilted-back load is more stable and improves visibility of the path. Never allow riders on the forks or any part of the truck."
+  };
+
+  const form = document.getElementById("quiz");
+  const warning = document.getElementById("warning");
+  const result = document.getElementById("result");
+  const scoreEl = document.getElementById("score");
+  const summaryEl = document.getElementById("summary");
+  const retryBtn = document.getElementById("retry");
+  const questions = Object.keys(answerKey);
+
+  function optionLabel(qId, value) {
+    const input = form.querySelector(`input[name="${qId}"][value="${value}"]`);
+    return input ? input.parentElement.querySelector("span").textContent : value;
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const unanswered = questions.filter((qId) => !form.querySelector(`input[name="${qId}"]:checked`));
+    if (unanswered.length > 0) {
+      warning.classList.remove("hidden");
+      document.getElementById(unanswered[0]).scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    warning.classList.add("hidden");
+
+    let score = 0;
+    questions.forEach((qId) => {
+      const card = document.getElementById(qId);
+      const selected = form.querySelector(`input[name="${qId}"]:checked`).value;
+      const feedback = card.querySelector(".feedback");
+      const isCorrect = selected === answerKey[qId];
+
+      card.classList.remove("correct", "wrong");
+      feedback.classList.remove("hidden", "correct-text", "wrong-text");
+      feedback.innerHTML = "";
+
+      if (isCorrect) {
+        score++;
+        card.classList.add("correct");
+        feedback.classList.add("correct-text");
+        feedback.innerHTML = "<strong>Correct.</strong> " + explanations[qId];
+      } else {
+        card.classList.add("wrong");
+        feedback.classList.add("wrong-text");
+        const right = optionLabel(qId, answerKey[qId]);
+        feedback.innerHTML = "<strong>Incorrect.</strong> The right answer is: " + right + " " + explanations[qId];
+      }
+
+      form.querySelectorAll(`input[name="${qId}"]`).forEach((input) => input.disabled = true);
+    });
+
+    scoreEl.textContent = "Your score: " + score + " out of " + questions.length;
+    summaryEl.textContent = score === questions.length
+      ? "Great work. You got every question right."
+      : "Review the questions you missed above, then try again.";
+    result.classList.remove("hidden");
+    result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    form.querySelector('button[type="submit"]').disabled = true;
+  });
+
+  retryBtn.addEventListener("click", () => {
+    form.reset();
+    questions.forEach((qId) => {
+      const card = document.getElementById(qId);
+      card.classList.remove("correct", "wrong");
+      const feedback = card.querySelector(".feedback");
+      feedback.classList.add("hidden");
+      feedback.innerHTML = "";
+      form.querySelectorAll(`input[name="${qId}"]`).forEach((input) => input.disabled = false);
+    });
+    form.querySelector('button[type="submit"]').disabled = false;
+    result.classList.add("hidden");
+    warning.classList.add("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
+</body>
+</html>

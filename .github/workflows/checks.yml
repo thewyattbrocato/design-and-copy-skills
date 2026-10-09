@@ -1,0 +1,46 @@
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python -m unittest discover -s tests
+      - name: Eval tooling smoke
+        run: |
+          python scripts/run_eval.py --help > /dev/null
+          python scripts/make_example.py --help > /dev/null
+          python scripts/render.py --help > /dev/null
+          python scripts/check_skill_fixtures.py --help > /dev/null
+          python scripts/results_table.py --help > /dev/null
+          python scripts/make_results_chart.py --help > /dev/null
+          python scripts/before_after_gallery.py --help > /dev/null
+          python scripts/ci_local.py --help > /dev/null
+      - name: Validate skills
+        run: python scripts/validate_skills.py
+      - name: Check links
+        run: python scripts/check_links.py
+      - name: Validate evals
+        run: python scripts/validate_evals.py
+      - name: Check skills for eval fixtures
+        run: |
+          python scripts/check_skill_fixtures.py
+          python scripts/check_skill_fixtures.py --strict || echo "::warning::dev-suite fixtures still appear under skills/ (not blocking; held-out hits fail the step above)"
+      - name: Check README tables
+        run: python scripts/results_table.py --check
+      - name: Check results chart
+        run: python scripts/make_results_chart.py --check
+      - name: Check before-and-after gallery
+        run: python scripts/before_after_gallery.py --check

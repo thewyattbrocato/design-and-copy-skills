@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Annual Report: Where Your Dollar Went</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #ffffff;
+    --ink: #1f2933;
+    --ink-2: #4a5663;
+    --muted: #6b7682;
+    --line: #e4ded3;
+    --c-prog: #1f7a6d;
+    --c-fund: #d98a1f;
+    --c-admin: #5b6fb5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161a1d;
+      --surface: #1f2428;
+      --ink: #f1ede6;
+      --ink-2: #c3c9cf;
+      --muted: #98a2ac;
+      --line: #333a40;
+      --c-prog: #46b5a3;
+      --c-fund: #e8a84a;
+      --c-admin: #8b9ee0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 24px 32px;
+  }
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 12px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--ink-2);
+    max-width: 62ch;
+    margin: 0 0 32px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .hero {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .hero .big {
+    font-size: clamp(44px, 9vw, 64px);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero .cap { color: var(--ink-2); font-size: 17px; }
+
+  .bar {
+    display: flex;
+    gap: 2px;
+    height: 56px;
+  }
+  .seg {
+    position: relative;
+    border: 0;
+    padding: 0;
+    cursor: default;
+    transition: filter .15s, transform .15s;
+  }
+  .seg:first-child { border-radius: 8px 0 0 8px; }
+  .seg:last-child { border-radius: 0 8px 8px 0; }
+  .seg:hover, .seg:focus-visible { filter: brightness(1.08); outline: none; transform: scaleY(1.06); }
+  .seg:focus-visible { box-shadow: 0 0 0 3px var(--ink); }
+  .prog { background: var(--c-prog); flex: 78; }
+  .fund { background: var(--c-fund); flex: 12; }
+  .admin { background: var(--c-admin); flex: 10; }
+  .seg .tip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--bg);
+    font: 13px/1.3 inherit;
+    padding: 6px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .12s;
+  }
+  .seg:hover .tip, .seg:focus-visible .tip { opacity: 1; }
+
+  .scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .item {
+    border-top: 3px solid;
+    padding-top: 12px;
+  }
+  .item.prog { border-color: var(--c-prog); background: none; }
+  .item.fund { border-color: var(--c-fund); background: none; }
+  .item.admin { border-color: var(--c-admin); background: none; }
+  .item .pct { font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .item .name { font-weight: 600; margin-top: 2px; }
+  .item .cents { color: var(--muted); font-size: 14px; }
+  .item p { color: var(--ink-2); font-size: 15px; margin: 8px 0 0; }
+
+  .thanks {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--ink-2);
+    font-size: 18px;
+  }
+  .thanks strong { color: var(--ink); }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 20px;
+  }
+  @media (max-width: 640px) {
+    .legend { grid-template-columns: 1fr; }
+    .card { padding: 20px; }
+  }
+  @media print {
+    body { background: #fff; }
+    main { padding: 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Annual Report</p>
+  <h1>Where every dollar you gave went</h1>
+  <p class="lede">Thank you for being part of our community. Here's a simple look at how each dollar you donated was put to work.</p>
+
+  <section class="card" aria-labelledby="chart-title">
+    <div class="hero">
+      <span class="big">78¢</span>
+      <span class="cap" id="chart-title">of every $1 went straight to our programs</span>
+    </div>
+
+    <div class="bar" role="img" aria-label="Stacked bar of each donated dollar: programs 78 percent, fundraising 12 percent, administration 10 percent">
+      <button class="seg prog" type="button" aria-label="Programs, 78 percent"><span class="tip">Programs · 78¢</span></button>
+      <button class="seg fund" type="button" aria-label="Fundraising, 12 percent"><span class="tip">Fundraising · 12¢</span></button>
+      <button class="seg admin" type="button" aria-label="Administration, 10 percent"><span class="tip">Administration · 10¢</span></button>
+    </div>
+    <div class="scale"><span>0¢</span><span>$1.00</span></div>
+
+    <div class="legend">
+      <div class="item prog">
+        <div class="pct">78%</div>
+        <div class="name">Programs</div>
+        <div class="cent">78¢ of each dollar</div>
+        <p>The heart of our work: services and support delivered directly to the people we serve.</p>
+      </div>
+      <div class="item fund">
+        <div class="pct">12%</div>
+        <div class="name">Fundraising</div>
+        <div class="cent">12¢ of each dollar</div>
+        <p>Helps us reach new supporters so we can do even more next year.</p>
+      </div>
+      <div class="item admin">
+        <div class="pct">10%</div>
+        <div class="name">Administration</div>
+        <div class="cent">10¢ of each dollar</div>
+        <p>Keeps the lights on: accounting, insurance, and the basics that make everything else possible.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="thanks"><strong>Thank you.</strong> Your generosity makes all of this possible.</p>
+  <footer>Percentages show the share of total donated dollars.</footer>
+</main>
+</body>
+</html>

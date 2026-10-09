@@ -1,0 +1,1 @@
+A helpful empty state tells the user what this space is for and gives them one clear next action, such as a "Create your first project" button, an "Import from CSV" option, or a template to start from. It also shows what the space will look like once it's populated, through a sample, a preview, or a short example, so the user gets a sense of the payoff and not only a blank slate.

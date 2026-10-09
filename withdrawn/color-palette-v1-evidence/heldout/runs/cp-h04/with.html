@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidepool – Marrow Vance</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b1114;
+    --surface: #131c20;
+    --surface-2: #1a262b;
+    --surface-3: #223238;
+    --border: #2f434a;
+    --text: #e4ece9;
+    --text-2: #a9bcb8;
+    --lead: #5fc9b8;
+    --lead-ink: #06201c;
+    --health: #e0876a;
+    --focus: #f2d68a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.4;
+  }
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.5);
+  }
+  .app {
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--lead);
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  h1 { margin: 0; font-size: 26px; line-height: 1.15; font-weight: 700; }
+  .title { margin: 4px 0 0; color: var(--text-2); font-size: 16px; }
+  .level {
+    flex: none;
+    text-align: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 8px 14px;
+  }
+  .level span { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-2); }
+  .level b { font-size: 26px; line-height: 1.1; }
+
+  .health { margin-top: 24px; }
+  .health-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; color: var(--text-2); margin-bottom: 8px; }
+  .health-row strong { color: var(--text); font-size: 18px; font-variant-numeric: tabular-nums; }
+  .bar {
+    height: 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .bar i { display: block; height: 100%; width: 70.83%; background: var(--health); border-radius: 999px; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
+  .stats li {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .stats span { display: block; font-size: 13px; color: var(--text-2); }
+  .stats b { font-size: 24px; font-variant-numeric: tabular-nums; }
+
+  h2 { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-2); margin: 26px 0 10px; font-weight: 600; }
+  .inv { margin: 0; padding: 0; list-style: none; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .inv li { padding: 13px 16px; background: var(--surface-2); font-size: 16px; display: flex; align-items: center; gap: 12px; }
+  .inv li + li { border-top: 1px solid var(--border); }
+  .inv li::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--lead); transform: rotate(45deg); flex: none; }
+
+  .actions { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 10px; margin-top: 24px; }
+  button {
+    font: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    min-height: 52px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-3);
+    color: var(--text);
+    cursor: pointer;
+  }
+  button:hover { background: #2b3f46; }
+  button:active { transform: translateY(1px); }
+  button.primary { background: var(--lead); border-color: var(--lead); color: var(--lead-ink); }
+  button.primary:hover { background: #7ad6c7; }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+</style>
+</head>
+<body>
+  <main class="card" aria-labelledby="name">
+    <p class="app">Tidepool</p>
+    <header>
+      <div>
+        <h1 id="name">Marrow Vance</h1>
+        <p class="title">Tide Warden</p>
+      </div>
+      <div class="level"><span>Level</span><b>7</b></div>
+    </header>
+
+    <section class="health" aria-label="Health">
+      <div class="health-row"><span>Health</span><strong>34 / 48</strong></div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="48" aria-valuenow="34" aria-label="Health 34 of 48"><i></i></div>
+    </section>
+
+    <ul class="stats" aria-label="Stats">
+      <li><span>Strength</span><b>14</b></li>
+      <li><span>Wits</span><b>17</b></li>
+      <li><span>Nerve</span><b>11</b></li>
+    </ul>
+
+    <h2>Inventory</h2>
+    <ul class="inv">
+      <li>Salt-iron blade</li>
+      <li>Lantern</li>
+      <li>Net of pearls</li>
+      <li>Healing draught</li>
+    </ul>
+
+    <div class="actions">
+      <button type="button">Roll</button>
+      <button type="button">Rest</button>
+      <button type="button" class="primary">Level up</button>
+    </div>
+  </main>
+</body>
+</html>

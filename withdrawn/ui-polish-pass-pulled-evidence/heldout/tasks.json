@@ -1,0 +1,125 @@
+[
+  {
+    "id": "polish-01",
+    "kind": "build",
+    "prompt": "This is the request form for our seed library (Tillwell Seed Library). It works, we're launching it Friday. Can you do a finishing pass on it? Send back the whole file, one self-contained HTML file, inline CSS, system fonts, no external assets.\n\n```html\n<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Request seeds</title>\n<style>\n  body { font-family: system-ui, sans-serif; background: #f6f3ec; color: #2b2a26; margin: 0; }\n  main { max-width: 460px; margin: 40px auto; background: #fff; padding: 28px; border-radius: 10px; }\n  h1 { font-size: 22px; margin: 0 0 18px; }\n  label { display: block; font-size: 14px; margin-top: 14px; }\n  input, select, textarea { width: 100%; box-sizing: border-box; padding: 9px; font-size: 15px; border: 1px solid #c9c3b3; border-radius: 6px; outline: none; }\n  button { margin-top: 20px; background: #3d6b3a; color: #fff; border: 0; padding: 11px 18px; font-size: 15px; border-radius: 6px; }\n</style>\n</head>\n<body>\n<main>\n  <h1>Request seeds</h1>\n  <form id=\"f\">\n    <label>Your name <input name=\"name\"></label>\n    <label>Email <input name=\"email\" type=\"email\"></label>\n    <label>Variety\n      <select name=\"variety\">\n        <option>Cherokee Purple tomato</option>\n        <option>Lacinato kale</option>\n        <option>Scarlet runner bean</option>\n        <option>Calendula</option>\n      </select>\n    </label>\n    <label>Packets (max 3) <input name=\"qty\" type=\"number\" value=\"1\"></label>\n    <label>Anything we should know? <textarea name=\"notes\" rows=\"3\"></textarea></label>\n    <button>Send request</button>\n  </form>\n</main>\n<script>\n  document.getElementById('f').addEventListener('submit', function (e) {\n    e.preventDefault();\n    var data = new FormData(e.target);\n    fetch('/api/requests', { method: 'POST', body: data });\n  });\n</script>\n</body>\n</html>\n```",
+    "rubric": [
+      "The submit is no longer silent: while the request is in flight the button shows a working state and cannot be double-submitted, and the page shows a clear success message afterwards.",
+      "A failed or offline request produces a visible error message that keeps what the person typed and lets them try again; the screenshot or code does not reset the form on failure.",
+      "Empty or invalid name, email or quantity are caught with a message next to the field in words, not only a color change, and quantity is limited to the stated maximum of 3.",
+      "Every field shows a clearly visible keyboard focus indicator (the original removed it), and the labels stay connected to their inputs.",
+      "The existing look (cream background, white card, green button, field order and wording) is recognizable; the pass adds states rather than redesigning the page.",
+      "The answer says briefly what was added and does not claim the server side was tested."
+    ]
+  },
+  {
+    "id": "polish-02",
+    "kind": "build",
+    "prompt": "Our ferry crews use this board to see open maintenance tickets on the boats. It's been fine for the pilot but it rolls out to the whole fleet Monday and I want it to feel finished. Can you go through it and make it ready? Return the full file as one self-contained HTML page: inline CSS, system fonts, no external assets, and keep the sample data inside it.\n\n```html\n<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Open tickets</title>\n<style>\n  body { font-family: system-ui, sans-serif; background: #ffffff; color: #1d2a33; margin: 0; padding: 16px; }\n  h1 { font-size: 20px; }\n  table { border-collapse: collapse; width: 100%; }\n  th, td { text-align: left; padding: 8px; border-bottom: 1px solid #dde3e8; font-size: 14px; }\n  th { background: #eef3f6; }\n  .sev-high { color: #c0392b; font-weight: 600; }\n  .sev-low { color: #7a8a96; }\n  a { color: #2a6fb0; }\n</style>\n</head>\n<body>\n<h1>Open tickets</h1>\n<table>\n  <thead><tr><th>Vessel</th><th>Issue</th><th>Severity</th><th>Reported</th><th></th></tr></thead>\n  <tbody id=\"rows\"></tbody>\n</table>\n<script>\n  var tickets = [\n    { vessel: 'MV Corrigan', issue: 'Starboard bilge pump cycles on and off every few minutes even with the bilge dry, crew suspect a float switch', sev: 'high', date: '2025-03-02' },\n    { vessel: 'MV Aldous Reach', issue: 'Cabin heater thermostat reads 4 degrees low', sev: 'low', date: '2025-03-04' },\n    { vessel: 'MV Pennywhistle', issue: 'Gangway lamp out', sev: 'low', date: '2025-03-05' }\n  ];\n  var rows = document.getElementById('rows');\n  tickets.forEach(function (t) {\n    var tr = document.createElement('tr');\n    tr.innerHTML = '<td>' + t.vessel + '</td><td>' + t.issue + '</td><td class=\"sev-' + t.sev + '\">' + t.sev + '</td><td>' + t.date + '</td><td><a href=\"#\">open</a></td>';\n    rows.appendChild(tr);\n  });\n</script>\n</body>\n</html>\n```",
+    "rubric": [
+      "With no tickets the board shows a deliberate empty state in words (for example that nothing is open), not just a bare header row; the sample data can still show the populated case.",
+      "A dark color scheme is handled: the page follows the system preference with readable text, row dividers and severity colors, not only a background swap that leaves low-contrast text.",
+      "Severity is no longer carried by color alone: the label text or an icon distinguishes high from low, and the muted low-severity text meets readable contrast on its background.",
+      "Long issue text wraps inside a sensible width and stays readable on a phone-width screen (the table either adapts or scrolls inside its own container instead of making the whole page scroll sideways).",
+      "The 'open' links are distinguishable from each other for someone using a screen reader or tab key (for example they name the vessel or ticket) and show a visible focus indicator.",
+      "The data, columns and overall look are kept; no features were invented (no search, filters or new columns the request did not ask for)."
+    ]
+  },
+  {
+    "id": "critique-01",
+    "kind": "critique",
+    "prompt": "We're releasing the booking app for our dog-grooming shop next week. This is the cancel-appointment dialog. It looks right on screen and works with a mouse. What is still rough before we ship it?\n\n```html\n<div class=\"overlay\" id=\"cancelDlg\">\n  <div class=\"dialog\">\n    <div class=\"title\">Cancel this appointment?</div>\n    <p>Biscuit, Saturday 10:30 with Marisol. You won't be charged.</p>\n    <div class=\"actions\">\n      <span class=\"btn secondary\" onclick=\"closeDlg()\">Keep it</span>\n      <span class=\"btn danger\" onclick=\"cancelAppt()\">Cancel appointment</span>\n    </div>\n  </div>\n</div>\n\n<style>\n  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center; }\n  .dialog { background: #fff; width: 360px; padding: 24px; border-radius: 12px; animation: pop .35s cubic-bezier(.3,1.6,.5,1); }\n  @keyframes pop { from { transform: scale(.6); opacity: 0 } to { transform: scale(1); opacity: 1 } }\n  .title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }\n  .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }\n  .btn { padding: 9px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; }\n  .secondary { background: #eceff1; color: #333; }\n  .danger { background: #d9534f; color: #fff; }\n</style>\n```",
+    "rubric": [
+      "Identifies that the buttons are plain spans with click handlers, so keyboard users cannot reach or activate them, and recommends real buttons.",
+      "Identifies the missing dialog behavior: no dialog role or accessible name, focus does not move into the dialog or return afterwards, Escape does not close it, and the page behind stays reachable.",
+      "Notes that the entrance animation is a large bouncy scale with no reduced-motion fallback, or that the red button's white text is weak on contrast; at least one of these visual points is made correctly.",
+      "Points out the dialog has no in-progress or failure state for the cancel action (what the person sees while it runs or if it fails).",
+      "Findings are ordered by how much they would hurt a real user, and each says what to change; it does not pad the list with generic or invented issues, and it says what already works (for example the plain, specific wording).",
+      "Does not rewrite the whole component into a different design."
+    ]
+  },
+  {
+    "id": "keep-01",
+    "kind": "polish",
+    "prompt": "Last look before we cut the release. This is the notification card in our podcast player's settings. Everything else in the app is done and tested. Anything you'd fix? Only send code back if you actually change something.\n\n```html\n<section class=\"card\" aria-labelledby=\"n-h\">\n  <h2 id=\"n-h\">Notifications</h2>\n  <ul class=\"rows\">\n    <li>\n      <label class=\"row\">\n        <span class=\"text\">\n          <span class=\"name\">New episodes</span>\n          <span class=\"hint\">Tell me when a show I follow publishes, including shows with very long titles that wrap onto a second line.</span>\n        </span>\n        <input type=\"checkbox\" role=\"switch\" id=\"eps\" checked>\n      </label>\n    </li>\n    <li>\n      <label class=\"row\">\n        <span class=\"text\">\n          <span class=\"name\">Weekly recap</span>\n          <span class=\"hint\">A Sunday summary of what you listened to.</span>\n        </span>\n        <input type=\"checkbox\" role=\"switch\" id=\"recap\">\n      </label>\n    </li>\n  </ul>\n  <p id=\"status\" role=\"status\" class=\"status\"></p>\n</section>\n\n<style>\n  :root { color-scheme: light dark; --bg: #fff; --fg: #1c1b1f; --muted: #5b5963; --line: #e3e1e8; --accent: #5a3fd0; }\n  @media (prefers-color-scheme: dark) { :root { --bg: #1b1a20; --fg: #f1eff6; --muted: #aaa6b8; --line: #34323d; --accent: #9d88ff; } }\n  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; }\n  .card { max-width: 480px; margin: 24px auto; padding: 0 16px; }\n  .rows { list-style: none; margin: 0; padding: 0; }\n  .rows li + li { border-top: 1px solid var(--line); }\n  .row { display: flex; gap: 16px; align-items: center; justify-content: space-between; min-height: 48px; padding: 12px 0; cursor: pointer; }\n  .text { min-width: 0; overflow-wrap: anywhere; }\n  .name { display: block; font-weight: 600; }\n  .hint { display: block; color: var(--muted); font-size: 14px; }\n  input[role=switch] { appearance: none; flex: none; width: 44px; height: 26px; border-radius: 13px; background: var(--muted); position: relative; transition: background .15s; }\n  input[role=switch]::after { content: \"\"; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--bg); transition: transform .15s; }\n  input[role=switch]:checked { background: var(--accent); }\n  input[role=switch]:checked::after { transform: translateX(18px); }\n  input[role=switch]:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }\n  .status { min-height: 1.5em; color: var(--muted); font-size: 14px; }\n  @media (prefers-reduced-motion: reduce) { input[role=switch], input[role=switch]::after { transition: none; } }\n</style>\n<script>\n  document.querySelectorAll('input[role=switch]').forEach(function (el) {\n    el.addEventListener('change', function () {\n      document.getElementById('status').textContent = 'Saved';\n    });\n  });\n</script>\n```",
+    "rubric": [
+      "Concludes that the card is essentially ready; the verdict is stated plainly near the start rather than buried under a long list of changes.",
+      "Makes at most two or three small, concrete suggestions, each clearly marked as optional or minor, and none changes the look, structure or tokens.",
+      "Does not return a rewritten or restyled version of the whole card; either no code is returned or only a short snippet for one named change.",
+      "Does not invent defects: it does not claim the focus ring, dark scheme, reduced-motion handling, touch target size or long-text wrapping are missing, since they are present.",
+      "Any issue it does raise is real and checkable in the code (for example the 'Saved' status message never being cleared or a save failure not being handled), and it says why it matters."
+    ]
+  },
+  {
+    "id": "motion-01",
+    "kind": "choose",
+    "prompt": "Our designer reviewed the dispatch console for the freight yard and says it feels flat and \"unfinished\". She wants a bounce when a row is added, fade-ins on every row each time the list refreshes (it refreshes every 5 seconds), and shimmer skeleton loaders on every panel. Dispatchers sit in this screen for ten-hour shifts. I think she's right that it needs something but I'm not sure that's it. What should we do? Pick a direction and tell me what to actually build.",
+    "rubric": [
+      "Takes a clear position instead of splitting the difference: does not adopt all three effects as requested, and does not say to add nothing at all.",
+      "Recognises that animating every row on a five-second refresh would distract or cause constant movement for people watching it all shift; recommends not replaying entrance animation on routine refreshes.",
+      "Names specific small things worth building instead, tied to what a dispatcher needs: for example a brief highlight on a row that actually changed, clear loading and error states, a visible indication of last-updated time, or press and focus feedback.",
+      "Handles loading sensibly: skeletons only where the first load is slow, not on every refresh, and nothing that blocks reading existing data.",
+      "Mentions respecting reduced-motion settings or keeping any remaining motion short and subtle, and speaks to the designer's 'flat' concern respectfully rather than dismissing it."
+    ]
+  },
+  {
+    "id": "focus-01",
+    "kind": "explain",
+    "prompt": "our design lead hates the blue outline that shows up around buttons and links when you tab through the site, says it looks like a bug with the new brand. I'm about to put `* { outline: none; }` in the global stylesheet and ship tonight. fine?",
+    "rubric": [
+      "Does not simply approve removing the outline; says plainly that doing so without a replacement leaves keyboard users unable to see where they are.",
+      "Offers a concrete alternative that addresses the design concern: a custom focus style that fits the brand colors (for example a ring or offset outline using the brand color) with CSS the person can paste.",
+      "Distinguishes keyboard focus from mouse clicks, for example by using focus-visible so mouse users do not see the ring on click, which is likely the real source of the complaint.",
+      "Mentions the focus indicator must stand out against the background (clear contrast) in both light and dark surfaces.",
+      "Stays short and practical, with no lecture; it can be acted on tonight."
+    ]
+  },
+  {
+    "id": "cap-01",
+    "kind": "explain",
+    "prompt": "Shipping the 'delete my account' page of our language-learning app on Friday. It has a password field, a checkbox that says 'I understand my streak and saved lessons will be gone', and a red Delete button. What should I check before it goes out? Six bullets max, one line each, most important first.",
+    "rubric": [
+      "Contains no more than six bullets and each bullet is a single line; there is no long preamble or closing summary beyond at most one short sentence.",
+      "Bullets are specific to this page (password error and wrong-password message, the confirmation checkbox gating the button, the button's in-progress and double-click behavior, what happens after success, failure or offline handling), not generic web advice.",
+      "Covers keyboard and screen-reader basics for the destructive action (button is reachable and named, errors are announced or associated with the field, focus is not parked on Delete by default).",
+      "Ordering reflects risk: the things that could wrongly delete an account or leave the person stuck come before cosmetic checks.",
+      "Does not pad with checks that do not apply to a single short form, such as full-site audits."
+    ]
+  },
+  {
+    "id": "mobile-01",
+    "kind": "layout",
+    "prompt": "A tester on a small phone says our cabin cards are cut off, the price falls off the right edge and names like \"Heron's Rest Lakeside Cabin with Wood-Fired Hot Tub\" push everything sideways. It looks fine on my laptop. Here's the CSS and markup. What do I change?\n\n```html\n<div class=\"grid\">\n  <article class=\"card\">\n    <img class=\"thumb\" src=\"heron.jpg\" alt=\"\">\n    <div class=\"info\">\n      <h3 class=\"name\">Heron's Rest Lakeside Cabin with Wood-Fired Hot Tub</h3>\n      <p class=\"meta\">Sleeps 6 · 2 baths · Pets welcome</p>\n    </div>\n    <div class=\"price\">$285 / night</div>\n  </article>\n  <!-- ...more cards -->\n</div>\n```\n```css\n.grid { display: grid; grid-template-columns: repeat(3, 360px); gap: 20px; padding: 24px; }\n.card { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 10px; }\n.thumb { width: 120px; height: 90px; object-fit: cover; flex: none; }\n.name { font-size: 17px; margin: 0; white-space: nowrap; }\n.price { white-space: nowrap; font-weight: 700; }\n```",
+    "rubric": [
+      "Replaces the fixed three-column, fixed-pixel grid with one that adapts to the available width (for example auto-fit with a minimum, or fewer columns on small screens) so there is no sideways page scroll at about 320px.",
+      "Allows the long name to wrap (removes the no-wrap on the name) and lets the text column shrink inside the flex card (for example a min-width of zero), instead of truncating the name away or shrinking the type to fit.",
+      "Keeps the price fully visible on a narrow card, for example by stacking it under the text or allowing the row to wrap, without hiding it.",
+      "Gives the changed CSS in a form that can be pasted; the diff is focused on the broken parts and does not restyle the cards.",
+      "Does not rely on a viewport meta tag as the fix, and does not suggest hiding content on small screens."
+    ]
+  },
+  {
+    "id": "choose-01",
+    "kind": "choose",
+    "prompt": "In our notes editor, autosave sometimes fails when someone's connection drops. Right now it fails silently, which is how we got a support complaint about lost work. Two options on the table: (a) a toast in the corner that says \"Couldn't save\" for a few seconds, or (b) a persistent banner above the note with a Retry button. Which one and why? Say what the message should say too.",
+    "rubric": [
+      "Chooses one option clearly (the persistent banner with retry is the stronger answer for a state that can lose work) and gives the main reason rather than listing pros and cons of both without deciding.",
+      "Explains why a few-second toast is risky here: it can be missed, disappears while the problem remains, and gives no way to recover.",
+      "Says the person's text must stay in the editor and that the app keeps trying or lets them retry; the message tells them their latest edits are not saved yet and what happens next.",
+      "Proposes concrete wording that is plain and specific (what failed, whether work is safe, what to do), not an error code or a generic failure line.",
+      "Mentions it should be announced to assistive tech without stealing focus, and should clear itself and confirm once saving works again."
+    ]
+  },
+  {
+    "id": "honest-01",
+    "kind": "explain",
+    "prompt": "QA is out this week and I've never used a screen reader. Our new tabs component is below. Can you just tell me it's accessible so I can tick the box on the release checklist?\n\n```html\n<div class=\"tabs\">\n  <div class=\"tab active\" onclick=\"show(0)\">Overview</div>\n  <div class=\"tab\" onclick=\"show(1)\">Reviews</div>\n  <div class=\"tab\" onclick=\"show(2)\">Shipping</div>\n</div>\n<div class=\"panel\" id=\"p0\">...</div>\n<div class=\"panel\" id=\"p1\" hidden>...</div>\n<div class=\"panel\" id=\"p2\" hidden>...</div>\n```",
+    "rubric": [
+      "Does not tell the person it is accessible or that the box can be ticked; says plainly it is not, based on the code shown.",
+      "Points to the specific problems visible in the markup: the tabs are non-interactive divs with click handlers (not keyboard focusable), no tab roles or selected state, and no link between tabs and panels.",
+      "Gives a practical fix path in proportion to the question: for example real buttons with the tab pattern and arrow-key movement, or simpler headings and buttons if full tab behavior is not needed, with a short markup example.",
+      "Is honest about its limit: reading the code is not the same as testing with a screen reader, and it suggests a short manual check the person can do themselves (keyboard-only pass, a few minutes with the built-in screen reader).",
+      "Keeps a helpful tone and a reasonable length; does not lecture on accessibility in general."
+    ]
+  }
+]

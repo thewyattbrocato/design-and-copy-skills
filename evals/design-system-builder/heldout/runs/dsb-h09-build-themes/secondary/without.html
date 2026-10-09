@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes</title>
+<style>
+  /*
+    Tokens: each theme only redefines the variables below.
+    Components read from the variables, so no per-theme component overrides are needed.
+  */
+  .theme-light {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #f4f6f5;
+    --text: #111418;
+    --muted: #5b6470;
+    --border: #dde3df;
+    --border-w: 1px;
+    --primary: #1f7a4d;
+    --on-primary: #ffffff;
+    --gain: #1f7a4d;
+    --spend: #b3412f;
+    --focus: #1f7a4d;
+  }
+
+  .theme-dark {
+    color-scheme: dark;
+    --bg: #121614;
+    --surface: #1b221f;
+    --text: #e8ede9;
+    --muted: #9eaba4;
+    --border: #2d3832;
+    --border-w: 1px;
+    --primary: #4cba85;
+    --on-primary: #0b1510;
+    --gain: #4cba85;
+    --spend: #e07a64;
+    --focus: #7fd9a8;
+  }
+
+  .theme-contrast {
+    color-scheme: dark;
+    --bg: #000000;
+    --surface: #0d0d0d;
+    --text: #ffffff;
+    --muted: #d4d4d4;
+    --border: #ffffff;
+    --border-w: 2px;
+    --primary: #5dffa6;
+    --on-primary: #000000;
+    --gain: #5dffa6;
+    --spend: #ff8a7a;
+    --focus: #ffff00;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 32px 24px;
+    background: #808080;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #111418;
+  }
+
+  h1 {
+    margin: 0 0 4px;
+    font-size: 22px;
+  }
+
+  .intro {
+    margin: 0 0 24px;
+    font-size: 14px;
+    color: #1a1a1a;
+  }
+
+  .themes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+
+  .theme-name {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Sample screen (shared by all themes) */
+  .screen {
+    background: var(--bg);
+    color: var(--text);
+    border: var(--border-w) solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .label {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .balance {
+    margin: 4px 0 2px;
+    font-size: 36px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .delta {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gain);
+  }
+
+  .section-title {
+    margin: 22px 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .card {
+    background: var(--surface);
+    border: var(--border-w) solid var(--border);
+    border-radius: 12px;
+    padding: 2px 14px;
+  }
+
+  .tx {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tx:last-child { border-bottom: 0; }
+
+  .tx-name {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .tx-date {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .amt {
+    font-size: 15px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .amt.pos { color: var(--gain); }
+  .amt.neg { color: var(--spend); }
+
+  .btn {
+    display: block;
+    width: 100%;
+    margin-top: 18px;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--primary);
+    color: var(--on-primary);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Kelpie themes</h1>
+<p class="intro">Light, dark, and high contrast, rendered from the same markup and one set of tokens.</p>
+
+<div class="themes">
+
+  <div>
+    <p class="theme-name">Light</p>
+    <div class="theme-light">
+      <div class="screen">
+        <p class="label">Total balance</p>
+        <p class="balance">$4,812.40</p>
+        <p class="delta">+$128.00 this week</p>
+
+        <p class="section-title">Recent transactions</p>
+        <div class="card">
+          <div class="tx">
+            <div>
+              <div class="tx-name">Paycheck</div>
+              <div class="tx-date">Oct 6</div>
+            </div>
+            <span class="amt pos">+$2,400.00</span>
+          </div>
+          <div class="tx">
+            <div>
+              <div class="tx-name">Groceries</div>
+              <div class="tx-date">Oct 5</div>
+            </div>
+            <span class="amt neg">&minus;$86.20</span>
+          </div>
+          <div class="tx">
+            <div>
+              <div class="tx-name">Transit pass</div>
+              <div class="tx-date">Oct 3</div>
+            </div>
+            <span class="amt neg">&minus;$45.00</span>
+          </div>
+        </div>
+
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <p class="theme-name">Dark</p>
+    <div class="theme-dark">
+      <div class="screen">
+        <p class="label">Total balance</p>
+        <p class="balance">$4,812.40</p>
+        <p class="delta">+$128.00 this week</p>
+
+        <p class="section-title">Recent transactions</p>
+        <div class="card">
+          <div class="tx">
+            <div>
+              <div class="tx-name">Paycheck</div>
+              <div class="tx-date">Oct 6</div>
+            </div>
+            <span class="amt pos">+$2,400.00</span>
+          </div>
+          <div class="tx">
+            <div>
+              <div class="tx-name">Groceries</div>
+              <div class="tx-date">Oct 5</div>
+            </div>
+            <span class="amt neg">&minus;$86.20</span>
+          </div>
+          <div class="tx">
+            <div>
+              <div class="tx-name">Transit pass</div>
+              <div class="tx-date">Oct 3</div>
+            </div>
+            <span class="amt neg">&minus;$45.00</span>
+          </div>
+        </div>
+
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <p class="theme-name">High contrast</p>
+    <div class="theme-contrast">
+      <div class="screen">
+        <p class="label">Total balance</p>
+        <p class="balance">$4,812.40</p>
+        <p class="delta">+$128.00 this week</p>
+
+        <p class="section-title">Recent transactions</p>
+        <div class="card">
+          <div class="tx">
+            <div>
+              <div class="tx-name">Paycheck</div>
+              <div class="tx-date">Oct 6</div>
+            </div>
+            <span class="amt pos">+$2,400.00</span>
+          </div>
+          <div class="tx">
+            <div>
+              <div class="tx-name">Groceries</div>
+              <div class="tx-date">Oct 5</div>
+            </div>
+            <span class="amt neg">&minus;$86.20</span>
+          </div>
+          <div class="tx">
+            <div>
+              <div class="tx-name">Transit pass</div>
+              <div class="tx-date">Oct 3</div>
+            </div>
+            <span class="amt neg">&minus;$45.00</span>
+          </div>
+        </div>
+
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

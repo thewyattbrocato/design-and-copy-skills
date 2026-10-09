@@ -1,0 +1,127 @@
+[
+  {
+    "id": "dsb-h01-vet-foundation",
+    "kind": "build",
+    "prompt": "We're building the web app for Hollowbrook Vet Care (appointment booking, pet records, reminders) and there's no design foundation yet, every screen is going to get built from scratch by whoever's free. Set up the foundation so everything stays consistent as we grow, and show it working: one self-contained HTML file, inline CSS, system fonts, no external assets. The page should show the foundation itself and a small sample of real pieces built from it (a booking form, an appointment card, a status message). Friendly but trustworthy, we're a clinic not a toy store.",
+    "rubric": [
+      "The foundation is defined once at the top of the stylesheet as named values (type sizes, spacing steps, colors, radii, a shadow or border treatment) and the sample pieces visibly use them instead of repeating raw numbers and hex codes",
+      "Color is organized by job (page background, surface, text, muted text, primary action, success/warning/danger, borders) and not only as a list of hues, so a change to the brand color would be one edit",
+      "Type and spacing come from small deliberate scales with visible steps, not dozens of near-identical values; the page shows them in a way a developer can read (labels, values)",
+      "The sample form, card and status message look like one family: same radius logic, same spacing rhythm, consistent button and field heights, readable contrast",
+      "The page includes brief usage rules a teammate can follow without asking (when to use which step, how to add something new), kept short and not as a wall of prose",
+      "Tone fits a veterinary clinic: warm but calm, not childish, no external fonts, images or scripts"
+    ]
+  },
+  {
+    "id": "dsb-h02-critique-drift",
+    "kind": "critique",
+    "prompt": "Our app's UI feels inconsistent and nobody can say why. Here's a chunk of the stylesheet. What's actually going on and what would you do about it, in what order?\n\n```css\n.btn { padding: 9px 17px; border-radius: 5px; font-size: 14px; background: #2f6fed; color: #fff; }\n.btn-big { padding: 13px 22px; border-radius: 7px; font-size: 17px; background: #2e6dea; }\n.card { padding: 18px; border-radius: 9px; border: 1px solid #e3e5e8; box-shadow: 0 2px 7px rgba(0,0,0,.12); }\n.panel { padding: 22px; border-radius: 12px; border: 1px solid #e1e4e8; box-shadow: 0 3px 9px rgba(0,0,0,.10); }\n.modal { padding: 26px; border-radius: 10px; box-shadow: 0 12px 40px rgba(0,0,0,.28); }\nh1 { font-size: 31px; } h2 { font-size: 23px; } h3 { font-size: 19px; } h4 { font-size: 17px; }\n.muted { color: #8a8f98; } .hint { color: #8d929b; } .caption { color: #858a93; }\n.alert-ok { background: #e6f6ea; color: #1f7a3a; } .badge-ok { background: #e4f5e8; color: #217c3d; }\n.row { margin-bottom: 14px; } .group { margin-bottom: 19px; } .section { margin-bottom: 34px; }\n.input { height: 38px; padding: 0 11px; border-radius: 6px; } .select { height: 40px; padding: 0 12px; border-radius: 4px; }\n```",
+    "rubric": [
+      "Names the actual causes from the supplied CSS: near-duplicate colors (the blues, the greens, the greys), a spread of one-off paddings/margins/radii, and shadows that differ without a reason; it quotes specific values rather than speaking in generalities",
+      "Separates differences that are accidents (two blues, 38px vs 40px controls) from ones that might be intentional (a modal sitting higher than a card), and does not tell them to flatten everything",
+      "Gives an ordered plan: define a small set of shared values first, then map the existing near-duplicates onto them, then change components; the order is justified",
+      "Proposes concrete target values or a small scale for at least spacing, radius and color roles, and states what will visibly shift when near-duplicates are merged",
+      "Is honest about what it cannot see (only one excerpt, no screens), and does not claim contrast or usage facts it has no basis for",
+      "Stays reasonably concise and prioritized rather than listing every property"
+    ]
+  },
+  {
+    "id": "dsb-h03-guard-leave-alone",
+    "kind": "polish",
+    "prompt": "We're about to ship v1 of our design tokens to the other team and I'd like a sanity pass first. Anything you'd change before we hand it over? Product is Tallyard, a warehouse inventory tool.\n\n```css\n:root {\n  /* spacing: 4px base */\n  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px; --space-12: 48px;\n  /* type */\n  --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem; --text-xl: 1.5rem; --text-2xl: 2rem;\n  --leading-tight: 1.25; --leading-body: 1.5;\n  /* color roles */\n  --color-bg: #fbfaf8; --color-surface: #ffffff; --color-border: #d9d5cc;\n  --color-text: #1d1b16; --color-text-muted: #5c574b;\n  --color-action: #1b5e8a; --color-action-hover: #144a6e; --color-on-action: #ffffff;\n  --color-danger: #b3261e; --color-success: #1e6b3a; --color-warning: #8a5a00;\n  /* shape + depth */\n  --radius-sm: 4px; --radius-md: 8px; --radius-full: 999px;\n  --shadow-raised: 0 1px 3px rgba(29,27,22,.14);\n  --shadow-overlay: 0 10px 30px rgba(29,27,22,.22);\n  /* motion */\n  --motion-fast: 120ms; --motion-base: 200ms; --ease-out: cubic-bezier(.2,.7,.2,1);\n}\n[data-theme=\"dark\"] {\n  --color-bg: #15140f; --color-surface: #1f1d17; --color-border: #3a372d;\n  --color-text: #f1eee6; --color-text-muted: #a9a394;\n  --color-action: #6fb1de; --color-action-hover: #8cc3e8; --color-on-action: #0c1a24;\n  --color-danger: #f2877f; --color-success: #6fcf92; --color-warning: #e0b04a;\n  --shadow-raised: 0 1px 3px rgba(0,0,0,.5);\n  --shadow-overlay: 0 10px 30px rgba(0,0,0,.6);\n}\n```",
+    "rubric": [
+      "Recognizes that the set is already coherent (consistent scale, role-based names, dark theme that remaps roles) and says so plainly instead of inventing problems",
+      "Recommends few or no changes; any change it does suggest is small, specific and justified by a real gap (for example a missing focus or disabled value, or a small naming nit), not a rewrite or a bigger scale",
+      "Does not rename the existing tokens, add a new tier of layers, or add many speculative tokens the team has not asked for",
+      "If it adds anything, it keeps the existing naming pattern and says why the addition is needed now; any note about contrast or untested states is flagged as something to verify, not asserted as fact",
+      "Is short: a verdict first, then at most a few items; it does not reprint the whole file"
+    ]
+  },
+  {
+    "id": "dsb-h04-guard-one-page",
+    "kind": "build",
+    "prompt": "I need a simple page for the Saint Ida's Parish bake sale next Saturday, 9am to 1pm in the church hall at 42 Orchard Lane. Cake, bread, pies, all proceeds to the roof fund. Volunteers can bring a dish by Friday evening. One self-contained HTML file, inline CSS, system fonts, no external anything. It's a one-off page, we'll delete it after the weekend. Warm and welcoming.",
+    "rubric": [
+      "The page is complete and usable: it states when, where, what will be sold, where the money goes and how volunteers can contribute, using only the facts provided (no invented prices, names or phone numbers)",
+      "The CSS is proportionate to a one-off page: a short stylesheet, at most a handful of custom properties, with no token documentation, naming layers, theme switcher or component library scaffolding",
+      "It looks designed and warm: clear hierarchy with the date and place easy to find, comfortable reading width and spacing, a restrained palette",
+      "Works on a phone-sized screen without horizontal scrolling and uses only system fonts and no external resources",
+      "Does not pad the page with filler sections, forms or features the request did not ask for"
+    ]
+  },
+  {
+    "id": "dsb-h05-choose-scale",
+    "kind": "choose",
+    "prompt": "We're laying the foundation for Tallyard, an inventory tool used on warehouse tablets (about 10 inch, often with gloves) and on office desktops where people live in dense tables all day. We can't agree on the spacing and type basis. Dev A wants a 4px base with a 1.2 type ratio. Dev B wants an 8px base with a 1.333 ratio because it's \"cleaner\". Dev C says just use whatever Tailwind does. Pick one and tell me the actual numbers we'd use.",
+    "rubric": [
+      "Commits to a recommendation rather than listing pros and cons and leaving the choice open",
+      "The reasoning is tied to the stated context (dense desktop tables, gloved tablet use and touch target size), not generic claims about which base is better",
+      "Gives concrete spacing steps and type sizes (actual px or rem values), enough that a developer could implement them, and the steps are fewer and more deliberate than every possible multiple",
+      "Resolves the tension between dense desktop and large-target tablet use explicitly (for example by naming what changes per context, or a minimum target size) rather than ignoring one of them",
+      "Addresses the Tailwind suggestion fairly, as a reasonable starting point or not, with a reason, instead of dismissing or accepting it blindly",
+      "Reasonably brief; does not turn into a tutorial on design systems"
+    ]
+  },
+  {
+    "id": "dsb-h06-layout-docs-site",
+    "kind": "layout",
+    "prompt": "Quillmark is a developer documentation site with a marketing front page on top of the same system. Articles are long, with code blocks and sometimes wide tables; the front page has feature rows and a pricing grid. We want one set of layout rules for the grid, content widths and reading measure so every page agrees, from phone to a big monitor. What should the rules be? Give me the actual numbers and the CSS I'd paste in.",
+    "rubric": [
+      "Gives concrete values for container width(s), gutters or margins, column count or approach, and reading measure for prose, and the numbers are plausible (prose measure in a readable range, not full container width)",
+      "Treats docs articles and marketing rows differently where they should differ (narrow reading column vs wider feature/pricing grid) while keeping one shared set of values",
+      "Says how code blocks and wide tables are handled so they do not break the reading measure or the page on a phone (scrolling inside the block, breaking out of the column, or similar)",
+      "Describes behavior across small, medium and large viewports, including very wide monitors where content should stop growing",
+      "The CSS is valid and uses the same named values it describes, not magic numbers repeated in each rule",
+      "Does not over-engineer: no more breakpoints or layout tokens than the described pages need"
+    ]
+  },
+  {
+    "id": "dsb-h07-guard-slack-rules",
+    "kind": "explain",
+    "prompt": "Our team keeps adding one-off colors and spacing values and it's making a mess. Write the message I can drop in our team Slack that explains how we name design tokens and how someone proposes a change or addition. Max 120 words, I don't want anyone to scroll.",
+    "rubric": [
+      "Stays within 120 words and is ready to paste into Slack with no preamble or sign-off about what it did",
+      "States a naming convention concretely with at least one example name that shows how it reads (what it is for, not what it looks like)",
+      "States a change process with a clear first step and a decision point or owner (who approves, or the test an addition must pass), not just \"be careful\"",
+      "Tells people what to do instead of adding a new value when something nearly fits (reuse the closest existing token)",
+      "Tone is collegial and not scolding or bureaucratic"
+    ]
+  },
+  {
+    "id": "dsb-h08-polish-tokenize",
+    "kind": "polish",
+    "prompt": "We have this button and card CSS in our app and I want it tidied so we can build more components consistently from the same values. Don't change how it looks in any way people would notice, and don't rename the classes since they're used all over. Give me the cleaned-up CSS.\n\n```css\n.btn { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; font-size:15px; font-weight:600; border-radius:6px; background:#0f766e; color:#fff; border:0; transition:background .18s ease; }\n.btn:hover { background:#0d6b63; }\n.btn-secondary { background:transparent; color:#0f766e; border:1px solid #0f766e; padding:9px 17px; }\n.btn-secondary:hover { background:#e6f4f2; }\n.btn-danger { background:#c0392b; color:#fff; }\n.btn-danger:hover { background:#a93226; }\n.card { background:#fff; border:1px solid #dde2e1; border-radius:10px; padding:20px; box-shadow:0 1px 4px rgba(16,24,40,.10); }\n.card-title { font-size:19px; font-weight:700; margin:0 0 10px; color:#14201f; }\n.card-meta { font-size:13px; color:#5a6b69; margin:0 0 14px; }\n.card-footer { margin-top:18px; padding-top:14px; border-top:1px solid #dde2e1; display:flex; gap:12px; justify-content:flex-end; }\n```",
+    "rubric": [
+      "Pulls repeated values (the teal, the border grey, spacing, radii, font sizes) into named variables declared once and uses them in the rules, with names that describe role or step rather than appearance",
+      "Keeps every class name and the visible result intact; any value it snaps (for example 9px/17px or 18px/20px) is called out with the tiny visual shift it causes, or kept as is with a reason",
+      "Handles the secondary button's 1px border compensation (the reduced padding) sensibly rather than breaking button size parity",
+      "Does not over-build: no unrequested new components, no theme layers or dark mode, and no change to the markup or class structure",
+      "Returns runnable CSS and a brief summary of what changed and what to double check, without a long essay"
+    ]
+  },
+  {
+    "id": "dsb-h09-build-themes",
+    "kind": "build",
+    "prompt": "Kelpie is a small personal budgeting app. We only have a light look so far and users keep asking for dark mode, and a couple have asked for a higher-contrast option. Extend what we have to support all three without it turning into a pile of overrides. Make one self-contained HTML file with inline CSS and system fonts, no external assets. Show all three themes side by side on the page, each one rendering the same sample screen (a balance summary, a list of recent transactions with positive and negative amounts, and a primary action button). Our current light look: white background, near-black text, a deep green (#1f7a4d) for primary actions and gains, a brick red (#b3412f) for spending.",
+    "rubric": [
+      "All three themes render the same sample screen side by side and are all visible in the screenshot, with the light theme matching the described look (white background, near-black text, deep green and brick red)",
+      "Themes are produced by changing a small set of named color roles in one place, and the sample screen's styles refer to the roles, not to per-theme copies of every rule",
+      "The dark theme is a considered palette (adjusted surfaces and tones, gains and spending colors that still read on dark), not a plain inversion with muddy greens and glaring white text",
+      "The higher-contrast theme is visibly stronger in text, borders and the action button, and its pairs look comfortably legible; positive and negative amounts are distinguishable by more than color alone (a sign, a label or an icon)",
+      "Amounts, labels and the button are readable in every theme with no faint grey-on-grey text; the layout and spacing are identical across themes",
+      "Uses only system fonts and inline CSS, with no external resources"
+    ]
+  },
+  {
+    "id": "dsb-h10-guard-square-brand",
+    "kind": "explain",
+    "prompt": "Boxcar Press is a small indie publisher. The brand is deliberately flat and blunt: hard square corners everywhere, thick black rules instead of soft shadows, off-white paper background, one loud tomato-red accent, a heavy condensed headline look in the print material, and basically no animation. We're finally doing the website and I need the shape, depth and motion tokens (radius, elevation, animation) for the design system. What do we define?",
+    "rubric": [
+      "Respects the brand: radius ends up zero (or one deliberate exception with a stated reason) rather than offering a small/medium/large radius ladder",
+      "Depth is expressed with borders, rules, offsets or layering in line with the brand, not soft blurred drop shadows; it states what distinguishes a raised or overlay element in that language",
+      "Motion is kept minimal and purposeful (short, simple state feedback at most) and mentions respecting reduced-motion preferences; it does not add a library of easing curves and durations",
+      "Keeps the token set small and honest: it does not pad the list with steps the brand will never use, and says what is intentionally left out",
+      "Gives concrete values or ready-to-paste definitions (rule thickness, offset size, durations), not just principles"
+    ]
+  }
+]

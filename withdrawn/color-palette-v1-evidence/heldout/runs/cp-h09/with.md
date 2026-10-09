@@ -1,0 +1,1 @@
+It should change. #9a9a9a on white is about 2.8:1 contrast, below the WCAG AA minimum of 4.5:1 for text, and placeholder text is covered by that rule too. Darkening it to around #767676 (about 4.5:1) or slightly darker keeps it visibly lighter than typed input while staying readable.

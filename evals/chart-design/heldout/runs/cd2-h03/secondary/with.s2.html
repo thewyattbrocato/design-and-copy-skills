@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2025 Orders and Revenue by Month</title>
+<style>
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 24px;
+    background: #f7f8f5;
+    color: #1d2420;
+  }
+  .card {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d9dfd9;
+    border-radius: 8px;
+    padding: 20px 24px 24px;
+  }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { margin: 0 0 16px; color: #5b655f; font-size: 14px; }
+  .legend { display: flex; gap: 18px; font-size: 14px; margin-bottom: 8px; }
+  .key {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    vertical-align: -1px;
+    border-radius: 2px;
+  }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { fill: #3d4741; font-size: 12px; font-family: inherit; }
+  svg .grid { stroke: #e4e9e4; stroke-width: 1; }
+  svg .base { stroke: #9aa39d; stroke-width: 1; }
+  svg .axis-title { font-weight: 600; font-size: 13px; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+  th, td {
+    text-align: right;
+    padding: 6px 8px;
+    border-bottom: 1px solid #e4e9e4;
+  }
+  th:first-child, td:first-child { text-align: left; }
+  tfoot td { font-weight: 600; border-bottom: none; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #14181a; color: #e6ebe8; }
+    .card { background: #1c2224; border-color: #323b3e; }
+    .sub { color: #a4aea8; }
+    svg text { fill: #c9d1cc; }
+    svg .grid { stroke: #2c3538; }
+    svg .base { stroke: #6b7670; }
+    th, td { border-bottom-color: #2c3538; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>2025 Orders and Revenue by Month</h1>
+  <p class="sub">Orders (bars, left axis) and revenue in US dollars (line, right axis). Both axes start at zero.</p>
+
+  <div class="legend">
+    <span><span class="key" style="background:#2f6b4f"></span>Orders</span>
+    <span><span class="key" style="background:#b5651d"></span>Revenue (USD)</span>
+  </div>
+
+  <div id="chart"></div>
+
+  <table>
+    <thead>
+      <tr><th>Month</th><th>Orders</th><th>Revenue (USD)</th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+    <tfoot>
+      <tr><td>Total</td><td id="totalOrders"></td><td id="totalRevenue"></td></tr>
+    </tfoot>
+  </table>
+</div>
+
+<script>
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const orders = [310, 280, 420, 690, 880, 760, 540, 500, 610, 470, 390, 520];
+  const revenue = [9800, 8900, 15200, 31400, 44900, 36100, 21500, 19800, 24700, 18200, 14600, 29300];
+
+  const fmtMoney = v => "$" + v.toLocaleString("en-US");
+
+  // Chart geometry
+  const W = 860, H = 420;
+  const m = { t: 20, r: 80, b: 40, l: 70 };
+  const iw = W - m.l - m.r;
+  const ih = H - m.t - m.b;
+  const maxOrders = 1000;
+  const maxRevenue = 50000; // 4 gridline steps line up: 250 orders = $12,500
+  const slot = iw / months.length;
+  const barW = slot * 0.55;
+
+  const xc = i => m.l + slot * (i + 0.5);
+  const yO = v => m.t + ih - (v / maxOrders) * ih;
+  const yR = v => m.t + ih - (v / maxRevenue) * ih;
+  const baseY = m.t + ih;
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="chartTitle chartDesc">`;
+  svg += `<title id="chartTitle">Orders and revenue by month, 2025</title>`;
+  svg += `<desc id="chartDesc">Bars show orders per month on the left axis. A line shows revenue in US dollars per month on the right axis. Exact values are in the table below.</desc>`;
+
+  // Gridlines and tick labels (shared scale)
+  for (let k = 0; k <= 4; k++) {
+    const y = m.t + ih - (k / 4) * ih;
+    svg += `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${y}" y2="${y}"/>`;
+    svg += `<text x="${m.l - 10}" y="${y + 4}" text-anchor="end">${k * 250}</text>`;
+    svg += `<text x="${W - m.r + 10}" y="${y + 4}" text-anchor="start">${fmtMoney(k * 12500)}</text>`;
+  }
+  svg += `<line class="base" x1="${m.l}" x2="${W - m.r}" y1="${baseY}" y2="${baseY}"/>`;
+
+  // Axis titles
+  svg += `<text class="axis-title" x="16" y="${m.t + ih / 2}" text-anchor="middle" transform="rotate(-90 16 ${m.t + ih / 2})">Orders</text>`;
+  svg += `<text class="axis-title" x="${W - 12}" y="${m.t + ih / 2}" text-anchor="middle" transform="rotate(90 ${W - 12} ${m.t + ih / 2})">Revenue (USD)</text>`;
+
+  // Order bars
+  months.forEach((mo, i) => {
+    const y = yO(orders[i]);
+    svg += `<rect x="${xc(i) - barW / 2}" y="${y}" width="${barW}" height="${baseY - y}" fill="#2f6b4f" rx="2"><title>${mo}: ${orders[i]} orders</title></rect>`;
+  });
+
+  // Revenue line and markers
+  const pts = revenue.map((v, i) => `${xc(i)},${yR(v)}`).join(" ");
+  svg += `<polyline points="${pts}" fill="none" stroke="#b5651d" stroke-width="2.5" stroke-linejoin="round"/>`;
+  revenue.forEach((v, i) => {
+    svg += `<circle cx="${xc(i)}" cy="${yR(v)}" r="4" fill="#b5651d" stroke="#ffffff" stroke-width="1.5"><title>${months[i]}: ${fmtMoney(v)}</title></circle>`;
+  });
+
+  // Month labels
+  months.forEach((mo, i) => {
+    svg += `<text x="${xc(i)}" y="${baseY + 20}" text-anchor="middle">${mo}</text>`;
+  });
+
+  svg += `</svg>`;
+  document.getElementById("chart").innerHTML = svg;
+
+  // Data table
+  const rows = months.map((mo, i) =>
+    `<tr><td>${mo}</td><td>${orders[i].toLocaleString("en-US")}</td><td>${fmtMoney(revenue[i])}</td></tr>`
+  ).join("");
+  document.getElementById("rows").innerHTML = rows;
+
+  const totalOrders = orders.reduce((a, b) => a + b, 0);
+  const totalRevenue = revenue.reduce((a, b) => a + b, 0);
+  document.getElementById("totalOrders").textContent = totalOrders.toLocaleString("en-US");
+  document.getElementById("totalRevenue").textContent = fmtMoney(totalRevenue);
+</script>
+</body>
+</html>

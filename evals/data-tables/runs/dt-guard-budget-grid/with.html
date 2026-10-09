@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Household Budget</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --paper: #ffffff;
+    --ink: #1c2330;
+    --muted: #5d6676;
+    --grid: #c3c9d4;
+    --head: #e8ebf0;
+    --total: #eef3fb;
+    --accent: #1f5fbf;
+    --focus: #1f5fbf;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); }
+  body { padding: 24px 32px; min-width: 1216px; }
+  header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 18px; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--muted); font-size: 13px; }
+  .stats { display: flex; gap: 28px; }
+  .stat { text-align: right; }
+  .stat span { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .stat strong { font-size: 20px; font-variant-numeric: tabular-nums; }
+  .sheet { background: var(--paper); border: 1px solid var(--grid); border-radius: 4px; overflow: auto; }
+  table { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: 13px; }
+  th, td { border: 1px solid var(--grid); padding: 0; height: 36px; }
+  thead th {
+    background: var(--head); font-weight: 600; font-size: 12px; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--muted); padding: 0 8px; text-align: right;
+  }
+  thead th:first-child, tbody th { text-align: left; width: 150px; }
+  thead th:last-child, td.rowtotal { width: 96px; }
+  tbody th {
+    background: var(--head); font-weight: 600; padding: 0 10px; font-size: 13px; color: var(--ink);
+  }
+  td input {
+    width: 100%; height: 100%; border: 0; margin: 0; padding: 0 8px; background: transparent;
+    font: inherit; color: inherit; text-align: right; font-variant-numeric: tabular-nums;
+    outline: none; border-radius: 0;
+  }
+  td.cell:hover { background: #f7f9fc; }
+  td.cell:focus-within {
+    outline: 2px solid var(--focus); outline-offset: -2px; background: #fff;
+  }
+  td.rowtotal, td.coltotal, tfoot th {
+    background: var(--total); font-weight: 600; text-align: right; padding: 0 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  tfoot th { text-align: left; padding: 0 10px; }
+  tfoot td { border-top: 2px solid #8b94a5; }
+  tfoot td.grand { background: #dce7f8; color: var(--accent); font-weight: 700; }
+  tr.savings th, tr.savings td.cell { background-image: none; }
+  tr.savings th { color: #17703f; }
+  .hint { margin-top: 12px; font-size: 12px; color: var(--muted); }
+  kbd { font: inherit; font-size: 11px; border: 1px solid var(--grid); border-bottom-width: 2px; border-radius: 3px; padding: 0 4px; background: #fff; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Household Budget</h1>
+    <p>Planned monthly spending by category. Click any cell to edit.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><span>Yearly total</span><strong id="s-year">$0</strong></div>
+    <div class="stat"><span>Monthly average</span><strong id="s-avg">$0</strong></div>
+    <div class="stat"><span>Savings share</span><strong id="s-sav">0%</strong></div>
+  </div>
+</header>
+
+<div class="sheet">
+  <table id="grid">
+    <thead></thead>
+    <tbody></tbody>
+    <tfoot></tfoot>
+  </table>
+</div>
+<p class="hint"><kbd>Tab</kbd> / <kbd>Enter</kbd> / arrow keys move between cells. Totals update as you type.</p>
+
+<script>
+(function () {
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var rows = [
+    ["Rent", 1850], ["Groceries", 640], ["Transport", 220], ["Utilities", 260],
+    ["Insurance", 310], ["Healthcare", 120], ["Dining out", 180],
+    ["Entertainment", 140], ["Savings", 500], ["Miscellaneous", 100]
+  ];
+  var data = rows.map(function (r, i) {
+    return months.map(function (_, m) {
+      var v = r[1];
+      if (r[0] === "Utilities") v += [90,80,50,20,10,30,50,60,30,20,50,80][m];
+      if (r[0] === "Entertainment" && m === 11) v += 160;
+      if (r[0] === "Groceries" && (m === 10 || m === 11)) v += 80;
+      return v;
+    });
+  });
+
+  var fmt = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+  var money = function (n) { return "$" + fmt.format(Math.round(n)); };
+  var parse = function (s) {
+    var n = parseFloat(String(s).replace(/[^0-9.\-]/g, ""));
+    return isFinite(n) ? n : 0;
+  };
+
+  var thead = document.querySelector("#grid thead");
+  var tbody = document.querySelector("#grid tbody");
+  var tfoot = document.querySelector("#grid tfoot");
+
+  var h = "<tr><th>Category</th>";
+  months.forEach(function (m) { h += "<th>" + m + "</th>"; });
+  thead.innerHTML = h + "<th>Total</th></tr>";
+
+  var b = "";
+  rows.forEach(function (r, i) {
+    b += '<tr class="' + (r[0] === "Savings" ? "savings" : "") + '"><th scope="row">' + r[0] + "</th>";
+    months.forEach(function (m, j) {
+      b += '<td class="cell"><input type="text" inputmode="decimal" autocomplete="off" ' +
+           'data-r="' + i + '" data-c="' + j + '" aria-label="' + r[0] + ", " + m + '" value="' + fmt.format(data[i][j]) + '"></td>';
+    });
+    b += '<td class="rowtotal" id="rt' + i + '"></td></tr>';
+  });
+  tbody.innerHTML = b;
+
+  var f = "<tr><th>Total</th>";
+  months.forEach(function (_, j) { f += '<td class="coltotal" id="ct' + j + '"></td>'; });
+  tfoot.innerHTML = f + '<td class="coltotal grand" id="gt"></td></tr>';
+
+  function recalc() {
+    var colSums = months.map(function () { return 0; });
+    var grand = 0, savings = 0;
+    data.forEach(function (row, i) {
+      var rs = 0;
+      row.forEach(function (v, j) { rs += v; colSums[j] += v; });
+      document.getElementById("rt" + i).textContent = money(rs);
+      grand += rs;
+      if (rows[i][0] === "Savings") savings = rs;
+    });
+    colSums.forEach(function (s, j) { document.getElementById("ct" + j).textContent = money(s); });
+    document.getElementById("gt").textContent = money(grand);
+    document.getElementById("s-year").textContent = money(grand);
+    document.getElementById("s-avg").textContent = money(grand / 12);
+    document.getElementById("s-sav").textContent = grand ? Math.round(savings / grand * 100) + "%" : "0%";
+  }
+
+  tbody.addEventListener("input", function (e) {
+    var t = e.target;
+    data[+t.dataset.r][+t.dataset.c] = parse(t.value);
+    recalc();
+  });
+  tbody.addEventListener("focusin", function (e) {
+    if (e.target.tagName === "INPUT") setTimeout(function () { e.target.select(); }, 0);
+  });
+  tbody.addEventListener("focusout", function (e) {
+    var t = e.target;
+    if (t.tagName === "INPUT") t.value = fmt.format(data[+t.dataset.r][+t.dataset.c]);
+  });
+  tbody.addEventListener("keydown", function (e) {
+    var t = e.target;
+    if (t.tagName !== "INPUT") return;
+    var r = +t.dataset.r, c = +t.dataset.c, dr = 0, dc = 0;
+    if (e.key === "Enter") dr = e.shiftKey ? -1 : 1;
+    else if (e.key === "ArrowDown") dr = 1;
+    else if (e.key === "ArrowUp") dr = -1;
+    else if (e.key === "ArrowLeft" && t.selectionStart === 0 && t.selectionEnd === 0) dc = -1;
+    else if (e.key === "ArrowRight" && t.selectionStart === t.value.length) dc = 1;
+    else if (e.key === "Escape") { t.value = fmt.format(data[r][c]); t.select(); return; }
+    else return;
+    var next = tbody.querySelector('input[data-r="' + (r + dr) + '"][data-c="' + (c + dc) + '"]');
+    if (next) { e.preventDefault(); next.focus(); }
+  });
+
+  recalc();
+})();
+</script>
+</body>
+</html>

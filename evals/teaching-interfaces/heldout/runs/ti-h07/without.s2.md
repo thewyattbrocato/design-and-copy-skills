@@ -1,0 +1,1 @@
+A helpful empty state tells the user what this space will hold and why it matters, then gives them one clear action to fill it, such as a "Create your first project" button, a template, or a sample-data option. It also meets them in context, with the right call to action for the moment, so they're never left at a dead end wondering what to do next.

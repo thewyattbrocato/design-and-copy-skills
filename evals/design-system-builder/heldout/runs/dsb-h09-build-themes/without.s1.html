@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes</title>
+<style>
+  /* ------------------------------------------------------------------
+     Theme tokens. Each theme only sets values; components below only
+     read tokens and never branch on theme. To add a theme, add one block.
+     In the real app, apply the same blocks to :root via
+     prefers-color-scheme / prefers-contrast or a user setting.
+     ------------------------------------------------------------------ */
+  [data-theme="light"] {
+    --bg: #ffffff;
+    --surface: #f4f6f4;
+    --text: #151916;
+    --text-muted: #5a625c;
+    --border: #dde2de;
+    --border-w: 1px;
+    --primary: #1f7a4d;
+    --on-primary: #ffffff;
+    --gain: #1f7a4d;
+    --loss: #b3412f;
+    --focus: #1f7a4d;
+    --amount-weight: 600;
+  }
+  [data-theme="dark"] {
+    --bg: #111512;
+    --surface: #1b211d;
+    --text: #edf1ee;
+    --text-muted: #a2ada5;
+    --border: #2c352f;
+    --border-w: 1px;
+    --primary: #5fcf94;
+    --on-primary: #08170e;
+    --gain: #5fcf94;
+    --loss: #ff9480;
+    --focus: #8fe3b5;
+    --amount-weight: 600;
+  }
+  [data-theme="contrast"] {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #000000;
+    --text-muted: #262626;
+    --border: #000000;
+    --border-w: 2px;
+    --primary: #0a4a2a;
+    --on-primary: #ffffff;
+    --gain: #0a4a2a;
+    --loss: #8a1c0c;
+    --focus: #0000d6;
+    --amount-weight: 800;
+  }
+
+  /* ---------------- Demo page chrome (not part of the app) ---------------- */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 20px 48px;
+    background: #e7eae8;
+    color: #151916;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  h1 { margin: 0 0 4px; font-size: 1.4rem; }
+  .lede { margin: 0 0 24px; color: #4a524c; font-size: .95rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .page-head { max-width: 1100px; margin: 0 auto; }
+  .label {
+    margin: 0 0 8px;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #4a524c;
+  }
+
+  /* ---------------- App components (token-only) ---------------- */
+  .screen {
+    background: var(--bg);
+    color: var(--text);
+    border: var(--border-w) solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .screen h2 { margin: 0 0 14px; font-size: 1.05rem; }
+
+  .summary {
+    background: var(--surface);
+    border: var(--border-w) solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+  .summary .caption { margin: 0; color: var(--text-muted); font-size: .85rem; }
+  .summary .balance {
+    margin: 2px 0 12px;
+    font-size: 2rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .split { display: flex; gap: 20px; }
+  .split .caption { display: block; }
+  .split strong { font-variant-numeric: tabular-nums; font-weight: var(--amount-weight); }
+
+  .gain { color: var(--gain); }
+  .loss { color: var(--loss); }
+
+  .tx { list-style: none; margin: 0 0 18px; padding: 0; }
+  .tx li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: var(--border-w) solid var(--border);
+  }
+  .tx li:last-child { border-bottom: 0; }
+  .tx .name { display: block; }
+  .tx .meta { display: block; color: var(--text-muted); font-size: .8rem; }
+  .tx .amount {
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--amount-weight);
+    white-space: nowrap;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px 16px;
+    font: inherit;
+    font-weight: 700;
+    color: var(--on-primary);
+    background: var(--primary);
+    border: var(--border-w) solid var(--primary);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+</style>
+</head>
+<body>
+  <div class="page-head">
+    <h1>Kelpie themes</h1>
+    <p class="lede">Light, dark and high contrast, all driven by one set of tokens. The same screen renders in each.</p>
+  </div>
+
+  <div class="grid">
+    <section>
+      <p class="label">Light</p>
+      <div class="screen" data-theme="light">
+        <h2>Overview</h2>
+        <div class="summary">
+          <p class="caption">Balance</p>
+          <p class="balance">$2,481.30</p>
+          <div class="split">
+            <span><span class="caption">In this month</span><strong class="gain">+$3,200.00</strong></span>
+            <span><span class="caption">Out this month</span><strong class="loss">−$718.70</strong></span>
+          </div>
+        </div>
+        <ul class="tx">
+          <li><span><span class="name">Paycheck</span><span class="meta">Oct 1 · Income</span></span><span class="amount gain">+$3,200.00</span></li>
+          <li><span><span class="name">Greenleaf Market</span><span class="meta">Oct 4 · Groceries</span></span><span class="amount loss">−$86.42</span></li>
+          <li><span><span class="name">Rent</span><span class="meta">Oct 5 · Housing</span></span><span class="amount loss">−$550.00</span></li>
+          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 6 · Shopping</span></span><span class="amount gain">+$42.00</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+
+    <section>
+      <p class="label">Dark</p>
+      <div class="screen" data-theme="dark">
+        <h2>Overview</h2>
+        <div class="summary">
+          <p class="caption">Balance</p>
+          <p class="balance">$2,481.30</p>
+          <div class="split">
+            <span><span class="caption">In this month</span><strong class="gain">+$3,200.00</strong></span>
+            <span><span class="caption">Out this month</span><strong class="loss">−$718.70</strong></span>
+          </div>
+        </div>
+        <ul class="tx">
+          <li><span><span class="name">Paycheck</span><span class="meta">Oct 1 · Income</span></span><span class="amount gain">+$3,200.00</span></li>
+          <li><span><span class="name">Greenleaf Market</span><span class="meta">Oct 4 · Groceries</span></span><span class="amount loss">−$86.42</span></li>
+          <li><span><span class="name">Rent</span><span class="meta">Oct 5 · Housing</span></span><span class="amount loss">−$550.00</span></li>
+          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 6 · Shopping</span></span><span class="amount gain">+$42.00</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+
+    <section>
+      <p class="label">High contrast</p>
+      <div class="screen" data-theme="contrast">
+        <h2>Overview</h2>
+        <div class="summary">
+          <p class="caption">Balance</p>
+          <p class="balance">$2,481.30</p>
+          <div class="split">
+            <span><span class="caption">In this month</span><strong class="gain">+$3,200.00</strong></span>
+            <span><span class="caption">Out this month</span><strong class="loss">−$718.70</strong></span>
+          </div>
+        </div>
+        <ul class="tx">
+          <li><span><span class="name">Paycheck</span><span class="meta">Oct 1 · Income</span></span><span class="amount gain">+$3,200.00</span></li>
+          <li><span><span class="name">Greenleaf Market</span><span class="meta">Oct 4 · Groceries</span></span><span class="amount loss">−$86.42</span></li>
+          <li><span><span class="name">Rent</span><span class="meta">Oct 5 · Housing</span></span><span class="amount loss">−$550.00</span></li>
+          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 6 · Shopping</span></span><span class="amount gain">+$42.00</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

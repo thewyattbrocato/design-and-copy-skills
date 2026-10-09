@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low Tide Radio — after midnight, the water goes out</title>
+<style>
+  :root {
+    --paper: #eee4cc;
+    --paper-deep: #e3d6b8;
+    --ink: #1c2a38;
+    --ink-soft: #4a5766;
+    --tide: #2c6a70;
+    --rust: #a8481f;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper-deep); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255,250,235,.55), transparent 60%),
+      var(--paper-deep);
+  }
+  .sheet {
+    width: 100%;
+    max-width: 38rem;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 2.1rem, rgba(44,106,112,.10) 2.1rem calc(2.1rem + 1px)),
+      var(--paper);
+    padding: 2.5rem 2.25rem 2.25rem;
+    border: 1px solid rgba(28,42,56,.25);
+    box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 14px 30px -18px rgba(28,42,56,.55);
+    position: relative;
+  }
+  .sheet::before {
+    /* margin rule, like a ledger */
+    content: "";
+    position: absolute; top: 0; bottom: 0; left: 1.1rem;
+    border-left: 1px solid rgba(168,72,31,.45);
+  }
+  .meta {
+    display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+    font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .meta .air { color: var(--rust); }
+  .meta .air::before {
+    content: ""; display: inline-block; width: .55em; height: .55em; border-radius: 50%;
+    background: var(--rust); margin-right: .55em; vertical-align: .05em;
+    animation: breathe 3.2s ease-in-out infinite;
+  }
+  @keyframes breathe { 50% { opacity: .25; } }
+
+  h1 {
+    margin: 2.2rem 0 0;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(3.2rem, 14vw, 5.6rem);
+    line-height: .92;
+    letter-spacing: -.02em;
+  }
+  h1 span { display: block; font-style: normal; font-size: .36em; letter-spacing: .38em; text-transform: uppercase; margin-top: .6rem; color: var(--tide); }
+
+  .tide { display: block; width: 100%; height: 26px; margin: 1.4rem 0 .8rem; }
+  .tide path { fill: none; stroke: var(--tide); stroke-width: 1.6; stroke-linecap: round; }
+  .tide path + path { stroke: var(--rust); opacity: .55; stroke-width: 1; }
+
+  .tagline {
+    margin: 0 0 2.2rem;
+    font-size: 1.25rem; line-height: 1.5;
+    max-width: 28rem;
+  }
+
+  h2 {
+    margin: 0 0 .4rem;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+    font-weight: 400; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--tide);
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: .5rem;
+  }
+  ol { list-style: none; margin: 0 0 2.2rem; padding: 0; }
+  li {
+    display: grid;
+    grid-template-columns: 4.2rem 1fr;
+    gap: .25rem 1rem;
+    padding: .95rem 0;
+    border-bottom: 1px dotted rgba(28,42,56,.45);
+  }
+  .time {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+    font-size: .85rem; color: var(--rust); padding-top: .3rem;
+  }
+  .track { font-size: 1.3rem; font-style: italic; line-height: 1.25; }
+  .artist {
+    grid-column: 2;
+    font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft);
+  }
+
+  .listen {
+    display: inline-block;
+    padding: .95rem 1.8rem;
+    color: var(--paper);
+    background: var(--ink);
+    text-decoration: none;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+    font-size: .9rem; letter-spacing: .2em; text-transform: uppercase;
+    border: 2px solid var(--ink);
+    outline: 1px solid var(--ink); outline-offset: 4px;
+    transition: background .2s, color .2s;
+  }
+  .listen:hover { background: var(--paper); color: var(--ink); }
+  .listen:focus-visible { outline: 3px solid var(--rust); outline-offset: 4px; }
+  .foot { margin: 1.6rem 0 0; font-size: .85rem; font-style: italic; color: var(--ink-soft); }
+
+  @media (max-width: 30rem) {
+    .sheet { padding: 2rem 1.25rem 2rem 1.9rem; }
+    li { grid-template-columns: 3.4rem 1fr; gap: .25rem .6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .meta .air::before { animation: none; }
+    .listen { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <div class="meta">
+      <span>Broadcast log · No. 214</span>
+      <span class="air">On air 12–4 a.m.</span>
+    </div>
+
+    <h1>Low Tide <span>Radio</span></h1>
+
+    <svg class="tide" viewBox="0 0 600 26" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 10 Q 25 0 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10 T 450 10 T 500 10 T 550 10 T 600 10"/>
+      <path d="M0 18 Q 25 8 50 18 T 100 18 T 150 18 T 200 18 T 250 18 T 300 18 T 350 18 T 400 18 T 450 18 T 500 18 T 550 18 T 600 18"/>
+    </svg>
+
+    <p class="tagline">Records for the hours when the water goes out and the stories come in.</p>
+
+    <h2>Tonight's playlist</h2>
+    <ol>
+      <li>
+        <span class="time">12:04</span>
+        <span class="track">“Salt Under the Floorboards”</span>
+        <span class="artist">Marguerite Anselm</span>
+      </li>
+      <li>
+        <span class="time">12:19</span>
+        <span class="track">“Slow Ferry to Nowhere”</span>
+        <span class="artist">The Hollow Lanterns</span>
+      </li>
+      <li>
+        <span class="time">12:36</span>
+        <span class="track">“Kettle at Three A.M.”</span>
+        <span class="artist">Inès Valcourt</span>
+      </li>
+      <li>
+        <span class="time">12:52</span>
+        <span class="track">“Low Tide, Reprise”</span>
+        <span class="artist">Tobias Rennick Quartet</span>
+      </li>
+    </ol>
+
+    <a class="listen" href="#listen">Listen live</a>
+    <p class="foot">Keep the window open a little. Someone is still up.</p>
+  </main>
+</body>
+</html>

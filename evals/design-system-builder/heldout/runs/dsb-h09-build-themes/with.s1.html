@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes: light, dark, high contrast</title>
+<style>
+/* Tier 1: raw values. Only themes read these. */
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --ink-900: #14171a;
+  --ink-600: #555d66;
+  --ink-200: #dfe3e1;
+  --night-900: #101411;
+  --night-800: #1a201c;
+  --night-600: #2c352f;
+  --mist-100: #eef2ef;
+  --mist-400: #a6b1aa;
+  --green-800: #0b5a34;
+  --green-600: #1f7a4d;   /* brand green */
+  --green-600-hover: #19653f;
+  --green-300: #55c48a;
+  --green-300-hover: #6fd09c;
+  --red-800: #8f2112;
+  --red-600: #b3412f;     /* brand brick red */
+  --red-300: #f08a79;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
+}
+
+/* Tier 2: semantic roles. Each theme remaps these and nothing else. */
+[data-theme="light"] {
+  --surface-page: var(--white);
+  --surface-raised: #f5f7f6;
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-600);
+  --border-subtle: var(--ink-200);
+  --border-width: 1px;
+  --accent: var(--green-600);
+  --accent-hover: var(--green-600-hover);
+  --on-accent: var(--white);
+  --positive: var(--green-600);
+  --negative: var(--red-600);
+  --focus-ring: var(--ink-900);
+  --shadow-raised: 0 1px 2px rgb(20 23 26 / .08);
+}
+[data-theme="dark"] {
+  --surface-page: var(--night-900);
+  --surface-raised: var(--night-800);   /* higher surfaces are lighter */
+  --text-primary: var(--mist-100);
+  --text-secondary: var(--mist-400);
+  --border-subtle: var(--night-600);
+  --border-width: 1px;
+  --accent: var(--green-300);           /* re-tuned for a dark ground */
+  --accent-hover: var(--green-300-hover);
+  --on-accent: var(--night-900);
+  --positive: var(--green-300);
+  --negative: var(--red-300);
+  --focus-ring: var(--mist-100);
+  --shadow-raised: none;
+}
+[data-theme="contrast"] {
+  --surface-page: var(--white);
+  --surface-raised: var(--white);
+  --text-primary: var(--black);
+  --text-secondary: #2b2f33;
+  --border-subtle: var(--black);
+  --border-width: 2px;
+  --accent: var(--green-800);
+  --accent-hover: #06402a;
+  --on-accent: var(--white);
+  --positive: var(--green-800);
+  --negative: var(--red-800);
+  --focus-ring: var(--black);
+  --shadow-raised: none;
+}
+
+/* Tier 3: components read roles only. */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: var(--space-5);
+  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #e6e9e7;
+  color: #14171a;
+}
+h1 { font-size: 1.25rem; margin: 0 0 var(--space-4); }
+.themes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-5);
+  align-items: start;
+}
+.theme-label { font-size: .8125rem; font-weight: 600; margin: 0 0 var(--space-2); letter-spacing: .04em; text-transform: uppercase; }
+
+.screen {
+  background: var(--surface-page);
+  color: var(--text-primary);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-4);
+}
+.balance {
+  background: var(--surface-raised);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+  padding: var(--space-4);
+}
+.balance-label { margin: 0; font-size: .875rem; color: var(--text-secondary); }
+.balance-amount { margin: var(--space-1) 0; font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.balance-delta { margin: 0; font-size: .875rem; color: var(--positive); font-weight: 600; }
+
+.section-title { margin: 0; font-size: 1rem; }
+.tx-list { list-style: none; margin: 0; padding: 0; border-top: var(--border-width) solid var(--border-subtle); }
+.tx {
+  display: flex; justify-content: space-between; gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: var(--border-width) solid var(--border-subtle);
+}
+.tx-name { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.tx-meta { display: block; font-size: .8125rem; color: var(--text-secondary); }
+.tx-amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tx-amount[data-sign="gain"] { color: var(--positive); }
+.tx-amount[data-sign="spend"] { color: var(--negative); }
+
+.btn {
+  font: inherit; font-weight: 600;
+  min-height: 44px; padding: 0 var(--space-5);
+  border: var(--border-width) solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent); color: var(--on-accent);
+  cursor: pointer;
+}
+.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+.btn:disabled { background: transparent; color: var(--text-secondary); border-color: var(--border-subtle); cursor: not-allowed; }
+
+@media (forced-colors: active) {
+  .btn { border: 2px solid ButtonText; }
+}
+</style>
+</head>
+<body>
+<h1>Kelpie themes</h1>
+<div class="themes">
+
+  <section>
+    <p class="theme-label">Light</p>
+    <div class="screen" data-theme="light">
+      <div class="balance">
+        <p class="balance-label">Available balance</p>
+        <p class="balance-amount">$4,218.36</p>
+        <p class="balance-delta">+$312.50 this month</p>
+      </div>
+      <h2 class="section-title">Recent transactions</h2>
+      <ul class="tx-list">
+        <li class="tx"><p class="tx-name">Paycheck<span class="tx-meta">Oct 1</span></p><span class="tx-amount" data-sign="gain">+$2,150.00</span></li>
+        <li class="tx"><p class="tx-name">Greenleaf Market<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$54.20</span></li>
+        <li class="tx"><p class="tx-name">Rent<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$1,200.00</span></li>
+        <li class="tx"><p class="tx-name">Savings interest<span class="tx-meta">Oct 5</span></p><span class="tx-amount" data-sign="gain">+$3.42</span></li>
+      </ul>
+      <button class="btn" type="button">Add transaction</button>
+    </div>
+  </section>
+
+  <section>
+    <p class="theme-label">Dark</p>
+    <div class="screen" data-theme="dark">
+      <div class="balance">
+        <p class="balance-label">Available balance</p>
+        <p class="balance-amount">$4,218.36</p>
+        <p class="balance-delta">+$312.50 this month</p>
+      </div>
+      <h2 class="section-title">Recent transactions</h2>
+      <ul class="tx-list">
+        <li class="tx"><p class="tx-name">Paycheck<span class="tx-meta">Oct 1</span></p><span class="tx-amount" data-sign="gain">+$2,150.00</span></li>
+        <li class="tx"><p class="tx-name">Greenleaf Market<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$54.20</span></li>
+        <li class="tx"><p class="tx-name">Rent<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$1,200.00</span></li>
+        <li class="tx"><p class="tx-name">Savings interest<span class="tx-meta">Oct 5</span></p><span class="tx-amount" data-sign="gain">+$3.42</span></li>
+      </ul>
+      <button class="btn" type="button">Add transaction</button>
+    </div>
+  </section>
+
+  <section>
+    <p class="theme-label">High contrast</p>
+    <div class="screen" data-theme="contrast">
+      <div class="balance">
+        <p class="balance-label">Available balance</p>
+        <p class="balance-amount">$4,218.36</p>
+        <p class="balance-delta">+$312.50 this month</p>
+      </div>
+      <h2 class="section-title">Recent transactions</h2>
+      <ul class="tx-list">
+        <li class="tx"><p class="tx-name">Paycheck<span class="tx-meta">Oct 1</span></p><span class="tx-amount" data-sign="gain">+$2,150.00</span></li>
+        <li class="tx"><p class="tx-name">Greenleaf Market<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$54.20</span></li>
+        <li class="tx"><p class="tx-name">Rent<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$1,200.00</span></li>
+        <li class="tx"><p class="tx-name">Savings interest<span class="tx-meta">Oct 5</span></p><span class="tx-amount" data-sign="gain">+$3.42</span></li>
+      </ul>
+      <button class="btn" type="button">Add transaction</button>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

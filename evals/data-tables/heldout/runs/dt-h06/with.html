@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trivia League Leaderboard</title>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --text: #1d2125;
+    --muted: #5b636b;
+    --line: #e3e1da;
+    --line-strong: #2b3137;
+    --tint: #f1efe6;
+    --accent: #1f4f8f;
+    --focus: #1f4f8f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171a;
+      --surface: #1b1f23;
+      --text: #e8eaec;
+      --muted: #9aa3ab;
+      --line: #2c3238;
+      --line-strong: #8b949c;
+      --tint: #22282e;
+      --accent: #8db8f0;
+      --focus: #8db8f0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.01em; }
+  .sub { margin: 0 0 20px; color: var(--muted); }
+  .wrap {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  .wrap:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  caption {
+    text-align: left;
+    padding: 14px 16px 10px;
+    color: var(--muted);
+    font-size: 14px;
+    caption-side: top;
+  }
+  th, td { padding: 12px 16px; white-space: nowrap; }
+  thead th {
+    padding: 0;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 2px solid var(--line-strong);
+    text-align: right;
+    vertical-align: bottom;
+  }
+  thead th.text, tbody th, td.text { text-align: left; }
+  thead th button {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 12px 16px;
+    cursor: pointer;
+    justify-content: flex-end;
+    font: inherit;
+    color: var(--muted);
+  }
+  thead th.text button { justify-content: flex-start; }
+  thead th button:hover { color: var(--text); }
+  thead th button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+  thead th[aria-sort="ascending"] button,
+  thead th[aria-sort="descending"] button { color: var(--text); }
+  .arrow {
+    display: inline-block;
+    width: 10px;
+    font-size: 11px;
+    color: var(--accent);
+  }
+  tbody tr { border-bottom: 1px solid var(--line); }
+  tbody tr:last-child { border-bottom: 0; }
+  tbody th { font-weight: 600; }
+  td.rank { color: var(--muted); width: 1%; }
+  td { text-align: right; }
+  td.sorted, thead th.sorted { background: var(--tint); }
+  tbody tr:hover td, tbody tr:hover th { background: var(--tint); }
+  td.diff { font-weight: 600; }
+  .note { margin: 12px 2px 0; color: var(--muted); font-size: 13px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Trivia League Leaderboard</h1>
+  <p class="sub">Fall season, after 14 rounds</p>
+
+  <div class="wrap" role="region" aria-labelledby="cap" tabindex="0">
+    <table id="board">
+      <caption id="cap">Standings for 8 teams. Rank is the official standing (wins, then differential). Select a column heading to sort.</caption>
+      <thead>
+        <tr>
+          <th scope="col" data-key="rank" data-type="num" data-dir="asc"><button type="button">Rank <span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" data-key="team" data-type="str" data-dir="asc" class="text"><button type="button">Team <span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" data-key="wins" data-type="num" data-dir="desc" aria-sort="descending" class="sorted"><button type="button">Wins <span class="arrow" aria-hidden="true">▼</span></button></th>
+          <th scope="col" data-key="losses" data-type="num" data-dir="asc"><button type="button">Losses <span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" data-key="pf" data-type="num" data-dir="desc"><button type="button">Points for <span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" data-key="pa" data-type="num" data-dir="asc"><button type="button">Points against <span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" data-key="diff" data-type="num" data-dir="desc"><button type="button">Differential <span class="arrow" aria-hidden="true"></span></button></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p class="note">Differential = points for − points against.</p>
+  <p class="sr" role="status" aria-live="polite" id="status"></p>
+</main>
+
+<script>
+(function () {
+  var teams = [
+    { team: "Quizzly Bears",      wins: 12, losses: 2,  pf: 1184, pa: 925 },
+    { team: "Brain Trust",        wins: 11, losses: 3,  pf: 1131, pa: 960 },
+    { team: "Trivia Newton-John", wins: 9,  losses: 5,  pf: 1064, pa: 1010 },
+    { team: "Know-It-Ales",       wins: 8,  losses: 6,  pf: 1042, pa: 1026 },
+    { team: "Pub Quiz Pioneers",  wins: 7,  losses: 7,  pf: 987,  pa: 1003 },
+    { team: "Fact Finders",       wins: 5,  losses: 9,  pf: 951,  pa: 1020 },
+    { team: "The Wikipedants",    wins: 4,  losses: 10, pf: 902,  pa: 1066 },
+    { team: "Lorem Quizpum",      wins: 2,  losses: 12, pf: 861,  pa: 1112 }
+  ];
+
+  teams.forEach(function (t) { t.diff = t.pf - t.pa; });
+  // Official rank: wins, then differential. Stays fixed when re-sorting.
+  teams.slice().sort(function (a, b) { return b.wins - a.wins || b.diff - a.diff; })
+       .forEach(function (t, i) { t.rank = i + 1; });
+
+  var fmt = new Intl.NumberFormat("en-US");
+  function fmtDiff(n) {
+    if (n === 0) return "0";
+    return (n > 0 ? "+" : "\u2212") + fmt.format(Math.abs(n));
+  }
+
+  var tbody = document.querySelector("#board tbody");
+  var heads = Array.prototype.slice.call(document.querySelectorAll("#board thead th"));
+  var status = document.getElementById("status");
+  var keys = heads.map(function (h) { return h.dataset.key; });
+  var sort = { key: "wins", dir: "desc" };
+
+  function render() {
+    var type = heads[keys.indexOf(sort.key)].dataset.type;
+    var mult = sort.dir === "asc" ? 1 : -1;
+    var rows = teams.slice().sort(function (a, b) {
+      var c = type === "str" ? a[sort.key].localeCompare(b[sort.key]) : a[sort.key] - b[sort.key];
+      return c * mult || a.rank - b.rank;
+    });
+
+    tbody.innerHTML = "";
+    rows.forEach(function (t) {
+      var tr = document.createElement("tr");
+      var cells = [
+        ["td", "rank", t.rank],
+        ["th", "team", t.team],
+        ["td", "wins", fmt.format(t.wins)],
+        ["td", "losses", fmt.format(t.losses)],
+        ["td", "pf", fmt.format(t.pf)],
+        ["td", "pa", fmt.format(t.pa)],
+        ["td", "diff", fmtDiff(t.diff)]
+      ];
+      cells.forEach(function (c) {
+        var el = document.createElement(c[0]);
+        el.textContent = c[2];
+        if (c[0] === "th") { el.scope = "row"; }
+        var cls = [];
+        if (c[1] === "rank") cls.push("rank");
+        if (c[1] === "diff") cls.push("diff");
+        if (c[1] === sort.key) cls.push("sorted");
+        el.className = cls.join(" ");
+        tr.appendChild(el);
+      });
+      tbody.appendChild(tr);
+    });
+
+    heads.forEach(function (h) {
+      var active = h.dataset.key === sort.key;
+      h.classList.toggle("sorted", active);
+      h.querySelector(".arrow").textContent = active ? (sort.dir === "asc" ? "\u25B2" : "\u25BC") : "";
+      if (active) h.setAttribute("aria-sort", sort.dir === "asc" ? "ascending" : "descending");
+      else h.removeAttribute("aria-sort");
+    });
+  }
+
+  heads.forEach(function (h) {
+    h.querySelector("button").addEventListener("click", function () {
+      var key = h.dataset.key;
+      if (sort.key === key) sort.dir = sort.dir === "asc" ? "desc" : "asc";
+      else { sort.key = key; sort.dir = h.dataset.dir; }
+      render();
+      status.textContent = "Sorted by " + h.querySelector("button").firstChild.textContent.trim() +
+        ", " + (sort.dir === "asc" ? "ascending" : "descending");
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forklift Safety Check</title>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --card: #ffffff;
+    --ink: #1c1c1c;
+    --muted: #5c5c5c;
+    --accent: #f5a300;
+    --accent-ink: #1c1c1c;
+    --good: #1b7f3b;
+    --good-bg: #e6f4ea;
+    --bad: #b3261e;
+    --bad-bg: #fdecea;
+    --line: #d9d4c7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  header {
+    background: var(--accent);
+    color: var(--accent-ink);
+    padding: 20px 16px;
+    border-bottom: 6px solid var(--ink);
+  }
+  header .inner, main { max-width: 720px; margin: 0 auto; }
+  h1 { margin: 0; font-size: 1.6rem; }
+  header p { margin: 4px 0 0; }
+  main { padding: 20px 16px 48px; }
+  fieldset {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin: 0 0 16px;
+    padding: 16px;
+  }
+  legend {
+    font-weight: 700;
+    padding: 0 6px;
+    font-size: 1.05rem;
+  }
+  .q-text { font-weight: 600; margin: 0 0 10px; }
+  label.opt {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    margin: 6px 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  label.opt:hover { background: #faf7f0; }
+  label.opt input { margin-top: 4px; width: 18px; height: 18px; flex: none; accent-color: var(--ink); }
+  label.opt:focus-within { outline: 3px solid var(--ink); outline-offset: 2px; }
+  button {
+    font: inherit;
+    font-weight: 700;
+    background: var(--ink);
+    color: #fff;
+    border: 0;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+  }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  button.secondary { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+  .error { color: var(--bad); font-weight: 600; margin: 10px 0 0; min-height: 1.5em; }
+  #results[hidden], #quiz[hidden] { display: none; }
+  .score {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 8px solid var(--accent);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .score .big { font-size: 2rem; font-weight: 800; margin: 0; }
+  .item {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border: 1px solid;
+  }
+  .item.right { background: var(--good-bg); border-color: var(--good); }
+  .item.wrong { background: var(--bad-bg); border-color: var(--bad); }
+  .item h3 { margin: 0 0 6px; font-size: 1rem; }
+  .item p { margin: 4px 0; }
+  .tag { font-weight: 700; }
+  .right .tag { color: var(--good); }
+  .wrong .tag { color: var(--bad); }
+  .why { color: var(--muted); font-size: 0.95rem; }
+  .actions { margin-top: 16px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>Forklift Safety Check</h1>
+    <p>New hire quiz &middot; 5 questions</p>
+  </div>
+</header>
+
+<main>
+  <form id="quiz" novalidate></form>
+
+  <section id="results" hidden aria-live="polite">
+    <div class="score" id="score"></div>
+    <div id="review"></div>
+    <div class="actions"><button type="button" class="secondary" id="retry">Retake quiz</button></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var questions = [
+    {
+      q: "What should you do before lifting a load that appears heavier than the truck's rated capacity on its data plate?",
+      options: [
+        "Lift it slowly and carefully",
+        "Do not lift it; get a larger truck or split the load",
+        "Lift it a few inches to test it",
+        "Have a coworker stand on the back as a counterweight"
+      ],
+      answer: 1,
+      why: "Never exceed the rated capacity on the data plate. Overloading can tip the truck or cause loss of control."
+    },
+    {
+      q: "A pedestrian is walking across your path ahead. What is the correct action?",
+      options: [
+        "Sound the horn and keep driving so they move faster",
+        "Flash your lights and drive around them quickly",
+        "Stop, make eye contact, and wait until they have clearly passed",
+        "Speed up to get past before they reach you"
+      ],
+      answer: 2,
+      why: "Pedestrians always have the right of way. Stop and confirm they have seen you before moving."
+    },
+    {
+      q: "How should you travel when carrying a load?",
+      options: [
+        "Forks raised high for better visibility",
+        "Forks 4 to 6 inches off the floor, tilted back slightly",
+        "Forks at the floor, dragging lightly",
+        "Forks at chest height so the load stays level"
+      ],
+      answer: 1,
+      why: "Keeping the load low and tilted back keeps the center of gravity stable and reduces tip-over risk."
+    },
+    {
+      q: "What is the right way to handle speed in the warehouse?",
+      options: [
+        "Drive at walking pace or the posted limit, and slow down at corners and blind spots",
+        "Go as fast as the truck allows when aisles are empty",
+        "Speed up on ramps to keep momentum",
+        "Take corners quickly to save time"
+      ],
+      answer: 0,
+      why: "Stay at or below the posted limit, slow for turns, wet floors and intersections, and sound the horn at blind spots."
+    },
+    {
+      q: "You are finished with the forklift. How should you park it?",
+      options: [
+        "Leave it in the aisle with the keys in it so the next driver can start quickly",
+        "Park it in a designated area, forks flat on the floor, controls neutral, brake set, and power off",
+        "Park it by an exit with the forks raised so they are out of the way",
+        "Park it anywhere as long as the engine is running"
+      ],
+      answer: 1,
+      why: "Lower the forks fully, set the brake, shut the truck off and remove the key. Park only in designated areas, clear of aisles, exits and fire equipment."
+    }
+  ];
+
+  var letters = ["A", "B", "C", "D"];
+  var form = document.getElementById("quiz");
+  var results = document.getElementById("results");
+  var scoreEl = document.getElementById("score");
+  var reviewEl = document.getElementById("review");
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function build() {
+    form.innerHTML = "";
+    questions.forEach(function (item, i) {
+      var fs = el("fieldset");
+      fs.appendChild(el("legend", "", "Question " + (i + 1) + " of " + questions.length));
+      fs.appendChild(el("p", "q-text", item.q));
+      item.options.forEach(function (opt, j) {
+        var label = el("label", "opt");
+        var input = document.createElement("input");
+        input.type = "radio";
+        input.name = "q" + i;
+        input.value = j;
+        label.appendChild(input);
+        label.appendChild(el("span", "", letters[j] + ". " + opt));
+        fs.appendChild(label);
+      });
+      form.appendChild(fs);
+    });
+    var submit = el("button", "", "Submit answers");
+    submit.type = "submit";
+    form.appendChild(submit);
+    form.appendChild(el("p", "error"));
+    form.lastChild.id = "err";
+    form.lastChild.setAttribute("role", "alert");
+  }
+
+  function selected(i) {
+    var c = form.querySelector('input[name="q' + i + '"]:checked');
+    return c ? parseInt(c.value, 10) : null;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var picks = questions.map(function (_, i) { return selected(i); });
+    var missing = [];
+    picks.forEach(function (p, i) { if (p === null) missing.push(i + 1); });
+    var err = document.getElementById("err");
+    if (missing.length) {
+      err.textContent = "Please answer all questions. Missing: " + missing.join(", ") + ".";
+      return;
+    }
+    err.textContent = "";
+
+    var score = 0;
+    reviewEl.innerHTML = "";
+    questions.forEach(function (item, i) {
+      var ok = picks[i] === item.answer;
+      if (ok) score++;
+      var box = el("div", "item " + (ok ? "right" : "wrong"));
+      box.appendChild(el("h3", "", (i + 1) + ". " + item.q));
+      var status = el("p");
+      status.appendChild(el("span", "tag", ok ? "Correct" : "Incorrect"));
+      box.appendChild(status);
+      if (!ok) {
+        box.appendChild(el("p", "", "Your answer: " + letters[picks[i]] + ". " + item.options[picks[i]]));
+        box.appendChild(el("p", "", "Correct answer: " + letters[item.answer] + ". " + item.options[item.answer]));
+      } else {
+        box.appendChild(el("p", "", letters[item.answer] + ". " + item.options[item.answer]));
+      }
+      box.appendChild(el("p", "why", item.why));
+      reviewEl.appendChild(box);
+    });
+
+    scoreEl.innerHTML = "";
+    scoreEl.appendChild(el("p", "big", score + " / " + questions.length));
+    var msg = score === questions.length
+      ? "Perfect score. You're ready to go."
+      : score >= 4
+        ? "Good work. Review the items you missed below."
+        : "Please review the answers below and retake the quiz before operating a forklift.";
+    scoreEl.appendChild(el("p", "", msg));
+
+    form.hidden = true;
+    results.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  document.getElementById("retry").addEventListener("click", function () {
+    build();
+    results.hidden = true;
+    form.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  build();
+})();
+</script>
+</body>
+</html>

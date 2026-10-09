@@ -1,0 +1,119 @@
+[
+  {
+    "id": "ac-h01-ferry-tabs",
+    "kind": "build",
+    "prompt": "I run a small passenger ferry between two islands (Tidewater Crossings) and need a timetable page. One self-contained HTML file, inline CSS, system fonts, no external assets. Three views of the schedule: Weekdays, Weekends, and Holidays, a few departure times each (make them up), switched by tabs. Under the timetable, a dark-mode switch that actually works. Keep it clean, it's mostly read on phones.",
+    "rubric": [
+      "The three views are switched by tab controls, and the current tab is visibly distinct from the others by more than a faint color change.",
+      "Only the selected view's times are shown, and the tab labels are real text (Weekdays, Weekends, Holidays), not icons.",
+      "The tabs can be operated from the keyboard (arrow keys and/or Tab reach every view) and the markup gives the tab set a tab/tabpanel relationship or an equivalent that a screen reader announces as selected.",
+      "The dark-mode switch is a real button or checkbox with a text label, shows its on/off state in words or a clear visual, and changes the page theme when used.",
+      "Controls have a visible keyboard focus indicator in the CSS, not outline removed with nothing in its place."
+    ]
+  },
+  {
+    "id": "ac-h02-seedshop-modal-menu",
+    "kind": "build",
+    "prompt": "Build me the top of an admin screen for a seed shop's order dashboard, single HTML file with inline CSS and system fonts, no external assets. Needs a user menu in the top right (profile, switch shop, sign out) and a table of 4 or 5 fake orders each with a Cancel order button. Cancel should ask for confirmation in a popup before anything happens. Make the popup visible in the page as it would look when open.",
+    "rubric": [
+      "The user menu trigger is a real button with a visible name (a name or 'Account'), not an unlabeled icon or a div, and the items are real links or buttons.",
+      "The confirmation popup is visible in the screenshot, with a clear title, a plain-language description of what cancelling does, and two distinct choices where the destructive one is worded as the action (not just 'OK'/'Yes').",
+      "The popup is marked up as a dialog (native dialog element or role=dialog with aria-modal and an accessible name) and the page behind it is visibly dimmed or separated.",
+      "The script moves focus into the popup when it opens, keeps Tab inside it, closes on Escape, and returns focus to the button that opened it.",
+      "The menu opens and closes by keyboard as well as mouse, closes on Escape, and reports whether it is open (aria-expanded or equivalent)."
+    ]
+  },
+  {
+    "id": "ac-h03-trail-carousel",
+    "kind": "build",
+    "prompt": "Make a photo carousel for the front page of a trail-running club (Larkspur Ridge Runners). No real photos, just colored panels with a caption each, 4 slides. I want it to auto-advance and have next/previous. One HTML file, inline CSS and JS, system fonts, nothing external.",
+    "rubric": [
+      "Next and previous are real buttons with text names (visible or screen-reader-only), not clickable divs or glyphs with no name.",
+      "Auto-advance can be stopped by the visitor with a visible pause/play control, and it also stops when the carousel has focus or the pointer is over it.",
+      "The page shows which slide is current (for example 'Slide 2 of 4' or dots/labels), and slides that are not shown are hidden from keyboard and screen reader users, not just moved off screen.",
+      "With reduced motion requested, the slides do not auto-advance or animate sideways.",
+      "Each slide's caption is real text and the carousel region has an accessible name."
+    ]
+  },
+  {
+    "id": "ac-h04-pottery-critique",
+    "kind": "critique",
+    "prompt": "A friend built this for her pottery studio's class page and says it feels weird with the keyboard and her screen reader. Can you look at it and tell me what's wrong and what to change?\n\n```html\n<div class=\"class-card\" onclick=\"location.href='/classes/wheel-basics'\">\n  <img src=\"wheel.jpg\">\n  <div class=\"title\">Wheel Basics</div>\n  <div class=\"meta\">Thursdays 6pm · 6 weeks</div>\n  <div class=\"save\" onclick=\"event.stopPropagation(); toggleSave(this)\">\n    <i class=\"icon-heart\"></i>\n  </div>\n</div>\n\n<div class=\"more\" onclick=\"toggleDetails()\">What's included <i class=\"icon-chevron\"></i></div>\n<div id=\"details\" style=\"display:none\">Clay, glazes, two firings.</div>\n```",
+    "rubric": [
+      "Identifies that the clickable divs cannot be reached or activated with the keyboard and are not announced as links or buttons.",
+      "Distinguishes the card as navigation (a link to the class page) from the save heart and the 'What's included' toggle as buttons, rather than treating everything the same.",
+      "Points out the icon-only save control has no name and no state, and the image has no alt text.",
+      "Says the 'What's included' control should expose whether the details are open or closed.",
+      "Gives corrected markup or a concrete fix for each problem, and does not rewrite things that were not broken (the visual styling, the copy)."
+    ]
+  },
+  {
+    "id": "ac-h05-link-or-button",
+    "kind": "choose",
+    "prompt": "Our invoicing app (Ledgerleaf) has a row for each invoice with these actions: View invoice, Download PDF, Mark as paid, Send reminder, and Duplicate. A dev says make them all buttons, another says make them all links. Which should each be?",
+    "rubric": [
+      "Gives a per-action answer rather than one answer for all five.",
+      "Treats actions that go to another page or give a file (View invoice, Download PDF) as links, and actions that change data or trigger something in place (Mark as paid, Send reminder, Duplicate) as buttons.",
+      "Gives a reason a user can feel (open in new tab, middle-click, back button, expected keyboard and screen reader behavior), not only a code rule.",
+      "Notes any consequential action, such as Mark as paid or Send reminder, needs feedback that it happened or a way to undo.",
+      "Stays brief and direct; it does not turn into a general accessibility lecture."
+    ]
+  },
+  {
+    "id": "ac-h06-guard-faq-good",
+    "kind": "polish",
+    "prompt": "We're about to ship the FAQ on our bike-repair booking page. Someone told me to run it through an accessibility pass. Can you do it? Here's the code.\n\n```html\n<h2>Questions before you book</h2>\n<div class=\"faq\">\n  <h3><button type=\"button\" aria-expanded=\"false\" aria-controls=\"a1\" id=\"q1\">How long does a tune-up take?</button></h3>\n  <div id=\"a1\" role=\"region\" aria-labelledby=\"q1\" hidden>Most tune-ups are ready the same afternoon.</div>\n  <h3><button type=\"button\" aria-expanded=\"false\" aria-controls=\"a2\" id=\"q2\">Do you service e-bikes?</button></h3>\n  <div id=\"a2\" role=\"region\" aria-labelledby=\"q2\" hidden>Yes, except for mid-drive motor repairs.</div>\n</div>\n<style>\n.faq button { font: inherit; background: none; border: 0; padding: 12px 0; width: 100%; text-align: left; cursor: pointer; }\n.faq button:focus-visible { outline: 3px solid #1a5fd0; outline-offset: 2px; }\n</style>\n<script>\ndocument.querySelectorAll('.faq button').forEach(function (b) {\n  b.addEventListener('click', function () {\n    var open = b.getAttribute('aria-expanded') === 'true';\n    b.setAttribute('aria-expanded', String(!open));\n    document.getElementById(b.getAttribute('aria-controls')).hidden = open;\n  });\n});\n</script>\n```",
+    "rubric": [
+      "Concludes that the component already works (real buttons, state, controlled panels, visible focus) and says so plainly instead of inventing problems.",
+      "Does not add tabindex, extra ARIA roles, arrow-key handling or a tab/accordion widget pattern that the markup does not need.",
+      "If it suggests changes, they are small, optional and clearly labeled as such (for example, panel region roles being optional with many items), and the original markup is left intact.",
+      "Does not rewrite the whole snippet or swap it for a different structure."
+    ]
+  },
+  {
+    "id": "ac-h07-guard-site-nav",
+    "kind": "polish",
+    "prompt": "I'm adding a dropdown to the main navigation of our dental clinic site. \"Services\" should open a list of Cleanings, Whitening, Orthodontics and Emergency visits. My coworker found a menu example with role=\"menu\" and menuitem and arrow keys everywhere, and says that's the accessible way. Here's what I have, can you finish it up?\n\n```html\n<nav aria-label=\"Main\">\n  <ul class=\"nav\">\n    <li><a href=\"/\">Home</a></li>\n    <li class=\"has-sub\">\n      <button class=\"sub-toggle\">Services</button>\n      <ul class=\"sub\">\n        <li><a href=\"/cleanings\">Cleanings</a></li>\n        <li><a href=\"/whitening\">Whitening</a></li>\n        <li><a href=\"/ortho\">Orthodontics</a></li>\n        <li><a href=\"/emergency\">Emergency visits</a></li>\n      </ul>\n    </li>\n    <li><a href=\"/about\">About</a></li>\n  </ul>\n</nav>\n```",
+    "rubric": [
+      "Keeps the nav as a list of links with a disclosure button and does not convert it to role=menu/menuitem, saying why that pattern is for application-style menus.",
+      "Adds the open/closed state to the Services button and a way to close it (Escape returns focus to the button, and/or closing when focus leaves).",
+      "Does not make the submenu open on hover only; the button works by keyboard and touch.",
+      "Does not trap focus or require arrow keys; Tab moves through the links in order.",
+      "Delivers the finished code, not only advice."
+    ]
+  },
+  {
+    "id": "ac-h08-guard-toast-short",
+    "kind": "explain",
+    "prompt": "Quick one, answer in under 100 words: we show a \"Saved\" toast in the corner for 3 seconds after someone edits their profile. A user said she never knows if it worked because she uses a screen reader. What's going on and what should we change?",
+    "rubric": [
+      "The answer is under about 100 words.",
+      "Explains that a toast appearing visually is not announced unless it is in a live region (status/polite) that exists in the page before the message is inserted.",
+      "Mentions that 3 seconds is too short or can be missed, or that the message should not depend on timing alone.",
+      "Gives one concrete fix and does not add unrelated advice (focus management, colors, a redesign)."
+    ]
+  },
+  {
+    "id": "ac-h09-class-cards-layout",
+    "kind": "layout",
+    "prompt": "We have a grid of cooking-class cards for a community kitchen. Each card has a photo, class name, date, price, a \"Spots left\" note, and a Wishlist heart button. The whole card should open the class page when clicked. Dev keeps wrapping the whole card in one big link and putting the heart inside it. How should we structure the card?",
+    "rubric": [
+      "Recommends a structure where the class name is the link (stretched over the card with CSS if the whole card should be clickable) rather than one link wrapping all content.",
+      "Keeps the Wishlist button as a sibling button outside the link, not nested inside it, with a name that includes the class and a pressed/not pressed state.",
+      "Explains that one big link makes a screen reader read the entire card as the link name.",
+      "Shows or describes concrete markup or CSS, not only principles.",
+      "Mentions the photo should have empty alt if decorative, or alt that adds information not already in the text."
+    ]
+  },
+  {
+    "id": "ac-h10-live-results",
+    "kind": "explain",
+    "prompt": "We have a search page for used books on our shop site. As you type, the results list updates below and a line above it says \"24 results\". Sighted users love it. A tester using a screen reader says typing just feels silent and she can't tell if anything is happening. Why, and what would you change without making it annoying?",
+    "rubric": [
+      "Explains the result count update is not announced because it is not in a live region.",
+      "Recommends a polite status region for the count, present in the page before updates, rather than assertive announcements or making the whole results list live.",
+      "Addresses annoyance, for example by announcing after typing pauses instead of on each keystroke, and keeping the message short.",
+      "Does not recommend moving focus to the results while the person is still typing."
+    ]
+  }
+]

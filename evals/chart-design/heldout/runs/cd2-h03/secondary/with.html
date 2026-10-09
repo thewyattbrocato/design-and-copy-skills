@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2025 Orders and Revenue by Month</title>
+<style>
+  :root {
+    --ink: #1f2a24;
+    --muted: #5d6b63;
+    --grid: #dfe5e1;
+    --orders: #7fa98a;
+    --revenue: #2f5d46;
+    --bg: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #e8efea;
+      --muted: #a3b1a8;
+      --grid: #33403a;
+      --orders: #6c9a7b;
+      --revenue: #9fd0b1;
+      --bg: #161c19;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .card {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  .sub {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  .legend span::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    vertical-align: -1px;
+    border-radius: 2px;
+    background: var(--c);
+  }
+  .legend .orders { --c: var(--orders); }
+  .legend .revenue { --c: var(--revenue); border-radius: 0; height: 3px; margin-top: 4px; }
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .axis-label { fill: var(--muted); font-size: 12px; }
+  .tick { fill: var(--muted); font-size: 12px; }
+  .month { fill: var(--ink); font-size: 12px; }
+  .grid { stroke: var(--grid); stroke-width: 1; }
+  .bar { fill: var(--orders); }
+  .bar:hover { opacity: 0.8; }
+  .line { fill: none; stroke: var(--revenue); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+  .dot { fill: var(--revenue); stroke: var(--bg); stroke-width: 2; }
+  .note { margin-top: 12px; font-size: 0.85rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>2025 Orders and Revenue by Month</h1>
+  <p class="sub">Orders (bars, left axis) and revenue (line, right axis), January to December 2025. Both axes start at zero.</p>
+  <div class="legend" aria-hidden="true">
+    <span class="orders">Orders</span>
+    <span class="revenue">Revenue (USD)</span>
+  </div>
+  <svg id="chart" viewBox="0 0 800 420" role="img" aria-labelledby="chart-title chart-desc">
+    <title id="chart-title">Orders and revenue by month, 2025</title>
+    <desc id="chart-desc">Bars show monthly orders on the left axis, from 310 in January up to a peak of 880 in May and down to 520 in December. A line shows monthly revenue in dollars on the right axis, from $9,800 in January up to a peak of $44,900 in May and $29,300 in December.</desc>
+  </svg>
+  <p class="note">Totals for the year: 6,370 orders and $274,400 in revenue. Hover over a bar or point for exact values.</p>
+</main>
+
+<script>
+(function () {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const orders = [310, 280, 420, 690, 880, 760, 540, 500, 610, 470, 390, 520];
+  const revenue = [9800, 8900, 15200, 31400, 44900, 36100, 21500, 19800, 24700, 18200, 14600, 29300];
+
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("chart");
+
+  const W = 800, H = 420;
+  const m = { top: 20, right: 72, bottom: 44, left: 64 };
+  const plotW = W - m.left - m.right;
+  const plotH = H - m.top - m.bottom;
+
+  const maxOrders = 1000, orderStep = 200;
+  const maxRevenue = 50000, revenueStep = 10000;
+
+  const band = plotW / months.length;
+  const cx = i => m.left + band * i + band / 2;
+  const yOrders = v => m.top + plotH - (v / maxOrders) * plotH;
+  const yRevenue = v => m.top + plotH - (v / maxRevenue) * plotH;
+
+  function el(name, attrs, parent) {
+    const node = document.createElementNS(NS, name);
+    for (const k in attrs) node.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(node);
+    return node;
+  }
+
+  function text(content, attrs, parent) {
+    const t = el("text", attrs, parent);
+    t.textContent = content;
+    return t;
+  }
+
+  const money = v => "$" + v.toLocaleString("en-US");
+
+  // Gridlines and left (orders) tick labels
+  for (let v = 0; v <= maxOrders; v += orderStep) {
+    const y = yOrders(v);
+    el("line", { x1: m.left, x2: W - m.right, y1: y, y2: y, class: "grid" });
+    text(v.toLocaleString("en-US"), { x: m.left - 8, y: y + 4, "text-anchor": "end", class: "tick" });
+  }
+
+  // Right (revenue) tick labels, aligned to the same gridlines
+  for (let i = 0; i <= maxRevenue / revenueStep; i++) {
+    const v = i * revenueStep;
+    const y = yRevenue(v);
+    text(money(v), { x: W - m.right + 8, y: y + 4, "text-anchor": "start", class: "tick" });
+  }
+
+  // Axis titles
+  text("Orders", { x: m.left, y: m.top - 6, "text-anchor": "start", class: "axis-label" });
+  text("Revenue (USD)", { x: W - m.right, y: m.top - 6, "text-anchor": "start", class: "axis-label" });
+
+  // Bars for orders
+  const barW = band * 0.56;
+  const baseY = m.top + plotH;
+  orders.forEach((v, i) => {
+    const bar = el("rect", {
+      x: cx(i) - barW / 2,
+      y: yOrders(v),
+      width: barW,
+      height: baseY - yOrders(v),
+      rx: 2,
+      class: "bar"
+    });
+    const title = el("title", {}, bar);
+    title.textContent = months[i] + " 2025: " + v.toLocaleString("en-US") + " orders";
+  });
+
+  // Revenue line
+  const points = revenue.map((v, i) => cx(i) + "," + yRevenue(v)).join(" ");
+  el("polyline", { points: points, class: "line" });
+
+  // Revenue points with tooltips
+  revenue.forEach((v, i) => {
+    const dot = el("circle", { cx: cx(i), cy: yRevenue(v), r: 4, class: "dot" });
+    const title = el("title", {}, dot);
+    title.textContent = months[i] + " 2025: " + money(v) + " revenue";
+  });
+
+  // Month labels on the x axis
+  months.forEach((mo, i) => {
+    text(mo, { x: cx(i), y: baseY + 22, "text-anchor": "middle", class: "month" });
+  });
+
+  // Baseline
+  el("line", { x1: m.left, x2: W - m.right, y1: baseY, y2: baseY, class: "grid" });
+})();
+</script>
+</body>
+</html>

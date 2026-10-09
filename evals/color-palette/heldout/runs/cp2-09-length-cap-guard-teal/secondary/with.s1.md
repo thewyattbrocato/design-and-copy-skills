@@ -1,0 +1,1 @@
+Use a cool gray with a slight teal tint: `#f6f8f8` for page backgrounds and `#1a2628` for body text, which gives about 15:1 contrast. Keep `#0f7c80` for links, buttons, and accents rather than body copy, since it's only about 5:1 against white.

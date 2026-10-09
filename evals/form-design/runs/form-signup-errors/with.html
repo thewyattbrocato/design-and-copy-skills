@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2 problems to fix – Get a library card – Fernhill Library</title>
+<style>
+  :root {
+    --ink: #1d2a24;
+    --muted: #4b5a52;
+    --fern: #2f6b4f;
+    --fern-dark: #214d39;
+    --paper: #f5f3ec;
+    --line: #8a968f;
+    --err: #a3200f;
+    --err-bg: #fdf0ed;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 18px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header.site {
+    background: var(--fern-dark);
+    color: #fff;
+    padding: 14px 20px;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+  header.site span { font-weight: 400; opacity: .85; }
+  main {
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+  h1 { font-size: 1.75rem; line-height: 1.2; margin: 0 0 8px; }
+  .lede { margin: 0 0 24px; color: var(--muted); }
+
+  .summary {
+    border: 3px solid var(--err);
+    background: var(--err-bg);
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 28px;
+  }
+  .summary h2 { font-size: 1.1rem; margin: 0 0 8px; color: var(--err); }
+  .summary ul { margin: 0; padding-left: 20px; }
+  .summary li + li { margin-top: 6px; }
+  .summary a { color: var(--err); font-weight: 600; }
+
+  .field { margin-bottom: 28px; }
+  label, legend.l {
+    display: block;
+    font-weight: 600;
+    padding: 0;
+    margin-bottom: 2px;
+  }
+  .opt { font-weight: 400; color: var(--muted); }
+  .hint { margin: 0 0 6px; color: var(--muted); font-size: .9375rem; }
+  fieldset { border: 0; padding: 0; margin: 0 0 28px; }
+
+  input[type=text], input[type=email], input[type=password] {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    min-height: 48px;
+    padding: 8px 12px;
+    color: var(--ink);
+    background: #fff;
+    border: 2px solid var(--line);
+    border-radius: 6px;
+  }
+  input:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 3px solid #1a5fd0;
+    outline-offset: 2px;
+  }
+  .dob { display: flex; gap: 12px; }
+  .dob div { flex: 0 0 auto; }
+  .dob .d, .dob .m { width: 4.5rem; }
+  .dob .y { width: 6.5rem; }
+  .dob label { font-weight: 400; font-size: .9375rem; color: var(--muted); }
+
+  .has-error input {
+    border-color: var(--err);
+    border-width: 3px;
+  }
+  .error {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin: 6px 0 0;
+    color: var(--err);
+    font-weight: 600;
+    font-size: .9375rem;
+  }
+  .error svg { flex: none; margin-top: 3px; }
+
+  .check { display: flex; gap: 12px; align-items: flex-start; }
+  .check input {
+    flex: none;
+    width: 24px; height: 24px;
+    margin: 2px 0 0;
+    accent-color: var(--fern);
+  }
+  .check label { font-weight: 400; margin: 0; }
+  .check .hint { margin: 0; }
+
+  button.primary {
+    font: inherit;
+    font-weight: 600;
+    min-height: 52px;
+    padding: 10px 28px;
+    color: #fff;
+    background: var(--fern);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button.primary:hover { background: var(--fern-dark); }
+  .signin { margin-top: 24px; color: var(--muted); font-size: .9375rem; }
+  .signin a { color: var(--fern-dark); }
+</style>
+</head>
+<body>
+<header class="site">Fernhill Library <span>· Online services</span></header>
+
+<main>
+  <h1>Get your library card</h1>
+  <p class="lede">All fields are required except event emails.</p>
+
+  <div class="summary" role="alert" id="summary">
+    <h2>There are 2 problems with your sign-up</h2>
+    <ul>
+      <li><a href="#email">Enter an email address with an @, like name@example.com</a></li>
+      <li><a href="#password">Use a password of at least 12 characters</a></li>
+    </ul>
+  </div>
+
+  <form action="#" method="post" novalidate>
+    <div class="field">
+      <label for="name">Full name</label>
+      <input type="text" id="name" name="name" autocomplete="name" value="Maria Okafor">
+    </div>
+
+    <div class="field has-error">
+      <label for="email">Email address</label>
+      <p class="hint" id="email-hint">We’ll send your card number here.</p>
+      <input type="email" id="email" name="email" autocomplete="email" inputmode="email"
+             autocapitalize="off" autocorrect="off" spellcheck="false"
+             value="maria.okafor.gmail.com"
+             aria-invalid="true" aria-describedby="email-hint email-err">
+      <p class="error" id="email-err">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#a3200f"/><rect x="8" y="4" width="2" height="6.5" fill="#fff"/><rect x="8" y="12" width="2" height="2" fill="#fff"/></svg>
+        <span><span style="position:absolute;left:-9999px">Error: </span>Enter an email address with an @, like name@example.com</span>
+      </p>
+    </div>
+
+    <div class="field has-error">
+      <label for="password">Password</label>
+      <p class="hint" id="pw-hint">At least 12 characters. Several words strung together work well.</p>
+      <input type="password" id="password" name="password" autocomplete="new-password"
+             value="fern42"
+             aria-invalid="true" aria-describedby="pw-hint password-err">
+      <p class="error" id="password-err">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#a3200f"/><rect x="8" y="4" width="2" height="6.5" fill="#fff"/><rect x="8" y="12" width="2" height="2" fill="#fff"/></svg>
+        <span><span style="position:absolute;left:-9999px">Error: </span>Use at least 12 characters. Your password has 6.</span>
+      </p>
+    </div>
+
+    <fieldset aria-describedby="dob-hint">
+      <legend class="l">Date of birth</legend>
+      <p class="hint" id="dob-hint">We use this to set the right card type for your age. For example, 14 3 1988.</p>
+      <div class="dob">
+        <div class="d">
+          <label for="dob-day">Day</label>
+          <input type="text" id="dob-day" name="dob-day" inputmode="numeric" autocomplete="bday-day" value="14">
+        </div>
+        <div class="m">
+          <label for="dob-month">Month</label>
+          <input type="text" id="dob-month" name="dob-month" inputmode="numeric" autocomplete="bday-month" value="3">
+        </div>
+        <div class="y">
+          <label for="dob-year">Year</label>
+          <input type="text" id="dob-year" name="dob-year" inputmode="numeric" autocomplete="bday-year" value="1988">
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="field check">
+      <input type="checkbox" id="events" name="events">
+      <div>
+        <label for="events">Email me about library events <span class="opt">(optional)</span></label>
+        <p class="hint">Talks, workshops and children’s story hours. About two emails a month.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="primary">Create library card</button>
+  </form>
+
+  <p class="signin">Already have a card? <a href="#">Sign in</a></p>
+</main>
+</body>
+</html>

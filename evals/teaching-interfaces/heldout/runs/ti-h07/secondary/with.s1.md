@@ -1,0 +1,1 @@
+The best empty states tell the user what this space is for and give them one concrete next action, such as a button that creates their first project or a link to a template, so the blank screen becomes a starting point. They also set expectations about what will appear here once the user acts, which shows how the feature fits into their work instead of leaving them to guess.

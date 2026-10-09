@@ -1,0 +1,1 @@
+A useful empty state tells the user what this space is for and what to do next, with one clear primary action (like "Create your first project") that gets them to a first success. It often adds a small example, template, or preview of the filled-in state, so the user can picture the payoff and not face a blank page.

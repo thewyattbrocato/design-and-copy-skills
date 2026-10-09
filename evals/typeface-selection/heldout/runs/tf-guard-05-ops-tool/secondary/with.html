@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brightwater Freight | Inbound Shipments</title>
+<style>
+  :root {
+    /* System fonts only. Monospace for IDs and times so digits line up and scan fast. */
+    --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    --bg: #f4f6f8;
+    --panel: #ffffff;
+    --ink: #111827;
+    --muted: #5b6573;
+    --line: #d9dee5;
+    --head: #1f2a37;
+    --head-ink: #ffffff;
+
+    --ok-bg: #dcf5e4;   --ok-ink: #0d5a2a;
+    --warn-bg: #fff1c2; --warn-ink: #6b4a00;
+    --info-bg: #dbeafe; --info-ink: #1e3a8a;
+    --late-bg: #fde0dc; --late-ink: #8a1c10;
+    --done-bg: #e5e7eb; --done-ink: #374151;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+  }
+
+  body {
+    font-family: var(--font-ui);
+    font-size: 20px;
+    color: var(--ink);
+    background: var(--bg);
+    padding: 24px 32px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .brand {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .count {
+    font-size: 18px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  thead th {
+    background: var(--head);
+    color: var(--head-ink);
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 14px 20px;
+  }
+
+  tbody td {
+    padding: 16px 20px;
+    border-top: 1px solid var(--line);
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  tbody tr:nth-child(even) td {
+    background: #fafbfc;
+  }
+
+  tbody tr:hover td {
+    background: #eef4fb;
+  }
+
+  /* Column widths */
+  .col-id     { width: 22%; }
+  .col-carrier{ width: 28%; }
+  .col-door   { width: 12%; }
+  .col-eta    { width: 17%; }
+  .col-status { width: 21%; }
+
+  .shipment-id {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .door {
+    display: inline-block;
+    min-width: 64px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border: 2px solid var(--head);
+    border-radius: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .door.none {
+    border-style: dashed;
+    border-color: var(--muted);
+    color: var(--muted);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .eta {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eta small {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .carrier {
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .status {
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .status.arrived   { background: var(--info-bg); color: var(--info-ink); }
+  .status.unloading { background: var(--warn-bg); color: var(--warn-ink); }
+  .status.received  { background: var(--ok-bg);   color: var(--ok-ink); }
+  .status.scheduled { background: var(--done-bg); color: var(--done-ink); }
+  .status.delayed   { background: var(--late-bg); color: var(--late-ink); }
+
+  .status.delayed::before {
+    content: "";
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: currentColor;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  footer {
+    margin-top: 14px;
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  /* Smaller shared monitors: keep it readable, drop the least important column width */
+  @media (max-width: 1100px) {
+    body { font-size: 17px; padding: 16px; }
+    .shipment-id { font-size: 20px; }
+    .eta { font-size: 19px; }
+    .door { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <span class="brand">Brightwater Freight</span>
+    <h1>Inbound Shipments</h1>
+  </div>
+  <div class="count" id="count">8 shipments</div>
+</header>
+
+<div class="panel">
+  <table>
+    <colgroup>
+      <col class="col-id">
+      <col class="col-carrier">
+      <col class="col-door">
+      <col class="col-eta">
+      <col class="col-status">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Shipment ID</th>
+        <th>Carrier</th>
+        <th>Dock Door</th>
+        <th>ETA</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="shipment-id">BW-20418</span></td>
+        <td class="carrier">Northline Freight</td>
+        <td><span class="door">D04</span></td>
+        <td class="eta">06:15<small>Today</small></td>
+        <td><span class="status unloading">Unloading</span></td>
+      </tr>
+      <tr>
+        <td><span class="shipment-id">BW-20421</span></td>
+        <td class="carrier">Keystone LTL</td>
+        <td><span class="door">D01</span></td>
+        <td class="eta">06:40<small>Today</small></td>
+        <td><span class="status received">Received</span></td>
+      </tr>
+      <tr>
+        <td><span class="shipment-id">BW-20425</span></td>
+        <td class="carrier">Atlas Parcel</td>
+        <td><span class="door">D07</span></td>
+        <td class="eta">07:30<small>Today</small></td>
+        <td><span class="status arrived">Arrived</span></td>
+      </tr>
+      <tr>
+        <td><span class="shipment-id">BW-20430</span></td>
+        <td class="carrier">Harbor Truckload</td>
+        <td><span class="door">D02</span></td>
+        <td class="eta">08:10<small>Today</small></td>
+        <td><span class="status delayed">Delayed</span></td>
+      </tr>
+      <tr>
+        <td><span class="shipment-id">BW-20433</span></td>
+        <td class="carrier">Summit Express</td>
+        <td><span class="door none">TBD</span></td>
+        <td class="eta">09:00<small>Today</small></td>
+        <td><span class="status scheduled">Scheduled</span></td>
+      </tr>
+      <tr>
+        <td><span class="shipment-id">BW-20437</span></td>
+        <td class="carrier">Northline Freight</td>
+        <td><span class="door">D05</span></td>
+        <td class="eta">09:45<small>Today</small></td>
+        <td><span class="status arrived">Arrived</span></td>
+      </tr>
+      <tr>
+        <td><span class="shipment-id">BW-20442</span></td>
+        <td class="carrier">Keystone LTL</td>
+        <td><span class="door">D03</span></td>
+        <td class="eta">11:20<small>Today</small></td>
+        <td><span class="status scheduled">Scheduled</span></td>
+      </tr>
+      <tr>
+        <td><span class="shipment-id">BW-20446</span></td>
+        <td class="carrier">Atlas Parcel</td>
+        <td><span class="door none">TBD</span></td>
+        <td class="eta">06:00<small>Tomorrow</small></td>
+        <td><span class="status scheduled">Scheduled</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>Updated from the dock schedule. Times are local.</footer>
+
+</body>
+</html>

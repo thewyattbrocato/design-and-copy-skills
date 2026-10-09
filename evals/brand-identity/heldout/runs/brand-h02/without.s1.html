@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Larkspur Payroll – Identity</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+Design note: I did not use "Established 1998". Larkspur is three years old, and a false founding date
+in client-facing material is a misrepresentation. At 500+ employee firms it is also easy to check
+(procurement, vendor due diligence, filings) and would hurt trust if found. The established feel here
+comes from a serif wordmark, a restrained palette, and the enterprise-focused descriptor line.
+If you want a date line, "Since 2023" is accurate and still reads as confident.
+-->
+<style>
+  :root{
+    --ink:#1d1530;
+    --plum:#3a2561;
+    --teal:#2e7f84;
+    --paper:#faf8f4;
+    --stone:#e7e2d8;
+    --muted:#6b6478;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:Georgia,"Times New Roman",serif;
+    background:#efece5;
+    color:var(--ink);
+    padding:56px 24px 80px;
+    line-height:1.5;
+  }
+  .wrap{max-width:980px;margin:0 auto}
+  h1{
+    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin:56px 0 18px;
+  }
+  h1:first-child{margin-top:0}
+  .panel{background:var(--paper);border:1px solid var(--stone);padding:64px 40px;display:flex;justify-content:center;align-items:center}
+  .panel.dark{background:var(--ink);border-color:var(--ink)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:760px){.row{grid-template-columns:1fr}}
+
+  /* Logo lockup */
+  .logo{display:flex;align-items:center;gap:22px}
+  .logo svg{flex:none}
+  .wm{display:flex;flex-direction:column}
+  .wm .name{
+    font-size:38px;letter-spacing:.2em;font-weight:400;line-height:1;color:var(--ink);
+  }
+  .wm .rule{height:1px;background:currentColor;opacity:.35;margin:12px 0 9px}
+  .wm .sub{
+    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--plum);font-weight:600;
+  }
+  .dark .wm .name{color:#fff}
+  .dark .wm .sub{color:#b9aedb}
+  .logo.sm svg{width:40px;height:40px}
+  .logo.sm{gap:12px}
+  .logo.sm .name{font-size:19px;letter-spacing:.18em}
+  .logo.sm .rule{margin:6px 0 5px}
+  .logo.sm .sub{font-size:7px;letter-spacing:.28em}
+
+  /* Business cards */
+  .card{
+    aspect-ratio:3.5/2;width:100%;max-width:440px;
+    box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 30px -12px rgba(29,21,48,.35);
+    padding:26px 28px;position:relative;
+  }
+  .card.front{background:var(--ink);display:flex;align-items:center;justify-content:center}
+  .card.front .logo{transform:scale(.72)}
+  .card.back{background:var(--paper);border:1px solid var(--stone);display:flex;flex-direction:column;justify-content:space-between}
+  .card .person .n{font-size:20px;letter-spacing:.02em}
+  .card .person .t{
+    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--plum);font-weight:600;margin-top:4px
+  }
+  .card .contact{
+    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:10.5px;color:var(--muted);line-height:1.7;
+    border-top:1px solid var(--stone);padding-top:10px;
+  }
+  .card .contact b{color:var(--ink);font-weight:600}
+  .stage{display:flex;justify-content:center}
+
+  /* Email signature */
+  .email{
+    background:#fff;border:1px solid var(--stone);padding:32px 36px;
+    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;color:#333;
+  }
+  .email .hd{font-size:12px;color:var(--muted);border-bottom:1px solid var(--stone);padding-bottom:12px;margin-bottom:18px}
+  .email p{margin-bottom:12px}
+  .sig{margin-top:26px;display:flex;gap:20px;align-items:stretch}
+  .sig .bar{width:3px;background:linear-gradient(var(--plum),var(--plum));flex:none}
+  .sig .nm{font-family:Georgia,serif;font-size:17px;color:var(--ink)}
+  .sig .tt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--plum);font-weight:600;margin:2px 0 10px}
+  .sig .ln{font-size:12.5px;color:var(--muted);line-height:1.65}
+  .sig .ln a{color:var(--teal);text-decoration:none}
+  .sig .lg{margin-top:14px;padding-top:12px;border-top:1px solid var(--stone)}
+
+  /* Palette */
+  .sw{display:flex;gap:0}
+  .sw div{flex:1;height:90px;padding:10px 12px;font-family:-apple-system,"Segoe UI",sans-serif;font-size:11px;color:#fff;display:flex;align-items:flex-end}
+  .note{font-family:-apple-system,"Segoe UI",sans-serif;font-size:12.5px;color:var(--muted);margin-top:14px;max-width:70ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Primary logo</h1>
+  <div class="panel">
+    <div class="logo" id="primary">
+      <svg width="84" height="84" viewBox="0 0 84 84" aria-label="Larkspur mark">
+        <rect x="1" y="1" width="82" height="82" fill="#3a2561"/>
+        <rect x="6" y="6" width="72" height="72" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1"/>
+        <text x="28" y="60" font-family="Georgia,'Times New Roman',serif" font-size="52" fill="#fff" text-anchor="middle">L</text>
+        <!-- larkspur spire -->
+        <g stroke="#7fc4c6" stroke-width="1.4" stroke-linecap="round" fill="none">
+          <path d="M58 66 V20"/>
+        </g>
+        <g fill="#7fc4c6">
+          <circle cx="58" cy="20" r="2.2"/>
+          <circle cx="53.5" cy="29" r="2"/><circle cx="62.5" cy="29" r="2"/>
+          <circle cx="52" cy="38" r="2"/><circle cx="64" cy="38" r="2"/>
+          <circle cx="51" cy="47" r="2"/><circle cx="65" cy="47" r="2"/>
+        </g>
+      </svg>
+      <div class="wm">
+        <div class="name">LARKSPUR</div>
+        <div class="rule"></div>
+        <div class="sub">Enterprise Payroll &amp; Compliance</div>
+      </div>
+    </div>
+  </div>
+
+  <h1>Reversed</h1>
+  <div class="panel dark">
+    <div class="logo">
+      <svg width="84" height="84" viewBox="0 0 84 84">
+        <rect x="1" y="1" width="82" height="82" fill="#fff"/>
+        <rect x="6" y="6" width="72" height="72" fill="none" stroke="#3a2561" stroke-opacity=".35"/>
+        <text x="28" y="60" font-family="Georgia,'Times New Roman',serif" font-size="52" fill="#3a2561" text-anchor="middle">L</text>
+        <path d="M58 66 V20" stroke="#2e7f84" stroke-width="1.4" stroke-linecap="round"/>
+        <g fill="#2e7f84">
+          <circle cx="58" cy="20" r="2.2"/>
+          <circle cx="53.5" cy="29" r="2"/><circle cx="62.5" cy="29" r="2"/>
+          <circle cx="52" cy="38" r="2"/><circle cx="64" cy="38" r="2"/>
+          <circle cx="51" cy="47" r="2"/><circle cx="65" cy="47" r="2"/>
+        </g>
+      </svg>
+      <div class="wm">
+        <div class="name">LARKSPUR</div>
+        <div class="rule"></div>
+        <div class="sub">Enterprise Payroll &amp; Compliance</div>
+      </div>
+    </div>
+  </div>
+
+  <h1>Palette &amp; type</h1>
+  <div class="sw">
+    <div style="background:#1d1530">Ink #1D1530</div>
+    <div style="background:#3a2561">Plum #3A2561</div>
+    <div style="background:#2e7f84">Teal #2E7F84</div>
+    <div style="background:#e7e2d8;color:#1d1530">Stone #E7E2D8</div>
+    <div style="background:#faf8f4;color:#1d1530;border:1px solid #e7e2d8">Paper #FAF8F4</div>
+  </div>
+  <p class="note">Georgia for the wordmark and names, widely spaced capitals; the system sans for descriptors and details. The purple from the old identity is kept as the anchor, darkened, and the teal is reduced to a small accent. The gradient swoosh is gone.</p>
+
+  <h1>Business card</h1>
+  <div class="row">
+    <div class="stage">
+      <div class="card front">
+        <div class="logo">
+          <svg width="84" height="84" viewBox="0 0 84 84">
+            <rect x="1" y="1" width="82" height="82" fill="#fff"/>
+            <rect x="6" y="6" width="72" height="72" fill="none" stroke="#3a2561" stroke-opacity=".35"/>
+            <text x="28" y="60" font-family="Georgia,'Times New Roman',serif" font-size="52" fill="#3a2561" text-anchor="middle">L</text>
+            <path d="M58 66 V20" stroke="#2e7f84" stroke-width="1.4" stroke-linecap="round"/>
+            <g fill="#2e7f84">
+              <circle cx="58" cy="20" r="2.2"/>
+              <circle cx="53.5" cy="29" r="2"/><circle cx="62.5" cy="29" r="2"/>
+              <circle cx="52" cy="38" r="2"/><circle cx="64" cy="38" r="2"/>
+              <circle cx="51" cy="47" r="2"/><circle cx="65" cy="47" r="2"/>
+            </g>
+          </svg>
+          <div class="wm" style="color:#fff">
+            <div class="name" style="color:#fff">LARKSPUR</div>
+            <div class="rule"></div>
+            <div class="sub" style="color:#b9aedb">Enterprise Payroll &amp; Compliance</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="card back">
+        <div class="person">
+          <div class="n">Jordan Ellis</div>
+          <div class="t">Director, Enterprise Accounts</div>
+        </div>
+        <div class="contact">
+          <b>T</b> +1 (555) 013-2480 &nbsp; <b>M</b> +1 (555) 013-2481<br>
+          <b>E</b> jordan.ellis@larkspurpayroll.com<br>
+          <b>W</b> larkspurpayroll.com
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1>Email signature</h1>
+  <div class="email">
+    <div class="hd"><b>To:</b> Priya Raman &nbsp;·&nbsp; <b>Subject:</b> Q4 payroll migration timeline</div>
+    <p>Hi Priya,</p>
+    <p>Thanks for the time today. I've attached the migration plan and the compliance checklist for your review.</p>
+    <p>Best regards,</p>
+    <div class="sig">
+      <div class="bar"></div>
+      <div>
+        <div class="nm">Jordan Ellis</div>
+        <div class="tt">Director, Enterprise Accounts</div>
+        <div class="ln">
+          T +1 (555) 013-2480 &nbsp;·&nbsp; M +1 (555) 013-2481<br>
+          <a href="#">jordan.ellis@larkspurpayroll.com</a> &nbsp;·&nbsp; <a href="#">larkspurpayroll.com</a>
+        </div>
+        <div class="lg">
+          <div class="logo sm">
+            <svg viewBox="0 0 84 84">
+              <rect x="1" y="1" width="82" height="82" fill="#3a2561"/>
+              <rect x="6" y="6" width="72" height="72" fill="none" stroke="#fff" stroke-opacity=".35"/>
+              <text x="28" y="60" font-family="Georgia,'Times New Roman',serif" font-size="52" fill="#fff" text-anchor="middle">L</text>
+              <path d="M58 66 V20" stroke="#7fc4c6" stroke-width="1.8" stroke-linecap="round"/>
+              <g fill="#7fc4c6">
+                <circle cx="58" cy="20" r="2.6"/>
+                <circle cx="53.5" cy="29" r="2.4"/><circle cx="62.5" cy="29" r="2.4"/>
+                <circle cx="52" cy="38" r="2.4"/><circle cx="64" cy="38" r="2.4"/>
+                <circle cx="51" cy="47" r="2.4"/><circle cx="65" cy="47" r="2.4"/>
+              </g>
+            </svg>
+            <div class="wm">
+              <div class="name">LARKSPUR</div>
+              <div class="rule"></div>
+              <div class="sub">Enterprise Payroll &amp; Compliance</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+**Lines.** Monthly revenue over 36 months is a time series, and lines show trends and seasonality across that span much better than bars. With 5 regions, label each line directly at its end or use small multiples so the lines don't become a tangle.

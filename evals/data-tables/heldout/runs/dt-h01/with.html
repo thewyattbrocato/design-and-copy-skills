@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corvid Freight: shipments this week</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --fg: #1c2024;
+    --muted: #5f6872;
+    --rule: #e1e5e9;
+    --rule-strong: #8a929b;
+    --head-bg: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15181c;
+      --fg: #e8ebee;
+      --muted: #a0a8b1;
+      --rule: #2b3037;
+      --rule-strong: #6b737c;
+      --head-bg: #15181c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 16px; color: var(--muted); }
+  .scroll {
+    overflow-x: auto;
+    border-radius: 4px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  caption {
+    text-align: left;
+    color: var(--muted);
+    padding-bottom: 8px;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 12px 14px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--rule);
+  }
+  thead th {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 2px solid var(--rule-strong);
+    position: sticky;
+    top: 0;
+    background: var(--head-bg);
+  }
+  tbody th { font-weight: 600; }
+  .num { text-align: right; }
+  .missing { color: var(--muted); }
+  .status::before {
+    display: inline-block;
+    width: 1.1em;
+    margin-right: 2px;
+    text-align: center;
+  }
+  .s-transit::before { content: "→"; }
+  .s-delivered::before { content: "✓"; }
+  .s-delayed::before { content: "!"; font-weight: 700; }
+  .s-pending::before { content: "○"; }
+  .s-delayed { font-weight: 600; }
+  .note { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Corvid Freight shipments</h1>
+  <p class="sub">This week</p>
+  <div class="scroll" role="region" aria-label="Shipments table, scrollable" tabindex="0">
+    <table>
+      <caption>Five shipments this week. Weight in kilograms, cost in US dollars. A dash means no value yet.</caption>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Destination</th>
+          <th scope="col" class="num">Weight (kg)</th>
+          <th scope="col">Status</th>
+          <th scope="col">ETA</th>
+          <th scope="col" class="num">Cost (USD)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">CF-2210</th>
+          <td>Tulsa</td>
+          <td class="num">1,240</td>
+          <td><span class="status s-transit">In transit</span></td>
+          <td>Thu 14:30</td>
+          <td class="num">842.00</td>
+        </tr>
+        <tr>
+          <th scope="row">CF-2211</th>
+          <td>Reno</td>
+          <td class="num">86</td>
+          <td><span class="status s-delivered">Delivered</span></td>
+          <td>Tue 09:10</td>
+          <td class="num">64.25</td>
+        </tr>
+        <tr>
+          <th scope="row">CF-2212</th>
+          <td>Omaha</td>
+          <td class="num">12,050</td>
+          <td><span class="status s-delayed">Delayed</span></td>
+          <td>Fri 08:00</td>
+          <td class="num">3,310.90</td>
+        </tr>
+        <tr>
+          <th scope="row">CF-2213</th>
+          <td>Boise</td>
+          <td class="num">430</td>
+          <td><span class="status s-pending">Pending</span></td>
+          <td class="missing">— <span class="note" style="margin:0">no ETA yet</span></td>
+          <td class="num missing">— <span class="note" style="margin:0">not yet quoted</span></td>
+        </tr>
+        <tr>
+          <th scope="row">CF-2214</th>
+          <td>Tulsa</td>
+          <td class="num">975</td>
+          <td><span class="status s-transit">In transit</span></td>
+          <td>Thu 16:45</td>
+          <td class="num">701.50</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>

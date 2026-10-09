@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brightwater Freight · Inbound Shipments</title>
+<style>
+  /* Fonts: system stacks only, no external requests.
+     UI text uses the platform's own sans. Shipment IDs use the platform's
+     monospace so every ID is the same width and easy to scan down a column.
+     Times and dock numbers use tabular figures so they line up. */
+  :root {
+    --bg: #0f1419;
+    --panel: #161d24;
+    --row-alt: #1b232b;
+    --line: #2a3640;
+    --text: #f2f5f7;
+    --muted: #9fb0bd;
+    --id: #7fd3ff;
+
+    --st-scheduled: #3b4a57;
+    --st-scheduled-text: #e3ebf0;
+    --st-arrived: #1f6feb;
+    --st-arrived-text: #ffffff;
+    --st-unloading: #d29922;
+    --st-unloading-text: #1a1200;
+    --st-received: #238636;
+    --st-received-text: #ffffff;
+    --st-delayed: #da3633;
+    --st-delayed-text: #ffffff;
+
+    --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 20px;
+    line-height: 1.3;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    padding: 24px 32px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--line);
+    margin-bottom: 16px;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  header .meta {
+    color: var(--muted);
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .table-wrap {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  col.c-id     { width: 22%; }
+  col.c-carrier{ width: 28%; }
+  col.c-dock   { width: 14%; }
+  col.c-eta    { width: 14%; }
+  col.c-status { width: 22%; }
+
+  thead th {
+    text-align: left;
+    background: #0c1116;
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 14px 20px;
+    border-bottom: 2px solid var(--line);
+  }
+
+  tbody td {
+    padding: 0 20px;
+    height: 64px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .id {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--id);
+    letter-spacing: 0.02em;
+  }
+
+  .carrier {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .dock,
+  .eta {
+    font-size: 26px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .status {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .status.scheduled { background: var(--st-scheduled); color: var(--st-scheduled-text); }
+  .status.arrived   { background: var(--st-arrived);   color: var(--st-arrived-text); }
+  .status.unloading { background: var(--st-unloading); color: var(--st-unloading-text); }
+  .status.received  { background: var(--st-received);  color: var(--st-received-text); }
+  .status.delayed   { background: var(--st-delayed);   color: var(--st-delayed-text); }
+
+  footer {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Inbound Shipments</h1>
+      <div class="meta">Brightwater Freight · Warehouse 1 · <span id="clock">--:--</span></div>
+    </header>
+
+    <div class="table-wrap">
+      <table>
+        <colgroup>
+          <col class="c-id">
+          <col class="c-carrier">
+          <col class="c-dock">
+          <col class="c-eta">
+          <col class="c-status">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">Shipment ID</th>
+            <th scope="col">Carrier</th>
+            <th scope="col">Dock Door</th>
+            <th scope="col">ETA</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="id">BW-20418</td>
+            <td class="carrier">Old Dominion Freight</td>
+            <td class="dock">D-01</td>
+            <td class="eta">06:30</td>
+            <td><span class="status received">Received</span></td>
+          </tr>
+          <tr>
+            <td class="id">BW-20421</td>
+            <td class="carrier">Estes Express</td>
+            <td class="dock">D-03</td>
+            <td class="eta">07:15</td>
+            <td><span class="status unloading">Unloading</span></td>
+          </tr>
+          <tr>
+            <td class="id">BW-20427</td>
+            <td class="carrier">FedEx Freight</td>
+            <td class="dock">D-05</td>
+            <td class="eta">08:00</td>
+            <td><span class="status arrived">Arrived</span></td>
+          </tr>
+          <tr>
+            <td class="id">BW-20433</td>
+            <td class="carrier">XPO Logistics</td>
+            <td class="dock">D-02</td>
+            <td class="eta">09:45</td>
+            <td><span class="status delayed">Delayed</span></td>
+          </tr>
+          <tr>
+            <td class="id">BW-20436</td>
+            <td class="carrier">Saia LTL</td>
+            <td class="dock">D-07</td>
+            <td class="eta">10:20</td>
+            <td><span class="status scheduled">Scheduled</span></td>
+          </tr>
+          <tr>
+            <td class="id">BW-20442</td>
+            <td class="carrier">UPS Freight</td>
+            <td class="dock">D-04</td>
+            <td class="eta">11:05</td>
+            <td><span class="status scheduled">Scheduled</span></td>
+          </tr>
+          <tr>
+            <td class="id">BW-20449</td>
+            <td class="carrier">Averitt Express</td>
+            <td class="dock">D-06</td>
+            <td class="eta">12:40</td>
+            <td><span class="status scheduled">Scheduled</span></td>
+          </tr>
+          <tr>
+            <td class="id">BW-20455</td>
+            <td class="carrier">R+L Carriers</td>
+            <td class="dock">D-08</td>
+            <td class="eta">14:10</td>
+            <td><span class="status delayed">Delayed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer>
+      <span>Status updates are entered by the dock lead.</span>
+      <span>8 inbound shipments</span>
+    </footer>
+  </div>
+
+  <script>
+    // Local clock only; no network calls.
+    (function () {
+      var el = document.getElementById("clock");
+      function tick() {
+        var d = new Date();
+        var hh = String(d.getHours()).padStart(2, "0");
+        var mm = String(d.getMinutes()).padStart(2, "0");
+        el.textContent = hh + ":" + mm;
+      }
+      tick();
+      setInterval(tick, 15000);
+    })();
+  </script>
+</body>
+</html>

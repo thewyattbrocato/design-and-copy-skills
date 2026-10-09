@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crew Logs · Halvorsen &amp; Sons</title>
+<style>
+  :root {
+    --bg: #f6f4f0;
+    --surface: #ffffff;
+    --ink: #1f2328;
+    --muted: #666d76;
+    --line: #e2ded6;
+    --accent: #b4430f;
+    --accent-ink: #ffffff;
+    --mark: #ffe58a;
+    --stripe: #faf8f4;
+    --hover: #fff4e8;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181a;
+      --surface: #1e2023;
+      --ink: #e8e6e1;
+      --muted: #9aa0a8;
+      --line: #32353a;
+      --accent: #f08a4b;
+      --accent-ink: #1a1a1a;
+      --mark: #6b5a12;
+      --stripe: #222427;
+      --hover: #2c2824;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 var(--sans);
+  }
+  .page { max-width: 1280px; margin: 0 auto; padding: 32px 40px 64px; }
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  h1 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); font-size: 14px; }
+
+  .controls {
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    margin: 20px 0 16px;
+  }
+  .controls label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  input[type="search"], select {
+    font: inherit; color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 12px;
+    height: 38px;
+  }
+  input[type="search"] { width: 340px; max-width: 100%; }
+  input:focus-visible, select:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 1px;
+  }
+  button.clear {
+    font: inherit; height: 38px; padding: 0 14px; border-radius: 6px;
+    border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer;
+  }
+  button.clear:hover { color: var(--ink); border-color: var(--muted); }
+  .count { margin-left: auto; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+  kbd {
+    font: 12px var(--mono); border: 1px solid var(--line); border-bottom-width: 2px;
+    border-radius: 4px; padding: 0 5px; color: var(--muted);
+  }
+
+  .wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  col.c-time { width: 90px; }
+  col.c-job { width: 120px; }
+  col.c-fore { width: 150px; }
+  thead th {
+    position: sticky; top: 0;
+    text-align: left; font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+    background: var(--surface);
+    padding: 10px 16px; border-bottom: 1px solid var(--line);
+  }
+  tbody td { padding: 12px 16px; vertical-align: top; border-bottom: 1px solid var(--line); }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:nth-child(even) { background: var(--stripe); }
+  tbody tr:hover { background: var(--hover); }
+  td.time, td.job { font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.time { color: var(--ink); font-weight: 600; }
+  td.fore { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  td.note { max-width: 74ch; overflow-wrap: anywhere; }
+  .jobbtn {
+    font: inherit; font-family: var(--mono); font-size: 13.5px;
+    background: none; border: 0; padding: 2px 6px; margin: -2px -6px;
+    color: var(--accent); cursor: pointer; border-radius: 4px; font-weight: 600;
+  }
+  .jobbtn:hover { text-decoration: underline; }
+  mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1px; }
+  .empty { padding: 48px 16px; text-align: center; color: var(--muted); }
+
+  @media (max-width: 760px) {
+    .page { padding: 20px 14px 40px; }
+    col.c-fore { width: 110px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Daily Crew Logs</h1>
+    <div class="sub">Halvorsen &amp; Sons Roofing · foreman tablet entries</div>
+  </header>
+
+  <div class="controls" role="search">
+    <label for="q">Search logs</label>
+    <input id="q" type="search" placeholder="Search job code, time, foreman or note…" autocomplete="off">
+    <label for="job">Job</label>
+    <select id="job"><option value="">All jobs</option></select>
+    <label for="fore">Foreman</label>
+    <select id="fore"><option value="">All foremen</option></select>
+    <button class="clear" id="clear" type="button">Clear</button>
+    <span class="sub">Press <kbd>/</kbd> to search</span>
+    <div class="count" id="count" aria-live="polite"></div>
+  </div>
+
+  <div class="wrap">
+    <table>
+      <colgroup><col class="c-time"><col class="c-job"><col class="c-fore"><col></colgroup>
+      <thead><tr><th scope="col">Time</th><th scope="col">Job</th><th scope="col">Foreman</th><th scope="col">Note</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" hidden>No entries match. Try a shorter search or clear the filters.</div>
+  </div>
+</div>
+
+<script>
+  const LOGS = [
+    ["06:42", "JOB-3381", "R. Alvarez", "Crew of 5 on site, tear-off on north slope started, tarped the open section before the afternoon rain, two bundles of 30-year shingles damaged in transit and set aside for return."],
+    ["09:15", "JOB-3377", "M. Osei", "Flashing at chimney re-set and sealed; homeowner asked about adding a ridge vent, quoted verbally, will send written estimate Thursday."],
+    ["11:03", "JOB-3381", "R. Alvarez", "Found soft decking along the eave, roughly 14 linear feet, replaced with 5/8 ply; photographed before and after and uploaded to the job folder."],
+    ["13:30", "JOB-3392", "T. Brandt", "Gutter apron installed on the east side; one downspout bracket missing from the truck, picking up tomorrow morning."],
+    ["15:48", "JOB-3377", "M. Osei", "Site cleaned, magnet sweep done twice, final walk-through with homeowner, no punch list items."]
+  ];
+
+  const $ = id => document.getElementById(id);
+  const q = $("q"), jobSel = $("job"), foreSel = $("fore"), rows = $("rows");
+
+  const uniq = i => [...new Set(LOGS.map(r => r[i]))].sort();
+  uniq(1).forEach(v => jobSel.add(new Option(v, v)));
+  uniq(2).forEach(v => foreSel.add(new Option(v, v)));
+
+  function highlight(parent, text, term) {
+    if (!term) { parent.append(text); return; }
+    const lower = text.toLowerCase();
+    let i = 0, at;
+    while ((at = lower.indexOf(term, i)) !== -1) {
+      parent.append(text.slice(i, at));
+      const m = document.createElement("mark");
+      m.textContent = text.slice(at, at + term.length);
+      parent.append(m);
+      i = at + term.length;
+    }
+    parent.append(text.slice(i));
+  }
+
+  function render() {
+    const term = q.value.trim().toLowerCase();
+    const job = jobSel.value, fore = foreSel.value;
+    const hits = LOGS.filter(r =>
+      (!job || r[1] === job) &&
+      (!fore || r[2] === fore) &&
+      (!term || r.join(" ").toLowerCase().includes(term))
+    );
+    rows.replaceChildren();
+    for (const [time, code, name, note] of hits) {
+      const tr = document.createElement("tr");
+      const tdT = document.createElement("td"); tdT.className = "time"; highlight(tdT, time, term);
+      const tdJ = document.createElement("td"); tdJ.className = "job";
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "jobbtn"; b.title = "Show only " + code;
+      highlight(b, code, term);
+      b.addEventListener("click", () => { jobSel.value = code; render(); });
+      tdJ.append(b);
+      const tdF = document.createElement("td"); tdF.className = "fore"; tdF.title = name; highlight(tdF, name, term);
+      const tdN = document.createElement("td"); tdN.className = "note"; highlight(tdN, note, term);
+      tr.append(tdT, tdJ, tdF, tdN);
+      rows.append(tr);
+    }
+    $("empty").hidden = hits.length > 0;
+    $("count").textContent = hits.length === LOGS.length
+      ? LOGS.length + " entries"
+      : hits.length + " of " + LOGS.length + " entries";
+  }
+
+  [q, jobSel, foreSel].forEach(el => el.addEventListener("input", render));
+  $("clear").addEventListener("click", () => { q.value = ""; jobSel.value = ""; foreSel.value = ""; render(); q.focus(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "/" && document.activeElement !== q && !/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) {
+      e.preventDefault(); q.focus();
+    } else if (e.key === "Escape" && document.activeElement === q) {
+      q.value = ""; render();
+    }
+  });
+  render();
+</script>
+</body>
+</html>

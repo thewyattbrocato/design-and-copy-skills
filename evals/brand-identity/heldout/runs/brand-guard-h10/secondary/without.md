@@ -1,0 +1,1 @@
+No. Cramming all three makes the logo hard to read at small sizes, on cans, and on taps. Pick one dominant element, usually the bear or the wordmark, and let the crest and hops appear as secondary marks or packaging details. Build a full lockup for big spaces and a simplified mark for small ones.

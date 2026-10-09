@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwick — Polite reminders for unpaid invoices</title>
+<style>
+  :root {
+    --ink: #14211b;
+    --body: #46544d;
+    --muted: #66746d;
+    --bg: #f7f6f1;
+    --card: #ffffff;
+    --line: #e3e1d8;
+    --green: #1f6b4a;
+    --green-dark: #17543a;
+    --green-soft: #e4f0e9;
+    --amber: #8a5a00;
+    --amber-soft: #fbefd2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+  /* nav */
+  nav { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; letter-spacing: -0.02em; text-decoration: none; }
+  .logo-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--green); position: relative; }
+  .logo-mark::before, .logo-mark::after {
+    content: ""; position: absolute; left: 13px; bottom: 6px; width: 2px; height: 14px; background: #fff; border-radius: 2px; transform-origin: bottom;
+  }
+  .logo-mark::before { transform: rotate(-35deg); }
+  .logo-mark::after { transform: rotate(35deg); }
+  .nav-links { display: flex; gap: 32px; align-items: center; font-size: 15px; color: var(--body); }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.02fr 1fr; gap: 64px; align-items: center; padding: 64px 0 96px; }
+  .eyebrow { font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 20px; }
+  h1 { font-size: 58px; line-height: 1.04; letter-spacing: -0.035em; font-weight: 750; max-width: 12.5em; }
+  .lede { margin-top: 24px; font-size: 19px; line-height: 1.55; color: var(--body); max-width: 31em; }
+  .actions { margin-top: 36px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; background: var(--green); color: #fff; text-decoration: none;
+    font-weight: 600; font-size: 17px; padding: 16px 28px; border-radius: 12px;
+  }
+  .btn:hover { background: var(--green-dark); }
+  .btn:focus-visible, .link:focus-visible { outline: 3px solid #7fc2a0; outline-offset: 3px; }
+  .link { font-size: 16px; color: var(--body); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #b9c2bc; }
+  .link:hover { color: var(--ink); }
+  .fine { margin-top: 18px; font-size: 14px; color: var(--muted); }
+
+  /* product visual */
+  .visual { position: relative; }
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: 0 24px 48px -24px rgba(20, 33, 27, 0.25);
+    overflow: hidden;
+  }
+  .panel-head { display: flex; justify-content: space-between; align-items: baseline; padding: 20px 24px 16px; border-bottom: 1px solid var(--line); }
+  .panel-title { font-weight: 650; font-size: 16px; }
+  .panel-sub { font-size: 13px; color: var(--muted); }
+  .row { display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+  .row:last-of-type { border-bottom: 0; }
+  .client { font-weight: 600; font-size: 15px; }
+  .meta { font-size: 13px; color: var(--muted); }
+  .amt { font-weight: 650; font-size: 16px; font-variant-numeric: tabular-nums; text-align: right; min-width: 78px; }
+  .tag { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .tag.paid { background: var(--green-soft); color: var(--green-dark); }
+  .tag.late { background: var(--amber-soft); color: var(--amber); }
+  .tag.sched { background: #eef0ee; color: var(--body); }
+
+  .email {
+    margin: 0 24px 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); padding: 16px 18px;
+  }
+  .email-top { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .email-top b { color: var(--ink); font-weight: 600; }
+  .email p { font-size: 14px; color: var(--body); line-height: 1.55; }
+  .email p + p { margin-top: 8px; }
+
+  .toast {
+    position: absolute; left: -28px; bottom: -22px; background: var(--ink); color: #fff;
+    padding: 12px 16px; border-radius: 12px; font-size: 14px; display: flex; gap: 10px; align-items: center;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #6fd6a3; }
+
+  @media (max-width: 920px) {
+    .hero { grid-template-columns: 1fr; gap: 56px; padding-top: 32px; }
+    h1 { font-size: 44px; }
+    .nav-links a:not(.keep) { display: none; }
+    .toast { left: 12px; }
+  }
+  @media (max-width: 480px) {
+    h1 { font-size: 36px; }
+    .row { grid-template-columns: 1fr auto; }
+    .row .tag { grid-column: 1; justify-self: start; }
+    .row .amt { grid-row: 1; grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#"><span class="logo-mark" aria-hidden="true"></span>Fernwick</a>
+      <div class="nav-links">
+        <a href="#">How it works</a>
+        <a href="#">Pricing</a>
+        <a class="keep" href="#">Sign in</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Invoice reminders for freelancers</p>
+        <h1>Get paid on time, without the awkward follow-up.</h1>
+        <p class="lede">Fernwick sends friendly, well-timed reminders when an invoice goes unpaid, so you can stop chasing clients and get back to the work you actually enjoy.</p>
+        <div class="actions">
+          <a class="btn" href="#">Start your free trial</a>
+          <a class="link" href="#">Watch a 2-minute demo</a>
+        </div>
+        <p class="fine">14 days free. No credit card needed.</p>
+      </div>
+
+      <div class="visual" aria-label="Fernwick dashboard preview">
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">Open invoices</span>
+            <span class="panel-sub">$6,150 outstanding</span>
+          </div>
+          <div class="row">
+            <div><div class="client">Northlight Studio</div><div class="meta">INV-0142 · 9 days overdue</div></div>
+            <span class="tag late">Reminder sent</span>
+            <span class="amt">$2,400</span>
+          </div>
+          <div class="row">
+            <div><div class="client">Hale &amp; Moss</div><div class="meta">INV-0139 · due in 3 days</div></div>
+            <span class="tag sched">Queued Fri</span>
+            <span class="amt">$1,250</span>
+          </div>
+          <div class="row">
+            <div><div class="client">Pixel Orchard</div><div class="meta">INV-0136 · paid Tuesday</div></div>
+            <span class="tag paid">Paid</span>
+            <span class="amt">$2,500</span>
+          </div>
+          <div class="email">
+            <div class="email-top"><span><b>To:</b> accounts@northlight.co</span><span>Sent 9:00 am</span></div>
+            <p>Hi Dana, a quick note that invoice 0142 for $2,400 was due last week. If it's already on its way, thank you!</p>
+            <p>The payment link is below whenever you're ready.</p>
+          </div>
+        </div>
+        <div class="toast"><span class="dot"></span>Northlight Studio paid $2,400</div>
+      </div>
+    </header>
+  </div>
+</body>
+</html>

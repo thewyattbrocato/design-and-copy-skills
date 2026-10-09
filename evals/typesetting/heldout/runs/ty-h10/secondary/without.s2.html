@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quillbase status</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --ok: #3fb950;
+    --ok-bg: rgba(63, 185, 80, 0.12);
+    --accent: #58a6ff;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 20px 64px;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 24px;
+  }
+
+  h2 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 40px 0 12px;
+  }
+
+  .summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    background: var(--ok-bg);
+    border: 1px solid rgba(63, 185, 80, 0.4);
+    border-radius: 8px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--ok);
+    flex: none;
+  }
+
+  .summary-text {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .summary-note {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  ul { list-style: none; margin: 0; padding: 0; }
+
+  .component {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 18px;
+  }
+
+  .component + .component {
+    border-top: 1px solid var(--border);
+  }
+
+  .component-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .component-name .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .uptime {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  .uptime-label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 6px;
+  }
+
+  .incident {
+    padding: 18px;
+  }
+
+  .incident + .incident {
+    border-top: 1px solid var(--border);
+  }
+
+  .incident-date {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .incident-title {
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  .incident p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  footer {
+    margin-top: 48px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Quillbase status</h1>
+
+  <section class="summary" aria-live="polite">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="summary-text">All systems operational</span>
+    <span class="summary-note">Last checked 4 minutes ago</span>
+  </section>
+
+  <h2>Components (30-day uptime)</h2>
+  <div class="panel">
+    <ul>
+      <li class="component">
+        <span class="component-name"><span class="dot" aria-hidden="true"></span>API</span>
+        <span class="uptime">99.98%<span class="uptime-label">uptime</span></span>
+      </li>
+      <li class="component">
+        <span class="component-name"><span class="dot" aria-hidden="true"></span>Sync service</span>
+        <span class="uptime">99.91%<span class="uptime-label">uptime</span></span>
+      </li>
+      <li class="component">
+        <span class="component-name"><span class="dot" aria-hidden="true"></span>Web editor</span>
+        <span class="uptime">99.99%<span class="uptime-label">uptime</span></span>
+      </li>
+      <li class="component">
+        <span class="component-name"><span class="dot" aria-hidden="true"></span>Webhooks</span>
+        <span class="uptime">99.62%<span class="uptime-label">uptime</span></span>
+      </li>
+      <li class="component">
+        <span class="component-name"><span class="dot" aria-hidden="true"></span>Search</span>
+        <span class="uptime">100%<span class="uptime-label">uptime</span></span>
+      </li>
+    </ul>
+  </div>
+
+  <h2>Past incidents</h2>
+  <div class="panel">
+    <article class="incident">
+      <div class="incident-date">21 September</div>
+      <h3 class="incident-title">Webhook delays</h3>
+      <p>Deliveries were delayed by up to 40 minutes between 08:10 and 09:05 UTC while we rebalanced a queue. All delayed events were delivered. We have added an alert for queue depth.</p>
+    </article>
+    <article class="incident">
+      <div class="incident-date">6 September</div>
+      <h3 class="incident-title">Sync lag in EU region</h3>
+      <p>Changes took up to 12 seconds to appear on a second device for about 25 minutes. We rolled back a deployment and the lag cleared.</p>
+    </article>
+  </div>
+
+  <footer>Quillbase status page</footer>
+</main>
+</body>
+</html>

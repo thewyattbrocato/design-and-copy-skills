@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Tide Ledger — Chapter Three</title>
+<meta name="viewport" content="width=1280, initial-scale=1">
+<style>
+  :root {
+    --paper: #f5efe0;
+    --ink: #2a2521;
+    --soft: #6f665a;
+    --lh: 20px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; }
+  body {
+    min-width: 1280px;
+    min-height: 800px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse at 50% 45%, #4a4540 0%, #2d2a27 60%, #1e1c1a 100%);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  }
+
+  /* ---------- the spread ---------- */
+  .spread {
+    position: relative;
+    width: 1000px;
+    height: 720px;
+    display: flex;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow:
+      0 30px 60px rgba(0,0,0,.55),
+      0 8px 18px rgba(0,0,0,.4);
+    background: var(--paper);
+  }
+  .page {
+    position: relative;
+    width: 500px;
+    height: 720px;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(255,252,242,.7), rgba(0,0,0,0) 70%),
+      var(--paper);
+    color: var(--ink);
+  }
+  /* gutter shading and fore-edge */
+  .page.verso {
+    background-image:
+      linear-gradient(to left, rgba(60,40,20,.28) 0, rgba(60,40,20,.10) 22px, rgba(60,40,20,0) 70px),
+      linear-gradient(to right, rgba(60,40,20,.10) 0, rgba(60,40,20,0) 6px),
+      radial-gradient(ellipse at 50% 40%, rgba(255,252,242,.7), rgba(0,0,0,0) 70%);
+  }
+  .page.recto {
+    background-image:
+      linear-gradient(to right, rgba(60,40,20,.28) 0, rgba(60,40,20,.10) 22px, rgba(60,40,20,0) 70px),
+      linear-gradient(to left, rgba(60,40,20,.10) 0, rgba(60,40,20,0) 6px),
+      radial-gradient(ellipse at 50% 40%, rgba(255,252,242,.7), rgba(0,0,0,0) 70%);
+  }
+  .spine {
+    position: absolute;
+    left: 499px; top: 0;
+    width: 2px; height: 100%;
+    background: rgba(50,30,10,.25);
+    z-index: 3;
+  }
+
+  /* ---------- running heads & folios ---------- */
+  .head, .folio {
+    position: absolute;
+    font-size: 10.5px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--soft);
+    font-variant-numeric: oldstyle-nums;
+  }
+  .head { top: 38px; left: 0; right: 0; text-align: center; }
+  .head i { font-style: italic; text-transform: none; letter-spacing: .06em; font-size: 12px; }
+  .folio { bottom: 30px; left: 0; right: 0; text-align: center; letter-spacing: .1em; font-size: 12px; }
+
+  /* ---------- the text flow: one stream, two columns, two pages ---------- */
+  .flow {
+    position: absolute;
+    top: 60px;
+    left: 44px;
+    width: 912px;               /* 400 + 112 + 400 */
+    height: 600px;              /* 30 lines of 20px */
+    column-count: 2;
+    column-gap: 112px;          /* inner margin on both sides of the gutter */
+    column-fill: auto;
+    z-index: 2;
+
+    font-size: 13.6px;
+    line-height: var(--lh);
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphenate-limit-chars: 6 3 3;
+    hyphenate-limit-lines: 2;
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+    font-feature-settings: "kern", "liga", "onum";
+    orphans: 2;
+    widows: 2;
+    word-spacing: -.01em;
+  }
+
+  /* chapter opening block: exactly ten lines tall to keep the baseline grid */
+  .opener {
+    height: calc(var(--lh) * 10);
+    padding-top: 34px;
+    text-align: center;
+    text-align-last: center;
+    hyphens: manual;
+    break-after: avoid;
+  }
+  .opener .num {
+    font-size: 11px;
+    letter-spacing: .5em;
+    text-indent: .5em;
+    text-transform: uppercase;
+    color: var(--soft);
+    line-height: 20px;
+  }
+  .opener h1 {
+    margin-top: 12px;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: .01em;
+    color: #1f1a17;
+  }
+  .opener .orn {
+    display: block;
+    width: 120px;
+    height: 12px;
+    margin: 18px auto 0;
+    position: relative;
+  }
+  .opener .orn::before {
+    content: "";
+    position: absolute; left: 0; right: 0; top: 5px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #8a7e6c 30%, #8a7e6c 70%, transparent);
+  }
+  .opener .orn::after {
+    content: "";
+    position: absolute; left: 50%; top: 1px;
+    width: 8px; height: 8px;
+    margin-left: -4px;
+    background: var(--paper);
+    border: 1px solid #8a7e6c;
+    transform: rotate(45deg);
+  }
+
+  p { text-indent: 1.5em; margin: 0; }
+  p.first { text-indent: 0; }
+  p.first::first-line {
+    font-variant: small-caps;
+    letter-spacing: .06em;
+    font-feature-settings: "kern", "smcp", "c2sc";
+  }
+  p.first::first-letter {
+    float: left;
+    font-size: 64px;
+    line-height: 50px;
+    padding: 5px 7px 0 0;
+    font-weight: 400;
+    color: #1f1a17;
+    font-variant: normal;
+    letter-spacing: 0;
+  }
+</style>
+</head>
+<body>
+  <main class="spread" aria-label="Two-page spread: chapter three of The Tide Ledger">
+
+    <section class="page verso">
+      <div class="folio">24</div>
+    </section>
+
+    <section class="page recto">
+      <div class="head"><i>The Tide Ledger</i></div>
+      <div class="folio">25</div>
+    </section>
+
+    <div class="spine"></div>
+
+    <article class="flow">
+      <header class="opener">
+        <div class="num">Chapter Three</div>
+        <h1>What the Harbour Kept</h1>
+        <span class="orn"></span>
+      </header>
+
+      <p class="first">The ferry from Skarrow put Edda Marlowe ashore at a quarter past four, in a rain so fine it seemed less to fall than to hang in the air and wait for her to walk into it. She stood a while on the landing stage with her case between her feet, watching the boatman coil his rope in slow, unhurried loops, and when he touched his cap to her and said nothing at all she understood that the island had already begun to decide what it thought of her.</p>
+
+      <p>The lamp at Hollin Quay was lit, though it was hardly evening. It hung from an iron bracket above the harbour&shy;master’s door, a green-glassed lantern gone cloudy with salt, and beneath it a woman in a man’s oilskin was mending a net with the patience of someone who had never once been hurried. She did not look up until Edda was near enough to read the lettering on the door behind her.</p>
+
+      <p>“You’ll be the niece,” the woman said. It was not a question, and Edda, who had rehearsed three different ways of introducing herself on the crossing, found that she had no use for any of them.</p>
+
+      <p>“Edda Marlowe. I’m looking for the house on Cutter’s Row. My uncle left a letter—”</p>
+
+      <p>“Your uncle left a good many things.” The woman bit off a length of twine and tied it with a knot so quick that Edda could not follow it. “Most of them are still in the house. Some of them are in the harbour. I wouldn’t ask which is which, not on your first night.”</p>
+
+      <p>Edda laughed, because it seemed the polite thing to do, and was sorry at once. The woman’s face did not change. Behind her, out past the break&shy;water, a bell began to toll in the swell, unevenly, like a tongue worrying a loose tooth, and every gull on the quay lifted at once and settled again.</p>
+
+      <p>“That’s the Widow,” the woman said, following her glance. “She rings when the water turns. You’ll stop hearing her in a week. Everyone does, except the ones who don’t.” She stood, and was taller than Edda had supposed, and held out a hand as rough as driftwood. “Nan Pellow. I kept the keys for him. I kept the ledger, too, though I’d sooner you didn’t ask me for it until you’ve slept.”</p>
+
+      <p>“What ledger?” Edda said.</p>
+
+      <p>Nan Pellow regarded her for a long moment, and then, almost kindly, she turned the lantern down a little, so that the green light shrank back toward the glass. “There,” she said. “Now you’ve asked. Come along, then, before the tide takes the road.”</p>
+
+      <p>They went up through the town in single file, Nan ahead with the keys chiming at her belt, Edda behind with her case knocking at her knee. The houses leaned together over the lane like old men sharing a secret, their shutters painted the same weathered blue, their doorsteps scrubbed pale as bone. Not one window showed a light. And yet Edda had the clear and unaccountable sense, climbing the wet cobbles with the bell still sounding below, that every one of them was watching her pass.</p>
+
+      <p>At the top of Cutter’s Row the lane narrowed to the width of a coffin, and Nan stopped before a door the colour of old iron. She did not put the key in the lock. She laid her palm flat against the wood instead, the way one might steady a nervous horse, and waited, and Edda waited with her, until somewhere deep inside the house a floorboard answered.</p>
+    </article>
+  </main>
+</body>
+</html>

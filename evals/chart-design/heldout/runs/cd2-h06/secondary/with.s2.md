@@ -1,0 +1,1 @@
+**Lines.** Monthly revenue over 3 years is a time series, and lines show trends and seasonality across 36 points per region far better than bars. With 5 regions, use direct labels at the line ends or small multiples so the lines stay readable.

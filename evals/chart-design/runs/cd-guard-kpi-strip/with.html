@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytics – This month</title>
+<style>
+  :root {
+    --surface: #ffffff;
+    --page: #f4f5f7;
+    --ink: #14181f;
+    --ink-2: #4a5360;
+    --ink-3: #6b7380;
+    --line: #e2e5ea;
+    --good: #14724a;
+    --good-bg: #e6f4ec;
+    --bad: #b3261e;
+    --bad-bg: #fcebe9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #171b22;
+      --page: #0e1116;
+      --ink: #f2f4f7;
+      --ink-2: #b5bcc7;
+      --ink-3: #8f97a4;
+      --line: #2a303a;
+      --good: #5fd19a;
+      --good-bg: #153326;
+      --bad: #ff8a80;
+      --bad-bg: #3b1917;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 20px;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .strip {
+    max-width: 1040px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .strip-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .strip-head h1 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .strip-head span {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .metric {
+    padding: 20px 24px 22px;
+    border-left: 1px solid var(--line);
+  }
+  .metric:first-child { border-left: 0; }
+  .label {
+    font-size: 13px;
+    color: var(--ink-2);
+    margin: 0 0 8px;
+  }
+  .value {
+    font-size: 36px;
+    line-height: 1.1;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 12px;
+  }
+  .delta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px 2px 6px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip svg { width: 12px; height: 12px; flex: none; }
+  .good { background: var(--good-bg); color: var(--good); }
+  .bad { background: var(--bad-bg); color: var(--bad); }
+  .prev { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .verdict { color: var(--ink-2); }
+  @media (max-width: 720px) {
+    .metrics { grid-template-columns: 1fr; }
+    .metric { border-left: 0; border-top: 1px solid var(--line); }
+    .metric:first-child { border-top: 0; }
+    .value { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+  <section class="strip" aria-labelledby="strip-title">
+    <div class="strip-head">
+      <h1 id="strip-title">This month</h1>
+      <span>vs. last month</span>
+    </div>
+    <ul class="metrics">
+      <li class="metric">
+        <p class="label">Active users</p>
+        <p class="value">18,420</p>
+        <div class="delta">
+          <span class="chip good">
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 10V2M2.5 5.5 6 2l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            +7.4%
+          </span>
+          <span class="verdict">Up 1,270</span>
+          <span class="prev">from 17,150</span>
+        </div>
+      </li>
+      <li class="metric">
+        <p class="label">Revenue</p>
+        <p class="value">$92,300</p>
+        <div class="delta">
+          <span class="chip bad">
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2v8M2.5 6.5 6 10l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            −4.6%
+          </span>
+          <span class="verdict">Down $4,500</span>
+          <span class="prev">from $96,800</span>
+        </div>
+      </li>
+      <li class="metric">
+        <p class="label">Churn</p>
+        <p class="value">2.4%</p>
+        <div class="delta">
+          <span class="chip good">
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2v8M2.5 6.5 6 10l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            −0.5 pts
+          </span>
+          <span class="verdict">Improved</span>
+          <span class="prev">from 2.9%</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+</body>
+</html>

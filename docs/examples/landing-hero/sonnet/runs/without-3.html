@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwick — Polite reminders for unpaid invoices</title>
+<style>
+  :root {
+    --bg: #f6f5ef;
+    --ink: #14231c;
+    --muted: #55645b;
+    --line: #dfdfd3;
+    --green: #1f5c43;
+    --green-dark: #164532;
+    --leaf: #7fb28f;
+    --mint: #e3f0e6;
+    --amber: #c98a1b;
+    --amber-bg: #fbf0d9;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(900px 500px at 85% 10%, rgba(127,178,143,.28), transparent 60%),
+      radial-gradient(600px 400px at 0% 100%, rgba(201,138,27,.10), transparent 60%),
+      var(--bg);
+  }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; letter-spacing: -.02em; }
+  .logo-mark {
+    width: 28px; height: 28px; border-radius: 8px; background: var(--green);
+    display: grid; place-items: center;
+  }
+  .logo-mark svg { width: 16px; height: 16px; }
+  .nav-links { display: flex; gap: 32px; font-size: 15px; color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { display: flex; align-items: center; gap: 20px; font-size: 15px; }
+  .nav-cta .signin { color: var(--muted); }
+  .btn-sm { padding: 9px 16px; border-radius: 10px; background: var(--ink); color: #fff; font-weight: 600; }
+
+  .hero-grid {
+    display: grid; grid-template-columns: 1.02fr 1fr; gap: 56px; align-items: center;
+    padding: 64px 0 96px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px 6px 8px; border-radius: 999px;
+    background: var(--mint); color: var(--green-dark);
+    font-size: 13px; font-weight: 600; margin-bottom: 24px;
+  }
+  .badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: block; box-shadow: 0 0 0 4px rgba(31,92,67,.15); }
+
+  h1 {
+    font-size: clamp(38px, 5.4vw, 64px);
+    line-height: 1.04; letter-spacing: -.035em; font-weight: 750;
+  }
+  h1 em { font-style: normal; color: var(--green); position: relative; white-space: nowrap; }
+  h1 em::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: .04em; height: .14em;
+    background: var(--leaf); opacity: .55; border-radius: 4px; z-index: -1;
+  }
+  .lede { margin-top: 24px; font-size: 19px; color: var(--muted); max-width: 30em; }
+
+  .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 26px; margin-top: 36px; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 16px 26px; border-radius: 12px;
+    background: var(--green); color: #fff; font-weight: 650; font-size: 17px;
+    box-shadow: 0 1px 0 rgba(255,255,255,.18) inset, 0 10px 24px -8px rgba(31,92,67,.6);
+    transition: background .15s, transform .15s;
+  }
+  .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+  .link-demo { display: inline-flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 550; color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  .link-demo:hover { color: var(--ink); border-color: var(--ink); }
+  .btn-primary:focus-visible, .link-demo:focus-visible, .btn-sm:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+  .fine { margin-top: 18px; font-size: 14px; color: var(--muted); }
+
+  /* Product visual */
+  .visual { position: relative; padding: 20px 0 30px 10px; }
+  .window {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: 0 40px 80px -30px rgba(20,35,28,.35), 0 8px 20px -8px rgba(20,35,28,.12);
+    overflow: hidden;
+  }
+  .bar { display: flex; align-items: center; gap: 7px; padding: 14px 18px; border-bottom: 1px solid var(--line); background: #fbfbf7; }
+  .bar span { width: 10px; height: 10px; border-radius: 50%; background: #dcdcd0; }
+  .bar b { margin-left: 12px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .panel { padding: 22px 22px 8px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat { padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; }
+  .stat small { display: block; font-size: 12px; color: var(--muted); }
+  .stat strong { font-size: 22px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat.good strong { color: var(--green); }
+
+  .row {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 14px; align-items: center;
+    padding: 14px 0; border-top: 1px solid var(--line);
+  }
+  .who { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .av { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; }
+  .who div { min-width: 0; }
+  .who strong { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .who small { font-size: 12px; color: var(--muted); }
+  .amt { font-size: 14px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .pill { font-size: 12px; font-weight: 650; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .pill.paid { background: var(--mint); color: var(--green-dark); }
+  .pill.sent { background: var(--amber-bg); color: #8a5a07; }
+  .pill.sched { background: #eceee9; color: var(--muted); }
+
+  .email {
+    position: absolute; left: -28px; bottom: -6px; width: 270px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 14px 16px; box-shadow: 0 24px 50px -20px rgba(20,35,28,.4);
+    transform: rotate(-1.5deg);
+  }
+  .email .h { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+  .email .h i { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); display: block; }
+  .email p { font-size: 13px; line-height: 1.45; color: var(--ink); }
+  .email p + p { margin-top: 6px; color: var(--muted); }
+
+  .toast {
+    position: absolute; right: -10px; top: -4px;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--ink); color: #fff; border-radius: 12px; padding: 10px 14px 10px 10px;
+    font-size: 13px; box-shadow: 0 18px 36px -14px rgba(20,35,28,.6);
+  }
+  .toast .ck { width: 24px; height: 24px; border-radius: 50%; background: var(--leaf); display: grid; place-items: center; }
+  .toast .ck svg { width: 13px; height: 13px; }
+  .toast small { display: block; color: #a9bbb0; font-size: 11px; }
+
+  .trust { border-top: 1px solid var(--line); padding: 22px 0 30px; font-size: 14px; color: var(--muted); text-align: center; }
+
+  @media (max-width: 920px) {
+    .nav-links { display: none; }
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; padding: 36px 0 64px; }
+    .visual { padding-left: 0; }
+    .email { left: -8px; }
+    .toast { right: 0; }
+  }
+  @media (max-width: 520px) {
+    .wrap { padding: 0 20px; }
+    .nav-cta .signin { display: none; }
+    .lede { font-size: 17px; }
+    .btn-primary { width: 100%; justify-content: center; }
+    .stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .stat { padding: 10px; }
+    .stat strong { font-size: 18px; }
+    .row { grid-template-columns: 1fr auto; }
+    .row .amt { display: none; }
+    .email { position: relative; left: 0; bottom: 0; width: auto; margin-top: 16px; transform: none; }
+    .toast { display: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .toast { animation: float 5s ease-in-out infinite; }
+    @keyframes float { 50% { transform: translateY(-6px); } }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="logo" href="#">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13C3 7 7 3 13 3c0 6-4 10-10 10Z"/><path d="M3 13 9 7"/></svg>
+        </span>
+        Fernwick
+      </a>
+      <div class="nav-links">
+        <a href="#">How it works</a>
+        <a href="#">Pricing</a>
+        <a href="#">Customers</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div class="nav-cta">
+        <a class="signin" href="#">Sign in</a>
+        <a class="btn-sm" href="#">Start free</a>
+      </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div>
+        <div class="badge"><i></i> Made for solo freelancers</div>
+        <h1>Get paid on time, <em>without the awkward emails.</em></h1>
+        <p class="lede">Fernwick quietly follows up on overdue invoices with friendly, well-timed reminders written in your voice. You keep the client relationship. The money shows up.</p>
+        <div class="actions">
+          <a class="btn-primary" href="#">Start your free trial
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a class="link-demo" href="#">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5 3.2v9.6a.5.5 0 0 0 .76.43l7.7-4.8a.5.5 0 0 0 0-.86l-7.7-4.8A.5.5 0 0 0 5 3.2Z"/></svg>
+            Watch a 2-minute demo
+          </a>
+        </div>
+        <p class="fine">14 days free · No credit card · Cancel anytime</p>
+      </div>
+
+      <div class="visual" aria-label="Fernwick dashboard preview" role="img">
+        <div class="toast">
+          <span class="ck"><svg viewBox="0 0 16 16" fill="none" stroke="#14231c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
+          <span>Invoice #1042 paid<small>Brightside Studio · $2,400</small></span>
+        </div>
+        <div class="window">
+          <div class="bar"><span></span><span></span><span></span><b>Invoices</b></div>
+          <div class="panel">
+            <div class="stats">
+              <div class="stat"><small>Outstanding</small><strong>$7,850</strong></div>
+              <div class="stat good"><small>Recovered</small><strong>$12,300</strong></div>
+              <div class="stat"><small>Avg. days late</small><strong>4.2</strong></div>
+            </div>
+            <div class="row">
+              <div class="who"><span class="av" style="background:#1f5c43">BS</span><div><strong>Brightside Studio</strong><small>#1042 · 12 days overdue</small></div></div>
+              <span class="amt">$2,400</span><span class="pill paid">Paid</span>
+            </div>
+            <div class="row">
+              <div class="who"><span class="av" style="background:#c98a1b">NH</span><div><strong>North Harbor Co.</strong><small>#1047 · 6 days overdue</small></div></div>
+              <span class="amt">$1,850</span><span class="pill sent">Reminder sent</span>
+            </div>
+            <div class="row">
+              <div class="who"><span class="av" style="background:#4b6b8a">OL</span><div><strong>Olive &amp; Lane</strong><small>#1051 · due in 2 days</small></div></div>
+              <span class="amt">$3,200</span><span class="pill sched">Scheduled</span>
+            </div>
+            <div class="row" style="padding-bottom:70px">
+              <div class="who"><span class="av" style="background:#8a5a6b">MK</span><div><strong>Meridian Kitchens</strong><small>#1053 · 1 day overdue</small></div></div>
+              <span class="amt">$2,800</span><span class="pill sent">Reminder sent</span>
+            </div>
+          </div>
+        </div>
+        <div class="email">
+          <div class="h"><i></i> Sent today, 9:00 AM · to North Harbor Co.</div>
+          <p>Hi Dana, hope the launch is going well! A quick nudge that invoice #1047 is still open.</p>
+          <p>Happy to resend the details if useful. Thanks so much!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><div class="trust">Trusted by 4,000+ designers, developers, and writers who’d rather not chase invoices</div></div>
+</header>
+</body>
+</html>

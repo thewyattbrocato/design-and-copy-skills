@@ -1,0 +1,123 @@
+[
+  {
+    "id": "rl-01",
+    "kind": "build",
+    "prompt": "I run Kiln & Clay, a pottery studio, and I need a \"This month's classes\" section for our site. Single self-contained HTML file, inline CSS, system fonts only, no external images or scripts. Put 7 class cards in it: Wheel Basics (Tue 6pm, 6 weeks, $210), Hand-Building Night (Wed 7pm, 4 weeks, $160), Glaze Lab (Sat 10am, 3 weeks, $120), Mug Marathon (Sun 1pm, 1 day, $75), Kids' Clay Club (Sat 2pm, 8 weeks, $190), Date-Night Wheel (Fri 7pm, 1 evening, $95), Sculpture Studio (Thu 6pm, 6 weeks, $230). Each card gets the name, schedule, length, price and a Sign up button. A lot of our customers book from their phones, so make sure it works on mobile.",
+    "rubric": [
+      "The seven cards form an even grid or row-and-column pattern at the screenshot width, with consistent gutters and no card visibly stretched, squashed or orphaned wider than its neighbours.",
+      "Within each card the name, schedule, length, price and button are clearly ordered, and the Sign up buttons sit in a consistent position from card to card even when titles differ in length.",
+      "The page source lets the grid change its column count as space allows (for example by letting cards wrap or auto-fit) rather than hard-coding one fixed column count and fixed pixel card widths.",
+      "Nothing in the page would force horizontal scrolling on a narrow phone: no fixed widths wider than a phone, and text and buttons keep a comfortable tap size and size relative to the card.",
+      "All seven classes and their details appear with the stated values and no invented content, and the page looks finished (heading, sensible page margins) rather than a bare list."
+    ]
+  },
+  {
+    "id": "rl-02",
+    "kind": "build",
+    "prompt": "Build me a dispatcher screen for Harbor Line Freight as one self-contained HTML file with inline CSS and system fonts only, no external assets. Left side: a navigation list (Loads, Drivers, Trucks, Invoices, Reports, Settings). Right side: a table-like list of today's loads with six rows (load number, origin, destination, driver, status, ETA; make up plausible data using Ohio and Indiana cities). My team keeps shrinking the browser window next to the phone dialer and the whole thing breaks, so it needs to hold up when the window is narrow too.",
+    "rubric": [
+      "At the screenshot width the navigation sits as a clearly separate column beside the loads list, and the loads list gets visibly more room than the navigation.",
+      "All six columns of load data are legible and aligned across rows, with status visually distinguishable from the other fields.",
+      "The page source adapts to a narrow window without relying on a long list of device-specific widths: the navigation can move above, collapse or wrap, and the loads area does not overflow the page.",
+      "Text is not clipped or overlapping anywhere in the screenshot, and long city names or driver names have somewhere to go (wrapping or truncation) instead of pushing the layout wider.",
+      "The result looks like a plausible internal tool: consistent spacing, restrained styling, a readable hierarchy between page title, navigation and data."
+    ]
+  },
+  {
+    "id": "rl-03",
+    "kind": "critique",
+    "prompt": "I inherited this CSS for the appointments page at Northgate Family Clinic and it looks awful on anything that isn't the developer's laptop. Tell me what's wrong with it and what you'd change. Don't rewrite the whole thing, just go through the problems.\n\n```css\n.page { width: 1100px; margin: 0 auto; }\n.layout { display: flex; }\n.sidebar { width: 280px; float: left; }\n.content { width: 780px; }\n.slots { display: flex; }\n.slot { width: 120px; height: 48px; margin-right: 10px; }\n.doctor-photo { width: 320px; height: 320px; }\n.intro { font-size: 15px; width: 900px; }\n\n@media (max-width: 768px) {\n  .page { width: 740px; }\n  .sidebar { display: none; }\n  .content { width: 700px; }\n  .slot { width: 100px; }\n}\n@media (max-width: 480px) {\n  .page { width: 460px; }\n  .content { width: 420px; }\n  .slot { width: 80px; margin-right: 4px; }\n  .doctor-photo { width: 200px; height: 200px; }\n}\n```",
+    "rubric": [
+      "Identifies that the fixed pixel widths on the page, content and intro are the root cause of the awful result on in-between sizes (for example a phone or a tablet that is not exactly 768px or 480px wide).",
+      "Points out that patching with several breakpoints that restate new fixed widths is fragile, and proposes fluid replacements (such as max-width, percentages, flexible sizing) instead of a fourth or fifth breakpoint.",
+      "Calls out at least one concrete defect in the slots, sidebar or photo (for example the row of slots cannot wrap and will overflow, the sidebar disappears entirely on narrow screens with no replacement, or the photo has a fixed square size), with a specific fix for it.",
+      "Gives short code snippets or property names for the proposed fixes without rewriting the entire stylesheet, as the user asked.",
+      "Is organized so each problem is clear and separable (a list or short sections), with the most damaging problem first."
+    ]
+  },
+  {
+    "id": "rl-04",
+    "kind": "build",
+    "prompt": "Make a single self-contained HTML file for an article page on a food blog called Salt & Ember. The post is \"Why your weeknight chili tastes flat\". No external fonts, images or scripts, system fonts only, inline CSS. It needs a headline, a byline (Marisol Quintero, 9 min read), a wide image area at the top (you don't have a photo, so use a CSS gradient or similar as a stand-in), about five paragraphs of body copy you write yourself on the topic, one pull quote, and a small \"Ingredients\" box. I want it comfortable to read on a big monitor and still fine if someone opens it in a narrow window or on their phone.",
+    "rubric": [
+      "At the screenshot width the body text is held to a comfortable reading column, not stretched across the whole screen, and the column is centered or clearly intentionally positioned.",
+      "The top image stand-in is clearly a wide frame with a sensible proportion, is not distorted, and aligns with the text column or intentionally extends beyond it.",
+      "The pull quote and Ingredients box are visually distinct from the body copy and sit with intention (inside the flow or beside the text) without crowding it.",
+      "Type is legible: body size comfortable, line height open, and contrast between text and background is strong.",
+      "The page source uses flexible sizing (max-width, relative units, fluid images) so the article would reflow in a narrow window rather than depending on fixed pixel widths.",
+      "The copy is on topic, has the stated headline and byline, and reads as plausible blog content rather than lorem ipsum."
+    ]
+  },
+  {
+    "id": "rl-05",
+    "kind": "explain",
+    "prompt": "Here's a component from our nonprofit's volunteer app (Open Table Pantry). On a phone, when a volunteer's email address is long, the whole card pushes off the right edge of the screen and the page scrolls sideways. I don't get why, since I gave the text container flex: 1. Can you explain what is going on and how to fix it?\n\n```html\n<div class=\"volunteer-card\">\n  <img class=\"avatar\" src=\"avatar.png\" width=\"56\" height=\"56\" alt=\"\">\n  <div class=\"info\">\n    <strong>Wilhelmina Okonkwo-Fairweather</strong>\n    <span>wilhelmina.okonkwo-fairweather@openTablePantry.example.org</span>\n  </div>\n  <button>Assign</button>\n</div>\n```\n```css\n.volunteer-card { display: flex; align-items: center; gap: 12px; padding: 12px; }\n.info { flex: 1; }\n```",
+    "rubric": [
+      "Gives a correct cause: a flex item will not shrink below its content's minimum size, and the long unbroken email address keeps the info block wide, which pushes the card past the screen.",
+      "Gives a working fix for the info block (for example setting min-width to 0 on it, or letting the text wrap or truncate with overflow handling) that matches the explanation.",
+      "Explains the choice of what happens to the long email (wrap anywhere, break, or truncate with an ellipsis) and notes it should stay reachable or readable, rather than being silently cut off.",
+      "Mentions that the avatar and the button should not be squeezed to nothing by the fix, or otherwise keeps them stable.",
+      "Is concise and teaches the idea in plain language, so the person could recognize the same problem in a different component."
+    ]
+  },
+  {
+    "id": "rl-06",
+    "kind": "choose",
+    "prompt": "We're building a design system for Tidewater Credit Union. There's one \"account summary\" card (balance, last transaction, a small sparkline, a Transfer button) that gets used in three places: the full-width dashboard where it sits in a 4-up row, the narrow right rail of the transaction page, and a modal. My teammate says to use viewport media queries to switch it between compact and roomy layouts. Another says to make it respond to its own container. Which should we do, and why? Please keep it practical, we have a decision meeting in an hour.",
+    "rubric": [
+      "Gives a clear recommendation in the first few sentences rather than a balanced survey with no pick.",
+      "Explains the failure of viewport-based switching for this case using the three placements: the card can be narrow on a wide screen (rail, modal) and wide on a small one, so the viewport does not tell it how much room it has.",
+      "Describes how the container-based approach would work concretely, for example container queries or an intrinsically wrapping layout, with a brief snippet or named properties.",
+      "Names at least one real trade-off or limit of the recommended approach (for example support, extra setup, or a case where a media query is still the right tool).",
+      "Stays practical and short enough to use in an hour-long prep window, without long history of CSS or filler."
+    ]
+  },
+  {
+    "id": "rl-guard-keep",
+    "kind": "polish",
+    "prompt": "I'm about to ship the product grid for Greenfield Co-op's online shop and want a second set of eyes. This is the CSS and markup. It looks good to me on my laptop and the couple of phones I tried. Anything I should tweak before I push it live, or am I good?\n\n```html\n<section class=\"shop\">\n  <h2>Fresh this week</h2>\n  <ul class=\"grid\">\n    <li class=\"item\"><div class=\"photo\"></div><h3>Rainbow chard</h3><p>$3.50 / bunch</p><button>Add</button></li>\n    <li class=\"item\"><div class=\"photo\"></div><h3>Honeycrisp apples</h3><p>$4.25 / lb</p><button>Add</button></li>\n    <li class=\"item\"><div class=\"photo\"></div><h3>Sourdough boule</h3><p>$7.00 / loaf</p><button>Add</button></li>\n    <li class=\"item\"><div class=\"photo\"></div><h3>Free-range eggs</h3><p>$6.00 / dozen</p><button>Add</button></li>\n  </ul>\n</section>\n```\n```css\n.shop { max-width: 72rem; margin-inline: auto; padding: 1.5rem clamp(1rem, 4vw, 2.5rem); }\n.grid { list-style: none; margin: 0; padding: 0; display: grid;\n        grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr)); gap: 1.25rem; }\n.item { display: flex; flex-direction: column; gap: .5rem; padding: 1rem;\n        border: 1px solid #d9e2d4; border-radius: .75rem; }\n.photo { aspect-ratio: 4 / 3; background: #e6efe0; border-radius: .5rem; }\n.item h3 { margin: 0; font-size: 1.05rem; }\n.item p { margin: 0; color: #4a5a44; }\n.item button { margin-top: auto; padding: .7rem 1rem; min-height: 2.75rem; border: 0;\n               border-radius: .5rem; background: #2f6b3a; color: #fff; font: inherit; }\n```",
+    "rubric": [
+      "Gives a clear overall verdict near the start that the layout is in good shape and can ship, rather than inventing a long list of problems.",
+      "Does not recommend replacing the grid with breakpoints or fixed column counts, and leaves the existing auto-fill column rule in place.",
+      "If it suggests any changes they are small, optional and clearly labeled as such, such as a focus style, a hover state, or alt text for the photo placeholders, and none of them restructures the CSS.",
+      "Does not rewrite the whole stylesheet; any code shown is a few lines at most.",
+      "Briefly says why the current approach works (for example it adapts to the available width and the buttons are tap-sized), so the person knows what to leave alone."
+    ]
+  },
+  {
+    "id": "rl-guard-board",
+    "kind": "build",
+    "prompt": "Make a single self-contained HTML file (inline CSS, system fonts only, no external assets, no images) with a playable-looking bingo card for a classroom game at Maple Street Elementary. A 5 by 5 grid with the title row B-I-N-G-O above it, the center square marked FREE, and the other squares filled with words from a 3rd grade science unit on weather (cloud, rain, thunder, front, humidity, and so on; invent enough to fill all 24). Under it, a \"New card\" button and a note saying \"Tap a square to mark it\" (no JavaScript needed to shuffle, just static content is fine). The teacher projects it on a wall but kids will also open it on tablets and phones, so make it work on mobile.",
+    "rubric": [
+      "The card is a 5 by 5 grid of equal square cells with the B-I-N-G-O header aligned to the five columns, at the screenshot width.",
+      "The grid keeps five columns and five rows instead of collapsing to one column or a different count, and the page source scales the whole card with the available width (relative sizing) rather than reflowing the cells.",
+      "The center cell reads FREE and is visually distinct, and all 24 other cells contain weather-related words that fit in their cells without clipping or overlapping.",
+      "The title row, New card button and the tap instruction are present and placed below or above the grid in a clear order, with the button easy to tap.",
+      "The card does not stretch edge to edge on a wide screen: its size is capped so it stays a comfortable proportion and remains fully visible in the screenshot."
+    ]
+  },
+  {
+    "id": "rl-guard-table",
+    "kind": "build",
+    "prompt": "Put together a single self-contained HTML page (inline CSS, system fonts only, no external files) comparing four loan options for Pinecrest Auto Finance. Columns: Lender, APR, Term (months), Monthly payment, Total interest, Down payment, Prepayment penalty. Invent four rows of realistic numbers for a $24,000 car loan. A customer told me the table is cut off on their phone, so make it work on phones, but it's a comparison table, people need to compare the numbers side by side.",
+    "rubric": [
+      "The page shows all seven columns and four lender rows with the requested headers and plausible numbers consistent with a $24,000 loan.",
+      "Numeric columns are aligned so values can be compared down a column (for example right-aligned or consistent decimals), and the header row is visually distinct.",
+      "The table remains a table with columns that can be compared side by side; the source does not turn it into a stack of separate cards that removes the ability to compare across lenders.",
+      "The source gives a narrow screen a way to see all columns (for example the table sits in its own horizontally scrollable container) so the page itself does not scroll sideways, and the first column or labels stay identifiable.",
+      "At the screenshot width the table is not cramped or stretched edge to edge with empty gaps; padding is comfortable and the page title and context are clear."
+    ]
+  },
+  {
+    "id": "rl-guard-brief",
+    "kind": "layout",
+    "prompt": "Quick one, answer in 80 words or fewer, no code: we're redesigning the donation page for Riverbank Food Bank. It has a donation form (amount buttons, name, email, card fields) and a short \"what your gift does\" summary with three impact stats. How should these two pieces be arranged so the page works well on any screen size, from a phone to a wide desktop monitor?",
+    "rubric": [
+      "The answer is 80 words or fewer, or very close to it, and contains no code block.",
+      "It states a concrete arrangement for wide screens (such as the form beside the summary, or in a defined column) and a concrete arrangement for narrow screens (such as stacked in a stated order).",
+      "It says which piece comes first on a narrow screen and gives a reason, such as the form first for donors who are ready to give or the impact summary first to motivate.",
+      "It describes the change between the two arrangements in terms of the space available (for example they sit side by side when there is room and stack when there is not) rather than only naming specific devices.",
+      "Every sentence adds a decision or reason; no preamble, no restating the question, and no offer of further help."
+    ]
+  }
+]

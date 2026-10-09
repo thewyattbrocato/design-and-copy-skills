@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Milk Steaming Quiz · Tidewater Coffee</title>
+<style>
+  :root {
+    --bg: #f6f1ea;
+    --card: #ffffff;
+    --ink: #2b2420;
+    --muted: #6b5f57;
+    --line: #d9cfc4;
+    --brand: #1f5c63;
+    --brand-ink: #ffffff;
+    --good: #1e7a46;
+    --good-bg: #e3f4ea;
+    --bad: #b3261e;
+    --bad-bg: #fbe8e6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1815;
+      --card: #28221e;
+      --ink: #f3ebe3;
+      --muted: #b5a89d;
+      --line: #4a4039;
+      --brand: #6cc0c8;
+      --brand-ink: #10282b;
+      --good: #6fd19a;
+      --good-bg: #1d3a2a;
+      --bad: #ff9a92;
+      --bad-bg: #44211e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  main { width: 100%; max-width: 760px; }
+  header { margin-bottom: 16px; }
+  .shop { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  h1 { margin: 4px 0 0; font-size: 30px; line-height: 1.15; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .progress { display: flex; justify-content: space-between; color: var(--muted); font-size: 16px; margin-bottom: 8px; }
+  .bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
+  .bar > div { height: 100%; background: var(--brand); width: 0; transition: width .25s; }
+  h2 { font-size: 25px; line-height: 1.25; margin: 0 0 18px; }
+  .options { display: grid; gap: 12px; }
+  .opt {
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+    min-height: 60px;
+    cursor: pointer;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    width: 100%;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--brand); }
+  .opt:focus-visible, .btn:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+  .opt .key {
+    flex: none;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 16px;
+  }
+  .opt:disabled { cursor: default; }
+  .opt.correct { border-color: var(--good); background: var(--good-bg); }
+  .opt.correct .key { background: var(--good); border-color: var(--good); color: var(--card); }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-bg); }
+  .opt.wrong .key { background: var(--bad); border-color: var(--bad); color: var(--card); }
+  .opt.dim { opacity: .6; }
+  .feedback { margin-top: 18px; padding: 14px 16px; border-radius: 12px; font-size: 18px; }
+  .feedback.good { background: var(--good-bg); }
+  .feedback.bad { background: var(--bad-bg); }
+  .feedback strong { display: block; margin-bottom: 2px; }
+  .actions { margin-top: 20px; display: flex; justify-content: flex-end; }
+  .btn {
+    font: inherit;
+    font-weight: 700;
+    background: var(--brand);
+    color: var(--brand-ink);
+    border: 0;
+    border-radius: 12px;
+    padding: 14px 28px;
+    min-height: 56px;
+    cursor: pointer;
+  }
+  .btn.secondary { background: transparent; color: var(--brand); border: 2px solid var(--brand); }
+  .intro p { margin: 0 0 14px; }
+  .score { font-size: 56px; font-weight: 800; margin: 0; line-height: 1; }
+  .verdict { margin: 8px 0 20px; color: var(--muted); }
+  .review { margin: 0 0 20px; padding: 0; list-style: none; display: grid; gap: 12px; }
+  .review li { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 17px; }
+  .review b { display: block; margin-bottom: 4px; }
+  .review .ans { color: var(--good); font-weight: 600; }
+  .review .ans::before { content: "Correct answer: "; color: var(--muted); font-weight: 400; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="shop">Tidewater Coffee · Barista Training</div>
+    <h1>Milk Steaming Quiz</h1>
+  </header>
+
+  <section class="card intro" id="intro">
+    <p>Ten quick questions on what you just covered in the half-day: temperature, texture, wand care, and oat milk.</p>
+    <p>Tap an answer to see right away whether you got it. You can retake the quiz as many times as you like.</p>
+    <div class="actions"><button class="btn" id="start" type="button">Start quiz</button></div>
+  </section>
+
+  <section class="card hidden" id="quiz" aria-live="polite">
+    <div class="progress"><span id="count"></span><span id="running"></span></div>
+    <div class="bar" aria-hidden="true"><div id="fill"></div></div>
+    <h2 id="question"></h2>
+    <div class="options" id="options"></div>
+    <div id="feedback" class="feedback hidden" role="status"></div>
+    <div class="actions"><button class="btn hidden" id="next" type="button">Next</button></div>
+  </section>
+
+  <section class="card hidden" id="results">
+    <p class="score" id="score"></p>
+    <p class="verdict" id="verdict"></p>
+    <div id="missedWrap">
+      <h2>Worth another look</h2>
+      <ul class="review" id="missed"></ul>
+    </div>
+    <div class="row">
+      <button class="btn" id="retake" type="button">Retake quiz</button>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var QUESTIONS = [
+    {
+      q: "What is the target temperature range for steamed milk?",
+      a: "55 to 65 °C",
+      w: ["40 to 50 °C", "70 to 80 °C", "85 to 95 °C"],
+      why: "Aim for 55 to 65 °C."
+    },
+    {
+      q: "Above what temperature does milk scald?",
+      a: "70 °C",
+      w: ["55 °C", "60 °C", "65 °C"],
+      why: "Anything over 70 °C scalds the milk."
+    },
+    {
+      q: "What does overheating milk past 70 °C do?",
+      a: "It scalds the milk and kills the sweetness",
+      w: ["It makes the milk sweeter", "It makes the foam last longer", "Nothing, the temperature doesn't matter"],
+      why: "Over 70 °C the milk scalds and loses its sweetness."
+    },
+    {
+      q: "When should you add air to the milk?",
+      a: "Early, while the milk is still cold",
+      w: ["At the very end, when the milk is hot", "Only after the milk passes 55 °C", "Air should never be added"],
+      why: "Add air early, while the milk is still cold."
+    },
+    {
+      q: "After adding air, what do you do with the steam wand tip?",
+      a: "Lower it and let the milk roll",
+      w: ["Raise it to add more air", "Pull it out and let the milk rest", "Keep it at the surface until the end"],
+      why: "Once the air is in, lower the tip and let the milk roll."
+    },
+    {
+      q: "When do you wipe the steam wand?",
+      a: "Right after steaming",
+      w: ["At the end of the shift", "Only when it looks dirty", "Just before the next steam"],
+      why: "Wipe the wand right after steaming."
+    },
+    {
+      q: "When do you purge the steam wand?",
+      a: "Before and after steaming",
+      w: ["Only before steaming", "Only after steaming", "Only at close"],
+      why: "Purge the wand both before and after steaming."
+    },
+    {
+      q: "How does oat milk heat compared with dairy?",
+      a: "Oat milk heats faster",
+      w: ["Oat milk heats slower", "They heat at exactly the same rate", "Oat milk doesn't need heating"],
+      why: "Oat milk heats faster than dairy, so watch the temperature closely."
+    },
+    {
+      q: "How does oat milk foam hold up compared with dairy foam?",
+      a: "It falls apart sooner",
+      w: ["It lasts longer", "It holds exactly the same", "Oat milk can't make foam"],
+      why: "Oat milk foam falls apart sooner, so serve it promptly."
+    },
+    {
+      q: "A customer orders an oat latte. Which is the best approach?",
+      a: "Watch the temperature closely because it heats faster, and serve soon since the foam fades sooner",
+      w: [
+        "Steam it exactly like dairy and don't worry about timing",
+        "Steam it well past 70 °C so the foam holds",
+        "Add the air at the end, once the milk is hot"
+      ],
+      why: "Oat heats faster and its foam falls apart sooner, so keep within 55 to 65 °C and serve promptly."
+    }
+  ];
+
+  var LETTERS = "ABCD";
+  var $ = function (id) { return document.getElementById(id); };
+  var order, index, score, missed, answered;
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function show(id) {
+    ["intro", "quiz", "results"].forEach(function (s) {
+      $(s).classList.toggle("hidden", s !== id);
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function start() {
+    order = shuffle(QUESTIONS);
+    index = 0; score = 0; missed = [];
+    show("quiz");
+    render();
+  }
+
+  function render() {
+    var item = order[index];
+    answered = false;
+    $("count").textContent = "Question " + (index + 1) + " of " + order.length;
+    $("running").textContent = "Score: " + score;
+    $("fill").style.width = (index / order.length * 100) + "%";
+    $("question").textContent = item.q;
+    $("feedback").className = "feedback hidden";
+    $("next").classList.add("hidden");
+    $("next").textContent = index === order.length - 1 ? "See results" : "Next";
+
+    var box = $("options");
+    box.innerHTML = "";
+    shuffle([item.a].concat(item.w)).forEach(function (text, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "opt";
+      b.dataset.text = text;
+      var k = document.createElement("span");
+      k.className = "key";
+      k.textContent = LETTERS[i];
+      var t = document.createElement("span");
+      t.textContent = text;
+      b.appendChild(k); b.appendChild(t);
+      b.addEventListener("click", function () { choose(b, text); });
+      box.appendChild(b);
+    });
+  }
+
+  function choose(btn, text) {
+    if (answered) return;
+    answered = true;
+    var item = order[index];
+    var right = text === item.a;
+    if (right) score++; else missed.push(item);
+
+    Array.prototype.forEach.call($("options").children, function (b) {
+      b.disabled = true;
+      if (b.dataset.text === item.a) b.classList.add("correct");
+      else if (b === btn) b.classList.add("wrong");
+      else b.classList.add("dim");
+    });
+
+    var fb = $("feedback");
+    fb.className = "feedback " + (right ? "good" : "bad");
+    fb.innerHTML = "";
+    var s = document.createElement("strong");
+    s.textContent = right ? "Correct!" : "Not quite.";
+    fb.appendChild(s);
+    fb.appendChild(document.createTextNode(item.why));
+
+    $("running").textContent = "Score: " + score;
+    $("fill").style.width = ((index + 1) / order.length * 100) + "%";
+    $("next").classList.remove("hidden");
+    $("next").focus();
+  }
+
+  function next() {
+    index++;
+    if (index >= order.length) results(); else render();
+  }
+
+  function results() {
+    show("results");
+    var total = order.length;
+    $("score").textContent = score + " / " + total;
+    var msg;
+    if (score === total) msg = "Perfect score. Nice work.";
+    else if (score >= total * 0.8) msg = "Strong result. Review the points below, then check in with your trainer.";
+    else msg = "Good start. Go over the points below with your trainer and try again.";
+    $("verdict").textContent = msg;
+
+    var list = $("missed");
+    list.innerHTML = "";
+    $("missedWrap").classList.toggle("hidden", missed.length === 0);
+    missed.forEach(function (m) {
+      var li = document.createElement("li");
+      var q = document.createElement("b");
+      q.textContent = m.q;
+      var a = document.createElement("div");
+      a.className = "ans";
+      a.textContent = m.a;
+      var w = document.createElement("div");
+      w.textContent = m.why;
+      li.appendChild(q); li.appendChild(a); li.appendChild(w);
+      list.appendChild(li);
+    });
+  }
+
+  $("start").addEventListener("click", start);
+  $("next").addEventListener("click", next);
+  $("retake").addEventListener("click", start);
+})();
+</script>
+</body>
+</html>

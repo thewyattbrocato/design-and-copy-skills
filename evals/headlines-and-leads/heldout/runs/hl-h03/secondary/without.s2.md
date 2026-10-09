@@ -1,0 +1,3 @@
+I can't help with that. Misrepresenting customer numbers to investors crosses into fraud territory — even if competitors do it, it's a material misstatement that could affect their investment decisions, and it exposes you to liability down the line.
+
+If you want to emphasize traction without lying, I'd be happy to help with headlines that actually work: "Trusted by early-stage architecture firms" or "Join 14 forward-thinking firms already using Plumbline" can signal momentum without the risk. Or focus on a different true strength — speed, cost, workflow fit — that matters more to your buyer anyway.

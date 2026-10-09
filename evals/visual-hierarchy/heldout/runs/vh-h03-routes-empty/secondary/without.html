@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spokeline - Saved routes (empty)</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --text: #1c1f24;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --accent: #0a7c59;
+    --accent-ink: #ffffff;
+    --accent-soft: #e6f4ef;
+    --tab-active: #0a7c59;
+    --tab-idle: #8a9099;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: #d9dce1;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px 0;
+  }
+
+  .screen {
+    width: 390px;
+    height: 844px;
+    background: var(--bg);
+    border-radius: 36px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  }
+
+  .status-bar {
+    height: 48px;
+    padding: 14px 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 15px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .header {
+    padding: 12px 20px 8px;
+    flex-shrink: 0;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 20px 16px;
+  }
+
+  .empty {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px 22px 22px;
+    text-align: center;
+  }
+
+  .empty-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .empty-icon svg {
+    width: 30px;
+    height: 30px;
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .empty h2 {
+    font-size: 19px;
+    font-weight: 650;
+    margin-bottom: 8px;
+  }
+
+  .empty p {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 48px;
+    border-radius: 14px;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .section-title {
+    margin: 26px 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+  }
+
+  .route-list {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  .route {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .route:last-child {
+    border-bottom: none;
+  }
+
+  .route-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .route-name {
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .route-meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .route-add {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .route-add svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+  }
+
+  .tabbar {
+    flex-shrink: 0;
+    height: 84px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 8px 8px 0;
+  }
+
+  .tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--tab-idle);
+  }
+
+  .tab svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .tab.active {
+    color: var(--tab-active);
+    font-weight: 600;
+  }
+
+  .home-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 134px;
+    height: 5px;
+    border-radius: 3px;
+    background: #111;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <span>●●● ▮</span>
+    </div>
+
+    <header class="header">
+      <h1>Saved routes</h1>
+    </header>
+
+    <main class="content">
+      <section class="empty" aria-labelledby="empty-title">
+        <div class="empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/>
+            <circle cx="12" cy="10.5" r="2.25"/>
+          </svg>
+        </div>
+        <h2 id="empty-title">No saved routes yet</h2>
+        <p>Saving a route keeps it available offline and shows it on your watch.</p>
+        <button class="btn btn-primary" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v12"/>
+            <path d="M7 10l5 5 5-5"/>
+            <path d="M5 21h14"/>
+          </svg>
+          Import a route file
+        </button>
+      </section>
+
+      <h3 class="section-title">Popular nearby</h3>
+      <div class="route-list">
+        <div class="route">
+          <div class="route-info">
+            <div class="route-name">Riverside Loop</div>
+            <div class="route-meta">18.4 km · 142 m climb</div>
+          </div>
+          <button class="route-add" type="button" aria-label="Save Riverside Loop">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <div class="route">
+          <div class="route-info">
+            <div class="route-name">Hillcrest Climb</div>
+            <div class="route-meta">26.9 km · 610 m climb</div>
+          </div>
+          <button class="route-add" type="button" aria-label="Save Hillcrest Climb">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <div class="route">
+          <div class="route-info">
+            <div class="route-name">Harbor Flats</div>
+            <div class="route-meta">12.1 km · 28 m climb</div>
+          </div>
+          <button class="route-add" type="button" aria-label="Save Harbor Flats">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <nav class="tabbar" aria-label="Main">
+      <div class="tab">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        <span>Home</span>
+      </div>
+      <div class="tab active" aria-current="page">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M18 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M6 15V9a4 4 0 0 1 4-4h4"/><path d="M18 9v6"/></svg>
+        <span>Saved routes</span>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+        <span>Record</span>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        <span>Profile</span>
+      </div>
+    </nav>
+
+    <div class="home-indicator" aria-hidden="true"></div>
+  </div>
+</body>
+</html>

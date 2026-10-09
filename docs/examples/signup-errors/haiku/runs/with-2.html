@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up — Plateful</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f9fafb;
+            padding: 24px;
+            color: #1f2937;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .error-summary {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+        }
+
+        .error-summary-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+
+        .error-summary ul {
+            list-style: none;
+            font-size: 14px;
+            color: #b91c1c;
+        }
+
+        .error-summary li {
+            margin-bottom: 4px;
+        }
+
+        .error-summary a {
+            color: #b91c1c;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #1f2937;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group.error input,
+        .form-group.error select {
+            border-color: #dc2626;
+        }
+
+        .form-group.error input:focus,
+        .form-group.error select:focus {
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .error-message {
+            font-size: 13px;
+            color: #dc2626;
+            margin-top: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .error-icon {
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #6b7280;
+            padding: 4px;
+        }
+
+        input[type="password"] {
+            padding-right: 40px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+            flex-shrink: 0;
+            accent-color: #3b82f6;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            cursor: pointer;
+            margin: 0;
+            flex: 1;
+        }
+
+        .checkbox-label a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group.error .checkbox-label {
+            color: #dc2626;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px 16px;
+            font-size: 16px;
+            font-weight: 500;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        button:active {
+            background: #1d4ed8;
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+
+        .hint {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create your account</h1>
+        <p class="subtitle">Join Plateful to start planning meals</p>
+
+        <div class="error-summary">
+            <div class="error-summary-title">Fix 3 errors to continue</div>
+            <ul>
+                <li><a href="#email">Email must be valid</a></li>
+                <li><a href="#servings">How many people do you cook for is required</a></li>
+                <li><a href="#terms">You must accept the terms</a></li>
+            </ul>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label for="name">Full name</label>
+                <input type="text" id="name" name="name" value="Sarah Chen" autocomplete="name">
+            </div>
+
+            <div class="form-group error">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" value="sarah.chen@" autocomplete="email">
+                <div class="error-message">
+                    <span class="error-icon">✕</span>
+                    <span>Enter an email address with an @, like name@example.com</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" value="SecurePass123" autocomplete="new-password">
+                    <button type="button" class="password-toggle" onclick="togglePassword()">Show</button>
+                </div>
+                <div class="hint">At least 8 characters with uppercase, lowercase, and a number</div>
+            </div>
+
+            <div class="form-group error">
+                <label for="servings">How many people do you cook for?</label>
+                <input type="number" id="servings" name="servings" min="1" max="20" autocomplete="off">
+                <div class="error-message">
+                    <span class="error-icon">✕</span>
+                    <span>Please select how many people</span>
+                </div>
+            </div>
+
+            <div class="form-group error">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" name="terms">
+                    <label for="terms" class="checkbox-label">
+                        I agree to Plateful's <a href="#">terms of service</a> and <a href="#">privacy policy</a>
+                    </label>
+                </div>
+                <div class="error-message" style="margin-top: 8px;">
+                    <span class="error-icon">✕</span>
+                    <span>You must accept the terms to continue</span>
+                </div>
+            </div>
+
+            <button type="submit">Create account</button>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const button = document.querySelector('.password-toggle');
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = 'Hide';
+            } else {
+                input.type = 'password';
+                button.textContent = 'Show';
+            }
+        }
+    </script>
+</body>
+</html>

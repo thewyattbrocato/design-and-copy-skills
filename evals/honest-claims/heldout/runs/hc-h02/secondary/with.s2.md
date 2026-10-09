@@ -1,0 +1,3 @@
+The Tarn R2 front light delivers 400 lumens across three modes—high, low, and flash—in a compact 62 g design that fits handlebars 22–35 mm with a tool-free clamp. Our bench tests show about 4 hours of runtime on high and roughly 14 hours on low, powered by a USB-C rechargeable battery. The IPX4 water rating ensures reliable performance in rain and wet conditions. One commuter captured it perfectly: "Rode home in a proper downpour and it didn't miss a beat." (Marta K., Bristol)
+
+At £39 with a 12-month warranty, the Tarn R2 delivers the straightforward, dependable visibility that cycling commuters depend on—night after night, whatever the weather brings.

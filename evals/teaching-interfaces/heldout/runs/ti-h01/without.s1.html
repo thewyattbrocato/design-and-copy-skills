@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to Kilnbook</title>
+<style>
+  :root{
+    --bg:#f6f1ea; --surface:#fffdf9; --ink:#2b2420; --muted:#6e625a; --line:#e6dccf;
+    --clay:#b4532a; --clay-dark:#8f3f1d; --clay-tint:#f8e6dc; --moss:#3f6b52; --moss-tint:#e2efe7;
+    --focus:#1d4ed8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1714; --surface:#26201c; --ink:#f3ebe3; --muted:#b3a597; --line:#3a312b;
+      --clay:#e07a4f; --clay-dark:#f09a74; --clay-tint:#3a251b; --moss:#7fc29a; --moss-tint:#1e2e25;
+      --focus:#8ab4ff;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--line);background:var(--surface)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em}
+  .brand svg{width:26px;height:26px}
+  .who{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px}
+  .avatar{width:32px;height:32px;border-radius:50%;background:var(--clay-tint);color:var(--clay-dark);display:grid;place-items:center;font-weight:700;font-size:13px}
+  main{max-width:1040px;margin:0 auto;padding:32px 24px 56px}
+  .hero{display:flex;gap:24px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-bottom:28px}
+  h1{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:0 0 8px;letter-spacing:-.02em}
+  .hero p{margin:0;color:var(--muted);max-width:52ch}
+  .credit{background:var(--clay-tint);color:var(--clay-dark);border-radius:14px;padding:12px 18px;text-align:center;min-width:130px}
+  .credit b{display:block;font-size:30px;line-height:1.1}
+  .credit span{font-size:13px}
+  .grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:24px}
+  @media (max-width:820px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+  h2{font-size:19px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{margin:0 0 16px;color:var(--muted);font-size:14px}
+  .seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px;margin-bottom:16px}
+  .seg button{border:0;background:none;color:var(--muted);padding:7px 16px;border-radius:7px;font-weight:600;font-size:14px}
+  .seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+  ul{list-style:none;margin:0;padding:0}
+  .slot{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+  .slot:first-child{border-top:0}
+  .date{width:56px;flex:none;text-align:center;border:1px solid var(--line);border-radius:10px;padding:5px 0;background:var(--bg)}
+  .date small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .date b{font-size:20px;line-height:1.1}
+  .info{flex:1;min-width:0}
+  .info strong{display:block}
+  .info span{font-size:14px;color:var(--muted)}
+  .tag{display:inline-block;font-size:12px;font-weight:600;color:var(--moss);background:var(--moss-tint);border-radius:99px;padding:1px 9px;margin-left:6px;vertical-align:1px}
+  .btn{border:1px solid var(--clay);background:var(--clay);color:#fff;border-radius:10px;padding:9px 16px;font-weight:600;white-space:nowrap}
+  .btn:hover{background:var(--clay-dark);border-color:var(--clay-dark)}
+  @media (prefers-color-scheme: dark){.btn{color:#1c1714}.btn:hover{color:#1c1714}}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn.ghost:hover{background:var(--bg);border-color:var(--muted)}
+  .btn.done{background:var(--moss-tint);color:var(--moss);border-color:transparent}
+  .btn[disabled]{opacity:.45;cursor:not-allowed}
+  .bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:12px 0 18px}
+  .bar i{display:block;height:100%;width:0;background:var(--moss);border-radius:99px;transition:width .35s}
+  .steps li{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line)}
+  .steps li:first-child{border-top:0}
+  .tick{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;margin-top:1px;font-size:13px;font-weight:700;color:transparent}
+  .steps li.on .tick{background:var(--moss);border-color:var(--moss);color:var(--surface)}
+  .steps li.on .t{text-decoration:line-through;color:var(--muted)}
+  .steps .t{font-weight:600}
+  .steps p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+  .link{background:none;border:0;padding:0;color:var(--clay-dark);font-weight:600;text-decoration:underline;font-size:14px;margin-top:4px}
+  .side{display:grid;gap:24px;align-content:start}
+  dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+  dt{color:var(--muted)} dd{margin:0}
+  .toast{margin-top:16px;padding:12px 14px;border-radius:10px;background:var(--moss-tint);color:var(--moss);font-weight:600;font-size:14px}
+  .toast[hidden]{display:none}
+  .skip{display:block;text-align:center;margin-top:24px;color:var(--muted);font-size:14px}
+  .skip a{color:inherit}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 6h16l-2 6c3 2 4 5 4 8 0 4-4 6-10 6S6 24 6 20c0-3 1-6 4-8L8 6z" fill="#b4532a"/><ellipse cx="16" cy="6" rx="8" ry="2" fill="#8f3f1d"/></svg>
+    Kilnbook
+  </div>
+  <div class="who"><span>Riverbend Clay Collective</span><div class="avatar" aria-hidden="true">MR</div></div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <h1>Welcome, Maya. Let’s get your hands in clay.</h1>
+      <p>Your membership is active. Book a first session below and you’ll be at the wheel this week. It takes about a minute.</p>
+    </div>
+    <div class="credit" aria-label="Welcome credits remaining">
+      <b id="credits">2</b>
+      <span>free welcome credits</span>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="pick">
+      <h2 id="pick">Pick your first session</h2>
+      <p class="sub">One credit covers one session. Beginners are welcome at every time listed.</p>
+      <div class="seg" role="tablist" aria-label="Resource type">
+        <button role="tab" id="tab-wheel" aria-selected="true" data-type="wheel">Wheel</button>
+        <button role="tab" id="tab-kiln" aria-selected="false" data-type="kiln">Kiln shelf</button>
+      </div>
+      <ul id="slots" role="tabpanel" aria-labelledby="tab-wheel"></ul>
+      <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <div class="side">
+      <section class="card" aria-labelledby="start">
+        <h2 id="start">Your getting-started list</h2>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="1" aria-label="Setup progress"><i id="fill"></i></div>
+        <ul class="steps" id="steps">
+          <li class="on" data-k="account"><span class="tick" aria-hidden="true">✓</span><div><div class="t">Join Riverbend Clay Collective</div></div></li>
+          <li data-k="safety"><span class="tick" aria-hidden="true">✓</span><div><div class="t">Watch the 4-minute studio safety intro</div><p>Required before your first session.</p><button class="link" id="safety">Mark as watched</button></div></li>
+          <li data-k="wheel"><span class="tick" aria-hidden="true">✓</span><div><div class="t">Book a wheel session</div><p>Pick a time on the left.</p></div></li>
+          <li data-k="kiln"><span class="tick" aria-hidden="true">✓</span><div><div class="t">Reserve a kiln shelf</div><p>Do this once you have a piece to fire.</p></div></li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="studio">
+        <h2 id="studio">About the studio</h2>
+        <p class="sub">Good to know before you arrive.</p>
+        <dl>
+          <dt>Address</dt><dd>214 Mill Street, Unit B</dd>
+          <dt>Open</dt><dd>Daily, 8 am – 10 pm</dd>
+          <dt>Bring</dt><dd>An apron and a towel. Clay and tools are provided.</dd>
+          <dt>Help</dt><dd>Studio monitor on site 6–9 pm weekdays</dd>
+        </dl>
+      </section>
+    </div>
+  </div>
+  <p class="skip"><a href="#">Skip for now and explore the dashboard</a></p>
+</main>
+
+<script>
+(function(){
+  var slots = {
+    wheel:[
+      {m:"Oct",d:8, title:"Wheel 4, today",       meta:"6:00 – 8:00 pm · 2 hrs",    note:"Monitor on site"},
+      {m:"Oct",d:9, title:"Wheel 2, tomorrow",    meta:"10:00 am – 12:00 pm · 2 hrs",note:"Quiet morning"},
+      {m:"Oct",d:11,title:"Wheel 6, Saturday",    meta:"9:00 – 11:00 am · 2 hrs",   note:"Beginner meetup"},
+      {m:"Oct",d:12,title:"Wheel 1, Sunday",      meta:"2:00 – 4:00 pm · 2 hrs"}
+    ],
+    kiln:[
+      {m:"Oct",d:10,title:"Bisque firing, Friday", meta:"Load by noon · 1 shelf",     note:"Ready Tue"},
+      {m:"Oct",d:13,title:"Glaze firing, Monday",  meta:"Load by 5:00 pm · 1 shelf"},
+      {m:"Oct",d:17,title:"Bisque firing, Friday", meta:"Load by noon · 1 shelf"}
+    ]
+  };
+  var type = "wheel", booked = {}, credits = 2, safety = false;
+  var list = document.getElementById("slots"), toast = document.getElementById("toast");
+
+  function render(){
+    list.innerHTML = "";
+    slots[type].forEach(function(s,i){
+      var id = type+i, isB = !!booked[id];
+      var li = document.createElement("li"); li.className = "slot";
+      li.innerHTML = '<div class="date"><small>'+s.m+'</small><b>'+s.d+'</b></div>'+
+        '<div class="info"><strong>'+s.title+(s.note?'<span class="tag">'+s.note+'</span>':'')+'</strong><span>'+s.meta+'</span></div>';
+      var b = document.createElement("button");
+      b.className = "btn"+(isB?" done":"");
+      b.textContent = isB ? "Booked ✓" : "Book · 1 credit";
+      b.disabled = !isB && credits < 1;
+      b.setAttribute("aria-label",(isB?"Cancel booking: ":"Book: ")+s.title+", "+s.meta);
+      if(isB) b.title = "Click to cancel";
+      b.onclick = function(){ toggle(id,s); };
+      li.appendChild(b); list.appendChild(li);
+    });
+  }
+  function toggle(id,s){
+    if(booked[id]){ delete booked[id]; credits++; toast.hidden = true; }
+    else {
+      booked[id] = true; credits--;
+      toast.hidden = false;
+      toast.textContent = "You’re in! " + s.title + ", " + s.meta + ". We’ve emailed your confirmation." +
+        (safety ? "" : " Watch the safety intro before you arrive.");
+    }
+    update();
+  }
+  function has(t){ return Object.keys(booked).some(function(k){ return k.indexOf(t)===0; }); }
+  function update(){
+    document.getElementById("credits").textContent = credits;
+    var done = {account:true, safety:safety, wheel:has("wheel"), kiln:has("kiln")}, n = 0;
+    document.querySelectorAll("#steps li").forEach(function(li){
+      var on = done[li.dataset.k]; li.classList.toggle("on", on); if(on) n++;
+    });
+    document.getElementById("fill").style.width = (n/4*100)+"%";
+    document.querySelector(".bar").setAttribute("aria-valuenow", n);
+    var sb = document.getElementById("safety"); if(sb) sb.hidden = safety;
+    render();
+  }
+  document.querySelectorAll(".seg button").forEach(function(b){
+    b.onclick = function(){
+      type = b.dataset.type;
+      document.querySelectorAll(".seg button").forEach(function(x){ x.setAttribute("aria-selected", x===b); });
+      list.setAttribute("aria-labelledby","tab-"+type);
+      render();
+    };
+  });
+  document.getElementById("safety").onclick = function(){ safety = true; update(); };
+  update();
+})();
+</script>
+</body>
+</html>

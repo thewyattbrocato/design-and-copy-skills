@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing · Slate &amp; Stone</title>
+<style>
+  :root {
+    --bg: #f3f1ed;
+    --ink: #22262b;
+    --muted: #5d646c;
+    --line: #d9d5cd;
+    --card: #fbfaf8;
+    --slate: #2f3a45;
+    --slate-2: #3d4b59;
+    --accent: #c2662d;
+    --accent-ink: #8f4513;
+    --ok: #2f6b4f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  header.top {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+    font-weight: 700;
+    letter-spacing: .02em;
+  }
+  header.top span { color: var(--accent); }
+  main { max-width: 1080px; margin: 0 auto; padding: 48px 24px 72px; }
+  .intro { text-align: center; max-width: 620px; margin: 0 auto 32px; }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 14px; letter-spacing: -.02em; }
+  .intro p { margin: 0; color: var(--muted); font-size: 1.1rem; }
+
+  .toggle-wrap { display: flex; justify-content: center; margin-bottom: 40px; }
+  .toggle {
+    display: inline-flex;
+    background: #e6e2da;
+    border-radius: 999px;
+    padding: 4px;
+    gap: 4px;
+  }
+  .toggle input { position: absolute; opacity: 0; pointer-events: none; }
+  .toggle label {
+    cursor: pointer;
+    padding: 9px 20px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .95rem;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toggle input:checked + label { background: var(--slate); color: #fff; }
+  .toggle input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .badge {
+    font-size: .72rem;
+    font-weight: 700;
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+  .plan {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .plan.featured {
+    background: var(--slate);
+    color: #f1efea;
+    border-color: var(--slate);
+    box-shadow: 0 18px 40px -18px rgba(47,58,69,.6);
+    transform: translateY(-12px);
+    padding-bottom: 44px;
+  }
+  .flag {
+    position: absolute;
+    top: -13px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #fff;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .plan h2 { margin: 0 0 4px; font-size: 1.35rem; }
+  .tag { margin: 0 0 22px; color: var(--muted); font-size: .95rem; min-height: 3em; }
+  .featured .tag { color: #b9c2cb; }
+  .price { display: flex; align-items: baseline; gap: 6px; }
+  .price .amt { font-size: 3rem; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+  .price .per { color: var(--muted); }
+  .featured .price .per { color: #b9c2cb; }
+  .billed { margin: 6px 0 24px; font-size: .88rem; color: var(--muted); min-height: 1.4em; }
+  .featured .billed { color: #b9c2cb; }
+
+  .cta {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-radius: 9px;
+    border: 2px solid var(--slate);
+    color: var(--slate);
+    margin-bottom: 26px;
+  }
+  .cta:hover { background: var(--slate); color: #fff; }
+  .cta:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .featured .cta { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .featured .cta:hover { background: #d4733a; border-color: #d4733a; }
+
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
+  li { display: flex; gap: 10px; align-items: flex-start; font-size: .98rem; }
+  li::before {
+    content: "";
+    flex: none;
+    width: 6px; height: 11px;
+    margin: 5px 6px 0 4px;
+    border: solid var(--ok);
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+  }
+  .featured li::before { border-color: #e9a678; }
+  li.lead { font-weight: 700; }
+  li.lead::before { display: none; }
+  li.lead { padding-left: 0; }
+
+  .foot { text-align: center; color: var(--muted); margin-top: 48px; font-size: .95rem; }
+
+  @media (max-width: 880px) {
+    .plans { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
+    .plan.featured { transform: none; order: -1; margin-top: 12px; padding-bottom: 32px; }
+  }
+</style>
+</head>
+<body>
+<header class="top">Slate <span>&amp;</span> Stone</header>
+
+<main>
+  <section class="intro">
+    <h1>Simple pricing for working crews</h1>
+    <p>Schedule jobs, keep your crew on the same page, and stop chasing texts. Pick the plan that fits your yard.</p>
+  </section>
+
+  <div class="toggle-wrap">
+    <div class="toggle" role="radiogroup" aria-label="Billing period">
+      <input type="radio" name="billing" id="b-monthly" value="monthly" checked>
+      <label for="b-monthly">Monthly</label>
+      <input type="radio" name="billing" id="b-annual" value="annual">
+      <label for="b-annual">Annual <span class="badge">2 months free</span></label>
+    </div>
+  </div>
+
+  <section class="plans" aria-label="Plans">
+    <article class="plan" data-month="19" data-year="190">
+      <h2>Solo</h2>
+      <p class="tag">For the one-person outfit running its own jobs.</p>
+      <div class="price"><span class="amt">$19</span><span class="per">/month</span></div>
+      <p class="billed" aria-live="polite">Billed monthly</p>
+      <a class="cta" href="#solo">Choose Solo</a>
+      <ul>
+        <li>1 user</li>
+        <li>20 jobs a month</li>
+      </ul>
+    </article>
+
+    <article class="plan featured" data-month="49" data-year="490">
+      <span class="flag">Most popular</span>
+      <h2>Crew</h2>
+      <p class="tag">For small crews who need everyone on the same schedule.</p>
+      <div class="price"><span class="amt">$49</span><span class="per">/month</span></div>
+      <p class="billed" aria-live="polite">Billed monthly</p>
+      <a class="cta" href="#crew">Choose Crew</a>
+      <ul>
+        <li>Up to 6 users</li>
+        <li>Unlimited jobs</li>
+        <li>Photo notes</li>
+      </ul>
+    </article>
+
+    <article class="plan" data-month="119" data-year="1190">
+      <h2>Yard</h2>
+      <p class="tag">For bigger operations with several crews and suppliers.</p>
+      <div class="price"><span class="amt">$119</span><span class="per">/month</span></div>
+      <p class="billed" aria-live="polite">Billed monthly</p>
+      <a class="cta" href="#yard">Choose Yard</a>
+      <ul>
+        <li class="lead">Everything in Crew, plus:</li>
+        <li>Up to 20 users</li>
+        <li>Invoicing</li>
+        <li>Supplier orders</li>
+      </ul>
+    </article>
+  </section>
+
+  <p class="foot">Pay annually and get 2 months free on any plan.</p>
+</main>
+
+<script>
+  (function () {
+    var radios = document.querySelectorAll('input[name="billing"]');
+    var plans = document.querySelectorAll('.plan');
+    function fmt(n) {
+      return '$' + (Math.round(n * 100) % 100 === 0 ? n.toFixed(0) : n.toFixed(2));
+    }
+    function update() {
+      var annual = document.getElementById('b-annual').checked;
+      plans.forEach(function (p) {
+        var m = +p.dataset.month, y = +p.dataset.year;
+        p.querySelector('.amt').textContent = annual ? fmt(y / 12) : fmt(m);
+        p.querySelector('.billed').textContent = annual
+          ? 'Billed ' + fmt(y) + ' a year (you save ' + fmt(m * 12 - y) + ')'
+          : 'Billed monthly';
+      });
+    }
+    radios.forEach(function (r) { r.addEventListener('change', update); });
+    update();
+  })();
+</script>
+</body>
+</html>

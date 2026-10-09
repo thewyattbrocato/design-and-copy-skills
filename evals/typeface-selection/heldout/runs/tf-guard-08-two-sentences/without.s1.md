@@ -1,0 +1,1 @@
+Use **Cormorant Garamond** (a free Google Font) in a light or regular weight, set in all caps with generous letter-spacing. It's elegant and romantic without being a script, and its high-contrast serif forms also handle the accent in "Inés" and "Tomás" well.

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes: Light, Dark, High contrast</title>
+<style>
+/* ---------- Tier 1: raw values (never read by components) ---------- */
+:root {
+  --green-900: #003d1f;
+  --green-800: #005a2e;
+  --green-700: #186340;
+  --green-600: #1f7a4d;   /* brand green */
+  --green-500: #3fb37a;
+  --green-400: #4fc88a;
+  --green-300: #6bd7a0;
+  --red-800: #8f1f0f;
+  --red-600: #b3412f;     /* brand brick red */
+  --red-300: #f08a76;
+  --ink-950: #000000;
+  --ink-900: #14171a;
+  --ink-700: #333333;
+  --ink-600: #5a6169;
+  --ink-300: #a4aca7;
+  --ink-100: #eef1ef;
+  --ink-050: #f3f5f3;
+  --white: #ffffff;
+  --night-900: #0f1311;
+  --night-800: #171c19;
+  --night-700: #212824;
+  --night-600: #343d38;
+  --night-950: #07120c;
+
+  /* Non-color scales are shared by every theme */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px;
+  --radius-sm: 6px; --radius-md: 12px; --radius-lg: 20px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --border-width: 1px;
+}
+
+/* ---------- Tier 2: semantic roles, remapped per theme ---------- */
+[data-theme="light"] {
+  color-scheme: light;
+  --surface-page: var(--white);
+  --surface-raised: var(--ink-050);
+  --surface-sunken: var(--ink-100);
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-600);
+  --border-subtle: #d9ded9;
+  --border-strong: var(--ink-600);
+  --positive: var(--green-600);
+  --negative: var(--red-600);
+  --action-bg: var(--green-600);
+  --action-bg-hover: var(--green-700);
+  --action-bg-active: #124d32;
+  --action-text: var(--white);
+  --action-border: transparent;
+  --focus-ring: var(--ink-900);
+  --disabled-bg: var(--ink-100);
+  --disabled-text: var(--ink-600);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-page: var(--night-900);
+  --surface-raised: var(--night-800);   /* higher elevation = lighter */
+  --surface-sunken: var(--night-700);
+  --text-primary: var(--ink-100);
+  --text-secondary: var(--ink-300);
+  --border-subtle: var(--night-600);
+  --border-strong: var(--ink-300);
+  --positive: var(--green-400);          /* re-tuned for dark ground */
+  --negative: var(--red-300);
+  --action-bg: var(--green-400);
+  --action-bg-hover: var(--green-300);
+  --action-bg-active: var(--green-500);
+  --action-text: var(--night-950);
+  --action-border: transparent;
+  --focus-ring: var(--white);
+  --disabled-bg: var(--night-700);
+  --disabled-text: var(--ink-300);
+}
+[data-theme="contrast"] {
+  color-scheme: light;
+  --surface-page: var(--white);
+  --surface-raised: var(--white);
+  --surface-sunken: var(--white);
+  --text-primary: var(--ink-950);
+  --text-secondary: var(--ink-700);
+  --border-subtle: var(--ink-950);
+  --border-strong: var(--ink-950);
+  --positive: var(--green-800);
+  --negative: var(--red-800);
+  --action-bg: var(--green-800);
+  --action-bg-hover: var(--green-900);
+  --action-bg-active: var(--ink-950);
+  --action-text: var(--white);
+  --action-border: var(--ink-950);
+  --focus-ring: var(--ink-950);
+  --disabled-bg: var(--white);
+  --disabled-text: var(--ink-700);
+  --border-width: 2px;                   /* structure carried by borders, not tint */
+}
+
+/* ---------- Components read semantic roles only ---------- */
+.screen {
+  background: var(--surface-page);
+  color: var(--text-primary);
+  font-family: var(--font);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-5);
+}
+.summary { display: grid; gap: var(--space-1); }
+.summary__label { margin: 0; font-size: 0.875rem; color: var(--text-secondary); }
+.summary__amount { margin: 0; font-size: 2.25rem; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.summary__delta { margin: 0; font-size: 0.875rem; color: var(--positive); font-weight: 600; }
+
+.card {
+  background: var(--surface-raised);
+  border: var(--border-width) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+}
+.card__title { margin: var(--space-3) 0 var(--space-1); font-size: 0.8125rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+.txn-list { list-style: none; margin: 0; padding: 0; }
+.txn {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: var(--border-width) solid var(--border-subtle);
+}
+.txn:first-child { border-top: 0; }
+.txn__name { font-size: 1rem; overflow-wrap: anywhere; }
+.txn__meta { display: block; font-size: 0.8125rem; color: var(--text-secondary); }
+.txn__amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.txn__amount--in { color: var(--positive); }
+.txn__amount--out { color: var(--negative); }
+
+.btn {
+  font: inherit; font-weight: 600;
+  min-height: 44px; padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-sm);
+  background: var(--action-bg); color: var(--action-text);
+  border: var(--border-width) solid var(--action-border);
+  cursor: pointer;
+}
+.btn:hover { background: var(--action-bg-hover); }
+.btn:active { background: var(--action-bg-active); }
+.btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+.btn:disabled { background: var(--disabled-bg); color: var(--disabled-text); border: var(--border-width) dashed var(--border-strong); cursor: not-allowed; }
+.btn--block { width: 100%; }
+
+/* ---------- Showcase page chrome (neutral, not part of the app) ---------- */
+body { margin: 0; padding: var(--space-5); background: #e4e7e5; font-family: var(--font); color: #14171a; }
+.page-title { margin: 0 0 var(--space-1); font-size: 1.25rem; }
+.page-note { margin: 0 0 var(--space-5); font-size: 0.875rem; color: #3d444a; max-width: 62ch; }
+.themes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-5); align-items: start; }
+.theme-label { margin: 0 0 var(--space-2); font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+
+@media (forced-colors: active) {
+  .btn { border: 2px solid ButtonText; }
+  .screen, .card { border-color: CanvasText; }
+}
+</style>
+</head>
+<body>
+  <h1 class="page-title">Kelpie themes</h1>
+  <p class="page-note">One component stylesheet, three themes. Each theme only remaps semantic roles (surface, text, border, positive, negative, action); components never reference raw colors. In the app, choose the theme from the system setting (<code>prefers-color-scheme</code>, <code>prefers-contrast</code>) with a manual override on <code>data-theme</code>.</p>
+
+  <div class="themes">
+
+    <section>
+      <h2 class="theme-label">Light</h2>
+      <div class="screen" data-theme="light">
+        <div class="summary">
+          <p class="summary__label">Available balance</p>
+          <p class="summary__amount">$4,218.60</p>
+          <p class="summary__delta">▲ +$312.40 this month</p>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Recent transactions</h3>
+          <ul class="txn-list">
+            <li class="txn"><span class="txn__name">Paycheck<span class="txn__meta">Oct 1 · Income</span></span><span class="txn__amount txn__amount--in">+$2,150.00</span></li>
+            <li class="txn"><span class="txn__name">Greenleaf Market<span class="txn__meta">Oct 3 · Groceries</span></span><span class="txn__amount txn__amount--out">−$84.27</span></li>
+            <li class="txn"><span class="txn__name">Metro transit pass<span class="txn__meta">Oct 4 · Transport</span></span><span class="txn__amount txn__amount--out">−$62.00</span></li>
+            <li class="txn"><span class="txn__name">Refund: headphones<span class="txn__meta">Oct 6 · Shopping</span></span><span class="txn__amount txn__amount--in">+$39.99</span></li>
+          </ul>
+        </div>
+        <button class="btn btn--block" type="button">Add transaction</button>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="theme-label">Dark</h2>
+      <div class="screen" data-theme="dark">
+        <div class="summary">
+          <p class="summary__label">Available balance</p>
+          <p class="summary__amount">$4,218.60</p>
+          <p class="summary__delta">▲ +$312.40 this month</p>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Recent transactions</h3>
+          <ul class="txn-list">
+            <li class="txn"><span class="txn__name">Paycheck<span class="txn__meta">Oct 1 · Income</span></span><span class="txn__amount txn__amount--in">+$2,150.00</span></li>
+            <li class="txn"><span class="txn__name">Greenleaf Market<span class="txn__meta">Oct 3 · Groceries</span></span><span class="txn__amount txn__amount--out">−$84.27</span></li>
+            <li class="txn"><span class="txn__name">Metro transit pass<span class="txn__meta">Oct 4 · Transport</span></span><span class="txn__amount txn__amount--out">−$62.00</span></li>
+            <li class="txn"><span class="txn__name">Refund: headphones<span class="txn__meta">Oct 6 · Shopping</span></span><span class="txn__amount txn__amount--in">+$39.99</span></li>
+          </ul>
+        </div>
+        <button class="btn btn--block" type="button">Add transaction</button>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="theme-label">High contrast</h2>
+      <div class="screen" data-theme="contrast">
+        <div class="summary">
+          <p class="summary__label">Available balance</p>
+          <p class="summary__amount">$4,218.60</p>
+          <p class="summary__delta">▲ +$312.40 this month</p>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Recent transactions</h3>
+          <ul class="txn-list">
+            <li class="txn"><span class="txn__name">Paycheck<span class="txn__meta">Oct 1 · Income</span></span><span class="txn__amount txn__amount--in">+$2,150.00</span></li>
+            <li class="txn"><span class="txn__name">Greenleaf Market<span class="txn__meta">Oct 3 · Groceries</span></span><span class="txn__amount txn__amount--out">−$84.27</span></li>
+            <li class="txn"><span class="txn__name">Metro transit pass<span class="txn__meta">Oct 4 · Transport</span></span><span class="txn__amount txn__amount--out">−$62.00</span></li>
+            <li class="txn"><span class="txn__name">Refund: headphones<span class="txn__meta">Oct 6 · Shopping</span></span><span class="txn__amount txn__amount--in">+$39.99</span></li>
+          </ul>
+        </div>
+        <button class="btn btn--block" type="button">Add transaction</button>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

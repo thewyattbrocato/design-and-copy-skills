@@ -1,0 +1,1 @@
+No. A logo that shows everything usually reads as nothing at small sizes, on cans and caps. Make the bear or the crest the primary mark, pair it with the wordmark, and use the other elements as secondary brand assets like labels, patterns, and taproom signage.

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bird Species by Trail Site, Spring</title>
+<style>
+  :root {
+    --surface: #ffffff;
+    --ink: #1c2526;
+    --ink-2: #4a5658;
+    --muted: #6b787a;
+    --grid: #e3e8e8;
+    --bar: #2b7a8c;
+    --bar-hi: #1d5a69;
+    --tip-bg: #1c2526;
+    --tip-ink: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #161c1d;
+      --ink: #eef2f2;
+      --ink-2: #b8c4c6;
+      --muted: #8d9a9c;
+      --grid: #2b3436;
+      --bar: #5db5c7;
+      --bar-hi: #8bd0de;
+      --tip-bg: #eef2f2;
+      --tip-ink: #161c1d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: #f3f5f5;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+  }
+  @media (prefers-color-scheme: dark) { body { background: #0e1213; } }
+  figure {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 24px 20px;
+    background: var(--surface);
+    border-radius: 12px;
+  }
+  h1 { font-size: 1.25rem; line-height: 1.3; margin: 0 0 4px; font-weight: 650; }
+  .sub { margin: 0 0 20px; color: var(--ink-2); font-size: 0.9rem; line-height: 1.4; }
+  .chart { position: relative; padding-left: 112px; }
+  .grid {
+    position: absolute; inset: 0 40px 22px 112px;
+    display: flex; justify-content: space-between; pointer-events: none;
+  }
+  .grid span { width: 1px; background: var(--grid); }
+  .rows { position: relative; list-style: none; margin: 0; padding: 0; }
+  .row {
+    position: relative;
+    display: flex; align-items: center;
+    height: 36px; margin: 6px 0;
+    outline: none;
+  }
+  .label {
+    position: absolute; left: -112px; width: 100px;
+    text-align: right; font-size: 0.88rem; color: var(--ink-2);
+  }
+  .track { flex: 1; display: flex; align-items: center; padding-right: 40px; }
+  .bar {
+    height: 20px;
+    background: var(--bar);
+    border-radius: 0 4px 4px 0;
+    transition: background .12s;
+  }
+  .val {
+    margin-left: 8px; font-size: 0.88rem; font-weight: 650;
+    font-variant-numeric: tabular-nums; color: var(--ink);
+  }
+  .row:hover .bar, .row:focus-visible .bar { background: var(--bar-hi); }
+  .row:focus-visible { outline: 2px solid var(--bar); outline-offset: 2px; border-radius: 4px; }
+  .tip {
+    position: absolute; left: 0; top: -30px;
+    background: var(--tip-bg); color: var(--tip-ink);
+    font-size: 0.78rem; padding: 4px 8px; border-radius: 4px;
+    white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: opacity .12s; z-index: 2;
+  }
+  .row:hover .tip, .row:focus-visible .tip { opacity: 1; }
+  .axis {
+    display: flex; justify-content: space-between;
+    margin: 4px 40px 0 0; font-size: 0.75rem; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .axis-title { margin: 6px 40px 0 0; text-align: center; font-size: 0.78rem; color: var(--muted); }
+  details { margin-top: 18px; font-size: 0.85rem; color: var(--ink-2); }
+  summary { cursor: pointer; width: fit-content; }
+  table { border-collapse: collapse; margin-top: 10px; width: 100%; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); }
+  td:last-child, th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .note { margin: 14px 0 0; font-size: 0.75rem; color: var(--muted); }
+  @media (max-width: 480px) {
+    figure { padding: 18px 14px; }
+    .chart { padding-left: 92px; }
+    .grid { left: 92px; }
+    .label { left: -92px; width: 82px; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+<figure>
+  <h1>Willow Flats leads the trail network with 74 bird species</h1>
+  <p class="sub">Bird species counted at six trail sites, last spring</p>
+
+  <div class="chart" role="img" aria-label="Horizontal bar chart of bird species counts by trail site: Willow Flats 74, Heron Point 67, North Ridge 52, Alder Run 41, Millpond 38, Quarry Loop 29.">
+    <div class="grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <ul class="rows">
+      <li class="row" tabindex="0"><span class="label">Willow Flats</span><div class="track"><div class="bar" style="width:calc((100% - 0px) * 74 / 80)"></div><span class="val">74</span></div><span class="tip">Willow Flats: 74 species</span></li>
+      <li class="row" tabindex="0"><span class="label">Heron Point</span><div class="track"><div class="bar" style="width:calc(100% * 67 / 80)"></div><span class="val">67</span></div><span class="tip">Heron Point: 67 species</span></li>
+      <li class="row" tabindex="0"><span class="label">North Ridge</span><div class="track"><div class="bar" style="width:calc(100% * 52 / 80)"></div><span class="val">52</span></div><span class="tip">North Ridge: 52 species</span></li>
+      <li class="row" tabindex="0"><span class="label">Alder Run</span><div class="track"><div class="bar" style="width:calc(100% * 41 / 80)"></div><span class="val">41</span></div><span class="tip">Alder Run: 41 species</span></li>
+      <li class="row" tabindex="0"><span class="label">Millpond</span><div class="track"><div class="bar" style="width:calc(100% * 38 / 80)"></div><span class="val">38</span></div><span class="tip">Millpond: 38 species</span></li>
+      <li class="row" tabindex="0"><span class="label">Quarry Loop</span><div class="track"><div class="bar" style="width:calc(100% * 29 / 80)"></div><span class="val">29</span></div><span class="tip">Quarry Loop: 29 species</span></li>
+    </ul>
+    <div class="axis" aria-hidden="true"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span></div>
+    <div class="axis-title">Species counted</div>
+  </div>
+
+  <details>
+    <summary>View as table</summary>
+    <table>
+      <thead><tr><th>Trail site</th><th>Species</th></tr></thead>
+      <tbody>
+        <tr><td>Willow Flats</td><td>74</td></tr>
+        <tr><td>Heron Point</td><td>67</td></tr>
+        <tr><td>North Ridge</td><td>52</td></tr>
+        <tr><td>Alder Run</td><td>41</td></tr>
+        <tr><td>Millpond</td><td>38</td></tr>
+        <tr><td>Quarry Loop</td><td>29</td></tr>
+      </tbody>
+    </table>
+  </details>
+</figure>
+</body>
+</html>

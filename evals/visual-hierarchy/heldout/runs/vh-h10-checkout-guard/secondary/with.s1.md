@@ -1,0 +1,1 @@
+**Place order** should be the filled, primary button, since it's the one action that completes the purchase. Make **Back to cart** a secondary style, such as an outline or text link, so it stays available without competing for attention.

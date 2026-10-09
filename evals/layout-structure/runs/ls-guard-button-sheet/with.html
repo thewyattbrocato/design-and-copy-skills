@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Button Set – Spec Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --panel: #ffffff;
+    --ink: #1a1b22;
+    --muted: #6a6c78;
+    --line: #e3e1db;
+    --accent: #3b40d6;
+    --accent-hover: #2f33b4;
+    --accent-press: #262a96;
+    --accent-tint: #ececfb;
+    --danger: #c62828;
+    --danger-hover: #a81f1f;
+    --danger-press: #8c1919;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { background: var(--bg); }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    width: 1280px;
+    height: 800px;
+    padding: 40px 64px 28px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 20px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  h1 { font-size: 30px; font-weight: 650; letter-spacing: -.02em; }
+  .intro { max-width: 380px; font-size: 13px; line-height: 1.5; color: var(--muted); text-align: right; }
+
+  .sheet {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 232px repeat(3, 1fr);
+    grid-template-rows: 76px repeat(4, 1fr);
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .sheet > div { border-bottom: 1px solid var(--line); padding: 0 28px; display: flex; }
+  .sheet > div:nth-last-child(-n+4) { border-bottom: 0; }
+
+  .corner {
+    align-items: flex-end;
+    padding-bottom: 14px !important;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .col-head { flex-direction: column; justify-content: flex-end; padding-bottom: 14px !important; gap: 3px; border-left: 1px solid var(--line); background: #fbfaf8; }
+  .corner { background: #fbfaf8; }
+  .col-head b { font-size: 15px; font-weight: 650; }
+  .col-head span, .row-head span.tok, .cell small {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .row-head { flex-direction: column; justify-content: center; gap: 5px; background: #fbfaf8; }
+  .row-head b { font-size: 15px; font-weight: 650; }
+  .row-head p { font-size: 12px; line-height: 1.45; color: var(--muted); }
+
+  .cell {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+    border-left: 1px solid var(--line);
+  }
+
+  /* ---------- Button ---------- */
+  .btn {
+    font-family: var(--sans);
+    font-weight: 600;
+    line-height: 1;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: background-color .12s, border-color .12s, color .12s;
+  }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn.sm { height: 32px; padding: 0 14px; font-size: 13px; border-radius: 6px; }
+  .btn.md { height: 40px; padding: 0 18px; font-size: 14px; border-radius: 8px; }
+  .btn.lg { height: 48px; padding: 0 24px; font-size: 16px; border-radius: 10px; }
+
+  .primary { background: var(--accent); color: #fff; }
+  .primary:hover { background: var(--accent-hover); }
+  .primary:active { background: var(--accent-press); }
+
+  .secondary { background: #fff; color: var(--accent); border-color: var(--accent); }
+  .secondary:hover { background: var(--accent-tint); }
+  .secondary:active { background: #dcdcf6; }
+
+  .tertiary { background: transparent; color: var(--accent); }
+  .tertiary:hover { background: var(--accent-tint); }
+  .tertiary:active { background: #dcdcf6; }
+
+  .destructive { background: var(--danger); color: #fff; }
+  .destructive:hover { background: var(--danger-hover); }
+  .destructive:active { background: var(--danger-press); }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="eyebrow">Design System · Components</div>
+      <h1>Button</h1>
+    </div>
+    <p class="intro">Four emphasis levels across three sizes. Hover each button to preview its interactive state.</p>
+  </header>
+
+  <main class="sheet">
+    <div class="corner">Variant ╲ Size</div>
+    <div class="col-head"><b>Small</b><span>sm · 32px · 13px text · 14px pad</span></div>
+    <div class="col-head"><b>Medium</b><span>md · 40px · 14px text · 18px pad</span></div>
+    <div class="col-head"><b>Large</b><span>lg · 48px · 16px text · 24px pad</span></div>
+
+    <div class="row-head"><b>Primary</b><p>Main action on a screen. One per view.</p><span class="tok">fill / accent</span></div>
+    <div class="cell"><button class="btn primary sm">Save changes</button><small>radius 6</small></div>
+    <div class="cell"><button class="btn primary md">Save changes</button><small>radius 8</small></div>
+    <div class="cell"><button class="btn primary lg">Save changes</button><small>radius 10</small></div>
+
+    <div class="row-head"><b>Secondary</b><p>Supporting actions alongside a primary.</p><span class="tok">outline / accent</span></div>
+    <div class="cell"><button class="btn secondary sm">Save draft</button><small>radius 6</small></div>
+    <div class="cell"><button class="btn secondary md">Save draft</button><small>radius 8</small></div>
+    <div class="cell"><button class="btn secondary lg">Save draft</button><small>radius 10</small></div>
+
+    <div class="row-head"><b>Tertiary</b><p>Low-emphasis, inline or dismissive actions.</p><span class="tok">text / accent</span></div>
+    <div class="cell"><button class="btn tertiary sm">Cancel</button><small>radius 6</small></div>
+    <div class="cell"><button class="btn tertiary md">Cancel</button><small>radius 8</small></div>
+    <div class="cell"><button class="btn tertiary lg">Cancel</button><small>radius 10</small></div>
+
+    <div class="row-head"><b>Destructive</b><p>Irreversible actions such as delete or remove.</p><span class="tok">fill / danger</span></div>
+    <div class="cell"><button class="btn destructive sm">Delete project</button><small>radius 6</small></div>
+    <div class="cell"><button class="btn destructive md">Delete project</button><small>radius 8</small></div>
+    <div class="cell"><button class="btn destructive lg">Delete project</button><small>radius 10</small></div>
+  </main>
+
+  <footer>
+    <span>Weight 600 · border 1.5px · system font stack</span>
+    <span>Focus ring 2px / offset 2px</span>
+  </footer>
+</body>
+</html>

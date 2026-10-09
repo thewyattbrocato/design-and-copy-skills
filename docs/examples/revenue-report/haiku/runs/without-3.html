@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Report - Ember & Oak</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8f6f3;
+            color: #2c2415;
+            padding: 16px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            background: white;
+            padding: 24px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        header {
+            margin-bottom: 20px;
+            border-bottom: 3px solid #8b6f47;
+            padding-bottom: 12px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .header-meta {
+            font-size: 11px;
+            color: #6b5d4f;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .metric-box {
+            background: #f8f6f3;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8b6f47;
+            margin-bottom: 4px;
+        }
+        
+        .metric-label {
+            font-size: 11px;
+            color: #6b5d4f;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c2415;
+        }
+        
+        #revenueChart {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #e0d9d3;
+            border-radius: 4px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        th {
+            background: #8b6f47;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e0d9d3;
+        }
+        
+        tr:hover {
+            background: #f8f6f3;
+        }
+        
+        tr:nth-child(even) {
+            background: #faf8f6;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .rank {
+            font-weight: 600;
+            color: #8b6f47;
+            min-width: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ember & Oak</h1>
+            <div class="header-meta">Monthly Performance Report • October 2026</div>
+        </header>
+        
+        <div class="metrics">
+            <div class="metric-box">
+                <div class="metric-value">$38,450</div>
+                <div class="metric-label">Total Revenue</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">892</div>
+                <div class="metric-label">Units Sold</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">$43.11</div>
+                <div class="metric-label">Avg Order Value</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">Weekly Revenue (Last 12 Weeks)</div>
+            <canvas id="revenueChart"></canvas>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">Top 6 Products</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 5%">#</th>
+                        <th>Product</th>
+                        <th class="text-right" style="width: 15%">Units Sold</th>
+                        <th class="text-right" style="width: 15%">Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="rank">1</span></td>
+                        <td>Ember Espresso Blend (1kg)</td>
+                        <td class="text-right">156</td>
+                        <td class="text-right">$8,580</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank">2</span></td>
+                        <td>Single Origin Collection (500g)</td>
+                        <td class="text-right">124</td>
+                        <td class="text-right">$7,440</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank">3</span></td>
+                        <td>Oak Roast Decaf (1kg)</td>
+                        <td class="text-right">98</td>
+                        <td class="text-right">$5,390</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank">4</span></td>
+                        <td>Pour-Over Bags (10ct)</td>
+                        <td class="text-right">187</td>
+                        <td class="text-right">$5,610</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank">5</span></td>
+                        <td>Coffee Subscription (Monthly)</td>
+                        <td class="text-right">45</td>
+                        <td class="text-right">$4,050</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank">6</span></td>
+                        <td>Ember & Oak Merchandise</td>
+                        <td class="text-right">282</td>
+                        <td class="text-right">$1,690</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('revenueChart');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        
+        const weeks = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10', 'W11', 'W12'];
+        const revenues = [2450, 2890, 3120, 2680, 3450, 3890, 3200, 3680, 3540, 4120, 3890, 3880];
+        
+        const padding = 40;
+        const chartWidth = canvas.width - padding * 2;
+        const chartHeight = canvas.height - padding * 2;
+        
+        const maxRevenue = Math.max(...revenues);
+        const minRevenue = Math.min(...revenues);
+        const range = maxRevenue - minRevenue;
+        
+        ctx.fillStyle = '#f8f6f3';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.strokeStyle = '#e0d9d3';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+            const y = padding + (chartHeight / 4) * i;
+            ctx.beginPath();
+            ctx.moveTo(padding, y);
+            ctx.lineTo(canvas.width - padding, y);
+            ctx.stroke();
+        }
+        
+        ctx.strokeStyle = '#8b6f47';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, canvas.height - padding);
+        ctx.lineTo(canvas.width - padding, canvas.height - padding);
+        ctx.stroke();
+        
+        ctx.fillStyle = '#6b5d4f';
+        ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'right';
+        for (let i = 0; i <= 4; i++) {
+            const value = minRevenue + (range / 4) * i;
+            const y = canvas.height - padding - (chartHeight / 4) * i;
+            ctx.fillText('$' + Math.round(value / 100) + 'K', padding - 8, y + 3);
+        }
+        
+        ctx.strokeStyle = '#8b6f47';
+        ctx.lineWidth = 3;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        
+        ctx.beginPath();
+        for (let i = 0; i < revenues.length; i++) {
+            const x = padding + (chartWidth / (revenues.length - 1)) * i;
+            const y = canvas.height - padding - ((revenues[i] - minRevenue) / range) * chartHeight;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        
+        ctx.fillStyle = '#8b6f47';
+        for (let i = 0; i < revenues.length; i++) {
+            const x = padding + (chartWidth / (revenues.length - 1)) * i;
+            const y = canvas.height - padding - ((revenues[i] - minRevenue) / range) * chartHeight;
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        ctx.fillStyle = '#6b5d4f';
+        ctx.font = '10px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'center';
+        for (let i = 0; i < weeks.length; i += 3) {
+            const x = padding + (chartWidth / (weeks.length - 1)) * i;
+            ctx.fillText(weeks[i], x, canvas.height - padding + 16);
+        }
+    </script>
+</body>
+</html>

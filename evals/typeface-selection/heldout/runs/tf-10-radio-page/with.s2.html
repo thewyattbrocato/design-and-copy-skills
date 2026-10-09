@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low Tide Radio — after midnight, until the water comes back</title>
+<style>
+  :root {
+    --paper: #ebe5d3;
+    --paper-deep: #e0d9c3;
+    --ink: #1c2a3b;
+    --ink-soft: #46546a;
+    --lamp: #a94a22;
+    --rule: #1c2a3b;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper-deep); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: clamp(1rem, 4vw, 3rem) clamp(.75rem, 3vw, 2rem);
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    line-height: 1.5;
+    background:
+      repeating-linear-gradient(0deg, rgba(28,42,59,.025) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at 50% 0%, #f1ecdc 0%, var(--paper-deep) 80%);
+  }
+  .sheet {
+    max-width: 38rem;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 5vw, 2.75rem);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    outline: 1px solid var(--rule);
+    outline-offset: -8px;
+    box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 18px 30px -22px rgba(28,42,59,.55);
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 0;
+    font-family: ui-monospace, "Courier New", Courier, monospace;
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  h1 {
+    margin: 1.4rem 0 .2rem;
+    font-weight: 400;
+    font-size: clamp(2.8rem, 12vw, 4.8rem);
+    line-height: .95;
+    letter-spacing: -.02em;
+  }
+  h1 em { color: var(--lamp); font-style: italic; }
+  .tagline {
+    margin: .8rem 0 0;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  .tide { display: block; width: 100%; height: auto; margin: 1.6rem 0 .3rem; }
+  .tide-note {
+    margin: 0 0 1.8rem;
+    font-family: ui-monospace, "Courier New", Courier, monospace;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+  }
+  h2 {
+    margin: 0 0 .6rem;
+    padding-bottom: .4rem;
+    border-bottom: 3px double var(--rule);
+    font-size: .8rem;
+    font-weight: 400;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+  }
+  ol { list-style: none; margin: 0; padding: 0; }
+  li {
+    display: grid;
+    grid-template-columns: 4.6rem 1fr;
+    gap: .25rem 1rem;
+    padding: .85rem 0;
+    border-bottom: 1px dotted var(--ink-soft);
+  }
+  li:last-child { border-bottom: 0; }
+  .time {
+    font-family: ui-monospace, "Courier New", Courier, monospace;
+    font-size: .85rem;
+    color: var(--lamp);
+    padding-top: .3rem;
+    white-space: nowrap;
+  }
+  .track { font-size: 1.25rem; font-style: italic; line-height: 1.25; }
+  .artist {
+    display: block;
+    font-style: normal;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: .15rem;
+  }
+  .live { margin-top: 1.8rem; display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .85rem 1.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    font: inherit;
+    font-size: 1rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--lamp);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--lamp); }
+  .btn:focus-visible { outline: 3px solid var(--lamp); outline-offset: 3px; }
+  .dot {
+    width: .6rem; height: .6rem; border-radius: 50%;
+    background: #f0a46f;
+    animation: breathe 2.8s ease-in-out infinite;
+  }
+  @keyframes breathe { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .dot { animation: none; }
+    .btn { transition: none; }
+  }
+  .live small {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: .9rem;
+  }
+  footer {
+    margin-top: 2rem;
+    padding-top: .8rem;
+    border-top: 1px solid var(--rule);
+    font-size: .85rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  @media (max-width: 26rem) {
+    li { grid-template-columns: 1fr; }
+    .time { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <p class="meta">
+      <span>Nightly broadcast</span>
+      <span>12:00 – 4:00 a.m.</span>
+    </p>
+
+    <h1>Low <em>Tide</em><br>Radio</h1>
+    <p class="tagline">Records for the hour when the harbour goes quiet and the shore shows its bones.</p>
+
+    <svg class="tide" viewBox="0 0 600 90" role="img" aria-label="A tide curve falling to its lowest point at about two in the morning">
+      <line x1="0" y1="70" x2="600" y2="70" stroke="#1c2a3b" stroke-width="1" stroke-dasharray="2 5"/>
+      <path d="M0 20 C 100 20, 160 74, 300 74 S 500 20, 600 20" fill="none" stroke="#1c2a3b" stroke-width="2"/>
+      <path d="M0 20 C 100 20, 160 74, 300 74 S 500 20, 600 20 L600 90 L0 90 Z" fill="#1c2a3b" opacity=".07"/>
+      <circle cx="300" cy="74" r="6" fill="#a94a22"/>
+      <line x1="300" y1="74" x2="300" y2="8" stroke="#a94a22" stroke-width="1"/>
+    </svg>
+    <p class="tide-note"><span>High water 11:48 p.m.</span><span>Low 2:04 a.m.</span><span>High 4:20 a.m.</span></p>
+
+    <section aria-labelledby="pl">
+      <h2 id="pl">Tonight’s tide table</h2>
+      <ol>
+        <li>
+          <span class="time">12:07 a.m.</span>
+          <span class="track">Salt on the Windowsill
+            <span class="artist">Marguerite Vane</span></span>
+        </li>
+        <li>
+          <span class="time">12:41 a.m.</span>
+          <span class="track">The Ferry Doesn’t Run Tonight
+            <span class="artist">Oswin &amp; the Slow Lanterns</span></span>
+        </li>
+        <li>
+          <span class="time">1:18 a.m.</span>
+          <span class="track">Kettle, Then Rain
+            <span class="artist">Tomás Ibarra Trio</span></span>
+        </li>
+        <li>
+          <span class="time">1:52 a.m.</span>
+          <span class="track">Letters Never Posted
+            <span class="artist">Halcyon Dunes</span></span>
+        </li>
+      </ol>
+    </section>
+
+    <div class="live">
+      <a class="btn" href="#live"><span class="dot" aria-hidden="true"></span>Listen live</a>
+      <small>On air now, somewhere past midnight.</small>
+    </div>
+
+    <footer>Keep a lamp on. The water always comes back.</footer>
+  </main>
+</body>
+</html>

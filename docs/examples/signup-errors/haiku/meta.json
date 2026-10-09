@@ -1,0 +1,88 @@
+{
+  "id": "signup-errors",
+  "skill": "form-design",
+  "prompt": "Build the signup page for a meal-planning app called Plateful: name, email, password, how many people they cook for, and a terms checkbox. Show the page as it looks right after someone pressed the button with a couple of mistakes, so I can see how the errors look.",
+  "prompt_suffix": "\n\nReturn the result as a single self-contained HTML file: all CSS inline, no external requests, system fonts only. Reply with one ```html fenced block and nothing else.",
+  "model": "haiku",
+  "model_id": "claude-haiku-4-5-20251001",
+  "date": "2026-10-07",
+  "mode": "installed",
+  "effort": null,
+  "width": 1280,
+  "height": 1000,
+  "runs_per_arm": 3,
+  "judge": "claude:opus",
+  "seed": 0,
+  "rubric": [
+    "Every field has a visible label that stays on screen, not a placeholder standing in for a label.",
+    "Each error message sits next to the field it belongs to, says in plain words what to fix, and does not rely on colour alone.",
+    "What the person already typed is kept, and the password requirements are visible without having to fail first.",
+    "The form is a single clear column with one primary button and a sensible order and grouping of fields.",
+    "Inputs are easy to see and use: visible borders, comfortable height and legible text size."
+  ],
+  "featuring_rule": "Declared before any run: rank the 3 without-skill runs and the 3 with-skill runs separately by the blind judge's rubric mean (two passes with the sides swapped, scores averaged), and feature the median run of each arm. The best run is never chosen. The contact sheet shows all six runs.",
+  "featured_run": {
+    "without": 1,
+    "with": 2
+  },
+  "spread": {
+    "without": [
+      3.5,
+      4.2,
+      3.3
+    ],
+    "with": [
+      3.9,
+      4.7,
+      4.8
+    ]
+  },
+  "skill_invoked_in_with_runs": [
+    true,
+    true,
+    true
+  ],
+  "pairs": [
+    {
+      "run": 1,
+      "winner": "with",
+      "position_consistent": true,
+      "rubric_scores": {
+        "with": 3.9,
+        "without": 3.5
+      },
+      "judge_notes": "pass 1 (A=without, B=with): B's error handling is more thorough: it gives a summary plus an inline message for every invalid field, and the messages say exactly what to fix (for example, the email message shows a correct format). A misses errors on the invalid email and the unselected household size, and its terms error overlaps the checkbox text. B has its own problems: it clears the password, crams the terms error beside a squeezed checkbox label, and the button is off-screen, so it isn't clearly better on keeping input or layout. | pass 2 (A=with, B=without): A has persistent labels, a specific inline error with an icon under every field, a summary at the top, and keeps the email the person typed. However, it clears the password, never shows password rules before an error, squeezes the terms checkbox into a narrow column, and the primary button is cut off in the screenshot. B keeps the masked password and shows its button, but it misses an error on the invalid 'john@example' email, its terms text overlaps its own error message, the placeholder in the empty name field could pass for a typed value, and it also hides password rules until they fail."
+    },
+    {
+      "run": 2,
+      "winner": "with",
+      "position_consistent": true,
+      "rubric_scores": {
+        "with": 4.7,
+        "without": 4.2
+      },
+      "judge_notes": "pass 1 (A=without, B=with): B shows the password requirements before anyone gets them wrong, gives more specific fix-it messages with icons, and adds a linked error summary. Its flaws are small: the 'Show' toggle is out of line and the people-count field looks like an empty text box even though its error says 'select'. A has clean labels and keeps what was typed, but it only shows the password rule after it fails, and the terms label overlaps its error message. | pass 2 (A=with, B=without): A shows the password rules before anyone gets them wrong, adds a linked error summary, and gives clear inline errors marked with icons and specific fixes such as 'like name@example.com'. Its flaws are small: the 'Show' toggle is misaligned, and the 'how many people' error says 'select' even though the field looks like a text box. B looks polished and keeps what was typed, but it only reveals the password rules after a failure, and the terms label overlaps the error text below it."
+    },
+    {
+      "run": 3,
+      "winner": "with",
+      "position_consistent": true,
+      "rubric_scores": {
+        "with": 4.8,
+        "without": 3.3
+      },
+      "judge_notes": "pass 1 (A=without, B=with): B keeps what the person typed, shows the password rule before any mistake, and marks each error with an icon and a specific fix, such as \"Enter an email address with an @\". One flaw is that B's 4-character password breaks its own 8-character rule but shows no error. A's errors are vague and shown by red colour alone, its terms error sits awkwardly beside the checkbox instead of under it, and it never shows any password requirements. | pass 2 (A=with, B=without): A puts specific, plain-language errors with an icon directly under each problem field, keeps what the person typed and shows the password rule before anyone fails it. One flaw: the 4-character password breaks its own 'at least 8 characters' hint, yet A shows no error for it. B keeps its labels and typed values, but its errors use red alone with generic wording, it never shows password requirements, and the terms error sits awkwardly beside the checkbox, which breaks the single-column layout."
+    }
+  ],
+  "files": {
+    "without": "without.png",
+    "with": "with.png",
+    "compare": "compare.png",
+    "contact_sheet": "contact-sheet.png"
+  },
+  "sources": {
+    "without": "without.html",
+    "with": "with.html",
+    "runs": "runs/"
+  }
+}

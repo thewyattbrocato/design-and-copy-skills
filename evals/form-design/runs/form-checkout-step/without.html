@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout – Delivery slot</title>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --card: #ffffff;
+    --ink: #1d2a24;
+    --muted: #5f6b65;
+    --line: #dcdad2;
+    --accent: #1f6b4a;
+    --accent-soft: #e4f1ea;
+    --warn: #8a5a00;
+    --disabled: #9aa39e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.45;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 24px 20px 48px; }
+  header.top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .brand { font-weight: 700; letter-spacing: .01em; color: var(--accent); }
+  .back { color: var(--muted); font-size: 14px; text-decoration: none; }
+  .back:hover { text-decoration: underline; }
+
+  ol.steps { list-style: none; display: flex; gap: 8px; padding: 0; margin: 0 0 28px; }
+  ol.steps li { flex: 1; font-size: 13px; color: var(--muted); }
+  ol.steps li::before {
+    content: ""; display: block; height: 4px; border-radius: 2px;
+    background: var(--line); margin-bottom: 8px;
+  }
+  ol.steps li.done::before, ol.steps li.current::before { background: var(--accent); }
+  ol.steps li.current { color: var(--ink); font-weight: 600; }
+
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+
+  .layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+  @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+
+  fieldset { border: 0; padding: 0; margin: 0 0 24px; }
+  legend { font-size: 15px; font-weight: 700; padding: 0; margin-bottom: 10px; display: flex; gap: 8px; align-items: baseline; }
+  legend span { font-weight: 400; color: var(--muted); font-size: 14px; }
+
+  .slot { position: relative; display: block; margin-bottom: 10px; }
+  .slot input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .slot .box {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .slot .radio {
+    flex: none; width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--muted); display: grid; place-items: center;
+  }
+  .slot .radio::after {
+    content: ""; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); transform: scale(0); transition: transform .12s;
+  }
+  .slot .time { font-weight: 600; }
+  .slot .note { font-size: 13px; color: var(--muted); }
+  .slot .info { flex: 1; }
+  .slot .fee { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .slot .fee.free { color: var(--accent); }
+  .slot:hover .box { border-color: var(--accent); }
+  .slot input:checked + .box { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent); }
+  .slot input:checked + .box .radio { border-color: var(--accent); }
+  .slot input:checked + .box .radio::after { transform: scale(1); }
+  .slot input:focus-visible + .box { outline: 3px solid #0b57d0; outline-offset: 2px; }
+  .slot input:disabled { cursor: not-allowed; }
+  .slot input:disabled + .box { background: #efeeea; }
+  .slot input:disabled + .box .time,
+  .slot input:disabled + .box .fee { color: var(--disabled); text-decoration: line-through; }
+  .slot input:disabled + .box .radio { border-color: var(--line); }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 99px; background: #fff3d6; color: var(--warn); margin-left: 6px; }
+
+  aside.summary {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px; position: sticky; top: 16px;
+  }
+  aside h2 { font-size: 16px; margin: 0 0 12px; }
+  .row { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .row .l { color: var(--muted); }
+  .row.total { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 12px; font-size: 17px; font-weight: 700; }
+  .row.total .l { color: var(--ink); }
+  .chosen { background: var(--bg); border-radius: 8px; padding: 10px 12px; font-size: 14px; margin: 12px 0 8px; }
+  .chosen b { display: block; }
+  .actions { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+  .btn {
+    font: inherit; font-weight: 600; border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; text-align: center; border: 1.5px solid var(--accent);
+  }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.primary:hover { background: #185a3d; }
+  .btn.secondary { background: transparent; color: var(--accent); }
+  .btn:focus-visible { outline: 3px solid #0b57d0; outline-offset: 2px; }
+  .fine { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">Greenbasket</div>
+    <a class="back" href="#">← Back to delivery address</a>
+  </header>
+
+  <ol class="steps" aria-label="Checkout progress">
+    <li class="done">1. Cart</li>
+    <li class="done">2. Address</li>
+    <li class="current" aria-current="step">3. Delivery slot</li>
+    <li>4. Payment</li>
+  </ol>
+
+  <h1>Choose a delivery slot</h1>
+  <p class="sub">Delivering to 42 Maple Street. Your slot is held for 15 minutes.</p>
+
+  <form class="layout" onsubmit="return false">
+    <div>
+      <fieldset>
+        <legend>Tomorrow <span>Saturday, Oct 5</span></legend>
+        <label class="slot">
+          <input type="radio" name="slot" value="sat-am" data-day="Sat, Oct 5" data-time="8:00 – 10:00 am" data-fee="4.99">
+          <span class="box"><span class="radio"></span>
+            <span class="info"><span class="time">8:00 – 10:00 am</span><br><span class="note">Early morning</span></span>
+            <span class="fee">$4.99</span></span>
+        </label>
+        <label class="slot">
+          <input type="radio" name="slot" value="sat-mid" data-day="Sat, Oct 5" data-time="12:00 – 2:00 pm" data-fee="3.99" checked>
+          <span class="box"><span class="radio"></span>
+            <span class="info"><span class="time">12:00 – 2:00 pm</span><span class="tag">Popular</span><br><span class="note">Midday</span></span>
+            <span class="fee">$3.99</span></span>
+        </label>
+        <label class="slot">
+          <input type="radio" name="slot" value="sat-pm" data-day="Sat, Oct 5" data-time="6:00 – 8:00 pm" data-fee="5.99" disabled>
+          <span class="box"><span class="radio"></span>
+            <span class="info"><span class="time">6:00 – 8:00 pm</span><br><span class="note">Fully booked</span></span>
+            <span class="fee">$5.99</span></span>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Sunday <span>Oct 6</span></legend>
+        <label class="slot">
+          <input type="radio" name="slot" value="sun-am" data-day="Sun, Oct 6" data-time="9:00 – 11:00 am" data-fee="2.99">
+          <span class="box"><span class="radio"></span>
+            <span class="info"><span class="time">9:00 – 11:00 am</span><br><span class="note">Morning</span></span>
+            <span class="fee">$2.99</span></span>
+        </label>
+        <label class="slot">
+          <input type="radio" name="slot" value="sun-mid" data-day="Sun, Oct 6" data-time="1:00 – 3:00 pm" data-fee="0">
+          <span class="box"><span class="radio"></span>
+            <span class="info"><span class="time">1:00 – 3:00 pm</span><span class="tag">Lowest fee</span><br><span class="note">Afternoon</span></span>
+            <span class="fee free">Free</span></span>
+        </label>
+        <label class="slot">
+          <input type="radio" name="slot" value="sun-pm" data-day="Sun, Oct 6" data-time="5:00 – 7:00 pm" data-fee="3.99">
+          <span class="box"><span class="radio"></span>
+            <span class="info"><span class="time">5:00 – 7:00 pm</span><br><span class="note">Evening</span></span>
+            <span class="fee">$3.99</span></span>
+        </label>
+      </fieldset>
+    </div>
+
+    <aside class="summary" aria-label="Order summary">
+      <h2>Order summary</h2>
+      <div class="row"><span class="l">Items (24)</span><span>$86.40</span></div>
+      <div class="row"><span class="l">Bag fee</span><span>$0.30</span></div>
+      <div class="row"><span class="l">Estimated tax</span><span>$2.15</span></div>
+      <div class="row"><span class="l">Delivery fee</span><span id="fee">$3.99</span></div>
+      <div class="row total"><span class="l">Total</span><span id="total">$92.84</span></div>
+      <div class="chosen" aria-live="polite"><b id="when">Sat, Oct 5</b><span id="window">12:00 – 2:00 pm</span></div>
+      <div class="actions">
+        <button class="btn primary" type="button">Continue to payment</button>
+        <button class="btn secondary" type="button">Back</button>
+      </div>
+      <p class="fine">You can change your slot until 10 pm the night before.</p>
+    </aside>
+  </form>
+</div>
+
+<script>
+  var base = 86.40 + 0.30 + 2.15;
+  function fmt(n) { return "$" + n.toFixed(2); }
+  function update() {
+    var r = document.querySelector('input[name="slot"]:checked');
+    if (!r) return;
+    var fee = parseFloat(r.dataset.fee);
+    document.getElementById("fee").textContent = fee === 0 ? "Free" : fmt(fee);
+    document.getElementById("total").textContent = fmt(base + fee);
+    document.getElementById("when").textContent = r.dataset.day;
+    document.getElementById("window").textContent = r.dataset.time;
+  }
+  document.querySelectorAll('input[name="slot"]').forEach(function (el) {
+    el.addEventListener("change", update);
+  });
+  update();
+</script>
+</body>
+</html>

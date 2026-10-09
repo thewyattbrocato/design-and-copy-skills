@@ -1,0 +1,1 @@
+A useful empty state says what the area is for (for example, "Tasks track who does what by when") and offers the one action that starts it, such as "Create your first task". Often it also adds a template or a clearly labeled sample to start from, and it hides controls that do nothing yet. A large illustration with "Nothing here yet" does none of that.

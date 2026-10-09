@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollowbrook Vet Care — Design Foundation</title>
+<style>
+/* ==========================================================================
+   HOLLOWBROOK DESIGN FOUNDATION  v0.1
+   Tier 1  raw values      --raw-*      (only theme blocks may read these)
+   Tier 2  semantic roles  --color-*, --space-*, --text-*, --radius-*, ...
+   Tier 3  components      .btn .field .card .badge .alert (read tier 2 only)
+   Themes remap tier 2. Nothing is inverted; dark is tuned separately.
+   ========================================================================== */
+
+:root {
+  /* ---- Tier 1: raw ramps (proposals; verify contrast before release) ---- */
+  --raw-teal-50:#E3F0EE; --raw-teal-300:#5FBDB5; --raw-teal-600:#1F6F6B; --raw-teal-700:#185B58; --raw-teal-900:#0B1D1C;
+  --raw-sand-50:#F6F4EF;  --raw-sand-200:#D9D5CB; --raw-white:#FFFFFF;
+  --raw-ink-900:#1F2A2E;  --raw-ink-700:#4A585D;  --raw-ink-400:#8A9296;
+  --raw-night-900:#12191B; --raw-night-800:#1B2427; --raw-night-700:#2D3A3E; --raw-night-400:#6F8084;
+  --raw-mist-100:#EAF0EF; --raw-mist-300:#A9B7B9;
+
+  /* ---- Tier 2: scales that do not change by theme ---- */
+  /* Spacing: 8 steps */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+  /* Type: 5 roles */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: ui-serif, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --text-caption: 0.8125rem; --text-body: 1rem; --text-subhead: 1.25rem; --text-title: 1.75rem; --text-display: 2.5rem;
+  --leading-tight:1.2; --leading-body:1.5;
+  /* Radius: 3 */
+  --radius-sm:4px; --radius-md:10px; --radius-pill:999px;
+  /* Motion: 3 durations, 3 easings */
+  --dur-fast:100ms; --dur-base:200ms; --dur-slow:320ms;
+  --ease-standard:cubic-bezier(.2,0,0,1); --ease-enter:cubic-bezier(0,0,.2,1); --ease-exit:cubic-bezier(.4,0,1,1);
+  /* Layout */
+  --size-target:44px; --size-content:60rem; --border-width:1px; --focus-width:3px;
+
+  /* ---- Tier 2: color roles, LIGHT ---- */
+  color-scheme: light;
+  --color-surface-page:var(--raw-sand-50);
+  --color-surface-raised:var(--raw-white);
+  --color-surface-sunken:var(--raw-sand-50);
+  --color-text-primary:var(--raw-ink-900);
+  --color-text-secondary:var(--raw-ink-700);
+  --color-border-subtle:var(--raw-sand-200);
+  --color-border-strong:var(--raw-ink-400);
+  --color-accent:var(--raw-teal-600);
+  --color-accent-hover:var(--raw-teal-700);
+  --color-accent-subtle:var(--raw-teal-50);
+  --color-accent-text:var(--raw-teal-700);
+  --color-on-accent:var(--raw-white);
+  --color-focus:#1F6F6B;
+  --color-success-bg:#E5F3E8; --color-success-text:#1E6B3A; --color-success-border:#9BCDA8;
+  --color-warning-bg:#FDF1D8; --color-warning-text:#7A4B00; --color-warning-border:#E5C27A;
+  --color-danger-bg:#FBE7E4;  --color-danger-text:#A12A22;  --color-danger-border:#E3A29C;
+  --color-info-bg:#E4EFFA;    --color-info-text:#1F5F99;    --color-info-border:#9DC1E3;
+  --color-danger-solid:#A12A22;
+  --shadow-raised:0 1px 2px rgba(31,42,46,.08), 0 1px 1px rgba(31,42,46,.04);
+  --shadow-overlay:0 8px 24px rgba(31,42,46,.14), 0 2px 6px rgba(31,42,46,.08);
+}
+
+/* ---- Tier 2: color roles, DARK (system setting, unless user forced light) ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-surface-page:var(--raw-night-900);
+    --color-surface-raised:var(--raw-night-800);
+    --color-surface-sunken:#0D1315;
+    --color-text-primary:var(--raw-mist-100);
+    --color-text-secondary:var(--raw-mist-300);
+    --color-border-subtle:var(--raw-night-700);
+    --color-border-strong:var(--raw-night-400);
+    --color-accent:var(--raw-teal-300);
+    --color-accent-hover:#7ACCC5;
+    --color-accent-subtle:#173231;
+    --color-accent-text:#86D3CC;
+    --color-on-accent:var(--raw-teal-900);
+    --color-focus:#86D3CC;
+    --color-success-bg:#1E3326; --color-success-text:#8FD6A2; --color-success-border:#2F5A3E;
+    --color-warning-bg:#3A2C10; --color-warning-text:#F0C36A; --color-warning-border:#6B5120;
+    --color-danger-bg:#3D1F1C;  --color-danger-text:#FFA9A0;  --color-danger-border:#74403B;
+    --color-info-bg:#1B2E42;    --color-info-text:#9CCBF5;    --color-info-border:#36597E;
+    --color-danger-solid:#FFA9A0;
+    --shadow-raised:0 0 0 rgba(0,0,0,0);
+    --shadow-overlay:0 8px 24px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-surface-page:var(--raw-night-900);
+  --color-surface-raised:var(--raw-night-800);
+  --color-surface-sunken:#0D1315;
+  --color-text-primary:var(--raw-mist-100);
+  --color-text-secondary:var(--raw-mist-300);
+  --color-border-subtle:var(--raw-night-700);
+  --color-border-strong:var(--raw-night-400);
+  --color-accent:var(--raw-teal-300);
+  --color-accent-hover:#7ACCC5;
+  --color-accent-subtle:#173231;
+  --color-accent-text:#86D3CC;
+  --color-on-accent:var(--raw-teal-900);
+  --color-focus:#86D3CC;
+  --color-success-bg:#1E3326; --color-success-text:#8FD6A2; --color-success-border:#2F5A3E;
+  --color-warning-bg:#3A2C10; --color-warning-text:#F0C36A; --color-warning-border:#6B5120;
+  --color-danger-bg:#3D1F1C;  --color-danger-text:#FFA9A0;  --color-danger-border:#74403B;
+  --color-info-bg:#1B2E42;    --color-info-text:#9CCBF5;    --color-info-border:#36597E;
+  --color-danger-solid:#FFA9A0;
+  --shadow-raised:0 0 0 rgba(0,0,0,0);
+  --shadow-overlay:0 8px 24px rgba(0,0,0,.5);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--color-surface-page);color:var(--color-text-primary);
+  font:var(--text-body)/var(--leading-body) var(--font-sans);-webkit-text-size-adjust:100%}
+h1,h2,h3,p{margin:0}
+:focus-visible{outline:var(--focus-width) solid var(--color-focus);outline-offset:2px}
+.wrap{max-width:var(--size-content);margin:0 auto;padding:0 var(--space-4)}
+@media (min-width:640px){.wrap{padding:0 var(--space-5)}}
+
+.t-display{font:600 var(--text-display)/var(--leading-tight) var(--font-display);letter-spacing:-.01em}
+.t-title{font:600 var(--text-title)/var(--leading-tight) var(--font-display)}
+.t-subhead{font:600 var(--text-subhead)/1.3 var(--font-sans)}
+.t-body{font:400 var(--text-body)/var(--leading-body) var(--font-sans)}
+.t-caption{font:400 var(--text-caption)/1.4 var(--font-sans);color:var(--color-text-secondary)}
+.muted{color:var(--color-text-secondary)}
+.eyebrow{font:600 var(--text-caption)/1.4 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-text)}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.875em}
+code{background:var(--color-surface-sunken);border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-sm);padding:0 var(--space-1);overflow-wrap:anywhere}
+
+/* ==========================================================================
+   Components (tier 3) — read semantic roles only
+   ========================================================================== */
+
+/* Button: primary | secondary | quiet | danger.  States: default hover focus pressed disabled loading */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  min-height:var(--size-target);padding:var(--space-2) var(--space-4);
+  font:600 var(--text-body)/1.2 var(--font-sans);text-decoration:none;cursor:pointer;
+  border:var(--border-width) solid transparent;border-radius:var(--radius-md);
+  transition:background-color var(--dur-fast) var(--ease-standard),border-color var(--dur-fast) var(--ease-standard),transform var(--dur-fast) var(--ease-standard)}
+.btn-primary{background:var(--color-accent);color:var(--color-on-accent)}
+.btn-primary:hover,.btn-primary.is-hover{background:var(--color-accent-hover)}
+.btn-secondary{background:var(--color-surface-raised);color:var(--color-text-primary);border-color:var(--color-border-strong)}
+.btn-secondary:hover,.btn-secondary.is-hover{background:var(--color-accent-subtle);border-color:var(--color-accent)}
+.btn-quiet{background:transparent;color:var(--color-accent-text)}
+.btn-quiet:hover,.btn-quiet.is-hover{background:var(--color-accent-subtle)}
+.btn-danger{background:transparent;color:var(--color-danger-text);border-color:var(--color-danger-border)}
+.btn-danger:hover,.btn-danger.is-hover{background:var(--color-danger-bg)}
+.btn:active,.btn.is-pressed{transform:translateY(1px)}
+.btn.is-focus{outline:var(--focus-width) solid var(--color-focus);outline-offset:2px}
+.btn:disabled,.btn[aria-disabled="true"]{cursor:not-allowed;background:var(--color-surface-sunken);color:var(--color-text-secondary);border-color:var(--color-border-subtle);opacity:.75;transform:none}
+.btn[aria-busy="true"]{cursor:progress}
+.btn[aria-busy="true"]::before{content:"";width:1em;height:1em;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin 800ms linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Field: label + control + hint + error.  States: default focus error disabled */
+.field{display:grid;gap:var(--space-1)}
+.field>label,.legend{font:600 var(--text-body)/1.3 var(--font-sans)}
+.hint{font-size:var(--text-caption);color:var(--color-text-secondary)}
+.error-text{font-size:var(--text-caption);color:var(--color-danger-text);font-weight:600}
+.control{width:100%;min-height:var(--size-target);padding:var(--space-2) var(--space-3);
+  font:inherit;color:var(--color-text-primary);background:var(--color-surface-raised);
+  border:var(--border-width) solid var(--color-border-strong);border-radius:var(--radius-md);
+  transition:border-color var(--dur-fast) var(--ease-standard)}
+textarea.control{min-height:calc(var(--size-target)*2);resize:vertical}
+.control:hover{border-color:var(--color-text-secondary)}
+.control:focus-visible,.control.is-focus{outline:var(--focus-width) solid var(--color-focus);outline-offset:1px;border-color:var(--color-focus)}
+.control[aria-invalid="true"]{border-color:var(--color-danger-solid);border-width:2px}
+.control:disabled{background:var(--color-surface-sunken);color:var(--color-text-secondary);border-color:var(--color-border-subtle);cursor:not-allowed}
+
+/* Choice chips (radio group) */
+.choices{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.choice{position:relative}
+.choice input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.choice span{display:inline-flex;align-items:center;min-height:var(--size-target);padding:var(--space-2) var(--space-4);
+  border:var(--border-width) solid var(--color-border-strong);border-radius:var(--radius-pill);background:var(--color-surface-raised);
+  transition:background-color var(--dur-fast) var(--ease-standard)}
+.choice input:hover+span{background:var(--color-accent-subtle)}
+.choice input:checked+span{background:var(--color-accent-subtle);border-color:var(--color-accent);border-width:2px;font-weight:600;color:var(--color-accent-text)}
+.choice input:focus-visible+span{outline:var(--focus-width) solid var(--color-focus);outline-offset:2px}
+.choice input:disabled+span{opacity:.55;text-decoration:line-through;cursor:not-allowed}
+
+/* Card */
+.card{background:var(--color-surface-raised);border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-md);box-shadow:var(--shadow-raised);padding:var(--space-5)}
+
+/* Badge: always text + color */
+.badge{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px var(--space-3);border-radius:var(--radius-pill);
+  font:600 var(--text-caption)/1.4 var(--font-sans);border:var(--border-width) solid;white-space:nowrap}
+.badge-success{background:var(--color-success-bg);color:var(--color-success-text);border-color:var(--color-success-border)}
+.badge-warning{background:var(--color-warning-bg);color:var(--color-warning-text);border-color:var(--color-warning-border)}
+.badge-danger{background:var(--color-danger-bg);color:var(--color-danger-text);border-color:var(--color-danger-border)}
+.badge-info{background:var(--color-info-bg);color:var(--color-info-text);border-color:var(--color-info-border)}
+
+/* Alert / status message */
+.alert{display:grid;grid-template-columns:auto 1fr;gap:var(--space-3);padding:var(--space-4);border:var(--border-width) solid;border-radius:var(--radius-md)}
+.alert-icon{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 14px/1 var(--font-sans);background:currentColor}
+.alert-icon>span{color:var(--alert-bg)}
+.alert-title{font-weight:600}
+.alert-body{color:inherit}
+.alert-success{--alert-bg:var(--color-success-bg);background:var(--color-success-bg);color:var(--color-success-text);border-color:var(--color-success-border)}
+.alert-warning{--alert-bg:var(--color-warning-bg);background:var(--color-warning-bg);color:var(--color-warning-text);border-color:var(--color-warning-border)}
+.alert-danger{--alert-bg:var(--color-danger-bg);background:var(--color-danger-bg);color:var(--color-danger-text);border-color:var(--color-danger-border)}
+.alert-info{--alert-bg:var(--color-info-bg);background:var(--color-info-bg);color:var(--color-info-text);border-color:var(--color-info-border)}
+
+/* Appointment card internals */
+.appt{display:grid;gap:var(--space-4)}
+.appt-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:var(--space-2) var(--space-3)}
+.appt-head>div{min-width:0}
+.appt-pet{overflow-wrap:anywhere}
+.appt-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:var(--space-3);margin:0;padding:var(--space-4) 0;
+  border-block:var(--border-width) solid var(--color-border-subtle)}
+.appt-meta dt{font-size:var(--text-caption);color:var(--color-text-secondary)}
+.appt-meta dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.row{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+
+/* ==========================================================================
+   Page-only layout for this showcase (not part of the system)
+   ========================================================================== */
+header.site{border-bottom:var(--border-width) solid var(--color-border-subtle);background:var(--color-surface-raised)}
+.site-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding-block:var(--space-3)}
+.brand{display:flex;align-items:center;gap:var(--space-2);font:600 var(--text-subhead)/1 var(--font-display)}
+.brand-mark{width:28px;height:28px;border-radius:var(--radius-md);background:var(--color-accent);display:grid;place-items:center;color:var(--color-on-accent)}
+.hero{padding-block:var(--space-7) var(--space-6);display:grid;gap:var(--space-3);max-width:44rem}
+section.block{padding-block:var(--space-6);border-top:var(--border-width) solid var(--color-border-subtle)}
+section.block>.wrap>header{display:grid;gap:var(--space-1);margin-bottom:var(--space-5);max-width:44rem}
+.grid{display:grid;gap:var(--space-4)}
+.g-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr))}
+.g-3{grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr))}
+.sw{border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--color-surface-raised)}
+.sw-chip{height:56px;border-bottom:var(--border-width) solid var(--color-border-subtle)}
+.sw-label{padding:var(--space-2) var(--space-3);display:grid;gap:2px}
+.pair{padding:var(--space-3);border-radius:var(--radius-sm);font-weight:600}
+.spec-table{width:100%;border-collapse:collapse;font-size:var(--text-caption)}
+.spec-table th,.spec-table td{text-align:left;padding:var(--space-2) var(--space-3);border-bottom:var(--border-width) solid var(--color-border-subtle);vertical-align:top}
+.spec-table th{color:var(--color-text-secondary);font-weight:600}
+.scroll{overflow-x:auto}
+.space-row{display:grid;grid-template-columns:7rem 1fr;gap:var(--space-3);align-items:center;padding-block:var(--space-1)}
+.space-bar{height:16px;background:var(--color-accent);border-radius:2px}
+.demo-cell{display:grid;gap:var(--space-2);align-content:start}
+.demo-label{font-size:var(--text-caption);color:var(--color-text-secondary)}
+.rule-list{margin:0;padding-left:var(--space-5);display:grid;gap:var(--space-2)}
+.do-dont{display:grid;gap:var(--space-3)}
+.do,.dont{padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);border:var(--border-width) solid}
+.do{background:var(--color-success-bg);color:var(--color-success-text);border-color:var(--color-success-border)}
+.dont{background:var(--color-danger-bg);color:var(--color-danger-text);border-color:var(--color-danger-border)}
+.form-grid{display:grid;gap:var(--space-5)}
+.two{display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr))}
+fieldset{border:0;margin:0;padding:0;min-width:0;display:grid;gap:var(--space-2)}
+.motion-demo{display:flex;align-items:center;gap:var(--space-3)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:var(--space-2);top:-100px;background:var(--color-surface-raised);padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);z-index:10}
+.skip:focus{top:var(--space-2)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+}
+@media (forced-colors: active){
+  .btn,.control,.card,.badge,.alert,.choice span{border:2px solid CanvasText}
+  .choice input:checked+span{border-color:Highlight;outline:2px solid Highlight}
+  .btn-primary{background:ButtonFace;color:ButtonText}
+  .alert-icon{background:CanvasText;forced-color-adjust:none}
+  .alert-icon>span{color:Canvas}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#components">Skip to components</a>
+
+<header class="site">
+  <div class="wrap site-bar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="11" r="2.3"/><circle cx="10" cy="6.5" r="2.3"/><circle cx="16" cy="6.5" r="2.3"/><circle cx="20" cy="11" r="2.3"/><path d="M12.9 12.5c-3 0-5.9 3.2-5.9 5.6 0 1.7 1.3 2.4 2.9 2.4 1 0 1.9-.4 3-.4s2 .4 3 .4c1.6 0 2.9-.7 2.9-2.4 0-2.4-2.9-5.6-5.9-5.6z"/></svg>
+      </span>
+      Hollowbrook Vet Care
+    </div>
+    <button class="btn btn-secondary" id="theme-toggle" type="button" aria-pressed="false">Dark theme</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero">
+      <p class="eyebrow">Design foundation v0.1</p>
+      <h1 class="t-display">Calm, clear, and careful with the details.</h1>
+      <p class="t-body muted">One small set of decisions, made once, so booking, pet records and reminders look and behave the same no matter who builds the screen. Everything below this line is built from the tokens on this page.</p>
+    </div>
+  </div>
+
+  <!-- PRINCIPLES -->
+  <section class="block">
+    <div class="wrap">
+      <header>
+        <h2 class="t-title">How we build</h2>
+        <p class="muted">Four principles, each with a reason. They decide the cases the tokens don't.</p>
+      </header>
+      <div class="grid g-2">
+        <div class="card"><h3 class="t-subhead">Warm in tone, plain in structure</h3><p class="muted">Personality lives in color, the serif headings and the wording. Forms, tables and buttons stay conventional, because people booking care for a sick pet are not here to explore.</p></div>
+        <div class="card"><h3 class="t-subhead">Never color alone</h3><p class="muted">Status always pairs color with words or a symbol. Reminders get read on bright phones, by color-blind owners, and in print.</p></div>
+        <div class="card"><h3 class="t-subhead">Roles, not values</h3><p class="muted">Components use <code>--color-text-secondary</code>, never a hex or a ramp step. That is what lets dark mode and future brands work without touching components.</p></div>
+        <div class="card"><h3 class="t-subhead">Easy to tap, easy to read</h3><p class="muted">Targets are at least 44px, body text is 16px, and focus is always visible. Many of our users are on a phone in a waiting room.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOKENS -->
+  <section class="block" id="tokens">
+    <div class="wrap">
+      <header>
+        <p class="eyebrow">Tokens</p>
+        <h2 class="t-title">Color roles</h2>
+        <p class="muted">Three tiers: raw values feed semantic roles, and components only read roles. The swatches below are live, so toggle the theme and watch the roles remap. Hex values are proposals; run a contrast check on each pair before release.</p>
+      </header>
+
+      <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Surfaces, text and borders</h3>
+      <div class="grid g-3" style="margin-bottom:var(--space-5)">
+        <div class="sw"><div class="sw-chip" style="background:var(--color-surface-page)"></div><div class="sw-label"><code>surface-page</code><span class="t-caption">App background</span></div></div>
+        <div class="sw"><div class="sw-chip" style="background:var(--color-surface-raised)"></div><div class="sw-label"><code>surface-raised</code><span class="t-caption">Cards, inputs. Lighter than the page in dark.</span></div></div>
+        <div class="sw"><div class="sw-chip" style="background:var(--color-surface-sunken)"></div><div class="sw-label"><code>surface-sunken</code><span class="t-caption">Wells, disabled fields</span></div></div>
+        <div class="sw"><div class="sw-chip" style="background:var(--color-text-primary)"></div><div class="sw-label"><code>text-primary</code><span class="t-caption">Body and headings</span></div></div>
+        <div class="sw"><div class="sw-chip" style="background:var(--color-text-secondary)"></div><div class="sw-label"><code>text-secondary</code><span class="t-caption">Hints, metadata</span></div></div>
+        <div class="sw"><div class="sw-chip" style="background:var(--color-border-subtle)"></div><div class="sw-label"><code>border-subtle</code><span class="t-caption">Dividers, card edges</span></div></div>
+        <div class="sw"><div class="sw-chip" style="background:var(--color-border-strong)"></div><div class="sw-label"><code>border-strong</code><span class="t-caption">Input edges (needs 3:1)</span></div></div>
+      </div>
+
+      <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Accent and status</h3>
+      <div class="grid g-3">
+        <div class="sw"><div class="sw-chip" style="background:var(--color-accent)"></div><div class="sw-label"><code>accent</code><span class="t-caption">Primary action, selection</span></div></div>
+        <div class="sw"><div class="sw-chip" style="background:var(--color-accent-subtle)"></div><div class="sw-label"><code>accent-subtle</code><span class="t-caption">Hover and selected backgrounds</span></div></div>
+        <div class="sw"><div class="pair" style="background:var(--color-accent);color:var(--color-on-accent);border-radius:0">on-accent / accent</div><div class="sw-label"><code>on-accent</code><span class="t-caption">Text on the accent fill</span></div></div>
+        <div class="sw"><div class="pair" style="background:var(--color-success-bg);color:var(--color-success-text);border-radius:0">Confirmed</div><div class="sw-label"><code>success-*</code><span class="t-caption">bg, text, border</span></div></div>
+        <div class="sw"><div class="pair" style="background:var(--color-warning-bg);color:var(--color-warning-text);border-radius:0">Needs attention</div><div class="sw-label"><code>warning-*</code><span class="t-caption">bg, text, border</span></div></div>
+        <div class="sw"><div class="pair" style="background:var(--color-danger-bg);color:var(--color-danger-text);border-radius:0">Problem</div><div class="sw-label"><code>danger-*</code><span class="t-caption">bg, text, border</span></div></div>
+        <div class="sw"><div class="pair" style="background:var(--color-info-bg);color:var(--color-info-text);border-radius:0">For your information</div><div class="sw-label"><code>info-*</code><span class="t-caption">bg, text, border</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <header>
+        <h2 class="t-title">Type</h2>
+        <p class="muted">Five roles on system fonts. A serif for display and titles gives warmth; everything you read or tap is sans-serif.</p>
+      </header>
+      <div class="card" style="display:grid;gap:var(--space-4)">
+        <div><p class="t-display">Meet Biscuit’s new vet</p><p class="t-caption mono">t-display · 2.5rem / 600 · serif · page headline, once per page</p></div>
+        <div><p class="t-title">Upcoming appointments</p><p class="t-caption mono">t-title · 1.75rem / 600 · serif · section heading</p></div>
+        <div><p class="t-subhead">Annual wellness exam</p><p class="t-caption mono">t-subhead · 1.25rem / 600 · sans · card and group headings</p></div>
+        <div><p class="t-body">Please arrive ten minutes early and bring any recent medication. Fasting is not needed for this visit.</p><p class="t-caption mono">t-body · 1rem / 400 · sans · default; never smaller for content</p></div>
+        <div><p class="t-caption">Reminder sent Oct 8 · Reply STOP to opt out</p><p class="t-caption mono">t-caption · 0.8125rem · sans · hints, metadata, labels on badges</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <header>
+        <h2 class="t-title">Spacing, shape, depth, motion</h2>
+        <p class="muted">Each scale is short on purpose. If a design needs a value that isn’t here, use the nearest step, or propose a change.</p>
+      </header>
+      <div class="grid g-2">
+        <div class="card">
+          <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Spacing · 8 steps</h3>
+          <div class="space-row"><code>space-1</code><div style="display:flex;align-items:center;gap:var(--space-2)"><div class="space-bar" style="width:4px"></div><span class="t-caption">4</span></div></div>
+          <div class="space-row"><code>space-2</code><div style="display:flex;align-items:center;gap:var(--space-2)"><div class="space-bar" style="width:8px"></div><span class="t-caption">8</span></div></div>
+          <div class="space-row"><code>space-3</code><div style="display:flex;align-items:center;gap:var(--space-2)"><div class="space-bar" style="width:12px"></div><span class="t-caption">12</span></div></div>
+          <div class="space-row"><code>space-4</code><div style="display:flex;align-items:center;gap:var(--space-2)"><div class="space-bar" style="width:16px"></div><span class="t-caption">16 · default gap</span></div></div>
+          <div class="space-row"><code>space-5</code><div style="display:flex;align-items:center;gap:var(--space-2)"><div class="space-bar" style="width:24px"></div><span class="t-caption">24 · card padding</span></div></div>
+          <div class="space-row"><code>space-6</code><div style="display:flex;align-items:center;gap:var(--space-2)"><div class="space-bar" style="width:32px"></div><span class="t-caption">32</span></div></div>
+          <div class="space-row"><code>space-7</code><div style="display:flex;align-items:center;gap:var(--space-2)"><div class="space-bar" style="width:48px"></div><span class="t-caption">48</span></div></div>
+          <div class="space-row"><code>space-8</code><div style="display:flex;align-items:center;gap:var(--space-2)"><div class="space-bar" style="width:64px"></div><span class="t-caption">64 · page sections</span></div></div>
+        </div>
+        <div class="card" style="display:grid;gap:var(--space-5);align-content:start">
+          <div>
+            <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Radius · 3</h3>
+            <div class="row" style="gap:var(--space-4);align-items:flex-end">
+              <div class="demo-cell"><div style="width:64px;height:48px;border:2px solid var(--color-accent);border-radius:var(--radius-sm)"></div><code>radius-sm</code><span class="t-caption">Code, small marks</span></div>
+              <div class="demo-cell"><div style="width:64px;height:48px;border:2px solid var(--color-accent);border-radius:var(--radius-md)"></div><code>radius-md</code><span class="t-caption">Controls, cards</span></div>
+              <div class="demo-cell"><div style="width:64px;height:48px;border:2px solid var(--color-accent);border-radius:var(--radius-pill)"></div><code>radius-pill</code><span class="t-caption">Badges, chips</span></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Elevation · 2</h3>
+            <div class="row" style="gap:var(--space-4)">
+              <div class="demo-cell"><div style="width:96px;height:56px;background:var(--color-surface-raised);border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-md);box-shadow:var(--shadow-raised)"></div><code>shadow-raised</code></div>
+              <div class="demo-cell"><div style="width:96px;height:56px;background:var(--color-surface-raised);border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-md);box-shadow:var(--shadow-overlay)"></div><code>shadow-overlay</code></div>
+            </div>
+            <p class="t-caption" style="margin-top:var(--space-2)">In dark themes, depth comes from lighter surfaces and borders, not shadow.</p>
+          </div>
+          <div>
+            <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Motion · 3 durations, 3 easings</h3>
+            <table class="spec-table"><tbody>
+              <tr><td><code>dur-fast</code> 100ms</td><td>Hover, press</td></tr>
+              <tr><td><code>dur-base</code> 200ms</td><td>Reveal, expand</td></tr>
+              <tr><td><code>dur-slow</code> 320ms</td><td>Page-level change</td></tr>
+              <tr><td><code>ease-standard / enter / exit</code></td><td>Move, appear, leave</td></tr>
+            </tbody></table>
+            <p class="t-caption" style="margin-top:var(--space-2)">Reduced-motion users get near-instant transitions automatically.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section class="block" id="components">
+    <div class="wrap">
+      <header>
+        <p class="eyebrow">Components</p>
+        <h2 class="t-title">Primitives and their states</h2>
+        <p class="muted">Every primitive is shown in the states it can be in. Forced states are for documentation only.</p>
+      </header>
+
+      <div class="card" style="display:grid;gap:var(--space-5)">
+        <div>
+          <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Button · four variants</h3>
+          <div class="grid g-3">
+            <div class="demo-cell"><span class="demo-label">Default</span><div class="row">
+              <button class="btn btn-primary" type="button">Book visit</button>
+              <button class="btn btn-secondary" type="button">Reschedule</button></div>
+              <div class="row"><button class="btn btn-quiet" type="button">View record</button>
+              <button class="btn btn-danger" type="button">Cancel visit</button></div></div>
+            <div class="demo-cell"><span class="demo-label">Hover</span><div class="row">
+              <button class="btn btn-primary is-hover" type="button">Book visit</button>
+              <button class="btn btn-secondary is-hover" type="button">Reschedule</button></div></div>
+            <div class="demo-cell"><span class="demo-label">Keyboard focus</span><div class="row">
+              <button class="btn btn-primary is-focus" type="button">Book visit</button></div></div>
+            <div class="demo-cell"><span class="demo-label">Pressed</span><div class="row">
+              <button class="btn btn-primary is-pressed" type="button">Book visit</button></div></div>
+            <div class="demo-cell"><span class="demo-label">Disabled (explain why nearby)</span><div class="row">
+              <button class="btn btn-primary" type="button" disabled>Book visit</button></div></div>
+            <div class="demo-cell"><span class="demo-label">Loading (keeps its width and label)</span><div class="row">
+              <button class="btn btn-primary" type="button" aria-busy="true">Saving</button></div></div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Field · label, hint, error</h3>
+          <div class="grid g-3">
+            <div class="field"><label for="f1">Pet name</label><input id="f1" class="control" value="Biscuit"><span class="hint">As it appears on their record.</span></div>
+            <div class="field"><label for="f2">Phone number</label><input id="f2" class="control is-focus" value="(555) 010-"><span class="hint">Focused</span></div>
+            <div class="field"><label for="f3">Email</label><input id="f3" class="control" value="sam@example" aria-invalid="true" aria-describedby="f3e"><span class="error-text" id="f3e">Enter a full email address, like name@example.com.</span></div>
+            <div class="field"><label for="f4">Microchip number</label><input id="f4" class="control" disabled value="Added by clinic staff"><span class="hint">Disabled</span></div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Badge · status words, never color alone</h3>
+          <div class="row">
+            <span class="badge badge-success">✓ Confirmed</span>
+            <span class="badge badge-warning">! Awaiting reply</span>
+            <span class="badge badge-danger">✕ Cancelled</span>
+            <span class="badge badge-info">i Reminder sent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLES -->
+  <section class="block" id="samples">
+    <div class="wrap">
+      <header>
+        <p class="eyebrow">In use</p>
+        <h2 class="t-title">Real pieces built from the foundation</h2>
+        <p class="muted">A booking form, an appointment card and status messages. None of them defines a color, size or space of its own.</p>
+      </header>
+
+      <div class="grid g-2" style="align-items:start">
+        <!-- Booking form -->
+        <form class="card form-grid" id="booking" novalidate aria-labelledby="book-h">
+          <div>
+            <h3 class="t-title" id="book-h">Book an appointment</h3>
+            <p class="muted">Takes about a minute. We’ll confirm by text and email.</p>
+          </div>
+
+          <div id="form-status" role="status" aria-live="polite"></div>
+
+          <div class="field">
+            <label for="pet">Which pet is this for?</label>
+            <select id="pet" class="control" required>
+              <option value="">Choose a pet</option>
+              <option>Biscuit (dog)</option>
+              <option>Juniper (cat)</option>
+              <option>Add a new pet…</option>
+            </select>
+            <span class="error-text" id="pet-err" hidden>Choose which pet you’re booking for.</span>
+          </div>
+
+          <div class="field">
+            <label for="reason">Reason for visit</label>
+            <select id="reason" class="control">
+              <option>Wellness exam</option>
+              <option>Vaccinations</option>
+              <option>Something seems wrong</option>
+              <option>Dental check</option>
+            </select>
+          </div>
+
+          <div class="two">
+            <div class="field">
+              <label for="date">Preferred date</label>
+              <input id="date" class="control" type="date" value="2026-10-15" min="2026-10-08">
+            </div>
+            <div class="field">
+              <label for="phone">Mobile for reminders</label>
+              <input id="phone" class="control" type="tel" autocomplete="tel" placeholder="(555) 010-0123">
+              <span class="hint">Optional</span>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend class="legend">Available times on Thu, Oct 15</legend>
+            <div class="choices" role="radiogroup">
+              <label class="choice"><input type="radio" name="time" value="9:00" checked><span>9:00 AM</span></label>
+              <label class="choice"><input type="radio" name="time" value="9:30"><span>9:30 AM</span></label>
+              <label class="choice"><input type="radio" name="time" value="10:30" disabled><span>10:30 AM</span></label>
+              <label class="choice"><input type="radio" name="time" value="1:00"><span>1:00 PM</span></label>
+              <label class="choice"><input type="radio" name="time" value="3:30"><span>3:30 PM</span></label>
+            </div>
+            <span class="hint">Struck-through times are taken.</span>
+          </fieldset>
+
+          <div class="field">
+            <label for="notes">Anything we should know?</label>
+            <textarea id="notes" class="control" placeholder="Symptoms, medications, or worries"></textarea>
+            <span class="hint">If this is an emergency, call us now at (555) 010-0100.</span>
+          </div>
+
+          <div class="row">
+            <button class="btn btn-primary" type="submit" id="submit">Request appointment</button>
+            <button class="btn btn-quiet" type="reset">Clear form</button>
+          </div>
+        </form>
+
+        <!-- Right column -->
+        <div class="grid">
+          <!-- Appointment card: normal -->
+          <article class="card appt" aria-labelledby="a1">
+            <div class="appt-head">
+              <div>
+                <p class="t-caption">Upcoming</p>
+                <h3 class="t-subhead appt-pet" id="a1">Biscuit · Annual wellness exam</h3>
+              </div>
+              <span class="badge badge-success">✓ Confirmed</span>
+            </div>
+            <dl class="appt-meta">
+              <div><dt>Date</dt><dd>Thu, Oct 15</dd></div>
+              <div><dt>Time</dt><dd>9:00 AM</dd></div>
+              <div><dt>With</dt><dd>Dr. Amara Okafor</dd></div>
+            </dl>
+            <p class="muted">Please arrive ten minutes early. Bring any current medication.</p>
+            <div class="row">
+              <button class="btn btn-secondary" type="button">Reschedule</button>
+              <button class="btn btn-danger" type="button">Cancel visit</button>
+            </div>
+          </article>
+
+          <!-- Appointment card: edge content, needs action -->
+          <article class="card appt" aria-labelledby="a2">
+            <div class="appt-head">
+              <div>
+                <p class="t-caption">Upcoming</p>
+                <h3 class="t-subhead appt-pet" id="a2">Sir Reginald Fluffington-Smythe III · Post-surgery recheck</h3>
+              </div>
+              <span class="badge badge-warning">! Awaiting reply</span>
+            </div>
+            <dl class="appt-meta">
+              <div><dt>Date</dt><dd>Mon, Oct 19</dd></div>
+              <div><dt>Time</dt><dd>1:00 PM</dd></div>
+              <div><dt>With</dt><dd>Dr. Priya Raghunathan-Delacroix</dd></div>
+            </dl>
+            <div class="alert alert-warning">
+              <span class="alert-icon" aria-hidden="true"><span>!</span></span>
+              <div><p class="alert-title">Please confirm by Friday</p><p class="alert-body">We’ll release this time to other families if we don’t hear back.</p></div>
+            </div>
+            <div class="row">
+              <button class="btn btn-primary" type="button">Confirm visit</button>
+              <button class="btn btn-quiet" type="button">Reschedule</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <h3 class="t-subhead" style="margin-block:var(--space-6) var(--space-3)">Status messages</h3>
+      <div class="grid g-2">
+        <div class="alert alert-success" role="status"><span class="alert-icon" aria-hidden="true"><span>✓</span></span><div><p class="alert-title">Appointment confirmed</p><p class="alert-body">Biscuit is booked for Thu, Oct 15 at 9:00 AM. A reminder will arrive the day before.</p></div></div>
+        <div class="alert alert-info" role="status"><span class="alert-icon" aria-hidden="true"><span>i</span></span><div><p class="alert-title">Vaccination records updated</p><p class="alert-body">Juniper’s rabies certificate was added to her pet record.</p></div></div>
+        <div class="alert alert-warning" role="status"><span class="alert-icon" aria-hidden="true"><span>!</span></span><div><p class="alert-title">Booking closes soon</p><p class="alert-body">Online booking for this week ends at 5:00 PM. After that, please call the clinic.</p></div></div>
+        <div class="alert alert-danger" role="alert"><span class="alert-icon" aria-hidden="true"><span>✕</span></span><div><p class="alert-title">We couldn’t save your booking</p><p class="alert-body">Your connection dropped, and nothing was booked. Your answers are still here, so try again.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOVERNANCE -->
+  <section class="block">
+    <div class="wrap">
+      <header>
+        <h2 class="t-title">Using and changing the system</h2>
+        <p class="muted">Short on purpose. The system should make building faster, not add a process.</p>
+      </header>
+      <div class="grid g-2">
+        <div class="card">
+          <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Rules for builders</h3>
+          <ol class="rule-list">
+            <li>Use a role, not a value. If you type a hex or a pixel number, stop and pick a token.</li>
+            <li>Need something that isn’t here? Use the nearest step. If it truly doesn’t fit, mark it as a local exception with a comment.</li>
+            <li>Reuse a component before building one. A pattern joins the system when a second screen needs it.</li>
+            <li>Ship every state: default, hover, focus, disabled, loading, error, and long or empty content.</li>
+            <li>Check light, dark and keyboard-only before you ask for review.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Use and misuse</h3>
+          <div class="do-dont">
+            <div class="do"><strong>Do</strong> · <code>color: var(--color-text-secondary)</code></div>
+            <div class="dont"><strong>Don’t</strong> · <code>color: #4A585D</code> or <code>var(--raw-ink-700)</code> in a component</div>
+            <div class="do"><strong>Do</strong> · Name a pattern for what it is: <code>appointment-card</code></div>
+            <div class="dont"><strong>Don’t</strong> · Name it for where it started: <code>dashboard-teal-box</code></div>
+          </div>
+        </div>
+        <div class="card" style="grid-column:1/-1">
+          <h3 class="t-subhead" style="margin-bottom:var(--space-3)">Changing a token or component</h3>
+          <div class="scroll"><table class="spec-table">
+            <thead><tr><th>Change</th><th>What it takes</th></tr></thead>
+            <tbody>
+              <tr><td>Add</td><td>A second real screen needs it. Say which, and which existing token it can’t cover.</td></tr>
+              <tr><td>Modify</td><td>Show the before and after in light and dark. Note every component that reads it.</td></tr>
+              <tr><td>Deprecate</td><td>Mark it, name the replacement, and write the migration before removal.</td></tr>
+              <tr><td>Remove</td><td>Only after nothing uses it. Record it in the changelog.</td></tr>
+            </tbody>
+          </table></div>
+          <p class="t-caption" style="margin-top:var(--space-3)">Owner and reviewer: <span class="mono">[assign: name your system owner]</span> · This CSS block is the single source until a token file is exported.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="border-top:var(--border-width) solid var(--color-border-subtle);padding-block:var(--space-5)">
+  <div class="wrap t-caption">Hollowbrook Vet Care · Design foundation v0.1 · Sample content is fictional.</div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('theme-toggle');
+  var mq=window.matchMedia('(prefers-color-scheme: dark)');
+  function current(){return root.getAttribute('data-theme')||(mq.matches?'dark':'light');}
+  function label(){var d=current()==='dark';btn.textContent=d?'Light theme':'Dark theme';btn.setAttribute('aria-pressed',String(d));}
+  btn.addEventListener('click',function(){root.setAttribute('data-theme',current()==='dark'?'light':'dark');label();});
+  label();
+
+  var form=document.getElementById('booking'), status=document.getElementById('form-status');
+  var pet=document.getElementById('pet'), err=document.getElementById('pet-err'), submit=document.getElementById('submit');
+  function alertHTML(kind,icon,title,body){
+    return '<div class="alert alert-'+kind+'"><span class="alert-icon" aria-hidden="true"><span>'+icon+'</span></span><div><p class="alert-title">'+title+'</p><p class="alert-body">'+body+'</p></div></div>';
+  }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!pet.value){
+      pet.setAttribute('aria-invalid','true'); pet.setAttribute('aria-describedby','pet-err'); err.hidden=false;
+      status.innerHTML=alertHTML('danger','✕','One thing needs fixing','Choose which pet you’re booking for, then try again.');
+      pet.focus(); return;
+    }
+    pet.removeAttribute('aria-invalid'); err.hidden=true;
+    submit.setAttribute('aria-busy','true'); submit.textContent='Sending';
+    setTimeout(function(){
+      submit.removeAttribute('aria-busy'); submit.textContent='Request appointment';
+      var t=form.querySelector('input[name=time]:checked');
+      status.innerHTML=alertHTML('success','✓','Request received','We’ll confirm '+pet.value+(t?' for '+t.nextElementSibling.textContent:'')+' by text and email shortly.');
+    },700);
+  });
+  pet.addEventListener('change',function(){if(pet.value){pet.removeAttribute('aria-invalid');err.hidden=true;}});
+  form.addEventListener('reset',function(){status.innerHTML='';pet.removeAttribute('aria-invalid');err.hidden=true;});
+})();
+</script>
+</body>
+</html>

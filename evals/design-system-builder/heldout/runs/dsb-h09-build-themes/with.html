@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes</title>
+<style>
+/* ---------- Tier 1: raw values (only theme blocks read these) ---------- */
+:root {
+  --green-700: #1f7a4d; --green-800: #176340; --green-900: #005a30; --green-950: #003d20;
+  --green-400: #4cc58a; --green-300: #6fd6a2;
+  --red-700: #b3412f; --red-300: #ff8a75; --red-900: #8f1d0c;
+  --ink-900: #151a17; --ink-600: #55605a; --ink-100: #e8ede9; --ink-300: #a3aea7;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 16px; --space-4: 24px; --space-5: 32px;
+  --radius-sm: 6px; --radius-md: 12px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---------- Tier 2: semantic roles, remapped per theme ---------- */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #f5f6f4;
+  --text: var(--ink-900);
+  --text-muted: var(--ink-600);
+  --border: #d5dad6;
+  --border-width: 1px;
+  --accent: var(--green-700);
+  --accent-hover: var(--green-800);
+  --on-accent: #ffffff;
+  --gain: var(--green-700);
+  --spend: var(--red-700);
+  --focus: #1b5fd1;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1411;
+  --surface: #1a211c;
+  --text: var(--ink-100);
+  --text-muted: var(--ink-300);
+  --border: #34403a;
+  --border-width: 1px;
+  --accent: var(--green-400);
+  --accent-hover: var(--green-300);
+  --on-accent: #08130d;
+  --gain: var(--green-400);
+  --spend: var(--red-300);
+  --focus: #8ab4ff;
+}
+[data-theme="contrast"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --text: #000000;
+  --text-muted: #2b2b2b;
+  --border: #000000;
+  --border-width: 2px;
+  --accent: var(--green-900);
+  --accent-hover: var(--green-950);
+  --on-accent: #ffffff;
+  --gain: var(--green-900);
+  --spend: var(--red-900);
+  --focus: #0033cc;
+}
+
+/* ---------- Tier 3: components read roles only ---------- */
+.screen {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+.screen h2 { margin: 0; font-size: 1rem; font-weight: 600; color: var(--text-muted); }
+.balance { background: var(--surface); border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md); padding: var(--space-3); }
+.balance .label { font-size: .8125rem; color: var(--text-muted); }
+.balance .value { font-size: 2rem; font-weight: 700; margin: var(--space-1) 0; font-variant-numeric: tabular-nums; }
+.balance .delta { font-size: .875rem; color: var(--gain); font-weight: 600; }
+.txns { list-style: none; margin: 0; padding: 0; border-top: var(--border-width) solid var(--border); }
+.txns li { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3);
+  padding: var(--space-3) 0; border-bottom: var(--border-width) solid var(--border); }
+.txns .name { font-weight: 500; }
+.txns .meta { display: block; font-size: .8125rem; color: var(--text-muted); }
+.amount { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.amount.gain { color: var(--gain); }
+.amount.spend { color: var(--spend); }
+.btn {
+  font: inherit; font-weight: 600; cursor: pointer;
+  background: var(--accent); color: var(--on-accent);
+  border: var(--border-width) solid var(--accent);
+  border-radius: var(--radius-sm); padding: var(--space-3) var(--space-4); min-height: 44px;
+}
+.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ---------- Page chrome for the comparison only ---------- */
+body { margin: 0; padding: var(--space-5) var(--space-3); background: #e9ebe9; font-family: var(--font); color: #151a17; }
+.page { max-width: 1200px; margin: 0 auto; }
+.page > h1 { font-size: 1.25rem; margin: 0 0 var(--space-4); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); align-items: start; }
+.theme-label { font: 600 .75rem var(--font-mono); letter-spacing: .04em; text-transform: uppercase; margin: 0 0 var(--space-2); }
+
+@media (forced-colors: active) {
+  .btn { border-color: ButtonText; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <h1>Kelpie: light, dark and high contrast</h1>
+  <div class="grid">
+
+    <section>
+      <p class="theme-label">Light</p>
+      <div class="screen" data-theme="light">
+        <h2>Main account</h2>
+        <div class="balance">
+          <div class="label">Available balance</div>
+          <div class="value">$4,218.60</div>
+          <div class="delta">+$312.40 this month</div>
+        </div>
+        <ul class="txns">
+          <li><span><span class="name">Paycheck</span><span class="meta">Oct 7</span></span><span class="amount gain">+$1,850.00</span></li>
+          <li><span><span class="name">Greenleaf Grocers</span><span class="meta">Oct 6</span></span><span class="amount spend">−$84.12</span></li>
+          <li><span><span class="name">Transit pass</span><span class="meta">Oct 4</span></span><span class="amount spend">−$62.00</span></li>
+          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 3</span></span><span class="amount gain">+$39.99</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+
+    <section>
+      <p class="theme-label">Dark</p>
+      <div class="screen" data-theme="dark">
+        <h2>Main account</h2>
+        <div class="balance">
+          <div class="label">Available balance</div>
+          <div class="value">$4,218.60</div>
+          <div class="delta">+$312.40 this month</div>
+        </div>
+        <ul class="txns">
+          <li><span><span class="name">Paycheck</span><span class="meta">Oct 7</span></span><span class="amount gain">+$1,850.00</span></li>
+          <li><span><span class="name">Greenleaf Grocers</span><span class="meta">Oct 6</span></span><span class="amount spend">−$84.12</span></li>
+          <li><span><span class="name">Transit pass</span><span class="meta">Oct 4</span></span><span class="amount spend">−$62.00</span></li>
+          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 3</span></span><span class="amount gain">+$39.99</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+
+    <section>
+      <p class="theme-label">High contrast</p>
+      <div class="screen" data-theme="contrast">
+        <h2>Main account</h2>
+        <div class="balance">
+          <div class="label">Available balance</div>
+          <div class="value">$4,218.60</div>
+          <div class="delta">+$312.40 this month</div>
+        </div>
+        <ul class="txns">
+          <li><span><span class="name">Paycheck</span><span class="meta">Oct 7</span></span><span class="amount gain">+$1,850.00</span></li>
+          <li><span><span class="name">Greenleaf Grocers</span><span class="meta">Oct 6</span></span><span class="amount spend">−$84.12</span></li>
+          <li><span><span class="name">Transit pass</span><span class="meta">Oct 4</span></span><span class="amount spend">−$62.00</span></li>
+          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 3</span></span><span class="amount gain">+$39.99</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+
+  </div>
+</main>
+</body>
+</html>

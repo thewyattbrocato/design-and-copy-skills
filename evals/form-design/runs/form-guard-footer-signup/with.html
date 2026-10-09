@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rye &amp; Rosemary Bakery</title>
+<style>
+  :root {
+    --cream: #fbf5ea;
+    --crust: #7a4a21;
+    --dark: #2e1d10;
+    --wheat: #e9d6b5;
+    --error: #a3200f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--dark);
+    background: #fff;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    flex: 1;
+    padding: 4rem 1.5rem;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+  main h1 { margin: 0 0 .5rem; font-size: 2rem; }
+  main p { margin: 0; }
+
+  footer {
+    background: var(--cream);
+    border-top: 1px solid var(--wheat);
+    padding: 2.5rem 1.5rem 1.5rem;
+  }
+  .footer-inner {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 3rem;
+    justify-content: space-between;
+  }
+  .info h2, .signup h2 { font-size: 1.125rem; margin: 0 0 .5rem; }
+  .info p { margin: 0; font-size: .9375rem; }
+
+  .signup { flex: 1 1 22rem; max-width: 28rem; }
+  .signup p.lead { margin: 0 0 .75rem; font-size: .9375rem; }
+
+  .row { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  input[type="email"] {
+    flex: 1 1 14rem;
+    min-height: 2.75rem;
+    padding: .5rem .75rem;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--dark);
+    background: #fff;
+    border: 1px solid #8a6d50;
+    border-radius: 4px;
+  }
+  input[aria-invalid="true"] { border: 2px solid var(--error); }
+  button {
+    min-height: 2.75rem;
+    padding: .5rem 1.25rem;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: var(--crust);
+    border: 2px solid var(--crust);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover { background: var(--dark); border-color: var(--dark); }
+  input:focus-visible, button:focus-visible {
+    outline: 3px solid #1a5fb4;
+    outline-offset: 2px;
+  }
+  .error {
+    margin: .5rem 0 0;
+    font-size: .9375rem;
+    color: var(--error);
+    font-weight: bold;
+  }
+  .error[hidden], .thanks[hidden], form[hidden] { display: none; }
+  .thanks { margin: 0; font-size: 1rem; }
+  .privacy { margin: .5rem 0 0; font-size: .8125rem; color: #5a4636; }
+  .legal { max-width: 60rem; margin: 2rem auto 0; font-size: .8125rem; color: #5a4636; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Rye &amp; Rosemary Bakery</h1>
+  <p>Fresh bread, pastries and cakes, baked every morning.</p>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="info">
+      <h2>Visit us</h2>
+      <p>14 Mill Lane<br>Tuesday to Sunday, 7am to 3pm</p>
+    </div>
+
+    <section class="signup" aria-labelledby="signup-title">
+      <h2 id="signup-title">Get our weekly bake list</h2>
+      <p class="lead">One email a week with what's coming out of the oven.</p>
+
+      <form id="signup-form" novalidate>
+        <div class="row">
+          <label for="email" class="visually-hidden">Email address</label>
+          <input id="email" name="email" type="email" inputmode="email"
+                 autocomplete="email" autocapitalize="none" autocorrect="off"
+                 spellcheck="false" placeholder="name@example.com"
+                 aria-describedby="email-error">
+          <button type="submit">Subscribe</button>
+        </div>
+        <p id="email-error" class="error" hidden></p>
+        <p class="privacy">We'll only use your email for the bake list. Unsubscribe any time.</p>
+      </form>
+
+      <p id="thanks" class="thanks" role="status" tabindex="-1" hidden></p>
+    </section>
+  </div>
+  <p class="legal">&copy; Rye &amp; Rosemary Bakery</p>
+</footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('signup-form');
+    var input = document.getElementById('email');
+    var error = document.getElementById('email-error');
+    var thanks = document.getElementById('thanks');
+    var submitted = false;
+
+    function problem(value) {
+      value = value.trim();
+      if (!value) return 'Enter your email address, like name@example.com';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        return 'Enter an email address with an @ and a domain, like name@example.com';
+      }
+      return '';
+    }
+
+    function show(msg) {
+      if (msg) {
+        error.textContent = 'Error: ' + msg;
+        error.hidden = false;
+        input.setAttribute('aria-invalid', 'true');
+      } else {
+        error.hidden = true;
+        error.textContent = '';
+        input.removeAttribute('aria-invalid');
+      }
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      submitted = true;
+      var msg = problem(input.value);
+      show(msg);
+      if (msg) { input.focus(); return; }
+      thanks.textContent = 'Thanks! Check ' + input.value.trim() +
+        ' for a confirmation email. If it doesn\u2019t arrive in a few minutes, check your spam folder.';
+      form.hidden = true;
+      thanks.hidden = false;
+      thanks.focus();
+    });
+
+    input.addEventListener('input', function () {
+      if (submitted) show(problem(input.value));
+    });
+  })();
+</script>
+</body>
+</html>

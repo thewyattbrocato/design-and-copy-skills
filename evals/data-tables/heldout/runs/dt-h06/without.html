@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trivia League Leaderboard</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --card: #ffffff;
+    --text: #1c2230;
+    --muted: #667085;
+    --line: #e4e7ec;
+    --head: #f0f2f6;
+    --accent: #2f5bea;
+    --accent-bg: #eef2ff;
+    --pos: #12703a;
+    --neg: #b42318;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12151c;
+      --card: #1a1f2a;
+      --text: #e8ebf2;
+      --muted: #9aa3b5;
+      --line: #2a3140;
+      --head: #202636;
+      --accent: #8aa4ff;
+      --accent-bg: #222b45;
+      --pos: #5fd08a;
+      --neg: #ff8a80;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.4;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  p.sub { margin: 0 0 20px; color: var(--muted); font-size: 0.9rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { padding: 12px 14px; text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: center; width: 56px; }
+  th:nth-child(2), td:nth-child(2) { text-align: left; }
+  thead th {
+    background: var(--head);
+    border-bottom: 1px solid var(--line);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    padding: 0;
+  }
+  thead th.static { padding: 12px 14px; }
+  thead button {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 12px 14px;
+    cursor: pointer;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    justify-content: flex-end;
+  }
+  thead th:nth-child(2) button { justify-content: flex-start; }
+  thead button:hover { color: var(--text); }
+  thead button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  thead button .arrow { width: 0.8em; opacity: 0.35; font-size: 0.8em; }
+  thead th[aria-sort="ascending"] .arrow,
+  thead th[aria-sort="descending"] .arrow { opacity: 1; }
+  thead th[aria-sort="ascending"],
+  thead th[aria-sort="descending"] {
+    color: var(--accent);
+    box-shadow: inset 0 -2px 0 var(--accent);
+  }
+  tbody tr { border-bottom: 1px solid var(--line); }
+  tbody tr:last-child { border-bottom: 0; }
+  tbody tr:hover { background: var(--head); }
+  td.sorted { background: var(--accent-bg); font-weight: 600; }
+  td.team { font-weight: 600; }
+  td.rank { color: var(--muted); }
+  .pos { color: var(--pos); }
+  .neg { color: var(--neg); }
+  .foot { margin-top: 12px; color: var(--muted); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Trivia League Leaderboard</h1>
+  <p class="sub">Fall season · 14 games played per team</p>
+  <div class="card">
+    <table id="board">
+      <thead>
+        <tr>
+          <th class="static" scope="col">Rank</th>
+          <th scope="col" data-key="team"><button type="button">Team <span class="arrow" aria-hidden="true">↕</span></button></th>
+          <th scope="col" data-key="wins"><button type="button">Wins <span class="arrow" aria-hidden="true">↕</span></button></th>
+          <th scope="col" data-key="losses"><button type="button">Losses <span class="arrow" aria-hidden="true">↕</span></button></th>
+          <th scope="col" data-key="pf"><button type="button">Points For <span class="arrow" aria-hidden="true">↕</span></button></th>
+          <th scope="col" data-key="pa"><button type="button">Points Against <span class="arrow" aria-hidden="true">↕</span></button></th>
+          <th scope="col" data-key="diff"><button type="button">Differential <span class="arrow" aria-hidden="true">↕</span></button></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p class="foot">Rank is the league standing (wins, then differential) and stays fixed when you re-sort. Click a column header to sort.</p>
+</div>
+
+<script>
+(function () {
+  var teams = [
+    { team: "Quizzly Bears",             wins: 12, losses: 2,  pf: 1842, pa: 1510 },
+    { team: "Trivia Newton-John",        wins: 11, losses: 3,  pf: 1795, pa: 1566 },
+    { team: "Know-It-Ales",              wins: 10, losses: 4,  pf: 1760, pa: 1602 },
+    { team: "Quiz Khalifa",              wins: 8,  losses: 6,  pf: 1688, pa: 1649 },
+    { team: "The Cerebral Assassins",    wins: 7,  losses: 7,  pf: 1641, pa: 1672 },
+    { team: "Mind Over Chatter",         wins: 5,  losses: 9,  pf: 1590, pa: 1685 },
+    { team: "Les Quizerables",           wins: 4,  losses: 10, pf: 1527, pa: 1738 },
+    { team: "Bill & Ted's Excellent Quiz", wins: 3, losses: 11, pf: 1471, pa: 1788 }
+  ];
+
+  teams.forEach(function (t) { t.diff = t.pf - t.pa; });
+
+  // Fixed league rank: wins desc, then differential desc
+  teams.slice().sort(function (a, b) { return b.wins - a.wins || b.diff - a.diff; })
+    .forEach(function (t, i) { t.rank = i + 1; });
+
+  var keys = ["team", "wins", "losses", "pf", "pa", "diff"];
+  var state = { key: "wins", dir: "desc" };
+  var tbody = document.querySelector("#board tbody");
+  var ths = document.querySelectorAll("#board thead th[data-key]");
+
+  function fmtDiff(n) {
+    if (n > 0) return "+" + n;
+    if (n < 0) return "\u2212" + Math.abs(n);
+    return "0";
+  }
+
+  function compare(a, b) {
+    var k = state.key, r;
+    if (k === "team") r = a.team.localeCompare(b.team);
+    else r = a[k] - b[k];
+    if (r === 0) r = b.diff - a.diff || a.rank - b.rank;
+    return state.dir === "asc" ? r : -r;
+  }
+
+  function render() {
+    var rows = teams.slice();
+    // For tie-breaks, keep direction-independent behavior by sorting then fixing ties
+    rows.sort(function (a, b) {
+      var k = state.key, r = (k === "team") ? a.team.localeCompare(b.team) : a[k] - b[k];
+      if (r !== 0) return state.dir === "asc" ? r : -r;
+      return a.rank - b.rank;
+    });
+
+    tbody.innerHTML = "";
+    rows.forEach(function (t) {
+      var tr = document.createElement("tr");
+      var cells = [["rank", t.rank, "rank"]].concat(keys.map(function (k) {
+        return [k, k === "diff" ? fmtDiff(t.diff) : t[k], k === "team" ? "team" : ""];
+      }));
+      cells.forEach(function (c) {
+        var td = document.createElement("td");
+        var cls = c[2];
+        if (c[0] === state.key) cls += " sorted";
+        if (c[0] === "diff") cls += t.diff > 0 ? " pos" : t.diff < 0 ? " neg" : "";
+        td.className = cls.trim();
+        td.textContent = c[1];
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+
+    ths.forEach(function (th) {
+      var active = th.getAttribute("data-key") === state.key;
+      th.setAttribute("aria-sort", active ? (state.dir === "asc" ? "ascending" : "descending") : "none");
+      th.querySelector(".arrow").textContent = active ? (state.dir === "asc" ? "▲" : "▼") : "↕";
+    });
+  }
+
+  ths.forEach(function (th) {
+    th.querySelector("button").addEventListener("click", function () {
+      var k = th.getAttribute("data-key");
+      if (state.key === k) {
+        state.dir = state.dir === "asc" ? "desc" : "asc";
+      } else {
+        state.key = k;
+        // Natural first direction: A–Z for names and fewest-first for losses/points against
+        state.dir = (k === "team" || k === "losses" || k === "pa") ? "asc" : "desc";
+      }
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orders and revenue by month</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0; padding: 24px 16px;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #f9f9f7; color: #0b0b0b;
+  }
+  .viz-root {
+    --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e;
+    --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --band: rgba(11,11,11,0.05);
+    --series-1: #2a78d6; --series-2: #eb6834;
+    max-width: 800px; margin: 0 auto; padding: 20px 20px 16px;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    position: relative;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0d0d0d; color: #fff; }
+    .viz-root {
+      --surface-1: #1a1a19; --text-primary: #fff; --text-secondary: #c3c2b7;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --band: rgba(255,255,255,0.06);
+      --series-1: #3987e5; --series-2: #d95926;
+    }
+  }
+  h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; color: var(--text-primary); }
+  .sub { margin: 0 0 16px; font-size: 13px; color: var(--text-secondary); }
+  .stats { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 8px; }
+  .stat .v { font-size: 24px; font-weight: 600; color: var(--text-primary); }
+  .stat .l { font-size: 12px; color: var(--text-secondary); }
+  svg { display: block; width: 100%; height: auto; }
+  svg text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--muted); font-size: 11px; }
+  svg text.title { font-size: 12px; font-weight: 600; fill: var(--text-primary); }
+  svg text.lbl { fill: var(--text-primary); font-weight: 600; }
+  .grid { stroke: var(--grid); stroke-width: 1; }
+  .base { stroke: var(--axis); stroke-width: 1; }
+  .band { fill: var(--band); opacity: 0; }
+  .s1 { fill: var(--series-1); } .s2 { fill: var(--series-2); }
+  .sw1 { fill: var(--series-1); } .sw2 { fill: var(--series-2); }
+  .tip {
+    position: absolute; pointer-events: none; opacity: 0; transition: opacity .1s;
+    background: var(--surface-1); border: 1px solid var(--axis); border-radius: 8px;
+    padding: 8px 10px; font-size: 12px; color: var(--text-secondary);
+    box-shadow: 0 2px 8px rgba(0,0,0,.12); white-space: nowrap;
+  }
+  .tip b { display: block; color: var(--text-primary); margin-bottom: 4px; font-size: 13px; }
+  .tip i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; }
+  .tip span { color: var(--text-primary); font-weight: 600; margin-left: 6px; }
+  details { margin-top: 12px; font-size: 13px; color: var(--text-secondary); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; margin-top: 8px; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 4px 8px; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-primary); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <h1>Orders and revenue by month, last year</h1>
+  <p class="sub">Both measures share the same month axis. Each has its own scale, so they sit in separate panels. Hover a month to see both.</p>
+  <div class="stats">
+    <div class="stat"><div class="v">6,370</div><div class="l">total orders</div></div>
+    <div class="stat"><div class="v">$274,400</div><div class="l">total revenue</div></div>
+    <div class="stat"><div class="v">May</div><div class="l">peak month for both</div></div>
+  </div>
+  <svg id="chart" viewBox="0 0 760 500" role="img" aria-label="Two aligned bar charts of monthly orders and monthly revenue. Both peak in May, with orders at 880 and revenue at $44,900."></svg>
+  <div class="tip" id="tip"></div>
+  <details>
+    <summary>View as table</summary>
+    <table id="tbl"><thead><tr><th>Month</th><th>Orders</th><th>Revenue</th></tr></thead><tbody></tbody></table>
+  </details>
+</div>
+<script>
+(function () {
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var orders = [310,280,420,690,880,760,540,500,610,470,390,520];
+  var revenue = [9800,8900,15200,31400,44900,36100,21500,19800,24700,18200,14600,29300];
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("chart");
+  var tip = document.getElementById("tip");
+  var root = document.querySelector(".viz-root");
+  var L = 60, R = 740, slot = (R - L) / 12, bw = 28;
+  var panels = [
+    { top: 40,  bot: 210, max: 1000,  step: 250,   data: orders,  cls: "s1", sw: "sw1", title: "Orders per month",
+      fmt: function (v) { return v.toLocaleString("en-US"); }, tick: function (v) { return v.toLocaleString("en-US"); } },
+    { top: 280, bot: 450, max: 50000, step: 10000, data: revenue, cls: "s2", sw: "sw2", title: "Revenue per month",
+      fmt: function (v) { return "$" + v.toLocaleString("en-US"); }, tick: function (v) { return v === 0 ? "$0" : "$" + (v / 1000) + "k"; } }
+  ];
+  function el(n, a, t) {
+    var e = document.createElementNS(NS, n);
+    for (var k in a) e.setAttribute(k, a[k]);
+    if (t != null) e.textContent = t;
+    svg.appendChild(e); return e;
+  }
+  var bands = [];
+  months.forEach(function (m, i) {
+    bands.push(el("rect", { "class": "band", x: L + i * slot, y: 28, width: slot, height: 422 }));
+  });
+  panels.forEach(function (p) {
+    var h = p.bot - p.top;
+    el("rect", { "class": p.sw, x: L - 52, y: p.top - 24, width: 10, height: 10, rx: 2 });
+    el("text", { "class": "title", x: L - 36, y: p.top - 14 }, p.title);
+    for (var v = 0; v <= p.max; v += p.step) {
+      var y = p.bot - (v / p.max) * h;
+      el("line", { "class": v === 0 ? "base" : "grid", x1: L, x2: R, y1: y, y2: y });
+      el("text", { x: L - 8, y: y + 4, "text-anchor": "end" }, p.tick(v));
+    }
+    var peak = Math.max.apply(null, p.data);
+    p.data.forEach(function (v, i) {
+      var bh = (v / p.max) * h, x = L + i * slot + (slot - bw) / 2, y = p.bot - bh, r = 4;
+      el("path", { "class": p.cls,
+        d: "M" + x + "," + p.bot + "V" + (y + r) + "Q" + x + "," + y + " " + (x + r) + "," + y +
+           "H" + (x + bw - r) + "Q" + (x + bw) + "," + y + " " + (x + bw) + "," + (y + r) + "V" + p.bot + "Z" });
+      if (v === peak) el("text", { "class": "lbl", x: x + bw / 2, y: y - 6, "text-anchor": "middle" }, p.fmt(v));
+    });
+  });
+  months.forEach(function (m, i) {
+    el("text", { x: L + i * slot + slot / 2, y: 472, "text-anchor": "middle" }, m);
+  });
+  months.forEach(function (m, i) {
+    var hit = el("rect", { x: L + i * slot, y: 28, width: slot, height: 440, fill: "transparent" });
+    hit.addEventListener("mousemove", function (e) { show(i, e); });
+    hit.addEventListener("mouseleave", hide);
+  });
+  function show(i, e) {
+    bands.forEach(function (b, j) { b.style.opacity = j === i ? 1 : 0; });
+    tip.innerHTML = "<b>" + months[i] + "</b>" +
+      '<div><i style="background:var(--series-1)"></i>Orders<span>' + orders[i].toLocaleString("en-US") + "</span></div>" +
+      '<div><i style="background:var(--series-2)"></i>Revenue<span>$' + revenue[i].toLocaleString("en-US") + "</span></div>";
+    var rb = root.getBoundingClientRect();
+    var x = e.clientX - rb.left + 14, y = e.clientY - rb.top - 20;
+    if (x + 150 > rb.width) x = e.clientX - rb.left - 160;
+    tip.style.left = x + "px"; tip.style.top = y + "px"; tip.style.opacity = 1;
+  }
+  function hide() {
+    bands.forEach(function (b) { b.style.opacity = 0; });
+    tip.style.opacity = 0;
+  }
+  var tb = document.querySelector("#tbl tbody");
+  months.forEach(function (m, i) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + m + "</td><td>" + orders[i].toLocaleString("en-US") + "</td><td>$" + revenue[i].toLocaleString("en-US") + "</td>";
+    tb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

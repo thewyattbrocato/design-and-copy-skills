@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orders and Revenue by Month, Last Year</title>
+<style>
+  :root {
+    --surface: #ffffff; --ink: #1f2328; --ink2: #57606a; --muted: #6e7781;
+    --grid: #e6e9ed; --axis: #c3c9d0;
+    --orders: #2563a8; --revenue: #c2570c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #1b1d21; --ink: #eceff3; --ink2: #b4bcc6; --muted: #98a1ad;
+      --grid: #2d3137; --axis: #444b54;
+      --orders: #6aa5e8; --revenue: #f0933f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px 16px; background: var(--surface); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .card { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; font-weight: 650; }
+  p.sub { margin: 0 0 14px; color: var(--ink2); font-size: 14px; }
+  .legend { display: flex; gap: 20px; font-size: 13px; color: var(--ink2); margin-bottom: 8px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .sw-bar { width: 12px; height: 12px; border-radius: 3px 3px 0 0; background: var(--orders); }
+  .sw-line { width: 18px; height: 2px; background: var(--revenue); position: relative; }
+  .sw-line::after { content: ""; position: absolute; left: 5px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--revenue); border: 2px solid var(--surface); box-sizing: content-box; margin: -2px 0 0 -2px; }
+  .wrap { position: relative; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { font-family: inherit; fill: var(--muted); font-size: 11px; }
+  svg .title { fill: var(--ink2); font-size: 12px; font-weight: 600; }
+  svg .lbl { fill: var(--ink); font-weight: 600; }
+  #tip {
+    position: absolute; pointer-events: none; opacity: 0; transition: opacity .1s;
+    background: var(--surface); color: var(--ink); border: 1px solid var(--axis);
+    border-radius: 6px; padding: 8px 10px; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    white-space: nowrap; z-index: 2;
+  }
+  #tip b { display: block; margin-bottom: 4px; }
+  #tip i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; }
+  details { margin-top: 12px; font-size: 13px; color: var(--ink2); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; margin-top: 8px; width: 100%; max-width: 420px; }
+  th, td { text-align: right; padding: 4px 10px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--ink); }
+  td { color: var(--ink2); }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Orders and revenue by month</h1>
+  <p class="sub">Last year. Both panels share one month axis, so each month lines up top to bottom. Peak was May: 880 orders, $44,900.</p>
+  <div class="legend">
+    <span><i class="sw-bar"></i>Orders (count)</span>
+    <span><i class="sw-line"></i>Revenue (US$)</span>
+  </div>
+  <div class="wrap" id="wrap">
+    <svg id="chart" viewBox="0 0 760 410" role="img" aria-label="Monthly orders as bars above monthly revenue as a line, January to December. Both peak in May."></svg>
+    <div id="tip"></div>
+  </div>
+  <details>
+    <summary>View as table</summary>
+    <table id="tbl"><thead><tr><th>Month</th><th>Orders</th><th>Revenue</th></tr></thead><tbody></tbody></table>
+  </details>
+</div>
+<script>
+(function () {
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var orders = [310,280,420,690,880,760,540,500,610,470,390,520];
+  var rev = [9800,8900,15200,31400,44900,36100,21500,19800,24700,18200,14600,29300];
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("chart");
+  var L = 52, R = 16, W = 760, pw = W - L - R, step = pw / 12;
+  var p1 = { top: 26, h: 150, max: 1000, ticks: [0,250,500,750,1000] };
+  var p2 = { top: 222, h: 150, max: 50000, ticks: [0,10000,20000,30000,40000,50000] };
+  function el(n, a, t) {
+    var e = document.createElementNS(NS, n);
+    for (var k in a) e.setAttribute(k, a[k]);
+    if (t != null) e.textContent = t;
+    svg.appendChild(e); return e;
+  }
+  function y(p, v) { return p.top + p.h - v / p.max * p.h; }
+  function cx(i) { return L + step * (i + .5); }
+  function money(v) { return "$" + v.toLocaleString("en-US"); }
+  function short(v) { return v === 0 ? "$0" : "$" + v / 1000 + "k"; }
+
+  el("text", { x: L, y: 14, class: "title" }, "Orders per month");
+  el("text", { x: L, y: 210, class: "title" }, "Revenue per month");
+
+  [p1, p2].forEach(function (p, pi) {
+    p.ticks.forEach(function (t) {
+      el("line", { x1: L, x2: W - R, y1: y(p, t), y2: y(p, t), stroke: t === 0 ? "var(--axis)" : "var(--grid)", "stroke-width": 1 });
+      el("text", { x: L - 8, y: y(p, t) + 4, "text-anchor": "end" }, pi ? short(t) : t);
+    });
+  });
+
+  // orders: bars with rounded data end
+  var bw = Math.min(30, step * .55);
+  orders.forEach(function (v, i) {
+    var x = cx(i) - bw / 2, top = y(p1, v), base = y(p1, 0), r = 4;
+    el("path", { d: "M" + x + "," + base + "V" + (top + r) + "Q" + x + "," + top + " " + (x + r) + "," + top +
+      "H" + (x + bw - r) + "Q" + (x + bw) + "," + top + " " + (x + bw) + "," + (top + r) + "V" + base + "Z", fill: "var(--orders)" });
+  });
+  el("text", { x: cx(4), y: y(p1, 880) - 6, "text-anchor": "middle", class: "lbl" }, "880");
+
+  // revenue: line with markers
+  el("polyline", { points: rev.map(function (v, i) { return cx(i) + "," + y(p2, v); }).join(" "),
+    fill: "none", stroke: "var(--revenue)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
+  rev.forEach(function (v, i) {
+    el("circle", { cx: cx(i), cy: y(p2, v), r: 4, fill: "var(--revenue)", stroke: "var(--surface)", "stroke-width": 2 });
+  });
+  el("text", { x: cx(4), y: y(p2, 44900) - 10, "text-anchor": "middle", class: "lbl" }, "$44.9k");
+
+  months.forEach(function (m, i) {
+    el("text", { x: cx(i), y: 394, "text-anchor": "middle" }, m);
+  });
+
+  // hover layer
+  var guide = el("line", { y1: p1.top, y2: p2.top + p2.h, stroke: "var(--ink2)", "stroke-width": 1, "stroke-dasharray": "3 3", opacity: 0 });
+  var tip = document.getElementById("tip"), wrap = document.getElementById("wrap");
+  function show(i) {
+    guide.setAttribute("x1", cx(i)); guide.setAttribute("x2", cx(i)); guide.setAttribute("opacity", 1);
+    tip.innerHTML = "<b>" + months[i] + "</b><i style='background:var(--orders)'></i>Orders: " + orders[i] +
+      "<br><i style='background:var(--revenue)'></i>Revenue: " + money(rev[i]) +
+      "<br><span style='color:var(--muted)'>" + money(Math.round(rev[i] / orders[i])) + " per order</span>";
+    var k = wrap.clientWidth / W, left = cx(i) * k + 12;
+    tip.style.opacity = 1;
+    if (left + tip.offsetWidth > wrap.clientWidth) left = cx(i) * k - tip.offsetWidth - 12;
+    tip.style.left = left + "px"; tip.style.top = (p1.top * k + 20) + "px";
+  }
+  function hide() { guide.setAttribute("opacity", 0); tip.style.opacity = 0; }
+  months.forEach(function (m, i) {
+    var r = el("rect", { x: L + step * i, y: p1.top - 10, width: step, height: p2.top + p2.h - p1.top + 10, fill: "transparent", tabindex: 0 });
+    r.setAttribute("aria-label", m + ": " + orders[i] + " orders, " + money(rev[i]) + " revenue");
+    r.addEventListener("mouseenter", function () { show(i); });
+    r.addEventListener("focus", function () { show(i); });
+    r.addEventListener("mouseleave", hide);
+    r.addEventListener("blur", hide);
+  });
+
+  var tb = document.querySelector("#tbl tbody");
+  months.forEach(function (m, i) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + m + "</td><td>" + orders[i] + "</td><td>" + money(rev[i]) + "</td>";
+    tb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

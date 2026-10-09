@@ -1,0 +1,1 @@
+Use **Cormorant Garamond** (free on Google Fonts) in a medium or semibold weight, set in capitals with generous letter-spacing for "INÉS & TOMÁS." It feels romantic through its elegant serifs without the cheesiness of a script font.

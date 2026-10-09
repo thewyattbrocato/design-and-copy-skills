@@ -1,0 +1,4 @@
+Pro: $18 a month. Everything in Free, minus the three-project limit. Make as many projects as you like, rewind up to 90 days when an edit goes sideways, and export PDFs with your fonts embedded so they look right everywhere. Cancel from Settings any time, no email needed. If three projects is all you need, Free is fine and always will be.
+
+- Your original was already doing the hard part: the price has its period, the cancel path is concrete, and the Free line is honest. I only added energy to the benefits and left the terms alone. I'd push back on your cofounder if they want to hype the last two sentences, since they're probably what builds trust.
+- "Unlimited" is gone from my version, but "as many as you like" makes the same claim. If there's a real cap, such as a fair-use limit, say so here.

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orders and revenue by month, last year</title>
+<style>
+  body {
+    margin: 0;
+    background: #f7f7f5;
+    color: #222;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main {
+    max-width: 800px;
+    margin: 32px auto;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e3e3df;
+    border-radius: 8px;
+  }
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .takeaway {
+    margin: 0 0 16px;
+    font-size: 15px;
+    color: #444;
+  }
+  .panel h2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 18px 0 4px;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 24px;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+  caption {
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  th, td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #eee;
+    text-align: right;
+  }
+  th:first-child, td:first-child {
+    text-align: left;
+  }
+  tfoot td {
+    font-weight: 600;
+    border-bottom: none;
+  }
+  .note {
+    margin: 12px 0 0;
+    font-size: 12px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Orders and revenue by month, last year</h1>
+  <p class="takeaway">Orders and revenue both peaked in May (880 orders, $44,900) and both bottomed in February (280 orders, $8,900). Full year: 6,370 orders and $274,400 in revenue.</p>
+
+  <div class="panel">
+    <h2>Orders</h2>
+    <svg id="orders" role="img" aria-label="Bar chart of monthly orders. Peak 880 in May, low 280 in February."></svg>
+  </div>
+
+  <div class="panel">
+    <h2>Revenue (USD)</h2>
+    <svg id="revenue" role="img" aria-label="Bar chart of monthly revenue in dollars. Peak $44,900 in May, low $8,900 in February."></svg>
+  </div>
+
+  <table>
+    <caption>Monthly values</caption>
+    <thead>
+      <tr><th>Month</th><th>Orders</th><th>Revenue</th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+    <tfoot>
+      <tr><td>Total</td><td>6,370</td><td>$274,400</td></tr>
+    </tfoot>
+  </table>
+
+  <p class="note">Both panels share the same month axis and start at zero. Each bar is labeled with its value.</p>
+</main>
+
+<script>
+  const data = [
+    ["Jan", 310, 9800],
+    ["Feb", 280, 8900],
+    ["Mar", 420, 15200],
+    ["Apr", 690, 31400],
+    ["May", 880, 44900],
+    ["Jun", 760, 36100],
+    ["Jul", 540, 21500],
+    ["Aug", 500, 19800],
+    ["Sep", 610, 24700],
+    ["Oct", 470, 18200],
+    ["Nov", 390, 14600],
+    ["Dec", 520, 29300]
+  ];
+
+  const W = 720, H = 220, L = 64, R = 12, T = 16, B = 28;
+  const PW = W - L - R, PH = H - T - B;
+  const fmtNum = v => v.toLocaleString("en-US");
+  const fmtMoney = v => "$" + v.toLocaleString("en-US");
+
+  function drawPanel(id, idx, max, step, color, fmt, showMonths) {
+    const band = PW / data.length;
+    const bw = band * 0.6;
+    let s = "";
+
+    for (let v = 0; v <= max; v += step) {
+      const y = T + PH * (1 - v / max);
+      s += `<line x1="${L}" x2="${W - R}" y1="${y}" y2="${y}" stroke="${v === 0 ? "#999" : "#e6e6e2"}" stroke-width="1"/>`;
+      s += `<text x="${L - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="#666">${fmt(v)}</text>`;
+    }
+
+    data.forEach((d, i) => {
+      const v = d[idx];
+      const h = PH * v / max;
+      const x = L + i * band + (band - bw) / 2;
+      const y = T + PH - h;
+      s += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" fill="${color}"/>`;
+      s += `<text x="${(x + bw / 2).toFixed(1)}" y="${(y - 5).toFixed(1)}" text-anchor="middle" font-size="11" fill="#333">${fmt(v)}</text>`;
+      if (showMonths) {
+        s += `<text x="${(x + bw / 2).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="#666">${d[0]}</text>`;
+      }
+    });
+
+    const svg = document.getElementById(id);
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.innerHTML = s;
+  }
+
+  drawPanel("orders", 1, 1000, 250, "#2f6b4f", fmtNum, false);
+  drawPanel("revenue", 2, 50000, 10000, "#b5652b", v => "$" + (v / 1000) + "k", true);
+
+  document.getElementById("rows").innerHTML = data
+    .map(d => `<tr><td>${d[0]}</td><td>${fmtNum(d[1])}</td><td>${fmtMoney(d[2])}</td></tr>`)
+    .join("");
+</script>
+</body>
+</html>

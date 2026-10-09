@@ -1,0 +1,1 @@
+The filled, prominent button should be **Place order**, since it's the primary action that completes the purchase. **Back to cart** should be a secondary style (outlined or text-only) because it's a low-stakes way out that shouldn't compete with the main action.

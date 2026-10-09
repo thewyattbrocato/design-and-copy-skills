@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nursery Orders and Revenue by Month (2025)</title>
+<style>
+  :root {
+    --surface: #ffffff;
+    --ink: #1d2327;
+    --ink-muted: #5b6670;
+    --grid: #e3e7ea;
+    --orders: #2a6f97;
+    --revenue: #b5651d;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #161b1f;
+      --ink: #e8ecef;
+      --ink-muted: #9aa5ae;
+      --grid: #2c343a;
+      --orders: #5fa8d3;
+      --revenue: #e0954a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font);
+  }
+  .card { max-width: 820px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
+  .sub { font-size: 14px; color: var(--ink-muted); margin: 0 0 16px; }
+  .legend { display: flex; gap: 16px; font-size: 13px; margin-bottom: 8px; }
+  .legend span::before {
+    content: "";
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: -1px;
+  }
+  .legend .l-orders::before { background: var(--orders); }
+  .legend .l-revenue::before { background: var(--revenue); }
+  .panel { margin-bottom: 12px; }
+  .panel-title { font-size: 14px; font-weight: 600; margin: 8px 0 2px; }
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+  svg text { font-family: var(--font); fill: var(--ink-muted); font-size: 12px; }
+  svg .x-label { fill: var(--ink-muted); }
+  svg .val { fill: var(--ink); font-size: 11px; }
+  svg .grid { stroke: var(--grid); stroke-width: 1; }
+  svg .axis { stroke: var(--grid); stroke-width: 1; }
+  svg .bar { fill: var(--orders); }
+  svg .bar:hover { opacity: 0.8; }
+  svg .line { fill: none; stroke: var(--revenue); stroke-width: 2; }
+  svg .area { fill: var(--revenue); opacity: 0.12; }
+  svg .dot { fill: var(--revenue); stroke: var(--surface); stroke-width: 2; }
+  svg .hit { fill: transparent; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 20px;
+    font-variant-numeric: tabular-nums;
+  }
+  th, td {
+    padding: 6px 8px;
+    text-align: right;
+    border-bottom: 1px solid var(--grid);
+  }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { color: var(--ink-muted); font-weight: 600; }
+  tfoot td { font-weight: 600; border-bottom: none; }
+  caption { text-align: left; font-weight: 600; font-size: 14px; margin-bottom: 6px; color: var(--ink); }
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>Orders and revenue by month</h1>
+  <p class="sub">Last year (2025). Each measure has its own scale, so the panels share months but not units.</p>
+
+  <div class="legend">
+    <span class="l-orders">Orders</span>
+    <span class="l-revenue">Revenue (USD)</span>
+  </div>
+
+  <section class="panel">
+    <div class="panel-title">Orders</div>
+    <svg id="orders-chart" viewBox="0 0 720 200" role="img" aria-label="Bar chart of orders by month in 2025"></svg>
+  </section>
+
+  <section class="panel">
+    <div class="panel-title">Revenue (USD)</div>
+    <svg id="revenue-chart" viewBox="0 0 720 200" role="img" aria-label="Line chart of revenue by month in 2025"></svg>
+  </section>
+
+  <table>
+    <caption>Monthly figures, 2025</caption>
+    <thead>
+      <tr><th>Month</th><th>Orders</th><th>Revenue</th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+    <tfoot>
+      <tr><td>Total</td><td id="total-orders"></td><td id="total-revenue"></td></tr>
+    </tfoot>
+  </table>
+</main>
+
+<script>
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const orders = [310,280,420,690,880,760,540,500,610,470,390,520];
+  const revenue = [9800,8900,15200,31400,44900,36100,21500,19800,24700,18200,14600,29300];
+
+  const W = 720, H = 200, L = 56, R = 12, T = 12, B = 28;
+  const plotW = W - L - R, plotH = H - T - B;
+  const cx = i => L + (i + 0.5) * plotW / months.length;
+  const yScale = (v, max) => T + plotH * (1 - v / max);
+  const fmtNum = n => n.toLocaleString("en-US");
+  const fmtUSD = n => n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+  function frame(max, step, fmt) {
+    let out = "";
+    for (let t = 0; t <= max; t += step) {
+      const y = yScale(t, max);
+      out += `<line class="grid" x1="${L}" x2="${W - R}" y1="${y}" y2="${y}"/>`;
+      out += `<text x="${L - 8}" y="${y + 4}" text-anchor="end">${fmt(t)}</text>`;
+    }
+    months.forEach((m, i) => {
+      out += `<text class="x-label" x="${cx(i)}" y="${H - 8}" text-anchor="middle">${m}</text>`;
+    });
+    return out;
+  }
+
+  function drawOrders() {
+    const max = 1000, step = 250, bw = (plotW / months.length) * 0.6;
+    let g = frame(max, step, fmtNum);
+    orders.forEach((v, i) => {
+      const y = yScale(v, max), h = yScale(0, max) - y;
+      g += `<rect class="bar" x="${cx(i) - bw / 2}" y="${y}" width="${bw}" height="${h}" rx="3"/>`;
+      g += `<text class="val" x="${cx(i)}" y="${y - 5}" text-anchor="middle">${v}</text>`;
+      g += `<title>${months[i]}: ${fmtNum(v)} orders</title>`;
+    });
+    document.getElementById("orders-chart").innerHTML = g;
+  }
+
+  function drawRevenue() {
+    const max = 50000, step = 12500;
+    let g = frame(max, step, n => "$" + fmtNum(n));
+    const pts = revenue.map((v, i) => [cx(i), yScale(v, max)]);
+    const base = yScale(0, max);
+    const linePath = pts.map((p, i) => (i ? "L" : "M") + p[0] + " " + p[1]).join(" ");
+    g += `<path class="area" d="${linePath} L${pts[pts.length - 1][0]} ${base} L${pts[0][0]} ${base} Z"/>`;
+    g += `<path class="line" d="${linePath}"/>`;
+    revenue.forEach((v, i) => {
+      g += `<circle class="dot" cx="${pts[i][0]}" cy="${pts[i][1]}" r="4"/>`;
+      g += `<circle class="hit" cx="${pts[i][0]}" cy="${pts[i][1]}" r="12"><title>${months[i]}: ${fmtUSD(v)}</title></circle>`;
+    });
+    document.getElementById("revenue-chart").innerHTML = g;
+  }
+
+  function drawTable() {
+    document.getElementById("rows").innerHTML = months.map((m, i) =>
+      `<tr><td>${m}</td><td>${fmtNum(orders[i])}</td><td>${fmtUSD(revenue[i])}</td></tr>`
+    ).join("");
+    const totO = orders.reduce((a, b) => a + b, 0);
+    const totR = revenue.reduce((a, b) => a + b, 0);
+    document.getElementById("total-orders").textContent = fmtNum(totO);
+    document.getElementById("total-revenue").textContent = fmtUSD(totR);
+  }
+
+  drawOrders();
+  drawRevenue();
+  drawTable();
+</script>
+</body>
+</html>

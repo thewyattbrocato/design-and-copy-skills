@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbound Shipments — Brightwater Freight</title>
+<style>
+  :root {
+    --bg: #0f1b24;
+    --panel: #162632;
+    --row-alt: #1a2d3a;
+    --line: #2a4152;
+    --text: #e8f0f5;
+    --muted: #8fa6b5;
+    --accent: #5cc8e6;
+    --ok: #4fd68a;
+    --warn: #ffc247;
+    --bad: #ff6b6b;
+    --info: #6aa8ff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    padding: 28px 36px;
+    min-height: 100vh;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    gap: 24px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .sub {
+    color: var(--muted);
+    font-size: 16px;
+    margin-top: 4px;
+  }
+  .clock {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 30px;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    text-align: right;
+  }
+  .clock small {
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 14px 20px;
+    background: #101f2a;
+    border-bottom: 2px solid var(--line);
+  }
+  td {
+    padding: 16px 20px;
+    font-size: 22px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:last-child td { border-bottom: none; }
+  .id, .door, .eta {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .id {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .door { font-weight: 700; color: var(--accent); }
+  .eta { white-space: nowrap; }
+  .carrier { color: var(--text); }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 2px solid currentColor;
+    white-space: nowrap;
+  }
+  .status::before {
+    content: "";
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .s-ontime { color: var(--ok); }
+  .s-arrived { color: var(--info); }
+  .s-unloading { color: var(--accent); }
+  .s-delayed { color: var(--warn); }
+  .s-hold { color: var(--bad); }
+  .s-hold::before { border-radius: 2px; }
+  .s-delayed::before { border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  footer {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Inbound Shipments</h1>
+      <div class="sub">Brightwater Freight · Warehouse Receiving</div>
+    </div>
+    <div class="clock"><span id="time">--:--</span><small id="date"></small></div>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Shipment ID</th>
+        <th>Carrier</th>
+        <th>Dock Door</th>
+        <th>ETA</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="id">BW-20412</td><td class="carrier">Northline Transport</td><td class="door">D-03</td><td class="eta">07:45</td><td><span class="status s-unloading">Unloading</span></td></tr>
+      <tr><td class="id">BW-20415</td><td class="carrier">Harbor &amp; Pike Logistics</td><td class="door">D-01</td><td class="eta">08:30</td><td><span class="status s-arrived">Arrived</span></td></tr>
+      <tr><td class="id">BW-20418</td><td class="carrier">Redwood Freightways</td><td class="door">D-05</td><td class="eta">09:15</td><td><span class="status s-ontime">On time</span></td></tr>
+      <tr><td class="id">BW-20421</td><td class="carrier">Summit Cold Chain</td><td class="door">D-07</td><td class="eta">09:50</td><td><span class="status s-hold">Hold – docs</span></td></tr>
+      <tr><td class="id">BW-20424</td><td class="carrier">Keystone Carriers</td><td class="door">D-02</td><td class="eta">10:40</td><td><span class="status s-delayed">Delayed</span></td></tr>
+      <tr><td class="id">BW-20427</td><td class="carrier">Northline Transport</td><td class="door">D-04</td><td class="eta">11:20</td><td><span class="status s-ontime">On time</span></td></tr>
+      <tr><td class="id">BW-20430</td><td class="carrier">Blue Mesa Trucking</td><td class="door">D-06</td><td class="eta">12:05</td><td><span class="status s-ontime">On time</span></td></tr>
+      <tr><td class="id">BW-20433</td><td class="carrier">Redwood Freightways</td><td class="door">D-08</td><td class="eta">13:30</td><td><span class="status s-delayed">Delayed</span></td></tr>
+    </tbody>
+  </table>
+
+  <footer>Sample data · Status shown by color, icon shape and label.</footer>
+
+<script>
+  function tick() {
+    var d = new Date();
+    document.getElementById("time").textContent =
+      d.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", hour12: false});
+    document.getElementById("date").textContent =
+      d.toLocaleDateString([], {weekday: "long", month: "short", day: "numeric"});
+  }
+  tick();
+  setInterval(tick, 15000);
+</script>
+</body>
+</html>

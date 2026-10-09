@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low Tide Radio</title>
+<style>
+  :root {
+    --paper: #f1e9d8;
+    --paper-deep: #e6dbc3;
+    --ink: #22201c;
+    --ink-soft: #5b5447;
+    --rule: #b9ab8c;
+    --signal: #a8432a;
+    --dial: #3b4a52;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; min-height: 100%; }
+
+  body {
+    background-color: var(--paper);
+    /* paper grain and faint ruled lines, drawn with gradients only */
+    background-image:
+      repeating-linear-gradient(0deg, rgba(90, 70, 40, 0.035) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.35), transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(120, 95, 60, 0.18), transparent 65%);
+    color: var(--ink);
+    font-family: var(--serif);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+  }
+
+  .sleeve {
+    width: 100%;
+    max-width: 640px;
+    background: rgba(255, 252, 242, 0.55);
+    border: 1px solid var(--rule);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 6px 8px 0 -2px var(--paper-deep), 6px 8px 0 -1px var(--rule);
+    padding: 44px 48px 40px;
+    position: relative;
+  }
+
+  /* a small "dial" strip across the top, like a tuner window */
+  .dial {
+    height: 26px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background-image:
+      repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 10px),
+      repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 50px);
+    background-size: 100% 8px, 100% 14px;
+    background-position: left top, left bottom;
+    background-repeat: repeat-x, repeat-x;
+    margin-bottom: 34px;
+    position: relative;
+  }
+  .dial::after {
+    content: "";
+    position: absolute;
+    left: 38%;
+    top: -6px;
+    bottom: -6px;
+    width: 2px;
+    background: var(--signal);
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-weight: 400;
+    font-size: clamp(44px, 8vw, 68px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    font-style: italic;
+  }
+
+  .tagline {
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin: 0 0 36px;
+    max-width: 30em;
+  }
+
+  .tonight {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+  .tonight h2 {
+    font-weight: 400;
+    font-size: 15px;
+    font-variant: small-caps;
+    letter-spacing: 0.12em;
+    margin: 0;
+  }
+  .tonight span {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  ol.tracks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 36px;
+    counter-reset: side;
+  }
+  ol.tracks li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: baseline;
+    padding: 13px 0;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--signal);
+  }
+  .artist {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+  .track {
+    display: block;
+    font-size: 21px;
+    font-style: italic;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  button.listen {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: var(--signal);
+    color: #fbf4e4;
+    border: 0;
+    border-radius: 0;
+    padding: 15px 26px 14px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #6e2b18;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  button.listen:hover { background: #b64e33; }
+  button.listen:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #6e2b18;
+  }
+  button.listen:focus-visible {
+    outline: 2px solid var(--dial);
+    outline-offset: 4px;
+  }
+
+  .slot {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  footer {
+    margin-top: 34px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 560px) {
+    .sleeve { padding: 30px 24px 28px; }
+    .track { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+  <main class="sleeve">
+    <div class="dial" aria-hidden="true"></div>
+
+    <p class="kicker">After-midnight broadcast &middot; 88.1 FM &middot; 00:00&ndash;03:00</p>
+    <h1>Low Tide Radio</h1>
+    <p class="tagline">Music for the hours when the water pulls back and the room gets quiet enough to hear yourself think.</p>
+
+    <div class="tonight">
+      <h2>Tonight's playlist</h2>
+      <span>4 tracks</span>
+    </div>
+
+    <ol class="tracks">
+      <li>
+        <span class="num">A1</span>
+        <span>
+          <span class="artist">Nick Drake</span>
+          <span class="track">Road</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">A2</span>
+        <span>
+          <span class="artist">Talk Talk</span>
+          <span class="track">After the Flood</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">B1</span>
+        <span>
+          <span class="artist">Galaxie 500</span>
+          <span class="track">Tugboat</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">B2</span>
+        <span>
+          <span class="artist">Brian Eno</span>
+          <span class="track">An Ending (Ascent)</span>
+        </span>
+      </li>
+    </ol>
+
+    <div class="actions">
+      <button class="listen" type="button">Listen live</button>
+      <div class="slot">Tape rolling<br>Needle down after the news</div>
+    </div>
+
+    <footer>
+      <span>Recorded close to the water.</span>
+      <span>Side A, then side B.</span>
+    </footer>
+  </main>
+</body>
+</html>

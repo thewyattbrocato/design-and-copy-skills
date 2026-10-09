@@ -1,0 +1,1 @@
+A useful empty state explains what the space is for and what a user gets by filling it, then offers one concrete next action, such as a button that creates the first item or a template to start from. It can also show what the populated view will look like, so the blank screen reads as a setup step rather than a dead end.

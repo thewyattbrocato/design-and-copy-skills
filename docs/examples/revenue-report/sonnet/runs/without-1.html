@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember &amp; Oak — Monthly Report, September 2026</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6;
+    --good: #006300;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --good: #0ca30c;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+  .page { width: 100%; max-width: 1180px; display: flex; flex-direction: column; gap: 16px; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; }
+  .brand { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .brand span { color: var(--ink-2); font-weight: 500; }
+  .period { font-size: 13px; color: var(--ink-2); text-align: right; line-height: 1.4; }
+  .period b { display: block; font-size: 15px; color: var(--ink); font-weight: 600; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .kpi .label { font-size: 12px; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.06em; }
+  .kpi .value { font-size: 34px; font-weight: 650; margin-top: 6px; letter-spacing: -0.02em; }
+  .kpi .delta { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+  .kpi .delta b { color: var(--good); font-weight: 600; }
+  .main { display: grid; grid-template-columns: 1.35fr 1fr; gap: 16px; }
+  h2 { font-size: 15px; font-weight: 600; }
+  .sub { font-size: 12px; color: var(--ink-2); margin: 2px 0 12px; }
+  .chart { position: relative; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  svg text { font-family: inherit; font-size: 11px; fill: var(--muted); }
+  .grid { stroke: var(--grid); stroke-width: 1; }
+  .base { stroke: var(--axis); stroke-width: 1; }
+  .line { fill: none; stroke: var(--series-1); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .area { fill: var(--series-1); opacity: 0.10; }
+  .dot { fill: var(--series-1); stroke: var(--surface); stroke-width: 2; }
+  .cross { stroke: var(--axis); stroke-width: 1; opacity: 0; }
+  .hdot { fill: var(--series-1); stroke: var(--surface); stroke-width: 2; opacity: 0; }
+  svg text.lbl { fill: var(--ink); font-weight: 600; font-size: 12px; }
+  .tip {
+    position: absolute; pointer-events: none; opacity: 0;
+    background: var(--surface); border: 1px solid var(--border);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    border-radius: 8px; padding: 8px 10px; font-size: 12px; color: var(--ink-2);
+    transform: translate(-50%, -100%); white-space: nowrap;
+  }
+  .tip b { display: block; color: var(--ink); font-size: 14px; margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { font-size: 11px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.05em; text-align: right; padding: 0 0 8px; border-bottom: 1px solid var(--axis); }
+  th:first-child, td:first-child { text-align: left; }
+  td { padding: 9px 0; text-align: right; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+  td:first-child { font-variant-numeric: normal; }
+  td .rank { color: var(--muted); display: inline-block; width: 18px; }
+  td small { display: block; color: var(--muted); font-size: 11px; margin-left: 18px; }
+  tfoot td { border-bottom: none; font-weight: 600; padding-top: 11px; }
+  footer { font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand">Ember &amp; Oak <span>· Monthly Report</span></div>
+    <div class="period"><b>September 2026</b>Prepared Oct 7, 2026</div>
+  </header>
+
+  <section class="kpis">
+    <div class="card kpi">
+      <div class="label">Revenue · last 4 weeks</div>
+      <div class="value">$24,800</div>
+      <div class="delta"><b>▲ 17.0%</b> vs. prior 4 weeks ($21,190)</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Orders</div>
+      <div class="value">790</div>
+      <div class="delta"><b>▲ 11.3%</b> vs. prior 4 weeks (710)</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Average order value</div>
+      <div class="value">$31.39</div>
+      <div class="delta"><b>▲ 5.2%</b> vs. prior 4 weeks ($29.85)</div>
+    </div>
+  </section>
+
+  <section class="main">
+    <div class="card">
+      <h2>Weekly revenue</h2>
+      <div class="sub">Last 12 weeks, ending Oct 4 · total $65,560</div>
+      <div class="chart" id="chart">
+        <svg id="svg" viewBox="0 0 680 300" role="img" aria-label="Line chart of weekly revenue for the last 12 weeks, rising from $4,820 to $6,310 with a peak of $6,480 in the week of Sep 21."></svg>
+        <div class="tip" id="tip"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Top 6 products</h2>
+      <div class="sub">Last 4 weeks, by revenue</div>
+      <table>
+        <thead><tr><th>Product</th><th>Units</th><th>Revenue</th><th>Share</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank">1</span>Ember House Blend<small>12 oz bag</small></td><td>410</td><td>$6,560</td><td>26.5%</td></tr>
+          <tr><td><span class="rank">2</span>Oaxaca Reserve<small>12 oz bag</small></td><td>232</td><td>$4,408</td><td>17.8%</td></tr>
+          <tr><td><span class="rank">3</span>Ethiopia Guji Natural<small>12 oz bag</small></td><td>168</td><td>$3,528</td><td>14.2%</td></tr>
+          <tr><td><span class="rank">4</span>Oak Barrel Cold Brew<small>32 oz bottle</small></td><td>190</td><td>$2,660</td><td>10.7%</td></tr>
+          <tr><td><span class="rank">5</span>Swiss Water Decaf<small>12 oz bag</small></td><td>118</td><td>$2,006</td><td>8.1%</td></tr>
+          <tr><td><span class="rank">6</span>Sumatra Dark<small>12 oz bag</small></td><td>105</td><td>$1,785</td><td>7.2%</td></tr>
+        </tbody>
+        <tfoot><tr><td>Top 6 total</td><td>1,223</td><td>$20,947</td><td>84.5%</td></tr></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <footer><span>Ember &amp; Oak Coffee Roasters</span><span>Weeks run Mon–Sun · Revenue is net of refunds</span></footer>
+</div>
+
+<script>
+(function () {
+  var weeks = ["Jul 13","Jul 20","Jul 27","Aug 3","Aug 10","Aug 17","Aug 24","Aug 31","Sep 7","Sep 14","Sep 21","Sep 28"];
+  var vals  = [4820,4950,4680,5120,5240,5010,5380,5560,5890,6120,6480,6310];
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("svg"), tip = document.getElementById("tip"), box = document.getElementById("chart");
+  var L = 48, R = 664, T = 16, B = 262, MAX = 7000;
+  var step = (R - L - 32) / 11;
+  function X(i) { return L + 16 + i * step; }
+  function Y(v) { return B - v / MAX * (B - T); }
+  function fmt(v) { return "$" + v.toLocaleString("en-US"); }
+  function el(n, a, txt) {
+    var e = document.createElementNS(NS, n);
+    for (var k in a) e.setAttribute(k, a[k]);
+    if (txt != null) e.textContent = txt;
+    svg.appendChild(e); return e;
+  }
+  [0,2000,4000,6000].forEach(function (g) {
+    el("line", { x1: L, x2: R, y1: Y(g), y2: Y(g), class: g ? "grid" : "base" });
+    el("text", { x: L - 8, y: Y(g) + 4, "text-anchor": "end" }, g ? "$" + g / 1000 + "k" : "$0");
+  });
+  weeks.forEach(function (w, i) {
+    if (i % 2 === 0 || i === 11) el("text", { x: X(i), y: B + 18, "text-anchor": "middle" }, w);
+  });
+  var pts = vals.map(function (v, i) { return X(i) + "," + Y(v); });
+  el("polygon", { class: "area", points: X(0) + "," + B + " " + pts.join(" ") + " " + X(11) + "," + B });
+  el("polyline", { class: "line", points: pts.join(" ") });
+  vals.forEach(function (v, i) { el("circle", { class: "dot", cx: X(i), cy: Y(v), r: 4 }); });
+  el("text", { class: "lbl", x: X(10), y: Y(vals[10]) - 12, "text-anchor": "middle" }, fmt(vals[10]) + " peak");
+  el("text", { class: "lbl", x: X(11), y: Y(vals[11]) + 22, "text-anchor": "end" }, fmt(vals[11]));
+  el("text", { class: "lbl", x: X(0), y: Y(vals[0]) + 22, "text-anchor": "start" }, fmt(vals[0]));
+
+  var cross = el("line", { class: "cross", y1: T, y2: B });
+  var hdot = el("circle", { class: "hdot", r: 5 });
+  vals.forEach(function (v, i) {
+    var r = el("rect", { x: X(i) - step / 2, y: T, width: step, height: B - T, fill: "transparent" });
+    r.addEventListener("mouseenter", function () {
+      cross.setAttribute("x1", X(i)); cross.setAttribute("x2", X(i)); cross.style.opacity = 1;
+      hdot.setAttribute("cx", X(i)); hdot.setAttribute("cy", Y(v)); hdot.style.opacity = 1;
+      var prev = i ? " · " + (v >= vals[i-1] ? "▲ " : "▼ ") + Math.abs((v / vals[i-1] - 1) * 100).toFixed(1) + "% vs. prior wk" : "";
+      tip.innerHTML = "Week of " + weeks[i] + "<b>" + fmt(v) + "</b>" + prev.replace(" · ", "");
+      var sx = box.clientWidth / 680;
+      tip.style.left = X(i) * sx + "px"; tip.style.top = (Y(v) * sx - 14) + "px"; tip.style.opacity = 1;
+    });
+    r.addEventListener("mouseleave", function () {
+      cross.style.opacity = 0; hdot.style.opacity = 0; tip.style.opacity = 0;
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Mostly solid, but the CTA and billing note have contrast problems. The "Start free trial" button (white 13px on #9aa0a6, about 2.5:1) and the "/month billed annually" note (#b5b5b5 on white, about 2:1) both fall below WCAG AA, and the gray button reads as disabled, so darken the button and the note to around #6b7280 or darker.

@@ -1,0 +1,1 @@
+Use **Cormorant Garamond** (Google Fonts, open license) in a light or regular weight, set large with a little letter-spacing. It's an elegant high-contrast serif that reads as romantic without being a script, and it pairs well with a plain sans like Inter for the schedule and RSVP form. Check that it renders the accented "é" and "á" in "Inés" and "Tomás" correctly.

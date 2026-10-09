@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to Kilnbook</title>
+<style>
+  :root{
+    --bg:#f6f1ea; --card:#fffdf9; --ink:#2b2420; --muted:#6b5f56; --line:#e2d8cb;
+    --accent:#a8472a; --accent-ink:#fff; --accent-soft:#f6e3da; --ok:#2f6b4a; --ok-soft:#e1f0e7;
+    --focus:#1d5fd1;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#1d1916; --card:#272220; --ink:#f3ece4; --muted:#b5a89c; --line:#3d3530;
+      --accent:#e0805f; --accent-ink:#1d1916; --accent-soft:#3b2a24; --ok:#7fcf9f; --ok-soft:#1f3328; --focus:#8ab4ff;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .top{display:flex;justify-content:space-between;align-items:center;max-width:880px;margin:0 auto;padding:18px 20px}
+  .brand{font-weight:700;letter-spacing:.2px}
+  .skip{color:var(--muted);font-size:14px}
+  a{color:inherit}
+  main{max-width:880px;margin:0 auto;padding:8px 20px 56px}
+  h1{font-size:clamp(26px,4vw,34px);line-height:1.2;margin:12px 0 8px}
+  .lede{color:var(--muted);margin:0 0 24px;max-width:60ch;font-size:17px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .step-label{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+  .choice{all:unset;box-sizing:border-box;cursor:pointer;border:2px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+  .choice:hover{border-color:var(--muted)}
+  .choice[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+  .choice strong{display:block;font-size:17px}
+  .choice span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+  button:focus-visible,.slot input:focus-visible+label,a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .sample{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;border:1px dashed var(--muted);color:var(--muted);margin-left:8px;vertical-align:middle}
+  .slots{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
+  .slot input{position:absolute;opacity:0}
+  .slot label{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer}
+  .slot label:hover{border-color:var(--muted)}
+  .slot input:checked+label{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+  .when{font-weight:600}
+  .what{color:var(--muted);font-size:14px}
+  .tag{font-size:13px;color:var(--muted);white-space:nowrap}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:12px 20px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .hint{color:var(--muted);font-size:14px}
+  .done{background:var(--ok-soft);border-color:var(--ok)}
+  .done h2{margin:0 0 6px;font-size:20px}
+  .done p{margin:0 0 14px}
+  [hidden]{display:none!important}
+  .foot{margin-top:22px;color:var(--muted);font-size:14px}
+  @media (max-width:520px){.choices{grid-template-columns:1fr}.slot label{flex-direction:column;align-items:flex-start;gap:2px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">Kilnbook</div>
+  <a class="skip" href="#explore">Skip, I'll look around first</a>
+</header>
+
+<main>
+  <h1>Welcome, Maya. Let's book your first session.</h1>
+  <p class="lede">Riverbend Clay Co-op runs on booked time: hours at a wheel and space in the kiln. Pick one below and you'll have a spot held in about a minute.</p>
+
+  <section class="card" aria-labelledby="s1">
+    <p class="step-label" id="s1">1 · What do you need first?</p>
+    <div class="choices">
+      <button class="choice" type="button" data-kind="wheel" aria-pressed="true">
+        <strong>A wheel</strong>
+        <span>A block of time at one pottery wheel to throw pots.</span>
+      </button>
+      <button class="choice" type="button" data-kind="kiln" aria-pressed="false">
+        <strong>Kiln space</strong>
+        <span>Shelf room in a shared firing for pieces you've already made.</span>
+      </button>
+    </div>
+
+    <p class="step-label">2 · Choose a time <span class="sample">Sample schedule</span></p>
+    <p class="hint" id="kindHelp" style="margin:0 0 10px"></p>
+    <ul class="slots" id="slots" role="radiogroup" aria-label="Available times"></ul>
+
+    <div class="actions">
+      <button class="btn" id="confirm" type="button" disabled>Book this slot</button>
+      <span class="hint" id="pickHint">Select a time to continue.</span>
+    </div>
+  </section>
+
+  <section class="card done" id="result" role="status" aria-live="polite" hidden tabindex="-1">
+    <h2 id="rTitle"></h2>
+    <p id="rBody"></p>
+    <div class="actions">
+      <button class="btn" id="another" type="button"></button>
+      <button class="btn ghost" id="undo" type="button">Cancel this booking</button>
+    </div>
+  </section>
+
+  <p class="foot" id="explore">Just browsing? You can see the full calendar and studio rules from <a href="#explore">Schedule</a> any time. Nothing is booked until you press the button.</p>
+</main>
+
+<script>
+  const DATA = {
+    wheel: {
+      help: "Each slot is 2 hours at one wheel. Clay and tools are not included in this sample.",
+      noun: "wheel session",
+      next: "Add kiln space for your pieces",
+      slots: [
+        {id:"w1", when:"Fri, Oct 9 · 6:00–8:00 pm", what:"Wheel 3", tag:"2 of 6 wheels open"},
+        {id:"w2", when:"Sat, Oct 10 · 10:00 am–12:00 pm", what:"Wheel 1", tag:"4 of 6 wheels open"},
+        {id:"w3", when:"Sun, Oct 11 · 1:00–3:00 pm", what:"Wheel 5", tag:"5 of 6 wheels open"}
+      ]
+    },
+    kiln: {
+      help: "Pots need two firings. Bisque is the first, for dry unglazed pieces. Glaze is the second, after glazing.",
+      noun: "kiln space",
+      next: "Book a wheel session",
+      slots: [
+        {id:"k1", when:"Bisque firing · Tue, Oct 13", what:"Load pieces by Mon, Oct 12, 5 pm", tag:"3 shelves left"},
+        {id:"k2", when:"Glaze firing · Thu, Oct 15", what:"Load pieces by Wed, Oct 14, 5 pm", tag:"1 shelf left"},
+        {id:"k3", when:"Bisque firing · Sat, Oct 17", what:"Load pieces by Fri, Oct 16, 5 pm", tag:"5 shelves left"}
+      ]
+    }
+  };
+  let kind = "wheel", picked = null;
+  const $ = s => document.querySelector(s);
+
+  function render(){
+    const d = DATA[kind];
+    $("#kindHelp").textContent = d.help;
+    $("#slots").innerHTML = d.slots.map(s =>
+      `<li class="slot"><input type="radio" name="slot" id="${s.id}" value="${s.id}">
+       <label for="${s.id}"><span><span class="when">${s.when}</span><br><span class="what">${s.what}</span></span><span class="tag">${s.tag}</span></label></li>`).join("");
+    picked = null; update();
+  }
+  function update(){
+    $("#confirm").disabled = !picked;
+    $("#pickHint").textContent = picked ? "You can cancel right after booking." : "Select a time to continue.";
+  }
+  document.querySelectorAll(".choice").forEach(b => b.addEventListener("click", () => {
+    kind = b.dataset.kind;
+    document.querySelectorAll(".choice").forEach(x => x.setAttribute("aria-pressed", x === b));
+    $("#result").hidden = true;
+    render();
+  }));
+  $("#slots").addEventListener("change", e => { picked = e.target.value; update(); });
+
+  $("#confirm").addEventListener("click", () => {
+    const d = DATA[kind], s = d.slots.find(x => x.id === picked);
+    $("#rTitle").textContent = "You're booked: " + s.when;
+    $("#rBody").textContent = s.what + ". It now appears under Your bookings, and you'll get a reminder before it starts. " +
+      (kind === "wheel" ? "Arrive a few minutes early to set up." : "Bring your pieces to the studio before the load deadline.");
+    $("#another").textContent = DATA[kind === "wheel" ? "kiln" : "wheel"].next;
+    $("#result").hidden = false; $("#result").focus();
+  });
+  $("#another").addEventListener("click", () => {
+    document.querySelector(`.choice[data-kind="${kind === "wheel" ? "kiln" : "wheel"}"]`).click();
+    $(".card").scrollIntoView({behavior:"smooth"});
+  });
+  $("#undo").addEventListener("click", () => { $("#result").hidden = true; render(); });
+  render();
+</script>
+</body>
+</html>

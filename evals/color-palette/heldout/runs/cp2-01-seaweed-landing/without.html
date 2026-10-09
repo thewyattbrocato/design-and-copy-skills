@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewick — Roasted Seaweed Snacks</title>
+<style>
+  :root {
+    --ink: #1d2b2a;
+    --ink-soft: #4a5b59;
+    --paper: #f4efe3;
+    --paper-deep: #e9e2d0;
+    --tide: #1f5f5b;
+    --ember: #e4572e;
+    --lime: #b7d44a;
+    --sesame: #d9b26f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .wave {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    width: 100%; height: 90px;
+    display: block;
+  }
+  header {
+    position: relative;
+    padding: 28px 24px 0;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .logo {
+    font-family: Georgia, "Iowan Old Style", serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+    color: var(--tide);
+  }
+  .logo span { color: var(--ember); }
+  .hero {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 72px 24px 80px;
+  }
+  h1 {
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 11em;
+    color: var(--tide);
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--ember);
+  }
+  .sub {
+    margin-top: 22px;
+    max-width: 30em;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+  }
+  .btn {
+    display: inline-block;
+    margin-top: 34px;
+    padding: 15px 34px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    border-radius: 999px;
+    box-shadow: 4px 4px 0 var(--ember);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ember); }
+  .btn:focus-visible { outline: 3px solid var(--tide); outline-offset: 4px; }
+  .products {
+    position: relative;
+    background: var(--tide);
+    padding: 70px 24px 100px;
+  }
+  .products::before {
+    content: "";
+    position: absolute;
+    top: -1px; left: 0; right: 0;
+    height: 40px;
+    background:
+      radial-gradient(circle at 20px 0, var(--paper) 20px, transparent 21px) 0 0 / 40px 40px repeat-x;
+  }
+  .grid {
+    max-width: 1040px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: var(--paper);
+    border-radius: 22px 22px 22px 4px;
+    padding: 26px 24px 28px;
+    position: relative;
+    transition: transform .2s ease;
+  }
+  .card:nth-child(2) { transform: translateY(14px); }
+  .card:hover { transform: translateY(-4px); }
+  .card:nth-child(2):hover { transform: translateY(10px); }
+  .chip {
+    width: 56px; height: 56px;
+    border-radius: 50% 50% 50% 8px;
+    margin-bottom: 18px;
+    display: grid;
+    place-items: center;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--ink);
+  }
+  .salt .chip { background: var(--paper-deep); border: 2px solid var(--ink); }
+  .chili .chip { background: var(--lime); }
+  .sesame .chip { background: var(--sesame); }
+  .card h2 {
+    font-family: Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--tide);
+    margin-bottom: 6px;
+  }
+  .card p { color: var(--ink-soft); font-size: 0.98rem; }
+  .tag {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ember);
+  }
+  footer {
+    background: var(--ink);
+    color: var(--paper-deep);
+    text-align: center;
+    padding: 22px;
+    font-size: 0.85rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+  @media (max-width: 600px) {
+    .hero { padding-top: 48px; }
+    .card:nth-child(2) { transform: none; }
+    .card:nth-child(2):hover { transform: translateY(-4px); }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">Tide<span>wick</span></div>
+  </header>
+
+  <section class="hero">
+    <h1>Crisp from the <em>cold</em> shore.</h1>
+    <p class="sub">Roasted seaweed snacks, thin as paper and loud on flavor. Small batches, three ways to crunch.</p>
+    <a class="btn" href="#shop">Shop now</a>
+  </section>
+
+  <section class="products" id="shop">
+    <div class="grid">
+      <article class="card salt">
+        <div class="chip" aria-hidden="true">S</div>
+        <h2>Sea Salt</h2>
+        <p>The classic. Toasty, briny and clean, with just enough salt to make you reach for another sheet.</p>
+        <span class="tag">Simple</span>
+      </article>
+      <article class="card chili">
+        <div class="chip" aria-hidden="true">C</div>
+        <h2>Chili Lime</h2>
+        <p>Bright citrus up front, a slow warm kick behind it. Snack-time with a little spark.</p>
+        <span class="tag">Zesty</span>
+      </article>
+      <article class="card sesame">
+        <div class="chip" aria-hidden="true">T</div>
+        <h2>Toasted Sesame</h2>
+        <p>Nutty, golden and fragrant. Like the best part of a sushi night, in a pocket-sized pack.</p>
+        <span class="tag">Nutty</span>
+      </article>
+    </div>
+  </section>
+
+  <footer>© Tidewick. Roasted seaweed snacks.</footer>
+</body>
+</html>

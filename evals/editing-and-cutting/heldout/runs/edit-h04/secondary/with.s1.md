@@ -1,0 +1,3 @@
+Kestrel Lane Credit Union's Rainy Day Savings account helps you build your savings over time. It earns a variable rate of interest of up to 3.1% APY, and this rate may change from time to time. Set up a monthly Pre-Authorized Debit transfer from your chequing account, in any amount, and your balance will typically grow faster than with occasional deposits. There are no monthly fees as long as the account is open and you're a member in good standing. Open it in a branch or online in about ten minutes.
+
+I left the "variable rate," "up to," "may," and "typically" sentences word-for-word, and kept "Pre-Authorized Debit" capitalized.

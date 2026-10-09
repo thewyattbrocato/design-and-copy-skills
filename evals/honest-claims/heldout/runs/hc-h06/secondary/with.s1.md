@@ -1,0 +1,3 @@
+Last Saturday the rhubarb jam sold out by 10:40—a first for us—so I'm making double this week, about 120 jars, though the rhubarb is at the mercy of the weather so don't hold me to it. The raspberry is still on the shelf if you'd like to try it. I think it's better than the rhubarb, but Jen on the next stall disagrees.
+
+**Notes:** The sell-out story is already your strongest sell—it's specific, unprecedented, and real. One swap: "which has never happened before" → "a first for us" tightens it and makes the achievement land harder. The candor throughout (weather caveat, honest disagreement with Jen) is what makes this persuasive; it builds trust.

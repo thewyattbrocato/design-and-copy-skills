@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marathon pace per kilometer</title>
+<style>
+  :root { --bg:#fff; --fg:#1f2328; --muted:#6b7280; --grid:#e5e7eb; --line:#2563eb; --accent:#c2410c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14171a; --fg:#e8eaed; --muted:#9aa1ab; --grid:#2a2f35; --line:#6ea0ff; --accent:#fb923c; }
+  }
+  body { margin:0; padding:24px; background:var(--bg); color:var(--fg);
+         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  figure { margin:0 auto; max-width:760px; }
+  h1 { font-size:20px; line-height:1.3; margin:0 0 4px; font-weight:600; }
+  p.sub { margin:0 0 12px; color:var(--muted); font-size:14px; }
+  svg { width:100%; height:auto; display:block; }
+  svg text { fill:var(--muted); font-size:12px; font-family:inherit; }
+  svg text.note { fill:var(--accent); font-weight:600; }
+  details { margin-top:12px; font-size:13px; color:var(--muted); }
+  summary { cursor:pointer; }
+  table { border-collapse:collapse; margin-top:8px; width:100%; }
+  th, td { padding:3px 6px; text-align:right; border-bottom:1px solid var(--grid); font-variant-numeric:tabular-nums; }
+  th { font-weight:600; }
+</style>
+</head>
+<body>
+<figure>
+  <h1>Pace faded steadily from 5:05 to 5:40 per km, with one water-stop spike at km 30</h1>
+  <p class="sub">Marathon training log · pace in min/km, km 1–42 (higher = slower)</p>
+  <svg id="chart" viewBox="0 0 720 320" role="img"
+       aria-label="Line chart of pace per kilometer over 42 km. Pace starts at 5:05 min/km, rises gradually to 5:40 at km 42, and spikes to 6:10 at km 30 during a water stop."></svg>
+  <details>
+    <summary>Show data table</summary>
+    <table id="tbl"></table>
+  </details>
+</figure>
+<script>
+  var secs = [305,304,306,305,307,306,308,307,309,308,310,311,310,312,313,312,314,315,314,316,317,
+              316,318,320,319,321,323,322,324,370,332,326,328,327,329,331,330,333,335,334,337,340];
+  var fmt = function (s) { return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0"); };
+  var W=720, H=320, L=48, R=24, T=20, B=40, MIN=290, MAX=380;
+  var x = function (km) { return L + (km-1)/41*(W-L-R); };
+  var y = function (s) { return T + (MAX-s)/(MAX-MIN)*(H-T-B); };
+  var NS = "http://www.w3.org/2000/svg", svg = document.getElementById("chart"), out = "";
+
+  [300,320,340,360,380].forEach(function (s) {
+    out += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(s)+'" y2="'+y(s)+'" stroke="var(--grid)"/>' +
+           '<text x="'+(L-8)+'" y="'+(y(s)+4)+'" text-anchor="end">'+fmt(s)+'</text>';
+  });
+  [1,5,10,15,20,25,30,35,40,42].forEach(function (k) {
+    out += '<text x="'+x(k)+'" y="'+(H-20)+'" text-anchor="middle">'+k+'</text>';
+  });
+  out += '<text x="'+((L+W-R)/2)+'" y="'+(H-4)+'" text-anchor="middle">Kilometer</text>';
+
+  var pts = secs.map(function (s,i) { return x(i+1).toFixed(1)+","+y(s).toFixed(1); }).join(" ");
+  out += '<polyline points="'+pts+'" fill="none" stroke="var(--line)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+
+  out += '<circle cx="'+x(1)+'" cy="'+y(secs[0])+'" r="4" fill="var(--line)"/>' +
+         '<text x="'+(x(1)+8)+'" y="'+(y(secs[0])+18)+'">Km 1 · 5:05</text>' +
+         '<circle cx="'+x(42)+'" cy="'+y(secs[41])+'" r="4" fill="var(--line)"/>' +
+         '<text x="'+(x(42)-8)+'" y="'+(y(secs[41])+20)+'" text-anchor="end">Km 42 · 5:40</text>' +
+         '<circle cx="'+x(30)+'" cy="'+y(secs[29])+'" r="5" fill="var(--accent)"/>' +
+         '<text class="note" x="'+(x(30)-10)+'" y="'+(y(secs[29])+4)+'" text-anchor="end">Km 30 · 6:10 water stop</text>';
+  svg.innerHTML = out;
+
+  var rows = '<tr><th>Km</th><th>Pace</th><th>Km</th><th>Pace</th><th>Km</th><th>Pace</th></tr>';
+  for (var i=0;i<14;i++) {
+    rows += '<tr>';
+    for (var c=0;c<3;c++) { var k=i+c*14; rows += '<td>'+(k+1)+'</td><td>'+fmt(secs[k])+'</td>'; }
+    rows += '</tr>';
+  }
+  document.getElementById("tbl").innerHTML = rows;
+</script>
+</body>
+</html>

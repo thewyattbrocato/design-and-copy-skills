@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quillon monthly rainfall</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #6b6963;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series: #2a78d6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #a09e97;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series: #3987e5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.45;
+  }
+  .card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  h1 { margin: 0; font-size: 1.35rem; font-weight: 650; letter-spacing: -0.01em; }
+  .sub { margin: 4px 0 0; color: var(--ink-2); font-size: 0.95rem; }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px 32px; margin: 20px 0 8px; }
+  .stat .v { font-size: 1.6rem; font-weight: 650; letter-spacing: -0.01em; }
+  .stat .v small { font-size: 0.9rem; font-weight: 500; color: var(--ink-2); }
+  .stat .l { font-size: 0.8rem; color: var(--ink-2); }
+  .chart { position: relative; margin-top: 8px; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  svg text { font-family: inherit; font-size: 12px; fill: var(--muted); }
+  svg text.val { fill: var(--ink); font-weight: 600; }
+  .bar { fill: var(--series); transition: opacity .12s; }
+  .chart.hovering .bar { opacity: 0.4; }
+  .chart.hovering .bar.on { opacity: 1; }
+  .hit { fill: transparent; cursor: default; outline: none; }
+  .tip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--axis);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    opacity: 0;
+    transform: translate(-50%, -100%);
+    transition: opacity .1s;
+  }
+  .tip.show { opacity: 1; }
+  .tip b { font-weight: 650; }
+  .tip span { color: var(--ink-2); }
+  .note { margin: 12px 0 0; font-size: 0.9rem; color: var(--ink-2); }
+  details { margin-top: 16px; border-top: 1px solid var(--grid); padding-top: 12px; }
+  summary { cursor: pointer; font-size: 0.9rem; color: var(--ink-2); }
+  table { border-collapse: collapse; margin-top: 8px; width: 100%; max-width: 280px; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 4px 0; border-bottom: 1px solid var(--grid); }
+  td:last-child, th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  tfoot td { font-weight: 650; border-bottom: 0; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card { border: 0; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Monthly rainfall in Quillon</h1>
+  <p class="sub">Millimetres of rain per month, January to December</p>
+
+  <div class="stats">
+    <div class="stat"><div class="v">743 <small>mm</small></div><div class="l">Total for the year</div></div>
+    <div class="stat"><div class="v">112 <small>mm</small></div><div class="l">Wettest month (November)</div></div>
+    <div class="stat"><div class="v">18 <small>mm</small></div><div class="l">Driest month (July)</div></div>
+  </div>
+
+  <div class="chart" id="chart" role="img" aria-label="Column chart of monthly rainfall in millimetres for Quillon. Rainfall is highest in November at 112 millimetres and lowest in July at 18 millimetres. A full table follows below.">
+    <svg id="svg" aria-hidden="true"></svg>
+    <div class="tip" id="tip"></div>
+  </div>
+
+  <p class="note">Winter is the wet season: October to December brings 305&nbsp;mm, about 41% of the year's rain. June to August gets only 71&nbsp;mm, so plan on watering.</p>
+
+  <details>
+    <summary>View as table</summary>
+    <table>
+      <thead><tr><th>Month</th><th>Rainfall (mm)</th></tr></thead>
+      <tbody id="rows"></tbody>
+      <tfoot><tr><td>Year total</td><td>743</td></tr></tfoot>
+    </table>
+  </details>
+</div>
+
+<script>
+(function () {
+  var data = [
+    ["Jan","January",82],["Feb","February",64],["Mar","March",71],["Apr","April",55],
+    ["May","May",48],["Jun","June",31],["Jul","July",18],["Aug","August",22],
+    ["Sep","September",47],["Oct","October",89],["Nov","November",112],["Dec","December",104]
+  ];
+  var chart = document.getElementById("chart");
+  var svg = document.getElementById("svg");
+  var tip = document.getElementById("tip");
+  var rows = document.getElementById("rows");
+  var ns = "http://www.w3.org/2000/svg";
+  var max = 120, ticks = [0, 30, 60, 90, 120];
+  var H = 300, m = { l: 34, r: 4, t: 22, b: 26 };
+
+  rows.innerHTML = data.map(function (d) {
+    return "<tr><td>" + d[1] + "</td><td>" + d[2] + "</td></tr>";
+  }).join("");
+
+  function el(name, attrs, text) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function show(i, bars, cx, top) {
+    chart.classList.add("hovering");
+    bars.forEach(function (b, j) { b.classList.toggle("on", j === i); });
+    tip.innerHTML = "<b>" + data[i][1] + "</b> <span>&nbsp;" + data[i][2] + " mm</span>";
+    var w = chart.clientWidth;
+    tip.style.left = Math.max(50, Math.min(w - 50, cx)) + "px";
+    tip.style.top = (top - 8) + "px";
+    tip.classList.add("show");
+  }
+  function hide(bars) {
+    chart.classList.remove("hovering");
+    bars.forEach(function (b) { b.classList.remove("on"); });
+    tip.classList.remove("show");
+  }
+
+  function render() {
+    var W = chart.clientWidth;
+    if (!W) return;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.setAttribute("height", H);
+    svg.innerHTML = "";
+    var pw = W - m.l - m.r, ph = H - m.t - m.b;
+    var band = pw / data.length;
+    var bw = Math.min(24, band * 0.62);
+    var y = function (v) { return m.t + ph - (v / max) * ph; };
+    var narrow = band < 34;
+
+    ticks.forEach(function (t) {
+      if (t > 0) svg.appendChild(el("line", { x1: m.l, x2: W - m.r, y1: y(t), y2: y(t), stroke: "var(--grid)", "stroke-width": 1 }));
+      svg.appendChild(el("text", { x: m.l - 8, y: y(t) + 4, "text-anchor": "end" }, t));
+    });
+    svg.appendChild(el("text", { x: 0, y: 10 }, "mm"));
+
+    var bars = [];
+    data.forEach(function (d, i) {
+      var cx = m.l + band * i + band / 2;
+      var x = cx - bw / 2, top = y(d[2]), base = y(0), r = Math.min(4, base - top);
+      var path = "M" + x + "," + base + "V" + (top + r) + "Q" + x + "," + top + " " + (x + r) + "," + top +
+                 "H" + (x + bw - r) + "Q" + (x + bw) + "," + top + " " + (x + bw) + "," + (top + r) + "V" + base + "Z";
+      var bar = el("path", { d: path, "class": "bar" });
+      svg.appendChild(bar);
+      bars.push(bar);
+
+      svg.appendChild(el("text", { x: cx, y: H - 8, "text-anchor": "middle" }, narrow ? d[0].charAt(0) : d[0]));
+
+      if (i === 10 || i === 6) {
+        svg.appendChild(el("text", { x: cx, y: top - 6, "text-anchor": "middle", "class": "val" }, d[2]));
+      }
+    });
+
+    svg.appendChild(el("line", { x1: m.l, x2: W - m.r, y1: y(0), y2: y(0), stroke: "var(--axis)", "stroke-width": 1 }));
+
+    data.forEach(function (d, i) {
+      var cx = m.l + band * i + band / 2;
+      var hit = el("rect", {
+        x: m.l + band * i, y: m.t, width: band, height: ph + m.b,
+        "class": "hit", tabindex: 0
+      });
+      var go = function () { show(i, bars, cx, y(d[2]) - (i === 10 || i === 6 ? 16 : 0)); };
+      hit.addEventListener("pointerenter", go);
+      hit.addEventListener("pointermove", go);
+      hit.addEventListener("pointerleave", function () { hide(bars); });
+      hit.addEventListener("focus", go);
+      hit.addEventListener("blur", function () { hide(bars); });
+      svg.appendChild(hit);
+    });
+  }
+
+  render();
+  if (window.ResizeObserver) new ResizeObserver(render).observe(chart);
+  else window.addEventListener("resize", render);
+})();
+</script>
+</body>
+</html>

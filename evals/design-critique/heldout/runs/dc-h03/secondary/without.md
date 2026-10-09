@@ -1,0 +1,1 @@
+Mostly fine, but fix the contrast: the #b5b5b5 billing note on white is about 2:1 and 11px is small, and white 13px on #9aa0a6 is about 2.6:1, so both fail WCAG AA. The gray button also reads as disabled next to Starter's blue, so the pricier plan looks like the less desirable one.

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spokeline – Saved routes</title>
+<style>
+  :root {
+    --bg: #f6f5f2;
+    --surface: #ffffff;
+    --ink: #1b1f1d;
+    --muted: #5f6762;
+    --line: #e4e2dc;
+    --accent: #e4572e;
+    --accent-ink: #ffffff;
+    --accent-soft: #fdece6;
+    --green: #1f7a5a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #dcdad4;
+    color: var(--ink);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .screen {
+    width: 100%;
+    max-width: 390px;
+    min-height: 100vh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  header {
+    padding: 20px 20px 8px;
+  }
+  header h1 {
+    font-size: 28px;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+  }
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 24px;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 28px 8px 28px;
+  }
+  .illo {
+    width: 132px;
+    height: 132px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    display: grid;
+    place-items: center;
+  }
+  .empty h2 {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .empty p {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--muted);
+    max-width: 300px;
+    margin: 0 auto 22px;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 50px;
+    border-radius: 14px;
+    border: 0;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .btn:active { filter: brightness(0.92); }
+  .btn:focus-visible, .route:focus-visible, .tab:focus-visible, .link:focus-visible {
+    outline: 3px solid #1b6fd1;
+    outline-offset: 2px;
+  }
+  .hint {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 6px 0 18px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .section-head h3 { font-size: 17px; font-weight: 700; }
+  .link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .list { display: flex; flex-direction: column; gap: 10px; }
+  .route {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    width: 100%;
+  }
+  .thumb {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: #eef3ef;
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+  .info { flex: 1; min-width: 0; }
+  .name {
+    font-size: 15px;
+    font-weight: 650;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .save {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    color: var(--ink);
+  }
+
+  nav {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    padding: 6px 4px calc(10px + env(safe-area-inset-bottom));
+  }
+  .tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 550;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .tab[aria-current="page"] { color: var(--accent); font-weight: 700; }
+  .tab svg { width: 24px; height: 24px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <header>
+    <h1>Saved routes</h1>
+  </header>
+
+  <main>
+    <section class="empty" aria-labelledby="empty-title">
+      <div class="illo" aria-hidden="true">
+        <svg width="84" height="84" viewBox="0 0 84 84" fill="none">
+          <path d="M20 14h34a4 4 0 0 1 4 4v50l-21-12-21 12V18a4 4 0 0 1 4-4z" fill="#fff" stroke="#e4572e" stroke-width="3" stroke-linejoin="round" transform="translate(4 0)"/>
+          <path d="M28 52c6-2 6-12 12-12s6 8 12 4 4-14 4-14" stroke="#e4572e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 6" transform="translate(-2 -12)"/>
+          <circle cx="28" cy="40" r="4" fill="#1f7a5a"/>
+          <circle cx="54" cy="26" r="4" fill="#e4572e"/>
+        </svg>
+      </div>
+      <h2 id="empty-title">No saved routes yet</h2>
+      <p>Saving a route keeps it available offline and shows it on your watch.</p>
+      <button class="btn" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 20h14"/></svg>
+        Import a route file
+      </button>
+      <div class="hint">GPX, TCX or FIT</div>
+    </section>
+
+    <div class="divider" role="separator"><span>or start with a popular ride</span></div>
+
+    <section aria-labelledby="pop-title">
+      <div class="section-head">
+        <h3 id="pop-title">Popular nearby</h3>
+        <a class="link" href="#">See all</a>
+      </div>
+      <div class="list">
+        <button class="route" type="button" aria-label="Save Riverside Loop, 24 km, 180 m climbing, 1.2 km away">
+          <span class="thumb" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#1f7a5a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24c0-9 8-4 10-10s10-6 12-4"/><circle cx="6" cy="26" r="1.5" fill="#1f7a5a"/></svg>
+          </span>
+          <span class="info">
+            <span class="name" style="display:block">Riverside Loop</span>
+            <span class="meta" style="display:block">24 km · 180 m climb · 1.2 km away</span>
+          </span>
+          <span class="save" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 4h12v17l-6-4-6 4z"/></svg>
+          </span>
+        </button>
+        <button class="route" type="button" aria-label="Save Hawk Hill Climb, 31 km, 520 m climbing, 3.4 km away">
+          <span class="thumb" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#1f7a5a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27l8-10 5 5 11-14"/><circle cx="5" cy="27" r="1.5" fill="#1f7a5a"/></svg>
+          </span>
+          <span class="info">
+            <span class="name" style="display:block">Hawk Hill Climb</span>
+            <span class="meta" style="display:block">31 km · 520 m climb · 3.4 km away</span>
+          </span>
+          <span class="save" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 4h12v17l-6-4-6 4z"/></svg>
+          </span>
+        </button>
+        <button class="route" type="button" aria-label="Save Old Mill Gravel, 42 km, 310 m climbing, 5.8 km away">
+          <span class="thumb" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#1f7a5a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8c10-2 8 8 14 8s6 8 6 10"/><circle cx="7" cy="8" r="1.5" fill="#1f7a5a"/></svg>
+          </span>
+          <span class="info">
+            <span class="name" style="display:block">Old Mill Gravel</span>
+            <span class="meta" style="display:block">42 km · 310 m climb · 5.8 km away</span>
+          </span>
+          <span class="save" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 4h12v17l-6-4-6 4z"/></svg>
+          </span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <nav aria-label="Main">
+    <button class="tab" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>
+      Home
+    </button>
+    <button class="tab" type="button" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12v17.5l-6-4-6 4z"/></svg>
+      Saved routes
+    </button>
+    <button class="tab" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+      Record
+    </button>
+    <button class="tab" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/></svg>
+      Profile
+    </button>
+  </nav>
+</div>
+</body>
+</html>

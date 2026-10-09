@@ -1,0 +1,1 @@
+Pair the teal with a slightly teal-tinted neutral: **#f6f9f9** for page backgrounds and **#1a2526** for body text, which is about 15:1 contrast (my estimate, not run through a checker). Use white or #eef3f3 for cards so the surfaces step up gently, and avoid pure black or a warm gray, which would clash with the teal.

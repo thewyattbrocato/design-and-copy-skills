@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to Kilnbook</title>
+<style>
+  :root {
+    --bg: #f7f2ea;
+    --card: #fffdf9;
+    --ink: #2b2420;
+    --muted: #6b5f56;
+    --line: #e5dbcc;
+    --clay: #b4491f;
+    --clay-dark: #8f3715;
+    --clay-tint: #f9e6dc;
+    --glaze: #2f5d5a;
+    --glaze-tint: #dfeceb;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--glaze); outline-offset: 2px; }
+
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1040px; margin: 0 auto; padding: 18px 24px;
+  }
+  .brand { font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .brand-mark { width: 22px; height: 22px; border-radius: 50% 50% 8px 8px; background: var(--clay); display: inline-block; }
+  .who { display: flex; align-items: center; gap: 10px; font-size: .9rem; color: var(--muted); }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--glaze); color: #fff; display: grid; place-items: center; font-weight: 600; font-size: .85rem; }
+
+  main { max-width: 1040px; margin: 0 auto; padding: 8px 24px 64px; }
+
+  .hero { margin: 12px 0 28px; max-width: 640px; }
+  .eyebrow { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--clay-dark); font-weight: 700; margin: 0 0 8px; }
+  h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.02em; }
+  .hero p { margin: 0; color: var(--muted); font-size: 1.05rem; }
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  h2 { font-size: 1.15rem; margin: 0 0 4px; }
+  .sub { margin: 0 0 16px; color: var(--muted); font-size: .92rem; }
+
+  .tabs { display: flex; gap: 6px; background: #f0e8da; padding: 4px; border-radius: 10px; margin-bottom: 14px; }
+  .tab { flex: 1; border: 0; background: transparent; padding: 10px 12px; border-radius: 7px; cursor: pointer; font-weight: 600; color: var(--muted); }
+  .tab[aria-selected="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 2px rgba(60,40,20,.15); }
+
+  .hint { background: var(--glaze-tint); color: #1f423f; border-radius: 10px; padding: 10px 14px; font-size: .9rem; margin: 0 0 14px; }
+
+  .slots { display: grid; gap: 10px; border: 0; padding: 0; margin: 0; }
+  .slot { position: relative; }
+  .slot input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+  .slot label {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border: 1.5px solid var(--line); border-radius: 12px; padding: 14px 16px; background: #fff; cursor: pointer;
+    transition: border-color .12s, background .12s;
+  }
+  .slot input:hover + label { border-color: #cdbba2; }
+  .slot input:checked + label { border-color: var(--clay); background: var(--clay-tint); }
+  .slot input:focus-visible + label { outline: 3px solid var(--glaze); outline-offset: 2px; }
+  .slot-when { font-weight: 650; }
+  .slot-where { font-size: .88rem; color: var(--muted); }
+  .left { font-size: .8rem; font-weight: 650; white-space: nowrap; padding: 3px 9px; border-radius: 99px; background: var(--glaze-tint); color: #1f423f; }
+  .left.low { background: #fbe7c4; color: #6d4700; }
+
+  .confirm {
+    margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .summary { font-size: .95rem; }
+  .summary strong { display: block; }
+  .summary span { color: var(--muted); font-size: .88rem; }
+  .btn { border: 0; background: var(--clay); color: #fff; font-weight: 700; padding: 12px 22px; border-radius: 10px; cursor: pointer; }
+  .btn:hover:not(:disabled) { background: var(--clay-dark); }
+  .btn:disabled { background: #d9cdbd; color: #6b5f56; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--clay-dark); border: 1.5px solid var(--clay); }
+  .btn.ghost:hover { background: var(--clay-tint); }
+
+  .done { text-align: center; padding: 18px 8px; }
+  .done .tick { width: 52px; height: 52px; border-radius: 50%; background: var(--glaze); color: #fff; display: grid; place-items: center; font-size: 1.6rem; margin: 0 auto 12px; }
+  .done p { color: var(--muted); margin: 6px 0 16px; }
+
+  aside { display: grid; gap: 16px; }
+  .steps { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 14px; }
+  .steps li { display: flex; gap: 12px; align-items: flex-start; font-size: .92rem; }
+  .steps b { display: block; }
+  .steps small { color: var(--muted); font-size: .84rem; }
+  .dot { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: .75rem; font-weight: 700; color: var(--muted); }
+  .steps li.complete .dot { background: var(--glaze); border-color: var(--glaze); color: #fff; }
+  .steps li.current .dot { border-color: var(--clay); color: var(--clay-dark); }
+  .bar { height: 6px; background: #efe6d7; border-radius: 99px; overflow: hidden; margin-top: 10px; }
+  .bar i { display: block; height: 100%; background: var(--glaze); width: 33%; transition: width .3s; }
+
+  .credits { display: flex; justify-content: space-between; align-items: baseline; }
+  .credits big { font-size: 1.9rem; font-weight: 750; letter-spacing: -0.02em; }
+  .price { list-style: none; padding: 0; margin: 10px 0 0; font-size: .88rem; color: var(--muted); }
+  .price li { display: flex; justify-content: space-between; padding: 6px 0; border-top: 1px solid var(--line); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="brand-mark" aria-hidden="true"></span>Kilnbook</div>
+  <div class="who"><span>Riverbend Clay Collective</span><span class="avatar" aria-hidden="true">MO</span></div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">Membership active</p>
+    <h1>Welcome, Maya. Let's get your hands in clay.</h1>
+    <p>You're one booking away from your first session. Pick a time below. Most new members start with a 2-hour wheel slot, and you can change it any time up to 4 hours before.</p>
+  </section>
+
+  <div class="layout">
+    <section class="card" aria-labelledby="book-h" id="booking">
+      <h2 id="book-h">Book your first session</h2>
+      <p class="sub">Showing the next openings at Riverbend Clay Collective.</p>
+
+      <div id="flow">
+        <div class="tabs" role="tablist" aria-label="Session type">
+          <button class="tab" role="tab" id="tab-wheel" aria-selected="true" aria-controls="panel" data-type="wheel">Wheel time</button>
+          <button class="tab" role="tab" id="tab-kiln" aria-selected="false" aria-controls="panel" data-type="kiln">Kiln shelf</button>
+        </div>
+
+        <div id="panel" role="tabpanel" aria-labelledby="tab-wheel">
+          <p class="hint" id="hint"></p>
+          <fieldset class="slots" id="slots">
+            <legend class="sr" style="position:absolute;left:-9999px">Available times</legend>
+          </fieldset>
+        </div>
+
+        <div class="confirm">
+          <div class="summary" aria-live="polite">
+            <strong id="sum-title">Choose a time to continue</strong>
+            <span id="sum-sub">Nothing is charged until you confirm.</span>
+          </div>
+          <button class="btn" id="confirm" disabled>Confirm booking</button>
+        </div>
+      </div>
+    </section>
+
+    <aside>
+      <section class="card" aria-labelledby="start-h">
+        <h2 id="start-h">Getting started</h2>
+        <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+        <ol class="steps">
+          <li class="complete"><span class="dot" aria-hidden="true">✓</span><div><b>Join the studio</b><small>Account and membership are set up.</small></div></li>
+          <li class="current" id="step-book"><span class="dot" aria-hidden="true">2</span><div><b>Book a wheel or kiln slot</b><small>Takes under a minute.</small></div></li>
+          <li><span class="dot" aria-hidden="true">3</span><div><b>Show up and make something</b><small>Aprons and basic tools are on the shelf by the sink. Arrive 10 minutes early for a quick walkthrough. It's required before you load the kiln.</small></div></li>
+        </ol>
+      </section>
+
+      <section class="card" aria-labelledby="cred-h">
+        <div class="credits"><h2 id="cred-h">Studio credits</h2><big id="credits">6</big></div>
+        <p class="sub" style="margin:4px 0 0">Included with your plan this month.</p>
+        <ul class="price">
+          <li><span>Wheel session (2 hrs)</span><span>2 credits</span></li>
+          <li><span>Kiln shelf (one firing)</span><span>1 credit</span></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<script>
+  const DATA = {
+    wheel: {
+      hint: "No experience needed. Staff can set you up with clay and a wheel, and a studio monitor is on the floor for every session.",
+      cost: 2,
+      slots: [
+        { id: "w1", when: "Fri, Oct 9 · 10:00 am – 12:00 pm", where: "Wheel room · Wheel 4", left: 3 },
+        { id: "w2", when: "Fri, Oct 9 · 6:00 – 8:00 pm", where: "Wheel room · Wheel 2", left: 1 },
+        { id: "w3", when: "Sat, Oct 10 · 9:00 – 11:00 am", where: "Wheel room · Wheel 6", left: 4 },
+        { id: "w4", when: "Tue, Oct 13 · 7:00 – 9:00 pm", where: "Wheel room · Wheel 1", left: 5 }
+      ]
+    },
+    kiln: {
+      hint: "No finished piece yet? Book a wheel session first. You can load the kiln any time after.",
+      cost: 1,
+      slots: [
+        { id: "k1", when: "Sat, Oct 10 · Bisque firing", where: "Load by 12:00 pm · Kiln A", left: 2 },
+        { id: "k2", when: "Wed, Oct 14 · Glaze firing (cone 6)", where: "Load by Tue 6:00 pm · Kiln B", left: 1 },
+        { id: "k3", when: "Fri, Oct 16 · Bisque firing", where: "Load by 12:00 pm · Kiln A", left: 6 }
+      ]
+    }
+  };
+
+  const $ = id => document.getElementById(id);
+  let type = "wheel", picked = null;
+
+  function render() {
+    const d = DATA[type];
+    $("hint").textContent = d.hint;
+    $("slots").innerHTML = '<legend style="position:absolute;left:-9999px">Available times</legend>' +
+      d.slots.map(s => `
+        <div class="slot">
+          <input type="radio" name="slot" id="${s.id}" value="${s.id}" ${picked === s.id ? "checked" : ""}>
+          <label for="${s.id}">
+            <span><span class="slot-when">${s.when}</span><br><span class="slot-where">${s.where}</span></span>
+            <span class="left ${s.left <= 1 ? "low" : ""}">${s.left === 1 ? "Last spot" : s.left + " open"}</span>
+          </label>
+        </div>`).join("");
+    update();
+  }
+
+  function update() {
+    const d = DATA[type];
+    const s = d.slots.find(x => x.id === picked);
+    $("confirm").disabled = !s;
+    $("sum-title").textContent = s ? s.when : "Choose a time to continue";
+    $("sum-sub").textContent = s ? `${s.where} · ${d.cost} credit${d.cost > 1 ? "s" : ""}` : "Nothing is charged until you confirm.";
+  }
+
+  document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+    type = t.dataset.type; picked = null;
+    document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === t));
+    $("panel").setAttribute("aria-labelledby", t.id);
+    render();
+  }));
+
+  $("slots").addEventListener("change", e => { picked = e.target.value; update(); });
+
+  $("confirm").addEventListener("click", () => {
+    const d = DATA[type];
+    const s = d.slots.find(x => x.id === picked);
+    $("credits").textContent = 6 - d.cost;
+    $("bar").style.width = "66%";
+    const li = $("step-book");
+    li.className = "complete";
+    li.querySelector(".dot").textContent = "✓";
+    li.querySelector("small").textContent = "Booked: " + s.when;
+    $("flow").innerHTML = `
+      <div class="done" role="status">
+        <div class="tick" aria-hidden="true">✓</div>
+        <h2>You're booked.</h2>
+        <p><strong>${s.when}</strong><br>${s.where}<br>${d.cost} credit${d.cost > 1 ? "s" : ""} used, ${6 - d.cost} left this month.</p>
+        <button class="btn ghost" id="another">Book another session</button>
+      </div>`;
+    $("another").addEventListener("click", () => location.reload());
+  });
+
+  render();
+</script>
+</body>
+</html>

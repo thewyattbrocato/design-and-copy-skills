@@ -1,0 +1,1 @@
+Use a cool, slightly teal-tinted neutral: a near-white page background like `#f5f8f8` and body text in a dark slate like `#1a2a2b` rather than pure black. Your teal `#0f7c80` is about 5:1 against white, so it also works for links and buttons on these backgrounds.

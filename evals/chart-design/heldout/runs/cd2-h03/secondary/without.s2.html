@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nursery Orders and Revenue by Month, Last Year</title>
+<style>
+:root{color-scheme:light dark;--bg:#fbfaf7;--ink:#1d2421;--muted:#5b6661;--grid:#e3e6e2;--orders:#2e7d5b;--revenue:#9a6b1f;--card:#ffffff}
+@media (prefers-color-scheme:dark){:root{--bg:#141a17;--ink:#e8eee9;--muted:#9aa7a0;--grid:#2c3732;--orders:#5fbf93;--revenue:#e0a85a;--card:#1b2320}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:800px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.4rem;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 16px;font-size:.9rem}
+.kpis{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--grid);border-radius:8px;padding:10px 14px;min-width:150px}
+.kpi b{display:block;font-size:1.25rem}
+.kpi span{color:var(--muted);font-size:.8rem}
+.panel{background:var(--card);border:1px solid var(--grid);border-radius:8px;padding:12px 12px 4px;margin-bottom:14px}
+.panel h2{font-size:1rem;margin:4px 8px 6px;display:flex;align-items:center;gap:8px}
+.swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--muted);font-size:12px;font-family:inherit}
+svg rect:hover{opacity:.8}
+table{width:100%;border-collapse:collapse;font-size:.85rem;margin:4px 0 8px}
+caption{text-align:left;color:var(--muted);padding-bottom:6px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:right}
+th:first-child,td:first-child{text-align:left}
+tfoot td{font-weight:600;border-bottom:none}
+</style>
+</head>
+<body>
+<main>
+  <h1>Orders and Revenue by Month</h1>
+  <p class="sub">Last year. Orders and revenue are charted in separate panels on a shared month axis, each with its own scale, so the two measures can be compared month by month without distortion.</p>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section class="panel">
+    <h2><span class="swatch" style="background:var(--orders)"></span>Orders per month</h2>
+    <svg id="orders" role="img" aria-label="Bar chart of monthly orders"></svg>
+  </section>
+
+  <section class="panel">
+    <h2><span class="swatch" style="background:var(--revenue)"></span>Revenue per month (USD)</h2>
+    <svg id="revenue" role="img" aria-label="Bar chart of monthly revenue in US dollars"></svg>
+  </section>
+
+  <section class="panel">
+    <table>
+      <caption>Monthly figures</caption>
+      <thead><tr><th>Month</th><th>Orders</th><th>Revenue</th><th>Avg. order value</th></tr></thead>
+      <tbody id="rows"></tbody>
+      <tfoot id="totals"></tfoot>
+    </table>
+  </section>
+</main>
+
+<script>
+const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const orders = [310,280,420,690,880,760,540,500,610,470,390,520];
+const revenue = [9800,8900,15200,31400,44900,36100,21500,19800,24700,18200,14600,29300];
+
+const fmtUSD = n => "$" + Math.round(n).toLocaleString("en-US");
+const fmtN = n => Math.round(n).toLocaleString("en-US");
+
+// Round the axis maximum up to a clean value with four equal intervals
+function niceTop(v) {
+  const raw = v / 4;
+  const p = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 2, 2.5, 5, 10].map(m => m * p).find(x => x >= raw);
+  return step * 4;
+}
+
+function barChart(id, vals, fmt, label) {
+  const svg = document.getElementById(id);
+  const W = 720, H = 230, L = 64, R = 8, T = 10, B = 28;
+  const top = niceTop(Math.max(...vals));
+  const step = top / 4;
+  const iw = W - L - R, ih = H - T - B;
+  const slot = iw / 12, bw = slot * 0.6;
+  let s = "";
+
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  for (let i = 0; i <= 4; i++) {
+    const y = T + ih - (step * i / top) * ih;
+    s += `<line x1="${L}" x2="${W - R}" y1="${y}" y2="${y}" style="stroke:var(--grid)"/>`;
+    s += `<text x="${L - 8}" y="${y + 4}" text-anchor="end">${fmt(step * i)}</text>`;
+  }
+  vals.forEach((v, i) => {
+    const h = (v / top) * ih;
+    const x = L + i * slot + (slot - bw) / 2;
+    const y = T + ih - h;
+    s += `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" style="fill:${label.color}"><title>${months[i]}: ${fmt(v)}</title></rect>`;
+    s += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${months[i]}</text>`;
+  });
+  svg.innerHTML = s;
+}
+
+barChart("orders", orders, fmtN, { color: "var(--orders)" });
+barChart("revenue", revenue, fmtUSD, { color: "var(--revenue)" });
+
+const totalOrders = orders.reduce((a, b) => a + b, 0);
+const totalRevenue = revenue.reduce((a, b) => a + b, 0);
+const peakIdx = revenue.indexOf(Math.max(...revenue));
+
+document.getElementById("kpis").innerHTML = `
+  <div class="kpi"><span>Total orders</span><b>${fmtN(totalOrders)}</b></div>
+  <div class="kpi"><span>Total revenue</span><b>${fmtUSD(totalRevenue)}</b></div>
+  <div class="kpi"><span>Avg. order value</span><b>${fmtUSD(totalRevenue / totalOrders)}</b></div>
+  <div class="kpi"><span>Peak revenue month</span><b>${months[peakIdx]} (${fmtUSD(revenue[peakIdx])})</b></div>`;
+
+document.getElementById("rows").innerHTML = months.map((m, i) => `
+  <tr><td>${m}</td><td>${fmtN(orders[i])}</td><td>${fmtUSD(revenue[i])}</td><td>${fmtUSD(revenue[i] / orders[i])}</td></tr>`).join("");
+
+document.getElementById("totals").innerHTML = `
+  <tr><td>Total</td><td>${fmtN(totalOrders)}</td><td>${fmtUSD(totalRevenue)}</td><td>${fmtUSD(totalRevenue / totalOrders)}</td></tr>`;
+</script>
+</body>
+</html>

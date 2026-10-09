@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Export Preferences</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --window-bg: #ececec;
+    --sheet-bg: rgba(246,246,246,0.96);
+    --text: #1d1d1f;
+    --text-2: #6e6e73;
+    --sep: rgba(0,0,0,0.12);
+    --field-bg: #ffffff;
+    --field-border: rgba(0,0,0,0.18);
+    --accent: #007aff;
+    --btn-bg: #ffffff;
+    --btn-border: rgba(0,0,0,0.2);
+    --track: rgba(0,0,0,0.14);
+    --backdrop: rgba(0,0,0,0.25);
+    --shadow: 0 22px 70px rgba(0,0,0,0.35), 0 0 0 0.5px rgba(0,0,0,0.25);
+    --seg-bg: rgba(0,0,0,0.06);
+    --seg-active: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --window-bg: #1e1e1e;
+      --sheet-bg: rgba(44,44,46,0.97);
+      --text: #f5f5f7;
+      --text-2: #98989d;
+      --sep: rgba(255,255,255,0.12);
+      --field-bg: #3a3a3c;
+      --field-border: rgba(255,255,255,0.15);
+      --accent: #0a84ff;
+      --btn-bg: #636366;
+      --btn-border: rgba(255,255,255,0.1);
+      --track: rgba(255,255,255,0.2);
+      --backdrop: rgba(0,0,0,0.45);
+      --shadow: 0 22px 70px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(255,255,255,0.15);
+      --seg-bg: rgba(255,255,255,0.1);
+      --seg-active: #636366;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font: 13px/1.35 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    color: var(--text);
+    background: var(--window-bg);
+    -webkit-font-smoothing: antialiased;
+    display: flex; justify-content: center; align-items: flex-start;
+    overflow: hidden;
+  }
+  /* Faux app window behind the sheet */
+  .window {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+  }
+  .titlebar {
+    height: 38px; display: flex; align-items: center; padding: 0 14px;
+    border-bottom: 1px solid var(--sep);
+    background: var(--sheet-bg);
+  }
+  .lights { display: flex; gap: 8px; }
+  .lights i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .lights i:nth-child(1){ background:#ff5f57; }
+  .lights i:nth-child(2){ background:#febc2e; }
+  .lights i:nth-child(3){ background:#28c840; }
+  .titlebar b { flex: 1; text-align: center; font-weight: 600; margin-right: 52px; }
+  .grid {
+    flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px,1fr));
+    gap: 10px; padding: 14px; align-content: start;
+  }
+  .grid span {
+    aspect-ratio: 4/3; border-radius: 4px;
+    background: linear-gradient(135deg, var(--track), transparent);
+  }
+  .backdrop { position: absolute; inset: 0; background: var(--backdrop); }
+
+  /* Sheet */
+  .sheet {
+    position: relative; margin-top: 38px;
+    width: 460px; max-width: calc(100% - 24px);
+    background: var(--sheet-bg);
+    -webkit-backdrop-filter: blur(30px) saturate(1.8);
+    backdrop-filter: blur(30px) saturate(1.8);
+    border-radius: 0 0 12px 12px;
+    box-shadow: var(--shadow);
+    padding: 20px 20px 16px;
+    animation: drop .28s cubic-bezier(.2,.8,.3,1) both;
+  }
+  @keyframes drop { from { transform: translateY(-30px); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
+
+  .head { display: flex; gap: 14px; align-items: center; margin-bottom: 18px; }
+  .icon {
+    width: 48px; height: 48px; border-radius: 11px; flex: none;
+    background: linear-gradient(160deg, #5ac8fa, #007aff 60%, #5856d6);
+    display: grid; place-items: center;
+    box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.2);
+  }
+  .icon svg { width: 26px; height: 26px; }
+  h1 { font-size: 15px; font-weight: 700; margin: 0 0 2px; }
+  .head p { margin: 0; color: var(--text-2); font-size: 12px; }
+
+  form { margin: 0; }
+  .row {
+    display: grid; grid-template-columns: 112px 1fr; gap: 12px;
+    align-items: center; padding: 7px 0;
+  }
+  .row > label, .row > .lbl { text-align: right; }
+  .hint { grid-column: 2; color: var(--text-2); font-size: 11px; margin-top: -4px; }
+
+  /* Segmented control */
+  .seg {
+    display: inline-flex; padding: 2px; border-radius: 7px;
+    background: var(--seg-bg); width: 100%;
+  }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg label {
+    flex: 1; text-align: center; padding: 3px 0; border-radius: 5px; cursor: default;
+    font-size: 12px;
+  }
+  .seg input:checked + label {
+    background: var(--seg-active);
+    box-shadow: 0 0.5px 2px rgba(0,0,0,0.25), 0 0 0 0.5px rgba(0,0,0,0.04);
+    font-weight: 500;
+  }
+  .seg input:focus-visible + label { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); }
+
+  /* Popup button */
+  .select { position: relative; }
+  select {
+    appearance: none; -webkit-appearance: none; width: 100%;
+    font: inherit; color: var(--text);
+    background: var(--btn-bg); border: 0.5px solid var(--btn-border);
+    border-radius: 6px; padding: 3px 26px 3px 9px; height: 22px;
+    box-shadow: 0 0.5px 1.5px rgba(0,0,0,0.15);
+  }
+  .select::after {
+    content: ""; position: absolute; right: 2px; top: 2px; bottom: 2px; width: 18px;
+    border-radius: 4px; background: var(--accent); pointer-events: none;
+  }
+  .select::before {
+    content: ""; position: absolute; right: 7px; top: 50%; width: 6px; height: 9px;
+    transform: translateY(-50%); z-index: 1; pointer-events: none;
+    background:
+      linear-gradient(135deg, transparent 45%, #fff 45% 55%, transparent 55%) 0 0/6px 4px no-repeat,
+      linear-gradient(45deg, transparent 45%, #fff 45% 55%, transparent 55%) 0 0/0 0 no-repeat;
+    clip-path: polygon(50% 0, 100% 40%, 0 40%, 50% 0, 50% 0, 50% 60%, 0 60%, 100% 60%, 50% 100%, 50% 60%);
+    background-color: #fff;
+  }
+  select:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 1px; }
+
+  /* Slider */
+  .slider { display: flex; align-items: center; gap: 10px; }
+  input[type=range] {
+    -webkit-appearance: none; appearance: none; flex: 1; height: 20px;
+    background: transparent; margin: 0;
+    --p: 80%;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 4px; border-radius: 2px;
+    background: linear-gradient(to right, var(--accent) var(--p), var(--track) var(--p));
+  }
+  input[type=range]::-moz-range-track { height: 4px; border-radius: 2px; background: var(--track); }
+  input[type=range]::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--accent); }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; margin-top: -6px;
+    background: #fff; border: 0.5px solid rgba(0,0,0,0.25);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 15px; height: 15px; border-radius: 50%; background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.25); box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+  }
+  input[type=range]:focus-visible { outline: none; }
+  input[type=range]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 55%, transparent), 0 1px 3px rgba(0,0,0,0.35); }
+  .val { width: 34px; text-align: right; font-variant-numeric: tabular-nums; }
+  .ends { display: flex; justify-content: space-between; color: var(--text-2); font-size: 11px; margin-top: -2px; }
+
+  .check { display: flex; gap: 6px; align-items: center; }
+  .check input { accent-color: var(--accent); margin: 0; width: 14px; height: 14px; }
+
+  hr { border: 0; border-top: 1px solid var(--sep); margin: 10px 0 12px; }
+
+  .buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; }
+  button {
+    font: inherit; min-width: 72px; height: 22px; padding: 0 14px; color: var(--text);
+    background: var(--btn-bg); border: 0.5px solid var(--btn-border);
+    border-radius: 6px; box-shadow: 0 0.5px 1.5px rgba(0,0,0,0.18);
+  }
+  button:active { filter: brightness(0.93); }
+  button.default {
+    background: linear-gradient(#3b9cff, var(--accent)); color: #fff; border-color: transparent; font-weight: 500;
+  }
+  button:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 1px; }
+  button:disabled { opacity: .5; }
+  .est { color: var(--text-2); font-size: 11px; margin-right: auto; align-self: center; }
+</style>
+</head>
+<body>
+  <div class="window" aria-hidden="true">
+    <div class="titlebar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <b>Library</b>
+    </div>
+    <div class="grid">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="t">
+    <div class="head">
+      <div class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10.5" r="1.8"/><path d="M4 17l5-4.5 3.5 3 3-2.5L20 16"/></svg>
+      </div>
+      <div>
+        <h1 id="t">Export Preferences</h1>
+        <p>Choose how photos are saved when you export them.</p>
+      </div>
+    </div>
+
+    <form onsubmit="return false">
+      <div class="row">
+        <span class="lbl" id="fl">Format:</span>
+        <div class="seg" role="radiogroup" aria-labelledby="fl">
+          <input type="radio" name="fmt" id="f1" checked><label for="f1">JPEG</label>
+          <input type="radio" name="fmt" id="f2"><label for="f2">PNG</label>
+          <input type="radio" name="fmt" id="f3"><label for="f3">TIFF</label>
+          <input type="radio" name="fmt" id="f4"><label for="f4">HEIC</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="q">Quality:</label>
+        <div>
+          <div class="slider">
+            <input type="range" id="q" min="0" max="100" value="80" oninput="this.style.setProperty('--p',this.value+'%');v.textContent=this.value+'%'">
+            <output class="val" id="v" for="q">80%</output>
+          </div>
+          <div class="ends"><span>Smaller file</span><span>Best quality</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="cp">Color Profile:</label>
+        <div class="select">
+          <select id="cp">
+            <option>sRGB IEC61966-2.1</option>
+            <option>Display P3</option>
+            <option>Adobe RGB (1998)</option>
+            <option>ProPhoto RGB</option>
+            <option>Generic RGB</option>
+          </select>
+        </div>
+        <div class="hint">sRGB is best for sharing on the web.</div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <span class="lbl"></span>
+        <label class="check"><input type="checkbox" checked> Include location and metadata</label>
+      </div>
+
+      <div class="buttons">
+        <button type="button">Cancel</button>
+        <button type="submit" class="default">Save</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

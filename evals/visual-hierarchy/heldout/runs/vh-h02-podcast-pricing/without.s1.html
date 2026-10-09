@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hushcast Pricing</title>
+<style>
+  :root {
+    --bg: #f6f5f9;
+    --surface: #ffffff;
+    --text: #1b1830;
+    --muted: #5e5a75;
+    --border: #e1deec;
+    --accent: #5b3df5;
+    --accent-strong: #4a2fd6;
+    --accent-soft: #eeeaff;
+    --on-accent: #ffffff;
+    --shadow: 0 1px 2px rgba(27, 24, 48, .06), 0 8px 24px rgba(27, 24, 48, .06);
+    --shadow-featured: 0 2px 4px rgba(91, 61, 245, .15), 0 24px 48px rgba(91, 61, 245, .22);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12101e;
+      --surface: #1c1930;
+      --text: #f2f0fb;
+      --muted: #a9a5c4;
+      --border: #332f4d;
+      --accent: #8b74ff;
+      --accent-strong: #a290ff;
+      --accent-soft: #2a2450;
+      --on-accent: #12101e;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3);
+      --shadow-featured: 0 24px 48px rgba(0, 0, 0, .45);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .pricing {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 72px 24px 88px;
+  }
+  .intro { text-align: center; max-width: 560px; margin: 0 auto 56px; }
+  .intro h2 {
+    margin: 0 0 12px;
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .intro p { margin: 0; color: var(--muted); font-size: 1.05rem; }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .plan {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px 28px 28px;
+    box-shadow: var(--shadow);
+  }
+  .plan.featured {
+    border: 2px solid var(--accent);
+    padding-top: 44px;
+    box-shadow: var(--shadow-featured);
+    transform: translateY(-12px);
+  }
+  .badge {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .plan h3 { margin: 0; font-size: 1.25rem; }
+  .tagline { margin: 4px 0 20px; color: var(--muted); font-size: .95rem; min-height: 1.5em; }
+  .price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 24px; }
+  .price .amount {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .price .per { color: var(--muted); font-size: .95rem; }
+
+  .features {
+    list-style: none;
+    margin: 0 0 28px;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 12px;
+    flex: 1;
+  }
+  .features li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: .98rem;
+  }
+  .features svg {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    padding: 3px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 13px 18px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    background: transparent;
+    transition: background .15s, border-color .15s, transform .15s;
+  }
+  .btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+  }
+  .btn.primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+
+  .note { text-align: center; color: var(--muted); font-size: .9rem; margin: 40px 0 0; }
+
+  @media (max-width: 860px) {
+    .plans { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; gap: 32px; }
+    .plan.featured { transform: none; order: -1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+<section class="pricing" aria-labelledby="pricing-title">
+  <div class="intro">
+    <h2 id="pricing-title">Simple pricing for every kind of show</h2>
+    <p>Start small, grow into more shows and more hours whenever you're ready. Change plans anytime.</p>
+  </div>
+
+  <ul class="plans">
+    <li class="plan">
+      <h3>Starter</h3>
+      <p class="tagline">For your first show</p>
+      <div class="price"><span class="amount">$9</span><span class="per">/month</span></div>
+      <ul class="features">
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>1 show</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>5 hours of audio a month</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>Basic stats</li>
+      </ul>
+      <a class="btn" href="#starter" aria-label="Choose the Starter plan">Choose Starter</a>
+    </li>
+
+    <li class="plan featured">
+      <span class="badge">Most popular</span>
+      <h3>Studio</h3>
+      <p class="tagline">For creators who publish regularly</p>
+      <div class="price"><span class="amount">$24</span><span class="per">/month</span></div>
+      <ul class="features">
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>5 shows</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>30 hours of audio a month</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>Detailed stats</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>Ad-free embeds</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>Custom domain</li>
+      </ul>
+      <a class="btn primary" href="#studio" aria-label="Choose the Studio plan">Choose Studio</a>
+    </li>
+
+    <li class="plan">
+      <h3>Network</h3>
+      <p class="tagline">For teams and multi-show networks</p>
+      <div class="price"><span class="amount">$79</span><span class="per">/month</span></div>
+      <ul class="features">
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>Unlimited shows</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>200 hours of audio a month</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>Team seats</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>Priority support</li>
+      </ul>
+      <a class="btn" href="#network" aria-label="Choose the Network plan">Choose Network</a>
+    </li>
+  </ul>
+
+  <p class="note">All prices in USD, billed monthly.</p>
+</section>
+</body>
+</html>

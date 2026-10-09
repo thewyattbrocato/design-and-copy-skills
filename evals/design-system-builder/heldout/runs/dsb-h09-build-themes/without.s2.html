@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes</title>
+<style>
+  /* ---------- Theme tokens ----------
+     Each theme only defines values for the same set of semantic tokens.
+     Components below never mention a theme, so adding a theme means adding one block. */
+  [data-theme="light"] {
+    --bg: #ffffff;
+    --surface: #f4f6f4;
+    --text: #141816;
+    --text-muted: #55605a;
+    --border: #d9dfdb;
+    --border-width: 1px;
+    --primary: #1f7a4d;
+    --primary-hover: #19663f;
+    --on-primary: #ffffff;
+    --gain: #1f7a4d;
+    --spend: #b3412f;
+    --focus: #1f7a4d;
+    --shadow: 0 1px 2px rgb(0 0 0 / .08);
+  }
+  [data-theme="dark"] {
+    --bg: #0f1411;
+    --surface: #182019;
+    --text: #eaf1ec;
+    --text-muted: #9fb0a5;
+    --border: #2a362d;
+    --border-width: 1px;
+    --primary: #4cc38a;
+    --primary-hover: #66d29e;
+    --on-primary: #06210f;
+    --gain: #4cc38a;
+    --spend: #f08a76;
+    --focus: #8fe0b6;
+    --shadow: none;
+  }
+  [data-theme="contrast"] {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #000000;
+    --text-muted: #2b2b2b;
+    --border: #000000;
+    --border-width: 2px;
+    --primary: #0a4a2a;
+    --primary-hover: #00331b;
+    --on-primary: #ffffff;
+    --gain: #0a4a2a;
+    --spend: #8a1608;
+    --focus: #0000d6;
+    --shadow: none;
+  }
+
+  /* ---------- Page chrome (not part of the app) ---------- */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 20px 48px;
+    background: #e6e9e7;
+    color: #141816;
+    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  h1 { font-size: 1.1rem; margin: 0 0 4px; text-align: center; }
+  .lede { margin: 0 0 24px; text-align: center; color: #4a554f; font-size: .9rem; }
+  .stage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .stage figure { margin: 0; }
+  .stage figcaption {
+    margin-bottom: 8px;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #4a554f;
+  }
+
+  /* ---------- Kelpie screen (token-driven only) ---------- */
+  .screen {
+    background: var(--bg);
+    color: var(--text);
+    border: var(--border-width) solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .screen h2 { margin: 0 0 16px; font-size: 1rem; font-weight: 600; }
+
+  .balance {
+    background: var(--surface);
+    border: var(--border-width) solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .label { color: var(--text-muted); font-size: .8rem; }
+  .amount-lg { font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; margin: 2px 0 8px; }
+  .month { display: flex; gap: 16px; font-size: .85rem; font-variant-numeric: tabular-nums; }
+
+  .gain { color: var(--gain); }
+  .spend { color: var(--spend); }
+
+  .section-title { margin: 0 0 4px; font-size: .8rem; color: var(--text-muted); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .txns { list-style: none; margin: 0 0 20px; padding: 0; }
+  .txns li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: var(--border-width) solid var(--border);
+  }
+  .txns li:last-child { border-bottom: 0; }
+  .txn-name { font-weight: 500; }
+  .txn-meta { display: block; color: var(--text-muted); font-size: .8rem; }
+  .txn-amt { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .btn {
+    width: 100%;
+    padding: 12px 16px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--on-primary);
+    background: var(--primary);
+    border: var(--border-width) solid var(--primary);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+  .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+</style>
+</head>
+<body>
+  <h1>Kelpie themes</h1>
+  <p class="lede">One component stylesheet, three token sets. Same screen in each.</p>
+
+  <div class="stage">
+
+    <figure>
+      <figcaption>Light</figcaption>
+      <section class="screen" data-theme="light" aria-labelledby="t-light">
+        <h2 id="t-light">Overview</h2>
+        <div class="balance">
+          <div class="label">Total balance</div>
+          <div class="amount-lg">$4,285.60</div>
+          <div class="month">
+            <span class="gain">+$2,400.00 in</span>
+            <span class="spend">−$1,184.25 out</span>
+          </div>
+        </div>
+        <h3 class="section-title">Recent</h3>
+        <ul class="txns">
+          <li><span><span class="txn-name">Paycheck</span><span class="txn-meta">Oct 1</span></span><span class="txn-amt gain">+$2,400.00</span></li>
+          <li><span><span class="txn-name">Green Grocer</span><span class="txn-meta">Oct 3</span></span><span class="txn-amt spend">−$86.42</span></li>
+          <li><span><span class="txn-name">Rent</span><span class="txn-meta">Oct 4</span></span><span class="txn-amt spend">−$1,050.00</span></li>
+          <li><span><span class="txn-name">Refund</span><span class="txn-meta">Oct 6</span></span><span class="txn-amt gain">+$32.17</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </section>
+    </figure>
+
+    <figure>
+      <figcaption>Dark</figcaption>
+      <section class="screen" data-theme="dark" aria-labelledby="t-dark">
+        <h2 id="t-dark">Overview</h2>
+        <div class="balance">
+          <div class="label">Total balance</div>
+          <div class="amount-lg">$4,285.60</div>
+          <div class="month">
+            <span class="gain">+$2,400.00 in</span>
+            <span class="spend">−$1,184.25 out</span>
+          </div>
+        </div>
+        <h3 class="section-title">Recent</h3>
+        <ul class="txns">
+          <li><span><span class="txn-name">Paycheck</span><span class="txn-meta">Oct 1</span></span><span class="txn-amt gain">+$2,400.00</span></li>
+          <li><span><span class="txn-name">Green Grocer</span><span class="txn-meta">Oct 3</span></span><span class="txn-amt spend">−$86.42</span></li>
+          <li><span><span class="txn-name">Rent</span><span class="txn-meta">Oct 4</span></span><span class="txn-amt spend">−$1,050.00</span></li>
+          <li><span><span class="txn-name">Refund</span><span class="txn-meta">Oct 6</span></span><span class="txn-amt gain">+$32.17</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </section>
+    </figure>
+
+    <figure>
+      <figcaption>High contrast</figcaption>
+      <section class="screen" data-theme="contrast" aria-labelledby="t-contrast">
+        <h2 id="t-contrast">Overview</h2>
+        <div class="balance">
+          <div class="label">Total balance</div>
+          <div class="amount-lg">$4,285.60</div>
+          <div class="month">
+            <span class="gain">+$2,400.00 in</span>
+            <span class="spend">−$1,184.25 out</span>
+          </div>
+        </div>
+        <h3 class="section-title">Recent</h3>
+        <ul class="txns">
+          <li><span><span class="txn-name">Paycheck</span><span class="txn-meta">Oct 1</span></span><span class="txn-amt gain">+$2,400.00</span></li>
+          <li><span><span class="txn-name">Green Grocer</span><span class="txn-meta">Oct 3</span></span><span class="txn-amt spend">−$86.42</span></li>
+          <li><span><span class="txn-name">Rent</span><span class="txn-meta">Oct 4</span></span><span class="txn-amt spend">−$1,050.00</span></li>
+          <li><span><span class="txn-name">Refund</span><span class="txn-meta">Oct 6</span></span><span class="txn-amt gain">+$32.17</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </section>
+    </figure>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to Kilnbook</title>
+<style>
+  :root {
+    --bg: #f7f3ee;
+    --surface: #ffffff;
+    --ink: #2b2420;
+    --muted: #6e625a;
+    --line: #e6ddd3;
+    --clay: #b5542d;
+    --clay-dark: #94401f;
+    --sage: #5f7a64;
+    --sage-soft: #e7eee6;
+    --focus: #1f5fa8;
+    --radius: 12px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--bg);
+  }
+
+  a { color: var(--clay-dark); }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .brand span { color: var(--clay); }
+  .topbar .account {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+
+  .hero h1 {
+    font-size: 1.875rem;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .hero p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 620px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 28px;
+  }
+  @media (min-width: 760px) {
+    .grid { grid-template-columns: 1.4fr 1fr; }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .card h2 {
+    font-size: 1.0625rem;
+    margin: 0 0 4px;
+  }
+  .card .sub {
+    margin: 0 0 16px;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  /* Progress */
+  .progress-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .progress {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .progress > div {
+    height: 100%;
+    width: 0%;
+    background: var(--sage);
+    border-radius: 999px;
+  }
+
+  /* Steps */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .step {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+  .step:first-child { border-top: 0; padding-top: 0; }
+  .step-num {
+    flex: 0 0 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .step.is-next .step-num {
+    background: var(--clay);
+    border-color: var(--clay);
+    color: #fff;
+  }
+  .step-body { flex: 1; min-width: 0; }
+  .step-body h3 {
+    margin: 2px 0 2px;
+    font-size: 1rem;
+  }
+  .step-body p {
+    margin: 0 0 10px;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--sage-soft);
+    color: var(--sage);
+    margin-left: 6px;
+    vertical-align: 2px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--clay);
+    background: var(--clay);
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--clay-dark); border-color: var(--clay-dark); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--clay-dark);
+    border-color: var(--line);
+  }
+  .btn.ghost:hover { background: var(--bg); }
+  .btn.small { padding: 7px 12px; font-size: 0.875rem; }
+
+  /* Slots */
+  .slot-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .slot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .slot:first-child { border-top: 0; padding-top: 0; }
+  .slot-meta { min-width: 0; }
+  .slot-title { font-weight: 600; font-size: 0.9375rem; }
+  .slot-when { font-size: 0.8125rem; color: var(--muted); }
+  .slot-seats {
+    font-size: 0.75rem;
+    color: var(--sage);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .slot-seats.low { color: var(--clay-dark); }
+
+  /* Kiln explainer */
+  .kiln-box {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.875rem;
+    color: var(--ink);
+    margin-top: 14px;
+  }
+  .kiln-box strong { display: block; margin-bottom: 4px; }
+  .kiln-box ol { margin: 6px 0 0; padding-left: 18px; }
+  .kiln-box li { margin-bottom: 4px; }
+
+  .footer-note {
+    margin-top: 28px;
+    font-size: 0.8125rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1816;
+      --surface: #26211e;
+      --ink: #f1ebe4;
+      --muted: #b1a396;
+      --line: #3a332e;
+      --clay: #d4703f;
+      --clay-dark: #e88c5f;
+      --sage: #94b29a;
+      --sage-soft: #2e3a30;
+      --focus: #7fb2ef;
+    }
+    .btn { color: #1c1816; }
+    .btn:hover { background: var(--clay-dark); color: #1c1816; }
+    .btn.ghost { color: var(--ink); }
+    .btn.ghost:hover { background: var(--bg); }
+    .step.is-next .step-num { color: #1c1816; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .progress > div { transition: width 0.4s ease; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#">Kiln<span>book</span></a>
+  <div class="account">Signed in as Jordan Ellis</div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Welcome to Hollow Oak Pottery, Jordan.</h1>
+    <p>Your membership is active. Most members book their first wheel session within a week. Here's the quickest way to get your hands in clay.</p>
+  </section>
+
+  <div class="grid">
+    <!-- Left: onboarding steps -->
+    <section class="card" aria-labelledby="steps-title">
+      <h2 id="steps-title">Your first three steps</h2>
+      <p class="sub">About 25 minutes in total, and everything else unlocks after this.</p>
+
+      <div class="progress-head">
+        <span>0 of 3 complete</span>
+        <span>0%</span>
+      </div>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" aria-label="Onboarding progress">
+        <div style="width: 0%;"></div>
+      </div>
+
+      <ol class="steps">
+        <li class="step is-next">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Take the studio orientation <span class="tag">Required</span></h3>
+            <p>A 20-minute walkthrough of safety, clay storage, and how to clean up after yourself. Runs every Saturday at 10:00.</p>
+            <a class="btn small" href="#">Reserve orientation</a>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Book your first wheel session</h3>
+            <p>Two hours on a shared wheel with a studio monitor nearby. Bring an apron, or borrow one from the front desk.</p>
+            <a class="btn ghost small" href="#">Browse wheel times</a>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Reserve a kiln slot for your first piece</h3>
+            <p>Once your piece is leather-hard, book a bisque or glaze firing. We'll walk you through it.</p>
+            <a class="btn ghost small" href="#">See kiln schedule</a>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Right: open slots and kiln explainer -->
+    <aside>
+      <section class="card" aria-labelledby="slots-title">
+        <h2 id="slots-title">Open this week</h2>
+        <p class="sub">Beginner-friendly times with space left.</p>
+
+        <ul class="slot-list">
+          <li class="slot">
+            <div class="slot-meta">
+              <div class="slot-title">Wheel: Beginners' Hour</div>
+              <div class="slot-when">Thu, Oct 9 · 6:00 to 8:00 pm</div>
+            </div>
+            <span class="slot-seats">4 seats</span>
+          </li>
+          <li class="slot">
+            <div class="slot-meta">
+              <div class="slot-title">Open wheel studio</div>
+              <div class="slot-when">Sat, Oct 11 · 10:00 am to 12:00 pm</div>
+            </div>
+            <span class="slot-seats low">1 seat</span>
+          </li>
+          <li class="slot">
+            <div class="slot-meta">
+              <div class="slot-title">Hand-building basics</div>
+              <div class="slot-when">Sun, Oct 12 · 1:00 to 3:00 pm</div>
+            </div>
+            <span class="slot-seats">6 seats</span>
+          </li>
+        </ul>
+
+        <div style="margin-top: 16px;">
+          <a class="btn" href="#">See all open times</a>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top: 20px;" aria-labelledby="kiln-title">
+        <h2 id="kiln-title">How kiln booking works</h2>
+        <p class="sub">The part that trips up most new members.</p>
+        <div class="kiln-box">
+          <strong>Firing a piece takes three steps:</strong>
+          <ol>
+            <li>Dry your piece fully, then drop it at the kiln shelf with your name on the tag.</li>
+            <li>Book a firing slot. Bisque firings run Mon and Wed, glaze firings run Fri.</li>
+            <li>Pick up your piece within 48 hours of the firing date.</li>
+          </ol>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <p class="footer-note">
+    Questions? Message the front desk at <a href="#">hello@hollowoakpottery.example</a> or stop by Tue to Sun, 9 am to 6 pm.
+  </p>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+"Place order" should be the filled, prominent button, since it's the primary action you want customers to take at the end of checkout. Make "Back to cart" a secondary style, like an outline or text link, so it stays available without competing for attention or being clicked by accident.

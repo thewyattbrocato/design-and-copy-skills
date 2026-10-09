@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saltline Ferries</title>
+<style>
+  :root {
+    --ink: #0e2a33;
+    --sky-top: #e9f1f0;
+    --sky-bot: #f6efe3;
+    --sea-1: #3f7d86;
+    --sea-2: #2c6670;
+    --sea-3: #1d4e59;
+    --sea-4: #123a44;
+    --accent: #0e2a33;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--sky-top);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bot) 62%);
+  }
+
+  .brand {
+    position: relative;
+    z-index: 2;
+    padding: clamp(24px, 4vw, 48px) clamp(24px, 6vw, 96px) 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(32px, 6vh, 80px) clamp(24px, 6vw, 96px) clamp(200px, 30vh, 320px);
+    max-width: 1280px;
+  }
+
+  h1 {
+    font-size: clamp(2.75rem, 8.4vw, 7.5rem);
+    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    max-width: 11ch;
+    text-wrap: balance;
+  }
+  h1 span { display: block; }
+  h1 span + span { color: var(--sea-2); }
+
+  .sub {
+    margin-top: clamp(20px, 3vh, 36px);
+    max-width: 34em;
+    font-size: clamp(1.125rem, 1.7vw, 1.5rem);
+    line-height: 1.5;
+    color: #2f4a52;
+    text-wrap: pretty;
+  }
+
+  .cta {
+    margin-top: clamp(28px, 4.5vh, 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 30px;
+    font: inherit;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background-color .25s ease, transform .25s ease;
+  }
+  .btn svg { transition: transform .25s ease; }
+  .btn:hover { background: var(--sea-3); }
+  .btn:hover svg { transform: translateX(4px); }
+  .btn:focus-visible { outline: 3px solid var(--sea-1); outline-offset: 4px; }
+  .note { font-size: 0.9375rem; color: #3d5960; }
+
+  .sea {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: clamp(220px, 38vh, 420px);
+    z-index: 1;
+    display: block;
+  }
+  .drift { animation: drift 18s ease-in-out infinite alternate; }
+  .drift.slow { animation-duration: 26s; animation-direction: alternate-reverse; }
+  .boat { animation: bob 7s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  @keyframes drift { from { transform: translateX(-24px); } to { transform: translateX(24px); } }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .drift, .boat { animation: none; }
+    .btn, .btn svg { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="brand">Saltline Ferries</div>
+
+    <div class="content">
+      <h1 id="hero-title"><span>Three islands.</span><span>One boat an hour.</span></h1>
+      <p class="sub">Daily sailings from 6:30 am to 9:00 pm, with bicycles and dogs welcome aboard.</p>
+      <div class="cta">
+        <a class="btn" href="#timetable">See the timetable
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <p class="note">Summer schedule from June 1.</p>
+      </div>
+    </div>
+
+    <svg class="sea" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+      <!-- distant islands -->
+      <path d="M700 190 C760 150 820 120 880 128 C940 135 990 160 1040 190 Z" fill="#a9c4c4" opacity=".7"/>
+      <path d="M960 190 C1020 140 1100 100 1180 110 C1260 120 1320 160 1380 190 Z" fill="#8fb1b3" opacity=".8"/>
+      <path d="M1180 190 C1240 165 1300 150 1360 156 C1400 160 1430 175 1440 190 Z" fill="#7aa3a7"/>
+      <!-- horizon sea -->
+      <rect x="0" y="188" width="1440" height="212" fill="var(--sea-1)"/>
+      <!-- boat -->
+      <g class="boat">
+        <path d="M520 214 L640 214 L624 232 L536 232 Z" fill="#f6efe3"/>
+        <rect x="556" y="198" width="52" height="16" rx="2" fill="#fff"/>
+        <rect x="574" y="188" width="22" height="10" rx="2" fill="#f6efe3"/>
+        <rect x="520" y="226" width="120" height="3" fill="#c8553d" opacity=".9"/>
+      </g>
+      <g class="drift slow">
+        <path d="M-40 250 Q 120 232 280 250 T 600 250 T 920 250 T 1240 250 T 1560 250 V400 H-40 Z" fill="var(--sea-2)"/>
+      </g>
+      <g class="drift">
+        <path d="M-40 300 Q 160 280 360 300 T 760 300 T 1160 300 T 1560 300 V400 H-40 Z" fill="var(--sea-3)"/>
+      </g>
+      <path d="M0 350 Q 240 336 480 350 T 960 350 T 1440 350 V400 H0 Z" fill="var(--sea-4)"/>
+    </svg>
+  </section>
+</body>
+</html>

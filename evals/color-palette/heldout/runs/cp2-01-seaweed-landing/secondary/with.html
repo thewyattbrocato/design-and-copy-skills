@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewick | Roasted Seaweed Snacks</title>
+<style>
+  :root {
+    --paper: #f4f0e6;
+    --ink: #17231e;
+    --nori: #24392f;
+    --tide: #2c6e73;
+    --chili: #e0573a;
+    --lime: #b9d26a;
+    --sesame: #d9a441;
+    --mist: #dfe9e2;
+    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 0;
+  }
+
+  .logo {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .logo span { color: var(--chili); }
+
+  nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-left: 24px;
+    opacity: 0.75;
+  }
+  nav a:hover { opacity: 1; }
+
+  .hero {
+    padding: 64px 0 56px;
+    border-bottom: 1px solid rgba(23, 35, 30, 0.12);
+  }
+
+  .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tide);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+    margin-bottom: 24px;
+  }
+  h1 em { font-style: italic; color: var(--tide); font-weight: 400; }
+
+  .lede {
+    font-size: 1.15rem;
+    max-width: 44ch;
+    opacity: 0.8;
+    margin-bottom: 36px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 14px 30px;
+    border-radius: 999px;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn:hover { background: var(--chili); transform: translateY(-2px); }
+
+  .products { padding: 64px 0 72px; }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 28px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+  .section-head p { opacity: 0.65; font-size: 0.95rem; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: #fbf9f3;
+    border: 1px solid rgba(23, 35, 30, 0.1);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px -18px rgba(23, 35, 30, 0.35);
+  }
+
+  .swatch {
+    height: 200px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+  .swatch .word {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+
+  .swatch-salt {
+    background:
+      repeating-linear-gradient(0deg, rgba(44, 110, 115, 0.12) 0 2px, transparent 2px 14px),
+      var(--mist);
+    color: var(--tide);
+  }
+  .swatch-chili {
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px 16px),
+      linear-gradient(160deg, var(--chili) 0%, #b93d26 100%);
+    color: #fff4ec;
+  }
+  .swatch-sesame {
+    background:
+      radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.22) 0 3px, transparent 4px) 0 0 / 22px 22px,
+      var(--sesame);
+    color: var(--nori);
+  }
+
+  .card-body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+  .tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.6;
+  }
+
+  .card h3 {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  .card p { font-size: 0.95rem; opacity: 0.78; }
+
+  .card .btn-small {
+    margin-top: auto;
+    align-self: flex-start;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 14px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .card .btn-small:hover { background: var(--ink); color: var(--paper); }
+
+  footer {
+    border-top: 1px solid rgba(23, 35, 30, 0.12);
+    padding: 24px 0 40px;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) {
+    nav a { margin-left: 16px; }
+    .hero { padding: 40px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="logo">Tide<span>wick</span></div>
+    <nav>
+      <a href="#products">Flavors</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Roasted seaweed, small batch</p>
+    <h1>Picked from the tide, <em>toasted</em> to crisp.</h1>
+    <p class="lede">Thin, light sheets roasted in small batches and salted just enough. Three flavors, one very good habit.</p>
+    <a class="btn" href="#">Shop now</a>
+  </section>
+
+  <section class="products" id="products">
+    <div class="section-head">
+      <h2>The three</h2>
+      <p>Each one a little different. All of them light.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="swatch swatch-salt">
+          <span class="word">Sea<br>Salt</span>
+        </div>
+        <div class="card-body">
+          <span class="tag">Classic</span>
+          <h3>Sea Salt</h3>
+          <p>Plain, clean, and mineral. The one that tastes like the shoreline.</p>
+          <a class="btn-small" href="#">Shop now</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="swatch swatch-chili">
+          <span class="word">Chili<br>Lime</span>
+        </div>
+        <div class="card-body">
+          <span class="tag">Bright</span>
+          <h3>Chili Lime</h3>
+          <p>Zesty citrus with a slow, warm finish. Bold, but never heavy.</p>
+          <a class="btn-small" href="#">Shop now</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="swatch swatch-sesame">
+          <span class="word">Toasted<br>Sesame</span>
+        </div>
+        <div class="card-body">
+          <span class="tag">Nutty</span>
+          <h3>Toasted Sesame</h3>
+          <p>Warm, nutty, and a little sweet. Made for the bag you finish first.</p>
+          <a class="btn-small" href="#">Shop now</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Tidewick</span>
+    <span>Small batch. Roasted by hand.</span>
+  </footer>
+</div>
+
+</body>
+</html>

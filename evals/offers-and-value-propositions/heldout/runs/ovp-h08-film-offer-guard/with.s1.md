@@ -1,0 +1,3 @@
+Harrow & Pine Films' Full Day package gives you two filmmakers for eight hours, so the day is covered from more than one angle and nobody has to miss a moment to catch another. You don't have to choose between the feeling of the day and the words spoken in it, because you get both: a highlight film of 5 to 7 minutes that you'll want to rewatch, and a separate 25-minute edit of your ceremony and speeches, so the vows and toasts are kept whole.
+
+Your finished films arrive within 10 weeks. They come through a private download link that stays active for two years, which gives you plenty of time to save them and share them with the people who matter. To get a quote for your date, just ask us.

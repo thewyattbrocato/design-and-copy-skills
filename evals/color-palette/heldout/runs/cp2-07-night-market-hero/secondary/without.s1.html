@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lantern Row Night Market</title>
+  <style>
+    /* Placeholder dusk sky until the real photo is ready. Swap .hero background for an image later. */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #0b0a1f;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #fff8ef;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 5rem;
+      overflow: hidden;
+      /* Dusk sky: deep indigo at the top, warm glow at the horizon, dark ground below */
+      background:
+        radial-gradient(ellipse 60% 35% at 50% 78%, rgba(255, 170, 90, 0.55), rgba(255, 170, 90, 0) 70%),
+        radial-gradient(ellipse 30% 20% at 18% 70%, rgba(255, 120, 70, 0.25), rgba(255, 120, 70, 0) 70%),
+        linear-gradient(
+          to bottom,
+          #0a0920 0%,
+          #1a1545 28%,
+          #4a2a6b 52%,
+          #9a4a7a 68%,
+          #e8794a 80%,
+          #ffb36b 84%,
+          #1a0f1f 85%,
+          #0c0812 100%
+        );
+    }
+
+    /* Faint stars across the upper sky */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 12% 14%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 28% 8%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.5px 1.5px at 46% 18%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 63% 6%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 78% 16%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.5px 1.5px at 90% 10%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 36% 30%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 85% 34%, rgba(255,255,255,0.5), transparent);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    /* Warm lantern glints along the lower third */
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 14%;
+      height: 12%;
+      background-image:
+        radial-gradient(circle at 8% 50%, rgba(255,214,140,0.9) 0 3px, rgba(255,214,140,0) 12px),
+        radial-gradient(circle at 22% 30%, rgba(255,190,110,0.8) 0 2px, rgba(255,190,110,0) 10px),
+        radial-gradient(circle at 37% 60%, rgba(255,214,140,0.9) 0 3px, rgba(255,214,140,0) 12px),
+        radial-gradient(circle at 53% 35%, rgba(255,190,110,0.8) 0 2px, rgba(255,190,110,0) 10px),
+        radial-gradient(circle at 68% 55%, rgba(255,214,140,0.9) 0 3px, rgba(255,214,140,0) 12px),
+        radial-gradient(circle at 82% 28%, rgba(255,190,110,0.8) 0 2px, rgba(255,190,110,0) 10px),
+        radial-gradient(circle at 94% 58%, rgba(255,214,140,0.9) 0 3px, rgba(255,214,140,0) 12px);
+      pointer-events: none;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: 880px;
+    }
+
+    .hero__eyebrow {
+      margin: 0 0 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #ffd39a;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero__title {
+      margin: 0;
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+      font-weight: 700;
+      font-size: clamp(3rem, 11vw, 7.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      color: #fff8ef;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .hero__dates {
+      margin: 1.75rem 0 0;
+      font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #ffe3b8;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero__tagline {
+      margin: 0.75rem 0 0;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-style: italic;
+      color: #f5dcd0;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero__button {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 1rem 2.4rem;
+      border-radius: 999px;
+      background: #ffb36b;
+      color: #2a1220;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(255, 150, 80, 0.35);
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .hero__button:hover {
+      background: #ffc48a;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(255, 150, 80, 0.45);
+    }
+
+    .hero__button:focus-visible {
+      outline: 3px solid #fff8ef;
+      outline-offset: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero__button { transition: none; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 5rem 1.25rem 4rem; }
+      .hero__eyebrow { letter-spacing: 0.2em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Note: October 17 falls on a Saturday in 2026 (Friday in 2025 and Sunday in 2027). Confirm the year before publishing. -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__content">
+      <p class="hero__eyebrow">Friday to Sunday</p>
+      <h1 class="hero__title" id="hero-title">Lantern Row Night Market</h1>
+      <p class="hero__dates">October 17 to 19</p>
+      <p class="hero__tagline">Food, crafts and live music after dark</p>
+      <a class="hero__button" href="#tickets">Get tickets</a>
+    </div>
+  </section>
+</body>
+</html>

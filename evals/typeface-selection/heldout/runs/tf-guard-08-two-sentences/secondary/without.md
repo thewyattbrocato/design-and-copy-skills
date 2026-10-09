@@ -1,0 +1,1 @@
+Use **Cormorant Garamond** (free on Google Fonts) in a light or medium weight, set in capitals with generous letter-spacing for the names. Its high-contrast serif gives a romantic, editorial feel without the cliché of script, and it pairs well with a clean sans-serif like Inter or Lato for the body text.

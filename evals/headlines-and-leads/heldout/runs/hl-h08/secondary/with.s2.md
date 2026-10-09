@@ -1,0 +1,21 @@
+# The Mug Paradox: What a Year of Teaching Beginners Taught Me
+
+When we opened our Saturday morning classes last spring, I thought I knew what to expect. I'd been throwing clay for fifteen years, taught workshops here and there, and felt ready to guide a group of complete beginners through their first pottery experience. What I didn't anticipate was how much I'd learn—not about clay, but about the gap between what beginners *want* to make and what actually serves them.
+
+The first thing almost everyone says is: "I want to make a mug." It's the same in every class, from the retired engineer to the graphic designer to the nurse working her first day off in weeks. Nobody comes in asking to center a cylinder. Nobody's excited about learning to throw a basic bowl. They want a mug they can use, hold in both hands, drink coffee from. It's such a reasonable desire that I spent the first few weeks trying to make it happen.
+
+This is where I learned my first real lesson: the mug is the hardest thing to get right.
+
+It's not the most technically demanding form we throw—the cylinder demands more precision, and tall vases require better control. But the mug combines almost everything that can go wrong. The walls need to be thin and even. The bottom can't be too thick or it looks clumsy. The spout has to actually work, which means angling it correctly and making sure it doesn't whistle. The handle—that's where dreams go to die. Attaching a handle without weakening the rim or making it lopsided took most of my students three or four tries. And after all that, if the proportions aren't right, the mug just feels *off* in your hands, even if technically it works.
+
+So I learned to redirect. Now when someone arrives and announces their mug dreams, I get excited with them, then gently suggest we start differently. We throw bowls. Lots of bowls. Different sizes, different wall thicknesses, different rim details. Bowls teach you about centering and wall pressure without the structural complications. Within a few weeks, people actually want to make bowls. They're beautiful when they're well-thrown. You can use them, gift them, stack them.
+
+And here's the thing: once someone's thrown fifteen decent bowls and understands clay at that deeper level, when they come back to the mug, it clicks. They know what thin walls feel like under their hands. They understand how to throw a base that doesn't look lumpy. The handle stops being an afterthought bolted onto something else—they see how it relates to the whole form.
+
+I've learned that beginning pottery is less about getting to your goal quickly and more about building intuition. Some of our best students this year were the ones who seemed to give up on their original vision fastest. They got curious instead. They'd throw a small cylinder and ask what happened. They'd thin the walls too much and watch it collapse, then try again. They'd try a textured rim just because they wondered. These people ended up with a feel for the clay that the goal-focused folks sometimes never developed.
+
+The other lesson, which I'm still sitting with, is about slowing down. An eight-week session feels long when you're planning it, then vanishingly short when you're living it. People would apologize to me halfway through about not being "good yet." I'd have to remind them—and myself—that they'd only had eight Saturday mornings. The professionals I learned from spent eight *years* before they made anything gallery-worthy. The fact that anyone could center clay in eight weeks, let alone throw a recognizable form, suddenly seemed remarkable.
+
+What surprised me most, though, was the community piece. These Saturday morning people started arriving early and staying late. They'd help each other troubleshoot. Someone would throw a beautiful cylinder and everyone would gather around and actually care. There's something about working with clay—something so immediate and unforgiving—that makes people honest with each other.
+
+Next spring, I'm offering the classes again. I'm not going to discourage the mug dreams anymore. But I'll know to build in the bowl months first. I'll know that "I'm not good yet" usually means "I'm just starting." And I'll trust that the clay itself teaches better than I can—you just have to get people the time and permission to listen.

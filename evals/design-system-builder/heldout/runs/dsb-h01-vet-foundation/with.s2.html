@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollowbrook Vet Care · Design Foundation</title>
+<style>
+/* =========================================================
+   TIER 1 · REFERENCE VALUES (raw; never used by components)
+   ========================================================= */
+:root {
+  --ref-teal-50:#E6F2EF; --ref-teal-300:#6FCBB7; --ref-teal-400:#4DB8A2; --ref-teal-700:#1F6B5E; --ref-teal-800:#17564B; --ref-teal-950:#0A1F1B;
+  --ref-ink-950:#121715; --ref-ink-900:#1B2623; --ref-ink-850:#1B2320; --ref-ink-800:#232D29; --ref-ink-700:#34413C; --ref-ink-600:#4A5753; --ref-ink-300:#A9B6B1; --ref-ink-200:#D5DCD8; --ref-ink-100:#E8EEEB; --ref-ink-50:#F5F7F5; --ref-white:#FFFFFF;
+  --ref-red-50:#FCEDEA; --ref-red-700:#A8321F; --ref-red-300:#FF9C8A; --ref-red-950:#3A1E1A;
+  --ref-green-50:#E8F5EC; --ref-green-700:#1E6B3A; --ref-green-300:#8FD9A8; --ref-green-950:#1B3324;
+  --ref-amber-50:#FFF3DC; --ref-amber-700:#7A4B00; --ref-amber-300:#F0C36B; --ref-amber-950:#3A2C10;
+  --ref-blue-50:#E8F1F9; --ref-blue-700:#1F5A8A; --ref-blue-300:#8EC1EE; --ref-blue-950:#162A3B;
+
+  /* scales: spacing (8 steps), radius (3), elevation (2), motion (3 durations, 1 easing) */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+  --radius-sm:6px; --radius-md:12px; --radius-pill:999px;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --duration-fast:100ms; --duration-base:200ms; --duration-slow:300ms;
+  --ease-standard:cubic-bezier(.2,0,0,1);
+  --target-min:44px;
+}
+
+/* =========================================================
+   TIER 2 · SEMANTIC ROLES (themes remap these: light-dark(light, dark))
+   ========================================================= */
+:root {
+  color-scheme: light dark;
+  --color-bg:               light-dark(var(--ref-ink-50),  var(--ref-ink-950));
+  --color-surface:          light-dark(var(--ref-white),   var(--ref-ink-850));
+  --color-surface-raised:   light-dark(var(--ref-white),   var(--ref-ink-800));
+  --color-surface-sunken:   light-dark(var(--ref-ink-100), var(--ref-ink-900));
+  --color-text:             light-dark(var(--ref-ink-900), var(--ref-ink-100));
+  --color-text-secondary:   light-dark(var(--ref-ink-600), var(--ref-ink-300));
+  --color-border:           light-dark(var(--ref-ink-200), var(--ref-ink-700));
+  --color-border-strong:    light-dark(#7C8A85,            #7F8E88);
+  --color-accent:           light-dark(var(--ref-teal-700),var(--ref-teal-300));
+  --color-accent-hover:     light-dark(var(--ref-teal-800),var(--ref-teal-400));
+  --color-on-accent:        light-dark(var(--ref-white),   var(--ref-teal-950));
+  --color-accent-subtle:    light-dark(var(--ref-teal-50), #16302B);
+  --color-focus:            light-dark(#0B5FD1,            #8EC1EE);
+
+  --color-danger-text:      light-dark(var(--ref-red-700),   var(--ref-red-300));
+  --color-danger-bg:        light-dark(var(--ref-red-50),    var(--ref-red-950));
+  --color-success-text:     light-dark(var(--ref-green-700), var(--ref-green-300));
+  --color-success-bg:       light-dark(var(--ref-green-50),  var(--ref-green-950));
+  --color-warning-text:     light-dark(var(--ref-amber-700), var(--ref-amber-300));
+  --color-warning-bg:       light-dark(var(--ref-amber-50),  var(--ref-amber-950));
+  --color-info-text:        light-dark(var(--ref-blue-700),  var(--ref-blue-300));
+  --color-info-bg:          light-dark(var(--ref-blue-50),   var(--ref-blue-950));
+
+  /* elevation: dark mode relies on lighter surfaces, shadows are subtle */
+  --shadow-1: 0 1px 2px light-dark(rgb(20 40 35 / .08), rgb(0 0 0 / .4));
+  --shadow-2: 0 6px 20px light-dark(rgb(20 40 35 / .12), rgb(0 0 0 / .5));
+
+  /* type roles (6) */
+  --type-display: 600 1.75rem/1.2 var(--font-sans);
+  --type-title:   600 1.25rem/1.3 var(--font-sans);
+  --type-heading: 600 1rem/1.4 var(--font-sans);
+  --type-body:    400 1rem/1.55 var(--font-sans);
+  --type-label:   600 .875rem/1.4 var(--font-sans);
+  --type-caption: 400 .8125rem/1.45 var(--font-sans);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+
+/* =========================================================
+   BASE
+   ========================================================= */
+*,*::before,*::after { box-sizing: border-box; }
+body { margin:0; background:var(--color-bg); color:var(--color-text); font:var(--type-body); }
+h1,h2,h3,p { margin:0; }
+h1 { font:var(--type-display); letter-spacing:-.01em; }
+h2 { font:var(--type-title); }
+h3 { font:var(--type-heading); }
+.caption { font:var(--type-caption); color:var(--color-text-secondary); }
+code { font:.8125rem ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background:var(--color-surface-sunken); padding:1px 6px; border-radius:var(--radius-sm); }
+:focus-visible { outline:3px solid var(--color-focus); outline-offset:2px; }
+.wrap { max-width:1000px; margin:0 auto; padding:0 var(--space-5); }
+.skip { position:absolute; left:-999px; }
+.skip:focus { left:var(--space-4); top:var(--space-4); background:var(--color-surface); padding:var(--space-2) var(--space-3); z-index:10; }
+
+/* =========================================================
+   TIER 3 · COMPONENTS (read semantic roles only)
+   ========================================================= */
+
+/* Button: variants primary / secondary / quiet; states default hover focus pressed disabled loading */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:var(--target-min); padding:0 var(--space-4);
+  font:var(--type-label); font-size:.9375rem; border-radius:var(--radius-sm); border:1.5px solid transparent; cursor:pointer; text-decoration:none;
+  transition:background var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard); }
+.btn--primary { background:var(--color-accent); color:var(--color-on-accent); }
+.btn--primary:hover, .btn--primary.is-hover { background:var(--color-accent-hover); }
+.btn--secondary { background:var(--color-surface); color:var(--color-text); border-color:var(--color-border-strong); }
+.btn--secondary:hover, .btn--secondary.is-hover { background:var(--color-surface-sunken); }
+.btn--quiet { background:transparent; color:var(--color-accent); }
+.btn--quiet:hover, .btn--quiet.is-hover { background:var(--color-accent-subtle); }
+.btn:active, .btn.is-pressed { transform:translateY(1px); }
+.btn.is-focus { outline:3px solid var(--color-focus); outline-offset:2px; }
+.btn[disabled], .btn[aria-disabled="true"] { background:var(--color-surface-sunken); color:var(--color-text-secondary); border-color:var(--color-border); cursor:not-allowed; transform:none; }
+.btn[aria-busy="true"]::before { content:""; width:1em; height:1em; border-radius:50%; border:2px solid currentColor; border-right-color:transparent; animation:spin 800ms linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Field: label + control + hint + error. states default focus error disabled */
+.field { display:grid; gap:var(--space-1); min-width:0; }
+.field > label, .legend { font:var(--type-label); }
+.hint { font:var(--type-caption); color:var(--color-text-secondary); }
+.control { width:100%; min-height:var(--target-min); padding:var(--space-2) var(--space-3); font:var(--type-body); color:var(--color-text);
+  background:var(--color-surface); border:1.5px solid var(--color-border-strong); border-radius:var(--radius-sm);
+  transition:border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard); }
+textarea.control { min-height:96px; resize:vertical; }
+.control:hover { border-color:var(--color-text-secondary); }
+.control:focus-visible, .control.is-focus { outline:none; border-color:var(--color-focus); box-shadow:0 0 0 3px color-mix(in srgb, var(--color-focus) 35%, transparent); }
+.control[aria-invalid="true"] { border-color:var(--color-danger-text); }
+.control:disabled { background:var(--color-surface-sunken); color:var(--color-text-secondary); border-color:var(--color-border); cursor:not-allowed; }
+.error { font:var(--type-caption); font-weight:600; color:var(--color-danger-text); display:flex; gap:var(--space-1); }
+
+/* Choice chip (radio): time slots */
+.chips { display:flex; flex-wrap:wrap; gap:var(--space-2); border:0; padding:0; margin:0; }
+.chip { position:relative; }
+.chip input { position:absolute; inset:0; opacity:0; cursor:pointer; margin:0; }
+.chip span { display:inline-flex; align-items:center; min-height:var(--target-min); padding:0 var(--space-4); border:1.5px solid var(--color-border-strong); border-radius:var(--radius-pill); background:var(--color-surface); font:var(--type-label); transition:background var(--duration-fast) var(--ease-standard); }
+.chip input:hover + span { background:var(--color-surface-sunken); }
+.chip input:checked + span { background:var(--color-accent-subtle); border-color:var(--color-accent); color:var(--color-accent); box-shadow:inset 0 0 0 1px var(--color-accent); }
+.chip input:focus-visible + span { outline:3px solid var(--color-focus); outline-offset:2px; }
+.chip input:disabled + span { color:var(--color-text-secondary); text-decoration:line-through; background:var(--color-surface-sunken); border-color:var(--color-border); cursor:not-allowed; }
+
+/* Badge: neutral / success / warning / danger / info (always icon + text, never color alone) */
+.badge { display:inline-flex; align-items:center; gap:var(--space-1); padding:2px var(--space-3); border-radius:var(--radius-pill); font:var(--type-caption); font-weight:600; white-space:nowrap; background:var(--color-info-bg); color:var(--color-info-text); }
+.badge--success { background:var(--color-success-bg); color:var(--color-success-text); }
+.badge--warning { background:var(--color-warning-bg); color:var(--color-warning-text); }
+.badge--danger  { background:var(--color-danger-bg);  color:var(--color-danger-text); }
+
+/* Message (inline status): info / success / warning / danger */
+.message { display:grid; grid-template-columns:auto 1fr; gap:var(--space-3); padding:var(--space-4); border-radius:var(--radius-md); border:1px solid currentColor; background:var(--color-info-bg); color:var(--color-info-text); }
+.message > div { color:var(--color-text); }
+.message strong { display:block; font:var(--type-heading); color:inherit; }
+.message strong { color:var(--color-text); }
+.message--success { background:var(--color-success-bg); color:var(--color-success-text); }
+.message--warning { background:var(--color-warning-bg); color:var(--color-warning-text); }
+.message--danger  { background:var(--color-danger-bg);  color:var(--color-danger-text); }
+.icon { width:20px; height:20px; flex:none; margin-top:2px; }
+
+/* Card: surface container; appointment-card composes it */
+.card { background:var(--color-surface-raised); border:1px solid var(--color-border); border-radius:var(--radius-md); box-shadow:var(--shadow-1); padding:var(--space-5); }
+.appt { display:grid; gap:var(--space-4); }
+.appt__head { display:flex; justify-content:space-between; gap:var(--space-3); align-items:flex-start; }
+.appt__head > div { min-width:0; }
+.appt__pet { overflow-wrap:anywhere; }
+.appt__meta { display:grid; grid-template-columns:auto 1fr; gap:var(--space-2) var(--space-4); margin:0; }
+.appt__meta dt { font:var(--type-caption); color:var(--color-text-secondary); padding-top:2px; }
+.appt__meta dd { margin:0; overflow-wrap:anywhere; }
+.appt__actions { display:flex; flex-wrap:wrap; gap:var(--space-2); border-top:1px solid var(--color-border); padding-top:var(--space-4); }
+
+/* =========================================================
+   DOC PAGE LAYOUT (not part of the system)
+   ========================================================= */
+.top { background:var(--color-surface); border-bottom:1px solid var(--color-border); }
+.top .wrap { display:flex; justify-content:space-between; align-items:center; gap:var(--space-4); padding-block:var(--space-4); }
+.brand { display:flex; align-items:center; gap:var(--space-3); font:var(--type-heading); }
+.brand svg { width:32px; height:32px; }
+.intro { padding-block:var(--space-7) var(--space-5); display:grid; gap:var(--space-3); max-width:68ch; }
+.intro p { color:var(--color-text-secondary); }
+section.doc { padding-block:var(--space-6); border-top:1px solid var(--color-border); display:grid; gap:var(--space-5); }
+.sub { display:grid; gap:var(--space-3); }
+.grid { display:grid; gap:var(--space-4); grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); }
+.sw { border:1px solid var(--color-border); border-radius:var(--radius-md); overflow:hidden; background:var(--color-surface); }
+.sw i { display:block; height:48px; border-bottom:1px solid var(--color-border); }
+.sw div { padding:var(--space-2) var(--space-3); display:grid; }
+.sw b { font:var(--type-label); }
+.pairs { display:grid; gap:var(--space-3); grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); }
+.pair { padding:var(--space-3) var(--space-4); border-radius:var(--radius-sm); font:var(--type-label); }
+.row { display:flex; flex-wrap:wrap; gap:var(--space-3); align-items:center; }
+.states { display:grid; gap:var(--space-3); }
+.states .row > .caption { width:84px; }
+.type-row { display:grid; grid-template-columns:110px 1fr; gap:var(--space-4); align-items:baseline; padding-block:var(--space-2); border-bottom:1px solid var(--color-border); }
+.space-row { display:grid; grid-template-columns:110px 1fr; gap:var(--space-4); align-items:center; }
+.space-row span { display:block; height:12px; background:var(--color-accent); border-radius:2px; }
+.demo-box { background:var(--color-surface); border:1px solid var(--color-border); width:96px; height:64px; display:grid; place-items:center; font:var(--type-caption); color:var(--color-text-secondary); }
+.demo { transition:transform var(--duration-base) var(--ease-standard); }
+.demo:hover { transform:translateY(-4px); }
+.samples { display:grid; gap:var(--space-5); grid-template-columns:minmax(0,3fr) minmax(0,2fr); align-items:start; }
+.stack { display:grid; gap:var(--space-5); }
+form.book { display:grid; gap:var(--space-5); }
+.two { display:grid; gap:var(--space-4); grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); }
+ul.rules { margin:0; padding-left:var(--space-5); display:grid; gap:var(--space-2); }
+.theme-toggle { font:var(--type-label); }
+@media (max-width:760px) { .samples { grid-template-columns:minmax(0,1fr); } .wrap { padding:0 var(--space-4); } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { transition-duration:1ms !important; animation-duration:1ms !important; } }
+@media (forced-colors:active) {
+  .btn, .badge, .message, .card, .chip span { border:1.5px solid CanvasText; }
+  .chip input:checked + span { outline:2px solid Highlight; }
+  .btn--primary { background:ButtonText; color:ButtonFace; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-info" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 9v5M10 6.2v.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 10.3l2.8 2.7L14 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 20 20"><path d="M10 2.5l8 14H2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8v4M10 14.2v.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 7l6 6M13 7l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--color-accent)"/><path d="M16 24c-5-3.5-7-6-7-9a4 4 0 017-2.4A4 4 0 0123 15c0 3-2 5.500-7 9z" fill="var(--color-on-accent)"/></svg>
+      Hollowbrook Vet Care <span class="caption">· Design foundation v1</span>
+    </div>
+    <button class="btn btn--secondary theme-toggle" type="button" id="theme" aria-pressed="false">Theme: auto</button>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <div class="intro">
+    <h1>One set of decisions, used everywhere.</h1>
+    <p>Calm, warm and clear. Every screen (booking, pet records, reminders) is built from the tokens and components below. If you need something that isn't here, adapt an existing piece first; if a second screen needs it, it joins the system.</p>
+    <p class="caption">Assumes one brand, a web product and a small team. Colors are proposals, so confirm them against the real brand.</p>
+  </div>
+
+  <!-- ============ PRINCIPLES ============ -->
+  <section class="doc" aria-labelledby="p">
+    <h2 id="p">Principles</h2>
+    <ul class="rules">
+      <li><b>Trustworthy before friendly.</b> People book care and read health records here. Warmth comes from color, wording and rounded corners. Layout and controls stay conventional.</li>
+      <li><b>Status is never color alone.</b> Every status pairs color with an icon and a word.</li>
+      <li><b>Components read roles, not raw values.</b> Use <code>--color-text-secondary</code>, never a hex or <code>--ref-*</code>. This is what lets dark mode and future themes work.</li>
+      <li><b>44px minimum targets, visible focus, keyboard first.</b> Many users book from a phone, in a waiting room.</li>
+    </ul>
+  </section>
+
+  <!-- ============ FOUNDATION ============ -->
+  <section class="doc" aria-labelledby="f">
+    <h2 id="f">Foundation</h2>
+
+    <div class="sub">
+      <h3>Tiers</h3>
+      <p class="caption"><code>--ref-*</code> raw values → <code>--color-*</code>, <code>--type-*</code> semantic roles (themes remap these) → components. Components never skip a tier.</p>
+    </div>
+
+    <div class="sub">
+      <h3>Color roles</h3>
+      <p class="caption">Shown live. Use the theme button to see them remap. Dark is re-tuned, not inverted: surfaces get lighter as they rise, accents get lighter.</p>
+      <div class="grid">
+        <div class="sw"><i style="background:var(--color-bg)"></i><div><b>bg</b><span class="caption">Page ground</span></div></div>
+        <div class="sw"><i style="background:var(--color-surface)"></i><div><b>surface</b><span class="caption">Cards, inputs</span></div></div>
+        <div class="sw"><i style="background:var(--color-surface-sunken)"></i><div><b>surface-sunken</b><span class="caption">Disabled, hover fill</span></div></div>
+        <div class="sw"><i style="background:var(--color-accent)"></i><div><b>accent</b><span class="caption">Primary action, selection</span></div></div>
+        <div class="sw"><i style="background:var(--color-accent-subtle)"></i><div><b>accent-subtle</b><span class="caption">Selected backgrounds</span></div></div>
+        <div class="sw"><i style="background:var(--color-border-strong)"></i><div><b>border-strong</b><span class="caption">Form control edges</span></div></div>
+        <div class="sw"><i style="background:var(--color-border)"></i><div><b>border</b><span class="caption">Dividers, card edges</span></div></div>
+        <div class="sw"><i style="background:var(--color-focus)"></i><div><b>focus</b><span class="caption">Focus ring only</span></div></div>
+      </div>
+      <div class="pairs" role="list" aria-label="Text and status color pairs">
+        <div class="pair" role="listitem" style="background:var(--color-surface);color:var(--color-text);border:1px solid var(--color-border)">text on surface</div>
+        <div class="pair" role="listitem" style="background:var(--color-surface);color:var(--color-text-secondary);border:1px solid var(--color-border)">text-secondary on surface</div>
+        <div class="pair" role="listitem" style="background:var(--color-accent);color:var(--color-on-accent)">on-accent on accent</div>
+        <div class="pair" role="listitem" style="background:var(--color-success-bg);color:var(--color-success-text)">success</div>
+        <div class="pair" role="listitem" style="background:var(--color-warning-bg);color:var(--color-warning-text)">warning</div>
+        <div class="pair" role="listitem" style="background:var(--color-danger-bg);color:var(--color-danger-text)">danger</div>
+        <div class="pair" role="listitem" style="background:var(--color-info-bg);color:var(--color-info-text)">info</div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Type · 6 roles, system fonts</h3>
+      <div>
+        <div class="type-row"><span class="caption">display</span><span style="font:var(--type-display)">Welcome back, Maple’s family</span></div>
+        <div class="type-row"><span class="caption">title</span><span style="font:var(--type-title)">Upcoming appointments</span></div>
+        <div class="type-row"><span class="caption">heading</span><span style="font:var(--type-heading)">Vaccination history</span></div>
+        <div class="type-row"><span class="caption">body</span><span style="font:var(--type-body)">Bring any recent lab results to the visit. Arrive five minutes early.</span></div>
+        <div class="type-row"><span class="caption">label</span><span style="font:var(--type-label)">Preferred time</span></div>
+        <div class="type-row"><span class="caption">caption</span><span style="font:var(--type-caption)">Reminders are sent 48 hours before the visit.</span></div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Spacing · 8 steps</h3>
+      <div class="states">
+        <div class="space-row"><span class="caption">space-1 · 4</span><span style="width:4px"></span></div>
+        <div class="space-row"><span class="caption">space-2 · 8</span><span style="width:8px"></span></div>
+        <div class="space-row"><span class="caption">space-3 · 12</span><span style="width:12px"></span></div>
+        <div class="space-row"><span class="caption">space-4 · 16</span><span style="width:16px"></span></div>
+        <div class="space-row"><span class="caption">space-5 · 24</span><span style="width:24px"></span></div>
+        <div class="space-row"><span class="caption">space-6 · 32</span><span style="width:32px"></span></div>
+        <div class="space-row"><span class="caption">space-7 · 48</span><span style="width:48px"></span></div>
+        <div class="space-row"><span class="caption">space-8 · 64</span><span style="width:64px"></span></div>
+      </div>
+      <p class="caption">Tighter inside a group, looser between groups. Pick the step; never a one-off pixel value.</p>
+    </div>
+
+    <div class="sub">
+      <h3>Radius, elevation, motion</h3>
+      <div class="row">
+        <div class="demo-box" style="border-radius:var(--radius-sm)">sm · 6</div>
+        <div class="demo-box" style="border-radius:var(--radius-md)">md · 12</div>
+        <div class="demo-box" style="border-radius:var(--radius-pill);width:120px">pill</div>
+        <div class="demo-box" style="border-radius:var(--radius-md);box-shadow:var(--shadow-1);border-color:transparent">shadow-1</div>
+        <div class="demo-box demo" style="border-radius:var(--radius-md);box-shadow:var(--shadow-2);border-color:transparent">shadow-2</div>
+      </div>
+      <p class="caption">Radius sm for controls, md for containers, pill for chips and badges. Shadow-1 for resting cards, shadow-2 for overlays only. Motion: 100 / 200 / 300 ms with one standard easing, and all motion is removed under reduced-motion. Hover the last box.</p>
+    </div>
+  </section>
+
+  <!-- ============ COMPONENT STATES ============ -->
+  <section class="doc" aria-labelledby="c">
+    <h2 id="c">Components and their states</h2>
+
+    <div class="sub">
+      <h3>Button</h3>
+      <div class="states">
+        <div class="row"><span class="caption">Primary</span>
+          <button class="btn btn--primary" type="button">Book visit</button>
+          <button class="btn btn--primary is-hover" type="button">Hover</button>
+          <button class="btn btn--primary is-focus" type="button">Focus</button>
+          <button class="btn btn--primary is-pressed" type="button">Pressed</button>
+          <button class="btn btn--primary" type="button" aria-busy="true" aria-disabled="true">Saving…</button>
+          <button class="btn btn--primary" type="button" disabled>Disabled</button>
+        </div>
+        <div class="row"><span class="caption">Secondary</span>
+          <button class="btn btn--secondary" type="button">Reschedule</button>
+          <button class="btn btn--secondary is-hover" type="button">Hover</button>
+          <button class="btn btn--secondary is-focus" type="button">Focus</button>
+          <button class="btn btn--secondary" type="button" disabled>Disabled</button>
+        </div>
+        <div class="row"><span class="caption">Quiet</span>
+          <button class="btn btn--quiet" type="button">Add to calendar</button>
+          <button class="btn btn--quiet is-hover" type="button">Hover</button>
+          <button class="btn btn--quiet" type="button" disabled>Disabled</button>
+        </div>
+      </div>
+      <p class="caption">One primary per view. Labels name the action (“Book visit”), not “Submit”. Loading keeps the label and sets <code>aria-busy</code>.</p>
+    </div>
+
+    <div class="sub">
+      <h3>Field</h3>
+      <div class="grid">
+        <div class="field"><label for="s1">Default</label><input id="s1" class="control" value="Maple"><span class="hint">Hint text sits below.</span></div>
+        <div class="field"><label for="s2">Focus</label><input id="s2" class="control is-focus" value="Maple"></div>
+        <div class="field"><label for="s3">Error</label><input id="s3" class="control" aria-invalid="true" aria-describedby="s3e" value="555-01"><span class="error" id="s3e">Enter a full phone number, like 555-0142.</span></div>
+        <div class="field"><label for="s4">Disabled</label><input id="s4" class="control" value="Locked by clinic" disabled></div>
+      </div>
+      <h3>Time-slot chip (radio)</h3>
+      <div class="chips" role="group" aria-label="Chip states">
+        <label class="chip"><input type="radio" name="demo" checked><span>9:00 am · selected</span></label>
+        <label class="chip"><input type="radio" name="demo"><span>9:30 am · default</span></label>
+        <label class="chip"><input type="radio" name="demo" disabled><span>10:00 am · taken</span></label>
+      </div>
+      <h3>Badge</h3>
+      <div class="row">
+        <span class="badge badge--success"><svg class="icon" style="width:14px;height:14px;margin:0"><use href="#i-check"/></svg>Confirmed</span>
+        <span class="badge badge--warning"><svg class="icon" style="width:14px;height:14px;margin:0"><use href="#i-warn"/></svg>Awaiting confirmation</span>
+        <span class="badge badge--danger"><svg class="icon" style="width:14px;height:14px;margin:0"><use href="#i-alert"/></svg>Cancelled</span>
+        <span class="badge"><svg class="icon" style="width:14px;height:14px;margin:0"><use href="#i-info"/></svg>Reminder sent</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SAMPLES ============ -->
+  <section class="doc" aria-labelledby="s">
+    <h2 id="s">Built from the foundation</h2>
+    <div class="samples">
+
+      <div class="card">
+        <form class="book" id="book" novalidate>
+          <div class="sub"><h3 style="font:var(--type-title)">Book an appointment</h3><p class="caption">Fields marked * are required.</p></div>
+
+          <div class="two">
+            <div class="field"><label for="pet">Pet *</label>
+              <select id="pet" class="control" required>
+                <option>Maple (Dog, Labrador)</option><option>Biscuit (Cat)</option><option>Add a new pet…</option>
+              </select></div>
+            <div class="field"><label for="reason">Reason for visit *</label>
+              <select id="reason" class="control" required>
+                <option>Annual check-up</option><option>Vaccination</option><option>Dental cleaning</option><option>Something’s wrong</option>
+              </select></div>
+          </div>
+
+          <div class="two">
+            <div class="field"><label for="date">Date *</label><input id="date" class="control" type="date" value="2026-10-21" required></div>
+            <div class="field"><label for="phone">Phone for reminders *</label>
+              <input id="phone" class="control" type="tel" inputmode="tel" value="555-01" aria-invalid="true" aria-describedby="phone-e" autocomplete="tel">
+              <span class="error" id="phone-e">Enter a full phone number, like 555-0142.</span></div>
+          </div>
+
+          <fieldset class="chips" style="display:grid;gap:var(--space-2)">
+            <legend class="legend" style="padding:0">Time *</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="time" value="9:00"><span>9:00 am</span></label>
+              <label class="chip"><input type="radio" name="time" value="9:30" checked><span>9:30 am</span></label>
+              <label class="chip"><input type="radio" name="time" value="10:00" disabled><span>10:00 am</span></label>
+              <label class="chip"><input type="radio" name="time" value="11:15"><span>11:15 am</span></label>
+              <label class="chip"><input type="radio" name="time" value="2:00"><span>2:00 pm</span></label>
+            </div>
+            <span class="hint">Struck-through times are already booked.</span>
+          </fieldset>
+
+          <div class="field"><label for="notes">Anything we should know? <span class="caption">(optional)</span></label>
+            <textarea id="notes" class="control" aria-describedby="notes-h"></textarea>
+            <span class="hint" id="notes-h">Symptoms, medications, or worries. We read every note before your visit.</span></div>
+
+          <div class="row">
+            <button class="btn btn--primary" type="submit">Book visit</button>
+            <button class="btn btn--quiet" type="reset">Clear form</button>
+          </div>
+          <div id="result" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <div class="stack">
+        <article class="card appt" aria-labelledby="a1">
+          <div class="appt__head">
+            <div><p class="caption">Next appointment</p><h3 id="a1" class="appt__pet" style="font:var(--type-title)">Maple</h3></div>
+            <span class="badge badge--success"><svg class="icon" style="width:14px;height:14px;margin:0"><use href="#i-check"/></svg>Confirmed</span>
+          </div>
+          <dl class="appt__meta">
+            <dt>When</dt><dd><b>Wed, Oct 21</b> · 9:30 am</dd>
+            <dt>Visit</dt><dd>Annual check-up</dd>
+            <dt>Vet</dt><dd>Dr. Okafor</dd>
+            <dt>Where</dt><dd>Hollowbrook Clinic, 14 Mill Lane</dd>
+          </dl>
+          <div class="appt__actions">
+            <button class="btn btn--secondary" type="button">Reschedule</button>
+            <button class="btn btn--quiet" type="button">Cancel visit</button>
+          </div>
+        </article>
+
+        <article class="card appt" aria-labelledby="a2">
+          <div class="appt__head">
+            <div><p class="caption">Edge case · long content</p><h3 id="a2" class="appt__pet">Sir Reginald Fluffington-Smythe III</h3></div>
+            <span class="badge badge--warning"><svg class="icon" style="width:14px;height:14px;margin:0"><use href="#i-warn"/></svg>Awaiting</span>
+          </div>
+          <dl class="appt__meta">
+            <dt>When</dt><dd><b>Fri, Nov 6</b> · 2:00 pm</dd>
+            <dt>Visit</dt><dd>Dental cleaning and follow-up bloodwork</dd>
+          </dl>
+        </article>
+
+        <div class="stack" style="gap:var(--space-3)">
+          <div class="message message--success" role="status">
+            <svg class="icon"><use href="#i-check"/></svg>
+            <div><strong>Appointment confirmed</strong>We’ve emailed the details. A reminder will arrive 48 hours before.</div>
+          </div>
+          <div class="message message--warning">
+            <svg class="icon"><use href="#i-warn"/></svg>
+            <div><strong>Vaccination due soon</strong>Maple’s rabies booster expires on Nov 30.</div>
+          </div>
+          <div class="message message--danger" role="alert">
+            <svg class="icon"><use href="#i-alert"/></svg>
+            <div><strong>We couldn’t save your changes</strong>Check your connection and try again. Nothing was lost.</div>
+          </div>
+          <div class="message">
+            <svg class="icon"><use href="#i-info"/></svg>
+            <div><strong>Holiday hours</strong>The clinic closes at 1 pm on Dec 24.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GOVERNANCE ============ -->
+  <section class="doc" aria-labelledby="g" style="padding-bottom:var(--space-8)">
+    <h2 id="g">How this changes</h2>
+    <ul class="rules">
+      <li><b>One source.</b> These custom properties are the source. Any design file mirrors them; if they differ, that’s a bug to fix, not a note.</li>
+      <li><b>New value?</b> Reuse the nearest existing step first. Add a token only when two screens need it, and name it by role (<code>--color-text-secondary</code>), never by color or page.</li>
+      <li><b>New component?</b> It joins when a second screen needs it. Specify every state, long and empty content, keyboard and focus before merging.</li>
+      <li><b>Four change types:</b> add, modify, deprecate, remove. Deprecate with a note and a migration before removing. Record each change in a changelog and name an owner. <span class="caption">[owner: to be assigned by the team]</span></li>
+      <li><b>Every theme checks every text pair.</b> Light and dark are done here; pairs were chosen for strong contrast but should be re-verified with a tool once brand colors are final.</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement, btn = document.getElementById('theme');
+  var modes = ['auto', 'light', 'dark'], i = 0;
+  btn.addEventListener('click', function () {
+    i = (i + 1) % modes.length;
+    if (modes[i] === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', modes[i]);
+    btn.textContent = 'Theme: ' + modes[i];
+    btn.setAttribute('aria-pressed', modes[i] !== 'auto');
+  });
+  var form = document.getElementById('book'), result = document.getElementById('result'), phone = document.getElementById('phone'), err = document.getElementById('phone-e');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = phone.value.replace(/\D/g, '').length >= 7;
+    phone.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    err.hidden = ok;
+    if (!ok) {
+      result.innerHTML = '<div class="message message--danger"><svg class="icon"><use href="#i-alert"/></svg><div><strong>Please fix 1 field</strong>Your phone number looks incomplete.</div></div>';
+      phone.focus();
+    } else {
+      result.innerHTML = '<div class="message message--success"><svg class="icon"><use href="#i-check"/></svg><div><strong>Request sent</strong>We’ll confirm your visit by email shortly.</div></div>';
+    }
+  });
+})();
+</script>
+</body>
+</html>

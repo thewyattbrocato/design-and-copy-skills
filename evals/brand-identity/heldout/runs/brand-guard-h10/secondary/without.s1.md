@@ -1,0 +1,1 @@
+No. Cramming all three makes the logo fail at small sizes, on cans, and on tap handles. Pick one dominant element, usually the bear or the wordmark, and use the crest or hops as a secondary mark or accent. Build a simplified full lockup for merch and signage, and a compact mark for caps and social avatars.

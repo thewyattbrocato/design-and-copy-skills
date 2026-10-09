@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnbook: book your first session</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --card: #ffffff;
+    --ink: #2b2623;
+    --muted: #6b625c;
+    --line: #e6dfd6;
+    --accent: #9a4f2e;
+    --accent-ink: #ffffff;
+    --soft: #f3ebe2;
+    --sample: #7a6f2a;
+    --focus: #1d5fa7;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    font-size: 16px;
+  }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 24px 20px 64px; }
+
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 20px; border-bottom: 1px solid var(--line);
+  }
+  .brand { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.01em; }
+  .top a { color: var(--muted); font-size: 0.95rem; }
+
+  h1 { font-size: 1.6rem; line-height: 1.25; margin: 28px 0 8px; font-weight: 700; }
+  .lede { margin: 0 0 6px; color: var(--ink); }
+  .outcome { margin: 0; color: var(--muted); }
+
+  .steps {
+    list-style: none; padding: 0; margin: 24px 0 8px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .steps li {
+    font-size: 0.9rem; color: var(--muted);
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+  }
+  .steps li[aria-current="step"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+  .steps li.done { color: var(--ink); }
+
+  section.step {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px; margin-top: 16px;
+  }
+  section.step h2 { font-size: 1.1rem; margin: 0 0 6px; }
+  section.step p.hint { margin: 0 0 16px; color: var(--muted); font-size: 0.95rem; }
+
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 560px) { .choices { grid-template-columns: 1fr; } }
+  .choice {
+    text-align: left; font: inherit; color: inherit; cursor: pointer;
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; padding: 16px;
+  }
+  .choice strong { display: block; margin-bottom: 4px; }
+  .choice span { color: var(--muted); font-size: 0.92rem; }
+  .choice[aria-pressed="true"] { border-color: var(--accent); background: var(--soft); }
+
+  .sample-tag {
+    display: inline-block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em;
+    color: var(--sample); background: #f4f1dc; border-radius: 6px; padding: 2px 8px; margin-bottom: 10px;
+  }
+  .slots { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .slot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--card);
+  }
+  .slot[aria-pressed="true"] { border-color: var(--accent); background: var(--soft); }
+  .slot button {
+    font: inherit; font-size: 0.92rem; cursor: pointer; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 6px 12px;
+  }
+  .slot[aria-pressed="true"] button { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+  .summary { margin: 0 0 16px; padding: 12px 14px; border-radius: 10px; background: var(--soft); font-size: 0.95rem; }
+  .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+  .btn {
+    font: inherit; font-weight: 600; cursor: pointer; border-radius: 10px; padding: 10px 18px;
+    background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent);
+  }
+  .btn:disabled { background: var(--line); border-color: var(--line); color: var(--muted); cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .back { font: inherit; background: none; border: 0; color: var(--muted); cursor: pointer; padding: 6px 0; }
+
+  .result {
+    margin-top: 16px; padding: 16px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--line);
+  }
+  .result h2 { font-size: 1.05rem; margin: 0 0 6px; }
+  .result p { margin: 0; color: var(--muted); }
+
+  .skip { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.95rem; }
+  .skip p { margin: 0 0 6px; }
+  .skip a { color: var(--ink); }
+
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">Kilnbook</div>
+    <a href="#">Skip to my account</a>
+  </header>
+
+  <main>
+    <h1>Welcome. Book your first session in about two minutes.</h1>
+    <p class="lede">Choose a wheel or a kiln slot, pick a time, and confirm. Your studio's real times will replace the practice ones below.</p>
+    <p class="outcome">After this, you can book a session on your own.</p>
+
+    <ol class="steps" aria-label="Progress">
+      <li id="s1" aria-current="step">1. Pick a session type</li>
+      <li id="s2">2. Choose a time</li>
+      <li id="s3">3. Confirm</li>
+    </ol>
+
+    <!-- Step 1 -->
+    <section class="step" id="step1" aria-labelledby="h-step1">
+      <h2 id="h-step1">What do you want to book?</h2>
+      <p class="hint">Not sure? Start with a wheel. You can book a kiln later.</p>
+      <div class="choices" role="group" aria-label="Session type">
+        <button class="choice" type="button" data-type="wheel" aria-pressed="false">
+          <strong>Wheel time</strong>
+          <span>A reserved wheel for a block of time in the studio. Good for practice and for your first throw.</span>
+        </button>
+        <button class="choice" type="button" data-type="kiln" aria-pressed="false">
+          <strong>Kiln slot</strong>
+          <span>A place in a firing. Staff load and fire the kiln at the booked time, then you collect your finished pieces later.</span>
+        </button>
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="toStep2" disabled>Next: choose a time</button>
+      </div>
+    </section>
+
+    <!-- Step 2 -->
+    <section class="step" id="step2" aria-labelledby="h-step2" hidden>
+      <h2 id="h-step2">Pick a time</h2>
+      <p class="hint">These are sample times so you can practise. Nothing here is a real booking yet.</p>
+      <span class="sample-tag">Sample times</span>
+      <ul class="slots" id="slotList"></ul>
+      <div class="actions">
+        <button class="back" type="button" data-back="1">Back</button>
+        <button class="btn" type="button" id="toStep3" disabled>Next: confirm</button>
+      </div>
+    </section>
+
+    <!-- Step 3 -->
+    <section class="step" id="step3" aria-labelledby="h-step3" hidden>
+      <h2 id="h-step3">Confirm your practice booking</h2>
+      <p class="summary" id="summary"></p>
+      <p class="hint">This practice run reserves nothing. It shows you where the button is and what the confirmation looks like.</p>
+      <div class="actions">
+        <button class="back" type="button" data-back="2">Back</button>
+        <button class="btn" type="button" id="confirm">Confirm practice booking</button>
+      </div>
+      <div class="result" id="result" hidden>
+        <h2>Practice booking complete</h2>
+        <p id="resultText"></p>
+        <div class="actions">
+          <button class="btn" type="button" id="realTimes">See this studio's real times</button>
+          <button class="back" type="button" id="again">Practise again</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="skip">
+      <p>Want to look around first? You can skip this and come back to it from Help.</p>
+      <p><a href="#">Skip for now and browse the studio calendar</a></p>
+    </div>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var choice = null, slot = null;
+    var sample = {
+      wheel: ["Tuesday, 10:00 to 12:00", "Thursday, 18:00 to 20:00", "Saturday, 09:00 to 11:00"],
+      kiln:  ["Wednesday firing, drop-off 09:00", "Friday firing, drop-off 09:00", "Sunday firing, drop-off 09:00"]
+    };
+    var names = { wheel: "Wheel time", kiln: "Kiln slot" };
+
+    function $(id) { return document.getElementById(id); }
+
+    function showStep(n) {
+      ["step1", "step2", "step3"].forEach(function (id, i) { $(id).hidden = (i + 1 !== n); });
+      ["s1", "s2", "s3"].forEach(function (id, i) {
+        var li = $(id);
+        li.removeAttribute("aria-current");
+        li.classList.toggle("done", i + 1 < n);
+        if (i + 1 === n) li.setAttribute("aria-current", "step");
+      });
+      var target = $("step" + n);
+      target.setAttribute("tabindex", "-1");
+      target.focus();
+    }
+
+    document.querySelectorAll(".choice").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        choice = btn.getAttribute("data-type");
+        document.querySelectorAll(".choice").forEach(function (b) {
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        });
+        slot = null;
+        $("toStep2").disabled = false;
+      });
+    });
+
+    $("toStep2").addEventListener("click", function () {
+      var list = $("slotList");
+      list.innerHTML = "";
+      slot = null;
+      $("toStep3").disabled = true;
+      sample[choice].forEach(function (text) {
+        var li = document.createElement("li");
+        li.className = "slot";
+        li.setAttribute("aria-pressed", "false");
+        var label = document.createElement("span");
+        label.textContent = text;
+        var pick = document.createElement("button");
+        pick.type = "button";
+        pick.textContent = "Choose";
+        pick.addEventListener("click", function () {
+          slot = text;
+          list.querySelectorAll(".slot").forEach(function (s) {
+            var on = s === li;
+            s.setAttribute("aria-pressed", on ? "true" : "false");
+            s.querySelector("button").textContent = on ? "Chosen" : "Choose";
+          });
+          $("toStep3").disabled = false;
+        });
+        li.appendChild(label);
+        li.appendChild(pick);
+        list.appendChild(li);
+      });
+      showStep(2);
+    });
+
+    $("toStep3").addEventListener("click", function () {
+      $("summary").textContent = names[choice] + ", " + slot + " (sample time)";
+      $("result").hidden = true;
+      showStep(3);
+    });
+
+    $("confirm").addEventListener("click", function () {
+      $("resultText").textContent =
+        "You just did the whole flow: choose a type, choose a time, confirm. A real booking works the same way, with your studio's own times.";
+      $("result").hidden = false;
+      $("result").focus && $("result").setAttribute("tabindex", "-1");
+      $("result").focus();
+    });
+
+    document.querySelectorAll("[data-back]").forEach(function (btn) {
+      btn.addEventListener("click", function () { showStep(Number(btn.getAttribute("data-back")) - 1 || 1); });
+    });
+
+    $("again").addEventListener("click", function () { showStep(1); });
+    $("realTimes").addEventListener("click", function () { window.location.hash = "#calendar"; });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forklift Safety Check</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --text: #1d232b;
+    --muted: #5b6573;
+    --accent: #1f6feb;
+    --accent-hover: #1858bd;
+    --ok: #1a7f37;
+    --ok-bg: #e6f4ea;
+    --bad: #b42318;
+    --bad-bg: #fdecea;
+    --border: #d7dce3;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  header h1 { margin: 0 0 4px; font-size: 1.6rem; }
+  header p { margin: 0 0 20px; color: var(--muted); }
+  .question {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .question h2 { font-size: 1.05rem; margin: 0 0 12px; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .options label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .options label:hover { background: #f0f5ff; }
+  .options input { margin-top: 4px; }
+  .options label.correct { background: var(--ok-bg); border-color: var(--ok); }
+  .options label.wrong { background: var(--bad-bg); border-color: var(--bad); }
+  .feedback { margin-top: 10px; font-size: 0.95rem; }
+  .feedback.ok { color: var(--ok); }
+  .feedback.bad { color: var(--bad); }
+  .actions { display: flex; gap: 12px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+  button {
+    font: inherit;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  button:hover { background: var(--accent-hover); }
+  button.secondary { background: #e6e9ef; color: var(--text); }
+  button.secondary:hover { background: #d7dce3; }
+  .warn { color: var(--bad); font-size: 0.95rem; }
+  .result {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .result .score { font-size: 2.2rem; font-weight: 700; margin: 0; }
+  .result .verdict { margin: 6px 0 0; color: var(--muted); }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Forklift Safety Check</h1>
+    <p>New hire knowledge check. Answer all five questions, then submit.</p>
+  </header>
+
+  <form id="quiz" novalidate>
+    <div id="questions"></div>
+    <div class="actions">
+      <button type="submit" id="submitBtn">Submit answers</button>
+      <span id="warn" class="warn hidden">Please answer every question before submitting.</span>
+    </div>
+  </form>
+
+  <section id="results" class="hidden">
+    <div class="result">
+      <p class="score" id="scoreText"></p>
+      <p class="verdict" id="verdictText"></p>
+    </div>
+    <div id="review"></div>
+    <div class="actions">
+      <button type="button" class="secondary" id="retryBtn">Try again</button>
+    </div>
+  </section>
+</div>
+
+<script>
+  const QUESTIONS = [
+    {
+      prompt: "What should you check before lifting any load with a forklift?",
+      options: [
+        "The load looks roughly the right weight",
+        "The capacity data plate, and that the load is within the rated capacity",
+        "Only the weight printed on the pallet label",
+        "Nothing, if the truck was used safely yesterday"
+      ],
+      answer: 1,
+      explanation: "The data plate gives the rated capacity for the truck and its load center. Never exceed it, and remember that a load carried farther out from the forks reduces what the truck can safely lift."
+    },
+    {
+      prompt: "Your view of the path ahead is blocked by the load you are carrying. What should you do?",
+      options: [
+        "Drive forward slowly and watch for obstacles",
+        "Ask a coworker to walk ahead and guide you only when they are nearby",
+        "Travel in reverse so you can see where you are going",
+        "Honk the horn and keep going"
+      ],
+      answer: 2,
+      explanation: "When the load blocks your view, drive in reverse with the load tilted back, so you can see the path. Pedestrians and obstacles are much harder to spot when you are driving forward blind."
+    },
+    {
+      prompt: "What is the safe speed to drive a forklift in a warehouse?",
+      options: [
+        "As fast as the truck can go, to keep the shift moving",
+        "A speed that lets you stop safely, typically no faster than walking pace indoors",
+        "Fast on straight aisles, but no limit in turns",
+        "Whatever speed other operators are driving"
+      ],
+      answer: 1,
+      explanation: "Drive at a speed that lets you stop safely, usually no faster than walking pace indoors. Slow down further at intersections, blind corners, doorways, and when carrying a load."
+    },
+    {
+      prompt: "When you park a forklift, which steps are correct?",
+      options: [
+        "Leave the forks raised so others can see the truck",
+        "Park on the ramp so the next operator can find it quickly",
+        "Lower the forks fully to the floor, neutralize the controls, set the parking brake, and turn off the truck",
+        "Leave the engine running and step off, as long as you are nearby"
+      ],
+      answer: 2,
+      explanation: "Lower the forks fully, neutralize the controls, set the parking brake, and shut the truck off. Never park on a ramp or incline, and never block aisles, exits, or emergency equipment."
+    },
+    {
+      prompt: "You are driving on a ramp or incline. How should you position the forklift?",
+      options: [
+        "Loaded: load facing downhill. Unloaded: forks facing uphill",
+        "Always drive straight up or down with the forks facing the same direction regardless of load",
+        "Loaded: load facing uphill. Unloaded: forks facing downhill",
+        "Turn across the ramp so the truck stays level"
+      ],
+      answer: 2,
+      explanation: "On an incline, keep a loaded truck with the load facing uphill, and an unloaded truck with the forks facing downhill. Never turn across a ramp, because the truck can tip sideways."
+    }
+  ];
+
+  const form = document.getElementById("quiz");
+  const questionsEl = document.getElementById("questions");
+  const resultsEl = document.getElementById("results");
+  const reviewEl = document.getElementById("review");
+  const warnEl = document.getElementById("warn");
+  const scoreText = document.getElementById("scoreText");
+  const verdictText = document.getElementById("verdictText");
+
+  function renderQuestions() {
+    questionsEl.innerHTML = "";
+    QUESTIONS.forEach((q, qi) => {
+      const card = document.createElement("fieldset");
+      card.className = "question";
+      card.id = "q" + qi;
+
+      const legend = document.createElement("legend");
+      legend.style.display = "none";
+      legend.textContent = "Question " + (qi + 1);
+      card.appendChild(legend);
+
+      const h2 = document.createElement("h2");
+      h2.textContent = (qi + 1) + ". " + q.prompt;
+      card.appendChild(h2);
+
+      const opts = document.createElement("div");
+      opts.className = "options";
+      q.options.forEach((text, oi) => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "q" + qi;
+        input.value = String(oi);
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(text));
+        opts.appendChild(label);
+      });
+      card.appendChild(opts);
+      questionsEl.appendChild(card);
+    });
+  }
+
+  function getAnswer(qi) {
+    const checked = form.querySelector('input[name="q' + qi + '"]:checked');
+    return checked ? Number(checked.value) : null;
+  }
+
+  function showResults() {
+    let score = 0;
+    reviewEl.innerHTML = "";
+
+    QUESTIONS.forEach((q, qi) => {
+      const chosen = getAnswer(qi);
+      const correct = chosen === q.answer;
+      if (correct) score++;
+
+      const card = document.createElement("div");
+      card.className = "question";
+
+      const h2 = document.createElement("h2");
+      h2.textContent = (qi + 1) + ". " + q.prompt;
+      card.appendChild(h2);
+
+      const opts = document.createElement("div");
+      opts.className = "options";
+      q.options.forEach((text, oi) => {
+        const label = document.createElement("label");
+        if (oi === q.answer) label.classList.add("correct");
+        else if (oi === chosen) label.classList.add("wrong");
+        label.textContent = text;
+        opts.appendChild(label);
+      });
+      card.appendChild(opts);
+
+      const fb = document.createElement("p");
+      fb.className = "feedback " + (correct ? "ok" : "bad");
+      fb.textContent = correct
+        ? "Correct. " + q.explanation
+        : "Incorrect. The right answer is: " + q.options[q.answer] + ". " + q.explanation;
+      card.appendChild(fb);
+
+      reviewEl.appendChild(card);
+    });
+
+    scoreText.textContent = "Score: " + score + " / " + QUESTIONS.length;
+    verdictText.textContent = score === QUESTIONS.length
+      ? "Excellent. You got every question right."
+      : score >= 4
+        ? "Good work. Review the questions you missed below."
+        : "Please review the answers below and retake the check before operating a forklift.";
+
+    form.classList.add("hidden");
+    resultsEl.classList.remove("hidden");
+    resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const unanswered = QUESTIONS.some((_, qi) => getAnswer(qi) === null);
+    if (unanswered) {
+      warnEl.classList.remove("hidden");
+      return;
+    }
+    warnEl.classList.add("hidden");
+    showResults();
+  });
+
+  document.getElementById("retryBtn").addEventListener("click", () => {
+    resultsEl.classList.add("hidden");
+    form.reset();
+    form.classList.remove("hidden");
+    warnEl.classList.add("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  renderQuestions();
+</script>
+</body>
+</html>

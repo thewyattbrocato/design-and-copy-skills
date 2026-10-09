@@ -1,0 +1,1 @@
+Use **Cormorant Garamond** (open-license Google Font) in a light-to-regular weight, set large with a little letter-spacing, e.g. "INÉS & TOMÁS" in caps or small caps. It's an elegant, high-contrast serif that reads as romantic without being a script, and it handles the accent on Inés and Tomás cleanly. Pair it with a plain sans for the schedule and RSVP form.

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollowbrook Vet Care · Design Foundation</title>
+<style>
+/* =========================================================
+   1. TOKENS
+   Every value used in components comes from here.
+   Components reference semantic roles (--color-action, --color-text),
+   never raw palette values. To change the look, change tokens only.
+   ========================================================= */
+:root {
+  /* Palette (raw values; do not use directly in components) */
+  --palette-teal-50: #E8F3F0;
+  --palette-teal-600: #0F6B5C;
+  --palette-teal-700: #0B5549;
+  --palette-ink-900: #1C2627;
+  --palette-ink-700: #3D4A4C;
+  --palette-ink-500: #5F6E70;
+  --palette-ink-300: #C9D1D2;
+  --palette-ink-100: #EEF2F2;
+  --palette-paper: #FFFFFF;
+  --palette-mist: #F6F8F7;
+  --palette-green-50: #E6F4EA;
+  --palette-green-800: #1E5E36;
+  --palette-amber-50: #FDF1D6;
+  --palette-amber-900: #6B4300;
+  --palette-red-50: #FBE9E7;
+  --palette-red-800: #9B2318;
+  --palette-blue-50: #E7EFFA;
+  --palette-blue-800: #1D4E89;
+
+  /* Semantic color roles (use these) */
+  --color-canvas: var(--palette-mist);
+  --color-surface: var(--palette-paper);
+  --color-text: var(--palette-ink-900);
+  --color-text-muted: var(--palette-ink-500);
+  --color-border: var(--palette-ink-300);
+  --color-border-subtle: var(--palette-ink-100);
+  --color-action: var(--palette-teal-600);
+  --color-action-hover: var(--palette-teal-700);
+  --color-action-soft: var(--palette-teal-50);
+  --color-on-action: var(--palette-paper);
+  --color-focus: var(--palette-blue-800);
+
+  --color-success-bg: var(--palette-green-50);
+  --color-success-text: var(--palette-green-800);
+  --color-warning-bg: var(--palette-amber-50);
+  --color-warning-text: var(--palette-amber-900);
+  --color-danger-bg: var(--palette-red-50);
+  --color-danger-text: var(--palette-red-800);
+  --color-info-bg: var(--palette-blue-50);
+  --color-info-text: var(--palette-blue-800);
+
+  /* Typography: system fonts only, no web font downloads */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --text-xs: 0.8125rem;  /* 13px: captions, badges */
+  --text-sm: 0.875rem;   /* 14px: hints, meta */
+  --text-base: 1rem;     /* 16px: body, form inputs */
+  --text-lg: 1.125rem;   /* 18px: card titles */
+  --text-xl: 1.375rem;   /* 22px: section titles */
+  --text-2xl: 1.75rem;   /* 28px: page title */
+  --leading-tight: 1.25;
+  --leading-body: 1.5;
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Spacing scale (4px base) */
+  --space-1: 0.25rem;  /* 4 */
+  --space-2: 0.5rem;   /* 8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Elevation */
+  --shadow-1: 0 1px 2px rgba(20, 40, 40, 0.06);
+  --shadow-2: 0 6px 16px rgba(20, 40, 40, 0.08);
+  --focus-ring: 0 0 0 3px rgba(29, 78, 137, 0.35);
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Layout */
+  --content-width: 1040px;
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  background: var(--color-canvas);
+}
+
+h1, h2, h3 {
+  margin: 0;
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-bold);
+}
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
+
+p { margin: 0; }
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+.container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+
+/* Page layout blocks */
+.site-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: var(--space-4) 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-lg);
+}
+.brand__mark {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--color-action);
+  color: var(--color-on-action);
+  display: grid; place-items: center;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+.brand__tag {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+}
+
+.doc-intro {
+  padding: var(--space-6) 0 var(--space-5);
+}
+.doc-intro p {
+  color: var(--color-text-muted);
+  max-width: 62ch;
+  margin-top: var(--space-2);
+}
+
+.section {
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--color-border-subtle);
+}
+.section__head {
+  margin-bottom: var(--space-5);
+}
+.section__head p {
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  max-width: 64ch;
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-1);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+.label-tag {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+/* =========================================================
+   3. FOUNDATION DISPLAY (swatches, scales)
+   ========================================================= */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+}
+.swatch {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+.swatch__chip {
+  height: 56px;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.swatch__meta {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
+.swatch__name { font-weight: var(--weight-semibold); }
+.swatch__token { color: var(--color-text-muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+.type-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.type-row:last-child { border-bottom: 0; }
+.type-row__token {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.space-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.space-row__bar {
+  height: 12px;
+  background: var(--color-action-soft);
+  border: 1px solid var(--color-action);
+  border-radius: 2px;
+}
+.space-row code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--color-text);
+  min-width: 120px;
+}
+
+.token-demo {
+  width: 72px; height: 72px;
+  background: var(--color-action-soft);
+  border: 1px solid var(--color-action);
+  display: grid; place-items: center;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.elev-demo {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.elev-demo > div {
+  background: var(--color-surface);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  min-width: 140px;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.rules {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+.rules li + li { margin-top: var(--space-2); }
+.rules strong { color: var(--color-text); }
+
+/* =========================================================
+   4. COMPONENTS
+   ========================================================= */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+.btn--primary {
+  background: var(--color-action);
+  color: var(--color-on-action);
+}
+.btn--primary:hover { background: var(--color-action-hover); }
+.btn--primary:active { background: var(--color-action-hover); filter: brightness(0.95); }
+
+.btn--secondary {
+  background: var(--color-surface);
+  color: var(--color-action);
+  border-color: var(--color-action);
+}
+.btn--secondary:hover { background: var(--color-action-soft); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-action);
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
+}
+.btn--ghost:hover { background: var(--color-action-soft); }
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background: var(--palette-ink-100);
+  color: var(--color-text-muted);
+  border-color: var(--palette-ink-100);
+  cursor: not-allowed;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* Form fields */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+.field__label {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+}
+.field__hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.field__error {
+  font-size: var(--text-sm);
+  color: var(--color-danger-text);
+  font-weight: var(--weight-semibold);
+}
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+textarea.input { min-height: 96px; resize: vertical; }
+.input::placeholder { color: var(--palette-ink-500); opacity: 1; }
+.input:hover { border-color: var(--palette-ink-500); }
+.input:focus { outline: none; border-color: var(--color-focus); box-shadow: var(--focus-ring); }
+.input[aria-invalid="true"] { border-color: var(--color-danger-text); }
+.input:disabled { background: var(--color-border-subtle); color: var(--color-text-muted); }
+
+/* Time slot chips (radio inputs styled as selectable buttons) */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+}
+.chips legend {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-2);
+  padding: 0;
+}
+.chip {
+  position: relative;
+  display: inline-flex;
+}
+.chip input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+  margin: 0;
+}
+.chip span {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+.chip:hover span { border-color: var(--palette-ink-500); }
+.chip input:checked + span {
+  background: var(--color-action);
+  border-color: var(--color-action);
+  color: var(--color-on-action);
+}
+.chip input:focus-visible + span { box-shadow: var(--focus-ring); }
+.chip input:disabled + span {
+  color: var(--color-text-muted);
+  background: var(--color-border-subtle);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+.badge--success { background: var(--color-success-bg); color: var(--color-success-text); }
+.badge--warning { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.badge--danger  { background: var(--color-danger-bg);  color: var(--color-danger-text); }
+.badge--info    { background: var(--color-info-bg);    color: var(--color-info-text); }
+.badge--neutral { background: var(--palette-ink-100);  color: var(--palette-ink-700); }
+
+/* Alerts / status messages */
+.alert {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-size: var(--text-sm);
+}
+.alert__icon {
+  flex: 0 0 auto;
+  width: 20px; height: 20px;
+  margin-top: 1px;
+}
+.alert__title {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  margin-bottom: 2px;
+}
+.alert--success { background: var(--color-success-bg); color: var(--color-success-text); border-color: currentColor; }
+.alert--warning { background: var(--color-warning-bg); color: var(--color-warning-text); border-color: currentColor; }
+.alert--danger  { background: var(--color-danger-bg);  color: var(--color-danger-text);  border-color: currentColor; }
+.alert--info    { background: var(--color-info-bg);    color: var(--color-info-text);    border-color: currentColor; }
+.alert[hidden] { display: none; }
+
+/* Appointment card */
+.appt-card {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-left: 4px solid var(--color-action);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-1);
+  transition: box-shadow var(--duration-base) var(--ease-standard);
+}
+.appt-card:hover { box-shadow: var(--shadow-2); }
+.appt-card__date {
+  background: var(--color-action-soft);
+  border-radius: var(--radius-md);
+  text-align: center;
+  padding: var(--space-2) var(--space-1);
+  align-self: start;
+}
+.appt-card__month {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  color: var(--color-action);
+  letter-spacing: 0.05em;
+}
+.appt-card__day {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.1;
+}
+.appt-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.appt-card__meta {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  display: grid;
+  gap: 2px;
+}
+.appt-card__actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   5. SAMPLE SCREEN: BOOKING FORM
+   ========================================================= */
+.booking {
+  max-width: 560px;
+}
+.booking__title { margin-bottom: var(--space-1); }
+.booking__intro {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-5);
+}
+.booking__footer {
+  border-top: 1px solid var(--color-border-subtle);
+  padding-top: var(--space-4);
+  margin-top: var(--space-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.booking__footer p { color: var(--color-text-muted); font-size: var(--text-sm); }
+.booking .alert { margin-bottom: var(--space-4); }
+
+.sample-stack {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 var(--space-4); }
+  .type-row { grid-template-columns: 1fr; gap: var(--space-1); }
+}
+
+/* Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container brand">
+    <span class="brand__mark" aria-hidden="true">HB</span>
+    <span>Hollowbrook Vet Care <span class="brand__tag">Design foundation</span></span>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="doc-intro">
+    <h1>Design foundation</h1>
+    <p>Shared tokens, rules and components for the Hollowbrook web app. Build every screen from these pieces. If something you need is missing, add it here first, then use it.</p>
+  </section>
+
+  <!-- ===================== FOUNDATION ===================== -->
+  <section class="section" aria-labelledby="h-color">
+    <div class="section__head">
+      <h2 id="h-color">Color</h2>
+      <p>Components use semantic roles (for example <code>--color-action</code>), never palette values. Status colors are always paired with a text label, never color alone.</p>
+    </div>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-action)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Action</div><div class="swatch__token">--color-action</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-action-soft)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Action soft</div><div class="swatch__token">--color-action-soft</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-text)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Text</div><div class="swatch__token">--color-text</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-text-muted)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Text muted</div><div class="swatch__token">--color-text-muted</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-canvas)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Canvas</div><div class="swatch__token">--color-canvas</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-surface)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Surface</div><div class="swatch__token">--color-surface</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-success-bg)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Success</div><div class="swatch__token">--color-success-*</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-warning-bg)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Warning</div><div class="swatch__token">--color-warning-*</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-danger-bg)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Danger</div><div class="swatch__token">--color-danger-*</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background: var(--color-info-bg)"></div>
+        <div class="swatch__meta"><div class="swatch__name">Info</div><div class="swatch__token">--color-info-*</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-type">
+    <div class="section__head">
+      <h2 id="h-type">Typography</h2>
+      <p>System font stack only. No web font downloads, so pages load fast and render natively on every device. Body text is never smaller than 14px.</p>
+    </div>
+    <div class="panel">
+      <div class="type-row">
+        <div class="type-row__token">--text-2xl · 28px</div>
+        <div style="font-size: var(--text-2xl); font-weight: var(--weight-bold)">Book a visit for Biscuit</div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__token">--text-xl · 22px</div>
+        <div style="font-size: var(--text-xl); font-weight: var(--weight-bold)">Upcoming appointments</div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__token">--text-lg · 18px</div>
+        <div style="font-size: var(--text-lg); font-weight: var(--weight-semibold)">Annual wellness exam</div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__token">--text-base · 16px</div>
+        <div>Please arrive ten minutes early so we can check in your pet.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__token">--text-sm · 14px</div>
+        <div style="font-size: var(--text-sm); color: var(--color-text-muted)">Hint text, timestamps, secondary details.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__token">--text-xs · 13px</div>
+        <div style="font-size: var(--text-xs); color: var(--color-text-muted)">Captions and badge labels.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-space">
+    <div class="section__head">
+      <h2 id="h-space">Spacing, shape and elevation</h2>
+      <p>Spacing is built on a 4px base. Use only these steps for margin, padding and gap.</p>
+    </div>
+    <div class="grid grid--2">
+      <div class="panel">
+        <div class="label-tag">Spacing scale</div>
+        <div class="space-row"><code>--space-1 · 4px</code><div class="space-row__bar" style="width: 4px"></div></div>
+        <div class="space-row"><code>--space-2 · 8px</code><div class="space-row__bar" style="width: 8px"></div></div>
+        <div class="space-row"><code>--space-3 · 12px</code><div class="space-row__bar" style="width: 12px"></div></div>
+        <div class="space-row"><code>--space-4 · 16px</code><div class="space-row__bar" style="width: 16px"></div></div>
+        <div class="space-row"><code>--space-5 · 24px</code><div class="space-row__bar" style="width: 24px"></div></div>
+        <div class="space-row"><code>--space-6 · 32px</code><div class="space-row__bar" style="width: 32px"></div></div>
+        <div class="space-row"><code>--space-7 · 48px</code><div class="space-row__bar" style="width: 48px"></div></div>
+      </div>
+      <div class="panel">
+        <div class="label-tag">Radius and elevation</div>
+        <div style="display:flex; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-5)">
+          <div class="token-demo" style="border-radius: var(--radius-sm)">sm<br>6px</div>
+          <div class="token-demo" style="border-radius: var(--radius-md)">md<br>10px</div>
+          <div class="token-demo" style="border-radius: var(--radius-lg)">lg<br>16px</div>
+        </div>
+        <div class="elev-demo">
+          <div style="box-shadow: var(--shadow-1)">Elevation 1<br>Cards at rest</div>
+          <div style="box-shadow: var(--shadow-2)">Elevation 2<br>Hover, menus</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-motion">
+    <div class="section__head">
+      <h2 id="h-motion">Motion</h2>
+      <p>Motion confirms an action; it never decorates. Animations turn off when the user prefers reduced motion.</p>
+    </div>
+    <div class="panel">
+      <ul class="rules">
+        <li><strong>Fast (120ms)</strong> for hover, press and color changes.</li>
+        <li><strong>Base (200ms)</strong> for elevation and panel reveals.</li>
+        <li><strong>Easing:</strong> <code>--ease-standard</code> for everything. No bounce or spring.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-rules">
+    <div class="section__head">
+      <h2 id="h-rules">Voice and layout rules</h2>
+      <p>Friendly and plain, never cute. We are a clinic: say what happens next, and avoid jargon in patient-facing text.</p>
+    </div>
+    <div class="panel">
+      <ul class="rules">
+        <li><strong>Plain language.</strong> "We could not book that time. Please choose another." Not "Error 409: slot unavailable."</li>
+        <li><strong>Pet names are welcome.</strong> "Biscuit's visit" is fine. Keep the clinic name in the header, not in every sentence.</li>
+        <li><strong>Every form field has a visible label.</strong> Placeholders are never used as labels.</li>
+        <li><strong>Errors name the field and the fix</strong>, and move focus to the first problem.</li>
+        <li><strong>Touch targets are at least 44px.</strong> Focus rings are always visible, never removed.</li>
+        <li><strong>Content width is 1040px maximum,</strong> with 24px side padding.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== COMPONENTS ===================== -->
+  <section class="section" aria-labelledby="h-components">
+    <div class="section__head">
+      <h2 id="h-components">Components</h2>
+      <p>Each component has a small set of variants. Add a variant only when two real screens need it.</p>
+    </div>
+    <div class="grid grid--2">
+      <div class="panel">
+        <div class="label-tag">Buttons</div>
+        <div class="btn-row" style="margin-bottom: var(--space-4)">
+          <button class="btn btn--primary" type="button">Confirm booking</button>
+          <button class="btn btn--secondary" type="button">Reschedule</button>
+          <button class="btn btn--ghost" type="button">Cancel</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--primary" type="button" disabled>Disabled</button>
+          <button class="btn btn--secondary" type="button" disabled>Disabled</button>
+        </div>
+        <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted)">
+          One primary action per view. Destructive actions use a text link style with a confirmation step.
+        </p>
+      </div>
+
+      <div class="panel">
+        <div class="label-tag">Status badges</div>
+        <div class="btn-row">
+          <span class="badge badge--success">Confirmed</span>
+          <span class="badge badge--info">Scheduled</span>
+          <span class="badge badge--warning">Check-in needed</span>
+          <span class="badge badge--danger">Cancelled</span>
+          <span class="badge badge--neutral">Completed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SAMPLE SCREENS ===================== -->
+  <section class="section" aria-labelledby="h-samples">
+    <div class="section__head">
+      <h2 id="h-samples">Built from the foundation</h2>
+      <p>Three real pieces: a booking form, an appointment card and a status message. All sample names are fictional.</p>
+    </div>
+
+    <div class="grid grid--2" style="align-items: start">
+
+      <!-- Booking form -->
+      <div class="panel booking">
+        <h3 class="booking__title">Book a visit</h3>
+        <p class="booking__intro">Choose a pet, a service and a time. We will confirm by email within one working day.</p>
+
+        <div id="booking-alert" class="alert alert--danger" role="alert" hidden>
+          <div>
+            <div class="alert__title">Please fix the highlighted fields</div>
+            <div>Choose a pet, a service and a time to continue.</div>
+          </div>
+        </div>
+
+        <form id="booking-form" novalidate>
+          <div class="field">
+            <label class="field__label" for="pet">Pet</label>
+            <select class="input" id="pet" name="pet" aria-describedby="pet-error" required>
+              <option value="">Select a pet</option>
+              <option>Biscuit (dog, 6 years)</option>
+              <option>Juniper (cat, 3 years)</option>
+            </select>
+            <span class="field__error" id="pet-error" hidden>Choose which pet this visit is for.</span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="service">Service</label>
+            <select class="input" id="service" name="service" aria-describedby="service-error" required>
+              <option value="">Select a service</option>
+              <option>Annual wellness exam</option>
+              <option>Vaccination</option>
+              <option>Dental cleaning</option>
+              <option>Sick visit</option>
+            </select>
+            <span class="field__error" id="service-error" hidden>Choose a service.</span>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="date">Preferred date</label>
+            <input class="input" id="date" name="date" type="date" aria-describedby="date-hint">
+            <span class="field__hint" id="date-hint">Weekdays, 8:00 to 17:00. Same-day visits are by phone.</span>
+          </div>
+
+          <fieldset class="chips" aria-describedby="time-error">
+            <legend>Time</legend>
+            <label class="chip"><input type="radio" name="time" value="08:30"><span>8:30 am</span></label>
+            <label class="chip"><input type="radio" name="time" value="09:15"><span>9:15 am</span></label>
+            <label class="chip"><input type="radio" name="time" value="10:00" disabled><span>10:00 am</span></label>
+            <label class="chip"><input type="radio" name="time" value="11:30"><span>11:30 am</span></label>
+            <label class="chip"><input type="radio" name="time" value="14:00"><span>2:00 pm</span></label>
+          </fieldset>
+          <span class="field__error" id="time-error" hidden style="display:block; margin: calc(var(--space-3) * -1) 0 var(--space-4)">Choose a time.</span>
+
+          <div class="field">
+            <label class="field__label" for="reason">Reason for visit <span class="field__hint">(optional)</span></label>
+            <textarea class="input" id="reason" name="reason" placeholder="For example: limping on the left back leg since Monday"></textarea>
+          </div>
+
+          <div class="booking__footer">
+            <p>You can change or cancel up to 24 hours before.</p>
+            <button class="btn btn--primary" type="submit">Request appointment</button>
+          </div>
+        </form>
+
+        <div id="booking-success" class="alert alert--success" role="status" hidden style="margin-top: var(--space-4)">
+          <div>
+            <div class="alert__title">Request received</div>
+            <div>We will confirm your visit by email shortly.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sample-stack">
+
+        <!-- Appointment card -->
+        <article class="appt-card" aria-labelledby="appt-title">
+          <div class="appt-card__date" aria-hidden="true">
+            <div class="appt-card__month">Oct</div>
+            <div class="appt-card__day">14</div>
+          </div>
+          <div>
+            <div class="appt-card__head">
+              <h3 id="appt-title">Annual wellness exam</h3>
+              <span class="badge badge--success">Confirmed</span>
+            </div>
+            <div class="appt-card__meta">
+              <span>Biscuit · Dr. Maya Ellis</span>
+              <span>Tuesday, 9:15 am · about 45 minutes</span>
+            </div>
+            <div class="appt-card__actions">
+              <button class="btn btn--secondary" type="button">Reschedule</button>
+              <button class="btn btn--ghost" type="button">Add to calendar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Status messages -->
+        <div class="alert alert--warning" role="status">
+          <div class="alert__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" width="20" height="20"><path fill="currentColor" d="M10 2 1.5 17h17L10 2Zm0 5.2a.9.9 0 0 1 .9.9v3.6a.9.9 0 1 1-1.8 0V8.1a.9.9 0 0 1 .9-.9Zm0 7.6a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Z"/></svg>
+          </div>
+          <div>
+            <div class="alert__title">Vaccination due soon</div>
+            <div>Juniper's rabies booster is due on 28 October. Book now to keep her record up to date.</div>
+          </div>
+        </div>
+
+        <div class="alert alert--info" role="status">
+          <div class="alert__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" width="20" height="20"><path fill="currentColor" d="M10 1.7a8.3 8.3 0 1 0 0 16.6 8.3 8.3 0 0 0 0-16.6Zm0 3.6a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Zm1.6 9.2H8.4v-1.4h1.1V9.6H8.6V8.2h2.6v4.8h1.1v1.4Z"/></svg>
+          </div>
+          <div>
+            <div class="alert__title">Clinic closed on Monday</div>
+            <div>We are closed for a public holiday. Urgent care is available by phone.</div>
+          </div>
+        </div>
+
+        <div class="alert alert--danger" role="alert">
+          <div class="alert__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" width="20" height="20"><path fill="currentColor" d="M10 1.7a8.3 8.3 0 1 0 0 16.6 8.3 8.3 0 0 0 0-16.6Zm-.9 4.4a.9.9 0 0 1 1.8 0v4.6a.9.9 0 1 1-1.8 0V6.1Zm.9 9.2a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Z"/></svg>
+          </div>
+          <div>
+            <div class="alert__title">Payment could not be processed</div>
+            <div>Your card was declined. Update your payment method to keep your visit booked.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Booking form: validates required fields, moves focus to the first problem,
+  // and shows a success status. Replace with the real submit handler later.
+  (function () {
+    var form = document.getElementById('booking-form');
+    var errorBox = document.getElementById('booking-alert');
+    var successBox = document.getElementById('booking-success');
+
+    function setError(field, errorEl, hasError) {
+      errorEl.hidden = !hasError;
+      if (field.setAttribute) field.setAttribute('aria-invalid', hasError ? 'true' : 'false');
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      successBox.hidden = true;
+
+      var pet = document.getElementById('pet');
+      var service = document.getElementById('service');
+      var time = form.querySelector('input[name="time"]:checked');
+      var timeError = document.getElementById('time-error');
+
+      var petBad = !pet.value;
+      var serviceBad = !service.value;
+      var timeBad = !time;
+
+      setError(pet, document.getElementById('pet-error'), petBad);
+      setError(service, document.getElementById('service-error'), serviceBad);
+      timeError.hidden = !timeBad;
+
+      var anyBad = petBad || serviceBad || timeBad;
+      errorBox.hidden = !anyBad;
+
+      if (anyBad) {
+        var first = petBad ? pet : serviceBad ? service : form.querySelector('input[name="time"]');
+        first.focus();
+        return;
+      }
+
+      form.reset();
+      successBox.hidden = false;
+      successBox.focus && successBox.setAttribute('tabindex', '-1');
+    });
+  })();
+</script>
+</body>
+</html>

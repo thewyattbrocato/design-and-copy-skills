@@ -1,0 +1,1 @@
+**Lines.** Monthly revenue over time is a trend question, and line charts show the shape of each region's series across 36 months better than bars do. If the audience needs exact figures, add a small data table or use small multiples (one line per region) so five overlapping lines don't get hard to read.

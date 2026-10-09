@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repair Subscription · Larkspur Bike Co-op</title>
+<style>
+  :root {
+    --ink: #1f2a33;
+    --muted: #55626d;
+    --bg: #f7f5f0;
+    --card: #ffffff;
+    --line: #dcd8cd;
+    --accent: #5b3fa0;
+    --accent-dark: #442d80;
+    --accent-soft: #efeaf9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+  }
+  a { color: var(--accent-dark); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  header.top { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .brand { font-weight: 700; font-size: 1.1rem; letter-spacing: .01em; }
+  .brand span { color: var(--accent); }
+  .hero { padding: 56px 0 32px; text-align: center; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 0 0 16px; }
+  .hero p { max-width: 36rem; margin: 0 auto; font-size: 1.1rem; color: var(--muted); }
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 32px 0 24px;
+    align-items: stretch;
+  }
+  .plan {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .plan.featured {
+    border: 2px solid var(--accent);
+    box-shadow: 0 8px 24px rgba(91, 63, 160, .15);
+  }
+  .badge {
+    position: absolute;
+    top: -13px; left: 24px;
+    background: var(--accent);
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 999px;
+  }
+  .plan h2 { margin: 0 0 8px; font-size: 1.25rem; }
+  .price { font-size: 2.4rem; font-weight: 800; line-height: 1; }
+  .price small { font-size: 1rem; font-weight: 500; color: var(--muted); }
+  .plan ul { list-style: none; padding: 0; margin: 20px 0 24px; flex: 1; }
+  .plan li { padding: 8px 0 8px 26px; position: relative; border-top: 1px solid var(--line); }
+  .plan li:first-child { border-top: 0; }
+  .plan li::before {
+    content: "";
+    position: absolute; left: 4px; top: 15px;
+    width: 12px; height: 6px;
+    border-left: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transform: rotate(-45deg);
+  }
+  .btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid var(--accent);
+    color: var(--accent-dark);
+    background: transparent;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--accent-soft); }
+  .featured .btn { background: var(--accent); color: #fff; }
+  .featured .btn:hover, .featured .btn:focus-visible { background: var(--accent-dark); border-color: var(--accent-dark); }
+  .btn:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #1f2a33; outline-offset: 2px; }
+  .signup {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 32px 24px;
+    margin: 24px 0 48px;
+  }
+  .signup h2 { margin: 0 0 8px; }
+  .signup > p { margin: 0 0 20px; color: var(--muted); }
+  form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  label { display: block; font-weight: 600; font-size: .95rem; margin-bottom: 4px; }
+  input, select {
+    width: 100%;
+    font: inherit;
+    padding: 10px 12px;
+    border: 1px solid #8a948f;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+  }
+  form .full { grid-column: 1 / -1; }
+  form button {
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 13px 16px;
+    border-radius: 8px;
+    border: 0;
+    background: var(--accent);
+    color: #fff;
+  }
+  form button:hover { background: var(--accent-dark); }
+  form button:focus-visible { outline: 3px solid #1f2a33; outline-offset: 2px; }
+  .note { font-size: .9rem; color: var(--muted); margin: 0; }
+  footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: .9rem; text-align: center; }
+  @media (max-width: 800px) {
+    .plans { grid-template-columns: 1fr; gap: 28px; }
+    form { grid-template-columns: 1fr; }
+    .hero { padding-top: 40px; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">Larkspur <span>Bike Co-op</span></div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <h1>Keep your bike rolling, all year.</h1>
+    <p>Our repair subscription covers regular tune-ups and discounts on parts, so small problems get fixed before they become big ones. Pick a plan, and your co-op has your back.</p>
+  </section>
+
+  <section class="wrap" aria-labelledby="plans-h">
+    <h2 id="plans-h" style="position:absolute;left:-9999px;">Plans</h2>
+    <div class="plans">
+      <article class="plan">
+        <h2>Basic</h2>
+        <div class="price">$12<small>/mo</small></div>
+        <ul>
+          <li>2 tune-ups per year</li>
+          <li>10% off parts</li>
+        </ul>
+        <a class="btn" href="#signup" data-plan="basic">Choose Basic</a>
+      </article>
+
+      <article class="plan featured">
+        <span class="badge">Most popular</span>
+        <h2>Plus</h2>
+        <div class="price">$24<small>/mo</small></div>
+        <ul>
+          <li>4 tune-ups per year</li>
+          <li>15% off parts</li>
+          <li>Free flat repairs</li>
+        </ul>
+        <a class="btn" href="#signup" data-plan="plus">Choose Plus</a>
+      </article>
+
+      <article class="plan">
+        <h2>Pro</h2>
+        <div class="price">$39<small>/mo</small></div>
+        <ul>
+          <li>Unlimited tune-ups</li>
+          <li>20% off parts</li>
+          <li>Free flat repairs</li>
+          <li>Loaner bike while yours is in the shop</li>
+        </ul>
+        <a class="btn" href="#signup" data-plan="pro">Choose Pro</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="signup">
+    <div class="signup">
+      <h2>Sign up</h2>
+      <p>Tell us a bit about you and we'll confirm your plan at the shop or by email.</p>
+      <form action="mailto:hello@larkspurbikecoop.example" method="post" enctype="text/plain">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="full">
+          <label for="plan">Plan</label>
+          <select id="plan" name="plan">
+            <option value="Basic">Basic: $12/mo</option>
+            <option value="Plus" selected>Plus: $24/mo</option>
+            <option value="Pro">Pro: $39/mo</option>
+          </select>
+        </div>
+        <div class="full"><button type="submit">Request my subscription</button></div>
+        <p class="note full">Submitting opens your email app with a pre-filled request to the co-op. Prefer to sign up in person? Stop by the shop any time.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Larkspur Bike Co-op · Repair subscription</div>
+</footer>
+</body>
+</html>

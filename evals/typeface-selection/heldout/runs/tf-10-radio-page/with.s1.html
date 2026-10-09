@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low Tide Radio — after midnight, until the water comes back</title>
+<style>
+  :root {
+    --paper: #e9e1cd;
+    --paper-deep: #ddd3ba;
+    --ink: #1d2b2a;
+    --ink-soft: #46544f;
+    --sea: #2f5d5a;
+    --rust: #a2452a;
+    --rule: #1d2b2a;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --mono: "Courier New", Courier, "American Typewriter", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--sea); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: clamp(14px, 4vw, 48px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    color: var(--ink);
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 2px, transparent 2px 7px),
+      var(--sea);
+  }
+  .card {
+    width: 100%;
+    max-width: 640px;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(ellipse at 100% 100%, rgba(120,90,40,.18), transparent 55%),
+      var(--paper);
+    padding: clamp(22px, 5vw, 48px);
+    border: 1px solid #0f1a19;
+    box-shadow: 0 1px 0 #fff3 inset, 6px 8px 0 rgba(10,24,22,.35);
+    position: relative;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: .75rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 6px;
+  }
+  h1 {
+    margin: 1.6rem 0 0;
+    font-weight: 400;
+    font-size: clamp(3rem, 14vw, 5.6rem);
+    line-height: .9;
+    letter-spacing: -.02em;
+    font-style: italic;
+  }
+  h1 span {
+    display: block;
+    font-style: normal;
+    font-size: .36em;
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    margin-top: .7em;
+    color: var(--sea);
+  }
+  .tagline {
+    margin: 1.4rem 0 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    max-width: 30em;
+    color: var(--ink-soft);
+  }
+  .tagline::first-letter { color: var(--rust); }
+
+  /* the waterline */
+  .water {
+    height: 22px;
+    margin: 2rem 0 1.6rem;
+    background:
+      radial-gradient(circle at 10px -4px, transparent 9px, var(--sea) 9.5px 11px, transparent 11.5px) 0 0 / 20px 22px repeat-x;
+    opacity: .85;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .water { animation: drift 14s linear infinite; }
+    @keyframes drift { to { background-position: 200px 0; } }
+  }
+
+  h2 {
+    margin: 0 0 .5rem;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: .78rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: .5rem;
+  }
+  h2 em { font-style: normal; color: var(--rust); }
+  ol { list-style: none; margin: 0; padding: 0; }
+  li {
+    display: grid;
+    grid-template-columns: 4.6rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px dotted var(--ink-soft);
+    align-items: baseline;
+  }
+  .time {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--rust);
+  }
+  .track {
+    font-size: 1.35rem;
+    font-style: italic;
+    line-height: 1.2;
+  }
+  .artist {
+    display: block;
+    margin-top: .25rem;
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: .8rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .live {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    appearance: none;
+    cursor: pointer;
+    font: inherit;
+    font-family: var(--mono);
+    font-size: .95rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: 0;
+    padding: 1rem 1.6rem;
+    box-shadow: 4px 4px 0 var(--rust);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--rust); }
+  .btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--rust); }
+  .btn:focus-visible { outline: 3px solid var(--sea); outline-offset: 4px; }
+  .note {
+    font-size: .95rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  footer {
+    margin-top: 2rem;
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  @media (max-width: 440px) {
+    li { grid-template-columns: 1fr; gap: .2rem; }
+    .meta { flex-direction: column; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="meta">
+      <span>Nightly · 12 to 4 a.m.</span>
+      <span>Vol. IX · Tide Table</span>
+    </div>
+
+    <h1>Low Tide<span>Radio</span></h1>
+    <p class="tagline">Records for the hours when the harbor goes quiet and everything left on the sand starts to show.</p>
+
+    <div class="water" aria-hidden="true"></div>
+
+    <section aria-labelledby="tonight">
+      <h2 id="tonight"><span>Tonight's Playlist</span><em>Four tides</em></h2>
+      <ol>
+        <li>
+          <span class="time">12:07</span>
+          <span class="track">Salt on the Windowsill<span class="artist">Marguerite Vale</span></span>
+        </li>
+        <li>
+          <span class="time">12:44</span>
+          <span class="track">The Ferry Doesn't Run Tonight<span class="artist">Osric &amp; the Slow Lanterns</span></span>
+        </li>
+        <li>
+          <span class="time">01:21</span>
+          <span class="track">Letters to a Lighthouse<span class="artist">Hollis Ferreira</span></span>
+        </li>
+        <li>
+          <span class="time">01:58</span>
+          <span class="track">Barnacle Lullaby<span class="artist">Wren Adeyemi Trio</span></span>
+        </li>
+      </ol>
+    </section>
+
+    <div class="live">
+      <button class="btn" type="button">Listen live</button>
+      <p class="note">Keep the lamp low. We're on until four.</p>
+    </div>
+
+    <footer>Low Tide Radio · broadcasting from the mudflats</footer>
+  </main>
+</body>
+</html>

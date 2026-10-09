@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwick — Polite reminders for unpaid invoices</title>
+<style>
+  :root {
+    --bg: #f6f8f4;
+    --ink: #14231c;
+    --muted: #5a6b62;
+    --line: #dfe6df;
+    --brand: #2f6b4f;
+    --brand-dark: #245640;
+    --brand-soft: #e3efe7;
+    --amber: #b7791f;
+    --amber-soft: #fbf0d9;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .glow {
+    position: absolute; inset: 0 0 auto 0; height: 640px; overflow: hidden; z-index: 0; pointer-events: none;
+  }
+  .glow::before {
+    content: ""; position: absolute; width: 720px; height: 720px; right: -160px; top: -300px;
+    background: radial-gradient(circle, rgba(47,107,79,.18), rgba(47,107,79,0) 65%);
+  }
+  .glow::after {
+    content: ""; position: absolute; width: 560px; height: 560px; left: -200px; top: -240px;
+    background: radial-gradient(circle, rgba(183,121,31,.12), rgba(183,121,31,0) 65%);
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; letter-spacing: -.02em; }
+  .logo-mark {
+    width: 28px; height: 28px; border-radius: 8px; background: var(--brand);
+    display: grid; place-items: center;
+  }
+  .logo-mark svg { width: 16px; height: 16px; }
+  .nav-links { display: flex; gap: 32px; font-size: 15px; color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { display: flex; align-items: center; gap: 20px; font-size: 15px; }
+  .nav-cta .signin { color: var(--muted); }
+  .btn-sm { padding: 9px 16px; border-radius: 9px; background: var(--ink); color: #fff; font-weight: 600; }
+
+  .hero {
+    display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center;
+    padding: 56px 0 96px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 8px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    font-size: 13px; color: var(--muted); margin-bottom: 26px;
+  }
+  .eyebrow b { background: var(--brand-soft); color: var(--brand-dark); padding: 2px 8px; border-radius: 999px; font-weight: 600; font-size: 12px; }
+  h1 {
+    font-size: clamp(38px, 5.4vw, 62px); line-height: 1.04; letter-spacing: -.035em; font-weight: 750;
+    margin-bottom: 22px;
+  }
+  h1 em { font-style: normal; color: var(--brand); }
+  .lede { font-size: 19px; color: var(--muted); max-width: 33em; margin-bottom: 34px; }
+  .actions { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 15px 26px; border-radius: 12px; background: var(--brand); color: #fff;
+    font-weight: 600; font-size: 16px; box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, 0 8px 20px -8px rgba(47,107,79,.7);
+    transition: background .15s, transform .15s;
+  }
+  .btn:hover { background: var(--brand-dark); transform: translateY(-1px); }
+  .link { font-size: 16px; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid transparent; }
+  .link span { color: var(--muted); transition: transform .15s; }
+  .link:hover span { transform: translateX(3px); }
+  .link:hover { border-bottom-color: var(--line); }
+  .fine { margin-top: 18px; font-size: 13.5px; color: var(--muted); }
+
+  /* Product visual */
+  .visual { position: relative; }
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: 0 30px 60px -30px rgba(20,35,28,.35), 0 2px 6px rgba(20,35,28,.05);
+    overflow: hidden;
+  }
+  .panel-top {
+    display: flex; align-items: center; justify-content: space-between; padding: 14px 18px;
+    border-bottom: 1px solid var(--line); background: #fbfcfa;
+  }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; background: #dfe6df; display: block; }
+  .panel-title { font-size: 13px; color: var(--muted); font-weight: 600; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+  .stat { padding: 16px 18px; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: 0; }
+  .stat small { display: block; font-size: 12px; color: var(--muted); }
+  .stat strong { font-size: 22px; letter-spacing: -.02em; }
+  .rows { padding: 6px 0; }
+  .row { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; padding: 12px 18px; }
+  .row + .row { border-top: 1px solid #eef2ee; }
+  .avatar {
+    width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 12px; font-weight: 700; color: var(--brand-dark); background: var(--brand-soft);
+  }
+  .avatar.b { background: var(--amber-soft); color: var(--amber); }
+  .avatar.c { background: #e6e9f5; color: #3d4a8a; }
+  .who b { display: block; font-size: 14.5px; line-height: 1.25; }
+  .who span { font-size: 12.5px; color: var(--muted); }
+  .right { text-align: right; }
+  .amt { font-size: 14.5px; font-weight: 650; display: block; }
+  .pill { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 2px 9px; border-radius: 999px; margin-top: 2px; }
+  .pill.paid { background: var(--brand-soft); color: var(--brand-dark); }
+  .pill.sched { background: var(--amber-soft); color: var(--amber); }
+  .pill.sent { background: #e6e9f5; color: #3d4a8a; }
+
+  .email {
+    position: absolute; left: -44px; bottom: -48px; width: 300px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px;
+    box-shadow: 0 24px 40px -20px rgba(20,35,28,.4);
+  }
+  .email-head { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--muted); margin-bottom: 10px; }
+  .email-head .tag { background: var(--brand-soft); color: var(--brand-dark); padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+  .email p { font-size: 13px; line-height: 1.5; color: #2c3d34; }
+  .email p + p { margin-top: 6px; }
+  .email .sig { color: var(--muted); }
+  .badge {
+    position: absolute; right: -14px; top: -18px; background: var(--ink); color: #fff;
+    padding: 9px 14px; border-radius: 12px; font-size: 13px; font-weight: 600;
+    box-shadow: 0 14px 28px -12px rgba(20,35,28,.6); display: flex; align-items: center; gap: 8px;
+  }
+  .badge i { width: 8px; height: 8px; border-radius: 50%; background: #6fd39b; display: block; }
+
+  @media (max-width: 920px) {
+    .hero { grid-template-columns: 1fr; gap: 80px; padding-top: 32px; }
+    .nav-links { display: none; }
+    .email { left: 12px; }
+    .badge { right: 10px; }
+  }
+  @media (max-width: 520px) {
+    .nav-cta .signin { display: none; }
+    .email { position: relative; left: 0; bottom: 0; width: auto; margin-top: 16px; }
+    .hero { gap: 40px; }
+    .lede { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+  <nav>
+    <a href="#" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13C3 7 7 3 13 3c0 6-4 10-10 10z"/><path d="M3 13L9 7"/></svg>
+      </span>
+      Fernwick
+    </a>
+    <div class="nav-links">
+      <a href="#">Product</a>
+      <a href="#">How it works</a>
+      <a href="#">Pricing</a>
+      <a href="#">Customers</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#" class="signin">Sign in</a>
+      <a href="#" class="btn-sm">Start free</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow"><b>New</b> Tone presets for every kind of client</div>
+      <h1>Get paid on time, <em>without the awkward emails.</em></h1>
+      <p class="lede">Fernwick sends friendly, well-timed reminders when an invoice goes unpaid, so you can stop chasing clients and get back to the work you actually enjoy.</p>
+      <div class="actions">
+        <a href="#" class="btn">Start your free trial</a>
+        <a href="#" class="link">Watch a 2-minute demo <span>→</span></a>
+      </div>
+      <p class="fine">14 days free · No credit card · Connects to your invoicing tool in minutes</p>
+    </div>
+
+    <div class="visual" aria-hidden="true">
+      <div class="badge"><i></i> Reminder sent to Northfield Studio</div>
+      <div class="panel">
+        <div class="panel-top">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <span class="panel-title">Invoices</span>
+          <span style="width:38px"></span>
+        </div>
+        <div class="stats">
+          <div class="stat"><small>Outstanding</small><strong>$6,420</strong></div>
+          <div class="stat"><small>Collected this month</small><strong>$11,850</strong></div>
+          <div class="stat"><small>Avg. days to pay</small><strong>9.4</strong></div>
+        </div>
+        <div class="rows">
+          <div class="row">
+            <div class="avatar">NS</div>
+            <div class="who"><b>Northfield Studio</b><span>INV-0148 · 6 days overdue</span></div>
+            <div class="right"><span class="amt">$2,400</span><span class="pill sent">Reminder sent</span></div>
+          </div>
+          <div class="row">
+            <div class="avatar b">HL</div>
+            <div class="who"><b>Harlow &amp; Lane</b><span>INV-0151 · Due in 2 days</span></div>
+            <div class="right"><span class="amt">$1,750</span><span class="pill sched">Scheduled Fri</span></div>
+          </div>
+          <div class="row">
+            <div class="avatar c">OK</div>
+            <div class="who"><b>Oak &amp; Kite Co.</b><span>INV-0144 · Paid Oct 3</span></div>
+            <div class="right"><span class="amt">$3,200</span><span class="pill paid">Paid</span></div>
+          </div>
+          <div class="row">
+            <div class="avatar">MB</div>
+            <div class="who"><b>Mira Bellweather</b><span>INV-0152 · Due in 9 days</span></div>
+            <div class="right"><span class="amt">$2,270</span><span class="pill sched">Scheduled Oct 16</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="email">
+        <div class="email-head"><span class="tag">Gentle nudge</span> To: accounts@northfield.co</div>
+        <p>Hi Dana, hope your week is going well! Just a quick note that invoice INV-0148 for $2,400 is now a few days past due.</p>
+        <p>A payment link is below whenever you have a moment. Thank you!</p>
+        <p class="sig">— Sam, via Fernwick</p>
+      </div>
+    </div>
+  </header>
+</div>
+</body>
+</html>

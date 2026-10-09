@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewrack — Snacks from the cold Atlantic</title>
+<style>
+  :root {
+    --deep: #0f2a33;
+    --sea: #1d4a55;
+    --foam: #f3efe6;
+    --sand: #e4dccb;
+    --kelp: #8fb996;
+    --rust: #e0824a;
+    --rust-dark: #c76a34;
+    --ink: #10242b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--deep);
+    color: var(--foam);
+    line-height: 1.5;
+  }
+  .hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, #2a6370 0%, transparent 60%),
+      linear-gradient(180deg, var(--deep) 0%, #0b1f26 100%);
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px clamp(20px, 5vw, 64px);
+    position: relative;
+    z-index: 2;
+  }
+  .logo {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    letter-spacing: .02em;
+    color: var(--foam);
+    text-decoration: none;
+  }
+  .logo span { color: var(--kelp); }
+  nav a.signin {
+    color: var(--sand);
+    font-size: .95rem;
+    text-decoration: none;
+  }
+  nav a.signin:hover { text-decoration: underline; }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 24px clamp(20px, 5vw, 64px) 120px;
+    position: relative;
+    z-index: 2;
+  }
+  .eyebrow {
+    font-size: .8rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--kelp);
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 7vw, 5.2rem);
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    max-width: 14ch;
+  }
+  .sub {
+    margin-top: 22px;
+    max-width: 46ch;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--sand);
+  }
+  .plans {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 44px;
+    width: 100%;
+    max-width: 780px;
+  }
+  .plan {
+    position: relative;
+    border: 1px solid rgba(243, 239, 230, .18);
+    border-radius: 14px;
+    padding: 22px 16px 20px;
+    background: rgba(243, 239, 230, .04);
+  }
+  .plan.featured {
+    background: var(--foam);
+    color: var(--ink);
+    border-color: var(--foam);
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+  }
+  .plan h2 {
+    font-size: .85rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    opacity: .8;
+  }
+  .price {
+    margin-top: 8px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+  .price small {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: .9rem;
+    opacity: .7;
+  }
+  .badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--rust);
+    color: #1a0f08;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .cta {
+    margin-top: 40px;
+    display: inline-block;
+    background: var(--rust);
+    color: #1a0f08;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 16px 36px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background .15s, transform .15s;
+  }
+  .cta:hover { background: var(--rust-dark); transform: translateY(-1px); }
+  .cta:focus-visible, .peek:focus-visible, nav a:focus-visible {
+    outline: 3px solid var(--kelp);
+    outline-offset: 3px;
+  }
+  .peek {
+    margin-top: 18px;
+    font-size: .92rem;
+    color: var(--sand);
+    text-underline-offset: 3px;
+  }
+  .peek:hover { color: var(--foam); }
+  .waves {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 110px;
+    z-index: 1;
+    display: block;
+  }
+  @media (max-width: 640px) {
+    .plans { grid-template-columns: 1fr; max-width: 340px; gap: 14px; }
+    .plan.featured { transform: none; order: -1; }
+    .content { padding-bottom: 140px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .waves .w1 { animation: drift 14s ease-in-out infinite alternate; }
+    .waves .w2 { animation: drift 20s ease-in-out infinite alternate-reverse; }
+    @keyframes drift { from { transform: translateX(-40px); } to { transform: translateX(40px); } }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <nav>
+    <a class="logo" href="#">Tide<span>wrack</span></a>
+    <a class="signin" href="#signin">Sign in</a>
+  </nav>
+
+  <div class="content">
+    <p class="eyebrow">Small-batch · Kelp-based · Monthly</p>
+    <h1>Snacks from the cold Atlantic</h1>
+    <p class="sub">Dulse crisps, kelp jerky and nori clusters, shipped monthly.</p>
+
+    <ul class="plans" aria-label="Subscription plans">
+      <li class="plan">
+        <h2>Sampler</h2>
+        <p class="price">$14<small>/mo</small></p>
+      </li>
+      <li class="plan featured">
+        <span class="badge">Most people pick this</span>
+        <h2>Regular</h2>
+        <p class="price">$26<small>/mo</small></p>
+      </li>
+      <li class="plan">
+        <h2>Family</h2>
+        <p class="price">$48<small>/mo</small></p>
+      </li>
+    </ul>
+
+    <a class="cta" href="#subscribe">Start your subscription</a>
+    <a class="peek" href="#this-month">See what's in this month's box</a>
+  </div>
+
+  <svg class="waves" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+    <path class="w1" fill="#1d4a55" fill-opacity=".6" d="M-80 50 C 100 10, 240 90, 440 50 S 800 10, 1000 50 S 1360 90, 1520 40 V110 H-80 Z"/>
+    <path class="w2" fill="#f3efe6" fill-opacity=".08" d="M-80 70 C 120 40, 300 100, 520 70 S 900 40, 1100 70 S 1380 100, 1520 65 V110 H-80 Z"/>
+  </svg>
+</header>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regional Quarterly Revenue: West Grew Fastest</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0; padding: 32px 20px;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #f9f9f7; color: #0b0b0b;
+  }
+  .viz-root {
+    --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e;
+    --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --good: #006300;
+    --s-north: #2a78d6; --s-south: #eb6834; --s-west: #1baf7a;
+    max-width: 860px; margin: 0 auto; padding: 28px 28px 22px;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    color: var(--text-primary);
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0d0d0d; color: #fff; }
+    .viz-root {
+      --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --good: #0ca30c;
+      --s-north: #3987e5; --s-south: #d95926; --s-west: #199e70;
+    }
+  }
+  h1 { font-size: 22px; line-height: 1.25; margin: 0 0 6px; font-weight: 650; letter-spacing: -0.01em; }
+  .sub { margin: 0 0 22px; color: var(--text-secondary); font-size: 14px; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  .tile { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .tile .name { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+  .sw { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .tile .big { font-size: 30px; font-weight: 650; margin: 6px 0 2px; letter-spacing: -0.02em; }
+  .tile .det { font-size: 12.5px; color: var(--text-secondary); }
+  .tile .rank { margin-left: auto; font-size: 11px; color: var(--muted); }
+  .legend { display: flex; gap: 18px; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 16px; height: 2px; display: inline-block; border-radius: 1px; }
+  .chartwrap { position: relative; }
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+  svg text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .tip {
+    position: absolute; pointer-events: none; opacity: 0; transition: opacity .1s;
+    background: var(--surface-1); border: 1px solid var(--axis); border-radius: 8px;
+    padding: 8px 10px; font-size: 12.5px; box-shadow: 0 4px 14px rgba(0,0,0,.14);
+    min-width: 140px; z-index: 2;
+  }
+  .tip b { display: block; margin-bottom: 4px; }
+  .tip div { display: flex; align-items: center; gap: 6px; justify-content: space-between; }
+  .tip div span:first-child { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+  details { margin-top: 14px; font-size: 13px; color: var(--text-secondary); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--grid); color: var(--text-primary); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-secondary); font-weight: 600; }
+  .foot { margin: 14px 0 0; font-size: 12px; color: var(--muted); }
+  @media (max-width: 620px) { .tiles { grid-template-columns: 1fr; } .viz-root { padding: 20px 16px; } }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <h1>West grew fastest: revenue up 66% from Q1 to Q4</h1>
+  <p class="sub">Quarterly revenue by regional sales team, $ thousands. Growth measured Q1 to Q4.</p>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="legend" aria-label="Legend">
+    <span><i style="background:var(--s-north)"></i>North</span>
+    <span><i style="background:var(--s-south)"></i>South</span>
+    <span><i style="background:var(--s-west)"></i>West</span>
+  </div>
+
+  <div class="chartwrap" id="wrap">
+    <svg id="chart" viewBox="0 0 760 340" role="img" aria-label="Line chart of quarterly revenue for North, South and West. West rose from 290 to 480, North from 410 to 520, South from 380 to 395."></svg>
+    <div class="tip" id="tip"></div>
+  </div>
+
+  <details>
+    <summary>View as table</summary>
+    <table>
+      <thead><tr><th>Team</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q1→Q4 change</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </details>
+  <p class="foot">Figures in $ thousands. Vertical axis starts at 250 to show change; compare slopes, not bar-style heights.</p>
+</div>
+
+<script>
+(function () {
+  var Q = ["Q1", "Q2", "Q3", "Q4"];
+  var data = [
+    { name: "North", v: [410, 455, 430, 520], c: "var(--s-north)" },
+    { name: "South", v: [380, 372, 410, 395], c: "var(--s-south)" },
+    { name: "West",  v: [290, 340, 365, 480], c: "var(--s-west)" }
+  ];
+  data.forEach(function (d) {
+    d.abs = d.v[3] - d.v[0];
+    d.pct = d.abs / d.v[0] * 100;
+  });
+  var ranked = data.slice().sort(function (a, b) { return b.pct - a.pct; });
+
+  // Tiles, ranked by growth
+  document.getElementById("tiles").innerHTML = ranked.map(function (d, i) {
+    return '<div class="tile"><div class="name"><span class="sw" style="background:' + d.c + '"></span>' +
+      d.name + '<span class="rank">#' + (i + 1) + ' growth</span></div>' +
+      '<div class="big">+' + d.pct.toFixed(0) + '%</div>' +
+      '<div class="det">+$' + d.abs + 'K &middot; $' + d.v[0] + 'K → $' + d.v[3] + 'K</div></div>';
+  }).join("");
+
+  // Table
+  document.getElementById("tbody").innerHTML = data.map(function (d) {
+    return "<tr><td>" + d.name + "</td>" + d.v.map(function (x) { return "<td>" + x + "</td>"; }).join("") +
+      "<td>+" + d.abs + " (+" + d.pct.toFixed(1) + "%)</td></tr>";
+  }).join("");
+
+  // Chart geometry
+  var W = 760, H = 340, L = 48, R = 150, T = 14, B = 34;
+  var x0 = L + 24, x1 = W - R - 20;
+  var ymin = 250, ymax = 550;
+  function X(i) { return x0 + i * (x1 - x0) / 3; }
+  function Y(v) { return T + (ymax - v) / (ymax - ymin) * (H - T - B); }
+
+  var s = "";
+  [300, 350, 400, 450, 500, 550].forEach(function (t) {
+    s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(t) + '" y2="' + Y(t) + '" stroke="var(--grid)" stroke-width="1"/>';
+    s += '<text x="' + (L - 8) + '" y="' + (Y(t) + 4) + '" text-anchor="end" font-size="12" fill="var(--muted)" style="font-variant-numeric:tabular-nums">' + t + '</text>';
+  });
+  s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + (H - B) + '" y2="' + (H - B) + '" stroke="var(--axis)" stroke-width="1"/>';
+  Q.forEach(function (q, i) {
+    s += '<text x="' + X(i) + '" y="' + (H - B + 20) + '" text-anchor="middle" font-size="12" fill="var(--muted)">' + q + '</text>';
+  });
+  s += '<line id="cross" x1="0" x2="0" y1="' + T + '" y2="' + (H - B) + '" stroke="var(--axis)" stroke-width="1" opacity="0"/>';
+
+  data.forEach(function (d) {
+    var pts = d.v.map(function (v, i) { return X(i) + "," + Y(v); }).join(" ");
+    s += '<polyline points="' + pts + '" fill="none" stroke="' + d.c + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+  });
+  data.forEach(function (d) {
+    d.v.forEach(function (v, i) {
+      s += '<circle class="pt" data-i="' + i + '" cx="' + X(i) + '" cy="' + Y(v) + '" r="4.5" fill="' + d.c + '" stroke="var(--surface-1)" stroke-width="2"/>';
+    });
+  });
+  // Direct labels at line ends (ink text, color via swatch)
+  data.forEach(function (d) {
+    var y = Y(d.v[3]);
+    s += '<circle cx="' + (x1 + 22) + '" cy="' + y + '" r="4" fill="' + d.c + '"/>';
+    s += '<text x="' + (x1 + 32) + '" y="' + (y - 2) + '" font-size="13" font-weight="600" fill="var(--text-primary)">' + d.name + ' $' + d.v[3] + 'K</text>';
+    s += '<text x="' + (x1 + 32) + '" y="' + (y + 13) + '" font-size="12" fill="var(--text-secondary)">+' + d.pct.toFixed(0) + '% since Q1</text>';
+  });
+  // Hit columns
+  var cw = (x1 - x0) / 3;
+  Q.forEach(function (q, i) {
+    s += '<rect class="hit" data-i="' + i + '" tabindex="0" x="' + (X(i) - cw / 2) + '" y="' + T + '" width="' + cw + '" height="' + (H - T - B) + '" fill="transparent" aria-label="' + q + ': ' +
+      data.map(function (d) { return d.name + " " + d.v[i]; }).join(", ") + ' thousand dollars" style="outline:none"/>';
+  });
+  var svg = document.getElementById("chart");
+  svg.innerHTML = s;
+
+  var tip = document.getElementById("tip"), wrap = document.getElementById("wrap"), cross = document.getElementById("cross");
+  function show(i) {
+    var rows = data.slice().sort(function (a, b) { return b.v[i] - a.v[i]; }).map(function (d) {
+      return '<div><span><span class="sw" style="background:' + d.c + '"></span>' + d.name + '</span><span style="font-variant-numeric:tabular-nums">$' + d.v[i] + 'K</span></div>';
+    }).join("");
+    tip.innerHTML = "<b>" + Q[i] + "</b>" + rows;
+    cross.setAttribute("x1", X(i)); cross.setAttribute("x2", X(i)); cross.setAttribute("opacity", "1");
+    var scale = wrap.getBoundingClientRect().width / W;
+    var left = X(i) * scale + 14;
+    if (left + 160 > wrap.getBoundingClientRect().width) left = X(i) * scale - 170;
+    tip.style.left = left + "px"; tip.style.top = (T * scale + 10) + "px";
+    tip.style.opacity = 1;
+    Array.prototype.forEach.call(svg.querySelectorAll(".pt"), function (p) {
+      p.setAttribute("r", p.getAttribute("data-i") == i ? 6 : 4.5);
+    });
+  }
+  function hide() {
+    tip.style.opacity = 0; cross.setAttribute("opacity", "0");
+    Array.prototype.forEach.call(svg.querySelectorAll(".pt"), function (p) { p.setAttribute("r", 4.5); });
+  }
+  Array.prototype.forEach.call(svg.querySelectorAll(".hit"), function (r) {
+    var i = +r.getAttribute("data-i");
+    r.addEventListener("mouseenter", function () { show(i); });
+    r.addEventListener("focus", function () { show(i); });
+    r.addEventListener("mouseleave", hide);
+    r.addEventListener("blur", hide);
+  });
+})();
+</script>
+</body>
+</html>

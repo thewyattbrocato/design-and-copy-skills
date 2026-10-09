@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in – Parent Portal</title>
+<style>
+  :root {
+    --ink: #1c2733;
+    --muted: #55626f;
+    --line: #8a97a3;
+    --bg: #eef3f7;
+    --card: #ffffff;
+    --brand: #1d4e89;
+    --brand-dark: #153a68;
+    --error: #b3261e;
+    --error-bg: #fdecea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  main {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 2px 14px rgba(28, 39, 51, 0.12);
+    overflow: hidden;
+  }
+  .brand {
+    background: var(--brand);
+    color: #fff;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand svg { flex: none; }
+  .brand strong { display: block; font-size: 1.0625rem; line-height: 1.2; }
+  .brand span { font-size: 0.875rem; opacity: 0.9; }
+  .body { padding: 28px 32px 32px; }
+  h1 { margin: 0 0 4px; font-size: 1.5rem; line-height: 1.25; }
+  .lead { margin: 0 0 24px; color: var(--muted); }
+  .field { margin-bottom: 20px; }
+  .label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  label { display: block; font-weight: 600; margin-bottom: 6px; }
+  input[type="email"], input[type="password"], input[type="text"] {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+  }
+  input:focus {
+    outline: 3px solid #7fb0ea;
+    outline-offset: 1px;
+    border-color: var(--brand);
+  }
+  .pw-wrap { position: relative; }
+  .pw-wrap input { padding-right: 76px; }
+  .toggle {
+    position: absolute;
+    top: 0; right: 0;
+    height: 46px;
+    min-width: 68px;
+    padding: 0 12px;
+    background: none;
+    border: 0;
+    color: var(--brand);
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0 8px 8px 0;
+  }
+  .toggle:focus-visible { outline: 3px solid #7fb0ea; outline-offset: -3px; }
+  a { color: var(--brand); font-weight: 600; }
+  a:hover { color: var(--brand-dark); }
+  a:focus-visible { outline: 3px solid #7fb0ea; outline-offset: 2px; border-radius: 2px; }
+  .forgot { font-size: 0.9375rem; }
+  .error-msg {
+    display: none;
+    margin: 6px 0 0;
+    color: var(--error);
+    font-size: 0.9375rem;
+  }
+  .error-msg::before { content: "\26A0\FE0E  "; }
+  .field.invalid .error-msg { display: block; }
+  .field.invalid input { border-color: var(--error); border-width: 2px; }
+  .summary {
+    display: none;
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    background: var(--error-bg);
+    border-left: 4px solid var(--error);
+    border-radius: 6px;
+    color: var(--error);
+  }
+  .summary.show { display: block; }
+  .summary:focus { outline: 3px solid #7fb0ea; }
+  .summary p { margin: 0 0 4px; font-weight: 700; }
+  .summary ul { margin: 0; padding-left: 20px; }
+  .summary a { color: var(--error); }
+  .submit {
+    width: 100%;
+    min-height: 48px;
+    font: inherit;
+    font-weight: 700;
+    color: #fff;
+    background: var(--brand);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .submit:hover { background: var(--brand-dark); }
+  .submit:focus-visible { outline: 3px solid #7fb0ea; outline-offset: 2px; }
+  .submit[aria-disabled="true"] { opacity: 0.75; cursor: progress; }
+  .create {
+    margin: 24px 0 0;
+    padding-top: 20px;
+    border-top: 1px solid #d5dde4;
+    text-align: center;
+    color: var(--muted);
+  }
+  .help { margin: 16px 0 0; text-align: center; font-size: 0.875rem; color: var(--muted); }
+  .vh {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  @media (max-width: 420px) {
+    .brand, .body { padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">
+    <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+      <path d="M18 5 3 12l15 7 15-7-15-7Z" fill="#fff"/>
+      <path d="M9 16v6c0 2.5 4 5 9 5s9-2.5 9-5v-6l-9 4.2L9 16Z" fill="#fff" opacity=".8"/>
+    </svg>
+    <div>
+      <strong>Maplewood School</strong>
+      <span>Parent Portal</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <h1>Sign in</h1>
+    <p class="lead">View grades, attendance and messages from your child's teachers.</p>
+
+    <div class="summary" id="summary" tabindex="-1" role="alert">
+      <p id="summary-title">Fix the following to sign in:</p>
+      <ul id="summary-list"></ul>
+    </div>
+
+    <form id="login" novalidate>
+      <div class="field" id="f-email">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" autocomplete="username"
+               inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false"
+               placeholder="name@example.com" aria-describedby="email-err">
+        <p class="error-msg" id="email-err"></p>
+      </div>
+
+      <div class="field" id="f-password">
+        <div class="label-row">
+          <label for="password">Password</label>
+          <a class="forgot" href="#forgot-password">Forgot password?</a>
+        </div>
+        <div class="pw-wrap">
+          <input type="password" id="password" name="password" autocomplete="current-password"
+                 autocapitalize="none" autocorrect="off" spellcheck="false"
+                 aria-describedby="password-err">
+          <button type="button" class="toggle" id="toggle" aria-controls="password" aria-pressed="false">Show</button>
+        </div>
+        <p class="error-msg" id="password-err"></p>
+      </div>
+
+      <button type="submit" class="submit" id="submit">Sign in</button>
+    </form>
+
+    <p class="create">New to the portal? <a href="#create-account">Create an account</a></p>
+    <p class="help">Need help? Contact the school office.</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById('login');
+  var summary = document.getElementById('summary');
+  var list = document.getElementById('summary-list');
+  var title = document.getElementById('summary-title');
+  var baseTitle = document.title;
+  var fields = {
+    email: {
+      input: document.getElementById('email'),
+      wrap: document.getElementById('f-email'),
+      err: document.getElementById('email-err'),
+      check: function (v) {
+        v = v.trim();
+        if (!v) return 'Enter your email address.';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Enter an email address with an @, like name@example.com.';
+        return '';
+      }
+    },
+    password: {
+      input: document.getElementById('password'),
+      wrap: document.getElementById('f-password'),
+      err: document.getElementById('password-err'),
+      check: function (v) { return v ? '' : 'Enter your password.'; }
+    }
+  };
+  var submitted = {};
+
+  function show(key) {
+    var f = fields[key], msg = f.check(f.input.value);
+    f.err.textContent = msg;
+    f.wrap.classList.toggle('invalid', !!msg);
+    if (msg) f.input.setAttribute('aria-invalid', 'true');
+    else f.input.removeAttribute('aria-invalid');
+    return msg;
+  }
+
+  function rebuildSummary() {
+    var keys = Object.keys(fields).filter(function (k) { return fields[k].check(fields[k].input.value); });
+    list.innerHTML = '';
+    keys.forEach(function (k) {
+      var li = document.createElement('li'), a = document.createElement('a');
+      a.href = '#' + fields[k].input.id;
+      a.textContent = fields[k].check(fields[k].input.value);
+      a.addEventListener('click', function (e) { e.preventDefault(); fields[k].input.focus(); });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    summary.classList.toggle('show', keys.length > 0);
+    document.title = keys.length ? '(' + keys.length + ' error' + (keys.length > 1 ? 's' : '') + ') ' + baseTitle : baseTitle;
+    return keys;
+  }
+
+  Object.keys(fields).forEach(function (k) {
+    fields[k].input.addEventListener('input', function () {
+      if (submitted[k]) { show(k); rebuildSummary(); }
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    Object.keys(fields).forEach(function (k) { submitted[k] = true; show(k); });
+    var keys = rebuildSummary();
+    if (keys.length) {
+      if (keys.length > 1) summary.focus();
+      else { summary.classList.remove('show'); fields[keys[0]].input.focus(); }
+      return;
+    }
+    var btn = document.getElementById('submit');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.textContent = 'Signing in…';
+    // Demo only: replace with a real request to your sign-in endpoint.
+  });
+
+  var toggle = document.getElementById('toggle');
+  toggle.addEventListener('click', function () {
+    var pw = fields.password.input, hidden = pw.type === 'password';
+    pw.type = hidden ? 'text' : 'password';
+    toggle.textContent = hidden ? 'Hide' : 'Show';
+    toggle.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+  });
+})();
+</script>
+</body>
+</html>

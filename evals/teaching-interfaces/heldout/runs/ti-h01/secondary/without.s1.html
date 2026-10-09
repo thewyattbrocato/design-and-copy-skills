@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Kilnbook</title>
+<style>
+  :root {
+    --bg: #faf6f1;
+    --surface: #ffffff;
+    --ink: #2b2420;
+    --muted: #75685e;
+    --line: #e8dfd5;
+    --accent: #b5562b;
+    --accent-ink: #ffffff;
+    --accent-soft: #f6e6dc;
+    --ok: #4b7a5a;
+    --ok-soft: #e3efe6;
+    --radius: 14px;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1816;
+      --surface: #262120;
+      --ink: #f3ebe3;
+      --muted: #a89b90;
+      --line: #3a322d;
+      --accent: #e08a5f;
+      --accent-ink: #1c1816;
+      --accent-soft: #3a2a21;
+      --ok: #8fc49f;
+      --ok-soft: #22302a;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 20px 56px;
+  }
+
+  header.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+
+  .brand {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .brand span { color: var(--accent); }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .hero h1 {
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.15;
+    margin: 0 0 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 58ch;
+    font-size: 16px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+
+  .card h2 {
+    font-size: 16px;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .card .sub {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* Progress */
+  .progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .bar {
+    flex: 1;
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar > i {
+    display: block;
+    height: 100%;
+    width: 33%;
+    background: var(--accent);
+    border-radius: 999px;
+  }
+
+  .progress strong {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* Steps */
+  ol.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  ol.steps li {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+
+  ol.steps li.done {
+    background: var(--ok-soft);
+    border-color: transparent;
+  }
+
+  .num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  li.done .num {
+    background: var(--ok);
+    color: #fff;
+  }
+
+  .step-title {
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .step-meta {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  li.done .step-title {
+    color: var(--ok);
+  }
+
+  .btn {
+    display: inline-block;
+    text-decoration: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 9px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .btn.primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .btn[aria-disabled="true"] {
+    opacity: 0.5;
+    pointer-events: none;
+    border-color: var(--line);
+    color: var(--muted);
+  }
+
+  /* Book options */
+  .options {
+    display: grid;
+    gap: 12px;
+  }
+
+  .option {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .option-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .option h3 {
+    margin: 0;
+    font-size: 15px;
+  }
+
+  .price {
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .option p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .slot {
+    font: inherit;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .slot:hover {
+    border-color: var(--accent);
+  }
+
+  /* Studio side card */
+  .studio-name {
+    font-weight: 700;
+    font-size: 17px;
+    margin: 0 0 2px;
+  }
+
+  dl.facts {
+    margin: 16px 0 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  dl.facts div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+    border-bottom: 1px dashed var(--line);
+    padding-bottom: 10px;
+  }
+
+  dl.facts div:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  dt { color: var(--muted); }
+  dd { margin: 0; text-align: right; font-weight: 600; }
+
+  .tip {
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    font-size: 14px;
+  }
+
+  .tip strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--accent);
+  }
+
+  .tip p {
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .empty {
+    margin-top: 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  footer.foot {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  footer.foot a {
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">Kiln<span>book</span></div>
+    <div class="avatar" aria-label="Your account">JM</div>
+  </header>
+
+  <section class="hero">
+    <h1>Welcome to Harbor Clay, Jordan.</h1>
+    <p>Your membership is active. Most members book their first wheel session within a week, so start there. Three quick steps and you'll be throwing on the wheel and sending work to the kiln.</p>
+  </section>
+
+  <div class="grid">
+
+    <!-- Left: next steps -->
+    <main>
+      <section class="card">
+        <h2>Get set up</h2>
+        <p class="sub">Finish these to unlock booking for kiln firings.</p>
+
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1" aria-label="Setup progress">
+          <div class="bar"><i></i></div>
+          <strong>1 of 3 done</strong>
+        </div>
+
+        <ol class="steps">
+          <li class="done">
+            <div class="num">✓</div>
+            <div>
+              <div class="step-title">Create your account</div>
+              <div class="step-meta">Done</div>
+            </div>
+            <span></span>
+          </li>
+
+          <li>
+            <div class="num">2</div>
+            <div>
+              <div class="step-title">Watch the 10-minute studio orientation</div>
+              <div class="step-meta">Covers safety, clean-up, and shared tools</div>
+            </div>
+            <a class="btn" href="#orientation">Start</a>
+          </li>
+
+          <li>
+            <div class="num">3</div>
+            <div>
+              <div class="step-title">Book a wheel session</div>
+              <div class="step-meta">Book in under a minute, cancel free up to 12 hours ahead</div>
+            </div>
+            <a class="btn primary" href="#wheel">Book now</a>
+          </li>
+        </ol>
+
+        <div class="empty">
+          Kiln slots open once you have a piece ready to fire.
+        </div>
+      </section>
+
+      <section class="card" id="wheel" style="margin-top:20px">
+        <h2>Pick a wheel session</h2>
+        <p class="sub">Two-hour sessions with a studio tech on hand. Clay and aprons are included.</p>
+
+        <div class="options">
+          <div class="option">
+            <div class="option-head">
+              <h3>Wheel Basics (Intro)</h3>
+              <span class="price">$38 · included in dues for members</span>
+            </div>
+            <p>Centering, opening, and pulling walls. Ideal for your first visit.</p>
+            <div class="slots">
+              <button class="slot" type="button">Thu 6:00 pm</button>
+              <button class="slot" type="button">Sat 10:00 am</button>
+              <button class="slot" type="button">Sat 1:30 pm</button>
+              <button class="slot" type="button">Sun 11:00 am</button>
+            </div>
+          </div>
+
+          <div class="option">
+            <div class="option-head">
+              <h3>Open Wheel</h3>
+              <span class="price">Member rate</span>
+            </div>
+            <p>Unsupervised studio time for members who've finished orientation.</p>
+            <div class="slots">
+              <button class="slot" type="button">Mon 7:00 pm</button>
+              <button class="slot" type="button">Wed 9:00 am</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right: studio info -->
+    <aside>
+      <section class="card">
+        <p class="studio-name">Harbor Clay Studio</p>
+        <p class="sub" style="margin-bottom:0">412 Mill Street, Unit 3</p>
+
+        <dl class="facts">
+          <div><dt>Open today</dt><dd>9 am – 9 pm</dd></div>
+          <div><dt>Studio tech on shift</dt><dd>Priya</dd></div>
+          <div><dt>Wheels available now</dt><dd>7 of 12</dd></div>
+          <div><dt>Next kiln firing</dt><dd>Fri, Oct 10</dd></div>
+          <div><dt>Membership</dt><dd>Community, monthly</dd></div>
+        </dl>
+
+        <div class="tip">
+          <strong>First-week tip</strong>
+          <p>Bring a finished bone-dry piece to your first kiln slot. Bisque firing takes about 48 hours, so book early.</p>
+        </div>
+      </section>
+    </aside>
+
+  </div>
+
+  <footer class="foot">
+    <span>Questions? Message the front desk any time the studio is open.</span>
+    <span><a href="#help">Help</a> · <a href="#policies">Studio policies</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

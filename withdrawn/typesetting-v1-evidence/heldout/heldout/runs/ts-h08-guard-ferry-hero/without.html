@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saltline Ferries</title>
+<style>
+  :root {
+    --ink: #0e2a3a;
+    --deep: #0b3248;
+    --sea: #1d5f7c;
+    --mist: #e9f1f3;
+    --sand: #f6f1e7;
+    --accent: #f2b45a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--sand);
+    background: var(--deep);
+  }
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 70% at 75% 8%, #f7dca8 0%, rgba(247,220,168,0) 45%),
+      linear-gradient(180deg, #86b4c4 0%, #4f8ba3 38%, #1d5f7c 62%, #0b3248 100%);
+  }
+  header {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px clamp(24px, 6vw, 88px);
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+    font-size: 14px; color: #fff;
+  }
+  .brand svg { width: 28px; height: 28px; }
+  nav { display: flex; gap: 32px; font-size: 14px; }
+  nav a { color: rgba(255,255,255,.85); text-decoration: none; }
+  nav a:hover { color: #fff; }
+  nav a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+  .content {
+    position: relative; z-index: 3;
+    flex: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 4vh clamp(24px, 6vw, 88px) 18vh;
+    max-width: 1200px;
+  }
+  h1 {
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: clamp(2.8rem, 8.2vw, 7.2rem);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    color: #fff;
+    max-width: 11em;
+    text-shadow: 0 2px 30px rgba(11,50,72,.25);
+  }
+  h1 span { display: block; color: #fde7bd; font-style: italic; }
+  .sub {
+    margin-top: clamp(20px, 3vh, 36px);
+    max-width: 32em;
+    font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+    line-height: 1.55;
+    color: rgba(255,255,255,.92);
+  }
+  .cta { margin-top: clamp(28px, 5vh, 48px); }
+  .btn {
+    display: inline-block;
+    padding: 18px 36px;
+    border-radius: 999px;
+    background: var(--sand);
+    color: var(--ink);
+    font-weight: 600; font-size: 1.05rem;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(11,50,72,.3);
+    transition: transform .25s ease, background .25s ease;
+  }
+  .btn:hover { transform: translateY(-2px); background: #fff; }
+  .note { margin-top: 16px; font-size: .9rem; color: rgba(255,255,255,.8); }
+
+  /* sea */
+  .waves { position: absolute; left: 0; right: 0; bottom: 0; height: 34vh; z-index: 2; pointer-events: none; }
+  .waves svg { position: absolute; bottom: 0; width: 200%; height: 100%; }
+  .w1 { animation: drift 40s linear infinite; opacity: .5; }
+  .w2 { animation: drift 28s linear infinite reverse; opacity: .6; }
+  .w3 { animation: drift 20s linear infinite; }
+  @keyframes drift { to { transform: translateX(-50%); } }
+
+  .boat {
+    position: absolute; z-index: 1;
+    right: clamp(24px, 12vw, 200px);
+    bottom: 27vh;
+    width: clamp(150px, 22vw, 320px);
+    animation: bob 7s ease-in-out infinite;
+  }
+  @keyframes bob { 50% { transform: translateY(8px) rotate(-.8deg); } }
+
+  .sun {
+    position: absolute; z-index: 0;
+    top: 12%; right: 18%;
+    width: clamp(80px, 12vw, 180px); aspect-ratio: 1;
+    border-radius: 50%;
+    background: #fff3d6;
+    box-shadow: 0 0 120px 50px rgba(255,236,190,.5);
+    opacity: .9;
+  }
+
+  @media (max-width: 640px) {
+    nav { display: none; }
+    .boat { right: -20px; bottom: 24vh; opacity: .9; }
+    .content { padding-bottom: 24vh; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .waves svg, .boat { animation: none; }
+  }
+</style>
+</head>
+<body>
+<section class="hero">
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M2 12c4-3 6 3 10 0s6 3 10 0 6 3 8 1"/>
+        <path d="M2 21c4-3 6 3 10 0s6 3 10 0 6 3 8 1"/>
+      </svg>
+      Saltline Ferries
+    </div>
+    <nav aria-label="Primary">
+      <a href="#timetable">Timetable</a>
+      <a href="#fares">Fares</a>
+      <a href="#islands">Islands</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="sun" aria-hidden="true"></div>
+
+  <svg class="boat" viewBox="0 0 320 140" aria-hidden="true">
+    <path d="M150 8v50" stroke="#0e2a3a" stroke-width="3" stroke-linecap="round"/>
+    <rect x="70" y="52" width="150" height="26" rx="5" fill="#f6f1e7"/>
+    <rect x="95" y="34" width="95" height="20" rx="4" fill="#fff"/>
+    <g fill="#1d5f7c">
+      <rect x="82" y="60" width="16" height="9" rx="2"/><rect x="106" y="60" width="16" height="9" rx="2"/>
+      <rect x="130" y="60" width="16" height="9" rx="2"/><rect x="154" y="60" width="16" height="9" rx="2"/>
+      <rect x="178" y="60" width="16" height="9" rx="2"/>
+      <rect x="104" y="40" width="14" height="8" rx="2"/><rect x="126" y="40" width="14" height="8" rx="2"/>
+      <rect x="148" y="40" width="14" height="8" rx="2"/>
+    </g>
+    <path d="M40 78h250l-28 34H72z" fill="#0e2a3a"/>
+    <path d="M52 88h226l-4 6H56z" fill="#f2b45a"/>
+  </svg>
+
+  <div class="content">
+    <h1>Three islands. <span>One boat an hour.</span></h1>
+    <p class="sub">Daily sailings from 6:30 am to 9:00 pm, with bicycles and dogs welcome aboard.</p>
+    <div class="cta">
+      <a class="btn" href="#timetable">See the timetable</a>
+      <p class="note">Summer schedule from June 1.</p>
+    </div>
+  </div>
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 200" preserveAspectRatio="none">
+      <path d="M0 80c120-40 240-40 360 0s240 40 360 0 240-40 360 0 240 40 360 0V200H0z" fill="#3b7b96"/>
+    </svg>
+    <svg class="w2" viewBox="0 0 1440 200" preserveAspectRatio="none" style="height:80%">
+      <path d="M0 70c120 36 240 36 360 0s240-36 360 0 240 36 360 0 240-36 360 0V200H0z" fill="#1d5f7c"/>
+    </svg>
+    <svg class="w3" viewBox="0 0 1440 200" preserveAspectRatio="none" style="height:55%">
+      <path d="M0 60c120-30 240-30 360 0s240 30 360 0 240-30 360 0 240 30 360 0V200H0z" fill="#0b3248"/>
+    </svg>
+  </div>
+</section>
+</body>
+</html>

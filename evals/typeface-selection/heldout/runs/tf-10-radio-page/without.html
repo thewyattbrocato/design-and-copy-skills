@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low Tide Radio — after midnight, until the water comes back</title>
+<style>
+  :root {
+    --paper: #efe6d2;
+    --paper-deep: #e4d8bc;
+    --ink: #1f2a3a;
+    --ink-soft: #4a5566;
+    --rust: #b4492a;
+    --rule: rgba(31, 42, 58, .28);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper-deep); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 32px 16px;
+    color: var(--ink);
+    font-family: var(--serif);
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.35), transparent 60%),
+      var(--paper-deep);
+  }
+  .sheet {
+    width: 100%;
+    max-width: 640px;
+    background: var(--paper);
+    padding: 44px 44px 36px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 18px 40px -22px rgba(31,42,58,.55);
+    position: relative;
+  }
+  .sheet::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  h1 {
+    margin: 34px 0 6px;
+    font-weight: 400;
+    font-size: clamp(48px, 12vw, 88px);
+    line-height: .92;
+    letter-spacing: -.02em;
+  }
+  h1 em {
+    display: block;
+    font-style: italic;
+    color: var(--rust);
+    padding-left: 1.1em;
+  }
+  .tagline {
+    margin: 18px 0 0;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--ink-soft);
+    max-width: 30em;
+    line-height: 1.45;
+  }
+  .tide {
+    display: block;
+    width: 100%;
+    height: 44px;
+    margin: 30px 0 6px;
+    color: var(--ink);
+  }
+  .tide path { fill: none; stroke: currentColor; stroke-width: 1.4; }
+  .tide path.b { opacity: .35; }
+  @media (prefers-reduced-motion: no-preference) {
+    .tide path.a { animation: drift 14s ease-in-out infinite alternate; }
+    .tide path.b { animation: drift 19s ease-in-out infinite alternate-reverse; }
+  }
+  @keyframes drift { to { transform: translateX(-40px); } }
+
+  h2 {
+    margin: 26px 0 0;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+  }
+  ol { list-style: none; margin: 0; padding: 0; }
+  li {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+    align-items: baseline;
+    padding: 15px 0;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .time {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--rust);
+    font-variant-numeric: tabular-nums;
+  }
+  .track { font-size: 21px; line-height: 1.25; }
+  .artist { display: block; font-size: 15px; font-style: italic; color: var(--ink-soft); margin-top: 2px; }
+
+  .foot {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px 24px;
+    justify-content: space-between;
+  }
+  button {
+    font: inherit;
+    font-size: 17px;
+    letter-spacing: .04em;
+    color: var(--paper);
+    background: var(--ink);
+    border: 0;
+    padding: 15px 28px 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 4px 4px 0 var(--rust);
+    transition: transform .12s, box-shadow .12s;
+  }
+  button:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--rust); }
+  button:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--rust); }
+  button:focus-visible { outline: 3px solid var(--rust); outline-offset: 3px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--rust); box-shadow: 0 0 0 2px var(--paper) inset; background: #e8896b; }
+  .note { font-size: 14px; font-style: italic; color: var(--ink-soft); max-width: 18em; line-height: 1.4; }
+
+  @media (max-width: 480px) {
+    .sheet { padding: 36px 24px 28px; }
+    li { grid-template-columns: 52px 1fr; }
+    .meta span:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <div class="meta"><span>Nightly · 12 – 4 a.m.</span><span>Tide table no. 1</span></div>
+
+    <h1>Low Tide <em>Radio</em></h1>
+    <p class="tagline">Records for the hours when the street goes quiet and the water pulls back far enough to show what was underneath.</p>
+
+    <svg class="tide" viewBox="0 0 600 44" preserveAspectRatio="none" aria-hidden="true">
+      <path class="b" d="M-40 24 C 20 4, 80 4, 140 24 S 260 44, 320 24 S 440 4, 500 24 S 620 44, 680 24"/>
+      <path class="a" d="M-40 30 C 20 10, 80 10, 140 30 S 260 50, 320 30 S 440 10, 500 30 S 620 50, 680 30"/>
+    </svg>
+
+    <h2>Tonight’s tide — four records</h2>
+    <ol>
+      <li>
+        <span class="time">12:07</span>
+        <span class="track">Salt on the Windowsill<span class="artist">Marianne Oyelaran</span></span>
+      </li>
+      <li>
+        <span class="time">12:44</span>
+        <span class="track">Last Ferry, Slow<span class="artist">The Quiet Harbour Trio</span></span>
+      </li>
+      <li>
+        <span class="time">01:21</span>
+        <span class="track">Letters Never Sent to Lisbon<span class="artist">Tomás Verhaeren</span></span>
+      </li>
+      <li>
+        <span class="time">02:03</span>
+        <span class="track">Lamplight Over Dry Sand<span class="artist">Ines &amp; the Static Orchard</span></span>
+      </li>
+    </ol>
+
+    <div class="foot">
+      <button type="button"><span class="dot" aria-hidden="true"></span>Listen live</button>
+      <p class="note">Best with one lamp on and the window slightly open.</p>
+    </div>
+  </main>
+</body>
+</html>

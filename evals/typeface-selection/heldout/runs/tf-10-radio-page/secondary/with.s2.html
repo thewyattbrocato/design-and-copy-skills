@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low Tide Radio</title>
+<style>
+  :root {
+    --paper: #ece3cf;
+    --paper-deep: #e2d6badd;
+    --ink: #2b2420;
+    --ink-soft: #6e5f50;
+    --rule: #b9a88c;
+    --rust: #9a3b24;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--paper);
+    background-image:
+      repeating-radial-gradient(circle at 17% 32%, rgba(90, 66, 40, 0.035) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(0deg, rgba(90, 66, 40, 0.025) 0 1px, transparent 1px 4px),
+      linear-gradient(180deg, #f2ead8 0%, #e6dcc5 100%);
+    color: var(--ink);
+    font-family: var(--serif);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.25rem;
+  }
+
+  main {
+    width: 100%;
+    max-width: 30rem;
+    position: relative;
+  }
+
+  /* A faint vignette, like a lamp that doesn't quite reach the corners */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(60, 40, 20, 0.12) 100%);
+  }
+
+  .sheet {
+    border-top: 3px double var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 1.6rem 0 1.4rem;
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 1.1rem;
+  }
+
+  h1 {
+    font-weight: normal;
+    font-size: clamp(2.6rem, 9vw, 3.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 0;
+    font-style: italic;
+  }
+
+  h1 span {
+    display: block;
+    font-style: normal;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    font-size: 0.5em;
+    margin-top: 0.35em;
+    color: var(--rust);
+  }
+
+  .tagline {
+    margin: 1.2rem 0 0;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 24rem;
+  }
+
+  .slot {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    margin: 1.4rem 0 0;
+    padding-top: 0.8rem;
+    border-top: 1px dotted var(--rule);
+    color: var(--ink-soft);
+  }
+
+  .log {
+    margin-top: 2rem;
+  }
+
+  .log h2 {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: normal;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 0.6rem;
+  }
+
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: track;
+  }
+
+  li {
+    counter-increment: track;
+    display: grid;
+    grid-template-columns: 2.4rem 1fr auto;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  li:first-child {
+    border-top: 1px solid var(--rule);
+  }
+
+  li::before {
+    content: counter(track, decimal-leading-zero);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--rust);
+  }
+
+  .track {
+    font-size: 1.12rem;
+    line-height: 1.25;
+  }
+
+  .artist {
+    display: block;
+    font-size: 0.92rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-top: 0.15rem;
+  }
+
+  .time {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .controls {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: 0;
+    border-radius: 2px;
+    padding: 0.95rem 1.6rem;
+    cursor: pointer;
+    box-shadow: 0 2px 0 #000, 0 6px 14px rgba(43, 36, 32, 0.25);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+
+  button:hover {
+    background: #3a302a;
+  }
+
+  button:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 #000, 0 2px 6px rgba(43, 36, 32, 0.25);
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--rust);
+    outline-offset: 3px;
+  }
+
+  .lamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .lamp i {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: #c9baa0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+  }
+
+  .lamp.on i {
+    background: var(--rust);
+    box-shadow: 0 0 6px 1px rgba(154, 59, 36, 0.45);
+  }
+
+  footer {
+    margin-top: 2.4rem;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    text-align: center;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header class="sheet">
+    <p class="kicker">
+      <span>Nightly</span>
+      <span>After midnight</span>
+    </p>
+    <h1>Low Tide<span>Radio</span></h1>
+    <p class="tagline">Records for the hours after the last bus, when the room gets quiet enough to hear the needle.</p>
+    <p class="slot">Tonight · 12:00 – 04:00 · Four selections, no talking until the second side</p>
+  </header>
+
+  <section class="log" aria-labelledby="playlist-heading">
+    <h2 id="playlist-heading">Tonight's log</h2>
+    <ol>
+      <li>
+        <div>
+          <span class="track">Road</span>
+          <span class="artist">Nick Drake</span>
+        </div>
+        <span class="time">00:00</span>
+      </li>
+      <li>
+        <div>
+          <span class="track">Sea Song</span>
+          <span class="artist">Robert Wyatt</span>
+        </div>
+        <span class="time">00:46</span>
+      </li>
+      <li>
+        <div>
+          <span class="track">Blue in Green</span>
+          <span class="artist">Bill Evans Trio</span>
+        </div>
+        <span class="time">02:15</span>
+      </li>
+      <li>
+        <div>
+          <span class="track">Fade Into You</span>
+          <span class="artist">Mazzy Star</span>
+        </div>
+        <span class="time">03:30</span>
+      </li>
+    </ol>
+  </section>
+
+  <div class="controls">
+    <button type="button" id="listen" aria-pressed="false">Listen live</button>
+    <span class="lamp" id="lamp"><i></i><span id="lamp-label">Off air</span></span>
+  </div>
+
+  <footer>Turn it down low. The tide is still going out.</footer>
+</main>
+
+<script>
+  (function () {
+    var btn = document.getElementById("listen");
+    var lamp = document.getElementById("lamp");
+    var label = document.getElementById("lamp-label");
+    var on = false;
+
+    btn.addEventListener("click", function () {
+      on = !on;
+      btn.textContent = on ? "Stop" : "Listen live";
+      btn.setAttribute("aria-pressed", String(on));
+      lamp.classList.toggle("on", on);
+      label.textContent = on ? "On air" : "Off air";
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Pair it with a faintly teal-tinted neutral set: an off-white background like `#f6f9f9` and body text in a deep blue-gray like `#1b2a2c`, which keeps the neutrals in the same hue family so they feel cohesive instead of stark. That text color has very high contrast on the background, and `#0f7c80` on `#f6f9f9` is about 5:1, so it's safe for links and buttons.

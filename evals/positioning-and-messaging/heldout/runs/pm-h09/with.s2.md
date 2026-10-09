@@ -1,0 +1,7 @@
+No, a full rewrite isn't necessary. The statement names a specific audience (night-shift nurses who can't sleep by day). It names the alternatives (generic blackout curtains and sleep apps). It states a difference anyone can check: one kit of three items plus a checklist, built around a night-shift schedule. A rival couldn't truthfully put their name on it. It also matches what you sell and tested well with the nurses you interviewed. A rewrite would risk losing all of that.
+
+I'd change one word. "Turn **any** bedroom" promises something you can't back, because some rooms will be too bright, too loud, or too oddly shaped. Your own disclaimer says the claim is practical, so "any" sits badly next to it. "Your" keeps the same picture and still fits the checklist for your own room.
+
+> "For night-shift nurses who struggle to sleep during the day, Dayrest is a set of blackout-and-white-noise kits (curtain panels, a door seal and a small sound machine) that turn your bedroom into a place you can sleep at noon. Unlike generic blackout curtains or sleep apps, Dayrest is sold as one kit designed around a night-shift schedule, with a setup checklist for your own room. We have not run clinical studies; our claim is practical, not medical."
+
+If your marketing lead has a specific problem with it, such as a new audience or a new product line, that would be a reason to revise. Ask them what is failing, because "start from scratch" isn't a reason on its own.

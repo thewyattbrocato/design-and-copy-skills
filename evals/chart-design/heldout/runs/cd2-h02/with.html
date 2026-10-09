@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fenwick Falls rent, 2016–2025</title>
+<style>
+  :root { --ink:#1f2937; --muted:#6b7280; --grid:#e5e7eb; --rent:#1d4ed8; --price:#6b7280; --surface:#ffffff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#f3f4f6; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); }
+  .card { max-width:760px; margin:24px auto; background:var(--surface); padding:28px 28px 20px; border-radius:6px; position:relative; }
+  h1 { font-size:26px; line-height:1.2; margin:0 0 8px; }
+  .sub { margin:0 0 14px; color:var(--muted); font-size:15px; line-height:1.4; }
+  .legend { display:flex; gap:20px; font-size:14px; margin-bottom:6px; }
+  .legend span { display:inline-flex; align-items:center; gap:7px; }
+  .legend i { display:inline-block; width:22px; height:3px; border-radius:2px; }
+  svg { width:100%; height:auto; display:block; touch-action:none; }
+  svg text { font-family:inherit; }
+  .tip { position:absolute; pointer-events:none; background:#fff; border:1px solid var(--grid); box-shadow:0 1px 4px rgba(0,0,0,.12); border-radius:4px; padding:8px 10px; font-size:13px; line-height:1.45; display:none; white-space:nowrap; }
+  .tip b { display:block; margin-bottom:2px; }
+  .note { font-size:12.5px; color:var(--muted); margin:10px 0 0; line-height:1.45; }
+  details { margin-top:12px; font-size:13px; }
+  summary { cursor:pointer; color:var(--muted); }
+  table { border-collapse:collapse; margin-top:8px; width:100%; font-variant-numeric:tabular-nums; }
+  th, td { text-align:right; padding:4px 8px; border-bottom:1px solid var(--grid); }
+  th:first-child, td:first-child { text-align:left; }
+  @media print { body { background:#fff; } .card { margin:0; } details { display:none; } }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Rent in Fenwick Falls rose 48% in ten years, outpacing regional prices (up 33%)</h1>
+  <p class="sub">Average monthly rent went from $1,180 in 2016 to $1,745 in 2025, which is $565 more every month. Both lines are indexed so 2016 = 100.</p>
+  <div class="legend">
+    <span><i style="background:var(--rent)"></i>Fenwick Falls average rent</span>
+    <span><i style="background:var(--price)"></i>Regional price index</span>
+  </div>
+  <svg id="c" viewBox="0 0 720 400" role="img" aria-labelledby="t d">
+    <title id="t">Line chart: Fenwick Falls rent versus regional prices, indexed 2016 = 100</title>
+    <desc id="d">Rent rose from 100 in 2016 to 148 in 2025. Regional prices rose from 100 to 132.5. Rent growth accelerated after 2020.</desc>
+  </svg>
+  <div class="tip" id="tip"></div>
+  <p class="note">Rent figures are average monthly rent in current (not inflation-adjusted) dollars, indexed to 2016 = 100 so they share a scale with the regional price index. The vertical axis starts at 100, not zero.</p>
+  <details>
+    <summary>View the data as a table</summary>
+    <table id="tbl"><thead><tr><th>Year</th><th>Avg. monthly rent</th><th>Rent index</th><th>Regional price index</th></tr></thead><tbody></tbody></table>
+  </details>
+</div>
+<script>
+(function(){
+  var years=[2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+  var rent=[1180,1215,1260,1310,1325,1390,1530,1640,1700,1745];
+  var price=[100,102.1,104.6,106.5,107.8,112.9,121.8,126.5,130.0,132.5];
+  var ri=rent.map(function(v){return v/rent[0]*100;});
+  var W=720,H=400,L=44,R=170,T=18,B=40,ymin=100,ymax=150;
+  var pw=W-L-R, ph=H-T-B;
+  function x(i){return L+pw*i/(years.length-1);}
+  function y(v){return T+ph*(1-(v-ymin)/(ymax-ymin));}
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("c"), s="";
+  for(var g=100;g<=150;g+=10){
+    s+='<line x1="'+L+'" x2="'+(L+pw)+'" y1="'+y(g)+'" y2="'+y(g)+'" stroke="'+(g===100?'#9ca3af':'#e5e7eb')+'" stroke-width="1"/>';
+    s+='<text x="'+(L-8)+'" y="'+(y(g)+4)+'" text-anchor="end" font-size="12" fill="#6b7280">'+g+'</text>';
+  }
+  years.forEach(function(yr,i){
+    if(i%1===0) s+='<text x="'+x(i)+'" y="'+(H-14)+'" text-anchor="middle" font-size="12" fill="#6b7280">'+(i===0||i===9||yr%2===0?yr:'')+'</text>';
+  });
+  function path(a){return a.map(function(v,i){return (i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1);}).join(' ');}
+  s+='<path d="'+path(price)+'" fill="none" stroke="#6b7280" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  s+='<path d="'+path(ri)+'" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
+  var e=years.length-1;
+  s+='<circle cx="'+x(e)+'" cy="'+y(ri[e])+'" r="5" fill="#1d4ed8" stroke="#fff" stroke-width="2"/>';
+  s+='<circle cx="'+x(e)+'" cy="'+y(price[e])+'" r="5" fill="#6b7280" stroke="#fff" stroke-width="2"/>';
+  s+='<text x="'+(x(e)+12)+'" y="'+(y(ri[e])-4)+'" font-size="14" font-weight="600" fill="#1f2937">Rent: 148</text>';
+  s+='<text x="'+(x(e)+12)+'" y="'+(y(ri[e])+13)+'" font-size="12.5" fill="#6b7280">$1,745 a month</text>';
+  s+='<text x="'+(x(e)+12)+'" y="'+(y(price[e])-4)+'" font-size="14" font-weight="600" fill="#1f2937">Prices: 132.5</text>';
+  s+='<text x="'+(x(e)+12)+'" y="'+(y(price[e])+13)+'" font-size="12.5" fill="#6b7280">regional index</text>';
+  s+='<text x="'+(L-34)+'" y="'+(T-4)+'" font-size="12" fill="#6b7280">Index, 2016 = 100</text>';
+  s+='<g id="h" style="display:none"><line id="hl" y1="'+T+'" y2="'+(T+ph)+'" stroke="#9ca3af" stroke-width="1"/><circle id="h1" r="5" fill="#1d4ed8" stroke="#fff" stroke-width="2"/><circle id="h2" r="5" fill="#6b7280" stroke="#fff" stroke-width="2"/></g>';
+  s+='<rect id="hit" x="'+L+'" y="'+T+'" width="'+pw+'" height="'+ph+'" fill="transparent"/>';
+  svg.insertAdjacentHTML("beforeend",s);
+
+  var tb=document.querySelector("#tbl tbody");
+  years.forEach(function(yr,i){
+    tb.insertAdjacentHTML("beforeend","<tr><td>"+yr+"</td><td>$"+rent[i].toLocaleString("en-US")+"</td><td>"+ri[i].toFixed(1)+"</td><td>"+price[i].toFixed(1)+"</td></tr>");
+  });
+
+  var tip=document.getElementById("tip"), h=document.getElementById("h"), card=document.querySelector(".card");
+  var hit=document.getElementById("hit");
+  function show(ev){
+    var r=svg.getBoundingClientRect(), p=(ev.clientX-r.left)/r.width*W;
+    var i=Math.max(0,Math.min(years.length-1,Math.round((p-L)/pw*(years.length-1))));
+    h.style.display="";
+    var hl=document.getElementById("hl");
+    hl.setAttribute("x1",x(i));hl.setAttribute("x2",x(i));
+    var a=document.getElementById("h1"),b=document.getElementById("h2");
+    a.setAttribute("cx",x(i));a.setAttribute("cy",y(ri[i]));
+    b.setAttribute("cx",x(i));b.setAttribute("cy",y(price[i]));
+    tip.innerHTML="<b>"+years[i]+"</b>Avg. rent: $"+rent[i].toLocaleString("en-US")+" (index "+ri[i].toFixed(1)+")<br>Regional prices: "+price[i].toFixed(1);
+    tip.style.display="block";
+    var cr=card.getBoundingClientRect(), left=r.left-cr.left+x(i)/W*r.width+12;
+    if(left+tip.offsetWidth>cr.width-8) left=r.left-cr.left+x(i)/W*r.width-tip.offsetWidth-12;
+    tip.style.left=left+"px";
+    tip.style.top=(r.top-cr.top+y(Math.max(ri[i],price[i]))/H*r.height-70)+"px";
+  }
+  function hide(){h.style.display="none";tip.style.display="none";}
+  hit.addEventListener("pointermove",show);
+  hit.addEventListener("pointerdown",show);
+  hit.addEventListener("pointerleave",hide);
+})();
+</script>
+</body>
+</html>

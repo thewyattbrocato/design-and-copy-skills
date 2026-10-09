@@ -1,0 +1,1 @@
+Set the names in Cormorant Garamond (open license, free to self-host) in medium weight with generous letter-spacing, and check that the é in Inés renders correctly. Use `font-family: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;` for the names, with a calm sans like Inter for the schedule and RSVP text.

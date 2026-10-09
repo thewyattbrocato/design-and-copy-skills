@@ -1,0 +1,10 @@
+Make Dunmore the only colored line, mute the other five, and label the lines directly. Your tool's six default colors make all six lines compete equally, so the eye never lands on Dunmore.
+
+1. **Highlight Dunmore.** Give it one strong color, such as a dark red or orange. Set the other five to the same light gray. If you need to tell them apart, use a faint gray for each, but keep them all well behind Dunmore.
+2. **Label lines directly and drop the legend.** Put "Dunmore" at the end of its line, with its endpoint values (42 at Q1 2023, 71 at Q4 2025). Label the gray lines only if you need to, or add one gray label such as "Other 5 clinics." Moving the names onto the lines removes the trip back and forth to the legend.
+3. **Strip the gridlines.** Remove the vertical ones entirely. If you keep horizontal ones, make them very light and keep only a few, such as 0, 25, 50, 75. The eye should go to the lines, not the grid.
+4. **Consider a shaded band for the other five.** Instead of five gray lines, draw a light gray band from 35 to 50 minutes labeled "Other five clinics: 35–50 min." That shows the range you care about in one shape and removes four lines of clutter. Keep Dunmore as the only line.
+5. **Use a title that states the finding.** Replace "Wait Time by Clinic" with something like: "Dunmore's ER wait rose from 42 to 71 minutes while other clinics held steady." A subtitle can give the units and period: "Average emergency room wait, minutes, Q1 2023–Q4 2025."
+6. **Keep the axis honest and readable.** Start the y-axis at 0 so the rise isn't exaggerated, or if you use a higher baseline like 30, say so visibly. Put the quarters on the x-axis with short labels, such as "Q1 '23," and avoid rotated text.
+
+If your charting tool can't do these things (direct labels, per-series color, a band, or removing gridlines), export the six series to a spreadsheet or a tool like Datawrapper or Excel and build it there. Let me know which tool you're using and I can give you the specific settings.

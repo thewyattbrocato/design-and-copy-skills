@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Daily Life of a Sourdough Starter · Rye &amp; Ember</title>
+<style>
+  :root{
+    --bg:#fbf6ee; --card:#fffdf8; --ink:#3a2a1e; --muted:#6e5a49; --line:#d9c9b4;
+    --fed:#e9dcc6; --rise:#f3d9a8; --peak:#f0b97a; --fall:#d9c3b0;
+    --curve:#b4470f; --good:#4f7a3a; --good-bg:rgba(95,140,70,.22);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1d1612; --card:#271e18; --ink:#f3e8d8; --muted:#bfa990; --line:#4a3b30;
+      --fed:#4a3d30; --rise:#5d4a2c; --peak:#6e4a27; --fall:#4d3d38;
+      --curve:#ff9a5c; --good:#9fd183; --good-bg:rgba(130,190,100,.22);
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  main{max-width:900px;margin:0 auto;padding:28px 18px 36px}
+  .brand{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--curve);font-weight:700}
+  h1{font:700 clamp(1.7rem,4vw,2.4rem)/1.15 Georgia,"Times New Roman",serif;margin:.2em 0 .3em}
+  .lede{margin:0 0 18px;color:var(--muted);max-width:62ch}
+  .lede b{color:var(--ink)}
+  .chart{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 10px 4px;overflow-x:auto}
+  .chart svg{display:block;width:100%;min-width:600px;height:auto}
+  svg text{fill:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .zl{font-size:13px;font-weight:700}
+  .ax{font-size:12px;fill:var(--muted)}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;padding:0;list-style:none}
+  .steps li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .steps svg{width:44px;height:58px;float:right;margin:0 0 4px 8px}
+  .steps h2{font:700 1.05rem/1.2 Georgia,serif;margin:0 0 2px}
+  .steps .when{font-size:.78rem;color:var(--muted);margin:0 0 6px;font-weight:600}
+  .steps p{margin:0;font-size:.9rem}
+  .why{background:var(--good-bg);border-left:4px solid var(--good);border-radius:8px;padding:12px 16px;margin:0 0 12px}
+  .why h2{font:700 1.1rem Georgia,serif;margin:0 0 4px}
+  .why p{margin:0 0 6px;font-size:.95rem}
+  .why p:last-child{margin:0}
+  .note{font-size:.82rem;color:var(--muted);margin:0}
+  @media (max-width:760px){.steps{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:440px){.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">Rye &amp; Ember · Bread Basics</div>
+  <h1>A starter’s day: rise, peak, collapse</h1>
+  <p class="lede">A sourdough starter is a jar of flour, water, and wild yeast. After you feed it, the yeast eat the fresh flour and release gas, so the jar <b>swells, tops out, then sinks</b>. Mix your dough at the right moment on that curve and the bread rises well. Mix at the wrong moment and it doesn’t.</p>
+
+  <div class="chart">
+    <svg viewBox="0 0 720 310" role="img" aria-labelledby="t d">
+      <title id="t">How high a starter sits in its jar over 12 hours after feeding</title>
+      <desc id="d">A curve starts flat at feeding, climbs slowly then steeply through the rising stage, reaches a peak at about 6 hours, then slowly falls during the collapse stage. The best window to mix dough is the last two hours of the rise, just before the peak.</desc>
+
+      <!-- stage zones -->
+      <rect x="60"  y="40" width="53"  height="210" fill="var(--fed)"/>
+      <rect x="113" y="40" width="214" height="210" fill="var(--rise)"/>
+      <rect x="327" y="40" width="106" height="210" fill="var(--peak)"/>
+      <rect x="433" y="40" width="267" height="210" fill="var(--fall)"/>
+
+      <!-- best mix window -->
+      <rect x="273" y="40" width="107" height="210" fill="var(--good-bg)" stroke="var(--good)" stroke-width="2" stroke-dasharray="5 4"/>
+
+      <!-- gridlines -->
+      <line x1="60" y1="250" x2="700" y2="250" stroke="var(--muted)" stroke-width="1.5"/>
+      <line x1="60" y1="150" x2="700" y2="150" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="60" y1="40" x2="60" y2="250" stroke="var(--muted)" stroke-width="1.5"/>
+
+      <!-- stage labels -->
+      <text class="zl" x="86"  y="58" text-anchor="middle">1 Fed</text>
+      <text class="zl" x="220" y="58" text-anchor="middle">2 Rising</text>
+      <text class="zl" x="380" y="58" text-anchor="middle" style="display:none">3</text>
+      <text class="zl" x="458" y="58" text-anchor="middle">3 Peak</text>
+      <text class="zl" x="566" y="58" text-anchor="middle">4 Collapse</text>
+
+      <!-- curve -->
+      <path d="M60,250 C120,250 220,100 380,100 C480,100 520,170 700,205" fill="none" stroke="var(--curve)" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="380" cy="100" r="6" fill="var(--curve)"/>
+      <text x="392" y="92" font-size="13" font-weight="700">Peak ≈ hour 6</text>
+
+      <!-- window label -->
+      <text x="326" y="222" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--good)">Best time</text>
+      <text x="326" y="239" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--good)">to mix dough</text>
+
+      <!-- collapse note -->
+      <text x="560" y="168" text-anchor="middle" class="ax">dome sinks, gets sour</text>
+
+      <!-- y axis -->
+      <text class="ax" x="54" y="254" text-anchor="end">1×</text>
+      <text class="ax" x="54" y="154" text-anchor="end">2×</text>
+      <text class="ax" x="16" y="145" transform="rotate(-90 16 145)" text-anchor="middle">height in jar</text>
+
+      <!-- x axis -->
+      <g class="ax" text-anchor="middle">
+        <text x="60"  y="270">0</text><text x="167" y="270">2</text><text x="273" y="270">4</text>
+        <text x="380" y="270">6</text><text x="487" y="270">8</text><text x="593" y="270">10</text><text x="700" y="270">12</text>
+      </g>
+      <text class="ax" x="380" y="296" text-anchor="middle">hours after feeding</text>
+    </svg>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <svg viewBox="0 0 44 58" aria-hidden="true"><rect x="5" y="6" width="34" height="48" rx="6" fill="none" stroke="var(--muted)" stroke-width="2"/><rect x="7" y="38" width="30" height="14" rx="3" fill="var(--curve)" opacity=".55"/></svg>
+      <h2>1 · Fed</h2><p class="when">Hour 0–1</p>
+      <p>You stir in fresh flour and water. It’s smooth and flat, with few bubbles. Put a rubber band at the starter’s level.</p>
+    </li>
+    <li>
+      <svg viewBox="0 0 44 58" aria-hidden="true"><rect x="5" y="6" width="34" height="48" rx="6" fill="none" stroke="var(--muted)" stroke-width="2"/><rect x="7" y="26" width="30" height="26" rx="3" fill="var(--curve)" opacity=".55"/><circle cx="15" cy="34" r="2" fill="var(--card)"/><circle cx="26" cy="40" r="2.5" fill="var(--card)"/><circle cx="31" cy="31" r="1.6" fill="var(--card)"/></svg>
+      <h2>2 · Rising</h2><p class="when">Hours 1–5</p>
+      <p>Bubbles form and the jar fills. The yeast are busy and the smell is sweet and yeasty.</p>
+    </li>
+    <li>
+      <svg viewBox="0 0 44 58" aria-hidden="true"><rect x="5" y="6" width="34" height="48" rx="6" fill="none" stroke="var(--muted)" stroke-width="2"/><path d="M7 52 V16 Q22 6 37 16 V52Z" fill="var(--curve)" opacity=".55"/><circle cx="15" cy="24" r="2" fill="var(--card)"/><circle cx="26" cy="31" r="2.5" fill="var(--card)"/><circle cx="30" cy="22" r="1.6" fill="var(--card)"/><circle cx="17" cy="42" r="2.4" fill="var(--card)"/></svg>
+      <h2>3 · Peak</h2><p class="when">Around hour 5–7</p>
+      <p>About double or more, with a domed top and bubbles throughout. This is the strongest it gets.</p>
+    </li>
+    <li>
+      <svg viewBox="0 0 44 58" aria-hidden="true"><rect x="5" y="6" width="34" height="48" rx="6" fill="none" stroke="var(--muted)" stroke-width="2"/><path d="M7 52 V24 Q14 28 22 25 Q30 30 37 24 V52Z" fill="var(--curve)" opacity=".55"/><path d="M12 24 V34 M30 26 V36" stroke="var(--card)" stroke-width="2"/></svg>
+      <h2>4 · Collapse</h2><p class="when">Hour 7 onward</p>
+      <p>The food runs low, so the dome sinks and leaves streaks on the glass. It smells sharp and sour. It’s hungry, not dead.</p>
+    </li>
+  </ol>
+
+  <div class="why">
+    <h2>Why the timing matters</h2>
+    <p><b>Mix near the peak, a little before or right at it.</b> The yeast are at full strength, so your dough rises reliably and tastes balanced.</p>
+    <p><b>Too early</b> (still flat) and the yeast are weak, so the loaf is dense and slow. <b>Too late</b> (collapsed) and there’s less lift and a sourer, sometimes gummy crumb. A collapsed starter isn’t ruined. Feed it again and wait for the next peak.</p>
+  </div>
+  <p class="note">Timings assume a warm kitchen (about 75°F / 24°C) and a feed of 1 part starter, 2 parts flour, 2 parts water by weight. A cooler room slows everything down, and a warmer one speeds it up, so go by the look of the jar and not the clock.</p>
+</main>
+</body>
+</html>

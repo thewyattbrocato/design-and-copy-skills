@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bird species by trail site, spring count</title>
+<style>
+  :root { color-scheme: light dark; }
+  .viz-root {
+    --page: #f9f9f7;
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #6d6b66;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6;
+    --label-w: 112px;
+    --tip-room: 40px;
+  }
+  @media (prefers-color-scheme: dark) {
+    .viz-root {
+      --page: #0d0d0d;
+      --surface-1: #1a1a19;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted: #a2a097;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--page, #f9f9f7);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { body { background: #0d0d0d; } }
+
+  .viz-root {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 24px 20px;
+    background: var(--surface-1);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+  }
+  h1 { font-size: 20px; line-height: 1.25; margin: 0 0 4px; font-weight: 600; }
+  .sub { margin: 0 0 22px; font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
+
+  .chart { position: relative; }
+  .grid {
+    position: absolute; top: 0; bottom: 22px;
+    left: var(--label-w); right: var(--tip-room);
+    pointer-events: none;
+  }
+  .grid i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid); }
+  .grid i:first-child { background: var(--axis); }
+  .ticks {
+    position: relative; height: 22px;
+    margin-left: var(--label-w); margin-right: var(--tip-room);
+    font-size: 12px; color: var(--text-muted);
+  }
+  .ticks span { position: absolute; top: 6px; transform: translateX(-50%); }
+
+  .row {
+    display: flex; align-items: center; height: 40px;
+    position: relative; outline: none; border-radius: 4px;
+  }
+  .row:hover, .row:focus-visible { background: color-mix(in srgb, var(--text-primary) 5%, transparent); }
+  .row:focus-visible { box-shadow: 0 0 0 2px var(--series-1); }
+  .name {
+    width: var(--label-w); padding-right: 12px; flex: none;
+    font-size: 14px; color: var(--text-secondary);
+  }
+  .track { position: relative; flex: 1; height: 100%; margin-right: var(--tip-room); }
+  .bar {
+    position: absolute; left: 0; top: 50%; height: 20px; margin-top: -10px;
+    background: var(--series-1);
+    border-radius: 0 4px 4px 0;
+  }
+  .val {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    margin-left: 8px; font-size: 14px; font-weight: 600; color: var(--text-primary);
+  }
+
+  .axis-title { margin: 2px 0 0 var(--label-w); font-size: 12px; color: var(--text-muted); }
+
+  details { margin-top: 18px; font-size: 13px; color: var(--text-secondary); }
+  summary { cursor: pointer; width: fit-content; }
+  summary:focus-visible { outline: 2px solid var(--series-1); outline-offset: 2px; border-radius: 2px; }
+  table { border-collapse: collapse; margin-top: 10px; width: 100%; }
+  th, td { text-align: left; padding: 6px 0; border-bottom: 1px solid var(--grid); }
+  th:last-child, td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  th { font-weight: 600; color: var(--text-primary); }
+
+  .tip {
+    position: fixed; z-index: 10; pointer-events: none;
+    padding: 6px 10px; border-radius: 6px; font-size: 13px;
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--axis);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    opacity: 0; transition: opacity .1s;
+    white-space: nowrap;
+  }
+  .tip.on { opacity: 1; }
+  .tip b { font-weight: 600; }
+  .tip span { color: var(--text-secondary); }
+
+  @media (max-width: 440px) {
+    .viz-root { --label-w: 92px; padding: 18px 14px; }
+    .name { font-size: 13px; }
+  }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .viz-root { border: none; }
+    details { display: none; }
+  }
+</style>
+</head>
+<body>
+<figure class="viz-root" style="margin:0 auto" aria-labelledby="t">
+  <h1 id="t">Willow Flats leads the spring bird count</h1>
+  <p class="sub">Bird species recorded at each of six trail sites, last spring</p>
+
+  <div class="chart" id="chart" role="list">
+    <div class="grid" aria-hidden="true">
+      <i style="left:0%"></i><i style="left:25%"></i><i style="left:50%"></i><i style="left:75%"></i><i style="left:100%"></i>
+    </div>
+    <div class="row" role="listitem" tabindex="0" data-n="Willow Flats" data-v="74" aria-label="Willow Flats: 74 species">
+      <div class="name">Willow Flats</div>
+      <div class="track"><div class="bar" style="width:92.5%"></div><div class="val" style="left:92.5%">74</div></div>
+    </div>
+    <div class="row" role="listitem" tabindex="0" data-n="Heron Point" data-v="67" aria-label="Heron Point: 67 species">
+      <div class="name">Heron Point</div>
+      <div class="track"><div class="bar" style="width:83.75%"></div><div class="val" style="left:83.75%">67</div></div>
+    </div>
+    <div class="row" role="listitem" tabindex="0" data-n="North Ridge" data-v="52" aria-label="North Ridge: 52 species">
+      <div class="name">North Ridge</div>
+      <div class="track"><div class="bar" style="width:65%"></div><div class="val" style="left:65%">52</div></div>
+    </div>
+    <div class="row" role="listitem" tabindex="0" data-n="Alder Run" data-v="41" aria-label="Alder Run: 41 species">
+      <div class="name">Alder Run</div>
+      <div class="track"><div class="bar" style="width:51.25%"></div><div class="val" style="left:51.25%">41</div></div>
+    </div>
+    <div class="row" role="listitem" tabindex="0" data-n="Millpond" data-v="38" aria-label="Millpond: 38 species">
+      <div class="name">Millpond</div>
+      <div class="track"><div class="bar" style="width:47.5%"></div><div class="val" style="left:47.5%">38</div></div>
+    </div>
+    <div class="row" role="listitem" tabindex="0" data-n="Quarry Loop" data-v="29" aria-label="Quarry Loop: 29 species">
+      <div class="name">Quarry Loop</div>
+      <div class="track"><div class="bar" style="width:36.25%"></div><div class="val" style="left:36.25%">29</div></div>
+    </div>
+    <div class="ticks" aria-hidden="true">
+      <span style="left:0%">0</span><span style="left:25%">20</span><span style="left:50%">40</span><span style="left:75%">60</span><span style="left:100%">80</span>
+    </div>
+  </div>
+  <div class="axis-title">Species recorded</div>
+
+  <details>
+    <summary>View as table</summary>
+    <table>
+      <thead><tr><th>Trail site</th><th>Species</th></tr></thead>
+      <tbody>
+        <tr><td>Willow Flats</td><td>74</td></tr>
+        <tr><td>Heron Point</td><td>67</td></tr>
+        <tr><td>North Ridge</td><td>52</td></tr>
+        <tr><td>Alder Run</td><td>41</td></tr>
+        <tr><td>Millpond</td><td>38</td></tr>
+        <tr><td>Quarry Loop</td><td>29</td></tr>
+      </tbody>
+    </table>
+  </details>
+
+  <div class="tip" id="tip" role="tooltip"></div>
+</figure>
+
+<script>
+  (function () {
+    var tip = document.getElementById('tip');
+    var rows = document.querySelectorAll('.row');
+    function show(r, x, y) {
+      tip.innerHTML = '<b>' + r.dataset.n + '</b> <span>' + r.dataset.v + ' species</span>';
+      tip.classList.add('on');
+      var w = tip.offsetWidth;
+      tip.style.left = Math.max(8, Math.min(x + 14, window.innerWidth - w - 8)) + 'px';
+      tip.style.top = Math.max(8, y - 38) + 'px';
+    }
+    function hide() { tip.classList.remove('on'); }
+    rows.forEach(function (r) {
+      r.addEventListener('pointermove', function (e) { show(r, e.clientX, e.clientY); });
+      r.addEventListener('pointerleave', hide);
+      r.addEventListener('focus', function () {
+        var b = r.getBoundingClientRect();
+        show(r, b.left + b.width / 2, b.top);
+      });
+      r.addEventListener('blur', hide);
+    });
+  })();
+</script>
+</body>
+</html>

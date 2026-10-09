@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ember &amp; Oak – September 2026 Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #faf6f0; color: #2b211b; padding: 28px 40px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  header { display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 2px solid #2b211b; padding-bottom: 10px; margin-bottom: 18px; }
+  h1 { font-size: 24px; letter-spacing: .02em; }
+  h1 span { color: #b5502a; }
+  .period { font-size: 14px; color: #6f6054; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi { background: #fff; border: 1px solid #e8dfd3; border-radius: 8px; padding: 12px 16px; }
+  .kpi .label { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: #6f6054; }
+  .kpi .value { font-size: 30px; font-weight: 700; margin: 2px 0; font-variant-numeric: tabular-nums; }
+  .kpi .delta { font-size: 13px; color: #6f6054; }
+  .kpi .delta b { color: #2f6b3f; }
+  .main { display: grid; grid-template-columns: 1.25fr 1fr; gap: 24px; }
+  .card { background: #fff; border: 1px solid #e8dfd3; border-radius: 8px; padding: 16px 18px; }
+  h2 { font-size: 16px; margin-bottom: 2px; }
+  .sub { font-size: 12.5px; color: #6f6054; margin-bottom: 8px; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { font-family: inherit; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+  th { text-align: right; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em;
+    color: #6f6054; font-weight: 600; padding: 6px 6px; border-bottom: 1px solid #2b211b; }
+  th:first-child, td:first-child { text-align: left; }
+  td { text-align: right; padding: 9px 6px; border-bottom: 1px solid #efe7dc; }
+  td:first-child { color: #2b211b; }
+  td small { display: block; color: #8a7b6e; font-size: 11.5px; }
+  tr.other td { color: #8a7b6e; border-bottom: none; }
+  .foot { margin-top: 14px; font-size: 11.5px; color: #8a7b6e; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Ember <span>&amp;</span> Oak <span style="color:#6f6054;font-weight:400;font-size:16px;">Monthly Report</span></h1>
+  <div class="period">September 2026</div>
+</header>
+
+<section class="kpis">
+  <div class="kpi">
+    <div class="label">September revenue</div>
+    <div class="value">$33,420</div>
+    <div class="delta"><b>+11.9%</b> vs August ($29,860)</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Orders</div>
+    <div class="value">612</div>
+    <div class="delta"><b>+8.2%</b> vs August (566)</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Average order value</div>
+    <div class="value">$54.61</div>
+    <div class="delta"><b>+3.5%</b> vs August ($52.76)</div>
+  </div>
+</section>
+
+<section class="main">
+  <div class="card">
+    <h2>Weekly revenue rose from $6.4k to $8.5k in 12 weeks</h2>
+    <div class="sub">Revenue per week, Jul 6 – Sep 27, 2026 (weeks start Monday)</div>
+    <svg id="chart" viewBox="0 0 640 320" role="img"
+      aria-label="Bar chart of weekly revenue for 12 weeks, rising from $6,420 in the week of Jul 6 to $8,460 in the week of Sep 21. The 12-week average is $7,069."></svg>
+  </div>
+
+  <div class="card">
+    <h2>Top 6 products in September</h2>
+    <div class="sub">Ranked by revenue</div>
+    <table>
+      <thead>
+        <tr><th>Product</th><th>Units</th><th>Revenue</th><th>Share</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Ember House Blend<small>12 oz bag</small></td><td>486</td><td>$8,019</td><td>24.0%</td></tr>
+        <tr><td>Ethiopia Guji<small>12 oz bag</small></td><td>342</td><td>$6,498</td><td>19.4%</td></tr>
+        <tr><td>Oak Barrel Espresso<small>12 oz bag</small></td><td>318</td><td>$5,724</td><td>17.1%</td></tr>
+        <tr><td>Colombia Huila<small>12 oz bag</small></td><td>264</td><td>$4,620</td><td>13.8%</td></tr>
+        <tr><td>Decaf Swiss Water<small>12 oz bag</small></td><td>172</td><td>$3,182</td><td>9.5%</td></tr>
+        <tr><td>Cold Brew Concentrate<small>32 oz bottle</small></td><td>148</td><td>$2,072</td><td>6.2%</td></tr>
+        <tr class="other"><td>All other products</td><td>–</td><td>$3,305</td><td>9.9%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="foot">Figures are gross sales in USD before fees and refunds. The dashed line in the chart is the 12-week average ($7,069).</div>
+
+<script>
+(function () {
+  var data = [
+    ["Jul 6", 6420], ["Jul 13", 6180], ["Jul 20", 6650], ["Jul 27", 6310],
+    ["Aug 3", 6890], ["Aug 10", 7040], ["Aug 17", 6720], ["Aug 24", 7210],
+    ["Aug 31", 7480], ["Sep 7", 7350], ["Sep 14", 8120], ["Sep 21", 8460]
+  ];
+  var L = 44, R = 600, T = 16, B = 282, max = 10000;
+  var slot = (R - L) / data.length, bw = 32;
+  var y = function (v) { return B - v / max * (B - T); };
+  var avg = data.reduce(function (s, d) { return s + d[1]; }, 0) / data.length;
+  var out = "";
+  for (var t = 0; t <= max; t += 2000) {
+    out += '<line x1="' + L + '" x2="' + R + '" y1="' + y(t) + '" y2="' + y(t) +
+      '" stroke="' + (t === 0 ? '#8a7b6e' : '#eee6da') + '" stroke-width="1"/>' +
+      '<text x="' + (L - 8) + '" y="' + (y(t) + 4) + '" text-anchor="end" font-size="11" fill="#8a7b6e">' +
+      (t === 0 ? '$0' : '$' + t / 1000 + 'k') + '</text>';
+  }
+  data.forEach(function (d, i) {
+    var x = L + i * slot + (slot - bw) / 2, last = i === data.length - 1;
+    out += '<rect x="' + x + '" y="' + y(d[1]) + '" width="' + bw + '" height="' + (B - y(d[1])) +
+      '" fill="' + (last ? '#b5502a' : '#d3c5b3') + '" rx="2"/>' +
+      '<text x="' + (x + bw / 2) + '" y="' + (y(d[1]) - 5) + '" text-anchor="middle" font-size="10.5" ' +
+      'fill="' + (last ? '#b5502a' : '#6f6054') + '" font-weight="' + (last ? 700 : 400) + '">' +
+      (d[1] / 1000).toFixed(1) + 'k</text>' +
+      '<text x="' + (x + bw / 2) + '" y="' + (B + 16) + '" text-anchor="middle" font-size="10.5" fill="#6f6054">' +
+      d[0].replace(' ', '\u00a0') + '</text>';
+  });
+  out += '<line x1="' + L + '" x2="' + R + '" y1="' + y(avg) + '" y2="' + y(avg) +
+    '" stroke="#2b211b" stroke-width="1.2" stroke-dasharray="5 4"/>' +
+    '<text x="' + (R + 6) + '" y="' + (y(avg) - 2) + '" font-size="11" fill="#2b211b" font-weight="600">12-wk</text>' +
+    '<text x="' + (R + 6) + '" y="' + (y(avg) + 11) + '" font-size="11" fill="#2b211b" font-weight="600">avg</text>' +
+    '<text x="' + (R + 6) + '" y="' + (y(avg) + 24) + '" font-size="11" fill="#2b211b">$7.1k</text>' +
+    '<text x="' + L + '" y="' + (B + 36) + '" font-size="10.5" fill="#8a7b6e">Week starting (Monday)</text>';
+  document.getElementById("chart").innerHTML = out;
+})();
+</script>
+</body>
+</html>

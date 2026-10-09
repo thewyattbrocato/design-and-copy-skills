@@ -1,0 +1,1 @@
+No. Cramming all three makes a busy mark that turns to mud small, on a can or a tap handle. Pick one idea, probably the bear, as the main mark. Keep the wordmark as a separate lockup, and use the hop crest as a secondary badge or pattern. Together they still say everything you are, just not all at once.

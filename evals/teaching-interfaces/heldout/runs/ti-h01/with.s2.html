@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to Kilnbook</title>
+<style>
+:root{
+  --bg:#f6f1ea; --card:#fffdf9; --ink:#2b2420; --mute:#6b5f56; --line:#e2d8cb;
+  --clay:#b4532a; --clay-d:#8f3f1d; --clay-t:#f6e3d8; --ok:#2f6b4a; --ok-t:#e3f1e8;
+  --focus:#1d4ed8;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#1d1916; --card:#27221e; --ink:#f3ebe2; --mute:#b5a89b; --line:#40372f;
+  --clay:#e0805a; --clay-d:#f0987a; --clay-t:#3b2a21; --ok:#7cc79b; --ok-t:#203528; --focus:#8fb0ff}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:14px clamp(16px,4vw,40px);border-bottom:1px solid var(--line)}
+.brand{font-weight:700;letter-spacing:.2px}
+.brand span{color:var(--clay)}
+header a{color:var(--mute);font-size:14px}
+a{color:var(--clay-d)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+main{max-width:980px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,4vw,40px) 60px}
+h1{font-size:clamp(26px,4vw,34px);line-height:1.2;margin:0 0 8px}
+.lead{color:var(--mute);margin:0 0 28px;max-width:60ch}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+section.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
+h2{font-size:17px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+.n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--clay);color:#fff;font-size:14px;flex:none}
+.hint{color:var(--mute);font-size:14px;margin:0 0 14px 36px}
+fieldset{border:0;margin:0;padding:0}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.choices{grid-template-columns:1fr}}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0;width:100%;height:100%}
+.opt label{display:block;border:2px solid var(--line);border-radius:12px;padding:14px;background:var(--card);height:100%}
+.opt input:checked+label{border-color:var(--clay);background:var(--clay-t)}
+.opt input:focus-visible+label{outline:3px solid var(--focus);outline-offset:2px}
+.opt strong{display:block;font-size:16px}
+.opt .what{display:block;color:var(--mute);font-size:14px;margin-top:2px}
+.opt svg{width:44px;height:44px;margin-bottom:8px;display:block}
+.day{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mute);margin:14px 0 8px}
+.day:first-of-type{margin-top:0}
+.slots{display:flex;flex-wrap:wrap;gap:8px}
+.slot{position:relative}
+.slot input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.slot label{display:block;padding:9px 14px;border:2px solid var(--line);border-radius:999px;font-size:15px;background:var(--card)}
+.slot input:checked+label{background:var(--clay);border-color:var(--clay);color:#fff}
+.slot input:focus-visible+label{outline:3px solid var(--focus);outline-offset:2px}
+.slot small{color:inherit;opacity:.75;margin-left:4px}
+.locked{color:var(--mute);font-size:14px;margin:0;padding:10px 0 0 36px}
+aside{position:sticky;top:16px}
+.sum{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.sum h3{margin:0 0 12px;font-size:14px;text-transform:uppercase;letter-spacing:.6px;color:var(--mute)}
+.sum dl{margin:0}
+.sum dt{font-size:13px;color:var(--mute)}
+.sum dd{margin:0 0 12px;font-weight:600;min-height:1.5em}
+.sum dd.empty{color:var(--mute);font-weight:400}
+button.go{width:100%;border:0;border-radius:10px;background:var(--clay);color:#fff;font:inherit;font-weight:700;
+  padding:13px;cursor:pointer}
+button.go:hover{background:var(--clay-d)}
+button.go[disabled]{background:var(--line);color:var(--mute);cursor:not-allowed}
+.note{font-size:13px;color:var(--mute);margin:10px 0 0}
+.done{background:var(--ok-t);border:1px solid var(--ok);border-radius:14px;padding:20px}
+.done h2{color:var(--ok)}
+.done p{margin:6px 0}
+.done .next{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn2{display:inline-block;padding:10px 14px;border-radius:10px;border:2px solid var(--ok);color:var(--ink);
+  background:transparent;font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
+[hidden]{display:none!important}
+.skip{margin-top:20px;font-size:14px;color:var(--mute)}
+@media (prefers-reduced-motion:no-preference){.opt label,.slot label{transition:background .15s,border-color .15s}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Kiln<span>book</span></div>
+  <a href="#" id="skipTop">Skip, take me to the dashboard</a>
+</header>
+
+<main>
+  <h1>Welcome to Marlowe Street Clay. Let’s book your first session.</h1>
+  <p class="lead">It takes about a minute. Two choices, and you have a spot reserved. You can book as many as you like afterwards.</p>
+
+  <div class="grid">
+    <div id="flow">
+      <section class="step">
+        <h2><span class="n">1</span> What do you want to use?</h2>
+        <p class="hint">Studios have two bookable things. Pick one for now.</p>
+        <fieldset>
+          <legend class="sr" style="position:absolute;left:-9999px">Equipment</legend>
+          <div class="choices">
+            <div class="opt">
+              <input type="radio" name="kind" id="k-wheel" value="wheel">
+              <label for="k-wheel">
+                <svg viewBox="0 0 44 44" aria-hidden="true"><ellipse cx="22" cy="30" rx="16" ry="6" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M12 30V16c0-3 20-3 20 0v14" fill="none" stroke="currentColor" stroke-width="2.5"/><ellipse cx="22" cy="16" rx="10" ry="3" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+                <strong>A pottery wheel</strong>
+                <span class="what">Your own wheel for a block of time, to throw pots.</span>
+              </label>
+            </div>
+            <div class="opt">
+              <input type="radio" name="kind" id="k-kiln" value="kiln">
+              <label for="k-kiln">
+                <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M8 38V20a14 14 0 0 1 28 0v18z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15 38v-9h14v9M15 24h14" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+                <strong>Kiln space</strong>
+                <span class="what">Shelf space in a firing, to harden pieces you’ve made.</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="step" id="step2">
+        <h2><span class="n">2</span> Pick a time</h2>
+        <p class="locked" id="locked">Choose what to use in step 1 and the open times appear here.</p>
+        <div id="slotsWrap" hidden>
+          <p class="hint" id="slotHint"></p>
+          <div id="slots"></div>
+          <p class="note" style="margin-left:0">Times shown are example availability for this preview.</p>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <div class="sum" id="summary" aria-live="polite">
+        <h3>Your booking</h3>
+        <dl>
+          <dt>Studio</dt><dd>Marlowe Street Clay</dd>
+          <dt>Using</dt><dd id="sKind" class="empty">Not chosen yet</dd>
+          <dt>When</dt><dd id="sWhen" class="empty">Not chosen yet</dd>
+        </dl>
+        <button class="go" id="book" disabled>Book this slot</button>
+        <p class="note" id="bookNote">Choose what to use and a time to continue.</p>
+      </div>
+    </aside>
+  </div>
+
+  <div class="done" id="done" hidden role="status">
+    <h2>Booked: <span id="dTitle"></span></h2>
+    <p id="dBody"></p>
+    <p>It’s now in <strong>My bookings</strong>, where you can change or cancel it.</p>
+    <div class="next">
+      <button class="btn2" id="toDash">Go to my dashboard</button>
+      <button class="btn2" id="another">Book another</button>
+    </div>
+  </div>
+
+  <p class="skip">Already know your way around? <a href="#" id="skipBottom">Skip to the dashboard</a>. You can find this guide again under Help.</p>
+</main>
+
+<script>
+(function(){
+  var data = {
+    wheel: {
+      name: "Pottery wheel",
+      hint: "Each time is a 2-hour block on one wheel.",
+      days: [
+        {d:"Thursday, Oct 9",   t:["10:00 am","2:00 pm","6:00 pm"]},
+        {d:"Friday, Oct 10",    t:["12:00 pm","4:00 pm"]},
+        {d:"Saturday, Oct 11",  t:["9:00 am","11:00 am","1:00 pm","3:00 pm"]}
+      ],
+      done:function(w){return "A wheel is held for you on "+w+" for two hours. Arrive a few minutes early so you’re set up when your time starts.";}
+    },
+    kiln: {
+      name: "Kiln space",
+      hint: "Each time is when a firing loads. Bring finished, fully dry pieces.",
+      days: [
+        {d:"Friday, Oct 10",    t:["Bisque load, 5:00 pm"]},
+        {d:"Monday, Oct 13",    t:["Glaze load, 10:00 am","Bisque load, 5:00 pm"]},
+        {d:"Wednesday, Oct 15", t:["Glaze load, 10:00 am"]}
+      ],
+      done:function(w){return "Shelf space is held for you in the firing that loads "+w+". Bring pieces that are fully dry.";}
+    }
+  };
+
+  var kind=null, when=null;
+  var $=function(id){return document.getElementById(id)};
+
+  function renderSlots(){
+    var k=data[kind], html="";
+    k.days.forEach(function(day,i){
+      html+='<h3 class="day">'+day.d+'</h3><div class="slots" role="radiogroup" aria-label="'+day.d+'">';
+      day.t.forEach(function(t,j){
+        var id="s-"+i+"-"+j;
+        html+='<div class="slot"><input type="radio" name="slot" id="'+id+'" value="'+day.d+" · "+t+'">'+
+              '<label for="'+id+'">'+t+'</label></div>';
+      });
+      html+='</div>';
+    });
+    $("slots").innerHTML=html;
+    $("slotHint").textContent=k.hint;
+    $("locked").hidden=true; $("slotsWrap").hidden=false;
+  }
+
+  function update(){
+    var k=kind&&data[kind];
+    var sk=$("sKind"), sw=$("sWhen");
+    sk.textContent=k?k.name:"Not chosen yet"; sk.className=k?"":"empty";
+    sw.textContent=when||"Not chosen yet"; sw.className=when?"":"empty";
+    var ready=!!(kind&&when);
+    $("book").disabled=!ready;
+    $("bookNote").textContent=ready?"Nothing is charged by booking this preview slot.":
+      (kind?"Pick a time to continue.":"Choose what to use and a time to continue.");
+  }
+
+  document.querySelectorAll('input[name="kind"]').forEach(function(r){
+    r.addEventListener("change",function(){
+      kind=r.value; when=null; renderSlots(); update();
+    });
+  });
+  $("slots").addEventListener("change",function(e){
+    if(e.target.name==="slot"){when=e.target.value; update();}
+  });
+
+  $("book").addEventListener("click",function(){
+    var k=data[kind];
+    $("dTitle").textContent=k.name+", "+when.split(" · ")[0];
+    $("dBody").textContent=k.done(when.replace(" · ",", "));
+    $("flow").parentNode.hidden=true;
+    $("done").hidden=false;
+    $("done").scrollIntoView({block:"start"});
+  });
+  $("another").addEventListener("click",function(){
+    kind=null; when=null;
+    document.querySelectorAll('input[name="kind"]').forEach(function(r){r.checked=false});
+    $("slotsWrap").hidden=true; $("locked").hidden=false;
+    $("done").hidden=true; $("flow").parentNode.hidden=false;
+    update();
+  });
+  function toDash(e){e.preventDefault();alert("This would open the member dashboard.");}
+  ["skipTop","skipBottom","toDash"].forEach(function(id){$(id).addEventListener("click",toDash)});
+})();
+</script>
+</body>
+</html>

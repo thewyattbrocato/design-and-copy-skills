@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelpie themes</title>
+<style>
+  /* ---------- Theme tokens ----------
+     Components below only read these variables. A theme is one block of values;
+     nothing downstream is overridden per theme. */
+  [data-theme="light"] {
+    --bg: #ffffff;
+    --surface: #f4f6f4;
+    --text: #14171a;
+    --muted: #55605a;
+    --border: #d5dbd7;
+    --border-w: 1px;
+    --primary: #1f7a4d;
+    --on-primary: #ffffff;
+    --gain: #1f7a4d;
+    --spend: #b3412f;
+    --focus: #1f7a4d;
+    --amount-weight: 600;
+  }
+  [data-theme="dark"] {
+    --bg: #111513;
+    --surface: #1b211d;
+    --text: #eef2ee;
+    --muted: #a5b0a8;
+    --border: #2f3932;
+    --border-w: 1px;
+    --primary: #5fcf93;
+    --on-primary: #07130c;
+    --gain: #5fcf93;
+    --spend: #f28b78;
+    --focus: #8be3b3;
+    --amount-weight: 600;
+  }
+  [data-theme="contrast"] {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #000000;
+    --muted: #1f1f1f;
+    --border: #000000;
+    --border-w: 2px;
+    --primary: #00522b;
+    --on-primary: #ffffff;
+    --gain: #00522b;
+    --spend: #8a1c0c;
+    --focus: #0b3dff;
+    --amount-weight: 800;
+  }
+
+  /* ---------- Page chrome (not themed) ---------- */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 20px 48px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #e6e8e6;
+    color: #222;
+  }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; text-align: center; }
+  .lede { margin: 0 0 28px; text-align: center; color: #555; font-size: .9rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .label {
+    margin: 0 0 8px;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #444;
+  }
+
+  /* ---------- Kelpie screen (themed via tokens only) ---------- */
+  .screen {
+    background: var(--bg);
+    color: var(--text);
+    border: var(--border-w) solid var(--border);
+    border-radius: 16px;
+    padding: 22px 20px 24px;
+    height: 100%;
+  }
+  .screen h2 { margin: 0 0 14px; font-size: 1rem; }
+
+  .summary {
+    background: var(--surface);
+    border: var(--border-w) solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .summary .caption { margin: 0; font-size: .8rem; color: var(--muted); }
+  .summary .balance {
+    margin: 2px 0 12px;
+    font-size: 2rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .split { display: flex; gap: 16px; font-size: .85rem; }
+  .split div { flex: 1; }
+  .split dt { color: var(--muted); }
+  .split dd { margin: 2px 0 0; }
+  .split, .split dl { margin: 0; }
+
+  .gain  { color: var(--gain); }
+  .spend { color: var(--spend); }
+  .amount {
+    font-weight: var(--amount-weight);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .tx-title {
+    margin: 22px 0 6px;
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .tx { list-style: none; margin: 0; padding: 0; }
+  .tx li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: var(--border-w) solid var(--border);
+  }
+  .tx li:last-child { border-bottom: 0; }
+  .tx .name { font-size: .95rem; }
+  .tx .meta { display: block; font-size: .75rem; color: var(--muted); }
+
+  .btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px 16px;
+    font: inherit;
+    font-weight: 700;
+    color: var(--on-primary);
+    background: var(--primary);
+    border: var(--border-w) solid var(--primary);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+</style>
+</head>
+<body>
+  <h1>Kelpie themes</h1>
+  <p class="lede">One screen, three themes. Each theme is a single block of design tokens.</p>
+
+  <div class="grid">
+    <section>
+      <p class="label">Light</p>
+      <div class="screen" data-theme="light">
+        <h2>Overview</h2>
+        <div class="summary">
+          <p class="caption">Available balance</p>
+          <p class="balance">$4,285.60</p>
+          <dl class="split">
+            <div><dt>Income</dt><dd class="amount gain">+$3,200.00</dd></div>
+            <div><dt>Spent</dt><dd class="amount spend">−$1,184.40</dd></div>
+          </dl>
+        </div>
+        <h3 class="tx-title">Recent</h3>
+        <ul class="tx">
+          <li><span class="name">Paycheck<span class="meta">Oct 1</span></span><span class="amount gain">+$2,800.00</span></li>
+          <li><span class="name">Groceries<span class="meta">Oct 3</span></span><span class="amount spend">−$84.12</span></li>
+          <li><span class="name">Rent<span class="meta">Oct 3</span></span><span class="amount spend">−$1,050.00</span></li>
+          <li><span class="name">Interest<span class="meta">Oct 5</span></span><span class="amount gain">+$3.18</span></li>
+          <li><span class="name">Coffee<span class="meta">Oct 6</span></span><span class="amount spend">−$5.75</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+
+    <section>
+      <p class="label">Dark</p>
+      <div class="screen" data-theme="dark">
+        <h2>Overview</h2>
+        <div class="summary">
+          <p class="caption">Available balance</p>
+          <p class="balance">$4,285.60</p>
+          <dl class="split">
+            <div><dt>Income</dt><dd class="amount gain">+$3,200.00</dd></div>
+            <div><dt>Spent</dt><dd class="amount spend">−$1,184.40</dd></div>
+          </dl>
+        </div>
+        <h3 class="tx-title">Recent</h3>
+        <ul class="tx">
+          <li><span class="name">Paycheck<span class="meta">Oct 1</span></span><span class="amount gain">+$2,800.00</span></li>
+          <li><span class="name">Groceries<span class="meta">Oct 3</span></span><span class="amount spend">−$84.12</span></li>
+          <li><span class="name">Rent<span class="meta">Oct 3</span></span><span class="amount spend">−$1,050.00</span></li>
+          <li><span class="name">Interest<span class="meta">Oct 5</span></span><span class="amount gain">+$3.18</span></li>
+          <li><span class="name">Coffee<span class="meta">Oct 6</span></span><span class="amount spend">−$5.75</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+
+    <section>
+      <p class="label">High contrast</p>
+      <div class="screen" data-theme="contrast">
+        <h2>Overview</h2>
+        <div class="summary">
+          <p class="caption">Available balance</p>
+          <p class="balance">$4,285.60</p>
+          <dl class="split">
+            <div><dt>Income</dt><dd class="amount gain">+$3,200.00</dd></div>
+            <div><dt>Spent</dt><dd class="amount spend">−$1,184.40</dd></div>
+          </dl>
+        </div>
+        <h3 class="tx-title">Recent</h3>
+        <ul class="tx">
+          <li><span class="name">Paycheck<span class="meta">Oct 1</span></span><span class="amount gain">+$2,800.00</span></li>
+          <li><span class="name">Groceries<span class="meta">Oct 3</span></span><span class="amount spend">−$84.12</span></li>
+          <li><span class="name">Rent<span class="meta">Oct 3</span></span><span class="amount spend">−$1,050.00</span></li>
+          <li><span class="name">Interest<span class="meta">Oct 5</span></span><span class="amount gain">+$3.18</span></li>
+          <li><span class="name">Coffee<span class="meta">Oct 6</span></span><span class="amount spend">−$5.75</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

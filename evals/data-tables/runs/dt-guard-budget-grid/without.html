@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Household Budget</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f3f4f6;
+    color: #1f2937;
+    width: 1280px;
+    height: 800px;
+    padding: 24px 28px;
+    overflow: hidden;
+  }
+  header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+  h1 { font-size: 22px; margin: 0; font-weight: 600; }
+  .sub { font-size: 13px; color: #6b7280; }
+  .stats { display: flex; gap: 12px; margin-bottom: 16px; }
+  .stat { background: #fff; border: 1px solid #d1d5db; border-radius: 4px; padding: 10px 16px; min-width: 180px; }
+  .stat .l { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #6b7280; }
+  .stat .v { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .wrap { background: #fff; border: 1px solid #9ca3af; display: inline-block; }
+  table { border-collapse: collapse; table-layout: fixed; width: 1222px; font-size: 13px; }
+  th, td { border: 1px solid #c3c8d0; padding: 0; height: 36px; }
+  th {
+    background: #e8ebf0; font-weight: 600; font-size: 12px; color: #374151;
+    text-align: right; padding: 0 8px;
+  }
+  th.cat, td.cat { text-align: left; width: 130px; }
+  th.tot, td.tot { width: 92px; }
+  td.cat { background: #f3f4f6; font-weight: 600; padding: 0 10px; }
+  td.cell { background: #fff; }
+  td.cell input {
+    width: 100%; height: 35px; border: 0; background: transparent;
+    padding: 0 8px; text-align: right; font: inherit; color: inherit;
+    font-variant-numeric: tabular-nums; outline: none;
+  }
+  td.cell:hover { background: #f8fafc; }
+  td.cell:focus-within { outline: 2px solid #2563eb; outline-offset: -2px; background: #eff6ff; }
+  td.rt, td.ct, td.gt {
+    background: #f3f4f6; text-align: right; padding: 0 8px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  tr.totalrow td { background: #e8ebf0; border-top: 2px solid #6b7280; }
+  td.gt { background: #dbe4f3; }
+  .hint { margin-top: 12px; font-size: 12px; color: #6b7280; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Household Budget 2026</h1>
+  <div class="sub">Click any cell to edit · Tab / Enter / arrow keys to move</div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="l">Annual total</div><div class="v" id="s-total">$0</div></div>
+  <div class="stat"><div class="l">Monthly average</div><div class="v" id="s-avg">$0</div></div>
+  <div class="stat"><div class="l">Largest category</div><div class="v" id="s-top">—</div></div>
+</div>
+
+<div class="wrap">
+  <table id="grid"></table>
+</div>
+<div class="hint">Amounts in US dollars. Totals recalculate as you type.</div>
+
+<script>
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const rows = [
+    ["Rent", 1850], ["Groceries", 620], ["Transport", 240], ["Utilities", 210],
+    ["Insurance", 180], ["Dining out", 190], ["Healthcare", 90], ["Entertainment", 120],
+    ["Savings", 500], ["Misc", 80]
+  ];
+  const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
+  const grid = document.getElementById("grid");
+
+  let h = "<tr><th class='cat'>Category</th>" + months.map(m => `<th>${m}</th>`).join("") + "<th class='tot'>Total</th></tr>";
+  rows.forEach(([name, base], r) => {
+    h += `<tr><td class="cat">${name}</td>`;
+    months.forEach((_, c) => {
+      let v = base;
+      if (name === "Utilities") v = base + [60,50,20,0,-20,-10,10,20,0,10,30,50][c];
+      if (name === "Groceries") v = base + (c % 3) * 15;
+      h += `<td class="cell"><input data-r="${r}" data-c="${c}" value="${v}" inputmode="decimal" aria-label="${name} ${months[c]}"></td>`;
+    });
+    h += `<td class="rt" id="rt${r}"></td></tr>`;
+  });
+  h += "<tr class='totalrow'><td class='cat'>Total</td>" +
+    months.map((_, c) => `<td class="ct" id="ct${c}"></td>`).join("") +
+    "<td class='gt' id="gt"></td></tr>";
+  grid.innerHTML = h.replace("id=\"gt\"", "id='gt'");
+
+  const inputs = [...grid.querySelectorAll("input")];
+  const val = i => parseFloat(String(i.value).replace(/[^0-9.\-]/g, "")) || 0;
+
+  function recalc() {
+    const rt = rows.map(() => 0), ct = months.map(() => 0);
+    inputs.forEach(i => {
+      const v = val(i);
+      rt[+i.dataset.r] += v;
+      ct[+i.dataset.c] += v;
+    });
+    rt.forEach((v, r) => document.getElementById("rt" + r).textContent = fmt(v));
+    ct.forEach((v, c) => document.getElementById("ct" + c).textContent = fmt(v));
+    const total = rt.reduce((a, b) => a + b, 0);
+    document.getElementById("gt").textContent = fmt(total);
+    document.getElementById("s-total").textContent = fmt(total);
+    document.getElementById("s-avg").textContent = fmt(total / 12);
+    const mx = Math.max(...rt);
+    document.getElementById("s-top").textContent = mx > 0 ? rows[rt.indexOf(mx)][0] + " · " + fmt(mx) : "—";
+  }
+
+  grid.addEventListener("input", recalc);
+  grid.addEventListener("focusin", e => { if (e.target.tagName === "INPUT") e.target.select(); });
+  grid.addEventListener("focusout", e => {
+    if (e.target.tagName === "INPUT") e.target.value = val(e.target);
+  });
+  grid.addEventListener("keydown", e => {
+    const t = e.target;
+    if (t.tagName !== "INPUT") return;
+    let r = +t.dataset.r, c = +t.dataset.c;
+    if (e.key === "ArrowUp") r--;
+    else if (e.key === "ArrowDown" || e.key === "Enter") r++;
+    else if (e.key === "ArrowLeft" && t.selectionStart === 0) c--;
+    else if (e.key === "ArrowRight" && t.selectionEnd === t.value.length) c++;
+    else return;
+    const n = grid.querySelector(`input[data-r="${r}"][data-c="${c}"]`);
+    if (n) { e.preventDefault(); n.focus(); }
+  });
+  recalc();
+</script>
+</body>
+</html>

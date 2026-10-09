@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollowbrook Vet Care — Design Foundation</title>
+<style>
+/* ==========================================================================
+   HOLLOWBROOK VET CARE — DESIGN FOUNDATION v0.1
+   Tier 1  --ref-*    raw values. Only tier 2 may read these.
+   Tier 2  --color-*, --space-*, --text-*, --radius-*, --shadow-*, --dur-*, --ease-*
+           semantic roles. Components read only these. Themes remap them.
+   Tier 3  components (.btn, .field, .alert, .badge, .card ...) built from tier 2.
+   Change rule: a new value replaces or merges with an existing one. It is never just added.
+   ========================================================================== */
+
+:root {
+  /* ---- Tier 1: raw values ---- */
+  --ref-teal-50:#E3F1EC; --ref-teal-300:#8ADBC4; --ref-teal-400:#5FC4A8; --ref-teal-500:#7FD3BB;
+  --ref-teal-700:#1F6F5F; --ref-teal-800:#185A4D; --ref-teal-900:#14503F; --ref-teal-950:#0C1F1A;
+  --ref-n-0:#FFFFFF; --ref-n-50:#F6F7F5; --ref-n-100:#EDF0EC; --ref-n-200:#D9DFDA; --ref-n-400:#78867F;
+  --ref-n-600:#4A5A56; --ref-n-500:#5B6B67; --ref-n-900:#1B2A27;
+  --ref-d-0:#0E1311; --ref-d-100:#121816; --ref-d-200:#1B2420; --ref-d-300:#2D3935; --ref-d-400:#6B7C75;
+  --ref-d-500:#93A39D; --ref-d-600:#B4C0BB; --ref-d-900:#E8EEEB;
+
+  /* ---- Tier 2: semantic roles (light theme) ---- */
+  --color-surface-page:var(--ref-n-50);
+  --color-surface-raised:var(--ref-n-0);
+  --color-surface-sunken:var(--ref-n-100);
+  --color-text-primary:var(--ref-n-900);
+  --color-text-secondary:var(--ref-n-600);
+  --color-text-muted:var(--ref-n-500);
+  --color-border-subtle:var(--ref-n-200);
+  --color-border-strong:var(--ref-n-400);
+  --color-accent:var(--ref-teal-700);
+  --color-accent-hover:var(--ref-teal-800);
+  --color-accent-pressed:var(--ref-teal-900);
+  --color-accent-subtle:var(--ref-teal-50);
+  --color-accent-text:var(--ref-teal-900);
+  --color-on-accent:#FFFFFF;
+  --color-danger:#B3261E;      --color-danger-subtle:#FCEBE9;  --color-danger-text:#8C1D18;
+  --color-success:#1E6B3A;     --color-success-subtle:#E6F3EA; --color-success-text:#17542D;
+  --color-warning:#8A5A00;     --color-warning-subtle:#FFF3D6; --color-warning-text:#6B4600;
+  --color-info:#1F5A8A;        --color-info-subtle:#E6F0F8;    --color-info-text:#194A72;
+  --color-focus:#1F5A8A;
+  --color-disabled-bg:var(--ref-n-100);
+  --color-disabled-text:#7D8A85;
+
+  /* Spacing — 8 steps */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+
+  /* Type — 6 roles (system fonts) */
+  --font-sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --text-display:700 2rem/1.15 var(--font-sans);
+  --text-heading:650 1.5rem/1.25 var(--font-sans);
+  --text-title:600 1.125rem/1.35 var(--font-sans);
+  --text-body:400 1rem/1.55 var(--font-sans);
+  --text-small:400 0.875rem/1.5 var(--font-sans);
+  --text-caption:600 0.75rem/1.4 var(--font-sans);
+
+  /* Radius — 3 */
+  --radius-sm:6px; --radius-md:12px; --radius-pill:999px;
+  /* Elevation — 2 */
+  --shadow-raised:0 1px 2px rgb(27 42 39 / .08), 0 2px 8px rgb(27 42 39 / .06);
+  --shadow-overlay:0 8px 24px rgb(27 42 39 / .16);
+  /* Border + focus */
+  --border-width:1px; --border-width-strong:2px;
+  --focus-ring:0 0 0 2px var(--color-surface-raised), 0 0 0 4px var(--color-focus);
+  /* Motion — 3 durations, 3 easings */
+  --dur-fast:100ms; --dur-base:200ms; --dur-slow:300ms;
+  --ease-standard:cubic-bezier(.2,0,0,1); --ease-enter:cubic-bezier(0,0,0,1); --ease-exit:cubic-bezier(.3,0,1,1);
+  /* Layout */
+  --size-target:44px; --size-content:960px;
+}
+
+/* Dark theme: remaps roles only. Raised surfaces get lighter; accents re-tuned for the dark ground. */
+:root[data-theme="dark"] { color-scheme:dark;
+  --color-surface-page:var(--ref-d-100); --color-surface-raised:var(--ref-d-200); --color-surface-sunken:var(--ref-d-0);
+  --color-text-primary:var(--ref-d-900); --color-text-secondary:var(--ref-d-600); --color-text-muted:var(--ref-d-500);
+  --color-border-subtle:var(--ref-d-300); --color-border-strong:var(--ref-d-400);
+  --color-accent:var(--ref-teal-400); --color-accent-hover:var(--ref-teal-500); --color-accent-pressed:var(--ref-teal-300);
+  --color-accent-subtle:#1F3530; --color-accent-text:var(--ref-teal-300); --color-on-accent:var(--ref-teal-950);
+  --color-danger:#FF8A80;  --color-danger-subtle:#3A1F1D;  --color-danger-text:#FFB4AD;
+  --color-success:#7FD69C; --color-success-subtle:#1C3326; --color-success-text:#A6E5BB;
+  --color-warning:#F0C060; --color-warning-subtle:#35290E; --color-warning-text:#F5D48A;
+  --color-info:#8FC2EE;    --color-info-subtle:#1B2C3B;    --color-info-text:#B5D6F4;
+  --color-focus:#8FC2EE;
+  --color-disabled-bg:#222C28; --color-disabled-text:#7D8A85;
+  --shadow-raised:0 1px 2px rgb(0 0 0 / .4); --shadow-overlay:0 8px 24px rgb(0 0 0 / .5);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme:dark;
+    --color-surface-page:var(--ref-d-100); --color-surface-raised:var(--ref-d-200); --color-surface-sunken:var(--ref-d-0);
+    --color-text-primary:var(--ref-d-900); --color-text-secondary:var(--ref-d-600); --color-text-muted:var(--ref-d-500);
+    --color-border-subtle:var(--ref-d-300); --color-border-strong:var(--ref-d-400);
+    --color-accent:var(--ref-teal-400); --color-accent-hover:var(--ref-teal-500); --color-accent-pressed:var(--ref-teal-300);
+    --color-accent-subtle:#1F3530; --color-accent-text:var(--ref-teal-300); --color-on-accent:var(--ref-teal-950);
+    --color-danger:#FF8A80;  --color-danger-subtle:#3A1F1D;  --color-danger-text:#FFB4AD;
+    --color-success:#7FD69C; --color-success-subtle:#1C3326; --color-success-text:#A6E5BB;
+    --color-warning:#F0C060; --color-warning-subtle:#35290E; --color-warning-text:#F5D48A;
+    --color-info:#8FC2EE;    --color-info-subtle:#1B2C3B;    --color-info-text:#B5D6F4;
+    --color-focus:#8FC2EE;
+    --color-disabled-bg:#222C28; --color-disabled-text:#7D8A85;
+    --shadow-raised:0 1px 2px rgb(0 0 0 / .4); --shadow-overlay:0 8px 24px rgb(0 0 0 / .5);
+  }
+}
+
+/* ---------- Base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--color-surface-page);color:var(--color-text-primary);font:var(--text-body)}
+h1,h2,h3,h4,p{margin:0}
+h1{font:var(--text-display)} h2{font:var(--text-heading)} h3{font:var(--text-title)}
+p{max-width:65ch}
+code{font:0.85em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--color-surface-sunken);padding:1px var(--space-1);border-radius:var(--radius-sm)}
+:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+.wrap{max-width:var(--size-content);margin:0 auto;padding:0 var(--space-4)}
+.muted{color:var(--color-text-secondary)}
+.small{font:var(--text-small)}
+.caption{font:var(--text-caption);letter-spacing:.04em;text-transform:uppercase;color:var(--color-text-muted)}
+
+/* ---------- Doc layout (documentation only, not part of the system) ---------- */
+.doc-head{background:var(--color-surface-raised);border-bottom:var(--border-width) solid var(--color-border-subtle);padding:var(--space-6) 0}
+.doc-head .wrap{display:flex;gap:var(--space-5);justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.doc-head p{margin-top:var(--space-2);color:var(--color-text-secondary)}
+.brand{display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-3);font:var(--text-title);color:var(--color-accent-text)}
+.brand svg{width:28px;height:28px}
+section.doc{padding:var(--space-7) 0 0}
+section.doc>.wrap>header{margin-bottom:var(--space-5)}
+section.doc>.wrap>header p{margin-top:var(--space-2);color:var(--color-text-secondary)}
+.grid{display:grid;gap:var(--space-4)}
+.cols-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.cols-3{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.panel{background:var(--color-surface-raised);border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-md);padding:var(--space-5)}
+.panel>.caption{display:block;margin-bottom:var(--space-3)}
+.stack{display:flex;flex-direction:column;gap:var(--space-4)}
+.row{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center}
+.principles{list-style:none;padding:0;margin:0;display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.principles li{padding-left:var(--space-4);border-left:var(--border-width-strong) solid var(--color-accent)}
+.principles strong{display:block;font:var(--text-title)}
+.principles span{color:var(--color-text-secondary);font:var(--text-small)}
+.swatch{border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-sm);overflow:hidden;background:var(--color-surface-raised)}
+.swatch .chip{height:48px;display:flex;align-items:center;padding:0 var(--space-3);font:var(--text-caption)}
+.swatch .meta{padding:var(--space-2) var(--space-3);font:var(--text-small)}
+.swatch .meta code{display:block;margin-bottom:2px;word-break:break-all}
+table.tok{width:100%;border-collapse:collapse;font:var(--text-small)}
+table.tok th,table.tok td{text-align:left;padding:var(--space-2) var(--space-3);border-bottom:var(--border-width) solid var(--color-border-subtle);vertical-align:middle}
+table.tok th{font:var(--text-caption);text-transform:uppercase;letter-spacing:.04em;color:var(--color-text-muted)}
+.space-bar{display:block;height:12px;background:var(--color-accent);border-radius:2px}
+.demo-box{width:72px;height:56px;background:var(--color-accent-subtle);border:var(--border-width) solid var(--color-border-strong);display:grid;place-items:center;font:var(--text-caption);color:var(--color-accent-text)}
+.demo-motion{width:100%;height:8px;background:var(--color-surface-sunken);border-radius:var(--radius-pill);position:relative}
+.demo-motion i{position:absolute;left:0;top:0;height:8px;width:24px;border-radius:var(--radius-pill);background:var(--color-accent)}
+.scroller:hover .demo-motion i,.scroller:focus-within .demo-motion i{left:calc(100% - 24px)}
+.theme-toggle{display:inline-flex;gap:var(--space-1);padding:var(--space-1);background:var(--color-surface-sunken);border-radius:var(--radius-pill)}
+.theme-toggle button{min-height:36px;padding:0 var(--space-3);border:0;border-radius:var(--radius-pill);background:transparent;color:var(--color-text-secondary);font:var(--text-small);font-weight:600;cursor:pointer}
+.theme-toggle button[aria-pressed="true"]{background:var(--color-surface-raised);color:var(--color-text-primary);box-shadow:var(--shadow-raised)}
+.dont{border-left:var(--border-width-strong) solid var(--color-danger);padding-left:var(--space-4)}
+.do{border-left:var(--border-width-strong) solid var(--color-success);padding-left:var(--space-4)}
+footer.doc-foot{margin-top:var(--space-8);padding:var(--space-6) 0;border-top:var(--border-width) solid var(--color-border-subtle);color:var(--color-text-secondary);font:var(--text-small)}
+
+/* ==========================================================================
+   COMPONENTS — read semantic roles only
+   ========================================================================== */
+
+/* Button. Variants: primary | secondary | quiet | danger. States: default, hover, pressed, focus, disabled, loading */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--size-target);padding:0 var(--space-5);
+  border:var(--border-width) solid transparent;border-radius:var(--radius-sm);font:var(--text-body);font-weight:600;text-decoration:none;cursor:pointer;
+  background:var(--color-accent);color:var(--color-on-accent);
+  transition:background-color var(--dur-fast) var(--ease-standard),border-color var(--dur-fast) var(--ease-standard)}
+.btn:hover,.btn.is-hover{background:var(--color-accent-hover)}
+.btn:active,.btn.is-pressed{background:var(--color-accent-pressed)}
+.btn--secondary{background:var(--color-surface-raised);color:var(--color-accent-text);border-color:var(--color-border-strong)}
+.btn--secondary:hover,.btn--secondary.is-hover{background:var(--color-accent-subtle);border-color:var(--color-accent)}
+.btn--secondary:active,.btn--secondary.is-pressed{background:var(--color-accent-subtle);border-color:var(--color-accent-pressed)}
+.btn--quiet{background:transparent;color:var(--color-accent-text)}
+.btn--quiet:hover,.btn--quiet.is-hover,.btn--quiet:active,.btn--quiet.is-pressed{background:var(--color-accent-subtle)}
+.btn--danger{background:var(--color-surface-raised);color:var(--color-danger-text);border-color:var(--color-danger)}
+.btn--danger:hover,.btn--danger.is-hover,.btn--danger:active,.btn--danger.is-pressed{background:var(--color-danger-subtle)}
+.btn[disabled],.btn[aria-disabled="true"]{background:var(--color-disabled-bg);color:var(--color-disabled-text);border-color:var(--color-border-subtle);cursor:not-allowed}
+.btn[aria-busy="true"]{cursor:progress}
+.btn[aria-busy="true"]::before{content:"";width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin 800ms linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Field. Parts: label, control, hint, error. States: default, hover, focus, error, disabled */
+.field{display:flex;flex-direction:column;gap:var(--space-1)}
+.field>label,.field>legend,.field-label{font:var(--text-small);font-weight:600;color:var(--color-text-primary);padding:0}
+.field .hint{font:var(--text-small);color:var(--color-text-secondary)}
+.field .error-msg{font:var(--text-small);color:var(--color-danger-text);display:none}
+.field .error-msg::before{content:"\26A0\00a0"}
+.control{width:100%;min-height:var(--size-target);padding:var(--space-2) var(--space-3);font:var(--text-body);color:var(--color-text-primary);
+  background:var(--color-surface-raised);border:var(--border-width) solid var(--color-border-strong);border-radius:var(--radius-sm);
+  transition:border-color var(--dur-fast) var(--ease-standard)}
+textarea.control{min-height:96px;resize:vertical}
+.control:hover{border-color:var(--color-text-secondary)}
+.control:focus-visible,.control.is-focus{border-color:var(--color-focus);box-shadow:var(--focus-ring)}
+.control:disabled{background:var(--color-disabled-bg);color:var(--color-disabled-text);border-color:var(--color-border-subtle);cursor:not-allowed}
+.field.is-invalid .control{border-color:var(--color-danger);border-width:var(--border-width-strong)}
+.field.is-invalid .error-msg{display:block}
+
+/* Choice chips (radio group). States: default, hover, checked, focus, disabled */
+.choices{display:flex;flex-wrap:wrap;gap:var(--space-2);border:0;margin:0;padding:0}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.choice span{display:inline-flex;align-items:center;justify-content:center;min-width:76px;min-height:var(--size-target);padding:0 var(--space-3);
+  border:var(--border-width) solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface-raised);font:var(--text-small);font-weight:600;
+  transition:background-color var(--dur-fast) var(--ease-standard)}
+.choice input:hover+span{background:var(--color-accent-subtle);border-color:var(--color-accent)}
+.choice input:checked+span{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-on-accent)}
+.choice input:focus-visible+span{box-shadow:var(--focus-ring)}
+.choice input:disabled{cursor:not-allowed}
+.choice input:disabled+span{background:var(--color-disabled-bg);color:var(--color-disabled-text);border-color:var(--color-border-subtle);text-decoration:line-through}
+
+/* Alert (status message). Variants: info | success | warning | danger. Always icon + text, never color alone */
+.alert{display:flex;gap:var(--space-3);align-items:flex-start;padding:var(--space-4);border-radius:var(--radius-md);border:var(--border-width) solid var(--_c);background:var(--_bg);color:var(--_t)}
+.alert .icon{flex:none;width:22px;height:22px;border-radius:50%;background:var(--_c);color:var(--color-surface-raised);display:grid;place-items:center;font:700 .8rem/1 var(--font-sans)}
+.alert strong{display:block;font:var(--text-body);font-weight:650}
+.alert p{font:var(--text-small)}
+.alert--info{--_c:var(--color-info);--_bg:var(--color-info-subtle);--_t:var(--color-info-text)}
+.alert--success{--_c:var(--color-success);--_bg:var(--color-success-subtle);--_t:var(--color-success-text)}
+.alert--warning{--_c:var(--color-warning);--_bg:var(--color-warning-subtle);--_t:var(--color-warning-text)}
+.alert--danger{--_c:var(--color-danger);--_bg:var(--color-danger-subtle);--_t:var(--color-danger-text)}
+.alert[hidden]{display:none}
+
+/* Badge. Same variants as alert */
+.badge{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px var(--space-3);border-radius:var(--radius-pill);font:var(--text-caption);background:var(--_bg);color:var(--_t);border:var(--border-width) solid var(--_c);white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--_c)}
+.badge--success{--_c:var(--color-success);--_bg:var(--color-success-subtle);--_t:var(--color-success-text)}
+.badge--warning{--_c:var(--color-warning);--_bg:var(--color-warning-subtle);--_t:var(--color-warning-text)}
+.badge--danger{--_c:var(--color-danger);--_bg:var(--color-danger-subtle);--_t:var(--color-danger-text)}
+.badge--neutral{--_c:var(--color-border-strong);--_bg:var(--color-surface-sunken);--_t:var(--color-text-secondary)}
+
+/* Card (appointment). Slots: header (title + badge), details, actions */
+.card{background:var(--color-surface-raised);border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-md);box-shadow:var(--shadow-raised);padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-3)}
+.card-head h3{min-width:0;overflow-wrap:anywhere}
+.card-meta{display:grid;grid-template-columns:auto 1fr;gap:var(--space-2) var(--space-4);margin:0;font:var(--text-small)}
+.card-meta dt{color:var(--color-text-muted);font-weight:600}
+.card-meta dd{margin:0;overflow-wrap:anywhere}
+.card-actions{display:flex;flex-wrap:wrap;gap:var(--space-2);padding-top:var(--space-3);border-top:var(--border-width) solid var(--color-border-subtle)}
+.card--cancelled .card-head h3,.card--cancelled .card-meta{color:var(--color-text-muted)}
+
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+@media (forced-colors: active){.btn,.badge,.alert,.card,.choice span{border:1px solid CanvasText}.btn[disabled]{border-color:GrayText;color:GrayText}:focus-visible{outline:2px solid Highlight}}
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="wrap">
+    <div>
+      <div class="brand">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="var(--color-accent)"/><path d="M14 21c-3.5-2.4-6-4.6-6-7.4A3.4 3.4 0 0 1 14 11.7a3.4 3.4 0 0 1 6 2.1c0 2.800-2.500 5-6 7.200z" fill="var(--color-on-accent)"/></svg>
+        Hollowbrook Vet Care
+      </div>
+      <h1>Design foundation</h1>
+      <p>One set of decisions, made once. Warm enough to put an anxious pet owner at ease, plain enough to trust with a medical record.</p>
+    </div>
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button type="button" data-set-theme="auto" aria-pressed="true">System</button>
+      <button type="button" data-set-theme="light" aria-pressed="false">Light</button>
+      <button type="button" data-set-theme="dark" aria-pressed="false">Dark</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="doc">
+  <div class="wrap">
+    <header>
+      <h2>Principles</h2>
+      <p>Four rules we use to settle disagreements.</p>
+    </header>
+    <ul class="principles">
+      <li><strong>Calm before clever</strong><span>People book visits when worried. Familiar patterns, no surprises, no decoration that competes with the task.</span></li>
+      <li><strong>Warmth lives in color and wording</strong><span>The teal, the soft neutrals and plain-spoken copy carry the friendliness. Layouts and forms stay conventional.</span></li>
+      <li><strong>Never color alone</strong><span>Every status pairs color with an icon or word. Every text pair passes contrast in every theme.</span></li>
+      <li><strong>Use a token or ask for one</strong><span>No raw hex, no loose pixel values in screens. If nothing fits, propose a change (see Governance).</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="wrap">
+    <header>
+      <h2>Color roles</h2>
+      <p>Components use roles, never raw values. Themes remap what each role points to; nothing is inverted. Try the theme toggle above.</p>
+    </header>
+    <div class="grid cols-3">
+      <div class="swatch"><div class="chip" style="background:var(--color-surface-page);color:var(--color-text-primary)">Aa page</div><div class="meta"><code>surface-page</code>App background</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-surface-raised);color:var(--color-text-primary)">Aa raised</div><div class="meta"><code>surface-raised</code>Cards, fields, panels</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-surface-sunken);color:var(--color-text-primary)">Aa sunken</div><div class="meta"><code>surface-sunken</code>Wells, code, toggles</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-surface-raised);color:var(--color-text-primary)">Primary text</div><div class="meta"><code>text-primary</code>Headings, body</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-surface-raised);color:var(--color-text-secondary)">Secondary text</div><div class="meta"><code>text-secondary</code>Supporting copy, hints</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-surface-raised);color:var(--color-text-muted)">Muted text</div><div class="meta"><code>text-muted</code>Labels, captions</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-accent);color:var(--color-on-accent)">Accent</div><div class="meta"><code>accent</code> + <code>on-accent</code>Primary actions</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-accent-subtle);color:var(--color-accent-text)">Accent subtle</div><div class="meta"><code>accent-subtle</code> + <code>accent-text</code>Hover, selection</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-surface-raised);border-bottom:var(--border-width-strong) solid var(--color-border-strong);color:var(--color-text-secondary)">Border</div><div class="meta"><code>border-subtle</code> / <code>border-strong</code>Dividers / control edges</div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-success-subtle);color:var(--color-success-text)">Success</div><div class="meta"><code>success</code> · <code>-subtle</code> · <code>-text</code></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-warning-subtle);color:var(--color-warning-text)">Warning</div><div class="meta"><code>warning</code> · <code>-subtle</code> · <code>-text</code></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-danger-subtle);color:var(--color-danger-text)">Danger</div><div class="meta"><code>danger</code> · <code>-subtle</code> · <code>-text</code></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-info-subtle);color:var(--color-info-text)">Info</div><div class="meta"><code>info</code> · <code>-subtle</code> · <code>-text</code></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="wrap">
+    <header>
+      <h2>Type</h2>
+      <p>System fonts, six roles. Body is 16px minimum for anything a person has to read or fill in.</p>
+    </header>
+    <div class="panel">
+      <table class="tok">
+        <thead><tr><th>Token</th><th>Specimen</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><code>text-display</code></td><td style="font:var(--text-display)">Healthy pets</td><td>One per page, at most</td></tr>
+          <tr><td><code>text-heading</code></td><td style="font:var(--text-heading)">Book a visit</td><td>Section headings</td></tr>
+          <tr><td><code>text-title</code></td><td style="font:var(--text-title)">Annual checkup for Biscuit</td><td>Card and panel titles</td></tr>
+          <tr><td><code>text-body</code></td><td style="font:var(--text-body)">Please arrive ten minutes early.</td><td>Default text, form input</td></tr>
+          <tr><td><code>text-small</code></td><td style="font:var(--text-small)">Hints, metadata, table cells</td><td>Secondary information</td></tr>
+          <tr><td><code>text-caption</code></td><td style="font:var(--text-caption);text-transform:uppercase;letter-spacing:.04em">Status label</td><td>Badges, overlines</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="wrap">
+    <header>
+      <h2>Space, shape, depth, motion</h2>
+      <p>Short scales. If a value is not on a scale, use the nearest step.</p>
+    </header>
+    <div class="grid cols-2">
+      <div class="panel">
+        <span class="caption">Spacing (8 steps)</span>
+        <table class="tok">
+          <tbody>
+            <tr><td><code>space-1</code> 4</td><td><span class="space-bar" style="width:4px"></span></td></tr>
+            <tr><td><code>space-2</code> 8</td><td><span class="space-bar" style="width:8px"></span></td></tr>
+            <tr><td><code>space-3</code> 12</td><td><span class="space-bar" style="width:12px"></span></td></tr>
+            <tr><td><code>space-4</code> 16</td><td><span class="space-bar" style="width:16px"></span></td></tr>
+            <tr><td><code>space-5</code> 24</td><td><span class="space-bar" style="width:24px"></span></td></tr>
+            <tr><td><code>space-6</code> 32</td><td><span class="space-bar" style="width:32px"></span></td></tr>
+            <tr><td><code>space-7</code> 48</td><td><span class="space-bar" style="width:48px"></span></td></tr>
+            <tr><td><code>space-8</code> 64</td><td><span class="space-bar" style="width:64px"></span></td></tr>
+          </tbody>
+        </table>
+        <p class="small muted" style="margin-top:var(--space-3)">Inside a component, use steps 2–5. Between sections, 6–8.</p>
+      </div>
+      <div class="stack">
+        <div class="panel">
+          <span class="caption">Radius (3) and elevation (2)</span>
+          <div class="row" style="align-items:flex-end">
+            <div><div class="demo-box" style="border-radius:var(--radius-sm)">sm</div><p class="small muted" style="margin-top:var(--space-1)">Controls</p></div>
+            <div><div class="demo-box" style="border-radius:var(--radius-md)">md</div><p class="small muted" style="margin-top:var(--space-1)">Cards</p></div>
+            <div><div class="demo-box" style="border-radius:var(--radius-pill);width:96px">pill</div><p class="small muted" style="margin-top:var(--space-1)">Badges</p></div>
+          </div>
+          <div class="row" style="margin-top:var(--space-4)">
+            <div class="demo-box" style="border-radius:var(--radius-md);background:var(--color-surface-raised);box-shadow:var(--shadow-raised);width:110px">raised</div>
+            <div class="demo-box" style="border-radius:var(--radius-md);background:var(--color-surface-raised);box-shadow:var(--shadow-overlay);width:110px">overlay</div>
+          </div>
+        </div>
+        <div class="panel scroller" tabindex="0" aria-label="Motion demo: hover or focus to play">
+          <span class="caption">Motion (hover or focus to play)</span>
+          <div class="stack" style="gap:var(--space-3)">
+            <div><span class="small"><code>dur-fast</code> 100ms · hover, press</span><div class="demo-motion"><i style="transition:left var(--dur-fast) var(--ease-standard)"></i></div></div>
+            <div><span class="small"><code>dur-base</code> 200ms · small reveals</span><div class="demo-motion"><i style="transition:left var(--dur-base) var(--ease-standard)"></i></div></div>
+            <div><span class="small"><code>dur-slow</code> 300ms · panels, dialogs</span><div class="demo-motion"><i style="transition:left var(--dur-slow) var(--ease-standard)"></i></div></div>
+          </div>
+          <p class="small muted" style="margin-top:var(--space-3)">Easings: <code>standard</code>, <code>enter</code>, <code>exit</code>. Reduced-motion users get none.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="wrap">
+    <header>
+      <h2>Components, all states</h2>
+      <p>Each is built only from the tokens above. Hover and pressed are pinned below so they can be seen; try tabbing for real focus.</p>
+    </header>
+    <div class="grid cols-2">
+      <div class="panel">
+        <span class="caption">Button — default · hover · pressed · disabled · loading</span>
+        <div class="stack">
+          <div class="row">
+            <button class="btn" type="button">Book visit</button>
+            <button class="btn is-hover" type="button">Hover</button>
+            <button class="btn is-pressed" type="button">Pressed</button>
+            <button class="btn" type="button" disabled>Disabled</button>
+            <button class="btn" type="button" aria-busy="true">Saving…</button>
+          </div>
+          <div class="row">
+            <button class="btn btn--secondary" type="button">Reschedule</button>
+            <button class="btn btn--quiet" type="button">Add to calendar</button>
+            <button class="btn btn--danger" type="button">Cancel visit</button>
+          </div>
+          <p class="small muted">One primary per view. Minimum target 44px. Labels say what happens: “Book visit”, not “Submit”.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <span class="caption">Field — default · focus · error · disabled</span>
+        <div class="stack">
+          <div class="field"><label for="f1">Owner name</label><input id="f1" class="control" value="Jordan Reyes"><span class="hint">As it appears on your records.</span></div>
+          <div class="field"><label for="f2">Phone (focused)</label><input id="f2" class="control is-focus" value="555-0142"></div>
+          <div class="field is-invalid"><label for="f3">Email</label><input id="f3" class="control" value="jordan@" aria-invalid="true" aria-describedby="f3e"><span class="error-msg" id="f3e">Enter a full email address, like name@example.com.</span></div>
+          <div class="field"><label for="f4">Clinic</label><input id="f4" class="control" value="Hollowbrook Main St." disabled></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:var(--space-4)">
+      <span class="caption">Status message (alert) — info · success · warning · danger</span>
+      <div class="grid cols-2">
+        <div class="alert alert--success" role="status"><span class="icon" aria-hidden="true">✓</span><div><strong>Visit confirmed</strong><p>Biscuit is booked for Tue, 14 Oct at 9:30 AM. We’ve emailed the details.</p></div></div>
+        <div class="alert alert--info" role="status"><span class="icon" aria-hidden="true">i</span><div><strong>Reminder set</strong><p>We’ll text you 24 hours before the appointment.</p></div></div>
+        <div class="alert alert--warning" role="status"><span class="icon" aria-hidden="true">!</span><div><strong>Vaccine due soon</strong><p>Rabies booster for Mochi is due within 30 days.</p></div></div>
+        <div class="alert alert--danger" role="alert"><span class="icon" aria-hidden="true">×</span><div><strong>We couldn’t save your booking</strong><p>Your connection dropped. Nothing was changed. Please try again.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="wrap">
+    <header>
+      <h2>Sample pieces</h2>
+      <p>Real screens are assembled from the parts above. These are the first three.</p>
+    </header>
+    <div class="grid cols-2" style="align-items:start">
+
+      <form class="card" id="booking" novalidate aria-labelledby="bk-title">
+        <div>
+          <h3 id="bk-title">Book an appointment</h3>
+          <p class="small muted">Takes about a minute. We’ll confirm by email.</p>
+        </div>
+        <div class="alert alert--success" role="status" id="bk-ok" hidden><span class="icon" aria-hidden="true">✓</span><div><strong>Visit requested</strong><p>Thanks. We’ll confirm your booking by email shortly.</p></div></div>
+        <div class="field" id="pet-field">
+          <label for="pet">Which pet is coming in?</label>
+          <select id="pet" class="control" aria-describedby="pet-err">
+            <option value="">Choose a pet</option>
+            <option>Biscuit (dog)</option>
+            <option>Mochi (cat)</option>
+          </select>
+          <span class="error-msg" id="pet-err">Choose which pet this visit is for.</span>
+        </div>
+        <div class="field">
+          <label for="reason">Reason for visit</label>
+          <select id="reason" class="control">
+            <option>Annual checkup</option><option>Vaccination</option><option>Something seems wrong</option><option>Dental</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="date">Preferred date</label>
+          <input id="date" class="control" type="date" value="2026-10-14">
+        </div>
+        <fieldset class="field" style="border:0;margin:0;padding:0">
+          <legend>Time</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="time" checked><span>9:30 AM</span></label>
+            <label class="choice"><input type="radio" name="time"><span>10:15 AM</span></label>
+            <label class="choice"><input type="radio" name="time" disabled><span>11:00 AM</span></label>
+            <label class="choice"><input type="radio" name="time"><span>1:45 PM</span></label>
+          </div>
+          <span class="hint">Struck-through times are already taken.</span>
+        </fieldset>
+        <div class="field">
+          <label for="notes">Anything we should know? <span class="muted" style="font-weight:400">(optional)</span></label>
+          <textarea id="notes" class="control" placeholder="Symptoms, medications, or worries"></textarea>
+        </div>
+        <div class="row"><button class="btn" type="submit">Book visit</button><button class="btn btn--quiet" type="reset">Clear</button></div>
+      </form>
+
+      <div class="stack">
+        <article class="card" aria-labelledby="ap1">
+          <div class="card-head"><div><span class="caption">Upcoming</span><h3 id="ap1">Annual checkup</h3></div><span class="badge badge--success">Confirmed</span></div>
+          <dl class="card-meta">
+            <dt>Pet</dt><dd>Biscuit, Labrador</dd>
+            <dt>When</dt><dd>Tue, 14 Oct · 9:30 AM</dd>
+            <dt>Vet</dt><dd>Dr. Amara Okafor</dd>
+            <dt>Where</dt><dd>Hollowbrook Main St.</dd>
+          </dl>
+          <div class="card-actions"><button class="btn btn--secondary" type="button">Reschedule</button><button class="btn btn--quiet" type="button">Add to calendar</button></div>
+        </article>
+
+        <article class="card" aria-labelledby="ap2">
+          <div class="card-head"><div><span class="caption">Upcoming</span><h3 id="ap2">Follow-up: post-surgical wound check and suture removal</h3></div><span class="badge badge--warning">Awaiting confirmation</span></div>
+          <dl class="card-meta">
+            <dt>Pet</dt><dd>Sir Reginald Fluffington-Smythe III</dd>
+            <dt>When</dt><dd>Fri, 17 Oct · 1:45 PM</dd>
+            <dt>Vet</dt><dd>Not yet assigned</dd>
+          </dl>
+          <div class="card-actions"><button class="btn btn--secondary" type="button">Reschedule</button><button class="btn btn--danger" type="button">Cancel visit</button></div>
+        </article>
+
+        <article class="card card--cancelled" aria-labelledby="ap3">
+          <div class="card-head"><div><span class="caption">Past</span><h3 id="ap3">Vaccination</h3></div><span class="badge badge--neutral">Cancelled</span></div>
+          <dl class="card-meta"><dt>Pet</dt><dd>Mochi, domestic shorthair</dd><dt>When</dt><dd>Mon, 29 Sep · 4:00 PM</dd></dl>
+          <div class="card-actions"><button class="btn btn--secondary" type="button">Book again</button></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc">
+  <div class="wrap">
+    <header>
+      <h2>Governance</h2>
+      <p>Light rules for a small team. Revisit when more than one squad is shipping.</p>
+    </header>
+    <div class="grid cols-2">
+      <div class="panel stack" style="gap:var(--space-3)">
+        <h3>Changing the system</h3>
+        <p class="small"><strong>Add</strong> a token or component when a second screen needs it. Not before.</p>
+        <p class="small"><strong>Modify</strong> a value in tier 1 or 2 and every consumer changes. Check contrast in both themes first.</p>
+        <p class="small"><strong>Deprecate</strong> by announcing it, naming the replacement, and keeping it for one release cycle before <strong>removing</strong> it.</p>
+        <p class="small muted">Owner: [name your system owner]. Keep a changelog beside the tokens file.</p>
+      </div>
+      <div class="panel stack" style="gap:var(--space-3)">
+        <h3>In practice</h3>
+        <div class="do"><p class="small"><strong>Do</strong> write <code>color: var(--color-text-secondary)</code> and <code>padding: var(--space-4)</code>.</p></div>
+        <div class="dont"><p class="small"><strong>Don’t</strong> write <code>color:#5b6b67</code> or <code>padding:15px</code>, or reach for a <code>--ref-*</code> value in a component.</p></div>
+        <div class="dont"><p class="small"><strong>Don’t</strong> signal status with color alone, or build a second “card” that only differs by radius.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="doc-foot"><div class="wrap">Hollowbrook Vet Care · Design foundation v0.1 · Colors were chosen for AA text contrast in both themes. Re-verify when you change a value.</div></footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  document.querySelectorAll('[data-set-theme]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-set-theme');
+      if(t==='auto'){root.removeAttribute('data-theme');}else{root.setAttribute('data-theme',t);}
+      document.querySelectorAll('[data-set-theme]').forEach(function(o){o.setAttribute('aria-pressed',String(o===b));});
+    });
+  });
+  var form=document.getElementById('booking'),pet=document.getElementById('pet'),
+      pf=document.getElementById('pet-field'),ok=document.getElementById('bk-ok');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!pet.value){pf.classList.add('is-invalid');pet.setAttribute('aria-invalid','true');ok.hidden=true;pet.focus();return;}
+    pf.classList.remove('is-invalid');pet.removeAttribute('aria-invalid');ok.hidden=false;
+  });
+  pet.addEventListener('change',function(){pf.classList.remove('is-invalid');pet.removeAttribute('aria-invalid');});
+  form.addEventListener('reset',function(){pf.classList.remove('is-invalid');ok.hidden=true;});
+})();
+</script>
+</body>
+</html>

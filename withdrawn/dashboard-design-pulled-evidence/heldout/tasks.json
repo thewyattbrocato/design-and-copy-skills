@@ -1,0 +1,126 @@
+[
+  {
+    "id": "dash-01",
+    "kind": "build",
+    "prompt": "I own 9 coffee shops (Hollow Oak Coffee) and every Monday I burn an hour in spreadsheets working out how last week went and which shop managers I should call. Can you build me a dashboard for that? One self-contained HTML file, inline CSS, system fonts, no external assets.\n\nLast week (week before in brackets, goal in curly braces):\nRevenue $184,200 ($176,900) {$180,000}\nTransactions 41,300 (40,100)\nAverage ticket $4.46 ($4.41)\nFood waste 6.8% of food cost (5.9%) {5% or less}\nLabor 31.5% of sales (30.2%) {30%}\n\nBy shop (revenue / waste % / labor %):\nRiverside 24,900 / 5.1 / 29.8\nOld Mill 23,400 / 5.9 / 30.4\nHarbor St 22,100 / 6.2 / 31.0\nCampus 21,800 / 8.9 / 33.6\nEastgate 20,500 / 5.5 / 30.1\nMarket Hall 19,700 / 7.4 / 31.9\nNorthfield 18,300 / 6.6 / 30.8\nQuarry Rd 17,200 / 9.7 / 32.5\nDepot 16,300 / 5.0 / 29.9\n\nChain revenue for the last 8 weeks, oldest first ($k): 168.5, 171.2, 173.9, 170.4, 175.8, 178.3, 176.9, 184.2",
+    "rubric": [
+      "Within the first screen, the owner can see how the chain did last week against the goal and the week before, with the supplied figures shown correctly.",
+      "The shops that need a call (the ones missing the waste and labor goals, such as Campus and Quarry Rd) are identifiable without reading all nine rows.",
+      "The status of a measure (on goal, near, off) is readable without relying on color alone, for example through a word, symbol or the gap to goal.",
+      "The 8-week revenue history is shown as a trend with the latest week called out, not as nine more cards.",
+      "Every number on the page comes from the supplied data or is simple arithmetic on it; no invented metrics or filler panels.",
+      "The page is a single self-contained HTML file with no external assets, and nothing overlaps or clips in the screenshot."
+    ]
+  },
+  {
+    "id": "dash-02",
+    "kind": "critique",
+    "prompt": "Our support team's dashboard has turned into a monster and the director says it has too many charts. We have it open on the big screen during the 15-minute daily standup, where we decide who picks up what and whether to pull anyone off projects to help with the queue. Here's everything on it right now:\n\n1. Tickets by channel (pie)\n2. Tickets created per day, past month (line)\n3. Open tickets by priority (stacked bar)\n4. Average first response time (gauge)\n5. CSAT score (3D donut)\n6. Tickets by product area (treemap)\n7. Agent leaderboard, tickets closed (bar)\n8. Backlog age (histogram)\n9. SLA breaches today (big number)\n10. Tickets by customer country (map)\n11. Reopened rate, last 12 weeks (line)\n12. Help-center article views (bar)\n13. Word cloud of ticket subjects\n14. Resolution time by agent (table)\n\nWhat would you keep, cut or merge? I don't want a lecture, I want to know what the standup screen should look like.",
+    "rubric": [
+      "Anchors the answer on the standup's decisions (who picks up what, whether to add help) and judges panels against them.",
+      "Makes explicit keep, cut or merge calls on named panels from the list instead of general advice.",
+      "Cuts or moves out panels that do not feed a standup decision, such as the word cloud, country map and help-center views, and says where they could live instead.",
+      "Ends with a screen of roughly 5 to 8 items, in a stated reading order, with the most urgent item (breaches or backlog age) first.",
+      "Notes a risk or trade-off in the choices, for example that a per-agent ranking on a shared screen changes behavior, or what is lost by cutting a trend."
+    ]
+  },
+  {
+    "id": "dash-03",
+    "kind": "choose",
+    "prompt": "We're a 6-person team running the payments API for an online ticketing site. I'm setting up one screen for the on-call engineer's second monitor. Metrics we already collect:\n\nrequest count, 5xx error rate, average latency, p50 latency, p95 latency, p99 latency, CPU per host, memory per host, disk usage, database connection pool usage, queue depth for payment-capture jobs, age of the oldest job in that queue, card decline rate, payment-provider timeouts, successful checkouts per minute, deploys in the last 24h, open incidents, cache hit ratio, pods restarted, TLS certificate days remaining, commits per week, weekly active users\n\nWhich should go on it, and how should each one be shown? I don't want 22 tiles.",
+    "rubric": [
+      "Selects a short list (about 6 to 9) and explicitly says what is left off.",
+      "Every chosen measure comes with a comparison, threshold or normal range, so the engineer can tell fine from not fine at a glance.",
+      "Prefers tail latency (p95 or p99) to the average, or explains why the average would hide problems.",
+      "Includes at least one measure of whether customers are actually completing payment (checkouts, provider timeouts or the capture queue), not only machine health.",
+      "Leaves out measures that do not drive an on-call action now (commits per week, weekly active users) and explains briefly.",
+      "Says how each pick is shown (number, trend, bar against a limit) rather than only listing names."
+    ]
+  },
+  {
+    "id": "dash-04",
+    "kind": "layout",
+    "prompt": "I manage a 5-dentist clinic. We're putting a screen in the back office (1920x1080) that I and the front desk will glance at all day, and I'll also open it on my laptop. Things I want on it:\n\n- today's appointments by hour\n- patients waiting right now\n- no-shows this week vs a normal week\n- chair use by room\n- overdue invoices (a total and the list)\n- supplies that are running low\n- monthly revenue vs goal\n- a date range picker and a dentist filter\n\nWhere does each of these go? Describe the layout concretely, as if you were handing it to a developer.",
+    "rubric": [
+      "Gives a concrete arrangement (rows, columns or regions with sizes or positions), not just a list of components.",
+      "Puts the live, same-day items (patients waiting, today's appointments) in the most prominent position and treats monthly revenue and the invoice list as secondary.",
+      "Places the date range and dentist filter where it is clear what they affect, and says what they do not affect (for example the live waiting count).",
+      "Groups related items together and separates unrelated ones, for example schedule items versus money items.",
+      "Handles the overdue invoices as a summary number with the full list a step away, or justifies putting the list on the main screen.",
+      "Acknowledges the difference between a wall-glance screen and the laptop, with at least one concrete consequence."
+    ]
+  },
+  {
+    "id": "dash-05",
+    "kind": "polish",
+    "prompt": "This is the fleet health page our bike-share ops team keeps open all day. It works well and people like it, but the program director wants it \"polished\" before the city council visits on Thursday. I'm nervous about breaking something that works. Here's the code:\n\n```html\n<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><title>Fleet health</title>\n<style>\nbody{font-family:system-ui,sans-serif;background:#f6f7f9;color:#1c2330;margin:0;padding:24px}\nh1{font-size:20px;margin:0}.sub{color:#5b6573;font-size:13px;margin:2px 0 18px}\n.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}\n.k{background:#fff;border:1px solid #dfe3e8;border-radius:6px;padding:12px 14px}\n.k .l{font-size:12px;color:#5b6573}.k .v{font-size:28px;font-weight:600;margin:2px 0}\n.k .d{font-size:12px;color:#5b6573}.k.warn{border-left:4px solid #c2570c}.k.bad{border-left:4px solid #b42318}\n.panel{background:#fff;border:1px solid #dfe3e8;border-radius:6px;padding:14px;margin-bottom:16px}\n.panel h2{font-size:14px;margin:0 0 8px}\ntable{width:100%;border-collapse:collapse;font-size:13px}\nth{text-align:left;color:#5b6573;font-weight:600;border-bottom:1px solid #dfe3e8;padding:6px 8px}\ntd{padding:6px 8px;border-bottom:1px solid #eef0f3}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}\n</style></head><body>\n<h1>Fleet health, Tuesday</h1><div class=\"sub\">Updated 14:05 · 520 bikes in service area</div>\n<div class=\"kpis\">\n<div class=\"k warn\"><div class=\"l\">Bikes available now</div><div class=\"v\">412</div><div class=\"d\">26 fewer than a typical Tuesday at 14:00 (438)</div></div>\n<div class=\"k bad\"><div class=\"l\">Out of service</div><div class=\"v\">38</div><div class=\"d\">Target 30 or fewer · 31 yesterday</div></div>\n<div class=\"k\"><div class=\"l\">Rebalancing trips today</div><div class=\"v\">21</div><div class=\"d\">Typical day: 24 by this time</div></div>\n<div class=\"k\"><div class=\"l\">Median dock refill time</div><div class=\"v\">2h 10m</div><div class=\"d\">Last Tuesday: 2h 25m</div></div>\n</div>\n<div class=\"panel\"><h2>Bikes available by hour, today vs typical Tuesday</h2>\n<svg viewBox=\"0 0 640 170\" width=\"100%\" role=\"img\" aria-label=\"Bikes available by hour, today and typical Tuesday\">\n<line x1=\"40\" y1=\"140\" x2=\"620\" y2=\"140\" stroke=\"#dfe3e8\"/><line x1=\"40\" y1=\"90\" x2=\"620\" y2=\"90\" stroke=\"#eef0f3\"/><line x1=\"40\" y1=\"40\" x2=\"620\" y2=\"40\" stroke=\"#eef0f3\"/>\n<text x=\"34\" y=\"144\" font-size=\"11\" text-anchor=\"end\" fill=\"#5b6573\">300</text><text x=\"34\" y=\"94\" font-size=\"11\" text-anchor=\"end\" fill=\"#5b6573\">400</text><text x=\"34\" y=\"44\" font-size=\"11\" text-anchor=\"end\" fill=\"#5b6573\">500</text>\n<polyline fill=\"none\" stroke=\"#9aa3af\" stroke-width=\"2\" stroke-dasharray=\"5 4\" points=\"40,60 120,52 200,70 280,62 360,66 440,92 520,84 600,70\"/>\n<polyline fill=\"none\" stroke=\"#1f5fbf\" stroke-width=\"2.5\" points=\"40,64 120,58 200,78 280,76 360,84\"/>\n<text x=\"366\" y=\"100\" font-size=\"12\" fill=\"#1f5fbf\">Today 412</text><text x=\"520\" y=\"76\" font-size=\"12\" fill=\"#5b6573\">Typical</text>\n<text x=\"40\" y=\"160\" font-size=\"11\" fill=\"#5b6573\">06:00</text><text x=\"200\" y=\"160\" font-size=\"11\" fill=\"#5b6573\">10:00</text><text x=\"360\" y=\"160\" font-size=\"11\" fill=\"#5b6573\">14:00</text><text x=\"600\" y=\"160\" font-size=\"11\" fill=\"#5b6573\" text-anchor=\"end\">22:00</text>\n</svg></div>\n<div class=\"panel\"><h2>Stations that need a van first</h2>\n<table><tr><th>Station</th><th class=\"n\">Bikes</th><th class=\"n\">Empty docks</th><th class=\"n\">Hours empty</th></tr>\n<tr><td>Central Library</td><td class=\"n\">0</td><td class=\"n\">22</td><td class=\"n\">3.5</td></tr>\n<tr><td>Ferry Landing</td><td class=\"n\">1</td><td class=\"n\">19</td><td class=\"n\">2.0</td></tr>\n<tr><td>Tech Park North</td><td class=\"n\">1</td><td class=\"n\">24</td><td class=\"n\">1.5</td></tr>\n<tr><td>Oak &amp; 9th</td><td class=\"n\">2</td><td class=\"n\">13</td><td class=\"n\">1.0</td></tr>\n<tr><td>Stadium Gate B</td><td class=\"n\">2</td><td class=\"n\">28</td><td class=\"n\">0.5</td></tr>\n</table></div>\n</body></html>\n```\n\nWhat would you change?",
+    "rubric": [
+      "Recognizes that the page already works and says so with specific reasons (for example the comparisons beside each number, the labeled lines, the ordered station list).",
+      "Proposes only a few small, concrete refinements (at most about five) and does not restructure the page or add new panels.",
+      "Explicitly lists what it would leave alone.",
+      "Does not add decorative elements (gradients, icons, shadows for their own sake) or new charts, and keeps all existing figures unchanged.",
+      "If it returns revised code, the data, sections and order are the same as the original; if it returns notes only, each change names the element it touches."
+    ]
+  },
+  {
+    "id": "dash-06",
+    "kind": "explain",
+    "prompt": "A new hire on our operations team asked me today why nobody looks at our status dashboard, and I didn't have a good answer. It has about 40 tiles, each green, amber or red. At any given moment around 15 of them are red. The thresholds were set when we launched it two years ago, and every red also sends an email to the whole team. People ignore the emails and the dashboard. Can you explain what's going on and what we should change? I'll forward your answer to the team lead, so keep it understandable for someone who doesn't build dashboards.",
+    "rubric": [
+      "Explains in plain language why constant red stops carrying information (people learn to ignore it) and ties this to the 15-of-40 and email details given.",
+      "Distinguishes things that need someone to act now from things that are merely worth knowing, and proposes handling them differently.",
+      "Suggests tying each threshold to an action or owner and reviewing thresholds that have drifted from the current normal.",
+      "Gives a short sequence of practical steps the team could start this week, not only principles.",
+      "Does not claim to know the actual cause beyond what was described; where it guesses it says so."
+    ]
+  },
+  {
+    "id": "dash-07",
+    "kind": "critique",
+    "prompt": "Give me the top three fixes for this HR dashboard in under 80 words total. No intro, no outro.\n\nWhat it has now: a 3D pie of headcount across 11 departments; a line chart of headcount by month with attrition rate on a second axis on the right; attrition is colored red whenever it's above 10%, but the company average is 14%, so most of it is red; the date range defaults to all time, which is 9 years; there are 8 dropdown filters across the top and all must be set before anything loads; the numbers people ask about most (open roles, time to hire) are in small gray text at the bottom of the page.",
+    "rubric": [
+      "The answer is 80 words or fewer, with no introduction or closing remark.",
+      "Gives exactly three fixes, each distinct.",
+      "Each fix refers to a specific detail from the description (the red threshold, the filters, the buried numbers, the date range, the pie or dual axis) rather than general advice.",
+      "The fixes are ordered by importance, with the most damaging problem first, and at least one addresses surfacing open roles and time to hire.",
+      "Each fix says what to do, not only what is wrong."
+    ]
+  },
+  {
+    "id": "dash-08",
+    "kind": "build",
+    "prompt": "I run a community food bank and have to give the board a one-page report on Thursday. The story I want them to take away is that demand is rising faster than what we're taking in. Can you build the page? One self-contained HTML file, inline CSS, system fonts, no external assets.\n\nApril to September:\nPounds of food donated: 41,200 / 43,800 / 39,500 / 36,100 / 44,900 / 52,300\nHouseholds served: 3,120 / 3,240 / 3,580 / 4,010 / 4,460 / 4,980\nVolunteer hours: 1,150 / 1,210 / 1,090 / 980 / 1,060 / (September's sign-in sheet got lost, so we don't have it)\nCash donations: $18,400 / $21,900 / $17,200 / $15,800 / $19,100 / $24,600",
+    "rubric": [
+      "States the main finding in plain words near the top, and the numbers in it match the supplied data (for example households served up roughly 60% while pounds donated grew roughly 27%).",
+      "Shows demand and supply on a comparable footing, for example pounds per household or both indexed to April, so the gap is visible rather than implied.",
+      "Treats the missing September volunteer hours as missing, visibly and with a note, and does not plot it as zero or fill it in.",
+      "Reads top to bottom as a story: finding first, then evidence, with secondary measures (cash, volunteers) clearly less prominent.",
+      "Does not invent causes, targets or figures that were not supplied.",
+      "Is a single self-contained HTML file whose screenshot shows no overlapping or clipped elements."
+    ]
+  },
+  {
+    "id": "dash-guard-01",
+    "kind": "choose",
+    "prompt": "We run the wall screen in our network operations room. It shows 24 services as tiles in a 6x4 grid, in alphabetical order, each with name, status color, latency and error %. The operators say it's hard to scan. Our VP saw it and said to \"simplify it down to 5 KPIs.\" The operators say no, because any of the 24 services can page them and they need to see all of them at once without clicking. I need to decide what to do. What do you recommend, and what specifically would you change on the screen?",
+    "rubric": [
+      "Does not accept the \"5 KPIs\" cut as the answer; keeps all 24 services visible without clicking, and says why.",
+      "Offers concrete changes that make the grid faster to scan, such as grouping by dependency or team, making healthy tiles visually quieter than troubled ones, or bringing the troubled ones forward.",
+      "Addresses the trade-off in any reordering (tiles that move versus stable positions operators have memorized) instead of ignoring it.",
+      "Gives the VP something real, such as a compact overall count or summary strip, so the concern is answered without hiding services.",
+      "Is specific enough to act on (what is grouped, what is dimmed, what is shown on a tile), not just a statement of principle."
+    ]
+  },
+  {
+    "id": "dash-guard-02",
+    "kind": "build",
+    "prompt": "Can you make me a dashboard for our newsletter signups? I just want to see how it's going. It's only the monthly numbers for this year, January to December: 310, 295, 342, 380, 365, 410, 398, 276, 431, 455, 470, 512. One self-contained HTML file, inline CSS, system fonts, no external assets.",
+    "rubric": [
+      "The page is built around one clear view of the monthly numbers, a single chart with its title and labeled axes, not a grid of panels.",
+      "Does not add metrics or panels that the supplied data cannot support (conversion rate, churn, source breakdown, goals), and no placeholder or made-up numbers.",
+      "The chart's scale is honest: bars start at zero, or a line has clearly labeled values, and all 12 months are present and in order.",
+      "The title or a short line says what the chart shows and notes the overall direction in words, using only figures that follow from the data (for example 310 to 512).",
+      "Makes the August drop visible and does not claim a reason for it."
+    ]
+  }
+]

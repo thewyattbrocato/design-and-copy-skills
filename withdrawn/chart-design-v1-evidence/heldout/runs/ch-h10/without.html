@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marathon pace per kilometer</title>
+<style>
+  :root {
+    --surface: #ffffff;
+    --ink: #1c1f24;
+    --ink-2: #4a5160;
+    --ink-3: #6b7280;
+    --grid: #e6e8ec;
+    --axis: #b9bec8;
+    --series: #2563c9;
+    --flag: #b45309;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #16181d;
+      --ink: #eceef2;
+      --ink-2: #b4bac6;
+      --ink-3: #8f96a3;
+      --grid: #2a2e36;
+      --axis: #454b57;
+      --series: #6ea3f5;
+      --flag: #f0a85a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .card { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+  p.sub { margin: 0 0 16px; font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+  .stats { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 12px; }
+  .stat .v { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: 12px; color: var(--ink-3); }
+  .wrap { position: relative; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  svg text { font-family: inherit; font-size: 11px; fill: var(--ink-3); font-variant-numeric: tabular-nums; }
+  svg text.label { fill: var(--ink-2); }
+  .tip {
+    position: absolute; pointer-events: none; opacity: 0;
+    background: var(--surface); color: var(--ink);
+    border: 1px solid var(--axis); border-radius: 6px;
+    padding: 6px 9px; font-size: 12px; line-height: 1.35;
+    white-space: nowrap; transform: translate(-50%, -100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    font-variant-numeric: tabular-nums;
+  }
+  .tip b { font-weight: 600; }
+  .tip span { color: var(--ink-2); }
+  details { margin-top: 14px; font-size: 12px; color: var(--ink-2); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; margin-top: 8px; width: 100%; font-variant-numeric: tabular-nums; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 2px 12px; margin-top: 8px; }
+  .grid div { display: flex; justify-content: space-between; border-bottom: 1px solid var(--grid); padding: 2px 0; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Pace per kilometer, 42 km long run</h1>
+  <p class="sub">Minutes per kilometer (lower is faster). A steady, gradual fade from 5:05 to 5:40, with one slow km at the water stop.</p>
+  <div class="stats">
+    <div class="stat"><div class="v">5:05</div><div class="l">Km 1</div></div>
+    <div class="stat"><div class="v">6:10</div><div class="l">Km 30 (water stop)</div></div>
+    <div class="stat"><div class="v">5:40</div><div class="l">Km 42</div></div>
+    <div class="stat"><div class="v" id="avg">–</div><div class="l">Average pace</div></div>
+  </div>
+  <div class="wrap" id="wrap">
+    <svg id="chart" viewBox="0 0 720 320" role="img" aria-label="Line chart of pace in minutes per kilometer for kilometers 1 to 42, rising from 5:05 to 5:40 with a spike to 6:10 at kilometer 30."></svg>
+    <div class="tip" id="tip"></div>
+  </div>
+  <details>
+    <summary>View data as table</summary>
+    <div class="grid" id="tbl"></div>
+  </details>
+</div>
+<script>
+(function () {
+  var secs = [305,304,306,305,307,306,308,307,309,308,310,309,311,310,312,313,312,314,315,314,316,317,316,319,320,321,322,324,325,370,331,328,329,330,332,331,334,335,336,337,338,340];
+  var fmt = function (s) { var m = Math.floor(s / 60), r = Math.round(s % 60); return m + ":" + (r < 10 ? "0" : "") + r; };
+  var W = 720, H = 320, L = 44, R = 16, T = 16, B = 40;
+  var yMin = 300, yMax = 375;
+  var x = function (km) { return L + (km - 1) / 41 * (W - L - R); };
+  var y = function (s) { return T + (yMax - s) / (yMax - yMin) * (H - T - B); };
+  var NS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("chart");
+  function el(n, a, t) {
+    var e = document.createElementNS(NS, n);
+    for (var k in a) e.setAttribute(k, a[k]);
+    if (t) e.textContent = t;
+    svg.appendChild(e);
+    return e;
+  }
+
+  for (var s = 300; s <= 375; s += 15) {
+    el("line", { x1: L, x2: W - R, y1: y(s), y2: y(s), stroke: "var(--grid)", "stroke-width": 1 });
+    el("text", { x: L - 8, y: y(s) + 4, "text-anchor": "end" }, fmt(s));
+  }
+  el("line", { x1: L, x2: W - R, y1: H - B, y2: H - B, stroke: "var(--axis)", "stroke-width": 1 });
+  [1, 5, 10, 15, 20, 25, 30, 35, 40, 42].forEach(function (k) {
+    el("text", { x: x(k), y: H - B + 16, "text-anchor": "middle" }, k);
+  });
+  el("text", { x: (L + W - R) / 2, y: H - 6, "text-anchor": "middle", class: "label" }, "Kilometer");
+
+  var d = secs.map(function (v, i) { return (i ? "L" : "M") + x(i + 1).toFixed(1) + " " + y(v).toFixed(1); }).join(" ");
+  el("path", { d: d, fill: "none", stroke: "var(--series)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
+
+  // spike marker + direct label
+  el("circle", { cx: x(30), cy: y(370), r: 4.5, fill: "var(--series)", stroke: "var(--surface)", "stroke-width": 2 });
+  el("text", { x: x(30) - 10, y: y(370) + 4, "text-anchor": "end", class: "label" }, "Km 30 · 6:10 water stop");
+
+  // hover layer
+  var cross = el("line", { y1: T, y2: H - B, stroke: "var(--axis)", "stroke-width": 1, opacity: 0 });
+  var dot = el("circle", { r: 4.5, fill: "var(--series)", stroke: "var(--surface)", "stroke-width": 2, opacity: 0 });
+  var hit = el("rect", { x: L, y: T, width: W - L - R, height: H - T - B, fill: "transparent" });
+  var tip = document.getElementById("tip"), wrap = document.getElementById("wrap");
+
+  function show(ev) {
+    var r = svg.getBoundingClientRect();
+    var px = (ev.clientX - r.left) / r.width * W;
+    var km = Math.max(1, Math.min(42, Math.round(1 + (px - L) / (W - L - R) * 41)));
+    var v = secs[km - 1], cx = x(km), cy = y(v);
+    cross.setAttribute("x1", cx); cross.setAttribute("x2", cx); cross.setAttribute("opacity", 1);
+    dot.setAttribute("cx", cx); dot.setAttribute("cy", cy); dot.setAttribute("opacity", 1);
+    tip.innerHTML = "<b>Km " + km + "</b><br><span>Pace</span> " + fmt(v) + " /km";
+    tip.style.left = (cx / W * 100) + "%";
+    tip.style.top = (cy / H * r.height - 10) + "px";
+    tip.style.opacity = 1;
+  }
+  function hide() { cross.setAttribute("opacity", 0); dot.setAttribute("opacity", 0); tip.style.opacity = 0; }
+  hit.addEventListener("mousemove", show);
+  hit.addEventListener("touchmove", function (e) { show(e.touches[0]); }, { passive: true });
+  hit.addEventListener("mouseleave", hide);
+  hit.addEventListener("touchend", hide);
+
+  document.getElementById("avg").textContent = fmt(secs.reduce(function (a, b) { return a + b; }, 0) / secs.length);
+  document.getElementById("tbl").innerHTML = secs.map(function (v, i) {
+    return "<div><span>Km " + (i + 1) + "</span><span>" + fmt(v) + "</span></div>";
+  }).join("");
+})();
+</script>
+</body>
+</html>

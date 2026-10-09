@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern Row Night Market</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #120d2b;
+    color: #fff8ee;
+  }
+
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: clamp(2rem, 6vw, 5rem) 1.5rem clamp(9rem, 22vw, 14rem);
+    overflow: hidden;
+    text-align: center;
+    background:
+      radial-gradient(120% 55% at 50% 100%, rgba(255, 170, 80, .75) 0%, rgba(255, 120, 90, .35) 40%, transparent 70%),
+      linear-gradient(180deg, #14103a 0%, #2b1a5c 30%, #5a2a74 55%, #a8406f 78%, #e8704f 100%);
+  }
+
+  /* stars */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 45% 0;
+    z-index: -3;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 18%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 27% 8%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 41% 24%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 58% 12%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 73% 20%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 88% 9%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 94% 30%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 6% 36%, #fff 50%, transparent 51%);
+    opacity: .75;
+    animation: twinkle 6s ease-in-out infinite alternate;
+  }
+
+  /* soft scrim so text stays readable over the brighter parts of the sky */
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: radial-gradient(60% 50% at 50% 45%, rgba(20, 12, 50, .55), transparent 100%);
+  }
+
+  /* string of lanterns */
+  .lanterns {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: clamp(3rem, 9vw, 6rem);
+    height: 90px;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 50% 50%, #fff3c4 0 4px, #ffb347 8px, rgba(255, 150, 60, .35) 16px, transparent 26px)
+      0 0 / 110px 90px repeat-x,
+      radial-gradient(circle at 50% 50%, #ffe2e2 0 3px, #ff7a6b 7px, rgba(255, 100, 90, .3) 14px, transparent 22px)
+      55px 30px / 110px 90px repeat-x;
+    filter: drop-shadow(0 0 6px rgba(255, 170, 80, .6));
+  }
+
+  /* market stall silhouette */
+  .skyline {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: clamp(3.5rem, 10vw, 6.5rem);
+    z-index: -1;
+    background: #0e0a22;
+    clip-path: polygon(
+      0 60%, 6% 60%, 10% 25%, 14% 60%, 22% 60%, 22% 45%, 30% 45%, 30% 60%,
+      38% 60%, 42% 18%, 46% 60%, 56% 60%, 56% 40%, 64% 40%, 64% 60%,
+      72% 60%, 76% 22%, 80% 60%, 88% 60%, 92% 30%, 96% 60%, 100% 60%, 100% 100%, 0 100%
+    );
+  }
+
+  .content { max-width: 52rem; }
+
+  .eyebrow {
+    margin: 0 0 1.25rem;
+    font-size: clamp(.8rem, 1.6vw, .95rem);
+    font-weight: 600;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: #ffd48a;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: .95;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    text-wrap: balance;
+    text-shadow: 0 2px 24px rgba(20, 8, 50, .6), 0 0 60px rgba(255, 170, 80, .25);
+  }
+  h1 span { display: block; color: #ffc46b; }
+
+  .dates {
+    margin: 1.75rem 0 .5rem;
+    font-size: clamp(1.15rem, 3vw, 1.75rem);
+    font-weight: 600;
+    text-shadow: 0 1px 12px rgba(20, 8, 50, .7);
+  }
+
+  .tagline {
+    margin: 0 0 2.25rem;
+    font-size: clamp(1rem, 2.4vw, 1.3rem);
+    color: #fbe9df;
+    text-shadow: 0 1px 12px rgba(20, 8, 50, .7);
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 1rem 2.4rem;
+    border-radius: 999px;
+    background: #ffc46b;
+    color: #2a1238;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    text-decoration: none;
+    box-shadow: 0 0 0 0 rgba(255, 196, 107, .5), 0 8px 30px rgba(10, 5, 30, .45);
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .cta:hover { background: #ffd48a; transform: translateY(-2px); box-shadow: 0 0 0 6px rgba(255, 196, 107, .25), 0 10px 34px rgba(10, 5, 30, .5); }
+  .cta:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+
+  @keyframes twinkle { from { opacity: .45; } to { opacity: .9; } }
+  @media (prefers-reduced-motion: reduce) {
+    .hero::before { animation: none; }
+    .cta { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="content">
+      <p class="eyebrow">Friday – Sunday</p>
+      <h1>Lantern Row <span>Night Market</span></h1>
+      <p class="dates">October 17 – 19</p>
+      <p class="tagline">Food, crafts and live music after dark</p>
+      <a class="cta" href="#tickets">Get tickets</a>
+    </div>
+    <div class="lanterns" aria-hidden="true"></div>
+    <div class="skyline" aria-hidden="true"></div>
+  </header>
+</body>
+</html>

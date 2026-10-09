@@ -1,0 +1,1 @@
+No. Cramming all three makes the logo busy and hard to reproduce at small sizes, like bottle caps and taps. Use one strong primary mark, the bear or the wordmark, and keep the crest as a secondary badge or packaging element. Show the full combination only in large, low-density spots like merch or signage.

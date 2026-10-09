@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewater Coffee · Milk Steaming Quiz</title>
+<style>
+:root { --bg:#f6f1ea; --card:#fffdf9; --ink:#2b2118; --muted:#7a6a5c; --accent:#6b4a2f; --good:#2e7d4f; --bad:#b03a2e; --line:#e4d9cc; }
+* { box-sizing: border-box; }
+body { margin:0; min-height:100vh; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif; background:var(--bg); color:var(--ink); display:flex; justify-content:center; padding:24px 16px; }
+.wrap { width:100%; max-width:640px; }
+header h1 { font-size:1.4rem; margin:0 0 4px; }
+header p { margin:0 0 20px; color:var(--muted); }
+.card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; box-shadow:0 1px 3px rgba(43,33,24,.06); }
+.progress { height:6px; background:var(--line); border-radius:3px; overflow:hidden; margin-bottom:18px; }
+.progress div { height:100%; background:var(--accent); width:0; transition:width .3s; }
+.meta { font-size:.85rem; color:var(--muted); margin-bottom:8px; }
+.question { font-size:1.2rem; font-weight:600; margin:0 0 16px; line-height:1.35; }
+.options { display:grid; gap:10px; }
+.option { text-align:left; font:inherit; font-size:1rem; padding:14px 16px; border:2px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); cursor:pointer; min-height:52px; }
+.option:hover:not(:disabled) { border-color:var(--accent); }
+.option:disabled { cursor:default; color:var(--ink); }
+.option.correct { border-color:var(--good); background:#e8f5ec; }
+.option.wrong { border-color:var(--bad); background:#f9e9e7; }
+.feedback { margin-top:16px; padding:12px 14px; border-radius:10px; background:#f3ece3; display:none; line-height:1.45; }
+.feedback.show { display:block; }
+.feedback strong { display:block; margin-bottom:4px; }
+.actions { margin-top:18px; display:flex; justify-content:flex-end; }
+button.primary { font:inherit; font-weight:600; padding:12px 22px; border:0; border-radius:10px; background:var(--accent); color:#fff; cursor:pointer; min-height:48px; }
+button.primary:disabled { opacity:.4; cursor:not-allowed; }
+.result { text-align:center; padding:12px 0; }
+.score { font-size:3rem; font-weight:700; color:var(--accent); margin:8px 0; }
+.result p { color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Tidewater Coffee · Milk Steaming Quiz</h1>
+    <p>Seven questions on today's half-day. Pick an answer to see the explanation.</p>
+  </header>
+  <main class="card" id="app"></main>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "What is the target milk temperature range?",
+    options: ["40 to 50 C", "55 to 65 C", "70 to 80 C", "85 to 95 C"],
+    answer: 1,
+    explain: "Aim for 55 to 65 C. Anything over 70 C scalds the milk and kills the sweetness."
+  },
+  {
+    q: "What happens if the milk goes over 70 C?",
+    options: ["It gets sweeter and thicker", "It scalds and loses its sweetness", "The foam holds longer", "Nothing noticeable changes"],
+    answer: 1,
+    explain: "Over 70 C the milk scalds and the sweetness is lost."
+  },
+  {
+    q: "When do you add air to the milk?",
+    options: ["Only after it reaches temperature", "Early, while the milk is still cold", "Halfway through, once it's warm", "Never; steam alone makes foam"],
+    answer: 1,
+    explain: "Add air early while the milk is still cold, then move on to the rolling stage."
+  },
+  {
+    q: "After the air is added, what do you do with the steam wand tip?",
+    options: ["Keep it at the surface", "Lower it so the milk rolls", "Pull it out of the pitcher", "Hold it at the top of the milk"],
+    answer: 1,
+    explain: "Lower the tip and let the milk roll. Air goes in early; the rolling heats the milk evenly."
+  },
+  {
+    q: "When should you wipe the steam wand?",
+    options: ["Before you start steaming", "Right after steaming", "Only at close", "Once a shift"],
+    answer: 1,
+    explain: "Wipe the wand right after every steaming."
+  },
+  {
+    q: "When should you purge the steam wand?",
+    options: ["Before steaming only", "After steaming only", "Before and after steaming", "Never; purging wastes steam"],
+    answer: 2,
+    explain: "Purge the wand before and after steaming."
+  },
+  {
+    q: "How does oat milk compare to dairy when steaming?",
+    options: ["It heats slower and holds foam longer", "It heats faster and its foam falls apart sooner", "It heats and foams exactly like dairy", "It doesn't need temperature checks"],
+    answer: 1,
+    explain: "Oat milk heats faster than dairy and its foam breaks down sooner, so keep a closer eye on both temperature and texture."
+  }
+];
+
+const app = document.getElementById("app");
+let index = 0;
+let score = 0;
+
+function el(tag, cls, text) {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (text != null) node.textContent = text;
+  return node;
+}
+
+function renderQuestion() {
+  const item = QUESTIONS[index];
+  let locked = false;
+  const buttons = [];
+
+  const bar = el("div", "progress");
+  const fill = el("div");
+  fill.style.width = (index / QUESTIONS.length * 100) + "%";
+  bar.appendChild(fill);
+
+  const meta = el("div", "meta", `Question ${index + 1} of ${QUESTIONS.length}`);
+  const question = el("h2", "question", item.q);
+  const options = el("div", "options");
+  const feedback = el("div", "feedback");
+  const actions = el("div", "actions");
+  const next = el("button", "primary", index === QUESTIONS.length - 1 ? "See results" : "Next");
+  next.type = "button";
+  next.disabled = true;
+
+  item.options.forEach((text, idx) => {
+    const button = el("button", "option", text);
+    button.type = "button";
+    button.addEventListener("click", () => {
+      if (locked) return;
+      locked = true;
+      buttons.forEach(b => b.disabled = true);
+      const correct = idx === item.answer;
+      if (correct) {
+        score++;
+        button.classList.add("correct");
+      } else {
+        button.classList.add("wrong");
+        buttons[item.answer].classList.add("correct");
+      }
+      feedback.replaceChildren(
+        el("strong", null, correct ? "Correct" : "Not quite"),
+        document.createTextNode(item.explain)
+      );
+      feedback.classList.add("show");
+      next.disabled = false;
+    });
+    buttons.push(button);
+    options.appendChild(button);
+  });
+
+  next.addEventListener("click", () => {
+    index++;
+    if (index < QUESTIONS.length) {
+      renderQuestion();
+    } else {
+      renderResults();
+    }
+  });
+
+  actions.appendChild(next);
+  app.replaceChildren(bar, meta, question, options, feedback, actions);
+}
+
+function renderResults() {
+  const ratio = score / QUESTIONS.length;
+  let message;
+  if (ratio === 1) {
+    message = "Every answer right. Nice work.";
+  } else if (ratio >= 0.7) {
+    message = "Solid. Review the ones you missed before your first shift on the wand.";
+  } else {
+    message = "Go over the milk steaming notes again, then retake the quiz.";
+  }
+
+  const result = el("div", "result");
+  result.append(
+    el("div", "meta", "Your score"),
+    el("div", "score", `${score} / ${QUESTIONS.length}`),
+    el("p", null, message)
+  );
+
+  const actions = el("div", "actions");
+  const again = el("button", "primary", "Retake quiz");
+  again.type = "button";
+  again.addEventListener("click", () => {
+    index = 0;
+    score = 0;
+    renderQuestion();
+  });
+  actions.appendChild(again);
+
+  app.replaceChildren(result, actions);
+}
+
+renderQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollowbrook Vet Care · Design Foundation</title>
+<style>
+/* ==========================================================================
+   1. DESIGN TOKENS
+   Every color, size, and spacing value in the app comes from here.
+   Do not hard-code hex values or px spacing in components or screens.
+   ========================================================================== */
+:root {
+  /* Brand: calm clinical teal */
+  --color-brand-900: #0a3d3d;
+  --color-brand-700: #0f6b6b;   /* primary actions, links on light bg */
+  --color-brand-600: #137c7c;   /* hover */
+  --color-brand-100: #d7eeee;
+  --color-brand-50:  #eef8f8;
+
+  /* Warm neutrals: text, surfaces, borders */
+  --color-ink-900: #1d2b2a;     /* body text, headings */
+  --color-ink-700: #41524f;     /* secondary text (contrast 7.9:1 on surface) */
+  --color-ink-500: #6b7b78;     /* hints, placeholders only; never for essential text */
+  --color-line:    #d5dedc;     /* borders, dividers */
+  --color-surface: #ffffff;     /* cards, inputs */
+  --color-canvas:  #f5f7f6;     /* page background */
+
+  /* Status: always paired with a text label, never color alone */
+  --color-success-bg: #e6f4ec;  --color-success-ink: #1b5e35;  --color-success-line: #2e8b57;
+  --color-warning-bg: #fdf3dc;  --color-warning-ink: #6e4a00;  --color-warning-line: #c58b10;
+  --color-danger-bg:  #fbe9e7;  --color-danger-ink:  #8a1f15;  --color-danger-line:  #c0392b;
+  --color-info-bg:    #e7f0fa;  --color-info-ink:    #1d4f7a;  --color-info-line:    #3b7bbf;
+
+  /* Focus ring: must stay visible for keyboard users */
+  --color-focus: #f0a500;
+
+  /* Typography: system fonts only, no web font downloads */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-xs: 0.8125rem;   /* 13px: badges, fine print */
+  --text-sm: 0.9375rem;   /* 15px: hints, labels, table text */
+  --text-md: 1rem;        /* 16px: body default */
+  --text-lg: 1.125rem;    /* 18px: card titles */
+  --text-xl: 1.375rem;    /* 22px: section headings */
+  --text-2xl: 1.75rem;    /* 28px: page title */
+
+  --leading-tight: 1.25;
+  --leading-body: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Spacing: 4px base scale. Use these, nothing else. */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.5rem;   /* 24px */
+  --space-6: 2rem;     /* 32px */
+  --space-7: 3rem;     /* 48px */
+
+  /* Shape and elevation: calm, not bubbly */
+  --radius-sm: 6px;    /* inputs, badges */
+  --radius-md: 10px;   /* buttons, alerts */
+  --radius-lg: 14px;   /* cards */
+  --shadow-card: 0 1px 2px rgba(29, 43, 42, 0.06), 0 2px 8px rgba(29, 43, 42, 0.05);
+
+  /* Layout */
+  --content-max: 760px;
+  --touch-target: 44px; /* minimum tap/click height for interactive controls */
+}
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
+  color: var(--color-ink-900);
+  background: var(--color-canvas);
+}
+
+h1, h2, h3 {
+  line-height: var(--leading-tight);
+  color: var(--color-ink-900);
+  margin: 0 0 var(--space-3);
+}
+h1 { font-size: var(--text-2xl); font-weight: var(--weight-semibold); }
+h2 { font-size: var(--text-xl);  font-weight: var(--weight-semibold); }
+h3 { font-size: var(--text-lg);  font-weight: var(--weight-semibold); }
+
+p { margin: 0 0 var(--space-3); }
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   3. LAYOUT PRIMITIVES
+   ========================================================================== */
+.container {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+.stack > * + * { margin-top: var(--space-4); }
+
+.section {
+  margin-top: var(--space-7);
+}
+.section > .section-intro {
+  color: var(--color-ink-700);
+  margin-bottom: var(--space-5);
+}
+
+.grid-2 {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.muted { color: var(--color-ink-700); }
+.small { font-size: var(--text-sm); }
+
+/* ==========================================================================
+   4. FOUNDATION DOCUMENTATION (this page only)
+   ========================================================================== */
+.doc-header {
+  background: var(--color-brand-900);
+  color: #ffffff;
+  padding: var(--space-6) 0;
+}
+.doc-header .container { padding-top: var(--space-5); padding-bottom: var(--space-5); }
+.doc-header h1 { color: #ffffff; margin-bottom: var(--space-2); }
+.doc-header p { color: #cfe6e6; margin: 0; max-width: 60ch; }
+
+.swatches {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.swatch {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.swatch-chip { height: 56px; }
+.swatch-body { padding: var(--space-2) var(--space-3); font-size: var(--text-xs); }
+.swatch-name { font-weight: var(--weight-semibold); color: var(--color-ink-900); display: block; }
+.swatch-value { font-family: var(--font-mono); color: var(--color-ink-700); }
+
+.type-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.type-row:last-child { border-bottom: 0; }
+.type-meta { font-size: var(--text-xs); color: var(--color-ink-700); font-family: var(--font-mono); }
+
+.space-scale { display: grid; gap: var(--space-2); }
+.space-row { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm); }
+.space-bar { background: var(--color-brand-600); height: 12px; border-radius: 2px; }
+.space-label { font-family: var(--font-mono); color: var(--color-ink-700); min-width: 150px; }
+
+.rules {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+.rules ol, .rules ul { margin: 0; padding-left: var(--space-5); }
+.rules li + li { margin-top: var(--space-2); }
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--color-brand-50);
+  color: var(--color-brand-900);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   5. BUTTONS
+   Variants: primary (one per view), secondary, quiet (tertiary/text).
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-5);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--color-brand-700);
+  color: #ffffff;
+}
+.btn-primary:hover:not(:disabled) { background: var(--color-brand-600); }
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-brand-700);
+  border-color: var(--color-brand-700);
+}
+.btn-secondary:hover:not(:disabled) { background: var(--color-brand-50); }
+
+.btn-quiet {
+  background: transparent;
+  color: var(--color-brand-700);
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
+}
+.btn-quiet:hover:not(:disabled) { background: var(--color-brand-50); }
+
+.btn-block { width: 100%; }
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* ==========================================================================
+   6. FORMS
+   Every control has a visible label. Hints and errors are linked with
+   aria-describedby. Errors use text + border, not color alone.
+   ========================================================================== */
+.field { display: grid; gap: var(--space-1); }
+
+.field-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ink-900);
+}
+.field-label .optional {
+  font-weight: var(--weight-regular);
+  color: var(--color-ink-700);
+}
+
+.field-hint {
+  font-size: var(--text-sm);
+  color: var(--color-ink-700);
+}
+
+.field-error {
+  font-size: var(--text-sm);
+  color: var(--color-danger-ink);
+  font-weight: var(--weight-medium);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  color: var(--color-ink-900);
+  background: var(--color-surface);
+  border: 1px solid #8fa19e;   /* 3:1+ against white for input boundary */
+  border-radius: var(--radius-sm);
+}
+.textarea { min-height: 96px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: var(--color-ink-500); }
+.input:hover, .select:hover, .textarea:hover { border-color: var(--color-brand-700); }
+
+.field.is-invalid .input,
+.field.is-invalid .select,
+.field.is-invalid .textarea {
+  border: 2px solid var(--color-danger-line);
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+legend {
+  padding: 0;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+/* Time-slot radio chips */
+.slot-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.slot-group input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.slot-group label {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid #8fa19e;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: var(--text-sm);
+}
+.slot-group label:hover { border-color: var(--color-brand-700); }
+.slot-group input:checked + label {
+  background: var(--color-brand-700);
+  border-color: var(--color-brand-700);
+  color: #ffffff;
+  font-weight: var(--weight-medium);
+}
+.slot-group input:focus-visible + label {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.slot-group input:disabled + label {
+  opacity: 0.45;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.form-grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.form-grid .span-full { grid-column: 1 / -1; }
+
+/* ==========================================================================
+   7. CARDS
+   ========================================================================== */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+}
+.card-title { font-size: var(--text-lg); font-weight: var(--weight-semibold); margin: 0; }
+.card-meta  { font-size: var(--text-sm); color: var(--color-ink-700); margin: var(--space-1) 0 0; }
+
+/* Appointment card */
+.appt {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+.appt-date {
+  background: var(--color-brand-50);
+  border: 1px solid var(--color-brand-100);
+  border-radius: var(--radius-md);
+  text-align: center;
+  padding: var(--space-2) var(--space-1);
+  color: var(--color-brand-900);
+}
+.appt-date .month { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; font-weight: var(--weight-semibold); }
+.appt-date .day   { font-size: var(--text-2xl); font-weight: var(--weight-semibold); line-height: 1.1; }
+.appt-date .dow   { font-size: var(--text-xs); color: var(--color-ink-700); }
+
+.appt-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.appt-details {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-sm);
+}
+.appt-details div { display: flex; gap: var(--space-2); }
+.appt-details dt { color: var(--color-ink-700); min-width: 88px; margin: 0; }
+.appt-details dd { margin: 0; color: var(--color-ink-900); }
+.appt-actions { margin-top: var(--space-4); display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+/* ==========================================================================
+   8. BADGES (status labels)
+   ========================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.badge-success { background: var(--color-success-bg); color: var(--color-success-ink); border-color: var(--color-success-line); }
+.badge-warning { background: var(--color-warning-bg); color: var(--color-warning-ink); border-color: var(--color-warning-line); }
+.badge-danger  { background: var(--color-danger-bg);  color: var(--color-danger-ink);  border-color: var(--color-danger-line); }
+.badge-info    { background: var(--color-info-bg);    color: var(--color-info-ink);    border-color: var(--color-info-line); }
+.badge-neutral { background: #eceff0; color: var(--color-ink-700); border-color: #b9c4c2; }
+
+/* ==========================================================================
+   9. ALERTS / STATUS MESSAGES
+   Use role="status" for confirmations and polite updates,
+   role="alert" only for errors that need immediate attention.
+   ========================================================================== */
+.alert {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+  align-items: start;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  font-size: var(--text-sm);
+}
+.alert-icon { width: 20px; height: 20px; margin-top: 2px; }
+.alert-title { display: block; font-weight: var(--weight-semibold); margin-bottom: 2px; font-size: var(--text-md); }
+.alert p { margin: 0; }
+.alert-success { background: var(--color-success-bg); border-color: var(--color-success-line); color: var(--color-success-ink); }
+.alert-warning { background: var(--color-warning-bg); border-color: var(--color-warning-line); color: var(--color-warning-ink); }
+.alert-danger  { background: var(--color-danger-bg);  border-color: var(--color-danger-line);  color: var(--color-danger-ink); }
+.alert-info    { background: var(--color-info-bg);    border-color: var(--color-info-line);    color: var(--color-info-ink); }
+
+.alert[hidden] { display: none; }
+
+/* ==========================================================================
+   10. SCREEN SAMPLE: BOOKING FORM
+   ========================================================================== */
+.booking-form-card { padding: var(--space-6); }
+.booking-form-card .intro { margin-bottom: var(--space-5); }
+.form-actions { margin-top: var(--space-5); display: grid; gap: var(--space-3); }
+.reassure { font-size: var(--text-sm); color: var(--color-ink-700); margin: 0; text-align: center; }
+
+/* ==========================================================================
+   11. RESPONSIVE
+   ========================================================================== */
+@media (max-width: 520px) {
+  .type-row { grid-template-columns: 1fr; gap: var(--space-1); }
+  .space-label { min-width: 110px; }
+  .booking-form-card { padding: var(--space-5) var(--space-4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="container">
+    <h1>Hollowbrook Vet Care</h1>
+    <p>Design foundation for the web app. Tokens, base styles, and a sample of components built from them. Every screen should be assembled from these pieces.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ===================== FOUNDATION ===================== -->
+  <section class="section" aria-labelledby="colors-h">
+    <h2 id="colors-h">Color</h2>
+    <p class="section-intro">Teal carries actions and identity. Warm neutrals hold text and surfaces. Status colors are always paired with a written label.</p>
+    <ul class="swatches">
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-brand-900)"></div><div class="swatch-body"><span class="swatch-name">Brand 900</span><span class="swatch-value">#0a3d3d</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-brand-700)"></div><div class="swatch-body"><span class="swatch-name">Brand 700 · Primary</span><span class="swatch-value">#0f6b6b</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-brand-100)"></div><div class="swatch-body"><span class="swatch-name">Brand 100</span><span class="swatch-value">#d7eeee</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-ink-900)"></div><div class="swatch-body"><span class="swatch-name">Ink 900 · Text</span><span class="swatch-value">#1d2b2a</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-ink-700)"></div><div class="swatch-body"><span class="swatch-name">Ink 700 · Secondary</span><span class="swatch-value">#41524f</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-line)"></div><div class="swatch-body"><span class="swatch-name">Line</span><span class="swatch-value">#d5dedc</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-success-line)"></div><div class="swatch-body"><span class="swatch-name">Success</span><span class="swatch-value">#2e8b57</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-warning-line)"></div><div class="swatch-body"><span class="swatch-name">Warning</span><span class="swatch-value">#c58b10</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-danger-line)"></div><div class="swatch-body"><span class="swatch-name">Danger</span><span class="swatch-value">#c0392b</span></div></li>
+      <li class="swatch"><div class="swatch-chip" style="background:var(--color-info-line)"></div><div class="swatch-body"><span class="swatch-name">Info</span><span class="swatch-value">#3b7bbf</span></div></li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="type-h">
+    <h2 id="type-h">Typography</h2>
+    <p class="section-intro">System font stack only. No web font downloads, so pages load fast and render natively on every device.</p>
+    <div class="card">
+      <div class="type-row"><span class="type-meta">--text-2xl · 28px</span><h1 style="margin:0">Pet records and visits</h1></div>
+      <div class="type-row"><span class="type-meta">--text-xl · 22px</span><h2 style="margin:0">Upcoming appointments</h2></div>
+      <div class="type-row"><span class="type-meta">--text-lg · 18px</span><h3 style="margin:0">Biscuit, Golden Retriever</h3></div>
+      <div class="type-row"><span class="type-meta">--text-md · 16px</span><p style="margin:0">Body text is 16px with a 1.55 line height. Keep line lengths under about 70 characters for reading comfort.</p></div>
+      <div class="type-row"><span class="type-meta">--text-sm · 15px</span><p class="muted" style="margin:0">Hints, labels, and supporting details.</p></div>
+      <div class="type-row"><span class="type-meta">--text-xs · 13px</span><p class="muted small" style="margin:0">Badges and fine print only. Do not use for essential information.</p></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="space-h">
+    <h2 id="space-h">Spacing, shape, and elevation</h2>
+    <p class="section-intro">A 4px base scale. Components use only these tokens, so layouts line up across screens.</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="space-scale">
+          <div class="space-row"><span class="space-label">--space-1 · 4px</span><div class="space-bar" style="width:4px"></div></div>
+          <div class="space-row"><span class="space-label">--space-2 · 8px</span><div class="space-bar" style="width:8px"></div></div>
+          <div class="space-row"><span class="space-label">--space-3 · 12px</span><div class="space-bar" style="width:12px"></div></div>
+          <div class="space-row"><span class="space-label">--space-4 · 16px</span><div class="space-bar" style="width:16px"></div></div>
+          <div class="space-row"><span class="space-label">--space-5 · 24px</span><div class="space-bar" style="width:24px"></div></div>
+          <div class="space-row"><span class="space-label">--space-6 · 32px</span><div class="space-bar" style="width:32px"></div></div>
+          <div class="space-row"><span class="space-label">--space-7 · 48px</span><div class="space-bar" style="width:48px"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="small muted" style="margin-bottom:var(--space-3)">Radius: sm 6px (inputs, badges) · md 10px (buttons, alerts) · lg 14px (cards)</p>
+        <p class="small muted" style="margin-bottom:var(--space-3)">Elevation: one shadow level for cards. Avoid stacking shadows.</p>
+        <p class="small muted" style="margin:0">Touch target: 44px minimum height for every button, input, and option.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="buttons-h">
+    <h2 id="buttons-h">Buttons</h2>
+    <p class="section-intro">One primary action per view. Secondary for alternatives. Quiet for low-emphasis actions like cancel or view details.</p>
+    <div class="card">
+      <div class="button-row">
+        <button class="btn btn-primary" type="button">Book appointment</button>
+        <button class="btn btn-secondary" type="button">Reschedule</button>
+        <button class="btn btn-quiet" type="button">Cancel</button>
+        <button class="btn btn-primary" type="button" disabled>Disabled</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="status-h">
+    <h2 id="status-h">Status messages and badges</h2>
+    <p class="section-intro">Each message has a title and plain-language text. Badges label the state of an appointment or record.</p>
+    <div class="stack">
+      <div class="alert alert-success" role="status">
+        <svg class="alert-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 10.5l2.5 2.5L14 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><span class="alert-title">Appointment confirmed</span><p>We've emailed the details. Please arrive 10 minutes early.</p></div>
+      </div>
+      <div class="alert alert-warning" role="status">
+        <svg class="alert-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l8 14H2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="14.5" r="1" fill="currentColor"/></svg>
+        <div><span class="alert-title">Vaccine record due soon</span><p>Biscuit's rabies booster is due in 14 days. Book a visit to stay current.</p></div>
+      </div>
+      <div class="alert alert-info" role="status">
+        <svg class="alert-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 9v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="6" r="1" fill="currentColor"/></svg>
+        <div><span class="alert-title">Clinic closes at 4 pm on Friday</span><p>Same-day urgent visits are still available by phone.</p></div>
+      </div>
+      <div class="alert alert-danger" role="alert">
+        <svg class="alert-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 5.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="14.5" r="1" fill="currentColor"/></svg>
+        <div><span class="alert-title">That time slot was just taken</span><p>Please choose another time. Your other details are still saved.</p></div>
+      </div>
+    </div>
+    <div class="button-row" style="margin-top:var(--space-4)">
+      <span class="badge badge-success">Confirmed</span>
+      <span class="badge badge-info">Checked in</span>
+      <span class="badge badge-warning">Awaiting payment</span>
+      <span class="badge badge-danger">Cancelled</span>
+      <span class="badge badge-neutral">Completed</span>
+    </div>
+  </section>
+
+  <!-- ===================== SAMPLE PIECES ===================== -->
+  <section class="section" aria-labelledby="sample-booking-h">
+    <h2 id="sample-booking-h">Sample: booking form</h2>
+    <p class="section-intro">Built only from the tokens and components above.</p>
+    <form class="card booking-form-card" id="booking-form" novalidate>
+      <div class="intro">
+        <h3>Book a visit</h3>
+        <p class="muted" style="margin:0">Choose your pet, the reason for the visit, and a time that works. You'll get a confirmation right away.</p>
+      </div>
+
+      <div class="form-grid">
+        <div class="field" id="field-pet">
+          <label class="field-label" for="pet">Pet</label>
+          <select class="select" id="pet" name="pet" aria-describedby="pet-error">
+            <option value="">Select a pet</option>
+            <option>Biscuit (Golden Retriever, 6 yrs)</option>
+            <option>Mochi (Domestic Shorthair, 3 yrs)</option>
+          </select>
+          <span class="field-error" id="pet-error" hidden>Please select a pet.</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="service">Reason for visit</label>
+          <select class="select" id="service" name="service">
+            <option>Wellness exam</option>
+            <option>Vaccination</option>
+            <option>Dental cleaning</option>
+            <option>Sick visit</option>
+          </select>
+        </div>
+
+        <div class="field" id="field-date">
+          <label class="field-label" for="date">Preferred date</label>
+          <input class="input" type="date" id="date" name="date" aria-describedby="date-hint date-error">
+          <span class="field-hint" id="date-hint">Same-day visits can be requested by phone.</span>
+          <span class="field-error" id="date-error" hidden>Please choose a date.</span>
+        </div>
+
+        <fieldset class="span-full" aria-describedby="time-error">
+          <legend>Preferred time</legend>
+          <div class="slot-group">
+            <input type="radio" id="t1" name="time" value="9:00"><label for="t1">9:00 am</label>
+            <input type="radio" id="t2" name="time" value="10:30"><label for="t2">10:30 am</label>
+            <input type="radio" id="t3" name="time" value="12:00" disabled><label for="t3">12:00 pm</label>
+            <input type="radio" id="t4" name="time" value="1:30"><label for="t4">1:30 pm</label>
+            <input type="radio" id="t5" name="time" value="3:00"><label for="t5">3:00 pm</label>
+          </div>
+          <span class="field-error" id="time-error" hidden>Please choose a time.</span>
+        </fieldset>
+
+        <div class="field span-full">
+          <label class="field-label" for="notes">Anything we should know? <span class="optional">(optional)</span></label>
+          <textarea class="textarea" id="notes" name="notes" aria-describedby="notes-hint"></textarea>
+          <span class="field-hint" id="notes-hint">Symptoms, behavior changes, or medications.</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="owner">Your name</label>
+          <input class="input" type="text" id="owner" name="owner" autocomplete="name">
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="phone">Phone</label>
+          <input class="input" type="tel" id="phone" name="phone" autocomplete="tel" aria-describedby="phone-hint">
+          <span class="field-hint" id="phone-hint">We only call about this appointment.</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <div class="alert alert-danger" id="form-status" role="alert" hidden>
+          <div><span class="alert-title">Please fix the highlighted fields</span><p>Look for the red messages above.</p></div>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Request appointment</button>
+        <p class="reassure">You can change or cancel up to 24 hours before your visit.</p>
+      </div>
+    </form>
+  </section>
+
+  <section class="section" aria-labelledby="sample-appt-h">
+    <h2 id="sample-appt-h">Sample: appointment card</h2>
+    <p class="section-intro">Used on the dashboard, the pet record, and the reminders list.</p>
+    <div class="grid-2">
+      <article class="card">
+        <div class="appt">
+          <div class="appt-date" aria-label="Thursday, October 15">
+            <div class="month">Oct</div>
+            <div class="day">15</div>
+            <div class="dow">Thu</div>
+          </div>
+          <div>
+            <div class="appt-head">
+              <div>
+                <h3 class="card-title">Wellness exam</h3>
+                <p class="card-meta">Biscuit · Dr. Amara Okafor</p>
+              </div>
+              <span class="badge badge-success">Confirmed</span>
+            </div>
+            <dl class="appt-details">
+              <div><dt>Time</dt><dd>9:00 am (45 min)</dd></div>
+              <div><dt>Location</dt><dd>Hollowbrook, Room 2</dd></div>
+            </dl>
+            <div class="appt-actions">
+              <button class="btn btn-secondary" type="button">Reschedule</button>
+              <button class="btn btn-quiet" type="button">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="appt">
+          <div class="appt-date" aria-label="Monday, October 19">
+            <div class="month">Oct</div>
+            <div class="day">19</div>
+            <div class="dow">Mon</div>
+          </div>
+          <div>
+            <div class="appt-head">
+              <div>
+                <h3 class="card-title">Vaccination</h3>
+                <p class="card-meta">Mochi · Nurse Daniel Reyes</p>
+              </div>
+              <span class="badge badge-warning">Awaiting payment</span>
+            </div>
+            <dl class="appt-details">
+              <div><dt>Time</dt><dd>1:30 pm (20 min)</dd></div>
+              <div><dt>Location</dt><dd>Hollowbrook, Front desk</dd></div>
+            </dl>
+            <div class="appt-actions">
+              <button class="btn btn-primary" type="button">Pay now</button>
+              <button class="btn btn-quiet" type="button">View details</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="rules-h">
+    <h2 id="rules-h">Rules for building new screens</h2>
+    <div class="rules">
+      <ol>
+        <li>Use tokens (<code>var(--color-…)</code>, <code>var(--space-…)</code>, <code>var(--text-…)</code>). Never hard-code colors, font sizes, or spacing.</li>
+        <li>Start from an existing component. Build a new one only when none fits, and add it to this page first.</li>
+        <li>One primary button per view. Destructive actions use the quiet or secondary style, with a confirmation step.</li>
+        <li>Every input has a visible label. Hints and errors connect with <code>aria-describedby</code>.</li>
+        <li>Show errors as text next to the field. Never rely on color alone.</li>
+        <li>Use <code>role="status"</code> for confirmations and <code>role="alert"</code> only for errors that need immediate attention.</li>
+        <li>Write plain, warm sentences. Say what happened and what the person can do next. Avoid jargon and exclamation marks.</li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* Minimal behavior for the sample booking form.
+   Shows how field errors and the form-level alert are wired together. */
+(function () {
+  var form = document.getElementById('booking-form');
+  var formStatus = document.getElementById('form-status');
+
+  function setError(fieldId, errorId, message) {
+    var field = document.getElementById(fieldId);
+    var error = document.getElementById(errorId);
+    var invalid = !!message;
+    if (field) field.classList.toggle('is-invalid', invalid);
+    if (error) error.hidden = !invalid;
+    return invalid;
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var pet = document.getElementById('pet').value;
+    var date = document.getElementById('date').value;
+    var time = form.querySelector('input[name="time"]:checked');
+
+    var hasError = false;
+    hasError = setError('field-pet', 'pet-error', !pet) || hasError;
+    hasError = setError('field-date', 'date-error', !date) || hasError;
+
+    var timeError = document.getElementById('time-error');
+    timeError.hidden = !!time;
+    if (!time) hasError = true;
+
+    formStatus.hidden = !hasError;
+    if (hasError) {
+      var firstInvalid = form.querySelector('.is-invalid .field-label, .is-invalid input, .is-invalid select') ||
+                         (timeError.hidden ? null : form.querySelector('fieldset'));
+      if (firstInvalid && firstInvalid.focus) firstInvalid.focus();
+      return;
+    }
+
+    formStatus.hidden = true;
+    var confirmation = document.createElement('div');
+    confirmation.className = 'alert alert-success';
+    confirmation.setAttribute('role', 'status');
+    confirmation.innerHTML =
+      '<div><span class="alert-title">Request received</span>' +
+      '<p>We\'ll confirm your visit by phone within one business day.</p></div>';
+    form.replaceWith(confirmation);
+    confirmation.setAttribute('tabindex', '-1');
+    confirmation.focus();
+  });
+})();
+</script>
+
+</body>
+</html>

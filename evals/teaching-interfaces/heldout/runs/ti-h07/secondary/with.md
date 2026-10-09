@@ -1,0 +1,1 @@
+An empty state helps when it tells the new user what the space is for and gives a concrete next action, such as a button to create their first project or a template to start from. It also works better when it shows what the filled-in version will look like, so the user understands the value before they have any data.

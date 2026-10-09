@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tickets opened vs resolved</title>
+<style>
+  :root{
+    --bg:#f3f4f6; --card:#ffffff; --ink:#111827; --muted:#6b7280; --grid:#e5e7eb;
+    --opened:#c2410c; --resolved:#0f766e; --grow:#c2410c; --shrink:#0f766e;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0b0f14; --card:#151b23; --ink:#f3f4f6; --muted:#9ca3af; --grid:#2a323d;
+      --opened:#fb923c; --resolved:#2dd4bf; --grow:#fb923c; --shrink:#2dd4bf;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:16px; overflow:hidden;
+  }
+  .card{
+    background:var(--card); border-radius:14px; width:min(760px,100%);
+    padding:20px 22px 16px; box-shadow:0 1px 3px rgba(0,0,0,.12);
+  }
+  .eyebrow{font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:0 0 4px}
+  h1{font-size:20px; line-height:1.25; margin:0 0 6px; font-weight:650}
+  .sub{margin:0 0 12px; font-size:14px; color:var(--muted); line-height:1.4}
+  .sub b{color:var(--ink); font-weight:600}
+  .stats{display:flex; gap:24px; margin:0 0 8px; flex-wrap:wrap}
+  .stat .n{font-size:22px; font-weight:700; font-variant-numeric:tabular-nums}
+  .stat .l{font-size:12px; color:var(--muted)}
+  svg{display:block; width:100%; height:auto; max-height:52vh}
+  svg text{font-family:inherit; fill:var(--muted); font-size:11px}
+  svg .lbl{font-size:12px; font-weight:650}
+  .foot{margin:8px 0 0; font-size:11.5px; color:var(--muted)}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <p class="eyebrow">Support weekly review · last 12 weeks</p>
+  <h1 id="t">Backlog is still +55 over 12 weeks, but it has shrunk two weeks running</h1>
+  <p class="sub">Resolved beat opened in weeks 11 and 12 (net <b>−10</b> tickets), after growing in most earlier weeks. One more strong week would confirm the trend.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">1,874</div><div class="l">opened</div></div>
+    <div class="stat"><div class="n">1,819</div><div class="l">resolved</div></div>
+    <div class="stat"><div class="n" style="color:var(--grow)">+55</div><div class="l">net backlog change</div></div>
+    <div class="stat"><div class="n" style="color:var(--shrink)">−8</div><div class="l">net, latest week</div></div>
+  </div>
+
+  <svg id="chart" viewBox="0 0 600 300" role="img" aria-labelledby="ct cd">
+    <title id="ct">Tickets opened versus resolved, last 12 weeks</title>
+    <desc id="cd">Line chart. Opened rises from 120 to a peak of 180 in week 9, then eases to 160. Resolved rises from 110 to 172 in week 10 and ends at 168, above opened in the last two weeks. Bars below show weekly net backlog change; weeks 3, 8, 11 and 12 are negative.</desc>
+  </svg>
+  <p class="foot">Line axis starts at 100 tickets. Net = opened − resolved; bars above the line mean the backlog grew that week.</p>
+</section>
+
+<script>
+(function(){
+  var opened=[120,135,128,150,162,158,171,166,180,175,169,160];
+  var resolved=[110,125,130,140,150,155,160,168,170,172,171,168];
+  var x0=44,x1=516,top=14,bot=190,vmin=100,vmax=190;
+  var sx=function(i){return x0+i*(x1-x0)/11};
+  var sy=function(v){return bot-(v-vmin)*(bot-top)/(vmax-vmin)};
+  var s='';
+  for(var v=100;v<=180;v+=20){
+    s+='<line x1="'+x0+'" x2="'+x1+'" y1="'+sy(v)+'" y2="'+sy(v)+'" stroke="var(--grid)"/>';
+    s+='<text x="'+(x0-8)+'" y="'+(sy(v)+4)+'" text-anchor="end">'+v+'</text>';
+  }
+  for(var i=0;i<12;i++){
+    s+='<text x="'+sx(i)+'" y="'+(bot+16)+'" text-anchor="middle">W'+(i+1)+'</text>';
+  }
+  function path(a){return a.map(function(v,i){return (i?'L':'M')+sx(i).toFixed(1)+' '+sy(v).toFixed(1)}).join(' ')}
+  s+='<path d="'+path(opened)+'" fill="none" stroke="var(--opened)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  s+='<path d="'+path(resolved)+'" fill="none" stroke="var(--resolved)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  [[opened,'--opened'],[resolved,'--resolved']].forEach(function(p){
+    s+='<circle cx="'+sx(11)+'" cy="'+sy(p[0][11])+'" r="4" fill="var('+p[1]+')"/>';
+  });
+  s+='<text class="lbl" x="'+(x1+10)+'" y="'+(sy(168)+1)+'" style="fill:var(--resolved)">Resolved 168</text>';
+  s+='<text class="lbl" x="'+(x1+10)+'" y="'+(sy(160)+9)+'" style="fill:var(--opened)">Opened 160</text>';
+  // net bars
+  var base=262,k=2.4;
+  s+='<text x="'+x0+'" y="222" style="font-weight:600">Net backlog change per week</text>';
+  s+='<line x1="'+x0+'" x2="'+x1+'" y1="'+base+'" y2="'+base+'" stroke="var(--muted)" stroke-width="1"/>';
+  for(var j=0;j<12;j++){
+    var n=opened[j]-resolved[j], h=Math.abs(n)*k, up=n>0;
+    var y=up?base-h:base, col=up?'var(--grow)':'var(--shrink)';
+    s+='<rect x="'+(sx(j)-10)+'" y="'+y+'" width="20" height="'+h+'" rx="2" fill="'+col+'"/>';
+    var ty=up?base-h-4:base+h+11;
+    s+='<text x="'+sx(j)+'" y="'+ty+'" text-anchor="middle" style="fill:var(--ink);font-size:10.5px">'+(n>0?'+':'−')+Math.abs(n)+'</text>';
+  }
+  s+='<text x="'+(x1+10)+'" y="'+(base-12)+'" style="fill:var(--grow)">grew</text>';
+  s+='<text x="'+(x1+10)+'" y="'+(base+18)+'" style="fill:var(--shrink)">shrank</text>';
+  document.getElementById('chart').insertAdjacentHTML('beforeend',s);
+})();
+</script>
+</body>
+</html>

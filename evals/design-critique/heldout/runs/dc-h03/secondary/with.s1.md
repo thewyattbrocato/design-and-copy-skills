@@ -1,0 +1,1 @@
+No, not as is. The gray "Start free trial" button with white text is about 2.6:1 contrast and reads as disabled, and the "/month billed annually" note at #b5b5b5 is also too faint to read (about 2:1). Give the button a real brand color like Starter's blue, and darken the note to at least #6b6b6b.

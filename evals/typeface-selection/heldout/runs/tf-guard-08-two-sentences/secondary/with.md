@@ -1,0 +1,1 @@
+Set the names in a refined display serif like Cormorant Garamond, used large and in regular or medium weight, with `font-family: "Cormorant Garamond", Georgia, serif;` as the stack. Use a plain sans such as Inter for the schedule and RSVP text, and check that the é and á render in whichever face you pick.

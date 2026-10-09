@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to Kilnbook</title>
+<style>
+  :root{
+    --bg:#f6f1ea; --surface:#fffdf9; --ink:#2b2420; --muted:#6b5e55; --line:#e0d5c8;
+    --accent:#a6471f; --accent-ink:#fff; --accent-soft:#f6e2d6; --ok:#2f6b4a; --ok-soft:#e1f0e7;
+    --focus:#1c5fd4;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#1d1814; --surface:#27211c; --ink:#f3ebe2; --muted:#b9ab9d; --line:#43382f;
+      --accent:#e0804f; --accent-ink:#1d1814; --accent-soft:#3b2a20; --ok:#7fcf9f; --ok-soft:#1f3328; --focus:#8ab4ff;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  header{display:flex;justify-content:space-between;align-items:center;padding:16px clamp(16px,4vw,40px)}
+  .brand{font-weight:700;letter-spacing:.2px;font-size:18px}
+  .brand span{color:var(--accent)}
+  .skip{color:var(--muted);background:none;border:0;font:inherit;text-decoration:underline;cursor:pointer;padding:8px}
+  main{max-width:980px;margin:0 auto;padding:8px clamp(16px,4vw,40px) 56px}
+  h1{font-size:clamp(26px,4vw,34px);line-height:1.2;margin:8px 0 8px}
+  .lede{color:var(--muted);margin:0 0 24px;max-width:60ch}
+  .layout{display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:start}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+  ol.steps{list-style:none;display:flex;gap:8px;margin:0 0 20px;padding:0;flex-wrap:wrap;font-size:14px}
+  ol.steps li{display:flex;align-items:center;gap:8px;color:var(--muted);padding:4px 12px 4px 4px;border-radius:99px}
+  ol.steps .n{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:600}
+  ol.steps li[aria-current="step"]{color:var(--ink);font-weight:600}
+  ol.steps li[aria-current="step"] .n{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  ol.steps li.done .n{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+  h2{font-size:20px;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 18px}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.choices{grid-template-columns:1fr}}
+  .choice{display:block;text-align:left;width:100%;font:inherit;color:inherit;background:var(--surface);
+    border:1.5px solid var(--line);border-radius:12px;padding:16px;cursor:pointer}
+  .choice:hover{border-color:var(--accent)}
+  .choice strong{display:block;font-size:18px;margin-bottom:4px}
+  .choice .term{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700;
+    padding:2px 8px;border-radius:99px;margin-bottom:8px}
+  .choice p{margin:0 0 8px;color:var(--muted);font-size:15px}
+  .choice .meta{font-size:13px;color:var(--ink)}
+  .slots{display:grid;gap:10px;margin:0;padding:0;border:0}
+  .slot{display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;background:var(--surface)}
+  .slot:hover{border-color:var(--accent)}
+  .slot input{accent-color:var(--accent);width:18px;height:18px;margin:0}
+  .slot:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+  .slot .when{font-weight:600}
+  .slot .where{color:var(--muted);font-size:14px}
+  .slot .grow{flex:1}
+  legend{font-weight:600;margin-bottom:10px;padding:0}
+  .actions{display:flex;gap:12px;align-items:center;margin-top:20px;flex-wrap:wrap}
+  .btn{font:inherit;font-weight:600;border-radius:10px;padding:11px 20px;cursor:pointer;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.ghost{background:none;color:var(--ink);border-color:var(--line)}
+  .tip{background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14px;margin:0 0 16px}
+  .sample{display:inline-block;font-size:12px;font-weight:700;border:1px dashed var(--muted);color:var(--muted);border-radius:6px;padding:1px 7px;vertical-align:middle}
+  aside.panel h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}
+  aside dl{margin:0}
+  aside dt{font-size:13px;color:var(--muted);margin-top:10px}
+  aside dd{margin:0;font-weight:600}
+  aside dd.empty{color:var(--muted);font-weight:400}
+  .studio{font-size:14px;color:var(--muted);margin:14px 0 0;border-top:1px solid var(--line);padding-top:12px}
+  .done-box{background:var(--ok-soft);border-radius:12px;padding:18px;margin-bottom:18px}
+  .done-box h2{color:var(--ok)}
+  .done-box p{margin:6px 0 0}
+  .next{border:1.5px solid var(--line);border-radius:12px;padding:16px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Kiln<span>book</span></div>
+  <button class="skip" id="skip" type="button">Skip, take me to my dashboard</button>
+</header>
+
+<main>
+  <h1>Welcome, Sam. Let's book your first session.</h1>
+  <p class="lede">It takes about a minute. By the end you'll have a real spot held at Riverbend Clay Co-op, and you'll know how to book the next one yourself.</p>
+
+  <div class="layout">
+    <section class="panel" aria-labelledby="stepTitle">
+      <ol class="steps" aria-label="Progress">
+        <li id="p1" aria-current="step"><span class="n">1</span>Choose</li>
+        <li id="p2"><span class="n">2</span>Pick a time</li>
+        <li id="p3"><span class="n">3</span>Confirm</li>
+      </ol>
+
+      <!-- Step 1 -->
+      <div id="s1">
+        <h2 id="stepTitle">What do you want to do first?</h2>
+        <p class="sub">Kilnbook handles two kinds of bookings. Pick one; you can book the other right after.</p>
+        <div class="choices">
+          <button class="choice" type="button" data-kind="wheel">
+            <span class="term">Wheel session</span>
+            <strong>Throw on a wheel</strong>
+            <p>A two-hour block at one wheel. Clay and tools are in the studio.</p>
+            <span class="meta">Good if you want to make something today.</span>
+          </button>
+          <button class="choice" type="button" data-kind="kiln">
+            <span class="term">Kiln slot</span>
+            <strong>Fire your pieces</strong>
+            <p>Shelf space in a shared firing. You drop pieces off before the load deadline.</p>
+            <span class="meta">Good if you already have pieces ready.</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="s2" hidden>
+        <h2>Pick a time</h2>
+        <p class="sub" id="s2sub"></p>
+        <p class="tip" id="kilnTip" hidden><strong>Bisque</strong> is the first firing of raw clay. <strong>Glaze</strong> is the second, after you've glazed. New pieces go in a bisque firing first.</p>
+        <fieldset class="slots" id="slotList" style="border:0;padding:0;margin:0">
+          <legend id="slotLegend"></legend>
+        </fieldset>
+        <div class="actions">
+          <button class="btn ghost" type="button" id="back2">Back</button>
+          <button class="btn" type="button" id="to3" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="s3" hidden>
+        <h2>Check and confirm</h2>
+        <p class="sub">This is what will be held for you.</p>
+        <p id="summary" style="font-size:18px;font-weight:600;margin:0"></p>
+        <p id="summaryWhere" class="sub" style="margin-top:4px"></p>
+        <div class="actions">
+          <button class="btn ghost" type="button" id="back3">Change time</button>
+          <button class="btn" type="button" id="confirm">Book this spot</button>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div id="s4" hidden aria-live="polite">
+        <div class="done-box">
+          <h2 id="doneTitle">Booked</h2>
+          <p id="doneText"></p>
+        </div>
+        <div class="next">
+          <strong id="nextTitle"></strong>
+          <p class="sub" id="nextText" style="margin:4px 0 12px"></p>
+          <div class="actions" style="margin-top:0">
+            <button class="btn" type="button" id="nextBtn"></button>
+            <button class="btn ghost" type="button" id="toDash">Go to my dashboard</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel" aria-label="Your choices so far">
+      <h3>Your booking</h3>
+      <dl>
+        <dt>Type</dt><dd id="aType" class="empty">Not chosen yet</dd>
+        <dt>When</dt><dd id="aWhen" class="empty">Not chosen yet</dd>
+        <dt>Where</dt><dd id="aWhere" class="empty">Not chosen yet</dd>
+      </dl>
+      <p class="studio"><span class="sample">Sample</span> Riverbend Clay Co-op and its availability are made-up example data for this preview.</p>
+    </aside>
+  </div>
+</main>
+
+<script>
+(function(){
+  var data = {
+    wheel:{
+      type:"Wheel session",
+      sub:"Each session is two hours at one wheel.",
+      legend:"Open wheel sessions",
+      slots:[
+        {id:"w1",when:"Fri Oct 9, 6:00 – 8:00 pm",where:"Wheel 2",tag:"Evening"},
+        {id:"w2",when:"Sat Oct 10, 10:00 am – 12:00 pm",where:"Wheel 3",tag:"Morning"},
+        {id:"w3",when:"Sat Oct 10, 12:00 – 2:00 pm",where:"Wheel 1",tag:"Midday"},
+        {id:"w4",when:"Sun Oct 11, 1:00 – 3:00 pm",where:"Wheel 4",tag:"Afternoon"}
+      ]
+    },
+    kiln:{
+      type:"Kiln slot",
+      sub:"Choose a firing. You bring your pieces to the studio before its load deadline.",
+      legend:"Upcoming firings with space",
+      slots:[
+        {id:"k1",when:"Bisque firing, load by Sat Oct 10, 5:00 pm",where:"Kiln A · 2 shelves left",tag:"Bisque"},
+        {id:"k2",when:"Glaze firing, load by Wed Oct 14, 5:00 pm",where:"Kiln B · 4 shelves left",tag:"Glaze"}
+      ]
+    }
+  };
+  var state={kind:null,slot:null,step:1};
+  var $=function(id){return document.getElementById(id)};
+
+  function show(n){
+    state.step=n;
+    ["s1","s2","s3","s4"].forEach(function(id,i){$(id).hidden=(i+1)!==n});
+    [1,2,3].forEach(function(i){
+      var li=$("p"+i);
+      li.classList.toggle("done",i<n);
+      if(i===n&&n<4)li.setAttribute("aria-current","step");else li.removeAttribute("aria-current");
+      li.querySelector(".n").textContent=i<n?"✓":i;
+    });
+    var h=document.querySelector("#s"+n+" h2");
+    if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:false});}
+  }
+  function side(){
+    var d=state.kind&&data[state.kind],s=currentSlot();
+    set("aType",d&&d.type);
+    set("aWhen",s&&s.when);
+    set("aWhere",s&&s.where);
+  }
+  function set(id,v){var e=$(id);e.textContent=v||"Not chosen yet";e.className=v?"":"empty"}
+  function currentSlot(){
+    if(!state.kind||!state.slot)return null;
+    return data[state.kind].slots.filter(function(s){return s.id===state.slot})[0];
+  }
+
+  document.querySelectorAll(".choice").forEach(function(b){
+    b.addEventListener("click",function(){
+      state.kind=b.dataset.kind;state.slot=null;
+      var d=data[state.kind];
+      $("s2sub").textContent=d.sub;
+      $("kilnTip").hidden=state.kind!=="kiln";
+      var f=$("slotList");
+      f.innerHTML="";
+      var lg=document.createElement("legend");lg.textContent=d.legend;f.appendChild(lg);
+      d.slots.forEach(function(s){
+        var l=document.createElement("label");l.className="slot";
+        l.innerHTML='<input type="radio" name="slot" value="'+s.id+'"><span class="grow"><span class="when"></span><br><span class="where"></span></span>';
+        l.querySelector(".when").textContent=s.when;
+        l.querySelector(".where").textContent=s.where;
+        l.querySelector("input").addEventListener("change",function(){
+          state.slot=s.id;$("to3").disabled=false;side();
+        });
+        f.appendChild(l);
+      });
+      $("to3").disabled=true;
+      side();show(2);
+    });
+  });
+  $("back2").onclick=function(){state.kind=null;state.slot=null;side();show(1)};
+  $("to3").onclick=function(){
+    var s=currentSlot(),d=data[state.kind];
+    $("summary").textContent=d.type+": "+s.when;
+    $("summaryWhere").textContent=s.where+" · Riverbend Clay Co-op";
+    show(3);
+  };
+  $("back3").onclick=function(){show(2)};
+  $("confirm").onclick=function(){
+    var s=currentSlot(),isW=state.kind==="wheel";
+    $("doneTitle").textContent=isW?"Your wheel is held":"Your shelf space is held";
+    $("doneText").textContent=(isW?s.where+" is yours for ":"You're in the ")+(isW?s.when+". ":s.when.split(",")[0]+". ")+
+      "It now appears under Upcoming on your dashboard.";
+    $("nextTitle").textContent=isW?"Next: reserve kiln space for what you make":"Next: reserve a wheel session to make more";
+    $("nextText").textContent=isW
+      ?"Pieces you throw need a bisque firing. Booking a kiln slot works the same way: choose, pick a time, confirm."
+      :"Booking a wheel session works the same way: choose, pick a time, confirm.";
+    $("nextBtn").textContent=isW?"Book a kiln slot":"Book a wheel session";
+    $("nextBtn").onclick=function(){
+      state.kind=isW?"kiln":"wheel";
+      document.querySelector('.choice[data-kind="'+state.kind+'"]').click();
+    };
+    show(4);
+  };
+  function dash(){alert("This preview ends here. In Kilnbook this opens your dashboard.")}
+  $("toDash").onclick=dash;$("skip").onclick=dash;
+})();
+</script>
+</body>
+</html>

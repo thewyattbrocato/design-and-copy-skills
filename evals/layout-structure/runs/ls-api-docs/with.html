@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create a refund · Ledgerline API</title>
+<style>
+  :root {
+    --bg: #fbfbf9;
+    --panel: #f3f3ef;
+    --ink: #1c2321;
+    --muted: #5d6762;
+    --faint: #8a938e;
+    --line: #e1e3dd;
+    --accent: #0f6b57;
+    --accent-soft: #e0efea;
+    --code-bg: #14201c;
+    --code-ink: #d9e4df;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.6 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Top bar */
+  .top {
+    position: fixed; inset: 0 0 auto 0; height: 52px; z-index: 5;
+    display: flex; align-items: center; gap: 28px;
+    padding: 0 24px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 650; font-size: 15px; letter-spacing: -0.01em; width: 200px; }
+  .mark { width: 20px; height: 20px; border-radius: 5px; background: var(--accent); position: relative; }
+  .mark::before, .mark::after { content: ""; position: absolute; left: 4px; right: 4px; height: 2px; background: #fff; border-radius: 1px; }
+  .mark::before { top: 6px; }
+  .mark::after { top: 11px; right: 8px; }
+  .top nav { display: flex; gap: 20px; font-size: 14px; color: var(--muted); }
+  .top nav .on { color: var(--ink); font-weight: 600; }
+  .top .spacer { flex: 1; }
+  .search {
+    width: 220px; height: 30px; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--panel); color: var(--faint); font-size: 13px;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 10px;
+  }
+  .search kbd { font: 11px var(--mono); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; background: var(--bg); }
+  .ver { font: 12px var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+
+  /* Three-column shell */
+  .shell {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr) 224px;
+    padding-top: 52px;
+    min-height: 100vh;
+  }
+  .side, .toc {
+    position: sticky; top: 52px; align-self: start;
+    height: calc(100vh - 52px); overflow-y: auto;
+  }
+
+  /* Left nav */
+  .side { padding: 24px 12px 32px 24px; border-right: 1px solid var(--line); }
+  .side h4 {
+    margin: 22px 0 6px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--faint); font-weight: 650;
+  }
+  .side h4:first-child { margin-top: 0; }
+  .side ul { list-style: none; margin: 0; padding: 0; }
+  .side li a {
+    display: block; padding: 4px 10px; margin-left: -10px; border-radius: 6px;
+    font-size: 14px; color: var(--muted);
+  }
+  .side li a:hover { background: var(--panel); color: var(--ink); }
+  .side li a.sub { padding-left: 22px; }
+  .side li a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .m { font: 600 10px var(--mono); margin-right: 6px; color: var(--faint); display: inline-block; width: 30px; }
+  .active .m { color: var(--accent); }
+
+  /* Article */
+  main { padding: 36px 52px 96px; min-width: 0; }
+  article { max-width: 700px; margin: 0 auto; }
+  .crumbs { font-size: 13px; color: var(--faint); margin-bottom: 10px; }
+  .crumbs span { color: var(--muted); }
+  h1 { font-size: 34px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px; }
+  h2 {
+    font-size: 21px; letter-spacing: -0.01em; margin: 48px 0 10px;
+    padding-top: 28px; border-top: 1px solid var(--line); scroll-margin-top: 72px;
+  }
+  h3 { font-size: 14px; margin: 22px 0 8px; color: var(--muted); font-weight: 650; }
+  p { margin: 0 0 14px; }
+  .lede { font-size: 17px; line-height: 1.55; color: var(--muted); margin-bottom: 20px; }
+  code {
+    font: 0.88em var(--mono); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 4px; padding: 1px 5px;
+  }
+
+  .endpoint {
+    display: flex; align-items: center; gap: 12px;
+    border: 1px solid var(--line); background: var(--panel); border-radius: 8px;
+    padding: 10px 14px; font-family: var(--mono); font-size: 14px;
+  }
+  .verb { background: var(--accent); color: #fff; font-weight: 700; font-size: 11px; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 4px; }
+  .endpoint .host { color: var(--faint); }
+  .endpoint .auth { margin-left: auto; font: 12px var(--sans); color: var(--muted); }
+
+  /* Parameters */
+  .params { margin: 14px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .params li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .pn { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 4px; }
+  .pn b { font: 600 14px var(--mono); }
+  .ty { font: 12px var(--mono); color: var(--faint); }
+  .req { font-size: 11px; font-weight: 650; color: #9a3b12; background: #fbeadf; border-radius: 4px; padding: 1px 7px; }
+  .opt { font-size: 11px; color: var(--faint); }
+  .params p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .params p + p { margin-top: 6px; }
+  .enum { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .enum code { font-size: 12px; }
+
+  /* Code */
+  .tabs { display: flex; gap: 2px; margin-top: 16px; }
+  .tab {
+    font: 600 12px var(--sans); padding: 7px 14px; color: var(--muted);
+    background: var(--panel); border: 1px solid var(--line); border-bottom: 0;
+    border-radius: 7px 7px 0 0;
+  }
+  .tab.on { background: var(--code-bg); color: #fff; border-color: var(--code-bg); }
+  pre {
+    margin: 0; background: var(--code-bg); color: var(--code-ink);
+    font: 13px/1.65 var(--mono); padding: 16px 18px; overflow-x: auto;
+    border-radius: 0 8px 8px 8px; tab-size: 2;
+  }
+  pre.solo { border-radius: 8px; margin-top: 8px; }
+  .k { color: #7fd1b9; } .s { color: #e8c887; } .c { color: #6f8780; } .n { color: #9cc3f0; } .f { color: #f1a98f; }
+  .cap { font-size: 13px; color: var(--faint); margin: 8px 0 0; }
+
+  /* Right outline */
+  .toc { padding: 36px 24px 32px 12px; }
+  .toc h4 { margin: 0 0 10px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); font-weight: 650; }
+  .toc ul { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a { display: block; padding: 3px 0 3px 14px; margin-left: -1px; border-left: 2px solid transparent; font-size: 13.5px; color: var(--muted); }
+  .toc a:hover { color: var(--ink); }
+  .toc a.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .toc a.sub { padding-left: 28px; font-size: 13px; color: var(--faint); font-family: var(--mono); }
+  .help { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  .help a { color: var(--accent); font-weight: 600; }
+
+  @media (max-width: 1100px) {
+    .shell { grid-template-columns: 220px minmax(0, 1fr); }
+    .toc { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#"><span class="mark"></span>Ledgerline</a>
+  <nav>
+    <a href="#">Guides</a>
+    <a class="on" href="#">API reference</a>
+    <a href="#">SDKs</a>
+    <a href="#">Changelog</a>
+  </nav>
+  <span class="spacer"></span>
+  <div class="search">Search docs <kbd>⌘K</kbd></div>
+  <span class="ver">2026-09-01</span>
+</header>
+
+<div class="shell">
+
+  <aside class="side" aria-label="API sections">
+    <h4>Getting started</h4>
+    <ul>
+      <li><a href="#">Introduction</a></li>
+      <li><a href="#">Authentication</a></li>
+      <li><a href="#">Idempotency</a></li>
+      <li><a href="#">Errors</a></li>
+      <li><a href="#">Pagination</a></li>
+    </ul>
+    <h4>Payments</h4>
+    <ul>
+      <li><a href="#"><span class="m">POST</span>Create a payment</a></li>
+      <li><a href="#"><span class="m">GET</span>Retrieve a payment</a></li>
+      <li><a href="#"><span class="m">POST</span>Capture a payment</a></li>
+    </ul>
+    <h4>Refunds</h4>
+    <ul>
+      <li><a class="active" href="#"><span class="m">POST</span>Create a refund</a></li>
+      <li><a href="#"><span class="m">GET</span>Retrieve a refund</a></li>
+      <li><a href="#"><span class="m">GET</span>List refunds</a></li>
+      <li><a href="#"><span class="m">POST</span>Cancel a refund</a></li>
+    </ul>
+    <h4>Disputes</h4>
+    <ul>
+      <li><a href="#">Submit evidence</a></li>
+      <li><a href="#">Close a dispute</a></li>
+    </ul>
+    <h4>Webhooks</h4>
+    <ul>
+      <li><a href="#">Event types</a></li>
+      <li><a href="#">Verifying signatures</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <article>
+      <div class="crumbs">API reference / <span>Refunds</span></div>
+      <h1 id="intro">Create a refund</h1>
+      <p class="lede">Return funds from a captured payment to the customer's original payment method. You can refund a payment in full or in part, and issue several partial refunds until the captured amount is used up.</p>
+
+      <div class="endpoint">
+        <span class="verb">POST</span>
+        <span><span class="host">https://api.ledgerline.example</span>/v1/refunds</span>
+        <span class="auth">Requires a secret key</span>
+      </div>
+
+      <p style="margin-top:16px">Refunds are created in the <code>pending</code> state and usually settle within 5–10 business days, depending on the customer's bank. Listen for the <code>refund.succeeded</code> or <code>refund.failed</code> webhook rather than polling.</p>
+
+      <h2 id="parameters">Parameters</h2>
+      <p>Send parameters as a JSON body. Include an <code>Idempotency-Key</code> header so a retried request never refunds twice.</p>
+
+      <ul class="params">
+        <li id="p-payment">
+          <div class="pn"><b>payment</b><span class="ty">string</span><span class="req">Required</span></div>
+          <p>ID of the captured payment to refund, for example <code>pay_8Kf2nQ</code>. Payments that are uncaptured or already fully refunded return an error.</p>
+        </li>
+        <li id="p-amount">
+          <div class="pn"><b>amount</b><span class="ty">integer</span><span class="opt">Optional</span></div>
+          <p>Amount to refund, in the smallest currency unit (cents for USD). Defaults to the full amount still refundable on the payment. It can't exceed that remainder.</p>
+        </li>
+        <li id="p-reason">
+          <div class="pn"><b>reason</b><span class="ty">enum</span><span class="opt">Optional</span></div>
+          <p>Why the refund is being issued. Shown in the dashboard and used in reporting.</p>
+          <div class="enum"><code>requested_by_customer</code><code>duplicate</code><code>fraudulent</code><code>other</code></div>
+        </li>
+        <li id="p-metadata">
+          <div class="pn"><b>metadata</b><span class="ty">object</span><span class="opt">Optional</span></div>
+          <p>Up to 20 string key-value pairs for your own records, such as an order or support ticket number. Keys are limited to 40 characters and values to 500.</p>
+        </li>
+        <li id="p-notify">
+          <div class="pn"><b>notify_customer</b><span class="ty">boolean</span><span class="opt">Optional · default true</span></div>
+          <p>Send the customer an email receipt when the refund succeeds. Set to <code>false</code> if you send your own.</p>
+        </li>
+      </ul>
+
+      <h2 id="examples">Code samples</h2>
+      <p>Refund $12.50 from a payment because the customer returned an item.</p>
+
+      <h3 id="ex-curl">cURL</h3>
+      <div class="tabs"><span class="tab on">cURL</span><span class="tab">Node.js</span></div>
+      <pre><span class="k">curl</span> https://api.ledgerline.example/v1/refunds \
+  -H <span class="s">"Authorization: Bearer $LEDGERLINE_SECRET_KEY"</span> \
+  -H <span class="s">"Idempotency-Key: refund-order-10442"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{
+    "payment": "pay_8Kf2nQ",
+    "amount": 1250,
+    "reason": "requested_by_customer",
+    "metadata": { "order_id": "10442" }
+  }'</span></pre>
+
+      <h3 id="ex-node">Node.js</h3>
+      <div class="tabs"><span class="tab">cURL</span><span class="tab on">Node.js</span></div>
+      <pre><span class="k">import</span> { Ledgerline } <span class="k">from</span> <span class="s">"@ledgerline/node"</span>;
+
+<span class="k">const</span> <span class="n">ledgerline</span> = <span class="k">new</span> <span class="f">Ledgerline</span>(process.env.LEDGERLINE_SECRET_KEY);
+
+<span class="k">const</span> <span class="n">refund</span> = <span class="k">await</span> ledgerline.refunds.<span class="f">create</span>(
+  {
+    payment: <span class="s">"pay_8Kf2nQ"</span>,
+    amount: <span class="n">1250</span>,
+    reason: <span class="s">"requested_by_customer"</span>,
+    metadata: { order_id: <span class="s">"10442"</span> },
+  },
+  { idempotencyKey: <span class="s">"refund-order-10442"</span> }
+);
+
+console.<span class="f">log</span>(refund.status); <span class="c">// "pending"</span></pre>
+
+      <h2 id="response">Response</h2>
+      <p>Returns the refund object with status <code>201 Created</code>. If the request fails, the API returns an <a href="#" style="color:var(--accent);font-weight:600">error object</a>; the most common are <code>payment_not_captured</code> and <code>amount_exceeds_refundable</code>.</p>
+      <pre class="solo">{
+  <span class="n">"id"</span>: <span class="s">"re_3Tq9xA"</span>,
+  <span class="n">"object"</span>: <span class="s">"refund"</span>,
+  <span class="n">"payment"</span>: <span class="s">"pay_8Kf2nQ"</span>,
+  <span class="n">"amount"</span>: 1250,
+  <span class="n">"currency"</span>: <span class="s">"usd"</span>,
+  <span class="n">"status"</span>: <span class="s">"pending"</span>,
+  <span class="n">"reason"</span>: <span class="s">"requested_by_customer"</span>,
+  <span class="n">"metadata"</span>: { <span class="n">"order_id"</span>: <span class="s">"10442"</span> },
+  <span class="n">"created_at"</span>: <span class="s">"2026-10-04T15:21:09Z"</span>
+}</pre>
+    </article>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <h4>On this page</h4>
+    <ul>
+      <li><a class="on" href="#intro">Create a refund</a></li>
+      <li><a href="#parameters">Parameters</a></li>
+      <li><a class="sub" href="#p-payment">payment</a></li>
+      <li><a class="sub" href="#p-amount">amount</a></li>
+      <li><a class="sub" href="#p-reason">reason</a></li>
+      <li><a class="sub" href="#p-metadata">metadata</a></li>
+      <li><a class="sub" href="#p-notify">notify_customer</a></li>
+      <li><a href="#examples">Code samples</a></li>
+      <li><a href="#response">Response</a></li>
+    </ul>
+    <div class="help">Stuck on a refund? <a href="#">Contact support</a></div>
+  </aside>
+
+</div>
+</body>
+</html>

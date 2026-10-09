@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Running payroll · Crumb &amp; Kettle</title>
+<style>
+  :root {
+    --bg: #fbf5ea;
+    --card: #fffdf8;
+    --ink: #3b2a20;
+    --muted: #6f5b4d;
+    --line: #e7dccb;
+    --accent: #b25a1e;
+    --accent-soft: #f6e3d0;
+    --done: #3a7a4a;
+    --done-soft: #dff0e1;
+    --shadow: 0 1px 2px rgba(59,42,32,.06), 0 12px 32px rgba(59,42,32,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1d1511;
+      --card: #281d17;
+      --ink: #f5e9da;
+      --muted: #c2ae9d;
+      --line: #4a392f;
+      --accent: #f0a066;
+      --accent-soft: #4a3123;
+      --done: #7fcb8f;
+      --done-soft: #26402c;
+      --shadow: 0 12px 32px rgba(0,0,0,.4);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  .card {
+    width: 100%;
+    max-width: 540px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 28px 28px 24px;
+  }
+  .brand {
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 14px 0 22px;
+  }
+  .ring { position: relative; width: 112px; height: 112px; flex: none; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); display: block; }
+  .ring .track { stroke: var(--line); }
+  .ring .bar { stroke: var(--accent); transition: stroke .4s; }
+  .ring .pct {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-size: 26px; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .ring .pct small { font-size: 14px; font-weight: 600; color: var(--muted); margin-left: 1px; }
+  .ring .big-check { position: absolute; inset: 0; display: none; place-items: center; }
+  .ring .big-check svg { width: 48px; height: 48px; transform: none; }
+  .finished .ring .bar { stroke: var(--done); }
+  .finished .ring .pct { display: none; }
+  .finished .ring .big-check { display: grid; animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
+  h1 { font-size: 24px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -.01em; }
+  .sub { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.4; }
+  .eta {
+    margin-top: 10px; display: inline-block;
+    font-size: 13px; font-weight: 600;
+    color: var(--accent); background: var(--accent-soft);
+    padding: 4px 10px; border-radius: 999px;
+    font-variant-numeric: tabular-nums;
+  }
+  .finished .eta { color: var(--done); background: var(--done-soft); }
+
+  ol { list-style: none; margin: 0; padding: 0; }
+  li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    column-gap: 14px;
+    padding: 0 0 18px;
+  }
+  li:last-child { padding-bottom: 0; }
+  li::before {
+    content: ""; position: absolute;
+    left: 15px; top: 34px; bottom: 2px; width: 2px;
+    background: var(--line); border-radius: 2px;
+  }
+  li:last-child::before { display: none; }
+  li.done::before { background: var(--done); }
+  .icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 14px; font-weight: 700;
+    border: 2px solid var(--line); color: var(--muted);
+    background: var(--card);
+    transition: background .3s, border-color .3s, color .3s;
+  }
+  .icon svg { width: 16px; height: 16px; display: none; }
+  .spin { display: none; width: 16px; height: 16px; border-radius: 50%;
+    border: 2.5px solid var(--accent-soft); border-top-color: var(--accent);
+    animation: spin .8s linear infinite; }
+  li.active .icon { border-color: var(--accent); background: var(--accent-soft); }
+  li.active .icon .num { display: none; }
+  li.active .spin { display: block; }
+  li.done .icon { background: var(--done); border-color: var(--done); color: #fff; }
+  li.done .icon .num { display: none; }
+  li.done .icon svg { display: block; animation: pop .35s cubic-bezier(.2,1.4,.4,1); }
+  .body { min-width: 0; padding-top: 4px; }
+  .title { font-size: 16px; font-weight: 600; line-height: 1.3; }
+  li.pending .title { color: var(--muted); font-weight: 500; }
+  .detail { font-size: 14px; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
+  li.active .detail { color: var(--ink); }
+  li.done .detail { color: var(--done); }
+  .mini {
+    height: 6px; border-radius: 6px; background: var(--line);
+    margin-top: 9px; overflow: hidden; display: none;
+  }
+  li.active .mini { display: block; }
+  .mini i {
+    display: block; height: 100%; width: 0; border-radius: 6px;
+    background: linear-gradient(90deg, var(--accent), #e19a5c, var(--accent));
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  .result {
+    display: none;
+    margin-top: 22px; padding: 16px 18px;
+    background: var(--done-soft); border-radius: 14px;
+    color: var(--ink);
+  }
+  .finished .result { display: block; animation: rise .5s ease-out; }
+  .result strong { display: block; font-size: 17px; line-height: 1.35; }
+  .result span { display: block; color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .footer { margin-top: 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); }
+  button {
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    color: var(--ink); background: transparent;
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px;
+  }
+  button:hover { background: var(--accent-soft); }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  @keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @keyframes rise { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .spin, .mini i, .finished .ring .big-check, li.done .icon svg, .finished .result { animation: none; }
+    .spin { border-top-color: var(--accent); border-color: var(--accent); }
+  }
+  @media (max-width: 420px) {
+    .card { padding: 22px 18px 20px; }
+    .head { gap: 14px; }
+    .ring { width: 92px; height: 92px; }
+    .ring .pct { font-size: 22px; }
+    h1 { font-size: 21px; }
+  }
+</style>
+</head>
+<body>
+<main class="card" id="card">
+  <div class="brand">Crumb &amp; Kettle · Payroll</div>
+
+  <div class="head">
+    <div class="ring">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="10"/>
+        <circle class="bar" id="bar" cx="60" cy="60" r="52" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+      </svg>
+      <div class="pct" id="pct" role="progressbar" aria-label="Payroll progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0<small>%</small></div>
+      <div class="big-check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--done)"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </div>
+    </div>
+    <div>
+      <h1 id="title">Running payroll</h1>
+      <p class="sub" id="sub">Pay period Oct 1–15</p>
+      <span class="eta" id="eta">About 40 seconds</span>
+    </div>
+  </div>
+
+  <ol id="steps"></ol>
+
+  <div class="result" id="result">
+    <strong>Payroll for Oct 1-15 is done. 23 employees paid.</strong>
+    <span>Timesheets, overtime, tax withholding, direct deposits and pay stubs are all complete.</span>
+  </div>
+
+  <div class="footer">
+    <span id="foot">This takes about 40 seconds in total.</span>
+    <button type="button" id="replay" hidden>Replay</button>
+  </div>
+  <div class="sr" aria-live="polite" id="live"></div>
+</main>
+
+<script>
+(function () {
+  var N = 23;
+  var TOTAL = 40;
+  var START_AT = 15.5; // seconds into the run when the page loads (mid step 3)
+  var steps = [
+    { name: "Collecting timesheets", dur: 7,
+      active: "Gathering hours from all 3 locations", done: "23 timesheets collected from 3 locations" },
+    { name: "Checking overtime", dur: 6,
+      active: "Reviewing hours over 40", done: "Overtime checked for 23 employees" },
+    { name: "Calculating tax withholding", dur: 10,
+      active: "Working out federal, state and payroll taxes", done: "Withholding calculated for 23 employees" },
+    { name: "Preparing direct deposits", dur: 9,
+      active: "Preparing deposits", done: "23 direct deposits ready" },
+    { name: "Sending pay stubs", dur: 8,
+      active: "Sending stubs", done: "23 pay stubs sent" }
+  ];
+  var starts = [], acc = 0;
+  steps.forEach(function (s) { starts.push(acc); acc += s.dur; });
+
+  var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var list = document.getElementById("steps");
+  var rows = steps.map(function (s, i) {
+    var li = document.createElement("li");
+    li.className = "pending";
+    li.innerHTML =
+      '<div class="icon"><span class="num">' + (i + 1) + '</span><span class="spin"></span>' + CHECK + '</div>' +
+      '<div class="body"><div class="title">' + s.name + '</div>' +
+      '<div class="detail">Waiting</div>' +
+      '<div class="mini"><i></i></div></div>';
+    list.appendChild(li);
+    return { li: li, detail: li.querySelector(".detail"), fill: li.querySelector(".mini i"), state: "" };
+  });
+
+  var card = document.getElementById("card");
+  var bar = document.getElementById("bar");
+  var pct = document.getElementById("pct");
+  var title = document.getElementById("title");
+  var sub = document.getElementById("sub");
+  var eta = document.getElementById("eta");
+  var foot = document.getElementById("foot");
+  var live = document.getElementById("live");
+  var replay = document.getElementById("replay");
+  var C = 326.73;
+  var t0, offset = START_AT, raf, lastActive = -1, finished = false;
+
+  function clamp(x) { return Math.max(0, Math.min(1, x)); }
+
+  function frame(now) {
+    var t = Math.min(TOTAL, offset + (now - t0) / 1000);
+    var overall = t / TOTAL;
+    var active = -1;
+
+    steps.forEach(function (s, i) {
+      var p = clamp((t - starts[i]) / s.dur);
+      var r = rows[i];
+      var state = p >= 1 ? "done" : p > 0 ? "active" : "pending";
+      if (r.state !== state) {
+        r.state = state;
+        r.li.className = state;
+        if (state === "done") r.detail.textContent = s.done;
+        if (state === "pending") r.detail.textContent = "Waiting";
+      }
+      if (state === "active") {
+        active = i;
+        var n = Math.min(N, Math.floor(p * N) + 1);
+        r.detail.textContent = s.active + " · " + n + " of " + N;
+        r.fill.style.width = (p * 100).toFixed(1) + "%";
+      }
+    });
+
+    var shown = Math.floor(overall * 100);
+    bar.style.strokeDashoffset = (C * (1 - overall)).toFixed(2);
+    pct.firstChild.nodeValue = shown;
+    pct.setAttribute("aria-valuenow", shown);
+
+    if (active !== lastActive && active >= 0) {
+      lastActive = active;
+      sub.textContent = "Step " + (active + 1) + " of 5: " + steps[active].name;
+      live.textContent = "Step " + (active + 1) + " of 5: " + steps[active].name;
+    }
+    var left = Math.max(1, Math.ceil(TOTAL - t));
+    eta.textContent = "About " + left + " second" + (left === 1 ? "" : "s") + " left";
+
+    if (t >= TOTAL) { finish(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+
+  function finish() {
+    finished = true;
+    card.classList.add("finished");
+    bar.style.strokeDashoffset = 0;
+    title.textContent = "Payroll complete";
+    sub.textContent = "Pay period Oct 1–15";
+    eta.textContent = "All 5 steps finished";
+    foot.textContent = "Nothing else to do here.";
+    live.textContent = "Payroll for Oct 1-15 is done. 23 employees paid.";
+    replay.hidden = false;
+  }
+
+  function start(from) {
+    cancelAnimationFrame(raf);
+    finished = false; lastActive = -1;
+    card.classList.remove("finished");
+    title.textContent = "Running payroll";
+    foot.textContent = "This takes about 40 seconds in total.";
+    replay.hidden = true;
+    rows.forEach(function (r) { r.state = ""; r.fill.style.width = "0"; });
+    offset = from;
+    t0 = performance.now();
+    raf = requestAnimationFrame(frame);
+  }
+
+  replay.addEventListener("click", function () { start(0); });
+  start(START_AT);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Mostly clean, but the disclaimer text (#b5b5b5 on white, about 2:1 contrast at 11px) is hard to read and should be darker. The gray button (white on #9aa0a6, about 2.6:1) also fails accessibility contrast and looks disabled, so it weakens the CTA on the plan you most want people to start with.

@@ -1,0 +1,1 @@
+It should change. #9a9a9a on white has a contrast ratio of about 2.8:1, below the WCAG AA minimum of 4.5:1 for text, and placeholder text is covered by that rule. Try #767676 or darker. That's the lightest gray that passes on white, at about 4.5:1, and it still reads as a placeholder next to your darker input text.

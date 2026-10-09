@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delivery slot, step 3 of 4 – Checkout</title>
+<style>
+  :root {
+    --ink: #1d2a24;
+    --muted: #55645c;
+    --line: #cfd8d2;
+    --bg: #f5f7f4;
+    --card: #ffffff;
+    --brand: #1f6b46;
+    --brand-dark: #165236;
+    --tint: #e7f3ec;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+  a { color: var(--brand-dark); }
+  .back { display: inline-block; margin-bottom: 12px; }
+  h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 4px; }
+  .steps { margin: 0 0 24px; color: var(--muted); }
+  .steps b { color: var(--ink); }
+  .layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+  @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  legend { font-size: 1.15rem; font-weight: 650; padding: 0; margin-bottom: 2px; }
+  .hint { color: var(--muted); margin: 0 0 16px; }
+  h2.day { font-size: 1rem; margin: 20px 0 8px; }
+  h2.day span { color: var(--muted); font-weight: 400; }
+  .slot {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 56px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+  }
+  .slot:hover { border-color: var(--brand); }
+  .slot:has(input:checked) { border-color: var(--brand); background: var(--tint); box-shadow: inset 0 0 0 1px var(--brand); }
+  .slot:has(input:focus-visible) { outline: 3px solid #1a5fb4; outline-offset: 2px; }
+  .slot input { width: 22px; height: 22px; margin: 0; accent-color: var(--brand); flex: none; }
+  .time { flex: 1; font-weight: 600; }
+  .time small { display: block; font-weight: 400; color: var(--muted); }
+  .fee { font-weight: 600; white-space: nowrap; }
+  .fee.free { color: var(--brand-dark); }
+  .actions { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  button {
+    font: inherit;
+    font-weight: 650;
+    min-height: 48px;
+    padding: 0 28px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--brand);
+    color: #fff;
+    cursor: pointer;
+  }
+  button:hover { background: var(--brand-dark); }
+  button:focus-visible { outline: 3px solid #1a5fb4; outline-offset: 2px; }
+  .summary h2 { font-size: 1.1rem; margin: 0 0 12px; }
+  .summary ul { list-style: none; margin: 0; padding: 0; }
+  .summary li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; }
+  .summary li span:first-child { color: var(--muted); }
+  .summary .rows { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }
+  .summary .total { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 10px; font-weight: 700; font-size: 1.1rem; }
+  .summary .total span:first-child { color: var(--ink); }
+  .note { font-size: 0.9rem; color: var(--muted); margin: 12px 0 0; }
+  .edit { display: inline-block; margin-top: 12px; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="#">← Back to delivery address</a>
+  <h1>Delivery slot, step 3 of 4</h1>
+  <p class="steps">Cart · Address · <b>Delivery slot</b> · Payment</p>
+
+  <div class="layout">
+    <form class="card" action="#" method="post">
+      <fieldset>
+        <legend>Choose a delivery slot</legend>
+        <p class="hint">Delivering to 42 Linden Road. Pick one window; a driver arrives at some point within it.</p>
+
+        <h2 class="day">Monday, 5 October <span>· Tomorrow</span></h2>
+        <label class="slot">
+          <input type="radio" name="slot" value="mon-am" required>
+          <span class="time">8:00 – 10:00 am</span>
+          <span class="fee">$6.99</span>
+        </label>
+        <label class="slot">
+          <input type="radio" name="slot" value="mon-mid">
+          <span class="time">12:00 – 2:00 pm</span>
+          <span class="fee">$4.99</span>
+        </label>
+        <label class="slot">
+          <input type="radio" name="slot" value="mon-eve">
+          <span class="time">5:00 – 7:00 pm</span>
+          <span class="fee">$7.99</span>
+        </label>
+
+        <h2 class="day">Tuesday, 6 October</h2>
+        <label class="slot">
+          <input type="radio" name="slot" value="tue-am">
+          <span class="time">8:00 – 10:00 am</span>
+          <span class="fee">$4.99</span>
+        </label>
+        <label class="slot">
+          <input type="radio" name="slot" value="tue-mid">
+          <span class="time">12:00 – 2:00 pm</span>
+          <span class="fee free">Free</span>
+        </label>
+        <label class="slot">
+          <input type="radio" name="slot" value="tue-eve">
+          <span class="time">5:00 – 7:00 pm</span>
+          <span class="fee">$6.99</span>
+        </label>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit">Continue to payment</button>
+      </div>
+      <p class="note">You can change your slot until 10:00 pm the night before delivery.</p>
+    </form>
+
+    <aside class="card summary" aria-labelledby="sum-h">
+      <h2 id="sum-h">Order summary</h2>
+      <ul>
+        <li><span>Items (23)</span><span>$84.60</span></li>
+        <li><span>Bag fee (2 bags)</span><span>$0.20</span></li>
+        <li><span>Estimated tax</span><span>$1.35</span></li>
+      </ul>
+      <ul class="rows">
+        <li><span>Delivery</span><span>Shown once you choose</span></li>
+      </ul>
+      <ul>
+        <li class="total"><span>Subtotal</span><span>$86.15</span></li>
+      </ul>
+      <p class="note">Delivery fee is added to your total at payment. Free delivery applies to the Tuesday 12:00 – 2:00 pm slot only.</p>
+      <a class="edit" href="#">Edit cart</a>
+    </aside>
+  </div>
+</div>
+</body>
+</html>

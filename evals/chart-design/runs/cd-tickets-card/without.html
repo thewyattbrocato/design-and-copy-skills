@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tickets opened vs resolved</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #6f6d67;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --opened: #2a78d6;
+    --resolved: #eb6834;
+    --good: #006300;
+    --bad: #b02a2a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #a09e96;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255,255,255,0.10);
+      --opened: #3987e5;
+      --resolved: #d95926;
+      --good: #3fc23f;
+      --bad: #ee7b7b;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    overflow: hidden;
+  }
+  .card {
+    width: min(760px, 100%);
+    max-height: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0;
+  }
+  .eyebrow { font-size: 12px; color: var(--muted); margin: 0; letter-spacing: .02em; }
+  h1 { font-size: 19px; line-height: 1.25; margin: 2px 0 0; font-weight: 650; }
+  .sub { font-size: 13px; color: var(--ink-2); margin: 4px 0 0; line-height: 1.4; }
+  .stats { display: flex; gap: 10px; flex-wrap: wrap; }
+  .stat {
+    flex: 1 1 150px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  .stat .label { font-size: 11.5px; color: var(--muted); }
+  .stat .val { font-size: 22px; font-weight: 650; display: flex; align-items: baseline; gap: 6px; }
+  .stat .val small { font-size: 12px; font-weight: 500; color: var(--ink-2); }
+  .up { color: var(--bad); }
+  .down { color: var(--good); }
+  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--ink-2); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+  .chart { position: relative; min-height: 0; }
+  svg { display: block; width: 100%; height: auto; max-height: 42vh; overflow: visible; }
+  svg text { font-family: inherit; fill: var(--muted); font-size: 11px; }
+  svg text.lbl { fill: var(--ink); font-size: 11.5px; font-weight: 600; }
+  .grid { stroke: var(--grid); stroke-width: 1; }
+  .axis { stroke: var(--axis); stroke-width: 1; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .tip {
+    position: absolute; pointer-events: none; opacity: 0;
+    background: var(--surface); color: var(--ink);
+    border: 1px solid var(--axis); border-radius: 8px;
+    padding: 7px 10px; font-size: 12px; line-height: 1.5;
+    box-shadow: 0 4px 14px rgba(0,0,0,.12);
+    transform: translate(-50%, 0); white-space: nowrap; transition: opacity .1s;
+  }
+  .tip b { display: block; margin-bottom: 2px; }
+  .tip .row { display: flex; align-items: center; gap: 6px; }
+  .tip .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .tip .net { color: var(--ink-2); margin-top: 2px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  @media (max-height: 560px) { .sub { display: none; } }
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <div>
+    <p class="eyebrow">Support weekly review · last 12 weeks</p>
+    <h1 id="t">Backlog is still up 55 tickets, but it shrank last week</h1>
+    <p class="sub">We opened more than we resolved in 9 of 12 weeks. Resolutions have caught up since week 9, and week 12 was the first week the backlog fell by a real margin (−8).</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="label">Net backlog change, 12 weeks</div>
+      <div class="val up"><span aria-hidden="true">▲</span> +55 <small>tickets, growing</small></div>
+    </div>
+    <div class="stat">
+      <div class="label">Net change, latest week</div>
+      <div class="val down"><span aria-hidden="true">▼</span> −8 <small>tickets, shrinking</small></div>
+    </div>
+  </div>
+
+  <div class="legend" aria-hidden="true">
+    <span><i style="background:var(--opened)"></i>Opened</span>
+    <span><i style="background:var(--resolved)"></i>Resolved</span>
+  </div>
+
+  <div class="chart" id="chart">
+    <svg id="svg" viewBox="0 0 640 244" role="img" aria-label="Line chart of tickets opened and resolved per week over 12 weeks. Opened rose from 120 to 160 after peaking at 180; resolved rose from 110 to 168 and overtook opened in the final week."></svg>
+    <div class="tip" id="tip"></div>
+    <table class="sr">
+      <caption>Tickets opened and resolved per week</caption>
+      <thead><tr><th>Week</th><th>Opened</th><th>Resolved</th><th>Net</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+(function () {
+  var opened   = [120,135,128,150,162,158,171,166,180,175,169,160];
+  var resolved = [110,125,130,140,150,155,160,168,170,172,171,168];
+  var NS = "http://www.w3.org/2000/svg";
+  var X0 = 40, X1 = 556, Y0 = 14, Y1 = 214, MIN = 100, MAX = 190;
+  var n = opened.length;
+  var svg = document.getElementById("svg");
+  var tip = document.getElementById("tip");
+  var chart = document.getElementById("chart");
+
+  function x(i) { return X0 + (X1 - X0) * i / (n - 1); }
+  function y(v) { return Y1 - (v - MIN) / (MAX - MIN) * (Y1 - Y0); }
+  function el(name, attrs, text) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    svg.appendChild(e);
+    return e;
+  }
+
+  [100,120,140,160,180].forEach(function (v) {
+    el("line", { x1: X0, x2: X1, y1: y(v), y2: y(v), "class": v === 100 ? "axis" : "grid" });
+    el("text", { x: X0 - 8, y: y(v) + 4, "text-anchor": "end" }, v);
+  });
+  for (var i = 0; i < n; i++) {
+    el("text", { x: x(i), y: Y1 + 18, "text-anchor": "middle" }, "W" + (i + 1));
+  }
+  el("text", { x: X1, y: Y1 + 34, "text-anchor": "end" }, "W12 = most recent week");
+
+  function path(data) {
+    return data.map(function (v, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(v).toFixed(1); }).join("");
+  }
+  el("path", { d: path(opened),   "class": "line", stroke: "var(--opened)" });
+  el("path", { d: path(resolved), "class": "line", stroke: "var(--resolved)" });
+
+  // end markers + direct labels
+  [[opened, "var(--opened)", "Opened"], [resolved, "var(--resolved)", "Resolved"]].forEach(function (s) {
+    var v = s[0][n - 1];
+    el("circle", { cx: x(n - 1), cy: y(v), r: 4, fill: s[1], stroke: "var(--surface)", "stroke-width": 2 });
+    el("text", { x: x(n - 1) + 10, y: y(v) + 4, "class": "lbl" }, s[2] + " " + v);
+  });
+
+  // hover layer
+  var cross = el("line", { y1: Y0, y2: Y1, stroke: "var(--axis)", "stroke-width": 1, opacity: 0 });
+  var hoO = el("circle", { r: 4.5, fill: "var(--opened)", stroke: "var(--surface)", "stroke-width": 2, opacity: 0 });
+  var hoR = el("circle", { r: 4.5, fill: "var(--resolved)", stroke: "var(--surface)", "stroke-width": 2, opacity: 0 });
+  var hit = el("rect", { x: X0 - 10, y: 0, width: X1 - X0 + 20, height: 244, fill: "transparent" });
+
+  function show(i) {
+    var net = opened[i] - resolved[i];
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("opacity", 1);
+    hoO.setAttribute("cx", x(i)); hoO.setAttribute("cy", y(opened[i])); hoO.setAttribute("opacity", 1);
+    hoR.setAttribute("cx", x(i)); hoR.setAttribute("cy", y(resolved[i])); hoR.setAttribute("opacity", 1);
+    tip.innerHTML =
+      "<b>Week " + (i + 1) + "</b>" +
+      '<div class="row"><span class="dot" style="background:var(--opened)"></span>Opened ' + opened[i] + "</div>" +
+      '<div class="row"><span class="dot" style="background:var(--resolved)"></span>Resolved ' + resolved[i] + "</div>" +
+      '<div class="net">' + (net > 0 ? "Backlog +" + net : net < 0 ? "Backlog −" + (-net) : "Backlog flat") + "</div>";
+    var box = svg.getBoundingClientRect(), cbox = chart.getBoundingClientRect();
+    var px = box.left - cbox.left + x(i) / 640 * box.width;
+    var half = tip.offsetWidth / 2;
+    px = Math.max(half, Math.min(cbox.width - half, px));
+    tip.style.left = px + "px";
+    tip.style.top = (box.top - cbox.top + 4) + "px";
+    tip.style.opacity = 1;
+  }
+  function hide() {
+    [cross, hoO, hoR].forEach(function (e) { e.setAttribute("opacity", 0); });
+    tip.style.opacity = 0;
+  }
+  hit.addEventListener("pointermove", function (ev) {
+    var box = svg.getBoundingClientRect();
+    var vx = (ev.clientX - box.left) / box.width * 640;
+    var i = Math.round((vx - X0) / (X1 - X0) * (n - 1));
+    show(Math.max(0, Math.min(n - 1, i)));
+  });
+  hit.addEventListener("pointerleave", hide);
+
+  // table for screen readers
+  document.getElementById("tbody").innerHTML = opened.map(function (o, i) {
+    return "<tr><td>" + (i + 1) + "</td><td>" + o + "</td><td>" + resolved[i] + "</td><td>" + (o - resolved[i]) + "</td></tr>";
+  }).join("");
+})();
+</script>
+</body>
+</html>

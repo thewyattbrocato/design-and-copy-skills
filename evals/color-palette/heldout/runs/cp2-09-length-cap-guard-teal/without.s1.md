@@ -1,0 +1,1 @@
+Use a very light, slightly cool off-white like #f6f9f9 for backgrounds and a deep teal-tinted charcoal like #1b2a2b for body text. Tinting both neutrals toward your teal's hue keeps the palette cohesive, and the text still has strong contrast (roughly 13:1) against the background.

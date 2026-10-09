@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bird Species by Trail Site, Last Spring</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --surface: #ffffff;
+    --ink: #1d2320;
+    --ink-2: #4a544f;
+    --ink-muted: #6b756f;
+    --grid: #dfe4e1;
+    --bar: #2f6b4f;
+    --bar-hover: #24553e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #161b19;
+      --ink: #e8ece9;
+      --ink-2: #b7c0bb;
+      --ink-muted: #8d978f;
+      --grid: #2d3431;
+      --bar: #7fc2a0;
+      --bar-hover: #a3d6bb;
+    }
+  }
+  body {
+    margin: 0;
+    padding: 24px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  figure {
+    margin: 0 auto;
+    max-width: 640px;
+  }
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    margin: 0 0 20px;
+    font-size: 0.875rem;
+    color: var(--ink-2);
+  }
+  .chart {
+    position: relative;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 9rem 1fr 3rem;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 0;
+    cursor: default;
+  }
+  .label {
+    font-size: 0.9rem;
+    text-align: right;
+    color: var(--ink);
+  }
+  .track {
+    position: relative;
+    height: 22px;
+    border-bottom: 1px solid var(--grid);
+  }
+  .bar {
+    height: 100%;
+    background: var(--bar);
+    border-radius: 0 4px 4px 0;
+    transition: background 120ms ease;
+    min-width: 2px;
+  }
+  .row:hover .bar,
+  .row:focus-visible .bar {
+    background: var(--bar-hover);
+  }
+  .row:focus-visible {
+    outline: 2px solid var(--bar);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .value {
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .axis-note {
+    margin: 14px 0 0 calc(9rem + 12px);
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+  }
+  details {
+    margin-top: 20px;
+    font-size: 0.875rem;
+    color: var(--ink-2);
+  }
+  summary {
+    cursor: pointer;
+  }
+  table {
+    border-collapse: collapse;
+    margin-top: 8px;
+    width: 100%;
+    max-width: 320px;
+  }
+  th, td {
+    text-align: left;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--grid);
+  }
+  th {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 480px) {
+    .row { grid-template-columns: 6.5rem 1fr 2.5rem; gap: 8px; }
+    .axis-note { margin-left: calc(6.5rem + 8px); }
+  }
+</style>
+</head>
+<body>
+<figure>
+  <h1>Bird Species Counted by Trail Site, Last Spring</h1>
+  <p class="subtitle">Number of bird species recorded at each of six trail sites, sorted high to low.</p>
+
+  <div class="chart" role="img" aria-label="Horizontal bar chart of bird species counts by trail site: Willow Flats 74, Heron Point 67, North Ridge 52, Alder Run 41, Millpond 38, Quarry Loop 29.">
+    <div class="row" tabindex="0" title="Willow Flats: 74 species">
+      <div class="label">Willow Flats</div>
+      <div class="track"><div class="bar" style="width: 92.5%;"></div></div>
+      <div class="value">74</div>
+    </div>
+    <div class="row" tabindex="0" title="Heron Point: 67 species">
+      <div class="label">Heron Point</div>
+      <div class="track"><div class="bar" style="width: 83.75%;"></div></div>
+      <div class="value">67</div>
+    </div>
+    <div class="row" tabindex="0" title="North Ridge: 52 species">
+      <div class="label">North Ridge</div>
+      <div class="track"><div class="bar" style="width: 65%;"></div></div>
+      <div class="value">52</div>
+    </div>
+    <div class="row" tabindex="0" title="Alder Run: 41 species">
+      <div class="label">Alder Run</div>
+      <div class="track"><div class="bar" style="width: 51.25%;"></div></div>
+      <div class="value">41</div>
+    </div>
+    <div class="row" tabindex="0" title="Millpond: 38 species">
+      <div class="label">Millpond</div>
+      <div class="track"><div class="bar" style="width: 47.5%;"></div></div>
+      <div class="value">38</div>
+    </div>
+    <div class="row" tabindex="0" title="Quarry Loop: 29 species">
+      <div class="label">Quarry Loop</div>
+      <div class="track"><div class="bar" style="width: 36.25%;"></div></div>
+      <div class="value">29</div>
+    </div>
+  </div>
+  <p class="axis-note">Bars start at zero. Scale runs 0 to 80 species.</p>
+
+  <details>
+    <summary>View as table</summary>
+    <table>
+      <thead>
+        <tr><th scope="col">Trail site</th><th scope="col">Species counted</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Willow Flats</td><td class="num">74</td></tr>
+        <tr><td>Heron Point</td><td class="num">67</td></tr>
+        <tr><td>North Ridge</td><td class="num">52</td></tr>
+        <tr><td>Alder Run</td><td class="num">41</td></tr>
+        <tr><td>Millpond</td><td class="num">38</td></tr>
+        <tr><td>Quarry Loop</td><td class="num">29</td></tr>
+      </tbody>
+    </table>
+  </details>
+</figure>
+</body>
+</html>

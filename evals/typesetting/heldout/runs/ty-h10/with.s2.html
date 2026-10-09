@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Quillbase status</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0e1116;
+    --surface: #161b22;
+    --border: #2a313c;
+    --text: #e6e9ee;
+    --muted: #9aa4b2;
+    --ok: #3fb97f;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 4rem;
+  }
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    margin: 2.75rem 0 1rem;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    font-weight: 600;
+  }
+  .summary {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1.125rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--ok);
+    border-radius: 8px;
+  }
+  .summary svg { flex: none; }
+  .summary p { margin: 0; }
+  .summary .headline { font-size: 1.125rem; font-weight: 600; }
+  .summary .note { color: var(--muted); font-size: 0.9375rem; }
+  ul.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  ul.list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.875rem 1.25rem;
+  }
+  ul.list li + li { border-top: 1px solid var(--border); }
+  .name { font-weight: 500; }
+  .state { color: var(--muted); font-size: 0.9375rem; margin-left: 0.75rem; }
+  .state::before { content: "\2713\00a0"; color: var(--ok); }
+  .uptime {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .caption { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.9375rem; }
+  .incident {
+    padding: 1.125rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .incident + .incident { margin-top: 0.75rem; }
+  .incident .date {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  .incident h3 {
+    margin: 0.125rem 0 0.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+  .incident p:last-child { margin: 0; color: #c9d0da; max-width: 65ch; }
+  @media (max-width: 30rem) {
+    main { padding-top: 2rem; }
+    h1 { font-size: 1.625rem; }
+    .state { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Quillbase status</h1>
+
+  <div class="summary" role="status">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" fill="#3fb97f"/>
+      <path d="M7 12.5l3.2 3.2L17 8.8" stroke="#0e1116" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <p class="headline">All systems operational</p>
+      <p class="note">Last checked 4 minutes ago</p>
+    </div>
+  </div>
+
+  <h2>Components</h2>
+  <p class="caption">30-day uptime</p>
+  <ul class="list">
+    <li><span><span class="name">API</span><span class="state">Operational</span></span><span class="uptime">99.98%</span></li>
+    <li><span><span class="name">Sync service</span><span class="state">Operational</span></span><span class="uptime">99.91%</span></li>
+    <li><span><span class="name">Web editor</span><span class="state">Operational</span></span><span class="uptime">99.99%</span></li>
+    <li><span><span class="name">Webhooks</span><span class="state">Operational</span></span><span class="uptime">99.62%</span></li>
+    <li><span><span class="name">Search</span><span class="state">Operational</span></span><span class="uptime">100%</span></li>
+  </ul>
+
+  <h2>Past incidents</h2>
+  <article class="incident">
+    <p class="date">21 September</p>
+    <h3>Webhook delays</h3>
+    <p>Deliveries were delayed by up to 40 minutes between 08:10 and 09:05 UTC while we rebalanced a queue. All delayed events were delivered. We have added an alert for queue depth.</p>
+  </article>
+  <article class="incident">
+    <p class="date">6 September</p>
+    <h3>Sync lag in EU region</h3>
+    <p>Changes took up to 12 seconds to appear on a second device for about 25 minutes. We rolled back a deployment and the lag cleared.</p>
+  </article>
+</main>
+</body>
+</html>

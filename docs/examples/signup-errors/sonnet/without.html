@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create your account · Plateful</title>
+<style>
+  :root {
+    --bg: #fbf7f0;
+    --card: #ffffff;
+    --ink: #2b2a26;
+    --muted: #6b675e;
+    --line: #d9d3c7;
+    --brand: #3f7d4e;
+    --brand-dark: #2f6540;
+    --accent: #e8734a;
+    --error: #b3261e;
+    --error-bg: #fdecea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+  .wrap { width: 100%; max-width: 440px; }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 24px; font-weight: 700; color: var(--brand);
+    margin-bottom: 20px; justify-content: center;
+    letter-spacing: -0.01em;
+  }
+  .logo svg { width: 32px; height: 32px; }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(60,50,30,.08);
+  }
+  h1 { font-size: 24px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sub { margin: 0 0 20px; color: var(--muted); font-size: 15px; }
+  .summary {
+    background: var(--error-bg);
+    border: 1px solid #f0b8b3;
+    border-left: 4px solid var(--error);
+    color: var(--error);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  .summary strong { display: block; margin-bottom: 4px; color: #7a1a14; }
+  .summary ul { margin: 0; padding-left: 18px; }
+  .summary a { color: var(--error); font-weight: 600; }
+  .field { margin-bottom: 18px; }
+  label, .legend { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  input[type=text], input[type=email], input[type=password], select {
+    width: 100%;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 12px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(63,125,78,.2);
+  }
+  .invalid input, .invalid select {
+    border-color: var(--error);
+    background: #fffafa;
+  }
+  .invalid input:focus, .invalid select:focus {
+    box-shadow: 0 0 0 3px rgba(179,38,30,.18);
+  }
+  .error {
+    display: flex; gap: 6px; align-items: flex-start;
+    color: var(--error);
+    font-size: 13.5px;
+    margin-top: 6px;
+  }
+  .error svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
+  .hint { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .pw-wrap { position: relative; }
+  .pw-wrap input { padding-right: 64px; }
+  .pw-toggle {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    background: none; border: 0; color: var(--brand-dark);
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    padding: 6px 8px; border-radius: 6px;
+  }
+  .pw-toggle:hover { background: #eef5ef; }
+  .terms {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14px; font-weight: 400; margin: 0;
+  }
+  .terms input {
+    width: 20px; height: 20px; margin: 1px 0 0; flex: none;
+    accent-color: var(--brand);
+  }
+  .invalid .terms input { outline: 2px solid var(--error); outline-offset: 1px; border-radius: 3px; }
+  .terms a, .foot a { color: var(--brand-dark); }
+  button.submit {
+    width: 100%;
+    font: inherit; font-size: 16px; font-weight: 700;
+    color: #fff; background: var(--brand);
+    border: 0; border-radius: 10px;
+    padding: 13px 16px; margin-top: 6px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  button.submit:hover { background: var(--brand-dark); }
+  button.submit:focus-visible { outline: 3px solid rgba(63,125,78,.4); outline-offset: 2px; }
+  .foot { text-align: center; font-size: 14px; color: var(--muted); margin-top: 18px; }
+  @media (max-width: 480px) {
+    body { padding: 20px 12px; }
+    .card { padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="14" fill="#3f7d4e"/>
+      <circle cx="16" cy="16" r="9" fill="#fbf7f0"/>
+      <circle cx="16" cy="16" r="4" fill="#e8734a"/>
+    </svg>
+    Plateful
+  </div>
+
+  <div class="card">
+    <h1>Create your account</h1>
+    <p class="sub">Plan the week's meals in minutes.</p>
+
+    <div class="summary" role="alert">
+      <strong>Please fix 3 things to continue:</strong>
+      <ul>
+        <li><a href="#email">Enter a valid email address</a></li>
+        <li><a href="#password">Choose a longer password</a></li>
+        <li><a href="#terms">Accept the terms to continue</a></li>
+      </ul>
+    </div>
+
+    <form novalidate>
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" autocomplete="name" value="Maya Alvarez">
+      </div>
+
+      <div class="field invalid">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" value="maya@example" aria-invalid="true" aria-describedby="email-err">
+        <div class="error" id="email-err">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5v4M8 10.5v1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span>That email looks incomplete. Try something like maya@example.com.</span>
+        </div>
+      </div>
+
+      <div class="field invalid">
+        <label for="password">Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="password" name="password" autocomplete="new-password" value="plate123" aria-invalid="true" aria-describedby="pw-err">
+          <button type="button" class="pw-toggle" aria-label="Show password">Show</button>
+        </div>
+        <div class="error" id="pw-err">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5v4M8 10.5v1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span>Password must be at least 10 characters. Yours is 8.</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="people">How many people do you cook for?</label>
+        <select id="people" name="people">
+          <option>Just me</option>
+          <option selected>2 people</option>
+          <option>3 people</option>
+          <option>4 people</option>
+          <option>5 people</option>
+          <option>6 or more</option>
+        </select>
+        <div class="hint">We'll scale recipes and shopping lists to fit.</div>
+      </div>
+
+      <div class="field invalid">
+        <label class="terms" for="terms">
+          <input type="checkbox" id="terms" name="terms" aria-invalid="true" aria-describedby="terms-err">
+          <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
+        </label>
+        <div class="error" id="terms-err">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5v4M8 10.5v1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span>You need to accept the terms to create an account.</span>
+        </div>
+      </div>
+
+      <button type="submit" class="submit">Create account</button>
+    </form>
+  </div>
+
+  <p class="foot">Already have an account? <a href="#">Log in</a></p>
+</div>
+</body>
+</html>

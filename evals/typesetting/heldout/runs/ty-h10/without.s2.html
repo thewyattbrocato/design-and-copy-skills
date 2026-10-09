@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quillbase status</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #2a313c;
+    --text: #e6edf3;
+    --muted: #9aa4b2;
+    --ok: #3fb950;
+    --ok-bg: rgba(63, 185, 80, 0.12);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 20px 72px;
+  }
+  h1 {
+    font-size: 1.75rem;
+    margin: 0 0 24px;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    font-size: 1.05rem;
+    margin: 48px 0 12px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .summary {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: var(--ok-bg);
+    border: 1px solid var(--ok);
+    border-radius: 10px;
+  }
+  .dot {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--ok);
+  }
+  .summary p { margin: 0; }
+  .summary .headline { font-size: 1.1rem; font-weight: 600; }
+  .summary .note { color: var(--muted); font-size: 0.9rem; }
+  ul.components {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .components li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+  }
+  .components li + li { border-top: 1px solid var(--border); }
+  .name { font-weight: 500; }
+  .uptime {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .uptime::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: var(--ok);
+  }
+  article {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+  article time {
+    display: block;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+  }
+  article h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  article p { margin: 0; color: var(--text); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Quillbase status</h1>
+
+  <div class="summary" role="status">
+    <span class="dot" aria-hidden="true"></span>
+    <div>
+      <p class="headline">All systems operational</p>
+      <p class="note">Last checked 4 minutes ago</p>
+    </div>
+  </div>
+
+  <h2>Components</h2>
+  <ul class="components">
+    <li><span class="name">API</span><span class="uptime">99.98%</span></li>
+    <li><span class="name">Sync service</span><span class="uptime">99.91%</span></li>
+    <li><span class="name">Web editor</span><span class="uptime">99.99%</span></li>
+    <li><span class="name">Webhooks</span><span class="uptime">99.62%</span></li>
+    <li><span class="name">Search</span><span class="uptime">100%</span></li>
+  </ul>
+  <p class="note" style="color: var(--muted); font-size: 0.85rem; margin: 8px 4px 0;">Uptime over the last 30 days.</p>
+
+  <h2>Past incidents</h2>
+  <article>
+    <time datetime="2026-09-21">21 September</time>
+    <h3>Webhook delays</h3>
+    <p>Deliveries were delayed by up to 40 minutes between 08:10 and 09:05 UTC while we rebalanced a queue. All delayed events were delivered. We have added an alert for queue depth.</p>
+  </article>
+  <article>
+    <time datetime="2026-09-06">6 September</time>
+    <h3>Sync lag in EU region</h3>
+    <p>Changes took up to 12 seconds to appear on a second device for about 25 minutes. We rolled back a deployment and the lag cleared.</p>
+  </article>
+</main>
+</body>
+</html>
