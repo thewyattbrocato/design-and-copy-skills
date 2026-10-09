@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/img/banner.svg" alt="design-and-copy-skills: a mark of four corner crop marks around one teal dot, beside the wordmark and the line &quot;Design guidance a coding agent loads when the task calls for it.&quot;" width="720"></p>
+<p align="center"><img src="docs/img/banner.svg" alt="design-and-copy-skills set very large on two lines in heavy white sans-serif on near-black, with amber hyphens. Beside it, an amber rule and an italic serif note: 26 skills for AI coding agents. Along the bottom, a strip of 26 small amber marks: 16 squares labelled 16 design, then 10 dashes labelled 10 copywriting." width="720"></p>
 
 # design-and-copy-skills
 
