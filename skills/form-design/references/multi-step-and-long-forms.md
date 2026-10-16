@@ -22,7 +22,7 @@ Order by when a question feels reasonable. A sensible checkout order: email, opt
 
 Put the step name and count in the page heading ("Delivery, step 2 of 4"). Assistive technology reads the same words that sighted people see. Keep one heading level for the step title on every step.
 
-A visual progress bar costs a phone screen and misleads when a path skips steps (collecting in store skips delivery). Add one only when the form is long or runs over several sessions, or when testing shows people get lost. If you do add one, do not announce the same information twice. Never use unnamed dots.
+The heading already tells people where they are, so a bar is for long forms or ones spread over several sessions. Skip it where the path varies: self-employed applicants skip the employer step, and a bar would count a step they never see. Do not repeat the same status in two places. Never use unnamed dots.
 
 ## Back and keeping answers
 
@@ -56,12 +56,13 @@ Send the same details by email when the person might not return to the page.
 
 Many applications and claims cannot be done in one sitting. Plan for hours or days, several people and steps that happen offline.
 
-1. **Readiness page.** Before the first question, say what the person needs: eligibility, documents, dates, who else must be involved, and how long it takes. This saves dead ends.
-2. **Task list.** Break the work into tasks short enough for one sitting. Name each with a verb ("Add your policy details"). Show status (not started, in progress, done) and a time estimate. Keep tasks of roughly equal size at the same level. Say who owns a task when several people share the job.
-3. **Documents inside tasks.** Ask for each document in the task that uses it, not in a separate upload drawer at the end.
-4. **Save and resume.** Save as the person goes. Offer a way back with a link or a sign-in, and say how long drafts are kept.
-5. **Branching.** Use one topic per page for branches. Ask "Add another?" after each repeated item instead of cloning a big block of fields.
-6. **Finish.** Show the completed list, let people reopen any task, run a review of all answers, and give one clear way to submit.
+The usual failure: someone is days in and a missing document turns up midway, so they give up.
+
+1. **"What you'll need" page.** Before the first question, list eligibility, the documents, dates, who else must take part, and the time it takes. Then ask for each document inside the task that uses it, not in an upload drawer at the end.
+2. **Progress checklist.** Break the work into tasks short enough for one sitting. Name each with a verb ("Add your policy details"). Show status (not started, in progress, done) and a time estimate. Keep tasks of roughly equal size. Say who owns a task when several people share the job.
+3. **Save and resume.** Save as the person goes. Offer a way back with a link or a sign-in, and say how long drafts are kept.
+4. **Branching.** Use short pages for branches. Ask "Add another?" after each repeated item instead of cloning a big block of fields.
+5. **Finish.** Show the completed list, let people reopen any task, run a review of all answers, and give one clear way to submit.
 
 ## Repeating items
 

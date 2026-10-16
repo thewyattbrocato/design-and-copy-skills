@@ -1,17 +1,19 @@
-I'd agree with your instinct. A day-one walkthrough of forty shortcuts will mostly be skipped or forgotten, and for people who bill by the tenth of an hour, a mandatory tour is a real interruption. Shortcuts stick when someone hits the slow way of doing something and sees the fast way at that moment.
+**Your instinct is right.** Forty shortcuts in a day-one walkthrough is an inventory of controls. Nobody retains forty new key combos from one sitting, and the ones they don't use in the first week will be forgotten. Lawyers already know how to work. What they lack is the habit of reaching for a key instead of the mouse, and that comes from repeated real use, not a tour.
 
-Here's what I'd do instead:
+**What to build instead:**
 
-1. **Show the shortcut next to every action.** Put the key combo in menus, buttons, and tooltips wherever the action appears, including "Split view ⌘\" next to the split button. This is the cheapest change and does the most work. Someone who clicks "Quick-cite" ten times sees the shortcut ten times.
+1. **Teach one idea: the command palette.** Make it the single thing new users learn: "Press [key] to find any action. Every result shows its shortcut." One idea covers all forty shortcuts, because the palette surfaces them when people need them. Start the first-run flow with a real task, such as creating a note on a matter, and mention the palette only once they've finished it.
 
-2. **Ship a command palette (⌘K or similar) that lists every action with its shortcut.** Lawyers who don't remember a key can type "cite" or "matter" and get the shortcut as a byproduct. Many people learn shortcuts this way without ever studying them.
+2. **Show the shortcut where the action lives.** Put the key next to every menu item and button that has one. This is a job aid at the moment of action, and it costs nothing to learn.
 
-3. **Add a context-aware cheat sheet on ⌘/.** It shows the shortcuts for the screen you're on, not all forty. It's a reference people open when they need it, not a lesson they have to sit through.
+3. **Nudge in context, not in a tour.** When someone does a task with the mouse that has a shortcut (say, split view), show the key once, in a small dismissable hint on the control they just used. Cap it per shortcut, and don't repeat it after they've used the key. No streaks, no counters that imply they're behind.
 
-4. **Use light, optional nudges.** After someone has used a mouse action several times, show a one-line hint once: "Tip: ⌘\ splits the view." Limit it to one per shortcut, make it dismissible, and add a setting to turn off nudges. Experienced users will be annoyed by anything else.
+4. **Offer a short, skippable pick during setup.** Ask "What do you do most?" with a few checkboxes drawn from the matter, citation and note workflows. Surface the shortcuts for what they pick. Experts can skip it entirely and find everything in the palette.
 
-5. **Ask a question at setup instead of teaching everything.** "What will you do most here: drafting, research, or matter management?" Then surface the three to five shortcuts that match that role. This is the closest thing to a real onboarding step, and it's short.
+5. **Keep a reference, separate from teaching.** A searchable shortcut sheet behind `?` or the Help menu, grouped by task (Matters, Split view, Citations), for lookup when someone wants it. It isn't a tutorial and it isn't mandatory.
 
-6. **Let people remap, and avoid collisions with conventions they already use.** Lawyers and paralegals carry habits from Word, Outlook, Westlaw, and Clio. A shortcut that conflicts with Word or the OS will cause more trouble than a missing one. Check your defaults against those tools, and let users customize them. If you're going to spend effort on anything beyond the list above, spend it here.
+**Check before you ship:**
+- **Key collisions.** Law firms bring Word, Outlook, Westlaw and Clio habits with them. Test every combo against common OS and browser shortcuts, and make keys rebindable. Rebinding matters more here than in most products because the muscle memory is already set.
+- **Measure the right thing.** Don't measure onboarding completion. Measure whether people use the shortcut for a task unaided at day 14 and day 30. That's the outcome the PM actually wants.
 
-To give the PM something concrete, you could propose a 90-second first-run that covers three shortcuts tied to the user's role, plus the palette and hints for everything else. Then measure whether keyboard use of split view, matter-jumping, and quick-cite rises over the first few weeks compared with your current baseline. If it doesn't, you'll have data for the next conversation. You could also watch two or three real paralegals work for an hour. That will tell you more about which shortcuts matter than any assumption about the audience.
+**Assumptions:** I don't know your usage data or which shortcuts are most frequent. If you have it, use it to choose the ones that get surfaced in the hints and the setup pick. The one-idea approach still holds without it.

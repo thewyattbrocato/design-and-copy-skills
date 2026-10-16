@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples · Water Quality Lab Portal</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f5f7f8; --panel: #fff; --text: #17212b; --muted: #5a6875;
+    --line: #dde3e8; --accent: #0b6e8a; --accent-text: #fff;
+    --ok: #17703f; --ok-bg: #e6f4ec; --busy-bg: #e8f3f7; --warn: #8a5a00;
+    --focus: #1a73e8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12181d; --panel: #1b242b; --text: #e6ecf0; --muted: #9aa8b4;
+      --line: #2e3a43; --accent: #4cb8d6; --accent-text: #08242e;
+      --ok: #6fd39a; --ok-bg: #16301f; --busy-bg: #17303a; --warn: #e0b04a;
+      --focus: #8ab4f8;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header.top {
+    background: var(--panel); border-bottom: 1px solid var(--line);
+    padding: 12px 24px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+  }
+  .brand { font-weight: 700; }
+  nav { display: flex; gap: 4px; }
+  nav a {
+    color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 6px;
+  }
+  nav a[aria-current="page"] { color: var(--text); background: var(--bg); font-weight: 600; }
+  main { max-width: 900px; margin: 0 auto; padding: 24px; }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  h1 { font-size: 22px; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0; }
+  .actions { display: flex; gap: 8px; align-items: center; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 6px; padding: 8px 16px;
+    border: 1px solid var(--line); background: var(--panel); color: var(--text);
+  }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+  button.primary[aria-disabled="true"] { cursor: progress; opacity: .75; }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+
+  .status {
+    margin-top: 16px; border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; background: var(--busy-bg);
+  }
+  .status.done { background: var(--ok-bg); border-color: transparent; }
+  .status.idle { background: var(--panel); }
+  .status-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .status strong { display: block; }
+  .detail { color: var(--muted); font-size: 14px; }
+  .bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-top: 10px; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .5s linear; }
+  .dl {
+    display: inline-block; background: var(--ok); color: var(--bg); font-weight: 600;
+    padding: 8px 16px; border-radius: 6px; text-decoration: none;
+  }
+  @media (prefers-color-scheme: dark) { .dl { color: #08240f; } }
+  .spinner {
+    display: inline-block; width: 12px; height: 12px; margin-right: 8px; vertical-align: -1px;
+    border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation: none; border-right-color: currentColor; }
+    .bar > i { transition: none; }
+  }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; margin-top: 24px; overflow-x: auto; }
+  .card h2 { font-size: 16px; margin: 0; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 16px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .flag { font-weight: 600; color: var(--warn); }
+  .flag::before { content: "▲ "; }
+  .pass { color: var(--ok); }
+  .pass::before { content: "✓ "; }
+  .note { color: var(--muted); font-size: 13px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="brand">Water Quality Lab</span>
+  <nav aria-label="Primary">
+    <a href="#">Dashboard</a>
+    <a href="#" aria-current="page">Samples</a>
+    <a href="#">Sites</a>
+    <a href="#">Reports</a>
+  </nav>
+</header>
+
+<main>
+  <div class="head">
+    <div>
+      <h1>Samples</h1>
+      <p class="sub">2026 season · sample data shown for illustration</p>
+    </div>
+    <div class="actions">
+      <button type="button" id="cancel" hidden>Cancel</button>
+      <button type="button" id="export" class="primary">Export season report</button>
+    </div>
+  </div>
+
+  <!-- Visible status: always in the same place, right under the button -->
+  <section class="status idle" id="panel" hidden aria-label="Export status">
+    <div class="status-row">
+      <div>
+        <strong id="title"></strong>
+        <span class="detail" id="detail"></span>
+      </div>
+      <a class="dl" id="download" hidden download="season-report-2026.csv" href="#">Download report</a>
+    </div>
+    <div class="bar" id="barWrap" hidden><i id="bar"></i></div>
+  </section>
+  <!-- Polite announcements for screen readers, updated only on state changes -->
+  <div id="sr" class="sr" role="status" aria-live="polite" style="position:absolute;left:-9999px"></div>
+
+  <div class="card">
+    <h2>Recent samples</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Sample</th><th>Site</th><th>Collected</th>
+          <th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Result</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="note">The report covers the whole season, not only the rows above. You can keep working while it is prepared.</p>
+</main>
+
+<script>
+(function () {
+  var EXPECTED_MS = 25000;   // stand-in for the real server time
+  var samples = [
+    ["WQ-2041", "Mill Creek upstream",  "2026-10-13", 7.4, 1.2, "pass"],
+    ["WQ-2040", "Mill Creek outfall",   "2026-10-13", 6.9, 4.8, "flag"],
+    ["WQ-2039", "North Reservoir",      "2026-10-12", 7.8, 0.9, "pass"],
+    ["WQ-2038", "Harbor Intake",        "2026-10-12", 8.1, 2.1, "pass"],
+    ["WQ-2037", "Cedar Spring",         "2026-10-10", 7.2, 0.6, "pass"],
+    ["WQ-2036", "East Wetland",         "2026-10-09", 6.4, 6.3, "flag"]
+  ];
+
+  var tbody = document.getElementById("rows");
+  samples.forEach(function (s) {
+    var tr = document.createElement("tr");
+    var cells = [s[0], s[1], s[2], s[3].toFixed(1), s[4].toFixed(1)];
+    cells.forEach(function (c, i) {
+      var td = document.createElement("td");
+      if (i >= 3) td.className = "num";
+      td.textContent = c;
+      tr.appendChild(td);
+    });
+    var r = document.createElement("td");
+    r.className = s[5];
+    r.textContent = s[5] === "pass" ? "Within limits" : "Review";
+    tr.appendChild(r);
+    tbody.appendChild(tr);
+  });
+
+  var btn = document.getElementById("export");
+  var cancel = document.getElementById("cancel");
+  var panel = document.getElementById("panel");
+  var title = document.getElementById("title");
+  var detail = document.getElementById("detail");
+  var bar = document.getElementById("bar");
+  var barWrap = document.getElementById("barWrap");
+  var dl = document.getElementById("download");
+  var sr = document.getElementById("sr");
+
+  var timer = null, startedAt = 0, running = false, blobUrl = null;
+
+  function announce(msg) { sr.textContent = ""; setTimeout(function () { sr.textContent = msg; }, 50); }
+
+  function show(cls, t, d) {
+    panel.hidden = false;
+    panel.className = "status " + cls;
+    title.textContent = t;
+    detail.textContent = d || "";
+  }
+
+  function tick() {
+    var el = Date.now() - startedAt;
+    var secs = Math.floor(el / 1000);
+    // Bar eases toward 95% so it never claims more than we know; completes on finish.
+    var pct = Math.min(95, (el / EXPECTED_MS) * 95);
+    bar.style.width = pct + "%";
+    var left = Math.max(0, Math.ceil((EXPECTED_MS - el) / 1000));
+    var msg = left > 0
+      ? secs + "s elapsed · usually takes about 25 seconds"
+      : secs + "s elapsed · taking a little longer than usual";
+    detail.textContent = " " + msg;
+    document.title = "Exporting… · Samples";
+    if (el >= EXPECTED_MS) finish();
+  }
+
+  function setBusy(on) {
+    running = on;
+    btn.setAttribute("aria-disabled", on ? "true" : "false");
+    cancel.hidden = !on;
+    barWrap.hidden = !on;
+    btn.innerHTML = on ? '<span class="spinner" aria-hidden="true"></span>Exporting…' : "Export season report";
+  }
+
+  function start() {
+    if (running) return;
+    if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+    dl.hidden = true;
+    startedAt = Date.now();
+    setBusy(true);
+    bar.style.width = "0%";
+    show("", "Preparing your season report…", "");
+    tick();
+    timer = setInterval(tick, 500);
+    announce("Export started. This usually takes about 25 seconds. You can keep working.");
+  }
+
+  function finish() {
+    clearInterval(timer);
+    setBusy(false);
+    document.title = "Samples · Water Quality Lab Portal";
+    var csv = "sample,site,collected,pH,turbidity_ntu,result\n" + samples.map(function (s) {
+      return [s[0], '"' + s[1] + '"', s[2], s[3], s[4], s[5]].join(",");
+    }).join("\n") + "\n";
+    blobUrl = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+    dl.href = blobUrl;
+    dl.hidden = false;
+    var t = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    show("done", "Season report ready", " Finished at " + t + ". Download stays here until you export again.");
+    announce("Season report is ready. Download report link is available.");
+    dl.focus();
+  }
+
+  function stop() {
+    if (!running) return;
+    clearInterval(timer);
+    setBusy(false);
+    document.title = "Samples · Water Quality Lab Portal";
+    show("idle", "Export cancelled", " Nothing was downloaded. You can start again any time.");
+    announce("Export cancelled.");
+    btn.focus();
+  }
+
+  btn.addEventListener("click", start);
+  cancel.addEventListener("click", stop);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && running) stop();
+  });
+})();
+</script>
+</body>
+</html>

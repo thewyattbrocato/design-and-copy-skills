@@ -1,38 +1,15 @@
-# Post de Instagram
+Here are three options. Each is under 160 characters, with the link and spaces counted.
 
-**🚲 Tu bici, a punto y de vuelta el mismo día**
+**1. Direct (129 characters)**
+> Odd Fern Goods: 20% off everything ends Sunday 11:59pm. Last chance! Use FERN20 on ceramics & candles: oddferngoods.example/sale
 
-En **Taller Ruedalibre** (calle Sueca, Zaragoza) tenemos una oferta para ti:
+**2. Urgency plus shipping (146 characters)**
+> Almost gone! Code FERN20 = 20% off all ceramics & candles, but only till Sunday 10/18, 11:59pm. Free shipping over $60. oddferngoods.example/sale
 
-✅ **Puesta a punto básica: 25 €** ~~30 €~~
-⏰ Si nos la traes **antes de las 11:00**, te la devolvemos **ese mismo día**
-📅 Oferta válida **hasta el 30 de noviembre**
+**3. Last call (152 characters)**
+> Last call from Odd Fern! 20% off the whole shop with FERN20 until Sunday at 11:59pm. Grab your favorites before they're gone: oddferngoods.example/sale
 
-🕘 Abrimos de lunes a sábado, de 9:00 a 19:00.
-
-Precio claro, trabajo bien hecho y sin dejarte días sin bici. Pásate por la calle Sueca y compruébalo tú mismo.
-
-📍 Calle Sueca, Zaragoza
-Etiqueta a alguien que lleve meses sin tocar la bici 👇
-
-#TallerRuedalibre #Zaragoza #BicisZaragoza #TallerDeBicis #PuestaAPunto #CiclismoUrbano #BiciZaragoza #CalleSueca
-
----
-
-# Cartel pequeño
-
-**TALLER RUEDALIBRE**
-*Tu taller de bicis en el barrio*
-
-**PUESTA A PUNTO BÁSICA**
-**25 €** ~~30 €~~
-*Hasta el 30 de noviembre*
-
-**Bici antes de las 11:00 → te la devolvemos hoy mismo**
-
-Lunes a sábado · 9:00 a 19:00
-Calle Sueca, Zaragoza
-
----
-
-**Una nota sobre la comparación con el otro taller:** no he escrito que el taller de la esquina cobre más, porque no habéis comprobado sus precios. Si lo decís sin datos, os arriesgáis a una queja o a perder credibilidad. En su lugar, el texto apunta a lo que sí podéis demostrar: precio rebajado, devolución el mismo día y horario amplio. Si comprobáis sus tarifas y salís ganando, puedo añadir una frase de comparación.
+- **Counts:** I counted by hand, so paste them into your SMS tool to confirm before sending.
+- **Special characters:** All three use plain characters only. An emoji or curly quote would switch the text to a different encoding, which cuts the limit to 70 characters per segment.
+- **Free shipping:** Message 2 mentions it without saying it's weekend-only, since it's always on.
+- **Opt-out text:** If your SMS platform adds "Reply STOP to opt out" automatically, it may count toward the limit. Message 1 has the most room, with 31 characters to spare.

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site photos – Inspection upload</title>
+<style>
+:root{
+  --bg:#f3f5f7;--card:#fff;--ink:#16202a;--muted:#5b6876;--line:#d9e0e7;--line-soft:#e9edf1;
+  --accent:#0b6bcb;--accent-ink:#fff;--accent-soft:#e6f0fb;
+  --ok:#17803d;--ok-soft:#e5f5ea;--err:#b42318;--err-soft:#fdecea;--warn:#8a5a00;--warn-soft:#fff4dc;
+  --track:#e3e8ed;--shadow:0 1px 2px rgba(16,24,40,.06),0 4px 16px rgba(16,24,40,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1418;--card:#171e24;--ink:#e8edf2;--muted:#9aa7b4;--line:#2b3641;--line-soft:#222c35;
+    --accent:#4da3ff;--accent-ink:#06121f;--accent-soft:#12273d;
+    --ok:#4cc27a;--ok-soft:#12291c;--err:#ff8a7e;--err-soft:#331a17;--warn:#f0b955;--warn-soft:#2e2410;
+    --track:#26313b;--shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  padding:24px 16px 48px}
+button,input,select{font:inherit;color:inherit}
+.panel{max-width:780px;margin:0 auto;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.head{padding:20px 22px 16px;border-bottom:1px solid var(--line-soft)}
+.eyebrow{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{margin:2px 0 2px;font-size:21px;line-height:1.25}
+.sub{margin:0;color:var(--muted);font-size:14px}
+.body{padding:18px 22px 8px}
+
+.drop{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;
+  padding:28px 16px;border:2px dashed var(--line);border-radius:12px;background:transparent;
+  transition:background .15s,border-color .15s}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop svg{width:34px;height:34px;color:var(--accent)}
+.drop strong{font-size:16px}
+.drop p{margin:0;color:var(--muted);font-size:13.5px}
+.drop .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:8px 16px;
+  border-radius:9px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover:not(:disabled){background:var(--line-soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover:not(:disabled){filter:brightness(1.08);background:var(--accent)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.small{min-height:32px;padding:4px 10px;font-size:13px}
+.btn.link{border:0;background:none;color:var(--accent);padding:4px 6px;min-height:32px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.alert{margin-top:14px;padding:10px 12px;border-radius:10px;background:var(--warn-soft);color:var(--warn);
+  border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);font-size:13.5px}
+.alert[hidden]{display:none}
+.alert .row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.alert ul{margin:6px 0 0;padding-left:18px}
+.alert b{font-weight:650}
+
+.summary{margin-top:18px;padding:12px 14px;border:1px solid var(--line-soft);border-radius:10px;background:var(--bg)}
+.summary[hidden]{display:none}
+.sum-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.sum-text{font-weight:600;font-size:14px}
+.sum-text span{font-weight:400;color:var(--muted)}
+.sum-actions{display:flex;gap:4px;flex-wrap:wrap}
+.bar{height:8px;border-radius:99px;background:var(--track);overflow:hidden;margin-top:10px}
+.bar>i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .2s}
+.bar.done>i{background:var(--ok)}
+
+ul.list{list-style:none;margin:14px 0 0;padding:0}
+.item{display:grid;grid-template-columns:64px 1fr auto;gap:6px 14px;padding:12px 0;border-top:1px solid var(--line-soft);align-items:start}
+.item:first-child{border-top:0}
+.thumb{width:64px;height:64px;border-radius:8px;background:var(--track);overflow:hidden;display:grid;place-items:center;
+  color:var(--muted);font-size:11px;font-weight:700;position:relative}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb.dim img{opacity:.55}
+.mid{min-width:0}
+.name{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.meta{font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.st{font-weight:600}
+.st.ok{color:var(--ok)}.st.err{color:var(--err)}.st.act{color:var(--accent)}
+.item .bar{height:5px;margin:7px 0 0}
+.item.error .bar>i{background:var(--err)}
+.item.done .bar{display:none}
+.fields{display:grid;grid-template-columns:1fr 150px;gap:8px;margin-top:8px}
+.fields input,.fields select{width:100%;min-height:34px;padding:5px 9px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:13.5px}
+.errmsg{color:var(--err);font-size:13px;margin-top:4px}
+.acts{display:flex;gap:4px}
+.icon{width:36px;height:36px;display:grid;place-items:center;border:0;border-radius:8px;background:none;cursor:pointer;color:var(--muted)}
+.icon:hover{background:var(--line-soft);color:var(--ink)}
+.icon svg{width:18px;height:18px}
+
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:14px 22px;border-top:1px solid var(--line-soft);margin-top:10px;background:var(--bg)}
+.foot .note{font-size:13px;color:var(--muted)}
+.foot .note.err{color:var(--err)}
+.empty{margin:18px 0 8px;text-align:center;color:var(--muted);font-size:13.5px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;
+  transition:.25s;max-width:90vw;z-index:10}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:560px){
+  .item{grid-template-columns:56px 1fr}
+  .thumb{width:56px;height:56px}
+  .acts{grid-column:1/-1;justify-content:flex-end;margin-top:-2px}
+  .fields{grid-template-columns:1fr}
+  .head,.body,.foot{padding-left:16px;padding-right:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="panel" aria-labelledby="title">
+  <header class="head">
+    <div class="eyebrow">Inspection INS-2291 · Pre-purchase structural</div>
+    <h1 id="title">Site photos</h1>
+    <p class="sub">14 Harbour Row, Unit 3 · Add photos of defects, access points and key areas.</p>
+  </header>
+
+  <section class="body">
+    <div class="drop" id="drop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16.5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.5M12 15V4m0 0L8 8m4-4 4 4"/></svg>
+      <strong>Drag photos here</strong>
+      <p>JPEG, PNG, WebP or HEIC · up to 25 MB each · up to 60 per batch. You can also paste images.</p>
+      <div class="btns">
+        <button type="button" class="btn primary" id="pick">Choose photos</button>
+        <button type="button" class="btn" id="cam">Take photo</button>
+      </div>
+      <input type="file" id="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.heic,.heif" multiple hidden>
+      <input type="file" id="fileCam" accept="image/*" capture="environment" hidden>
+    </div>
+
+    <div class="alert" id="rejects" role="alert" hidden></div>
+
+    <div class="summary" id="summary" hidden>
+      <div class="sum-top">
+        <div class="sum-text" id="sumText"></div>
+        <div class="sum-actions">
+          <button type="button" class="btn small" id="retryAll" hidden>Retry failed</button>
+          <button type="button" class="btn link small" id="clearDone" hidden>Clear uploaded</button>
+        </div>
+      </div>
+      <div class="bar" id="overall" role="progressbar" aria-label="Overall upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+    </div>
+
+    <p class="empty" id="empty">No photos added yet.</p>
+    <ul class="list" id="list" aria-label="Photos to upload"></ul>
+  </section>
+
+  <footer class="foot">
+    <div class="note" id="footNote">Add at least one photo to continue.</div>
+    <button type="button" class="btn primary" id="finish" disabled>Attach to inspection</button>
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+<div class="sr" id="live" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Config ---------- */
+var MAX_SIZE = 25*1024*1024, MAX_FILES = 60, CONCURRENCY = 3;
+var OK_EXT = /\.(jpe?g|png|webp|heic|heif)$/i;
+var OK_TYPE = /^image\/(jpeg|png|webp|heic|heif)$/i;
+var TAGS = ["Exterior","Roof","Interior","Basement / Subfloor","Defect","Services","Other"];
+
+/* ---------- State ---------- */
+var items = [], nextId = 1, seen = {}, validCount = 0, failureUsed = false, attached = false;
+var $ = function(id){return document.getElementById(id)};
+var drop=$("drop"), list=$("list"), fileIn=$("file"), camIn=$("fileCam"), rejects=$("rejects"),
+    summary=$("summary"), sumText=$("sumText"), overall=$("overall"), empty=$("empty"),
+    retryAll=$("retryAll"), clearDone=$("clearDone"), finish=$("finish"), footNote=$("footNote");
+
+/* ---------- Helpers ---------- */
+function fmt(b){ if(b<1024) return b+" B"; if(b<1048576) return (b/1024).toFixed(0)+" KB"; return (b/1048576).toFixed(1)+" MB"; }
+function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]}); }
+function isHeic(f){ return /heic|heif/i.test(f.type) || /\.(heic|heif)$/i.test(f.name); }
+function say(msg){ var l=$("live"); l.textContent=""; setTimeout(function(){l.textContent=msg},30); }
+var toastT;
+function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(function(){t.classList.remove("show")},3200); }
+var ICON = {
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  retry:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>',
+  trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>'
+};
+
+/* ---------- Adding files ---------- */
+function addFiles(fileList){
+  var files = Array.prototype.slice.call(fileList||[]);
+  if(!files.length) return;
+  var bad = [];
+  files.forEach(function(f){
+    var key = f.name+"|"+f.size+"|"+f.lastModified;
+    if(!(OK_TYPE.test(f.type) || OK_EXT.test(f.name))) return bad.push([f.name,"Not a supported image type"]);
+    if(f.size===0) return bad.push([f.name,"File is empty"]);
+    if(f.size>MAX_SIZE) return bad.push([f.name,"Larger than 25 MB ("+fmt(f.size)+")"]);
+    if(seen[key]) return bad.push([f.name,"Already added"]);
+    if(items.length>=MAX_FILES) return bad.push([f.name,"Batch limit of "+MAX_FILES+" photos reached"]);
+    seen[key]=true; validCount++;
+    var it = { id:nextId++, file:f, key:key, status:"queued", pct:0, tag:"", caption:"", timer:null,
+               url: isHeic(f)?null:URL.createObjectURL(f), error:"",
+               /* Simulation: the 3rd accepted photo drops its connection on the first attempt. */
+               willFail: (!failureUsed && validCount===3) };
+    if(it.willFail) failureUsed = true;
+    items.push(it); list.appendChild(buildItem(it));
+  });
+  showRejects(bad);
+  if(attached){ attached=false; }
+  render(); pump();
+  var added = files.length - bad.length;
+  if(added) say(added+" photo"+(added>1?"s":"")+" added to the upload queue.");
+}
+function showRejects(bad){
+  if(!bad.length){ rejects.hidden=true; rejects.innerHTML=""; return; }
+  rejects.hidden=false;
+  rejects.innerHTML='<div class="row"><div><b>'+bad.length+' file'+(bad.length>1?"s were":" was")+' not added</b><ul>'+
+    bad.slice(0,6).map(function(b){return "<li>"+esc(b[0])+" — "+esc(b[1])+"</li>"}).join("")+
+    (bad.length>6?"<li>…and "+(bad.length-6)+" more</li>":"")+'</ul></div>'+
+    '<button type="button" class="btn link small" id="dismissRej">Dismiss</button></div>';
+  $("dismissRej").onclick=function(){rejects.hidden=true; rejects.innerHTML="";};
+}
+
+/* ---------- Item DOM ---------- */
+function buildItem(it){
+  var li=document.createElement("li"); li.className="item"; li.id="it"+it.id;
+  li.innerHTML =
+   '<div class="thumb">'+(it.url?'<img alt="" decoding="async">':'HEIC')+'</div>'+
+   '<div class="mid">'+
+     '<div class="name" title="'+esc(it.file.name)+'">'+esc(it.file.name)+'</div>'+
+     '<div class="meta"><span>'+fmt(it.file.size)+'</span><span class="st"></span></div>'+
+     '<div class="bar"><i></i></div>'+
+     '<div class="errmsg" hidden></div>'+
+     '<div class="fields">'+
+       '<input type="text" maxlength="140" placeholder="Caption (optional)" aria-label="Caption for '+esc(it.file.name)+'">'+
+       '<select aria-label="Area for '+esc(it.file.name)+'"><option value="">Area…</option>'+
+         TAGS.map(function(t){return '<option>'+esc(t)+'</option>'}).join("")+'</select>'+
+     '</div>'+
+   '</div>'+
+   '<div class="acts"></div>';
+  if(it.url){
+    var img=li.querySelector("img"); img.src=it.url;
+    img.onerror=function(){ img.remove(); li.querySelector(".thumb").textContent="IMG"; };
+  }
+  li.querySelector("input").oninput=function(e){it.caption=e.target.value};
+  li.querySelector("select").onchange=function(e){it.tag=e.target.value};
+  li.querySelector(".acts").addEventListener("click",function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    if(b.dataset.a==="retry") retry(it); else remove(it);
+  });
+  it.el=li; paintItem(it); return li;
+}
+function paintItem(it){
+  var li=it.el, st=li.querySelector(".st"), bar=li.querySelector(".bar>i"),
+      msg=li.querySelector(".errmsg"), acts=li.querySelector(".acts");
+  li.className="item "+it.status;
+  li.querySelector(".thumb").classList.toggle("dim", it.status!=="done");
+  bar.style.width=it.pct+"%";
+  msg.hidden = it.status!=="error"; msg.textContent = it.error;
+  var label, cls="", name=esc(it.file.name);
+  if(it.status==="queued"){label="Waiting…"}
+  else if(it.status==="uploading"){label="Uploading "+Math.round(it.pct)+"%"; cls="act"}
+  else if(it.status==="done"){label="Uploaded ✓"; cls="ok"}
+  else {label="Failed"; cls="err"}
+  st.textContent=label; st.className="st "+cls;
+  var h="";
+  if(it.status==="error") h+='<button type="button" class="icon" data-a="retry" aria-label="Retry upload of '+name+'" title="Retry">'+ICON.retry+'</button>';
+  if(it.status==="queued"||it.status==="uploading") h+='<button type="button" class="icon" data-a="rm" aria-label="Cancel upload of '+name+'" title="Cancel">'+ICON.x+'</button>';
+  else h+='<button type="button" class="icon" data-a="rm" aria-label="Remove '+name+'" title="Remove">'+ICON.trash+'</button>';
+  if(acts.dataset.sig!==h){acts.innerHTML=h; acts.dataset.sig=h;}
+}
+
+/* ---------- Upload engine (simulated) ---------- */
+/* Swap simulateUpload for a real XHR/fetch with progress to go live. */
+function simulateUpload(it, onProgress, onDone, onFail){
+  var size=it.file.size;
+  var duration=Math.min(9000,Math.max(1400,size/1.3e6*1000));
+  var failAt = it.willFail ? 55+Math.random()*20 : 101;
+  var pct=0, last=Date.now();
+  it.timer=setInterval(function(){
+    var now=Date.now(), dt=now-last; last=now;
+    pct+=100*dt/duration*(0.55+Math.random()*0.9);
+    if(pct>=failAt){
+      clearInterval(it.timer); it.timer=null; it.willFail=false;
+      return onFail(Math.round(pct),"Connection lost at "+Math.round(pct)+"%. Check your signal and retry.");
+    }
+    if(pct>=100){ clearInterval(it.timer); it.timer=null; return onDone(); }
+    onProgress(pct);
+  },120);
+}
+function pump(){
+  var active=items.filter(function(i){return i.status==="uploading"}).length;
+  for(var k=0;k<items.length && active<CONCURRENCY;k++){
+    var it=items[k];
+    if(it.status!=="queued") continue;
+    active++; start(it);
+  }
+}
+function start(it){
+  it.status="uploading"; it.pct=0; it.error=""; paintItem(it); render();
+  simulateUpload(it,
+    function(p){ it.pct=p; paintItem(it); renderSummary(); },
+    function(){ it.status="done"; it.pct=100; paintItem(it); say(it.file.name+" uploaded."); render(); pump(); },
+    function(p,m){ it.status="error"; it.pct=p; it.error=m; paintItem(it); say(it.file.name+" failed to upload."); render(); pump(); }
+  );
+}
+function retry(it){ it.status="queued"; it.pct=0; it.error=""; paintItem(it); render(); pump(); }
+function remove(it){
+  if(it.timer){clearInterval(it.timer); it.timer=null;}
+  if(it.url) URL.revokeObjectURL(it.url);
+  delete seen[it.key];
+  var idx=items.indexOf(it), wasFocus=it.el.contains(document.activeElement);
+  items.splice(idx,1); it.el.remove();
+  say(it.file.name+(it.status==="uploading"||it.status==="queued"?" upload cancelled.":" removed."));
+  render(); pump();
+  if(wasFocus){ var n=items[Math.min(idx,items.length-1)]; var b=n&&n.el.querySelector(".icon"); (b||$("pick")).focus(); }
+}
+
+/* ---------- Rendering ---------- */
+function counts(){
+  var c={queued:0,uploading:0,done:0,error:0};
+  items.forEach(function(i){c[i.status]++}); return c;
+}
+function render(){
+  empty.hidden = items.length>0;
+  summary.hidden = items.length===0;
+  renderSummary();
+  var c=counts(), busy=c.queued+c.uploading;
+  retryAll.hidden = c.error===0; retryAll.textContent = "Retry failed ("+c.error+")";
+  clearDone.hidden = c.done===0;
+  finish.disabled = busy>0 || c.done===0 || attached;
+  finish.textContent = attached ? "Attached ✓" : (c.done? "Attach "+c.done+" photo"+(c.done>1?"s":"")+" to inspection" : "Attach to inspection");
+  footNote.className="note";
+  if(attached) footNote.textContent="Photos attached to INS-2291.";
+  else if(!items.length) footNote.textContent="Add at least one photo to continue.";
+  else if(busy) footNote.textContent="Uploading… keep this page open until finished.";
+  else if(c.error){ footNote.className="note err"; footNote.textContent=c.error+" photo"+(c.error>1?"s":"")+" failed. Retry or remove "+(c.error>1?"them":"it")+" — failed photos won't be attached."; }
+  else if(c.done) footNote.textContent="All photos uploaded. Ready to attach.";
+}
+function renderSummary(){
+  if(!items.length) return;
+  var c=counts(), total=items.length, sum=0;
+  items.forEach(function(i){sum+= i.status==="done"?100:i.pct});
+  var pct=Math.round(sum/total);
+  var parts=[];
+  if(c.uploading) parts.push(c.uploading+" uploading");
+  if(c.queued) parts.push(c.queued+" waiting");
+  if(c.error) parts.push(c.error+" failed");
+  sumText.innerHTML = c.done+" of "+total+" uploaded"+(parts.length?' <span>· '+parts.join(" · ")+'</span>':"");
+  overall.firstElementChild.style.width=pct+"%";
+  overall.setAttribute("aria-valuenow",pct);
+  overall.classList.toggle("done", c.done===total);
+}
+
+/* ---------- Events ---------- */
+$("pick").onclick=function(){fileIn.click()};
+$("cam").onclick=function(){camIn.click()};
+[fileIn,camIn].forEach(function(inp){
+  inp.onchange=function(){ addFiles(inp.files); inp.value=""; };
+});
+retryAll.onclick=function(){ items.forEach(function(i){ if(i.status==="error"){i.status="queued";i.pct=0;i.error="";paintItem(i);} }); render(); pump(); };
+clearDone.onclick=function(){ items.filter(function(i){return i.status==="done"}).forEach(remove); };
+finish.onclick=function(){
+  var n=counts().done; attached=true; render();
+  toast(n+" photo"+(n>1?"s":"")+" attached to inspection INS-2291");
+  say(n+" photos attached to the inspection.");
+};
+
+var depth=0;
+function hasFiles(e){ var t=e.dataTransfer&&e.dataTransfer.types; return t && Array.prototype.indexOf.call(t,"Files")>-1; }
+window.addEventListener("dragenter",function(e){ if(!hasFiles(e)) return; e.preventDefault(); depth++; drop.classList.add("over"); });
+window.addEventListener("dragover",function(e){ if(!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect="copy"; });
+window.addEventListener("dragleave",function(e){ if(!hasFiles(e)) return; depth=Math.max(0,depth-1); if(!depth) drop.classList.remove("over"); });
+window.addEventListener("drop",function(e){
+  if(!hasFiles(e)) return; e.preventDefault(); depth=0; drop.classList.remove("over");
+  addFiles(e.dataTransfer.files);
+});
+window.addEventListener("paste",function(e){
+  if(/input|select|textarea/i.test((e.target||{}).tagName||"")) return;
+  var fs=e.clipboardData&&e.clipboardData.files; if(fs&&fs.length){ e.preventDefault(); addFiles(fs); }
+});
+window.addEventListener("beforeunload",function(e){
+  var c=counts(); if(c.uploading||c.queued){ e.preventDefault(); e.returnValue=""; }
+});
+render();
+})();
+</script>
+</body>
+</html>

@@ -5,7 +5,7 @@ description: Use when you design, build, plan or review the overall structure of
 
 # Layout structure
 
-A layout is the answer to four questions: what is the material, how much of it is there, how wide is a line of text, and what happens in a container you did not design. Models usually skip them and reach for a stock template (twelve columns, a centered stack, heading plus three cards, repeated). This skill puts the questions first and lets the structure follow from the answers.
+A layout is the answer to four questions: what does the reader do with this (read it through, compare it, or work inside it), what happens in a container you did not design, what is it made of and how much of it is there, and how wide may a line of text run. Models usually skip them and reach for a stock template (twelve columns, a centered stack, heading plus three cards, repeated). This skill puts the questions first and lets the structure follow from the answers.
 
 ## When to use
 
@@ -30,7 +30,7 @@ A layout is the answer to four questions: what is the material, how much of it i
 
 Scale it to the task. A full page uses every step; a header fix needs steps 1 and 6 only.
 
-1. **Run the intake.** Answer four things in a sentence each: what the material is (continuous prose, comparable items, separate chunks, bands of different content, or a mix), how much there is and what the worst case looks like (longest title, empty state, one item versus a hundred, translated text), who reads and what they must find first, and whether the format is fixed (slide, poster, print, social card) or reflowing. If the content does not exist yet, write plausible content first; a layout drawn around placeholder boxes fits nothing.
+1. **Run the intake.** Answer four things in a sentence each: what the reader does with it (reads it through, compares it, or works inside it) and what they must find first, how much there is and what the worst case looks like (longest title, empty state, one item versus a hundred, translated text), whether the format is fixed (slide, poster, print, social card) or reflowing, and what the material is (continuous prose, comparable items, separate chunks, bands of different content, or a mix). If the content does not exist yet, write plausible content first; a layout drawn around placeholder boxes fits nothing.
 2. **Pick a structure family.** Match the material, not a habit: see the table below, and load the structure reference for worked cases.
 3. **Set the measure, then derive columns.** Decide how wide the main text may run, then see how many columns of that width the container supports. Do not start from a count of columns and pour text across them. A twelve-unit lattice is a planning sketch; reading text never spans most of it.
 4. **Size unequal columns on purpose.** A main column roughly twice a secondary one is a dependable starting pair. A navigation or filter sidebar often sits around 14 to 20rem. Let the secondary column hold what it needs (a table of contents, notes, captions) and no more.

@@ -1,3 +1,3 @@
-Not quite. Refunding right away skips the first step: check the payments dashboard for a duplicate posting. Refund only if confirmed or manager-approved.
+Refunding right away skips step one. Check the payments dashboard for a duplicate posting first. Refund only if a duplicate is confirmed or a manager approves.
 
-(24 words)
+(26 words)

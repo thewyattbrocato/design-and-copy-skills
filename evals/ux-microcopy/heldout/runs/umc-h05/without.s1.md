@@ -1,17 +1,35 @@
-**Pre-prompt screen**
+# Shiftbook copy
 
-**Headline:** Find bikes near you
+## 1. Coordinator's empty state (no shifts posted yet)
 
-**Body:** Wheelhaus uses your location to show available bikes on the map and to start your ride when you scan a bike.
+**Headline:** Post your first shift
+**Body:** Add a shift and parents can sign up for it. You'll see who's signed up right here.
+**Button:** Post a shift
 
-**Primary button:** Continue
+## 2. Parent's empty state (no open shifts)
+
+**Headline:** No open shifts right now
+**Body:** Every shift is filled, or none have been posted yet. Check back soon.
+**Optional line (if the parent hasn't enabled reminders):** Turn on notifications and we'll remind you about shifts you sign up for.
+
+## 3. Notification permission prompt
+
+This is the screen shown *before* the browser's own permission dialog.
+
+**Headline:** Want a reminder before your shift?
+**Body:** We'll send a notification to this device shortly before a shift you've signed up for. We won't send anything else.
+**Primary button:** Turn on reminders
 **Secondary button:** Not now
 
-**Notes**
+**If they block it (shown later, where they'd re-enable it):**
+Reminders are off. You can turn them on in your browser's site settings.
 
-- **Nothing about storage, sharing, or retention.** The copy only states the two uses you're sure of. Avoid lines like "we never store your location" or "your data stays private" until legal signs off. Those are promises, and the screen would be wrong if the policy ends up different. When legal finishes, add one sentence plus a "Learn more" link to the privacy policy.
-- **Button labels.** "Continue" fits better than "Allow" because the system dialog comes next, and users shouldn't think they've already granted permission. "Not now" is better than "Don't allow" because it doesn't read as permanent. If they tap it, let them browse the map without location and re-offer the prompt when they try to scan a bike.
-- **System dialog string.** On iOS, `NSLocationWhenInUseUsageDescription` is a separate piece of copy. Suggested text: "Wheelhaus uses your location to show nearby bikes and to start your ride when you scan a bike." On Android, the system dialog has no custom text.
-- **Scope.** This assumes while-using-the-app access, since both uses happen when the app is open. If you plan to ask for background location (for example, to track a ride in progress), that needs its own prompt and its own copy.
+Note that these are browser notifications, not email, so the copy says "notification" and "this device." Calling them email-like could confuse parents who then wait for an email that never arrives. The "We won't send anything else" line is only accurate if reminders really are the only thing you send, so cut it if that might change.
 
-I can also draft a version with a privacy line ready to drop in once legal is done, or a shorter variant if you want to A/B test.
+## 4. Shift just taken by someone else
+
+**Headline:** Too slow, that shift was just taken
+**Body:** Someone else signed up a moment ago. Take a look at the other open shifts.
+**Button:** See open shifts
+
+If you'd like a softer tone, use "Someone just beat you to it" as the headline. If no other shifts are open, the button should lead to the empty state in #2, which already covers that case.

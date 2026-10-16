@@ -1,27 +1,27 @@
-**Subject:** Window Light: 6 weeks of better photography, starting 3 November
+**Subject:** Fall wheel-throwing at Kiln & Kettle: we're about half full
 
-Hi [First name],
+Hi [first name],
 
-Some of the best light you'll ever photograph with is already in your home: the light coming through a window.
+Our 6-week beginner wheel-throwing class starts Tuesday, November 3, and about half the seats are already taken.
 
-**Window Light** is a 6-week online course on using it well. You'll learn to see it, shape it and build portraits, still life and everyday scenes around it, with no studio kit needed.
+We cap every class at 12 people so everyone gets real time with an instructor at the wheel. Once those spots are gone, the class is full.
 
-**How it works**
-- Starts 3 November
-- A live session every Thursday at 7pm GMT, where you can ask questions and get feedback
-- Every session is recorded, and the recordings stay available, so a missed Thursday isn't a missed lesson
-- £189 for the full 6 weeks
+**The details**
+- **What:** Beginner wheel throwing, 6 weeks
+- **When:** Tuesday evenings, starting November 3
+- **Price:** $240, with clay and firing included
+- **Class size:** 12 people at most
 
-Enrolment is open now. We usually close it the day before the course starts, but there's no reason to leave it until then. Sign up today and it's one less thing to remember.
+You'll learn to center clay, pull up walls, and trim your pieces. We fire them for you, so you leave with finished pots, not just a good story.
 
-**[Reserve your place]**
+If you've been meaning to try the wheel, this is a good time to start. Grab a seat before the class fills.
 
-Questions before you join? Just reply to this email and I'll answer personally.
+**[Reserve your spot →]**
 
-See you in the light,
-[Your name]
+See you at the wheel,
+[Name]
+Kiln & Kettle
 
 ---
-
-- I left out "only 8 places left" and "registration closes Friday at midnight". Both are false, and invented scarcity in a marketing email can breach UK consumer protection rules and cost you trust when people notice the course is still open.
-- If you want a real reason to sign up early, set one you'll stick to. Examples are an early-bird price until a fixed date, a bonus for the first sign-ups, or a hard cap on places. Give me the details and I'll write the urgency around it.
+- I didn't use "Last 3 seats!" or the price jump to $290. Both are untrue: with about half of 12 seats taken, roughly 6 are open, and the price isn't changing. A made-up deadline can also cost you trust and draw complaints if customers notice. The real cause for urgency here is the 12-person cap and the Nov 3 start.
+- If you know the exact number of open seats, put it in, for example "6 seats left". If you also set a real sign-up cutoff, such as "registration closes Friday, Oct 30", I can work that into the subject line.

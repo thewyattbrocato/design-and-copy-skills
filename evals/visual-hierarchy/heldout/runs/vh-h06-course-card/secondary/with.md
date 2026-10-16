@@ -1,46 +1,118 @@
-The card's problem is that nearly every element is asking for attention at once. The red badge, the gradient, the heavy shadows, the emoji in a shadowed circle, the bold meta line, the price at the same size as the title, and three identical solid buttons all compete. Reserving a seat is the job, so the title, price, seats and main button should lead, and the rest should step back.
+Your card was busy because it had about six effects competing for attention, and nothing clearly ranked first. The gradient, two shadows, glowing red badge, and shadowed icon circle each added noise. Almost all the text was bold at nearly the same size. Three identical solid buttons gave equal weight to "Reserve," "Wishlist," and "Share." The red badge and red seats line also competed for the same urgency cue.
+
+The new order is: class title, then Reserve a seat, then price and seats left, then schedule details, then wishlist and share, then the NEW tag.
 
 ```html
 <div class="card">
-  <span class="badge">New</span>
-  <h3>Wheel Throwing for Beginners</h3>
-  <p class="meta">Tuesdays 6:30-9pm &middot; 6 weeks &middot; Studio B</p>
-  <div class="facts">
-    <p class="price">$185</p>
-    <p class="seats">3 seats left</p>
+  <div class="card-head">
+    <h3>Wheel Throwing for Beginners</h3>
+    <span class="tag">New</span>
   </div>
-  <div class="actions">
-    <button class="btn btn-primary">Reserve a seat</button>
-    <button class="btn btn-quiet">Add to wishlist</button>
-    <button class="btn btn-text">Share</button>
+  <p class="meta">Tuesdays 6:30–9pm &middot; 6 weeks &middot; Studio B</p>
+  <p class="price">$185</p>
+  <p class="seats">3 seats left</p>
+  <button class="btn btn-primary">Reserve a seat</button>
+  <div class="secondary">
+    <button class="btn btn-ghost">Add to wishlist</button>
+    <button class="btn btn-ghost">Share</button>
   </div>
 </div>
 ```
 
 ```css
-.card { width: 320px; padding: 24px; border: 1px solid #e6d5c3; border-radius: 12px; background: #fff; color: #2b2622; font-family: system-ui, sans-serif; }
+.card {
+  width: 320px;
+  box-sizing: border-box;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e6d9cc;
+  border-radius: 12px;
+  font-family: system-ui, sans-serif;
+  color: #2b2118;
+}
 
-.badge { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #8a4a1f; background: #fbeee3; padding: 3px 8px; border-radius: 4px; margin: 0 0 12px; }
-.card h3 { font-size: 22px; font-weight: 700; line-height: 1.3; margin: 0 0 6px; }
-.meta { font-size: 14px; color: #6b625b; margin: 0 0 16px; }
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
 
-.facts { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 20px; }
-.price { font-size: 18px; font-weight: 700; margin: 0; }
-.seats { font-size: 14px; font-weight: 600; color: #a8371f; margin: 0; }
+.card h3 {
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 700;
+  margin: 0;
+}
 
-.actions { display: flex; flex-wrap: wrap; gap: 8px; }
-.btn { font: inherit; font-size: 15px; font-weight: 600; border-radius: 8px; padding: 10px 16px; cursor: pointer; }
-.btn-primary { flex: 1 1 100%; background: #a35a24; color: #fff; border: 1px solid #a35a24; }
-.btn-quiet { background: #fff; color: #2b2622; border: 1px solid #cfc3b7; }
-.btn-text { background: none; border: none; color: #6b625b; text-decoration: underline; padding: 10px 4px; }
+.tag {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #8a4a1f;
+  background: #fbf1e8;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.meta {
+  font-size: 14px;
+  color: #6b5a4c;
+  margin: 8px 0 16px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.seats {
+  font-size: 14px;
+  font-weight: 600;
+  color: #b53a22;
+  margin: 4px 0 20px;
+}
+
+.btn {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  background: #8a4a1f;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.secondary {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.btn-ghost {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b5a4c;
+  text-decoration: underline;
+}
 ```
 
 What changed and why:
 
-- **One primary action.** "Reserve a seat" is the only solid button and spans the full width. Wishlist is an outline button and Share is a text link, so the card has a single clear next step.
-- **Title leads, price follows.** The title is the largest element, and the price drops from 20px to 18px so it no longer competes with it.
-- **One accent.** The red badge and red seats count were both emphasis. The badge is now a quiet neutral tag, and the red stays on "3 seats left" because it's the one piece of urgency worth noticing.
-- **Decoration removed.** The gradient, the stacked shadows, the emoji circle and the overlapping badge had no job, so I cut them. A thin neutral border and a 12px radius do the framing. If the emoji is part of your brand, it can go inline before the title at a small size.
-- **Contrast.** I darkened the button fill to `#a35a24` so white text meets the 4.5:1 contrast floor. The original `#c9783c` was about 3.4:1.
-
-I kept your copy as written. The wishlist and share buttons sit on their own row so the labels don't crowd each other at 320px.
+- **One effect per surface.** The gradient, glow, and stacked shadows are gone. A 1px border and a plain white background do the job.
+- **Decoration removed.** The icon circle had no information, so I dropped it. If the emoji carries brand identity for you, it can go back as a small inline mark beside the title.
+- **One primary action.** Reserve is the only solid button. Wishlist and Share are quiet text links.
+- **Clear steps.** The title is 22px, price is 20px, and the meta line is 14px in a muted color. The steps are visible without being dramatic.
+- **One urgency cue.** "3 seats left" stays red as text. The badge is now a small, quiet tag.
+- **Contrast.** The button color is darker than your original `#c9783c`, so the white label meets readable contrast. If you want the original orange back, the button will need a darker label color or a larger text size to pass.

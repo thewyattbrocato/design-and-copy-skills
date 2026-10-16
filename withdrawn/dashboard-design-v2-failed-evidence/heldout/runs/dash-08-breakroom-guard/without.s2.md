@@ -1,0 +1,1 @@
+Probably not: a break-room TV has no keyboard or mouse, so pickers and filters would go unused, and the screen is better as a glanceable view of the current shift's packed-vs-target number. If teams or products matter, show a small per-team breakdown or rotate between views automatically, and keep any slicing for a separate interactive version for supervisors.

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Season reports – Lakeside Water Quality Lab</title>
+<style>
+  :root {
+    --bg: #f4f7f8;
+    --surface: #fff;
+    --ink: #14262e;
+    --muted: #55696f;
+    --line: #d8e2e5;
+    --accent: #0b6e8a;
+    --accent-ink: #fff;
+    --accent-soft: #e2f1f5;
+    --ok: #17703f;
+    --ok-soft: #e3f4ea;
+    --warn: #8a5300;
+    --warn-soft: #fdf1dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1b20;
+      --surface: #16262d;
+      --ink: #e6eff2;
+      --muted: #9bb0b7;
+      --line: #274049;
+      --accent: #4fb6d3;
+      --accent-ink: #072029;
+      --accent-soft: #19343e;
+      --ok: #6fd39a;
+      --ok-soft: #14331f;
+      --warn: #f0be6a;
+      --warn-soft: #3a2b10;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header.top {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 24px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  header.top strong { font-size: 16px; }
+  header.top nav { display: flex; gap: 16px; color: var(--muted); font-size: 14px; }
+  header.top nav a { color: inherit; text-decoration: none; }
+  header.top nav a[aria-current] { color: var(--ink); font-weight: 600; }
+  main { max-width: 860px; margin: 0 auto; padding: 28px 24px 56px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+  }
+  .export-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .export-row p { margin: 0; color: var(--muted); flex: 1 1 260px; }
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 9px 16px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  button:focus-visible, a.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .primary { background: var(--accent); color: var(--accent-ink); display: inline-flex; align-items: center; gap: 8px; }
+  .primary[aria-disabled="true"] { cursor: progress; opacity: .85; }
+  .secondary { background: transparent; color: var(--accent); border-color: var(--line); }
+  .secondary:hover { background: var(--accent-soft); }
+
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    display: none;
+  }
+  .busy .spinner { display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .status { margin-top: 16px; display: none; border-radius: 8px; padding: 14px 16px; }
+  .status.show { display: block; }
+  .status.working { background: var(--accent-soft); }
+  .status.done { background: var(--ok-soft); }
+  .status.cancelled { background: var(--warn-soft); }
+  .status-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .status-title { font-weight: 650; }
+  .done .status-title { color: var(--ok); }
+  .cancelled .status-title { color: var(--warn); }
+  .elapsed { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
+  .detail { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+  .actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+  a.btn {
+    display: inline-block; text-decoration: none;
+    background: var(--ok); color: var(--surface);
+    font-weight: 600; padding: 9px 16px; border-radius: 8px;
+  }
+
+  .bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin-top: 12px; position: relative; }
+  .bar i {
+    position: absolute; top: 0; bottom: 0; width: 35%;
+    background: var(--accent); border-radius: 3px;
+    animation: slide 1.4s ease-in-out infinite;
+  }
+  @keyframes slide { from { left: -35%; } to { left: 100%; } }
+  .done .bar, .cancelled .bar { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation-duration: 2.4s; }
+    .bar i { animation: none; width: 100%; opacity: .5; }
+  }
+
+  h2 { font-size: 16px; margin: 0 0 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  caption { text-align: left; color: var(--muted); padding-bottom: 8px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-block; padding: 1px 9px; border-radius: 99px; font-size: 12.5px; font-weight: 600; }
+  .pill.pass { background: var(--ok-soft); color: var(--ok); }
+  .pill.review { background: var(--warn-soft); color: var(--warn); }
+  .table-wrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<header class="top">
+  <strong>Lakeside Water Quality Lab</strong>
+  <nav aria-label="Primary">
+    <a href="#">Samples</a>
+    <a href="#" aria-current="page">Reports</a>
+    <a href="#">Sites</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Season reports</h1>
+  <p class="sub">2026 sampling season · 214 samples across 18 sites</p>
+
+  <section class="card" aria-labelledby="exp-h">
+    <h2 id="exp-h">Export</h2>
+    <div class="export-row">
+      <p>Bundles every result for the season into one CSV file. This usually takes about 25 seconds, and you can keep browsing the samples below while you wait.</p>
+      <button id="exportBtn" class="primary" type="button" aria-disabled="false">
+        <span class="spinner" aria-hidden="true"></span>
+        <span id="exportLabel">Export season report</span>
+      </button>
+    </div>
+
+    <div id="status" class="status" aria-live="polite" aria-atomic="true"></div>
+  </section>
+
+  <section class="card">
+    <div class="table-wrap">
+      <table>
+        <caption>Recent samples</caption>
+        <thead>
+          <tr>
+            <th>Sample</th><th>Site</th><th>Collected</th>
+            <th class="num">pH</th><th class="num">Turbidity (NTU)</th><th class="num">E. coli (MPN/100 mL)</th><th>Result</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td>WQ-2141</td><td>North Inlet</td><td>2026-10-07</td><td class="num">7.4</td><td class="num">1.8</td><td class="num">12</td><td><span class="pill pass">Pass</span></td></tr>
+          <tr><td>WQ-2140</td><td>Cedar Creek</td><td>2026-10-07</td><td class="num">7.1</td><td class="num">3.2</td><td class="num">48</td><td><span class="pill pass">Pass</span></td></tr>
+          <tr><td>WQ-2139</td><td>Boat Ramp</td><td>2026-10-06</td><td class="num">6.8</td><td class="num">5.9</td><td class="num">236</td><td><span class="pill review">Review</span></td></tr>
+          <tr><td>WQ-2138</td><td>East Shore</td><td>2026-10-06</td><td class="num">7.6</td><td class="num">1.2</td><td class="num">6</td><td><span class="pill pass">Pass</span></td></tr>
+          <tr><td>WQ-2137</td><td>South Weir</td><td>2026-10-05</td><td class="num">7.3</td><td class="num">2.4</td><td class="num">31</td><td><span class="pill pass">Pass</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var DURATION_MS = 25000;          // stand-in for the real server wait
+  var btn = document.getElementById('exportBtn');
+  var label = document.getElementById('exportLabel');
+  var box = document.getElementById('status');
+  var timer = null, tick = null, startedAt = 0, running = false, fileUrl = null;
+
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  function buildCsv() {
+    var lines = [['Sample','Site','Collected','pH','Turbidity_NTU','Ecoli_MPN_100mL','Result']];
+    document.querySelectorAll('#rows tr').forEach(function (tr) {
+      lines.push(Array.prototype.map.call(tr.cells, function (c) { return c.textContent.trim(); }));
+    });
+    return lines.map(function (r) { return r.join(','); }).join('\n') + '\n';
+  }
+
+  function onBeforeUnload(e) { e.preventDefault(); e.returnValue = ''; }
+
+  function setBusy(on) {
+    running = on;
+    btn.classList.toggle('busy', on);
+    btn.setAttribute('aria-disabled', on ? 'true' : 'false');
+    label.textContent = on ? 'Exporting…' : 'Export season report';
+    document.title = on ? 'Exporting… – Season reports' : 'Season reports – Lakeside Water Quality Lab';
+    if (on) window.addEventListener('beforeunload', onBeforeUnload);
+    else window.removeEventListener('beforeunload', onBeforeUnload);
+  }
+
+  function showWorking() {
+    box.className = 'status show working';
+    box.innerHTML =
+      '<div class="status-head">' +
+        '<span class="status-title">Export started. The server is building your report.</span>' +
+        '<span class="elapsed" aria-hidden="true">Elapsed <span id="el">0:00</span></span>' +
+      '</div>' +
+      '<p class="detail">Usually takes about 25 seconds. Your download will appear here when it’s ready. Please keep this tab open.</p>' +
+      '<div class="bar" aria-hidden="true"><i></i></div>' +
+      '<div class="actions"><button type="button" class="secondary" id="cancelBtn">Cancel export</button></div>';
+    document.getElementById('cancelBtn').addEventListener('click', cancel);
+  }
+
+  function stopTimers() { clearTimeout(timer); clearInterval(tick); }
+
+  function start() {
+    if (running) return;                 // ignore repeat clicks
+    if (fileUrl) { URL.revokeObjectURL(fileUrl); fileUrl = null; }
+    setBusy(true);
+    showWorking();
+    startedAt = Date.now();
+    var el = document.getElementById('el');
+    tick = setInterval(function () { el.textContent = fmt(Date.now() - startedAt); }, 500);
+    timer = setTimeout(finish, DURATION_MS);
+  }
+
+  function cancel() {
+    stopTimers();
+    setBusy(false);
+    box.className = 'status show cancelled';
+    box.innerHTML =
+      '<div class="status-head"><span class="status-title">Export cancelled</span></div>' +
+      '<p class="detail">No file was created. You can start a new export any time.</p>';
+    btn.focus();
+  }
+
+  function finish() {
+    stopTimers();
+    var took = fmt(Date.now() - startedAt);
+    setBusy(false);
+    fileUrl = URL.createObjectURL(new Blob([buildCsv()], { type: 'text/csv' }));
+    box.className = 'status show done';
+    box.innerHTML =
+      '<div class="status-head"><span class="status-title">Your report is ready</span>' +
+      '<span class="elapsed">Took ' + took + '</span></div>' +
+      '<p class="detail">season-report-2026.csv</p>' +
+      '<div class="actions"><a class="btn" id="dl" href="' + fileUrl + '" download="season-report-2026.csv">Download report</a></div>';
+    document.getElementById('dl').focus();
+    document.title = 'Report ready – Season reports';
+  }
+
+  btn.addEventListener('click', start);
+})();
+</script>
+</body>
+</html>

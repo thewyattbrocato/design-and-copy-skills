@@ -3,203 +3,316 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>This month's classes · Kiln &amp; Clay</title>
+<title>Winter Timetable – Island Ferries</title>
 <style>
   :root {
-    --clay: #b5573a;
-    --clay-dark: #8f3f26;
-    --ink: #2b211c;
-    --muted: #6b5d55;
-    --paper: #faf5ef;
-    --card: #ffffff;
-    --line: #e6d9cc;
+    --ink: #14232e;
+    --muted: #4a5b67;
+    --line: #c9d3da;
+    --band: #f1f5f8;
+    --accent: #0b4f6c;
+    --accent-ink: #ffffff;
   }
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    background: var(--paper);
+    padding: 1rem;
+    background: #ffffff;
     color: var(--ink);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.45;
   }
-  .classes {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: clamp(1.25rem, 5vw, 3rem) clamp(1rem, 4vw, 2rem);
-  }
-  .classes h2 {
+  .wrap { max-width: 72rem; margin: 0 auto; }
+
+  header { margin-bottom: 1rem; }
+  h1 {
     margin: 0 0 .25rem;
-    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-size: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
     line-height: 1.15;
-    font-family: Georgia, "Times New Roman", serif;
   }
-  .classes .intro {
-    margin: 0 0 1.5rem;
-    color: var(--muted);
-  }
-  .grid {
-    list-style: none;
-    margin: 0;
+  .sub { margin: 0; color: var(--muted); }
+  .islands {
+    margin: .75rem 0 0;
     padding: 0;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  }
-  .card {
+    list-style: none;
     display: flex;
-    flex-direction: column;
-    background: var(--card);
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+  .islands li {
     border: 1px solid var(--line);
-    border-top: 4px solid var(--clay);
-    border-radius: .75rem;
-    padding: 1.25rem;
-    box-shadow: 0 1px 3px rgba(43, 33, 28, .06);
+    border-radius: 999px;
+    padding: .15rem .7rem;
+    font-size: .9rem;
+    background: var(--band);
   }
-  .card h3 {
-    margin: 0 0 .75rem;
-    font-size: 1.2rem;
-    line-height: 1.25;
-    overflow-wrap: anywhere;
-  }
-  .details {
-    margin: 0 0 1rem;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: .25rem .75rem;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
     font-size: .95rem;
   }
-  .details dt { color: var(--muted); }
-  .details dd { margin: 0; font-weight: 600; }
-  .card-foot {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: .75rem;
-  }
-  .price {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--clay-dark);
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2.75rem;
-    padding: .5rem 1.25rem;
-    background: var(--clay);
-    color: #fff;
-    font: inherit;
+  caption {
+    text-align: left;
+    padding: .5rem 0;
     font-weight: 600;
-    text-decoration: none;
-    border: 0;
-    border-radius: .5rem;
-    cursor: pointer;
+    color: var(--muted);
   }
-  .btn:hover { background: var(--clay-dark); }
-  .btn:focus-visible {
-    outline: 3px solid var(--ink);
-    outline-offset: 2px;
+  thead th {
+    background: var(--accent);
+    color: var(--accent-ink);
+    text-align: left;
+    font-weight: 600;
+    padding: .6rem .6rem;
+    white-space: nowrap;
   }
-  @media (max-width: 30rem) {
-    .card-foot { flex-direction: column; align-items: stretch; }
-    .price { text-align: center; }
-    .btn { width: 100%; }
+  tbody th, tbody td {
+    padding: .6rem .6rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: var(--band); }
+  tbody th { font-weight: 700; }
+  .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.fare { text-align: right; }
+  thead th.fare { text-align: right; }
+  .route { font-weight: 600; }
+  .arrow { color: var(--muted); padding: 0 .15em; }
+  .notes { color: var(--muted); }
+
+  .key {
+    margin-top: 1.25rem;
+    padding: .9rem 1rem;
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--accent);
+    border-radius: 4px;
+    font-size: .95rem;
+  }
+  .key p { margin: 0 0 .4rem; }
+  .key p:last-child { margin-bottom: 0; }
+
+  /* Phones: each sailing becomes a card */
+  @media screen and (max-width: 47.99rem) {
+    body { padding: .75rem; }
+    table, tbody, tr, th, td { display: block; }
+    thead {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+    caption { display: block; }
+    tbody tr, tbody tr:nth-child(even) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .5rem 1rem;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: .8rem .9rem;
+      margin-bottom: .75rem;
+    }
+    tbody th, tbody td { border: 0; padding: 0; }
+    tbody th {
+      grid-column: 1 / -1;
+      font-size: 1.6rem;
+      line-height: 1.1;
+      color: var(--accent);
+    }
+    td.route-cell { grid-column: 1 / -1; font-size: 1.1rem; }
+    td.notes { grid-column: 1 / -1; }
+    td.fare { text-align: left; }
+    td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    td.route-cell::before, td.notes:empty { display: none; }
+    td.notes:empty { display: none; }
+  }
+
+  @media print {
+    @page { size: A4 landscape; margin: 12mm; }
+    body { padding: 0; font-size: 11pt; color: #000; }
+    thead th {
+      background: #fff;
+      color: #000;
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
+    }
+    tbody tr:nth-child(even) { background: #fff; }
+    tbody th, tbody td { border-bottom: 1px solid #888; }
+    tr { break-inside: avoid; }
+    .islands li, .key { background: #fff; border-color: #888; }
+    .notes, .sub, caption { color: #000; }
   }
 </style>
 </head>
 <body>
-<section class="classes" aria-labelledby="classes-title">
-  <h2 id="classes-title">This month's classes</h2>
-  <p class="intro">Small groups, all materials and firing included.</p>
+<div class="wrap">
+  <header>
+    <h1>Winter Timetable</h1>
+    <p class="sub">Daily sailings, 26 October 2026 to 28 March 2027</p>
+    <ul class="islands" aria-label="Islands served">
+      <li>Saltmarsh</li>
+      <li>Gull Rock</li>
+      <li>Little Corran</li>
+      <li>Penhallow Quay</li>
+    </ul>
+  </header>
 
-  <ul class="grid">
-    <li class="card">
-      <h3>Wheel Basics</h3>
-      <dl class="details">
-        <dt>Schedule</dt><dd>Tuesdays, 6pm</dd>
-        <dt>Length</dt><dd>6 weeks</dd>
-      </dl>
-      <div class="card-foot">
-        <span class="price">$210</span>
-        <a class="btn" href="#signup" aria-label="Sign up for Wheel Basics">Sign up</a>
-      </div>
-    </li>
+  <main>
+    <table>
+      <caption>All times are local departure and arrival times, 24-hour clock.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Departs</th>
+          <th scope="col">Route</th>
+          <th scope="col">Boat</th>
+          <th scope="col">Arrives</th>
+          <th scope="col">Crossing time</th>
+          <th scope="col">Bikes allowed</th>
+          <th scope="col" class="fare">Fare</th>
+          <th scope="col">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row" class="num">07:30</th>
+          <td class="route-cell route" data-label="Route">Saltmarsh<span class="arrow" aria-label="to">→</span>Penhallow Quay</td>
+          <td data-label="Boat">Curlew</td>
+          <td class="num" data-label="Arrives">08:20</td>
+          <td class="num" data-label="Crossing time">50 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£9.50</td>
+          <td class="notes" data-label="Notes">Mon–Fri only</td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">08:00</th>
+          <td class="route-cell route" data-label="Route">Penhallow Quay<span class="arrow" aria-label="to">→</span>Saltmarsh</td>
+          <td data-label="Boat">Tern</td>
+          <td class="num" data-label="Arrives">08:50</td>
+          <td class="num" data-label="Crossing time">50 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£9.50</td>
+          <td class="notes" data-label="Notes">Mon–Fri only</td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">08:45</th>
+          <td class="route-cell route" data-label="Route">Saltmarsh<span class="arrow" aria-label="to">→</span>Gull Rock</td>
+          <td data-label="Boat">Marram</td>
+          <td class="num" data-label="Arrives">09:20</td>
+          <td class="num" data-label="Crossing time">35 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£6.80</td>
+          <td class="notes" data-label="Notes"></td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">09:30</th>
+          <td class="route-cell route" data-label="Route">Gull Rock<span class="arrow" aria-label="to">→</span>Little Corran</td>
+          <td data-label="Boat">Marram</td>
+          <td class="num" data-label="Arrives">09:55</td>
+          <td class="num" data-label="Crossing time">25 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£5.40</td>
+          <td class="notes" data-label="Notes">Connects with 08:45 from Saltmarsh</td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">10:15</th>
+          <td class="route-cell route" data-label="Route">Little Corran<span class="arrow" aria-label="to">→</span>Penhallow Quay</td>
+          <td data-label="Boat">Wren</td>
+          <td class="num" data-label="Arrives">10:55</td>
+          <td class="num" data-label="Crossing time">40 min</td>
+          <td data-label="Bikes allowed">Folding bikes only</td>
+          <td class="num fare" data-label="Fare">£7.20</td>
+          <td class="notes" data-label="Notes">Small boat, limited deck space</td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">11:00</th>
+          <td class="route-cell route" data-label="Route">Penhallow Quay<span class="arrow" aria-label="to">→</span>Saltmarsh</td>
+          <td data-label="Boat">Curlew</td>
+          <td class="num" data-label="Arrives">11:50</td>
+          <td class="num" data-label="Crossing time">50 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£9.50</td>
+          <td class="notes" data-label="Notes"></td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">12:10</th>
+          <td class="route-cell route" data-label="Route">Saltmarsh<span class="arrow" aria-label="to">→</span>Gull Rock</td>
+          <td data-label="Boat">Tern</td>
+          <td class="num" data-label="Arrives">12:45</td>
+          <td class="num" data-label="Crossing time">35 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£6.80</td>
+          <td class="notes" data-label="Notes">Does not run on Sundays</td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">13:00</th>
+          <td class="route-cell route" data-label="Route">Gull Rock<span class="arrow" aria-label="to">→</span>Saltmarsh</td>
+          <td data-label="Boat">Marram</td>
+          <td class="num" data-label="Arrives">13:35</td>
+          <td class="num" data-label="Crossing time">35 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£6.80</td>
+          <td class="notes" data-label="Notes"></td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">14:20</th>
+          <td class="route-cell route" data-label="Route">Little Corran<span class="arrow" aria-label="to">→</span>Gull Rock</td>
+          <td data-label="Boat">Wren</td>
+          <td class="num" data-label="Arrives">14:45</td>
+          <td class="num" data-label="Crossing time">25 min</td>
+          <td data-label="Bikes allowed">Folding bikes only</td>
+          <td class="num fare" data-label="Fare">£5.40</td>
+          <td class="notes" data-label="Notes">Small boat, limited deck space</td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">15:15</th>
+          <td class="route-cell route" data-label="Route">Saltmarsh<span class="arrow" aria-label="to">→</span>Penhallow Quay</td>
+          <td data-label="Boat">Curlew</td>
+          <td class="num" data-label="Arrives">16:05</td>
+          <td class="num" data-label="Crossing time">50 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£9.50</td>
+          <td class="notes" data-label="Notes"></td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">16:30</th>
+          <td class="route-cell route" data-label="Route">Penhallow Quay<span class="arrow" aria-label="to">→</span>Little Corran</td>
+          <td data-label="Boat">Wren</td>
+          <td class="num" data-label="Arrives">17:10</td>
+          <td class="num" data-label="Crossing time">40 min</td>
+          <td data-label="Bikes allowed">Folding bikes only</td>
+          <td class="num fare" data-label="Fare">£7.20</td>
+          <td class="notes" data-label="Notes">Last sailing to Little Corran</td>
+        </tr>
+        <tr>
+          <th scope="row" class="num">17:05</th>
+          <td class="route-cell route" data-label="Route">Gull Rock<span class="arrow" aria-label="to">→</span>Saltmarsh</td>
+          <td data-label="Boat">Tern</td>
+          <td class="num" data-label="Arrives">17:40</td>
+          <td class="num" data-label="Crossing time">35 min</td>
+          <td data-label="Bikes allowed">Yes</td>
+          <td class="num fare" data-label="Fare">£6.80</td>
+          <td class="notes" data-label="Notes">Last sailing of the day</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <li class="card">
-      <h3>Hand-Building Night</h3>
-      <dl class="details">
-        <dt>Schedule</dt><dd>Wednesdays, 7pm</dd>
-        <dt>Length</dt><dd>4 weeks</dd>
-      </dl>
-      <div class="card-foot">
-        <span class="price">$160</span>
-        <a class="btn" href="#signup" aria-label="Sign up for Hand-Building Night">Sign up</a>
-      </div>
-    </li>
-
-    <li class="card">
-      <h3>Glaze Lab</h3>
-      <dl class="details">
-        <dt>Schedule</dt><dd>Saturdays, 10am</dd>
-        <dt>Length</dt><dd>3 weeks</dd>
-      </dl>
-      <div class="card-foot">
-        <span class="price">$120</span>
-        <a class="btn" href="#signup" aria-label="Sign up for Glaze Lab">Sign up</a>
-      </div>
-    </li>
-
-    <li class="card">
-      <h3>Mug Marathon</h3>
-      <dl class="details">
-        <dt>Schedule</dt><dd>Sunday, 1pm</dd>
-        <dt>Length</dt><dd>1 day</dd>
-      </dl>
-      <div class="card-foot">
-        <span class="price">$75</span>
-        <a class="btn" href="#signup" aria-label="Sign up for Mug Marathon">Sign up</a>
-      </div>
-    </li>
-
-    <li class="card">
-      <h3>Kids' Clay Club</h3>
-      <dl class="details">
-        <dt>Schedule</dt><dd>Saturdays, 2pm</dd>
-        <dt>Length</dt><dd>8 weeks</dd>
-      </dl>
-      <div class="card-foot">
-        <span class="price">$190</span>
-        <a class="btn" href="#signup" aria-label="Sign up for Kids' Clay Club">Sign up</a>
-      </div>
-    </li>
-
-    <li class="card">
-      <h3>Date-Night Wheel</h3>
-      <dl class="details">
-        <dt>Schedule</dt><dd>Friday, 7pm</dd>
-        <dt>Length</dt><dd>1 evening</dd>
-      </dl>
-      <div class="card-foot">
-        <span class="price">$95</span>
-        <a class="btn" href="#signup" aria-label="Sign up for Date-Night Wheel">Sign up</a>
-      </div>
-    </li>
-
-    <li class="card">
-      <h3>Sculpture Studio</h3>
-      <dl class="details">
-        <dt>Schedule</dt><dd>Thursdays, 6pm</dd>
-        <dt>Length</dt><dd>6 weeks</dd>
-      </dl>
-      <div class="card-foot">
-        <span class="price">$230</span>
-        <a class="btn" href="#signup" aria-label="Sign up for Sculpture Studio">Sign up</a>
-      </div>
-    </li>
-  </ul>
-</section>
+    <section class="key" aria-label="Good to know">
+      <p><strong>Fares</strong> are single adult fares. Please ask on board about child, concession and return prices.</p>
+      <p><strong>Weather:</strong> winter sailings may be delayed or cancelled in high winds or poor visibility. Please check with the office before you travel.</p>
+      <p><strong>Bikes:</strong> “Folding bikes only” means the bike must be folded and carried on board.</p>
+    </section>
+  </main>
+</div>
 </body>
 </html>

@@ -1,0 +1,3 @@
+1. **Country:** Use a searchable select (autocomplete) with `autocomplete="country"`. A known list of about 190 is too long for radios, and typing a few letters is quicker than scrolling.
+2. **Delivery speed:** Use three visible radios, each showing its time and price (for example "Express, 2 days, $18"). With only three options that affect cost, people should see and compare them at once, and "Standard" can be preselected.
+3. **Gift note:** Use an optional multi-line textarea labeled "Gift note (optional)" with a visible counter such as "0/200". It's free text that may run past one line, and the counter shows the limit before anyone hits it.

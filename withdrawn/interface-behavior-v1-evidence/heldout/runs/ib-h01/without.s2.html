@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Larder Lane Pantry – Saturday Shifts</title>
+<style>
+:root{
+  --bg:#f5f2ea; --card:#fff; --ink:#1d2a23; --muted:#5b6a61; --line:#ddd8ca;
+  --accent:#1e6b49; --accent-ink:#fff; --accent-soft:#e1f0e8;
+  --warn-bg:#fff0cf; --warn-ink:#7a4d00; --full-bg:#e9e6dc; --danger:#a3281f;
+  --mine-bg:#e1f0e8; --shadow:0 1px 2px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#131a16; --card:#1c2520; --ink:#eef2ee; --muted:#a2b0a7; --line:#33423a;
+    --accent:#5fcf9a; --accent-ink:#0b1a12; --accent-soft:#23382d;
+    --warn-bg:#4a3a10; --warn-ink:#ffd98a; --full-bg:#2a342e; --danger:#ff9a90;
+    --mine-bg:#23382d; --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+button,input{font:inherit;color:inherit;touch-action:manipulation}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:640px;margin:0 auto;padding:0 14px}
+header{padding:calc(18px + env(safe-area-inset-top)) 0 10px}
+.eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{margin:2px 0 4px;font-size:26px;line-height:1.15}
+.sub{margin:0;color:var(--muted)}
+.who{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  margin:12px 0 0;padding:10px 12px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+}
+.who b{font-weight:700}
+.link{background:none;border:0;padding:10px 4px;min-height:44px;color:var(--accent);font-weight:600;text-decoration:underline}
+.bar{
+  position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);
+}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button{
+  min-height:46px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);font-weight:600;
+}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+main{padding:14px 0 8px;display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.card.hasmine{border-color:var(--accent);border-width:2px}
+.ch{padding:14px 14px 10px}
+.time{margin:0;font-size:14px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.row1{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+h2{margin:2px 0 2px;font-size:20px;line-height:1.2}
+.note{margin:0;color:var(--muted);font-size:14px}
+.tag{flex:none;font-size:13px;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.tag.low{background:var(--warn-bg);color:var(--warn-ink)}
+.tag.full{background:var(--full-bg);color:var(--muted)}
+.meter{height:6px;border-radius:9px;background:var(--full-bg);margin-top:10px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);border-radius:9px;transition:width .25s}
+.spots{list-style:none;margin:0;padding:0 10px 10px;display:grid;gap:6px}
+.spot{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:52px;
+  padding:6px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);width:100%;text-align:left;
+}
+.spot.filled{background:var(--bg);border-color:transparent}
+.spot.mine{background:var(--mine-bg);border-color:var(--accent)}
+.spot.open{border-style:dashed;border-color:var(--accent);color:var(--ink)}
+.spot.open:active{background:var(--accent-soft)}
+.spot .go{font-weight:700;color:var(--accent)}
+.spot .nm{font-weight:600;overflow-wrap:anywhere}
+.spot .nm small{font-weight:500;color:var(--muted)}
+.drop{
+  flex:none;min-height:44px;padding:0 14px;border-radius:9px;border:1.5px solid var(--danger);
+  background:transparent;color:var(--danger);font-weight:700;
+}
+.fullnote{margin:0;padding:0 14px 14px;color:var(--muted);font-size:14px}
+.empty{padding:28px 16px;text-align:center;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:14px}
+footer{padding:12px 0 40px;color:var(--muted);font-size:14px}
+footer .acts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.btn{
+  min-height:46px;padding:0 16px;border-radius:10px;border:1.5px solid var(--accent);
+  background:var(--card);color:var(--accent);font-weight:700;
+}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.quiet{border-color:var(--line);color:var(--muted);font-weight:600}
+.toast{
+  position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translate(-50%,20px);
+  width:min(92vw,520px);display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 14px;border-radius:12px;background:#17211b;color:#fff;box-shadow:0 6px 24px rgba(0,0,0,.3);
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20;
+}
+@media (prefers-color-scheme:dark){.toast{background:#eef2ee;color:#12201a}}
+.toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast button{
+  flex:none;min-height:44px;padding:0 14px;border-radius:8px;border:1.5px solid currentColor;background:transparent;font-weight:700;
+}
+dialog{
+  border:0;border-radius:16px;padding:20px;width:min(92vw,420px);background:var(--card);color:var(--ink);
+  box-shadow:0 10px 40px rgba(0,0,0,.35);
+}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog h3{margin:0 0 4px;font-size:20px}
+dialog p{margin:0 0 12px;color:var(--muted)}
+dialog input{
+  width:100%;min-height:50px;padding:0 12px;font-size:17px;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--bg);margin-bottom:12px;
+}
+dialog .acts{display:flex;gap:8px;justify-content:flex-end}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Larder Lane Pantry</p>
+    <h1>Saturday volunteer shifts</h1>
+    <p class="sub" id="summary" aria-live="polite"></p>
+    <div class="who" id="who"></div>
+  </header>
+
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Filter shifts" id="filters">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="open" aria-pressed="false">Open spots</button>
+      <button type="button" data-f="mine" aria-pressed="false">My shifts</button>
+    </div>
+  </div>
+
+  <main id="list"></main>
+
+  <footer>
+    <div class="acts">
+      <button class="btn primary" type="button" id="copy">Copy roster</button>
+      <button class="btn quiet" type="button" id="clear">Clear all sign-ups</button>
+    </div>
+    <p>Sign-ups are saved in this browser only. Tap “Copy roster” to paste the current list into your group chat.</p>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button type="button" id="toastBtn" hidden>Undo</button></div>
+
+<dialog id="nameDlg" aria-labelledby="nameTitle">
+  <form id="nameForm">
+    <h3 id="nameTitle">What's your name?</h3>
+    <p id="nameHelp">We'll remember it so next time it's one tap.</p>
+    <label class="sr" for="nameInput">Your name</label>
+    <input id="nameInput" type="text" maxlength="24" autocomplete="given-name" autocapitalize="words" placeholder="First name and last initial" required>
+    <div class="acts">
+      <button class="btn quiet" type="button" id="nameCancel">Cancel</button>
+      <button class="btn primary" type="submit">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+
+  var SHIFTS = [
+    {id:"recv",  role:"Truck unloading",        start:450, end:540, cap:4, note:"Lifting boxes off the delivery truck."},
+    {id:"sort",  role:"Sorting & shelving",     start:510, end:630, cap:5, note:"Check dates, sort donations, stock shelves."},
+    {id:"drv1",  role:"Driver: home deliveries",start:540, end:660, cap:3, note:"Deliver boxes to homebound neighbors. Own car."},
+    {id:"desk",  role:"Front desk check-in",    start:570, end:720, cap:3, note:"Greet families and sign them in."},
+    {id:"bag",   role:"Produce bagging",        start:600, end:720, cap:5, note:"Weigh and bag fresh produce."},
+    {id:"drv2",  role:"Driver: grocery pickup", start:690, end:810, cap:2, note:"Pick up donations from partner stores."},
+    {id:"pack",  role:"Pre-pack family boxes",  start:720, end:840, cap:4, note:"Build boxes for next week's distribution."},
+    {id:"clean", role:"Cleanup & close",        start:810, end:900, cap:4, note:"Sweep, break down boxes, wipe tables, lock up."}
+  ];
+
+  /* ---------- date / keys ---------- */
+  var today = new Date();
+  var sat = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  sat.setDate(sat.getDate() + ((6 - sat.getDay() + 7) % 7));
+  var iso = sat.getFullYear() + "-" + String(sat.getMonth()+1).padStart(2,"0") + "-" + String(sat.getDate()).padStart(2,"0");
+  var KEY = "larder-lane-board-" + iso, NAME_KEY = "larder-lane-name";
+  var dateLabel = sat.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+
+  /* ---------- state ---------- */
+  var data = loadData();
+  var myName = lsGet(NAME_KEY) || "";
+  var filter = "all";
+  var pendingShift = null;
+
+  function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+
+  function loadData(){
+    var raw = lsGet(KEY), out = {}, parsed = null;
+    if(raw){ try{ parsed = JSON.parse(raw); }catch(e){} }
+    if(!parsed){
+      parsed = {recv:["Marcus T."],sort:["Dana R.","Priya K.","Joe M."],drv1:["Linda S."],
+                desk:["Tomás V.","Beth A."],bag:["Ayesha N."],drv2:[],pack:["Greg H."],clean:[]};
+    }
+    SHIFTS.forEach(function(s){
+      var a = Array.isArray(parsed[s.id]) ? parsed[s.id] : [];
+      out[s.id] = a.filter(function(n){ return typeof n === "string" && n.trim(); }).slice(0, s.cap);
+    });
+    return out;
+  }
+  function save(){ lsSet(KEY, JSON.stringify(data)); }
+
+  /* ---------- helpers ---------- */
+  function norm(n){ return n.trim().replace(/\s+/g," ").toLowerCase(); }
+  function isMe(n){ return myName && norm(n) === norm(myName); }
+  function has(s){ return data[s.id].some(isMe); }
+  function t12(m){
+    var h = Math.floor(m/60), mi = m%60, ap = h>=12 ? "pm" : "am";
+    h = h%12 || 12;
+    return h + ":" + String(mi).padStart(2,"0") + " " + ap;
+  }
+  function range(s){ return t12(s.start) + " – " + t12(s.end); }
+  function el(tag, attrs, kids){
+    var e = document.createElement(tag);
+    for(var k in (attrs||{})){
+      if(k === "text") e.textContent = attrs[k];
+      else if(k === "class") e.className = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    }
+    (kids||[]).forEach(function(c){ if(c) e.appendChild(c); });
+    return e;
+  }
+
+  /* ---------- actions ---------- */
+  function signUp(s){
+    if(!myName){ pendingShift = s; openName(false); return; }
+    var list = data[s.id];
+    if(list.length >= s.cap){ toast("Sorry, that shift just filled up."); render(s.id); return; }
+    if(has(s)) return;
+    var clash = SHIFTS.filter(function(o){ return o !== s && has(o) && o.start < s.end && s.start < o.end; })[0];
+    if(clash){
+      toast("That overlaps your " + clash.role + " shift (" + range(clash) + ").");
+      return;
+    }
+    var before = list.slice();
+    list.push(myName); save(); render(s.id);
+    toast("You're in: " + s.role + ", " + t12(s.start) + ".", function(){ data[s.id] = before; save(); render(s.id); });
+  }
+  function dropOut(s){
+    var before = data[s.id].slice();
+    data[s.id] = before.filter(function(n){ return !isMe(n); });
+    save(); render(s.id);
+    toast("You dropped out of " + s.role + ".", function(){
+      if(data[s.id].length < s.cap){ data[s.id] = before; save(); render(s.id); }
+      else toast("Someone took your spot already.");
+    });
+  }
+
+  /* ---------- toast ---------- */
+  var toastEl = document.getElementById("toast"), toastMsg = document.getElementById("toastMsg"),
+      toastBtn = document.getElementById("toastBtn"), toastTimer = null, undoFn = null;
+  function toast(msg, undo){
+    clearTimeout(toastTimer);
+    toastMsg.textContent = msg;
+    undoFn = undo || null;
+    toastBtn.hidden = !undo;
+    toastEl.classList.add("show");
+    toastTimer = setTimeout(hideToast, undo ? 8000 : 4500);
+  }
+  function hideToast(){ toastEl.classList.remove("show"); undoFn = null; }
+  toastBtn.addEventListener("click", function(){ var f = undoFn; hideToast(); if(f) f(); });
+
+  /* ---------- name dialog ---------- */
+  var dlg = document.getElementById("nameDlg"), nameInput = document.getElementById("nameInput");
+  function openName(isChange){
+    document.getElementById("nameTitle").textContent = isChange ? "Change your name" : "What's your name?";
+    nameInput.value = isChange ? myName : "";
+    if(dlg.showModal) dlg.showModal(); else dlg.setAttribute("open","");
+    setTimeout(function(){ nameInput.focus(); nameInput.select(); }, 30);
+  }
+  function closeName(){ if(dlg.close) dlg.close(); else dlg.removeAttribute("open"); }
+  document.getElementById("nameForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var n = nameInput.value.trim().replace(/\s+/g," ");
+    if(!n) return;
+    myName = n; lsSet(NAME_KEY, n);
+    closeName();
+    var p = pendingShift; pendingShift = null;
+    render();
+    if(p) signUp(p);
+  });
+  document.getElementById("nameCancel").addEventListener("click", function(){ pendingShift = null; closeName(); });
+  dlg.addEventListener("cancel", function(){ pendingShift = null; });
+
+  /* ---------- render ---------- */
+  var listEl = document.getElementById("list");
+
+  function renderHeader(){
+    var open = 0, mine = 0;
+    SHIFTS.forEach(function(s){ open += s.cap - data[s.id].length; if(has(s)) mine++; });
+    document.getElementById("summary").textContent =
+      dateLabel + " · " + (open ? open + (open===1?" spot":" spots") + " still open" : "every spot is filled");
+    var who = document.getElementById("who");
+    who.textContent = "";
+    if(myName){
+      var span = el("span",{},[]);
+      span.appendChild(document.createTextNode("Signed up as "));
+      span.appendChild(el("b",{text:myName}));
+      span.appendChild(document.createTextNode(mine ? " · " + mine + (mine===1?" shift":" shifts") : ""));
+      var b = el("button",{"class":"link",type:"button",text:"Not you?"});
+      b.addEventListener("click", function(){ openName(true); });
+      who.appendChild(span); who.appendChild(b);
+    } else {
+      who.appendChild(el("span",{text:"Tap any open spot to sign up."}));
+      var b2 = el("button",{"class":"link",type:"button",text:"Set my name"});
+      b2.addEventListener("click", function(){ pendingShift = null; openName(false); });
+      who.appendChild(b2);
+    }
+  }
+
+  function card(s){
+    var list = data[s.id], left = s.cap - list.length, mine = has(s);
+    var tagCls = "tag", tagTxt;
+    if(left === 0){ tagCls += " full"; tagTxt = "Full"; }
+    else if(left === 1 || list.length === 0){ tagCls += " low"; tagTxt = left + (left===1?" spot left":" spots left"); }
+    else tagTxt = left + " spots left";
+
+    var head = el("div",{"class":"ch"},[
+      el("p",{"class":"time",text:range(s)}),
+      el("div",{"class":"row1"},[
+        el("h2",{text:s.role}),
+        el("span",{"class":tagCls,text:tagTxt})
+      ]),
+      el("p",{"class":"note",text:s.note}),
+      (function(){
+        var m = el("div",{"class":"meter","aria-hidden":"true"});
+        m.appendChild(el("i",{style:"width:"+Math.round(list.length/s.cap*100)+"%"}));
+        return m;
+      })()
+    ]);
+
+    var ul = el("ul",{"class":"spots","aria-label":s.role + " spots"});
+    list.forEach(function(n){
+      var me = isMe(n);
+      var li = el("li");
+      var row = el("div",{"class":"spot filled" + (me?" mine":"")});
+      var nm = el("span",{"class":"nm",text:n});
+      if(me) nm.appendChild(el("small",{text:"  (you)"}));
+      row.appendChild(nm);
+      if(me){
+        var d = el("button",{"class":"drop",type:"button","data-k":s.id+":mine","aria-label":"Drop out of "+s.role,text:"Drop out"});
+        d.addEventListener("click", function(){ dropOut(s); });
+        row.appendChild(d);
+      }
+      li.appendChild(row); ul.appendChild(li);
+    });
+    for(var i=0;i<left;i++){
+      var li2 = el("li");
+      var ob = el("button",{"class":"spot open",type:"button","data-k":s.id+":open","aria-label":"Sign up for "+s.role+", "+range(s)},[
+        el("span",{"class":"nm",text:"Open spot"}),
+        el("span",{"class":"go",text:"Sign up +"})
+      ]);
+      ob.addEventListener("click", function(){ signUp(s); });
+      li2.appendChild(ob); ul.appendChild(li2);
+    }
+    var c = el("section",{"class":"card"+(mine?" hasmine":""),"data-id":s.id},[head,ul]);
+    return c;
+  }
+
+  function render(focusId){
+    renderHeader();
+    document.querySelectorAll("#filters button").forEach(function(b){
+      b.setAttribute("aria-pressed", String(b.dataset.f === filter));
+    });
+    listEl.textContent = "";
+    var shown = SHIFTS.filter(function(s){
+      if(filter === "open") return data[s.id].length < s.cap;
+      if(filter === "mine") return has(s);
+      return true;
+    });
+    if(!shown.length){
+      var msg = filter === "mine" ? "You haven't signed up for a shift yet. Tap “Open spots” to find one."
+              : "Every spot is filled. Thank you, everyone!";
+      listEl.appendChild(el("div",{"class":"empty",text:msg}));
+    }
+    shown.forEach(function(s){ listEl.appendChild(card(s)); });
+    if(focusId){
+      var c = listEl.querySelector('[data-id="'+focusId+'"]');
+      if(c){
+        var t = c.querySelector('[data-k$=":mine"]') || c.querySelector('[data-k$=":open"]');
+        if(t) t.focus({preventScroll:true});
+      } else if(document.activeElement && document.activeElement !== document.body){
+        /* card filtered away; leave focus alone */
+      }
+    }
+  }
+
+  /* ---------- filters ---------- */
+  document.getElementById("filters").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-f]");
+    if(!b) return;
+    filter = b.dataset.f; render();
+  });
+
+  /* ---------- roster copy / clear ---------- */
+  function rosterText(){
+    var lines = ["Larder Lane Pantry – " + dateLabel, ""];
+    SHIFTS.forEach(function(s){
+      var l = data[s.id];
+      lines.push(range(s) + "  " + s.role + " (" + l.length + "/" + s.cap + ")");
+      lines.push("   " + (l.length ? l.join(", ") : "nobody yet"));
+    });
+    return lines.join("\n");
+  }
+  document.getElementById("copy").addEventListener("click", function(){
+    var txt = rosterText();
+    function fallback(){
+      var ta = el("textarea",{"aria-hidden":"true"}); ta.value = txt;
+      ta.style.cssText = "position:fixed;opacity:0;top:0;left:0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      var ok = false; try{ ok = document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta);
+      toast(ok ? "Roster copied." : "Couldn't copy. Your browser blocked it.");
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ toast("Roster copied."); }, fallback);
+    } else fallback();
+  });
+  document.getElementById("clear").addEventListener("click", function(){
+    if(!confirm("Remove everyone from every shift on this device?")) return;
+    SHIFTS.forEach(function(s){ data[s.id] = []; });
+    save(); render(); toast("Board cleared.");
+  });
+
+  /* keep multiple tabs in sync */
+  window.addEventListener("storage", function(e){
+    if(e.key === KEY){ data = loadData(); render(); }
+    if(e.key === NAME_KEY){ myName = lsGet(NAME_KEY) || ""; render(); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

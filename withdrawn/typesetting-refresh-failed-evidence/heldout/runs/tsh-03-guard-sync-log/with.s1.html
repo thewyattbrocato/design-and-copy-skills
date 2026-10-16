@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sync log viewer</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #fafaf9; --panel: #ffffff; --fg: #1c1917; --muted: #78716c; --line: #e7e5e4;
+    --err: #b91c1c; --err-bg: #fef2f2; --warn: #a16207; --warn-bg: #fefce8;
+    --acc: #2563eb; --hover: #f5f5f4; --key: #a8a29e;
+    --ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --hh: 110px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151413; --panel: #1c1a19; --fg: #e7e5e4; --muted: #a8a29e; --line: #2d2a28;
+      --err: #f87171; --err-bg: #2a1616; --warn: #fbbf24; --warn-bg: #271f0c;
+      --acc: #60a5fa; --hover: #232120; --key: #78716c;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.4 var(--ui); }
+
+  header {
+    position: sticky; top: 0; z-index: 5; background: var(--panel);
+    border-bottom: 1px solid var(--line); padding: 10px 20px 10px 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .top, .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  h1 { font-size: 15px; margin: 0; font-weight: 650; }
+  .meta { color: var(--muted); font-size: 12.5px; }
+  .spacer { flex: 1; }
+
+  button, select, input[type=search] {
+    font: inherit; font-size: 13px; color: var(--fg); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px;
+  }
+  button { cursor: pointer; }
+  button:hover { background: var(--hover); }
+  :focus-visible { outline: 2px solid var(--acc); outline-offset: 1px; }
+  input[type=search] { width: 220px; }
+
+  .lvl { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px; letter-spacing: .03em; }
+  .lvl .sw { width: 9px; height: 9px; border-radius: 2px; border: 2px solid currentColor; }
+  .lvl[aria-pressed=true] .sw { background: currentColor; }
+  .lvl[aria-pressed=false] { opacity: .55; }
+  .lvl b { font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lvl.err { color: var(--err); } .lvl.warn { color: var(--warn); } .lvl.info { color: var(--fg); }
+  .lvl.err[aria-pressed=true] { background: var(--err-bg); }
+  .lvl.warn[aria-pressed=true] { background: var(--warn-bg); }
+  .sep { width: 1px; height: 20px; background: var(--line); }
+  .hint { color: var(--muted); font-size: 12px; }
+  kbd { font: 11px var(--mono); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; background: var(--bg); }
+
+  main { padding: 6px 22px 60px 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; }
+  .row {
+    display: grid; grid-template-columns: 5ch 8ch 7ch 15ch 1fr; gap: 0 12px;
+    padding: 1px 8px 1px 12px; border-left: 3px solid transparent;
+    scroll-margin-top: calc(var(--hh) + 6px);
+  }
+  .row:hover { background: var(--hover); }
+  .row.err { background: var(--err-bg); border-left-color: var(--err); }
+  .row.warn { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.cur { outline: 2px solid var(--acc); outline-offset: -2px; }
+  .n, .t { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .n { text-align: right; user-select: none; }
+  .lv { font-weight: 700; letter-spacing: .02em; color: var(--muted); }
+  .row.err .lv { color: var(--err); } .row.warn .lv { color: var(--warn); }
+  .comp { color: var(--fg); cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .comp:hover { text-decoration: underline; }
+  .msg { white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; }
+  .k { color: var(--key); }
+  .hot { font-weight: 700; }
+  .hot .k { color: inherit; font-weight: 500; }
+  .row.err .hot { color: var(--err); } .row.warn .hot { color: var(--warn); }
+  .bad { color: var(--err); font-weight: 700; }
+  .cont .msg { grid-column: 5; color: var(--muted); }
+  .day {
+    margin: 10px 0 2px; padding: 2px 12px 2px 15px; color: var(--muted); font: 600 11px var(--ui);
+    letter-spacing: .06em; text-transform: uppercase;
+  }
+  mark { background: #fde047; color: #1c1917; border-radius: 2px; }
+  .empty { padding: 60px 20px; text-align: center; color: var(--muted); font: 14px var(--ui); }
+
+  #map { position: fixed; right: 0; top: var(--hh); bottom: 0; width: 14px; background: var(--panel); border-left: 1px solid var(--line); z-index: 4; }
+  #map i { position: absolute; left: 2px; right: 2px; min-height: 3px; border-radius: 1px; cursor: pointer; }
+  #map i.err { background: var(--err); } #map i.warn { background: var(--warn); opacity: .8; }
+
+  body.drag::after {
+    content: "Drop log file to open"; position: fixed; inset: 0; z-index: 20; display: grid; place-items: center;
+    background: color-mix(in srgb, var(--bg) 85%, transparent); font: 600 20px var(--ui); border: 3px dashed var(--acc);
+  }
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 4ch 8ch 6ch 1fr; }
+    .comp { display: none; }
+    .cont .msg { grid-column: 4; }
+    input[type=search] { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<header id="hdr">
+  <div class="top">
+    <h1>Sync log</h1>
+    <span class="meta" id="meta"></span>
+    <span class="spacer"></span>
+    <button id="open" type="button">Open log file…</button>
+    <input id="file" type="file" hidden>
+  </div>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search (batch, source, reason…)" aria-label="Search log">
+    <select id="comp" aria-label="Filter by component"></select>
+    <span class="sep"></span>
+    <span id="levels" role="group" aria-label="Filter by level"></span>
+    <span class="sep"></span>
+    <button id="prev" type="button" title="Previous warning/error (p)">▲ Prev</button>
+    <button id="next" type="button" title="Next warning/error (n)">▼ Next</button>
+    <span class="hint"><kbd>n</kbd> / <kbd>p</kbd> jump between problems</span>
+    <span class="spacer"></span>
+    <span class="meta" id="status" aria-live="polite"></span>
+  </div>
+</header>
+
+<main id="list"></main>
+<div id="map" aria-hidden="true"></div>
+
+<script>
+/* Open a log with the button, or drag a file onto the page.
+   The lines below are only sample data shown on first load. */
+const SAMPLE = `2025-03-11T02:00:04Z INFO  sync.orders  batch=0041 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=812 checksum=ok
+2025-03-11T02:00:05Z INFO  sync.orders  batch=0042 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=790 checksum=ok
+2025-03-11T02:00:07Z WARN  sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=4410 retry=1 reason=lock_timeout waited_ms=3000
+2025-03-11T02:00:12Z ERROR sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=9120 retry=3 reason=lock_timeout action=skipped_batch_for_rerun
+2025-03-11T02:00:13Z INFO  sync.orders  batch=0043 rows=4988 source=warehouse-east target=ledger-main elapsed_ms=801 checksum=ok
+2025-03-11T02:00:15Z INFO  sync.inventory batch=0102 rows=1830 source=warehouse-west target=ledger-main elapsed_ms=377 checksum=ok`;
+
+const HOT = new Set(['reason', 'action', 'retry', 'error', 'err', 'exception']);
+const LINE = /^(\d{4}-\d\d-\d\d)[T ]([\d:.]+)Z?\s+([A-Za-z]+)\s+(\S+)\s*(.*)$/;
+const $ = id => document.getElementById(id);
+const els = { list: $('list'), map: $('map'), q: $('q'), comp: $('comp'), levels: $('levels'),
+              status: $('status'), meta: $('meta'), hdr: $('hdr') };
+
+let rows = [], visible = [], active = new Set(), cur = null, query = '';
+
+const sevOf = l => /^(ERROR|FATAL|CRIT|CRITICAL|SEVERE)$/.test(l) ? 'err'
+                 : /^(WARN|WARNING)$/.test(l) ? 'warn' : 'info';
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function hl(s) {
+  if (!query) return esc(s);
+  const re = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  let out = '', last = 0, m;
+  while ((m = re.exec(s))) {
+    if (!m[0]) break;
+    out += esc(s.slice(last, m.index)) + '<mark>' + esc(m[0]) + '</mark>';
+    last = m.index + m[0].length;
+  }
+  return out + esc(s.slice(last));
+}
+
+function parse(text) {
+  const lines = text.split(/\r?\n/);
+  while (lines.length && !lines[lines.length - 1].trim()) lines.pop();
+  const out = [];
+  lines.forEach((raw, i) => {
+    if (!raw.trim()) return;
+    const m = raw.match(LINE), prev = out[out.length - 1];
+    if (m) {
+      const level = m[3].toUpperCase();
+      out.push({ n: i + 1, raw, date: m[1], time: m[2].slice(0, 8), level, sev: sevOf(level), comp: m[4], rest: m[5] });
+    } else {
+      out.push({ n: i + 1, raw, cont: true, level: prev ? prev.level : 'OTHER', sev: prev ? prev.sev : 'info',
+                 comp: prev ? prev.comp : '', date: prev ? prev.date : '', rest: raw });
+    }
+  });
+  return out;
+}
+
+function fmtMsg(rest) {
+  const parts = [];
+  for (const m of rest.matchAll(/([\w.\-]+)=("[^"]*"|\S*)|(\S+)/g)) {
+    if (m[3] !== undefined) { parts.push(hl(m[3])); continue; }
+    const k = m[1], v = m[2];
+    const bad = k === 'checksum' && v !== 'ok';
+    const cls = HOT.has(k) ? 'hot' : bad ? 'bad' : '';
+    const html = `<span class="k">${hl(k)}=</span>${hl(v)}`;
+    parts.push(cls ? `<span class="${cls}">${html}</span>` : html);
+  }
+  return parts.join(' ');
+}
+
+function load(text, name) {
+  rows = parse(text);
+  const counts = {};
+  rows.forEach(r => { if (!r.cont) counts[r.level] = (counts[r.level] || 0) + 1; });
+  const order = ['FATAL', 'CRITICAL', 'CRIT', 'ERROR', 'SEVERE', 'WARN', 'WARNING', 'INFO', 'DEBUG', 'TRACE'];
+  const lv = Object.keys(counts).sort((a, b) => {
+    const ia = order.indexOf(a), ib = order.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b);
+  });
+  active = new Set(lv);
+  els.levels.innerHTML = lv.map(l =>
+    `<button type="button" class="lvl ${sevOf(l)}" data-l="${esc(l)}" aria-pressed="true">` +
+    `<span class="sw"></span>${esc(l)} <b>${counts[l]}</b></button>`).join(' ');
+
+  const comps = [...new Set(rows.filter(r => !r.cont).map(r => r.comp))].sort();
+  els.comp.innerHTML = '<option value="">All components</option>' +
+    comps.map(c => `<option>${esc(c)}</option>`).join('');
+
+  const first = rows.find(r => !r.cont), last = [...rows].reverse().find(r => !r.cont);
+  const range = first ? `${first.date} ${first.time} → ${last.date === first.date ? '' : last.date + ' '}${last.time} UTC` : '';
+  els.meta.textContent = `${name} · ${rows.length.toLocaleString()} lines · ${range}`;
+  cur = null;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function render() {
+  const comp = els.comp.value;
+  query = els.q.value.trim();
+  const ql = query.toLowerCase();
+  visible = rows.filter(r => active.has(r.level) && (!comp || r.comp === comp) && (!ql || r.raw.toLowerCase().includes(ql)));
+
+  let html = '', day = '';
+  for (const r of visible) {
+    if (r.date && r.date !== day) { day = r.date; html += `<div class="day">${esc(day)}</div>`; }
+    html += r.cont
+      ? `<div class="row cont ${r.sev}" id="L${r.n}"><span class="n">${r.n}</span><span class="msg">${hl(r.raw)}</span></div>`
+      : `<div class="row ${r.sev}" id="L${r.n}" data-p="${r.sev !== 'info' ? 1 : 0}">` +
+        `<span class="n">${r.n}</span><span class="t" title="${esc(r.date)}">${esc(r.time)}</span>` +
+        `<span class="lv">${esc(r.level)}</span><span class="comp" data-c="${esc(r.comp)}" title="Filter to ${esc(r.comp)}">${hl(r.comp)}</span>` +
+        `<span class="msg">${fmtMsg(r.rest)}</span></div>`;
+  }
+  els.list.innerHTML = html || '<div class="empty">No lines match the current filters.</div>';
+
+  els.map.innerHTML = visible.map((r, i) => (r.cont || r.sev === 'info') ? '' :
+    `<i class="${r.sev}" style="top:${(i / visible.length * 100).toFixed(3)}%" data-n="${r.n}"></i>`).join('');
+
+  const problems = visible.filter(r => !r.cont && r.sev !== 'info').length;
+  els.status.textContent = `Showing ${visible.length.toLocaleString()} of ${rows.length.toLocaleString()} lines · ${problems} warnings/errors`;
+}
+
+function jump(dir) {
+  const hh = els.hdr.offsetHeight;
+  const list = [...els.list.querySelectorAll('.row[data-p="1"]')];
+  if (!list.length) { els.status.textContent = 'No warnings or errors in the current view'; return; }
+  let ref = hh;
+  if (cur && cur.isConnected) {
+    const t = cur.getBoundingClientRect().top;
+    if (t >= hh - 4 && t < innerHeight) ref = t;
+  }
+  const top = e => e.getBoundingClientRect().top;
+  const target = dir > 0
+    ? list.find(e => top(e) > ref + 2) || list[0]
+    : [...list].reverse().find(e => top(e) < ref - 2) || list[list.length - 1];
+  go(target);
+}
+
+function go(el) {
+  if (cur) cur.classList.remove('cur');
+  cur = el;
+  el.classList.add('cur');
+  el.scrollIntoView({ block: 'start' });
+}
+
+/* events */
+els.q.addEventListener('input', render);
+els.comp.addEventListener('change', render);
+els.levels.addEventListener('click', e => {
+  const b = e.target.closest('.lvl'); if (!b) return;
+  const l = b.dataset.l;
+  active.has(l) ? active.delete(l) : active.add(l);
+  b.setAttribute('aria-pressed', active.has(l));
+  render();
+});
+els.list.addEventListener('click', e => {
+  const c = e.target.closest('.comp'); if (!c) return;
+  els.comp.value = els.comp.value === c.dataset.c ? '' : c.dataset.c;
+  render();
+});
+els.map.addEventListener('click', e => {
+  const m = e.target.closest('i'); if (!m) return;
+  go($('L' + m.dataset.n));
+});
+$('next').onclick = () => jump(1);
+$('prev').onclick = () => jump(-1);
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+  if (e.key === 'n') jump(1); else if (e.key === 'p') jump(-1);
+  else if (e.key === '/') { e.preventDefault(); els.q.focus(); }
+});
+
+async function openFile(f) { if (f) load(await f.text(), f.name); }
+$('open').onclick = () => $('file').click();
+$('file').onchange = e => openFile(e.target.files[0]);
+let depth = 0;
+addEventListener('dragenter', e => { e.preventDefault(); depth++; document.body.classList.add('drag'); });
+addEventListener('dragleave', () => { if (--depth <= 0) { depth = 0; document.body.classList.remove('drag'); } });
+addEventListener('dragover', e => e.preventDefault());
+addEventListener('drop', e => {
+  e.preventDefault(); depth = 0; document.body.classList.remove('drag');
+  openFile(e.dataTransfer.files[0]);
+});
+
+new ResizeObserver(() => document.documentElement.style.setProperty('--hh', els.hdr.offsetHeight + 'px')).observe(els.hdr);
+
+load(SAMPLE, 'sample data (open your log file or drop it here)');
+</script>
+</body>
+</html>

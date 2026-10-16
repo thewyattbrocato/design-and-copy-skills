@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnside Ceramics</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --clay: #b5502f;
+    --clay-deep: #7e3119;
+    --cream: #f6ede1;
+    --ink: #2a1a12;
+    --glaze: #2f5d62;
+    --straw: #e3b25c;
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif;
+    line-height: 1.4;
+  }
+
+  .hero {
+    min-block-size: 100vh;
+    min-block-size: 100dvh;
+    max-inline-size: 100rem;
+    margin-inline: auto;
+    padding-block: clamp(1.25rem, 4vmin, 3.5rem);
+    padding-inline: max(clamp(1.25rem, 4vw, 4rem), env(safe-area-inset-left)) max(clamp(1.25rem, 4vw, 4rem), env(safe-area-inset-right));
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(1.25rem, 4vmin, 3rem);
+  }
+
+  h1 {
+    margin: 0;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.88;
+    /* vw-based so the name spans the poster; capped by height so short screens keep the button visible */
+    font-size: clamp(2.75rem, min(13.5vw, 26vh), 15rem);
+    color: var(--clay-deep);
+    overflow-wrap: anywhere;
+  }
+  h1 span { display: block; }
+  h1 .second { color: var(--clay); }
+
+  .lower {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    gap: clamp(1.25rem, 4vmin, 3rem);
+    align-items: stretch;
+  }
+
+  .copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(1rem, 3vmin, 2rem);
+    min-inline-size: 0;
+  }
+
+  .copy p {
+    margin: 0;
+    max-inline-size: 22ch;
+    font-size: clamp(1.25rem, 1rem + 1.6vw, 2.5rem);
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1em 1.8em;
+    min-block-size: 3rem;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 999px;
+    font-size: clamp(1.0625rem, 0.9rem + 0.7vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: background-color .2s, transform .2s;
+  }
+  .btn:hover { background: var(--glaze); transform: translateY(-2px); }
+  .btn:focus-visible { outline: 0.2em solid var(--straw); outline-offset: 0.2em; }
+
+  /* Decorative color block: abstract vessel shapes from gradients */
+  .block {
+    position: relative;
+    isolation: isolate;
+    min-block-size: clamp(12rem, 30vh, 30rem);
+    border-radius: clamp(1.5rem, 4vmin, 3.5rem);
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 72% 28%, var(--straw) 0 14%, transparent 14.5%),
+      linear-gradient(160deg, var(--glaze) 0 55%, var(--clay) 55% 100%);
+  }
+  .block::before,
+  .block::after { content: ""; position: absolute; z-index: 1; }
+  /* vase */
+  .block::before {
+    inline-size: 38%;
+    aspect-ratio: 3 / 4;
+    inset-inline-start: 12%;
+    inset-block-end: -4%;
+    background: var(--cream);
+    border-radius: 45% 45% 18% 18% / 60% 60% 18% 18%;
+  }
+  /* bowl */
+  .block::after {
+    inline-size: 34%;
+    aspect-ratio: 2 / 1;
+    inset-inline-end: 8%;
+    inset-block-end: 8%;
+    background: var(--clay-deep);
+    border-radius: 0 0 999px 999px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+    .btn:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="hero">
+    <h1><span>Kilnside</span><span class="second">Ceramics</span></h1>
+    <div class="lower">
+      <div class="copy">
+        <p>Hand-thrown pottery classes, fired right down the lane.</p>
+        <a class="btn" href="#book">Book a class</a>
+      </div>
+      <div class="block" aria-hidden="true"></div>
+    </div>
+  </main>
+</body>
+</html>

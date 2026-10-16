@@ -1,27 +1,42 @@
-**Verdict:** The spec is solid and shippable. The type, contrast, targets, spacing and single-action focus are all right. The risks are in what the spec doesn't cover: the meaning of "request", the empty and error states, and consent. I'd fix the first four items before Friday.
+**Verdict: this is ready in the parts you described. The risks are in what the spec doesn't say.** I only had the spec, not the built page, so these are gaps to confirm, not defects I saw.
 
-**Fix before launch**
+## Fix before Friday
 
-1. **Confirmation wording (high).** The button says "Request this time", so the visitor hasn't booked yet. The confirmation screen has to say that plainly. For example: "We've received your request for Tue at 2:30. We'll text you within [X hours] to confirm." If the slots are live availability and the booking is instant, change the button to "Book this time". Otherwise people will show up to unconfirmed appointments. Also put the day and time in the confirmation as a full date, such as "Tue, Oct 14", not just "Tuesday".
-2. **"Mon–Fri" is ambiguous (high).** It doesn't say which week. Decide what happens when today is Wednesday (are Mon and Tue disabled, or do they mean next week?) and show actual dates on the buttons. Also decide what the time grid shows before a day is picked, and what it shows when a day has no slots. Say "No times left Tuesday, try another day" and keep the other days selectable. The spec doesn't cover any of these states.
-3. **Consent for texting (high).** You collect a mobile number, but the spec never says how you'll use it. Add one line under the field: "We'll text only about this appointment." If you send reminders or marketing, that needs its own unchecked opt-in. Whoever owns compliance should confirm this.
-4. **Dental emergencies and the note field (medium–high).** Someone in severe pain will land on a form that has no urgency path. Add a line near the top: "Pain, swelling or an accident? Call now: 555-0142." Under "Add a note", add: "Please don't include medical details you wouldn't want on a form." Check with your compliance owner whether free-text health information needs more than that.
-5. **Phone links (medium).** Confirm that the header number and "Call us instead" are both `tel:` links. A plain text link under a 52px button is probably under 44px tall, so pad it to at least 44px. Many visitors will arrive from a phone and prefer to call.
-6. **Error behavior (medium).** The spec describes inline errors but not what happens after a failed submit. On submit with errors, move focus to the first invalid field and add a short summary. Accept phone formats like `(555) 014-2000` and `555.014.2000` and normalize them instead of rejecting them. Add a "Couldn't send, please try again or call" state for network failure. Disable the button while the request is in flight so people don't submit twice.
-7. **Day buttons and slot grid accessibility (medium).** Build both as radio groups, with arrow-key navigation and a selected state that isn't color alone (a check mark or a heavier border). Give the day buttons 44px height or more; the spec only states that for slots. Disabled slots should look disabled and be announced as unavailable.
+1. **Blocker: "Mon-Fri" has no dates.** A patient on Thursday can't tell if "Tue" means the 20th or the 27th. Label the buttons "Mon 19", "Tue 20" and so on, and say which week is shown. Repeat the full date on the confirmation screen.
 
-**Smaller items**
+2. **Major: the time grid has undefined states.** Check each of these:
+   - No day is picked yet.
+   - A day has no open slots.
+   - Slots are loading.
+   - The slot was taken between the patient viewing it and submitting.
 
-- Test at 320px and at 200% text zoom, not only 360px. Segmented Mon–Fri buttons are the likeliest thing to break.
-- Set input text to at least 16px so iOS Safari doesn't zoom on focus. Add `autocomplete="name"` and `autocomplete="tel"`, and `inputmode="tel"` on the phone field.
-- Verify the focus ring has at least 3:1 contrast against both the blue button and the white page, with a small offset.
-- If a patient can go back from the confirmation screen, make sure they don't see an empty form or resubmit. Offering "add to calendar" would be a nice extra, not a requirement.
+   For the last one, keep their other answers, refresh the grid and say "That time was just taken. Here are the nearest openings." Never let it fail silently.
 
-**Keep as is**
+3. **Major: "Request" needs honest follow-through.** The button says request, so the confirmation must say:
+   - The visit is not booked yet.
+   - Who will contact them, by what channel (text or call) and by when.
+   - What to do if they hear nothing, with the phone number.
 
-- **One primary action.** A single full-width 52px button with a quiet secondary link gives no competing choices.
-- **Type and color.** The 40px/1.15 title at about 16:1, the 18px intro at about 60 characters, and the 7:1 button give a readable page for an older audience. Your stated ratios are consistent with those colors, but I didn't recompute them.
-- **Visible labels above fields, with the note optional and collapsed.** Four required inputs is about as short as this form can be.
-- **Inline errors with an icon and text.** They don't rely on red alone.
+   Give the mobile field a reason, such as "We'll text or call to confirm." If you send texts, add consent wording there.
 
-**Not checked:** I haven't seen the page rendered, so I haven't verified contrast values, the real tap-target sizes, or the actual copy on the confirmation screen. I also don't know whether you offer Saturday or evening hours. If you do, "Mon–Fri" is leaving patients out.
+4. **Major: the phone number must be a real `tel:` link.** On a phone, 18px text is a small target. Give the header number and "Call us instead" a tap area of at least 44px. This is the fallback for anyone the form fails, so it matters most for them.
+
+5. **Medium: error handling beyond color.** On a failed submit, move focus to the first invalid field and name the problem there. Disable the button or show a "Sending…" state so nobody double-submits. Your error red #b42318 on white is about 6.6:1 (I computed it), which passes. The icon and text already cover the color-only problem.
+
+6. **Medium: the "Add a note" privacy risk.** Free text in a dental context invites health details. Add one line ("Please don't include medical details; we'll ask when we call"). Ask whoever handles your compliance whether that is enough.
+
+7. **Low: field semantics.**
+   - Mark up day and time as grouped radio buttons, each with a legend.
+   - Show the selected state with more than color, such as a check or a heavier border.
+   - Set `type="tel"`, `autocomplete="name"` and `autocomplete="tel"`.
+   - Optionally make the button read "Request Tue 10:30" so it echoes the choice.
+
+## Keep
+
+- **One primary action and a quiet text link.** There is no competing navigation, so the task is obvious.
+- **Contrast.** Title is about 15.7:1 (computed). The button is about 6.7:1 (computed, slightly under your "about 7"). Both pass AA comfortably.
+- **44px slot targets and 52px button, with visible labels above the fields.** These suit people on phones, including older patients.
+- **The optional field collapsed, and a confirmation that repeats the choice.** This cuts the form to the minimum.
+
+## Not checked
+Real rendering, the focus ring itself, 200% zoom and reflow, screen-reader behavior, and the slot grid's column count at 360px. Send a link or markup if you want those covered.

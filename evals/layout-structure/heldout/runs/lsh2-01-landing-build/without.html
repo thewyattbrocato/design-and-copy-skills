@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnroom — Handmade mugs and bowls, shipped every other month</title>
+<meta name="description" content="Kilnroom is a Tacoma ceramics studio. Every other month we ship a box of three handmade mugs or bowls for $64. Skip or cancel anytime.">
+<style>
+  :root {
+    --clay: #b5573a;
+    --clay-dark: #8f4029;
+    --ink: #2a211d;
+    --muted: #6b5d55;
+    --bg: #faf5ee;
+    --sand: #efe5d6;
+    --line: #dccfbd;
+    --glaze: #5d7468;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  h1, h2, h3, .serif {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  p { margin: 0; }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+  section { padding: 56px 0; }
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clay-dark);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  h2 { font-size: clamp(28px, 5vw, 40px); margin-bottom: 16px; }
+
+  .btn {
+    display: inline-block;
+    background: var(--clay);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 15px 28px;
+    border-radius: 999px;
+    border: 0;
+    cursor: pointer;
+    min-height: 48px;
+    transition: background .15s, transform .15s;
+  }
+  .btn:hover { background: var(--clay-dark); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible {
+    outline: 3px solid var(--glaze);
+    outline-offset: 3px;
+  }
+  .btn.ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+  }
+  .btn.ghost:hover { background: var(--ink); color: var(--bg); }
+
+  /* header */
+  header { padding: 18px 0; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .logo { font-size: 24px; text-decoration: none; }
+  .logo span { color: var(--clay); }
+  nav { display: flex; align-items: center; gap: 22px; }
+  nav a.link { text-decoration: none; font-size: 15px; color: var(--muted); }
+  nav a.link:hover { color: var(--ink); }
+  nav .btn { padding: 9px 20px; font-size: 15px; min-height: 40px; }
+  @media (max-width: 640px) { nav a.link { display: none; } }
+
+  /* placeholders */
+  .ph {
+    background:
+      repeating-linear-gradient(45deg, rgba(93,116,104,.08) 0 12px, transparent 12px 24px),
+      var(--sand);
+    border: 1.5px dashed var(--line);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  /* hero */
+  .hero { padding: 24px 0 56px; }
+  .hero .wrap { display: grid; gap: 32px; }
+  .hero h1 { font-size: clamp(38px, 9vw, 64px); margin-bottom: 18px; }
+  .hero p.lead { font-size: 19px; color: var(--muted); max-width: 34em; margin-bottom: 26px; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .hero .fine { font-size: 14px; color: var(--muted); margin-top: 16px; }
+  .hero .ph { aspect-ratio: 4 / 5; }
+  @media (min-width: 860px) {
+    .hero .wrap { grid-template-columns: 1.1fr 1fr; align-items: center; gap: 56px; }
+    .hero { padding: 48px 0 80px; }
+  }
+
+  /* what's in the box */
+  .box-grid { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); margin: 28px 0 20px; }
+  .box-grid .ph { aspect-ratio: 1; font-size: 13px; }
+  .intro { max-width: 36em; color: var(--muted); }
+  .choice { display: grid; gap: 16px; margin-top: 28px; }
+  .choice div {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .choice h3 { font-size: 22px; margin-bottom: 6px; }
+  .choice p { color: var(--muted); font-size: 16px; }
+  @media (min-width: 700px) { .choice { grid-template-columns: 1fr 1fr; } }
+
+  /* how it works */
+  .how { background: var(--sand); }
+  .steps { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 22px; counter-reset: s; }
+  .steps li { counter-increment: s; padding-left: 58px; position: relative; }
+  .steps li::before {
+    content: counter(s);
+    position: absolute; left: 0; top: 0;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--glaze); color: #fff;
+    display: grid; place-items: center;
+    font-family: Georgia, serif; font-size: 19px;
+  }
+  .steps h3 { font-size: 21px; margin-bottom: 4px; }
+  .steps p { color: var(--muted); font-size: 16px; }
+  @media (min-width: 800px) {
+    .steps { grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  }
+
+  /* studio */
+  .studio .wrap { display: grid; gap: 28px; }
+  .studio .ph { aspect-ratio: 4 / 3; }
+  .studio p + p { margin-top: 14px; }
+  .studio p { color: var(--muted); }
+  @media (min-width: 860px) {
+    .studio .wrap { grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  }
+
+  /* pricing */
+  .price-card {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 22px;
+    padding: 36px 26px;
+    display: grid;
+    gap: 24px;
+  }
+  .price-card h2 { margin-bottom: 8px; }
+  .price { font-family: Georgia, serif; font-size: 56px; line-height: 1; }
+  .price small { font-family: system-ui, sans-serif; font-size: 16px; opacity: .75; }
+  .price-card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .price-card li { padding-left: 28px; position: relative; }
+  .price-card li::before { content: "✓"; position: absolute; left: 0; color: #e6a88f; font-weight: 700; }
+  .price-card .btn { background: #e6a88f; color: var(--ink); text-align: center; }
+  .price-card .btn:hover { background: #f0bba6; }
+  @media (min-width: 800px) {
+    .price-card { grid-template-columns: 1.1fr 1fr; padding: 52px; align-items: center; }
+  }
+
+  /* faq */
+  .faq { max-width: 740px; }
+  details { border-bottom: 1px solid var(--line); padding: 4px 0; }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 16px 28px 16px 0;
+    list-style: none;
+    position: relative;
+    min-height: 48px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+";
+    position: absolute; right: 4px; top: 12px;
+    font-size: 24px; color: var(--clay);
+    transition: transform .2s;
+  }
+  details[open] summary::after { content: "–"; }
+  details p { color: var(--muted); padding: 0 0 18px; max-width: 36em; }
+
+  /* footer */
+  footer { border-top: 1px solid var(--line); padding: 36px 0 44px; color: var(--muted); font-size: 15px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+  footer a { text-decoration: none; border-bottom: 1px solid var(--line); }
+  footer a:hover { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo serif" href="#top">Kiln<span>room</span></a>
+    <nav>
+      <a class="link" href="#box">The box</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="btn" href="#join">Join</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Ceramics studio · Tacoma, WA</p>
+        <h1>Three handmade pieces, every other month.</h1>
+        <p class="lead">Each box holds three mugs or three bowls, thrown and glazed by hand in our Tacoma studio, then packed and sent to your door. Build a cupboard that doesn't match, on purpose.</p>
+        <div class="cta">
+          <a class="btn" href="#join">Get a box · $64</a>
+          <a class="btn ghost" href="#how">How it works</a>
+        </div>
+        <p class="fine">Skip a shipment or cancel anytime.</p>
+      </div>
+      <div class="ph" role="img" aria-label="Photo placeholder: a hand holding a glazed mug in the studio">
+        Photo: hand holding a freshly glazed mug
+      </div>
+    </div>
+  </section>
+
+  <section id="box">
+    <div class="wrap">
+      <p class="eyebrow">What's in the box</p>
+      <h2>Three pieces, no two alike.</h2>
+      <p class="intro">Every piece is made by hand, so the glaze pools a little differently and the shapes vary slightly. You'll get a set that belongs together without being a matched set.</p>
+      <div class="box-grid">
+        <div class="ph" role="img" aria-label="Photo placeholder: first piece">Piece one</div>
+        <div class="ph" role="img" aria-label="Photo placeholder: second piece">Piece two</div>
+        <div class="ph" role="img" aria-label="Photo placeholder: third piece">Piece three</div>
+      </div>
+      <div class="choice">
+        <div>
+          <h3>Mug boxes</h3>
+          <p>Three mugs for coffee, tea, or soup. Comfortable handles, good weight, and glazes that look better with use.</p>
+        </div>
+        <div>
+          <h3>Bowl boxes</h3>
+          <p>Three bowls for noodles, cereal, or serving. Sized to hold a real meal and stack neatly in the cupboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Simple, and easy to step away from.</h2>
+      <ol class="steps">
+        <li>
+          <h3>Pick mugs or bowls</h3>
+          <p>Choose what you'd like in your first box. You can switch between them later.</p>
+        </li>
+        <li>
+          <h3>We make and pack</h3>
+          <p>Your pieces are finished in the studio and wrapped carefully so they arrive in one piece.</p>
+        </li>
+        <li>
+          <h3>A box every other month</h3>
+          <p>Three new pieces arrive every two months. Skip one or cancel whenever you like.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="studio">
+    <div class="wrap">
+      <div class="ph" role="img" aria-label="Photo placeholder: the Kilnroom studio in Tacoma">Photo: the studio, wheel and shelves</div>
+      <div>
+        <p class="eyebrow">The studio</p>
+        <h2>Made in Tacoma.</h2>
+        <p>Kilnroom is a small ceramics studio. We throw, trim, glaze, and fire everything ourselves, and we ship in small batches so each box gets proper attention.</p>
+        <p>Because the work is handmade, you may see small variations in color and shape. That's part of why they're nice to use.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="join">
+    <div class="wrap">
+      <div class="price-card">
+        <div>
+          <p class="eyebrow" style="color:#e6a88f">The subscription</p>
+          <h2>One box, every other month.</h2>
+          <p class="price">$64 <small>per box</small></p>
+        </div>
+        <div style="display:grid; gap:22px">
+          <ul>
+            <li>Three handmade mugs or three bowls</li>
+            <li>Ships every other month</li>
+            <li>Skip any shipment</li>
+            <li>Cancel anytime</li>
+          </ul>
+          <a class="btn" href="#join">Start my subscription</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap faq">
+      <p class="eyebrow">Questions</p>
+      <h2>Good to know</h2>
+      <details>
+        <summary>How often do boxes ship?</summary>
+        <p>Every other month, so six boxes a year if you never skip.</p>
+      </details>
+      <details>
+        <summary>Can I skip a box or cancel?</summary>
+        <p>Yes, either one, anytime. Skipping just moves you to the following shipment. There's no minimum commitment.</p>
+      </details>
+      <details>
+        <summary>Can I choose between mugs and bowls?</summary>
+        <p>Yes. Pick one when you sign up, and let us know if you'd like to switch for a later box.</p>
+      </details>
+      <details>
+        <summary>Will my pieces match?</summary>
+        <p>They'll look good together, but each is handmade, so expect natural variation in shape and glaze.</p>
+      </details>
+      <details>
+        <summary>What if something arrives damaged?</summary>
+        <p>Get in touch with a photo and we'll sort it out.</p>
+      </details>
+      <details>
+        <summary>Are the pieces dishwasher and microwave safe?</summary>
+        <p>Details on care come with each box. If you have a question about a specific piece, just ask.</p>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong class="serif" style="font-size:20px;color:var(--ink)">Kilnroom</strong><br>
+      Handmade ceramics · Tacoma, Washington
+    </div>
+    <div>
+      <a href="#top">Back to top</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,18 +1,15 @@
-Mostly leave it alone. It's short and the task happens in the real product. Each screen has one idea, and Skip is on every screen. I'd change one line and check two things.
+This is already good, so I'd ship it nearly as is. It's three short screens, each tied to a real task. Each screen's text sits next to the thing it describes, and Skip is on every screen. I'd change one line.
 
-**Change: Screen 2 text.** It says "Draw a circle", but a circle is already placed on the map. People will look for a draw tool that isn't there.
+**Screen 2 (the only edit)**
+- Title: Add your walking area
+- Text: ~~"Draw a circle on the map where you walk."~~ **"Drag the circle to where you walk."** We'll only offer you walks inside it.
 
-> Drag the circle over the area where you walk. We'll only offer you walks inside it.
+The circle is already on the map and draggable, so "Draw" tells people to do something they can't. Someone may look for a drawing tool that isn't there. If the circle can be resized, add "and resize" here, but I can't tell that from what you've sent.
 
-Everything else stays word for word:
+Screens 1 and 3 stay unchanged.
 
-- **Screen 1:** Add your first walk. "Pick a dog, a day and a time. That's all a walk needs." The Dog field is highlighted and the button is Next.
-- **Screen 3:** You're ready. "Your first walk is on the calendar. Tap it any time to change or cancel." The button is Go to calendar.
+**Check before tomorrow**
+- **Screen 3 can be false.** "Your first walk is on the calendar" is only true if the walk was saved on screen 1. Test pressing Next with the form empty or half-filled. Either block Next until the walk exists, or show a different line when it doesn't, such as "Add your first walk any time from [where the add button lives]".
+- **The way back to help after Skip is untested.** I can't see whether one exists. If it doesn't, add a "Replay setup" entry somewhere findable, such as [settings or help menu].
 
-**Check before shipping (I can't see the app):**
-1. **Screen 3 can be false.** If someone skips screen 1, or taps Next without filling in the form, no walk exists. "Your first walk is on the calendar" would then be wrong. Either show a different line when no walk was saved, or make sure Next on screen 1 only advances once the walk is saved.
-2. **Skip needs a way back.** Make sure the help is reachable later, for example from a menu entry. If it isn't, add one, because skippers have no other route back to it.
-
-**Measuring it:** "Under a minute" and fewer setup tickets show people get through it. They don't show people can add a walk a week later without help. I'd also track the share of new users who schedule a second walk within seven days, and whether that differs between those who finished the flow and those who skipped it.
-
-I assumed screen 1 is a live form, not a mock-up, and that nothing was left out of your description. I didn't invent any labels or behavior.
+**How to judge it later:** the drop in setup tickets is a good sign. The stronger check is how many new users have a saved walk and a walking area a few days after sign-up, without having opened help again. Split that by people who finished the flow and people who skipped it.

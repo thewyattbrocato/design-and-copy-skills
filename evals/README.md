@@ -153,6 +153,35 @@ to at most 1000px wide and about 250 KB (PNG, JPEG only if a PNG will not fit). 
 With `runs: 1` the single answer per arm is used as is. With `runs: N` it picks the answer per arm with the
 highest blind absolute score from the judge model, which never sees the arm, and `meta.json` records all scores.
 
+## Activation check
+
+A skill only helps if it is picked at the right moment, and before it is loaded all an agent sees is its name and
+description. The activation check measures that routing step on its own. For each skill, `evals/<skill>/activation.json`
+holds 6 `should_load` requests (realistic, in different phrasings, none copying the description's wording) and 4
+`should_not_load` requests (near misses that belong to a sibling skill or to the description's not-for list, plus one
+with no overlap). `scripts/run_activation.py` shows a model, by default haiku, the name and description of every skill
+and one request, and asks which single skill, if any, it would load. It makes one call per request, shows no skill body
+and writes `evals/<skill>/activation-results.json`: recall on the `should_load` requests, the false-pick rate on the
+`should_not_load` requests and which skill took each request instead. `evals/activation-summary.md` is generated from
+those files and lists every skill, with the ones under 4 of 6 or with any false pick highlighted.
+
+```
+python3 scripts/run_activation.py [--skills a,b] [--model haiku] [--concurrency 6] [--dry-run]
+python3 scripts/activation_summary.py [--check]
+```
+
+What it shows and what it does not. It checks routing from descriptions only: whether the description lets a model
+pick the skill for a request and leave it alone for another. It does not show that a skill is good, and it is not the
+loaded rate of the held-out runs, where the model chooses a skill in a real task; that stays the evidence for whether a
+skill gets used. One model, one call per request and a small set of requests give a rough signal, and the same request
+can come out differently on another run. No description was changed because of this check, and none will be changed to
+fit it without a fresh held-out run, since a description edit is a change to the skill.
+
+The model call goes through the same stub mechanism as the generator (`EVAL_GENERATOR_CMD`), so tests and CI never
+call a real model. `scripts/validate_evals.py` checks the shape of both files and recomputes the counts from the
+records; `python3 scripts/activation_summary.py --check` fails when a skill has no `activation.json`, when a request is
+used by two skills, or when the summary is out of date. File formats are in [SCHEMA.md](SCHEMA.md#activation-files).
+
 ## Headless CLI usage (verified)
 
 - Generation: `claude -p <prompt> --model <m> --output-format stream-json --verbose --setting-sources project

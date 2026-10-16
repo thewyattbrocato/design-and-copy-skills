@@ -1,35 +1,21 @@
-I'd push back on the hero stat and the bigger cards. With 40 to 60 trucks that can't scroll, anything large takes space from the trucks, and "most important" is hard to define on a fixed screen. The table's real problem is probably that it's a list: 60 rows at normal height won't fit on one display, so dispatchers are scanning for the one row that matters.
+I'd push back on the hero stat plus bigger cards. Those take space from the one thing dispatchers need, which is seeing all 40 to 60 trucks at once. Making some cards bigger means fewer trucks fit, and the screen still feels crowded. The overwhelm probably comes from 60 identical rows competing equally for attention, not from the count alone.
 
-**Organize by status, not by truck importance.** Use five lanes across the screen, in workflow order:
+**What I'd build instead**
 
-```
-ARRIVING (4) | WAITING (12) | LOADING (9) | UNLOADING (11) | READY TO LEAVE (6)
-[card]       | [card]       | [card]      | [card]         | [card]
-[card]       | ...          | ...         | ...            | ...
-```
+1. **Split the trucks by where they are, not into a single list.** Trucks at a door and trucks in the yard are different jobs.
+   - **Left: door grid.** Show every door as a fixed tile with the truck currently in it, its status, and its minutes. Doors don't move, so dispatchers learn where to look and stop searching.
+   - **Right: yard queue.** Trucks that are arriving, waiting, or ready to leave, grouped into lanes by status. Each lane header shows its count, and rows sort by minutes on site, longest first.
 
-- Each lane is a column of compact cards, sorted by minutes on site, longest first. The top of each lane is always the thing that needs attention.
-- Lane headers show the count, so the totals are the summary and you don't need a hero stat.
-- Put "Ready to leave" at the right end, since that's where trucks finish.
+2. **Replace the hero stat with a count strip.** A single thin row across the top: `Arriving 8 · Waiting 14 · Loading 12 · Unloading 9 · Ready 11`, plus one alert count, such as `⚠ 4 over 90 min`. A total is not useful to a dispatcher. The alert count is what they act on, so that's the one number to make big.
 
-**Use time, not size, to show urgency.** Set a dwell target per status (e.g., waiting over 45 min, loading over 90 min). Cards past target get a colored left edge or border, and the rest stay neutral. Keep cards the same size. Color should mark exceptions only, or the screen becomes the "overwhelming" thing they're complaining about.
+3. **Use color only for exceptions.** Five saturated status colors plus badges will read as noise. Keep status as a neutral label or a small icon. Save color for trucks over the dwell threshold, and maybe doors that have been idle too long. If everything is colored, nothing stands out.
 
-**Card contents, in order of scan priority:**
-1. Dock door as a bold badge (dispatchers think in doors)
-2. Truck ID, bold
-3. Minutes on site, large, tabular numerals
-4. Carrier, smaller
-5. Notes, one line, truncated; the full note on click or hover is fine since it isn't hiding a truck
+4. **Keep the rows dense and fixed-height.** Use a single line per truck with tabular numerals so the minute counts line up. Dispatchers have to read a lot of rows, so 14 px or larger for truck ID and minutes is a reasonable floor. Truncate notes to one line, and let a hover or click show the full text.
 
-Status doesn't need its own field because the lane already says it.
+5. **Stabilize the layout.** If rows reorder every time minutes tick up or a status changes, the screen will feel chaotic. Keep lanes and door positions fixed, update values in place, and briefly highlight only what changed.
 
-**Top strip, kept slim:** a single row with the lane counts (repeated for glanceability if you want), the current time, and maybe the longest current wait. That's the one thing that deserves a larger number.
+**The honest constraint**
 
-**Things to verify before building:**
-- **Uneven distribution.** The layout breaks if 25 trucks land in Waiting. Build the lanes to flex: card density should tighten automatically as a lane gets longer (compact rows past a threshold), and you should test the worst-case split, not the average.
-- **Text size.** Dispatchers read this from a distance, so plan for 14px minimum for body text and larger for ID and minutes.
-- **Screen size.** Test on the actual monitors in the yard, since 60 trucks fit very differently at 1080p and 4K.
+Sixty single-line rows at a readable size need roughly 900 to 1000 px of height. That fits a 1080p display, but barely, and not with much room for a header. If the rows get smaller to fit more, they'll be harder to read at arm's length. A large monitor or a wall display will do better than a laptop. Before you commit, load the screen with 60 realistic mock trucks on the actual hardware and check whether the top five exceptions jump out within a couple of seconds. If they don't, the fix is more contrast on exceptions, not more space for hero cards.
 
-If you want an alternative, a dock-door grid (one tile per door, with the truck in it) fits how some yards think, but it doesn't show the queue, so I'd keep it for a secondary view if you need one. I'd start with the status lanes.
-
-I can build a quick HTML mockup with 60 sample trucks, including a skewed distribution, so you can check density on a real screen size. Want me to do that?
+If you tell me the screen size and whether you have door-to-truck assignments in the data, I can sketch the exact grid and the sizes.

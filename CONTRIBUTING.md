@@ -105,15 +105,16 @@ python3 scripts/check_skill_fixtures.py
 python3 scripts/results_table.py --check
 python3 scripts/make_results_chart.py --check
 python3 scripts/before_after_gallery.py --check
+python3 scripts/activation_summary.py --check
 ```
 
-`check_skill_fixtures.py` fails on a held-out fixture found in a skill folder under `skills/`, `copy-skills/` or `withdrawn/` (not in an evidence-only folder there) and warns on a dev one; `--strict` fails on both. CI runs the `--strict` pass as a warning only, so a dev-suite hit does not fail the build. `results_table.py` rewrites the generated tables in `README.md`; run it without `--check` after a skill's description or any results file changes, and commit the result. `make_results_chart.py` redraws `docs/img/results.svg` from the same results files; rerun it (add `--png docs/img/results.png` for the 2x copy, which needs Chrome) after a held-out result changes, and commit the result.
+`check_skill_fixtures.py` fails on a held-out fixture found in a skill folder under `skills/`, `copy-skills/` or `withdrawn/` (not in an evidence-only folder there) and warns on a dev one; `--strict` fails on both. CI runs the `--strict` pass as a warning only, so a dev-suite hit does not fail the build. `results_table.py` rewrites the generated tables in `README.md`; run it without `--check` after a skill's description or any results file changes, and commit the result. `make_results_chart.py` redraws `docs/img/results.svg` from the same results files; rerun it (add `--png docs/img/results.png` for the 2x copy, which needs Chrome) after a held-out result changes, and commit the result. `run_activation.py` asks a model which skill it would load from the names and descriptions alone and writes `evals/<skill>/activation-results.json`; a new skill needs an `activation.json` (see [evals/SCHEMA.md](evals/SCHEMA.md#activation-files)), and after a description edit rerun it and `activation_summary.py` and commit the result.
 
 The tests never call a live model: `EVAL_GENERATOR_CMD`, `EVAL_JUDGE_CMD` and `EVAL_RENDER_CMD` point at the stub in `tests/mock_eval_cmd.py`. Keep it that way, and keep the scripts on the standard library only, so a fresh clone with Python 3 can run every check.
 
 ## Changing the tooling
 
-Scripts live in `scripts/` (the checks above plus `ci_local.py`, `run_eval.py`, `results_table.py`, `make_results_chart.py`, `before_after_gallery.py`, `make_example.py` and `render.py`) and are run as `python3 scripts/<name>.py`; shared pieces are in `evalkit.py` and `mdlinks.py`. Every script is covered by a test module in `tests/`, and a behavior change comes with a test. If you change what a script accepts or writes, update [evals/README.md](evals/README.md) or [evals/SCHEMA.md](evals/SCHEMA.md) in the same pull request.
+Scripts live in `scripts/` (the checks above plus `ci_local.py`, `run_eval.py`, `results_table.py`, `make_results_chart.py`, `before_after_gallery.py`, `run_activation.py`, `activation_summary.py`, `make_example.py` and `render.py`) and are run as `python3 scripts/<name>.py`; shared pieces are in `evalkit.py` and `mdlinks.py`. Every script is covered by a test module in `tests/`, and a behavior change comes with a test. If you change what a script accepts or writes, update [evals/README.md](evals/README.md) or [evals/SCHEMA.md](evals/SCHEMA.md) in the same pull request.
 
 ## Pull request checklist
 

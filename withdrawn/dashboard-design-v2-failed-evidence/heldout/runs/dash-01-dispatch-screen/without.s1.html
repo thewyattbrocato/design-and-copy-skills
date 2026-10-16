@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewater Cold Freight – 6am Dispatch</title>
+<style>
+  :root{
+    --bg:#f4f6f8; --card:#fff; --ink:#16202a; --muted:#566574; --line:#d9e0e6;
+    --go:#14683a; --go-bg:#e3f4ea;
+    --warn:#8a4b00; --warn-bg:#fff0d6;
+    --bad:#a11a1a; --bad-bg:#fde4e4;
+    --down:#3d4752; --down-bg:#e6e9ed;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.4}
+  .wrap{max-width:1200px;margin:0 auto;padding:20px 24px 32px}
+  header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  h1{font-size:22px;margin:0}
+  header .when{color:var(--muted);font-size:14px}
+  h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
+
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;border-top-width:4px}
+  .tile .n{font-size:34px;font-weight:700;line-height:1}
+  .tile .l{font-weight:600;margin-top:4px}
+  .tile .s{color:var(--muted);font-size:13px}
+  .t-go{border-top-color:var(--go)} .t-go .n{color:var(--go)}
+  .t-bad{border-top-color:var(--bad)} .t-bad .n{color:var(--bad)}
+  .t-warn{border-top-color:#c77700} .t-warn .n{color:var(--warn)}
+  .t-down{border-top-color:var(--down)} .t-down .n{color:var(--down)}
+
+  .actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .act{background:var(--card);border:1px solid var(--line);border-left-width:6px;border-radius:8px;padding:10px 14px}
+  .act.bad{border-left-color:var(--bad)} .act.warn{border-left-color:#c77700} .act.down{border-left-color:var(--down)}
+  .act .top{display:flex;justify-content:space-between;gap:8px;font-weight:700}
+  .act .top .time{font-weight:600;color:var(--muted);white-space:nowrap}
+  .act p{margin:4px 0 0}
+  .act .ask{color:var(--muted);font-size:14px}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:#eef2f5}
+  tr:last-child td{border-bottom:0}
+  td.van{font-weight:700;font-size:17px}
+  td.time{font-variant-numeric:tabular-nums;font-weight:600}
+  tr.r-bad td:first-child{box-shadow:inset 6px 0 0 var(--bad)}
+  tr.r-warn td:first-child{box-shadow:inset 6px 0 0 #c77700}
+  tr.r-down td:first-child{box-shadow:inset 6px 0 0 var(--down)}
+  tr.r-go td:first-child{box-shadow:inset 6px 0 0 var(--go)}
+  .sub{display:block;color:var(--muted);font-size:13px;font-weight:400}
+
+  .badge{display:inline-block;padding:2px 9px;border-radius:999px;font-weight:700;font-size:12px;letter-spacing:.03em;white-space:nowrap}
+  .b-go{background:var(--go-bg);color:var(--go)}
+  .b-bad{background:var(--bad-bg);color:var(--bad)}
+  .b-warn{background:var(--warn-bg);color:var(--warn)}
+  .b-down{background:var(--down-bg);color:var(--down)}
+
+  .temp{display:flex;align-items:center;gap:10px}
+  .temp .v{font-variant-numeric:tabular-nums;font-weight:700;min-width:62px}
+  .scale{position:relative;width:110px;height:10px;background:#e1e6eb;border-radius:5px}
+  .scale .band{position:absolute;top:0;bottom:0;left:20%;width:30%;background:#9fd3b5;border-radius:5px}
+  .scale .mk{position:absolute;top:-3px;width:4px;height:16px;margin-left:-2px;background:var(--ink);border-radius:2px}
+  .scale.out .mk{background:var(--bad)}
+  .legend{color:var(--muted);font-size:12px;margin-top:8px}
+  .over{color:var(--bad);font-weight:700}
+
+  @media (max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}.actions{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Tidewater Cold Freight · 6am Dispatch</h1>
+    <div class="when">Wed 14 Oct 2026 · 8-van fleet · one depot</div>
+  </header>
+
+  <section class="tiles" aria-label="Summary">
+    <div class="tile t-go"><div class="n">4</div><div class="l">Fit to go</div><div class="s">V1, V2, V6, V8</div></div>
+    <div class="tile t-bad"><div class="n">1</div><div class="l">Cargo out of range</div><div class="s">V5 at -11.4 °C</div></div>
+    <div class="tile t-warn"><div class="n">2</div><div class="l">Ready but can't go</div><div class="s">V4 service overdue · V7 no driver</div></div>
+    <div class="tile t-down"><div class="n">1</div><div class="l">In workshop</div><div class="s">V3 brake job · 08:00 booking uncovered</div></div>
+  </section>
+
+  <h2>Needs action before routes go out (by first booking)</h2>
+  <section class="actions">
+    <div class="act bad">
+      <div class="top"><span>V5 · Ines R. <span class="badge b-bad">CARGO TOO WARM</span></span><span class="time">Booking 06:45 · 45 min away</span></div>
+      <p>Trailer at <strong>-11.4 °C</strong>, which is 3.6 °C above the -15 °C upper limit. It is loaded and waiting on release.</p>
+      <p class="ask">Don't release until the trailer is back in range. This is the earliest booking, so it is the most likely to run late.</p>
+    </div>
+    <div class="act down">
+      <div class="top"><span>V3 · unassigned <span class="badge b-down">IN WORKSHOP</span></span><span class="time">Booking 08:00</span></div>
+      <p>Brake job in progress. The 08:00 booking has no van.</p>
+      <p class="ask">Needs another van or a rebooked slot.</p>
+    </div>
+    <div class="act warn">
+      <div class="top"><span>V4 · Joss K. <span class="badge b-warn">SERVICE OVERDUE</span></span><span class="time">Booking 08:15</span></div>
+      <p>Last serviced 11 weeks ago against a 10-week limit, so it is 1 week over. Trailer temp is fine at -16.8 °C.</p>
+      <p class="ask">Your call whether it runs. If it's held, Joss K. and the 08:15 booking need cover.</p>
+    </div>
+    <div class="act warn">
+      <div class="top"><span>V7 · no driver <span class="badge b-warn">DRIVER SICK</span></span><span class="time">Booking 09:30</span></div>
+      <p>The van is ready and trailer temp is OK at -15.6 °C, but the driver called in sick.</p>
+      <p class="ask">Needs a replacement driver before 09:30.</p>
+    </div>
+  </section>
+
+  <h2>All vans, in order of first booking</h2>
+  <table>
+    <thead>
+      <tr><th>Van</th><th>Call</th><th>Driver</th><th>First booking</th><th>Trailer temp (target -18 to -15 °C)</th><th>Last service (limit 10 wk)</th></tr>
+    </thead>
+    <tbody>
+      <tr class="r-bad">
+        <td class="van">V5</td>
+        <td><span class="badge b-bad">HOLD – TOO WARM</span><span class="sub">Loaded, waiting on release</span></td>
+        <td>Ines R.</td><td class="time">06:45</td>
+        <td><div class="temp"><span class="v">-11.4 °C</span><div class="scale out"><div class="band"></div><div class="mk" style="left:86%"></div></div><span class="over">OUT OF RANGE</span></div></td>
+        <td>4 weeks ago</td>
+      </tr>
+      <tr class="r-go">
+        <td class="van">V1</td>
+        <td><span class="badge b-go">GO</span><span class="sub">Ready</span></td>
+        <td>Marta L.</td><td class="time">07:30</td>
+        <td><div class="temp"><span class="v">-17.2 °C</span><div class="scale"><div class="band"></div><div class="mk" style="left:28%"></div></div></div></td>
+        <td>2 weeks ago</td>
+      </tr>
+      <tr class="r-go">
+        <td class="van">V2</td>
+        <td><span class="badge b-go">GO</span><span class="sub">Ready</span></td>
+        <td>Dev P.</td><td class="time">07:45</td>
+        <td><div class="temp"><span class="v">-16.4 °C</span><div class="scale"><div class="band"></div><div class="mk" style="left:36%"></div></div></div></td>
+        <td>5 weeks ago</td>
+      </tr>
+      <tr class="r-down">
+        <td class="van">V3</td>
+        <td><span class="badge b-down">DOWN</span><span class="sub">In workshop (brake job)</span></td>
+        <td>unassigned</td><td class="time">08:00</td>
+        <td>n/a</td>
+        <td>3 days ago</td>
+      </tr>
+      <tr class="r-warn">
+        <td class="van">V4</td>
+        <td><span class="badge b-warn">HOLD – SERVICE</span><span class="sub">Ready, but overdue</span></td>
+        <td>Joss K.</td><td class="time">08:15</td>
+        <td><div class="temp"><span class="v">-16.8 °C</span><div class="scale"><div class="band"></div><div class="mk" style="left:32%"></div></div></div></td>
+        <td><span class="over">11 weeks ago</span><span class="sub">1 week over limit</span></td>
+      </tr>
+      <tr class="r-go">
+        <td class="van">V6</td>
+        <td><span class="badge b-go">GO</span><span class="sub">Ready</span></td>
+        <td>Tomas B.</td><td class="time">09:00</td>
+        <td><div class="temp"><span class="v">-17.9 °C</span><div class="scale"><div class="band"></div><div class="mk" style="left:21%"></div></div></div></td>
+        <td>6 weeks ago</td>
+      </tr>
+      <tr class="r-warn">
+        <td class="van">V7</td>
+        <td><span class="badge b-warn">NO DRIVER</span><span class="sub">Ready</span></td>
+        <td>Driver called in sick</td><td class="time">09:30</td>
+        <td><div class="temp"><span class="v">-15.6 °C</span><div class="scale"><div class="band"></div><div class="mk" style="left:44%"></div></div></div></td>
+        <td>1 week ago</td>
+      </tr>
+      <tr class="r-go">
+        <td class="van">V8</td>
+        <td><span class="badge b-go">GO</span><span class="sub">Ready</span></td>
+        <td>Aiko S.</td><td class="time">10:00</td>
+        <td><div class="temp"><span class="v">-16.1 °C</span><div class="scale"><div class="band"></div><div class="mk" style="left:39%"></div></div></div></td>
+        <td>8 weeks ago</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="legend">Temp scale runs -20 to -10 °C. The green band is the -18 to -15 °C target and the marker is the current reading.</div>
+
+</div>
+</body>
+</html>

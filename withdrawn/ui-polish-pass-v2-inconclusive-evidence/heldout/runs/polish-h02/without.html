@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign the Waiver</title>
+<style>
+  :root {
+    --bg: #f3f1ed;
+    --card: #ffffff;
+    --text: #1d1d1b;
+    --muted: #5f5e5a;
+    --border: #bdb9b0;
+    --accent: #c2410c;
+    --accent-dark: #9a3412;
+    --error: #b91c1c;
+    --ok: #166534;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161614;
+      --card: #222220;
+      --text: #f4f2ee;
+      --muted: #b0ada5;
+      --border: #5a5852;
+      --accent: #f97316;
+      --accent-dark: #fb923c;
+      --error: #f87171;
+      --ok: #4ade80;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  form, .done {
+    width: 100%;
+    max-width: 480px;
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.12);
+  }
+  h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+  .lead { margin: 0 0 24px; color: var(--muted); font-size: 1rem; }
+  .field { margin-bottom: 20px; }
+  label.lbl { display: block; font-weight: 600; margin-bottom: 6px; }
+  .hint { display: block; color: var(--muted); font-size: .875rem; margin-top: 4px; }
+  input[type=text], input[type=email], input[type=date] {
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 14px;
+    font: inherit;
+    color: var(--text);
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+  }
+  input:focus-visible, button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  input[aria-invalid=true] { border-color: var(--error); }
+  .err { display: none; color: var(--error); font-size: .9rem; font-weight: 600; margin-top: 6px; }
+  .field.bad .err { display: block; }
+  .check {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .check input { width: 28px; height: 28px; flex: none; margin: 0; accent-color: var(--accent); }
+  .field.bad .check { border-color: var(--error); }
+  button {
+    width: 100%;
+    min-height: 56px;
+    font: inherit;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent-dark);
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  @media (prefers-color-scheme: dark) { button { color: #1a1a18; background: var(--accent); } }
+  button:hover { filter: brightness(1.08); }
+  button:disabled { opacity: .6; cursor: default; }
+  .done { text-align: center; }
+  .done[hidden], form[hidden] { display: none; }
+  .tick {
+    width: 64px; height: 64px; margin: 0 auto 12px;
+    border-radius: 50%; background: var(--ok); color: var(--card);
+    font-size: 36px; line-height: 64px;
+  }
+  #summary { display: none; color: var(--error); font-weight: 600; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<main>
+<form id="f" novalidate>
+  <h1>Sign the waiver</h1>
+  <p class="lead">Takes about a minute. Please fill this out before you climb.</p>
+  <div id="summary" role="alert"></div>
+
+  <div class="field" data-for="name">
+    <label class="lbl" for="name">Full name</label>
+    <input type="text" id="name" name="name" autocomplete="name" aria-describedby="name-err" required>
+    <div class="err" id="name-err">Please enter your full name.</div>
+  </div>
+
+  <div class="field" data-for="email">
+    <label class="lbl" for="email">Email</label>
+    <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" aria-describedby="email-hint email-err" required>
+    <span class="hint" id="email-hint">We'll send you a copy of your waiver.</span>
+    <div class="err" id="email-err">Please enter a valid email, like name@example.com.</div>
+  </div>
+
+  <div class="field" data-for="dob">
+    <label class="lbl" for="dob">Date of birth</label>
+    <input type="date" id="dob" name="dob" autocomplete="bday" aria-describedby="dob-err" required>
+    <div class="err" id="dob-err">Please enter a valid date of birth.</div>
+  </div>
+
+  <div class="field" data-for="agree">
+    <label class="check" for="agree">
+      <input type="checkbox" id="agree" name="agree" aria-describedby="agree-err">
+      <span>I have read and agree to the waiver.</span>
+    </label>
+    <div class="err" id="agree-err">You need to check this box to continue.</div>
+  </div>
+
+  <button type="submit" id="go">Submit waiver</button>
+</form>
+
+<section class="done" id="done" hidden aria-live="polite" tabindex="-1">
+  <div class="tick" aria-hidden="true">✓</div>
+  <h1>You're all set!</h1>
+  <p class="lead" id="doneMsg">Thanks. Check in at the front desk and have a great climb.</p>
+</section>
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById('f');
+  var summary = document.getElementById('summary');
+  var done = document.getElementById('done');
+  var ids = ['name', 'email', 'dob', 'agree'];
+
+  var todayStr = (function () {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  })();
+  document.getElementById('dob').max = todayStr;
+  document.getElementById('dob').min = '1900-01-01';
+
+  function valid(id) {
+    var el = document.getElementById(id);
+    var v = el.value.trim();
+    if (id === 'name') return v.length >= 2;
+    if (id === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+    if (id === 'dob') return /^\d{4}-\d{2}-\d{2}$/.test(v) && v <= todayStr && v >= '1900-01-01';
+    if (id === 'agree') return el.checked;
+  }
+
+  function mark(id) {
+    var ok = valid(id);
+    var el = document.getElementById(id);
+    el.closest('.field').classList.toggle('bad', !ok);
+    if (id !== 'agree') el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    return ok;
+  }
+
+  ids.forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('blur', function () { if (el.value || id === 'agree') mark(id); });
+    el.addEventListener('input', function () {
+      if (el.closest('.field').classList.contains('bad')) mark(id);
+    });
+    el.addEventListener('change', function () {
+      if (el.closest('.field').classList.contains('bad')) mark(id);
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var firstBad = null;
+    var count = 0;
+    ids.forEach(function (id) {
+      if (!mark(id)) {
+        count++;
+        if (!firstBad) firstBad = document.getElementById(id);
+      }
+    });
+    if (firstBad) {
+      summary.style.display = 'block';
+      summary.textContent = count === 1 ? 'One thing needs fixing below.' : count + ' things need fixing below.';
+      firstBad.focus();
+      return;
+    }
+    summary.style.display = 'none';
+    var first = document.getElementById('name').value.trim().split(/\s+/)[0];
+    document.getElementById('doneMsg').textContent =
+      'Thanks, ' + first + '. Check in at the front desk and have a great climb.';
+    form.hidden = true;
+    done.hidden = false;
+    done.focus();
+    window.scrollTo(0, 0);
+  });
+})();
+</script>
+</body>
+</html>

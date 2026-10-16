@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples – Water Quality Lab Portal</title>
+<style>
+  :root {
+    --bg: #f4f7f9; --card: #fff; --ink: #14262e; --muted: #5a6e77; --line: #dde5ea;
+    --accent: #0b6e8a; --accent-ink: #fff; --ok: #1b7a43; --ok-bg: #e6f4ec; --warn: #9a5b00; --warn-bg: #fff3dc;
+    --bad: #a12b2b; --bad-bg: #fbe9e9; --track: #d6e6ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1a20; --card: #15262e; --ink: #e5eef2; --muted: #92a9b3; --line: #24394343;
+      --line: #263c46; --accent: #4cb8d6; --accent-ink: #062029; --ok: #6fd39a; --ok-bg: #12301f;
+      --warn: #f0b758; --warn-bg: #33270f; --bad: #f08a8a; --bad-bg: #3a1a1a; --track: #21404c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  header { background: var(--card); border-bottom: 1px solid var(--line); padding: 14px 24px;
+    display: flex; justify-content: space-between; align-items: center; }
+  header strong { font-size: 16px; }
+  header span { color: var(--muted); font-size: 13px; }
+  main { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 22px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; margin-bottom: 22px; }
+  .row { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .row h2 { font-size: 16px; margin: 0 0 2px; }
+  .row p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  button, .btn { font: inherit; font-weight: 600; border-radius: 8px; padding: 9px 16px; cursor: pointer;
+    border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+  button:focus-visible, .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  button[disabled] { cursor: progress; opacity: .8; }
+  button.ghost { background: transparent; color: var(--accent); }
+  .spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent;
+    animation: r .8s linear infinite; display: none; }
+  .busy .spin { display: inline-block; }
+  @keyframes r { to { transform: rotate(360deg); } }
+
+  #status { margin-top: 16px; display: none; border-radius: 8px; padding: 12px 14px; }
+  #status.show { display: block; }
+  #status.working { background: var(--warn-bg); }
+  #status.done { background: var(--ok-bg); }
+  #status.error { background: var(--bad-bg); }
+  .line1 { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-weight: 600; }
+  .line1 .t { font-variant-numeric: tabular-nums; font-weight: 400; color: var(--muted); }
+  .bar { height: 6px; border-radius: 3px; background: var(--track); margin: 10px 0 8px; overflow: hidden; position: relative; }
+  .bar i { position: absolute; top: 0; bottom: 0; width: 35%; background: var(--accent); border-radius: 3px;
+    animation: slide 1.4s ease-in-out infinite; }
+  @keyframes slide { 0% { left: -35%; } 100% { left: 100%; } }
+  .hint { font-size: 13px; color: var(--muted); margin: 0; }
+  .actions { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  #status.done .bar, #status.error .bar { display: none; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  caption { text-align: left; font-weight: 600; font-size: 16px; padding-bottom: 10px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+  .pill.ok { background: var(--ok-bg); color: var(--ok); }
+  .pill.flag { background: var(--warn-bg); color: var(--warn); }
+  .tw { overflow-x: auto; }
+  @media (prefers-reduced-motion: reduce) { .bar i, .spin { animation-duration: 3s; } }
+</style>
+</head>
+<body>
+<header><strong>Riverbend Water Quality Lab</strong><span>Client portal</span></header>
+<main>
+  <h1>Samples</h1>
+  <p class="sub">2026 season · Upper Riverbend watershed</p>
+
+  <section class="card" aria-labelledby="exp-h">
+    <div class="row">
+      <div>
+        <h2 id="exp-h">Season report</h2>
+        <p>All results for the 2026 season as a single CSV file. Takes about 25 seconds to prepare.</p>
+      </div>
+      <button id="exportBtn" type="button" aria-describedby="status">
+        <span class="spin" aria-hidden="true"></span>
+        <span id="btnLabel">Export season report</span>
+      </button>
+    </div>
+
+    <div id="status" role="status" aria-live="polite">
+      <div class="line1"><span id="msg"></span><span class="t" id="time"></span></div>
+      <div class="bar" aria-hidden="true"><i></i></div>
+      <p class="hint" id="hint"></p>
+      <div class="actions" id="actions"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="tw">
+    <table>
+      <caption>Recent samples</caption>
+      <thead><tr>
+        <th>Sample ID</th><th>Site</th><th>Collected</th><th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Status</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var samples = [
+    ["WQ-26-0418", "Cedar Creek Intake", "2026-10-07", 7.4, 1.2, "ok"],
+    ["WQ-26-0417", "Mill Pond Outlet", "2026-10-07", 6.9, 3.8, "ok"],
+    ["WQ-26-0416", "North Fork Bridge", "2026-10-06", 8.1, 5.6, "flag"],
+    ["WQ-26-0415", "Cedar Creek Intake", "2026-10-05", 7.5, 1.0, "ok"],
+    ["WQ-26-0414", "Harlow Well #2", "2026-10-05", 7.1, 0.4, "ok"],
+    ["WQ-26-0413", "Mill Pond Outlet", "2026-10-03", 6.7, 4.4, "flag"]
+  ];
+  document.getElementById("rows").innerHTML = samples.map(function (s) {
+    return "<tr><td>" + s[0] + "</td><td>" + s[1] + "</td><td>" + s[2] + "</td><td class='num'>" + s[3].toFixed(1) +
+      "</td><td class='num'>" + s[4].toFixed(1) + "</td><td><span class='pill " + s[5] + "'>" +
+      (s[5] === "ok" ? "Passed" : "Review") + "</span></td></tr>";
+  }).join("");
+
+  var DURATION = 25000;
+  var btn = document.getElementById("exportBtn"), label = document.getElementById("btnLabel");
+  var box = document.getElementById("status"), msg = document.getElementById("msg"), time = document.getElementById("time");
+  var hint = document.getElementById("hint"), actions = document.getElementById("actions");
+  var tick, finish, start, blobUrl;
+
+  function setState(cls) { box.className = "show " + cls; }
+
+  function run() {
+    start = Date.now();
+    btn.disabled = true; btn.setAttribute("aria-disabled", "true");
+    btn.parentNode.parentNode.classList.add("busy");
+    label.textContent = "Exporting…";
+    setState("working");
+    msg.textContent = "Preparing your season report…";
+    hint.textContent = "This usually takes about 25 seconds. You can leave this tab open and keep browsing; the download link will appear here.";
+    actions.innerHTML = "";
+    var cancel = document.createElement("button");
+    cancel.type = "button"; cancel.className = "ghost"; cancel.textContent = "Cancel";
+    cancel.onclick = function () { stop(); reset(); setState("error"); msg.textContent = "Export cancelled.";
+      hint.textContent = "Nothing was downloaded. You can start again any time."; time.textContent = ""; };
+    actions.appendChild(cancel);
+    update();
+    tick = setInterval(update, 250);
+    finish = setTimeout(done, DURATION);
+  }
+
+  function update() {
+    var s = Math.floor((Date.now() - start) / 1000);
+    time.textContent = "Elapsed " + s + "s";
+    if (s > 35) hint.textContent = "Taking longer than usual. Still working; no need to restart.";
+  }
+
+  function stop() { clearInterval(tick); clearTimeout(finish); }
+
+  function reset() {
+    btn.disabled = false; btn.removeAttribute("aria-disabled");
+    btn.parentNode.parentNode.classList.remove("busy");
+    label.textContent = "Export season report";
+  }
+
+  function done() {
+    stop(); reset();
+    var csv = "sample_id,site,collected,ph,turbidity_ntu,status\n" + samples.map(function (s) {
+      return [s[0], '"' + s[1] + '"', s[2], s[3], s[4], s[5] === "ok" ? "passed" : "review"].join(",");
+    }).join("\n") + "\n";
+    if (blobUrl) URL.revokeObjectURL(blobUrl);
+    blobUrl = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+    var secs = Math.round((Date.now() - start) / 1000);
+    setState("done");
+    msg.textContent = "Your report is ready.";
+    time.textContent = "Took " + secs + "s";
+    hint.textContent = "File: season-report-2026.csv";
+    actions.innerHTML = "";
+    var a = document.createElement("a");
+    a.className = "btn"; a.href = blobUrl; a.download = "season-report-2026.csv"; a.textContent = "Download report";
+    actions.appendChild(a);
+    a.focus();
+  }
+
+  btn.addEventListener("click", function () { if (!btn.disabled) run(); });
+})();
+</script>
+</body>
+</html>

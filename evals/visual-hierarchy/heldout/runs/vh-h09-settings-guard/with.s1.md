@@ -1,23 +1,29 @@
-The layout mostly holds. The order is clear, the steps between levels are visible, and the page has no decoration without a job. Leave the type scale, the dividers, the section spacing and the no-icons, no-cards approach as they are. These are the changes I'd make, most important first:
+The layout mostly holds, so I wouldn't redesign it. The order is clear: title, then section headings, then setting names, then explanations, with one filled button as the only action. Dropping icons, shadows and cards suits a page that's just a list of toggles. Here are the changes I'd make, most important first.
 
 1. **Cap the content width.**
-   - You didn't mention a max width. If rows stretch across a wide screen, the switch ends up far from the setting name, and the eye loses its row.
-   - Fix: limit the content column to about 640–720px, with the switch at its right edge. Left-align the title, sections and button to that same column.
+   - **Problem:** You didn't mention a max width. On a wide screen the switch sits far from its setting name, and the eye loses the row.
+   - **Fix:** Cap the content column at roughly 640–720px, with the switch at its right edge. The title, headings, rows and Save button then share one left edge.
 
-2. **Make sure Save still stands out when the page is mostly teal.**
-   - Teal is reserved for switches and the button, which is good. But if most defaults are "on", the page will have many teal switches and the button won't pop.
-   - Fix: check this by squinting at a realistic state. The solid, larger button should win. If it doesn't, use a darker teal for the button or increase its padding. Don't add anything else to it.
+2. **Make sure Save is visible.**
+   - **Problem:** It sits at the bottom, so on a long page it can be below the fold. Users may flip switches and never see it.
+   - **Fix:** Keep it where it is but make it sticky at the bottom of the viewport, or confirm with the developer that it's always reachable. If switches save instantly instead, drop the button.
 
-3. **Don't rely on color alone for on and off.**
-   - Teal versus grey can look the same in grayscale or for color-blind users.
-   - Fix: the knob position (left or right) must carry the state. Each switch also needs an accessible name and state, taken from the setting name.
+3. **Keep Save the clear primary when many switches are on.**
+   - **Problem:** Teal is used for both on-switches and Save. With a dozen switches on, teal covers more area than the one button.
+   - **Fix:** This is fine as long as Save stays the largest, solid teal shape on the page. Don't let switches grow beyond the standard size. I wouldn't add a second color.
 
-4. **Check the grey text contrast.**
-   - Grey 14px text is the usual place for contrast to fail, and it's what separates the explanation from the setting name.
-   - Fix: use a darker grey, not a lighter weight. It should clear 4.5:1 against white. The same applies to the description under the page title.
+4. **Check the weakest step: 18px semibold heading over 16px regular row names.**
+   - **Problem:** The size gap is small. The semibold weight and the generous space above each section carry the separation.
+   - **Fix:** This works only if that section spacing stays clearly larger than the row spacing. If the developer tightens spacing, bump headings to 20px.
 
-5. **Keep Save reachable and 'Reset to defaults' safe.**
-   - Save sits at the bottom of a long page. Users may toggle something and never scroll down to it.
-   - Fix: make Save visible once something changes, for example in a sticky footer that keeps the same left alignment. Give 'Reset to defaults' a clear gap from the button and a confirm step or an undo. It stays a plain link, because it shouldn't compete with Save.
+5. **Add a second cue for the switch states.**
+   - **Problem:** Teal versus grey is a color-only difference.
+   - **Fix:** The knob position (left or right) already provides a second cue, so keep it. Make sure the grey off-track is dark enough to be visible against white (at least 3:1 contrast), and that the grey 14px explanations clear 4.5:1. Light greys are the usual failure here.
 
-Two assumptions: I took the 18px headings to be the right size for settings groups, since the 16px regular rows below them carry the page. I also assumed every section has several rows. If "Weekly summary" has only one, the divider lines and generous spacing may be more than it needs.
+The rest should stay as is:
+- The thin row dividers.
+- The text-only "Reset to defaults" link as the tertiary action.
+- The one-line grey page description.
+- The white background.
+
+If "Reset to defaults" turns out to be hard to spot as clickable, underline it on hover rather than making it teal.

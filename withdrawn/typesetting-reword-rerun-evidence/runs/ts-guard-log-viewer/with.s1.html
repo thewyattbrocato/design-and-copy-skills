@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy #4821 · Logs</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --panel: #141920;
+    --line: #232a34;
+    --text: #d8dee6;
+    --dim: #8a95a3;
+    --info: #6cb6ff;
+    --info-bg: rgba(108,182,255,.12);
+    --warn: #f0b429;
+    --warn-bg: rgba(240,180,41,.13);
+    --err: #ff7b72;
+    --err-bg: rgba(255,123,114,.15);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1760px; margin: 0 auto; padding: 28px 32px 48px; }
+
+  header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; margin-bottom: 20px; }
+  h1 { margin: 0 0 6px; font-size: 22px; font-weight: 650; letter-spacing: -.01em; }
+  .meta { margin: 0; color: var(--dim); font-size: 14px; }
+  .meta b { color: var(--text); font-weight: 550; }
+  .status { display: inline-flex; align-items: center; gap: 6px; color: var(--err); font-weight: 600; }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+
+  .filters { display: flex; gap: 8px; }
+  .filters button {
+    font: inherit; font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border-radius: 6px; cursor: pointer;
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--line);
+  }
+  .filters button:hover { border-color: #3a4554; }
+  .filters button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  .filters button[aria-pressed="false"] { opacity: .5; text-decoration: line-through; }
+  .filters .n { font-family: var(--mono); font-weight: 500; color: var(--dim); }
+  .filters .dot { width: 8px; height: 8px; border-radius: 2px; }
+
+  .log {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 11.5em 5.5em 11em minmax(0, 1fr);
+    column-gap: 20px;
+    align-items: baseline;
+    padding: 7px 18px 7px 15px;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: rgba(255,255,255,.03); }
+  .row.WARN  { border-left-color: var(--warn); background: var(--warn-bg); }
+  .row.ERROR { border-left-color: var(--err);  background: var(--err-bg); }
+  .row.WARN:hover, .row.ERROR:hover { filter: brightness(1.15); }
+
+  .ts { color: var(--dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ts b { color: var(--text); font-weight: 400; }
+
+  .lvl { font-weight: 700; font-size: 12px; letter-spacing: .06em; }
+  .lvl span { display: inline-block; min-width: 4.8em; text-align: center; padding: 0 6px; border-radius: 4px; }
+  .INFO  .lvl span { color: var(--info); background: var(--info-bg); }
+  .WARN  .lvl span { color: var(--warn); background: rgba(240,180,41,.18); }
+  .ERROR .lvl span { color: #ffb3ad; background: rgba(255,123,114,.28); }
+
+  .svc { color: #b6a6ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; word-break: break-word; max-width: 130ch; }
+  .ERROR .msg { color: #ffd9d6; }
+  .msg a { color: var(--info); text-decoration: underline; text-underline-offset: 2px; }
+  .msg .hint { color: var(--dim); }
+
+  footer { margin-top: 14px; color: var(--dim); font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .wrap { padding: 20px 14px 32px; }
+    .row { grid-template-columns: 1fr; row-gap: 2px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Deploy #4821 · web-api@3.18.2</h1>
+      <p class="meta"><span class="status">Failed, rolled back</span> &nbsp;·&nbsp; <b>production</b> / prod-us-east-1 &nbsp;·&nbsp; 2026-10-15 &nbsp;·&nbsp; 14:02:11 – 14:11:47 UTC</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter by level">
+      <button type="button" data-level="INFO" aria-pressed="true"><span class="dot" style="background:var(--info)"></span>INFO <span class="n" data-count="INFO"></span></button>
+      <button type="button" data-level="WARN" aria-pressed="true"><span class="dot" style="background:var(--warn)"></span>WARN <span class="n" data-count="WARN"></span></button>
+      <button type="button" data-level="ERROR" aria-pressed="true"><span class="dot" style="background:var(--err)"></span>ERROR <span class="n" data-count="ERROR"></span></button>
+    </div>
+  </header>
+
+  <main class="log" id="log" aria-label="Deploy log">
+    <div class="row INFO"><span class="ts">10-15 <b>14:02:11.482</b></span><span class="lvl"><span>INFO</span></span><span class="svc">pipeline-ctrl</span><span class="msg">Deploy #4821 started for release web-api@3.18.2 to production (triggered by merge of PR #9172 on main)</span></div>
+    <div class="row INFO"><span class="ts">10-15 <b>14:02:13.907</b></span><span class="lvl"><span>INFO</span></span><span class="svc">build-runner</span><span class="msg">Docker image built in 48.2s: registry.internal.example.com/web-api:3.18.2 (sha256:9f2c1a7be40d)</span></div>
+    <div class="row INFO"><span class="ts">10-15 <b>14:03:02.115</b></span><span class="lvl"><span>INFO</span></span><span class="svc">artifact-store</span><span class="msg">Pushed 14 layers (212 MB) to registry.internal.example.com/web-api:3.18.2</span></div>
+    <div class="row INFO"><span class="ts">10-15 <b>14:09:14.640</b></span><span class="lvl"><span>INFO</span></span><span class="svc">test-runner</span><span class="msg">Integration suite passed: 1,284 tests, 0 failed, 3 skipped in 6m 12s</span></div>
+    <div class="row WARN"><span class="ts">10-15 <b>14:09:15.021</b></span><span class="lvl"><span>WARN</span></span><span class="svc">test-runner</span><span class="msg">Flaky test detected: checkout.payment.retry_on_timeout failed 1 of 3 attempts; see <a href="#">https://ci.example.com/jobs/88213/tests?filter=flaky&amp;suite=integration&amp;run=4821</a> for full history and quarantine status</span></div>
+    <div class="row INFO"><span class="ts">10-15 <b>14:09:31.774</b></span><span class="lvl"><span>INFO</span></span><span class="svc">k8s-deployer</span><span class="msg">Applying deploy/prod/web-api.yaml to cluster prod-us-east-1, namespace=web, strategy=RollingUpdate maxSurge=25% maxUnavailable=0</span></div>
+    <div class="row INFO"><span class="ts">10-15 <b>14:09:48.230</b></span><span class="lvl"><span>INFO</span></span><span class="svc">k8s-deployer</span><span class="msg">Rollout progress: 1/6 new pods ready, 5/6 old pods serving traffic</span></div>
+    <div class="row WARN"><span class="ts">10-15 <b>14:10:03.918</b></span><span class="lvl"><span>WARN</span></span><span class="svc">healthcheck</span><span class="msg">Readiness probe slow for pod web-api-7d9f8b6c5-x2k4q: GET /healthz took 2.8s (threshold 1.0s)</span></div>
+    <div class="row ERROR"><span class="ts">10-15 <b>14:10:21.346</b></span><span class="lvl"><span>ERROR</span></span><span class="svc">healthcheck</span><span class="msg">Readiness probe failed for pod web-api-7d9f8b6c5-m8t9z: connect ECONNREFUSED 10.42.7.19:8080 after 3 attempts</span></div>
+    <div class="row ERROR"><span class="ts">10-15 <b>14:10:22.052</b></span><span class="lvl"><span>ERROR</span></span><span class="svc">config-service</span><span class="msg">Failed to resolve secret ref vault://prod/web-api/db-credentials#password: 403 permission denied <span class="hint">at SecretResolver.fetch (secret-resolver.js:142:19) at async ConfigLoader.load (config-loader.js:88:5) at async bootstrap (server.js:31:3)</span></span></div>
+    <div class="row WARN"><span class="ts">10-15 <b>14:10:44.689</b></span><span class="lvl"><span>WARN</span></span><span class="svc">k8s-deployer</span><span class="msg">Pod web-api-7d9f8b6c5-m8t9z restarted 2 times (CrashLoopBackOff), next backoff 40s</span></div>
+    <div class="row INFO"><span class="ts">10-15 <b>14:11:05.203</b></span><span class="lvl"><span>INFO</span></span><span class="svc">pipeline-ctrl</span><span class="msg">Automatic rollback initiated: reverting web-api to 3.18.1 (revision 212)</span></div>
+    <div class="row INFO"><span class="ts">10-15 <b>14:11:39.871</b></span><span class="lvl"><span>INFO</span></span><span class="svc">k8s-deployer</span><span class="msg">Rollback complete: 6/6 pods ready on web-api@3.18.1</span></div>
+    <div class="row ERROR"><span class="ts">10-15 <b>14:11:47.310</b></span><span class="lvl"><span>ERROR</span></span><span class="svc">pipeline-ctrl</span><span class="msg">Deploy #4821 failed: stage "rollout" exited with code 1. Runbook: <a href="#">https://wiki.example.com/runbooks/deploy/rollout-failure?service=web-api&amp;env=production&amp;incident=INC-20931</a></span></div>
+  </main>
+
+  <footer><span id="shown"></span></footer>
+</div>
+
+<script>
+  (function () {
+    var rows = document.querySelectorAll('.row');
+    var buttons = document.querySelectorAll('.filters button');
+    var counts = {INFO: 0, WARN: 0, ERROR: 0};
+    rows.forEach(function (r) { counts[r.classList.contains('ERROR') ? 'ERROR' : r.classList.contains('WARN') ? 'WARN' : 'INFO']++; });
+    Object.keys(counts).forEach(function (k) {
+      document.querySelector('[data-count="' + k + '"]').textContent = counts[k];
+    });
+    function update() {
+      var on = {}, shown = 0;
+      buttons.forEach(function (b) { on[b.dataset.level] = b.getAttribute('aria-pressed') === 'true'; });
+      rows.forEach(function (r) {
+        var lvl = r.classList.contains('ERROR') ? 'ERROR' : r.classList.contains('WARN') ? 'WARN' : 'INFO';
+        r.hidden = !on[lvl];
+        if (on[lvl]) shown++;
+      });
+      document.getElementById('shown').textContent = 'Showing ' + shown + ' of ' + rows.length + ' lines';
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+        update();
+      });
+    });
+    update();
+  })();
+</script>
+</body>
+</html>

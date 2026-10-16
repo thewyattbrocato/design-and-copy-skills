@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy log · deploy-4821</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0f1216;
+    --panel: #151a20;
+    --line: #232a33;
+    --text: #d9e0e8;
+    --muted: #8f9aa7;
+    --info: #86bbff;
+    --warn: #f2bb4c;
+    --err: #ff8279;
+    --warn-bg: rgba(242, 187, 76, 0.07);
+    --err-bg: rgba(255, 130, 121, 0.10);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1840px; margin: 0 auto; padding: 28px 32px 48px; }
+
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; margin-bottom: 18px; }
+  h1 { margin: 0; font-size: 20px; font-weight: 650; letter-spacing: -0.01em; }
+  .meta { color: var(--muted); font-family: var(--mono); font-size: 13px; }
+  .status {
+    font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+    color: var(--err); border: 1px solid var(--err); border-radius: 4px; padding: 1px 8px;
+  }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .toolbar button {
+    font: 600 13px var(--mono);
+    color: var(--text); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 6px 12px; cursor: pointer;
+  }
+  .toolbar button:hover { border-color: var(--muted); }
+  .toolbar button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  .toolbar button[aria-pressed="false"] { color: var(--muted); background: transparent; text-decoration: line-through; }
+  .toolbar .n { color: var(--muted); font-weight: 400; margin-left: 6px; }
+
+  .log {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 7.5em 5.5em 11em minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 6px 20px 6px 17px;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: rgba(255, 255, 255, 0.035); }
+  .row.warn { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.error { background: var(--err-bg); border-left-color: var(--err); }
+  .row[hidden] { display: none; }
+
+  .ts { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .lvl { font-weight: 700; letter-spacing: 0.04em; }
+  .info .lvl { color: var(--info); }
+  .warn .lvl { color: var(--warn); }
+  .error .lvl { color: var(--err); }
+  .svc { color: #b6c2cf; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; min-width: 0; }
+  .error .msg { color: #ffd9d5; }
+
+  .colhead {
+    display: grid;
+    grid-template-columns: 7.5em 5.5em 11em minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 8px 20px 8px 20px;
+    background: #10151a;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font: 600 12px var(--sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 16px; }
+    .colhead { display: none; }
+    .row { grid-template-columns: auto auto 1fr; column-gap: 12px; }
+    .msg { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Deploy pipeline · deploy-4821</h1>
+    <span class="status">FAILED · ROLLED BACK</span>
+    <span class="meta">2026-10-15 · main @ 9f3c2ab · production / us-east-1</span>
+  </header>
+
+  <div class="toolbar" id="filters" role="group" aria-label="Filter by level">
+    <button type="button" data-level="info" aria-pressed="true">INFO<span class="n"></span></button>
+    <button type="button" data-level="warn" aria-pressed="true">WARN<span class="n"></span></button>
+    <button type="button" data-level="error" aria-pressed="true">ERROR<span class="n"></span></button>
+  </div>
+
+  <div class="log" role="table" aria-label="Deploy log">
+    <div class="colhead" role="row">
+      <span role="columnheader">Time (UTC)</span>
+      <span role="columnheader">Level</span>
+      <span role="columnheader">Service</span>
+      <span role="columnheader">Message</span>
+    </div>
+
+    <div class="row info" role="row"><span class="ts" role="cell">14:02:11.384</span><span class="lvl" role="cell">INFO</span><span class="svc" role="cell">build-runner</span><span class="msg" role="cell">Pipeline deploy-4821 started for commit 9f3c2ab on main (triggered by merge of PR #2291 "Retry idempotent charge requests")</span></div>
+    <div class="row info" role="row"><span class="ts" role="cell">14:02:13.902</span><span class="lvl" role="cell">INFO</span><span class="svc" role="cell">git-fetch</span><span class="msg" role="cell">Checked out 9f3c2ab; 37 files changed, 812 insertions(+), 140 deletions(-)</span></div>
+    <div class="row info" role="row"><span class="ts" role="cell">14:03:48.117</span><span class="lvl" role="cell">INFO</span><span class="svc" role="cell">artifact-store</span><span class="msg" role="cell">Pushed image registry.internal.example.com/payments/api:2026.10.15-9f3c2ab (412 MB) digest=sha256:7d1e9c0b4a5f3e2d8c6b1a0f9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d in 14.2s</span></div>
+    <div class="row info" role="row"><span class="ts" role="cell">14:05:27.640</span><span class="lvl" role="cell">INFO</span><span class="svc" role="cell">test-runner</span><span class="msg" role="cell">1,284 tests passed, 0 failed, 12 skipped in 96.4s</span></div>
+    <div class="row warn" role="row"><span class="ts" role="cell">14:05:27.655</span><span class="lvl" role="cell">WARN</span><span class="svc" role="cell">test-runner</span><span class="msg" role="cell">Flaky test: CheckoutFlowTest.retriesOnTimeout passed only on attempt 3 of 3; history for the last 30 runs at https://ci.example.com/runs/4821/tests/CheckoutFlowTest.retriesOnTimeout/history</span></div>
+    <div class="row info" role="row"><span class="ts" role="cell">14:05:41.208</span><span class="lvl" role="cell">INFO</span><span class="svc" role="cell">config-service</span><span class="msg" role="cell">Resolved 63 config keys for env=production; 2 overridden by feature flags</span></div>
+    <div class="row info" role="row"><span class="ts" role="cell">14:05:52.771</span><span class="lvl" role="cell">INFO</span><span class="svc" role="cell">db-migrator</span><span class="msg" role="cell">Applied migration 20261015_add_charge_idempotency_key (0.84s, 0 rows locked)</span></div>
+    <div class="row info" role="row"><span class="ts" role="cell">14:06:04.019</span><span class="lvl" role="cell">INFO</span><span class="svc" role="cell">k8s-deployer</span><span class="msg" role="cell">Rolling out payments-api to namespace payments-prod (strategy=RollingUpdate, maxSurge=2, maxUnavailable=0)</span></div>
+    <div class="row warn" role="row"><span class="ts" role="cell">14:07:34.532</span><span class="lvl" role="cell">WARN</span><span class="svc" role="cell">k8s-deployer</span><span class="msg" role="cell">Rollout slow: 2/6 replicas ready after 90s (progressDeadlineSeconds=300)</span></div>
+    <div class="row error" role="row"><span class="ts" role="cell">14:07:49.246</span><span class="lvl" role="cell">ERROR</span><span class="svc" role="cell">k8s-deployer</span><span class="msg" role="cell">Readiness probe failed for pod payments-api-7c9d8b6f5-x2k4q: GET http://10.42.3.17:8080/healthz returned 503 Service Unavailable (attempt 3 of 5)</span></div>
+    <div class="row error" role="row"><span class="ts" role="cell">14:07:51.003</span><span class="lvl" role="cell">ERROR</span><span class="svc" role="cell">payments-api</span><span class="msg" role="cell">Startup failed: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696) ... hint: check DB_HOST and the pgbouncer pool_size limit</span></div>
+    <div class="row warn" role="row"><span class="ts" role="cell">14:08:12.480</span><span class="lvl" role="cell">WARN</span><span class="svc" role="cell">db-migrator</span><span class="msg" role="cell">Connection count on payments-db-primary at 497/500; new pods may be refused until old replicas drain</span></div>
+    <div class="row info" role="row"><span class="ts" role="cell">14:08:30.915</span><span class="lvl" role="cell">INFO</span><span class="svc" role="cell">k8s-deployer</span><span class="msg" role="cell">Health threshold breached; rolling back to revision 118 (image payments/api:2026.10.14-c41d07e)</span></div>
+    <div class="row error" role="row"><span class="ts" role="cell">14:09:02.337</span><span class="lvl" role="cell">ERROR</span><span class="svc" role="cell">notifier</span><span class="msg" role="cell">Deploy deploy-4821 failed and was rolled back; paged #payments-oncall, runbook: https://wiki.example.com/runbooks/payments/db-connection-exhaustion?from=deploy-4821</span></div>
+  </div>
+</div>
+
+<script>
+  const rows = document.querySelectorAll('.row');
+  const buttons = document.querySelectorAll('#filters button');
+  buttons.forEach(b => {
+    const lvl = b.dataset.level;
+    b.querySelector('.n').textContent = document.querySelectorAll('.row.' + lvl).length;
+    b.addEventListener('click', () => {
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      const on = new Set([...buttons].filter(x => x.getAttribute('aria-pressed') === 'true').map(x => x.dataset.level));
+      rows.forEach(r => { r.hidden = ![...on].some(l => r.classList.contains(l)); });
+    });
+  });
+</script>
+</body>
+</html>

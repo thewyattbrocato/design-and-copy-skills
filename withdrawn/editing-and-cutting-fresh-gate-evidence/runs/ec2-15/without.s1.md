@@ -1,0 +1,1 @@
+Hi everyone! Thanks so much for helping with the river cleanup. We're meeting at the boat ramp at 8 AM this Saturday. Please bring a pair of gloves, and we'll have the rest covered. Can't wait to see you there! 🌿

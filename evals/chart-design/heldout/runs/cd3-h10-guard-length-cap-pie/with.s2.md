@@ -1,0 +1,1 @@
+A pie chart is fine here: there are only three categories, and the shares are different enough (52/31/17) to tell apart. If you want readers to compare exact values more easily, a horizontal bar chart sorted from largest to smallest works a bit better. Whichever you pick, label the percentages directly on the slices or bars.

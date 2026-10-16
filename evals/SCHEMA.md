@@ -122,3 +122,61 @@ above changes for it. Protocol 2 adds:
 - `secondary` (optional, top level): `{summary, verdicts}` for the same suite run by a weaker generator
   (`--secondary-model`). Its summary has `model`, `samples` and the same tallies and `loaded` block as the primary
   one, and no `gate`; it is reported and never decides anything.
+
+## Activation files
+
+Every skill under `skills/` and `copy-skills/` also has two files directly in `evals/<skill>/` (not inside a suite):
+`activation.json`, the requests, and `activation-results.json`, what a model picked. They belong to the routing check
+described in [README.md](README.md#activation-check). `scripts/validate_evals.py` checks their shape and
+`scripts/activation_summary.py --check` requires `activation.json` for every skill.
+
+### activation.json
+
+```json
+{
+  "should_load": ["Six requests the skill is meant to be picked for."],
+  "should_not_load": ["Four requests it should stay out of."]
+}
+```
+
+- `should_load`: exactly 6 realistic requests, phrased the way people type them: some direct, some indirect, some
+  terse. They must not name the skill and must not repeat a quoted phrase of its description (a phrase of three or
+  more words may not appear inside a request either).
+- `should_not_load`: exactly 4 requests. Mostly near misses that belong to a sibling skill or to the description's
+  not-for list, plus one with no overlap at all.
+- Each request is a non-empty string of at most 400 characters. A request appears once across all files.
+
+### activation-results.json
+
+Written by `scripts/run_activation.py`. One model call per request, with only each skill's name and description shown.
+
+```json
+{
+  "skill": "chart-design",
+  "model": "haiku",
+  "model_id": "claude-haiku-5-5",
+  "date": "2026-10-15",
+  "catalog_size": 30,
+  "catalog_hash": "11174cb74f681669",
+  "should_load": {
+    "total": 6, "picked": 6, "recall": 1.0,
+    "results": [{"prompt": "...", "picked": "chart-design", "correct": true}]
+  },
+  "should_not_load": {
+    "total": 4, "false_picks": 0, "false_pick_rate": 0.0,
+    "results": [{"prompt": "...", "picked": "data-tables", "false_pick": false}]
+  }
+}
+```
+
+- `model`: the model asked (`haiku` by default). `model_id` (optional): the id the CLI resolved it to. `date`: YYYY-MM-DD.
+- `catalog_size` and `catalog_hash`: how many skills were shown and a hash of their names and descriptions. The
+  validator warns, and does not fail, when the descriptions have changed since (rerun the script to refresh).
+- `results` holds one record per request, in the order of `activation.json`, and `prompt` repeats the request. `picked`
+  is the skill the model chose, or `null` when it chose none (or named no listed skill after three asks). For
+  `should_load`, `correct` is true when `picked` is this skill; for `should_not_load`, `false_pick` is true when `picked`
+  is this skill. The other picks show which skill took the request instead.
+- `picked`, `recall`, `false_picks` and `false_pick_rate` are recomputed by the validator from the records, and every
+  `picked` name must be a current skill.
+
+`evals/activation-summary.md` is generated from these files by `scripts/activation_summary.py`.

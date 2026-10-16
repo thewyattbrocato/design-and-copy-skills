@@ -1,0 +1,1 @@
+Sort by score, highest first, so the printout reads as a ranking. Put the title and student first and the score last (or add a rank column), and break ties by title or student name so the order is stable.

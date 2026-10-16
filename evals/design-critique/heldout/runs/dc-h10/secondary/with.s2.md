@@ -1,24 +1,21 @@
-Based on your description, the main problem is the gold on white. The hairlines and the tiny leaf will struggle on all three uses.
+I can only judge from your description, so treat this as a read on the concept, not a visual review. Still, the description points to a few problems you can check.
 
-**1. The gold has too little contrast on white (the biggest issue)**
-`#c9a227` on white is about **2.4:1**. WCAG asks for 4.5:1 for text and 3:1 for graphics, so this fails both. Thin strokes make it worse, because they carry less ink and look even paler. On a sign it will wash out in daylight, and on a cup it will look faded.
+**The biggest risk is the 32px favicon.** Very fine hairlines and a tiny leaf will not survive at 32px. Strokes will either disappear or blur into a gold smear, and the leaf will vanish. The favicon will probably need its own mark, such as a single "P" monogram, a simplified leaf, or the "i" with the leaf, drawn with heavier strokes. Test it by exporting at 32px and at 16px and looking at it on a browser tab.
 
-- Darken the gold for light backgrounds. `#8a6d1a` is about **4.9:1** on white and still reads as gold.
-- Keep `#c9a227` for dark backgrounds. Gold on deep green, espresso brown, or charcoal is where that brightness works, and it looks rich there.
+**The gold on white is light.** #c9a227 against white is about 2.4:1 contrast. That is below the 3:1 minimum for large text under WCAG, and hairlines make it worse. On a shop sign seen from across the street, a thin light gold script may be hard to read. Consider a deeper gold or bronze for the main logo (something around #8a6d1a to #a07c24 would likely reach 3:1 or better), and keep the lighter gold for decorative accents only if you need them.
 
-**2. The hairlines won't survive the cup or the favicon**
-- **Paper cups:** Hairlines can fill in with ink spread or break up in print. Aim for a minimum stroke of roughly 0.5–0.75 pt for print, and test at actual size. If the cups are gold foil or metallic ink, very fine lines are the first thing to fail.
-- **32px favicon:** A script wordmark cannot be read at that size, and the leaf will disappear. Make a separate icon instead: a monogram ("P" or "PT"), or the leaf alone, with strokes thick enough to hold at 16–32px. Test it at 16px too, since browser tabs are often that small.
+**Paper cups will change the thin strokes.** Printing on cups, especially kraft or textured stock, causes ink spread and dot gain. Hairlines often fill in or break up. Ask your printer for a proof on the actual cup stock before committing. Gold ink or foil is also usually a special-print cost, so confirm the budget.
 
-**3. The leaf above the "i" is the weakest detail**
-A tiny leaf is the first thing to disappear at small sizes or in print. Make it larger (roughly the cap height of the x-height area), or drop it from the small-format versions entirely. Keeping the leaf in the favicon monogram is an option.
+**The leaf above the "i" is the most fragile detail.** At small sizes it will read as a speck or a stray mark. Make it bigger relative to the letters, or make it the one bold element, or drop it from the small-size versions.
 
-**4. The shop sign**
-The sign works if it is big and gold-on-dark, or if it's a darker gold and the strokes are not hairline. At a distance, a sign with hairline script on white will read as blank. Check the sign at the distance people will see it, from across the street, not at arm's length.
+**Hairline script is hard to reproduce.** Thin connecting strokes can break when a logo is shrunk, embossed, laser-etched into wood or a sign, or reproduced in one color on a fax or stamp. Test it in one flat color and at a few sizes.
 
-**What I'd do, in order:**
-1. Pick a deep gold for light backgrounds and keep the bright gold for dark ones.
-2. Thicken the strokes for print and the sign, so the minimum stroke is about 0.5 pt.
-3. Make a simplified monogram for the favicon and small uses.
+**What's working:** Gold on white suggests a refined, calm tea-house tone, and a script wordmark fits a name like Pemberly. The tiny leaf is a nice, specific touch if it can survive scaling.
 
-I'm working from your description, so I can't see the letterforms, spacing, or how the leaf sits. If you can paste the SVG source, or tell me the typeface name and stroke width, I can give more specific notes. If you can get a PNG at small and large sizes later, I can also check how it holds up.
+**Suggested next steps:**
+1. Make a 2–3 px minimum stroke rule and check the design against it.
+2. Build a simplified mark for the favicon and social avatars.
+3. Test the main logo in a darker gold, and in one flat color.
+4. Get a physical proof on a cup before printing a run.
+
+If you can tell me the stroke width in pixels, the letter height, and roughly how the leaf sits, I can give more specific feedback. You can also describe the letter shapes, or share the SVG source or a text description of the paths if the file is code.

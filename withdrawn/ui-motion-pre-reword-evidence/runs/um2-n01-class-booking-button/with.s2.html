@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnhouse – Saturday Wheel-Throwing</title>
+<style>
+  :root {
+    --clay: #b5532c;
+    --clay-dark: #9a4422;
+    --ink: #2b2420;
+    --muted: #7a6e66;
+    --paper: #faf6f1;
+    --card: #ffffff;
+    --line: #e8dfd5;
+    --ok: #2f6b4f;
+    --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .card {
+    width: 100%;
+    max-width: 360px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(43, 36, 32, 0.06), 0 8px 24px rgba(43, 36, 32, 0.06);
+  }
+  .brand {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clay);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  h1 { font-size: 22px; line-height: 1.25; margin: 0 0 16px; }
+  .when { margin: 0 0 4px; font-size: 15px; }
+  .when-sub { margin: 0 0 20px; font-size: 14px; color: var(--muted); }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .price { font-size: 26px; font-weight: 700; }
+  .price small { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .seats { font-size: 14px; color: var(--muted); text-align: right; }
+  .seats strong {
+    display: inline-block;
+    color: var(--ink);
+    font-size: 16px;
+    font-variant-numeric: tabular-nums;
+  }
+  .seats strong.tick { animation: tick 200ms var(--ease-out); }
+  @keyframes tick {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .dots { display: flex; gap: 5px; margin: 0 0 20px; }
+  .dots i {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--line);
+    transition: background-color 200ms var(--ease-out);
+  }
+  .dots i.taken { background: var(--clay); opacity: 0.35; }
+  .dots i.mine { background: var(--ok); opacity: 1; }
+
+  .reserve {
+    position: relative;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--clay);
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 100ms var(--ease-out), background-color 150ms var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .reserve:hover { background: var(--clay-dark); }
+  .reserve:active { transform: scale(0.98); }
+  .reserve:focus-visible { outline: 3px solid #e9a98c; outline-offset: 2px; }
+  .reserve[aria-busy="true"] { cursor: progress; background: var(--clay-dark); }
+  .reserve.done { background: var(--ok); cursor: default; }
+  .reserve.soldout { background: #cfc5ba; cursor: not-allowed; }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    display: none;
+    animation: spin 700ms linear infinite;
+  }
+  /* label responds instantly; spinner joins only if the wait runs on */
+  .reserve[aria-busy="true"] .spinner {
+    display: inline-block;
+    opacity: 0;
+    animation: spin 700ms linear infinite, appear 200ms 500ms forwards;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes appear { to { opacity: 1; } }
+
+  .check { display: none; width: 18px; height: 18px; }
+  .done .check { display: inline-block; animation: tick 200ms var(--ease-out); }
+
+  .status {
+    min-height: 20px;
+    margin: 12px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .status button {
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: var(--clay);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .status.error { color: #a12b2b; }
+  .status.in { animation: tick 200ms var(--ease-out); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reserve:active { transform: none; }
+    .seats strong.tick, .check, .status.in { animation: none; }
+    .spinner { animation-duration: 1.6s !important; }
+  }
+</style>
+</head>
+<body>
+  <article class="card">
+    <p class="brand">Kilnhouse</p>
+    <h1>Saturday Wheel-Throwing</h1>
+    <p class="when">Saturday, October 17</p>
+    <p class="when-sub">10:00 am – 12:30 pm · Beginners welcome</p>
+
+    <div class="row">
+      <div class="price">$65 <small>/ person</small></div>
+      <div class="seats"><strong id="seatCount">3</strong> of 8 seats left</div>
+    </div>
+
+    <div class="dots" id="dots" aria-hidden="true"></div>
+
+    <button class="reserve" id="reserve" type="button">
+      <svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>
+      <span class="spinner" aria-hidden="true"></span>
+      <span id="label">Reserve a seat</span>
+    </button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </article>
+
+<script>
+(function () {
+  var TOTAL = 8;
+  var seats = 3;
+  var state = 'idle'; // idle | pending | done
+  var timer = null;
+
+  var btn = document.getElementById('reserve');
+  var label = document.getElementById('label');
+  var count = document.getElementById('seatCount');
+  var dots = document.getElementById('dots');
+  var status = document.getElementById('status');
+
+  for (var i = 0; i < TOTAL; i++) dots.appendChild(document.createElement('i'));
+
+  function render(mineIndex) {
+    var taken = TOTAL - seats;
+    [].forEach.call(dots.children, function (d, i) {
+      d.className = i < taken ? 'taken' : '';
+    });
+    if (mineIndex != null) dots.children[mineIndex].className = 'mine';
+    if (+count.textContent !== seats) {
+      count.textContent = seats;
+      count.classList.remove('tick');
+      void count.offsetWidth;
+      count.classList.add('tick');
+    }
+  }
+
+  function say(html, isError) {
+    status.className = 'status in' + (isError ? ' error' : '');
+    status.innerHTML = html;
+  }
+
+  function reset() {
+    state = 'idle';
+    btn.className = 'reserve';
+    btn.removeAttribute('aria-busy');
+    label.textContent = seats > 0 ? 'Reserve a seat' : 'Sold out';
+    if (seats === 0) btn.classList.add('soldout');
+  }
+
+  btn.addEventListener('click', function () {
+    if (state !== 'idle' || seats === 0) return;
+    state = 'pending';
+    btn.setAttribute('aria-busy', 'true');
+    label.textContent = 'Reserving…';
+    status.textContent = '';
+
+    // fake network request, 1–2 seconds
+    timer = setTimeout(function () {
+      seats -= 1;
+      state = 'done';
+      btn.removeAttribute('aria-busy');
+      btn.className = 'reserve done';
+      label.textContent = 'Seat reserved';
+      render(TOTAL - seats - 1);
+      say('You\u2019re in! <button type="button" id="undo">Undo</button>');
+      document.getElementById('undo').addEventListener('click', undo);
+    }, 1000 + Math.random() * 1000);
+  });
+
+  function undo() {
+    seats += 1;
+    render();
+    reset();
+    say('Reservation cancelled.');
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

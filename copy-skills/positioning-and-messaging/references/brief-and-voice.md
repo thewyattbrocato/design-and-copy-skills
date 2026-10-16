@@ -6,7 +6,7 @@ Write each field as a sentence a customer could say. Omit a field you have nothi
 
 1. **One-liner**: what it is, for whom, in a category word a stranger knows.
 2. **Controlling idea**: the one sentence people repeat.
-3. **For / not for**: the situation that makes someone care a lot, and who should look elsewhere.
+3. **For / not for**: who needs this most, and who should look elsewhere.
 4. **Their current fix**: the real alternatives, with what each does well.
 5. **Differences**: each with its proof, or [unproven: how to show it], and what it lets the customer do.
 6. **Objections**: the two or three real ones, each with a factual answer from what the user supplied.

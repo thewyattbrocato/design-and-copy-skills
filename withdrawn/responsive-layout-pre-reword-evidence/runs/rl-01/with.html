@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Winter Timetable – Island Ferries</title>
+<style>
+  :root {
+    --ink: #14283a;
+    --muted: #4d6172;
+    --line: #cdd8e0;
+    --bg: #f3f6f8;
+    --card: #ffffff;
+    --accent: #0b5c80;
+    --accent-soft: #e3f1f7;
+    --warn: #8a4b00;
+    --warn-soft: #fdf1dc;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .wrap {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 2.5rem;
+  }
+  header h1 {
+    margin: 0;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    line-height: 1.15;
+  }
+  header p { margin: 0.4rem 0 0; color: var(--muted); }
+  .islands {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .islands li {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 99px;
+  }
+  .notice {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1rem;
+    background: var(--warn-soft);
+    border-left: 4px solid var(--warn);
+    color: #4a2a00;
+    border-radius: 0 6px 6px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+  caption {
+    text-align: left;
+    padding: 0 0 0.6rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  th, td {
+    padding: 0.65rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  thead th {
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(even) { background: #f7fafc; }
+  td { font-variant-numeric: tabular-nums; }
+  .time { font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
+  .route { font-weight: 600; }
+  .arrow { color: var(--accent); }
+  .nowrap { white-space: nowrap; }
+  .yes { font-weight: 600; color: #11603a; }
+  .no { font-weight: 600; color: #8c1d1d; }
+  .notes { color: var(--muted); }
+
+  footer { margin-top: 1.25rem; color: var(--muted); font-size: 0.92rem; }
+  footer p { margin: 0.3rem 0; }
+
+  /* Phones: each sailing becomes a card */
+  @media (max-width: 52rem) {
+    .wrap { padding: 1rem 0.75rem 2rem; }
+    table, tbody, tr, td { display: block; }
+    table { background: none; border: 0; }
+    thead {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+    tbody tr, tbody tr:nth-child(even) {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin-bottom: 0.75rem;
+      padding: 0.25rem 0;
+      overflow: hidden;
+    }
+    td {
+      display: grid;
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border: 0;
+      overflow-wrap: anywhere;
+    }
+    td::before {
+      content: attr(data-label);
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding-top: 0.1rem;
+    }
+    td.time, td.route {
+      display: block;
+      padding: 0.35rem 0.9rem;
+    }
+    td.time::before, td.route::before { content: none; }
+    td.time {
+      background: var(--accent-soft);
+      font-size: 1.5rem;
+      padding-top: 0.55rem;
+      padding-bottom: 0.1rem;
+      margin-top: -0.25rem;
+    }
+    td.route {
+      background: var(--accent-soft);
+      font-size: 1.1rem;
+      padding-top: 0;
+      padding-bottom: 0.6rem;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  /* Office printing */
+  @page { size: A4 landscape; margin: 12mm; }
+  @media print {
+    body { background: #fff; font-size: 10pt; }
+    .wrap { max-width: none; padding: 0; }
+    .islands li { border: 1px solid #888; background: none; color: #000; }
+    .notice { background: none; border: 1px solid #000; border-left-width: 4px; color: #000; }
+    table { border: 1px solid #000; }
+    thead { display: table-header-group; }
+    thead th { background: #e6e6e6; color: #000; border-bottom: 2px solid #000; }
+    th, td { padding: 4pt 6pt; border-bottom: 1px solid #999; }
+    tbody tr:nth-child(even) { background: none; }
+    tr { break-inside: avoid; }
+    .time { font-size: 11pt; }
+    .arrow, .yes, .no, .notes { color: #000; }
+    .no { text-decoration: underline; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Winter Timetable</h1>
+    <p>In force 26 October 2026 to 28 March 2027</p>
+    <ul class="islands" aria-label="Islands served">
+      <li>Saltmarsh</li>
+      <li>Gull Rock</li>
+      <li>Little Corran</li>
+      <li>Penhallow Quay</li>
+    </ul>
+  </header>
+
+  <p class="notice"><strong>Winter sailings may be delayed or cancelled in bad weather.</strong> Please check with the skipper or the notice board on the pier before you travel.</p>
+
+  <table>
+    <caption>Daily sailings in departure order. Fares are one-way, per adult, in pounds.</caption>
+    <thead>
+      <tr>
+        <th scope="col">Departs</th>
+        <th scope="col">Route</th>
+        <th scope="col">Boat</th>
+        <th scope="col">Arrives</th>
+        <th scope="col">Crossing time</th>
+        <th scope="col">Bikes allowed</th>
+        <th scope="col">Fare</th>
+        <th scope="col">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="time" data-label="Departs">07:30</td>
+        <td class="route" data-label="Route">Saltmarsh <span class="arrow" aria-label="to">→</span> Gull Rock</td>
+        <td data-label="Boat">Kittiwake</td>
+        <td class="nowrap" data-label="Arrives">07:55</td>
+        <td class="nowrap" data-label="Crossing time">25 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span></td>
+        <td class="nowrap" data-label="Fare">£6.50</td>
+        <td class="notes" data-label="Notes">Daily. Workers’ boat, first of the day.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">08:15</td>
+        <td class="route" data-label="Route">Penhallow Quay <span class="arrow" aria-label="to">→</span> Saltmarsh</td>
+        <td data-label="Boat">Mary Tamsin</td>
+        <td class="nowrap" data-label="Arrives">08:55</td>
+        <td class="nowrap" data-label="Crossing time">40 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span></td>
+        <td class="nowrap" data-label="Fare">£9.00</td>
+        <td class="notes" data-label="Notes">Daily. Busy with commuters, arrive early.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">09:00</td>
+        <td class="route" data-label="Route">Gull Rock <span class="arrow" aria-label="to">→</span> Little Corran</td>
+        <td data-label="Boat">Curlew</td>
+        <td class="nowrap" data-label="Arrives">09:35</td>
+        <td class="nowrap" data-label="Crossing time">35 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span> (max 6)</td>
+        <td class="nowrap" data-label="Fare">£8.00</td>
+        <td class="notes" data-label="Notes">Daily.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">09:45</td>
+        <td class="route" data-label="Route">Saltmarsh <span class="arrow" aria-label="to">→</span> Penhallow Quay</td>
+        <td data-label="Boat">Mary Tamsin</td>
+        <td class="nowrap" data-label="Arrives">10:25</td>
+        <td class="nowrap" data-label="Crossing time">40 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span></td>
+        <td class="nowrap" data-label="Fare">£9.00</td>
+        <td class="notes" data-label="Notes">Daily.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">10:30</td>
+        <td class="route" data-label="Route">Little Corran <span class="arrow" aria-label="to">→</span> Penhallow Quay</td>
+        <td data-label="Boat">Old Pilchard</td>
+        <td class="nowrap" data-label="Arrives">11:20</td>
+        <td class="nowrap" data-label="Crossing time">50 min</td>
+        <td data-label="Bikes allowed"><span class="no">No</span></td>
+        <td class="nowrap" data-label="Fare">£11.00</td>
+        <td class="notes" data-label="Notes">Monday to Saturday. Covered cabin, no deck space for bikes.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">11:40</td>
+        <td class="route" data-label="Route">Little Corran <span class="arrow" aria-label="to">→</span> Saltmarsh</td>
+        <td data-label="Boat">Curlew</td>
+        <td class="nowrap" data-label="Arrives">12:35</td>
+        <td class="nowrap" data-label="Crossing time">55 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span> (max 6)</td>
+        <td class="nowrap" data-label="Fare">£12.50</td>
+        <td class="notes" data-label="Notes">Daily. Longest crossing, can be rough.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">12:30</td>
+        <td class="route" data-label="Route">Gull Rock <span class="arrow" aria-label="to">→</span> Saltmarsh</td>
+        <td data-label="Boat">Kittiwake</td>
+        <td class="nowrap" data-label="Arrives">12:55</td>
+        <td class="nowrap" data-label="Crossing time">25 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span></td>
+        <td class="nowrap" data-label="Fare">£6.50</td>
+        <td class="notes" data-label="Notes">Daily.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">13:15</td>
+        <td class="route" data-label="Route">Penhallow Quay <span class="arrow" aria-label="to">→</span> Little Corran</td>
+        <td data-label="Boat">Old Pilchard</td>
+        <td class="nowrap" data-label="Arrives">14:05</td>
+        <td class="nowrap" data-label="Crossing time">50 min</td>
+        <td data-label="Bikes allowed"><span class="no">No</span></td>
+        <td class="nowrap" data-label="Fare">£11.00</td>
+        <td class="notes" data-label="Notes">Monday to Saturday.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">14:00</td>
+        <td class="route" data-label="Route">Saltmarsh <span class="arrow" aria-label="to">→</span> Little Corran</td>
+        <td data-label="Boat">Curlew</td>
+        <td class="nowrap" data-label="Arrives">14:55</td>
+        <td class="nowrap" data-label="Crossing time">55 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span> (max 6)</td>
+        <td class="nowrap" data-label="Fare">£12.50</td>
+        <td class="notes" data-label="Notes">Daily.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">15:10</td>
+        <td class="route" data-label="Route">Saltmarsh <span class="arrow" aria-label="to">→</span> Gull Rock</td>
+        <td data-label="Boat">Kittiwake</td>
+        <td class="nowrap" data-label="Arrives">15:35</td>
+        <td class="nowrap" data-label="Crossing time">25 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span></td>
+        <td class="nowrap" data-label="Fare">£6.50</td>
+        <td class="notes" data-label="Notes">Friday to Sunday only.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">16:00</td>
+        <td class="route" data-label="Route">Little Corran <span class="arrow" aria-label="to">→</span> Saltmarsh</td>
+        <td data-label="Boat">Curlew</td>
+        <td class="nowrap" data-label="Arrives">16:55</td>
+        <td class="nowrap" data-label="Crossing time">55 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span> (max 6)</td>
+        <td class="nowrap" data-label="Fare">£12.50</td>
+        <td class="notes" data-label="Notes">Daily. Last boat off Little Corran.</td>
+      </tr>
+      <tr>
+        <td class="time" data-label="Departs">16:45</td>
+        <td class="route" data-label="Route">Penhallow Quay <span class="arrow" aria-label="to">→</span> Saltmarsh</td>
+        <td data-label="Boat">Mary Tamsin</td>
+        <td class="nowrap" data-label="Arrives">17:25</td>
+        <td class="nowrap" data-label="Crossing time">40 min</td>
+        <td data-label="Bikes allowed"><span class="yes">Yes</span></td>
+        <td class="nowrap" data-label="Fare">£9.00</td>
+        <td class="notes" data-label="Notes">Daily. Last boat of the day, weather permitting.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <p>Children under 5 travel free. Dogs travel free on a lead.</p>
+    <p>Times are local departure and arrival times. Please be at the pier 10 minutes before departure.</p>
+  </footer>
+</div>
+</body>
+</html>

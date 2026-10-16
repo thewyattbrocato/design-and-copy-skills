@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbor Line Freight – Dispatch</title>
+<style>
+  :root {
+    --bg: #f3f5f8;
+    --panel: #ffffff;
+    --ink: #1b2430;
+    --muted: #5d6b7c;
+    --line: #dde3ea;
+    --nav: #12263a;
+    --nav-ink: #c9d6e3;
+    --accent: #1f6fb2;
+    --green-bg: #dff3e4; --green: #1d6b34;
+    --amber-bg: #fdf0d2; --amber: #8a5a00;
+    --blue-bg: #dcebfa; --blue: #174f86;
+    --red-bg: #fbdcdc; --red: #9b1c1c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .app { display: flex; min-height: 100vh; }
+
+  /* Navigation */
+  nav {
+    flex: 0 0 200px;
+    background: var(--nav);
+    color: var(--nav-ink);
+    padding: 20px 12px;
+  }
+  .brand {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 0 10px 18px;
+    letter-spacing: .02em;
+  }
+  .brand small { display: block; font-weight: 400; color: var(--nav-ink); font-size: .75rem; }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  nav a {
+    display: block;
+    padding: 10px;
+    border-radius: 6px;
+    color: inherit;
+    text-decoration: none;
+    font-size: .95rem;
+  }
+  nav a:hover { background: rgba(255,255,255,.08); }
+  nav a:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
+  nav a[aria-current="page"] { background: var(--accent); color: #fff; font-weight: 600; }
+
+  /* Main */
+  main { flex: 1 1 0; min-width: 0; padding: 24px; }
+  header.page { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 16px; }
+  h1 { margin: 0; font-size: 1.4rem; }
+  .date { color: var(--muted); font-size: .9rem; }
+
+  .list { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .row {
+    display: grid;
+    grid-template-columns: 90px minmax(0,1.2fr) minmax(0,1.2fr) minmax(0,1fr) 110px 80px;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+  }
+  .row:first-child { border-top: 0; }
+  .row.head {
+    background: #eef2f6;
+    color: var(--muted);
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-weight: 600;
+  }
+  .row > div { min-width: 0; overflow-wrap: anywhere; }
+  .num { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .eta { font-variant-numeric: tabular-nums; }
+  .badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .s-transit { background: var(--blue-bg); color: var(--blue); }
+  .s-loading { background: var(--amber-bg); color: var(--amber); }
+  .s-delivered { background: var(--green-bg); color: var(--green); }
+  .s-delayed { background: var(--red-bg); color: var(--red); }
+
+  /* Medium: nav becomes a horizontal bar */
+  @media (max-width: 760px) {
+    .app { flex-direction: column; }
+    nav { flex: none; padding: 12px; }
+    .brand { padding-bottom: 10px; }
+    nav ul { flex-direction: row; overflow-x: auto; gap: 4px; -webkit-overflow-scrolling: touch; }
+    nav a { white-space: nowrap; padding: 8px 12px; }
+    main { padding: 16px 12px; }
+  }
+
+  /* Narrow: rows become stacked cards with labels */
+  @media (max-width: 620px) {
+    .row.head { display: none; }
+    .list { background: transparent; border: 0; border-radius: 0; display: flex; flex-direction: column; gap: 10px; overflow: visible; }
+    .row {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "num status"
+        "route route"
+        "driver eta";
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      gap: 6px 12px;
+      padding: 12px;
+    }
+    .row:first-child { border-top: 1px solid var(--line); }
+    .c-num { grid-area: num; }
+    .c-status { grid-area: status; justify-self: end; }
+    .c-origin, .c-dest { display: inline; }
+    .c-origin { grid-area: route; }
+    .c-dest { grid-area: route; }
+    .c-driver { grid-area: driver; color: var(--muted); font-size: .9rem; }
+    .c-eta { grid-area: eta; justify-self: end; font-size: .9rem; }
+    .c-origin::before, .c-dest::before {
+      content: attr(data-label) " ";
+      color: var(--muted);
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .c-driver::before { content: "Driver: "; }
+    .c-eta::before { content: "ETA "; color: var(--muted); }
+    .route { display: block; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav aria-label="Main">
+    <div class="brand">Harbor Line Freight<small>Dispatch</small></div>
+    <ul>
+      <li><a href="#" aria-current="page">Loads</a></li>
+      <li><a href="#">Drivers</a></li>
+      <li><a href="#">Trucks</a></li>
+      <li><a href="#">Invoices</a></li>
+      <li><a href="#">Reports</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <header class="page">
+      <h1>Today's Loads</h1>
+      <span class="date">Tuesday, Oct 6, 2026 · 6 loads</span>
+    </header>
+
+    <div class="list" role="table" aria-label="Today's loads">
+      <div class="row head" role="row">
+        <div role="columnheader">Load #</div>
+        <div role="columnheader">Origin</div>
+        <div role="columnheader">Destination</div>
+        <div role="columnheader">Driver</div>
+        <div role="columnheader">Status</div>
+        <div role="columnheader">ETA</div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="num c-num" role="cell">HL-24817</div>
+        <div class="c-origin" role="cell">Columbus, OH</div>
+        <div class="c-dest" role="cell">Indianapolis, IN</div>
+        <div class="c-driver" role="cell">Marcus Webb</div>
+        <div class="c-status" role="cell"><span class="badge s-transit">In Transit</span></div>
+        <div class="eta c-eta" role="cell">2:15 PM</div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="num c-num" role="cell">HL-24818</div>
+        <div class="c-origin" role="cell">Cleveland, OH</div>
+        <div class="c-dest" role="cell">Fort Wayne, IN</div>
+        <div class="c-driver" role="cell">Dana Ortiz</div>
+        <div class="c-status" role="cell"><span class="badge s-loading">Loading</span></div>
+        <div class="eta c-eta" role="cell">4:40 PM</div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="num c-num" role="cell">HL-24819</div>
+        <div class="c-origin" role="cell">Toledo, OH</div>
+        <div class="c-dest" role="cell">South Bend, IN</div>
+        <div class="c-driver" role="cell">Priya Nair</div>
+        <div class="c-status" role="cell"><span class="badge s-delivered">Delivered</span></div>
+        <div class="eta c-eta" role="cell">11:05 AM</div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="num c-num" role="cell">HL-24820</div>
+        <div class="c-origin" role="cell">Evansville, IN</div>
+        <div class="c-dest" role="cell">Cincinnati, OH</div>
+        <div class="c-driver" role="cell">Tom Kessler</div>
+        <div class="c-status" role="cell"><span class="badge s-delayed">Delayed</span></div>
+        <div class="eta c-eta" role="cell">5:30 PM</div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="num c-num" role="cell">HL-24821</div>
+        <div class="c-origin" role="cell">Dayton, OH</div>
+        <div class="c-dest" role="cell">Lafayette, IN</div>
+        <div class="c-driver" role="cell">Luis Herrera</div>
+        <div class="c-status" role="cell"><span class="badge s-transit">In Transit</span></div>
+        <div class="eta c-eta" role="cell">1:50 PM</div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="num c-num" role="cell">HL-24822</div>
+        <div class="c-origin" role="cell">Akron, OH</div>
+        <div class="c-dest" role="cell">Muncie, IN</div>
+        <div class="c-driver" role="cell">Casey Brandt</div>
+        <div class="c-status" role="cell"><span class="badge s-loading">Loading</span></div>
+        <div class="eta c-eta" role="cell">6:10 PM</div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,24 +1,31 @@
-**Verdict:** The page feels off because its emphasis is inverted. The nav is the highest-contrast thing on the screen, the heading is smaller than the paragraph under it, and the main call to action is the faintest element.
+**Verdict:** The page feels off because its hierarchy is inverted and its actions look disabled. The headline is smaller than the body text, the buttons are the faintest and smallest elements on the page, and in the markup the links and buttons have no `href`, so they can't be clicked or reached by keyboard.
 
-**Findings, most severe first**
+**Findings, by severity**
 
-1. **High: Body text and buttons are too faint to read comfortably.** `#9a9a9a` on `#f6f1e7` is about 2.5:1 by the WCAG formula (I computed it from the hex values). The minimum for body text is 4.5:1. Every line of copy and all three buttons are affected. Fix: use `#595959` or similar, which comes out around 6.2:1 by my calculation.
+1. **Blocker: nav links and CTAs are not links.** Every `<a>` lacks an `href`, so "Book a class," "Gift cards," "Rent the studio," and the nav items are not focusable, not clickable, and get no link semantics for screen readers. Fix: add real `href`s, or use `<button>` for actions.
 
-2. **High: Hierarchy is inverted.** The `h1` is 18px and the `p` is 20px, so the paragraph outranks the title. Fix: make the h1 roughly 40–48px and keep the paragraph at 18–20px.
+2. **Major: the headline is smaller than the paragraph.** The h1 is 18px at weight 400, and the paragraph beneath it is 20px. The eye lands on the paragraph, so the page's name and promise read as a caption. Fix: make the h1 clearly the largest type on the page, around 40–56px, and bring the weight up.
 
-3. **High: The hero paragraph is a single run-on sentence.** It is about 300 characters, and `max-width:1100px` at 20px Georgia allows roughly 110+ characters per line, far past the 50–75 range that's comfortable to read. The visitor has to parse six offerings in one breath. Fix: split it into a short lead line plus a list of the offerings (classes, wheel nights, workshops, parties, studio rental), and cap the width around 65ch.
+3. **Major: gray text on cream fails contrast.** `#9a9a9a` on `#f6f1e7` is about **2.6:1** (computed from the hex values). WCAG AA needs 4.5:1 for body text, so the body copy and the 11px button labels both fail. This is most likely the washed-out, "disabled" look you're sensing. Fix: darken body text to roughly `#4a4a4a` or darker and check it against the cream background.
 
-4. **High: No clear primary action.** All three buttons share the same ghost style, so "Book a class" (the likely main goal) looks the same as "Gift cards." The buttons are also 11px text with about 6px vertical padding, roughly 25px tall, well under a 44px touch target. Fix: make "Book a class" a filled button at 16px or larger with a minimum 44px height, and keep the other two as secondary.
+4. **Major: no primary action.** The three CTAs share identical 11px gray outline styling with a `#bbb` border, which is about 1.7:1 against the cream background and barely visible. Nothing says "do this first." Fix: make "Book a class" a solid filled button at 15–16px with a clear contrast ratio. Make Gift cards and Rent the studio secondary.
 
-5. **Medium: The nav pulls the eye away from the content.** It is dark (`#2b2b2b`) with light text at about 10.4:1, which is the strongest contrast on the page, and it holds nine items. Fix: lighten the nav to match the cream background or cut it to five or six items (for example Classes, Wheel nights, Studio rental, Gift cards, About, Cart).
+5. **Moderate: no sign of the craft.** The page is text only, with no clay, wheel, glaze, or studio photo. For a pottery studio, this is the largest gap in whether it feels like *them*. This is a content issue more than a CSS one. Add one hero image of finished work or the room.
 
-6. **Medium: No imagery.** A pottery studio is visual, and the page is text only. Adding a photo of finished work or the studio in the hero would likely fix much of the "off" feeling. This is partly taste, but it also affects whether a stranger understands what the place looks like.
+6. **Moderate: line length and the hero paragraph.** The paragraph is capped at 1100px at 20px Georgia. That's roughly 100–110 characters per line (estimated, not measured), well past the 45–75 range that reads comfortably. Cap it near 640–700px and break the offer into a short list: six-week wheel courses, Thursday wheel nights, weekend hand-building, parties up to eight, monthly studio rental.
 
-7. **Low: Links aren't real links.** The nav `<a>` tags and the button `<a>` tags have no `href`, so they aren't focusable or clickable as written. "Gift cards" also appears in both the nav and the hero buttons. If this is placeholder markup, ignore this; if not, add `href`s.
+7. **Minor: left edges don't line up.** The nav text starts at 14px and the hero at 10px, a 4px offset that is small but visible on a full-width bar. Use one shared gutter.
 
-**Keep**
-- The cream background and Georgia serif suit a craft studio and give it a warm tone.
-- The hero copy covers everything the studio offers, so the content is right even though its presentation isn't.
-- The thin, restrained button borders fit the overall look. Only their color needs fixing.
+8. **Minor: nav and labels are noisy and inconsistent.** Nine items sit at 12px with no grouping. "Gift cards" appears in both the nav and the CTAs. The naming also drifts: "Studio rental" in the nav versus "Rent the studio" on the button. Pick one term for each.
 
-**Notes:** I assumed a first-time visitor deciding whether to book, at high fidelity. I did not check mobile layout, real images, or other pages. The contrast figures are computed from the hex values, not measured on screen.
+9. **Minor: button size.** The buttons are roughly 27px tall (estimated from 6px padding, 11px text, and a 1px border). That clears the 24px WCAG 2.2 AA minimum but sits well under the 44px comfort target. Raising the font size as in finding 4 will fix this.
+
+**What works and should stay**
+- The dark nav with `#ddd` text on `#2b2b2b` is about **10.4:1**, which passes comfortably.
+- Georgia and the cream background suit a craft studio. Keep the warmth and change the grays.
+- The copy is specific: "six-week," "Thursdays," "up to eight people." Concrete facts like these convert better than generic welcome text.
+- The single left-aligned hero column is a sound structure.
+
+**Fix order:** 1 (links), then 3 and 4 (contrast and the primary CTA), then 2 (headline scale), then 5 (imagery), then 6 and 7. Items 8 and 9 can come last.
+
+**Not checked:** mobile widths, the real fonts (Georgia may fall back on other systems), hover and focus states, anything below the fold, the cart and other pages, and the actual rendering. The contrast ratios and line length are computed or estimated from the code you sent.

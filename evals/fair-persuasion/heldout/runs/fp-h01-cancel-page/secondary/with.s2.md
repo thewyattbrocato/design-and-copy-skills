@@ -1,35 +1,37 @@
-## Cancel page: Variant A (pause is built)
+**Screen 1: Cancel**
 
-**Heading:** Before you go
+**Heading:** Cancel your Pennywise Pantry subscription
 
-**Body:**
-Your plan stays active until **[end date]**, and you keep full access until then. After that, your receipts and meal plans **[what happens to saved data, and by when]**. Your next bill would be on **[renewal date]**, and you won't be charged after **[end date]**.
+**Body:** You'll keep full access until **[last day of access, e.g. Nov 14, 2026]**. After that, your plan won't renew and you won't be charged again. Your saved receipts and meal plans **[are kept until (date) / are deleted on (date)]**.
 
-**Option (equal weight to the cancel button):**
-**Pause for up to 3 months.** No charges while paused. Your receipts and plans stay saved, and you can restart whenever you want.
-Button: **Pause my plan**
+**Option card, shown once, above the buttons:**
 
-**Cancel button (same size and style as Pause):**
-**Continue cancelling**
+*Version A, if the pause is built:*
+> **Need a break instead?** Pause for up to 3 months. You won't be charged while paused, and your receipts and plans will be there when you return.
+> [Pause for up to 3 months]
 
-**Optional reason (not required to continue):**
-"What's the main reason? (optional)"
-Too expensive · I'm not cooking as much · The meal plans don't fit my needs · Something else
+*Version B, if the pause isn't built:*
+> **Want to keep cooking with us for less?** Switch to yearly: $79 billed once a year, about $6.58 a month instead of $9.
+> [Switch to yearly]
 
-## Cancel page: Variant B (pause not built)
+**Buttons, same size and weight:**
+[Keep my subscription] [Cancel subscription]
 
-Use this if eng says pause isn't ready. Keep the heading, body, and reason question from Variant A. Replace the pause option with this one:
+**Optional, below the buttons:**
+> Tell us why you're leaving (optional)
+> [Dropdown: Too expensive / Not cooking as much / Didn't find it useful / Something else / Skip]
 
-**Option (equal weight to the cancel button):**
-**Switch to yearly for $79/year** (about $6.58/month). That's $29 less than paying $9 a month for the year.
-Button: **Switch to yearly**
+Choosing a reason changes nothing about the cancel button. "Skip" is as prominent as the options.
 
-## Confirmation after cancelling
+**Screen 2: Confirmed**
 
-**You're cancelled.** You have full access until **[end date]**.
-Want to come back? Restart any time at **[link]**. Your receipts and meal plans will be kept until **[date]**.
+**Heading:** Your subscription is cancelled
+
+> You have access until **[last day of access]**. To come back, sign in and restart any time. Your receipts and meal plans **[are waiting for you / are kept until (date)]**.
+
+Thanks for trying Pennywise Pantry.
 
 ---
 
-- **Placeholders and eng check:** Fill in `[end date]`, `[renewal date]`, `[what happens to saved data, and by when]`, and `[link]`. Don't show the pause option until eng confirms it works end to end, including the 3-month limit and how the billing date moves. To measure whether the page is helping, track how many people choose pause or switch instead of cancelling, and how many of the people who cancel return within 60 days.
-- **Rules:** Cancellation and auto-renewal rules vary by location and change over time, so have someone check this flow against the rules that apply to you.
+- **Placeholders and legal:** Fill the bracketed dates and data-retention lines from eng and your policy; I didn't assume any. Auto-renewal cancellation rules vary by location and change over time, so have counsel check this flow, including whether the annual plan's refund terms match the switch offer.
+- **Track:** Resubscribes within 90 days, split by cancel reason and by whether the person accepted the pause or annual offer. That shows whether the offer helps people stay or only delays the cancel.

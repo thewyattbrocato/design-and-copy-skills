@@ -1,34 +1,38 @@
-Here's a version that leads with what to do first and treats the rest as later setup:
+Here's a version that groups the steps by when they matter, drops the feature list, and explains each step in terms of what it does for the clinic.
 
-> **Welcome to Stackwell**
->
-> Stackwell helps your clinic keep the right supplies on hand, order them on time, and track what you spend.
->
-> **Start here**
-> 1. **Set your currency and time zone.** These apply to costs and dates in your reports.
-> 2. **Add your locations,** such as the front desk, exam rooms, and storage.
-> 3. **Import your item catalog** from a spreadsheet. You'll need items before you can set par levels.
->
-> **Set up ordering**
-> 4. **Add vendors** and their payment terms.
-> 5. **Set purchase order approval rules** for who needs to sign off on orders.
-> 6. **Set par levels** for your items. A par level is how many of each item you want on hand. Stackwell alerts you when stock drops below it. This takes time for a full catalog, so you can do it in batches.
->
-> **Set up your team and systems**
-> 7. **Invite your team** and assign roles.
-> 8. **Connect your accounting software.**
-> 9. **Schedule weekly cycle counts.** These are short physical counts of a few items at a time that keep your inventory accurate.
->
-> You can return to any step later from Settings.
->
-> [Finish] [Help Center]
+---
 
-**What changed:**
-- **Removed the feature list.** It named a dozen features before the user had any task, so it read as a wall of terms. The features now show up where they're needed.
-- **Grouped the nine steps** into three stages and put the first three at the top, since they're the ones a new admin can finish right away.
-- **Explained par levels inline,** since it's the one term most people wouldn't know. I dropped "reorder points" because it's close enough to par levels that it added confusion.
-- **Gave each step a reason in a few words** where the purpose wasn't obvious, such as currency or cycle counts.
+**Welcome to Stackwell**
 
-**Two assumptions to check:**
-- **That setup can be finished later.** The original says "Click Finish when done," which suggests every step is required. I wrote the copy as if the admin can finish now and return to steps later. If the steps are required, change the last line and the button label.
-- **That Settings is where setup lives.** I don't know the real menu path, so update "Settings" to match the app.
+Stackwell helps your clinic keep supplies stocked without overordering. Setup is a one-time process, and you can finish the rest later.
+
+**Start here**
+
+1. **Set your currency and time zone.** Costs and order dates will use these.
+2. **Add your locations,** such as Front Desk, Exam Rooms, and Storage. Stock is tracked by location.
+3. **Import your item catalog** from a spreadsheet. You can add or edit items later.
+
+**Set up before your first order**
+
+4. **Add your vendors** and their payment terms.
+5. **Set par levels** for your items: the amount you want on hand. Start with the items you use most.
+6. **Set approval rules** for purchase orders, such as who signs off on orders above a set amount.
+
+**Set up when you're ready**
+
+7. **Invite your team** and assign their roles.
+8. **Connect your accounting software** so purchases and costs sync automatically.
+9. **Schedule weekly cycle counts,** which are quick spot-checks that catch stock errors early.
+
+When you're done, click **Finish**. You can revisit any step later. For more help, visit the Help Center.
+
+---
+
+**What changed and why**
+
+- **Cut the feature list.** Fifteen nouns in one sentence don't help a new admin decide what to do first. Each feature now appears in the step where it matters.
+- **Split steps into "start here," "before first order," and "later."** This tells the admin what's urgent and what can wait.
+- **Put each step's purpose in plain words** (for example, "so purchases and costs sync automatically"), so the admin knows why it matters, not just what to click.
+- **Numbered the steps and kept each one to one action.**
+
+I assumed the steps aren't all required before Finish. If they are, I'd drop the groupings and keep one numbered list. I also didn't add any navigation paths (like where to find setup later), since I don't know your menu structure. If you tell me those, I can add them.

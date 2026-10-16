@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Last Salt Barge — Rhea Okonkwo-Hale</title>
+<style>
+  :root {
+    --paper: #f4efe6;
+    --ink: #1b1a17;
+    --muted: #6b645a;
+    --rule: #cfc5b4;
+    --accent: #a5381f;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+    --edge: clamp(1.25rem, 5vw, 4rem);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+  }
+
+  /* Running masthead strip */
+  .strip {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem var(--edge);
+    font: 600 0.7rem/1 var(--sans);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--rule);
+    color: var(--muted);
+  }
+  .strip b { color: var(--accent); font-weight: 700; }
+
+  /* Lead image with title set into it */
+  .lead { margin: 0; }
+  .frame {
+    position: relative;
+    min-height: min(88vh, 62rem);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--edge);
+    color: #fff;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 70% at 75% 18%, #d8b27a 0%, rgba(216,178,122,0) 55%),
+      linear-gradient(180deg, #7d8c8f 0%, #56686d 38%, #2f3e44 62%, #1c262b 100%);
+  }
+  /* water line + hull silhouette, purely decorative placeholder */
+  .frame::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, transparent 52%, rgba(20,28,32,.55) 52%, rgba(20,28,32,.9) 100%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 2px, transparent 2px 14px);
+  }
+  .frame::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,14,16,0) 35%, rgba(10,14,16,.82) 100%);
+  }
+  .ph {
+    position: absolute;
+    top: 1.25rem; right: var(--edge);
+    z-index: 2;
+    font: 600 0.68rem/1 var(--sans);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.7rem;
+    border: 1px dashed rgba(255,255,255,.65);
+    color: rgba(255,255,255,.9);
+  }
+  .titleblock { position: relative; z-index: 2; max-width: 68rem; }
+  .kicker {
+    font: 700 0.78rem/1 var(--sans);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #f0c9a0;
+    margin: 0 0 1.4rem;
+  }
+  h1 {
+    margin: 0;
+    font-weight: 400;
+    font-size: clamp(3.4rem, 12.5vw, 10.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: #f0c9a0; }
+  .dek {
+    max-width: 34rem;
+    margin: 1.8rem 0 0;
+    font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+    line-height: 1.35;
+    font-style: italic;
+    color: #f1ece2;
+  }
+  .credit {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.7rem var(--edge) 0;
+    font: 0.72rem/1.4 var(--sans);
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .credit span { text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; margin-right: 0.5em; }
+
+  /* Byline column + reading column */
+  .article {
+    display: grid;
+    grid-template-columns: minmax(10rem, 15rem) minmax(0, 40rem);
+    column-gap: clamp(2rem, 6vw, 6rem);
+    padding: clamp(2.5rem, 7vw, 6rem) var(--edge) 6rem;
+    max-width: 78rem;
+    margin: 0 auto;
+  }
+  .meta {
+    font-family: var(--sans);
+    border-top: 3px solid var(--ink);
+    padding-top: 1rem;
+    align-self: start;
+  }
+  .meta p { margin: 0 0 1.1rem; }
+  .meta .label {
+    display: block;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .meta .val { font-size: 1.02rem; font-weight: 600; line-height: 1.3; }
+  .meta .val.time { color: var(--accent); }
+
+  .body p {
+    margin: 0 0 1.45em;
+    font-size: clamp(1.1rem, 1.5vw, 1.28rem);
+    line-height: 1.62;
+    hyphens: auto;
+  }
+  .body p:first-child { margin-top: 0; }
+  .body p:first-child::first-letter {
+    float: left;
+    font-size: 5.6em;
+    line-height: 0.78;
+    padding: 0.06em 0.1em 0 0;
+    color: var(--accent);
+  }
+  .body p:first-child::first-line {
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 52rem) {
+    .article { grid-template-columns: 1fr; row-gap: 2rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 0 2.2rem; }
+    .frame { min-height: 78vh; }
+    .strip span:last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <span><b>Long Read</b> &nbsp;/&nbsp; Rivers &amp; Estuary</span>
+  <span>Regional Magazine</span>
+</div>
+
+<figure class="lead">
+  <div class="frame" role="img" aria-label="Placeholder for lead photograph of a Thames sailing barge on the Medway at dawn">
+    <div class="ph">Lead photo placeholder</div>
+    <div class="titleblock">
+      <p class="kicker">Feature</p>
+      <h1>The Last <em>Salt</em> Barge</h1>
+      <p class="dek">On the Medway, one family keeps a trade alive that the tide stopped paying for.</p>
+    </div>
+  </div>
+  <figcaption class="credit"><span>Photograph</span> Photographer name / Magazine archive</figcaption>
+</figure>
+
+<main class="article">
+  <aside class="meta" aria-label="Article details">
+    <p><span class="label">Words by</span><span class="val">Rhea Okonkwo-Hale</span></p>
+    <p><span class="label">Reading time</span><span class="val time">22 minutes</span></p>
+  </aside>
+
+  <div class="body">
+    <p>Before the light comes up over Upnor, Tobias Marlow is already on the foredeck, a mug going cold in his fist, reading the water the way other men read the post. The Medway is slack and brown and giving nothing away. Behind him the Ellen Rose sits low at her mooring, forty tons of Cheshire salt in the hold, her sails furled against the wait. The tide turns at ten past six. It has turned there twice a day for longer than his family has kept records.</p>
+
+    <p>The trade is older than the railway and, by most accounts, should have died with it. Salt came up the river for the fish curers of Rochester and the tanneries beyond, and it went out again as a currency of small favours. By the 1960s the lorries had taken nearly all of it. What remains is a single contract with a pickling works in Aylesford, worth less each year than the insurance on the hull. Tobias does the sums on the back of an envelope every January, then puts the envelope in the stove.</p>
+
+    <p>His daughter, Imani, thinks the envelope is a kind of prayer. She is twenty-six, holds a master's licence the Medway Ports Authority issued with visible reluctance, and spent three years in Rotterdam working for a firm that moved containers by app. She came home, she says, because she missed being able to see what she was carrying. Her father says she came home because her mother asked. Both are probably true. On the quay at Upnor they argue about it daily, in the flat, affectionate voices of people who have shared a small space for decades.</p>
+
+    <p>Nobody pretends the arithmetic will change. A barge of this age drinks money: a new mainsail alone costs more than the year's freight, and the last sailmaker on the estuary is seventy-nine. Yet the Ellen Rose goes out. She went out in January sleet and in August glare, and when the tide finally lifts her at ten past six she moves with a patience that makes the engine, which they rarely use, seem like an interruption. “You don't get paid for the river,” Tobias says, loosing the line. “You get paid for being the one who goes.”</p>
+  </div>
+</main>
+
+</body>
+</html>

@@ -1,41 +1,29 @@
-I left out "4.8 stars from 2,300+ reviews" and "used by 100,000 commuters". Both are false today, and you've said so yourself. Fake ratings and usage numbers can get the app rejected or removed under Apple's and Google's metadata rules, and the FTC treats fabricated review claims as deceptive advertising. If a reviewer or competitor flags it, the cost lands right at launch. You can add the real numbers once you have them.
+I'd steer away from "Cut your heating bill by 38%". It's the best of 212 results, from a home with no attic insulation at all. The typical home saw 14%, and the middle half saw 9–21%. A customer who expects 38% and gets 12% will feel misled, and the headline could also invite complaints about misleading advertising. The honest numbers are still good, and you can use the 38% as a labeled example instead of the headline.
 
-Here's a listing that keeps the strong opener and stays scannable:
+## Website results section
 
----
+**Headline:** Typical result: a 14% cut in heating bills
 
-**Commute Calm: Meditation for Your Commute**
+**Subhead:** We measured 212 homes. Here's what happened.
 
-**Turn your commute into the calmest part of your day.**
+Between 2023 and 2025, Greenwell Home Energy air-sealed and added attic insulation in 212 homes. For each one, we compared weather-adjusted heating bills for the 12 months before and after the job.
 
-Short guided meditations built for trains, buses, and platforms. No long sessions, no wasted time.
+- **14% median reduction.** Half of homes did better than this, half did less.
+- **9–21% for the middle half.** Most homes landed in this range.
+- **38% in the best case.** A 1920s farmhouse with no attic insulation at all saw the biggest drop. Older, uninsulated homes have the most to gain.
+- **About 4% saw no measurable change.** 9 of the 212 homes didn't improve in a way we could detect. We'd rather you hear that from us up front.
 
-**WHY COMMUTERS LIKE IT**
-- **40 guided sessions**, from 3 to 10 minutes, so there's one for every ride
-- **Offline downloads** let you listen on the train with no signal and no data use
-- **Free to start**: your first 7 sessions are on us
+A typical job costs $2,900, and our own crew does all of the work.
 
-**PERFECT FOR**
-- Easing morning stress before work
-- Decompressing on the ride home
-- Resetting between stops, delays, and crowds
+*Want to know what to expect in your home? Ask us for an estimate.*
 
-**HOW IT WORKS**
-1. Pick a session that fits your ride
-2. Download it before you leave
-3. Press play and breathe
+## Postcard (two lines)
 
-**PRICING**
-The first 7 sessions are free. Unlock all 40 for $4.99/month. Cancel anytime in your account settings.
+**We measured 212 homes: the typical heating bill dropped 14%,**
+**and most fell 9–21%. Greenwell Home Energy.**
 
-**Download Commute Calm and make your next commute a calm one.**
+## If your partner still wants the 38%
 
----
+A compromise that stays accurate is to keep the 38% as a named example, as in the section above. For the postcard, you could use "Up to 38% off heating bills*" with the footnote "*Best of 212 homes; typical result 14%." I'd still prefer the median as the headline, since it's the number most customers can expect.
 
-Some options for the top line until you have real social proof:
-- "Meditation that fits your commute: 3 to 10 minutes, works offline."
-- "Built for the train. 40 short sessions, no signal needed."
-
-After launch, prompt happy users for a rating after they finish their 3rd or 4th session. Once you have a real rating and review count, put it at the top. If you want, I can also write a short subtitle, keywords, and a "What's New" blurb.
-
-Before you submit, check that the subscription wording matches your in-app purchase setup. That means the billing period, whether there's a trial, and the cancellation language.
+I left out payback time and dollar savings because you haven't calculated them. Once you have, they'd make a strong addition.

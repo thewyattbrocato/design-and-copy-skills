@@ -9,7 +9,8 @@
 
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: #888;
     color: #1d1b19;
   }
@@ -20,57 +21,48 @@
     min-height: 100vh;
   }
 
-  @media (max-width: 720px) {
-    .compare { grid-template-columns: 1fr; }
-  }
-
   .pane {
     padding: 32px 24px;
-    min-width: 0;
+    background: var(--bg);
+    color: var(--text);
   }
 
-  /* Light theme (existing Tallowcast tokens) */
+  .pane-label {
+    margin: 0 0 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
   .theme-light {
     --bg: #faf7f2;
     --card: #ffffff;
     --text: #1d1b19;
     --muted: #6e6862;
     --accent: #e0492b;
-    --accent-text: #ffffff;
+    --accent-ink: #ffffff;
     --border: #e8e1d7;
-    background: var(--bg);
-    color: var(--text);
   }
 
-  /* Dark theme (proposed) */
   .theme-dark {
-    --bg: #171513;
-    --card: #221f1c;
-    --text: #f3eee8;
-    --muted: #a39a91;
-    --accent: #f26a4b;
-    --accent-text: #171513;
-    --border: #3a342f;
-    background: var(--bg);
-    color: var(--text);
-  }
-
-  .pane-label {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin: 0 0 20px;
+    --bg: #161412;
+    --card: #211e1b;
+    --text: #f2ede6;
+    --muted: #a8a097;
+    --accent: #f26b4e;
+    --accent-ink: #1a0d08;
+    --border: #35302b;
   }
 
   .header {
-    margin: 0 0 20px;
+    margin-bottom: 20px;
   }
 
   .header h1 {
-    font-size: 24px;
     margin: 0 0 4px;
+    font-size: 22px;
     font-weight: 700;
   }
 
@@ -93,178 +85,184 @@
     display: flex;
     align-items: center;
     gap: 14px;
+    padding: 14px 16px;
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 16px;
+    border-radius: 12px;
   }
 
-  .play {
-    flex: 0 0 auto;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: none;
-    background: var(--accent);
-    color: var(--accent-text);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0;
-  }
-
-  .play:hover { filter: brightness(1.05); }
-
-  .play:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-
-  .play svg {
-    width: 16px;
-    height: 16px;
-    margin-left: 2px;
-    fill: currentColor;
-  }
-
-  .info {
-    min-width: 0;
+  .episode-info {
     flex: 1;
+    min-width: 0;
   }
 
-  .title {
+  .episode-title {
+    margin: 0 0 4px;
     font-size: 15px;
     font-weight: 600;
-    margin: 0 0 4px;
     color: var(--text);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .meta {
+  .episode-meta {
+    margin: 0;
     font-size: 13px;
     color: var(--muted);
-    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .play-btn {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .play-btn:hover {
+    filter: brightness(1.08);
+  }
+
+  .play-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .play-btn svg {
+    width: 14px;
+    height: 14px;
+    margin-left: 2px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 720px) {
+    .compare {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 </head>
 <body>
-
 <div class="compare">
 
   <section class="pane theme-light" aria-label="Light theme">
     <p class="pane-label">Light</p>
-    <header class="header">
-      <h1>Episodes</h1>
-      <p>Tallowcast</p>
-    </header>
+    <div class="header">
+      <h1>Tallowcast</h1>
+      <p>Recently added episodes</p>
+    </div>
     <ul class="episode-list">
       <li class="episode">
-        <button class="play" aria-label="Play The Long Way Round">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">The Long Way Round</p>
-          <p class="meta">42 min</p>
+        <div class="episode-info">
+          <p class="episode-title">The Quiet Economics of Night Markets</p>
+          <p class="episode-meta">42 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play The Quiet Economics of Night Markets">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
       <li class="episode">
-        <button class="play" aria-label="Play Notes from a Slow Kitchen">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">Notes from a Slow Kitchen</p>
-          <p class="meta">28 min</p>
+        <div class="episode-info">
+          <p class="episode-title">Salt, Smoke, and the Oldest Recipes</p>
+          <p class="episode-meta">28 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play Salt, Smoke, and the Oldest Recipes">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
       <li class="episode">
-        <button class="play" aria-label="Play Lighthouse Keepers">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">Lighthouse Keepers</p>
-          <p class="meta">1 hr 6 min</p>
+        <div class="episode-info">
+          <p class="episode-title">Listening Rooms: A Brief History</p>
+          <p class="episode-meta">55 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play Listening Rooms: A Brief History">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
       <li class="episode">
-        <button class="play" aria-label="Play Quiet Sundays">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">Quiet Sundays</p>
-          <p class="meta">35 min</p>
+        <div class="episode-info">
+          <p class="episode-title">Why Mapmakers Lied on Purpose</p>
+          <p class="episode-meta">36 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play Why Mapmakers Lied on Purpose">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
       <li class="episode">
-        <button class="play" aria-label="Play Field Recordings, Vol. 3">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">Field Recordings, Vol. 3</p>
-          <p class="meta">19 min</p>
+        <div class="episode-info">
+          <p class="episode-title">Field Notes from a Lighthouse Keeper</p>
+          <p class="episode-meta">19 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play Field Notes from a Lighthouse Keeper">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
     </ul>
   </section>
 
   <section class="pane theme-dark" aria-label="Dark theme">
     <p class="pane-label">Dark</p>
-    <header class="header">
-      <h1>Episodes</h1>
-      <p>Tallowcast</p>
-    </header>
+    <div class="header">
+      <h1>Tallowcast</h1>
+      <p>Recently added episodes</p>
+    </div>
     <ul class="episode-list">
       <li class="episode">
-        <button class="play" aria-label="Play The Long Way Round">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">The Long Way Round</p>
-          <p class="meta">42 min</p>
+        <div class="episode-info">
+          <p class="episode-title">The Quiet Economics of Night Markets</p>
+          <p class="episode-meta">42 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play The Quiet Economics of Night Markets">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
       <li class="episode">
-        <button class="play" aria-label="Play Notes from a Slow Kitchen">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">Notes from a Slow Kitchen</p>
-          <p class="meta">28 min</p>
+        <div class="episode-info">
+          <p class="episode-title">Salt, Smoke, and the Oldest Recipes</p>
+          <p class="episode-meta">28 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play Salt, Smoke, and the Oldest Recipes">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
       <li class="episode">
-        <button class="play" aria-label="Play Lighthouse Keepers">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">Lighthouse Keepers</p>
-          <p class="meta">1 hr 6 min</p>
+        <div class="episode-info">
+          <p class="episode-title">Listening Rooms: A Brief History</p>
+          <p class="episode-meta">55 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play Listening Rooms: A Brief History">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
       <li class="episode">
-        <button class="play" aria-label="Play Quiet Sundays">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">Quiet Sundays</p>
-          <p class="meta">35 min</p>
+        <div class="episode-info">
+          <p class="episode-title">Why Mapmakers Lied on Purpose</p>
+          <p class="episode-meta">36 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play Why Mapmakers Lied on Purpose">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
       <li class="episode">
-        <button class="play" aria-label="Play Field Recordings, Vol. 3">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="info">
-          <p class="title">Field Recordings, Vol. 3</p>
-          <p class="meta">19 min</p>
+        <div class="episode-info">
+          <p class="episode-title">Field Notes from a Lighthouse Keeper</p>
+          <p class="episode-meta">19 min</p>
         </div>
+        <button class="play-btn" type="button" aria-label="Play Field Notes from a Lighthouse Keeper">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5v11l10-5.5z"/></svg>
+        </button>
       </li>
     </ul>
   </section>
 
 </div>
-
 </body>
 </html>

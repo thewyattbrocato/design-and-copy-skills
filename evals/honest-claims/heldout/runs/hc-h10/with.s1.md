@@ -1,36 +1,10 @@
-**POST DE INSTAGRAM**
+**1.** (124 characters)
+Odd Fern Goods: last chance! 20% off everything ends Sunday 10/18 at 11:59 pm. Use code FERN20 at oddferngoods.example/sale
 
-🚲 Puesta a punto básica: 25 € (antes 30 €)
+**2.** (149 characters)
+Last call: our 20% off sale ends Sunday night (10/18, 11:59 pm). Ceramics + candles, code FERN20. Free shipping over $60. oddferngoods.example/sale
 
-En Taller Ruedalibre te dejamos la bici lista para rodar sin que pierdas la semana esperando.
+**3.** (140 characters)
+Sunday 10/18 at 11:59 pm, the 20% off ends. Stock up on ceramics & candles from Odd Fern Goods with code FERN20: oddferngoods.example/sale
 
-✅ Traes la bici antes de las 11:00 y te la devolvemos el mismo día
-✅ 25 € en vez de 30 €, hasta el 30 de noviembre
-✅ Abrimos de lunes a sábado, de 9:00 a 19:00
-
-📍 Calle Sueca, Zaragoza
-
-Pásate esta semana y llega al invierno con la bici a punto.
-
-#Zaragoza #TallerDeBicis #Bicicleta #CiclismoUrbano #TallerRuedalibre
-
----
-
-**CARTEL PEQUEÑO**
-
-**TALLER RUEDALIBRE**
-
-**Puesta a punto básica**
-**25 €** ~~30 €~~
-*Hasta el 30 de noviembre*
-
-Trae tu bici antes de las 11:00
-y te la devolvemos **el mismo día**.
-
-Lunes a sábado, de 9:00 a 19:00
-Calle Sueca, Zaragoza
-
----
-
-- No incluí ninguna comparación con el taller de la esquina, porque no habéis comprobado sus precios. Si los miráis y los tenéis anotados con fecha, os preparo una línea con ese dato.
-- En lugar de decir "la mejor opción del barrio", que no se puede demostrar, el texto se apoya en lo que sí os distingue: el precio, la entrega el mismo día y el horario.
+I counted each message by hand, so paste them into your SMS tool to confirm the totals. The urgency comes only from your real deadline. I left out "almost gone" stock language, since you didn't say anything about limited inventory. Message 2 mentions free shipping over $60 as a plain fact, not as a weekend perk.

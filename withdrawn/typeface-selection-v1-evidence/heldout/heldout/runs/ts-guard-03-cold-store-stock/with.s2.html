@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Check – Brannock Cold Storage</title>
+<style>
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: #111;
+    color: #fff;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.25;
+  }
+  .top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #111;
+    padding: 8px 8px 6px;
+    border-bottom: 3px solid #444;
+  }
+  h1 { margin: 0 0 6px; font-size: 20px; font-weight: bold; }
+  .searchrow { display: table; width: 100%; border-collapse: collapse; }
+  .searchrow .cell { display: table-cell; vertical-align: middle; }
+  .searchrow .btncell { width: 1%; padding-left: 6px; }
+  label.sr { position: absolute; left: -9999px; }
+  #search {
+    box-sizing: border-box;
+    width: 100%;
+    height: 56px;
+    padding: 0 10px;
+    font-size: 22px;
+    font-family: inherit;
+    color: #000;
+    background: #fff;
+    border: 3px solid #fff;
+    border-radius: 0;
+  }
+  button {
+    height: 56px;
+    min-width: 72px;
+    padding: 0 12px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: inherit;
+    color: #000;
+    background: #ffc933;
+    border: 3px solid #ffc933;
+    border-radius: 0;
+  }
+  button:active { background: #fff; border-color: #fff; }
+  #search:focus, button:focus, .count:focus {
+    outline: 4px solid #4db8ff;
+    outline-offset: 0;
+  }
+  .summary { margin: 6px 0 0; font-size: 17px; color: #ddd; }
+  .summary b { color: #fff; }
+
+  .wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    min-width: 320px;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  th {
+    text-align: left;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #ccc;
+    background: #222;
+    padding: 6px 4px;
+    border-bottom: 2px solid #666;
+  }
+  td {
+    padding: 6px 4px;
+    border-bottom: 1px solid #555;
+    vertical-align: middle;
+    word-wrap: break-word;
+  }
+  th.sku, td.sku { width: 27%; padding-left: 8px; }
+  th.bin, td.bin { width: 21%; }
+  th.exp, td.exp { width: 13%; text-align: right; }
+  th.cnt, td.cnt { width: 22%; }
+  th.st,  td.st  { width: 17%; }
+  td.sku { font-weight: bold; font-size: 19px; }
+  td.exp { font-size: 20px; }
+  .count {
+    box-sizing: border-box;
+    width: 100%;
+    height: 56px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    font-family: inherit;
+    color: #000;
+    background: #fff;
+    border: 3px solid #fff;
+    border-radius: 0;
+    padding: 0 2px;
+  }
+  td.st { font-weight: bold; font-size: 16px; border-left: 8px solid #666; padding-left: 5px; }
+  td.st span { display: block; font-size: 18px; }
+  tr.pending td.st { color: #ccc; border-left-color: #777; }
+  tr.ok td.st { color: #5fe08a; border-left-color: #5fe08a; }
+  tr.short td.st { color: #ff8a80; border-left-color: #ff5252; }
+  tr.over td.st { color: #ffc933; border-left-color: #ffc933; }
+  tr.short, tr.over { background: #1d1d1d; }
+
+  #empty {
+    display: none;
+    padding: 20px 10px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Stock Check</h1>
+  <div class="searchrow">
+    <div class="cell">
+      <label class="sr" for="search">Search SKU or bin</label>
+      <input id="search" type="text" placeholder="Scan or type SKU / bin" autocomplete="off" autocapitalize="characters">
+    </div>
+    <div class="cell btncell"><button id="clear" type="button">Clear</button></div>
+  </div>
+  <p class="summary" id="summary" aria-live="polite"></p>
+</div>
+
+<div class="wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="sku">SKU</th>
+        <th class="bin">Bin</th>
+        <th class="exp">Exp</th>
+        <th class="cnt">Count</th>
+        <th class="st">Status</th>
+      </tr>
+    </thead>
+    <tbody id="body"></tbody>
+  </table>
+  <div id="empty">No match. Clear search.</div>
+</div>
+
+<script>
+(function () {
+  var data = [
+    ["FZ-1001", "A-01-1", 48],
+    ["FZ-1018", "A-01-3", 120],
+    ["FZ-1042", "A-02-2", 36],
+    ["FZ-1057", "A-04-1", 72],
+    ["FZ-2003", "B-01-1", 24],
+    ["FZ-2019", "B-02-3", 90],
+    ["FZ-2064", "B-03-2", 60],
+    ["CH-3010", "C-01-1", 144],
+    ["CH-3027", "C-02-2", 18],
+    ["CH-3055", "C-04-3", 52],
+    ["DY-4002", "D-01-2", 200],
+    ["DY-4031", "D-03-1", 30]
+  ];
+
+  var body = document.getElementById("body");
+  var search = document.getElementById("search");
+  var clearBtn = document.getElementById("clear");
+  var summary = document.getElementById("summary");
+  var empty = document.getElementById("empty");
+  var rows = [];
+
+  function cell(cls, text) {
+    var td = document.createElement("td");
+    td.className = cls;
+    td.appendChild(document.createTextNode(text));
+    return td;
+  }
+
+  function build() {
+    var i;
+    for (i = 0; i < data.length; i++) {
+      (function (d) {
+        var tr = document.createElement("tr");
+        var tdIn = document.createElement("td");
+        var inp = document.createElement("input");
+        var tdSt = document.createElement("td");
+        tr.className = "pending";
+        tr.appendChild(cell("sku", d[0]));
+        tr.appendChild(cell("bin", d[1]));
+        tr.appendChild(cell("exp", String(d[2])));
+        tdIn.className = "cnt";
+        inp.type = "number";
+        inp.className = "count";
+        inp.min = "0";
+        inp.step = "1";
+        inp.setAttribute("inputmode", "numeric");
+        inp.setAttribute("pattern", "[0-9]*");
+        inp.setAttribute("aria-label", "Counted quantity for " + d[0]);
+        tdIn.appendChild(inp);
+        tr.appendChild(tdIn);
+        tdSt.className = "st";
+        tr.appendChild(tdSt);
+        body.appendChild(tr);
+        var row = { tr: tr, inp: inp, st: tdSt, sku: d[0], bin: d[1], exp: d[2], state: "pending" };
+        rows.push(row);
+        update(row);
+        inp.onfocus = function () { try { inp.select(); } catch (e) {} };
+        inp.oninput = inp.onkeyup = function (e) {
+          if (e && e.keyCode === 13) { return; }
+          update(row);
+          refresh();
+        };
+        inp.onkeydown = function (e) {
+          e = e || window.event;
+          if (e.keyCode === 13) { focusNext(row); return false; }
+        };
+      })(data[i]);
+    }
+  }
+
+  function update(row) {
+    var v = row.inp.value;
+    var html, cls, n, diff;
+    if (v === "" || isNaN(parseInt(v, 10)) || parseInt(v, 10) < 0) {
+      cls = "pending"; html = "Not counted";
+    } else {
+      n = parseInt(v, 10);
+      diff = n - row.exp;
+      if (diff === 0) { cls = "ok"; html = "OK"; }
+      else if (diff < 0) { cls = "short"; html = "SHORT<span>" + diff + "</span>"; }
+      else { cls = "over"; html = "OVER<span>+" + diff + "</span>"; }
+    }
+    row.state = cls;
+    row.tr.className = cls;
+    row.st.innerHTML = html;
+  }
+
+  function visible(row) {
+    return row.tr.style.display !== "none";
+  }
+
+  function focusNext(row) {
+    var i = 0, j;
+    for (; i < rows.length; i++) { if (rows[i] === row) { break; } }
+    for (j = i + 1; j < rows.length; j++) {
+      if (visible(rows[j])) { rows[j].inp.focus(); return; }
+    }
+    row.inp.blur();
+  }
+
+  function refresh() {
+    var q = search.value.replace(/^\s+|\s+$/g, "").toLowerCase();
+    var shown = 0, counted = 0, ok = 0, bad = 0, i, r, match;
+    for (i = 0; i < rows.length; i++) {
+      r = rows[i];
+      match = q === "" || r.sku.toLowerCase().indexOf(q) !== -1 || r.bin.toLowerCase().indexOf(q) !== -1;
+      r.tr.style.display = match ? "" : "none";
+      if (match) { shown++; }
+      if (r.state !== "pending") {
+        counted++;
+        if (r.state === "ok") { ok++; } else { bad++; }
+      }
+    }
+    empty.style.display = shown === 0 ? "block" : "none";
+    summary.innerHTML = "Counted <b>" + counted + "/" + rows.length + "</b> &nbsp; OK <b>" + ok +
+      "</b> &nbsp; Off <b>" + bad + "</b>" + (q !== "" ? " &nbsp; Showing <b>" + shown + "</b>" : "");
+  }
+
+  search.oninput = search.onkeyup = function (e) {
+    if (e && e.keyCode === 13) {
+      for (var i = 0; i < rows.length; i++) {
+        if (visible(rows[i])) { rows[i].inp.focus(); break; }
+      }
+      return;
+    }
+    refresh();
+  };
+  clearBtn.onclick = function () {
+    search.value = "";
+    refresh();
+    search.focus();
+  };
+
+  build();
+  refresh();
+})();
+</script>
+</body>
+</html>

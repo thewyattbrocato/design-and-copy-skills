@@ -25,7 +25,9 @@ For full reviews, audits and scored reviews. A small ask uses the verdict and a 
 - **Minor:** noticeable friction or inconsistency; people cope.
 - **Polish:** refinement, after the rest.
 
-For a quick triage of a chart or graphic: ugly (taste), bad (hard to read or perceive), wrong (the data is misrepresented). Wrong outranks bad outranks ugly.
+To match three-level severity elsewhere: Blocker = blocks, Major = slows, Minor and Polish = annoys.
+
+For a chart, a finding that misstates the data outranks one that is hard to read, and both outrank a matter of taste.
 
 ## Score anchors (same for every dimension)
 

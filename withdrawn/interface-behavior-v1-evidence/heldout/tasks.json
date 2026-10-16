@@ -1,0 +1,127 @@
+[
+  {
+    "id": "ib-h01",
+    "kind": "build",
+    "prompt": "I coordinate volunteers at Larder Lane Pantry and I need a Saturday shift board. Make it one self-contained HTML file with inline CSS and JS, system fonts, nothing loaded from outside. About eight shifts across the day (sorting, front desk, driver, bagging, cleanup, that kind of thing), each with a handful of spots. People sign up and sometimes have to drop out. Most are regulars and they mostly use it on their phones, usually in a hurry. Make it actually work, not a static picture.",
+    "rubric": [
+      "Each shift shows its own current state in place (spots left, whether this volunteer is on it) without needing another page or an alert.",
+      "The volunteer's name or contact is asked for once and reused for later sign-ups, not re-asked on every shift.",
+      "Dropping out is one quick step that can be reversed (an undo or re-join affordance), not gated by a blocking 'Are you sure?' dialog.",
+      "A full shift reads as full and offers something sensible (waitlist, a note, another shift), not a silently dead button or a hidden row.",
+      "Controls are tap-sized and the layout holds at phone width.",
+      "The page is interactive: signing up changes the visible spot counts and the signed-up state."
+    ]
+  },
+  {
+    "id": "ib-h02",
+    "kind": "critique",
+    "prompt": "Customers of our bookkeeping app Ledgerleaf keep telling us it's \"tiring\" to use but they can't say why. Here's what happens when a bookkeeper works through a typical month-end:\n\n- Click a transaction's category: a dialog asks \"Change category? This will update the transaction.\" Yes/No.\n- Click \"Mark reconciled\": a dialog asks \"Are you sure you want to reconcile this transaction?\" Yes/No.\n- Delete a draft invoice: a dialog asks \"Are you sure you want to delete this invoice?\" Yes/No. After deleting, a second dialog says \"Invoice deleted.\" with an OK button.\n- Void a posted invoice that has already been emailed to the client: no dialog, it just voids and the row turns grey.\n- Edit any field and navigate away: nothing happens, the edit is saved silently.\n- There is no way to get a deleted draft or a changed category back.\n\nWhat's going on here and what would you change first?",
+    "rubric": [
+      "Identifies that routine, easily reversed actions (category change, reconcile, draft delete) are interrupted by dialogs while the one consequential action (voiding an emailed invoice) is not.",
+      "Proposes replacing the routine confirmations with a way to reverse the action afterward (undo, restore, history), and says why that is faster than asking first.",
+      "Proposes a deliberate, specific check for the void, or another safeguard that matches its real consequence (client already notified), rather than a generic yes/no.",
+      "Points out that the 'Invoice deleted' acknowledgement dialog adds a click for no information, or the equivalent small in-place confirmation as the fix.",
+      "Gives a fix order and stays on behavior; it does not drift into restyling the interface.",
+      "Does not invent details about the app beyond the list given, or flags clearly what it is assuming."
+    ]
+  },
+  {
+    "id": "ib-h03-guard-irreversible",
+    "kind": "choose",
+    "prompt": "We build Postmark & Pine, an email tool for small shops. Two actions in the product: \"Archive list\" (hides a subscriber list from the sidebar) and \"Send campaign\" (emails everyone on a list, which can be anywhere from 200 to 30,000 people). Our product lead wants the two to behave the same for consistency: either both get a confirmation dialog or both get an undo toast. Which should it be?",
+    "rubric": [
+      "Gives a clear recommendation up front rather than surveying options.",
+      "Does not accept the premise of one pattern for both; treats the two actions differently because one can be taken back and the other cannot once sent.",
+      "Archive is handled so it can be reversed afterward (undo or restore) without a dialog first.",
+      "Send gets a deliberate pause that carries specifics (which list, how many people, a clear send action) or a short cancel window before delivery, not a bare 'Are you sure?'.",
+      "Briefly states what the answer depends on (for example whether archiving truly keeps the list and its data) instead of asserting it as fact."
+    ]
+  },
+  {
+    "id": "ib-h04",
+    "kind": "layout",
+    "prompt": "Front-desk staff at Maple Row Vet look at today's appointments, roughly 60 rows, with filters for vet and status. They want to pick several appointments and then do something to them: send a reminder text to the owners, mark them checked in, reschedule, or cancel. How should selecting work and where do the actions go? Describe the layout and how it behaves; no need to design the visuals.",
+    "rubric": [
+      "Makes the current selection obvious (a count or summary that is always visible while rows are selected).",
+      "Bulk actions appear in relation to the selection instead of sitting as permanently visible buttons that are mostly disabled.",
+      "Is explicit about what 'select all' means when filters are applied or the list is longer than what is shown, and what happens to the selection when a filter changes.",
+      "Treats the actions unequally by consequence: checking in is light and reversible, while texting owners or cancelling is previewed or reversible in a way that matches its cost.",
+      "Covers how selection is made fast for repeat use (range selection, keyboard, or similar) and what the rows do after an action completes.",
+      "Stays at the level of behavior and layout and does not spend its length on colors or typography."
+    ]
+  },
+  {
+    "id": "ib-h05",
+    "kind": "explain",
+    "prompt": "In Tidal Print Co., customers design a poster and then export a print-ready PDF. The export takes anywhere from under a second to maybe 40 seconds depending on size. Right now every action in the editor (save, rename, duplicate, export) puts up the same full-screen spinner. One of our developers says that's fine because \"loading is loading.\" Write me something I can send him explaining what we should do instead.",
+    "rubric": [
+      "Explains that how long an action takes should change what the screen does, using rough time bands rather than one treatment for everything.",
+      "Says fast actions like rename and save should show their result in place immediately and should not block the screen with a spinner.",
+      "For the long export, describes progress or a stated wait, the ability to keep working or leave, and a clear completion that delivers the file where the customer will find it.",
+      "Addresses what happens if an action fails after the screen already moved on (the failure is visible and recoverable).",
+      "Is written as a message to a colleague and is plain and short, with no lecture."
+    ]
+  },
+  {
+    "id": "ib-h06-guard-leave-alone",
+    "kind": "polish",
+    "prompt": "Here's the behavior spec for receipt capture in our expense app. Engineers start on it Monday. Give it a once-over and fix anything that's wrong before I send it.\n\n**Receipt capture**\n\nWho and how often: field sales reps, a few receipts a day, usually standing in a parking lot with one hand free. Speed matters more than completeness at capture; the full detail can be filled in later.\n\n1. Tapping Capture opens the camera immediately. One photo saves a draft expense right away; there is no save step.\n2. The draft is pre-filled: amount and date read from the photo when legible, category set to the rep's most recent category for that merchant (or blank for a new merchant), currency set to the rep's home currency.\n3. Each draft shows its state on its own row: Uploading, Needs details (amount or category missing), or Ready. The state changes in place. Reps never have to open a draft to find out whether it went through.\n4. If there is no signal, the photo is kept on the phone and the row shows \"Waiting for signal\". It uploads on its own when the connection returns. Nothing is lost if the app is closed.\n5. Deleting a draft removes it at once and shows \"Draft deleted. Undo\" for 10 seconds. After that it moves to a Recently deleted list that keeps it for a month. There is no confirmation dialog.\n6. Submitting a report to a manager is the one step that does ask: the sheet shows the total, the number of expenses and the manager's name, and the button reads \"Submit 7 expenses to Dana\". After submitting, reps can recall the report until the manager opens it.\n7. A rep can switch the camera between single receipt and a multi-page receipt; the current mode is shown on the capture screen and resets to single when the camera closes.",
+    "rubric": [
+      "Treats the spec as essentially sound and says so; does not rewrite it wholesale or restructure it.",
+      "Keeps its core decisions intact: no save step, no confirmation on delete with undo plus a recovery list, the specific confirmation on submit, state shown in place.",
+      "Makes at most a few small, specific edits or flags, each with a short reason, and does not add new sections, features or long passages.",
+      "Does not flip a good decision into a worse one (for example adding a confirm to delete or a save button).",
+      "Is short; it does not pad the reply with praise or a restated copy of the whole spec."
+    ]
+  },
+  {
+    "id": "ib-h07",
+    "kind": "critique",
+    "prompt": "We run PartsDeck, an internal catalog where shop staff look up replacement parts for appliances. Staff say it \"feels clunky\" but nobody has pinned it down. Here's how it works today:\n\n- Search lives only on the home page. Typing then pressing Enter takes you to a results page.\n- Results match on part name only, exact words. Searching a model number, a misspelling, or \"washer pump\" when the part is called \"pump, washing machine\" returns nothing.\n- When there are no results the page says \"No results found.\"\n- On the results page you can filter by brand and by price. Open a part, press Back, and the filters are cleared and the list is at the top again.\n- Part detail opens as a full page. There's no way to go to the next result without going back to the list.\n- The page doesn't show where you are or what you searched for once you're on a part.\n\nWhat's wrong and what do you fix first?",
+    "rubric": [
+      "Names losing the user's place (filters, query, scroll position) when they go back from a part as a main problem and proposes keeping it.",
+      "Addresses the dead-end search: matching that tolerates model numbers, misspellings and alternate names, or at least suggestions, and a no-results state that offers a way forward.",
+      "Notes that search is only reachable from the home page and that where the user is and what they searched for is lost on a part page, and fixes it.",
+      "Ranks the fixes with a clear first priority and a reason.",
+      "Stays within the facts given and says what it can't know without seeing usage; does not invent complaints or analytics.",
+      "Stays on behavior and navigation and does not redesign the look of the pages."
+    ]
+  },
+  {
+    "id": "ib-h08-guard-length-cap",
+    "kind": "explain",
+    "prompt": "Under 120 words total, please: how should undo work when someone deletes a note in Reedbed, a notes app for phones? Engineers will read it and build from it.",
+    "rubric": [
+      "Is 120 words or fewer, counting everything in the reply.",
+      "States how long undo is available and where it appears, in terms an engineer could build.",
+      "Covers what happens after the undo window closes or the app is closed (some recovery path, or an explicit decision that there is none).",
+      "Does not ask for a confirmation before deleting.",
+      "Has no preamble, summary line or filler; every sentence carries a decision."
+    ]
+  },
+  {
+    "id": "ib-h09-guard-expert-tool",
+    "kind": "choose",
+    "prompt": "I run Kestrel Towing. Our dispatchers use our own dispatch console all day, around 300 calls a shift, mostly the same handful of job types. The new general manager wants it friendlier: a step-by-step wizard for every new job, tooltips on everything, and an \"Are you sure?\" before a truck is assigned. The dispatchers say that would slow them to a crawl. Who's right, and what should I actually do? Last quarter we had two cases where one truck got assigned to two jobs.",
+    "rubric": [
+      "Takes a position: for people who use the tool all day, a wizard and a confirmation on every assignment would cost far more than they protect.",
+      "Keeps the fast path: typing or keyboard entry, defaults carried over from recent jobs, no forced step-by-step flow for experienced dispatchers.",
+      "Takes the double-assignment problem seriously and addresses it at the point it happens (an inline conflict warning, a blocked double booking, or an easy reassign and undo), not with a blanket confirmation.",
+      "Finds the legitimate concern behind the manager's request (new hires or error rate) and offers help that doesn't get in the way of experienced users, such as optional help or a learning mode.",
+      "Is concrete and short, and says plainly what it would change and what it would leave alone."
+    ]
+  },
+  {
+    "id": "ib-h10",
+    "kind": "build",
+    "prompt": "Make the settings screen for Orchard FM, a small-town radio streaming app, as one self-contained HTML file with inline CSS and JS, system fonts, nothing loaded from outside. It should have the usual things: streaming quality, download only on wifi, a default sleep timer, crossfade between songs, new-show notifications, show lyrics, text size, and a way to put everything back to normal. It will be viewed on a phone but should be fine on a desktop too. It should respond to taps and clicks.",
+    "rubric": [
+      "Every setting's current value is visible on the screen without opening anything.",
+      "A change takes effect right away and the page shows in place that it was kept, or else makes clear what is still unsaved; there is no state where the user cannot tell.",
+      "The settings are ordered and grouped by how often people change them, not alphabetically or in the order the request listed them.",
+      "The reset option is clearly separated from everyday settings, and resetting is recoverable or clearly scoped rather than silently wiping everything.",
+      "Controls are appropriate to the choice (switches for on and off, segmented or select controls for a few options) and are comfortably tap-sized at phone width.",
+      "Defaults are sensible and visible, and the page works when tapped (toggles flip, selections change)."
+    ]
+  }
+]

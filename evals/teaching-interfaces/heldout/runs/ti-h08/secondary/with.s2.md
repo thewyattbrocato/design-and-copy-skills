@@ -1,17 +1,19 @@
-Your instinct is right. A 40-shortcut tour on day one fails for three reasons:
+**Your instinct is right.** A day-one walkthrough of 40 shortcuts is a tour of an inventory. Nobody retains a list of 40 keystrokes from one session, and busy lawyers will skip it, which means the first real task gets delayed for something they won't remember. Shortcuts are learned when a person needs one, at the moment they would otherwise reach for the mouse.
 
-- **Nothing to apply it to.** On day one there are no matters, notes, or citations, so the shortcuts are abstract and get forgotten before they're needed.
-- **Recall is poor.** People retain a handful of items from a long sequence. Most of the tour will be dismissed as a click-through.
-- **Power users are the audience.** Lawyers who spend eight hours a day in a tool will learn shortcuts when a specific moment makes them worth learning, and they will resent being walked through a tour.
+**What I'd propose instead:**
 
-What works better is teaching each shortcut at the moment it's useful:
+1. **Show the shortcut where the mouse action already is.** Put the keystroke next to every menu item, button tooltip, and right-click option that has one. Someone who opens split view from the menu sees `⌘⌥S` and learns it without a lesson. This costs almost nothing to build and works for all 40.
 
-1. **Show the shortcut next to the action.** Every menu item, button tooltip, and quick-cite prompt should display its shortcut. This is passive and costs nothing, and it's where most people first notice shortcuts.
-2. **Make a command palette the main discovery tool.** Typing "cite" or "matter" and seeing the shortcut beside each result teaches more than any tour, and it works for the 40th shortcut as well as the 4th.
-3. **Hint after repetition.** When someone does the same mouse action a few times in a row (e.g., switching matters from the sidebar), show a small one-line tip: "Tip: ⌘⇧M jumps to any matter." Dismissing it should be one click, and it should never reappear for that tip. Gmail, Figma, and Linear use variations of this.
-4. **Keep a reference card and a `?` overlay.** Provide a one-page printable sheet for firm trainers and an in-app cheat sheet. Lawyers and paralegals often learn from a colleague or a firm training session, so a card they can hand around is useful.
-5. **Let them remap.** Firms have existing habits from Word, Westlaw/Lexis, and Outlook, and a shortcut that collides with one of those will get ignored or cause errors. Check your bindings against the apps they keep open next to Lumenote, and let people remap.
+2. **Make the first task use two or three shortcuts.** Pick the ones that matter most for the core flow (probably jumping between matters and the most common insert, if that's quick-cite). Have the guided first task use them, with the shortcut shown beside the step. The one-sentence goal: "After today, they can switch matters without the mouse." Anything beyond those three waits.
 
-If the PM needs something concrete for day one, I'd propose three shortcuts at most, chosen by the first task a user performs (for example, the one for the action they'll do most in their first session), with the rest surfaced through the palette and repetition hints.
+3. **Add a command palette, if you don't have one.** A searchable action list (type "split," "cite," "matter") that shows each command's shortcut is how most power users discover features. It covers all 40 without teaching any of them up front, and it doubles as a fallback for anything they forgot.
 
-To make the case, propose a test: compare the full tour against the three-shortcut version, and measure shortcut use as a share of total actions at 30 days, plus retention. If the tour doesn't move that number, that's the evidence you need.
+4. **Offer one contextual nudge, once per shortcut.** If someone uses the same mouse path repeatedly, show a small, dismissible hint: "Tip: this is `⌘⌥J`." Show each hint once and never again. Tune the threshold in testing rather than guessing a number now.
+
+5. **Keep a reference sheet, not a tutorial.** A "Keyboard shortcuts" page (opened with `?` or from Help) grouped by task, such as "Matters," "Writing," "Citations," with what each does. Experts pull it when they need it. It should never be a gate.
+
+6. **Let them rebind keys.** Lawyers and paralegals bring muscle memory from Word, Westlaw, and Lexis, and some of your defaults will collide with OS or Word shortcuts. Check conflicts before launch. A rebinding option is cheap and removes the biggest source of friction.
+
+**How to frame it for the PM:** The goal isn't "every new user knows all 40 on day one." It's "each person finds the handful that save them the most time within the first week, and still uses them two weeks later without help." That's measurable. Track adoption per shortcut, and check whether people who used a shortcut in week one still use it in week three.
+
+**Assumptions:** I'm assuming the app is mostly menu- and button-driven today and doesn't yet have a command palette. If it does, lean on that first (point 3 becomes the main discovery path). I haven't seen your current UI, so the first-task choices need checking against what people actually do on day one.

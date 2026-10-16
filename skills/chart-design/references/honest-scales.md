@@ -2,7 +2,7 @@
 
 Load this when setting axes, comparing across time, adjusting money, handling partial or missing periods, sizing circles, binning, or choosing the aspect ratio.
 
-The test behind every rule here: does the size of the drawing change by the same proportion as the data? If a value doubles, the mark should look about twice as large, and a reader who has never seen the numbers should come away with the right impression.
+The test behind every rule here: if the value doubled, would a stranger guess "about twice"? The mark should look about twice as large.
 
 ## Baselines
 
@@ -33,7 +33,7 @@ If a dual axis is required anyway, color each axis title and tick labels to matc
 
 ## Money
 
-- Long series (more than a few years) in dollars, euros or any currency mix inflation into the trend. Plot constant or real values, an index, or a share of income or price of something else, and state the base year.
+- A long series (more than a few years) in any currency mixes inflation into the trend: rent over 20 years looks like it climbed much more than it did in real terms. Plot constant or real values, an index, or a share of income, and state the base year.
 - When the nominal number is the point (a salary offer, a committed budget), plot nominal and say so; consider showing both in a pair of lines.
 - Convert foreign currencies at a stated rate or date, not whichever rate the data happens to use at each point.
 
@@ -50,7 +50,7 @@ If a dual axis is required anyway, color each axis title and tick labels to matc
 - If you encode a value in a circle or square, scale the area to the value. Doubling a radius quadruples the area. Take the square root of value (relative to a reference) to get the radius.
 - Icons, logos and pictograms scaled in two dimensions mislead the same way. Use bars, or repeat one fixed-size icon.
 - Do not use one value for both height and width of a bar.
-- Never use a three-dimensional shape to carry a one-dimensional value.
+- Do not draw a flat quantity as a cube, cylinder or tilted bar; the extra depth changes how big it looks.
 
 ## Bins and intervals
 

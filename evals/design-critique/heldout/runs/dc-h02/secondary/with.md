@@ -1,45 +1,43 @@
-The spec is mostly solid. The main risks are in the day/time logic, the 360px behavior, and a few accessibility gaps that are cheap to fix before Friday. I reviewed the spec only. If you share the built page or repo, I can check the actual rendering.
+**Verdict: this is close to ship-ready, but the page promises a booking and the spec delivers a request.** The top fix is to say "request" before the patient taps the button, and to design the no-slot and slot-taken paths, which the spec doesn't cover.
 
-## Fix before Friday
+**Findings, ranked**
 
-1. **Time slots aren't tied to the day.** The spec has a weekday picker and a slot grid but doesn't say the slots depend on the day. Slots should reload when the day changes, and the grid needs an empty state ("No openings that day. Pick another day or call us"). Otherwise someone can select a 10:00 slot on Tuesday that only exists on Thursday.
+1. **Major: expectation gap at submit.** "Request this time" next to a time slot reads as a booked appointment. Add one line above the button, such as "The office confirms by text within [X] hours." Without it, patients will assume they're booked and call when they aren't. The confirmation screen then has to say "requested, not yet confirmed," not just repeat the day and time.
 
-2. **"520px wide" will break at 360px.** Use `max-width: 520px; width: 100%` with 16px side gutters. A fixed 520px form forces sideways scroll, which is the exact thing you're testing for. Also test at 320px, since WCAG reflow is defined at 320 CSS px, and at 200% text size.
+2. **Major: missing states.** The spec doesn't cover:
+   - A day with no open slots (the time grid needs an empty message and a nudge to another day or to "Call us instead").
+   - A slot taken between load and submit (inline error, refreshed grid, the chosen day kept).
+   - A submit failure or network error.
+   - Weekends. Mon–Fri is a business rule, so say on the page why there's no Saturday option, or say the office is closed.
 
-3. **The contrast claim for the primary button is slightly off.** `#0b5cad` on white is about **6.7:1**, not 7:1. It passes AA (4.5:1) comfortably but not AAA. Fix the number in any doc or copy that cites it. The other colors hold up: `#1b2430` is about 15.7:1 and `#b42318` is about 6.6:1 on white.
+3. **Major: the phone number needs a `tel:` link.** The header number and "Call us instead" should both be tap-to-call links. Tap targets for the text link need padding to reach 44px, since plain text is about 20px tall.
 
-4. **Dental emergencies.** A "Request this time" form is the wrong path for someone in acute pain or with a knocked-out tooth. Add one line near the top or near the button: "Tooth pain or an injury? Call 555-0142 now." This is a real patient-safety gap, not polish.
+4. **Major: confirm 555-0142 is the real practice number.** The 555-01xx range is reserved for fictional use. This is likely a placeholder, and it's the one number patients will use if the form fails.
 
-5. **Consent and compliance copy.** You're collecting a mobile number and a visit reason. If you'll text them, the form needs a short line such as "We'll text you to confirm this time." Also confirm with whoever owns compliance that the form, email, and SMS vendors are covered for health information in the US (a BAA if needed). That's a question for your compliance owner, not something I can settle from the spec.
+5. **Minor: the 8px scale is not fully applied.** The 52px button and 44px targets are not multiples of 8. That's fine for sizes, since targets have their own rule, but don't describe the whole system as 8px-based. Keep 32/16 for spacing and drop the claim for sizes.
 
-6. **Focus management.** On submit with errors, move focus to the first invalid field or to an error summary, and link each error to its field with `aria-describedby`. After submit, move focus to the confirmation heading. Without this, screen-reader users won't know the form failed or that it succeeded.
+6. **Minor: mobile number helper text.** "Mobile number" is a good label, but it needs one line saying why, since you're texting confirmations: "We text your confirmation to this number." That is one of the few helper texts that earns its place. Also set `type="tel"`, `autocomplete="tel"` and a `inputmode="tel"`.
 
-## Should fix
+7. **Minor: the "Add a note" disclosure.** Make it a real button with `aria-expanded`, and say the note is optional in its label or helper text so no one assumes it's required.
 
-7. **Input font size.** Set inputs to at least 16px. Smaller text makes iOS Safari zoom on focus, which looks broken.
+8. **Minor: the 360px test is one width.** Test 320px and 375px too, plus 200% and 400% text zoom (WCAG reflow). The segmented Mon–Fri control and the slot grid are where sideways scroll usually appears.
 
-8. **"Call us instead" hit area.** A plain text link is often about 20px tall. Give it a 44px tap area with padding, and make it a `tel:` link. The header phone number should also be a `tel:` link.
+**What works and should stay**
 
-9. **Segmented day control.** Use `role="radiogroup"` with arrow-key navigation, not five independent buttons. Five segments in about 328px usable width is tight, so check the labels don't truncate. Selected state should not rely on color alone; use a fill plus a weight or check mark.
+- Single column at 520px with labels above fields. It's the simplest scan path for a form like this.
+- Inline errors with an icon and plain text. Color is not the only signal.
+- The 52px primary button, full width, with one primary action and a text secondary. The hierarchy is clear.
+- Title and intro sizes and the 60ch line length suit the content.
 
-10. **Focus ring.** "Clearly visible" needs a number. Specify 2px, at least 3:1 against the white background and the button color, with an offset so it isn't clipped.
+**Computed contrast (from the hex values, WCAG 2.x)**
 
-11. **Header at 360px.** Practice name plus an 18px semibold phone number in one row can wrap or overflow. Plan a stacked or truncated layout and test it.
+- `#1b2430` on white: **15.7:1**. Your "~16:1" is fine.
+- `#0b5cad` with white: **6.7:1**, not ~7:1. It passes AA for all text. It fails AAA for normal text (needs 7:1), so either darken slightly to about `#0a56a0` or leave it and don't claim AAA.
+- `#b42318` on white: **6.6:1**. Passes AA.
 
-12. **Form states.** Specify the submitting state (disabled button, spinner, label change) to prevent double submits, and a network-failure message that doesn't lose what the user typed.
+**Not checked**
 
-13. **Autofill and input types.** Use `autocomplete="name"`, `autocomplete="tel"`, and `type="tel"` on the mobile field. Show a format example as helper text, since that's one of the few places helper text earns its space.
-
-14. **Confirmation screen.** Include the practice phone number for changes, and say plainly that this is a request and not a confirmed booking until the practice confirms. "What happens next" should name a time frame, such as "We'll text you within one business day."
-
-15. **Missing basics for a dental practice.** Consider adding the address and hours somewhere. The "no other nav" rule is fine, but patients often look for these on a booking page.
-
-## Keep
-
-- Labels above fields, with errors inline plus icon plus plain text.
-- 44px slot targets and a 52px primary button.
-- The 8px spacing scale.
-- The "Request this time" wording, which sets accurate expectations.
-- Optional note collapsed behind a disclosure.
-
-If you tell me the framework and share the markup or a staging URL, I can check the 360px behavior, focus order, and contrast against the real page.
+- The focus ring's color and contrast. "Clearly visible" needs a value, ideally 3:1 against both the button and white.
+- Real rendering, fonts, and actual slot data.
+- Screen reader behavior and keyboard flow through the day buttons and time grid.
+- The error copy itself and the confirmation wording.

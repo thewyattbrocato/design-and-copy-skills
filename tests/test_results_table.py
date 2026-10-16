@@ -30,6 +30,12 @@ class ResultsTableTest(unittest.TestCase):
         self.t.write("evals/beta/tasks.json", "[]")
         self.t.write("evals/beta/results.json", results("claude:sonnet"))
         self.t.write("evals/beta/heldout/results.json", results("claude:opus", suite="heldout"))
+        self.t.write("evals/alpha/activation.json", json.dumps({"should_load": ["Set the thing.", "Fix the thing."]}))
+        self.t.write("evals/alpha/activation-results.json", json.dumps({"should_load": {"results": [
+            {"prompt": "Set the thing.", "picked": "alpha", "correct": True},
+            {"prompt": "Fix the thing.", "picked": "beta", "correct": False}]}}))
+        self.addCleanup(setattr, mod, "TRY_IT", mod.TRY_IT)
+        mod.TRY_IT = (("alpha", 0),)
 
     def blocks(self):
         return mod.render(self.t.root)
@@ -189,6 +195,33 @@ class ResultsTableTest(unittest.TestCase):
         self.assertIn("superseded, held-out rerun pending", alpha)
         self.assertIn("`claude:sonnet`, same model as the generator", beta)
         self.assertIn("superseded by the held-out run", beta)
+
+    def test_headline_sums_the_loaded_only_tallies_and_counts_marginal_passes(self):
+        self.assertEqual(self.blocks()["headline"], [
+            "**Across 1 skills, counting only the held-out tasks where the skill loaded (2 in all): 0 wins, 0 losses and "
+            "2 ties against the same model without it. 1 of the 1 passes are marginal.**"])
+
+    def test_marginal_block_lists_each_marginal_pass_in_plain_words(self):
+        self.assertEqual(self.blocks()["marginal"], [
+            "- **beta**: The model loaded it on only 2 of 4 tasks; it won no more tasks than it lost."])
+
+    def test_marginal_checks_pair_the_short_reason_with_its_plain_words(self):
+        results = json.loads((self.t.root / "evals/beta/heldout/results.json").read_text())
+        self.assertEqual(mod.marginal_checks(results), [("2 loaded tasks", "the model loaded it on only 2 of 4 tasks"),
+                                                         ("no win margin", "it won no more tasks than it lost")])
+        self.assertEqual(mod.marginal_reasons(results), ["2 loaded tasks", "no win margin"])
+
+    def test_tryit_prints_the_request_word_for_word_with_its_skill(self):
+        self.assertEqual(self.blocks()["tryit"][2:],
+                         ["| \u201cSet the thing.\u201d | [alpha](skills/alpha/SKILL.md) |"])
+
+    def test_tryit_refuses_a_request_that_was_not_routed_to_its_skill(self):
+        mod.TRY_IT = (("alpha", 1),)
+        with self.assertRaises(ValueError):
+            mod.tryit_lines(self.t.root)
+        mod.TRY_IT = (("alpha", 5),)
+        with self.assertRaises(ValueError):
+            mod.tryit_lines(self.t.root)
 
     def test_update_check_and_idempotence(self):
         self.assertEqual(mod.main(["--root", str(self.t.root), "--check"]), 1)

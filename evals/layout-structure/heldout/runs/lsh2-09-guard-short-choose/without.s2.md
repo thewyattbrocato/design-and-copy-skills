@@ -1,0 +1,1 @@
+Go with the full-bleed illustration. For an illustrator, the work is the pitch, and a big image proves her skill before anyone reads a word. Keep her name legible in the corner, and put a short line about what she does in the nav or just below the fold so visitors still learn that quickly.

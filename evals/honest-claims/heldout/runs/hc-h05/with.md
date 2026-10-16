@@ -1,15 +1,31 @@
-I can't write the two headline claims as asked. Your fact sheet says you don't know the city average for your students' school mix, and that you haven't compared yourselves with any franchise. Parents would read "we beat the city average" and "better than the franchises" as facts, and you have nothing behind either. Your real results are strong enough to carry the paragraph without them.
+## Results and what patients say
 
-**Draft paragraph**
+**What you can expect from us**
 
-> Last June, 24 Kestrel Hill students sat the Year 11 maths GCSE, and 19 of them (79%) reached grade 5 or above. Eleven improved by at least two grades from their autumn mock. Those results come from small-group teaching: sessions of no more than five students, 90 minutes a week, led by two qualified teachers. Every half-term, you get a written progress note, so you always know where your child stands and what we're working on next. We're a single local centre, open since 2019, and we know each student by name.
+Every patient starts with a full assessment. We look at how you move, work out what's driving the pain, and agree a plan with you before treatment begins. You'll see the same physiotherapist each visit. Sessions run 45 minutes, which is enough time to treat, teach you your exercises, and answer your questions without watching the clock.
 
-**What I changed and why**
-- **"Beat the city average"** is replaced by your own 79% figure, with its basis (24 students, last June). A comparison can be added if you find a figure that matches your students' school mix. Until then, this keeps the strongest claim you can defend.
-- **"Better than the franchises"** is replaced by a description of what you do: group size, teacher qualifications, and progress notes. Parents can compare those details themselves. If you later get real franchise details, such as their group sizes, you could add a fair side-by-side.
-- **"Improved by two grades"** is scoped to "from their autumn mock", and I wrote "Eleven" rather than "almost half". That's accurate (11 of 24 is 46%), but I kept to the exact count.
+We focus on two areas, knees and shoulders, and we see them every day.
 
-**Check before publishing**
-- Six students attended for only one term, and most joined in the autumn or later. I left this out because the paragraph doesn't claim a full-year effect. Don't add wording like "after a year with us" or "our students gain two grades".
-- The sample is small (24 students, one cohort). Giving counts rather than only percentages helps parents judge that fairly.
-- If you want a stronger parent-facing proof line, add a real parent quote with their permission: [add a real parent quote]. This is optional. Remove the placeholder if you don't have one.
+**What patients say**
+
+We opened five weeks ago, so this section is still filling up. Here is what our first patients have told us:
+
+> [patient quote 1: their words, with their permission]
+
+> [patient quote 2: their words, with their permission]
+
+We'll add outcomes and more patient comments as people finish their rehab with us. Book your first visit and we'll tell you honestly what we think recovery looks like for you.
+
+**First visit with full assessment and treatment plan, 45 minutes, $95.** [Book now]
+
+---
+
+## About Northgate Physio
+
+Northgate Physio is a two-physiotherapist practice on the east side, in a converted bakery. We focus on knee and shoulder rehab, because we'd rather be very good at a few things than average at many. Sessions are 45 minutes and cost $95. Your first visit includes a full assessment, so you leave knowing what's wrong and what happens next. We opened five weeks ago and we want to earn your trust with your injury, one patient at a time.
+
+---
+
+Notes:
+- I left the patient quotes as placeholders. Invented testimonials or recovery statistics would be fabricated proof, and in a health setting they could also draw a complaint. Ask your first few patients for a sentence or two and permission to use it. Quote them as written, with a first name or initials if they agree.
+- "Same physiotherapist each visit" and "agree a plan before treatment" are my assumptions, so cut or change them if they aren't true. Also have the page checked against your regulator's advertising rules for health practices before you go live.

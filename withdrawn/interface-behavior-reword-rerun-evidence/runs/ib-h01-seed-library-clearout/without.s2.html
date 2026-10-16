@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seed Library – Volunteer Desk</title>
+<style>
+  :root {
+    --bg: #f6f4ee; --card: #ffffff; --ink: #1f2a22; --muted: #5d6a60;
+    --line: #dcd8cb; --accent: #2f6b3f; --accent-ink: #ffffff;
+    --warn-bg: #fff1d6; --warn-ink: #7a4b00;
+    --empty-bg: #fde4e1; --empty-ink: #8a2217;
+    --row-hover: #f1efe6; --focus: #1a5fb4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161b17; --card: #1f261f; --ink: #e8eee8; --muted: #9fae a2;
+      --muted: #a0aea3; --line: #36423a; --accent: #6fbf86; --accent-ink: #0f1a12;
+      --warn-bg: #4a3710; --warn-ink: #ffd98a;
+      --empty-bg: #4d2420; --empty-ink: #ffb4aa;
+      --row-hover: #263026; --focus: #8ab8ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 980px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  h2 { font-size: 1.1rem; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 16px; margin-bottom: 16px;
+  }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 16px; }
+  .stat b { font-size: 1.3rem; display: block; line-height: 1.2; }
+  .stat span { color: var(--muted); font-size: .85rem; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; align-items: end; }
+  label.f { display: flex; flex-direction: column; font-size: .8rem; color: var(--muted); gap: 3px; }
+  input, select, button { font: inherit; color: inherit; }
+  input[type=text], input[type=number], select {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 7px 9px; min-height: 38px;
+  }
+  button {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    padding: 7px 12px; min-height: 38px; cursor: pointer;
+  }
+  button:hover:not(:disabled) { background: var(--row-hover); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  button.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.08); }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { font-size: .8rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+  th button { border: 0; background: none; padding: 2px 0; min-height: 0; font-weight: 600; color: var(--muted); }
+  th button:hover:not(:disabled) { background: none; color: var(--ink); }
+  tbody tr:hover { background: var(--row-hover); }
+  td.num, th.num { text-align: right; }
+  .qty { display: inline-flex; align-items: center; gap: 6px; }
+  .qty button { min-height: 32px; width: 32px; padding: 0; font-weight: 700; }
+  .qty output { min-width: 2ch; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .badge {
+    display: inline-block; font-size: .75rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px; margin-right: 4px;
+  }
+  .b-empty { background: var(--empty-bg); color: var(--empty-ink); }
+  .b-old { background: var(--warn-bg); color: var(--warn-ink); }
+  .none { color: var(--muted); padding: 18px 10px; text-align: center; }
+  .rules { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; margin: 10px 0; }
+  .rules label { display: flex; align-items: center; gap: 8px; }
+  .rules input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); }
+  .cand { list-style: none; margin: 0 0 12px; padding: 0; border: 1px solid var(--line); border-radius: 8px; }
+  .cand li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .cand li:last-child { border-bottom: 0; }
+  .cand input { width: 20px; height: 20px; accent-color: var(--accent); }
+  .cand .nm { flex: 1; min-width: 160px; }
+  .cand .meta { color: var(--muted); font-size: .85rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .msg { min-height: 1.4em; color: var(--muted); }
+  details summary { cursor: pointer; font-weight: 600; }
+  details form { margin-top: 12px; }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Seed Library – Volunteer Desk</h1>
+  <p class="sub">Tap + / − as packets go out the door. At season’s end, use the cleanup box to clear old and empty packets in one go.</p>
+
+  <div class="stats" aria-live="polite" id="stats"></div>
+
+  <section class="card" aria-labelledby="cleanH">
+    <h2 id="cleanH">End-of-season cleanup</h2>
+    <p class="sub" style="margin-bottom:6px">Choose what counts as “clear out”, uncheck anything you want to keep, then remove.</p>
+    <div class="rules">
+      <label><input type="checkbox" id="ruleEmpty" checked> Empty packets (0 left)</label>
+      <label><input type="checkbox" id="ruleOld" checked> Packed in or before
+        <select id="cutoff" aria-label="Packed in or before year"></select></label>
+    </div>
+    <ul class="cand" id="cand"></ul>
+    <div class="actions">
+      <button class="primary" id="removeBtn">Remove selected</button>
+      <button id="undoBtn" disabled>Undo last removal</button>
+      <span class="msg" id="msg" role="status"></span>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="invH">
+    <h2 id="invH">Packets on the shelf</h2>
+    <div class="toolbar">
+      <label class="f">Search
+        <input type="text" id="q" placeholder="e.g. tomato"></label>
+      <label class="f">Type
+        <select id="typeFilter"><option value="">All types</option></select></label>
+      <label class="f"><span>Show</span>
+        <select id="viewFilter">
+          <option value="">Everything</option>
+          <option value="flag">Needs attention (old or empty)</option>
+          <option value="low">Running low (1–5 left)</option>
+        </select></label>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col"><button data-sort="name">Name</button></th>
+            <th scope="col"><button data-sort="type">Type</button></th>
+            <th scope="col" class="num"><button data-sort="year">Year packed</button></th>
+            <th scope="col" class="num"><button data-sort="left">Left</button></th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <details style="margin-top:14px">
+      <summary>Add a packet</summary>
+      <form id="addForm" class="toolbar">
+        <label class="f">Name <input type="text" id="aName" required></label>
+        <label class="f">Type
+          <select id="aType"></select></label>
+        <label class="f">Year packed <input type="number" id="aYear" min="2000" max="2100" required></label>
+        <label class="f">How many <input type="number" id="aLeft" min="0" max="999" value="10" required></label>
+        <button class="primary" type="submit">Add</button>
+      </form>
+    </details>
+  </section>
+
+  <div class="foot">
+    <span>Made-up sample data. Changes are saved in this browser only.</span>
+    <button id="resetBtn">Reset sample data</button>
+  </div>
+</main>
+
+<script>
+(function () {
+  var THIS_YEAR = new Date().getFullYear();
+  var TYPES = ["Vegetable", "Herb", "Flower", "Fruit"];
+  var KEY = "seedlib-desk-v1";
+
+  function sample() {
+    var d = [
+      ["Brandywine Tomato", "Vegetable", 2025, 14],
+      ["Genovese Basil", "Herb", 2026, 22],
+      ["Cosmos 'Sensation'", "Flower", 2024, 9],
+      ["Lacinato Kale", "Vegetable", 2023, 0],
+      ["Sugar Snap Pea", "Vegetable", 2022, 6],
+      ["Zinnia Mix", "Flower", 2026, 31],
+      ["Cilantro", "Herb", 2021, 4],
+      ["Detroit Dark Red Beet", "Vegetable", 2025, 0],
+      ["Moonglow Watermelon", "Fruit", 2024, 3],
+      ["Calendula", "Flower", 2020, 12],
+      ["Dill 'Bouquet'", "Herb", 2026, 17],
+      ["Rainbow Chard", "Vegetable", 2023, 8],
+      ["Alpine Strawberry", "Fruit", 2025, 5],
+      ["Sunflower 'Mammoth'", "Flower", 2022, 0],
+      ["Cherokee Purple Tomato", "Vegetable", 2026, 19]
+    ];
+    return d.map(function (r, i) { return { id: i + 1, name: r[0], type: r[1], year: r[2], left: r[3] }; });
+  }
+
+  var packets, nextId, lastRemoved = [], excluded = {};
+  var sortKey = "name", sortDir = 1;
+
+  function load() {
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY));
+      if (Array.isArray(s)) return s;
+    } catch (e) {}
+    return sample();
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(packets)); } catch (e) {} }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function $(id) { return document.getElementById(id); }
+
+  packets = load();
+  nextId = packets.reduce(function (m, p) { return Math.max(m, p.id); }, 0) + 1;
+
+  // Setup selects
+  var cutoff = $("cutoff");
+  for (var y = THIS_YEAR - 1; y >= THIS_YEAR - 8; y--) {
+    var o = document.createElement("option"); o.value = y; o.textContent = y;
+    if (y === THIS_YEAR - 3) o.selected = true;
+    cutoff.appendChild(o);
+  }
+  TYPES.forEach(function (t) {
+    ["typeFilter", "aType"].forEach(function (id) {
+      var o = document.createElement("option"); o.value = t; o.textContent = t; $(id).appendChild(o);
+    });
+  });
+  $("aYear").value = THIS_YEAR;
+
+  function isOld(p) { return p.year <= +cutoff.value; }
+
+  function candidates() {
+    var e = $("ruleEmpty").checked, o = $("ruleOld").checked;
+    return packets.filter(function (p) { return (e && p.left === 0) || (o && isOld(p)); });
+  }
+
+  function badges(p) {
+    var h = "";
+    if (p.left === 0) h += '<span class="badge b-empty">Empty</span>';
+    if (isOld(p)) h += '<span class="badge b-old">Old seed</span>';
+    return h;
+  }
+
+  function renderStats() {
+    var empty = packets.filter(function (p) { return p.left === 0; }).length;
+    var old = packets.filter(isOld).length;
+    var total = packets.reduce(function (s, p) { return s + p.left; }, 0);
+    $("stats").innerHTML =
+      '<div class="stat"><b>' + packets.length + '</b><span>packet types</span></div>' +
+      '<div class="stat"><b>' + total + '</b><span>packets in stock</span></div>' +
+      '<div class="stat"><b>' + empty + '</b><span>empty</span></div>' +
+      '<div class="stat"><b>' + old + '</b><span>packed ' + cutoff.value + ' or earlier</span></div>';
+  }
+
+  function renderCand() {
+    var list = candidates();
+    var ul = $("cand");
+    if (!list.length) {
+      ul.innerHTML = '<li class="meta">Nothing matches these rules. The shelf is tidy.</li>';
+    } else {
+      ul.innerHTML = list.map(function (p) {
+        var checked = excluded[p.id] ? "" : " checked";
+        return '<li><input type="checkbox" data-id="' + p.id + '" id="c' + p.id + '"' + checked + '>' +
+          '<label class="nm" for="c' + p.id + '">' + esc(p.name) + '</label>' +
+          '<span class="meta">' + esc(p.type) + ' · packed ' + p.year + ' · ' + p.left + ' left</span>' +
+          '<span>' + badges(p) + '</span></li>';
+      }).join("");
+    }
+    updateRemoveBtn();
+  }
+
+  function selected() {
+    return candidates().filter(function (p) { return !excluded[p.id]; });
+  }
+  function updateRemoveBtn() {
+    var n = selected().length;
+    var b = $("removeBtn");
+    b.textContent = "Remove " + n + " selected packet" + (n === 1 ? "" : "s");
+    b.disabled = n === 0;
+  }
+
+  function renderRows() {
+    var q = $("q").value.trim().toLowerCase();
+    var t = $("typeFilter").value, v = $("viewFilter").value;
+    var rows = packets.filter(function (p) {
+      if (q && p.name.toLowerCase().indexOf(q) < 0) return false;
+      if (t && p.type !== t) return false;
+      if (v === "flag" && !(p.left === 0 || isOld(p))) return false;
+      if (v === "low" && !(p.left >= 1 && p.left <= 5)) return false;
+      return true;
+    });
+    rows.sort(function (a, b) {
+      var x = a[sortKey], y = b[sortKey];
+      if (typeof x === "string") return x.localeCompare(y) * sortDir;
+      return (x - y) * sortDir || a.name.localeCompare(b.name);
+    });
+    $("rows").innerHTML = rows.length ? rows.map(function (p) {
+      return '<tr><td>' + esc(p.name) + '</td><td>' + esc(p.type) + '</td>' +
+        '<td class="num">' + p.year + '</td>' +
+        '<td class="num"><span class="qty">' +
+        '<button data-act="dec" data-id="' + p.id + '" aria-label="One fewer ' + esc(p.name) + '"' + (p.left === 0 ? " disabled" : "") + '>−</button>' +
+        '<output>' + p.left + '</output>' +
+        '<button data-act="inc" data-id="' + p.id + '" aria-label="One more ' + esc(p.name) + '">+</button></span></td>' +
+        '<td>' + badges(p) + '</td></tr>';
+    }).join("") : '<tr><td colspan="5" class="none">No packets match.</td></tr>';
+
+    document.querySelectorAll("th button").forEach(function (b) {
+      var th = b.parentNode, on = b.dataset.sort === sortKey;
+      th.setAttribute("aria-sort", on ? (sortDir > 0 ? "ascending" : "descending") : "none");
+      b.textContent = b.textContent.replace(/ [▲▼]$/, "") + (on ? (sortDir > 0 ? " ▲" : " ▼") : "");
+    });
+  }
+
+  function renderAll() { renderStats(); renderCand(); renderRows(); }
+
+  // Events
+  $("rows").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-act]"); if (!b) return;
+    var p = packets.find(function (x) { return x.id === +b.dataset.id; });
+    if (!p) return;
+    p.left = Math.max(0, p.left + (b.dataset.act === "inc" ? 1 : -1));
+    save(); renderAll();
+    var again = document.querySelector('button[data-act="' + b.dataset.act + '"][data-id="' + p.id + '"]');
+    if (again && !again.disabled) again.focus();
+  });
+
+  $("cand").addEventListener("change", function (e) {
+    var id = e.target.dataset.id; if (!id) return;
+    if (e.target.checked) delete excluded[id]; else excluded[id] = true;
+    updateRemoveBtn();
+  });
+
+  ["ruleEmpty", "ruleOld", "cutoff"].forEach(function (id) {
+    $(id).addEventListener("change", function () { $("msg").textContent = ""; renderAll(); });
+  });
+  ["q", "typeFilter", "viewFilter"].forEach(function (id) {
+    $(id).addEventListener("input", renderRows);
+  });
+
+  document.querySelectorAll("th button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (sortKey === b.dataset.sort) sortDir = -sortDir; else { sortKey = b.dataset.sort; sortDir = 1; }
+      renderRows();
+    });
+  });
+
+  $("removeBtn").addEventListener("click", function () {
+    var gone = selected();
+    if (!gone.length) return;
+    var ids = {}; gone.forEach(function (p) { ids[p.id] = true; });
+    lastRemoved = gone;
+    packets = packets.filter(function (p) { return !ids[p.id]; });
+    excluded = {};
+    save(); renderAll();
+    $("undoBtn").disabled = false;
+    $("msg").textContent = "Removed " + gone.length + " packet" + (gone.length === 1 ? "" : "s") + ".";
+  });
+
+  $("undoBtn").addEventListener("click", function () {
+    if (!lastRemoved.length) return;
+    packets = packets.concat(lastRemoved);
+    $("msg").textContent = "Restored " + lastRemoved.length + " packet" + (lastRemoved.length === 1 ? "" : "s") + ".";
+    lastRemoved = [];
+    this.disabled = true;
+    save(); renderAll();
+  });
+
+  $("addForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("aName").value.trim(); if (!name) return;
+    packets.push({ id: nextId++, name: name, type: $("aType").value, year: +$("aYear").value, left: Math.max(0, +$("aLeft").value) });
+    $("aName").value = "";
+    save(); renderAll();
+    $("aName").focus();
+  });
+
+  $("resetBtn").addEventListener("click", function () {
+    if (!confirm("Replace everything with the made-up sample data?")) return;
+    packets = sample(); nextId = packets.length + 1; lastRemoved = []; excluded = {};
+    $("undoBtn").disabled = true; $("msg").textContent = "";
+    save(); renderAll();
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

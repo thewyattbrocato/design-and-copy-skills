@@ -1,23 +1,11 @@
-Here are four reminders for the text that goes out 2 days before the appointment. Each is counted with the merge fields as written, so `{first_name}` counts as 12 characters. Real names are usually shorter, so the rendered text will be shorter too.
+Here are four texts for the 2-day reminder. I counted by hand with each merge field at its literal length, so the real messages will be a bit shorter once filled in.
 
-**1. (150 characters)**
-```
-Hi {first_name}, reminder: Birchwood Dental appt on {date} at {time}. Reply C to confirm, R to reschedule. Need 24hr notice to change. Call (555) 0100
-```
+1. `Hi {first_name}, your Birchwood Dental visit is {date} at {time}. Reply C to confirm or R to reschedule. Questions? (555) 0100` (~126 chars)
 
-**2. (137 characters)**
-```
-{first_name}, see you at Birchwood Dental on {date} at {time}. Reply C to confirm or R to reschedule. Changes need 24 hrs notice. (555) 0100
-```
+2. `{first_name}, see you {date} at {time} at Birchwood Dental! Reply C to confirm or R to reschedule. Changes need 24 hrs notice.` (~125 chars)
 
-**3. (147 characters)**
-```
-Hi {first_name}, Birchwood Dental visit {date} at {time}. Reply C to confirm, R to reschedule. Cancel or change under 24 hrs = $45 fee. (555) 0100
-```
+3. `Birchwood Dental: {first_name}, your appointment is {date} at {time}. Reply C to confirm or R to reschedule. Call (555) 0100.` (~125 chars)
 
-**4. (145 characters)**
-```
-Reminder: {first_name}, Birchwood Dental on {date} at {time}. Reply C to confirm or R to reschedule (24 hrs notice needed). Questions? (555) 0100
-```
+4. `Hi {first_name}! Reminder of your visit {date} at {time}. Reply C to confirm, R to reschedule. Late fee $45 if canceled under 24 hrs.` (~133 chars)
 
-I counted these by hand, so run them through your texting tool's counter once with real sample data before you schedule them. Each one has at least 8 characters of room for a longer name. Three of the four mention the 24-hour rule, and #3 states the $45 fee outright. If you'd rather not lead with the fee, #2 and #4 carry only the notice requirement.
+I left a margin of about 25 characters under the 160 limit. That covers longer values for {date} (like "Monday, Oct 19") and a long first name. Your texting tool should still run a test send with real merge values to confirm the length limit before this goes live.

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Kayak – Saltmarsh Paddle Co.</title>
+<style>
+  :root {
+    --bg: #eef3f1;
+    --card: #ffffff;
+    --ink: #17302b;
+    --muted: #55696a;
+    --line: #c9d6d2;
+    --accent: #0f6b5c;
+    --accent-ink: #ffffff;
+    --accent-soft: #e0f0ec;
+    --error: #b3261e;
+    --focus: #1a73c8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1b19;
+      --card: #172623;
+      --ink: #e6f0ed;
+      --muted: #9bb2ad;
+      --line: #2e4540;
+      --accent: #4cc2aa;
+      --accent-ink: #072620;
+      --accent-soft: #1d3833;
+      --error: #ff8a80;
+      --focus: #7ab8f5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 24px 16px 48px;
+  }
+  main { max-width: 640px; margin: 0 auto; }
+  header { margin-bottom: 20px; }
+  h1 { font-size: 1.75rem; line-height: 1.2; margin: 0 0 6px; }
+  header p { margin: 0; color: var(--muted); }
+  form, .done {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  fieldset { border: 0; margin: 0 0 24px; padding: 0; }
+  legend { font-weight: 700; font-size: 1.05rem; padding: 0; margin-bottom: 12px; }
+  .row { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+  .field { margin-bottom: 14px; }
+  label, .label { display: block; font-weight: 600; margin-bottom: 4px; }
+  .hint { color: var(--muted); font-size: 0.875rem; margin: 2px 0 0; }
+  input[type=text], input[type=email], input[type=tel], input[type=date], select, textarea {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  textarea { resize: vertical; min-height: 72px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  [aria-invalid=true] { border-color: var(--error); }
+  .err { color: var(--error); font-size: 0.875rem; margin: 4px 0 0; min-height: 0; }
+  .err:empty { display: none; }
+
+  .boats { display: grid; gap: 12px; }
+  .boat {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+  }
+  .boat strong { display: block; }
+  .boat span { color: var(--muted); font-size: 0.875rem; }
+  .stepper { display: flex; align-items: center; gap: 4px; }
+  .stepper button {
+    width: 44px; height: 44px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    font: inherit; font-size: 1.4rem; cursor: pointer;
+  }
+  .stepper button:disabled { opacity: 0.35; cursor: not-allowed; }
+  .stepper output { min-width: 36px; text-align: center; font-weight: 700; font-size: 1.15rem; }
+  .capacity { margin-top: 10px; font-size: 0.9rem; color: var(--muted); }
+
+  .summary {
+    background: var(--accent-soft);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+  .summary dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; }
+  .summary dt { color: var(--muted); }
+  .summary dd { margin: 0; text-align: right; }
+  .summary .total { font-weight: 700; font-size: 1.2rem; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 4px; color: var(--ink); }
+  .summary dt.total { color: var(--ink); }
+
+  .submit {
+    width: 100%; min-height: 50px; border: 0; border-radius: 10px;
+    background: var(--accent); color: var(--accent-ink);
+    font: inherit; font-weight: 700; font-size: 1.05rem; cursor: pointer;
+  }
+  .submit:hover { filter: brightness(1.08); }
+  .fine { color: var(--muted); font-size: 0.85rem; margin: 12px 0 0; text-align: center; }
+  .done[hidden], form[hidden] { display: none; }
+  .done h2 { margin-top: 0; }
+  .done pre {
+    white-space: pre-wrap; font: inherit; background: var(--accent-soft);
+    border-radius: 8px; padding: 12px 14px;
+  }
+  .linkbtn {
+    display: inline-block; margin-right: 10px; margin-top: 4px; padding: 10px 16px; border-radius: 8px;
+    background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none;
+    border: 0; font-size: 1rem; cursor: pointer; font-family: inherit;
+  }
+  .linkbtn.alt { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Book a kayak</h1>
+    <p>Saltmarsh Paddle Co. · Tidal creek paddling · Trips leave between 9:00 am and 4:00 pm</p>
+  </header>
+
+  <form id="form" novalidate>
+    <fieldset>
+      <legend>Your trip</legend>
+      <div class="row">
+        <div class="field">
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" required aria-describedby="date-err">
+          <p class="err" id="date-err"></p>
+        </div>
+        <div class="field">
+          <label for="time">Departure time</label>
+          <select id="time" name="time" required></select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="hours">How long?</label>
+        <select id="hours" name="hours">
+          <option value="1">1 hour</option>
+          <option value="2" selected>2 hours</option>
+          <option value="3">3 hours</option>
+          <option value="4">4 hours</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Boats</legend>
+      <div class="boats">
+        <div class="boat">
+          <div><strong>Single kayak</strong><span>$35 per hour · 1 person</span></div>
+          <div class="stepper" role="group" aria-label="Single kayaks">
+            <button type="button" data-boat="singles" data-step="-1" aria-label="Remove a single kayak">−</button>
+            <output id="singles-out" aria-live="polite">0</output>
+            <button type="button" data-boat="singles" data-step="1" aria-label="Add a single kayak">+</button>
+          </div>
+        </div>
+        <div class="boat">
+          <div><strong>Tandem kayak</strong><span>$55 per hour · 2 people</span></div>
+          <div class="stepper" role="group" aria-label="Tandem kayaks">
+            <button type="button" data-boat="tandems" data-step="-1" aria-label="Remove a tandem kayak">−</button>
+            <output id="tandems-out" aria-live="polite">0</output>
+            <button type="button" data-boat="tandems" data-step="1" aria-label="Add a tandem kayak">+</button>
+          </div>
+        </div>
+      </div>
+      <p class="capacity" id="capacity"></p>
+      <p class="err" id="boats-err"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your details</legend>
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" autocomplete="name" required aria-describedby="name-err">
+        <p class="err" id="name-err"></p>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="email-err">
+          <p class="err" id="email-err"></p>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" required aria-describedby="phone-err">
+          <p class="err" id="phone-err"></p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="notes">Anything we should know? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+        <textarea id="notes" name="notes"></textarea>
+      </div>
+    </fieldset>
+
+    <div class="summary" aria-live="polite">
+      <dl id="summary"></dl>
+    </div>
+
+    <button type="submit" class="submit">Request this booking</button>
+    <p class="fine">Pay when you arrive. We'll confirm your booking by email or phone.</p>
+  </form>
+
+  <section class="done" id="done" hidden aria-live="polite" tabindex="-1">
+    <h2>Almost done – send your request</h2>
+    <p id="done-msg"></p>
+    <pre id="done-text"></pre>
+    <a class="linkbtn" id="mailto" href="#">Send by email</a>
+    <button type="button" class="linkbtn alt" id="edit">Edit booking</button>
+  </section>
+</main>
+
+<script>
+(function () {
+  // Where booking requests are emailed. Change this to your own address.
+  var BOOKING_EMAIL = "bookings@example.com";
+  var RATES = { singles: 35, tandems: 55 };
+  var MAX_PEOPLE = 6;
+  var counts = { singles: 0, tandems: 0 };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var money = function (n) { return "$" + n.toLocaleString("en-US"); };
+
+  // Departure times: 9:00 am to 4:00 pm every 30 minutes
+  var timeSel = $("time");
+  for (var m = 9 * 60; m <= 16 * 60; m += 30) {
+    var h = Math.floor(m / 60), mm = m % 60;
+    var label = ((h + 11) % 12 + 1) + ":" + (mm ? "30" : "00") + (h >= 12 ? " pm" : " am");
+    var o = document.createElement("option");
+    o.value = label; o.textContent = label;
+    timeSel.appendChild(o);
+  }
+
+  // Earliest date is today (local)
+  var now = new Date();
+  var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+  var todayStr = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
+  $("date").min = todayStr;
+
+  function people() { return counts.singles + counts.tandems * 2; }
+  function hours() { return parseInt($("hours").value, 10); }
+  function total() { return (counts.singles * RATES.singles + counts.tandems * RATES.tandems) * hours(); }
+
+  function prettyDate(v) {
+    if (!v) return "—";
+    var p = v.split("-");
+    return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString("en-US",
+      { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  }
+
+  function render() {
+    $("singles-out").textContent = counts.singles;
+    $("tandems-out").textContent = counts.tandems;
+    var left = MAX_PEOPLE - people();
+    $("capacity").textContent = people() + " of " + MAX_PEOPLE + " people" +
+      (left === 0 ? " · group is full" : "");
+    document.querySelectorAll(".stepper button").forEach(function (b) {
+      var boat = b.dataset.boat, step = +b.dataset.step;
+      var size = boat === "tandems" ? 2 : 1;
+      b.disabled = step < 0 ? counts[boat] === 0 : left < size;
+    });
+
+    var hrs = hours();
+    var rows = "";
+    if (counts.singles) rows += "<dt>" + counts.singles + " single" + (counts.singles > 1 ? "s" : "") +
+      " × " + hrs + " hr × $35</dt><dd>" + money(counts.singles * 35 * hrs) + "</dd>";
+    if (counts.tandems) rows += "<dt>" + counts.tandems + " tandem" + (counts.tandems > 1 ? "s" : "") +
+      " × " + hrs + " hr × $55</dt><dd>" + money(counts.tandems * 55 * hrs) + "</dd>";
+    if (!rows) rows = "<dt>No boats selected yet</dt><dd></dd>";
+    rows += "<dt>When</dt><dd>" + prettyDate($("date").value) + ", " + timeSel.value + "</dd>";
+    rows += '<dt class="total">Estimated total</dt><dd class="total">' + money(total()) + "</dd>";
+    $("summary").innerHTML = rows;
+  }
+
+  document.querySelectorAll(".stepper button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var boat = b.dataset.boat, step = +b.dataset.step;
+      var size = boat === "tandems" ? 2 : 1;
+      if (step > 0 && people() + size > MAX_PEOPLE) return;
+      counts[boat] = Math.max(0, counts[boat] + step);
+      $("boats-err").textContent = "";
+      render();
+    });
+  });
+  ["date", "time", "hours"].forEach(function (id) { $(id).addEventListener("input", render); });
+
+  function setErr(id, field, msg) {
+    $(id).textContent = msg;
+    if (field) field.setAttribute("aria-invalid", msg ? "true" : "false");
+    return !msg;
+  }
+
+  function validate() {
+    var ok = true, first = null;
+    function check(pass, errId, fieldId, msg) {
+      var f = $(fieldId);
+      var good = setErr(errId, f, pass ? "" : msg);
+      if (!good && !first) first = f;
+      ok = ok && good;
+    }
+    var d = $("date").value;
+    check(d && d >= todayStr, "date-err", "date", d ? "Please pick today or a future date." : "Please choose a date.");
+    check($("name").value.trim().length > 1, "name-err", "name", "Please enter your name.");
+    check(/^\S+@\S+\.\S+$/.test($("email").value.trim()), "email-err", "email", "Please enter a valid email address.");
+    check($("phone").value.replace(/\D/g, "").length >= 7, "phone-err", "phone", "Please enter a phone number we can reach.");
+    if (people() < 1) {
+      $("boats-err").textContent = "Add at least one kayak.";
+      ok = false;
+      if (!first) first = document.querySelector(".stepper button");
+    } else {
+      $("boats-err").textContent = "";
+    }
+    if (first) first.focus();
+    return ok;
+  }
+
+  function bookingText() {
+    var lines = [
+      "Kayak booking request – Saltmarsh Paddle Co.",
+      "",
+      "Date: " + prettyDate($("date").value),
+      "Departure: " + timeSel.value,
+      "Length: " + hours() + " hour" + (hours() > 1 ? "s" : ""),
+      "Singles: " + counts.singles,
+      "Tandems: " + counts.tandems,
+      "People: " + people(),
+      "Estimated total: " + money(total()),
+      "",
+      "Name: " + $("name").value.trim(),
+      "Email: " + $("email").value.trim(),
+      "Phone: " + $("phone").value.trim()
+    ];
+    var notes = $("notes").value.trim();
+    if (notes) lines.push("Notes: " + notes);
+    return lines.join("\n");
+  }
+
+  $("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!validate()) return;
+    var text = bookingText();
+    $("done-msg").textContent = "Please review your request, then send it to us.";
+    $("done-text").textContent = text;
+    $("mailto").href = "mailto:" + BOOKING_EMAIL +
+      "?subject=" + encodeURIComponent("Kayak booking – " + $("date").value + " " + timeSel.value) +
+      "&body=" + encodeURIComponent(text);
+    $("form").hidden = true;
+    $("done").hidden = false;
+    $("done").focus();
+  });
+
+  $("edit").addEventListener("click", function () {
+    $("done").hidden = true;
+    $("form").hidden = false;
+    $("date").focus();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,18 +1,22 @@
-I can't critique the site yet because I haven't seen it. I have no way to load web pages in this session, and `.example` is a reserved domain that doesn't resolve on the public internet anyway. Any "teardown" from me now would be invented, so I'm not going to write one.
+I can't critique this yet. I have no way to load web pages in this session, and `.example` is a reserved domain that never resolves on the real internet. Anything I said about your layout, copy or booking steps would be made up, so I won't.
 
-**What to send (any of these works, the first two are best):**
-1. **Screenshots of the booking flow, step by step.** Include the landing page's first screen, the date/time picker, the form, payment, and the confirmation. Mobile and desktop if you have both.
-2. **The page HTML or a saved copy,** if you'd rather I measure things. That lets me compute tap-target sizes, contrast ratios and form field counts.
-3. **Your analytics funnel,** if you have one. Visitors, then people who start booking, then each step, then paid bookings. This is the cheapest way to test your hunch. If most people drop at one step, that step is your problem. If they never reach the booking button, the problem is upstream of the flow.
+**What I need (any one is enough):**
+1. **Screenshots** of the homepage first screen and every booking step, in order, on both desktop and phone. This is the best option.
+2. **The HTML or source** of those pages, saved to a file. Give me the path and I'll read it.
+3. **A step-by-step description** of the booking flow: each screen, its fields, its buttons, and where people stop.
 
-**What I'll check once I have it:**
-- **First screen:** whether a stranger can tell what Sundial is, where it is, what it costs, and how to book within a few seconds.
-- **Clicks and fields from "Book" to confirmation:** counted, not guessed.
-- **Surprises at the end:** fees, deposits, forced account creation, or availability that only appears after you've filled in details.
-- **Mobile:** most sauna bookings probably come from phones, so I'll look at date picker usability, tap targets and keyboard behavior on the form.
-- **Error and empty states:** what happens when a slot is full, a card fails, or a field is wrong.
-- **Trust signals:** photos, reviews, location, cancellation policy, and whether they appear before the payment step.
+**Two things that would change my verdict:**
+- **Analytics.** Do you have a funnel showing where people drop off, such as visit, then "Book" click, then date picked, then payment, then confirmation? If most of them drop at one step, that step is the problem. If they never click "Book", the problem is the homepage, not the flow.
+- **Device split.** Do most visitors come from a phone? Booking flows often work on desktop and fail on mobile.
 
-**Your hypothesis, in the meantime:** the booking flow is a strong suspect for any service site, but the funnel data will confirm it. A weak homepage can look like a booking problem when people are actually leaving before they ever click "Book."
+**What I'll check once I can see it, so you know it won't be gentle:**
+- **First screen.** Can a stranger name the offer and the next action within a few seconds?
+- **Clicks and fields.** How many clicks and fields stand between "I want a session" and a confirmed booking?
+- **Price and availability.** Are they shown before the user commits, or only at the end? Are fees or account creation forced late?
+- **Date and time picker.** Is it usable at thumb size, and does it show which slots are actually open?
+- **Errors and confirmation.** What happens when a slot is taken or a card fails, and does the user get a clear confirmation?
+- **Accessibility.** Contrast, tap-target size and form labels.
 
-Send whatever you have and I'll give you a ranked, severity-tagged teardown with a fix order.
+I'll rank the findings by severity, tell you what to fix first, and name what works and should stay.
+
+Send whichever of the three you can, and I'll do the full teardown.

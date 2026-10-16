@@ -1,22 +1,18 @@
-I'd push back on the hero stat and the big cards. With 40 to 60 trucks that must all stay visible, anything that takes space from the grid makes the tiles smaller, and making some cards bigger means others get smaller. Size is also a poor signal here, because "most important" changes every few minutes. When a card jumps in size, dispatchers lose the position they were relying on.
+**The proposal works against your constraint.** A hero stat and large cards take space that 40 to 60 trucks need. At 1080p, a 56px card per truck means about 3,000px of content, so the cards would have to scroll or hide trucks. Your dispatchers are right to refuse both. The hierarchy should come from position and a few loud exceptions, not from size.
 
-**What I'd do instead**
+**What I'd build instead:**
 
-1. **Keep a thin summary strip, not a hero.** One line across the top: `On site 47 · Arriving 6 · Waiting 12 · Loading 9 · Unloading 8 · Ready 12 · Longest wait 94 min`. Counts are useful for a glance, but a big number takes space that the trucks need.
+1. **A thin summary strip, not a hero.** One line of counts by status ("On site 52 · Waiting over 30 min 7 · Ready to leave 9"). It orients the eye without taking a block of the screen.
 
-2. **Group by status as lanes, not a flat grid.** Five columns (Arriving, Waiting, Loading, Unloading, Ready to leave), each holding its trucks as compact tiles. Dispatchers can scan a lane instead of reading 60 rows, and the lane header shows the count. The lane order follows the workflow, so the eye moves left to right through the yard. If the yard is organized around fixed doors, you could group by dock door instead, or put a door grid on top of the lanes. Ask the dispatchers which one matches how they think.
+2. **Five status lanes as columns, left to right in process order:** Arriving → Waiting → Loading/Unloading → Ready to leave. Trucks sit in their lane as compact chips, so the status column is already grouped and nobody has to scan 60 rows to find the waiting ones. With 60 trucks across five lanes, that is about 12 per lane, which fits at roughly 56px per chip.
 
-3. **Sort inside each lane by minutes on site, longest first.** The most urgent truck in each lane is always at the top, and that gives you your "importance" without changing the sizes.
+3. **Compact chips, one line plus a second line.** Line one: truck ID, dock door, minutes on site. Line two: carrier and the notes, truncated. Dispatchers can scan the ID and time without reading the rest.
 
-4. **Make the urgency visible with color and a border, not size.** A waiting truck over your threshold (say 60 min) gets an amber border, and over a second threshold gets red. Keep the color rules few and fixed, and use shape or an icon too, since some dispatchers may have color-vision problems and the wall display may be read at an angle.
+4. **Make the exceptions loud, and nothing else.** Use one technique for the trucks that need action: a value and weight step for minutes over a threshold (e.g. waiting over 30 min), plus a status shape or icon so it survives grayscale. Everything else stays calm. Don't use a second emphasis for the same chip.
 
-5. **Make each tile readable at arm's length, with fixed fields.** Put the truck ID and dock door on the first line in the largest type, carrier and minutes on the second, and the note on the third, truncated to one line with a note icon if there's more. Every tile has the same fields in the same places, so the eye learns the pattern.
+5. **Sort within each lane by urgency**, longest on site first. The top of each lane is where attention goes.
 
-**Rough math for a 1920×1080 screen:** with about 60 px for the summary strip, 5 lanes gives roughly 370 px per lane. Each tile can then be around 340×90 px, which fits about 9 tiles per lane vertically. That covers 45 trucks in the worst case, so you'd likely want to go to tiles of about 80 px or a second column in the busiest lane. Measure this against real counts before committing, especially since the peak could be 60 in one lane.
-
-**Two things to check before finalizing**
-
-- What's the screen size and viewing distance? A wall display read from 2 m needs much larger type than a desk monitor.
-- Time a realistic task with dispatchers, such as "find the truck at door 14" or "which truck has been waiting longest," on both the old table and the new layout. That tells you whether the redesign actually helps, which matters more than how it looks.
-
-If you share the door count, screen resolution, and typical peak truck count, I can work out exact tile dimensions and sketch the layout in code.
+**Things to check before you commit:**
+- **Lane overflow:** If one lane regularly holds 20 or more trucks, let that lane switch to a two- or three-column chip grid rather than making the lane taller.
+- **Screen size:** I'm assuming a single large monitor at 1080p or larger. On a smaller display, the chip height has to shrink, and the second line may need to go.
+- **Real status mix:** If the counts are heavily skewed (say, 40 of 60 are "unloading"), the lane widths should be uneven or the lanes should become a single list with status as a column. Check with a day's data.

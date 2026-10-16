@@ -1,33 +1,34 @@
-**Pick: deep forest green (`#1F4D3A`).** Navy is the default bank color, so it blends in. Plum reads boutique and is hard to make feel dependable with money. Forest green says stable, local, and member-owned, and it sets Fernhollow apart from the blue banks around it. Use green for the brand and keep it out of status meaning, so success never looks like the brand.
+**Lead: deep forest green.** It reads as local, steady, and member-owned, and it avoids the navy that most banks use. Plum is the most distinctive but reads less like money-trust. The trade-off is that green can drift toward "outdoorsy," so keep the base neutral and warm.
 
 **Palette**
 
-| Role | Value | Use | Contrast (estimated) |
+| Role | Value | Used for | Ratio (estimated by hand) |
 |---|---|---|---|
-| Lead | `#1F4D3A` | Primary button, links, footer ground | White on lead ≈ 9.6:1 |
-| Footer ground | `#14302A` | Footer only | Light text `#E8EFEA` ≈ 12:1 |
-| Ink | `#17201B` | Body and headings | On page ≈ 17:1 |
-| Muted ink | `#4F5C55` | Captions, attributions | On page ≈ 6.5:1 |
-| Page | `#F7F6F1` | Base (warm off-white) | |
-| Tint | `#E8EFEA` | Rate strip and quiet panels | Ink on tint ≈ 14:1 |
-| Edge | `#6B7B72` | Input borders | On white ≈ 4.5:1 |
+| Lead | `#1F4D3A` | Hero ground, footer ground (footer goes deeper, `#15362A`), primary text links | White on lead ≈ 9.6:1 |
+| Ink | `#1B2A22` | Body and headings on white | ≈ 15:1 on white |
+| Muted text | `#55635B` | Captions, rate dates, footnotes | ≈ 6.3:1 on white |
+| Tint | `#EEF4F0` | Rate strip ground, quiet section breaks | Ink on tint ≈ 14:1 |
+| Warm cream | `#F7F3EA` | Join button fill on the hero | Lead text on cream ≈ 8.7:1 |
+| Error | `#9B2C2C` | Calculator validation only, always with an icon and words | Check on white before shipping |
 
-I measured these by hand from the luminance formula, not with a tool, so treat the ratios as estimates and check them in your build.
+I estimated these by hand and could not run a checker, so confirm each pair with a contrast tool before you ship.
 
-**Where color goes, section by section**
+**Color should show up in**
 
-- **Hero:** Keep the ground light (page color), with ink headline text. Use one lead-colored Join today button, and a small green eyebrow label if you want one. Do not fill the hero with green. A full green hero would compete with the footer and make the button less distinct.
-- **Rate strip:** Put it on the tint. Show rates in ink, not green. Mark rate changes with an arrow icon and words ("up 0.25"), not green or red. Green-up and red-down alone fail for color-blind members and carry no meaning on their own.
-- **Calculator tiles:** White cards on the page ground, with a thin edge. Inputs get the `#6B7B72` border so they meet the 3:1 control-edge floor. Keep result figures in ink. Use lead color only for the tile's calculate action or link, not the numbers.
-- **Testimonials:** Mostly ink on page ground, with muted ink for attributions. A small lead-colored quote mark is fine. Avoid colored avatars and gold stars, which add more hues than the page needs. If you don't have real member quotes, use visible placeholders, not invented ones.
-- **Footer:** This is the one large green field on the page. Use the footer ground, light text, and hue-matched light tints for links and secondary hours. Do not use translucent white for secondary text; it looks disabled. A thin lead-colored top rule is enough as a divider.
-- **Across the page:** Focus rings use lead green on light grounds and a light tint on the footer. Hover is a darker lead step, not a new hue.
+- **Hero:** one solid lead ground, no gradient. The Join today button is cream with lead text. A green button on a green hero would disappear.
+- **Rates strip:** rates and labels in ink, with the tint ground. Use lead green for the rate figures only. Don't use red and green to show rate direction; use an arrow or word.
+- **Calculator tiles:** white cards with a thin lead top rule and one lead icon or link each. Keep the tiles neutral so they don't compete with the hero.
+- **Testimonials:** ink quotes on white, with a small lead quotation mark. Use placeholder names and quotes until you have real, approved member text.
+- **Footer:** deep lead ground, white headings, and links in a hue-matched tint (`#C9DCD1`, about 6.7:1 on the footer ground), not translucent white. Branch hours sit in the same tint. Underline links so they don't rely on color alone.
+- **Focus rings everywhere:** lead green at 3:1 or better, so keyboard users can see where they are.
 
-**Shouldn't**
+**Color should not show up in**
 
-- Green gradients, or green on every heading.
-- A second accent competing with the lead.
-- Brand green as the error color. If you need an error red, pick a different shade and always pair it with an icon and words.
-- Green rate numbers or green calculator results on every tile.
+- The testimonial cards or the tiles' backgrounds. Five colored blocks would make five competing accents.
+- Any gradient, including in the hero.
+- Decorative color in icons across the tiles. Only one icon should carry the lead color.
+- Body copy or placeholder text in lead green. Long text in green is harder to read than ink.
+- The error red as a brand accent. It appears only in form validation.
+- Status by color alone. Anything that signals open, closed, or rate change needs a word or icon.
 
-One assumption: I assumed the site has no existing brand color or logo to match. If Fernhollow already has a logo in another green or in navy, tell me and I'll adjust the lead to fit.
+**Two notes:** I assumed a light, neutral page with the green as the only strong color, which fits a bank homepage. If the credit union already has a brand color, tell me and I'll swap the lead and rerun the pairs.

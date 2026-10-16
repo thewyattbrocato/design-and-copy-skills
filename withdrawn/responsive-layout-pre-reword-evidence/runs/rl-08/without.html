@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Harbour Street Family Clinic – Welcome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; cursor: none; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0b3c5d;
+    color: #ffffff;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 4.5vh 5vw;
+    gap: 3.5vh;
+  }
+  header { text-align: center; }
+  h1 {
+    font-size: 6.4vw;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1.05;
+  }
+  .sub {
+    margin-top: 1.5vh;
+    font-size: 2.6vw;
+    font-weight: 500;
+    color: #bfe3f7;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3vw;
+    min-height: 0;
+  }
+  .card {
+    background: #ffffff;
+    color: #0b2a3f;
+    border-radius: 2vw;
+    padding: 3.5vh 2.6vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card h2 {
+    font-size: 2.8vw;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #0b6fa4;
+    margin-bottom: 3vh;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 2vh 1.6vw;
+    border-radius: 1.2vw;
+    font-size: 3.4vw;
+    font-weight: 600;
+  }
+  .row + .row { margin-top: 1.5vh; }
+  .row .time { font-weight: 800; white-space: nowrap; }
+  .row.today { background: #ffd23f; color: #0b2a3f; }
+  .today-tag {
+    display: none;
+    font-size: 1.6vw;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-left: 1vw;
+    vertical-align: middle;
+  }
+  .row.today .today-tag { display: inline; }
+  .flu {
+    background: #e8f6ee;
+    border: 0.5vw solid #1b9e5a;
+    align-items: center;
+    text-align: center;
+  }
+  .flu h2 { color: #137a45; }
+  .flu .big {
+    font-size: 6.6vw;
+    font-weight: 900;
+    line-height: 1.05;
+    color: #0b2a3f;
+  }
+  .flu .desc {
+    margin-top: 2.5vh;
+    font-size: 2.8vw;
+    font-weight: 600;
+    color: #0b2a3f;
+  }
+  footer {
+    background: #ffd23f;
+    color: #0b2a3f;
+    text-align: center;
+    border-radius: 2vw;
+    padding: 3vh 2vw;
+    font-size: 4.6vw;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Harbour Street Family Clinic</h1>
+    <div class="sub">Welcome</div>
+  </header>
+
+  <main>
+    <section class="card" aria-label="Walk-in hours">
+      <h2>Walk-in Hours</h2>
+      <div class="row" data-days="1,2,3,4,5">
+        <span>Mon – Fri<span class="today-tag">Today</span></span>
+        <span class="time">8:00 – 18:00</span>
+      </div>
+      <div class="row" data-days="6">
+        <span>Saturday<span class="today-tag">Today</span></span>
+        <span class="time">9:00 – 13:00</span>
+      </div>
+    </section>
+
+    <section class="card flu" aria-label="Flu clinic">
+      <h2>Flu Clinic</h2>
+      <div class="big">Level 2</div>
+      <div class="desc">Please take the stairs or elevator to Level 2</div>
+    </section>
+  </main>
+
+  <footer>Please check in at the desk</footer>
+
+<script>
+  // Highlight the row matching today's weekday; refresh each minute so it rolls over at midnight.
+  function markToday() {
+    var d = new Date().getDay();
+    document.querySelectorAll('.row').forEach(function (r) {
+      var days = r.getAttribute('data-days').split(',').map(Number);
+      r.classList.toggle('today', days.indexOf(d) !== -1);
+    });
+  }
+  markToday();
+  setInterval(markToday, 60000);
+</script>
+</body>
+</html>

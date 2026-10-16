@@ -1,33 +1,39 @@
-**Lead: deep forest green.** Credit unions compete on "member-owned" and "local," and green reads as community and steady growth. Navy is the default bank look, so it would make Fernhollow indistinguishable from the regional banks it competes with. Plum reads as consumer luxury and fits less well with a trust-and-stewardship message.
+**Pick: deep forest green.** It reads as local, steady, and member-owned, where navy is the default bank color and plum reads less trustworthy for money. Green also holds up on the dark footer without a second hue.
 
-**Palette** (ratios estimated by hand, not run through a checker)
+**Palette**
 
-| Role | Hex | Use | Ratio |
+| Role | Hex | Use | Contrast (estimated, not measured in code) |
 |---|---|---|---|
-| Forest (lead) | #1F4D3A | Hero ground, primary action, headings | 9.7:1 on white |
-| Forest deep | #14302A | Footer ground | Off-white text ~15:1 |
-| Surface tint | #EEF4F0 | Rates strip, testimonial band | Body text ~8:1 |
-| Body text | #1E2A26 | All body copy | ~15:1 on white |
-| Muted text | #55635D | Captions, labels, meta | 6.2:1 on white, 5.6:1 on tint |
-| Control edge | #6B7F76 | Input borders, outline button edges | 4.3:1 on white |
-| Hover tint | #DCE9E2 | Hover on tiles and links | Forest text ~8:1 |
+| Lead | `#1F4D3A` | Hero ground, Join button fill, rate figures, link text | White on lead ≈ 9.7:1 |
+| Footer ground | `#14291F` | Footer only | |
+| Footer text | `#E6EEE9` | Footer headings and hours | ≈ 13:1 on footer ground |
+| Footer muted | `#C9D8CF` | Footer labels, fine print | About 7:1 on footer ground. Don't go below this; `#A9BDB2` is only ≈ 3.6:1 |
+| Surface tint | `#F3F6F2` | Rates strip, page background | |
+| Card | `#FFFFFF` | Calculator tiles, testimonials | |
+| Hairline | `#D5DED8` | Card borders, dividers | Decorative only |
+| Text | `#1E2622` | Body and headings | ≈ 16:1 on white |
+| Text secondary | `#4A5751` | Labels, captions | ≈ 7.5:1 on white and on the tint |
 
-Tint #DCE9E2 is a placeholder hue step, so verify its exact ratio before shipping.
+Accent: none needed. The lead carries every action, so there's no second hue to compete with it. If you later want a warm highlight, use one small sand tone and nothing else.
 
-**Where color goes, section by section**
+**Where color shows**
 
-- **Hero:** Forest full-bleed ground with white headline. Join today is a white fill with forest text (9.7:1), not a forest button on forest, which would vanish. Hover goes to #DCE9E2. Color is allowed here because the hero is the one brand moment on the page.
-- **Rates strip:** Tint ground, forest-free. Rate numbers in body text, weight carries emphasis. Rate direction (up or down) gets an arrow and a word, not green or red. Labels use muted text.
-- **Calculator tiles:** White cards with a body-text title. Forest appears only on the tile's outline button, which is outlined rather than solid so Join today stays the strongest action. Focus rings use forest at 3:1 or better.
-- **Testimonials:** Tint band with white cards. Quote text in body color. Use a neutral placeholder avatar and visible placeholder names, since no real member proof was supplied. Do not add colored quote marks or star colors.
-- **Footer:** Deep forest ground with off-white text (#F4F7F5). Secondary text uses a hue-matched light tint (#B9CCC2, about 7.9:1), not translucent white. Links are light tint and underlined. Do not use the lead forest as link color on the dark ground, since it disappears.
+- **Hero:** full-bleed lead green, white headline, one white **Join today** button with green text (≈ 9.7:1). This is the only large colored area above the footer.
+- **Rates strip:** tinted neutral ground. Rate figures in lead green, labels in text secondary. Color marks the numbers; the labels say what they are.
+- **Calculator tiles:** white cards, hairline border. Color only on a small green icon and the tile's text link. Each tile stays the same; don't give each one its own color.
+- **Testimonials:** neutral. Quotes in body text, names in secondary text. Any quote mark or small rule may be green, but it's optional.
+- **Footer:** dark green-black ground, light text, muted labels. Branch hours in the primary footer text so they're easy to read.
 
-**Where color should not go**
+**Where color should not show**
 
-- No gradients, and no color behind body text on the hero beyond the single forest ground.
-- Don't use forest for error or warning states. Use a separate red with an icon and words.
-- Don't color individual rates or testimonial cards with different hues.
-- No colored section background on every tile.
-- Don't rely on color alone for any status or direction.
+- **Not on body text or headings** in the main content. Keep headings near-black; green on every heading dilutes the lead.
+- **Not on the calculator tiles' backgrounds**, and not on testimonial cards. Color there competes with the content.
+- **Not as status.** Don't use green for "success" or "rate up," and don't use red for "rate down." If you show rate changes, use an arrow and a word, and keep the lead color out of it.
+- **Not in gradients or glows.** A solid lead reads more stable for a financial brand.
+- **Not on the footer's fine print.** Muted text stays at or above the `#C9D8CF` floor.
+- **Not a second brand hue.** Don't add navy or plum as secondary colors.
 
-Two notes: the palette is a starting point, so run the listed pairs through a checker before you commit. Also, the one trade-off is that a forest hero and forest footer bookend the page, which feels heavier than a light hero would.
+**Notes**
+
+- The ratios are estimates from hand calculation. Run them through a checker before you ship, especially the footer muted text and any tinted states.
+- Testimonials need real member quotes or a visible placeholder. Don't invent ratings or member counts.

@@ -1,0 +1,1 @@
+Don't discard their work. Save the entered data (server-side draft or local storage) before or as the session expires, then show a re-login prompt, in a modal or new tab, without leaving the page. After successful re-authentication, restore the form and resubmit automatically or with one click. Never show a generic error.

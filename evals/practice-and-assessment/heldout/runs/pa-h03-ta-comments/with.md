@@ -1,42 +1,25 @@
-## What's wrong with the three comments
+## What's wrong with them
 
-**The shared problem:** each comment is a verdict (good, wrong, 6/10) with no evidence about the student's query. The student can't tell what they did, why it mattered, or what to try next. Two further problems:
+All three comments fail the same way. The student can't tell what they did, why it matters, or what to do next.
 
-- **#1 praises a query with real problems.** The student learns that `SELECT *` and an unneeded subquery are fine.
-- **#3 criticizes the wrong thing.** The joins were correct, and the actual issue (aliases and output names) is never mentioned. A vague "needs improvement on joins" sends the student to study something they already did well.
+1. **"Good job!"** is praise with no information. It hides a real problem (the 3x slowdown, `SELECT *`, an unneeded subquery), so the student will repeat it. It also never says what was right: the correct rows.
+2. **"Your query is wrong. See the solution."** gives a verdict and hands the student the answer. The student doesn't learn that the cause is the INNER JOIN dropping customers with no orders. They'll probably copy the solution without understanding it.
+3. **"Great effort. Needs improvement on joins. 6/10"** praises effort, not the work. The "joins" criticism is wrong, because the join was fine. The real issues are the `a`/`b` aliases and the confusing output column names, and the comment never mentions them. The 6/10 has no stated basis, so the student can't tell what would earn a 9.
 
-**Rewrites:**
+## Rewrites
 
-**1. Correct but slow (SELECT * plus subquery)**
+Each one says what happened, gives the principle in a sentence, and ends with one thing to try. Where a comment would be unclear without it, I've included the query.
 
-> Your query returns the right rows, so the logic is sound. Two things to look at:
->
-> - The subquery does the same work a join can do. On the sample data, the join version runs about 3x faster. Try rewriting it with a join, then compare the two with `EXPLAIN`.
-> - `SELECT *` pulls every column, including ones you don't use. List only the columns you need. That makes the output easier to read, and the query won't break if the table changes later.
->
-> Once you've rewritten it, check that your row count still matches.
+**1.**
+> Your query returns the right rows, so the logic is sound. Two things to look at next. `SELECT *` pulls every column, including ones you don't use. A subquery here makes the database do extra work a join can do directly. On the sample data, your version ran about 3x slower than a join. Try rewriting it with a JOIN and listing only the columns you need, then compare run times.
 
-**2. INNER JOIN drops customers with no orders**
+**2.**
+> Your result is missing customers who have never ordered. The task asked for every customer, including those with an order count of 0. An INNER JOIN keeps only customers with a matching row in `orders`, so those customers disappear. Try a LEFT JOIN from `customers` to `orders`. Then check that a customer with no orders shows up with a count of 0, not missing. Your grouping and counting approach is otherwise on the right track. [Remove this sentence if the student's grouping is actually wrong.]
 
-> Your query counts orders correctly for customers who have them. But the exercise asks for *every* customer, and customers with zero orders are missing from your result.
->
-> The cause is `INNER JOIN`: it keeps only customers who have a matching row in `orders`. A customer with no orders has no match, so the row is removed.
->
-> To fix it, change the join so all customers are kept even without a match. Then check what `COUNT(...)` returns for those customers. Counting a column from `orders` gives 0 for them, but `COUNT(*)` gives 1. Try both and see why.
->
-> To check your fix, compare the number of rows in your result with `SELECT COUNT(*) FROM customers`. They should be equal.
+**3.**
+> Your result is correct and the query is well structured, including the join. The weak spot is readability. With tables aliased as `a` and `b`, a reader has to look back at the FROM clause to know which is which. The output column names are also hard to read. Try aliases that hint at the table (`c` for `customers`, `o` for `orders`) and name the output columns (for example `AS order_count`). Then re-read the query as if someone else wrote it.
 
-**3. Correct and clean, but aliases `a`/`b` and confusing output names**
+## Notes
 
-> Your join logic and result are correct, and the query is cleanly structured. The one thing to fix is naming.
->
-> - **Aliases:** `a` and `b` force the reader to scroll back and work out which table is which. Use short names that say what the table is, such as `c` for `customers` and `o` for `orders`, or just `cust` and `ord`.
-> - **Output columns:** the result headers are hard to read. Add `AS` names that describe the value, for example `customer_name` and `order_count`.
->
-> Imagine a teammate reading this in six months. Could they tell what each column holds without opening the query?
-
-**What these have in common:** each one says what was right, names the specific issue and why it matters, and gives a concrete next step. In #2 the student can also check their own fix. A TA can write one of these in a couple of minutes once they've read the query closely.
-
-**Rubric for TAs:** before sending a comment, check that it (1) names something specific in the student's query, (2) explains the consequence, and (3) gives one next action. Scores like "6/10" can stay if your program requires them, but only alongside those three things.
-
-**Note:** I assumed the bootcamp's goal is that students can fix and self-check their own queries. If you also want a standard for what counts as full marks, such as whether `SELECT *` loses points, fill in [grading criteria]. I didn't invent one.
+- I dropped the 6/10. If you want scores, publish a short rubric (correctness, efficiency, readability) so a number maps to something the student can act on.
+- In #2, I assumed the student's grouping was fine since you only mentioned the join. TAs should only say that when they've checked.

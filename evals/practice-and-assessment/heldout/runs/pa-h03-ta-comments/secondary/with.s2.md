@@ -1,45 +1,36 @@
 ## What's wrong with them
 
-- **"Good job!"** praises without saying what worked, and it hides the main lesson. The query returns correct rows, but the student also needs to hear about `SELECT *`, the subquery, and the 3x slowdown.
-- **"Your query is wrong. See the solution."** gives a verdict but no cause. Pointing to the solution invites copying, so the student never learns why the INNER JOIN drops customers with no orders.
-- **"Great effort. Needs improvement on joins. 6/10"** attaches the criticism to the wrong thing. The joins were correct. The problems were the `a`/`b` aliases and unclear output names. The score also has no stated basis, so the student can't tell what cost points.
+1. **"Good job!"** is praise with no information. It doesn't say what worked, and it hides the one real improvement the student could make. The SELECT * and the 3x slowdown are the useful part of the feedback, and they're missing.
 
-All three also lack a next step. A useful comment says what works, names the specific issue, explains why it matters, and suggests a concrete thing to try without giving the answer away.
+2. **"Your query is wrong. See the solution."** says there's a problem but not what it is. The student can't tell whether the issue is the join, the filter, or the output. "See the solution" ends the learning: the student copies the answer and doesn't learn why INNER JOIN drops customers with no orders.
+
+3. **"Great effort. Needs improvement on joins. 6/10"** has three problems. "Great effort" is vague praise. "Needs improvement on joins" is wrong about this submission, since the joins return the correct result. The score has no stated basis, so the student can't tell what cost points. The actual issue, unreadable aliases and column names, is never named.
+
+Across all three, the comments describe the grade or the verdict but not the specific thing in the query, and they don't tell the student what to do next.
 
 ## Rewrites
 
-**1. Correct rows, but the query is heavier than it needs to be.**
-
-> The rows are correct, and the query is easy to follow. Two things to tighten:
+**1.**
+> Your query returns the right rows, so the logic is sound. Two things to tighten:
 >
-> - `SELECT *` returns every column from every table. List the columns you need. The query then documents its own output and won't change if a table gains a column.
-> - The subquery works, but a `JOIN` does the same job here. On the sample data your version ran about three times slower than the join. Rewrite the subquery as a join and time both versions.
+> - `SELECT *` pulls every column. List only the ones you need so the next reader knows what the query produces.
+> - The subquery works, but a JOIN does the same job here and runs about 3x faster on the sample data. Rewrite it as a join against the same tables and compare the timings. Knowing why one approach is faster is worth building.
+
+**2.**
+> This doesn't meet the requirement. The exercise asks for every customer, including those with no orders. An INNER JOIN keeps only rows that match on both sides, so customers with zero orders drop out of the result.
 >
-> Question to carry forward: can this be one join instead of a nested query?
+> Look at what a LEFT JOIN does with unmatched rows, and at how `COUNT(*)` differs from `COUNT(o.order_id)` when the joined side is NULL. Then check your output: is the zero-order customer there, and what does their count show? If the join direction is still unclear after that, come to office hours and we'll work through it together.
 
-**2. Missing customers with zero orders.**
-
-> You're using the right tables and columns. The issue is the join type. An INNER JOIN keeps only customers with at least one matching order, but this exercise needs every customer, including those with none.
+**3.**
+> Your query returns the correct result and the structure is clean. The main thing to fix is readability:
 >
-> Ask yourself: which table has to appear in full in the result, and which join keeps the unmatched rows from that side?
+> - Aliases `a` and `b` make it hard to tell which table each column comes from. Use short names that mean something, like `c` for customers and `o` for orders.
+> - Give output columns names that describe them. A column called `count` or left unaliased tells the reader nothing; `order_count` does.
 >
-> Then check your count. If a customer has no orders, a `LEFT JOIN` produces one row with NULLs on the orders side. `COUNT(*)` counts that row as 1. Which column should you count so a customer with no orders shows 0?
+> I deducted points for readability, so that's where to focus on the next pass. [If there's a rubric line for this, cite it here. If there isn't, don't include a score.]
 
-**3. Correct result, weak readability (6/10).**
+The third one shows the pattern to keep. Only give a score if you can point to the criterion behind it. A number without a stated basis reads as arbitrary, and students will assume it is.
 
-> The result is correct and the joins are right. The points were lost on readability:
->
-> - `a` and `b` don't say what they refer to. Use short names that do, such as `customers c` and `orders o`.
-> - Output names like the ones here are hard to read. Give each column an `AS` alias that says what it holds, such as `order_count` instead of `count`.
->
-> Renaming these is the change that will matter most to the next person who reads your query, including you in a month. If the 6/10 comes from a rubric, list the criteria that lost points here so the student can see where the score came from.
+## The pattern
 
-## A short checklist for TAs
-
-- Say what the student did right, specifically.
-- Name the issue at the level where it lives (join type, naming, performance), not a general topic like "joins."
-- Explain why it matters.
-- Give a next step that points toward the fix without writing it out.
-- Tie any score to visible criteria.
-
-I used generic names like `customers` and `orders` in the rewrites. Swap in your course's actual schema if it differs.
+Each good TA comment does four things: it says what the student did right, names the specific line or behavior that needs changing, explains why it matters (correctness, speed, or readability), and gives a next step that doesn't hand over the answer. If you want, I can draft a short checklist of these for the TAs or review a few more comments from this week.

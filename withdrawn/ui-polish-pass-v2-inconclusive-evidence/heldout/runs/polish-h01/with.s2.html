@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tide lookup</title>
+<style>
+body{font-family:sans-serif;margin:20px;max-width:40rem;color:#111;line-height:1.4}
+h1{margin-top:0}
+form{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+label{flex-basis:100%;font-weight:bold}
+input,button{font-size:16px;padding:6px}
+input{flex:1 1 12rem;min-width:0;border:1px solid #767676;border-radius:3px}
+button{cursor:pointer}
+input:focus-visible,button:focus-visible,.ports button:focus-visible{outline:3px solid #1a5fb4;outline-offset:2px}
+#out{margin-top:16px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;margin-top:8px;min-width:16rem}
+caption{text-align:left;font-weight:bold}
+td,th{border:1px solid #ccc;padding:4px 10px;text-align:left}
+.msg{margin:0 0 8px}
+.hint{color:#555}
+.err{color:#9b1c1c}
+.ports{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.ports button{background:none;border:1px solid #767676;border-radius:3px;color:#1a5fb4}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<h1>Tide lookup</h1>
+<form id="f" novalidate>
+  <label for="port">Port name</label>
+  <input id="port" list="ports" autocomplete="off" placeholder="Port name" aria-describedby="out">
+  <datalist id="ports"></datalist>
+  <button type="submit">Search</button>
+</form>
+<div id="out" aria-live="polite"></div>
+<script>
+const DATA={"Kellmouth":[["04:12","High","4.1 m"],["10:30","Low","0.6 m"],["16:44","High","4.3 m"],["22:51","Low","0.5 m"]],"Port Arnley":[["05:02","High","3.2 m"],["11:19","Low","0.9 m"]]};
+const input=document.getElementById('port'),out=document.getElementById('out');
+const names=Object.keys(DATA);
+
+names.forEach(n=>{const o=document.createElement('option');o.value=n;document.getElementById('ports').appendChild(o)});
+
+function el(tag,text,cls){const e=document.createElement(tag);if(text!=null)e.textContent=text;if(cls)e.className=cls;return e}
+
+function portList(){
+  const ul=el('ul',null,'ports');
+  names.forEach(n=>{
+    const li=document.createElement('li'),b=el('button',n);
+    b.type='button';
+    b.onclick=()=>{input.value=n;go()};
+    li.appendChild(b);ul.appendChild(li);
+  });
+  return ul;
+}
+
+function showStart(){
+  out.replaceChildren(el('p','Type a port name to see its high and low tides, or pick one:','msg hint'),portList());
+}
+
+function go(){
+  const q=input.value.trim();
+  if(!q){
+    out.replaceChildren(el('p','Enter a port name to search.','msg err'),portList());
+    input.focus();
+    return;
+  }
+  const key=names.find(n=>n.toLowerCase()===q.toLowerCase());
+  if(!key){
+    out.replaceChildren(el('p','No tide times found for \u201C'+q+'\u201D. Check the spelling or choose one of these ports:','msg err'),portList());
+    input.focus();
+    return;
+  }
+  const wrap=el('div',null,'tablewrap'),t=document.createElement('table');
+  t.appendChild(el('caption','Tides for '+key));
+  const hr=t.createTHead().insertRow();
+  ['Time','Tide','Height'].forEach(h=>{const th=el('th',h);th.scope='col';hr.appendChild(th)});
+  const tb=t.createTBody();
+  DATA[key].forEach(r=>{const tr=tb.insertRow();r.forEach(c=>tr.insertCell().textContent=c)});
+  wrap.appendChild(t);
+  out.replaceChildren(wrap);
+}
+
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();go()});
+showStart();
+</script></body></html>

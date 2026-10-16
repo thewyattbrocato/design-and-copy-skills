@@ -1,29 +1,24 @@
-Here's the cleaned-up version. The mountain, route line, summit hold and two-line lockup are all still there.
+Here's the cleaned-up version. The mountain, the route line and the hold dot are all still there.
 
 ```svg
-<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t">
-  <title id="t">Boulderline – Indoor Climbing &amp; Training</title>
-  <!-- Fonts: Papyrus (wordmark), Arial (tagline). Outline both before print or sign use. -->
-  <path d="M10 100 L45 30 L65 62 L82 40 L112 100 Z" fill="#ff5a36" stroke-linejoin="round"/>
+<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Boulderline – Indoor Climbing &amp; Training</title>
+  <!-- Fonts: wordmark and tagline are live text. Outline them before print or sign use. -->
+  <path d="M10 100 L45 30 L65 62 L82 40 L112 100 Z" fill="#ff5a36" stroke="#222" stroke-width="2" stroke-linejoin="round"/>
   <path d="M25 100 L45 58 L58 80" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="45" cy="30" r="4" fill="#222"/>
-  <text x="128" y="72" font-family="Papyrus, fantasy" font-size="34" fill="#222" letter-spacing="1">Boulderline</text>
-  <text x="128" y="96" font-family="Arial, sans-serif" font-size="9" fill="#555" letter-spacing=".5">INDOOR CLIMBING &amp; TRAINING</text>
+  <circle cx="45" cy="30" r="5" fill="#222"/>
+  <text x="126" y="70" font-family="'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="700" fill="#222">Boulderline</text>
+  <text x="128" y="92" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" letter-spacing="1" fill="#555">INDOOR CLIMBING &amp; TRAINING</text>
 </svg>
 ```
 
-**What I changed**
-- **Gradient and drop shadow:** I removed both and made the mountain flat `#ff5a36`, the start of your gradient. A flat shape survives one-color printing, embroidery, favicons and dark backgrounds. The yellow end of the gradient is gone. It would work well as an accent color elsewhere.
-- **Outline stroke:** I removed the 1px dark outline. It would disappear at small sizes.
-- **Route line:** I thickened it from 1 to 3 and rounded the ends and joins. A 1px white line vanishes when the logo is small.
-- **Summit hold:** It was the same color as the mountain, so you couldn't see it. It's now dark `#222`, so it reads as a hold.
-- **Alignment:** The tagline started 2px right of the wordmark (130 vs 128). Both now start at 128.
-- **Tagline legibility:** I changed it from `#888` at 8px to `#555` at 9px, with slight letter-spacing. The old gray was too faint on white.
-- **SVG basics:** I added `role="img"` and a `<title>`, so the logo has an accessible name. I added fallback fonts and noted the font dependency in a comment.
+What I changed:
+- **Shadow:** I removed the drop-shadow filter and its `<defs>`. It turns to mud in one color and on dark backgrounds.
+- **Gradient:** I flattened it to your orange, `#ff5a36`. The yellow end is gone, so say if you want it back as a flat second color.
+- **Hairlines:** The 1px strokes would vanish at small sizes. The outline is now 2 and the route line 3, with rounded joins and caps.
+- **Hold dot:** It was orange on an orange peak, so it was invisible. It's now `#222` and slightly larger.
+- **Tagline:** I darkened it from `#888` to `#555` for contrast and nudged it to line up with the wordmark.
+- **Accessibility:** I added `role="img"` and a `<title>`.
+- **Wordmark font:** I swapped Papyrus for a bold sans (Helvetica Neue, then Arial). This is the one change that goes beyond tidying, because Papyrus isn't installed on many machines and renders differently across systems. It also doesn't match the bold mountain. I'd pick a proper font next and then outline the text. If you want Papyrus back, change `font-family` on that one line.
 
-**What I left alone, and why**
-- **Papyrus:** It's a stock font that's heavily associated with spa and fantasy branding, and it's the weakest part of the logo. I left it because you asked me not to redo the logo. Changing it is the single biggest upgrade, so tell me if you want a sturdier face with one custom touch, such as a cut that echoes the route line.
-- **Text outlines:** I can't convert text to outlines without the font file. Until that's done, the logo depends on the viewer having Papyrus installed.
-- **Tagline:** It sits in the same file, but treat it as an optional line that you can drop for small uses.
-
-Next, I can make a one-color version using `currentColor`, a reversed version for dark backgrounds, and a symbol-only icon with a heavier shape for 16 and 32px. Want those?
+I haven't tested it solid black, reversed on a dark background, or at 16–32px. If you want, I can make a one-color version using `currentColor`, a reversed version, and a symbol-only icon. The icon would be a heavier mountain drawn for small sizes, not the full logo shrunk.

@@ -26,7 +26,7 @@ Load this for slides, posters, social graphics, and print pages. A reflowing scr
 
 One message in several formats needs one design per format. Cropping a wide hero into a tall story cuts the text and leaves an empty remainder.
 
-For each ratio (about 1.91:1 link preview, 1:1 post, 4:5 portrait post, 9:16 story, 16:9 slide):
+For each ratio (about 1.91:1 link preview, 1:1 post, 4:5 portrait post, the tall story ratio, 16:9 slide):
 
 1. List what must appear: the headline, the key fact, the mark.
 2. Place those in the new frame from scratch; use more vertical stacking in tall frames and side-by-side in wide ones.

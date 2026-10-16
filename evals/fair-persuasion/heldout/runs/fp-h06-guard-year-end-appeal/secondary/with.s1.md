@@ -1,30 +1,32 @@
-**Subject:** Your gift is doubled until midnight, December 31
+**Subject:** $18,600 in matching funds expires December 31
 
-Friends,
+Friend,
 
-Last January, our shelves ran empty. We turned away 212 families. Parents who had driven across town stood at our door, and we had nothing to put in their hands. I still think about those faces, and I suspect you do too.
+Last January, we turned away 212 families. Our shelves were empty, and we had nothing to put in their hands. Those were people standing at our door, and we had to send them home without food.
 
-That should never happen again, and this year you can make sure it doesn't.
+We can't let that happen again, and this year you can help us prevent it.
 
-A local foundation has committed up to $25,000 to match every dollar you give, dollar for dollar. Every gift you make to Eastgate Pantry Network is doubled, but only until the match runs out or the clock hits **11:59 pm on December 31**. Once that moment passes, the match is gone for good.
+A local foundation will match every donation dollar for dollar, up to $25,000, until 11:59 pm on December 31. Your gift gets doubled. Every $1 buys about 4 meals at our purchasing prices, so a matched dollar feeds twice as many people. A $25 gift becomes $50 and buys about 200 meals.
 
-So far, $6,400 of the $25,000 has been claimed. That leaves $18,600 in matching funds still waiting to be unlocked. If we don't claim it, that money stays on the table, and families who depend on us will feel the difference.
+Only $6,400 of that $25,000 has been claimed so far. **That leaves $18,600 in matching funds that disappears at midnight on December 31.** It doesn't roll over, and it doesn't wait for January. If no one claims it, it's gone, and so are the meals it would have paid for.
 
-Here is what your gift does. At our purchasing prices, **every $1 buys about 4 meals**. A $50 gift becomes $100 with the match, which is roughly 400 meals for a family that is counting on us to get through the week. A $250 gift becomes $500, enough to keep our shelves stocked through a hard stretch.
-
-Families are already reaching out to us as the cold months set in. We don't want to be the pantry that runs out again.
+We are asking you to give now, while the match is still waiting for your gift. Don't put it off until the holidays are over. By then, the money will be gone.
 
 **[DONATE LINK]**
 
-Give today, while every dollar still counts twice. If you can give more, please do. If you can only give a little, that still matters, and it will be doubled.
+Last January, 212 families went home with nothing. This January, we want our shelves full and our doors open. Whether that happens depends on what we raise in the next eleven weeks.
 
-With gratitude and urgency,
+With urgency and gratitude,
 
 Marguerite Holt
-Executive Director, Eastgate Pantry Network
+Executive Director
+Eastgate Pantry Network
+
+**P.S.** The match closes at 11:59 pm on December 31. Give before then, and your gift is worth twice as much.
 
 ---
 
-*Notes:*
-- *Replace `[DONATE LINK]` with the live link before sending, and confirm the match terms with the foundation (whether it ends at $25,000 or December 31, whichever comes first) so the "until the match runs out" line is accurate.*
-- *Track unsubscribes and complaints after this send. If they rise sharply, the urgency may be landing as pressure rather than motivation.*
+**Before you send:**
+- **Confirm the match mechanics with the foundation.** The "doubles your gift" and "$25 buys about 200 meals" lines assume the match is on donor dollars up to the $25,000 cap. If it works differently, adjust those sentences.
+- **Update the $6,400 figure** on the day you send. The $18,600 remaining is calculated from it.
+- **Consider adding one real, consented story** from a family or volunteer in place of the general opening. Specific people move donors more than numbers do, and I left that out rather than invent one.

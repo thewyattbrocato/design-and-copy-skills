@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stillwater</title>
+<style>
+  :root {
+    --bg: #0f1c24;
+    --bg-2: #16282f;
+    --surface: #1b3039;
+    --line: rgba(190, 225, 225, 0.12);
+    --text: #e8f1ef;
+    --muted: #8fa9a9;
+    --accent: #7fd1c0;
+    --accent-ink: #08201b;
+    --warm: #e9c58a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #070d11;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  .phone {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    background:
+      radial-gradient(120% 60% at 50% 38%, #1d3a42 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    padding: max(20px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  @media (min-width: 460px) {
+    .phone { min-height: 860px; max-height: 900px; border-radius: 36px; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+  }
+  header { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; }
+  .brand { font-size: 15px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .streak {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--text);
+    padding: 7px 12px; border-radius: 999px;
+    background: rgba(127, 209, 192, .1);
+    border: 1px solid var(--line);
+  }
+  .streak .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warm); box-shadow: 0 0 10px var(--warm); }
+  .streak b { font-weight: 650; font-variant-numeric: tabular-nums; }
+  .streak span.sub { color: var(--muted); }
+
+  .hero { text-align: center; }
+  .hero h1 { font-size: 28px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+  .hero p { margin-top: 6px; color: var(--muted); font-size: 15px; }
+
+  .start-wrap { display: flex; justify-content: center; padding: 6px 0; }
+  .start {
+    position: relative;
+    width: 180px; height: 180px; border-radius: 50%;
+    border: 0; cursor: pointer;
+    background: radial-gradient(circle at 35% 30%, #a6e6d8, var(--accent) 55%, #54b3a1);
+    color: var(--accent-ink);
+    font: inherit; font-size: 22px; font-weight: 650; letter-spacing: .02em;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    box-shadow: 0 0 0 14px rgba(127,209,192,.09), 0 0 0 30px rgba(127,209,192,.05), 0 20px 50px rgba(84,179,161,.35);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .start small { font-size: 13px; font-weight: 500; opacity: .75; }
+  .start:hover { transform: scale(1.02); }
+  .start:active { transform: scale(.97); }
+  .start:focus-visible, .dur label:has(input:focus-visible) { outline: 3px solid var(--warm); outline-offset: 4px; }
+
+  .dur { display: flex; gap: 10px; border: 0; }
+  .dur legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .dur label { flex: 1; position: relative; border-radius: 14px; }
+  .dur input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .dur .chip {
+    display: block; text-align: center; padding: 13px 0;
+    border-radius: 14px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--muted);
+    font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums;
+    transition: all .15s ease;
+  }
+  .dur .chip small { font-size: 12px; font-weight: 500; margin-left: 3px; }
+  .dur input:checked + .chip { background: rgba(127,209,192,.16); border-color: var(--accent); color: var(--text); }
+
+  .recent h2 { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+  .recent ul { list-style: none; border-top: 1px solid var(--line); }
+  .recent li { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+  .ring {
+    width: 36px; height: 36px; border-radius: 50%; flex: none;
+    display: grid; place-items: center;
+    background: rgba(127,209,192,.1); border: 1px solid var(--line);
+  }
+  .ring i { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .meta { flex: 1; min-width: 0; }
+  .meta strong { display: block; font-size: 16px; font-weight: 600; }
+  .meta span { font-size: 13px; color: var(--muted); }
+  .len { font-size: 15px; color: var(--text); font-variant-numeric: tabular-nums; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="phone">
+  <header>
+    <div class="brand">Stillwater</div>
+    <div class="streak" aria-label="Today's streak: 12 days">
+      <span class="dot" aria-hidden="true"></span>
+      <span><b>12</b> day streak</span>
+      <span class="sub">· today ✓</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Settle in.</h1>
+    <p>Choose a length, then begin.</p>
+  </section>
+
+  <div class="start-wrap">
+    <button class="start" type="button">Start<small id="startLen">10 min</small></button>
+  </div>
+
+  <fieldset class="dur">
+    <legend>Duration</legend>
+    <label><input type="radio" name="d" value="5"><span class="chip">5<small>min</small></span></label>
+    <label><input type="radio" name="d" value="10" checked><span class="chip">10<small>min</small></span></label>
+    <label><input type="radio" name="d" value="20"><span class="chip">20<small>min</small></span></label>
+  </fieldset>
+
+  <section class="recent">
+    <h2>Recent sessions</h2>
+    <ul>
+      <li><span class="ring"><i></i></span><div class="meta"><strong>Morning sit</strong><span>Today · 7:42 am</span></div><span class="len">10 min</span></li>
+      <li><span class="ring"><i></i></span><div class="meta"><strong>Evening wind-down</strong><span>Yesterday · 9:15 pm</span></div><span class="len">20 min</span></li>
+      <li><span class="ring"><i></i></span><div class="meta"><strong>Midday reset</strong><span>Mon · 12:30 pm</span></div><span class="len">5 min</span></li>
+    </ul>
+  </section>
+</main>
+<script>
+  document.querySelectorAll('input[name=d]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      document.getElementById('startLen').textContent = r.value + ' min';
+    });
+  });
+</script>
+</body>
+</html>

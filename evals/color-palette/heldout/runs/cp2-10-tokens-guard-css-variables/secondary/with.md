@@ -9,4 +9,4 @@
 }
 ```
 
-The error color is one token because it covers both text and borders. If you want those separately adjustable, split it into `--color-error-text` and `--color-error-border`.
+The error color covers both error text and borders, so it's a single property.

@@ -6,7 +6,12 @@ Each skill folder holds meta.json (the task, the tally, the judged difference, t
 
   <!-- before-after:start --> ... <!-- before-after:end -->
 
-as one collapsible panel per skill, design skills first and copywriting skills second. Excerpt text is escaped so it
+as one collapsible panel per skill, design skills first and copywriting skills second. A second block,
+
+  <!-- before-after:featured:start --> ... <!-- before-after:featured:end -->
+
+shows the one skill whose meta.json says `"featured": true` in full near the top of the README: the prompt, the two
+answers side by side and the judge result read from that skill's held-out results.json. Excerpt text is escaped so it
 renders as plain text, with newlines as <br> inside table cells. With --check nothing is written; the exit code is 1
 when the README does not match the files (CI uses this).
 """
@@ -17,6 +22,7 @@ import sys
 from pathlib import Path
 
 START, END = "<!-- before-after:start -->", "<!-- before-after:end -->"
+FEATURED_START, FEATURED_END = "<!-- before-after:featured:start -->", "<!-- before-after:featured:end -->"
 GALLERY = Path("docs") / "before-after"
 KINDS = (("design", "Design skills"), ("copy", "Copywriting skills"))
 TALLY = re.compile(r"^(\d+) / (\d+) / (\d+)$")
@@ -124,11 +130,60 @@ def render(root):
     return lines
 
 
-def update(text, lines):
-    i, j = text.find(START), text.find(END)
+def sample_phrase(winners, side):
+    """`3 of 3 samples` style count of the samples a side won."""
+    return f"{winners.count(side)} of {len(winners)} samples"
+
+
+def featured_lines(root):
+    """The featured skill's task in full: prompt, both answers side by side, and the judge result under them."""
+    metas = [(f, m) for f, m in load(root) if m.get("featured")]
+    if len(metas) != 1:
+        raise ValueError(f"exactly one meta.json must set featured to true, found {len(metas)}")
+    folder, meta = metas[0]
+    skill = meta["skill"]
+    wins, losses, ties = tally(meta)
+    results = json.loads((Path(root) / "evals" / skill / "heldout" / "results.json").read_text(encoding="utf-8"))
+    verdict = next((v for v in results["verdicts"] if v["task_id"] == meta["task_id"]), None)
+    if verdict is None:
+        raise ValueError(f"{skill}: held-out results.json has no verdict for {meta['task_id']}")
+    winners = [s["winner"] for s in verdict["samples"]]
+    side = verdict["winner"]
+    judge = results["summary"]["judge"]
+    other = "a different model from the one that wrote the answers" if not results["summary"].get("same_model_judge") \
+        else "the same model as the one that wrote the answers"
+    outcome = {"with": "The answer with the skill won this task",
+               "without": "The answer without the skill won this task",
+               "tie": "This task was a tie"}[side]
+    count = "" if side == "tie" else f", {sample_phrase(winners, side)}"
+    rel = GALLERY / skill
+    shots = {i["side"]: i for i in meta.get("images", [])}
+    lines = [f"The same request, given to the same model with and without the `{skill}` skill installed:", "",
+             blockquote(meta["prompt"]), "", "| Without the skill | With the skill |", "|---|---|"]
+    if shots:
+        lines.append("| " + " | ".join(f"![{alt(shots[k]['alt'])}]({(rel / shots[k]['file']).as_posix()})"
+                                       for k in ("without", "with")) + " |")
+    lines += [
+        f"| {cell((folder / meta['without_file']).read_text(encoding='utf-8'))} | "
+        f"{cell((folder / meta['with_file']).read_text(encoding='utf-8'))} |",
+        "",
+        f"**Judge result.** {outcome}{count}, by {float(meta['judge_gap']):+.2f} rubric points on the 5-point scale. "
+        f"The judge was `{judge}`, {other}; it saw the two answers "
+        "unlabelled, in both orders. Over all of this skill's held-out tasks where it loaded, the skill won "
+        f"{wins}, lost {losses} and tied {ties}. [Full run files](evals/{skill}/heldout/runs/{meta['task_id']}/).",
+        "",
+        "This is one example, not a typical one: it is the task with the biggest judged gap in the skill's favor "
+        f"among the tasks where the skill loaded. Examples for {len(load(root)) - 1} other skills are in "
+        "[More before and after examples](#more-before-and-after-examples).",
+    ]
+    return lines
+
+
+def update(text, lines, start=START, end=END):
+    i, j = text.find(start), text.find(end)
     if i < 0 or j < i:
-        raise ValueError(f"README.md is missing the {START} ... {END} markers")
-    return text[:i + len(START)] + "\n" + "\n".join(lines) + "\n" + text[j:]
+        raise ValueError(f"README.md is missing the {start} ... {end} markers")
+    return text[:i + len(start)] + "\n" + "\n".join(lines) + "\n" + text[j:]
 
 
 def main(argv=None):
@@ -139,7 +194,7 @@ def main(argv=None):
     readme = Path(args.root) / "README.md"
     try:
         current = readme.read_text(encoding="utf-8")
-        new = update(current, render(args.root))
+        new = update(update(current, render(args.root)), featured_lines(args.root), FEATURED_START, FEATURED_END)
     except (OSError, ValueError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2

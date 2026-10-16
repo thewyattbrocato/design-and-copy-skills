@@ -1,69 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tern &amp; Wick: Repair Cafes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tern &amp; Wick | Book a repair cafe slot</title>
   <style>
     :root {
       --paper: #f6f1e7;
-      --ink: #2b2a26;
-      --muted: #6b665b;
-      --moss: #3f6b4e;
-      --moss-dark: #2f5239;
-      --ember: #c8642b;
-      --line: #e2d9c7;
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --serif: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --paper: #1f1e1b;
-        --ink: #f1ebdd;
-        --muted: #aaa397;
-        --moss: #7fb08f;
-        --moss-dark: #6aa07c;
-        --ember: #e0885a;
-        --line: #3a372f;
-      }
+      --ink: #1f2a24;
+      --muted: #55625a;
+      --moss: #2f5d46;
+      --moss-dark: #234a37;
+      --ember: #c2582b;
+      --line: #d9cfbd;
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
-      height: 100%;
-    }
-
-    body {
+      padding: 0;
       background: var(--paper);
       color: var(--ink);
       font-family: var(--font);
-      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
     }
 
     header {
+      padding: 24px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 1.5rem;
       border-bottom: 1px solid var(--line);
     }
 
-    .wordmark {
-      font-family: var(--serif);
-      font-size: 1.25rem;
+    .brand {
       font-weight: 700;
+      font-size: 1.05rem;
       letter-spacing: 0.01em;
       color: var(--ink);
       text-decoration: none;
     }
 
-    .wordmark span {
+    .brand span {
       color: var(--ember);
     }
 
@@ -72,37 +58,27 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1.5rem;
+      padding: 48px 24px;
     }
 
     .hero {
-      max-width: 40rem;
+      max-width: 680px;
       text-align: center;
     }
 
-    .eyebrow {
-      display: inline-block;
-      margin: 0 0 1rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--moss);
-    }
-
     h1 {
-      margin: 0 0 1.25rem;
-      font-family: var(--serif);
-      font-size: clamp(2.5rem, 7vw, 4.25rem);
-      font-weight: 700;
+      margin: 0 0 20px;
+      font-size: clamp(2.4rem, 6vw, 4rem);
       line-height: 1.05;
+      font-weight: 800;
       letter-spacing: -0.02em;
     }
 
     .lede {
-      margin: 0 auto 2.25rem;
-      max-width: 32rem;
+      margin: 0 auto 36px;
+      max-width: 540px;
       font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      line-height: 1.5;
       color: var(--muted);
     }
 
@@ -110,79 +86,72 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 18px;
     }
 
     .btn-primary {
       display: inline-block;
-      padding: 0.9rem 1.9rem;
-      border-radius: 999px;
+      padding: 16px 32px;
       background: var(--moss);
-      color: #fff;
+      color: #ffffff;
       font-size: 1.05rem;
-      font-weight: 600;
+      font-weight: 650;
       text-decoration: none;
-      box-shadow: 0 2px 0 var(--moss-dark);
+      border-radius: 10px;
+      transition: background 0.15s ease;
     }
 
-    .btn-primary:hover {
-      background: var(--moss-dark);
-    }
+    .btn-primary:hover { background: var(--moss-dark); }
 
     .btn-primary:focus-visible,
-    .learn-link:focus-visible,
-    .wordmark:focus-visible {
+    .help-link:focus-visible,
+    .brand:focus-visible {
       outline: 3px solid var(--ember);
       outline-offset: 3px;
     }
 
-    .learn-link {
-      color: var(--ink);
+    .help-link {
+      color: var(--moss);
       font-size: 0.98rem;
+      font-weight: 600;
       text-decoration: underline;
-      text-decoration-color: var(--ember);
-      text-decoration-thickness: 2px;
-      text-underline-offset: 4px;
+      text-underline-offset: 3px;
     }
 
-    .learn-link:hover {
-      color: var(--ember);
-    }
+    .help-link:hover { color: var(--moss-dark); }
 
     footer {
-      padding: 1.25rem 1.5rem;
+      padding: 20px 32px;
       border-top: 1px solid var(--line);
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: var(--muted);
     }
 
-    footer strong {
-      color: var(--ink);
-      font-weight: 600;
+    @media (max-width: 480px) {
+      header, footer { padding-left: 20px; padding-right: 20px; }
+      .btn-primary { width: 100%; text-align: center; }
     }
   </style>
 </head>
 <body>
   <header>
-    <a class="wordmark" href="#">Tern <span>&amp;</span> Wick</a>
+    <a class="brand" href="#">Tern <span>&amp;</span> Wick</a>
   </header>
 
   <main>
     <section class="hero">
-      <p class="eyebrow">Community repair cafes</p>
       <h1>Don't bin it. Bring it in.</h1>
       <p class="lede">Book a 30-minute slot at a repair cafe near you. Volunteers, tools and tea are free.</p>
-
       <div class="actions">
-        <a class="btn-primary" href="#book">Book a 30-minute slot</a>
-        <a class="learn-link" href="#how-it-works">How a repair cafe works</a>
+        <a class="btn-primary" href="#book">Book a slot</a>
+        <a class="help-link" href="#how-it-works">How a repair cafe works</a>
       </div>
     </section>
   </main>
 
   <footer>
-    <strong>214 cafes</strong> in 9 countries, <strong>41,000 things</strong> fixed
+    214 cafes in 9 countries, 41,000 things fixed
   </footer>
 </body>
 </html>

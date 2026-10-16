@@ -60,6 +60,8 @@ These are external accessibility standards; check the current guideline before p
 - Animate transform and opacity first; they are the cheapest properties to composite. Check current paint and layout cost before animating anything else, and avoid width, height, top and left on large elements.
 - Use `will-change` sparingly and only on elements about to animate, then remove it.
 - Test on a slow device; people notice stutter far more than a frame counter. A beautiful curve that stutters is a bad curve.
+- Steady frame pacing beats a higher rate that dips; prefer a calmer effect that holds over a rich one that stutters.
+- Avoid animating very large distances; shorten the travel (start near the destination) or cross-fade instead.
 - Do not load a heavy animation library for a few fades.
 - If a screen feels slow, measure first: long tasks and late input response cost more than long durations.
 
@@ -70,15 +72,14 @@ For every motion, write one row:
 | Motion | Trigger | Properties | Duration | Easing | Delay | Interrupt behavior | Reduced motion |
 |---|---|---|---|---|---|---|---|
 
-Keep the vocabulary small: three or four durations, three easings, one stagger value, recorded as values rather than adjectives. A video or prototype alone is not a spec; it must list the numbers too. When the system has tokens, use their names; do not invent a new set.
+Keep the vocabulary small: three or four durations, three easings, one stagger value, recorded as values rather than adjectives. Name presets by role in the team's own words ("enter-overlay", "dismiss-toast"), each with its numbers and one purpose line, so squads reuse them instead of inventing their own. A video or prototype alone is not a spec; it must list the numbers too. When the system has tokens, use their names; do not invent a new set.
 
-## Brand adjectives as numbers
+## Temperament as numbers
 
-| Word | Translates to |
-|---|---|
-| Calm | Shorter travel; opacity over position; ease-out; no overshoot |
-| Decisive | Arrives and stops; ease-out; no overshoot |
-| Energetic | Slight overshoot; slightly faster; a little more travel |
-| Playful | A touch of squash or bounce, only where it cannot hurt a hit target |
+| Word | Travel | Overshoot | Duration against the baseline |
+|---|---|---|---|
+| Quiet | 4 to 8 px, opacity leading | none | about a fifth shorter, ease-out |
+| Crisp | 8 to 16 px | none; arrives and stops | baseline |
+| Lively | 12 to 24 px | up to about 5 percent, never on a hit target | about a fifth longer |
 
 Apply one word everywhere. If the product's motion is already a mix, audit it first: list every motion, group them, and decide on one set rather than nudging dozens of near-matches.

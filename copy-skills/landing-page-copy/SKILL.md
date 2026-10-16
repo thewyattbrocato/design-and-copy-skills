@@ -33,7 +33,7 @@ Small tasks (one section, a hero rewrite) can skip to step 3.
 
 1. **Gather what the page turns on:** who arrives and from where, what they already know, the one action, the offer and terms, the proof the user really has, their real objections, a voice sample, any length cap. Use what the brief gives. If the brief lacks the offer or the audience and the session is interactive, ask once in one short list with a default per item. Otherwise deliver anyway: write what the facts support, put a visible placeholder where a needed fact is missing, never invent it.
 2. **Plan in three to six lines** (reader, the one idea, section order, the ask), then draft in the same reply.
-3. **Order sections by the reader's questions:** what is this and is it for me; why care now; how does it work; will it work for someone like me; what does it cost, what is the catch, what must I do; what if it goes wrong; what do I do now. Reorder by reader: someone ready to buy needs offer and terms early, someone who has not noticed the problem needs it made visible first and briefly, a cheap familiar purchase needs only benefit, proof and action.
+3. **Order sections by the reader's questions:** what is this and is it for me; why care now; how does it work; will it work for someone like me; what does it cost, what is the catch, what must I do; what if it goes wrong; what do I do now. Reorder by reader: someone who came looking for the product needs offer and terms early, someone who came with the problem needs it in their words first and briefly, someone who came from elsewhere needs one concrete result first, a cheap familiar purchase needs only benefit, proof and action.
 4. **Hero:** headline and subhead say who it is for, what changes, and what kind of thing it is, in a familiar category word. One primary action whose button says what happens. At most one lower-commitment path.
 5. **One job per section.** The heading states the section's point, so the headings read alone tell the argument. Group features under the outcome they serve; use as many items as the content has.
 6. **Proof sits beside the claim it supports,** matched to the doubt: a demonstration or specific result for "does it work", someone like the reader for "can I do it", a named outside source for "who says so". If none was supplied, use a placeholder such as [add a real customer quote] or a softer true sentence. For a business with a long history, the founding story can be the proof.
@@ -42,7 +42,7 @@ Small tasks (one section, a hero rewrite) can skip to step 3.
 
 ## Judgment calls
 
-- **Length.** Default to the decision's weight: short for cheap, familiar purchases, longer for costly, new or risky ones, scannable either way. Cut sections before words. With a stated cap, count and keep within it, dropping the lowest-value sections first and naming them.
+- **Length.** Default to the decision's weight: short for cheap, familiar purchases, longer for costly, new or risky ones, scannable either way. Cut sections before words. With a stated cap, count and keep within it, dropping the lowest-value sections first and naming them in removal order, with what stays whatever the length.
 - **Opening.** Default by the reader: problem first when they feel it, outcome first when comparing, offer first when ready. Change when the user's page opens on something that already works.
 - **Rewrites.** Default to keeping every line that already does its job and saying which you kept. If the page already works, say so and change at most a word. Replace a line only to fix clarity, specificity, truth or the action.
 - **Voice.** Default to the supplied sample or the user's best existing lines. With neither, write plain and specific; no adjective triplets, no "unlock", "seamless" or "all-in-one", no exclamation marks.
@@ -78,3 +78,4 @@ Deliver the copy deck first: labelled sections with heading, body and button tex
 ## References
 
 - [page-types.md](references/page-types.md): load when the page is pricing, about, case study, long-form sales or product, or when the user asks for a section plan.
+- [anatomy-length-and-truth.md](references/anatomy-length-and-truth.md): load when the page must be cut or sized, the hero opens on a feature, a real limit must be stated, or navigation is in question.

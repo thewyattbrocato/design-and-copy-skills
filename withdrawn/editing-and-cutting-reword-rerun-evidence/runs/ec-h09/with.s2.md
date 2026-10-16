@@ -1,0 +1,1 @@
+Odette Marsh has spent 14 years as a pastry chef, the last six at a hotel restaurant. Now Marsh teaches weekend laminated dough classes at a community kitchen and writes a newsletter on sourdough croissants. Marsh's talk explains why laminated dough fails and how to fix it.

@@ -1,33 +1,73 @@
-**Recommendation: make the card respond to its own container (container queries).** Use viewport media queries only for page-level layout, such as how many columns the dashboard grid has.
+The developer is mostly right. I found nothing broken, and the responsive parts are done well. I only read the CSS and didn't render it, so I haven't tested it against your actual HTML.
 
-**Why, based on your three placements**
+**What's already good**
+- `--gutter` uses `clamp()`, so the side padding scales smoothly with no breakpoints.
+- The `h1` size mixes `rem` with `vw`. That keeps it responsive and still lets it scale when users zoom or change their browser font size.
+- The grid uses `minmax(min(100%, 16rem), 1fr)`. The `min(100%, …)` stops columns overflowing on screens narrower than 16rem, which many people miss.
+- `.prose` is capped at `65ch`, a good line length for reading.
+- `img` has `max-width: 100%; height: auto`, so images scale without distortion.
 
-- **The viewport can't tell the card which layout to use.** The card's width depends on where it sits, not on the screen size. On a 1440px screen it could be about 300px in the 4-up row, about 320px in the right rail, or about 500px in a modal. A viewport query would see the same screen in all three cases. You'd need hacks like `.rail .card { ... }` or `.modal .card { ... }` overrides, and those leak the card's internals into every page that uses it.
-- **The modal is the clearest case.** Its width is set by the modal, not the viewport. A media query can't handle it at all.
-- **The 4-up row changes width on its own.** At some breakpoints it becomes 2-up or 1-up, so the card's width shifts without any card-level logic. With container queries the card adapts automatically.
-- **It matches what a design system component should be.** The card should be portable, so a consumer can place it anywhere without knowing its breakpoints. Media queries tie the component to the page that uses it.
+**Small gaps worth closing**
+1. **`box-sizing`:** there's no reset, so padding and borders add to widths. It isn't a bug here, but it surprises people as the site grows.
+2. **Grid children can overflow:** a long URL, code block or table inside a grid item can force it wider than its column. Adding `min-width: 0` to the children fixes this.
+3. **Media beyond `img`:** `video`, `svg` and `canvas` aren't covered. Setting `img` to `display: block` also removes the small gap that appears under inline images.
+4. **Long words:** `overflow-wrap` on the body prevents long strings from breaking narrow layouts.
 
-**How to do it**
-
+**Tidied version**
 ```css
-.account-card-wrapper { container: account-card / inline-size; }
+:root {
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+}
 
-.account-card { /* compact by default */ }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-@container account-card (min-width: 360px) {
-  .account-card { /* roomy: sparkline beside balance, inline Transfer button */ }
+body {
+  margin: 0;
+  font: 1rem/1.6 system-ui, sans-serif;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 1.2rem + 2.5vw, 3.25rem);
+  line-height: 1.15;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.wrap {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.prose {
+  max-width: 65ch;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.grid > * {
+  min-width: 0;
 }
 ```
 
-- Write the compact layout as the default and add the roomy layout at a `min-width` container query.
-- Put `container-type` on a wrapper element, not on the card itself. A container can't style itself, only its descendants.
-- Set one or two breakpoints based on where the content actually breaks, such as when the sparkline no longer fits beside the balance. Don't set them from device sizes.
-- Browser support is no longer a concern. Container size queries are in all current evergreen browsers. Check your credit union's minimum supported browsers if you have an unusual policy.
+**Caveats**
+- With `border-box`, `.wrap` now holds 72rem including its padding, so the content area is slightly narrower on large screens. Bump `max-width` to about `77rem` if you want the old width.
+- Check that the HTML has `<meta name="viewport" content="width=device-width, initial-scale=1">`. Without it, phones ignore all of this CSS and render a zoomed-out desktop page.
+- Before reporting back to your boss, open the page in browser dev tools at 320px, 768px and 1280px wide. Also zoom to 200% to confirm nothing scrolls sideways.
 
-**Trade-offs to mention in the meeting**
-
-- `inline-size` containment means the wrapper can't take its width from its content. That's fine in grid and flex layouts, but check it in the modal if the modal shrink-wraps its content.
-- Container queries add a small amount of setup, and designers need to think in "card widths" instead of "screen sizes". Document the card's breakpoints in the design system and in Storybook, and add a story for each width.
-- Viewport media queries still make sense for things that depend on the device, like touch target sizes, `prefers-reduced-motion`, and the dashboard's column count.
-
-**Short version for the meeting:** the card's layout depends on the space it's given, and only a container query measures that. Media queries would force per-page overrides and can't handle the modal.
+If you share the HTML or point me at the files, I can check it against the real markup.

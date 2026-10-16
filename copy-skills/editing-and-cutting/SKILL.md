@@ -29,6 +29,8 @@ The user's style guide, voice sample and marked lines win over every default bel
 
 ## Before you edit
 
+Take the level asked and no more: errors only, line edit, structure, or idea. A typo check gets typo fixes plus at most one line on anything bigger, not a new draft.
+
 Name the piece's one point and its reader. If you cannot, the trouble is structure or thinking, not words: say so in one line, and still deliver a best edit. Decide what must survive: the point, every fact and number, true qualifiers, required disclosures, the ask, the only proof, anything the user marked, and the author's voice where it works.
 
 ## Editing order
@@ -67,7 +69,7 @@ Never invent a number, quote, review, rating, customer, deadline, stock limit or
 
 ## Output
 
-Deliver the edited text first, with nothing before it. For a critique ("what would you cut"), give the cuts and why, briefly, and the edited text only if asked. When a count or set is asked for (one version, three options), give exactly that. Add at most two one-line notes, only for what the user must act on or check: a placeholder, a cut that was close, a line kept on purpose. No change table, no explanation of every edit unless asked. Answer in the user's language.
+Deliver the edited text first, with nothing before it. For a critique ("what would you cut"), give the cuts and why, briefly, and the edited text only if asked. When a count or set is asked for (one version, three options), give exactly that. Add at most two one-line notes, only for what the user must act on or check: a placeholder, a cut that was close, a line kept on purpose. Under a cap of about 80 words, add no notes at all: they count against the cap or get dropped, so put the placeholder in the text and let it speak. No change table, no explanation of every edit unless asked. Answer in the user's language.
 
 ## Quick checks
 
@@ -79,4 +81,5 @@ Deliver the edited text first, with nothing before it. For a critique ("what wou
 
 ## References
 
+- [levels-and-structure.md](references/levels-and-structure.md): load when a level is named ("just fix typos", "is the structure okay", "what would you cut"), for long drafts with an order problem, or when cuts keep losing meaning; has the paragraph outline, cutting tests and short pairs.
 - [template-voice.md](references/template-voice.md): load for "sounds like AI", "generic", "punch it up", or any text full of stock phrases; has the grouped list, how to replace each kind, and short before-and-after pairs.

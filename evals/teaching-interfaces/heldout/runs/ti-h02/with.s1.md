@@ -1,27 +1,27 @@
 **Why they skip**
 
-Step 1 is a gate with no content. "Let's take a quick tour" tells people nothing they want, and the only thing it offers is a delay before they can use the product. Skip is the only way to get to the work. Freelancers who sign up to send an invoice read a seven-step tour as a toll.
+Step 1 tells people nothing except that a tour is coming. It offers no reason to stay, and a freelancer who just signed up wants to send an invoice, not sit through a tour. The rest of the tour shows they're right.
 
-The rest of the tour would not have helped them much if they'd stayed.
-- **Steps 2–4 list controls.** They name about 20 items (nine sidebar entries, five top-bar items, five dashboard widgets). People can't remember a list like that. Most of the labels are self-explanatory anyway, and the dashboard is empty on day one, so the step 4 description has nothing to point at.
-- **Step 5 is the only step that matters,** and it comes fifth. It also packs in five features (line items, taxes, discounts, due date, payment link) and a shortcut, and none of it is practiced.
-- **Step 6 is a settings pointer** to something people can't act on until they've sent an invoice.
-- **Step 7 is a ceremony.** "You're all set!" confirms nothing, because they haven't done anything yet.
+- **It's an inventory, not a lesson.** Steps 2–4 list about 20 things (nine sidebar items, five top-bar items, five dashboard widgets) that people can see and read for themselves. Nobody remembers a list that long.
+- **It sits over the dashboard, which is empty on day one.** The revenue and overdue widgets it points at have nothing in them yet.
+- **It blocks the real task.** The one thing the tour is really for, creating an invoice, doesn't appear until step 5, and it's only described there. Step 7 ("You're all set!") celebrates having read.
+- **It's a mandatory sequence of seven "Next" clicks.** Step 1 gives no preview of the payoff, so Skip is the sensible choice.
 
 **What I'd change**
 
-The goal is that afterwards they can create and send their first invoice. Replace the tour with a guided first task.
+1. **Cut the tour and replace it with one guided first task.** After they sign up, the goal is "afterwards they can send their first invoice."
+2. **Fix the interface before teaching it.** Make "New invoice" a labeled button (with N as a hint), not a bare + that needs explaining. Then the sidebar and top bar need no tour.
+3. **Start with a one-line prompt on the dashboard.** For example: "Send your first invoice. It takes about two minutes." with a **Create invoice** button and a quiet **Skip, I'll explore** link.
+4. **Guide the form with a few hints, each beside its field.** Cover client, line items, due date and send. Mention taxes, discounts and the payment link only as optional fields. Keep that hint on screen while they fill in the form.
+5. **Offer a starting point.** Let them pick an existing client or a sample client, clearly labeled "Sample" and replaceable in one action. Don't show fake revenue on the dashboard that could pass for their own numbers.
+6. **Confirm what happened, then point to the next step.** For example: "Invoice sent to [client]. You'll see it under Outstanding. When they pay, connect your bank to match payments automatically." This replaces the old step 6 and step 7, and it appears when it's relevant.
+7. **Make the dashboard's empty state do the teaching.** Each widget should say what it will show and what starts it ("Revenue appears here after your first paid invoice").
+8. **Keep a way back.** Put a "Product tour" or "Getting started" item in the help menu for anyone who skipped.
 
-1. **Delete steps 1–4 and 7.** The sidebar and top bar need no explanation, and the dashboard doesn't need one until it has data.
-2. **Open on the task.** The dashboard's empty state has one primary action: "Create your first invoice." One line says what it's for, for example: "Invoices are how you get paid. This takes about a minute." Add a visible "I'll explore first" link for people who want to skip.
-3. **Walk through the real invoice form** with 2–3 coach marks, only on what's needed to send: client, line item, send. Taxes, discounts, due date and payment link stay as normal form fields. Don't teach them up front.
-4. **Offer a starting point.** Let them pick or add a client, and prefill sensible defaults. If you show sample data, label it "Sample" and make it removable in one click.
-5. **Give feedback in their terms when they send,** such as "Invoice #1 sent to [client]. You'll see it under Outstanding on your dashboard." That replaces "You're all set!" and points to the next step.
-6. **Bring bank connection back later as a real prompt.** For example, show it after the first invoice is sent: "Want payments matched automatically? Connect your bank." Don't put it in the tour.
-7. **Keep a way back.** Put a "Help" or "Replay the walkthrough" entry in the help center. The `N` shortcut can show up as a hint on the + button, where people will see it while they work.
+If you want to keep a tour for some users, limit it to 3–5 steps that lead to the first invoice: the + button, the client, line items, send.
 
-**How to check it**
+**How to judge it**
 
-Skip rate and tour completion are the wrong measures. Compare the share of new users who send an invoice within their first session and within 7 days. Also check whether they create a second invoice without any prompting.
+Don't use tour completion as the measure. Compare, for new signups, the share who send a first invoice within 7 days, and the share who create a second invoice unaided a week or two later. Run the new flow against the old tour as an A/B test. Skip rate on step 1 is a symptom, not the goal.
 
-I haven't seen your analytics beyond the 80% figure, so I'm assuming that people want to invoice quickly and that your empty dashboard has room for a primary action.
+*Assumptions: I'm inferring the cause from the tour text and your 80% figure, with no session recordings. Checking where skippers go next (do they create an invoice anyway?) would confirm it.*

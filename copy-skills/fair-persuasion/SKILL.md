@@ -1,6 +1,6 @@
 ---
 name: fair-persuasion
-description: Use whenever words or a screen flow are meant to move someone toward a choice, in any language and at any length - "reduce churn on the cancel page", "get more people on the annual plan", "increase opt-ins", "is this a dark pattern?", "is this too pushy?", "make it ethical but still convert". Covers plan recommendations, defaults, pre-checked options, upsells, trial conversion, cancel, pause and win-back flows, consent and permission prompts, reminders, referral asks, and appeals to fear, guilt, status or exclusivity. Not for whether a claim is true (honest-claims), form field mechanics (form-design) or the screen strings themselves (ux-microcopy).
+description: Use whenever a flow, default, plan choice, upsell, cancel or pause step, consent prompt or reminder is designed to steer a choice, or someone asks if it is pushy or a dark pattern, in any language - "reduce churn on the cancel page", "get more people on the annual plan", "increase opt-ins", "is this a dark pattern?", "is this too pushy?". Covers plan recommendations, pre-checked options, trial conversion, win-back flows, referral asks, and appeals to fear, guilt, status or exclusivity. Not for whether a claim is true (honest-claims), form field mechanics (form-design) or the screen strings themselves (ux-microcopy).
 ---
 
 # Fair persuasion
@@ -31,7 +31,7 @@ Do the work. Never invent a pause plan, discount, grace period, data-retention r
 
 ## Rules, grouped by the choice in play
 
-- **Start.** Show the first charge date, amount and renewal terms before the card field, at the same size as "free", and send a reminder before the first charge. Put the saving in money next to any percentage, and show the yearly total with the monthly equivalent and cancellation terms. Mark a recommended plan with its reason; recommend only options someone would sensibly buy.
+- **Start.** Show the first charge date, amount and renewal terms before the card field, at the same size as "free", and send a reminder before the first charge. Put the saving in money next to any percentage, and show the yearly total with the monthly equivalent and cancellation terms. If a plan is marked as recommended, give its reason; recommend only options someone would sensibly buy.
 - **Add.** Offer an upsell after the need is met, unticked, priced, and declined in one action. Charge nothing after purchase without a fresh yes. A default is fine when a well-informed person would pick it (security on, backup on), and it says so and reverses in one step.
 - **Stay.** Real reasons to leave deserve real answers: pause, downgrade, fix the cause. Offer at most one alternative, once, and a neutral way to decline. A discount counts only when it is a real price change that anyone in the same situation could get.
 - **Leave.** Cancelling costs no more effort than joining did and works in the same place. One screen: a plain heading, what becomes of the person's data and bills and by what date, the cancel button, one optional alternative. The confirmation names the last day of access and the way back in. Ask for a reason if you like, but never as a condition.

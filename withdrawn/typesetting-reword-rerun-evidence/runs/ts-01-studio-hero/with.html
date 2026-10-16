@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwick Ceramics — Hand-thrown dinnerware &amp; glazing classes</title>
+<style>
+  :root {
+    --cream: #f5ede2;
+    --ink: #2a2019;
+    --muted: #5c4d42;
+    --clay: #b0442a;
+    --clay-dark: #8f3520;
+    --fern: #5f7355;
+    --sand: #e6d6c0;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  a { color: inherit; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px clamp(24px, 5vw, 72px);
+  }
+  .wordmark {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+  }
+  nav { display: flex; gap: 32px; }
+  nav a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+  }
+  nav a:hover { color: var(--ink); border-bottom-color: var(--clay); }
+
+  .hero-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+    padding: 0 clamp(24px, 5vw, 72px) 72px;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fern);
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: clamp(3.25rem, 6.4vw, 6rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--clay); }
+  .lede {
+    margin-top: 28px;
+    max-width: 34em;
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    line-height: 1.55;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 16px 28px;
+    border-radius: 999px;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid var(--clay);
+    transition: background-color .15s, color .15s, border-color .15s;
+  }
+  .btn-primary { background: var(--clay); color: #fff; }
+  .btn-primary:hover { background: var(--clay-dark); border-color: var(--clay-dark); }
+  .btn-secondary { background: transparent; color: var(--clay-dark); }
+  .btn-secondary:hover { background: var(--clay); color: #fff; }
+  .btn:focus-visible, nav a:focus-visible, .wordmark:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  /* Purely decorative stack of plates, drawn in CSS */
+  .art {
+    position: relative;
+    aspect-ratio: 1;
+    width: 100%;
+    max-width: 560px;
+    justify-self: center;
+  }
+  .plate {
+    position: absolute;
+    border-radius: 50%;
+  }
+  .plate.back {
+    inset: 0 8% 14% 0;
+    background: radial-gradient(circle at 50% 50%, #cfdac4 0 38%, #b9c9ad 39% 41%, #dfe8d6 42% 100%);
+    box-shadow: 0 24px 40px -20px rgba(42,32,25,.35);
+  }
+  .plate.mid {
+    inset: 22% 0 0 20%;
+    background: radial-gradient(circle at 50% 50%, #c9553a 0 36%, #a93f26 37% 39%, #d0674d 40% 100%);
+    box-shadow: 0 28px 44px -18px rgba(42,32,25,.45);
+  }
+  .plate.front {
+    inset: 12% 22% 26% 12%;
+    background:
+      radial-gradient(circle at 36% 30%, rgba(255,255,255,.55), transparent 30%),
+      radial-gradient(circle at 50% 50%, #f8f1e6 0 44%, var(--sand) 45% 47%, #f3e9da 48% 100%);
+    box-shadow: 0 20px 36px -16px rgba(42,32,25,.4);
+  }
+  .plate.front::after {
+    content: "";
+    position: absolute;
+    inset: 30%;
+    border-radius: 50%;
+    border: 3px solid var(--fern);
+    opacity: .75;
+  }
+
+  @media (max-width: 860px) {
+    .hero-body { grid-template-columns: 1fr; padding-bottom: 48px; }
+    .art { max-width: 340px; }
+    nav { gap: 20px; }
+  }
+  @media (max-width: 520px) {
+    nav a:not(:last-child) { display: none; }
+    .btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+  <section class="hero">
+    <header>
+      <a class="wordmark" href="#">Fernwick Ceramics</a>
+      <nav aria-label="Main">
+        <a href="#">Shop</a>
+        <a href="#">Classes</a>
+        <a href="#">Studio</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <div class="hero-body">
+      <div>
+        <p class="eyebrow">Hand-thrown in our two-person studio</p>
+        <h1>Dinnerware with <em>fingerprints</em> on it.</h1>
+        <p class="lede">Every plate, bowl and mug is thrown, glazed and fired by us, made to be used daily. Come make your own at one of our weekend glazing classes.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#">Shop the spring collection</a>
+          <a class="btn btn-secondary" href="#">Book a class</a>
+        </div>
+      </div>
+
+      <div class="art" aria-hidden="true">
+        <div class="plate back"></div>
+        <div class="plate mid"></div>
+        <div class="plate front"></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

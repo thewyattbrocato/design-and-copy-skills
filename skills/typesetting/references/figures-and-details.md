@@ -32,16 +32,17 @@ Load this when text holds figures, units, dates, quotes, dashes or capitals, or 
 | Primes for feet and inches (5′ 10″) | Straight quotes |
 | True minus (−) in numbers; ellipsis character | Hyphen; three periods |
 
-Code, data and URLs keep their literal characters. Spell names with their accents and set a whole word in one face.
+Code, data and URLs keep their literal characters. Spell names with their accents.
 
 ## Capitals and emphasis
 
 - Sentence case by default. All caps for one to three words (status tags, column heads), tracked 0.05 to 0.1em, at 12px or more. Several sentences in capitals: rewrite them in sentence case.
 - Real small caps (`font-variant-caps: all-small-caps`), tracked a little, never shrunken capitals. Never letterspace lowercase running text; use weight or italic for emphasis.
 - Keep punctuation next to bold or italic in the surrounding style unless the whole phrase is emphasized.
+- A block quotation needs only one cue to stand apart from the text around it, such as an indent or a smaller size; stacking italic on top of both is too much.
 
 ## Breaks and truncation
 
-- Hyphenation (`hyphens: auto`, `lang` set): at least two characters before the break and three after, no more than three hyphenated lines in a row. Avoid lone words on the last line of a heading (`text-wrap: balance`).
+- Hyphenation (`hyphens: auto`, `lang` set): avoid ladders of hyphenated lines. Avoid lone words on the last line of a heading (`text-wrap: balance`).
 - Truncate only non-critical text such as a file name, username or secondary description; truncate the middle for paths and ids when the ends matter. Offer a way to see it all; a tooltip alone fails on touch.
 - Never truncate an amount, an error message or the only instruction on a screen: let it wrap.

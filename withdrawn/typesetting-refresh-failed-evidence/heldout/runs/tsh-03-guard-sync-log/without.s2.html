@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sync Log Viewer</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #667085; --line: #e3e6ec;
+    --err: #b42318; --err-bg: #fdecea; --warn: #8a5a00; --warn-bg: #fff4d6;
+    --info: #3d4a63; --info-bg: #eaeef5; --accent: #2457d6; --key: #7a5af8;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12151c; --panel: #181c25; --text: #e4e8f0; --muted: #8b93a5; --line: #272d3a;
+      --err: #ff8a80; --err-bg: #3a1a1a; --warn: #f2c14e; --warn-bg: #36290c;
+      --info: #9aa6bf; --info-bg: #222836; --accent: #7ea2ff; --key: #b3a1ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { display: flex; flex-direction: column; background: var(--bg); color: var(--text); font: 14px/1.4 var(--sans); }
+  header { background: var(--panel); border-bottom: 1px solid var(--line); padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  h1 { font-size: 15px; margin: 0 8px 0 0; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--text); border-radius: 999px; padding: 4px 11px; font: inherit; cursor: pointer; }
+  .chip[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
+  .chip b { font-family: var(--mono); font-weight: 600; }
+  .chip.ERROR { background: var(--err-bg); color: var(--err); border-color: transparent; }
+  .chip.WARN { background: var(--warn-bg); color: var(--warn); border-color: transparent; }
+  .chip.INFO { background: var(--info-bg); color: var(--info); border-color: transparent; }
+  input[type=search], select, button.btn { font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; }
+  input[type=search] { min-width: 220px; }
+  button.btn { cursor: pointer; }
+  button.btn:hover, .chip:hover { border-color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .spacer { flex: 1; }
+  #status { color: var(--muted); font-size: 13px; }
+  main { flex: 1; min-height: 0; display: flex; position: relative; }
+  #log { flex: 1; overflow: auto; font: 12.5px/1.5 var(--mono); padding: 4px 0; }
+  .row { display: flex; gap: 10px; padding: 1px 14px 1px 11px; border-left: 3px solid transparent; white-space: pre; }
+  .row:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  .row.WARN { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.ERROR { background: var(--err-bg); border-left-color: var(--err); }
+  .row.flash { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .row[hidden] { display: none; }
+  .ln { color: var(--muted); min-width: 4ch; text-align: right; user-select: none; }
+  .ts { color: var(--muted); }
+  .lvl { font-weight: 700; min-width: 5ch; }
+  .ERROR .lvl { color: var(--err); } .WARN .lvl { color: var(--warn); } .INFO .lvl { color: var(--info); }
+  .svc { font-weight: 600; min-width: 15ch; }
+  .k { color: var(--muted); } .k.hot { color: var(--key); font-weight: 700; }
+  .v.hot { font-weight: 700; }
+  .ERROR .v.hot { color: var(--err); } .WARN .v.hot { color: var(--warn); }
+  .v.bad { color: var(--err); font-weight: 700; }
+  .v.slow { color: var(--warn); font-weight: 700; text-decoration: underline dotted; }
+  .raw { color: var(--muted); }
+  #rail { width: 16px; position: relative; background: var(--panel); border-left: 1px solid var(--line); flex: none; }
+  #rail i { position: absolute; left: 2px; right: 2px; height: 3px; border-radius: 1px; cursor: pointer; }
+  #rail i.ERROR { background: var(--err); } #rail i.WARN { background: var(--warn); }
+  #rail u { position: absolute; left: 0; right: 0; background: color-mix(in srgb, var(--accent) 25%, transparent); pointer-events: none; text-decoration: none; }
+  #empty { padding: 40px; color: var(--muted); text-align: center; }
+  #drop { position: absolute; inset: 0; display: none; place-items: center; background: color-mix(in srgb, var(--bg) 85%, transparent); font-size: 18px; border: 3px dashed var(--accent); z-index: 5; }
+  body.dragging #drop { display: grid; }
+  footer { padding: 5px 14px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); background: var(--panel); }
+  kbd { font-family: var(--mono); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sync Log</h1>
+  <button class="chip ERROR" data-lvl="ERROR" aria-pressed="true">ERROR <b id="cE">0</b></button>
+  <button class="chip WARN" data-lvl="WARN" aria-pressed="true">WARN <b id="cW">0</b></button>
+  <button class="chip INFO" data-lvl="INFO" aria-pressed="true">INFO <b id="cI">0</b></button>
+  <select id="svc" aria-label="Filter by service"><option value="">All services</option></select>
+  <input type="search" id="q" placeholder="Search…  ( / )" aria-label="Search log">
+  <button class="btn" id="prev" title="Previous problem (k)">▲ Prev problem</button>
+  <button class="btn" id="next" title="Next problem (j)">▼ Next problem</button>
+  <span class="spacer"></span>
+  <span id="status"></span>
+  <button class="btn" id="open">Open log…</button>
+  <input type="file" id="file" hidden>
+</header>
+<main>
+  <div id="log" tabindex="0" aria-label="Log lines"></div>
+  <div id="rail" aria-hidden="true"></div>
+  <div id="drop">Drop a log file to load it</div>
+</main>
+<footer><kbd>j</kbd>/<kbd>k</kbd> next/previous problem · <kbd>/</kbd> search · drop a file anywhere or paste log text · red/amber ticks on the right show where problems are</footer>
+
+<script>
+(function () {
+  var SAMPLE = [
+    "2025-03-11T02:00:04Z INFO  sync.orders  batch=0041 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=812 checksum=ok",
+    "2025-03-11T02:00:05Z INFO  sync.orders  batch=0042 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=790 checksum=ok",
+    "2025-03-11T02:00:07Z WARN  sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=4410 retry=1 reason=lock_timeout waited_ms=3000",
+    "2025-03-11T02:00:12Z ERROR sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=9120 retry=3 reason=lock_timeout action=skipped_batch_for_rerun",
+    "2025-03-11T02:00:13Z INFO  sync.orders  batch=0043 rows=4988 source=warehouse-east target=ledger-main elapsed_ms=801 checksum=ok",
+    "2025-03-11T02:00:15Z INFO  sync.inventory batch=0102 rows=1830 source=warehouse-west target=ledger-main elapsed_ms=377 checksum=ok"
+  ].join("\n");
+
+  var SLOW_MS = 3000;                       // elapsed_ms at or above this is flagged
+  var HOT_KEYS = { reason: 1, action: 1, retry: 1, error: 1, waited_ms: 1 };
+  var LINE_RE = /^(\S+)\s+(ERROR|WARN|INFO|DEBUG|FATAL|TRACE|WARNING)\s+(\S+)\s*(.*)$/i;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var logEl = $("log"), rail = $("rail"), qEl = $("q"), svcEl = $("svc");
+  var rows = [], active = { ERROR: true, WARN: true, INFO: true };
+  var cursor = -1;
+
+  function normLevel(l) {
+    l = l.toUpperCase();
+    if (l === "FATAL") return "ERROR";
+    if (l === "WARNING") return "WARN";
+    if (l === "DEBUG" || l === "TRACE") return "INFO";
+    return l;
+  }
+
+  function span(cls, text) {
+    var s = document.createElement("span");
+    if (cls) s.className = cls;
+    s.textContent = text;
+    return s;
+  }
+
+  function buildRow(line, n, prev) {
+    var el = document.createElement("div");
+    var m = LINE_RE.exec(line);
+    var rec = { el: el, level: "INFO", svc: "", text: line.toLowerCase(), problem: false };
+    var ln = span("ln", String(n));
+    if (!m) {                                // continuation / unparsed line: inherit previous level
+      if (prev) { rec.level = prev.level; rec.svc = prev.svc; rec.problem = false; }
+      el.className = "row " + rec.level;
+      el.append(ln, span("raw", line || " "));
+      return rec;
+    }
+    rec.level = normLevel(m[2]);
+    rec.svc = m[3];
+    rec.problem = rec.level !== "INFO";
+    el.className = "row " + rec.level;
+    var ts = m[1], shown = ts;
+    var t = /T(\d\d:\d\d:\d\d)/.exec(ts);
+    if (t) shown = t[1];
+    var tsEl = span("ts", shown); tsEl.title = ts;
+    var msg = document.createElement("span");
+    m[4].split(/\s+/).forEach(function (tok, i) {
+      if (!tok) return;
+      if (i) msg.append(" ");
+      var eq = tok.indexOf("=");
+      if (eq < 1) { msg.append(span("", tok)); return; }
+      var k = tok.slice(0, eq), v = tok.slice(eq + 1), vc = "v";
+      var hot = HOT_KEYS[k] && rec.problem;
+      if (hot) vc += " hot";
+      if (k === "checksum" && v !== "ok") vc += " bad";
+      if (k === "elapsed_ms" && Number(v) >= SLOW_MS) vc += " slow";
+      msg.append(span("k" + (hot ? " hot" : ""), k + "="), span(vc, v));
+    });
+    el.append(ln, tsEl, span("lvl", rec.level), span("svc", rec.svc), msg);
+    return rec;
+  }
+
+  function load(text) {
+    var lines = text.replace(/\r\n?/g, "\n").split("\n");
+    while (lines.length && !lines[lines.length - 1]) lines.pop();
+    logEl.textContent = "";
+    rows = []; cursor = -1;
+    var frag = document.createDocumentFragment(), svcs = {}, c = { ERROR: 0, WARN: 0, INFO: 0 };
+    lines.forEach(function (line, i) {
+      var r = buildRow(line, i + 1, rows[rows.length - 1]);
+      rows.push(r); frag.appendChild(r.el);
+      if (r.problem || LINE_RE.test(line)) c[r.level]++;
+      if (r.svc) svcs[r.svc] = 1;
+    });
+    logEl.appendChild(frag);
+    $("cE").textContent = c.ERROR; $("cW").textContent = c.WARN; $("cI").textContent = c.INFO;
+    var cur = svcEl.value;
+    svcEl.textContent = "";
+    svcEl.append(new Option("All services", ""));
+    Object.keys(svcs).sort().forEach(function (s) { svcEl.append(new Option(s, s)); });
+    svcEl.value = svcs[cur] ? cur : "";
+    applyFilters();
+    logEl.scrollTop = 0;
+  }
+
+  function applyFilters() {
+    var q = qEl.value.trim().toLowerCase(), svc = svcEl.value, shown = 0;
+    rows.forEach(function (r) {
+      var ok = active[r.level] && (!svc || r.svc === svc) && (!q || r.text.indexOf(q) !== -1);
+      r.el.hidden = !ok;
+      r.visible = ok;
+      if (ok) shown++;
+    });
+    $("status").textContent = shown + " of " + rows.length + " lines";
+    if (!shown) {
+      var e = document.getElementById("empty");
+      if (!e) { e = document.createElement("div"); e.id = "empty"; e.textContent = "No lines match the current filters."; logEl.appendChild(e); }
+    } else {
+      var old = document.getElementById("empty"); if (old) old.remove();
+    }
+    drawRail();
+  }
+
+  function drawRail() {
+    rail.textContent = "";
+    var vis = rows.filter(function (r) { return r.visible; });
+    var total = vis.length || 1, h = rail.clientHeight;
+    var last = -10;
+    vis.forEach(function (r, i) {
+      if (!r.problem) return;
+      var y = Math.round(i / total * h);
+      if (y - last < 3 && r.level !== "ERROR") return;
+      last = y;
+      var m = document.createElement("i");
+      m.className = r.level; m.style.top = y + "px";
+      m.title = r.level + " · line " + (rows.indexOf(r) + 1);
+      m.addEventListener("click", function () { goTo(r); });
+      rail.appendChild(m);
+    });
+    var vp = document.createElement("u"); vp.id = "vp"; rail.appendChild(vp);
+    updateViewport();
+  }
+
+  function updateViewport() {
+    var vp = document.getElementById("vp");
+    if (!vp) return;
+    var sh = logEl.scrollHeight || 1, h = rail.clientHeight;
+    vp.style.top = (logEl.scrollTop / sh * h) + "px";
+    vp.style.height = Math.max(6, logEl.clientHeight / sh * h) + "px";
+  }
+
+  function goTo(r) {
+    r.el.scrollIntoView({ block: "center" });
+    r.el.classList.add("flash");
+    setTimeout(function () { r.el.classList.remove("flash"); }, 900);
+  }
+
+  function jump(dir) {
+    var top = logEl.getBoundingClientRect().top, probs = rows.filter(function (r) { return r.visible && r.problem; });
+    if (!probs.length) return;
+    var target = null, edge = top + logEl.clientHeight * 0.5;
+    if (dir > 0) {
+      target = probs.find(function (r) { return r.el.getBoundingClientRect().top > edge + 2; }) || probs[0];
+    } else {
+      for (var i = probs.length - 1; i >= 0; i--) {
+        if (probs[i].el.getBoundingClientRect().top < edge - 2) { target = probs[i]; break; }
+      }
+      target = target || probs[probs.length - 1];
+    }
+    goTo(target);
+  }
+
+  document.querySelectorAll(".chip").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var on = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", on);
+      active[b.dataset.lvl] = on;
+      applyFilters();
+    });
+  });
+  qEl.addEventListener("input", applyFilters);
+  svcEl.addEventListener("change", applyFilters);
+  $("next").addEventListener("click", function () { jump(1); });
+  $("prev").addEventListener("click", function () { jump(-1); });
+  logEl.addEventListener("scroll", updateViewport);
+  window.addEventListener("resize", drawRail);
+
+  document.addEventListener("keydown", function (e) {
+    var typing = /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName);
+    if (e.key === "/" && !typing) { e.preventDefault(); qEl.focus(); qEl.select(); }
+    else if (e.key === "Escape" && document.activeElement === qEl) { qEl.blur(); }
+    else if (!typing && !e.metaKey && !e.ctrlKey) {
+      if (e.key === "j") jump(1);
+      if (e.key === "k") jump(-1);
+    }
+  });
+
+  function readFile(f) { if (f) f.text().then(load); }
+  $("open").addEventListener("click", function () { $("file").click(); });
+  $("file").addEventListener("change", function (e) { readFile(e.target.files[0]); e.target.value = ""; });
+
+  var depth = 0;
+  window.addEventListener("dragenter", function (e) { e.preventDefault(); depth++; document.body.classList.add("dragging"); });
+  window.addEventListener("dragleave", function () { if (--depth <= 0) { depth = 0; document.body.classList.remove("dragging"); } });
+  window.addEventListener("dragover", function (e) { e.preventDefault(); });
+  window.addEventListener("drop", function (e) {
+    e.preventDefault(); depth = 0; document.body.classList.remove("dragging");
+    readFile(e.dataTransfer.files[0]);
+  });
+  document.addEventListener("paste", function (e) {
+    if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return;
+    var t = e.clipboardData.getData("text");
+    if (t) load(t);
+  });
+
+  load(SAMPLE);
+})();
+</script>
+</body>
+</html>

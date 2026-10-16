@@ -1,22 +1,25 @@
-I can't see the logo, so this is based on your description. The main issues are contrast and the 32px favicon, and both are likely to be real problems.
+I can't see the logo, so this is based only on your description. From that, the main risk is that the mark is too light and too fine to survive the smaller uses.
 
-**1. Contrast is too low for the text.** I calculated #c9a227 on white at about **2.4:1**. WCAG asks for 4.5:1 for text and 3:1 for graphics. A thin script in a light gold will be hard to read on a sign from across a room, and it will look faded on a cup. Gold reads as premium, but at this value and weight it reads as washed out. Options:
-- Darken the gold for the wordmark (around #8a6d1a or #7a5f14 should reach 4.5:1 or close to it), and keep the brighter gold for accents only.
-- Or set the wordmark in a deep tea color (dark green-brown or near-black) and use gold for the leaf or a rule.
-- If the sign and cups must be gold, make the wordmark heavier. Don't rely on the color to carry it.
+**The big issues**
 
-**2. Hairlines won't survive small sizes or print.**
-- At 32px, hairline strokes disappear or turn into grey noise. The wordmark will not be readable as a favicon at any color.
-- On paper cups, very fine strokes often fill in or break up from ink spread, and a gold approximation in CMYK shifts the color further. A common minimum for print is about 0.5 mm for line art, and thicker for knockout or foil.
-- Test by printing a proof at real size on the actual cup stock before you commit.
+1. **The gold is too light on white.** `#c9a227` on white is about 2.4:1 contrast. Hairlines in that color will look washed out on a sign or a cup, especially in daylight. Thin strokes make it worse, because antialiasing lightens them further.
 
-**3. The leaf above the "i" will probably vanish.** At sign and cup scale it may read as a stray speck, and at favicon size it's gone. Consider making the leaf replace the i-dot, which keeps it integrated and gives it more mass.
+2. **The hairlines won't survive 32px.** At favicon size, hairline strokes either disappear or blur into a gold smudge. The leaf above the "i" will probably be a few pixels of noise. Your favicon needs its own design; a scaled-down version of the wordmark won't work.
 
-**4. The favicon needs its own mark, not a shrunk wordmark.** Use a monogram (a "P" or a leaf-i), a simple bold shape, and possibly a solid tile in the brand color behind it. Design it as a separate asset, and test it at 16px and 32px.
+3. **Print will be hard.** Hairlines on paper cups depend on the printer's minimum line weight and registration. Gold is also hard to match in CMYK, and on kraft or colored cups it can vanish. If you can use a foil or spot color, it will look better, but the hairlines still need to be thicker than what you describe.
 
-**A quick check before you go further:**
-- Squint or blur it. Can you still read "Pemberly"?
-- Render it in grayscale. Does the contrast hold up?
-- Shrink it to 32px. Is the leaf still visible? Are the hairlines still there?
+**What I'd do**
 
-If you can paste the SVG source here as text, I can measure the actual stroke widths and point out exactly which parts will fail, instead of working from your description. Otherwise, tell me the rough stroke width in px at your largest intended size and I can give you specific minimums.
+- **Darken the gold for the primary mark.** Something around `#8C6D1A` gives roughly 4.9:1 on white and still reads as gold. Keep the brighter `#c9a227` for accents or on dark backgrounds, where it has better contrast.
+- **Thicken the strokes.** Aim for a stroke weight that still reads at roughly 1/8" on a cup. If you want to keep the delicate feel, use a slightly heavier cut for production and keep the hairline version for large applications like the sign.
+- **Make a simplified favicon mark.** Drop the leaf and the thinnest strokes. A monogram ("P" or a "PT" ligature) in a heavier weight, or a leaf alone, will be more legible at 16–32px.
+- **Test at real sizes.** View the logo at 16, 32, and 64px, on a cup mockup, and on the actual sign material if you can. Check it on a dark background too, since many shop signs and cup sleeves use dark colors.
+- **Supply a vector.** An SVG for the sign shop and printer will avoid rasterization problems.
+
+**What would help me give more specific feedback**
+
+- The script style (formal copperplate, brush, monoline?) and how the letters connect.
+- Whether the leaf sits on the i's dot or floats above it.
+- The exact width of the hairlines in points or pixels.
+
+If you can paste the SVG source or describe the letters' spacing and proportions, I can be more specific about where the weight should change.

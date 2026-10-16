@@ -1,59 +1,34 @@
-## Why it feels generic
+# Why it feels generic
 
-Every item on your page is a default, and none of them says anything about dog groomers or bookkeeping. You could swap in "AI-powered CRM for dentists" and nothing would break. There are four causes.
+**Nothing in it says "dog groomers" or "bookkeeping".** Swap the headline and you could ship the same page for any SaaS. Every element is a default, and defaults carry no information about you.
 
-**1. Nothing is ranked.**
-- The pill, gradient headline, glowing button and gradient icon tiles are all loud, so none of them stands out.
-- The glow under the button makes it compete with the headline instead of being the one obvious action.
-- Three identical cards say "these are equally important," which is rarely true. For a bookkeeping tool, one or two features are the reason people buy.
+1. **Everything is emphasized, so nothing is.** The pill, the gradient headline, the glowing button and the gradient icon tiles all compete. The reader has no first thing to look at, and the page reads as decoration.
+2. **The gradients and glow have no job.** Purple-to-pink says "tech startup" and nothing about your product. The same goes for the glow under the button and the blobs behind each section. If you removed them, you'd lose no information and no identity. A glow also makes the button look like an ad, when your audience wants a tool they can trust with their money.
+3. **The three-card pattern ranks nothing.** Identical cards claim that three features are equally important, which is almost never true. Each card has an icon, a bold title and two grey lines. That's the template's rhythm, not your argument. Using it again for pricing makes the whole page one repeated unit.
+4. **"New: AI-powered" is the most generic claim you could make.** It describes the technology and leaves out what the groomer gets. Groomers don't shop for AI. They want to stop doing receipts at 9pm.
+5. **Centering everything with uniform spacing gives the page no tension.** There's no axis, no asymmetry and no moment of surprise.
 
-**2. The decoration has no job.**
-- The blobs, gradients, glows and icon tiles don't organize anything or identify you. If you removed them, you'd lose no information and no personality.
-- The "New: AI-powered" pill is the worst one. It's the most common startup opener, and it leads with your technology instead of the owner's problem.
+# What would make it yours
 
-**3. The layout is the stock layout.**
-- A centered hero, a row of three cards, and the same three-card pattern again for pricing is the structure of nearly every template.
-- Repeating it for pricing means the two sections look the same even though they do different jobs.
+**Start with content, because that's where most of the distinctiveness is.**
+- Write the headline in the groomer's own terms: tips, cash, no-shows, deposits, booking gaps, the shoebox of receipts, tax time. Name a specific pain.
+- Replace "AI-powered" with the concrete outcome. If the AI categorizes expenses, say that.
+- Show the real product. A screenshot or mock of an actual ledger, with groomer-specific line items like "Full groom – Biscuit, $85 + $15 tip", does more than any illustration. It also shows who the tool is for. Use realistic placeholder data until you have real data.
+- Rank your features. Pick the one that matters most and give it half the page, with a real visual. Let the other two be smaller, plain text rows with no boxes. Keep an icon only if it carries meaning.
 
-**4. The content is abstract.**
-- Gradient icon, bold title, two lines of grey text. That format works for any product, so it carries nothing specific to yours.
+**Then subtract.**
+- Delete the blobs and the pill.
+- Make the headline a solid color.
+- Give the button one flat, solid fill and no glow. It should be the only strongly colored thing in the hero.
+- Drop the gradient icon tiles.
 
-## What would make it yours
+**Then pick a few deliberate choices that belong to you.**
+- **One color you can own.** Choose it from the world of grooming (a specific towel, a clipper case, a shop sign) rather than from the startup palette. Use it sparingly, for roughly a tenth of the page.
+- **A distinctive typeface or voice.** A warmer, slightly characterful headline face, with plain body text, will separate you from the sans-serif sameness faster than any graphic.
+- **Left-aligned, asymmetric layouts.** Put the headline on the left and the product on the right, then vary the layout from section to section.
+- **Pricing that ranks.** Show the plans as a simple table or list. Give the recommended plan a label and structural emphasis (a heavier border or more size) rather than color alone. Put each plan's real price in as the biggest thing in it. I haven't invented numbers for you, so fill in your own.
+- **Proof from real groomers**, such as a name, a shop and a quote. Use a placeholder like `[customer quote]` until you have one. Don't fabricate counts or testimonials, because they read as fake and cost you trust.
 
-**Start from the groomer's actual world.** This is the biggest lever.
-- Use their vocabulary: tips, no-shows, deposits, "Saturday with 9 poodles," booking-to-payout, sales tax on retail shampoo, contractor groomers on commission.
-- Write the headline about their problem in their words, for example "Know what you actually made this week." Drop the "AI-powered" framing.
+**One check:** cover your logo and squint. If you can't tell it's for dog groomers, the page isn't yours yet.
 
-**Show the product instead of describing it.**
-- Replace the icon cards with a real screenshot, or a mocked one using believable groomer data: "Biscuit, full groom, $85, tip $15, paid by card."
-- A tip-split view or a weekly-take-home view says "this is for groomers" more clearly than any icon.
-
-**Rank the features.**
-- Give the one or two things that matter most real space, each with a concrete example or screenshot.
-- Put the rest in a plain list or a quieter row.
-- Drop the card boxes. Alignment and spacing can do the grouping.
-
-**Make the first screen simple.**
-- Left-align the headline (or keep it centered only if the hero stays very short).
-- Use one solid, flat primary button, with no glow and no gradient.
-- Make the headline plain dark text at a strong weight.
-- Remove the pill, or turn it into a small, quiet line that says something real.
-
-**Pick one deliberate visual identity.**
-- Choose a flat, warm palette with one accent color, something a groomer would recognize from their shop or brand, instead of purple-to-pink.
-- Use one distinctive device used consistently. That could be a paw-print motif, a receipt-style or ledger-paper look for numbers, or real photos of groomers and dogs. Keep it quieter than the headline and the button.
-- Use icons only where they carry meaning, such as a paw to mark a pet's record.
-
-**Make pricing look different from features.**
-- Pricing can be a simple table or a short list with one plan clearly recommended through a label, a heavier border, or more size, rather than color alone.
-- That one change breaks the three-cards-twice repetition.
-
-**Use real proof or leave it out.**
-- A quote from a real groomer, or a number like "[customer count]" once you have one, does more than a blob does.
-- Don't invent stats or logos to fill space.
-
-## Quick test
-
-Squint at the page. If you can't tell what the single main thing is, or if you could swap the product name and nothing would break, it's still generic. Fix the ranking and the content first, and treat the styling as the last step.
-
-If you share the HTML or a screenshot, I can mark up exactly what to cut and what to keep.
+If you share the file or repo, I can restructure the hero and the features section directly. I'd need to know which single feature matters most to your customers, because that choice decides the layout.

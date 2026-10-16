@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Harbour Street Family Clinic – Welcome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #0b2a43;
+    color: #ffffff;
+    cursor: none;
+  }
+  .board {
+    width: 100vw;
+    height: 100vh;
+    padding: 5vh 5vw;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 3.5vh;
+  }
+  header { text-align: center; }
+  .welcome {
+    font-size: clamp(20px, 2.6vw, 56px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9fd4f5;
+    margin-bottom: 1.5vh;
+  }
+  h1 {
+    font-size: clamp(36px, 5.8vw, 128px);
+    line-height: 1.1;
+    font-weight: 800;
+  }
+  .hours {
+    background: #ffffff;
+    color: #0b2a43;
+    border-radius: 1.6vw;
+    padding: 3vh 4vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 0;
+  }
+  .hours .label {
+    font-size: clamp(20px, 2.4vw, 52px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #1b6fa8;
+  }
+  .hours .today {
+    font-size: clamp(40px, 7.6vw, 170px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 1vh 0 2vh;
+  }
+  .schedule {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1vh 3vw;
+    font-size: clamp(18px, 2.2vw, 48px);
+    font-weight: 600;
+  }
+  .schedule span { white-space: nowrap; }
+  .flu {
+    background: #ffd23f;
+    color: #1a1a1a;
+    border-radius: 1.6vw;
+    padding: 2.5vh 3vw;
+    text-align: center;
+    font-size: clamp(26px, 3.8vw, 84px);
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  .checkin {
+    text-align: center;
+    font-size: clamp(26px, 3.6vw, 80px);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+</style>
+</head>
+<body>
+  <main class="board">
+    <header>
+      <div class="welcome">Welcome to</div>
+      <h1>Harbour Street Family Clinic</h1>
+    </header>
+
+    <section class="hours" aria-label="Walk-in hours">
+      <div class="label"><span id="day">Today</span> walk-in hours</div>
+      <div class="today" id="today">8:00 – 18:00</div>
+      <div class="schedule">
+        <span>Mon–Fri 8:00–18:00</span>
+        <span>Sat 9:00–13:00</span>
+      </div>
+    </section>
+
+    <section class="flu">Flu clinic is on Level 2</section>
+
+    <section class="checkin">Please check in at the desk</section>
+  </main>
+
+<script>
+  (function () {
+    var names = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    function update() {
+      var d = new Date().getDay();
+      var text = "8:00 – 18:00";
+      if (d === 0) text = "Closed today";
+      else if (d === 6) text = "9:00 – 13:00";
+      document.getElementById("day").textContent = names[d];
+      document.getElementById("today").textContent = text;
+    }
+    update();
+    setInterval(update, 60000);
+  })();
+</script>
+</body>
+</html>

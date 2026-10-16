@@ -1,13 +1,15 @@
-It's partly real, but the printer should have explained it better. Screens make color with light, and print makes it with ink on paper. Bright, saturated oranges like #ff6a1a are among the hardest colors to reproduce in print. Standard print uses CMYK inks, which can't reach some very vivid oranges, and the paper's own tint dulls the result further. So the printer is right that the exact color can't always be reproduced with standard inks. But "that's just how print works" doesn't mean you have to accept the brownish result. Some options:
+The printer is partly right, but "just how print works" skips the fixable part.
 
-1. **Ask for a spot color (Pantone).** This is the most reliable fix for a brand color. A spot color is a pre-mixed ink, so it can be far more vivid than a CMYK build. Ask the printer to match your orange to the closest Pantone color in their coated or uncoated guide, and to print a swatch for you to compare. Many shops charge extra for a spot color, but for a brand color it's usually worth it. Note that a spot color may still not match #ff6a1a exactly, so the goal is the closest vivid match.
+**Why it's true:** Screens emit light, so #ff6a1a can look very luminous. Print reflects light off paper through inks, and standard CMYK inks can't reach every saturated RGB color. Bright, saturated oranges are among the colors most often out of gamut, so the printer has to substitute the nearest color they can make. The paper also limits brightness. Uncoated stock absorbs ink and dulls colors, and kraft or cream stocks push oranges toward brown.
 
-2. **Check the color mode and profile.** Make sure the menu file is CMYK, not RGB, and that it uses the printer's ICC profile. If the file was converted with a generic profile, the orange may have been pulled down before it reached the press. Ask the printer to confirm which profile they used.
+**Why it's not an excuse:** Several things affect the result, and you can control most of them:
 
-3. **Ask for a soft proof or a press-matched proof.** A proof made with the printer's profile shows what the press can actually produce. If the proof looks brown, you know the problem is in the file or the conversion, not your monitor.
+1. **Use a Pantone spot color for the brand orange.** This is the most reliable fix. A spot ink is mixed to a specific formula, so it prints much closer to a target than a CMYK build. It usually adds a small cost for one extra ink. Ask the printer for a few Pantone orange candidates and compare them against a physical swatch book, since hex-to-Pantone matches are approximate.
+2. **If you stay with CMYK, test before committing.** Ask for a test sheet with 4–6 orange builds at different magenta and yellow levels, printed on the actual paper. Choose the one that looks right. Avoid adding black, which makes orange look muddy.
+3. **Check the paper.** A coated or silk stock will look noticeably brighter than uncoated. If the menu is on uncoated or textured stock, mention that the orange is meant to be vivid so the printer can recommend a stock that holds it.
+4. **Ask for the proof details.** Ask which ICC profile they used (for example GRACoL or FOGRA) and whether the proof is a press-accurate proof or a screen approximation. Also ask whether the file was converted to CMYK with a color-managed workflow. Naive or mismatched conversions are a common cause of brownish oranges.
+5. **Check your screen.** A calibrated monitor helps you judge proofs fairly. Compare the printed sample under daylight-balanced light, not on a bright screen.
 
-4. **Pick a print-safe orange.** If spot color isn't in the budget, choose a slightly deeper, more saturated orange that falls within CMYK, and check it on the proof. Then use it for the menu and keep #ff6a1a for screens. Two oranges that look close is better than one that looks muddy.
+Set expectations with the printer: they can get close and bright, but they won't reproduce the glow of a backlit screen. A Pantone spot color is the most likely to satisfy you.
 
-5. **Think about the paper.** A warm or cream stock will shift orange toward brown. A bright white stock will keep it cleaner. If you're using a textured or natural paper, consider that a factor.
-
-For the next proof, I'd ask for a spot color match plus a small test strip with three or four candidate oranges, including your current CMYK build, the nearest Pantone, and one deeper variant. Then compare them on the actual paper you plan to use.
+If you can share the proof or tell me the paper stock and what the printer quoted, I can help you choose between a spot color and a CMYK build.

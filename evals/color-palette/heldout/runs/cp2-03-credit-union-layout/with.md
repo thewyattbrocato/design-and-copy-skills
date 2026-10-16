@@ -1,38 +1,36 @@
-**Pick: deep forest green, `#1F4D3A`.**
+**Pick: deep forest green.** No brand color was given, so I chose it for three reasons:
+- It matches the name, Fernhollow.
+- It reads as local and member-owned. Navy is the default for banks, and plum is memorable but gets awkward next to rates and status messages.
+- It supports a warm contrasting action color, so the Join button is the only thing that pops.
 
-- **Why green:** "Fern" and "hollow" already put green in the name. Navy is what nearly every bank uses, so it would make Fernhollow look like all of them. Green still reads as money and trust, and it suits a local, member-owned place.
-- **Why not plum:** it's distinctive, but it works against the sober, rate-focused content.
-- **Why not navy:** see above.
+I couldn't run code, so the contrast ratios below are hand-calculated estimates.
 
 ## Palette
 
-| Role | Value | Use | Contrast (estimated) |
-|---|---|---|---|
-| Lead | `#1F4D3A` | Hero ground, icons, link and hover accents | White on it: about 9.6:1 |
-| Accent (once) | `#F2C14E` | "Join today" button only, with `#14211B` text | About 9.9:1 |
-| Ink | `#17261F` | Headlines, rate numbers, body text | High on all light grounds |
-| Secondary text | `#4A5D52` | Rate labels, captions | About 6.1:1 on `#EAF0EA` |
-| Page and cards | `#FFFFFF` / `#F4F7F3` | Green-tinted off-white, not gray | n/a |
-| Rates band | `#EAF0EA` | Strip background | n/a |
-| Hairlines | `#D5DED7` | Card borders, dividers | n/a |
-| Footer | `#14211B` | Green-tinted near-black | n/a |
-| Footer text | `#E8EEE9`, `#A9BDB1` | Primary and secondary text | About 14:1 and 8.4:1 |
+| Role | Value | Notes |
+|---|---|---|
+| Lead green | `#1F4D3A` | Hero ground and key accents. White on it is about 9.6:1. |
+| Action | `#E9B949` (marigold) | Join button only, with `#14231C` text at about 8.8:1. It sits on the green hero at about 5.3:1, and the lightness gap keeps the edge crisp. |
+| Page | `#F6F8F5` | Neutral with a green tint. |
+| Tint | `#E8F0EA` | Rate strip and hover. |
+| Surface | `#FFFFFF` | Cards. |
+| Text | `#17211C` | Body text, about 15:1 on the page. |
+| Secondary text | `#4A5750` | About 7:1 on the page. |
+| Footer | `#14231C` | Text `#E6EEE9`, comfortably above 12:1. |
 
-## Where color goes, section by section
+## Where color goes
 
-- **Hero:** this is the one big block of green, with a white headline on it. The gold Join today button is the only gold on the page, so the eye goes straight to it.
-- **Rates strip:** keep it quiet. Use the pale `#EAF0EA` band with near-black rate numbers and gray-green labels. Don't make the numbers green, because they'd compete with the hero and look like "gains". If you want one touch of color, add a thin 2px green rule on top.
-- **Calculator tiles:** use white cards with a hairline border, a green icon, and a green border on hover. Don't fill all three tiles green. That would make three more heavy blocks right under the hero.
-- **Testimonials:** keep them neutral, with ink text on off-white. At most, use a small green quote mark. Leave the quotes and names as visible placeholders until you have real ones.
-- **Footer:** use the dark green-black with off-white hours. Green isn't used as a fill here. Links get a gold underline on hover.
+- **Hero:** This is the one big area of green. Put the marigold Join today button on it. If you use a photo, add a green scrim and check contrast at the brightest spot under the headline.
+- **Rate strip:** Use the pale tint ground, with the rate numerals in near-black text. Green appears only in small labels, such as "Auto loan", and a thin top rule. Don't use red or green to show whether a rate went up or down. If you show a change, use an arrow and a word.
+- **Calculator tiles:** Use white cards with a green icon, a green text link or outlined button, and a green focus ring. Don't fill them with green. Three solid green tiles would compete with the hero.
+- **Testimonials:** Keep these almost entirely neutral. The only color is a small green quote mark or name rule. Quotes are read, so they stay on a plain ground in dark text.
+- **Footer:** Use the dark green-black ground with off-white hours and tint-colored links. This closes the page with the brand hue without adding a new color.
 
-## Where color shouldn't show up
+## Where color stays out
 
-- Body text, rate numbers and testimonial text.
-- Green or red up/down arrows on rates. Meaning shouldn't depend on hue alone.
-- Error states. Use a separate red, `#B3261E`, with an icon and words. Green is also the usual "success" color, so success messages need a check icon and a label too.
-- Gradients, or a second competing brand hue.
+- Body text, headings and rate figures stay near-black, not green.
+- Marigold appears nowhere except the Join button, plus the same button in the footer if you repeat it.
+- There are no gradients, and no second accent hue.
+- The brand green is never used for success or error states. Use a separate red for errors and a separate, lighter green for confirmations. Always pair them with an icon or label.
 
-Most of the page stays tinted white, and green fills about one section. That keeps it feeling like a credit union rather than a template.
-
-I couldn't run a contrast checker, so the ratios are hand-calculated estimates. Please verify them before you ship.
+One trade-off: green is the expected color for money, so the marigold button and the tinted neutrals are what keep the page from looking generic.

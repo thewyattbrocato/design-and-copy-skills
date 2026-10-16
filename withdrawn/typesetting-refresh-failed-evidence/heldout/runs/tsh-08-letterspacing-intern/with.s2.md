@@ -1,0 +1,1 @@
+Letter-spacing is tuned for text at normal reading sizes, so when letters get blown up into a big headline, the gaps scale up too and start to look loose and gappy. Designers tighten them by hand so the headline looks like one solid shape. Paragraph text is already spaced for small sizes, and changing it mostly makes long passages harder to read, so they leave it alone.

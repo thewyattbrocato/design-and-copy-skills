@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern Row Night Market · Oct 18 &amp; 25 · Ropewalk Yard</title>
+<!-- NOTE: Copy says "Saturdays October 18 and 25". In 2026, Oct 18 and 25 fall on Sundays (Saturdays are Oct 17 and 24). Confirm the dates before printing. -->
+<style>
+  :root{
+    --ink:#140b0f;
+    --ink-2:#1d1015;
+    --cream:#f7e8cf;
+    --cream-dim:#cdb99a;
+    --amber:#ffb23e;
+    --amber-deep:#f2791f;
+    --red:#e5483b;
+    --red-deep:#9c1f27;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--ink);-webkit-text-size-adjust:100%}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(60% 40% at 50% 8%, rgba(255,150,50,.22), transparent 70%),
+      radial-gradient(80% 50% at 50% 100%, rgba(229,72,59,.18), transparent 70%),
+      linear-gradient(180deg,var(--ink-2),var(--ink) 60%);
+    color:var(--cream);
+    font-family:var(--sans);
+    line-height:1.5;
+    display:flex;justify-content:center;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  .poster{
+    width:100%;max-width:960px;
+    padding:0 clamp(20px,5vw,56px) clamp(32px,6vw,64px);
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+    position:relative;
+  }
+
+  /* ---------- lantern string ---------- */
+  .string{
+    width:calc(100% + 2*clamp(20px,5vw,56px));
+    position:relative;
+    display:flex;justify-content:space-around;align-items:flex-start;
+    padding:0 2%;
+    height:clamp(150px,26vw,250px);
+    margin-bottom:clamp(8px,2vw,24px);
+  }
+  .string::before{
+    content:"";position:absolute;left:0;right:0;top:0;height:2px;
+    background:linear-gradient(90deg,transparent,#5a3a2a 10%,#5a3a2a 90%,transparent);
+  }
+  .lantern{
+    --s:1;--drop:20px;--hue:var(--red);--hue2:var(--red-deep);
+    position:relative;
+    display:flex;flex-direction:column;align-items:center;
+    transform-origin:50% 0;
+    animation:sway 6s ease-in-out infinite;
+    animation-delay:var(--d,0s);
+  }
+  .lantern::before{ /* cord */
+    content:"";width:2px;height:var(--drop);background:#5a3a2a;
+  }
+  .lantern .cap{
+    width:calc(26px*var(--s));height:calc(8px*var(--s));
+    background:#2a1a14;border-radius:3px 3px 0 0;
+  }
+  .lantern .body{
+    width:calc(60px*var(--s));height:calc(72px*var(--s));
+    border-radius:50% / 46%;
+    background:
+      repeating-linear-gradient(90deg,transparent 0 calc(9px*var(--s)),rgba(60,10,10,.28) calc(9px*var(--s)) calc(10px*var(--s))),
+      radial-gradient(closest-side at 50% 55%,#fff0b8 0%,var(--amber) 38%,var(--hue) 78%,var(--hue2) 100%);
+    box-shadow:
+      0 0 calc(30px*var(--s)) calc(6px*var(--s)) rgba(255,160,60,.45),
+      0 0 calc(90px*var(--s)) calc(14px*var(--s)) rgba(255,120,40,.18);
+  }
+  .lantern .base{
+    width:calc(22px*var(--s));height:calc(7px*var(--s));
+    background:#2a1a14;border-radius:0 0 3px 3px;
+  }
+  .lantern .tassel{
+    width:2px;height:calc(18px*var(--s));
+    background:linear-gradient(var(--amber),var(--amber-deep));
+    position:relative;
+  }
+  .lantern .tassel::after{
+    content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);
+    width:8px;height:12px;border-radius:2px 2px 50% 50%;
+    background:linear-gradient(var(--amber),var(--amber-deep));
+  }
+  .l1{--s:.9;--drop:26px;--d:-1s}
+  .l2{--s:1.1;--drop:70px;--hue:#f2791f;--hue2:#a8420f;--d:-3s}
+  .l3{--s:.8;--drop:14px;--d:-2s}
+  .l4{--s:1.25;--drop:48px;--d:-4.5s}
+  .l5{--s:.85;--drop:84px;--hue:#f2791f;--hue2:#a8420f;--d:-.5s}
+  .l6{--s:1.05;--drop:30px;--d:-5s}
+  .l7{--s:.8;--drop:60px;--hue:#f2791f;--hue2:#a8420f;--d:-2.5s}
+  @keyframes sway{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}}
+
+  /* ---------- type ---------- */
+  .kicker{
+    font-size:clamp(.78rem,1.8vw,.95rem);
+    letter-spacing:.32em;text-transform:uppercase;
+    color:var(--amber);font-weight:600;
+    display:flex;gap:.9em;align-items:center;justify-content:center;flex-wrap:wrap;
+  }
+  .kicker i{width:5px;height:5px;border-radius:50%;background:var(--red);display:inline-block}
+
+  h1{
+    font-family:var(--serif);
+    font-weight:800;
+    font-size:clamp(3.2rem,13.5vw,9rem);
+    line-height:.9;
+    letter-spacing:-.02em;
+    margin:clamp(14px,3vw,28px) 0 clamp(14px,3vw,28px);
+    color:var(--cream);
+    text-wrap:balance;
+    text-shadow:0 0 40px rgba(255,150,50,.35);
+  }
+  h1 .accent{
+    display:block;
+    background:linear-gradient(180deg,#ffd77a,var(--amber) 45%,var(--amber-deep));
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+    text-shadow:none;
+    font-style:italic;
+    font-size:.62em;
+    letter-spacing:0;
+    margin-top:.08em;
+    padding:0 .1em .08em;
+  }
+  .tag{
+    font-family:var(--serif);font-style:italic;
+    font-size:clamp(1.1rem,3vw,1.6rem);
+    color:var(--cream-dim);
+    max-width:30ch;
+    text-wrap:balance;
+  }
+
+  /* ---------- dates ---------- */
+  .dates{
+    width:100%;
+    display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,3vw,28px);
+    margin:clamp(28px,6vw,52px) 0 clamp(14px,3vw,24px);
+  }
+  .date{
+    border:1.5px solid rgba(255,178,62,.55);
+    border-radius:18px;
+    padding:clamp(16px,3.5vw,30px) 12px;
+    background:linear-gradient(180deg,rgba(255,178,62,.12),rgba(229,72,59,.06));
+    position:relative;
+  }
+  .date .dow{
+    font-size:clamp(.72rem,1.7vw,.9rem);letter-spacing:.3em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;
+  }
+  .date .day{
+    font-family:var(--serif);font-weight:800;
+    font-size:clamp(3rem,11vw,6.5rem);line-height:1;
+    font-variant-numeric:lining-nums tabular-nums;
+    margin:.05em 0 .02em;
+  }
+  .date .mon{
+    font-size:clamp(.9rem,2.4vw,1.25rem);letter-spacing:.28em;text-transform:uppercase;
+    color:var(--cream-dim);font-weight:600;
+  }
+
+  .time{
+    font-family:var(--serif);
+    font-size:clamp(1.5rem,5vw,2.8rem);font-weight:700;
+    letter-spacing:.01em;
+    margin-bottom:clamp(24px,5vw,44px);
+  }
+  .time span{color:var(--amber);padding:0 .15em}
+
+  /* ---------- details ---------- */
+  .details{
+    width:100%;
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border-top:1px solid rgba(247,232,207,.22);
+    border-bottom:1px solid rgba(247,232,207,.22);
+  }
+  .detail{
+    padding:clamp(18px,3.5vw,32px) clamp(10px,2vw,20px);
+  }
+  .detail + .detail{border-left:1px solid rgba(247,232,207,.22)}
+  .detail .label{
+    font-size:clamp(.68rem,1.5vw,.8rem);letter-spacing:.3em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;margin-bottom:.6em;
+  }
+  .detail .big{
+    font-family:var(--serif);font-weight:800;
+    font-size:clamp(1.6rem,5vw,2.9rem);line-height:1.05;
+  }
+  .detail .small{
+    margin-top:.45em;
+    font-size:clamp(.88rem,2vw,1.05rem);color:var(--cream-dim);
+  }
+
+  .place{
+    margin-top:clamp(26px,5vw,44px);
+  }
+  .place .label{
+    font-size:clamp(.7rem,1.6vw,.82rem);letter-spacing:.3em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;
+  }
+  .place .venue{
+    font-family:var(--serif);font-weight:800;
+    font-size:clamp(2rem,7vw,4rem);line-height:1.05;margin:.15em 0 .1em;
+  }
+  .place .street{
+    font-size:clamp(1rem,2.8vw,1.45rem);color:var(--cream-dim);letter-spacing:.04em;
+  }
+
+  .foot{
+    margin-top:clamp(28px,5vw,48px);
+    font-size:clamp(.72rem,1.7vw,.9rem);
+    letter-spacing:.3em;text-transform:uppercase;
+    color:var(--cream-dim);
+    display:flex;gap:1em;align-items:center;justify-content:center;flex-wrap:wrap;
+  }
+  .foot b{color:var(--cream);font-weight:700}
+  .foot i{width:5px;height:5px;border-radius:50%;background:var(--red);display:inline-block}
+
+  /* ---------- small screens ---------- */
+  @media (max-width:560px){
+    .details{grid-template-columns:1fr}
+    .detail + .detail{border-left:0;border-top:1px solid rgba(247,232,207,.22)}
+    .lantern:nth-child(even){display:none}
+    .string{justify-content:space-around}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .lantern{animation:none}
+  }
+
+  @media print{
+    @page{size:A3 portrait;margin:0}
+    html,body{background:var(--ink)}
+    .lantern{animation:none}
+  }
+</style>
+</head>
+<body>
+<main class="poster">
+
+  <div class="string" aria-hidden="true">
+    <div class="lantern l1"><div class="cap"></div><div class="body"></div><div class="base"></div><div class="tassel"></div></div>
+    <div class="lantern l2"><div class="cap"></div><div class="body"></div><div class="base"></div><div class="tassel"></div></div>
+    <div class="lantern l3"><div class="cap"></div><div class="body"></div><div class="base"></div><div class="tassel"></div></div>
+    <div class="lantern l4"><div class="cap"></div><div class="body"></div><div class="base"></div><div class="tassel"></div></div>
+    <div class="lantern l5"><div class="cap"></div><div class="body"></div><div class="base"></div><div class="tassel"></div></div>
+    <div class="lantern l6"><div class="cap"></div><div class="body"></div><div class="base"></div><div class="tassel"></div></div>
+    <div class="lantern l7"><div class="cap"></div><div class="body"></div><div class="base"></div><div class="tassel"></div></div>
+  </div>
+
+  <p class="kicker"><span>Street food</span><i></i><span>Live music</span><i></i><span>Free entry</span></p>
+
+  <h1>Lantern Row <span class="accent">Night Market</span></h1>
+
+  <p class="tag">Forty stalls, one lantern-lit yard, and your whole evening.</p>
+
+  <section class="dates" aria-label="Dates">
+    <div class="date">
+      <div class="dow">Saturday</div>
+      <div class="day">18</div>
+      <div class="mon">October</div>
+    </div>
+    <div class="date">
+      <div class="dow">Saturday</div>
+      <div class="day">25</div>
+      <div class="mon">October</div>
+    </div>
+  </section>
+
+  <p class="time">6pm <span>–</span> midnight</p>
+
+  <section class="details" aria-label="Details">
+    <div class="detail">
+      <div class="label">Stalls</div>
+      <div class="big">40</div>
+      <div class="small">street food vendors</div>
+    </div>
+    <div class="detail">
+      <div class="label">Live music</div>
+      <div class="big">From 8pm</div>
+      <div class="small">on both nights</div>
+    </div>
+    <div class="detail">
+      <div class="label">Entry</div>
+      <div class="big">Free</div>
+      <div class="small">just turn up</div>
+    </div>
+  </section>
+
+  <section class="place" aria-label="Location">
+    <div class="label">Find us at</div>
+    <div class="venue">The old Ropewalk Yard</div>
+    <div class="street">Carter Street</div>
+  </section>
+
+  <p class="foot"><b>Lantern Row</b><i></i><span>Follow the lights</span></p>
+
+</main>
+</body>
+</html>

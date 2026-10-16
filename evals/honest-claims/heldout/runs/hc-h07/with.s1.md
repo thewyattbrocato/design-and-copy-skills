@@ -1,17 +1,5 @@
-Here's one option for each.
+**Security you can verify**
 
-**Empty cart**
-> **Your cart's a blank patch of soil.**
-> Let's find something to grow in it.
-> [Browse plants]
+Our SOC 2 Type II report was issued in August 2026. Brindle Backup delivered 99.95% uptime over the 12 months ending September 30, 2026, measured on our public status page. Your data is encrypted with AES-256 at rest and TLS 1.3 in transit. We have had no customer data breaches since we were founded in 2019.
 
-**Password reset confirmation**
-> **Check your inbox.**
-> If there's a Fernside account for that email, a reset link is on its way. It can take a few minutes to arrive, so check your spam folder if you don't see it.
-
-**Button after adding a plant to the cart**
-> **View cart**
-
-If you want a bit more leaf, **Go to cart** or **See your cart** work too. I'd keep this one plain, because it's a functional button and people should recognize it at a glance. The friendliness can go in a small confirmation line next to it, like "Added. It's settling in."
-
-The reset message says "if there's an account" on purpose. It doesn't confirm whether the email is registered, which keeps strangers from using the form to find out who shops with you. If you'd rather have a warmer, more direct version, I can write one, but the neutral wording is the safer default.
+(59 words total. I didn't add anything beyond your four facts. I kept the dates and the status-page basis because you supplied them.)

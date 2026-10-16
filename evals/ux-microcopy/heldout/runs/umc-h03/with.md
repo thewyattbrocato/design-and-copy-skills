@@ -1,10 +1,1 @@
-**Headline**
-Your plant shelf is empty
-
-**Body**
-Join 40,000 happy plant parents by adding your first plant.
-
-**Button**
-Add a plant
-
-Note: the body line is a single sentence, so the social proof sits in the one line you have. If your UI calls plants something else, like "Add to my plants", keep the button label consistent with the tab name.
+Marrow & Rye started in 2019 in a converted garage on Pell Street, when Dani Okafor and her brother Tunde decided the neighborhood needed a better loaf. Everything we bake is naturally leavened with a rye starter Dani has been tending since 2016, and it's still the heart of every bread that leaves the oven. Our flour comes from a mill two counties over, so what you taste starts close to home. We bake six days a week and rest on Mondays. Tunde runs the counter, so there's a good chance he'll be the one handing you your bread, and he also drives our wholesale deliveries to four cafes nearby. Come by, say hello, and stay a while.

@@ -4,11 +4,9 @@ Your membership stays active until [end of billing period], and you can book cla
 
 If cost or schedule is the reason, you can pause for up to 3 months at no charge, or move to the 4-class plan ($39 a month). Either takes about a minute from here.
 
-[Pause my membership]   [Switch to 4 classes]   [Cancel my membership]
+[Pause my membership]   [Switch to 4 classes]   [Continue cancelling]
 
 No reason needed. We'll email a confirmation as soon as you cancel.
 
----
-
-- I changed only one thing, "Continue cancelling" to "Cancel my membership". This page is already fair and effective. It names the end date and what happens to the person's data. It makes two real offers tied to the two likeliest reasons for leaving. It also lets people leave in one click. Tougher copy, such as guilt, a hidden cancel button or a "you'll lose everything" warning, would probably cost you trust and cause refunds or chargebacks. It wouldn't keep many more people.
-- If your boss wants more retention, the better lever is the offers, not the wording. Track how many people take the pause or the 4-class plan, and how many of those are still members 60 to 90 days later. Also check that the confirmation email states the last day of access and how to rejoin.
+- I didn't change the copy, and I'd push back on the "too soft" read. The page already does what a good save page should. It names the real end date and what happens to the person's data. It offers two real alternatives that match the usual reasons for leaving (cost and schedule). Cancelling takes one click with equal weight, and no reason is required. Harsher copy such as guilt, fear or a hidden cancel button might save a few more people in the short term. It would also bring more chargebacks, complaints and bad reviews, and it could run into click-to-cancel rules. Those rules vary by place and change over time, so have them checked.
+- The better way to keep more people is to measure the page as it is. Track the pause and downgrade take rates, and track how many of those people are still members 60 to 90 days later. Compare that with support complaints and reactivations. If the take rates are low, test where the alternatives sit and how clearly they're described, not how much pressure the page applies.

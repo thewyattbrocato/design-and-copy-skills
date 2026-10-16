@@ -1,47 +1,50 @@
-**The page doesn't say what to look at or do, and its pale gray text is hard to read.** The cause is a few specific things.
+**Verdict:** The page is hard to read and gives no clear next step. Gray text on cream, a heading smaller than the paragraph under it, and three identical faint buttons all push the same way. They make the page feel timid and a little cold, which is a poor fit for a pottery studio.
 
-## Findings, in priority order
+Assumptions: a first-time visitor deciding whether to book, and a high-fidelity page.
 
-**1. Body text is hard to read: about 2.5:1 contrast (Blocker).**
-- `#9a9a9a` on `#f6f1e7` computes to roughly 2.5:1. WCAG AA asks for 4.5:1.
-- This is probably most of the "off" feeling. The whole page looks faded.
-- The same gray is used for the outlined buttons, so the calls to action fade too.
-- Fix: change the text to something like `#2b2b2b`, which is already in your palette from the nav. Use a warm dark brown if you want it softer. Keep it above 4.5:1.
+## Findings, in fix order
 
-**2. The hierarchy is upside down (Major).**
-- The "Welcome to Tidewell" `h1` is 18px at weight 400. The paragraph below it is 20px, so the heading is smaller than the body text.
-- Your name and the page's main message aren't the first thing seen.
-- Fix: make the `h1` about 40–48px. Make the paragraph 17–18px.
+1. **Blocker: body text is too faint.**
+   - `#9a9a9a` on `#f6f1e7` computes to about 2.5:1. WCAG AA asks for 4.5:1.
+   - The paragraph, the h1 and the button labels all use that color, and the button borders (`#bbb`) are fainter still.
+   - This is the main source of the "off" feeling, and many people will struggle to read it at all.
+   - Fix: use a warm dark such as `#2b2b2b` or a dark clay brown for text. Keep gray only for secondary details.
 
-**3. The intro is one dense paragraph that tries to say everything (Major).**
-- It is a single ~55-word sentence listing six offerings.
-- `max-width:1100px` at 20px Georgia gives about 120 characters per line. That is roughly twice a comfortable length of 50–75.
-- `line-height:1.2` is tight for that line length, so the eye loses its place.
-- Fix: write one short sentence on what Tidewell is, such as "A small harbor pottery studio. Learn, drop in, or rent a wheel." Move the six offerings into a short scannable list or cards. Set the paragraph `max-width` to about 60ch and `line-height` to 1.5.
+2. **Major: the hierarchy is upside down.**
+   - The h1 "Welcome to Tidewell" is 18px, and the paragraph below it is 20px. The heading is the smallest thing in the hero.
+   - "Welcome to…" also says nothing about what you do.
+   - Fix: make the h1 about 40–48px and lead with the offer, for example "Pottery classes and studio access on the harbor". Drop the paragraph to 17–18px.
 
-**4. There is no primary action (Major).**
-- The three buttons (Book a class, Gift cards, Rent the studio) look identical: small, gray and outlined.
-- A visitor can't tell which one matters most.
-- They are 11px text with about 27px height. I computed that from the padding, so it is an estimate. It is small for touch.
-- Fix: make "Book a class" a filled, larger button, at least 44px tall. Leave the other two as quieter secondary buttons.
+3. **Major: the paragraph is a wall of text.**
+   - It is one 60-word sentence that lists six offerings.
+   - `max-width:1100px` at 20px Georgia gives roughly 100+ characters per line. That's my estimate, not a measurement, and it is well past a comfortable 60–75.
+   - `line-height:1.2` is tight for body text.
+   - Fix: cap the width at about 60ch, use a line-height of about 1.5, and cut the copy to one or two sentences. Move the offerings into a short list or cards.
 
-**5. The nav has too many items at too small a size (Moderate).**
-- It has 9 items at 12px, all equal in weight.
-- Cart (0) and Contact look the same as Classes.
-- "Gift cards" is also a hero button, so it appears twice.
-- None of the `<a>` tags has an `href`. They aren't keyboard-focusable and don't work as links.
-- Fix: cut to about 5–6 top-level items. Put Glaze library and Blog under a "More" menu or in the footer. Set the cart apart on the right. Add `href`s. Raise the nav text to about 15px.
+4. **Major: there is no primary action.**
+   - "Book a class", "Gift cards" and "Rent the studio" have identical styling: ghost buttons with a pale border.
+   - They are 11px text with 6px/10px padding, so about 27px tall. That's an estimate, and it is under the 44px touch target.
+   - Nothing says which one matters most.
+   - Fix: make "Book a class" a solid, larger filled button. Keep the other two as quiet secondary links.
 
-**6. The spacing is cramped and there is nothing visual (Moderate).**
-- The hero has 10px side padding, so the text sits almost against the left edge.
-- There is no image or color accent.
-- For a craft studio, the lack of imagery is a large missed opportunity. Nothing on the page shows pots, clay or the harbor. This part is partly taste.
-- Fix: use 24–48px side padding, or center the content in a container. Add one strong photo of your work or the studio.
+5. **Major: the nav is crowded and not usable as built.**
+   - There are 9 items at 12px, with no padding on the links, so the tap targets are about 15px tall.
+   - The links have no `href`, so they can't be reached by keyboard or followed.
+   - "Gift cards" appears in both the nav and the hero.
+   - There is no Tidewell name or logo in the bar.
+   - Fix: put the studio name at the left and keep 5–6 items. Group Blog and Glaze library under About or Studio, and keep Cart separate on the right. Use 15–16px type with real padding.
 
-## What works, keep it
-- **The warm cream background (`#f6f1e7`) and Georgia** fit a pottery studio and feel handmade rather than corporate.
-- **The dark nav bar** is clearly separated from the page, and its light text on dark is readable.
-- **The copy is specific**: harbor, Thursdays, eight people, kiln access. Keep these details and move them into a list.
-- **The button labels** are concrete verbs and destinations.
+6. **Minor: nothing on the page looks like pottery.**
+   - There is no image, texture or accent color. The dark `#2b2b2b` nav bar is the heaviest element, so it draws the eye more than the content.
+   - This is partly taste. A single photo of hands at the wheel or a glazed piece would do more than any color tweak.
 
-*Assumptions: a first-time visitor deciding whether to book. I judged this from the code only, so I haven't checked mobile layout, the rest of the site, or how it renders.*
+7. **Minor: the page is missing `<meta name="viewport">`.** Phones will render it at desktop width, which makes the small type even smaller.
+
+## Keep
+
+- **Georgia on warm cream.** It suits a craft studio, and the `#f6f1e7` background is a good base once the text is darker.
+- **Generous hero padding and left alignment.** The layout is simple and uncluttered.
+- **The nav contrast.** `#ddd` on `#2b2b2b` is about 10:1, which is fine. Only the size is a problem.
+- **The content itself.** The offerings are clear and specific, with Thursday wheel nights, six-week courses and kiln access. They just need to be easier to scan.
+
+Not checked: how the page looks in a browser, behavior at different widths, and any pages beyond the homepage.

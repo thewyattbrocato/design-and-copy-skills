@@ -1,27 +1,18 @@
-The layout is mostly sound. The hierarchy is clear, the palette is restrained, and the spec avoids decoration. I'd change or clarify these before handing it off:
+The layout is mostly sound. The type scale (28 / 18 / 16 / 14) steps down clearly, the page has one accent color, and there's no decoration to remove. I'd change these before handing it off:
 
-**Needs a decision**
-1. **Save button vs. auto-save.** Switches usually apply immediately, but a Save button implies changes are batched. Decide which model this is. If it's batched, the spec needs an unsaved-changes state and a save confirmation. If switches save on toggle, the Save button may be unnecessary.
-2. **"Reset to defaults" placement.** It sits right next to the primary teal button, so a misclick is easy and it resets everything with no undo. Add a confirmation step, or move it away from Save (for example, to a separate area or a section-level control).
+1. **The teal rule contradicts the button.** "Nothing else on the page is teal" is false as written, because the Save button is teal. Reword it to something like "teal appears only on the on-state switches and the primary Save button."
 
-**Needs exact values**
-3. **Spacing is vague.** "Thin light lines," "generous extra space," and "one-line" can't be built consistently. Give values, such as a 1px divider at a specific grey, a row gap, a section gap that is clearly larger than the row gap, and a minimum row height.
-4. **Section separation.** Without a divider, a large gap alone may not separate sections clearly. Confirm that the section gap reads as a break from the row lines.
+2. **Spacing is undefined.** "Generous extra space" between sections is the only spacing spec, and developers will guess at it. Give values for row gap, heading-to-first-row gap, and section gap. The section gap needs to be clearly larger than the heading-to-rows gap, or each heading will read as belonging to the section above it, since the sections have no dividers.
 
-**Accessibility**
-5. **Contrast.** The 14px grey description needs at least 4.5:1 against white. The grey off-state switch needs at least 3:1 against white (WCAG 1.4.11), so check that the track and its edge meet that.
-6. **Switch labels.** Each switch must be programmatically labeled by its row name, not just placed visually next to it.
-7. **Focus indicator.** Specify the keyboard focus style. The browser default blue would add a second accent colour and break "nothing else is teal." Keep it neutral or teal, but define it.
-8. **Touch targets.** The full row should be tappable, or the switch should be at least 44px on touch devices.
+3. **Reset to defaults sits next to the primary action with no safeguard.** A plain link is the right weight, but it's the only destructive control on the page and it's right beside Save. Add spacing between them, and specify whether Reset applies immediately or only changes the form, and whether it asks for confirmation.
 
-**Minor / unspecified states**
-9. **Missing states.** Specify loading, save-error, and save-success states, plus the narrow-width layout where a long description wraps next to the switch.
-10. **Weekly summary.** If its rows only have switches, it's fine. If it needs a frequency or day picker, the spec doesn't cover that.
+4. **The Save button has no states.** Specify whether it's disabled or hidden when nothing has changed, and what happens after a successful save.
 
-**Keep as is**
-- The type scale (28 / 18 / 16 / 14) gives a clear order.
-- The teal is limited to the switches and the primary button.
-- No icons, shadows, or cards.
-- The left-aligned button matches the content edge.
+5. **Contrast isn't specified.** Check these against WCAG before the developer picks colors:
+   - The grey off-state of the switches needs at least 3:1 against white (non-text UI contrast).
+   - The 14px grey explanations need at least 4.5:1 against white.
+   - The teal needs enough contrast against white for the button label and the on-state switch.
 
-If you tell me whether the page auto-saves, I can turn these into a short spec note for the developer with the values filled in.
+6. **Smaller gaps:** no mobile or narrow-width behavior is specified, and the row label color isn't stated (I'm assuming default body text).
+
+I reviewed the written spec only. There's no code or design file in this directory to check against.

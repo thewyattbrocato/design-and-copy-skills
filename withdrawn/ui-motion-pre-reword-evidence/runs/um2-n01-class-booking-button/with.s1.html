@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnhouse – Saturday Wheel-Throwing</title>
+<style>
+  :root {
+    --clay: #b5502d;
+    --clay-dark: #9a4122;
+    --ink: #2a211c;
+    --muted: #6f625a;
+    --paper: #fbf6f0;
+    --card: #ffffff;
+    --line: #e8ddd1;
+    --ok: #2f6b45;
+    --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .card {
+    width: 100%;
+    max-width: 360px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(42,33,28,.06), 0 8px 24px rgba(42,33,28,.06);
+  }
+  .studio {
+    margin: 0 0 8px;
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--clay);
+    font-weight: 600;
+  }
+  h1 { margin: 0 0 4px; font-size: 22px; line-height: 1.25; }
+  .when { margin: 0 0 20px; color: var(--muted); font-size: 15px; }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+  }
+  .price { font-size: 26px; font-weight: 700; }
+  .price small { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .seats { font-size: 14px; color: var(--muted); text-align: right; }
+  .seats strong { color: var(--ink); font-variant-numeric: tabular-nums; display: inline-block; }
+  .seats strong.tick { animation: tick 200ms var(--ease-out); }
+  @keyframes tick {
+    from { transform: translateY(-4px); opacity: .3; }
+    to { transform: none; opacity: 1; }
+  }
+
+  button {
+    position: relative;
+    width: 100%;
+    height: 48px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--clay);
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 100ms var(--ease-out), background-color 150ms var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:hover { background: var(--clay-dark); }
+  button:active { transform: scale(.97); }
+  button:focus-visible { outline: 3px solid rgba(181,80,45,.4); outline-offset: 2px; }
+  button[data-state="done"], button[data-state="done"]:hover { background: var(--ok); }
+  button[data-state="soldout"] { background: #d9cfc5; color: #7a6d63; cursor: not-allowed; }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out);
+  }
+  .label.swap { opacity: 0; transform: translateY(4px); }
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    display: none;
+    animation: spin 700ms linear infinite;
+  }
+  button[data-state="pending"] .spinner { display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .status {
+    min-height: 20px;
+    margin: 12px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .status.ok { color: var(--ok); }
+  .status.err { color: #a3281c; }
+
+  @media (prefers-reduced-motion: reduce) {
+    button, .label { transition: background-color 150ms linear, opacity 150ms linear; }
+    button:active { transform: none; }
+    .label.swap { transform: none; }
+    .seats strong.tick { animation: none; }
+    .spinner { animation-duration: 1.6s; }
+  }
+</style>
+</head>
+<body>
+  <article class="card">
+    <p class="studio">Kilnhouse</p>
+    <h1>Saturday Wheel-Throwing</h1>
+    <p class="when">Sat, Oct 17 · 10:00 am – 12:30 pm</p>
+
+    <div class="meta">
+      <div class="price">$65 <small>per person</small></div>
+      <div class="seats"><strong id="seats">4</strong> seats left</div>
+    </div>
+
+    <button id="reserve" type="button" data-state="idle">
+      <span class="label" id="label"><span class="spinner" aria-hidden="true"></span><span id="text">Reserve a seat</span></span>
+    </button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </article>
+
+<script>
+(function () {
+  var btn = document.getElementById('reserve');
+  var label = document.getElementById('label');
+  var text = document.getElementById('text');
+  var status = document.getElementById('status');
+  var seatsEl = document.getElementById('seats');
+  var seats = 4;
+  var timer = null;
+  var spinnerTimer = null;
+
+  function setLabel(msg) {
+    label.classList.add('swap');
+    setTimeout(function () {
+      text.textContent = msg;
+      label.classList.remove('swap');
+    }, 120);
+  }
+
+  function setState(state) {
+    btn.dataset.state = state;
+  }
+
+  function updateSeats(n) {
+    seatsEl.textContent = n;
+    seatsEl.classList.remove('tick');
+    void seatsEl.offsetWidth;
+    seatsEl.classList.add('tick');
+    seatsEl.parentNode.lastChild.textContent = n === 1 ? ' seat left' : ' seats left';
+  }
+
+  function reset() {
+    setState('idle');
+    setLabel(seats > 0 ? 'Reserve a seat' : 'Sold out');
+    if (seats <= 0) setState('soldout');
+  }
+
+  btn.addEventListener('click', function () {
+    var state = btn.dataset.state;
+    if (state === 'soldout') return;
+
+    // Click again while pending = cancel (input is never locked out)
+    if (state === 'pending') {
+      clearTimeout(timer);
+      setState('idle');
+      setLabel('Reserve a seat');
+      status.className = 'status';
+      status.textContent = 'Request cancelled.';
+      return;
+    }
+    if (state === 'done') return;
+
+    // Instant acknowledgement: label changes and the seat is held on press.
+    status.className = 'status';
+    status.textContent = '';
+    setState('pending');
+    setLabel('Reserving… (tap to cancel)');
+
+    // Fake network request, 1.5 seconds
+    timer = setTimeout(function () {
+      seats -= 1;
+      updateSeats(seats);
+      setState('done');
+      setLabel('Seat reserved ✓');
+      status.className = 'status ok';
+      status.textContent = 'You\u2019re in! Confirmation sent to your email.';
+      setTimeout(function () {
+        if (btn.dataset.state === 'done') reset();
+      }, 3000);
+    }, 1500);
+  });
+})();
+</script>
+</body>
+</html>

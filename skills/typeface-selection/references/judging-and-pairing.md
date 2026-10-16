@@ -29,7 +29,7 @@ Two files with one name can be different drawings (a stripped web cut, a lighter
 ## Pairing
 
 1. **Start with one family.** Use its weights and italic first. Add a second only for a role the first cannot play.
-2. **Share a skeleton or differ clearly.** A calligraphic serif beside a humanist sans, or a geometric sans beside a geometric-leaning serif, share construction. A display serif over a plain grotesque differs clearly. A grotesque beside another grotesque is a near miss.
+2. **Match the build or differ clearly.** Two faces with similar stroke contrast and x-height, such as a low-contrast text serif beside a humanist sans, sit well together. A display serif over a plain grotesque differs clearly. A grotesque beside another grotesque is a near miss.
 3. **Fix roles before choosing.** Primary for the text people read most; secondary for headings, labels or code. Do not swap roles across the page.
 4. **Check proportion.** Matched x-height, or sized to look matched; if the second face needs a size correction at every use, it is the wrong partner.
 5. **Keep emphasis inside the owner.** Italic and bold come from the family the text is in. A script beside an italic of the same name clashes.

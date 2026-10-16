@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unpaid Invoices – Tallow Lane Cycles</title>
+<style>
+  :root {
+    --bg: #f6f5f2; --card: #fff; --text: #1d1d1b; --muted: #66645e; --line: #e2e0da;
+    --over-bg: #fde8e6; --over-fg: #9b1c12;
+    --soon-bg: #fff1d6; --soon-fg: #7a4a00;
+    --ok-bg: #e6f0e8; --ok-fg: #1f5a2c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161614; --card: #212120; --text: #f1efe9; --muted: #a09d94; --line: #373734;
+      --over-bg: #4a1f1b; --over-fg: #ffb4ab;
+      --soon-bg: #46330e; --soon-fg: #ffd58a;
+      --ok-bg: #1d3624; --ok-fg: #a6dbb0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px 16px 40px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.4;
+  }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .tile .label { color: var(--muted); font-size: .85rem; }
+  .tile .value { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .tile .note { color: var(--muted); font-size: .85rem; }
+  .tile.over { border-left: 5px solid var(--over-fg); }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); background: var(--bg); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .id { font-weight: 700; white-space: nowrap; }
+  .sm { display: block; color: var(--muted); font-size: .85rem; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .82rem; font-weight: 600; white-space: nowrap; }
+  .over-b { background: var(--over-bg); color: var(--over-fg); }
+  .soon-b { background: var(--soon-bg); color: var(--soon-fg); }
+  .ok-b { background: var(--ok-bg); color: var(--ok-fg); }
+  .bal { font-weight: 700; }
+  footer { color: var(--muted); font-size: .85rem; margin-top: 14px; }
+  @media (max-width: 640px) {
+    th.hide, td.hide { display: none; }
+    th, td { padding: 10px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Unpaid invoices</h1>
+  <p class="sub">Tallow Lane Cycles · as of Oct 14 · most overdue first</p>
+
+  <section class="summary" aria-label="Summary">
+    <div class="tile">
+      <div class="label">Total outstanding</div>
+      <div class="value">$4,869.75</div>
+      <div class="note">6 invoices</div>
+    </div>
+    <div class="tile over">
+      <div class="label">Overdue</div>
+      <div class="value">$2,248.75</div>
+      <div class="note">3 invoices</div>
+    </div>
+    <div class="tile">
+      <div class="label">Not yet due</div>
+      <div class="value">$2,621.00</div>
+      <div class="note">3 invoices</div>
+    </div>
+  </section>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Invoice</th>
+        <th>Customer</th>
+        <th class="hide">Due</th>
+        <th>Status</th>
+        <th class="num">Balance due</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="id">#1045</td>
+        <td>Mbeki, Thandi<span class="sm">Issued Sep 20 · Total $238.75</span></td>
+        <td class="hide">Oct 4</td>
+        <td><span class="badge over-b">Overdue 10 days</span></td>
+        <td class="num bal">$238.75</td>
+      </tr>
+      <tr>
+        <td class="id">#1042</td>
+        <td>Brightwater Cafe (delivery bike service)<span class="sm">Issued Sep 5 · Total $1,260.00</span></td>
+        <td class="hide">Oct 5</td>
+        <td><span class="badge over-b">Overdue 9 days</span></td>
+        <td class="num bal">$1,260.00</td>
+      </tr>
+      <tr>
+        <td class="id">#1044</td>
+        <td>Hartley School Cycling Club<span class="sm">Issued Sep 12 · Total $1,150.00 · $400.00 received (part paid)</span></td>
+        <td class="hide">Oct 12</td>
+        <td><span class="badge over-b">Overdue 2 days</span></td>
+        <td class="num bal">$750.00</td>
+      </tr>
+      <tr>
+        <td class="id">#1046</td>
+        <td>Cardoso, Rui<span class="sm">Issued Oct 1 · Total $96.00</span></td>
+        <td class="hide">Oct 15</td>
+        <td><span class="badge soon-b">Due tomorrow</span></td>
+        <td class="num bal">$96.00</td>
+      </tr>
+      <tr>
+        <td class="id">#1048</td>
+        <td>Pell, Joanne<span class="sm">Issued Oct 7 · Total $45.00</span></td>
+        <td class="hide">Oct 21</td>
+        <td><span class="badge soon-b">Due in 7 days</span></td>
+        <td class="num bal">$45.00</td>
+      </tr>
+      <tr>
+        <td class="id">#1047</td>
+        <td>Harbour Courier Co.<span class="sm">Issued Oct 3 · Total $2,480.00</span></td>
+        <td class="hide">Nov 2</td>
+        <td><span class="badge ok-b">Due in 19 days</span></td>
+        <td class="num bal">$2,480.00</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <footer>Balance due = invoice total minus payments received. Paid invoices (#1041, #1043, #1049) are not shown.</footer>
+</main>
+</body>
+</html>

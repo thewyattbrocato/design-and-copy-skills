@@ -2,11 +2,15 @@
 """Generate the skills and results tables in README.md from the files they describe.
 
 Reads skills/*/SKILL.md, copy-skills/*/SKILL.md, withdrawn/*/SKILL.md, evals/*/heldout/results.json (clean evidence) and evals/*/results.json (the dev set,
-which the skill writers saw), and rewrites five blocks of README.md between marker comments:
+which the skill writers saw), evals/*/activation.json and evals/*/activation-results.json, and rewrites eight blocks of
+README.md between marker comments:
 
+  <!-- results-table:headline:start --> ... <!-- results-table:headline:end -->
+  <!-- results-table:tryit:start --> ... <!-- results-table:tryit:end -->
   <!-- results-table:skills:start --> ... <!-- results-table:skills:end -->
   <!-- results-table:copy:start --> ... <!-- results-table:copy:end -->
   <!-- results-table:heldout:start --> ... <!-- results-table:heldout:end -->
+  <!-- results-table:marginal:start --> ... <!-- results-table:marginal:end -->
   <!-- results-table:dev:start --> ... <!-- results-table:dev:end -->
   <!-- results-table:withdrawn:start --> ... <!-- results-table:withdrawn:end -->
 
@@ -15,7 +19,9 @@ and loaded-only tallies, the gate decision and the secondary row (a weaker gener
 results tables. Skills and evidence-only folders under withdrawn/ appear only in the withdrawn block (the README calls it
 archived evidence; a held-out results.json at the folder root counts). Held-out rows of a passing skill carry a `marginal` marker
 when the mean rubric advantage is below +0.15, fewer than 7 tasks had a loaded sample, or the loaded-only win margin is at most
-one task. Protocol 1 loaded-only tallies are recomputed from `with_skill_invoked`. A skill with no held-out results is shown as "pending clean rerun". With --check nothing is written; the exit
+one task. The headline block sums the loaded-only tallies of the listed skills and counts the marginal passes; the marginal block
+lists them in plain words; the tryit block prints five example requests taken word for word from activation.json, each
+checked against activation-results.json to have been routed to the right skill. Protocol 1 loaded-only tallies are recomputed from `with_skill_invoked`. A skill with no held-out results is shown as "pending clean rerun". With --check nothing is written; the exit
 code is 1 when the README does not match the files (CI uses this).
 """
 import argparse
@@ -28,10 +34,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import evalkit  # noqa: E402
 import validate_evals  # noqa: E402
 import validate_skills  # noqa: E402
-from roots import LIVE_ROOTS  # noqa: E402
+from roots import LIVE_ROOTS, find_skill  # noqa: E402
 
-BLOCKS = ("skills", "copy", "heldout", "dev", "withdrawn")
+BLOCKS = ("headline", "tryit", "skills", "copy", "heldout", "marginal", "dev", "withdrawn")
 NONE_YET = "none yet"
+# One example request per skill for the README "Try it" list: (skill, index into should_load of its activation.json).
+TRY_IT = (("visual-hierarchy", 0), ("chart-design", 1), ("form-design", 0), ("email-and-sequences", 2),
+          ("honest-claims", 2))
 PENDING = "pending clean rerun"
 
 
@@ -148,9 +157,10 @@ def loaded_outcome(results):
     return tally, g["mean_rubric_with"], g["mean_rubric_without"]
 
 
-def marginal_reasons(results):
-    """Why a passing result is marginal: a mean rubric advantage below +0.15, fewer than 7 tasks with a loaded
-    sample, or a win margin of at most one task (see loaded_outcome for what the means and the tally cover)."""
+def marginal_checks(results):
+    """[(short reason, plain-words reason)] why a passing result is marginal: a mean rubric advantage below +0.15,
+    fewer than 7 tasks with a loaded sample, or a win margin of at most one task (see loaded_outcome for what the
+    means and the tally cover). Empty for a result that did not pass or is not marginal."""
     s = results["summary"]
     g = s.get("gate", {})
     protocol2 = s.get("protocol", 1) == 2 and isinstance(s.get("loaded"), dict)
@@ -159,16 +169,28 @@ def marginal_reasons(results):
     if not passed or outcome is None:
         return []
     tally, mean_with, mean_without = outcome
-    reasons = []
+    checks = []
     advantage = round(mean_with - mean_without, 3)
     if advantage < MARGINAL_ADVANTAGE:
-        reasons.append("rubric level" if abs(advantage) < 0.005 else f"rubric {advantage:+.2f}")
-    if tally["tasks_with_loaded_sample"] < MARGINAL_TASKS:
-        reasons.append(f"{tally['tasks_with_loaded_sample']} loaded tasks")
+        level = abs(advantage) < 0.005
+        checks.append(("rubric level" if level else f"rubric {advantage:+.2f}",
+                       "its mean rubric score was level with the baseline" if level
+                       else f"its mean rubric edge was {advantage:+.2f}, under the +{MARGINAL_ADVANTAGE:.2f} bar"))
+    loaded = tally["tasks_with_loaded_sample"]
+    if loaded < MARGINAL_TASKS:
+        checks.append((f"{loaded} loaded tasks",
+                       f"the model loaded it on only {loaded} of {len(results.get('verdicts', []))} tasks"))
     margin = tally["with_wins"] - tally["without_wins"]
     if margin <= 1:
-        reasons.append("one-task win margin" if margin == 1 else "no win margin")
-    return reasons
+        checks.append(("one-task win margin" if margin == 1 else "no win margin",
+                       "it won just one more task than it lost" if margin == 1
+                       else "it won no more tasks than it lost"))
+    return checks
+
+
+def marginal_reasons(results):
+    """Why a passing result is marginal, in the short words of the Gate column."""
+    return [short for short, _ in marginal_checks(results)]
 
 
 def judge_text(summary):
@@ -289,9 +311,69 @@ def withdrawn_table(root):
     return lines
 
 
+def heldout_results(root):
+    """[(name, results)] for every listed skill that has held-out results, in table order."""
+    found = []
+    for name, _, _ in live_rows(root):
+        results = load_json(Path(root) / "evals" / name / "heldout" / "results.json")
+        if isinstance(results, dict) and isinstance(results.get("summary"), dict):
+            found.append((name, results))
+    return found
+
+
+def headline_lines(root):
+    """One line: the loaded-only wins, losses and ties summed over the listed skills, and how many passes are marginal."""
+    wins = losses = ties = skills = marginal = 0
+    for _, results in heldout_results(root):
+        outcome = loaded_outcome(results)
+        if outcome is None:
+            continue
+        tally = outcome[0]
+        skills += 1
+        wins, losses, ties = wins + tally["with_wins"], losses + tally["without_wins"], ties + tally["ties"]
+        marginal += bool(marginal_reasons(results))
+    if not skills:
+        return [NONE_YET]
+    return [f"**Across {skills} skills, counting only the held-out tasks where the skill loaded ({wins + losses + ties} in all): "
+            f"{wins} wins, {losses} losses and {ties} ties against the same model without it. {marginal} of the {skills} "
+            "passes are marginal.**"]
+
+
+def marginal_lines(root):
+    """A bullet per marginal pass, with the reasons in plain words."""
+    lines = []
+    for name, results in heldout_results(root):
+        checks = marginal_checks(results)
+        if checks:
+            reasons = "; ".join(plain for _, plain in checks)
+            lines.append(f"- **{name}**: {reasons[0].upper()}{reasons[1:]}.")
+    return lines or [NONE_YET]
+
+
+def tryit_lines(root):
+    """A table of the TRY_IT requests, each word for word from activation.json and routed correctly in activation-results.json."""
+    lines = ["| Type this | The agent should load |", "|---|---|"]
+    for name, index in TRY_IT:
+        folder = Path(root) / "evals" / name
+        requests = (load_json(folder / "activation.json") or {}).get("should_load", [])
+        recorded = (load_json(folder / "activation-results.json") or {}).get("should_load", {}).get("results", [])
+        if not 0 <= index < len(requests):
+            raise ValueError(f"evals/{name}/activation.json has no should_load request {index}")
+        prompt = requests[index]
+        if not any(r.get("prompt") == prompt and r.get("correct") is True and r.get("picked") == name
+                   for r in recorded):
+            raise ValueError(f"evals/{name}/activation-results.json does not show {prompt!r} routed to {name}")
+        found = find_skill(root, name)
+        if found is None:
+            raise ValueError(f"{name} is not a listed skill")
+        lines.append(f"| \u201c{cell(prompt)}\u201d | [{name}]({found[0]}/{name}/SKILL.md) |")
+    return lines
+
+
 def render(root):
-    return {"skills": skills_table(root), "copy": copy_table(root), "heldout": heldout_table(root), "dev": dev_table(root),
-            "withdrawn": withdrawn_table(root)}
+    return {"headline": headline_lines(root), "tryit": tryit_lines(root), "skills": skills_table(root),
+            "copy": copy_table(root), "heldout": heldout_table(root), "marginal": marginal_lines(root),
+            "dev": dev_table(root), "withdrawn": withdrawn_table(root)}
 
 
 def replace_block(text, block, lines):

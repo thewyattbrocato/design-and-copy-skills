@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillwater – 21-day streak</title>
+<!--
+  Design note: the brief asked for flashing lights and a pulsing screen. Rapid
+  full-screen flashing can trigger seizures in people with photosensitive
+  epilepsy (WCAG 2.3.1), and it clashes with a calm journaling product. This
+  version keeps the "huge" feeling with layered fireworks, a slow breathing glow
+  (about 0.25 Hz, low amplitude) and a count-up, with no strobing. Bursts are
+  small and spaced out, so no more than ~1.5 flashes per second occur over a
+  small area. It honours prefers-reduced-motion and has a "Pause effects" toggle.
+-->
+<style>
+  :root {
+    --bg1: #0b1530;
+    --bg2: #050914;
+    --ink: #f4f1ea;
+    --muted: #b7c0d6;
+    --accent: #ffd98a;
+    --accent2: #8fd3ff;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg2);
+    color: var(--ink);
+    overflow: hidden;
+  }
+  .stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: radial-gradient(ellipse at 50% 40%, var(--bg1) 0%, var(--bg2) 75%);
+  }
+  /* slow, low-amplitude breathing glow */
+  .glow {
+    position: absolute; inset: -10%;
+    background: radial-gradient(circle at 50% 45%, rgba(255,217,138,.22), rgba(143,211,255,.08) 40%, transparent 65%);
+    opacity: .7;
+    animation: breathe 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .45; transform: scale(.97); }
+    50%      { opacity: .85; transform: scale(1.03); }
+  }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  .card {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    max-width: 32rem;
+    animation: rise .9s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px) scale(.98); }
+    to   { opacity: 1; transform: none; }
+  }
+  .eyebrow {
+    letter-spacing: .22em; text-transform: uppercase;
+    font-size: .8rem; color: var(--accent);
+    margin: 0 0 .5rem;
+  }
+  .count {
+    font-size: clamp(6rem, 24vw, 12rem);
+    line-height: 1; font-weight: 700;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, #fff 10%, var(--accent) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 40px rgba(255,217,138,.25);
+  }
+  .unit { font-size: 1.4rem; margin: 0 0 1.25rem; color: var(--ink); letter-spacing: .05em; }
+  .msg { color: var(--muted); font-size: 1.05rem; line-height: 1.55; margin: 0 auto 2rem; max-width: 26rem; }
+  .actions { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 999px;
+    padding: .8rem 1.6rem; border: 1px solid transparent;
+    transition: transform .15s ease, background .2s ease, border-color .2s ease;
+  }
+  button:active { transform: scale(.97); }
+  button:focus-visible { outline: 3px solid var(--accent2); outline-offset: 3px; }
+  .primary { background: var(--accent); color: #1a1405; font-weight: 600; }
+  .primary:hover { background: #ffe5a8; }
+  .ghost { background: transparent; color: var(--muted); border-color: rgba(255,255,255,.22); }
+  .ghost:hover { border-color: rgba(255,255,255,.5); color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow, .card { animation: none; }
+    .glow { opacity: .65; }
+  }
+  body.paused .glow, body.paused .card { animation: none; }
+  body.paused .glow { opacity: .65; }
+</style>
+</head>
+<body>
+  <main class="stage" role="dialog" aria-modal="true" aria-labelledby="title" aria-describedby="desc">
+    <div class="glow" aria-hidden="true"></div>
+    <canvas id="fx" aria-hidden="true"></canvas>
+
+    <section class="card">
+      <p class="eyebrow">Streak unlocked</p>
+      <h1 id="title" class="count" aria-label="21 days"><span id="num">21</span></h1>
+      <p class="unit">days in a row</p>
+      <p id="desc" class="msg">Twenty-one days of showing up for your own thoughts. That's a habit now, and it's yours.</p>
+      <div class="actions">
+        <button class="primary" id="continue" type="button">Keep going</button>
+        <button class="ghost" id="toggle" type="button" aria-pressed="false">Pause effects</button>
+      </div>
+    </section>
+  </main>
+
+<script>
+(function () {
+  var canvas = document.getElementById('fx');
+  var ctx = canvas.getContext('2d');
+  var numEl = document.getElementById('num');
+  var toggle = document.getElementById('toggle');
+  var cont = document.getElementById('continue');
+  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var paused = mq.matches;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0;
+  var parts = [], rockets = [];
+  var last = 0, nextBurst = 0, raf = null;
+  var colors = [[255,217,138],[143,211,255],[255,160,190],[190,170,255],[160,240,200],[255,255,255]];
+
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function launch() {
+    rockets.push({
+      x: rnd(W * .12, W * .88), y: H + 10,
+      ty: rnd(H * .15, H * .5),
+      vy: -rnd(520, 700),
+      c: colors[(Math.random() * colors.length) | 0]
+    });
+  }
+
+  function burst(x, y, c) {
+    var n = W < 600 ? 45 : 70;
+    var c2 = colors[(Math.random() * colors.length) | 0];
+    for (var i = 0; i < n; i++) {
+      var a = (i / n) * Math.PI * 2 + rnd(-.05, .05);
+      var s = rnd(70, 230) * (W < 600 ? .7 : 1);
+      parts.push({
+        x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s,
+        life: 0, max: rnd(1.2, 2.0), c: i % 3 ? c : c2, r: rnd(1.2, 2.2)
+      });
+    }
+  }
+
+  function frame(t) {
+    raf = requestAnimationFrame(frame);
+    var dt = Math.min((t - last) / 1000 || 0, .05);
+    last = t;
+
+    // fade previous frame to leave soft trails
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,.22)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+
+    // at most one new rocket every ~0.8s: keeps flash rate far under 3/sec
+    if (t > nextBurst) { launch(); nextBurst = t + rnd(800, 1400); }
+
+    for (var i = rockets.length - 1; i >= 0; i--) {
+      var r = rockets[i];
+      r.y += r.vy * dt;
+      r.vy *= 0.992;
+      ctx.fillStyle = 'rgba(' + r.c.join(',') + ',.9)';
+      ctx.beginPath(); ctx.arc(r.x, r.y, 2, 0, 6.283); ctx.fill();
+      if (r.y <= r.ty) { burst(r.x, r.y, r.c); rockets.splice(i, 1); }
+    }
+
+    for (var j = parts.length - 1; j >= 0; j--) {
+      var p = parts[j];
+      p.life += dt;
+      if (p.life > p.max) { parts.splice(j, 1); continue; }
+      p.vx *= 0.985; p.vy = p.vy * 0.985 + 90 * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      var k = 1 - p.life / p.max;
+      ctx.fillStyle = 'rgba(' + p.c.join(',') + ',' + (k * .9).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (.5 + k * .5), 0, 6.283); ctx.fill();
+    }
+  }
+
+  function drawStatic() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < 40; i++) {
+      var c = colors[(Math.random() * colors.length) | 0];
+      ctx.fillStyle = 'rgba(' + c.join(',') + ',' + rnd(.3, .8).toFixed(2) + ')';
+      ctx.beginPath(); ctx.arc(rnd(0, W), rnd(0, H * .8), rnd(1, 2.4), 0, 6.283); ctx.fill();
+    }
+  }
+
+  function countUp() {
+    if (paused) { numEl.textContent = '21'; return; }
+    var start = performance.now(), dur = 1600;
+    (function step(now) {
+      var p = Math.min((now - start) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      numEl.textContent = Math.round(e * 21);
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  }
+
+  function apply() {
+    document.body.classList.toggle('paused', paused);
+    toggle.setAttribute('aria-pressed', String(paused));
+    toggle.textContent = paused ? 'Play effects' : 'Pause effects';
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+    parts.length = 0; rockets.length = 0;
+    if (paused) { drawStatic(); }
+    else { ctx.clearRect(0, 0, W, H); last = performance.now(); nextBurst = last + 300; raf = requestAnimationFrame(frame); }
+  }
+
+  toggle.addEventListener('click', function () { paused = !paused; apply(); });
+  mq.addEventListener && mq.addEventListener('change', function (e) { paused = e.matches; apply(); });
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && raf) { cancelAnimationFrame(raf); raf = null; }
+    else if (!document.hidden && !paused && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+  });
+  cont.addEventListener('click', function () {
+    // hook for the host app: dismiss the celebration
+    window.dispatchEvent(new CustomEvent('stillwater:celebration-dismissed'));
+  });
+
+  apply();
+  countUp();
+  cont.focus({ preventScroll: true });
+})();
+</script>
+</body>
+</html>

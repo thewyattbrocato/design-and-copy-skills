@@ -126,7 +126,7 @@ I couldn't save the file because the Write tool is disabled in this session. Her
     <li class="card">
       <h2 class="title">Lantern Meridian</h2>
       <p class="author">Marian Teal Okafor</p>
-      <p class="synopsis">After a long blackout collapses the cities, a traveling troupe of actors and musicians performs old plays for the scattered settlements of the surviving world.</p>
+      <p class="synopsis">After a long winter closes the roads, a traveling troupe of actors and musicians performs old plays for the scattered settlements along the old roads.</p>
       <div class="actions">
         <button class="btn btn-primary" type="button">Reserve</button>
         <button class="btn btn-secondary" type="button">Details</button>
@@ -136,7 +136,7 @@ I couldn't save the file because the Write tool is disabled in this session. Her
     <li class="card">
       <h2 class="title">Halcyon Reach</h2>
       <p class="author">Selwyn Ashcombe</p>
-      <p class="synopsis">Corvane lives in a vast house of endless halls and tides, recording its wonders in his journals, until evidence of another person upends his quiet world.</p>
+      <p class="synopsis">Merriwick lives in a vast house of endless corridors and fog, recording its wonders in his journals, until evidence of another person upends his quiet world.</p>
       <div class="actions">
         <button class="btn btn-primary" type="button">Reserve</button>
         <button class="btn btn-secondary" type="button">Details</button>

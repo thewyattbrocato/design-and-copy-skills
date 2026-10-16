@@ -1,32 +1,18 @@
 ---
 name: responsive-layout
-description: Use whenever CSS layout has to hold up on any screen, container or setting, including when someone says the page breaks on phones, overflows, scrolls sideways, clips, looks cramped when zoomed or stretched too wide, or asks to make it responsive, fluid, mobile-friendly or modern, in any language and at any length: stacks, sidebars, wrapping grids, card rows, heroes, media frames, overlays and modals, scroll strips, app shells, units, clamp, container queries versus media queries, long-text overflow, zoom, right-to-left, safe areas; not for choosing page structure (layout-structure), spacing values (spacing-and-grouping), dialog focus and other detailed component accessibility semantics or type scales (typesetting).
+description: Use whenever CSS layout has to hold up on any screen, container or setting, in any language and at any length: the page breaks on phones, overflows, scrolls sideways, clips, is cramped when zoomed or stretched too wide, the headline is huge on a short or landscape screen, or someone asks to make it responsive, fluid or mobile-friendly. Covers stacks, sidebars, wrapping grids, heroes, modals, scroll strips, app shells, units, clamp, container versus media queries, long-text overflow, zoom, right-to-left, safe areas; not for page structure (layout-structure), spacing values (spacing-and-grouping) or type scales (typesetting); dialog focus semantics are out of scope.
 ---
 
 # Responsive layout
 
 Write CSS that adapts to the space it is given, not to a list of devices. State the tolerances (the narrowest an item may get, the longest a line may run, the gap) and let the browser work out the rest. The model's default habits come from older tutorials; the fixes are small and current.
 
-## Do not produce
-
-- Media queries at device widths (480, 768, 1024) to re-lay out a component that lives in containers of many sizes.
-- A grid minimum a fixed pixel size larger than a small screen, such as `minmax(300px, 1fr)` with no cap.
-- Pixel font sizes, or a root size set in pixels, that ignore the reader's settings.
-- `height: 100vh` on a region that holds content, or absolute-plus-transform centering of content that can grow.
-- `margin-bottom` on every child instead of a gap owned by the parent.
-- `z-index: 9999` or any escalating number.
-- `width: 100vw` inside a page that has a vertical scrollbar.
-- Flex or grid children with no escape for long strings (URLs, compound words).
-- Blocked zoom (`user-scalable=no`, `maximum-scale=1`).
-- Physical `left`/`right` spacing in a layout that may be read right to left.
-- Responsive machinery on a fixed-size export or a one-element page.
-
 ## When to use
 
 - Writing, reviewing, fixing or modernizing CSS (or utility classes) for layout: page shells, sidebars, card grids, toolbars, heroes, modals, galleries, scrollers, forms in columns.
 - Complaints that something overflows, clips, scrolls sideways, is too wide on a monitor, too cramped on a phone, or breaks when text is long, large or translated.
-- Choosing units, `clamp()` sizes, container versus media queries, or where a breakpoint belongs.
-- Any page or component build, as a last pass on the layout CSS it produced.
+- Choosing units, `clamp()` sizes, headline or reading sizes for short, tall or distant screens, container versus media queries, or where a breakpoint belongs.
+- A page or component build whose layout CSS you wrote yourself and have not yet run these checks on: one last pass, silent unless it finds a failure.
 
 The request can be one line and never say "responsive" ("it looks broken on my phone"). A short request is not a small one.
 
@@ -64,8 +50,8 @@ Only what changes the CSS: the code or markup to fix (if any), the narrowest wid
 Small fixes start at step 6. For a large build, write steps 1 to 4 as a short plan (regions, patterns, queries), then write one representative region in full before the rest, and continue unless the user redirects.
 
 1. **Constraints from content.** For each region, note the longest line allowed, the gap, the smallest comfortable width of a repeated item, and the worst content (long title, long URL, zero items, a hundred items).
-2. **Global axioms.** Border-box sizing; rem for type and most spacing, `ch` for text measure, em for things that scale with the text beside them, pixels only for hairlines; images capped at their container; the root size left at the user's default. See [units and fluid sizing](references/units-and-fluid-sizing.md).
-3. **One pattern per region.** Match each region to the problem it has in [layout patterns](references/layout-patterns.md): content that must wrap or stack (self-spacing column, wrapping items, fitted cards, all-or-none row), a readable text width, side-by-side regions, something that must keep a shape or size (media ratio, screen-filling region), overlays, deliberate sideways scrolling.
+2. **Global defaults.** Border-box sizing; rem for type and most spacing, `ch` for text measure, em for things that scale with the text beside them, pixels only for hairlines; images capped at their container; the root size left at the user's default. See [units and fluid sizing](references/units-and-fluid-sizing.md).
+3. **One pattern per region.** Match each region to the problem it has in [layout patterns](references/layout-patterns.md): content that must wrap or stack (even-spaced column, wrapping items, fitted cards, row-or-stack), a readable text width, side-by-side regions, something that must keep a shape or size (media ratio, screen-filling region), overlays, deliberate sideways scrolling.
 4. **Choose the query, if any.** First try a pattern that needs none. Then a container query for components, a media query only for viewport or device questions. See [queries and breakpoints](references/queries-and-breakpoints.md).
 5. **Fluid sizes with bounds.** `clamp()` with a rem floor and ceiling for display type and big section spacing; never let the measure grow with the viewport.
 6. **Guard overflow.** `min-inline-size: 0` on flex and grid children that hold long content, `overflow-wrap: anywhere` for long strings, scrolling only inside a labeled region and only in one direction. See [overflow, zoom and direction](references/overflow-zoom-and-direction.md).
@@ -81,7 +67,7 @@ Small fixes start at step 6. For a large build, write steps 1 to 4 as a short pl
 
 **Intrinsic pattern or query.** Default: use the pattern when the change is "wrap or don't". Change to a query when the change is a different arrangement (a table becoming a list, a label moving inside a control).
 
-**Switching row.** Default: peers sit in one row or all stack, switching together, and stack automatically when there are too many to fit. Change when the items are really unequal in importance: use a sidebar split or a grid.
+**Switching row.** Default: peers sit in one row or all stack, switching together at a container width chosen for the largest expected count. Change when the items are really unequal in importance: use a side-by-side split or a grid.
 
 **Grid minimum.** Default: the smallest comfortable item width, capped by the container (`min(16rem, 100%)`). Change to auto-fit when empty tracks should collapse and auto-fill when a lone item should stay card-sized, then look at one item and at three.
 
@@ -89,13 +75,15 @@ Small fixes start at step 6. For a large build, write steps 1 to 4 as a short pl
 
 **Fixed versus fluid size.** Default: relative units and `min-block-size`. Change to a fixed size for hairlines, icon boxes that must stay square, canvases, and export formats.
 
+**Display type.** Default: `clamp()` with a rem term, a ceiling, `vmin` instead of `vw`, and a `max-height` guard, so a landscape phone and a short wide window both keep the headline and its call to action on screen. Change to the plain scale step when the heading sits in a fixed-width card. See [type in context](references/type-in-context.md).
+
 **Screen-height regions.** Default: `min-block-size` in dynamic viewport units with a plain `vh` line before it as a fallback. Change to a plain flow when the region holds only a short message.
 
 **Horizontal scrolling.** Default: avoid. Allow it inside a deliberate strip or a wide table wrapper that is labeled, keyboard-reachable and shows a scrollbar. Change never to two directions at once.
 
 **Utility classes or frameworks.** Default: say the technique in the user's tools. Change to plain CSS when no stack is stated.
 
-## Common failures
+## Common failures (do not produce these)
 
 - Component layout flipped by media queries at 768 and 1024 → a wrapping pattern or a container query.
 - `minmax(300px, 1fr)` overflowing a phone → `minmax(min(16rem, 100%), 1fr)`.
@@ -105,12 +93,11 @@ Small fixes start at step 6. For a large build, write steps 1 to 4 as a short pl
 - `margin-bottom` on every child → a parent `gap`, or one rule between siblings.
 - `z-index: 9999` → a named scale, `isolation: isolate` on components, or the dialog or popover top layer.
 - A long URL pushing a flex item out of its card → `min-inline-size: 0` and `overflow-wrap: anywhere`.
+- Zoom blocked with `user-scalable=no` or `maximum-scale=1` → remove it; reflow must work at 200%.
 - `width: 100vw` causing sideways scroll → `inline-size: 100%` or the container's own width.
 - `margin-left` and `padding-right` everywhere → logical properties.
 - A modal with a fixed width and tall content → `inline-size: min(40rem, 100% - 2rem)`, a `max-block-size`, internal scroll.
 - Nested scrollers fighting each other → one scroll owner per region, `overscroll-behavior: contain` on inner ones.
-- A rewrite of CSS that already adapts → say it holds up, change only the failing line.
-- Answers that pad with theory past the requested length → code and verdict first, cut the rest.
 
 ## Quick checks
 
@@ -128,5 +115,6 @@ Small fixes start at step 6. For a large build, write steps 1 to 4 as a short pl
 
 - [references/layout-patterns.md](references/layout-patterns.md): load when building or repairing regions; each pattern with a short recipe, when to use it and how it fails.
 - [references/units-and-fluid-sizing.md](references/units-and-fluid-sizing.md): load when setting font, spacing or container sizes, or writing `clamp()`.
+- [references/type-in-context.md](references/type-in-context.md): load for headline and hero sizing on short or huge screens, reading distance, margin notes, columns and the device test matrix.
 - [references/queries-and-breakpoints.md](references/queries-and-breakpoints.md): load when a layout needs a query, a breakpoint, or a preference or capability check.
 - [references/overflow-zoom-and-direction.md](references/overflow-zoom-and-direction.md): load when hardening: long strings, scroll regions, zoom and reflow, right to left, safe areas, sticky headers, stacking.

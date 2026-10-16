@@ -1,15 +1,16 @@
-**Yes, do it, with a few conditions.** Pre-selecting annual and showing the monthly price in small grey text is a normal pricing-page pattern. It's fair when the annual plan is something a well-informed person would sensibly buy, and $89.99 vs. $12.99 × 12 ($155.88) is a real saving for anyone who'll use the app for a year.
+**Partly fine. Pre-selecting annual is OK, but the small grey monthly price is the part that steers.**
 
-What I'd change:
+Annual pre-selected is a normal default. It's the plan many informed people would sensibly pick, and it reverses in one click. Shrinking the monthly option is different. It works because people don't notice it, and it makes the choice harder to read.
 
-1. **Make the monthly option easy to see and pick.** Small grey text is fine for the monthly price as a secondary line. The toggle itself should be clear and equal in weight, and the monthly price should be readable, not hidden. If someone has to hunt for it, it's a dark pattern.
-2. **Show the real math.** Put the saving in dollars next to any percentage: "$89.99/year, about $7.50/mo. Save $65.89 vs. monthly." Say plainly that it's billed once a year.
-3. **State the terms before the card field.** Show the charge amount, the renewal date and the cancellation or refund terms (`[refund policy]`). Annual renewals that surprise people are the biggest source of regret and chargebacks.
-4. **Send a reminder before renewal.** Email them `[N days]` before the annual charge. It costs you a few renewals and saves you a lot of refund requests and angry reviews.
-5. **Make cancelling as easy as joining.** The same place, a few clicks, with the last day of access named.
+**What I'd do:**
 
-The variant I'd avoid is a pre-selected annual plan alongside a monthly option that's hard to find, an unlabelled auto-renewal, or a "most popular" badge with no data behind it. Any of those would make the same default look manipulative.
+- **Pre-select annual and mark it "Best value" or "Recommended".** Give the reason next to the label.
+- **Show both prices at the same size and weight.** Both should be readable and clearly clickable. The toggle should be a real two-option control, with monthly as easy to pick as annual.
+- **Show the real math next to the percentage.** $89.99 a year works out to about $7.50 a month, against $155.88 a year on monthly. That's a saving of about $65.89, or roughly 42%. Put the dollar amount beside the percentage.
+- **State the renewal terms on the page, before checkout.** For example: "Billed $89.99 once a year, renews on [date] unless you cancel. Cancel anytime in [location]." Add a reminder email before the first renewal, since annual charges are the ones that cause regret.
 
-**Track a regret signal.** Watch refund requests and support tickets in the first 30 days among annual signups, and compare them to monthly. If annual refunds climb, the default is pulling in people who'd rather have monthly. Then tweak the copy before you drop the default.
+Your growth person gets what they want: annual is the default, it's promoted, and it's framed with real savings. The only change is that monthly stays visible instead of being hidden in grey.
 
-Rules on auto-renewal disclosure vary by place and change over time, so have your terms and renewal emails checked, especially if you sell in the EU, the UK or California.
+Two notes:
+- **Track regret signals.** Watch annual refund requests and cancellations within the first 30 days. If they climb after the change, the default is pulling in people who didn't want it.
+- **Check the rules.** Auto-renewal and price-display rules vary by place and change over time, and app store policies can be stricter. Have someone check this before launch.

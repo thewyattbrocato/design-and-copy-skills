@@ -1,0 +1,1 @@
+Hi everyone! 🌊 Quick reminder: river cleanup is this Saturday. We'll meet at the boat ramp at 8 AM. Please bring a pair of gloves, and we'll have the rest covered. Thanks so much for pitching in. See you there!

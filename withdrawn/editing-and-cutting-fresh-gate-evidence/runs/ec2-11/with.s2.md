@@ -1,0 +1,1 @@
+Hollow Pine is a hand-poured soy wax candle that smells like cedar and bright orange peel. It's woodsy and warm, with a little citrus lift. Poured by hand into an 8 oz tin, it's easy to take along and easy to set anywhere that needs some quiet.

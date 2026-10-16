@@ -1,16 +1,75 @@
-**Headline**
-Expert physiotherapy in Leeds, with an appointment this week
+# Copper Hollow Pepper Co. Homepage Copy
 
-**Paragraph**
-At Alder Row Physiotherapy, you'll be seen by one of our three chartered physiotherapists, led by founder Priya, who brings 11 years of NHS and private experience. Whether you're dealing with a sports injury, back or neck pain, or recovering from surgery, we'll give you the time and care to get you moving well again.
+## Hero
 
-**Bullets**
-- **Rated 4.7 from 62 Google reviews**, from patients who've been in our hands.
-- **Appointments usually within 3 working days**, with a 45-minute first session and 30-minute follow-ups.
-- **Direct billing for Verity Health and Marlow Mutual**, so claiming is simple.
+**Small-batch hot sauce, fermented for three weeks.**
+Made outside Duluth with peppers from farms we know by name.
 
-A few notes:
-- "This week" in the headline is a slight stretch of "within 3 working days" (a Monday-evening enquiry might not be seen until Thursday). If you'd rather be strictly accurate, use: *"Expert physiotherapy in Leeds, usually with an appointment within 3 working days."* Then drop that detail from the second bullet and use the space for something else, such as the services.
-- The rating is "as of last week," so check it's still current before launch, or the number may drift out of date.
-- I left out awards, press and research, since you don't have any. The trust here comes from the credentials, real review numbers and quick access, which is more convincing than inflated claims.
-- I didn't mention opening in 2021, as "since 2021" doesn't add much trust. It could work well in the footer or an About section.
+[Shop the Sauces]
+
+---
+
+## Four Sauces, One Kitchen
+
+**Smoked Peach Habanero**
+Sweet peach and smoke up front, with habanero heat building behind it.
+
+**Green Ghost**
+Jalapeño and tomatillo. Bright, tangy, and made for tacos, eggs, and anything that needs waking up.
+
+**Black Garlic Mild**
+Deep, savory, and gentle on the heat. It's the bottle for people who want flavor first.
+
+**Copper Reaper**
+Our hot one. It's built for people who ask, "Is that all you've got?"
+
+**$9 a bottle**
+
+---
+
+## Three Weeks, Start to Bottle
+
+Every batch ferments for three full weeks before it's bottled. We don't rush it. That time gives the sauce its depth and tang, and you can taste the difference.
+
+We make everything in small batches in a commercial kitchen outside Duluth. Each run is small enough that we can taste, adjust, and stand behind every bottle.
+
+---
+
+## Peppers From People We Know
+
+Our peppers come from two farms we know personally. One is right here in our own county. We know who grew them and how, and that's the kind of relationship you can't get from a distributor.
+
+---
+
+## It Started at the Saturday Market
+
+Copper Hollow began at a folding table at the Saturday farmers market. People tried a sample, came back the next week, and brought friends. That's still how we measure ourselves: does someone who tastes it want another bottle?
+
+The online store just opened this month, so now you don't have to wait for Saturday.
+
+---
+
+## Pick Your Heat
+
+**Just getting started?** Try Black Garlic Mild or Green Ghost.
+**Want something in the middle?** Smoked Peach Habanero.
+**Ready for it?** Copper Reaper.
+
+---
+
+## Closer
+
+**Find your bottle.**
+Four sauces, fermented slowly and made by hand. $9 each, shipped anywhere in the US.
+
+[Shop All Sauces]
+
+---
+
+## Notes for you
+
+- **I kept "established" to what's true.** Your market roots, the three-week ferment, and the farm relationships carry that feeling without help. I left out claims like "since 20XX," award badges, or "thousands sold," because they'd be easy to get wrong. If you have real ones, add them. Customer quotes from the market would be the best addition.
+- **Flavor descriptions are my inference** from the sauce names. Please adjust them to match what's actually in the bottle, especially the heat levels.
+- **Things you could name for more credibility:** the farms, if they're okay with it, and the market. Specifics like these make a brand feel real.
+- **I didn't include claims** like "all natural," "no preservatives," or "gluten-free." Add them only if you can back them up.
+- **The word count** is about 400 on the page. I can expand any section, such as a longer founder story or a shipping and FAQ blurb, to reach 600.

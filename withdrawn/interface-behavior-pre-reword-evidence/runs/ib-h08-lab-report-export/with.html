@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples · Harbor Water Quality Lab</title>
+<style>
+  :root {
+    --bg: #f5f7f8;
+    --surface: #ffffff;
+    --ink: #17252b;
+    --muted: #5a6b73;
+    --line: #dde4e8;
+    --accent: #0b6e8a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e3f1f5;
+    --ok: #1b7a4b;
+    --ok-soft: #e4f4EA;
+    --warn: #9a5b00;
+    --warn-soft: #fdf1dc;
+    --bad: #a62b2b;
+    --bad-soft: #fbe6e6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10181c;
+      --surface: #182227;
+      --ink: #e6eef1;
+      --muted: #93a5ad;
+      --line: #2a373d;
+      --accent: #4fb4d0;
+      --accent-ink: #08222b;
+      --accent-soft: #1b3a45;
+      --ok: #62cf93;
+      --ok-soft: #173325;
+      --warn: #f0b95a;
+      --warn-soft: #3a2d13;
+      --bad: #f19090;
+      --bad-soft: #3b1d1d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header.top {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .brand { font-weight: 650; letter-spacing: .01em; }
+  .brand span { color: var(--muted); font-weight: 400; }
+  .who { color: var(--muted); font-size: 14px; }
+  main { max-width: 920px; margin: 0 auto; padding: 28px 24px 56px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+  }
+  .export-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .export-row h2 { font-size: 16px; margin: 0 0 2px; }
+  .export-row p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 9px 16px;
+    border: 1px solid transparent;
+  }
+  button:focus-visible, a.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .primary { background: var(--accent); color: var(--accent-ink); font-weight: 600; min-width: 170px; }
+  .primary:hover:not(:disabled) { filter: brightness(1.08); }
+  .primary:disabled { cursor: progress; opacity: .75; }
+  .secondary { background: transparent; color: var(--accent); border-color: var(--line); }
+  .secondary:hover { background: var(--accent-soft); }
+  .link { background: none; border: 0; color: var(--accent); padding: 0; text-decoration: underline; }
+
+  .spinner {
+    display: inline-block;
+    width: 13px; height: 13px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    vertical-align: -2px;
+    margin-right: 8px;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .status {
+    margin-top: 16px;
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: none;
+  }
+  .status.show { display: block; }
+  .status.working { background: var(--accent-soft); }
+  .status.done { background: var(--ok-soft); }
+  .status.cancel { background: var(--warn-soft); }
+  .status .line { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .status strong { display: block; }
+  .status .detail { color: var(--muted); font-size: 14px; }
+  .elapsed { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  .bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--line);
+    overflow: hidden;
+    margin-top: 10px;
+    position: relative;
+  }
+  .bar::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 35%;
+    border-radius: 3px;
+    background: var(--accent);
+    animation: slide 1.4s ease-in-out infinite;
+  }
+  @keyframes slide { from { left: -35%; } to { left: 100%; } }
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation: none; border-right-color: currentColor; }
+    .bar::after { animation: none; width: 100%; opacity: .5; }
+  }
+
+  a.btn {
+    display: inline-block;
+    background: var(--ok);
+    color: var(--surface);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px 14px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  caption { text-align: left; font-weight: 650; font-size: 16px; padding-bottom: 10px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:last-child td { border-bottom: 0; }
+  .pill { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12.5px; font-weight: 600; }
+  .pill.pass { background: var(--ok-soft); color: var(--ok); }
+  .pill.review { background: var(--warn-soft); color: var(--warn); }
+  .pill.fail { background: var(--bad-soft); color: var(--bad); }
+  .table-wrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">Harbor Water Quality Lab <span>· Client portal</span></div>
+  <div class="who">Signed in as field-ops@example.org</div>
+</header>
+
+<main>
+  <h1>Samples</h1>
+  <p class="sub">2026 sampling season · last updated today</p>
+
+  <section class="card" aria-labelledby="exp-h">
+    <div class="export-row">
+      <div>
+        <h2 id="exp-h">Season report</h2>
+        <p>All results for the 2026 season in one file. Takes about 25 seconds to prepare.</p>
+      </div>
+      <button id="exportBtn" class="primary" type="button">Export season report</button>
+    </div>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="card">
+    <div class="table-wrap">
+      <table>
+        <caption>Recent samples</caption>
+        <thead>
+          <tr>
+            <th>Sample ID</th>
+            <th>Site</th>
+            <th>Collected</th>
+            <th class="num">pH</th>
+            <th class="num">Turbidity (NTU)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var EXPECTED_MS = 25000;
+
+  var samples = [
+    ["WQ-26-0412", "North Inlet",     "2026-10-07", 7.4, 1.8, "Pass"],
+    ["WQ-26-0411", "Cedar Creek",     "2026-10-07", 6.9, 3.2, "Pass"],
+    ["WQ-26-0410", "East Reservoir",  "2026-10-06", 8.1, 4.9, "Review"],
+    ["WQ-26-0409", "Mill Pond",       "2026-10-06", 7.2, 2.4, "Pass"],
+    ["WQ-26-0408", "South Weir",      "2026-10-05", 6.3, 7.8, "Fail"],
+    ["WQ-26-0407", "North Inlet",     "2026-10-03", 7.5, 1.6, "Pass"]
+  ];
+
+  var tbody = document.getElementById("rows");
+  samples.forEach(function (s) {
+    var tr = document.createElement("tr");
+    var cls = s[5].toLowerCase();
+    tr.innerHTML =
+      "<td>" + s[0] + "</td><td>" + s[1] + "</td><td>" + s[2] + "</td>" +
+      '<td class="num">' + s[3].toFixed(1) + '</td><td class="num">' + s[4].toFixed(1) + "</td>" +
+      '<td><span class="pill ' + cls + '">' + s[5] + "</span></td>";
+    tbody.appendChild(tr);
+  });
+
+  var btn = document.getElementById("exportBtn");
+  var status = document.getElementById("status");
+  var baseTitle = document.title;
+  var startedAt = 0, tick = null, finish = null, fileUrl = null;
+
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    return s + (s === 1 ? " second" : " seconds");
+  }
+
+  function setIdle() {
+    btn.disabled = false;
+    btn.textContent = "Export season report";
+    document.title = baseTitle;
+  }
+
+  function showWorking() {
+    status.className = "status show working";
+    status.innerHTML =
+      '<div class="line"><div><strong>Preparing your report…</strong>' +
+      '<span class="detail">This usually takes about 25 seconds. You can keep browsing; the download will appear here when it\u2019s ready.</span></div>' +
+      '<div><span class="elapsed" id="elapsed">0 seconds</span> · ' +
+      '<button type="button" class="link" id="cancelBtn">Cancel</button></div></div>' +
+      '<div class="bar" aria-hidden="true"></div>';
+    document.getElementById("cancelBtn").addEventListener("click", cancel);
+  }
+
+  function start() {
+    if (fileUrl) { URL.revokeObjectURL(fileUrl); fileUrl = null; }
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Exporting…';
+    startedAt = Date.now();
+    showWorking();
+    document.title = "Exporting… · " + baseTitle;
+
+    tick = setInterval(function () {
+      var el = document.getElementById("elapsed");
+      if (el) el.textContent = fmt(Date.now() - startedAt);
+    }, 500);
+
+    // Stand-in for the real server request.
+    finish = setTimeout(done, EXPECTED_MS);
+  }
+
+  function stopTimers() {
+    clearInterval(tick);
+    clearTimeout(finish);
+  }
+
+  function cancel() {
+    stopTimers();
+    setIdle();
+    status.className = "status show cancel";
+    status.innerHTML =
+      '<div class="line"><div><strong>Export cancelled</strong>' +
+      '<span class="detail">No file was created. Start again whenever you\u2019re ready.</span></div></div>';
+  }
+
+  function done() {
+    stopTimers();
+    var took = fmt(Date.now() - startedAt);
+    var csv = "Sample ID,Site,Collected,pH,Turbidity (NTU),Status\n" +
+      samples.map(function (s) { return s.join(","); }).join("\n") + "\n";
+    fileUrl = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+
+    setIdle();
+    document.title = "Report ready · " + baseTitle;
+    status.className = "status show done";
+    status.innerHTML =
+      '<div class="line"><div><strong>Season report is ready</strong>' +
+      '<span class="detail">season-report-2026.csv · prepared in ' + took + '</span></div>' +
+      '<a class="btn" id="dl" href="' + fileUrl + '" download="season-report-2026.csv">Download report</a></div>';
+    document.getElementById("dl").focus();
+  }
+
+  btn.addEventListener("click", start);
+})();
+</script>
+</body>
+</html>

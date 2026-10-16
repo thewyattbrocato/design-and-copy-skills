@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnroom — Handmade mugs and bowls, shipped every other month</title>
+<meta name="description" content="Kilnroom is a Tacoma ceramics studio. Every other month we ship a box of three handmade mugs or bowls for $64. Skip or cancel anytime.">
+<style>
+  :root{
+    --cream:#f6efe6;
+    --paper:#fbf7f1;
+    --ink:#2b211c;
+    --muted:#5e5048;
+    --clay:#a2481f;
+    --clay-dark:#843a18;
+    --line:#dccfc0;
+    --sage:#a9b39a;
+    --oat:#d9c7ab;
+    --slate:#6f7d84;
+    --rust:#c9825b;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --pad:clamp(1.25rem,5vw,3rem);
+    --max:72rem;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--cream);color:var(--ink);
+    font-family:var(--sans);font-size:1.0625rem;line-height:1.6;
+  }
+  img,svg{max-width:100%}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--clay);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;margin:0;letter-spacing:-.01em}
+  h1{font-size:clamp(2.5rem,8.5vw,4.75rem)}
+  h2{font-size:clamp(1.9rem,5vw,3rem)}
+  h3{font-size:1.35rem}
+  p{margin:0}
+  .eyebrow{
+    font-size:.8125rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    color:var(--clay-dark);margin-bottom:1rem;
+  }
+
+  /* Buttons */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:3.25rem;padding:.75rem 1.75rem;border-radius:999px;
+    background:var(--clay);color:#fff;text-decoration:none;font-weight:600;font-size:1.0625rem;
+    border:2px solid var(--clay);transition:background .15s,transform .15s;
+  }
+  .btn:hover{background:var(--clay-dark);border-color:var(--clay-dark)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--cream)}
+
+  /* Header */
+  header.site{padding:1.1rem 0}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .logo{font-family:var(--serif);font-size:1.6rem;font-weight:700;text-decoration:none;letter-spacing:-.01em}
+  nav.top{display:none;gap:2rem}
+  nav.top a{text-decoration:none;font-weight:500;color:var(--muted)}
+  nav.top a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+  header.site .btn{min-height:2.75rem;padding:.4rem 1.2rem;font-size:.9375rem}
+
+  /* Photo placeholders */
+  .ph{
+    position:relative;border-radius:1.25rem;overflow:hidden;
+    display:flex;align-items:flex-end;padding:1rem;
+    background:
+      radial-gradient(120% 90% at 30% 20%,rgba(255,255,255,.35),transparent 55%),
+      linear-gradient(160deg,var(--c1,var(--oat)),var(--c2,var(--rust)));
+    color:rgba(43,33,28,.8);
+  }
+  .ph::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(0deg,rgba(43,33,28,.045) 0 2px,transparent 2px 9px);
+  }
+  .ph span{
+    position:relative;font-size:.8125rem;font-weight:600;letter-spacing:.04em;
+    background:rgba(251,247,241,.88);padding:.3rem .65rem;border-radius:999px;
+  }
+
+  /* Hero */
+  .hero{padding:1.5rem 0 3.5rem}
+  .hero .wrap{display:grid;gap:2rem}
+  .hero p.lede{font-size:1.2rem;color:var(--muted);margin-top:1.25rem;max-width:34rem}
+  .hero .cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
+  .hero .fine{font-size:.9375rem;color:var(--muted);margin-top:1rem}
+  .hero .ph{aspect-ratio:4/3.4;--c1:#d9c7ab;--c2:#c9825b}
+
+  /* Strip */
+  .strip{background:var(--ink);color:var(--cream)}
+  .strip ul{list-style:none;margin:0;padding:1.1rem 0;display:grid;gap:.4rem;text-align:center;font-size:.9375rem}
+  .strip li{opacity:.92}
+
+  section{padding:4rem 0}
+  .head{max-width:40rem;margin-bottom:2.25rem}
+  .head p{color:var(--muted);margin-top:1rem}
+
+  /* Gallery */
+  .gallery{display:grid;gap:1rem}
+  .gallery .ph{aspect-ratio:4/3}
+  .g1{--c1:#a9b39a;--c2:#6f7d84}
+  .g2{--c1:#e6d8bf;--c2:#b4552d}
+  .g3{--c1:#8e9aa0;--c2:#d9c7ab}
+
+  /* Steps */
+  .steps{list-style:none;margin:0;padding:0;display:grid;gap:1rem;counter-reset:s}
+  .steps li{
+    counter-increment:s;background:var(--paper);border:1px solid var(--line);
+    border-radius:1.25rem;padding:1.5rem;
+  }
+  .steps li::before{
+    content:counter(s);display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:50%;
+    background:var(--clay);color:#fff;font-family:var(--serif);font-weight:700;font-size:1.15rem;margin-bottom:1rem;
+  }
+  .steps p{color:var(--muted);margin-top:.5rem}
+
+  /* Box / pricing */
+  .box{background:var(--paper);border-block:1px solid var(--line)}
+  .box .wrap{display:grid;gap:2rem}
+  .box .ph{aspect-ratio:1/1;--c1:#d9c7ab;--c2:#a9b39a}
+  .price{font-family:var(--serif);font-size:3.5rem;font-weight:600;line-height:1;margin-top:1.25rem}
+  .price small{font-family:var(--sans);font-size:1rem;color:var(--muted);font-weight:400}
+  .box ul.check{list-style:none;padding:0;margin:1.5rem 0 2rem;display:grid;gap:.7rem}
+  .box ul.check li{padding-left:2rem;position:relative}
+  .box ul.check li::before{
+    content:"";position:absolute;left:.15rem;top:.5em;width:.8rem;height:.45rem;
+    border-left:3px solid var(--clay);border-bottom:3px solid var(--clay);transform:rotate(-45deg);
+  }
+
+  /* Studio */
+  .studio .wrap{display:grid;gap:2rem}
+  .studio .ph{aspect-ratio:4/5;--c1:#8e9aa0;--c2:#c9825b}
+  .studio p+p{margin-top:1rem}
+  .studio p{color:var(--muted);max-width:34rem}
+  .studio h2{margin-bottom:1.25rem}
+
+  /* FAQ */
+  .faq{max-width:46rem}
+  details{border-top:1px solid var(--line)}
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{
+    cursor:pointer;list-style:none;padding:1.15rem 2.5rem 1.15rem 0;position:relative;
+    font-weight:600;font-size:1.0625rem;min-height:3rem;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:.25rem;top:.9rem;font-size:1.5rem;line-height:1;color:var(--clay)}
+  details[open] summary::after{content:"–"}
+  details p{padding:0 0 1.25rem;color:var(--muted);max-width:38rem}
+
+  /* Final CTA */
+  .final{background:var(--clay);color:#fff;text-align:center}
+  .final h2{max-width:32rem;margin:0 auto}
+  .final p{margin:1rem auto 1.75rem;max-width:30rem;opacity:.95}
+  .final .btn{background:#fff;color:var(--clay-dark);border-color:#fff}
+  .final .btn:hover{background:var(--cream);border-color:var(--cream)}
+  .final :focus-visible{outline-color:#fff}
+
+  footer{padding:2.5rem 0 6rem;color:var(--muted);font-size:.9375rem}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:.75rem 2rem;justify-content:space-between}
+  footer a{text-underline-offset:3px}
+
+  /* Sticky mobile CTA */
+  .sticky{
+    position:fixed;left:0;right:0;bottom:0;z-index:10;
+    padding:.7rem var(--pad) calc(.7rem + env(safe-area-inset-bottom));
+    background:rgba(246,239,230,.96);border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  }
+  .sticky span{font-size:.9375rem;line-height:1.25}
+  .sticky strong{display:block}
+  .sticky .btn{min-height:3rem;padding:.5rem 1.4rem;white-space:nowrap}
+
+  /* Laptop and up */
+  @media (min-width:760px){
+    nav.top{display:flex}
+    .hero{padding:3rem 0 5rem}
+    .hero .wrap{grid-template-columns:1.05fr 1fr;align-items:center;gap:3.5rem}
+    .hero .ph{aspect-ratio:4/5}
+    .strip ul{grid-template-columns:repeat(3,1fr)}
+    section{padding:6rem 0}
+    .gallery{grid-template-columns:1.3fr 1fr 1fr;align-items:stretch}
+    .gallery .ph{aspect-ratio:auto;min-height:22rem}
+    .steps{grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .box .wrap{grid-template-columns:1fr 1fr;align-items:center;gap:4rem}
+    .studio .wrap{grid-template-columns:1fr 1fr;align-items:center;gap:4rem}
+    .studio .ph{order:2}
+    .sticky{display:none}
+    footer{padding-bottom:2.5rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .btn{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="#top">Kilnroom</a>
+    <nav class="top" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#box">The box</a>
+      <a href="#studio">The studio</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <a class="btn" href="#join">Join</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" style="padding-bottom:3.5rem">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Ceramics studio · Tacoma, WA</p>
+        <h1>Handmade pottery, at your door every other month.</h1>
+        <p class="lede">A box of three handmade mugs or bowls, made in our Tacoma studio. Use them every day, and slowly build a set that's yours.</p>
+        <div class="cta">
+          <a class="btn" href="#join">Get your first box · $64</a>
+          <a class="btn ghost" href="#how">See how it works</a>
+        </div>
+        <p class="fine">Skip a box or cancel anytime.</p>
+      </div>
+      <div class="ph" role="img" aria-label="Placeholder: photo of three glazed mugs on a wooden shelf">
+        <span>Photo: three glazed mugs on a shelf</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <ul>
+        <li>Made by hand in Tacoma</li>
+        <li>3 pieces per box · every other month</li>
+        <li>Skip or cancel anytime</li>
+      </ul>
+    </div>
+  </div>
+
+  <section aria-labelledby="pieces-h" style="padding-bottom:2rem">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">The pieces</p>
+        <h2 id="pieces-h">Made to be held, used, and chipped a little.</h2>
+        <p>Each piece is thrown, trimmed, glazed, and fired by hand, so no two are identical. Expect small variations in glaze and shape. That's the point.</p>
+      </div>
+      <div class="gallery">
+        <div class="ph g1" role="img" aria-label="Placeholder: close-up of a mug with speckled glaze"><span>Photo: mug, close-up of glaze</span></div>
+        <div class="ph g2" role="img" aria-label="Placeholder: stack of bowls"><span>Photo: stacked bowls</span></div>
+        <div class="ph g3" role="img" aria-label="Placeholder: hands holding a mug"><span>Photo: hands holding a mug</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-h">Simple, and easy to step back from.</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Join</h3>
+          <p>Sign up for $64 per box. Your first box goes out with the next firing.</p>
+        </li>
+        <li>
+          <h3>Unbox</h3>
+          <p>Every other month, three handmade mugs or bowls arrive, packed to survive the trip.</p>
+        </li>
+        <li>
+          <h3>Skip or stop</h3>
+          <p>Busy, or your shelves are full? Skip a box or cancel anytime.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="box" id="box" aria-labelledby="box-h">
+    <div class="wrap">
+      <div class="ph" role="img" aria-label="Placeholder: open shipping box with three wrapped ceramic pieces">
+        <span>Photo: an open box, three pieces wrapped in paper</span>
+      </div>
+      <div>
+        <p class="eyebrow">The box</p>
+        <h2 id="box-h">Three pieces, one price.</h2>
+        <p class="price">$64 <small>/ box, every other month</small></p>
+        <ul class="check">
+          <li>Three handmade mugs or bowls in every box</li>
+          <li>Made in small batches in our Tacoma studio</li>
+          <li>Skip any box, or cancel anytime</li>
+        </ul>
+        <a class="btn" href="#join">Start my subscription</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="studio" id="studio" aria-labelledby="studio-h">
+    <div class="wrap">
+      <div class="ph" role="img" aria-label="Placeholder: potter at the wheel in the studio">
+        <span>Photo: at the wheel in the studio</span>
+      </div>
+      <div>
+        <p class="eyebrow">The studio</p>
+        <h2 id="studio-h">A small studio, a real kiln.</h2>
+        <p>Kilnroom is a working ceramics studio in Tacoma. Everything in your box was made here, by hand, in the same room where it was fired.</p>
+        <p>We started the subscription so good everyday pottery could reach more kitchens, without a trip to a craft fair.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" aria-labelledby="faq-h" style="padding-top:2rem">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-h">Good to know.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>How often do boxes ship?</summary>
+          <p>Every other month. Each box has three handmade pieces: mugs or bowls.</p>
+        </details>
+        <details>
+          <summary>What does it cost?</summary>
+          <p>$64 per box.</p>
+        </details>
+        <details>
+          <summary>Can I skip a box?</summary>
+          <p>Yes. Skip any time you like, no penalty.</p>
+        </details>
+        <details>
+          <summary>How do I cancel?</summary>
+          <p>Cancel anytime. There's no minimum commitment.</p>
+        </details>
+        <details>
+          <summary>Will my pieces match the photos?</summary>
+          <p>Every piece is handmade, so glaze and shape vary a little from one to the next. Photos show the spirit of the work, not an exact piece.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- TODO: point this link at your real checkout or sign-up page -->
+  <section class="final" id="join" aria-labelledby="join-h">
+    <div class="wrap">
+      <h2 id="join-h">Put something handmade on your table.</h2>
+      <p>$64 a box, every other month. Skip or cancel anytime.</p>
+      <a class="btn" href="#join">Get your first box</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Kilnroom · Tacoma, Washington</span>
+    <span><a href="#top">Back to top</a></span>
+  </div>
+</footer>
+
+<div class="sticky">
+  <span><strong>Kilnroom box · $64</strong>Skip or cancel anytime</span>
+  <a class="btn" href="#join">Join</a>
+</div>
+
+</body>
+</html>

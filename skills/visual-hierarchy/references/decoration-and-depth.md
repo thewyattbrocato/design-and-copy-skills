@@ -41,6 +41,6 @@ If the honest answer is "it looks premium" or "it fills space", remove it and lo
 ## Icon sets
 
 - One family per interface: the same stroke weight, the same corner style, the same grid, and the same level of detail. A single outlier looks like a bug.
-- Icons are for recognition. Use one when it is a well-known symbol, or where it speeds scanning. A generic icon in a colored circle above every feature heading adds weight without information; drop it or make it real. The shape itself is not the failure: a small icon that must fill a large area looks chunky when scaled up, so a tinted shape around it is fine when it earns the space. Balance an icon's weight against nearby text by softening its color.
+- Icons are for recognition. Use one when it is a well-known symbol, or where it speeds scanning. A generic icon in a colored circle above every feature heading adds weight without information; drop it or make it real. Draw or pick icons at the size they are shown; if only a small icon exists, give it a quiet backing shape rather than enlarging its strokes. Balance an icon's weight against nearby text by softening its color.
 - Pair unfamiliar icons with a text label.
 - Size icons to the text they sit with, and align them optically (see the alignment reference).

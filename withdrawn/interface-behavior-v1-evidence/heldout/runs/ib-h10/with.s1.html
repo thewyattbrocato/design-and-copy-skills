@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings · Orchard FM</title>
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --card: #ffffff;
+    --ink: #232019;
+    --muted: #6a6558;
+    --line: #e4dfd2;
+    --accent: #2f6b3a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e3efdf;
+    --danger: #a3341f;
+    --focus: #1a5fb4;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151712;
+      --card: #1f221b;
+      --ink: #efeadc;
+      --muted: #a39f90;
+      --line: #33372d;
+      --accent: #8cc98f;
+      --accent-ink: #11200f;
+      --accent-soft: #2a3a28;
+      --danger: #f08b76;
+      --focus: #7db3ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 16px; }
+  html[data-text="small"] { font-size: 14px; }
+  html[data-text="large"] { font-size: 18.5px; }
+  html[data-text="xlarge"] { font-size: 21px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.4;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 40rem; margin: 0 auto; padding: 1rem 1rem 6rem; }
+  header { display: flex; align-items: center; gap: .75rem; padding: .75rem 0 1rem; }
+  .logo {
+    width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink);
+    display: grid; place-items: center; font-weight: 700; flex: none;
+  }
+  h1 { font-size: 1.5rem; margin: 0; line-height: 1.1; }
+  .sub { color: var(--muted); font-size: .85rem; margin: 0; }
+  h2 {
+    font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); margin: 1.5rem .25rem .5rem;
+  }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
+  .row { padding: .9rem 1rem; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .line { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .label { font-weight: 600; font-size: 1rem; }
+  .hint { color: var(--muted); font-size: .85rem; margin: .15rem 0 0; }
+  .text { min-width: 0; flex: 1; }
+
+  /* switch */
+  .switch {
+    flex: none; position: relative; width: 3.25rem; height: 2rem; border-radius: 1rem;
+    border: 0; padding: 0; background: #9a968a; cursor: pointer;
+    transition: background .18s;
+  }
+  .switch::after {
+    content: ""; position: absolute; top: .2rem; left: .2rem; width: 1.6rem; height: 1.6rem;
+    border-radius: 50%; background: #fff; transition: transform .18s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  }
+  .switch[aria-checked="true"] { background: var(--accent); }
+  .switch[aria-checked="true"]::after { transform: translateX(1.25rem); }
+  @media (prefers-color-scheme: dark) { .switch[aria-checked="false"] { background: #595c52; } }
+
+  /* segmented */
+  .seg { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .65rem; }
+  .seg button {
+    flex: 1 1 auto; min-height: 2.75rem; padding: .4rem .8rem;
+    border: 1px solid var(--line); border-radius: .7rem; background: transparent;
+    color: var(--ink); font: inherit; font-size: .92rem; cursor: pointer;
+  }
+  .seg button:hover { border-color: var(--accent); }
+  .seg button[aria-checked="true"] {
+    background: var(--accent-soft); border-color: var(--accent); font-weight: 700;
+  }
+
+  /* slider */
+  .value { font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+  input[type=range] { width: 100%; margin: .6rem 0 0; accent-color: var(--accent); height: 2rem; cursor: pointer; }
+  .ticks { display: flex; justify-content: space-between; color: var(--muted); font-size: .75rem; }
+
+  .sample {
+    margin-top: .75rem; padding: .75rem .9rem; border-radius: .7rem;
+    background: var(--bg); border: 1px dashed var(--line);
+  }
+  .sample b { display: block; }
+  .sample span { color: var(--muted); font-size: .85rem; }
+
+  .reset {
+    width: 100%; min-height: 3rem; border-radius: .8rem; cursor: pointer;
+    border: 1px solid var(--danger); background: transparent; color: var(--danger);
+    font: inherit; font-weight: 700;
+  }
+  .reset:hover:not(:disabled) { background: color-mix(in srgb, var(--danger) 10%, transparent); }
+  .reset:disabled { border-color: var(--line); color: var(--muted); cursor: default; }
+
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 1.25rem; transform: translate(-50%, 150%);
+    display: flex; align-items: center; gap: 1rem; max-width: calc(100% - 2rem);
+    background: var(--ink); color: var(--bg); padding: .7rem 1rem; border-radius: .8rem;
+    box-shadow: 0 6px 24px rgba(0,0,0,.3); transition: transform .22s; z-index: 10;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+  .toast button {
+    background: none; border: 0; color: inherit; font: inherit; font-weight: 700;
+    text-decoration: underline; cursor: pointer; padding: .4rem; min-height: 2.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .switch, .switch::after, .toast { transition: none; }
+  }
+  @media (min-width: 700px) {
+    .wrap { padding-top: 2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo" aria-hidden="true">O</div>
+    <div>
+      <h1>Settings</h1>
+      <p class="sub">Orchard FM · changes save automatically</p>
+    </div>
+  </header>
+
+  <main>
+    <h2 id="h-playback">Playback</h2>
+    <section class="card" aria-labelledby="h-playback">
+      <div class="row">
+        <div class="label" id="l-quality">Streaming quality</div>
+        <p class="hint" id="quality-hint"></p>
+        <div class="seg" role="radiogroup" aria-labelledby="l-quality" data-key="quality">
+          <button type="button" role="radio" data-value="low">Data saver</button>
+          <button type="button" role="radio" data-value="standard">Standard</button>
+          <button type="button" role="radio" data-value="high">High</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="line">
+          <div class="label" id="l-crossfade">Crossfade between songs</div>
+          <span class="value" id="crossfade-val"></span>
+        </div>
+        <input type="range" id="crossfade" min="0" max="12" step="1" aria-labelledby="l-crossfade" aria-describedby="crossfade-hint">
+        <div class="ticks" aria-hidden="true"><span>Off</span><span>12 s</span></div>
+        <p class="hint" id="crossfade-hint">Songs blend into each other instead of a gap.</p>
+      </div>
+
+      <div class="row">
+        <div class="label" id="l-sleep">Default sleep timer</div>
+        <p class="hint">Starts automatically when you press play.</p>
+        <div class="seg" role="radiogroup" aria-labelledby="l-sleep" data-key="sleep">
+          <button type="button" role="radio" data-value="0">Off</button>
+          <button type="button" role="radio" data-value="15">15 min</button>
+          <button type="button" role="radio" data-value="30">30 min</button>
+          <button type="button" role="radio" data-value="45">45 min</button>
+          <button type="button" role="radio" data-value="60">1 hour</button>
+        </div>
+      </div>
+    </section>
+
+    <h2 id="h-data">Data &amp; alerts</h2>
+    <section class="card" aria-labelledby="h-data">
+      <div class="row line">
+        <div class="text">
+          <div class="label" id="l-wifi">Download only on Wi-Fi</div>
+          <p class="hint">Saved shows won't use mobile data.</p>
+        </div>
+        <button type="button" class="switch" role="switch" data-key="wifiOnly" aria-labelledby="l-wifi"></button>
+      </div>
+      <div class="row line">
+        <div class="text">
+          <div class="label" id="l-notify">New-show notifications</div>
+          <p class="hint">Hear about it when a new show is posted.</p>
+        </div>
+        <button type="button" class="switch" role="switch" data-key="notify" aria-labelledby="l-notify"></button>
+      </div>
+    </section>
+
+    <h2 id="h-display">Display</h2>
+    <section class="card" aria-labelledby="h-display">
+      <div class="row line">
+        <div class="text">
+          <div class="label" id="l-lyrics">Show lyrics</div>
+          <p class="hint">Display lyrics on the Now Playing screen when available.</p>
+        </div>
+        <button type="button" class="switch" role="switch" data-key="lyrics" aria-labelledby="l-lyrics"></button>
+      </div>
+      <div class="row">
+        <div class="label" id="l-text">Text size</div>
+        <div class="seg" role="radiogroup" aria-labelledby="l-text" data-key="text">
+          <button type="button" role="radio" data-value="small">Small</button>
+          <button type="button" role="radio" data-value="medium">Medium</button>
+          <button type="button" role="radio" data-value="large">Large</button>
+          <button type="button" role="radio" data-value="xlarge">Extra large</button>
+        </div>
+        <div class="sample" aria-hidden="true">
+          <b>Morning on the Porch</b>
+          <span>Now playing · Orchard FM 94.3</span>
+        </div>
+      </div>
+    </section>
+
+    <h2 id="h-reset">Reset</h2>
+    <section class="card" aria-labelledby="h-reset">
+      <div class="row">
+        <button type="button" class="reset" id="reset">Restore default settings</button>
+        <p class="hint" id="reset-hint" style="text-align:center"></p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span id="toast-msg"></span>
+  <button type="button" id="undo">Undo</button>
+</div>
+
+<script>
+(function () {
+  var DEFAULTS = {
+    quality: "standard", crossfade: 3, sleep: "0",
+    wifiOnly: true, notify: true, lyrics: true, text: "medium"
+  };
+  var KEY = "orchardfm.settings.v1";
+  var QUALITY_HINT = {
+    low: "Uses the least data. Sounds fine on a slow connection.",
+    standard: "A good balance of sound and data.",
+    high: "Best sound. Uses the most data."
+  };
+
+  var state = load();
+  var undoSnapshot = null, toastTimer = null;
+
+  function load() {
+    var s = Object.assign({}, DEFAULTS);
+    try {
+      var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+      Object.keys(DEFAULTS).forEach(function (k) {
+        if (typeof saved[k] === typeof DEFAULTS[k]) s[k] = saved[k];
+      });
+    } catch (e) {}
+    return s;
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function isDefault() {
+    return Object.keys(DEFAULTS).every(function (k) { return state[k] === DEFAULTS[k]; });
+  }
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  function render() {
+    $$(".seg").forEach(function (g) {
+      var cur = String(state[g.dataset.key]);
+      var btns = $$("button", g);
+      btns.forEach(function (b) {
+        var on = b.dataset.value === cur;
+        b.setAttribute("aria-checked", on);
+        b.tabIndex = on ? 0 : -1;
+      });
+    });
+    $$(".switch").forEach(function (s) {
+      s.setAttribute("aria-checked", !!state[s.dataset.key]);
+    });
+    var cf = $("#crossfade");
+    cf.value = state.crossfade;
+    cf.setAttribute("aria-valuetext", state.crossfade ? state.crossfade + " seconds" : "Off");
+    $("#crossfade-val").textContent = state.crossfade ? state.crossfade + " s" : "Off";
+    $("#quality-hint").textContent = QUALITY_HINT[state.quality];
+    document.documentElement.dataset.text = state.text;
+    var d = isDefault();
+    $("#reset").disabled = d;
+    $("#reset-hint").textContent = d ? "Everything is already at its default." : "";
+  }
+
+  function set(key, val) {
+    state[key] = val;
+    save();
+    render();
+  }
+
+  // segmented radio groups
+  $$(".seg").forEach(function (g) {
+    var key = g.dataset.key;
+    var isNum = false;
+    g.addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (b) set(key, b.dataset.value);
+    });
+    g.addEventListener("keydown", function (e) {
+      var dir = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (!dir) return;
+      e.preventDefault();
+      var btns = $$("button", g);
+      var i = btns.indexOf(document.activeElement);
+      var n = btns[(i + dir + btns.length) % btns.length];
+      n.focus();
+      set(key, n.dataset.value);
+      n.focus();
+    });
+  });
+
+  // switches
+  $$(".switch").forEach(function (s) {
+    s.addEventListener("click", function () {
+      set(s.dataset.key, !state[s.dataset.key]);
+    });
+  });
+
+  // slider
+  $("#crossfade").addEventListener("input", function (e) {
+    set("crossfade", Number(e.target.value));
+  });
+
+  // toast
+  function showToast(msg, withUndo) {
+    $("#toast-msg").textContent = msg;
+    $("#undo").style.display = withUndo ? "" : "none";
+    $("#toast").classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 7000);
+  }
+  function hideToast() {
+    $("#toast").classList.remove("show");
+    undoSnapshot = null;
+  }
+
+  // reset with undo (no confirm dialog; it's reversible)
+  $("#reset").addEventListener("click", function () {
+    if (isDefault()) return;
+    undoSnapshot = Object.assign({}, state);
+    state = Object.assign({}, DEFAULTS);
+    save();
+    render();
+    showToast("Settings restored to defaults.", true);
+  });
+  $("#undo").addEventListener("click", function () {
+    if (!undoSnapshot) return;
+    state = undoSnapshot;
+    save();
+    render();
+    hideToast();
+    $("#reset").focus();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

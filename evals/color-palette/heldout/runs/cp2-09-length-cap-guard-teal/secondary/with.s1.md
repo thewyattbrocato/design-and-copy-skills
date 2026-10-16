@@ -1,1 +1,1 @@
-Use a cool gray with a slight teal tint: `#f6f8f8` for page backgrounds and `#1a2628` for body text, which gives about 15:1 contrast. Keep `#0f7c80` for links, buttons, and accents rather than body copy, since it's only about 5:1 against white.
+Use a teal-tinted off-white like `#F5F8F8` for page backgrounds and a deep slate like `#1B2A2C` for body text, which gives about 14:1 contrast and keeps the neutrals in the same hue family as your brand. Keep `#0f7c80` for buttons, links, and accents, since it reaches only about 5:1 against white and is tight for small body copy.

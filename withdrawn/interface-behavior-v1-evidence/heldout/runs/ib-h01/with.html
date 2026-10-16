@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder Lane Pantry – Saturday Shifts</title>
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fff; --ink:#1f2a24; --muted:#5b665f; --line:#ddd8cb;
+    --green:#1f6b45; --green-d:#17543a; --green-bg:#e3f1e8;
+    --amber:#8a5a00; --amber-bg:#fdf0d2; --red:#a52a2a; --red-bg:#fbe7e4;
+    --radius:14px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#161b18;--card:#212823;--ink:#eef2ee;--muted:#a3afa7;--line:#37413a;
+      --green:#5fc08a;--green-d:#7fd3a3;--green-bg:#1d3a2b;--amber:#f0c36a;--amber-bg:#3d3114;--red:#ff9c92;--red-bg:#432120}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:17px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-text-size-adjust:100%}
+  .wrap{max-width:640px;margin:0 auto;padding:16px 14px 120px}
+  h1{font-size:1.5rem;margin:6px 0 0;line-height:1.2}
+  .sub{color:var(--muted);margin:2px 0 14px}
+  button{font:inherit;cursor:pointer}
+  button:focus-visible,input:focus-visible{outline:3px solid #2b7de9;outline-offset:2px}
+
+  .who{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:10px 14px;margin-bottom:10px}
+  .who b{font-weight:700}
+  .linkbtn{background:none;border:0;color:var(--green);font-weight:600;padding:10px 4px;min-height:44px;text-decoration:underline}
+
+  .summary{background:var(--green-bg);color:var(--green-d);border-radius:var(--radius);
+    padding:10px 14px;margin-bottom:16px;font-weight:600}
+  .summary.none{background:var(--amber-bg);color:var(--amber)}
+
+  .shift{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px;margin-bottom:12px}
+  .shift.mine{border:2px solid var(--green)}
+  .head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+  .time{font-size:.9rem;color:var(--muted);font-weight:600}
+  .title{font-size:1.15rem;font-weight:700;margin:0}
+  .note{font-size:.9rem;color:var(--muted);margin:2px 0 0}
+  .count{font-size:.85rem;font-weight:700;padding:4px 10px;border-radius:99px;white-space:nowrap;
+    background:var(--amber-bg);color:var(--amber)}
+  .count.full{background:var(--green-bg);color:var(--green-d)}
+  ul.spots{list-style:none;margin:10px 0 12px;padding:0;display:grid;gap:6px}
+  .spots li{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    min-height:44px;padding:4px 6px 4px 12px;border-radius:10px;background:var(--bg)}
+  .spots li.open{background:none;border:1.5px dashed var(--line);color:var(--muted)}
+  .spots li.me{background:var(--green-bg);color:var(--green-d);font-weight:700}
+  .rm{background:none;border:0;color:var(--muted);min-width:44px;min-height:44px;font-size:.85rem;text-decoration:underline}
+  .go{width:100%;min-height:52px;border-radius:12px;border:0;font-weight:700;font-size:1.05rem;
+    background:var(--green);color:#fff}
+  @media (prefers-color-scheme:dark){.go{color:#0d1a12}}
+  .go:active{transform:scale(.98)}
+  .go.drop{background:transparent;color:var(--red);border:2px solid var(--red)}
+  .go[disabled]{background:var(--line);color:var(--muted);cursor:default}
+
+  .foot{text-align:center;margin-top:20px}
+  .foot .linkbtn{color:var(--muted);font-size:.9rem}
+
+  .toast{position:fixed;left:50%;bottom:16px;transform:translate(-50%,150%);transition:transform .2s;
+    width:min(92vw,520px);background:#1f2a24;color:#fff;border-radius:12px;padding:6px 8px 6px 16px;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:20;box-shadow:0 6px 24px #0005}
+  .toast.show{transform:translate(-50%,0)}
+  .toast button{background:none;border:0;color:#9fe3bd;font-weight:700;min-height:44px;padding:0 12px;font-size:1rem}
+  .toast.err{background:#7a1f1f}
+  @media (prefers-reduced-motion:reduce){.toast{transition:none}}
+
+  dialog{border:0;border-radius:18px;padding:20px;width:min(92vw,420px);background:var(--card);color:var(--ink)}
+  dialog::backdrop{background:#0008}
+  dialog h2{margin:0 0 4px;font-size:1.2rem}
+  dialog p{margin:0 0 12px;color:var(--muted)}
+  input[type=text]{width:100%;font:inherit;font-size:1.1rem;padding:12px;border-radius:10px;
+    border:2px solid var(--line);background:var(--bg);color:var(--ink);min-height:50px}
+  .row{display:flex;gap:10px;margin-top:14px}
+  .row .go{flex:1}
+  .row .go.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Larder Lane Pantry</h1>
+  <p class="sub" id="date">Saturday shifts</p>
+
+  <div class="who" id="who"></div>
+  <div class="summary" id="summary" role="status"></div>
+  <main id="board"></main>
+
+  <div class="foot"><button class="linkbtn" id="reset">Clear the whole board for a new week</button></div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button id="toastBtn" hidden>Undo</button></div>
+
+<dialog id="nameDlg">
+  <form method="dialog" id="nameForm">
+    <h2>Who's signing up?</h2>
+    <p>We'll remember your name on this phone.</p>
+    <label for="nameIn" class="sr" style="position:absolute;left:-9999px">Your name</label>
+    <input type="text" id="nameIn" list="known" autocomplete="name" placeholder="First and last name" maxlength="40" enterkeyhint="done">
+    <datalist id="known"></datalist>
+    <div class="row">
+      <button type="button" class="go alt" id="nameCancel">Cancel</button>
+      <button type="submit" class="go">Continue</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function(){
+  var SHIFTS=[
+    {id:"s1",time:"7:30 – 9:30 am",s:450,e:570,title:"Driver: food bank pickup",note:"Pantry van, valid license needed",cap:2},
+    {id:"s2",time:"8:00 – 10:00 am",s:480,e:600,title:"Sorting donations",note:"Check dates, box by category",cap:5},
+    {id:"s3",time:"9:30 am – 12:00 pm",s:570,e:720,title:"Front desk check-in",note:"Greet guests, sign-in sheet",cap:3},
+    {id:"s4",time:"10:00 am – 12:00 pm",s:600,e:720,title:"Bagging groceries",note:"Pack bags to the family-size list",cap:6},
+    {id:"s5",time:"10:00 am – 12:00 pm",s:600,e:720,title:"Parking lot & carry-out",note:"Help guests to their cars",cap:3},
+    {id:"s6",time:"12:00 – 2:00 pm",s:720,e:840,title:"Driver: home deliveries",note:"Route sheet provided",cap:3},
+    {id:"s7",time:"12:00 – 1:30 pm",s:720,e:810,title:"Restock shelves",note:"Move stock from back room",cap:4},
+    {id:"s8",time:"1:30 – 3:00 pm",s:810,e:900,title:"Cleanup & close",note:"Floors, tables, trash and recycling",cap:4}
+  ];
+  var KEY="larder-lane-board-v1", NAMEKEY="larder-lane-name";
+  var seed={s1:["Marcus T."],s2:["Dolores R.","Ken A.","Priya S."],s3:["Anita W."],s4:["Joe B.","Lena K."],s5:[],s6:["Marcus T."],s7:["Priya S."],s8:["Ken A.","Dolores R."]};
+  var board=load(), me=lsGet(NAMEKEY)||"", pending=null, toastTimer=null, undoFn=null;
+
+  function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function load(){
+    try{var r=JSON.parse(lsGet(KEY));if(r&&typeof r==="object")return r}catch(e){}
+    return JSON.parse(JSON.stringify(seed));
+  }
+  function save(){lsSet(KEY,JSON.stringify(board))}
+  function $(i){return document.getElementById(i)}
+  function same(a,b){return a.toLowerCase()===b.toLowerCase()}
+  function has(id,n){return (board[id]||[]).some(function(x){return same(x,n)})}
+  function byId(id){return SHIFTS.filter(function(s){return s.id===id})[0]}
+  function esc(t){var d=document.createElement("div");d.textContent=t;return d.innerHTML}
+
+  // date heading: upcoming Saturday
+  (function(){
+    var d=new Date(), add=(6-d.getDay()+7)%7; d.setDate(d.getDate()+add);
+    $("date").textContent=(add===0?"Today, ":"")+d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"})+" · tap a shift to sign up";
+  })();
+
+  function render(){
+    var mine=SHIFTS.filter(function(s){return me&&has(s.id,me)});
+    $("who").innerHTML=me
+      ?'<span>Signed in as <b>'+esc(me)+'</b></span><button class="linkbtn" id="chg">Not you?</button>'
+      :'<span>Tap any shift to sign up</span>';
+    if(me)$("chg").onclick=function(){pending=null;askName()};
+    var sm=$("summary");
+    if(!me){sm.className="summary none";sm.textContent="Open spots are marked below."}
+    else if(mine.length){sm.className="summary";sm.textContent="You're on "+mine.length+" shift"+(mine.length>1?"s":"")+": "+mine.map(function(s){return s.title.split(":")[0]+" ("+s.time.split(" – ")[0].replace(/ ?[ap]m/,"")+")"}).join(", ")}
+    else{sm.className="summary none";sm.textContent="You haven't signed up for anything yet."}
+
+    var names={};
+    var html=SHIFTS.map(function(s){
+      var list=board[s.id]||[], left=s.cap-list.length, isMine=me&&has(s.id,me), li="";
+      list.forEach(function(n,i){
+        var m=me&&same(n,me);
+        li+='<li class="'+(m?"me":"")+'"><span>'+esc(n)+(m?" (you)":"")+'</span>'
+          +'<button class="rm" data-rm="'+s.id+'" data-i="'+i+'" aria-label="Remove '+esc(n)+' from '+esc(s.title)+'">'+(m?"":"Remove")+'</button></li>';
+        names[n]=1;
+      });
+      for(var k=0;k<left;k++)li+='<li class="open"><span>Open spot</span></li>';
+      var btn=isMine?'<button class="go drop" data-drop="'+s.id+'">Drop out of this shift</button>'
+        :left>0?'<button class="go" data-join="'+s.id+'">Sign up · '+left+' open</button>'
+        :'<button class="go" disabled>Shift is full</button>';
+      return '<section class="shift'+(isMine?" mine":"")+'" aria-label="'+esc(s.title)+'">'
+        +'<div class="head"><div><div class="time">'+s.time+'</div><h2 class="title">'+esc(s.title)+'</h2><p class="note">'+esc(s.note)+'</p></div>'
+        +'<span class="count'+(left===0?" full":"")+'">'+list.length+'/'+s.cap+'</span></div>'
+        +'<ul class="spots">'+li+'</ul>'+btn+'</section>';
+    }).join("");
+    $("board").innerHTML=html;
+    // remove buttons for "me" rows are hidden text; make them hidden fully
+    Array.prototype.forEach.call(document.querySelectorAll(".spots li.me .rm"),function(b){b.hidden=true});
+    $("known").innerHTML=Object.keys(names).map(function(n){return '<option value="'+esc(n)+'">'}).join("");
+  }
+
+  function toast(msg,undo,err){
+    clearTimeout(toastTimer);
+    var t=$("toast");t.className="toast show"+(err?" err":"");
+    $("toastMsg").textContent=msg;
+    undoFn=undo||null;$("toastBtn").hidden=!undo;
+    toastTimer=setTimeout(function(){t.className="toast"+(err?" err":"");undoFn=null},undo?7000:3500);
+  }
+  $("toastBtn").onclick=function(){if(undoFn){var f=undoFn;undoFn=null;f();$("toast").className="toast"}};
+
+  function conflict(id,n){
+    var s=byId(id);
+    return SHIFTS.filter(function(o){return o.id!==id&&has(o.id,n)&&o.s<s.e&&s.s<o.e})[0];
+  }
+  function join(id){
+    var s=byId(id),list=board[id]=board[id]||[];
+    if(has(id,me))return;
+    if(list.length>=s.cap){toast("Sorry, that shift just filled up.",null,true);render();return}
+    var c=conflict(id,me);
+    if(c){toast("That overlaps with "+c.title+" ("+c.time+").",null,true);return}
+    list.push(me);save();render();
+    toast("You're in: "+s.title+", "+s.time+". Thank you!");
+  }
+  function removeAt(id,i){
+    var s=byId(id),list=board[id],n=list[i];
+    list.splice(i,1);save();render();
+    toast((me&&same(n,me)?"You dropped ":n+" removed from ")+s.title+".",function(){
+      var l=board[id];if(l.length<s.cap&&!has(id,n)){l.splice(Math.min(i,l.length),0,n);save();render();toast("Restored.")}
+      else toast("Couldn't undo, spot was taken.",null,true);
+    });
+  }
+
+  $("board").addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    if(b.dataset.join){ if(!me){pending=b.dataset.join;askName()} else join(b.dataset.join) }
+    else if(b.dataset.drop){var l=board[b.dataset.drop];for(var i=0;i<l.length;i++)if(same(l[i],me)){removeAt(b.dataset.drop,i);break}}
+    else if(b.dataset.rm){removeAt(b.dataset.rm,+b.dataset.i)}
+  });
+
+  function askName(){
+    var d=$("nameDlg");$("nameIn").value=me;
+    if(d.showModal)d.showModal();else d.setAttribute("open","");
+    setTimeout(function(){$("nameIn").focus();$("nameIn").select()},30);
+  }
+  function closeName(){var d=$("nameDlg");if(d.close)d.close();else d.removeAttribute("open")}
+  $("nameCancel").onclick=function(){pending=null;closeName()};
+  $("nameForm").onsubmit=function(e){
+    e.preventDefault();
+    var n=$("nameIn").value.replace(/\s+/g," ").trim();
+    if(!n){$("nameIn").focus();return}
+    // reuse existing capitalisation if this person is already on the board
+    Object.keys(board).forEach(function(k){board[k].forEach(function(x){if(same(x,n))n=x})});
+    me=n;lsSet(NAMEKEY,me);closeName();
+    var p=pending;pending=null;render();
+    if(p)join(p);
+  };
+
+  $("reset").onclick=function(){
+    var snap=JSON.stringify(board);
+    board={};SHIFTS.forEach(function(s){board[s.id]=[]});save();render();
+    toast("Board cleared for a new week.",function(){board=JSON.parse(snap);save();render()});
+  };
+
+  // keep multiple phones/tabs roughly in sync
+  window.addEventListener("storage",function(e){if(e.key===KEY){board=load();render()}});
+  window.addEventListener("focus",function(){board=load();render()});
+
+  render();
+})();
+</script>
+</body>
+</html>

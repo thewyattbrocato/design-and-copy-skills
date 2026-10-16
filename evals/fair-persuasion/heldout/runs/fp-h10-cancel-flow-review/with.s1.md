@@ -1,31 +1,33 @@
-**Yes, this is a dark pattern, mainly because of steps 4 and 5.** Cancelling needs a phone call during office hours, and the confirmation only arrives after that call. Sign-up took two taps online.
+**Yes, it's a dark pattern.** Joining takes two taps online, but leaving takes four screens and a phone call during office hours. The phone call is the worst part, because the cancellation isn't done until then.
 
 **What's fine**
-- **One pause offer (step 3).** A free freeze of up to 2 months is a real alternative. Offering it once with an equal-weight [Pause] / [No thanks] is legitimate retention.
-- **Asking why they're leaving (step 4).** This is fine as long as it's optional.
-- **A retention message in principle (step 2).** One is acceptable if it's true and neutral.
+- **Step 3, the pause offer.** It's one real alternative with a neutral "No thanks" of equal weight. Keep it, but show it only once.
+- **A reason question,** as long as it's optional.
+- **Some retention attempt.** One honest save offer is legitimate.
 
 **What isn't**
-1. **Phone call to finish (steps 4 and 5).** This is the worst part. The channel is harder than sign-up, it's limited to Mon–Fri 9–5, and no confirmation exists until the call is done. That leaves people unsure whether they'll be billed again.
-2. **Buried entry point (step 1).** "Cancel membership" is a small grey link, last in the list, under "Billing FAQs".
-3. **Lopsided buttons (step 2).** A big green [Keep] sits next to a tiny grey [Continue]. The two choices aren't equal in weight.
-4. **Stacked screens (steps 2 and 3).** Two pitches before the exit is more than one honest alternative, shown once.
-5. **Required dropdown (step 4).** Making the reason mandatory turns a survey into a condition of leaving.
-6. **The "3x more likely" stat (step 2).** This needs checking, because members who stay may simply be the motivated ones. It also works as mild guilt. I can't judge whether it's true. Have someone verify it before you keep it.
+1. **Step 1, the hidden entry.** "Cancel membership" is the last item, a small grey link under "Billing FAQs". It should be as findable as "Manage" itself.
+2. **Step 2, the lopsided buttons and the stat.** A big green "Keep" sits next to a small grey "Continue". The "3x more likely to hit their goals" line is also a persuasion pitch aimed at someone who has already decided. If the stat is true and sourced, it's a mild issue. As the only message on a full screen, it works as a speed bump.
+3. **Step 4, the required dropdown.** Making the reason mandatory turns a survey into a condition of leaving.
+4. **Step 4, the phone call.** Online sign-up followed by a phone-only exit, limited to Mon–Fri 9–5, is the clearest violation. It's also the most likely to attract regulator attention.
+5. **Step 5, the missing confirmation.** No email until after the call leaves people unsure whether they're still being billed, and they have no proof of cancelling.
+6. **Stacked screens.** Steps 2, 3 and 4 each make an ask before the user can leave. One alternative offered once is fine, but three interruptions isn't.
 
 **What to change**
-- **Put cancel in the app.** Make it a normal-weight item in Manage, not hidden under the FAQs link.
-- **Reduce the flow to one screen.** It needs:
-  - a plain heading
-  - what happens to billing and access, with a placeholder like `[last day of access]`
-  - a clear [Cancel membership] button
-  - one optional alternative, such as "Pause up to 2 months, free" (the pause already exists)
-  - an optional reason dropdown
-- **Make the buttons equal in weight.** Use the same size and style for "Pause instead" and "Cancel membership".
-- **Drop the stat screen, or fold it into the single screen.** Keep it only if it's verified, and don't make it the headline.
-- **Confirm immediately by email.** The confirmation should state the last day of access, that no further charges will be made, and how to rejoin.
-- **Keep phone as an optional extra.** A call can stay as a help channel, but it must never be required.
+1. **Entry.** Put "Cancel membership" in the normal list under Manage, styled like the other items.
+2. **One cancel screen**, with:
+   - a plain heading, such as "Cancel your membership";
+   - what happens next: "Your access ends on [last access date]. Your last charge was [date/amount]. You won't be billed again. [Data/booking-history retention rule]";
+   - two equal-weight buttons: **[Cancel membership]** and **[Keep membership]**;
+   - one optional line above them: "Need a break instead? Pause free for up to 2 months. [Pause]". This keeps your save offer, shown once.
+3. **Reason.** Make the dropdown optional, shown after cancelling or marked "Skip".
+4. **Remove the phone step.** Cancel in-app and finish there. Keep the phone line as an optional help channel, not a requirement.
+5. **Confirmation.** Show a confirmation screen and send the email immediately. Both should state the last day of access, that no further charges will occur, and how to rejoin.
+6. **Retention stat.** Either drop it or move it into the pause/keep line as a short, sourced fact. It shouldn't be a screen on its own.
 
-Rules on cancellation flows vary by place and change over time, and some jurisdictions explicitly require online cancellation for online sign-up. Have this checked before launch.
+That takes cancelling from four screens plus a call down to about two taps, which is close to the effort of joining. You keep the pause offer and the feedback signal, and you lose the obstacles.
 
-If you want to track one regret signal, watch for repeat billing disputes or chargebacks after cancelling. They'll tell you quickly whether people think they cancelled and didn't.
+**Notes**
+- Consumer rules on cancellation (for example "click to cancel" laws) vary by place and change over time, so have this checked for the regions you operate in. Stricter law or platform policy overrides anything above.
+- Placeholders in brackets are for you to fill in. I haven't assumed any access-end rule, refund policy or data-retention period.
+- To track regret, watch cancel-then-rejoin rates and billing-dispute or chargeback tickets after the change.

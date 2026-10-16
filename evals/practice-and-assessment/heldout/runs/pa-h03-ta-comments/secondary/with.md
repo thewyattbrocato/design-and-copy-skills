@@ -1,43 +1,19 @@
-## What's wrong with the originals
+**What's wrong with each comment**
 
-1. **"Good job!"** names no specific thing to keep doing and no specific thing to change. The student can't tell whether the SELECT * or the subquery matters, or whether the speed difference is important.
-2. **"Your query is wrong. See the solution."** says the work is wrong without saying where. It also hands over the answer, so the student doesn't learn the join logic. The real bug, an INNER JOIN that drops customers with no orders, is never named.
-3. **"Great effort. Needs improvement on joins. 6/10"** is vague in three ways. "Needs improvement on joins" doesn't match the feedback, since the joins are correct, and the student can't tell what the 6 reflects. The aliasing and column-name problems are never mentioned.
+1. **"Good job!"** The student gets no information. It also hides the real issues: `SELECT *`, and a subquery that runs about three times slower than the join. A student reading "Good job!" would reasonably conclude the query is fine.
+2. **"Your query is wrong. See the solution."** It says the query is wrong but not why. The student can't tell whether the problem is the join, the grouping, or the count. Pointing to the solution ends the learning step, and the student can copy it without understanding the outer-join idea they need.
+3. **"Great effort. Needs improvement on joins. 6/10"** It points at the wrong problem. The joins are correct, and the actual issue is naming. The score has no breakdown, so the student can't tell what cost points.
 
-All three share the same gaps: no link to the actual submission, no reason, and no next step.
+**Rewrites**
 
-## Rewrites
+1. "The result is correct, so the logic is sound. Two things to improve:
+   - `SELECT *` returns every column. List only the columns you need. It's easier to read and doesn't break when the table changes.
+   - The subquery can be a join. On the sample data your version runs about 3x slower. Rewrite it as a join and time both versions. Which would you choose on a table with a million rows, and why?"
 
-I only have your descriptions of the submissions, not the SQL, so the wording below is generic. Swap in the real table and column names before using them.
+2. "The task asks for every customer, including those with no orders. An INNER JOIN drops any customer without a matching row in `orders`, so those customers disappear from the result. Ask yourself which table's rows must be kept no matter what, and which join type keeps unmatched rows from that side. After you change the join, check what a customer with zero orders shows in the count. Hint: `COUNT(*)` counts the padded row as 1, but `COUNT(column)` ignores NULLs. Come to office hours if you get stuck on this."
 
-**1.**
-> Your query returns the correct rows, and the logic is easy to follow. Two things to work on:
->
-> - `SELECT *` pulls every column. Name the columns you need. That keeps the output stable if the table changes and makes the query's purpose clear to the next reader.
-> - The subquery works, but on the sample data the equivalent JOIN runs about three times faster. Rewrite it as a JOIN and time both. Then think about when the subquery would still be the clearer choice.
+3. "Your joins are correct, and the result is right. The 6/10 comes from readability, not from the join logic. The aliases `a` and `b` don't tell a reader which table is which. Use short names that mean something, like `c` for customers and `o` for orders. Also give the output columns clear names with `AS` (for example `order_count` instead of an unnamed `COUNT(*)`). Once the names are clear, the query should make sense to someone reading it for the first time. [If the rubric has a line item for this, name it here, e.g. 'Naming and clarity: 4/6.']"
 
-**2.**
-> The query gets the columns right, but it's missing customers who have never placed an order, and the task asks for every customer. Look at the join type: INNER JOIN keeps only rows that match in both tables. Which join keeps every row from the left table?
->
-> Once you change it, check what your count returns for a customer with no orders. `COUNT(*)` counts the row even when it's empty, so think about which column should be counted.
+**Pattern across the three:** each rewrite names something specific from the student's code, says why it matters, and gives a next step or a question that makes the student do the thinking. The grade explanation ties to the rubric.
 
-This version points to the bug and asks questions that lead to the fix. It doesn't give the answer away.
-
-**3.**
-> Your query returns the correct rows, and the structure is clean. Points were lost on readability:
->
-> - Aliases `a` and `b` make it hard to tell which table each column comes from. Use names that mean something, like `c` for customers and `o` for orders, or the full table names.
-> - The output headers are hard to interpret. Add `AS` aliases such as `AS order_count` so the result explains itself.
->
-> Score: 6/10. Correctness earned full credit; the deduction is for readability.
-
-If the 6 reflects something beyond readability, the comment should name that too. A score with no stated basis is the thing students are complaining about.
-
-## The pattern to follow
-
-Each comment should cover:
-- **What's right**, specifically enough that the student knows to keep doing it.
-- **What's wrong**, pointing to the part of the submission, not the whole thing.
-- **Why it matters**, so the student learns the principle and not just this fix.
-- **A next step**, ideally a hint or question rather than the solution.
-- **The score basis**, if you give a score.
+I don't have your rubric or schema, so I made up table and column names in the comments. Check the score line in #3 against your rubric. If the 6 comes from a specific criterion, put that criterion in the comment.

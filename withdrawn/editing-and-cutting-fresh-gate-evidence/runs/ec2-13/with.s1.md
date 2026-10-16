@@ -1,0 +1,3 @@
+Priya Venkataram runs a small tax preparation practice serving gig workers and freelancers. In nine years, she has helped independent earners handle quarterly estimates, deductions, and the surprises of self-employment income. She explains taxes in plain language, so clients can stay on top of their finances and stop dreading filing season.
+
+That's about 50 words. I only used what you told me: nine years, a small practice, and a client base of gig workers and freelancers. The line about plain language and clients not dreading filing season is my own addition, so cut it or swap in something that's true for you. If you'd like, I can write a first-person version, or add details like credentials (EA, CPA), your location, or your business name.

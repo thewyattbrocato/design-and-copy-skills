@@ -11,6 +11,8 @@ The generator reports the skill as loaded in every WITH answer, as JSON {"answer
 EVAL_MOCK_NOT_LOADED='{"t1": 1, "t2#1": 99}' says a task (or "task#sample") fails to load for that many leading
 attempts (99 = never). EVAL_MOCK_SAMPLE_VERDICTS='{"t0": ["with", "with", "without"]}' makes the judge pick
 the named arm for each sample of a text task (anything else follows EVAL_MOCK_JUDGE).
+For the activation check (kind "activation") the generator answers with the skill whose name appears in the request,
+or NONE; EVAL_MOCK_ROUTES='{"text in a request": "skill-name" | null | "any other reply"}' overrides that per request.
 """
 import json
 import os
@@ -35,6 +37,8 @@ def generate(req):
     if log:
         with open(log, "a") as f:
             f.write(f"{req['task_id']}/{req['arm']}\n")
+    if req["kind"] == "activation":
+        return route(req["prompt"])
     if req["kind"] == "probe":
         names = ["dataviz", "init"] + ([req["skill"]] if req["arm"] == "with" else [])
         return ", ".join(names)
@@ -45,6 +49,16 @@ def generate(req):
     if req["arm"] == "with":
         return json.dumps({"answer": text, "skills_invoked": [req["skill"]] if loads(req) else []})
     return text
+
+
+def route(prompt):
+    """The activation check's answer: the roster name found in the request, NONE, or a reply set by EVAL_MOCK_ROUTES."""
+    request = re.search(r'"""\n(.*?)\n"""', prompt, re.S)[1]
+    for text, reply in json.loads(os.environ.get("EVAL_MOCK_ROUTES") or "{}").items():
+        if text in request:
+            return "NONE" if reply is None else reply
+    names = re.findall(r"^- ([\w-]+): ", prompt, re.M)
+    return next((n for n in names if n in request), "NONE")
 
 
 def loads(req):

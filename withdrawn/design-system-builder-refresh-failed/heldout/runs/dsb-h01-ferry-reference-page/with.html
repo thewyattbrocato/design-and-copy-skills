@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marlowe Ferries – Front-end style guide (proposal)</title>
+<style>
+:root{
+  /* raw values */
+  --navy-700:#0B3C5D; --blue-600:#1D6FA3; --blue-500:#2A8BD1; --blue-100:#e8f1f8;
+  --grey-50:#f4f7fa; --white:#ffffff; --ink-900:#1a1a1a; --grey-600:#6b7785; --grey-200:#d7dee5;
+  --red-700:#c0392b; --red-100:#fbeae8; --green-600:#1e8e5a; --green-800:#166a43; --green-100:#e3f4ec;
+  --amber-400:#f2b84b; --amber-100:#fdf1d6; --amber-900:#5e4200;
+
+  /* semantic roles (components read only these) */
+  --text:var(--ink-900); --text-muted:var(--grey-600); --text-on-brand:var(--white); --text-link:var(--blue-600);
+  --surface-page:var(--grey-50); --surface-raised:var(--white); --surface-selected:var(--blue-100);
+  --border:var(--grey-200); --border-strong:var(--grey-600);
+  --brand:var(--navy-700); --brand-hover:var(--blue-600); --brand-pressed:#082d46;
+  --focus:var(--blue-500);
+  --danger:var(--red-700); --danger-surface:var(--red-100);
+  --success:var(--green-800); --success-surface:var(--green-100);
+  --warning-text:var(--amber-900); --warning-surface:var(--amber-100); --warning-mark:var(--amber-400);
+
+  /* scales */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+  --radius-sm:4px; --radius-md:8px; --radius-lg:12px; --radius-pill:999px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --text-caption:12px; --text-small:14px; --text-body:16px; --text-title-sm:20px; --text-title:24px; --text-display:32px;
+  --target:44px;
+}
+*{box-sizing:border-box}
+body{margin:0;font:400 var(--text-body)/1.5 var(--font);color:var(--text);background:var(--surface-page)}
+.wrap{max-width:960px;margin:0 auto;padding:var(--space-6) var(--space-5) var(--space-8)}
+h1{font-size:var(--text-display);line-height:1.2;margin:0 0 var(--space-2);color:var(--brand)}
+h2{font-size:var(--text-title);line-height:1.25;margin:var(--space-8) 0 var(--space-2);padding-top:var(--space-5);border-top:1px solid var(--border);color:var(--brand)}
+h3{font-size:var(--text-body);margin:var(--space-5) 0 var(--space-2)}
+p{margin:0 0 var(--space-3);max-width:68ch}
+.muted{color:var(--text-muted)}
+.small{font-size:var(--text-small)}
+code{font:var(--text-small) ui-monospace,Menlo,Consolas,monospace;background:var(--grey-200);padding:1px 5px;border-radius:var(--radius-sm)}
+.grid{display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.sw{background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;font-size:var(--text-small)}
+.sw i{display:block;height:56px;border-bottom:1px solid var(--border)}
+.sw div{padding:var(--space-2) var(--space-3)}
+.sw b{display:block}
+table{border-collapse:collapse;width:100%;background:var(--surface-raised);border:1px solid var(--border);font-size:var(--text-small)}
+th,td{text-align:left;padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-selected);font-weight:600}
+.panel{background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-5)}
+.row{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:flex-end}
+.cell{display:flex;flex-direction:column;gap:var(--space-2);align-items:flex-start}
+.lbl{font-size:var(--text-caption);color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em}
+.sp{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);font-size:var(--text-small)}
+.sp span.bar{height:16px;background:var(--blue-500);border-radius:var(--radius-sm)}
+.sp code{min-width:90px}
+.rad{width:88px;height:64px;background:var(--surface-selected);border:2px solid var(--brand)}
+
+/* ---------- components ---------- */
+.btn{font:600 var(--text-body)/1 var(--font);min-height:var(--target);padding:0 var(--space-5);border-radius:var(--radius-md);border:2px solid transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);text-decoration:none}
+.btn-primary{background:var(--brand);color:var(--text-on-brand)}
+.btn-primary:hover,.btn-primary.is-hover{background:var(--brand-hover)}
+.btn-primary:active,.btn-primary.is-pressed{background:var(--brand-pressed)}
+.btn-secondary{background:var(--surface-raised);color:var(--brand);border-color:var(--brand)}
+.btn-secondary:hover,.btn-secondary.is-hover{background:var(--surface-selected)}
+.btn-secondary:active,.btn-secondary.is-pressed{background:var(--border)}
+.btn:focus-visible,.btn.is-focus,.link:focus-visible,.link.is-focus,.nav a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn:disabled,.btn.is-disabled{background:var(--border);color:var(--text-muted);border-color:transparent;cursor:not-allowed}
+.btn.is-loading{position:relative;color:transparent}
+.btn.is-loading::after{content:"Working…";position:absolute;color:var(--text-on-brand)}
+.btn-secondary.is-loading::after{color:var(--brand)}
+
+.link{color:var(--text-link);text-decoration:underline;text-underline-offset:3px;font-size:var(--text-body)}
+.link:hover,.link.is-hover{color:var(--brand);text-decoration-thickness:2px}
+
+.field{display:flex;flex-direction:column;gap:var(--space-1);width:240px}
+.field label{font-size:var(--text-small);font-weight:600}
+.field .hint{font-size:var(--text-caption);color:var(--text-muted)}
+.field .err{font-size:var(--text-caption);color:var(--danger);font-weight:600}
+.input{font:400 var(--text-body)/1.2 var(--font);min-height:var(--target);padding:0 var(--space-3);border:1px solid var(--border-strong);border-radius:var(--radius-md);background:var(--surface-raised);color:var(--text);width:100%}
+select.input{appearance:none;padding-right:var(--space-7);background-image:linear-gradient(45deg,transparent 50%,var(--text) 50%),linear-gradient(135deg,var(--text) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+.input::placeholder{color:var(--text-muted)}
+.input:focus,.input.is-focus{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--brand)}
+.input.is-error{border-color:var(--danger);border-width:2px}
+.input:disabled{background:var(--surface-page);color:var(--text-muted);border-color:var(--border);cursor:not-allowed}
+
+.badge{display:inline-flex;align-items:center;gap:var(--space-1);font:600 var(--text-caption)/1 var(--font);padding:var(--space-2) var(--space-3);border-radius:var(--radius-pill);white-space:nowrap}
+.badge-ontime{background:var(--success-surface);color:var(--success)}
+.badge-delayed{background:var(--warning-surface);color:var(--warning-text);box-shadow:inset 0 0 0 1px var(--warning-mark)}
+.badge-cancelled{background:var(--danger-surface);color:var(--danger)}
+
+.card{background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-4) var(--space-5);width:340px;display:flex;flex-direction:column;gap:var(--space-3)}
+.card.is-selected{border:2px solid var(--brand);background:var(--surface-selected)}
+.card header{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}
+.card .route{font-size:var(--text-small);color:var(--text-muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .time{font-size:var(--text-display);font-weight:700;line-height:1.1;color:var(--brand)}
+.card .time s{font-size:var(--text-body);color:var(--text-muted);font-weight:400;margin-left:var(--space-2)}
+.card footer{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);font-size:var(--text-small)}
+.card.is-cancelled .time{color:var(--text-muted);text-decoration:line-through}
+
+.nav{background:var(--brand);color:var(--text-on-brand);display:flex;align-items:center;gap:var(--space-5);padding:0 var(--space-5);min-height:56px;border-radius:var(--radius-md)}
+.nav .logo{font-weight:700;font-size:var(--text-title-sm);margin-right:auto}
+.nav a{color:var(--text-on-brand);text-decoration:none;min-height:var(--target);display:inline-flex;align-items:center;padding:0 var(--space-2);border-bottom:3px solid transparent;font-size:var(--text-body)}
+.nav a:hover{border-bottom-color:var(--blue-500)}
+.nav a[aria-current="page"]{border-bottom-color:var(--text-on-brand);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Marlowe Ferries front-end styles</h1>
+<p class="muted">Proposal v0.1 for the booking site and the deck-crew tablet app. Built from the values currently in the CSS: near-duplicates are merged, and every value that remains has a role. Colour values below are proposals taken from your existing palette. Text and background pairs were chosen for contrast but have not been run through a checker, so verify before sign-off.</p>
+
+<h3>Principles</h3>
+<p><b>1. Readable at arm's length, in glare.</b> Deck crew use the tablet outdoors, so text stays at 14px or larger except captions, and every tap target is at least 44px.<br>
+<b>2. Status is never colour alone.</b> Every status carries a symbol and a word.<br>
+<b>3. One value per job.</b> If two values look the same, they are the same token.</p>
+
+<!-- COLOUR -->
+<h2>Colour</h2>
+<p>Components use roles (left), never raw hex. Raw values are listed once.</p>
+<div class="grid">
+  <div class="sw"><i style="background:var(--brand)"></i><div><b>brand</b><code>#0B3C5D</code><br><span class="muted">Nav, primary button, headings</span></div></div>
+  <div class="sw"><i style="background:var(--text-link)"></i><div><b>text-link / brand-hover</b><code>#1D6FA3</code><br><span class="muted">Links, hover on primary</span></div></div>
+  <div class="sw"><i style="background:var(--focus)"></i><div><b>focus</b><code>#2A8BD1</code><br><span class="muted">Focus rings, nav hover. Not for text.</span></div></div>
+  <div class="sw"><i style="background:var(--surface-selected)"></i><div><b>surface-selected</b><code>#e8f1f8</code><br><span class="muted">Selected, hover on secondary</span></div></div>
+  <div class="sw"><i style="background:var(--surface-page)"></i><div><b>surface-page</b><code>#f4f7fa</code><br><span class="muted">Page background</span></div></div>
+  <div class="sw"><i style="background:var(--surface-raised)"></i><div><b>surface-raised</b><code>#ffffff</code><br><span class="muted">Cards, inputs, tables</span></div></div>
+  <div class="sw"><i style="background:var(--text)"></i><div><b>text</b><code>#1a1a1a</code><br><span class="muted">Body copy</span></div></div>
+  <div class="sw"><i style="background:var(--text-muted)"></i><div><b>text-muted / border-strong</b><code>#6b7785</code><br><span class="muted">Secondary text, input borders</span></div></div>
+  <div class="sw"><i style="background:var(--border)"></i><div><b>border</b><code>#d7dee5</code><br><span class="muted">Dividers, card edges, disabled fill</span></div></div>
+  <div class="sw"><i style="background:var(--danger)"></i><div><b>danger</b><code>#c0392b</code><br><span class="muted">Errors, cancelled</span></div></div>
+  <div class="sw"><i style="background:var(--success)"></i><div><b>success</b><code>#166a43</code> <span class="muted">(new, darker)</span><br><span class="muted">On-time text. Your #1e8e5a is likely too light for small text.</span></div></div>
+  <div class="sw"><i style="background:var(--warning-mark)"></i><div><b>warning-mark</b><code>#f2b84b</code><br><span class="muted">Delayed outline only, never text. Text uses #5e4200.</span></div></div>
+</div>
+<h3>Merge map (22 colours → 12 roles + 4 status tints)</h3>
+<table>
+<tr><th>Found in CSS</th><th>Becomes</th></tr>
+<tr><td>#0B3C5D, #0c3d5e, #0a3a5a</td><td>brand <code>#0B3C5D</code></td></tr>
+<tr><td>#1D6FA3, #1e70a4</td><td>text-link <code>#1D6FA3</code></td></tr>
+<tr><td>#2A8BD1</td><td>focus (unchanged)</td></tr>
+<tr><td>#e8f1f8, #EAF2F9</td><td>surface-selected <code>#e8f1f8</code></td></tr>
+<tr><td>#f4f7fa / #ffffff</td><td>surface-page / surface-raised</td></tr>
+<tr><td>#1a1a1a, #222, #333</td><td>text <code>#1a1a1a</code></td></tr>
+<tr><td>#6b7785, #7a8794</td><td>text-muted <code>#6b7785</code> (#7a8794 is lighter and probably too faint for text)</td></tr>
+<tr><td>#d7dee5, #cfd8e0</td><td>border <code>#d7dee5</code></td></tr>
+<tr><td>#c0392b, #d64533</td><td>danger <code>#c0392b</code></td></tr>
+<tr><td>#1e8e5a, #23915c</td><td>success <code>#166a43</code> for text, <code>#e3f4ec</code> for fill</td></tr>
+<tr><td>#f2b84b</td><td>warning-mark, plus tint <code>#fdf1d6</code> and text <code>#5e4200</code></td></tr>
+</table>
+
+<!-- TYPE -->
+<h2>Type</h2>
+<p>System font stack. Six sizes replace the fourteen in use. Weights: 400 body, 600 emphasis and buttons, 700 display and times.</p>
+<div class="panel">
+  <div class="sp"><code>display 32</code><span style="font-size:32px;font-weight:700;line-height:1.2">Departs 14:30</span></div>
+  <div class="sp"><code>title 24</code><span style="font-size:24px;font-weight:600">Choose your sailing</span></div>
+  <div class="sp"><code>title-sm 20</code><span style="font-size:20px;font-weight:600">Marlowe Quay to Harbour Point</span></div>
+  <div class="sp"><code>body 16</code><span>Default for paragraphs, buttons and inputs.</span></div>
+  <div class="sp"><code>small 14</code><span style="font-size:14px">Labels, hints, table text, card details.</span></div>
+  <div class="sp"><code>caption 12</code><span style="font-size:12px">Badges and fine print. Keep it short.</span></div>
+</div>
+<p class="small muted" style="margin-top:var(--space-3)">11→12 · 13→14 · 15, 17→16 · 18→20 · 22→24 · 28→32 · 40→32 (or drop). Line height 1.5 for body, 1.2 for display and titles.</p>
+
+<!-- SPACING -->
+<h2>Spacing</h2>
+<p>Eight steps replace seventeen. Use them for padding, gaps and margins.</p>
+<div class="panel">
+  <div class="sp"><code>space-1 · 4</code><span class="bar" style="width:4px"></span></div>
+  <div class="sp"><code>space-2 · 8</code><span class="bar" style="width:8px"></span></div>
+  <div class="sp"><code>space-3 · 12</code><span class="bar" style="width:12px"></span></div>
+  <div class="sp"><code>space-4 · 16</code><span class="bar" style="width:16px"></span></div>
+  <div class="sp"><code>space-5 · 24</code><span class="bar" style="width:24px"></span></div>
+  <div class="sp"><code>space-6 · 32</code><span class="bar" style="width:32px"></span></div>
+  <div class="sp"><code>space-7 · 48</code><span class="bar" style="width:48px"></span></div>
+  <div class="sp"><code>space-8 · 64</code><span class="bar" style="width:64px"></span></div>
+</div>
+<p class="small muted" style="margin-top:var(--space-3)">2, 5→4 · 6→8 · 10→8 or 12 · 14→12 or 16 · 18, 20→16 or 24 · 28→24 or 32 · 40→32 or 48. Pick the nearer step case by case. Hairlines (1–2px) are borders, not spacing.</p>
+
+<!-- RADII -->
+<h2>Radius</h2>
+<div class="row">
+  <div class="cell"><div class="rad" style="border-radius:4px"></div><code>sm · 4</code><span class="small muted">Code chips, small marks</span></div>
+  <div class="cell"><div class="rad" style="border-radius:8px"></div><code>md · 8</code><span class="small muted">Buttons, inputs, nav</span></div>
+  <div class="cell"><div class="rad" style="border-radius:12px"></div><code>lg · 12</code><span class="small muted">Cards, panels</span></div>
+  <div class="cell"><div class="rad" style="border-radius:999px"></div><code>pill · 999</code><span class="small muted">Badges</span></div>
+</div>
+<p class="small muted" style="margin-top:var(--space-3)">2, 3→4 · 6→8.</p>
+
+<!-- COMPONENTS -->
+<h2>Components</h2>
+<p>Eight components. Each is shown in every state it can be in. Pinned states (hover, focus, pressed) are forced here for display; in the product they come from the real pseudo-classes.</p>
+
+<h3>Top nav</h3>
+<nav class="nav" aria-label="Example">
+  <span class="logo">Marlowe Ferries</span>
+  <a href="#" aria-current="page">Sailings</a><a href="#">My bookings</a><a href="#">Fares</a><a href="#">Help</a>
+</nav>
+<p class="small muted" style="margin-top:var(--space-2)">One level only. Current page: underline plus bold, not colour alone. Links keep a 44px target. On narrow screens the links collapse behind a "Menu" button (to be designed).</p>
+
+<h3>Buttons</h3>
+<div class="panel">
+  <p class="lbl">Primary: one per view, for the main action</p>
+  <div class="row" style="margin-bottom:var(--space-5)">
+    <div class="cell"><button class="btn btn-primary">Book now</button><span class="lbl">Default</span></div>
+    <div class="cell"><button class="btn btn-primary is-hover">Book now</button><span class="lbl">Hover</span></div>
+    <div class="cell"><button class="btn btn-primary is-pressed">Book now</button><span class="lbl">Pressed</span></div>
+    <div class="cell"><button class="btn btn-primary is-focus">Book now</button><span class="lbl">Focus</span></div>
+    <div class="cell"><button class="btn btn-primary is-loading">Book now</button><span class="lbl">Loading</span></div>
+    <div class="cell"><button class="btn btn-primary" disabled>Book now</button><span class="lbl">Disabled</span></div>
+  </div>
+  <p class="lbl">Secondary: alternative or lower-priority actions</p>
+  <div class="row">
+    <div class="cell"><button class="btn btn-secondary">Change sailing</button><span class="lbl">Default</span></div>
+    <div class="cell"><button class="btn btn-secondary is-hover">Change sailing</button><span class="lbl">Hover</span></div>
+    <div class="cell"><button class="btn btn-secondary is-pressed">Change sailing</button><span class="lbl">Pressed</span></div>
+    <div class="cell"><button class="btn btn-secondary is-focus">Change sailing</button><span class="lbl">Focus</span></div>
+    <div class="cell"><button class="btn btn-secondary is-loading">Change sailing</button><span class="lbl">Loading</span></div>
+    <div class="cell"><button class="btn btn-secondary" disabled>Change sailing</button><span class="lbl">Disabled</span></div>
+  </div>
+</div>
+<p class="small muted" style="margin-top:var(--space-2)">Min height 44px, 24px side padding. Labels are verbs and stay on one line; if a label is too long, shorten it rather than wrapping.</p>
+
+<h3>Text link</h3>
+<div class="row">
+  <div class="cell"><a class="link" href="#">View timetable</a><span class="lbl">Default</span></div>
+  <div class="cell"><a class="link is-hover" href="#">View timetable</a><span class="lbl">Hover</span></div>
+  <div class="cell"><a class="link is-focus" href="#">View timetable</a><span class="lbl">Focus</span></div>
+</div>
+<p class="small muted" style="margin-top:var(--space-2)">Always underlined. Links navigate; buttons act. If it changes data, it's a button.</p>
+
+<h3>Text input and select</h3>
+<div class="panel">
+  <div class="row">
+    <div class="field"><label for="a">Booking reference</label><input id="a" class="input" placeholder="e.g. MF-48213"><span class="hint">Default</span></div>
+    <div class="field"><label for="b">Booking reference</label><input id="b" class="input is-focus" value="MF-48"><span class="hint">Focus</span></div>
+    <div class="field"><label for="c">Booking reference</label><input id="c" class="input is-error" value="48213" aria-describedby="ce"><span id="ce" class="err">Starts with MF-, then 5 digits.</span></div>
+    <div class="field"><label for="d">Booking reference</label><input id="d" class="input" value="MF-48213" disabled><span class="hint">Disabled</span></div>
+  </div>
+  <div class="row" style="margin-top:var(--space-5)">
+    <div class="field"><label for="e">Departure terminal</label><select id="e" class="input"><option>Marlowe Quay</option><option>Harbour Point</option></select><span class="hint">Default</span></div>
+    <div class="field"><label for="f">Departure terminal</label><select id="f" class="input is-focus"><option>Marlowe Quay</option></select><span class="hint">Focus</span></div>
+    <div class="field"><label for="g">Departure terminal</label><select id="g" class="input is-error"><option>Choose…</option></select><span class="err">Choose a terminal.</span></div>
+    <div class="field"><label for="h">Departure terminal</label><select id="h" class="input" disabled><option>Marlowe Quay</option></select><span class="hint">Disabled</span></div>
+  </div>
+</div>
+<p class="small muted" style="margin-top:var(--space-2)">Label always visible above the field; placeholder is an example, never the label. Errors say how to fix it, and show a message plus a thicker border. Select shares the input's size and states.</p>
+
+<h3>Status badge</h3>
+<div class="row">
+  <div class="cell"><span class="badge badge-ontime">● On time</span><span class="lbl">On time</span></div>
+  <div class="cell"><span class="badge badge-delayed">▲ Delayed</span><span class="lbl">Delayed</span></div>
+  <div class="cell"><span class="badge badge-cancelled">✕ Cancelled</span><span class="lbl">Cancelled</span></div>
+</div>
+<p class="small muted" style="margin-top:var(--space-2)">Exactly three statuses. A new one needs a new symbol and a word, and is added here first. Not interactive.</p>
+
+<h3>Sailing card</h3>
+<p>Shows one departure. Delayed shows the new time with the original struck through; cancelled mutes the time. Stays 340px or flexes to its container.</p>
+<div class="row" style="align-items:flex-start">
+  <div class="cell">
+    <article class="card">
+      <header><span class="route">Marlowe Quay → Harbour Point</span><span class="badge badge-ontime">● On time</span></header>
+      <div class="time">14:30</div>
+      <footer><span class="muted">MV Ashdown · Arrives 15:10</span><button class="btn btn-primary" style="min-height:44px;padding:0 var(--space-4)">Select</button></footer>
+    </article><span class="lbl">On time</span>
+  </div>
+  <div class="cell">
+    <article class="card">
+      <header><span class="route">Marlowe Quay → Harbour Point</span><span class="badge badge-delayed">▲ Delayed</span></header>
+      <div class="time">15:05<s>14:30</s></div>
+      <footer><span class="muted">MV Ashdown · Arrives 15:45</span><button class="btn btn-primary" style="min-height:44px;padding:0 var(--space-4)">Select</button></footer>
+    </article><span class="lbl">Delayed</span>
+  </div>
+  <div class="cell">
+    <article class="card is-cancelled">
+      <header><span class="route">Marlowe Quay → Harbour Point</span><span class="badge badge-cancelled">✕ Cancelled</span></header>
+      <div class="time">16:00</div>
+      <footer><span class="muted">Next sailing 17:30</span><button class="btn btn-primary" disabled style="min-height:44px;padding:0 var(--space-4)">Select</button></footer>
+    </article><span class="lbl">Cancelled</span>
+  </div>
+  <div class="cell">
+    <article class="card is-selected">
+      <header><span class="route">Marlowe Quay → Harbour Point</span><span class="badge badge-ontime">● On time</span></header>
+      <div class="time">17:30</div>
+      <footer><span class="muted">MV Ashdown · Arrives 18:10</span><button class="btn btn-secondary" style="min-height:44px;padding:0 var(--space-4)">Selected</button></footer>
+    </article><span class="lbl">Selected</span>
+  </div>
+</div>
+<p class="small muted" style="margin-top:var(--space-2)">Long route names truncate with an ellipsis; the full name goes in the accessible label. Not shown yet: loading and no-sailings states.</p>
+
+<!-- OPEN -->
+<h2>Open decisions</h2>
+<table>
+<tr><th>Question</th><th>Default in this page</th></tr>
+<tr><td>Does the tablet app need larger controls than the website?</td><td>No. 44px everywhere for now. Add a "large" size only if crews report mis-taps.</td></tr>
+<tr><td>Dark mode or a high-contrast theme for the tablet in sunlight or at night?</td><td>Not designed. Roles are named so a theme can remap them later.</td></tr>
+<tr><td>Which gets 40px type, if anything?</td><td>Dropped. Use display 32.</td></tr>
+<tr><td>Who owns this?</td><td>Unassigned. Name one person who can approve changes, and keep the tokens in one file used by both apps.</td></tr>
+</table>
+<p class="small muted" style="margin-top:var(--space-5)">Assumed: one brand, light theme only, web and tablet sharing one stylesheet.</p>
+
+</div>
+</body>
+</html>

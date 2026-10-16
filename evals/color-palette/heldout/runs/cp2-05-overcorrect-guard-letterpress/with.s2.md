@@ -1,19 +1,19 @@
-Your palette already works, and I wouldn't swap any colors. It's a warm paper, a dark ink with a green-blue tint, and one rust accent, which suits letterpress. I worked out the contrast ratios by hand, so treat them as estimates.
+Your palette already works, and I wouldn't change any of the five colors. The ratios below are my own estimates from the hex values, because I can't run a checker here.
 
 | Pair | Ratio | Verdict |
 |---|---|---|
-| Ink on Paper | about 13:1 | Excellent |
-| Rust on Paper (links, button fill) | about 4.8:1 | Passes for text |
-| Paper text on Rust button | about 4.8:1 | Passes |
-| Muted on Paper | about 4.9:1 | Passes |
-| Sage on Paper | about 3.0:1 | Fine for rules, too low for text |
-| Ink on Sage | about 4.3:1 | Just under 4.5 |
+| Ink on Paper | ~13:1 | Strong |
+| Rust on Paper (links, button fill) | ~4.8:1 | Passes for body text |
+| Paper text on Rust button | ~4.8:1 | Passes |
+| Muted on Paper | ~4.9:1 | Passes, so captions are readable |
+| Sage on Paper | ~3.0:1 | Fine for decorative rules, too weak for text |
 
-**Changes, by impact**
+It's already restrained in the way that reads as premium. The neutrals are warm and tinted rather than pure black and white, and there is one accent with a clear job. A "more premium" version would come from how you use these colors, not from new ones.
 
-1. **Sage tags with text.** Sage fails as a fill under ink text and as a text color on Paper. Keep `#7c9082` for rules and borders only. For tags, use a pale sage fill `#e1e6dc` with deep sage text `#4a5d50` (about 5.6:1), plus an optional 1px `#7c9082` border.
-2. **Rust hover and pressed state.** Add `#9a3a21` (about 6.2:1 on Paper). This gives buttons and links a visible state without a second accent.
-3. **One raised surface.** Add `#ece5d4` for cards, price-list rows and the footer. It's a small step darker than Paper, so sections separate without heavy borders. Ink and Muted both still pass on it, though Muted falls to about 4.3:1 there. Use Ink for anything small on that surface, or keep Muted text on Paper.
-4. **Hairline dividers.** Use `#d9d0bc` for thin lines. It's quieter than sage and looks more refined.
+1. **Keep Rust small.** Use it for links, the primary button and perhaps one thin detail. Don't use it for large blocks or section backgrounds. The less area it covers, the more deliberate it looks.
+2. **Don't put text in Sage.** Ink on a Sage fill is only ~4.3:1, and Paper on Sage is ~3:1. For tags, use a pale sage tint like `#dde4dc` as the fill with Ink text (~11:1). Keep `#7c9082` for rules and borders.
+3. **Add one step between Paper and Ink for surfaces.** A card or footer band in `#ece5d6` gives you depth without a new hue. Rust on that tint drops to about 4.3:1, so keep Rust links on plain Paper, or darken them to the hover color below.
+4. **Define a Rust hover/pressed state.** Use `#94361d` (~6.7:1 on Paper). A darker hover reads as a considered detail, and it also gives you a link color that passes on the tinted surface.
+5. **Use a hairline color for dividers.** Something like `#d9d1bf` is quieter than Sage or Muted. Fine rules in a soft tone suit a letterpress brand.
 
-Most of the "premium" feel will come from type, spacing, paper stock and the rust staying scarce, rather than from color. On the printed price list, rust and sage will shift depending on your ink and stock, so proof them. Screen hex values won't match.
+On the printed price list, these hex values are screen colors. On press, your actual ink and paper stock set the result. Check a proof against the screen colors, especially Sage, which will look different on uncoated stock.

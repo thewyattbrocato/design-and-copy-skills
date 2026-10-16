@@ -1,24 +1,24 @@
-**Verdict:** The page feels amateur because it has no clear order of importance. Three things compete at once: the type, the buttons, and the boxes. The biggest problem is that the main action, "Get tickets," is the weakest button on the page.
+**Verdict:** The page feels amateur because nothing tells the eye what matters most. Three bold type sizes, four button styles, and five identical boxes all compete at the same volume, and the one action that matters, buying tickets, is the least prominent button on the page.
 
-**Findings**
+**Findings, most severe first**
 
-1. **Major: The primary CTA is visually the weakest button.** "Get tickets" is outlined, while "Vendor list" is filled, so the eye goes to the secondary action first. Ticket sales are presumably the page's goal. *Fix:* Make "Get tickets" the only filled button in the brand red. Make "Vendor list" outlined or ghost, and keep "Map" as a text link.
+1. **High: The primary action is visually weakest.** "Get tickets" is outlined, while "Vendor list" and "Subscribe" are filled, and the two filled buttons are different reds. A visitor who came to buy tickets sees two stronger buttons before the one they need. *Fix:* make "Get tickets" the only filled button, in the brand red. Make "Vendor list" a secondary outline and "Subscribe" a text link.
 
-2. **Major: Four buttons use four styles, and two reds compete.** Outlined, filled, pill-shaped text link, and filled in a second red. Each one looks like a different system. *Fix:* Use two styles at most: one primary (filled) and one secondary (outlined or text). Give "Subscribe" the secondary style, not a second red.
+2. **High: The type scale is flat at the top.** The headline is 28px, the date 26px, and the first sentence of the intro 24px, all bold. That is three near-equal display levels, and the date (key info) is almost as loud as the title. The intro's first sentence reads as a second headline. The ratio between the top sizes is about 1.08, too small to create hierarchy. *Fix:* headline around 36–40px bold; date around 20px semibold; intro lead 20px regular, or drop the bold; body 16–18px. Four sizes total, with the top one clearly dominant.
 
-3. **Major: The type hierarchy is flat at the top.** The headline is 28px, the date is 26px, and the first intro sentence is 24px bold. Everything is bold, the sizes are within 15% of each other, and the color is the same, so nothing reads as the title. Four sizes appear in the first screen. *Fix:* Make the headline clearly dominant (around 40px or more). Set the date one step down and differentiate it with weight or case. Make the intro lead a smaller bold or semibold (around 20px). Keep body text at 16–18px. Don't make the lead bold by changing its size.
+3. **High: Five identical boxes with borders and shadows flatten the page.** Every section gets the same chrome, so the page reads as a stack of cards and no section is more important than the others. Tickets, the key conversion section, looks the same as parking. *Fix:* remove the boxes and shadows from most sections and separate them with spacing and a single rule. Keep a box only for tickets, if anything.
 
-4. **Moderate: Five identical boxes make the page feel like a form.** Every section is a bordered card with a drop shadow. The shadow and card stacking make the page look dated, and the sections all have equal weight. *Fix:* Remove the boxes and shadows. Separate sections with spacing and one consistent heading style. Keep the boxes only if one section is genuinely a different kind of content, like tickets.
+4. **Medium: Four button treatments on one small page.** Outlined, filled, a text link in a pill, and a second filled red are four different systems. The pill-shaped text link matches nothing else. *Fix:* two styles only: primary (filled) and secondary (outline). Text links for low-priority actions.
 
-5. **Moderate: Vendor photos in different sizes make the grid look unfinished.** *Fix:* Give every photo the same aspect ratio (for example 4:3 or 1:1) with `object-fit: cover`.
+5. **Medium: Vendor photos at different sizes make the grid look unfinished.** *Fix:* a fixed aspect ratio (for example 4:3) with `object-fit: cover`, so every tile is identical in size.
 
-6. **Minor (taste): All text is #8b0000.** On a pink background this makes the whole page one color tone, and long body paragraphs in dark red are tiring to read. *Fix:* Keep the red for the headline, the primary button, and maybe section headings. Set body text to a near-black or dark neutral.
+6. **Medium (taste): Centered body text.** Centering works for the headline and date. For the multi-line intro and section text, centered lines have ragged starts and ends and are harder to scan. *Fix:* keep the header centered and left-align the body copy within a narrow column.
+
+7. **Low (taste): Everything is one hue.** Headline, body, borders, and buttons are all #8b0000, so color carries no meaning and hierarchy depends on size alone. Dark red on pale pink is legible, so this is not an accessibility problem. *Fix:* set body text in a near-black or warm gray and reserve the red for the headline and the primary button.
 
 **What works and should stay**
-- **Single brand red on a pale ground.** It's a coherent palette. Keep the family and reduce how often it appears.
-- **Centered single-column layout.** It suits a small event page on mobile and desktop.
-- **Section order (about, vendors, food, parking, tickets).** It matches how a visitor decides whether to come.
+- **Contrast:** dark red on pale pink should pass comfortably. My estimate is about 8:1, assuming a background near #ffe4e6; the exact pink was not supplied, so treat that number as an estimate.
+- **Single centered column:** a narrow, focused layout suits a one-day event page.
+- **Section order:** about, vendors, food, parking, tickets is a logical sequence. Tickets is last, so the buy action sits at the bottom. Consider a visible ticket button near the top as well.
 
-**Fix order:** 1) button hierarchy, 2) type scale, 3) remove boxes and shadows, 4) photo ratios, 5) body text color.
-
-**Notes:** I assumed the pale pink is around #ffe4e1. Dark red #8b0000 on that background is roughly 8:1, so contrast passes AA. I haven't checked the real background value. I also haven't seen the rendered page or mobile breakpoints, so the findings above come from your description.
+**Not checked:** the actual background hex, section heading sizes, mobile layout, and the rendered page. The critique is based on your description, not a screenshot.

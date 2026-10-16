@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewater Cold Freight – 6am Dispatch</title>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --panel: #ffffff;
+    --ink: #14202b;
+    --muted: #5a6978;
+    --line: #d9e0e6;
+    --go: #0f7a3d;
+    --go-bg: #e4f4ea;
+    --hold: #b3261e;
+    --hold-bg: #fbe9e7;
+    --warn: #8a5a00;
+    --warn-bg: #fff3d6;
+    --band: #cfe8d8;
+    --track: #e6ebef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10161c;
+      --panel: #19222b;
+      --ink: #eaf0f5;
+      --muted: #9aa9b7;
+      --line: #2c3945;
+      --go: #5fd18b;
+      --go-bg: #15301f;
+      --hold: #ff8a80;
+      --hold-bg: #3a1c1a;
+      --warn: #f2c35b;
+      --warn-bg: #36290d;
+      --band: #1f4a31;
+      --track: #26323d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  main { max-width: 1240px; margin: 0 auto; padding: 18px 22px 28px; }
+  header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  h1 { font-size: 21px; margin: 0; letter-spacing: .2px; }
+  header .sub { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 22px 0 8px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; border-left-width: 6px; }
+  .tile .label { font-size: 13px; color: var(--muted); }
+  .tile .big { font-size: 34px; font-weight: 700; line-height: 1.1; margin: 2px 0; }
+  .tile .big small { font-size: 16px; font-weight: 500; color: var(--muted); }
+  .tile .detail { font-size: 14px; }
+  .tile.ok { border-left-color: var(--go); }
+  .tile.bad { border-left-color: var(--hold); }
+  .tile.warn { border-left-color: var(--warn); }
+
+  .actions { display: grid; gap: 8px; }
+  .action { background: var(--panel); border: 1px solid var(--line); border-left: 6px solid var(--hold); border-radius: 10px; padding: 10px 14px; display: grid; grid-template-columns: 74px 54px 1fr; gap: 10px; align-items: baseline; }
+  .action .time { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .action .van { font-weight: 700; }
+  .action .why { color: var(--ink); }
+  .action .why span { color: var(--muted); display: block; font-size: 14px; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--bg); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  td.num { font-variant-numeric: tabular-nums; }
+  td.van { font-weight: 700; }
+  tr.hold td:first-child { box-shadow: inset 5px 0 0 var(--hold); }
+  tr.go td:first-child { box-shadow: inset 5px 0 0 var(--go); }
+
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .pill.go { background: var(--go-bg); color: var(--go); }
+  .pill.hold { background: var(--hold-bg); color: var(--hold); }
+  .sub2 { display: block; color: var(--muted); font-size: 13px; }
+  .bad-text { color: var(--hold); font-weight: 700; }
+  .warn-text { color: var(--warn); font-weight: 700; }
+
+  .temp { display: flex; align-items: center; gap: 10px; min-width: 190px; }
+  .temp .val { width: 66px; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .gauge { position: relative; flex: 1; height: 10px; background: var(--track); border-radius: 5px; }
+  .gauge .band { position: absolute; top: 0; bottom: 0; background: var(--band); border-radius: 5px; }
+  .gauge .mark { position: absolute; top: -3px; width: 4px; height: 16px; border-radius: 2px; background: var(--ink); transform: translateX(-2px); }
+  .gauge .mark.out { background: var(--hold); width: 6px; transform: translateX(-3px); }
+  .scale { color: var(--muted); font-size: 12px; margin-top: 6px; }
+  footer { margin-top: 14px; color: var(--muted); font-size: 12.5px; }
+
+  @media (max-width: 860px) {
+    .tiles { grid-template-columns: 1fr; }
+    table, thead, tbody, tr, td, th { display: block; }
+    thead { display: none; }
+    td { border-bottom: 0; padding: 4px 12px; }
+    tr { border-bottom: 1px solid var(--line); padding: 6px 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Tidewater Cold Freight &middot; 6am Dispatch</h1>
+    <div class="sub">Wednesday 14 Oct 2026 &middot; 8 vans, 1 depot</div>
+  </header>
+
+  <section class="tiles" id="tiles" aria-label="Summary"></section>
+
+  <h2>Needs action before routes go out (by first booking)</h2>
+  <section class="actions" id="actions"></section>
+
+  <h2>All vans (by first booking)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Van</th><th>Verdict</th><th>First booking</th><th>Driver</th>
+        <th>Trailer temp (target -18 to -15 &deg;C)</th><th>Last service</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div class="scale">Gauge runs -22 to -8 &deg;C; shaded band is the -18 to -15 target. Service limit is 10 weeks.</div>
+
+  <footer>
+    Go = status Ready, service within 10 weeks, trailer temp in range, and a driver assigned. Anything else is Hold.
+    To reuse tomorrow, edit the <code>vans</code> list in the script at the bottom of this file.
+  </footer>
+</main>
+
+<script>
+  // Edit this list each morning. serviceWeeks may be fractional (3 days = 0.4).
+  var TEMP_MIN = -18, TEMP_MAX = -15, SERVICE_LIMIT = 10;
+  var vans = [
+    { id: "V1", status: "Ready", serviceWeeks: 2,   serviceText: "2 weeks ago",  temp: -17.2, booking: "07:30", driver: "Marta L." },
+    { id: "V2", status: "Ready", serviceWeeks: 5,   serviceText: "5 weeks ago",  temp: -16.4, booking: "07:45", driver: "Dev P." },
+    { id: "V3", status: "In workshop (brake job)", workshop: true, serviceWeeks: 0.4, serviceText: "3 days ago", temp: null, booking: "08:00", driver: null },
+    { id: "V4", status: "Ready", serviceWeeks: 11,  serviceText: "11 weeks ago", temp: -16.8, booking: "08:15", driver: "Joss K." },
+    { id: "V5", status: "Loaded, waiting on release", serviceWeeks: 4, serviceText: "4 weeks ago", temp: -11.4, booking: "06:45", driver: "Ines R." },
+    { id: "V6", status: "Ready", serviceWeeks: 6,   serviceText: "6 weeks ago",  temp: -17.9, booking: "09:00", driver: "Tomas B." },
+    { id: "V7", status: "Ready", serviceWeeks: 1,   serviceText: "1 week ago",   temp: -15.6, booking: "09:30", driver: null, driverNote: "Driver called in sick" },
+    { id: "V8", status: "Ready", serviceWeeks: 8,   serviceText: "8 weeks ago",  temp: -16.1, booking: "10:00", driver: "Aiko S." }
+  ];
+
+  function el(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+  vans.forEach(function (v) {
+    v.reasons = [];
+    v.tempOut = v.temp !== null && (v.temp < TEMP_MIN || v.temp > TEMP_MAX);
+    v.serviceOver = v.serviceWeeks > SERVICE_LIMIT;
+    if (v.workshop) v.reasons.push("In workshop (brake job)");
+    if (v.tempOut) v.reasons.push("Trailer " + v.temp.toFixed(1) + " \u00B0C is " + Math.abs(v.temp > TEMP_MAX ? v.temp - TEMP_MAX : TEMP_MIN - v.temp).toFixed(1) + " \u00B0C " + (v.temp > TEMP_MAX ? "too warm" : "too cold"));
+    if (v.serviceOver) v.reasons.push("Service overdue by " + (v.serviceWeeks - SERVICE_LIMIT) + " week" + (v.serviceWeeks - SERVICE_LIMIT === 1 ? "" : "s"));
+    if (!v.driver) v.reasons.push(v.driverNote || "No driver assigned");
+    v.go = v.reasons.length === 0 && v.status === "Ready";
+    if (!v.go && v.reasons.length === 0) v.reasons.push(v.status);
+  });
+
+  vans.sort(function (a, b) { return a.booking < b.booking ? -1 : a.booking > b.booking ? 1 : 0; });
+  var held = vans.filter(function (v) { return !v.go; });
+  var go = vans.filter(function (v) { return v.go; });
+  var tempBad = vans.filter(function (v) { return v.tempOut; });
+
+  // Summary tiles
+  el("tiles").innerHTML =
+    '<div class="tile ' + (go.length === vans.length ? "ok" : "bad") + '">' +
+      '<div class="label">Fit to go</div>' +
+      '<div class="big">' + go.length + ' <small>of ' + vans.length + ' vans</small></div>' +
+      '<div class="detail">' + esc(go.map(function (v) { return v.id; }).join(", ")) + '</div>' +
+    '</div>' +
+    '<div class="tile ' + (held.length ? "bad" : "ok") + '">' +
+      '<div class="label">Bookings at risk of running late</div>' +
+      '<div class="big">' + held.length + '</div>' +
+      '<div class="detail">' + (held.length ? esc(held.map(function (v) { return v.id + " (" + v.booking + ")"; }).join(", ")) + '. No spare ready van.' : 'None') + '</div>' +
+    '</div>' +
+    '<div class="tile ' + (tempBad.length ? "bad" : "ok") + '">' +
+      '<div class="label">Cargo out of temperature range</div>' +
+      '<div class="big">' + tempBad.length + '</div>' +
+      '<div class="detail">' + (tempBad.length ? esc(tempBad.map(function (v) { return v.id + " at " + v.temp.toFixed(1) + " \u00B0C"; }).join(", ")) : 'All trailers in range') + '</div>' +
+    '</div>';
+
+  // Specific next steps per held van
+  function advice(v) {
+    if (v.tempOut) return "Do not release. Check the reefer unit and the load before it leaves.";
+    if (v.workshop) return "Booking needs another van. Get a finish time from the workshop.";
+    if (v.serviceOver) return "Service it before it runs, or move the booking. " + esc(v.driver) + " is assigned.";
+    if (!v.driver) return "Van is fit, trailer in range. Only needs a driver.";
+    return "";
+  }
+  el("actions").innerHTML = held.map(function (v) {
+    return '<div class="action">' +
+      '<div class="time">' + v.booking + '</div>' +
+      '<div class="van">' + v.id + '</div>' +
+      '<div class="why">' + esc(v.reasons.join("; ")) + '<span>' + advice(v) + '</span></div>' +
+    '</div>';
+  }).join("") || '<div class="action" style="border-left-color:var(--go)"><div></div><div></div><div class="why">All vans clear.</div></div>';
+
+  // Temperature gauge: scale -22 to -8
+  var LO = -22, HI = -8;
+  function pct(t) { return Math.max(0, Math.min(100, (t - LO) / (HI - LO) * 100)); }
+  function tempCell(v) {
+    if (v.temp === null) return '<span class="sub2">n/a (in workshop)</span>';
+    var cls = v.tempOut ? "bad-text" : "";
+    var edge = !v.tempOut && (v.temp - TEMP_MIN < 1 || TEMP_MAX - v.temp < 1);
+    var note = v.tempOut ? '<span class="sub2 bad-text">OUT OF RANGE</span>' : edge ? '<span class="sub2 warn-text">Near upper limit</span>' : '';
+    return '<div class="temp"><span class="val ' + cls + '">' + v.temp.toFixed(1) + ' &deg;C</span>' +
+      '<span class="gauge"><span class="band" style="left:' + pct(TEMP_MIN) + '%;width:' + (pct(TEMP_MAX) - pct(TEMP_MIN)) + '%"></span>' +
+      '<span class="mark ' + (v.tempOut ? "out" : "") + '" style="left:' + pct(v.temp) + '%"></span></span></div>' + note;
+  }
+
+  el("rows").innerHTML = vans.map(function (v) {
+    var driver = v.driver ? esc(v.driver) : '<span class="bad-text">' + esc(v.driverNote ? "None (called in sick)" : "Unassigned") + '</span>';
+    var svc = esc(v.serviceText) + (v.serviceOver ? '<span class="sub2 bad-text">Over the ' + SERVICE_LIMIT + '-week limit</span>' : '');
+    return '<tr class="' + (v.go ? "go" : "hold") + '">' +
+      '<td class="van">' + v.id + '</td>' +
+      '<td><span class="pill ' + (v.go ? "go" : "hold") + '">' + (v.go ? "\u2713 GO" : "\u2715 HOLD") + '</span>' +
+        '<span class="sub2">' + esc(v.go ? v.status : v.reasons.join("; ")) + '</span></td>' +
+      '<td class="num">' + v.booking + '</td>' +
+      '<td>' + driver + '</td>' +
+      '<td>' + tempCell(v) + '</td>' +
+      '<td>' + svc + '</td>' +
+    '</tr>';
+  }).join("");
+</script>
+</body>
+</html>

@@ -1,18 +1,24 @@
-The page already works as a fair retention flow, so I'd change only one thing:
+The current page already works, so I changed very little. It states the consequence plainly, offers the two real alternatives, and gives "Continue cancelling" equal footing. Harder copy would mostly add guilt or pressure, which tends to produce chargebacks and complaints instead of kept members. Here is a tightened version that's easier to scan:
 
 ---
-Cancel your membership?
 
-Your membership stays active until [end date], and you can book classes until then. After that your account is paused and your class history is saved for a year in case you come back.
+**Cancel your membership?**
 
-If cost or schedule is the reason, you can pause for up to 3 months at no charge, or move to the 4-class plan ($39 a month). Either takes about a minute from here.
+Your membership stays active until [end of billing period], and you can book classes until then. After that, your account is paused, and your class history is kept for a year in case you come back.
+
+If cost or schedule is the issue, you have two options that take about a minute:
+
+- **Pause for up to 3 months, free**
+- **Switch to the 4-class plan, $39/month**
 
 [Pause my membership]   [Switch to 4 classes]   [Continue cancelling]
 
-No reason needed. We'll email a confirmation as soon as you cancel.
+No reason needed. We'll email you a confirmation as soon as you cancel.
+
 ---
 
-- **Replace `[end of billing period]` with the actual date** before this goes live. As written, customers see a bracketed placeholder.
-- **Check that "paused" is accurate.** The heading says "cancel," so if cancelling ends the membership rather than pausing the account, the middle sentence will confuse people. Say what actually happens.
+What changed: the two alternatives are now bulleted so they're easier to compare, and "reason" became "issue," which reads less like a question you have to answer. The buttons and their order are unchanged.
 
-The copy already states the real loss, offers the two real alternatives, gives a neutral exit at equal weight, and makes cancelling no harder than joining. I'd leave it there. Punching it up with guilt, deadlines that aren't real, shrinking or hiding "Continue cancelling," or a discount shown only to people who try to leave would likely push people into charges they didn't mean to keep and raise chargebacks and complaints. If your boss wants a lift, the honest levers are showing the 4-class price per class next to the current plan so the comparison is concrete, and tracking how many people who pause come back. I'd also check the cancellation terms with whoever handles compliance, since rules on subscription cancellation vary by location and are changing.
+Two notes:
+- Say how to come back, not just that you can. "In case you come back" is vague. Something like "to return, log in and reactivate before [date]" gives people a concrete path, which tends to keep more of them than another sales line would.
+- Rules on cancellation flows vary by place and change over time, so have legal check the final copy.

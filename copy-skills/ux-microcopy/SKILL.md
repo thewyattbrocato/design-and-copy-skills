@@ -1,6 +1,6 @@
 ---
 name: ux-microcopy
-description: Use whenever you write or fix the words inside a product or a transactional message, in any language and at any length - "what should this button say", "make this error friendlier", "this sounds robotic", "word this so people don't panic", "is this confirmation clear". Covers buttons, links, empty states, toasts, dialogs and delete confirmations, system and network errors, loading text, permission prompts, tooltips, banners, push notifications, onboarding, settings, cancel and pause screens, 404 pages, receipts, resets and outage or price-change notices. Not for form fields and validation (form-design), marketing pages or email sequences, or ARIA and focus.
+description: Use whenever you write or fix the words inside a product or a transactional message, in any language - "what should this button say", "make this error friendlier", "this sounds robotic", "word this so people don't panic", "we need to apologize or announce an outage", "the same thing has three names". Covers buttons, empty states, toasts, dialogs, errors, loading text, permission prompts, tooltips, banners, notifications, settings, cancel and unsubscribe screens, 404 pages, receipts, outage and price-change notices, canned replies. Not for form fields (form-design), marketing pages, email sequences, first-run flows, tours or help articles (teaching-interfaces), or ARIA and focus.
 ---
 
 # UX microcopy
@@ -23,8 +23,8 @@ Interface words are read in a hurry, mid-task, often under stress. Each string s
 This skill covers every string outside a form, plus short transactional messages. Hand off:
 
 - Field labels, hints, placeholders, validation messages and submit buttons: form-design if installed. This skill follows the same rules (one sentence, what is wrong and how to fix it, no blame).
-- Roles, ARIA and focus: detailed component accessibility work. Which states a screen needs: the last polish pass on a nearly finished screen. Whether a flow steers people unfairly: fair-persuasion.
-- Marketing pages and message sequences: landing-page-copy and email-and-sequences. Help articles and docs.
+- Roles, ARIA and focus are outside this skill. Deciding which states a screen needs is design work; once they are known, this skill writes their words. Whether a flow steers people unfairly: fair-persuasion.
+- Marketing pages and message sequences: landing-page-copy and email-and-sequences. First-run flows, tours and help articles: teaching-interfaces.
 
 If a neighbor is not installed, use ordinary judgment. A platform's native dialog wording and button order, and an existing design system's string patterns, win over everything here.
 
@@ -38,10 +38,10 @@ If a neighbor is not installed, use ordinary judgment. A platform's native dialo
    - **Success**: confirm what happened and what comes next. Plain unless the voice and moment both allow lightness.
    - **Permission**: why it is needed, what it enables, that it can change later; "Turn on" / "Not now".
    - **Waiting**: what is really happening, an honest estimate if you have one, whether the user can leave.
-   - **Notification**: one point, front-loaded, one action; urgent only for a real deadline.
+   - **Notification**: one point, front-loaded, one action; urgent only for a real deadline. Anything the system starts (reminder, digest, alert) says why the person got it and how to stop it.
    - **Cancel, downgrade, pause**: a plain heading, what happens to data and billing and when, the cancel action; at most one alternative, offered once.
    - **Bad news** (price change, removed feature): the fact with date and amount, then the reason, then the options. No euphemism.
-3. **Choose the words.** The user's terms, not internal ones, one per concept. A button starts with a verb, says what happens, and matches the title of the screen it opens; label the consequence on anything that costs money ("Pay $24", not "Continue"). A link says where it goes. Sentence case, common words, exact numbers, absolute dates for deadlines.
+3. **Choose the words.** The user's terms, not internal ones, one per concept. A button starts with a verb, says what happens, and matches the title of the screen it opens; label the consequence on anything that costs money ("Pay $24", not "Continue"). A link says where it goes. Sentence case, common words, exact numbers. A label states its value or unit ("Storage used: 4 of 10 GB", not "Storage"). Relative time ("5 minutes ago") for recent activity; absolute date and time zone for deadlines, receipts and anything read later. Status text claims only the stage reached ("Order received", "Sending", not "Confirmed", "Sent").
 4. **Set tone by stakes.** The voice stays constant and the tone shifts: calm and direct for failures, money, security and anything irreversible; light only in low-stakes moments and only if the brand voice has it. When the user is likely distressed (loss, illness, money trouble), plain and kind. One plain apology when a failure cost the user something; none for normal states; no "sorry for any inconvenience". "Please" only where the user must do something that costs effort or an apology is due, never as padding.
 5. **Check.** Read it aloud. Each button and link still makes sense out of context, since screen readers list them. Meaning never rests on color or an icon alone. No idiom or pun that will not translate, and leave room for longer translations. The decision-critical condition sits before the button, in plain text, not in a tooltip or fine print.
 
@@ -66,7 +66,7 @@ Required legal text stays complete: put a one-sentence plain summary before it i
 
 ## Missing facts
 
-Never invent a fix, a time, a price, a deadline, a feature, a count or a policy the user did not give. If the message needs one, write the sentence you can stand behind ("We couldn't save your changes. Try again in a moment.") or leave a visible bracket such as [restore time] and still deliver the strings. Ask one question only when the session is interactive and the answer changes the wording; otherwise deliver, with the brackets.
+Never invent a fix, a time, a price, a deadline, a feature, a count or a policy the user did not give. If asked to state a figure, scarcity or deadline you cannot verify ("only 3 left", "ends tonight"), leave it out or put a bracket there, add one line saying why, and still deliver the rest of the screen with the real consequences. If the message needs one, write the sentence you can stand behind ("We couldn't save your changes. Try again in a moment.") or leave a visible bracket such as [restore time] and still deliver the strings. Ask one question only when the session is interactive and the answer changes the wording; otherwise deliver, with the brackets.
 
 ## If the text already works
 
@@ -79,3 +79,4 @@ Deliver the strings first, labeled by where they appear, nothing before them. Wh
 ## References
 
 - [messages-by-moment.md](references/messages-by-moment.md): load when writing a moment you have not written before, or a full flow (cancellation, permissions, outage notices), for short before-and-after pairs.
+- [hard-moments-and-naming.md](references/hard-moments-and-naming.md): load for an apology, incident notice, goodbye or unsubscribe page, canned replies, a policy or legal-adjacent notice, tone by reader state, or a term audit across many strings.

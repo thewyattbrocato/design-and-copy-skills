@@ -1,1 +1,1 @@
-No. Cramming three elements into one mark usually makes it illegible at small sizes, like bottle caps and taps. Lead with one: the bear is the most ownable. Use the crest or wordmark as a secondary lockup for labels and merch where there's room.
+No. Cramming all three makes the logo illegible at small sizes and hard to reproduce on caps, cans, and taps. Use one primary mark (the bear is the strongest bet) with the wordmark as a separate lockup. Save the crest and hops for labels, packaging details, and secondary graphics.

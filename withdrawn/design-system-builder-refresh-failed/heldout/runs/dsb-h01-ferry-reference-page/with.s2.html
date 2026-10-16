@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marlowe Ferries — Styles and Components (proposal)</title>
+<style>
+:root{
+  /* Color roles (first pass: semantic roles over raw hex) */
+  --color-brand-deep:#0B3C5D;
+  --color-brand:#1D6FA3;
+  --color-focus:#2A8BD1;
+  --color-surface-page:#f4f7fa;
+  --color-surface-raised:#ffffff;
+  --color-surface-tint:#E8F1F8;
+  --color-text-primary:#1a1a1a;
+  --color-text-secondary:#6b7785;
+  --color-text-on-brand:#ffffff;
+  --color-text-link:#1D6FA3;
+  --color-border-subtle:#d7dee5;
+  --color-border-control:#6b7785;
+  --color-danger:#c0392b;
+  --color-success:#1e8e5a;
+  --color-warning:#f2b84b;
+  /* Proposed new: status tints (not in the current CSS) */
+  --color-danger-tint:#fbeceb;
+  --color-success-tint:#e4f4ec;
+  --color-warning-tint:#fdf4de;
+
+  /* Type roles */
+  --text-caption:12px;
+  --text-body-sm:14px;
+  --text-body:16px;
+  --text-title:20px;
+  --text-heading:24px;
+  --text-display:32px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+
+  /* Spacing steps */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px;
+
+  /* Radii */
+  --radius-sm:4px; --radius-md:8px; --radius-lg:12px; --radius-pill:999px;
+
+  /* Controls */
+  --control-h:44px;
+  --control-h-deck:56px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:400 var(--text-body)/1.5 var(--font);color:var(--color-text-primary);background:var(--color-surface-page)}
+.wrap{max-width:980px;margin:0 auto;padding:var(--space-6) var(--space-4) var(--space-8)}
+h1,h2,h3,h4{margin:0;line-height:1.25}
+h1{font-size:var(--text-display);font-weight:700;color:var(--color-brand-deep)}
+h2{font-size:var(--text-heading);font-weight:700;color:var(--color-brand-deep);margin-bottom:var(--space-2)}
+h3{font-size:var(--text-title);font-weight:600;margin-bottom:var(--space-2)}
+h4{font-size:var(--text-body-sm);font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:var(--space-2)}
+p{margin:0 0 var(--space-3)}
+.lede{font-size:var(--text-title);max-width:62ch}
+.muted{color:var(--color-text-secondary)}
+.small{font-size:var(--text-body-sm)}
+section{margin-top:var(--space-7);padding-top:var(--space-5);border-top:1px solid var(--color-border-subtle)}
+.toc{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-5) 0 0;padding:0;list-style:none}
+.toc a{display:inline-block;padding:var(--space-1) var(--space-3);border:1px solid var(--color-border-subtle);border-radius:var(--radius-pill);background:var(--color-surface-raised);color:var(--color-text-link);text-decoration:none;font-size:var(--text-body-sm)}
+.toc a:hover{background:var(--color-surface-tint)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--color-focus);outline-offset:2px}
+.panel{background:var(--color-surface-raised);border:1px solid var(--color-border-subtle);border-radius:var(--radius-lg);padding:var(--space-5)}
+.grid{display:grid;gap:var(--space-4)}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.row{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:flex-end}
+.cell{display:flex;flex-direction:column;gap:var(--space-2);align-items:flex-start}
+.cap{font-size:var(--text-caption);color:var(--color-text-secondary)}
+code{font:var(--text-body-sm)/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--color-surface-tint);padding:1px 6px;border-radius:var(--radius-sm)}
+table{width:100%;border-collapse:collapse;font-size:var(--text-body-sm)}
+th,td{text-align:left;padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-border-subtle);vertical-align:top}
+th{font-weight:600;color:var(--color-text-secondary);font-size:var(--text-caption);text-transform:uppercase;letter-spacing:.06em}
+.scroll{overflow-x:auto}
+
+/* Swatches */
+.sw{background:var(--color-surface-raised);border:1px solid var(--color-border-subtle);border-radius:var(--radius-md);overflow:hidden}
+.sw i{display:block;height:56px;background:var(--c);border-bottom:1px solid var(--color-border-subtle)}
+.sw div{padding:var(--space-2) var(--space-3)}
+.sw b{display:block;font-size:var(--text-body-sm)}
+.sw span{display:block;font-size:var(--text-caption);color:var(--color-text-secondary)}
+
+/* Spacing + radii demos */
+.sp{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2);font-size:var(--text-body-sm)}
+.sp code{min-width:76px}
+.sp i{display:block;height:16px;background:var(--color-brand);border-radius:2px}
+.rd{width:72px;height:72px;background:var(--color-surface-tint);border:2px solid var(--color-brand)}
+
+/* ===== Components ===== */
+.btn{font:600 var(--text-body)/1 var(--font);min-height:var(--control-h);padding:0 var(--space-5);border-radius:var(--radius-md);border:2px solid transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);text-decoration:none}
+.btn-primary{background:var(--color-brand-deep);color:var(--color-text-on-brand)}
+.btn-primary:hover,.btn-primary.is-hover{background:var(--color-brand)}
+.btn-primary:active,.btn-primary.is-pressed{background:var(--color-brand-deep);transform:translateY(1px);box-shadow:inset 0 2px 0 rgba(0,0,0,.35)}
+.btn-secondary{background:var(--color-surface-raised);color:var(--color-brand-deep);border-color:var(--color-brand-deep)}
+.btn-secondary:hover,.btn-secondary.is-hover{background:var(--color-surface-tint)}
+.btn-secondary:active,.btn-secondary.is-pressed{background:var(--color-surface-tint);transform:translateY(1px);box-shadow:inset 0 2px 0 rgba(11,60,93,.25)}
+.btn.is-focus{outline:3px solid var(--color-focus);outline-offset:2px}
+.btn:disabled,.btn.is-disabled{background:var(--color-border-subtle);color:var(--color-text-secondary);border-color:transparent;cursor:not-allowed;box-shadow:none;transform:none}
+.btn-deck{min-height:var(--control-h-deck);padding:0 var(--space-6);font-size:var(--text-title)}
+.spin{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none;border-right-color:currentColor;opacity:.6}html{scroll-behavior:auto}}
+
+.link{color:var(--color-text-link);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;font-weight:400}
+.link:hover,.link.is-hover{text-decoration-thickness:2px;color:var(--color-brand-deep)}
+.link.is-focus{outline:3px solid var(--color-focus);outline-offset:2px;border-radius:var(--radius-sm)}
+
+.field{display:flex;flex-direction:column;gap:var(--space-1);width:100%;max-width:300px}
+.field label{font-size:var(--text-body-sm);font-weight:600}
+.input,.select{font:400 var(--text-body)/1.2 var(--font);min-height:var(--control-h);padding:0 var(--space-3);border:1px solid var(--color-border-control);border-radius:var(--radius-md);background:var(--color-surface-raised);color:var(--color-text-primary);width:100%}
+.input::placeholder{color:var(--color-text-secondary);opacity:1}
+.select{appearance:none;-webkit-appearance:none;padding-right:var(--space-6);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right var(--space-3) center}
+.input:hover,.select:hover,.input.is-hover{border-color:var(--color-brand-deep)}
+.input:focus,.select:focus,.input.is-focus{border-color:var(--color-brand);outline:3px solid var(--color-focus);outline-offset:0}
+.input.is-error{border:2px solid var(--color-danger)}
+.input:disabled,.select:disabled{background:var(--color-surface-page);border-color:var(--color-border-subtle);color:var(--color-text-secondary);cursor:not-allowed}
+.help{font-size:var(--text-caption);color:var(--color-text-secondary)}
+.err{font-size:var(--text-caption);color:var(--color-danger);display:flex;gap:var(--space-1);align-items:center;font-weight:600}
+
+.badge{display:inline-flex;align-items:center;gap:6px;padding:var(--space-1) var(--space-3) var(--space-1) var(--space-2);border-radius:var(--radius-pill);font-size:var(--text-body-sm);font-weight:600;line-height:1.3;color:var(--color-text-primary);white-space:nowrap}
+.badge svg{width:14px;height:14px;flex:none}
+.badge-ontime{background:var(--color-success-tint)}
+.badge-ontime svg{color:var(--color-success)}
+.badge-delayed{background:var(--color-warning-tint)}
+.badge-delayed svg{color:#a86f00}
+.badge-cancelled{background:var(--color-danger-tint)}
+.badge-cancelled svg{color:var(--color-danger)}
+
+.sailing{background:var(--color-surface-raised);border:1px solid var(--color-border-subtle);border-radius:var(--radius-lg);padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-3);width:100%;max-width:380px}
+.sailing-head{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-3)}
+.sailing-head h4{margin:0;font-size:var(--text-body);text-transform:none;letter-spacing:0;color:var(--color-text-primary);font-weight:600;line-height:1.3}
+.sailing-times{display:flex;align-items:center;gap:var(--space-4)}
+.sailing-times .lab{display:block;font-size:var(--text-caption);color:var(--color-text-secondary)}
+.sailing-times .t{font-size:var(--text-heading);font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+.sailing-times .t s{color:var(--color-text-secondary);font-weight:400;font-size:var(--text-body)}
+.sailing-times .arrow{color:var(--color-text-secondary)}
+.sailing-foot{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);border-top:1px solid var(--color-border-subtle);padding-top:var(--space-3)}
+.sailing.is-cancelled .t{color:var(--color-text-secondary);text-decoration:line-through}
+.sailing.is-cancelled{background:var(--color-surface-page)}
+
+.nav{background:var(--color-brand-deep);color:var(--color-text-on-brand);display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-5);padding:0 var(--space-4);border-radius:var(--radius-md)}
+.nav .brand{font-weight:700;font-size:var(--text-title);padding:var(--space-3) 0;color:inherit;text-decoration:none}
+.nav ul{display:flex;flex-wrap:wrap;gap:var(--space-1);list-style:none;margin:0;padding:0}
+.nav li a{display:flex;align-items:center;min-height:var(--control-h);padding:0 var(--space-3);color:inherit;text-decoration:none;font-weight:600;font-size:var(--text-body);border-radius:var(--radius-sm);border-bottom:3px solid transparent}
+.nav li a:hover{background:rgba(255,255,255,.14)}
+.nav li a[aria-current="page"]{border-bottom-color:var(--color-warning)}
+.nav a:focus-visible{outline-color:#fff}
+.nav .spacer{flex:1}
+
+.rule{background:var(--color-surface-tint);border-left:4px solid var(--color-brand);padding:var(--space-3) var(--space-4);border-radius:0 var(--radius-md) var(--radius-md) 0;font-size:var(--text-body-sm);margin-top:var(--space-4)}
+.dont{border-left-color:var(--color-danger);background:var(--color-danger-tint)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-ok" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="currentColor"/><path d="M4 7.2l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-late" viewBox="0 0 14 14"><path d="M7 1l6.5 11.5h-13z" fill="currentColor"/><path d="M7 5.5v3.2M7 10.2v.2" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="currentColor"/><path d="M4.8 4.8l4.4 4.4M9.2 4.8l-4.4 4.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="wrap">
+<header>
+  <p class="muted small" style="margin-bottom:var(--space-2)">Marlowe Ferries · Front end · Draft for review</p>
+  <h1>Styles and components</h1>
+  <p class="lede" style="margin-top:var(--space-3)">One set of decisions for the booking site and the deck tablet app. This page proposes the set; it does not describe the CSS as it is today.</p>
+  <ul class="toc">
+    <li><a href="#principles">Principles</a></li>
+    <li><a href="#color">Color</a></li>
+    <li><a href="#type">Type</a></li>
+    <li><a href="#space">Spacing &amp; radii</a></li>
+    <li><a href="#components">Components</a></li>
+    <li><a href="#migration">Merge map</a></li>
+    <li><a href="#change">Changing the system</a></li>
+  </ul>
+  <div class="rule"><b>How to read this.</b> Everything here was built from the extracted value lists you sent, not from the stylesheets or screens themselves. Merges are proposals. The status tints, the 56px deck control height and the hover and pressed treatments are new; the CSS has nothing to map them to. Contrast figures are hand-calculated and approximate, so re-run them in a checker before you sign off.</div>
+</header>
+
+<section id="principles">
+  <h2>Principles</h2>
+  <p class="muted">Ranked. When two conflict, the higher one wins. Each has a test anyone can run.</p>
+  <div class="grid g3">
+    <div class="panel"><h3>1. Readable at a glance</h3><p class="small">Deck crew read this standing up, often outdoors. Times and status are the largest, clearest things on a sailing.<br><b>Test:</b> squint at a screenshot; can you still tell the time and status?</p></div>
+    <div class="panel"><h3>2. Never color alone</h3><p class="small">Status always has a word and a shape as well as a color.<br><b>Test:</b> view in grayscale; all three statuses still differ.</p></div>
+    <div class="panel"><h3>3. One value per job</h3><p class="small">A new color, size or spacing replaces or merges with an existing one. It is not added beside it.<br><b>Test:</b> a pull request that adds a value names the one it replaces.</p></div>
+  </div>
+</section>
+
+<section id="color">
+  <h2>Color</h2>
+  <p class="muted">22 colors in use become 15 roles, plus 3 proposed status tints. Components use the role name, never the hex.</p>
+
+  <h4>Brand</h4>
+  <div class="grid g3">
+    <div class="sw" style="--c:#0B3C5D"><i></i><div><b>color.brand.deep</b><span>#0B3C5D · nav, primary button, headings</span></div></div>
+    <div class="sw" style="--c:#1D6FA3"><i></i><div><b>color.brand</b><span>#1D6FA3 · links, hover, active accents</span></div></div>
+    <div class="sw" style="--c:#2A8BD1"><i></i><div><b>color.focus</b><span>#2A8BD1 · focus ring only</span></div></div>
+  </div>
+
+  <h4 style="margin-top:var(--space-5)">Surface</h4>
+  <div class="grid g3">
+    <div class="sw" style="--c:#f4f7fa"><i></i><div><b>color.surface.page</b><span>#f4f7fa · page background</span></div></div>
+    <div class="sw" style="--c:#ffffff"><i></i><div><b>color.surface.raised</b><span>#ffffff · cards, inputs, panels</span></div></div>
+    <div class="sw" style="--c:#E8F1F8"><i></i><div><b>color.surface.tint</b><span>#E8F1F8 · hover fills, callouts</span></div></div>
+  </div>
+
+  <h4 style="margin-top:var(--space-5)">Text and border</h4>
+  <div class="grid g3">
+    <div class="sw" style="--c:#1a1a1a"><i></i><div><b>color.text.primary</b><span>#1a1a1a · body and labels</span></div></div>
+    <div class="sw" style="--c:#6b7785"><i></i><div><b>color.text.secondary</b><span>#6b7785 · captions, hints</span></div></div>
+    <div class="sw" style="--c:#d7dee5"><i></i><div><b>color.border.subtle</b><span>#d7dee5 · dividers, card edges</span></div></div>
+    <div class="sw" style="--c:#6b7785"><i></i><div><b>color.border.control</b><span>#6b7785 · input and select edges</span></div></div>
+  </div>
+
+  <h4 style="margin-top:var(--space-5)">Status</h4>
+  <div class="grid g3">
+    <div class="sw" style="--c:#1e8e5a"><i></i><div><b>color.status.success</b><span>#1e8e5a · on time</span></div></div>
+    <div class="sw" style="--c:#f2b84b"><i></i><div><b>color.status.warning</b><span>#f2b84b · delayed</span></div></div>
+    <div class="sw" style="--c:#c0392b"><i></i><div><b>color.status.danger</b><span>#c0392b · cancelled, errors</span></div></div>
+    <div class="sw" style="--c:#e4f4ec"><i></i><div><b>…success.tint</b><span>#e4f4ec · proposed</span></div></div>
+    <div class="sw" style="--c:#fdf4de"><i></i><div><b>…warning.tint</b><span>#fdf4de · proposed</span></div></div>
+    <div class="sw" style="--c:#fbeceb"><i></i><div><b>…danger.tint</b><span>#fbeceb · proposed</span></div></div>
+  </div>
+
+  <h4 style="margin-top:var(--space-5)">Pairs that matter (approximate)</h4>
+  <div class="panel scroll"><table>
+    <tr><th>Text on background</th><th>Ratio</th><th>Use</th></tr>
+    <tr><td>Primary text on white</td><td>about 17:1</td><td>All body text</td></tr>
+    <tr><td>White on brand.deep</td><td>about 11:1</td><td>Nav, primary button</td></tr>
+    <tr><td>Link on white</td><td>about 5.4:1</td><td>Text links</td></tr>
+    <tr><td>Secondary text on white</td><td>about 4.6:1</td><td>Passes. Only on white; on the page background (#f4f7fa) it falls just under 4.5, so use primary text there.</td></tr>
+    <tr><td>Danger on white</td><td>about 5.4:1</td><td>Error messages</td></tr>
+    <tr><td>White on status.success</td><td>about 4.1:1</td><td><b>Fails for small text.</b> Success is used for the icon and dot, never as a text background.</td></tr>
+  </table></div>
+</section>
+
+<section id="type">
+  <h2>Type</h2>
+  <p class="muted">14 sizes become 6 roles. System font stack, weights 400, 600 and 700 only. Body is 16px everywhere, including the tablet.</p>
+  <div class="panel scroll"><table>
+    <tr><th>Role</th><th>Size</th><th>Sample</th><th>Replaces</th></tr>
+    <tr><td><code>text.display</code></td><td>32</td><td style="font-size:32px;font-weight:700;line-height:1.2">Depart 14:35</td><td>28, 32, 40</td></tr>
+    <tr><td><code>text.heading</code></td><td>24</td><td style="font-size:24px;font-weight:700;line-height:1.2">Today’s sailings</td><td>22, 24</td></tr>
+    <tr><td><code>text.title</code></td><td>20</td><td style="font-size:20px;font-weight:600;line-height:1.3">Northport to Kellan Island</td><td>18, 20</td></tr>
+    <tr><td><code>text.body</code></td><td>16</td><td style="font-size:16px">Foot passengers board 20 minutes before departure.</td><td>16, 17</td></tr>
+    <tr><td><code>text.body-sm</code></td><td>14</td><td style="font-size:14px">Vessel and terminal details</td><td>14, 15</td></tr>
+    <tr><td><code>text.caption</code></td><td>12</td><td style="font-size:12px">Updated 2 minutes ago</td><td>11, 12, 13</td></tr>
+  </table></div>
+  <div class="rule">Times use tabular numerals (<code>font-variant-numeric: tabular-nums</code>) so a column of departures lines up.</div>
+</section>
+
+<section id="space">
+  <h2>Spacing and radii</h2>
+  <div class="grid g2">
+    <div class="panel">
+      <h3>Spacing: 8 steps</h3>
+      <p class="muted small">17 values become 8. Use the step number, not the pixels, in code.</p>
+      <div class="sp"><code>space.1</code><i style="width:4px"></i>4</div>
+      <div class="sp"><code>space.2</code><i style="width:8px"></i>8</div>
+      <div class="sp"><code>space.3</code><i style="width:12px"></i>12</div>
+      <div class="sp"><code>space.4</code><i style="width:16px"></i>16</div>
+      <div class="sp"><code>space.5</code><i style="width:24px"></i>24</div>
+      <div class="sp"><code>space.6</code><i style="width:32px"></i>32</div>
+      <div class="sp"><code>space.7</code><i style="width:48px"></i>48</div>
+      <div class="sp"><code>space.8</code><i style="width:64px"></i>64</div>
+      <p class="small muted" style="margin-top:var(--space-3)">Rule of thumb: tighter inside a component (1–3), looser between components (4–6), largest between page sections (7–8).</p>
+    </div>
+    <div class="panel">
+      <h3>Radii: 4 values</h3>
+      <p class="muted small">7 values become 4.</p>
+      <div class="row" style="align-items:flex-start">
+        <div class="cell"><div class="rd" style="border-radius:4px"></div><code>radius.sm</code><span class="cap">4 · nav items, small chips</span></div>
+        <div class="cell"><div class="rd" style="border-radius:8px"></div><code>radius.md</code><span class="cap">8 · buttons, inputs</span></div>
+        <div class="cell"><div class="rd" style="border-radius:12px"></div><code>radius.lg</code><span class="cap">12 · cards, panels</span></div>
+        <div class="cell"><div class="rd" style="border-radius:999px"></div><code>radius.pill</code><span class="cap">999 · badges</span></div>
+      </div>
+      <h3 style="margin-top:var(--space-5)">Control height</h3>
+      <p class="small">Every tappable control is at least <b>44px</b> tall. The deck tablet uses <b>56px</b> for the main action on a screen (proposed).</p>
+    </div>
+  </div>
+</section>
+
+<section id="components">
+  <h2>Components</h2>
+  <p class="muted">Eight components, all of which already exist. Each is shown in the states it can be in. Hover over the live ones, or press Tab to see focus.</p>
+
+  <!-- Primary button -->
+  <div class="panel" style="margin-top:var(--space-5)">
+    <h3>Primary button</h3>
+    <p class="small muted">The one main action on a screen: “Book”, “Confirm”, “Select sailing”. One per view.</p>
+    <div class="row">
+      <div class="cell"><button class="btn btn-primary">Book sailing</button><span class="cap">Default</span></div>
+      <div class="cell"><button class="btn btn-primary is-hover">Book sailing</button><span class="cap">Hover</span></div>
+      <div class="cell"><button class="btn btn-primary is-pressed">Book sailing</button><span class="cap">Pressed</span></div>
+      <div class="cell"><button class="btn btn-primary is-focus">Book sailing</button><span class="cap">Focus</span></div>
+      <div class="cell"><button class="btn btn-primary" disabled>Book sailing</button><span class="cap">Disabled</span></div>
+      <div class="cell"><button class="btn btn-primary" aria-busy="true"><span class="spin" aria-hidden="true"></span>Booking…</button><span class="cap">Loading</span></div>
+      <div class="cell"><button class="btn btn-primary btn-deck">Board vehicle</button><span class="cap">Deck size (56px)</span></div>
+    </div>
+    <div class="rule">Labels are verbs, sentence case, and stay on one line. A long label wraps to two lines and the button grows; it is never cut off. While loading, keep the width and disable repeat taps.</div>
+  </div>
+
+  <!-- Secondary button -->
+  <div class="panel" style="margin-top:var(--space-4)">
+    <h3>Secondary button</h3>
+    <p class="small muted">Alternative or supporting actions: “Back”, “View timetable”, “Cancel”.</p>
+    <div class="row">
+      <div class="cell"><button class="btn btn-secondary">View timetable</button><span class="cap">Default</span></div>
+      <div class="cell"><button class="btn btn-secondary is-hover">View timetable</button><span class="cap">Hover</span></div>
+      <div class="cell"><button class="btn btn-secondary is-pressed">View timetable</button><span class="cap">Pressed</span></div>
+      <div class="cell"><button class="btn btn-secondary is-focus">View timetable</button><span class="cap">Focus</span></div>
+      <div class="cell"><button class="btn btn-secondary" disabled>View timetable</button><span class="cap">Disabled</span></div>
+      <div class="cell"><button class="btn btn-secondary btn-deck">Back</button><span class="cap">Deck size</span></div>
+    </div>
+  </div>
+
+  <!-- Link -->
+  <div class="panel" style="margin-top:var(--space-4)">
+    <h3>Text link</h3>
+    <p class="small muted">Navigation inside a sentence or a short reference. If it performs an action, it is a button.</p>
+    <div class="row">
+      <div class="cell"><a class="link" href="#components">Fare conditions</a><span class="cap">Default</span></div>
+      <div class="cell"><a class="link is-hover" href="#components">Fare conditions</a><span class="cap">Hover</span></div>
+      <div class="cell"><a class="link is-focus" href="#components">Fare conditions</a><span class="cap">Focus</span></div>
+    </div>
+    <div class="rule">Links are always underlined. The color alone is not enough, because #1D6FA3 and black body text are too close in lightness for some readers.</div>
+  </div>
+
+  <!-- Input / select -->
+  <div class="panel" style="margin-top:var(--space-4)">
+    <h3>Text input</h3>
+    <p class="small muted">Always has a visible label above it. A placeholder is an example, never the label.</p>
+    <div class="row" style="align-items:flex-start">
+      <div class="field"><label for="i1">Booking reference</label><input id="i1" class="input" placeholder="e.g. MF48213"><span class="help">Default, with hint</span></div>
+      <div class="field"><label for="i2">Booking reference</label><input id="i2" class="input is-hover" value="MF48213"><span class="help">Hover</span></div>
+      <div class="field"><label for="i3">Booking reference</label><input id="i3" class="input is-focus" value="MF48213"><span class="help">Focus</span></div>
+      <div class="field"><label for="i4">Booking reference</label><input id="i4" class="input is-error" value="MF4821" aria-invalid="true" aria-describedby="e4"><span class="err" id="e4"><svg width="14" height="14" aria-hidden="true" style="color:var(--color-danger)"><use href="#i-x"/></svg>Enter all 7 characters.</span></div>
+      <div class="field"><label for="i5">Booking reference</label><input id="i5" class="input" value="MF48213" disabled><span class="help">Disabled</span></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:var(--space-4)">
+    <h3>Select</h3>
+    <p class="small muted">Same height, border and label as the text input. Uses the browser’s native list so it works on the tablet.</p>
+    <div class="row" style="align-items:flex-start">
+      <div class="field"><label for="s1">Departure terminal</label><select id="s1" class="select"><option>Northport</option><option>Kellan Island</option><option>Harrow Point</option></select><span class="help">Default</span></div>
+      <div class="field"><label for="s2">Departure terminal</label><select id="s2" class="select" style="border-color:var(--color-brand-deep)"><option>Northport</option></select><span class="help">Hover</span></div>
+      <div class="field"><label for="s3">Departure terminal</label><select id="s3" class="select" style="border-color:var(--color-brand);outline:3px solid var(--color-focus)"><option>Northport</option></select><span class="help">Focus</span></div>
+      <div class="field"><label for="s4">Departure terminal</label><select id="s4" class="select" disabled><option>Northport</option></select><span class="help">Disabled</span></div>
+    </div>
+    <div class="rule">Error and long-option behavior follow the text input: red 2px border plus a message below, and long option text is truncated in the closed control but shown in full in the list.</div>
+  </div>
+
+  <!-- Badge -->
+  <div class="panel" style="margin-top:var(--space-4)">
+    <h3>Status badge</h3>
+    <p class="small muted">Three statuses, no others. Each has a color, a shape and a word, so it reads in grayscale.</p>
+    <div class="row">
+      <div class="cell"><span class="badge badge-ontime"><svg aria-hidden="true"><use href="#i-ok"/></svg>On time</span><span class="cap">Circle + check</span></div>
+      <div class="cell"><span class="badge badge-delayed"><svg aria-hidden="true"><use href="#i-late"/></svg>Delayed</span><span class="cap">Triangle + bar</span></div>
+      <div class="cell"><span class="badge badge-cancelled"><svg aria-hidden="true"><use href="#i-x"/></svg>Cancelled</span><span class="cap">Circle + cross</span></div>
+    </div>
+    <div class="rule">The text is always primary black on a light tint. The status color appears only in the icon. A badge is not interactive. If a delay needs detail (“+17 min”), put it next to the badge, not inside it.</div>
+  </div>
+
+  <!-- Sailing card -->
+  <div class="panel" style="margin-top:var(--space-4)">
+    <h3>Sailing card</h3>
+    <p class="small muted">One departure. Times are the largest thing on it. Sample content only.</p>
+    <div class="row" style="align-items:flex-start">
+      <div class="cell" style="flex:1 1 300px">
+        <article class="sailing">
+          <div class="sailing-head"><h4>Northport to Kellan Island</h4><span class="badge badge-ontime"><svg aria-hidden="true"><use href="#i-ok"/></svg>On time</span></div>
+          <div class="sailing-times">
+            <div><span class="lab">Departs</span><span class="t">14:35</span></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div><span class="lab">Arrives</span><span class="t">15:40</span></div>
+          </div>
+          <div class="sailing-foot"><span class="small muted">MV Heron · Berth 2</span><button class="btn btn-primary">Select</button></div>
+        </article>
+        <span class="cap">On time</span>
+      </div>
+      <div class="cell" style="flex:1 1 300px">
+        <article class="sailing">
+          <div class="sailing-head"><h4>Northport to Kellan Island</h4><span class="badge badge-delayed"><svg aria-hidden="true"><use href="#i-late"/></svg>Delayed</span></div>
+          <div class="sailing-times">
+            <div><span class="lab">Departs</span><span class="t"><s><span class="sr" style="position:absolute;left:-9999px">Scheduled </span>14:35</s> 14:52</span></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div><span class="lab">Arrives</span><span class="t">15:57</span></div>
+          </div>
+          <div class="sailing-foot"><span class="small muted">MV Heron · Berth 2</span><button class="btn btn-primary">Select</button></div>
+        </article>
+        <span class="cap">Delayed: the old time is struck through, the new one is bold</span>
+      </div>
+      <div class="cell" style="flex:1 1 300px">
+        <article class="sailing is-cancelled">
+          <div class="sailing-head"><h4>Northport to Kellan Island</h4><span class="badge badge-cancelled"><svg aria-hidden="true"><use href="#i-x"/></svg>Cancelled</span></div>
+          <div class="sailing-times">
+            <div><span class="lab">Departs</span><span class="t">14:35</span></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div><span class="lab">Arrives</span><span class="t">15:40</span></div>
+          </div>
+          <div class="sailing-foot"><span class="small">Next sailing 16:10</span><button class="btn btn-secondary">View</button></div>
+        </article>
+        <span class="cap">Cancelled: no booking action; points to the next sailing</span>
+      </div>
+      <div class="cell" style="flex:1 1 300px">
+        <article class="sailing">
+          <div class="sailing-head"><h4>Harrow Point Passenger Terminal to Kellan Island North Landing</h4><span class="badge badge-ontime"><svg aria-hidden="true"><use href="#i-ok"/></svg>On time</span></div>
+          <div class="sailing-times">
+            <div><span class="lab">Departs</span><span class="t">06:05</span></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div><span class="lab">Arrives</span><span class="t">07:20</span></div>
+          </div>
+          <div class="sailing-foot"><span class="small muted">MV Fulmar · Berth 1</span><button class="btn btn-primary">Select</button></div>
+        </article>
+        <span class="cap">Long route name wraps; the badge stays top-right</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="panel" style="margin-top:var(--space-4)">
+    <h3>Top nav</h3>
+    <p class="small muted">Site-wide navigation. Five items at most. The current page is marked with an amber underline and <code>aria-current="page"</code>.</p>
+    <nav class="nav" aria-label="Example">
+      <a class="brand" href="#components">Marlowe Ferries</a>
+      <ul>
+        <li><a href="#components">Book</a></li>
+        <li><a href="#components" aria-current="page">Timetables</a></li>
+        <li><a href="#components">Fares</a></li>
+        <li><a href="#components">Alerts</a></li>
+        <li><a href="#components">Help</a></li>
+      </ul>
+    </nav>
+    <div class="rule">On narrow screens items wrap to a second row rather than hiding. If a menu collapse is needed, that is a new component and goes through the process below.</div>
+  </div>
+</section>
+
+<section id="migration">
+  <h2>Merge map</h2>
+  <p class="muted">Old value on the left, new role on the right. Nothing was dropped silently. Please check the starred rows, since they were close calls.</p>
+  <div class="panel scroll"><table>
+    <tr><th>Old values</th><th>Becomes</th></tr>
+    <tr><td>#0B3C5D, #0c3d5e, #0a3a5a</td><td><code>color.brand.deep</code> (#0B3C5D)</td></tr>
+    <tr><td>#1D6FA3, #1e70a4</td><td><code>color.brand</code> (#1D6FA3)</td></tr>
+    <tr><td>#2A8BD1</td><td><code>color.focus</code>. If it is used for anything besides focus today, tell me what.</td></tr>
+    <tr><td>#e8f1f8, #EAF2F9</td><td><code>color.surface.tint</code> (#E8F1F8)</td></tr>
+    <tr><td>#f4f7fa / #ffffff</td><td><code>color.surface.page</code> / <code>color.surface.raised</code></td></tr>
+    <tr><td>#1a1a1a, #222, #333</td><td><code>color.text.primary</code> (#1a1a1a)</td></tr>
+    <tr><td>#6b7785, #7a8794</td><td><code>color.text.secondary</code> (#6b7785). *#7a8794 is lighter and falls under 4.5:1 on white, so it can’t stay for text.</td></tr>
+    <tr><td>#d7dee5, #cfd8e0</td><td><code>color.border.subtle</code> (#d7dee5)</td></tr>
+    <tr><td>#c0392b, #d64533</td><td><code>color.status.danger</code> (#c0392b)</td></tr>
+    <tr><td>#1e8e5a, #23915c</td><td><code>color.status.success</code> (#1e8e5a)</td></tr>
+    <tr><td>#f2b84b</td><td><code>color.status.warning</code></td></tr>
+    <tr><td>Type 11, 12, 13 / 14, 15 / 16, 17 / 18, 20 / 22, 24 / 28, 32, 40</td><td>caption / body-sm / body / title / heading / display. *18 sits equally between 16 and 20; I chose 20.</td></tr>
+    <tr><td>Spacing 2, 4, 5 / 6, 8, 10 / 12, 14 / 16, 18, 20 / 24, 28 / 32, 40 / 48 / 64</td><td>space.1 / 2 / 3 / 4 / 5 / 6 / 7 / 8. *40 sits between 32 and 48; I chose 32.</td></tr>
+    <tr><td>Radii 2, 3, 4 / 6, 8 / 12 / 999</td><td>sm / md / lg / pill. *6 sits between 4 and 8; I chose 8.</td></tr>
+  </table></div>
+  <p class="small muted" style="margin-top:var(--space-3)">Suggested order: colors first (largest visible clean-up, lowest risk), then type, then spacing and radii. For spacing and radii, change a template at a time and compare screenshots. How many places each value appears: <b>[count from your repo]</b>.</p>
+</section>
+
+<section id="change">
+  <h2>Changing the system</h2>
+  <div class="grid g2">
+    <div class="panel">
+      <h3>Adding something</h3>
+      <p class="small">A new component or value is added when a second screen needs it and no existing one can be adjusted to fit. Otherwise it stays local to its screen and is marked as an exception in the code.</p>
+      <p class="small">New components must show every state (default, hover, pressed, focus, disabled, loading, error where relevant), the long-text case, and the empty case.</p>
+    </div>
+    <div class="panel">
+      <h3>Changing or removing</h3>
+      <p class="small">Four kinds of change: add, modify, deprecate, remove. Deprecate first, tell the people using it, give the replacement, then remove. Keep a one-line changelog entry for each.</p>
+      <p class="small"><b>Owner:</b> [name]. <b>Source of truth:</b> the tokens block at the top of this file, until both products read it from one shared file.</p>
+    </div>
+  </div>
+  <div class="rule dont"><b>Don’t:</b> add a gray “just a bit lighter”; write a hex value inside a component; show status by color alone; make a second sailing card for the tablet. If the tablet needs more, add a size to this one.</div>
+  <div class="rule"><b>Not covered yet:</b> dark mode, forms with several steps, modals, toasts, icons beyond the three status ones, and any motion beyond the loading spinner. None of them were in the list you sent.</div>
+</section>
+</div>
+</body>
+</html>

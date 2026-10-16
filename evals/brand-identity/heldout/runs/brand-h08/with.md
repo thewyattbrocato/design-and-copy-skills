@@ -1,28 +1,26 @@
-Your designer is half right. Embroidery does have hard limits, but "just how embroidery works" is the reason to make a separate embroidery version of the logo. It isn't a reason to accept a melted one. The same goes for the favicon.
+It's partly true, but it's not a reason to accept the result. Embroidery has real physical limits, and a good designer works within them by making a separate version of the logo for it. The tab icon problem has the same cause, and so does the fix.
 
 **Why it happens**
 
-Your logo was drawn for screens and print, where detail costs nothing. Both failures come from using that one full-detail file at a size and in a medium where the detail can't survive.
+Your logo was drawn for screens and print, where you can show hairlines, tiny type and subtle gradients. Small sizes and thread can't do that.
 
-- **Favicon:** The tab icon is 16 to 32 pixels square. A full logo shrunk to that size loses every thin line and small shape, so you get a gray smudge.
-- **Embroidery:** The mark is built from thread, and thread has a physical width of about 0.3 to 0.4 mm. Stitches also pull and spread the fabric. Two lines closer than about 1 mm merge. Text shorter than about 5 to 6 mm (roughly ¼ inch) tall fills in, and that's why the tagline is unreadable. Gradients and hairlines can't be stitched at all.
-- **What the designer should have done:** The designer, or the embroidery digitizer, should have made a simplified version before production. Skipping that step is the failure, so "that's how it works" isn't a fair answer.
+- **Favicon:** At 32px (16px on many displays) you have about a thousand pixels. A full logo shrunk to that size loses its thin strokes and small shapes, and what's left blurs into gray.
+- **Embroidery:** Thread is about 0.3–0.4mm wide, and stitches can't cross over each other cleanly. Lines thinner than roughly 1mm fill in or merge. Lowercase text under about 5–6mm tall (roughly ¼ inch) turns to mush. Fabric also puckers and pulls the stitches, which closes up fine gaps. Gradients and shading become a few flat thread colors.
 
-**What to do (a small project)**
+So your designer is right that the *full logo* can't be embroidered faithfully. They're wrong if they mean nothing can be done. That's a normal production step, usually called digitizing, and it normally starts from a simplified version of the logo.
 
-You need three small additions to the logo you already have, and the main logo stays as it is.
+**What to do**
 
-1. **A favicon-only mark.** Use one bold shape, such as a monogram or the single strongest part of the logo, on a solid background. Draw it for 16 to 32 px and check it at actual size. Don't shrink the full logo. Export it as SVG, plus a 32 px PNG and a 180 px touch icon.
-2. **An embroidery version.** It should be flat, with 3 to 5 solid colors at most, thicker strokes, wider gaps between elements, and no gradients or shadows. Have a digitizer prepare the stitch file (a DST or similar) from it. Ask them for a sample sew-out on the actual polo fabric before you order the full run.
-3. **Drop the tagline from the embroidery.** Leave it off the polos, or put it on a different item such as a print or a card. Taglines are better as a separate optional line than as part of the logo.
+You don't need a rebrand. You need two small, simplified versions of the mark:
 
-Also, one-color and reversed (light-on-dark) versions of the logo are useful for polos in different colors, so ask for those in the same pass.
+1. **Small-size mark for the favicon.** Use a single bold shape: an initial, a monogram, or the one strongest element of the logo. Use no tagline, no thin lines, and solid flat colors. Check it at 16 and 32px against both light and dark browser themes.
+2. **Embroidery version.** Use the same mark with thicker strokes and wider gaps between elements. Use no more than 2–3 flat colors and no gradients. Drop the tagline from the embroidery, or leave it off the polo and keep it for print. Taglines are usually the first thing to fail in thread. If you must have it, make it all-caps, a bold sans-serif, and at least ~6mm tall.
+3. **Redo the stitching.** Ask the embroiderer to re-digitize from the simplified art and send a sample stitch-out before they run the whole order. Reworking a file is cheap, but reworking 20 polos isn't.
 
-**How to brief the designer**
+**Practical next steps**
 
-Something like: "Please deliver a favicon mark and a simplified embroidery version (minimum line 1 mm, minimum text height 6 mm, no tagline). Test the favicon at 16 and 32 px." That's probably a few hours of work, not a rebrand.
+- Ask your designer for the simplified versions above, delivered as SVG. That's a small job, an hour or two for most designers. If they push back, point out that it's standard practice.
+- Give the embroiderer the simplified art, the exact size you want on the chest (3–4 inches wide is typical), and the thread colors.
+- For the tagline, keep it on the website, deck and print materials, where it works. It doesn't need to be on the shirt.
 
-**Assumptions**
-
-- I haven't seen your logo, so I can't say which element should become the favicon. If you send the file, I can suggest one.
-- The embroidery numbers are typical guidelines. Your digitizer's own minimums on your fabric take priority.
+I assumed your logo has fine line work plus a tagline, since that's what you described. If you send me the file, I can say specifically what to simplify.

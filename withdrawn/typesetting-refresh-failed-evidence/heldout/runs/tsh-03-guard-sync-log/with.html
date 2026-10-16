@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sync log viewer</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --panel: #ffffff;
+    --text: #1d2330;
+    --muted: #667085;
+    --line: #e3e6ec;
+    --err: #b42318;
+    --err-bg: #fdecea;
+    --warn: #8a5a00;
+    --warn-bg: #fff5dc;
+    --info: #3b5b8c;
+    --accent: #2457d6;
+    --hot: #b42318;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171d;
+      --panel: #1a1e26;
+      --text: #e3e7ee;
+      --muted: #98a2b3;
+      --line: #2b313c;
+      --err: #ff8a80;
+      --err-bg: #3a1f22;
+      --warn: #f2c35b;
+      --warn-bg: #352c16;
+      --info: #8fb0e6;
+      --accent: #7aa2ff;
+      --hot: #ff8a80;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: flex; flex-direction: column;
+    background: var(--bg); color: var(--text);
+    font-family: var(--sans); font-size: 15px; line-height: 1.5;
+  }
+  header {
+    background: var(--panel); border-bottom: 1px solid var(--line);
+    padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center;
+  }
+  h1 { font-size: 16px; margin: 0; font-weight: 650; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-left: auto; }
+  input[type=search], select, button {
+    font: inherit; font-size: 14px; color: var(--text);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
+    padding: 5px 10px; min-height: 32px;
+  }
+  input[type=search] { width: 230px; }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--muted); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .chip { display: inline-flex; gap: 6px; align-items: center; font-weight: 600; font-family: var(--mono); font-size: 13px; }
+  .chip .n { font-weight: 400; color: var(--muted); }
+  .chip[aria-pressed=false] { opacity: .45; text-decoration: line-through; }
+  .chip.ERROR { color: var(--err); }
+  .chip.WARN { color: var(--warn); }
+  .chip.INFO { color: var(--info); }
+  .jump { display: inline-flex; gap: 4px; }
+
+  main { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 16px; position: relative; }
+  #log {
+    overflow: auto; background: var(--panel); font-family: var(--mono); font-size: 13px; line-height: 1.55;
+    scroll-behavior: auto;
+  }
+  .row {
+    display: grid; grid-template-columns: 52px 78px 56px 120px 1fr; gap: 0 10px;
+    padding: 2px 12px 2px 8px; border-left: 4px solid transparent; border-bottom: 1px solid transparent;
+  }
+  .row:hover { background: color-mix(in srgb, var(--text) 5%, transparent); }
+  .row.ERROR { background: var(--err-bg); border-left-color: var(--err); }
+  .row.WARN { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.flash { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .ln { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; user-select: none; }
+  .ts { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lv { font-weight: 700; }
+  .ERROR .lv { color: var(--err); }
+  .WARN .lv { color: var(--warn); }
+  .INFO .lv { color: var(--info); }
+  .comp { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .msg { overflow-wrap: anywhere; }
+  .k { color: var(--muted); }
+  .hot .k, .hot .v { color: var(--hot); font-weight: 700; }
+  .WARN .hot .k, .WARN .hot .v { color: var(--warn); }
+  .row:not(.ERROR):not(.WARN) .hot .k, .row:not(.ERROR):not(.WARN) .hot .v { color: var(--hot); }
+  .kv { margin-right: 10px; white-space: nowrap; }
+  mark { background: #ffd54d; color: #000; border-radius: 2px; }
+  .raw { grid-column: 2 / -1; color: var(--muted); white-space: pre-wrap; }
+  .empty { padding: 40px; text-align: center; color: var(--muted); font-family: var(--sans); }
+
+  #ruler { position: relative; background: var(--bg); border-left: 1px solid var(--line); cursor: pointer; }
+  #ruler i { position: absolute; left: 2px; right: 2px; height: 3px; border-radius: 1px; }
+  #ruler i.ERROR { background: var(--err); height: 4px; }
+  #ruler i.WARN { background: var(--warn); }
+  #view { position: absolute; left: 0; right: 0; background: color-mix(in srgb, var(--text) 14%, transparent); pointer-events: none; min-height: 4px; }
+
+  #drop {
+    display: none; position: absolute; inset: 0; z-index: 5; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--bg) 85%, transparent); border: 3px dashed var(--accent);
+    font-size: 18px; font-weight: 600;
+  }
+  body.dragging #drop { display: flex; }
+  footer { padding: 6px 16px; font-size: 12px; color: var(--muted); background: var(--panel); border-top: 1px solid var(--line); }
+  kbd { font-family: var(--mono); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; }
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 40px 64px 50px 1fr; }
+    .comp { grid-column: 4; }
+    .msg { grid-column: 2 / -1; }
+    input[type=search] { width: 100%; }
+    .controls { margin-left: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sync log</h1>
+  <span class="meta" id="summary"></span>
+  <div class="controls">
+    <span id="chips" style="display:flex;gap:6px"></span>
+    <select id="comp" aria-label="Filter by component"><option value="">All components</option></select>
+    <input type="search" id="q" placeholder="Search (press /)" aria-label="Search log">
+    <span class="jump">
+      <button id="prev" title="Previous problem (p)">▲ Problem</button>
+      <button id="next" title="Next problem (n)">▼ Problem</button>
+    </span>
+    <button id="open">Open log…</button>
+    <input type="file" id="file" hidden>
+  </div>
+</header>
+<main>
+  <div id="log" tabindex="0" aria-label="Log lines"></div>
+  <div id="ruler" title="Errors and warnings. Click to jump."><div id="view"></div></div>
+  <div id="drop">Drop a log file to load it</div>
+</main>
+<footer>Open, drop, or paste a log to load it. Showing a sample until then. Keys: <kbd>n</kbd> next problem, <kbd>p</kbd> previous, <kbd>/</kbd> search.</footer>
+
+<script>
+const SAMPLE = `2025-03-11T02:00:04Z INFO  sync.orders  batch=0041 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=812 checksum=ok
+2025-03-11T02:00:05Z INFO  sync.orders  batch=0042 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=790 checksum=ok
+2025-03-11T02:00:07Z WARN  sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=4410 retry=1 reason=lock_timeout waited_ms=3000
+2025-03-11T02:00:12Z ERROR sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=9120 retry=3 reason=lock_timeout action=skipped_batch_for_rerun
+2025-03-11T02:00:13Z INFO  sync.orders  batch=0043 rows=4988 source=warehouse-east target=ledger-main elapsed_ms=801 checksum=ok
+2025-03-11T02:00:15Z INFO  sync.inventory batch=0102 rows=1830 source=warehouse-west target=ledger-main elapsed_ms=377 checksum=ok`;
+
+const $ = id => document.getElementById(id);
+const logEl = $('log'), ruler = $('ruler'), viewEl = $('view');
+const LINE = /^(\d{4}-\d\d-\d\dT[\d:.]+Z?)\s+([A-Za-z]+)\s+(\S+)\s*(.*)$/;
+const HOT_KEYS = new Set(['retry', 'reason', 'action', 'waited_ms', 'error', 'err']);
+const ORDER = ['ERROR', 'WARN', 'INFO'];
+
+let lines = [], visible = [], activeLevels = new Set(), problemIdx = [], cursor = -1;
+
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function parse(text) {
+  return text.split(/\r?\n/).filter(l => l.trim()).map((raw, i) => {
+    const m = LINE.exec(raw);
+    if (!m) return { n: i + 1, raw, level: '', comp: '', ts: '', msg: raw };
+    let level = m[2].toUpperCase();
+    if (level === 'WARNING') level = 'WARN';
+    if (level === 'ERR' || level === 'FATAL' || level === 'CRITICAL') level = 'ERROR';
+    return { n: i + 1, raw, ts: m[1], level, comp: m[3], msg: m[4] };
+  });
+}
+
+function isHot(k, v) {
+  if (HOT_KEYS.has(k)) return true;
+  if (k === 'checksum' && v !== 'ok') return true;
+  return false;
+}
+
+function highlight(text, q) {
+  if (!q) return esc(text);
+  const lo = text.toLowerCase(); let out = '', i = 0, j;
+  while ((j = lo.indexOf(q, i)) !== -1) {
+    out += esc(text.slice(i, j)) + '<mark>' + esc(text.slice(j, j + q.length)) + '</mark>';
+    i = j + q.length;
+  }
+  return out + esc(text.slice(i));
+}
+
+function msgHtml(msg, q) {
+  const re = /(\S+?)=(\S*)/g; let out = '', last = 0, m;
+  while ((m = re.exec(msg))) {
+    if (m.index > last) out += highlight(msg.slice(last, m.index), q);
+    out += `<span class="kv${isHot(m[1], m[2]) ? ' hot' : ''}"><span class="k">${highlight(m[1], q)}=</span><span class="v">${highlight(m[2], q)}</span></span>`;
+    last = re.lastIndex;
+  }
+  return out + highlight(msg.slice(last), q);
+}
+
+function load(text) {
+  lines = parse(text);
+  const counts = {}, comps = new Set();
+  lines.forEach(l => { if (l.level) counts[l.level] = (counts[l.level] || 0) + 1; if (l.comp) comps.add(l.comp); });
+  const levels = Object.keys(counts).sort((a, b) => {
+    const ia = ORDER.indexOf(a), ib = ORDER.indexOf(b);
+    return (ia < 0 ? 9 : ia) - (ib < 0 ? 9 : ib) || a.localeCompare(b);
+  });
+  activeLevels = new Set(levels);
+  $('chips').innerHTML = '';
+  levels.forEach(lv => {
+    const b = document.createElement('button');
+    b.className = 'chip ' + lv; b.setAttribute('aria-pressed', 'true');
+    b.innerHTML = `${esc(lv)} <span class="n">${counts[lv]}</span>`;
+    b.onclick = () => {
+      const on = !activeLevels.has(lv);
+      on ? activeLevels.add(lv) : activeLevels.delete(lv);
+      b.setAttribute('aria-pressed', on);
+      render();
+    };
+    $('chips').appendChild(b);
+  });
+  const sel = $('comp');
+  sel.innerHTML = '<option value="">All components</option>' +
+    [...comps].sort().map(c => `<option>${esc(c)}</option>`).join('');
+  const stamps = lines.filter(l => l.ts);
+  $('summary').textContent = stamps.length
+    ? `${lines.length.toLocaleString()} lines · ${stamps[0].ts.replace('T', ' ').replace('Z', '')} → ${stamps[stamps.length - 1].ts.slice(11).replace('Z', '')} UTC`
+    : `${lines.length.toLocaleString()} lines`;
+  cursor = -1;
+  render();
+  logEl.scrollTop = 0;
+}
+
+function render() {
+  const q = $('q').value.trim().toLowerCase(), comp = $('comp').value;
+  visible = lines.filter(l =>
+    (!l.level || activeLevels.has(l.level)) &&
+    (!comp || l.comp === comp) &&
+    (!q || l.raw.toLowerCase().includes(q)));
+  const multiDay = new Set(lines.map(l => l.ts.slice(0, 10))).size > 1;
+  const html = visible.map(l => {
+    if (!l.level) return `<div class="row"><span class="ln">${l.n}</span><span class="raw">${highlight(l.raw, q)}</span></div>`;
+    const t = multiDay ? l.ts.slice(5, 19).replace('T', ' ') : l.ts.slice(11, 19);
+    return `<div class="row ${esc(l.level)}" title="${esc(l.ts)}"><span class="ln">${l.n}</span><span class="ts">${esc(t)}</span><span class="lv">${esc(l.level)}</span><span class="comp" title="${esc(l.comp)}">${highlight(l.comp, q)}</span><span class="msg">${msgHtml(l.msg, q)}</span></div>`;
+  }).join('');
+  logEl.innerHTML = html || '<div class="empty">No lines match the current filters.</div>';
+  problemIdx = [];
+  visible.forEach((l, i) => { if (l.level === 'ERROR' || l.level === 'WARN') problemIdx.push(i); });
+  cursor = -1;
+  drawRuler();
+}
+
+function drawRuler() {
+  ruler.querySelectorAll('i').forEach(e => e.remove());
+  const n = visible.length || 1, frag = document.createDocumentFragment();
+  problemIdx.forEach(i => {
+    const m = document.createElement('i');
+    m.className = visible[i].level;
+    m.style.top = (i / n * 100) + '%';
+    frag.appendChild(m);
+  });
+  ruler.appendChild(frag);
+  updateView();
+}
+
+function updateView() {
+  const h = logEl.scrollHeight || 1;
+  viewEl.style.top = (logEl.scrollTop / h * 100) + '%';
+  viewEl.style.height = Math.min(100, logEl.clientHeight / h * 100) + '%';
+}
+
+function goTo(i) {
+  const row = logEl.children[i];
+  if (!row) return;
+  logEl.scrollTop = row.offsetTop - logEl.clientHeight / 3;
+  logEl.querySelectorAll('.flash').forEach(e => e.classList.remove('flash'));
+  row.classList.add('flash');
+}
+
+function jump(dir) {
+  if (!problemIdx.length) return;
+  // Start from what's on screen if no jump has happened yet.
+  if (cursor < 0) {
+    const top = logEl.scrollTop + 4;
+    let k = problemIdx.findIndex(i => logEl.children[i].offsetTop >= top);
+    if (k < 0) k = problemIdx.length;
+    cursor = dir > 0 ? k - 1 : k;
+  }
+  cursor = (cursor + dir + problemIdx.length) % problemIdx.length;
+  goTo(problemIdx[cursor]);
+}
+
+ruler.addEventListener('click', e => {
+  const r = ruler.getBoundingClientRect();
+  logEl.scrollTop = (e.clientY - r.top) / r.height * logEl.scrollHeight - logEl.clientHeight / 2;
+});
+logEl.addEventListener('scroll', updateView);
+window.addEventListener('resize', updateView);
+$('next').onclick = () => jump(1);
+$('prev').onclick = () => jump(-1);
+let timer;
+$('q').addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(render, 150); });
+$('comp').addEventListener('change', render);
+
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const typing = /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
+  if (e.key === '/' && !typing) { e.preventDefault(); $('q').focus(); }
+  else if (e.key === 'Escape' && typing) { document.activeElement.blur(); }
+  else if (!typing && e.key === 'n') jump(1);
+  else if (!typing && e.key === 'p') jump(-1);
+});
+
+function readFile(f) {
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = () => load(String(r.result));
+  r.readAsText(f);
+}
+$('open').onclick = () => $('file').click();
+$('file').onchange = e => readFile(e.target.files[0]);
+
+let depth = 0;
+window.addEventListener('dragenter', e => { e.preventDefault(); depth++; document.body.classList.add('dragging'); });
+window.addEventListener('dragleave', () => { if (--depth <= 0) { depth = 0; document.body.classList.remove('dragging'); } });
+window.addEventListener('dragover', e => e.preventDefault());
+window.addEventListener('drop', e => {
+  e.preventDefault(); depth = 0; document.body.classList.remove('dragging');
+  readFile(e.dataTransfer.files[0]);
+});
+window.addEventListener('paste', e => {
+  if (/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
+  const t = e.clipboardData.getData('text');
+  if (t.includes('\n')) load(t);
+});
+
+load(SAMPLE);
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tide lookup</title>
+<style>
+:root{
+  --bg:#f3f6f8;
+  --card:#ffffff;
+  --text:#14262e;
+  --muted:#5b6f78;
+  --line:#dde5ea;
+  --accent:#0b6e8a;
+  --accent-text:#ffffff;
+  --high:#0b6e8a;
+  --high-bg:#e1f2f7;
+  --low:#8a5a0b;
+  --low-bg:#f8eddb;
+  --focus:#1a8fb0;
+  --shadow:0 1px 2px rgba(20,38,46,.06),0 6px 20px rgba(20,38,46,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0e1a20;
+    --card:#15262e;
+    --text:#e6eff3;
+    --muted:#93a9b3;
+    --line:#26404b;
+    --accent:#4fb6d3;
+    --accent-text:#08202a;
+    --high:#7fd0e6;
+    --high-bg:#16404d;
+    --low:#e8c27d;
+    --low-bg:#4a3a1a;
+    --focus:#7fd0e6;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  line-height:1.5;
+}
+main{max-width:560px;margin:0 auto;padding:40px 20px 56px}
+header{margin-bottom:24px}
+h1{margin:0 0 4px;font-size:1.9rem;letter-spacing:-.01em;line-height:1.2}
+.sub{margin:0;color:var(--muted)}
+form{display:flex;gap:8px;flex-wrap:wrap}
+label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+input,button{font:inherit;font-size:1rem;border-radius:10px}
+input[type=search]{
+  flex:1 1 220px;
+  min-width:0;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  box-shadow:var(--shadow);
+}
+input::placeholder{color:var(--muted)}
+button{
+  padding:12px 22px;
+  border:0;
+  background:var(--accent);
+  color:var(--accent-text);
+  font-weight:600;
+  cursor:pointer;
+}
+button:hover{filter:brightness(1.08)}
+button:active{transform:translateY(1px)}
+input:focus-visible,button:focus-visible,.chip:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0;list-style:none}
+.chip{
+  font:inherit;
+  font-size:.9rem;
+  font-weight:500;
+  padding:6px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  cursor:pointer;
+}
+.chip:hover{border-color:var(--accent);filter:none}
+#out{margin-top:24px}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.card h2{margin:0;padding:16px 18px;font-size:1.15rem;border-bottom:1px solid var(--line)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px 18px;text-align:left}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+tbody tr+tr td{border-top:1px solid var(--line)}
+td.time,td.height{font-variant-numeric:tabular-nums}
+td.time{font-weight:600}
+th:last-child,td:last-child{text-align:right}
+.badge{
+  display:inline-block;
+  padding:2px 10px;
+  border-radius:999px;
+  font-size:.85rem;
+  font-weight:600;
+}
+.badge.high{background:var(--high-bg);color:var(--high)}
+.badge.low{background:var(--low-bg);color:var(--low)}
+.note{
+  padding:22px 18px;
+  text-align:center;
+  color:var(--muted);
+  background:var(--card);
+  border:1px dashed var(--line);
+  border-radius:14px;
+}
+.note strong{color:var(--text)}
+.note .chips{justify-content:center}
+footer{margin-top:28px;color:var(--muted);font-size:.85rem;text-align:center}
+@media (max-width:420px){
+  main{padding-top:28px}
+  th,td{padding:10px 12px}
+  button{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:no-preference){
+  #out>*{animation:rise .25s ease-out}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Tide lookup</h1>
+    <p class="sub">Pick a port to see its high and low tides.</p>
+  </header>
+
+  <form id="form" autocomplete="off">
+    <label for="port">Port name</label>
+    <input id="port" type="search" list="ports" placeholder="Port name, e.g. Kellmouth" autocapitalize="words" spellcheck="false">
+    <datalist id="ports"></datalist>
+    <button type="submit">Search</button>
+  </form>
+
+  <ul class="chips" id="quick" aria-label="Available ports"></ul>
+
+  <div id="out" aria-live="polite"></div>
+
+  <footer>Times are local to each port. Heights are in metres.</footer>
+</main>
+
+<script>
+const DATA={"Kellmouth":[["04:12","High","4.1 m"],["10:30","Low","0.6 m"],["16:44","High","4.3 m"],["22:51","Low","0.5 m"]],"Port Arnley":[["05:02","High","3.2 m"],["11:19","Low","0.9 m"]]};
+
+const portInput=document.getElementById('port');
+const out=document.getElementById('out');
+const quick=document.getElementById('quick');
+const ports=Object.keys(DATA);
+
+function el(tag,cls,text){
+  const e=document.createElement(tag);
+  if(cls)e.className=cls;
+  if(text!==undefined)e.textContent=text;
+  return e;
+}
+
+function chipList(names){
+  const ul=el('ul','chips');
+  names.forEach(n=>{
+    const li=document.createElement('li');
+    const b=el('button','chip',n);
+    b.type='button';
+    b.addEventListener('click',()=>{portInput.value=n;go();});
+    li.appendChild(b);
+    ul.appendChild(li);
+  });
+  return ul;
+}
+
+function note(){
+  const d=el('div','note');
+  for(const part of arguments)d.appendChild(part);
+  return d;
+}
+
+function showTable(name){
+  const card=el('section','card');
+  card.appendChild(el('h2',null,name));
+  const table=el('table');
+  const thead=document.createElement('thead');
+  const hr=document.createElement('tr');
+  ['Time','Tide','Height'].forEach(t=>{
+    const th=el('th',null,t);
+    th.scope='col';
+    hr.appendChild(th);
+  });
+  thead.appendChild(hr);
+  table.appendChild(thead);
+  const tbody=document.createElement('tbody');
+  DATA[name].forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.appendChild(el('td','time',r[0]));
+    const tide=el('td');
+    const kind=String(r[1]).toLowerCase()==='high'?'high':'low';
+    tide.appendChild(el('span','badge '+kind,(kind==='high'?'▲ ':'▼ ')+r[1]));
+    tr.appendChild(tide);
+    tr.appendChild(el('td','height',r[2]));
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  card.appendChild(table);
+  out.replaceChildren(card);
+}
+
+function go(){
+  const q=portInput.value.trim();
+  if(!q){
+    out.replaceChildren(note(el('span',null,'Type a port name above, or choose one from the list.')));
+    portInput.focus();
+    return;
+  }
+  const lq=q.toLowerCase();
+  const exact=ports.find(p=>p.toLowerCase()===lq);
+  if(exact){portInput.value=exact;showTable(exact);return;}
+  const partial=ports.filter(p=>p.toLowerCase().includes(lq));
+  if(partial.length===1){portInput.value=partial[0];showTable(partial[0]);return;}
+  if(partial.length>1){
+    out.replaceChildren(note(el('p',null,'Several ports match. Which one?'),chipList(partial)));
+    return;
+  }
+  const msg=el('p');
+  msg.append('No tide data for ');
+  msg.appendChild(el('strong',null,'“'+q+'”'));
+  msg.append('. Try one of these:');
+  out.replaceChildren(note(msg,chipList(ports)));
+}
+
+ports.forEach(p=>{
+  const o=document.createElement('option');
+  o.value=p;
+  document.getElementById('ports').appendChild(o);
+});
+chipList(ports).childNodes.forEach(li=>quick.appendChild(li.cloneNode(true)));
+quick.querySelectorAll('.chip').forEach(b=>{
+  b.addEventListener('click',()=>{portInput.value=b.textContent;go();});
+});
+
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();go();});
+</script>
+</body>
+</html>

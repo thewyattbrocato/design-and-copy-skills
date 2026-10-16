@@ -1,23 +1,27 @@
-**Short answer: no. What you have shows people completed the course and liked it. It doesn't show it worked.**
+**No, that isn't enough to show the program worked.** It shows the program ran smoothly and people liked it. It doesn't show that agents do their jobs better.
 
-- **Completion (12/12)** shows attendance. It says nothing about on-the-job performance.
-- **Survey (4.6/5)** shows people were satisfied. At most it flags unhappiness, and it doesn't show learning or behavior change.
-- **Quiz (91%)** is a same-day score on the course content. It shows people could answer at the end of the course. It doesn't show they can handle real tickets, or that they'll retain the skill a week or a month later. Whether it means much also depends on whether the questions test judgment in situations or just recall of policy.
+**What your three numbers tell you**
+- **12 of 12 finished.** Completion shows the course was deliverable. People tend to finish a required onboarding whether or not it works.
+- **4.6 out of 5 on the survey.** This tells you agents weren't unhappy. It doesn't tell you whether they learned anything or changed how they work.
+- **91% on the final quiz.** This is a same-day score on one test. Without a baseline or a later check, you can't tell learning from short-term recall or an easy quiz. If the quiz tests definitions rather than decisions, it says even less.
 
-Also, 12 people with no comparison group can't tell you whether the program changed anything. A cohort that did well might have done well anyway.
+There's also no comparison. You don't know how earlier cohorts, or agents who skipped the course, performed on the same measures.
 
 **What to tell your director**
+Something like:
 
-"The first cohort completed the program, rated it highly, and passed the final quiz at 91%. That tells us the program is delivered well and people learned the content. It doesn't yet tell us whether it changed how they handle customers. Here's how we'll find out."
+> "The first cohort completed the program with strong satisfaction and quiz results, so the rollout went well. Those are early signals, not proof of impact. To show it worked, I'll track [the metrics we already use for new agents] for this cohort against [previous cohort or current baseline] at [30/60/90 days]."
 
-Then propose a short follow-up:
+That is honest, and it shows you know what evidence would settle it.
 
-1. **Pick the metric you already track that onboarding should move**, such as [time to first independent ticket], [QA score], [reopen rate], [escalation rate], or [CSAT on their tickets]. Choose one or two, and write down what "worked" looks like before you pull the data.
-2. **Compare against something.** Use the previous cohort's numbers at the same point in tenure ([baseline from last cohort]), or compare against agents who skipped parts of the program.
-3. **Check retention.** Re-test a mixed set of scenario questions 1–2 weeks after the course, with changed details. A same-day score can't show this.
-4. **Observe real work.** Have a lead or QA score 3–5 real tickets per agent against a short rubric, such as [correct diagnosis, right escalation, tone].
-5. **Ask the agents and their leads** which parts they actually use on the job, and what they wished the course had covered. This is more useful than the 4.6.
+**Evidence that would actually show it worked**
+1. **Pick the metric the team already tracks and the behavior behind it.** Examples are time to independent handling, [CSAT on new-agent tickets], [QA score], [escalation or reopen rate] and [handle time]. Agree on these with your director before you collect more data.
+2. **Compare against a baseline.** Use the previous cohort's numbers at the same tenure, if you have them: [prior cohort metric] versus [this cohort metric]. With 12 people, treat any difference as suggestive, not conclusive.
+3. **Re-check on a later day.** Give a short set of realistic scenarios, such as a frustrated customer or a refund edge case. Use mixed cases with changed details, a week or two after the course. If agents still choose well, they've retained it.
+4. **Observe real work.** Have a lead or QA score a sample of each agent's live tickets or calls against a short rubric.
+5. **Ask the agents and their leads.** Ask which parts of the course they used on the job and where they got stuck. Ask the leads what the agents still get wrong. Compare agents who applied the skills with those who didn't.
+6. **Look at the quiz itself.** Check whether the items are scenarios ("what does this agent do next?") or definition recall. If they're recall, treat 91% as weak evidence.
 
-**Caveat:** I don't know your baseline or which metrics Fennick tracks, so I left those bracketed. Fill them in with your real numbers. Don't estimate them.
+**One caution:** if the metrics don't move, the course may not be the cause. Tools, a vague process or time pressure can hold agents back no matter how good the training is. Check for that before you add more training.
 
-If the follow-up data comes in positive, you'll have a much stronger claim. If it doesn't, you'll know which part of the program to fix.
+If you tell me which metrics Fennick Labs already tracks, I can turn this into a short measurement plan or a one-page summary for your director.

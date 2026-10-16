@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings · Orchard FM</title>
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --card: #ffffff;
+    --ink: #1f2a22;
+    --muted: #5b675f;
+    --line: #e2ddd0;
+    --accent: #2f6b3f;
+    --accent-ink: #ffffff;
+    --focus: #b4541a;
+    --scale: 1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141a16;
+      --card: #1e2620;
+      --ink: #eef2ec;
+      --muted: #a2afa5;
+      --line: #2f3a32;
+      --accent: #7fc08f;
+      --accent-ink: #0f1a12;
+      --focus: #f0a46a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: calc(16px * var(--scale));
+    line-height: 1.4;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px 96px; }
+  header { padding: 28px 0 12px; }
+  .brand { font-size: .8em; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  h1 { margin: 4px 0 4px; font-size: 1.75em; }
+  .sub { margin: 0; color: var(--muted); font-size: .9em; }
+  h2 {
+    margin: 26px 4px 8px; font-size: .78em; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .group {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; overflow: hidden;
+  }
+  .row { padding: 14px 16px; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .line { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .label { font-weight: 600; }
+  .hint { margin: 2px 0 0; color: var(--muted); font-size: .85em; }
+  .text { min-width: 0; flex: 1; }
+
+  /* switch */
+  .switch {
+    appearance: none; -webkit-appearance: none; flex: none;
+    width: 52px; height: 32px; border-radius: 16px; margin: 0;
+    background: #9aa39c; position: relative; cursor: pointer;
+    transition: background .15s; border: 0;
+  }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 26px; height: 26px; border-radius: 50%; background: #fff;
+    transition: transform .15s; box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  }
+  .switch:checked { background: var(--accent); }
+  .switch:checked::after { transform: translateX(20px); }
+  @media (prefers-reduced-motion: reduce) {
+    .switch, .switch::after { transition: none; }
+  }
+
+  /* segmented */
+  .seg { display: flex; margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .seg label { flex: 1; position: relative; }
+  .seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .seg span {
+    display: block; text-align: center; padding: 10px 6px; font-size: .9em;
+    border-left: 1px solid var(--line); min-height: 44px;
+  }
+  .seg label:first-child span { border-left: 0; }
+  .seg input:checked + span { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+  .seg input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: -3px; }
+  .seg small { display: block; font-weight: 400; opacity: .85; font-size: .78em; }
+
+  input[type=range] { width: 100%; margin: 10px 0 0; accent-color: var(--accent); height: 28px; }
+  .val { font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+  select {
+    font: inherit; color: var(--ink); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; min-height: 44px;
+  }
+
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .switch:focus-visible { outline-offset: 3px; }
+
+  .sample {
+    margin-top: 10px; padding: 10px 12px; border-radius: 10px;
+    background: var(--bg); border: 1px dashed var(--line);
+  }
+  .sample b { display: block; }
+  .sample.lyr { font-style: italic; }
+
+  .disabled { opacity: .5; }
+
+  .resetbox { margin-top: 26px; text-align: center; }
+  button.reset {
+    font: inherit; font-weight: 600; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 12px 18px;
+    min-height: 48px; cursor: pointer; width: 100%;
+  }
+  button.reset:hover { border-color: var(--accent); }
+  button.reset:disabled { opacity: .5; cursor: default; }
+  .note { color: var(--muted); font-size: .8em; margin: 8px 0 0; }
+
+  /* toast */
+  .toast {
+    position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 140%);
+    background: #1f2a22; color: #fff; border-radius: 12px;
+    padding: 8px 8px 8px 16px; display: flex; align-items: center; gap: 12px;
+    max-width: calc(100% - 32px); box-shadow: 0 6px 24px rgba(0,0,0,.3);
+    transition: transform .2s; z-index: 5; visibility: hidden;
+  }
+  .toast.show { transform: translate(-50%, 0); visibility: visible; }
+  .toast button {
+    font: inherit; font-weight: 700; color: #bfe5c8; background: transparent;
+    border: 0; padding: 10px 12px; min-height: 44px; cursor: pointer; border-radius: 8px;
+  }
+  @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (min-width: 700px) {
+    .wrap { padding-top: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Orchard FM</div>
+    <h1>Settings</h1>
+    <p class="sub">Changes save automatically on this device.</p>
+  </header>
+
+  <h2>Listening</h2>
+  <div class="group">
+    <div class="row">
+      <div class="label" id="q-l">Streaming quality</div>
+      <p class="hint" id="q-h"></p>
+      <div class="seg" role="radiogroup" aria-labelledby="q-l">
+        <label><input type="radio" name="quality" value="auto"><span>Auto</span></label>
+        <label><input type="radio" name="quality" value="low"><span>Low<small>saves data</small></span></label>
+        <label><input type="radio" name="quality" value="normal"><span>Normal</span></label>
+        <label><input type="radio" name="quality" value="high"><span>High</span></label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="line">
+        <div class="text">
+          <label class="label" for="crossfade-on">Crossfade between songs</label>
+          <p class="hint">Blend the end of one song into the next.</p>
+        </div>
+        <input type="checkbox" class="switch" id="crossfade-on" role="switch">
+      </div>
+      <div id="cf-box">
+        <div class="line" style="margin-top:10px">
+          <label for="crossfade" class="hint" style="margin:0">Length</label>
+          <span class="val" id="cf-val"></span>
+        </div>
+        <input type="range" id="crossfade" min="1" max="12" step="1">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="line">
+        <div class="text">
+          <label class="label" for="sleep">Default sleep timer</label>
+          <p class="hint">Used when you tap the moon in the player.</p>
+        </div>
+        <select id="sleep">
+          <option value="0">Off</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="90">90 minutes</option>
+          <option value="end">End of show</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <h2>Downloads &amp; alerts</h2>
+  <div class="group">
+    <div class="row">
+      <div class="line">
+        <div class="text">
+          <label class="label" for="wifi">Download only on Wi‑Fi</label>
+          <p class="hint" id="wifi-h"></p>
+        </div>
+        <input type="checkbox" class="switch" id="wifi" role="switch">
+      </div>
+    </div>
+    <div class="row">
+      <div class="line">
+        <div class="text">
+          <label class="label" for="notify">New-show notifications</label>
+          <p class="hint" id="notify-h"></p>
+        </div>
+        <input type="checkbox" class="switch" id="notify" role="switch">
+      </div>
+    </div>
+  </div>
+
+  <h2>Display</h2>
+  <div class="group">
+    <div class="row">
+      <div class="line">
+        <div class="text">
+          <label class="label" for="lyrics">Show lyrics</label>
+          <p class="hint">Display lyrics in the player when they’re available.</p>
+        </div>
+        <input type="checkbox" class="switch" id="lyrics" role="switch">
+      </div>
+    </div>
+    <div class="row">
+      <div class="line">
+        <label class="label" for="size">Text size</label>
+        <span class="val" id="size-val"></span>
+      </div>
+      <input type="range" id="size" min="0" max="4" step="1" aria-describedby="size-h">
+      <div class="sample" id="sample">
+        <b>Morning on the Square</b>
+        <span id="lyr-line">With Dot Halvorsen · Live from Main Street</span>
+      </div>
+      <p class="hint" id="size-h" style="margin-top:8px">Preview of how text will look across the app.</p>
+    </div>
+  </div>
+
+  <div class="resetbox">
+    <button class="reset" id="reset" type="button">Reset all to defaults</button>
+    <p class="note">You can undo a reset right after.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <span id="toast-msg"></span>
+  <button type="button" id="undo">Undo</button>
+</div>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var KEY = "orchardfm.settings.v1";
+  var DEFAULTS = {
+    quality: "auto", crossfade_on: false, crossfade: 4, sleep: "0",
+    wifi: true, notify: true, lyrics: true, size: 1
+  };
+  var SIZES = [
+    { n: "Small", s: 0.9 }, { n: "Default", s: 1 }, { n: "Large", s: 1.15 },
+    { n: "Larger", s: 1.3 }, { n: "Largest", s: 1.5 }
+  ];
+  var QHINT = {
+    auto: "Picks the best quality your connection can hold.",
+    low: "Lowest data use. Good for weak signal.",
+    normal: "Balanced sound and data use.",
+    high: "Best sound. Uses the most data."
+  };
+
+  var state = load();
+  var undoState = null, toastTimer = null;
+  var $ = function (id) { return document.getElementById(id); };
+
+  function load() {
+    var s = {}, k, saved = null;
+    try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+    for (k in DEFAULTS) s[k] = (saved && k in saved) ? saved[k] : DEFAULTS[k];
+    return s;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  function render() {
+    document.querySelectorAll('input[name=quality]').forEach(function (r) { r.checked = r.value === state.quality; });
+    $("q-h").textContent = QHINT[state.quality];
+    $("crossfade-on").checked = state.crossfade_on;
+    $("crossfade").value = state.crossfade;
+    $("crossfade").disabled = !state.crossfade_on;
+    $("cf-box").classList.toggle("disabled", !state.crossfade_on);
+    $("cf-val").textContent = state.crossfade_on ? state.crossfade + " sec" : "Off";
+    $("sleep").value = state.sleep;
+    $("wifi").checked = state.wifi;
+    $("wifi-h").textContent = state.wifi
+      ? "Shows download over Wi‑Fi only. Mobile data is not used."
+      : "Downloads may use mobile data.";
+    $("notify").checked = state.notify;
+    $("notify-h").textContent = state.notify
+      ? "We’ll tell you when a show you follow goes up."
+      : "Off. You won’t be alerted about new shows.";
+    $("lyrics").checked = state.lyrics;
+    $("lyr-line").textContent = state.lyrics
+      ? "“…and the porch light stays on till the song is done.”"
+      : "With Dot Halvorsen · Live from Main Street";
+    $("sample").classList.toggle("lyr", state.lyrics);
+    $("size").value = state.size;
+    $("size").setAttribute("aria-valuetext", SIZES[state.size].n);
+    $("size-val").textContent = SIZES[state.size].n;
+    document.documentElement.style.setProperty("--scale", SIZES[state.size].s);
+    $("reset").disabled = JSON.stringify(state) === JSON.stringify(DEFAULTS);
+  }
+
+  function set(k, v) {
+    if (state[k] === v) return;
+    state[k] = v; save(); render();
+  }
+
+  function toast(msg) {
+    $("toast-msg").textContent = msg;
+    $("live").textContent = "";
+    setTimeout(function () { $("live").textContent = msg + ". Undo available."; }, 50);
+    $("toast").classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 10000);
+  }
+  function hideToast() {
+    $("toast").classList.remove("show");
+    undoState = null;
+  }
+
+  document.querySelectorAll('input[name=quality]').forEach(function (r) {
+    r.addEventListener("change", function () { set("quality", r.value); });
+  });
+  $("crossfade-on").addEventListener("change", function (e) { set("crossfade_on", e.target.checked); });
+  $("crossfade").addEventListener("input", function (e) { set("crossfade", +e.target.value); });
+  $("sleep").addEventListener("change", function (e) { set("sleep", e.target.value); });
+  $("wifi").addEventListener("change", function (e) { set("wifi", e.target.checked); });
+  $("notify").addEventListener("change", function (e) { set("notify", e.target.checked); });
+  $("lyrics").addEventListener("change", function (e) { set("lyrics", e.target.checked); });
+  $("size").addEventListener("input", function (e) { set("size", +e.target.value); });
+
+  $("reset").addEventListener("click", function () {
+    undoState = JSON.parse(JSON.stringify(state));
+    state = JSON.parse(JSON.stringify(DEFAULTS));
+    save(); render();
+    toast("Settings reset to defaults");
+  });
+  $("undo").addEventListener("click", function () {
+    if (!undoState) return;
+    state = undoState; save(); render();
+    hideToast();
+    $("live").textContent = "";
+    setTimeout(function () { $("live").textContent = "Reset undone"; }, 50);
+    $("reset").focus();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,18 +1,16 @@
-**Refine it.** Keep the dog and redraw it as a clean vector. Don't start over.
+**Refine it. Keep the dog, and redraw it as clean vector art.**
 
-The dog is the asset. Your neighborhood already knows it, and a new mark would make three locations look like they had no history. The problem is the execution, not the idea: a wobbly pencil line doesn't scale to signage, embroidery, or a favicon, and a rounded font next to it looks dated beside a "clean professional" brief. Both are fixable without losing recognition.
+The dog is the asset. People in the neighborhood already know it, and a dog with one ear up says "vet" at a glance. Replacing it would throw away recognition you paid for over twelve years, and a new mark would take years to earn back that familiarity. The problem is the execution, not the idea. A wobbly pencil line won't survive a 1-inch favicon, a one-color fax, or a vinyl sign cut, so the fix is a faithful redraw.
 
 What I'd do:
 
-1. **Trace the dog as a flat, solid silhouette.** Keep the one ear up, the pose, and the overall proportions. Simplify the interior lines. Cut detail that disappears at small sizes, like eye lines, whiskers, and fur texture.
-2. **Test it solid black first.** Check it at 32px and reversed on a dark background. If the ear and head shape still read, the mark works.
-3. **Redraw the name in a custom-adjusted version of the rounded face** (or a close, cleaner rounded sans), with spacing tuned by eye. Give the letters the same weight as the dog so they feel like one mark.
-4. **Build three lockups:** horizontal, stacked, and dog-only. Add a separate line for each location ("North," "Westside," etc.) rather than building it into the mark.
-5. **Keep the existing color** if you have one. Recognition is worth more than a fresh palette.
+1. **Trace the dog into a solid, flat vector shape.** Keep the pose, the raised ear, and the overall silhouette. Smooth the lines, and simplify any interior detail that would disappear at small sizes. Fix the proportions so it reads as a deliberate illustration rather than a sketch.
+2. **Redraw the name in a clean custom lettering treatment** that keeps the rounded feel. Adjust the spacing and one or two letterforms so it isn't just a stock font. This gives your partner the "professional" look without losing the warmth.
+3. **Test it in black first**, at 16–32 px, then reversed on a dark background. If the ear and the silhouette still read, you're in good shape.
+4. **Build the three-location system around it:** a horizontal lockup, a stacked version, and the dog alone for avatars and signage. Use one color family across all three sites and let each location's name or address sit as a secondary line.
 
-Before you roll it out to three locations, check two things:
+Show your partner the original beside the redraw, on a real sign and a website header. Then ask a few regulars which one they recognize. That's the evidence that the refinement works, and it gives you a concrete answer if your partner still wants a fresh start.
 
-- **Ask some regulars and staff** to compare the old and new versions side by side. Ask "Is this our dog?" If most say yes, you have your evidence. I can't tell you the recognition level from here.
-- **Ask a trademark attorney to run a clearance search** on the redrawn mark. Twelve years of use may or may not be registered, and I can't confirm uniqueness.
-
-Tell your partner the cost of a refinement is low, and the thing you'd lose by replacing it is the one thing your neighborhood already recognizes.
+Two things to check before you commit:
+- **Ownership of the original drawing.** The kid's family may have a claim to the artwork. Get a short written OK to adapt it before you publish the redraw, and keep the paperwork.
+- **Trademark search.** If you plan to register the mark, have a lawyer clear the redrawn version. I can't tell you it's unique.

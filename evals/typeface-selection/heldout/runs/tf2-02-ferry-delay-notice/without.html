@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbor Line Ferry – Sailing Status</title>
+<style>
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --line: #000;
+    --warn-bg: #ffd400;
+    --ok: #006b2d;
+    --delay: #8a3b00;
+    --cancel: #b00020;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .banner {
+    background: var(--warn-bg);
+    color: #000;
+    border-bottom: 6px solid #000;
+    padding: 20px 16px;
+  }
+  .banner .brand {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .banner h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 900;
+  }
+  .banner p { margin: 0; font-size: 19px; font-weight: 600; }
+  main { padding: 16px; max-width: 640px; margin: 0 auto; }
+  h2 { font-size: 22px; margin: 8px 0 12px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid var(--line);
+  }
+  caption {
+    text-align: left;
+    font-size: 15px;
+    padding-bottom: 6px;
+    font-weight: 600;
+  }
+  th, td {
+    padding: 14px 10px;
+    text-align: left;
+    border-bottom: 2px solid var(--line);
+    vertical-align: middle;
+  }
+  thead th {
+    background: #000;
+    color: #fff;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  td.time {
+    font-size: 24px;
+    font-weight: 800;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  td.boat { font-size: 18px; font-weight: 600; }
+  .status {
+    display: inline-block;
+    font-weight: 800;
+    font-size: 17px;
+    line-height: 1.2;
+  }
+  .status::before { display: inline-block; margin-right: 6px; font-weight: 900; }
+  .ok { color: var(--ok); }
+  .ok::before { content: "\2713"; }
+  .delay { color: var(--delay); }
+  .delay::before { content: "\25B2"; }
+  .cancel { color: var(--cancel); }
+  .cancel::before { content: "\2715"; }
+  tr.is-cancelled td.time, tr.is-cancelled td.boat { text-decoration: line-through; text-decoration-thickness: 2px; }
+  footer {
+    margin-top: 24px;
+    border: 3px solid #000;
+    padding: 16px;
+    text-align: center;
+  }
+  footer p { margin: 0 0 8px; font-weight: 600; }
+  footer a {
+    display: block;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 900;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  footer a:focus-visible { outline: 4px solid #0050d0; outline-offset: 3px; }
+  .updated { font-size: 15px; margin: 12px 0 0; text-align: center; }
+  @media (max-width: 380px) {
+    th, td { padding: 12px 6px; }
+    td.time { font-size: 21px; }
+    .status, td.boat { font-size: 16px; }
+    .banner h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+  <header class="banner" role="alert">
+    <p class="brand">Harbor Line Ferry</p>
+    <h1>Sailings are delayed</h1>
+    <p>Heavy fog is slowing crossings. Some departures are running 15 minutes late and one is cancelled. Please check the times below.</p>
+  </header>
+
+  <main>
+    <h2>Next 6 departures</h2>
+    <table>
+      <caption>Updated 2:40 PM</caption>
+      <thead>
+        <tr><th scope="col">Time</th><th scope="col">Boat</th><th scope="col">Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="time">3:00 PM</td>
+          <td class="boat">Osprey</td>
+          <td><span class="status delay">Delayed 15 min</span></td>
+        </tr>
+        <tr class="is-cancelled">
+          <td class="time">3:30 PM</td>
+          <td class="boat">Heron</td>
+          <td><span class="status cancel">Cancelled</span></td>
+        </tr>
+        <tr>
+          <td class="time">4:00 PM</td>
+          <td class="boat">Osprey</td>
+          <td><span class="status delay">Delayed 15 min</span></td>
+        </tr>
+        <tr>
+          <td class="time">4:30 PM</td>
+          <td class="boat">Kittiwake</td>
+          <td><span class="status ok">On time</span></td>
+        </tr>
+        <tr>
+          <td class="time">5:00 PM</td>
+          <td class="boat">Heron</td>
+          <td><span class="status ok">On time</span></td>
+        </tr>
+        <tr>
+          <td class="time">5:30 PM</td>
+          <td class="boat">Kittiwake</td>
+          <td><span class="status ok">On time</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <footer>
+      <p>Questions? Call the terminal:</p>
+      <a href="tel:+15555550142">(555) 555-0142</a>
+    </footer>
+  </main>
+</body>
+</html>

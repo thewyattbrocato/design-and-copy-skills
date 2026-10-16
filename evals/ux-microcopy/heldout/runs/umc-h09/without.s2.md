@@ -1,19 +1,16 @@
-**Headline:** Walks your dog will wait by the door for.
+Here are the options. I counted every character, including spaces and punctuation.
 
-**Subhead:** 30- or 60-minute walks, and a photo sent to you afterward so you can see how it went.
+**(a) Free-ride period about to end**
 
-**Button:** Book a walk
+1. `30 minutes in! Your free ride period ends soon.` (47)
+2. `Free time ends soon, then it's billed per minute.` (49)
+3. `Free ride time is almost up. Per-minute billing comes next.` (59)
 
-**Notes**
+**(b) Reserved bike held for 5 more minutes**
 
-- **Insured and background-checked:** I left both claims out. Until you've seen the paperwork, publishing them could be a false claim, and it's a liability for you and the owner if a customer relies on it. Once the owner sends proof, you could add a line under the button, such as "Fully insured. Every walker background-checked."
-- **Social proof:** I didn't add anything like "trusted by local dog owners" because you have no reviews yet. The photo after each walk is your strongest trust signal at launch, so the subhead leads with it.
-- **Button:** "Book a walk" assumes visitors can book or request a walk. If the first step is a quote or a meet-and-greet, use "Request a walk" or "Get started" instead.
+1. `5 minutes left to grab your reserved bike.` (42)
+2. `Your bike is held for 5 more minutes. Go unlock it!` (51)
+3. `Your reservation ends in 5 min. Your bike's waiting!` (52)
 
-**Alternate headlines**
-
-- Your dog's favorite part of the day.
-- A good walk, and the photo to prove it.
-- Walks they'll love. Photos you will too.
-
-If you tell me the city and the owner's tone (playful or more professional), I can tailor the copy further.
+- **Price:** I left the per-minute price out. Options (a)2 and (a)3 mention per-minute billing, so you could add the rate to either one. Both are already close to the limit (49 and 59), so you'd need to shorten the wording. For example, `Free time ends soon. Then $X/min.` leaves plenty of room.
+- **Emoji:** I didn't use any. They can count as 2 or more characters and render differently across devices, which is risky at the 60-character limit.

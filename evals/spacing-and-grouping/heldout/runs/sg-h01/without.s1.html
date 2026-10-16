@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palabra – Profile settings</title>
+<style>
+  :root {
+    --bg: #f6f3ee;
+    --card: #ffffff;
+    --ink: #1f2a2e;
+    --muted: #5f6b70;
+    --line: #dcd7cf;
+    --accent: #1d7a5f;
+    --accent-ink: #ffffff;
+    --accent-soft: #e2f1ec;
+    --danger: #b3261e;
+    --danger-soft: #fbeceb;
+    --focus: #1a5fd0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14191b;
+      --card: #1d2427;
+      --ink: #eef1f0;
+      --muted: #a2adb0;
+      --line: #364146;
+      --accent: #4cc29b;
+      --accent-ink: #0b1f18;
+      --accent-soft: #1d3a31;
+      --danger: #ff8a80;
+      --danger-soft: #3a2220;
+      --focus: #7aa7ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.45;
+    padding: 32px 16px 56px;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; }
+  header { margin-bottom: 20px; }
+  .brand { font-weight: 700; color: var(--accent); letter-spacing: .02em; font-size: .95rem; }
+  h1 { font-size: 1.6rem; margin: 4px 0 4px; }
+  header p { margin: 0; color: var(--muted); }
+  form, .danger {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .field { margin-bottom: 20px; }
+  label, .label { display: block; font-weight: 600; margin-bottom: 6px; }
+  .hint { color: var(--muted); font-size: .875rem; margin-top: 4px; }
+  input[type="text"], input[type="time"], select {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  input:focus-visible, select:focus-visible, button:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+  h2 {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin: 28px 0 8px;
+  }
+  .toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .toggle:last-of-type { border-bottom: 1px solid var(--line); }
+  .toggle .t { font-weight: 600; }
+  .toggle .d { color: var(--muted); font-size: .875rem; }
+  .switch { position: relative; flex: none; width: 48px; height: 28px; }
+  .switch input {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    margin: 0; opacity: 0; cursor: pointer; z-index: 1;
+  }
+  .track {
+    position: absolute; inset: 0;
+    background: var(--line);
+    border-radius: 999px;
+    transition: background .15s;
+  }
+  .track::after {
+    content: "";
+    position: absolute; top: 3px; left: 3px;
+    width: 22px; height: 22px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,.35);
+    transition: transform .15s;
+  }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+  .switch input:focus-visible + .track { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .actions { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
+  .btn {
+    font: inherit; font-weight: 600;
+    border-radius: 9px;
+    padding: 11px 22px;
+    min-height: 44px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .status { color: var(--accent); font-weight: 600; font-size: .9rem; }
+  .danger { margin-top: 20px; border-color: var(--danger); background: var(--danger-soft); }
+  .danger h2 { margin-top: 0; color: var(--danger); }
+  .danger p { margin: 0 0 14px; }
+  .btn-danger { background: transparent; color: var(--danger); border-color: var(--danger); }
+  .btn-danger:hover { background: var(--danger); color: var(--card); }
+  .confirm { display: none; margin-top: 16px; }
+  .confirm.open { display: block; }
+  .confirm .btn-danger { background: var(--danger); color: var(--card); }
+  .confirm .btn-danger:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .confirm .actions { margin-top: 12px; }
+  @media (prefers-reduced-motion: reduce) {
+    .track, .track::after { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Palabra</div>
+    <h1>Profile settings</h1>
+    <p>Manage how you learn and how Palabra keeps you on track.</p>
+  </header>
+
+  <form id="settings" novalidate>
+    <div class="field">
+      <label for="name">Display name</label>
+      <input type="text" id="name" name="name" value="Alex Rivera" maxlength="40" autocomplete="nickname">
+      <div class="hint">Shown on leaderboards and in friend lists.</div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="native">Native language</label>
+        <select id="native" name="native">
+          <option>English</option>
+          <option>Spanish</option>
+          <option>French</option>
+          <option>German</option>
+          <option>Portuguese</option>
+          <option>Mandarin Chinese</option>
+          <option>Japanese</option>
+          <option>Arabic</option>
+          <option>Hindi</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="goal">Learning goal</label>
+        <select id="goal" name="goal">
+          <option>Travel &amp; conversation</option>
+          <option>Career &amp; business</option>
+          <option>School or exams</option>
+          <option>Connect with family &amp; friends</option>
+          <option>Culture, media &amp; fun</option>
+          <option>Moving abroad</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="reminder">Daily reminder time</label>
+      <input type="time" id="reminder" name="reminder" value="19:00">
+      <div class="hint">We'll nudge you once a day at this time.</div>
+    </div>
+
+    <h2>Preferences</h2>
+    <div class="toggle">
+      <div>
+        <div class="t" id="sound-t">Sound effects</div>
+        <div class="d">Play chimes for correct answers and lesson completion.</div>
+      </div>
+      <span class="switch">
+        <input type="checkbox" role="switch" id="sound" aria-labelledby="sound-t" checked>
+        <span class="track"></span>
+      </span>
+    </div>
+    <div class="toggle">
+      <div>
+        <div class="t" id="streak-t">Streak emails</div>
+        <div class="d">Get an email when your streak is about to end.</div>
+      </div>
+      <span class="switch">
+        <input type="checkbox" role="switch" id="streak" aria-labelledby="streak-t" checked>
+        <span class="track"></span>
+      </span>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <span class="status" id="status" role="status" aria-live="polite"></span>
+    </div>
+  </form>
+
+  <section class="danger" aria-labelledby="danger-h">
+    <h2 id="danger-h">Delete account</h2>
+    <p>Permanently delete your Palabra account, progress, and streak. This can't be undone.</p>
+    <button type="button" class="btn btn-danger" id="delete-open" aria-expanded="false" aria-controls="confirm">Delete account…</button>
+    <div class="confirm" id="confirm">
+      <label for="confirm-input">Type <strong>DELETE</strong> to confirm</label>
+      <input type="text" id="confirm-input" autocomplete="off" spellcheck="false">
+      <div class="actions">
+        <button type="button" class="btn btn-danger" id="delete-go" disabled>Permanently delete</button>
+        <button type="button" class="btn btn-ghost" id="delete-cancel">Cancel</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  var form = document.getElementById('settings');
+  var status = document.getElementById('status');
+  var timer;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('name');
+    if (!name.value.trim()) {
+      status.style.color = 'var(--danger)';
+      status.textContent = 'Please enter a display name.';
+      name.focus();
+      return;
+    }
+    status.style.color = '';
+    status.textContent = 'Settings saved.';
+    clearTimeout(timer);
+    timer = setTimeout(function () { status.textContent = ''; }, 3000);
+  });
+
+  var openBtn = document.getElementById('delete-open');
+  var box = document.getElementById('confirm');
+  var input = document.getElementById('confirm-input');
+  var go = document.getElementById('delete-go');
+  openBtn.addEventListener('click', function () {
+    box.classList.add('open');
+    openBtn.setAttribute('aria-expanded', 'true');
+    input.focus();
+  });
+  document.getElementById('delete-cancel').addEventListener('click', function () {
+    box.classList.remove('open');
+    openBtn.setAttribute('aria-expanded', 'false');
+    input.value = '';
+    go.disabled = true;
+    openBtn.focus();
+  });
+  input.addEventListener('input', function () {
+    go.disabled = input.value !== 'DELETE';
+  });
+  go.addEventListener('click', function () {
+    box.classList.remove('open');
+    input.value = '';
+    go.disabled = true;
+    status.style.color = '';
+    status.textContent = 'Account deletion requested (demo).';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples · Harbourline Water Lab</title>
+<style>
+  :root {
+    --bg: #f4f7f8;
+    --panel: #ffffff;
+    --ink: #14272e;
+    --muted: #55696f;
+    --line: #d9e2e5;
+    --accent: #0b6e8a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e2f1f5;
+    --ok: #1d7a4a;
+    --warn: #9a5b00;
+    --bad: #b3261e;
+    --focus: #0b6e8a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1a1e;
+      --panel: #162429;
+      --ink: #e6eef0;
+      --muted: #96aab0;
+      --line: #28393f;
+      --accent: #4cb8d4;
+      --accent-ink: #06232c;
+      --accent-soft: #1b3640;
+      --ok: #62c58f;
+      --warn: #e5b05a;
+      --bad: #f09a93;
+      --focus: #4cb8d4;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header.top {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { font-weight: 700; letter-spacing: .01em; }
+  .brand span { color: var(--muted); font-weight: 400; }
+  .user { color: var(--muted); font-size: 13px; }
+  main { max-width: 920px; margin: 0 auto; padding: 28px 24px 64px; }
+  .head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  h1 { margin: 0 0 2px; font-size: 22px; }
+  .sub { margin: 0; color: var(--muted); }
+
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    border-radius: 8px; border: 1px solid transparent;
+    padding: 9px 16px; min-height: 40px;
+  }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .primary { background: var(--accent); color: var(--accent-ink); }
+  .primary:hover:not([disabled]) { filter: brightness(1.08); }
+  .primary[disabled] { cursor: progress; opacity: .75; }
+  .ghost { background: transparent; color: var(--accent); border-color: var(--line); }
+  .ghost:hover { background: var(--accent-soft); }
+
+  .btn-inner { display: inline-flex; align-items: center; gap: 8px; }
+  .spinner {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid currentColor; border-right-color: transparent;
+    animation: spin .8s linear infinite; display: none;
+  }
+  .busy .spinner { display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Progress panel */
+  #status {
+    margin-top: 20px; padding: 16px 18px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-left: 4px solid var(--accent); border-radius: 8px;
+  }
+  #status[hidden] { display: none; }
+  #status.done { border-left-color: var(--ok); }
+  #status.cancelled { border-left-color: var(--warn); }
+  .status-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; }
+  .status-title { font-weight: 600; margin: 0; }
+  .elapsed { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
+  .bar {
+    margin: 12px 0 8px; height: 8px; border-radius: 4px;
+    background: var(--accent-soft); overflow: hidden;
+  }
+  .bar > i {
+    display: block; height: 100%; width: 0%;
+    background: var(--accent); border-radius: 4px;
+    transition: width .4s linear;
+  }
+  .hint { margin: 0; color: var(--muted); font-size: 13px; }
+  .actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .actions a {
+    color: var(--accent-ink); background: var(--accent); text-decoration: none;
+    font-weight: 600; padding: 9px 16px; border-radius: 8px; display: inline-block;
+  }
+  .actions button { padding: 7px 12px; min-height: 36px; }
+
+  /* Table */
+  .card { margin-top: 28px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .card h2 { font-size: 15px; margin: 0; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 10px 18px; text-align: left; white-space: nowrap; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid var(--line); }
+  tbody tr + tr td { border-top: 1px solid var(--line); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { font-weight: 600; }
+  .tag::before { content: "● "; }
+  .tag.ok { color: var(--ok); }
+  .tag.warn { color: var(--warn); }
+  .tag.bad { color: var(--bad); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation-duration: 2.4s; }
+    .bar > i { transition: none; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">Harbourline <span>Water Quality Lab</span></div>
+  <div class="user">Signed in as lab staff</div>
+</header>
+
+<main>
+  <div class="head">
+    <div>
+      <h1>Samples</h1>
+      <p class="sub">Season 2026 · Spring–Autumn monitoring round</p>
+    </div>
+    <button id="exportBtn" class="primary" type="button" aria-describedby="status">
+      <span class="btn-inner"><span class="spinner" aria-hidden="true"></span><span id="btnLabel">Export season report</span></span>
+    </button>
+  </div>
+
+  <div id="status" hidden>
+    <div class="status-row">
+      <p class="status-title" id="statusTitle" role="status" aria-live="polite"></p>
+      <span class="elapsed" id="elapsed" aria-hidden="true"></span>
+    </div>
+    <div class="bar" id="barWrap" aria-hidden="true"><i id="barFill"></i></div>
+    <p class="hint" id="hint"></p>
+    <div class="actions" id="actions"></div>
+  </div>
+
+  <section class="card" aria-labelledby="recentH">
+    <h2 id="recentH">Recent samples</h2>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Sample</th><th>Site</th><th>Collected</th>
+            <th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>WQ-2417</td><td>North Intake</td><td>14 Oct, 08:40</td><td class="num">7.2</td><td class="num">0.8</td><td><span class="tag ok">Within limits</span></td></tr>
+          <tr><td>WQ-2416</td><td>Millrace Creek</td><td>14 Oct, 07:55</td><td class="num">6.6</td><td class="num">4.9</td><td><span class="tag warn">Review turbidity</span></td></tr>
+          <tr><td>WQ-2415</td><td>Eastbank Well 3</td><td>13 Oct, 15:20</td><td class="num">7.5</td><td class="num">0.3</td><td><span class="tag ok">Within limits</span></td></tr>
+          <tr><td>WQ-2414</td><td>Reservoir Outlet</td><td>13 Oct, 11:05</td><td class="num">8.9</td><td class="num">1.2</td><td><span class="tag bad">pH out of range</span></td></tr>
+          <tr><td>WQ-2413</td><td>Harbour Pier</td><td>12 Oct, 09:30</td><td class="num">7.9</td><td class="num">2.1</td><td><span class="tag ok">Within limits</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var EXPECTED_MS = 25000;          // fake server time
+  var btn = document.getElementById('exportBtn');
+  var btnLabel = document.getElementById('btnLabel');
+  var panel = document.getElementById('status');
+  var title = document.getElementById('statusTitle');
+  var elapsedEl = document.getElementById('elapsed');
+  var barWrap = document.getElementById('barWrap');
+  var bar = document.getElementById('barFill');
+  var hint = document.getElementById('hint');
+  var actions = document.getElementById('actions');
+  var baseTitle = document.title;
+
+  var timer = null, startedAt = 0, fileUrl = null, running = false;
+
+  function warnLeave(e) { e.preventDefault(); e.returnValue = ''; }
+
+  function setBusy(on) {
+    running = on;
+    btn.disabled = on;
+    btn.classList.toggle('busy', on);
+    btn.setAttribute('aria-busy', on ? 'true' : 'false');
+    btnLabel.textContent = on ? 'Exporting…' : 'Export season report';
+    if (on) window.addEventListener('beforeunload', warnLeave);
+    else window.removeEventListener('beforeunload', warnLeave);
+  }
+
+  function clearActions() { while (actions.firstChild) actions.removeChild(actions.firstChild); }
+
+  function makeButton(text, cls, fn) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = cls; b.textContent = text;
+    b.addEventListener('click', fn);
+    return b;
+  }
+
+  function buildCsv() {
+    return [
+      'sample,site,collected,ph,turbidity_ntu,result',
+      'WQ-2417,North Intake,2026-10-14 08:40,7.2,0.8,Within limits',
+      'WQ-2416,Millrace Creek,2026-10-14 07:55,6.6,4.9,Review turbidity',
+      'WQ-2415,Eastbank Well 3,2026-10-13 15:20,7.5,0.3,Within limits',
+      'WQ-2414,Reservoir Outlet,2026-10-13 11:05,8.9,1.2,pH out of range',
+      'WQ-2413,Harbour Pier,2026-10-12 09:30,7.9,2.1,Within limits'
+    ].join('\n');
+  }
+
+  function tick() {
+    var ms = Date.now() - startedAt;
+    var s = Math.floor(ms / 1000);
+    elapsedEl.textContent = 'Elapsed ' + s + 's';
+    // Estimate only: never reaches 100% until the server says so.
+    var pct = Math.min(94, (ms / EXPECTED_MS) * 94);
+    bar.style.width = pct + '%';
+    document.title = 'Exporting… ' + s + 's · ' + baseTitle;
+    if (ms > EXPECTED_MS) {
+      hint.textContent = 'Taking a little longer than usual. It is still running — please keep this tab open.';
+    }
+    if (ms >= EXPECTED_MS + 500) {
+      // Fake server finishing a bit after the expected time is unnecessary; finish at EXPECTED_MS.
+    }
+  }
+
+  function start() {
+    if (running) return;
+    if (fileUrl) { URL.revokeObjectURL(fileUrl); fileUrl = null; }
+    setBusy(true);
+    panel.hidden = false;
+    panel.className = '';
+    barWrap.hidden = false;
+    bar.style.width = '0%';
+    clearActions();
+    title.textContent = 'Building your season report…';
+    hint.textContent = 'This usually takes about 25 seconds. You can keep this tab open and read the table below; the download will start when it is ready.';
+    startedAt = Date.now();
+    tick();
+    actions.appendChild(makeButton('Cancel export', 'ghost', cancel));
+    timer = setInterval(function () {
+      tick();
+      if (Date.now() - startedAt >= EXPECTED_MS) finish();
+    }, 250);
+  }
+
+  function stopTimer() { clearInterval(timer); timer = null; document.title = baseTitle; }
+
+  function cancel() {
+    if (!running) return;
+    stopTimer();
+    setBusy(false);
+    panel.className = 'cancelled';
+    barWrap.hidden = true;
+    elapsedEl.textContent = '';
+    title.textContent = 'Export cancelled. No file was created.';
+    hint.textContent = '';
+    clearActions();
+    actions.appendChild(makeButton('Start again', 'ghost', start));
+    btn.focus();
+  }
+
+  function finish() {
+    stopTimer();
+    setBusy(false);
+    var blob = new Blob([buildCsv()], { type: 'text/csv' });
+    fileUrl = URL.createObjectURL(blob);
+    var name = 'season-report-2026.csv';
+    panel.className = 'done';
+    bar.style.width = '100%';
+    barWrap.hidden = true;
+    elapsedEl.textContent = 'Finished in ' + Math.round((Date.now() - startedAt) / 1000) + 's';
+    title.textContent = 'Season report is ready.';
+    hint.textContent = 'Your download should start automatically. If it does not, use the button below.';
+    clearActions();
+    var a = document.createElement('a');
+    a.href = fileUrl; a.download = name; a.textContent = 'Download ' + name;
+    actions.appendChild(a);
+    actions.appendChild(makeButton('Dismiss', 'ghost', function () {
+      panel.hidden = true; btn.focus();
+    }));
+    a.click();
+    a.focus();
+  }
+
+  btn.addEventListener('click', start);
+})();
+</script>
+</body>
+</html>

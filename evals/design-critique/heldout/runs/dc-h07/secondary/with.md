@@ -1,17 +1,16 @@
-**Go with B.** Dispatchers spend their day on one question: which loads are late, and what do I do about them. B puts that list on screen at all times, sorted by lateness, so the most urgent work is always at the top.
+**Go with B.** The dispatcher's job is triage: find the late load, see why, and act. B puts that at the top of the screen. A puts four summary numbers and a map in front of the list they need to act on.
 
-A spends its prime real estate on things a dispatcher doesn't act on:
+- **Sorting by lateness answers the core question.** "Which load do I call about right now?" is the first thing the screen shows.
+- **A's KPI tiles are mostly passive.** Four big tiles on a 27-inch screen take a lot of vertical space and give dispatchers little to do. Dispatchers glance at these numbers, then go back to the list.
+- **A's sidebar costs width you need for columns.** A table with lateness, ETA, driver, lane, status, and last check-in needs the full width, and that's exactly what a 27-inch monitor provides.
+- **The map-on-click pattern fits the work.** A dispatcher looks at a map when dealing with one load, so opening it from the row keeps the map tied to the decision.
 
-- **Four big KPI tiles** take a lot of vertical space and mostly restate information the sorted table already shows. Avg dwell time is a diagnostic, not something you act on mid-shift.
-- **The sidebar** eats horizontal space on a 27-inch screen, and dispatchers rarely navigate between sections while working a queue.
-- **The map at two-thirds width** gives the most space to the least-used element. The map matters when you're choosing a truck near a pickup, but that's a secondary task.
+**Changes I'd make to B:**
 
-B's main risk is that the map is hidden until a row is clicked, so dispatchers lose the spatial overview. Fix that with a few changes:
+1. **Keep a slim KPI strip.** One line above the filters, such as "On-time 94% · 38 active · 6 late · dwell 42m," is enough. Dispatchers still want the big picture without the tile cost.
+2. **Add a way to see the whole map.** Clustering matters, like three late trucks on the same corridor. Give the map a toggle or a full-width mode so the side panel isn't the only spatial view.
+3. **Make lateness readable without color alone.** Show "+47 min late" as text, with color as a reinforcement.
+4. **Design for keyboard use.** Arrow keys should move between rows, and the side panel should update as the selection changes. A dispatcher on a 12-hour shift will value this more than any visual choice.
+5. **Put navigation in a thin top bar or a collapsed icon rail** so the other sections (carriers, history, settings) stay reachable without a full sidebar.
 
-1. **Replace the tiles with a slim summary strip** above the table: on-time %, late count, and active trucks as single-line stats. Keep the numbers, drop the tile chrome.
-2. **Keep a small, always-visible map thumbnail or a toggle** so the geography is never fully gone. Clicking a row can still open the full side panel.
-3. **Make the side panel non-blocking.** Dispatchers will click through many rows in a row, so the table should stay usable and the panel should update in place rather than fight for focus.
-4. **Support multi-select and bulk actions** (reassign, notify customer). Chasing late loads usually means handling several at once.
-5. **Make the lateness column readable at a glance:** signed minutes late, colour-coded, with the most overdue rows first.
-
-Before committing, run a quick task test with two or three dispatchers on each layout. Ask them to find the five most late loads and reassign one. Time it and watch where they hesitate. That will settle the map question better than either of us guessing.
+**Before you commit:** run a short test with 3–5 real dispatchers. Give them a task like "find the three loads most at risk and tell me why," then watch where they hunt. If they keep wanting the map open next to the table, that's your signal to make the split view permanent rather than click-to-open.

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notification settings – Fernlight</title>
+<style>
+  :root {
+    --bg: #f3f6f1;
+    --card: #ffffff;
+    --ink: #1b2a21;
+    --muted: #5c6b61;
+    --line: #dde5dc;
+    --accent: #2f7a4d;
+    --accent-ink: #ffffff;
+    --off: #b9c4bb;
+    --focus: #1d5fd1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111a14;
+      --card: #1a261e;
+      --ink: #e8f0ea;
+      --muted: #9fb0a4;
+      --line: #2b3a30;
+      --accent: #5fbf85;
+      --accent-ink: #0d1a12;
+      --off: #4a5a4f;
+      --focus: #8ab4ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  header.top {
+    display: flex; align-items: center; gap: 10px;
+    max-width: 640px; margin: 0 auto; padding: 24px 20px 0;
+    font-weight: 700; letter-spacing: .01em;
+  }
+  header.top svg { width: 26px; height: 26px; color: var(--accent); }
+  main { max-width: 640px; margin: 0 auto; padding: 16px 20px 56px; }
+  h1 { font-size: 1.75rem; margin: 8px 0 4px; line-height: 1.2; }
+  .lede { margin: 0 0 24px; color: var(--muted); }
+  section {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 20px 8px;
+    margin-bottom: 20px;
+  }
+  section.account { padding-bottom: 20px; }
+  h2 { font-size: 1.05rem; margin: 0 0 4px; }
+  .sub { margin: 0 0 8px; color: var(--muted); font-size: .9rem; }
+  .row {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .row:first-of-type { border-top: 0; }
+  .row .text { flex: 1; min-width: 0; }
+  .row .name { font-weight: 600; display: block; }
+  .row .desc { color: var(--muted); font-size: .9rem; display: block; }
+
+  /* switch */
+  .switch { position: relative; flex: none; width: 48px; height: 28px; }
+  .switch input {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    margin: 0; opacity: 0; cursor: pointer; z-index: 1;
+  }
+  .track {
+    position: absolute; inset: 0; border-radius: 999px;
+    background: var(--off); transition: background .15s;
+  }
+  .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3);
+    transition: transform .15s;
+  }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+  .switch input:focus-visible + .track { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  label.field { display: block; font-weight: 600; margin-bottom: 6px; }
+  input[type="time"], input[type="email"] {
+    font: inherit; color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 12px;
+    min-height: 44px;
+  }
+  input[type="email"] { width: 100%; }
+  input[type="time"] { min-width: 130px; }
+  input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .time-row .row-label { flex: 1; }
+  .hint { color: var(--muted); font-size: .85rem; margin: 6px 0 0; }
+
+  .actions { display: flex; align-items: center; gap: 14px; margin-top: 18px; flex-wrap: wrap; }
+  button.save {
+    font: inherit; font-weight: 600;
+    background: var(--accent); color: var(--accent-ink);
+    border: 0; border-radius: 10px;
+    padding: 11px 22px; min-height: 44px; cursor: pointer;
+  }
+  button.save:hover { filter: brightness(1.08); }
+  button.save:active { transform: translateY(1px); }
+  #status { color: var(--muted); font-size: .9rem; }
+
+  @media (max-width: 480px) {
+    .time-row { flex-direction: column; align-items: stretch; gap: 8px; }
+    input[type="time"] { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track, .track::after { transition: none; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V10"/><path d="M12 14C12 9 8 6 3 6c0 5 3 8 9 8z"/><path d="M12 11c0-4 3-7 9-7 0 5-3 7-9 7z"/></svg>
+  Fernlight
+</header>
+
+<main>
+  <h1>Notification settings</h1>
+  <p class="lede">Choose what Fernlight tells you about your greenhouse, and when.</p>
+
+  <form id="form">
+    <section aria-labelledby="h-alerts">
+      <h2 id="h-alerts">Alerts</h2>
+      <p class="sub">Get notified as soon as something needs attention.</p>
+
+      <div class="row">
+        <div class="text">
+          <span class="name" id="n-frost">Frost warning</span>
+          <span class="desc" id="d-frost">Alerts you when the temperature is forecast to drop near freezing.</span>
+        </div>
+        <span class="switch">
+          <input type="checkbox" role="switch" checked aria-labelledby="n-frost" aria-describedby="d-frost">
+          <span class="track"></span>
+        </span>
+      </div>
+
+      <div class="row">
+        <div class="text">
+          <span class="name" id="n-soil">Low soil moisture</span>
+          <span class="desc" id="d-soil">Lets you know when soil gets too dry so you can water in time.</span>
+        </div>
+        <span class="switch">
+          <input type="checkbox" role="switch" checked aria-labelledby="n-soil" aria-describedby="d-soil">
+          <span class="track"></span>
+        </span>
+      </div>
+
+      <div class="row">
+        <div class="text">
+          <span class="name" id="n-door">Door left open</span>
+          <span class="desc" id="d-door">Warns you if the greenhouse door stays open for more than 10 minutes.</span>
+        </div>
+        <span class="switch">
+          <input type="checkbox" role="switch" aria-labelledby="n-door" aria-describedby="d-door">
+          <span class="track"></span>
+        </span>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-sched">
+      <h2 id="h-sched">Schedule</h2>
+      <p class="sub">Pause non-urgent notifications overnight and pick when your recap arrives.</p>
+
+      <div class="row time-row">
+        <label class="row-label" for="qs"><span class="name" style="font-weight:600">Quiet hours start</span></label>
+        <input type="time" id="qs" value="22:00">
+      </div>
+      <div class="row time-row">
+        <label class="row-label" for="qe"><span class="name" style="font-weight:600">Quiet hours end</span></label>
+        <input type="time" id="qe" value="07:00">
+      </div>
+      <div class="row time-row">
+        <label class="row-label" for="ds">
+          <span class="name" style="font-weight:600">Daily summary</span>
+          <span class="desc">A once-a-day recap of your greenhouse conditions.</span>
+        </label>
+        <input type="time" id="ds" value="08:00">
+      </div>
+    </section>
+
+    <section class="account" aria-labelledby="h-acct">
+      <h2 id="h-acct">Account</h2>
+      <p class="sub">Where we send email notifications.</p>
+      <label class="field" for="email">Email address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      <p class="hint">We'll only use this for Fernlight notifications.</p>
+      <div class="actions">
+        <button type="submit" class="save">Save changes</button>
+        <span id="status" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+  </form>
+</main>
+
+<script>
+  document.getElementById('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var s = document.getElementById('status');
+    s.textContent = 'Changes saved.';
+    setTimeout(function () { s.textContent = ''; }, 3000);
+  });
+</script>
+</body>
+</html>

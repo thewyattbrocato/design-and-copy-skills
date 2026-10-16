@@ -1,13 +1,20 @@
-**What's wrong:** the page doesn't rank anything. All eight cards have the same weight, and within each card the four metrics are the same size and weight, so "Room 5 humidity is 61%" looks the same as "Room 3 is at 20°C." The only signal is a slightly darker orange number, and that is the weakest cue available. It's a small change in color value, it disappears in grayscale and at a glance, and the "alert" word is 11px grey, quieter than the labels above the numbers. The page has no answer to "is anything wrong right now?" so it reads as flat. That's the "feels flat" your co-founder means.
+The page is flat because it treats every room and every number the same, so nothing tells you where to look. The alert is also the weakest element on the page.
 
-**What to change first:** make an out-of-range room impossible to miss, using more than one cue.
+**What's wrong**
 
-- **Give alert cards a structural change.** Use a thick colored border or a tinted card fill, and move the card to the top of the grid. Don't rely on the number's color alone.
-- **Name the problem in words.** Replace "alert" with something like `HUMIDITY HIGH · 61% · target 85–90%` in bold, at a readable size. Put the reading and the limit it broke in the same line.
-- **Show duration.** "Out of range for 6h" would have made Room 5 obvious. That is the number the page most needs and currently doesn't show.
-- **Demote the normal metrics.** When a room is in range, shrink its card or drop it to a quiet state. Days-to-harvest shouldn't carry the same visual weight as temperature and humidity.
-- **Add a summary line at the top**, such as "1 room out of range · Room 5 humidity 6h." When everything is fine, it should say so.
+- **Status is encoded in the least visible way.** The only signal is a slightly darker orange on one number, and the word "alert" is 11px grey in a corner. A problem is quieter than the healthy data around it. In Room 5's case, a humidity of 61% in a flat 28px orange number could easily pass as normal.
+- **The cards hide the state.** Eight identical white tiles give no sense of whether anything is wrong until you read each one. There's no summary, such as "2 rooms out of range," and no sorting that puts problems first.
+- **The four metrics are ranked equally, but they aren't equal.** Humidity and CO2 can ruin a flush within hours. Days-to-harvest is planning information. Giving all four the same size and weight means the harvest countdown competes with the alarms.
+- **The page shows a snapshot with no time context.** "61%" tells you nothing about whether it just dropped or has been wrong for six hours. Time-in-state is the detail that would have caught Room 5, and the page doesn't show it.
+- **Targets are missing.** A number without its acceptable range makes you do the comparison in your head, which is the work a monitoring page should do for you.
 
-**The bigger issue:** a page only helps if someone looks at it. Six hours at 61% means nobody was watching. Visual changes won't fix that, so add an active alert too: a push, SMS or Slack message when a reading stays out of range for more than a set time, say 15 to 30 minutes. Do that alongside the redesign, not after it.
+**What to change first**
 
-Two assumptions to check: I don't know your target ranges for each room, so the alert text needs them. And if the 61% was within the range you intended for that stage of growth, the threshold is the bug rather than the display.
+1. **Make out-of-range the primary state, not a tint.** Give a tile that's out of range a clear status treatment: a solid colored left edge or header band, and a labeled status line such as "HUMIDITY HIGH · 61% · target 85–95% · 6h". Use text and shape, not just color, so it still reads for people with color-vision differences.
+2. **Add a summary strip at the top.** Show a count such as "2 rooms out of range" and sort rooms with problems first. Healthy rooms can collapse to a smaller, quieter row.
+3. **Show duration out of range on every alert.** This is the change that addresses last week's incident directly. Show how long each metric has been out of range, and make it more prominent after a threshold, for example 30 minutes.
+4. **Reorder the metrics by importance.** Make humidity and CO2 the large numbers, and show temperature and days-to-harvest smaller. Put the target range next to each number.
+
+One caveat: a visual change only helps if someone is looking at the page. If Room 5 sat at 61% for six hours, the bigger gap may be that nothing pushed an alert to a phone. If you don't already have that, a notification for any metric that stays out of range beyond a set time is probably worth adding alongside the visual fixes.
+
+If you point me to the page's source file, I can make the first two changes directly. I haven't seen the code, so these recommendations are based on your description.

@@ -1,17 +1,16 @@
-**Headline**
-Keep Quillpost for 30% off [number of months]?
+**In-app notice (shown on open)**
 
-**Body**
-Your scheduled newsletters and drafts stay as they are, and you keep your current plan. The 30% discount applies to [which invoices], and the offer ends [offer end date].
+> **Some recent edits may not have saved**
+> A sync problem on our side may have stopped edits you made between 11:20 pm and 12:00 am UTC last night from saving. We're still checking which accounts were affected, and we're sorry. Please check any notes you edited in that window. We'll email you as soon as we know whether your account was affected.
+> [Review my notes] [Dismiss]
 
-If you'd rather cancel, your plan ends on [end date]. [What happens to scheduled sends and saved drafts after that.]
+**Email, first paragraph**
 
-**Primary button**
-Keep my plan at 30% off
+> Subject: Some of your Quillmark edits may not have saved
+>
+> A sync problem on our side last night may have stopped some edits from saving. The affected window is roughly 11:20 pm to 12:00 am UTC. We're sorry. We're still working out which accounts were affected and what caused it, so we can't yet say whether your notes were. If you edited anything in that window, please check those notes. We'll write again with what we find, including [what we can restore, and when].
 
-**Decline button**
-Continue canceling
+**Two notes**
 
-Notes:
-- I left out the countdown and the "I'd rather overpay" button. A 10:00 timer on an offer with no real deadline is invented urgency, and a decline that mocks the choice is shaming. Both can read as manipulative and draw complaints or chargebacks. If the offer really does expire, show the actual end date instead of a timer.
-- Fill the brackets from the real offer terms before you test. Don't show the 30% to customers until you've decided to honor it for everyone who accepts.
+- I left out "no user data was lost" and "this will never happen again". The first contradicts the notice, because edits may have been lost. The second is a promise you can't keep while the cause is unknown. If either turns out to be false, users will remember it longer than the outage. When you know more, you can say what was recovered ("we restored X") and what you changed ("we fixed Y and added Z to catch this earlier"). Those are claims you can stand behind.
+- Fill in the bracket in the email once you know what is recoverable. Also confirm that the email goes only to accounts you've confirmed as affected. Until then, the in-app notice covers everyone.

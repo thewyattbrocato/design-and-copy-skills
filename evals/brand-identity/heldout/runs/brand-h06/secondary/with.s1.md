@@ -1,52 +1,52 @@
-# Southbank Reading Room: placement specs
-
-Every version uses the same symbol and the same name. Only the arrangement changes. Measurements use **u**, the height of one book in the stack, so the designer can scale from their master file.
+Each placement uses a different lockup. The name is set in the same typeface as the symbol's lettering throughout. Proportions are given relative to **M**, the overall height of the three-book symbol, so the designer can scale them to any size. Clear space is **B**, the height of one book in the stack.
 
 ## 1. Wide website header
 
-**Lockup:** horizontal. Symbol on the left, name on one line to its right.
+**Lockup:** Horizontal. Symbol on the left, name on one line to its right.
 
-- Symbol height: about 3u to 4u of the header bar's inner height (roughly 40 to 56 px on a standard header). Minimum 24 px tall.
-- Name: set on one line, vertically centered on the stack. Its cap height should be about the height of one book, so the name looks like it belongs to the symbol rather than sitting beside it.
-- Clear space: at least 1u on all sides, which keeps navigation links from crowding the mark.
-- Background: a light header uses the dark version. A dark header uses the reversed version (light ink on the dark ground), never the full-color version.
-- No tagline. If the site needs one, it goes in a separate line below the header or in the hero section.
+- **Bar height:** 72–96 px. Symbol height M = about 55% of the bar.
+- **Name:** Cap height about 40% of M, vertically centered on the symbol. Baseline-align the last line of text to the bottom book where it helps.
+- **Gap** between symbol and name: 0.5 B.
+- **Clear space** on all sides: 1 B minimum.
+- **Minimum size:** symbol M ≥ 28 px. Below that, switch to the symbol-only mark with the name in the page title.
+- **Ground:** Reversed on a dark header, or the solid version on a light one. Never place it on a photo without a solid panel behind it.
 
 ## 2. Square social avatar
 
-**Lockup:** symbol only. The name is dropped.
+**Lockup:** Symbol only. The name is dropped because it won't read at avatar sizes (often 40–110 px).
 
-- Export a 512 × 512 master. Most platforms crop to a circle, so keep the symbol inside a circle about 80% of the square's width.
-- Center the symbol with generous padding, roughly 15% of the square on each side.
-- Background: a solid field in the brand's main color, with the symbol in the reversed color. Use a flat fill, no gradient.
-- Check it at 32 to 40 px. If the gaps between books close up at that size, the designer should draw a heavier small version for avatars only.
+- **Canvas:** Square, 400 × 400 px minimum.
+- **Symbol:** Centered, M ≈ 60% of the canvas height.
+- **Safe zone:** Keep all of the symbol inside a circle of 80% of the canvas diameter, since most platforms crop to a circle.
+- **Ground:** One flat color field, using the reversed symbol. No border, no text.
+- **Check:** View at 40 px. The S should still read as three stacked books.
+
+If the name must appear on the avatar, use the stacked lockup (below) with the name at about 14% of the canvas width, and keep it inside the safe circle.
 
 ## 3. Narrow bookmark
 
-**Lockup:** stacked. Symbol on top, name below in two centered lines ("Southbank" over "Reading Room").
+**Lockup:** Stacked and vertical. Symbol at the top, name below it in three short centered lines: *Southbank / Reading / Room*.
 
-- Symbol width: about 40% to 50% of the bookmark's width. This keeps it recognizable without crowding the edges.
-- Name width: about 60% to 70% of the bookmark's width, with the two lines centered under the symbol.
-- Margins: keep all printed elements at least 5 mm from the trimmed edge. Keep them clear of any tassel hole or ribbon.
-- Ink: one color only, typically the dark version. Hairline gaps in the stack are the first thing to fail on paper, so check that the gaps stay open at the printed size.
-- Do not rotate the name along the bookmark's length. It becomes unreadable.
+- **Bookmark size:** Standard about 50 × 200 mm (2 × 8 in). Adjust to the actual trim.
+- **Symbol:** Width about 60% of the bookmark width, placed in the top quarter of the strip. Its height should be 20–25 mm.
+- **Name:** Three centered lines, widest line no more than 75% of the bookmark width. Cap height about 40% of M.
+- **Margins:** 8 mm on the left, right and top; 12 mm at the bottom so the tassel or tip doesn't crowd it.
+- **Minimum:** Use a heavier, simplified symbol if the books' gaps close below about 1.5 mm at print size.
+- **Ink:** One color on the paper stock. No tint, gradient or hairline.
 
 ## 4. Canvas tote bag
 
-**Lockup:** stacked, scaled up. A large symbol with the name below it.
+**Lockup:** Stacked. Symbol above the name, centered on the front panel.
 
-- Placement: centered on the front panel, roughly one-third of the way down from the top edge. Keep it at least 5 cm from the handle attachments and side seams.
-- Symbol width: about 50% to 60% of the printed area's width. On a typical 38 cm front panel, that is roughly 19 to 23 cm.
-- Name: set below the symbol at about 1/4 of the symbol's height for the cap height, centered.
-- Ink: one color, dark version, screen-printed or stenciled. Ink spreads on woven canvas, so keep the narrowest gap in the stack at least 2 mm at printed size. If the gaps are narrower, widen them in the print version only.
-- No gradients, shading, or halftones. These fail on screen print.
+- **Print width:** Target 25–28 cm for the full lockup, centered horizontally.
+- **Vertical position:** Top edge of the symbol about one-third down from the top of the bag's front panel.
+- **Symbol height:** about 12 cm, so M ≈ 12 cm.
+- **Name:** Single line below the symbol, cap height about 2.5 cm, or two lines if the single line exceeds the symbol's width by more than 30%.
+- **Clear space:** 3 cm minimum from the bag's seams and edges.
+- **Ground:** Natural or light canvas uses the solid version. For dark canvas, use the reversed version with a separate reversed-ink screen.
+- **Production:** One ink color for screen printing or embroidery, no halftones or gradients. The thinnest stroke should be at least 2 mm, since fine lines fill in on woven fabric.
 
-## Common to all four
+## Build notes
 
-- Build the symbol and the name as separate, locked artwork so each lockup uses the same proportions.
-- Judge each version in solid black first, then reversed on dark, then at its smallest real size.
-- Use the same name spelling and capitalization everywhere.
-
-**Assumptions:** I haven't seen the actual drawing, so the proportions are relative to the book height. The volunteer designer should confirm the gap and the name's cap height against the master file.
-
-**Trade-off:** the stacked bookmark and tote lockups use two lines of name, which reads more slowly than one line. If the name is short, a single line may work on the bookmark too.
+- Deliver one master in each lockup type (horizontal, stacked, symbol-only) in both solid and reversed versions, as outlined SVG with no live text, so no font is needed to place it.
+- I haven't seen your actual artwork, so these proportions are starting values. The designer should confirm them by printing or placing each lockup at its real size before finalizing.

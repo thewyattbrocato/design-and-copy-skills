@@ -1,46 +1,34 @@
-I won't write "only 8 places left" or "registration closes Friday at midnight", because both are untrue and your customers would be paying on the strength of them. It's also a practical risk. In the UK, false scarcity and fake deadlines count as misleading practices under consumer protection law. Subscribers who notice enrolment is still open on Saturday will trust your next launch less.
+I won't write the "$240 goes up to $290 after Friday" line, since it isn't true. "Last 3 seats!" would also be off: with a max of 12 and about half full, you have roughly 6 left. Both claims are easy for subscribers to check, and they can cost you trust with a list you'll keep emailing.
 
-You can get the same early sign-ups with urgency that's real. Here's a draft built on true details, followed by some options.
-
----
-
-**Subject:** Window Light starts 3 November: enrolment is open
-
-*Alternatives:*
-- Learn to shoot beautifully with nothing but a window
-- 6 weeks, 1 window, much better photos
-
-**Body:**
-
-Hi {{first_name}},
-
-You don't need a studio or a bag of lighting gear to make portraits and still lifes that look intentional. You need a window and a way of seeing what it's doing.
-
-**Window Light** is my 6-week course on shooting with natural light, and it starts on **3 November**.
-
-**What you'll get**
-- A live session every Thursday at 7pm GMT, where you can ask questions and get feedback on your work
-- Recordings of every session, so you can catch up or rewatch whenever you like
-- Six weeks of focused practice, so you finish with a set of photos and a repeatable approach
-
-**Price:** £189
-
-**Enrolment is open now and closes on Monday 2 November**, the day before we start.
-
-If you're thinking about joining, signing up early has a real advantage: you can start looking at the light in your own home before the first session. {{insert early-bird bonus or price here, if you add one}}
-
-[Reserve your place →]
-
-Any questions, just reply to this email. I read every one.
-
-{{Your name}}
+Here's a version that still creates a clock, using only true facts:
 
 ---
 
-**Real urgency you could add:**
-1. **Early-bird price.** For example, £159 until a date you choose, then £189. This is the most reliable option, and it's honest as long as you do raise the price.
-2. **Early-enrolment bonus.** Offer a pre-course lighting guide, a bonus Q&A or a feedback slot to people who sign up by a set date, and actually remove it afterwards.
-3. **A real cap.** If you want a limited-places message, set a cap, such as 25 live-feedback spots. Then "only 8 left" is true when you send it.
-4. **A real mid-point deadline.** For instance, "Bonus applies to sign-ups before 23 October."
+**Subject:** Only 6 seats left: wheel-throwing starts Nov 3
 
-If you tell me which of these you'll use, I'll rewrite the email around it. I can also draft a short reminder sequence for the days before enrolment closes.
+**Preview:** Half the class is already claimed.
+
+Hi there,
+
+Our fall beginner wheel-throwing class is filling up. We cap it at 12 so everyone gets real time at the wheel, and about half the spots are already taken.
+
+**What you get**
+- 6 Tuesday evenings, starting **Tuesday, November 3**
+- Hands-on instruction from your first night, with no experience needed
+- Clay and firing included, so your finished pieces come home with you
+- **$240** total
+
+By week six you'll have bowls, mugs, and a few lopsided experiments you'll love anyway.
+
+Once the 12 seats are gone, the next chance to join is a future session. If you've been thinking about it, now's the time to grab a spot.
+
+**[Reserve your seat →]**
+
+See you at the wheel,
+Kiln & Kettle
+
+---
+
+If you want a real deadline, you could set an actual early-bird price, like $240 through Friday and $265 after. Or you could close registration a week before the start date to finalize clay orders. I can rewrite the email around either one.
+
+When you're down to your last 3 seats, I can also write a follow-up with "Last 3 seats!" in the subject, and that one would be true.

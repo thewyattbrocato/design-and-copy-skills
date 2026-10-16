@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernbrook Nursery – Monthly Sales 2025</title>
+<style>
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: #fff;
+    color: #222;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  figure { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px; line-height: 1.25; }
+  p.sub { margin: 0 0 18px; color: #555; font-size: 14px; }
+  svg { width: 100%; height: auto; display: block; }
+  .val { font-size: 12px; fill: #333; text-anchor: middle; }
+  .mon { font-size: 13px; fill: #444; text-anchor: middle; }
+  .tick { font-size: 12px; fill: #777; text-anchor: end; }
+  .grid { stroke: #e6e6e6; stroke-width: 1; }
+  .base { stroke: #999; stroke-width: 1; }
+  .bar { fill: #9fb8a4; }
+  .peak { fill: #2f6b3f; }
+  .note { font-size: 12px; fill: #2f6b3f; text-anchor: middle; font-weight: 600; }
+  details { margin-top: 14px; font-size: 13px; color: #444; }
+  table { border-collapse: collapse; margin-top: 8px; }
+  th, td { padding: 3px 14px 3px 0; text-align: left; font-weight: normal; }
+  td:last-child, th:last-child { text-align: right; }
+</style>
+</head>
+<body>
+<figure>
+  <h1>Fernbrook Nursery sales peaked in May at $38,900</h1>
+  <p class="sub">Monthly sales, 2025, in US dollars. Spring drives the year, with a smaller bump in September.</p>
+
+  <svg viewBox="0 0 720 380" role="img" aria-labelledby="t d">
+    <title id="t">Bar chart of Fernbrook Nursery monthly sales in 2025</title>
+    <desc id="d">Sales rise from $8,200 in January to a peak of $38,900 in May, fall to $19,500 in August, rise to $24,300 in September, then drop to $6,100 in December.</desc>
+
+    <!-- gridlines & y ticks: 0 to 40,000; plot y from 330 (0) to 30 (40,000) -->
+    <g>
+      <line class="grid" x1="60" x2="710" y1="255" y2="255"/>
+      <line class="grid" x1="60" x2="710" y1="180" y2="180"/>
+      <line class="grid" x1="60" x2="710" y1="105" y2="105"/>
+      <line class="grid" x1="60" x2="710" y1="30"  y2="30"/>
+      <text class="tick" x="52" y="334">$0</text>
+      <text class="tick" x="52" y="259">$10k</text>
+      <text class="tick" x="52" y="184">$20k</text>
+      <text class="tick" x="52" y="109">$30k</text>
+      <text class="tick" x="52" y="34">$40k</text>
+    </g>
+
+    <g id="bars"></g>
+    <line class="base" x1="60" x2="710" y1="330" y2="330"/>
+    <g id="labels"></g>
+  </svg>
+
+  <details>
+    <summary>View data as a table</summary>
+    <table id="tbl"><tr><th>Month</th><th>Sales</th></tr></table>
+  </details>
+</figure>
+
+<script>
+  var data = [
+    ["Jan",8200],["Feb",9100],["Mar",15600],["Apr",27400],["May",38900],["Jun",31200],
+    ["Jul",22800],["Aug",19500],["Sep",24300],["Oct",17700],["Nov",10400],["Dec",6100]
+  ];
+  var ns = "http://www.w3.org/2000/svg";
+  var bars = document.getElementById("bars");
+  var labels = document.getElementById("labels");
+  var tbl = document.getElementById("tbl");
+  var x0 = 60, slot = 650 / 12, bw = 38, base = 330, scale = 300 / 40000;
+  function el(name, attrs, text) {
+    var e = document.createElementNS(ns, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text) e.textContent = text;
+    return e;
+  }
+  data.forEach(function (d, i) {
+    var h = d[1] * scale, cx = x0 + slot * i + slot / 2;
+    var peak = d[1] === 38900;
+    bars.appendChild(el("rect", {"class": peak ? "bar peak" : "bar", x: cx - bw / 2, y: base - h, width: bw, height: h}));
+    labels.appendChild(el("text", {"class": "val", x: cx, y: base - h - 6}, "$" + d[1].toLocaleString("en-US")));
+    labels.appendChild(el("text", {"class": "mon", x: cx, y: 352}, d[0]));
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + d[0] + "</td><td>$" + d[1].toLocaleString("en-US") + "</td>";
+    tbl.appendChild(tr);
+  });
+</script>
+</body>
+</html>

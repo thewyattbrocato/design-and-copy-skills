@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brannock Cold Storage - Stock Check</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #000;
+    color: #fff;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+  header {
+    background: #111;
+    border-bottom: 3px solid #ffd400;
+    padding: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  h1 {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffd400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .searchrow { display: table; width: 100%; }
+  .searchrow > div { display: table-cell; vertical-align: middle; }
+  .searchrow .clearcell { width: 1%; padding-left: 6px; }
+  #search {
+    width: 100%;
+    height: 54px;
+    font-size: 22px;
+    padding: 0 10px;
+    background: #fff;
+    color: #000;
+    border: 3px solid #888;
+    border-radius: 6px;
+  }
+  #clear {
+    height: 54px;
+    min-width: 72px;
+    font-size: 18px;
+    font-weight: 700;
+    background: #333;
+    color: #fff;
+    border: 3px solid #888;
+    border-radius: 6px;
+  }
+  #summary {
+    margin-top: 6px;
+    font-size: 16px;
+    color: #ddd;
+  }
+  #summary b { color: #fff; }
+  .wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    min-width: 440px;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  th {
+    background: #222;
+    color: #ffd400;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 6px 6px;
+    border-bottom: 2px solid #666;
+  }
+  td {
+    padding: 6px;
+    border-bottom: 2px solid #444;
+    vertical-align: middle;
+    font-size: 18px;
+    word-wrap: break-word;
+  }
+  th.c-sku, td.c-sku { width: 27%; font-weight: 700; }
+  th.c-bin, td.c-bin { width: 17%; }
+  th.c-exp, td.c-exp { width: 13%; text-align: right; }
+  th.c-cnt, td.c-cnt { width: 20%; }
+  th.c-st,  td.c-st  { width: 23%; font-weight: 700; font-size: 16px; }
+  tbody tr:nth-child(even) { background: #0d0d0d; }
+  tbody tr:nth-child(odd) { background: #1a1a1a; }
+  .count {
+    width: 100%;
+    height: 54px;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    background: #fff;
+    color: #000;
+    border: 3px solid #888;
+    border-radius: 6px;
+    padding: 0 2px;
+  }
+  input:focus, button:focus {
+    outline: 4px solid #00c8ff;
+    outline-offset: 1px;
+  }
+  .st-todo  { color: #ccc; }
+  .st-ok    { color: #000; background: #3ddc5a; }
+  .st-short { color: #000; background: #ffb000; }
+  .st-over  { color: #fff; background: #d6001c; }
+  .pill { display: block; padding: 6px 4px; border-radius: 4px; text-align: center; }
+  #empty {
+    display: none;
+    padding: 20px 10px;
+    font-size: 20px;
+    text-align: center;
+    color: #ffd400;
+  }
+  noscript { display: block; padding: 10px; color: #ffd400; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Stock Check</h1>
+  <div class="searchrow">
+    <div><input id="search" type="text" placeholder="Search SKU or bin" autocomplete="off" autocapitalize="characters"></div>
+    <div class="clearcell"><button id="clear" type="button">CLEAR</button></div>
+  </div>
+  <div id="summary"></div>
+</header>
+
+<noscript>JavaScript is needed for search and status.</noscript>
+
+<div class="wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="c-sku">SKU</th>
+        <th class="c-bin">Bin</th>
+        <th class="c-exp">Exp</th>
+        <th class="c-cnt">Count</th>
+        <th class="c-st">Status</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div id="empty">No matching SKU or bin</div>
+</div>
+
+<script>
+(function () {
+  var data = [
+    ["FRZ-1001", "A-01-1", 48],
+    ["FRZ-1017", "A-01-2", 120],
+    ["FRZ-1042", "A-02-1", 36],
+    ["FRZ-2208", "B-03-1", 72],
+    ["FRZ-2215", "B-03-3", 24],
+    ["CHL-3104", "C-05-2", 96],
+    ["CHL-3120", "C-05-4", 60],
+    ["CHL-3377", "C-06-1", 18],
+    ["ICE-4001", "D-02-1", 200],
+    ["ICE-4015", "D-02-2", 144],
+    ["MET-5120", "E-07-3", 30],
+    ["SEA-6033", "F-09-2", 54]
+  ];
+
+  var tbody = document.getElementById("rows");
+  var search = document.getElementById("search");
+  var clearBtn = document.getElementById("clear");
+  var summary = document.getElementById("summary");
+  var emptyMsg = document.getElementById("empty");
+  var rows = [];
+
+  function build() {
+    var i, d, tr, td, inp, st;
+    for (i = 0; i < data.length; i++) {
+      d = data[i];
+      tr = document.createElement("tr");
+
+      td = document.createElement("td");
+      td.className = "c-sku";
+      td.appendChild(document.createTextNode(d[0]));
+      tr.appendChild(td);
+
+      td = document.createElement("td");
+      td.className = "c-bin";
+      td.appendChild(document.createTextNode(d[1]));
+      tr.appendChild(td);
+
+      td = document.createElement("td");
+      td.className = "c-exp";
+      td.appendChild(document.createTextNode(String(d[2])));
+      tr.appendChild(td);
+
+      td = document.createElement("td");
+      td.className = "c-cnt";
+      inp = document.createElement("input");
+      inp.type = "text";
+      inp.className = "count";
+      inp.setAttribute("inputmode", "numeric");
+      inp.setAttribute("pattern", "[0-9]*");
+      inp.setAttribute("maxlength", "5");
+      inp.setAttribute("aria-label", "Counted quantity for " + d[0]);
+      td.appendChild(inp);
+      tr.appendChild(td);
+
+      td = document.createElement("td");
+      td.className = "c-st";
+      st = document.createElement("span");
+      td.appendChild(st);
+      tr.appendChild(td);
+
+      tbody.appendChild(tr);
+      rows.push({ el: tr, sku: d[0], bin: d[1], exp: d[2], input: inp, status: st, state: "todo" });
+      bind(rows[rows.length - 1]);
+      update(rows[rows.length - 1]);
+    }
+  }
+
+  function bind(r) {
+    var handler = function () {
+      var cleaned = r.input.value.replace(/[^0-9]/g, "");
+      if (cleaned !== r.input.value) { r.input.value = cleaned; }
+      update(r);
+      refreshSummary();
+    };
+    r.input.oninput = handler;
+    r.input.onkeyup = handler;
+    r.input.onfocus = function () {
+      try { r.input.select(); } catch (e) {}
+    };
+  }
+
+  function update(r) {
+    var v = r.input.value;
+    var cls, txt;
+    if (v === "") {
+      r.state = "todo"; cls = "pill st-todo"; txt = "TO COUNT";
+    } else {
+      var n = parseInt(v, 10);
+      var diff = n - r.exp;
+      if (diff === 0) {
+        r.state = "ok"; cls = "pill st-ok"; txt = "\u2713 OK";
+      } else if (diff < 0) {
+        r.state = "short"; cls = "pill st-short"; txt = "\u25BC SHORT " + Math.abs(diff);
+      } else {
+        r.state = "over"; cls = "pill st-over"; txt = "\u25B2 OVER " + diff;
+      }
+    }
+    r.status.className = cls;
+    r.status.textContent = txt;
+  }
+
+  function refreshSummary() {
+    var counted = 0, bad = 0, i;
+    for (i = 0; i < rows.length; i++) {
+      if (rows[i].state !== "todo") { counted++; }
+      if (rows[i].state === "short" || rows[i].state === "over") { bad++; }
+    }
+    summary.innerHTML = "Counted <b>" + counted + "/" + rows.length + "</b> &nbsp; Mismatch <b>" + bad + "</b>";
+  }
+
+  function filter() {
+    var q = search.value.replace(/^\s+|\s+$/g, "").toUpperCase();
+    var shown = 0, i, r, match;
+    for (i = 0; i < rows.length; i++) {
+      r = rows[i];
+      match = q === "" || r.sku.indexOf(q) !== -1 || r.bin.indexOf(q) !== -1;
+      r.el.style.display = match ? "" : "none";
+      if (match) { shown++; }
+    }
+    emptyMsg.style.display = shown === 0 ? "block" : "none";
+  }
+
+  search.oninput = filter;
+  search.onkeyup = filter;
+  clearBtn.onclick = function () {
+    search.value = "";
+    filter();
+    search.focus();
+  };
+
+  build();
+  refreshSummary();
+})();
+</script>
+</body>
+</html>

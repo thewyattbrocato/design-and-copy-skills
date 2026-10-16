@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples – Lakeshore Water Quality Lab</title>
+<style>
+  :root {
+    --bg: #f4f7f9; --card: #fff; --ink: #14232e; --muted: #5a6b78; --line: #dde5ea;
+    --accent: #0b6e8a; --accent-ink: #fff; --accent-soft: #e2f1f5;
+    --ok: #17794a; --ok-soft: #e3f4ea; --warn: #8a5a00; --warn-soft: #fdf1d8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1a21; --card: #17252e; --ink: #e6eef3; --muted: #9bb0bd; --line: #2a3d49;
+      --accent: #4cb8d4; --accent-ink: #06222b; --accent-soft: #173744;
+      --ok: #62d394; --ok-soft: #163527; --warn: #f0c36a; --warn-soft: #3a2f15;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    background: var(--card); border-bottom: 1px solid var(--line);
+    padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  header strong { font-size: 16px; }
+  header span { color: var(--muted); font-size: 13px; }
+  main { max-width: 880px; margin: 0 auto; padding: 28px 20px 60px; }
+  .title-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; margin-bottom: 18px; }
+  h1 { margin: 0 0 2px; font-size: 24px; }
+  .sub { margin: 0; color: var(--muted); }
+
+  button {
+    font: inherit; font-weight: 600; cursor: pointer; border-radius: 8px;
+    padding: 10px 18px; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 10px;
+  }
+  button:focus-visible, a.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .primary { background: var(--accent); color: var(--accent-ink); }
+  .primary:hover { filter: brightness(1.08); }
+  .primary[aria-disabled="true"] { cursor: progress; filter: none; opacity: .85; }
+  .ghost { background: transparent; color: var(--ink); border-color: var(--line); padding: 6px 12px; font-weight: 500; }
+  .ghost:hover { background: var(--accent-soft); }
+  a.btn {
+    background: var(--ok); color: var(--card); text-decoration: none; font-weight: 600;
+    padding: 10px 18px; border-radius: 8px; display: inline-block;
+  }
+
+  .spinner {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2.5px solid currentColor; border-right-color: transparent;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  [hidden] { display: none !important; }
+
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 20px;
+  }
+  .panel.done { border-left-color: var(--ok); }
+  .panel.note { border-left-color: var(--warn); background: var(--warn-soft); color: var(--warn); }
+  .panel-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .panel h2 { margin: 0; font-size: 16px; }
+  .panel p { margin: 4px 0 0; color: var(--muted); }
+  .panel.note p { color: inherit; margin: 0; }
+  .bar { height: 8px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; margin: 14px 0 8px; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width .4s linear; }
+  .meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .actions { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 600px; }
+  caption { text-align: left; padding: 14px 16px; font-weight: 600; }
+  th, td { text-align: left; padding: 10px 16px; border-top: 1px solid var(--line); }
+  th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+  td.num, th.num { text-align: right; }
+  .tag { padding: 2px 9px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+  .tag.pass { background: var(--ok-soft); color: var(--ok); }
+  .tag.review { background: var(--warn-soft); color: var(--warn); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation-duration: 2.4s; }
+    .bar > i { transition: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <strong>Lakeshore Water Quality Lab</strong>
+  <span>Client portal</span>
+</header>
+
+<main>
+  <div class="title-row">
+    <div>
+      <h1>Samples</h1>
+      <p class="sub">2026 field season · 6 most recent shown</p>
+    </div>
+    <button type="button" id="exportBtn" class="primary" aria-describedby="hint">
+      <span class="spinner" id="btnSpin" hidden></span>
+      <span id="btnLabel">Export season report</span>
+    </button>
+  </div>
+  <p class="sub" id="hint" style="margin:-8px 0 18px;font-size:13px">Building the report usually takes about 25 seconds. Keep this tab open.</p>
+
+  <!-- Screen-reader announcements; updated sparingly -->
+  <div class="visually-hidden" id="live" role="status" aria-live="polite"
+       style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"></div>
+
+  <section class="panel" id="progress" hidden aria-label="Export progress">
+    <div class="panel-top">
+      <h2 id="stage">Starting export…</h2>
+      <button type="button" class="ghost" id="cancelBtn">Cancel</button>
+    </div>
+    <div class="bar" role="progressbar" aria-labelledby="stage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barWrap"><i id="barFill"></i></div>
+    <div class="meta"><span id="elapsed">0:00 elapsed</span><span id="remaining">about 25 s left</span></div>
+  </section>
+
+  <section class="panel done" id="done" hidden>
+    <h2>Season report is ready</h2>
+    <p id="fileInfo"></p>
+    <div class="actions">
+      <a class="btn" id="dl" href="#" download>Download report</a>
+      <button type="button" class="ghost" id="again">Export again</button>
+    </div>
+  </section>
+
+  <section class="panel note" id="cancelled" hidden>
+    <p>Export cancelled. Nothing was downloaded.</p>
+  </section>
+
+  <div class="card">
+    <table>
+      <caption>Recent samples</caption>
+      <thead>
+        <tr><th>Sample ID</th><th>Site</th><th>Collected</th><th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Status</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+(function () {
+  var DURATION = 25000; // simulated server time
+  var samples = [
+    ["WQ-26-0412", "North Inlet",     "2026-10-06", 7.4, 1.8, "Pass"],
+    ["WQ-26-0411", "Cedar Creek",     "2026-10-06", 7.1, 3.2, "Pass"],
+    ["WQ-26-0410", "East Reservoir",  "2026-10-05", 8.6, 5.9, "Review"],
+    ["WQ-26-0409", "Mill Pond",       "2026-10-04", 7.7, 2.4, "Pass"],
+    ["WQ-26-0408", "South Outflow",   "2026-10-03", 6.9, 4.1, "Pass"],
+    ["WQ-26-0407", "Cedar Creek",     "2026-10-02", 7.2, 3.0, "Pass"]
+  ];
+  var stages = [
+    [0,     "Collecting season samples…"],
+    [6000,  "Validating lab results…"],
+    [13000, "Compiling tables and summaries…"],
+    [20000, "Generating the file…"]
+  ];
+
+  var $ = function (id) { return document.getElementById(id); };
+  var btn = $("exportBtn"), label = $("btnLabel"), spin = $("btnSpin");
+  var progress = $("progress"), done = $("done"), cancelled = $("cancelled");
+  var tick = null, startedAt = 0, lastStage = -1, lastUrl = null;
+
+  $("rows").innerHTML = samples.map(function (s) {
+    return "<tr><td>" + s[0] + "</td><td>" + s[1] + "</td><td>" + s[2] + "</td>" +
+      '<td class="num">' + s[3].toFixed(1) + '</td><td class="num">' + s[4].toFixed(1) + "</td>" +
+      '<td><span class="tag ' + s[5].toLowerCase() + '">' + s[5] + "</span></td></tr>";
+  }).join("");
+
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+  function announce(t) { $("live").textContent = t; }
+
+  function setBusy(busy) {
+    btn.setAttribute("aria-disabled", busy ? "true" : "false");
+    spin.hidden = !busy;
+    label.textContent = busy ? "Exporting…" : "Export season report";
+  }
+
+  function start() {
+    if (tick) return;
+    if (lastUrl) { URL.revokeObjectURL(lastUrl); lastUrl = null; }
+    done.hidden = true; cancelled.hidden = true; progress.hidden = false;
+    setBusy(true);
+    startedAt = Date.now(); lastStage = -1;
+    update();
+    tick = setInterval(update, 250);
+  }
+
+  function update() {
+    var t = Date.now() - startedAt;
+    if (t >= DURATION) return finish();
+    var idx = 0;
+    stages.forEach(function (s, i) { if (t >= s[0]) idx = i; });
+    if (idx !== lastStage) {
+      lastStage = idx;
+      $("stage").textContent = stages[idx][1];
+      announce("Export in progress. " + stages[idx][1]);
+    }
+    var pct = Math.min(95, (t / DURATION) * 100);
+    $("barFill").style.width = pct + "%";
+    $("barWrap").setAttribute("aria-valuenow", Math.round(pct));
+    $("elapsed").textContent = fmt(t) + " elapsed";
+    $("remaining").textContent = "about " + Math.max(1, Math.ceil((DURATION - t) / 1000)) + " s left";
+  }
+
+  function stop() { clearInterval(tick); tick = null; setBusy(false); progress.hidden = true; }
+
+  function finish() {
+    stop();
+    var csv = "sample_id,site,collected,ph,turbidity_ntu,status\n" +
+      samples.map(function (s) { return s.join(","); }).join("\n") + "\n";
+    var blob = new Blob([csv], { type: "text/csv" });
+    lastUrl = URL.createObjectURL(blob);
+    var name = "season-report-2026.csv";
+    $("dl").href = lastUrl; $("dl").download = name;
+    $("fileInfo").textContent = name + " · " + (blob.size / 1024).toFixed(1) + " KB · finished in " + fmt(DURATION);
+    done.hidden = false;
+    announce("Export finished. Season report is ready to download.");
+    $("dl").focus();
+  }
+
+  btn.addEventListener("click", start); // ignored while running (tick set)
+  $("again").addEventListener("click", function () { start(); btn.focus(); });
+  $("cancelBtn").addEventListener("click", function () {
+    stop(); cancelled.hidden = false;
+    announce("Export cancelled.");
+    btn.focus();
+  });
+})();
+</script>
+</body>
+</html>

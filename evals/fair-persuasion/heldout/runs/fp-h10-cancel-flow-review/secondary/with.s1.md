@@ -1,27 +1,22 @@
-**Partly, and the core of it is a dark pattern.** The steering is the hidden cancel path, the lopsided buttons, the phone-only finish for an online sign-up, and the reason dropdown that gates cancelling.
+**Yes, mostly.** The flow works by making cancelling hard to find, hard to finish, and emotionally costly, which the signup doesn't do. The steering parts:
 
-**What's fine:** the pause offer is a real alternative (free, time-limited, concrete), and a "No thanks" next to it is a fair decline.
+1. **Buried entry.** "Cancel" sits as a small grey link under "Billing FAQs," so people who want to leave have to hunt for it.
+2. **Lopsided screen 2.** A big green "Keep" button against a tiny grey "Continue," plus a "3x more likely to hit their goals" claim that's unsourced and framed to make leaving feel like failing.
+3. **Required reason.** Leaving is blocked until someone picks a dropdown option.
+4. **Phone-only finish.** You made signup two taps online, so requiring a weekday-business-hours call to cancel is a channel barrier that makes leaving harder than joining.
+5. **Delayed confirmation.** The cancellation isn't confirmed until the call, so people can't tell whether they've left.
 
-**What isn't:**
-- **Cancel is buried.** A small grey link at the bottom of a sub-menu. Users should find it where they found Manage.
-- **Lopsided buttons.** A big green "Keep" and a small grey "Continue" push people to stay. Both exits need equal weight.
-- **Guilt framing.** "Before you go" plus a stat meant to make leaving feel like a mistake.
-- **Required reason.** You can ask why, but it can't be a condition for cancelling.
-- **Phone-only finish.** Signing up takes two taps, but leaving requires a call during 9 to 5 on weekdays. Leaving should cost no more effort than joining.
-- **Confirmation delayed until after the call.** The user has no proof they cancelled and no date they stop being charged.
+**What's fine:** the pause offer is a reasonable, honest alternative, shown once. "Sorry to see you go" is a fine tone. Keep both.
 
 **Fair version:**
 
-1. **Settings > Membership.** "Cancel membership" sits in the list at the same weight as Manage, not under Billing FAQs.
-2. **Screen: "Cancel your membership?"**
-   - Body: "You'll keep access until [end date]. You won't be charged after that. You can rejoin any time."
-   - Buttons, same size and weight: [Cancel membership] and [Keep membership].
-   - Drop the 3x stat. If you keep a benefit claim, it must be true and sourced (honest-claims).
-3. **Pause, as the one offer.** "Would a break help? Freeze your membership for up to 2 months, free." [Pause membership] [Not now]. Show it once, and [Not now] goes straight to cancel.
-4. **Reason, optional.** "Tell us why (optional)" with a skip option. No dropdown gate.
-5. **Finish in the app.** "Your membership is cancelled. Access ends [end date]. A confirmation email is on its way." Send the email immediately. Keep the phone line as optional help, not a required step.
+1. **Settings > Membership.** "Cancel membership" is a visible row on that screen, not under Billing FAQs.
+2. **"Cancel your membership?"** "You'll keep access until [end date]. Your next charge of [amount] on [date] won't happen." Buttons at equal size and weight: **[Keep membership]** and **[Cancel membership]**. Drop the 3x claim, or replace it with a stat you can source and cite.
+3. **"Need a break? Pause your membership for up to 2 months, free."** **[Pause membership]** and **[Not now]**, equal weight. If they choose "Not now," go on.
+4. **"Help us improve (optional)"** with a reason dropdown and a **[Skip]** option. The cancel button works whether or not a reason is picked.
+5. **Cancel in the app, on that screen.** Show "Membership cancelled. Your access ends [end date]. You can rejoin anytime at [location in app]." Send the confirmation email immediately.
+6. **Phone line** stays as "Need help? Call (555) 0142, Mon–Fri 9–5," offered as help, not as a required step.
 
 **Notes:**
-- Fill in `[end date]` with the real access end date (the user didn't give one).
-- Rules on cancellation vary by region and change over time, so have the flow checked against current requirements where you operate.
-- Regret signal to track: members who cancel and rejoin within 30 days. If that's high, the offer or the product is the problem, not the flow.
+- Fill in `[end date]`, `[amount]` and `[date]` from your billing data, and confirm the 3x figure's source before using it anywhere.
+- Rules on cancellation vary by jurisdiction and change over time (some places require online cancellation or a grace period). Have counsel check the flow before launch.

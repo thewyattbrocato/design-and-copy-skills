@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sync Log Viewer</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f7f7f5;
+    --panel: #ffffff;
+    --text: #1e2126;
+    --dim: #6b717b;
+    --line: #e2e3e0;
+    --accent: #2a5bd7;
+    --err: #c62828;
+    --err-bg: #fdecec;
+    --warn: #9a5b00;
+    --warn-bg: #fff5de;
+    --info: #3d6b4a;
+    --key: #7a5b9a;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a;
+      --panel: #1b1e23;
+      --text: #d9dce1;
+      --dim: #8b919b;
+      --line: #2b2f36;
+      --accent: #7aa2ff;
+      --err: #ff7b72;
+      --err-bg: #3a1f22;
+      --warn: #e3b341;
+      --warn-bg: #352c15;
+      --info: #7fc18f;
+      --key: #b79ae0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.5 var(--sans);
+  }
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    align-items: center;
+  }
+  h1 { font-size: 15px; margin: 0 6px 0 0; font-weight: 650; }
+  .chips { display: flex; gap: 6px; }
+  .chip {
+    font: 600 12px var(--sans);
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text);
+    border-radius: 999px;
+    padding: 4px 11px;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip[aria-pressed="false"] { opacity: .4; text-decoration: line-through; }
+  .chip.error { color: var(--err); border-color: var(--err); }
+  .chip.warn { color: var(--warn); border-color: var(--warn); }
+  .chip.info { color: var(--info); border-color: var(--info); }
+  input[type=search], select, button.btn {
+    font: 13px var(--sans);
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 9px;
+  }
+  input[type=search] { width: 220px; }
+  button.btn { cursor: pointer; }
+  button.btn:hover, .chip:hover { border-color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  label.check { font-size: 13px; color: var(--dim); display: flex; gap: 5px; align-items: center; }
+  .spacer { flex: 1; }
+  #status { color: var(--dim); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+  main { padding: 8px 40px 60px 16px; }
+  #drop {
+    display: none;
+    position: fixed; inset: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    border: 3px dashed var(--accent);
+    align-items: center; justify-content: center;
+    font-size: 20px; color: var(--accent);
+  }
+  body.dragging #drop { display: flex; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 4.2ch 20ch 7ch 15ch 1fr;
+    gap: 0 12px;
+    padding: 2px 8px;
+    border-left: 3px solid transparent;
+    font: 12.5px/1.55 var(--mono);
+    border-radius: 3px;
+  }
+  .row:hover { background: color-mix(in srgb, var(--text) 6%, transparent); }
+  .row.error { background: var(--err-bg); border-left-color: var(--err); }
+  .row.warn { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.flash { outline: 2px solid var(--accent); }
+  .n { color: var(--dim); text-align: right; opacity: .7; user-select: none; }
+  .ts { color: var(--dim); }
+  .lvl { font-weight: 700; }
+  .error .lvl { color: var(--err); }
+  .warn .lvl { color: var(--warn); }
+  .info .lvl { color: var(--info); }
+  .sub { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; }
+  .k { color: var(--dim); }
+  .v { color: var(--text); }
+  .hot .k { color: var(--key); }
+  .hot .v { font-weight: 700; color: var(--err); }
+  .warn .hot .v { color: var(--warn); }
+  .raw { grid-column: 3 / -1; color: var(--dim); white-space: pre-wrap; overflow-wrap: anywhere; }
+  mark { background: #ffe066; color: #000; border-radius: 2px; }
+  .empty { padding: 40px 8px; color: var(--dim); text-align: center; }
+
+  #mini {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 18px;
+    z-index: 4; background: var(--panel);
+    border-left: 1px solid var(--line);
+    cursor: pointer;
+  }
+  #mini i {
+    position: absolute; left: 2px; right: 2px; height: 3px; border-radius: 1px;
+    background: var(--warn);
+  }
+  #mini i.error { background: var(--err); height: 4px; }
+  #view {
+    position: absolute; left: 0; right: 0;
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    pointer-events: none;
+  }
+  @media (max-width: 860px) {
+    .row { grid-template-columns: 4ch 1fr; }
+    .ts, .lvl, .sub, .msg, .raw { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sync log</h1>
+  <div class="chips" role="group" aria-label="Filter by level">
+    <button class="chip error" data-lvl="error" aria-pressed="true">ERROR <span>0</span></button>
+    <button class="chip warn" data-lvl="warn" aria-pressed="true">WARN <span>0</span></button>
+    <button class="chip info" data-lvl="info" aria-pressed="true">INFO <span>0</span></button>
+  </div>
+  <input type="search" id="q" placeholder="Search…  ( / )" aria-label="Search log">
+  <select id="sub" aria-label="Filter by job"><option value="">All jobs</option></select>
+  <button class="btn" id="prev" title="Previous problem (p)">▲ Prev</button>
+  <button class="btn" id="next" title="Next problem (n)">▼ Next problem</button>
+  <label class="check"><input type="checkbox" id="only"> Problems only</label>
+  <span class="spacer"></span>
+  <span id="status"></span>
+  <button class="btn" id="open">Open log…</button>
+  <input type="file" id="file" hidden>
+</header>
+
+<main id="list" aria-label="Log lines"></main>
+<div id="mini" title="Click to jump"><div id="view"></div></div>
+<div id="drop">Drop a log file to load it</div>
+
+<script>
+const SAMPLE = `2025-03-11T02:00:04Z INFO  sync.orders  batch=0041 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=812 checksum=ok
+2025-03-11T02:00:05Z INFO  sync.orders  batch=0042 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=790 checksum=ok
+2025-03-11T02:00:07Z WARN  sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=4410 retry=1 reason=lock_timeout waited_ms=3000
+2025-03-11T02:00:12Z ERROR sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=9120 retry=3 reason=lock_timeout action=skipped_batch_for_rerun
+2025-03-11T02:00:13Z INFO  sync.orders  batch=0043 rows=4988 source=warehouse-east target=ledger-main elapsed_ms=801 checksum=ok
+2025-03-11T02:00:15Z INFO  sync.inventory batch=0102 rows=1830 source=warehouse-west target=ledger-main elapsed_ms=377 checksum=ok`;
+
+const LINE = /^(\S+)\s+([A-Za-z]+)\s+(\S+)\s*(.*)$/;
+const LEVELS = { error: "error", err: "error", fatal: "error", critical: "error", crit: "error",
+                 warn: "warn", warning: "warn", info: "info", debug: "info", trace: "info", notice: "info" };
+const SLOW_MS = 3000;
+
+const $ = id => document.getElementById(id);
+const list = $("list"), q = $("q"), subSel = $("sub"), only = $("only"), mini = $("mini"), view = $("view");
+const active = { error: true, warn: true, info: true };
+let entries = [];   // {n, raw, ts, lvlText, level, sub, msg, problem}
+let shown = [];     // [{entry, el}]
+
+function parse(text) {
+  const out = [];
+  let prevLevel = "info";
+  text.split(/\r?\n/).forEach(raw => {
+    if (!raw.trim()) return;
+    const m = LINE.exec(raw);
+    const lv = m && LEVELS[m[2].toLowerCase()];
+    if (m && lv) {
+      prevLevel = lv;
+      out.push({ n: out.length + 1, raw, ts: m[1], lvlText: m[2].toUpperCase(), level: lv, sub: m[3], msg: m[4] });
+    } else {
+      // unparsed / continuation line: inherit the previous level so it stays with its parent
+      out.push({ n: out.length + 1, raw, level: prevLevel, cont: true });
+    }
+  });
+  out.forEach(e => {
+    e.problem = e.level !== "info" || /checksum=(?!ok\b)\S+/.test(e.raw);
+  });
+  return out;
+}
+
+function esc(s) { return s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])); }
+
+function highlight(text, term) {
+  let h = esc(text);
+  if (term) {
+    const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/&/g, "&amp;").replace(/</g, "&lt;"), "gi");
+    h = h.replace(re, m => "<mark>" + m + "</mark>");
+  }
+  return h;
+}
+
+function msgHTML(msg, term) {
+  // Split into key=value pairs; mark the ones that usually explain a problem
+  return msg.split(/(\s+)/).map(tok => {
+    const m = /^([\w.-]+)=(.*)$/.exec(tok);
+    if (!m) return highlight(tok, term);
+    const [, k, v] = m;
+    let hot = ["reason", "action", "retry", "error", "err"].includes(k)
+      || (k === "checksum" && v !== "ok")
+      || (/_ms$/.test(k) && +v >= SLOW_MS);
+    const html = '<span class="k">' + highlight(k, term) + '=</span><span class="v">' + highlight(v, term) + "</span>";
+    return hot ? '<span class="hot">' + html + "</span>" : html;
+  }).join("");
+}
+
+function buildRow(e, term) {
+  const el = document.createElement("div");
+  el.className = "row " + e.level;
+  el.dataset.n = e.n;
+  if (e.cont) {
+    el.innerHTML = '<span class="n">' + e.n + '</span><span class="raw">' + highlight(e.raw, term) + "</span>";
+  } else {
+    el.innerHTML =
+      '<span class="n">' + e.n + "</span>" +
+      '<span class="ts">' + esc(e.ts) + "</span>" +
+      '<span class="lvl">' + esc(e.lvlText) + "</span>" +
+      '<span class="sub">' + highlight(e.sub, term) + "</span>" +
+      '<span class="msg">' + msgHTML(e.msg, term) + "</span>";
+  }
+  return el;
+}
+
+function render() {
+  const term = q.value.trim();
+  const lt = term.toLowerCase();
+  const sub = subSel.value;
+  // keep continuation lines attached to their parent's sub-system for the job filter
+  let parentSub = "";
+  const frag = document.createDocumentFragment();
+  shown = [];
+  entries.forEach(e => {
+    if (!e.cont) parentSub = e.sub;
+    if (!active[e.level]) return;
+    if (only.checked && !e.problem) return;
+    if (sub && (e.cont ? parentSub : e.sub) !== sub) return;
+    if (lt && !e.raw.toLowerCase().includes(lt)) return;
+    const el = buildRow(e, term);
+    frag.appendChild(el);
+    shown.push({ e, el });
+  });
+  list.textContent = "";
+  if (!shown.length) {
+    const d = document.createElement("div");
+    d.className = "empty";
+    d.textContent = entries.length ? "No lines match the current filters." : "No log loaded. Open a file, drop one here, or paste text.";
+    list.appendChild(d);
+  } else {
+    list.appendChild(frag);
+  }
+  $("status").textContent = "Showing " + shown.length.toLocaleString() + " of " + entries.length.toLocaleString() + " lines";
+  drawMini();
+}
+
+function updateCounts() {
+  const c = { error: 0, warn: 0, info: 0 };
+  entries.forEach(e => { if (!e.cont) c[e.level]++; });
+  document.querySelectorAll(".chip").forEach(b => b.querySelector("span").textContent = c[b.dataset.lvl].toLocaleString());
+  const subs = [...new Set(entries.filter(e => e.sub).map(e => e.sub))].sort();
+  const cur = subSel.value;
+  subSel.innerHTML = '<option value="">All jobs</option>' + subs.map(s => '<option>' + esc(s) + "</option>").join("");
+  subSel.value = subs.includes(cur) ? cur : "";
+}
+
+function load(text) {
+  entries = parse(text);
+  updateCounts();
+  render();
+  scrollTo(0, 0);
+}
+
+/* Overview strip: shows where problems sit in the (filtered) log */
+function drawMini() {
+  mini.querySelectorAll("i").forEach(i => i.remove());
+  const total = shown.length;
+  if (!total) return;
+  const h = mini.clientHeight;
+  const seen = new Set();
+  shown.forEach(({ e }, idx) => {
+    if (e.level === "info" || e.cont) return;
+    const y = Math.round(idx / total * (h - 4));
+    const key = e.level + y;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const t = document.createElement("i");
+    t.className = e.level;
+    t.style.top = y + "px";
+    mini.appendChild(t);
+  });
+  updateView();
+}
+function updateView() {
+  const doc = document.documentElement;
+  const max = doc.scrollHeight;
+  const h = mini.clientHeight;
+  view.style.top = (scrollY / max * h) + "px";
+  view.style.height = Math.max(6, innerHeight / max * h) + "px";
+}
+mini.addEventListener("click", ev => {
+  if (!shown.length) return;
+  const frac = ev.clientY / mini.clientHeight;
+  const target = shown[Math.min(shown.length - 1, Math.floor(frac * shown.length))].el;
+  scrollTo(0, target.offsetTop - innerHeight / 3);
+});
+addEventListener("scroll", updateView, { passive: true });
+addEventListener("resize", drawMini);
+
+/* Problem navigation */
+function jump(dir) {
+  const head = document.querySelector("header").offsetHeight + 8;
+  const probs = shown.filter(s => s.e.level !== "info" && !s.e.cont || (s.e.problem && !s.e.cont));
+  if (!probs.length) return;
+  let pick;
+  if (dir > 0) pick = probs.find(s => s.el.getBoundingClientRect().top > head + 4);
+  else pick = [...probs].reverse().find(s => s.el.getBoundingClientRect().top < head - 4);
+  if (!pick) pick = dir > 0 ? probs[0] : probs[probs.length - 1];
+  scrollTo(0, pick.el.offsetTop - head - 40);
+  pick.el.classList.add("flash");
+  setTimeout(() => pick.el.classList.remove("flash"), 900);
+}
+$("next").onclick = () => jump(1);
+$("prev").onclick = () => jump(-1);
+
+/* Controls */
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+  const on = b.getAttribute("aria-pressed") !== "true";
+  b.setAttribute("aria-pressed", on);
+  active[b.dataset.lvl] = on;
+  render();
+}));
+let timer;
+q.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(render, 120); });
+subSel.addEventListener("change", render);
+only.addEventListener("change", render);
+
+addEventListener("keydown", ev => {
+  const typing = /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
+  if (ev.key === "Escape" && document.activeElement === q) { q.value = ""; q.blur(); render(); return; }
+  if (typing || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  if (ev.key === "/") { ev.preventDefault(); q.focus(); }
+  else if (ev.key === "n" || ev.key === "j") jump(1);
+  else if (ev.key === "p" || ev.key === "k") jump(-1);
+});
+
+/* Loading: file picker, drag-and-drop, paste */
+$("open").onclick = () => $("file").click();
+$("file").addEventListener("change", ev => { if (ev.target.files[0]) readFile(ev.target.files[0]); ev.target.value = ""; });
+function readFile(f) { f.text().then(load); }
+let depth = 0;
+addEventListener("dragenter", ev => { ev.preventDefault(); depth++; document.body.classList.add("dragging"); });
+addEventListener("dragleave", () => { if (--depth <= 0) { depth = 0; document.body.classList.remove("dragging"); } });
+addEventListener("dragover", ev => ev.preventDefault());
+addEventListener("drop", ev => {
+  ev.preventDefault(); depth = 0; document.body.classList.remove("dragging");
+  const f = ev.dataTransfer.files[0];
+  if (f) readFile(f);
+});
+addEventListener("paste", ev => {
+  if (/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
+  const t = ev.clipboardData.getData("text");
+  if (t.trim()) { ev.preventDefault(); load(t); }
+});
+
+load(SAMPLE);
+</script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillwater – 21-day streak</title>
+<style>
+  :root {
+    --bg: #0b1426;
+    --ink: #f3f6fb;
+    --muted: #a9b8d0;
+    --accent: #ffd98a;
+    --accent2: #8fd3ff;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden;
+  }
+  .stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: radial-gradient(120% 90% at 50% 100%, #14284a 0%, var(--bg) 60%);
+  }
+  /* Slow "breathing" glow: ~5s cycle, low amplitude. Not a flash. */
+  .glow {
+    position: absolute; inset: -10%;
+    background:
+      radial-gradient(45% 40% at 50% 50%, rgba(255, 217, 138, .22), transparent 70%),
+      radial-gradient(60% 50% at 50% 55%, rgba(143, 211, 255, .14), transparent 75%);
+    opacity: .6;
+    animation: breathe 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .5; transform: scale(1); }
+    50%      { opacity: .9; transform: scale(1.06); }
+  }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  .card {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    max-width: 32rem;
+    animation: rise .9s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px) scale(.98); }
+    to   { opacity: 1; transform: none; }
+  }
+  .eyebrow {
+    letter-spacing: .22em; text-transform: uppercase;
+    font-size: .8rem; color: var(--accent2); margin: 0 0 .5rem;
+  }
+  .count {
+    font-size: clamp(6rem, 26vw, 11rem);
+    font-weight: 700; line-height: 1; margin: 0;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, #fff 10%, var(--accent) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 40px rgba(255, 217, 138, .25);
+  }
+  .days { font-size: 1.4rem; margin: .25rem 0 1.25rem; letter-spacing: .08em; }
+  .msg { color: var(--muted); font-size: 1.1rem; line-height: 1.55; margin: 0 auto 2rem; max-width: 26rem; }
+  button {
+    font: inherit; font-weight: 600;
+    padding: .85rem 2.2rem; border-radius: 999px; border: 0; cursor: pointer;
+    background: var(--accent); color: #231a05;
+    transition: transform .15s ease, box-shadow .15s ease;
+    box-shadow: 0 6px 24px rgba(255, 217, 138, .25);
+  }
+  button:hover { transform: translateY(-1px); }
+  button:active { transform: scale(.97); }
+  button:focus-visible { outline: 3px solid var(--accent2); outline-offset: 3px; }
+
+  .stage.closed { display: none; }
+  .again {
+    position: fixed; inset: 0; display: none; place-items: center; text-align: center;
+    background: var(--bg); color: var(--muted);
+  }
+  .again.show { display: grid; }
+  .again button { margin-top: 1rem; background: transparent; color: var(--ink); border: 1px solid var(--muted); box-shadow: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow, .card { animation: none; }
+    .glow { opacity: .7; }
+  }
+</style>
+</head>
+<body>
+  <main class="stage" id="stage" role="dialog" aria-modal="true" aria-labelledby="title" aria-describedby="msg">
+    <div class="glow" aria-hidden="true"></div>
+    <canvas id="fx" aria-hidden="true"></canvas>
+    <section class="card">
+      <p class="eyebrow">Streak unlocked</p>
+      <h1 class="count" id="title"><span id="num" aria-hidden="true">21</span><span class="sr" style="position:absolute;left:-9999px">21 days</span></h1>
+      <p class="days">days in a row</p>
+      <p class="msg" id="msg">Three weeks of showing up for your own words. That's a habit, and it's yours now.</p>
+      <button id="go" autofocus>Keep writing</button>
+    </section>
+  </main>
+
+  <div class="again" id="again">
+    <div>
+      <p>Your streak is safe. See you tomorrow.</p>
+      <button id="replay">Replay celebration</button>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const again = document.getElementById('again');
+  const canvas = document.getElementById('fx');
+  const ctx = canvas.getContext('2d');
+  const num = document.getElementById('num');
+  const go = document.getElementById('go');
+  const replay = document.getElementById('replay');
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  let w = 0, h = 0, dpr = 1;
+  let particles = [], rockets = [];
+  let raf = 0, last = 0, nextLaunch = 0, running = false;
+
+  const palette = [[255,217,138],[143,211,255],[255,170,190],[190,170,255],[160,240,200],[255,255,255]];
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = innerWidth; h = innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (motionQuery.matches && running === false && !stage.classList.contains('closed')) drawStatic();
+  }
+
+  function burst(x, y, big) {
+    const base = palette[(Math.random() * palette.length) | 0];
+    const alt = palette[(Math.random() * palette.length) | 0];
+    const n = big ? 90 : 60;
+    for (let i = 0; i < n; i++) {
+      const a = (Math.PI * 2 * i) / n + Math.random() * .1;
+      const s = (big ? 3.6 : 2.8) * (.55 + Math.random() * .6);
+      particles.push({
+        x, y, px: x, py: y,
+        vx: Math.cos(a) * s, vy: Math.sin(a) * s,
+        life: 1, decay: .008 + Math.random() * .008,
+        c: i % 2 ? base : alt
+      });
+    }
+  }
+
+  function launch() {
+    rockets.push({
+      x: w * (.15 + Math.random() * .7), y: h + 10,
+      vy: -(h * .0115 + Math.random() * 2.2), vx: (Math.random() - .5) * 1.2,
+      px: 0, py: 0
+    });
+  }
+
+  function step(t) {
+    const dt = Math.min((t - last) / 16.67, 3); last = t;
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineCap = 'round';
+
+    // launch rhythm: roughly one rocket every ~0.9–1.6 s, well under flash thresholds
+    if (t > nextLaunch) { launch(); nextLaunch = t + 900 + Math.random() * 700; }
+
+    for (let i = rockets.length - 1; i >= 0; i--) {
+      const r = rockets[i];
+      r.px = r.x; r.py = r.y;
+      r.x += r.vx * dt; r.y += r.vy * dt; r.vy += .06 * dt;
+      ctx.strokeStyle = 'rgba(255,230,180,.7)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(r.px, r.py); ctx.lineTo(r.x, r.y); ctx.stroke();
+      if (r.vy >= -1 || r.y < h * .2) { burst(r.x, r.y, Math.random() < .3); rockets.splice(i, 1); }
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.px = p.x; p.py = p.y;
+      p.vx *= Math.pow(.985, dt); p.vy = p.vy * Math.pow(.985, dt) + .03 * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      p.life -= p.decay * dt;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.strokeStyle = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},${p.life * .9})`;
+      ctx.lineWidth = 1.6 + p.life;
+      ctx.beginPath(); ctx.moveTo(p.px, p.py); ctx.lineTo(p.x, p.y); ctx.stroke();
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  // Reduced motion: a single still starburst, no animation.
+  function drawStatic() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    const spots = [[.2,.25],[.8,.3],[.5,.12],[.15,.7],[.85,.72]];
+    spots.forEach(([fx, fy], k) => {
+      const c = palette[k % palette.length], n = 28, len = Math.min(w, h) * .07;
+      for (let i = 0; i < n; i++) {
+        const a = (Math.PI * 2 * i) / n;
+        ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},.55)`;
+        ctx.lineWidth = 2; ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(w * fx + Math.cos(a) * len * .4, h * fy + Math.sin(a) * len * .4);
+        ctx.lineTo(w * fx + Math.cos(a) * len, h * fy + Math.sin(a) * len);
+        ctx.stroke();
+      }
+    });
+  }
+
+  function countUp() {
+    if (motionQuery.matches) { num.textContent = '21'; return; }
+    const start = performance.now(), dur = 1500;
+    (function tick(now) {
+      const t = Math.min((now - start) / dur, 1);
+      num.textContent = Math.max(1, Math.round(21 * (1 - Math.pow(1 - t, 3))));
+      if (t < 1 && !stage.classList.contains('closed')) requestAnimationFrame(tick);
+    })(start);
+  }
+
+  function start() {
+    running = false;
+    cancelAnimationFrame(raf);
+    particles = []; rockets = [];
+    resize();
+    countUp();
+    if (motionQuery.matches) { drawStatic(); return; }
+    running = true; last = performance.now(); nextLaunch = last + 300;
+    raf = requestAnimationFrame(step);
+    setTimeout(() => { if (running) { burst(w * .3, h * .3, true); burst(w * .7, h * .28, true); } }, 500);
+  }
+
+  function stop() {
+    running = false; cancelAnimationFrame(raf);
+    ctx.clearRect(0, 0, w, h);
+  }
+
+  function close() {
+    stop();
+    stage.classList.add('closed');
+    again.classList.add('show');
+    replay.focus();
+  }
+
+  go.addEventListener('click', close);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !stage.classList.contains('closed')) close(); });
+  replay.addEventListener('click', () => {
+    again.classList.remove('show');
+    stage.classList.remove('closed');
+    start(); go.focus();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (stage.classList.contains('closed') || motionQuery.matches) return;
+    if (document.hidden) { running = false; cancelAnimationFrame(raf); }
+    else { running = true; last = performance.now(); raf = requestAnimationFrame(step); }
+  });
+  addEventListener('resize', resize);
+  motionQuery.addEventListener('change', () => { if (!stage.classList.contains('closed')) start(); });
+
+  start();
+  go.focus();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings · Fernwick</title>
+<style>
+  :root {
+    --bg: #f4f6f1;
+    --surface: #ffffff;
+    --ink: #1c2a20;
+    --ink-2: #4b5a4f;
+    --line: #dfe5da;
+    --accent: #2f6b45;
+    --accent-ink: #ffffff;
+    --off: #aab4a9;
+    --danger: #b3261e;
+    --danger-bg: #fdf1f0;
+    --focus: #1f6feb;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121a15;
+      --surface: #1b261f;
+      --ink: #e7efe8;
+      --ink-2: #a5b4a8;
+      --line: #2c3a30;
+      --accent: #6cc28a;
+      --accent-ink: #0d1a11;
+      --off: #55645a;
+      --danger: #ff8a80;
+      --danger-bg: #2a1a19;
+      --focus: #7ab2ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.45 var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  header svg { width: 36px; height: 36px; color: var(--accent); flex: none; }
+  h1 { font-size: 1.5rem; margin: 0; line-height: 1.2; }
+  header p { margin: 0; color: var(--ink-2); font-size: .9rem; }
+  h2 {
+    font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-2); margin: 28px 4px 8px;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; overflow: hidden;
+  }
+  .row {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 14px 16px; border-top: 1px solid var(--line);
+  }
+  .row:first-child { border-top: 0; }
+  .text { min-width: 0; }
+  .label { font-weight: 600; display: block; }
+  .hint { color: var(--ink-2); font-size: .875rem; display: block; margin-top: 2px; }
+
+  /* Switch */
+  .switch { position: relative; flex: none; width: 50px; height: 30px; }
+  .switch input {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    margin: 0; opacity: 0; cursor: pointer; z-index: 1;
+  }
+  .track {
+    position: absolute; inset: 0; border-radius: 15px; background: var(--off);
+    transition: background .15s;
+  }
+  .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px;
+    border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    transition: transform .15s;
+  }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+  .switch input:focus-visible + .track { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  /* Segmented control */
+  .seg { display: inline-flex; flex: none; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+  .seg label { position: relative; }
+  .seg input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .seg span {
+    display: block; padding: 6px 14px; border-radius: 7px; font-weight: 600;
+    color: var(--ink-2); min-width: 52px; text-align: center;
+  }
+  .seg input:checked + span { background: var(--accent); color: var(--accent-ink); }
+  .seg input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  /* Quiet hours */
+  .quiet { display: block; }
+  .times { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+  .times label { display: flex; flex-direction: column; gap: 4px; font-size: .8rem; color: var(--ink-2); font-weight: 600; }
+  input[type="time"] {
+    font: inherit; font-size: 1rem; color: var(--ink); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 130px;
+  }
+  input[type="time"]:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+  .quiet-summary { margin-top: 10px; font-size: .875rem; color: var(--ink-2); }
+  .quiet.disabled .times, .quiet.disabled .quiet-summary { opacity: .5; }
+
+  /* Danger zone */
+  .danger { border-color: color-mix(in srgb, var(--danger) 40%, var(--line)); }
+  .danger .label { color: var(--danger); }
+  button {
+    font: inherit; font-weight: 600; border-radius: 10px; padding: 9px 16px;
+    cursor: pointer; border: 1px solid transparent;
+  }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .btn-danger { background: transparent; color: var(--danger); border-color: var(--danger); flex: none; }
+  .btn-danger:hover { background: var(--danger-bg); }
+  .btn-solid-danger { background: var(--danger); color: #fff; }
+  .btn-solid-danger:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-plain { background: var(--bg); color: var(--ink); border-color: var(--line); }
+
+  dialog {
+    border: 1px solid var(--line); border-radius: 16px; padding: 24px;
+    background: var(--surface); color: var(--ink); max-width: 420px; width: calc(100% - 32px);
+  }
+  dialog::backdrop { background: rgba(0,0,0,.5); }
+  dialog h3 { margin: 0 0 8px; font-size: 1.15rem; }
+  dialog p { margin: 0 0 14px; color: var(--ink-2); }
+  dialog input[type="text"] {
+    width: 100%; font: inherit; padding: 9px 12px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+  }
+  dialog input[type="text"]:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+  .actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+
+  .status {
+    position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 20px);
+    background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px;
+    font-size: .9rem; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+  }
+  .status.show { opacity: 1; transform: translate(-50%, 0); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 21v-9"/>
+      <path d="M12 12c0-4 2.5-7 7-7 0 4-2.5 7-7 7z"/>
+      <path d="M12 15c0-3-2-5.500-6-5.500 0 3 2 5.500 6 5.500z"/>
+    </svg>
+    <div>
+      <h1>Settings</h1>
+      <p>Fernwick · keep your plants thriving</p>
+    </div>
+  </header>
+
+  <h2>Notifications</h2>
+  <section class="card" aria-label="Notifications">
+    <div class="row">
+      <div class="text">
+        <label class="label" for="reminders">Watering reminders</label>
+        <span class="hint" id="reminders-hint">Get a nudge when a plant is due for water.</span>
+      </div>
+      <span class="switch">
+        <input type="checkbox" role="switch" id="reminders" aria-describedby="reminders-hint" checked>
+        <span class="track"></span>
+      </span>
+    </div>
+
+    <div class="row quiet" id="quiet">
+      <div class="text" style="width:100%">
+        <span class="label" id="quiet-title">Quiet hours</span>
+        <span class="hint">Reminders stay silent during this window.</span>
+        <div class="times" role="group" aria-labelledby="quiet-title">
+          <label>Start
+            <input type="time" id="qstart" value="22:00">
+          </label>
+          <label>End
+            <input type="time" id="qend" value="07:00">
+          </label>
+        </div>
+        <div class="quiet-summary" id="qsummary" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="text">
+        <label class="label" for="weekly">Weekly summary email</label>
+        <span class="hint" id="weekly-hint">A Monday recap of what needs care this week.</span>
+      </div>
+      <span class="switch">
+        <input type="checkbox" role="switch" id="weekly" aria-describedby="weekly-hint" checked>
+        <span class="track"></span>
+      </span>
+    </div>
+  </section>
+
+  <h2>Privacy</h2>
+  <section class="card" aria-label="Privacy">
+    <div class="row">
+      <div class="text">
+        <label class="label" for="photos">Show my plant photos on my public profile</label>
+        <span class="hint" id="photos-hint">When off, only your name and bio are visible to others.</span>
+      </div>
+      <span class="switch">
+        <input type="checkbox" role="switch" id="photos" aria-describedby="photos-hint">
+        <span class="track"></span>
+      </span>
+    </div>
+  </section>
+
+  <h2>Units</h2>
+  <section class="card" aria-label="Units">
+    <div class="row">
+      <div class="text">
+        <span class="label" id="temp-label">Temperature</span>
+        <span class="hint">Used for room and climate guidance.</span>
+      </div>
+      <div class="seg" role="radiogroup" aria-labelledby="temp-label">
+        <label><input type="radio" name="temp" value="C"><span>°C</span></label>
+        <label><input type="radio" name="temp" value="F" checked><span>°F</span></label>
+      </div>
+    </div>
+  </section>
+
+  <h2>Account</h2>
+  <section class="card danger" aria-label="Account">
+    <div class="row">
+      <div class="text">
+        <span class="label">Delete account</span>
+        <span class="hint">Permanently removes your plants, care history, and photos. This can’t be undone.</span>
+      </div>
+      <button type="button" class="btn-danger" id="delete-open">Delete…</button>
+    </div>
+  </section>
+</main>
+
+<dialog id="confirm" aria-labelledby="dlg-title">
+  <form method="dialog" id="dlg-form">
+    <h3 id="dlg-title">Delete your account?</h3>
+    <p>All your plants, care history, and photos will be permanently deleted. Type <strong>DELETE</strong> to confirm.</p>
+    <label for="dlg-input" class="hint" style="margin-bottom:6px">Confirmation</label>
+    <input type="text" id="dlg-input" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <div class="actions">
+      <button type="button" class="btn-plain" id="dlg-cancel">Cancel</button>
+      <button type="submit" class="btn-solid-danger" id="dlg-confirm" disabled>Delete account</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="status" id="status" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var statusEl = $('status'), timer;
+
+  function toast(msg) {
+    statusEl.textContent = msg;
+    statusEl.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(function () { statusEl.classList.remove('show'); }, 1800);
+  }
+
+  function fmt(t) {
+    if (!t) return '—';
+    var p = t.split(':'), h = +p[0], m = p[1];
+    var suffix = h >= 12 ? 'PM' : 'AM';
+    return ((h % 12) || 12) + ':' + m + ' ' + suffix;
+  }
+
+  function updateQuiet() {
+    var s = $('qstart').value, e = $('qend').value;
+    var on = $('reminders').checked;
+    $('quiet').classList.toggle('disabled', !on);
+    $('qstart').disabled = $('qend').disabled = !on;
+    if (!on) { $('qsummary').textContent = 'Turn on watering reminders to use quiet hours.'; return; }
+    if (!s || !e) { $('qsummary').textContent = 'Choose a start and end time.'; return; }
+    if (s === e) { $('qsummary').textContent = 'Start and end are the same, so no quiet hours are set.'; return; }
+    $('qsummary').textContent = 'Silent from ' + fmt(s) + ' to ' + fmt(e) + (e < s ? ' the next day.' : '.');
+  }
+
+  $('reminders').addEventListener('change', function () {
+    updateQuiet();
+    toast('Watering reminders ' + (this.checked ? 'on' : 'off'));
+  });
+  $('weekly').addEventListener('change', function () {
+    toast('Weekly summary ' + (this.checked ? 'on' : 'off'));
+  });
+  $('photos').addEventListener('change', function () {
+    toast(this.checked ? 'Photos visible on your profile' : 'Photos hidden from your profile');
+  });
+  ['qstart', 'qend'].forEach(function (id) {
+    $(id).addEventListener('change', function () { updateQuiet(); toast('Quiet hours saved'); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="temp"]'), function (r) {
+    r.addEventListener('change', function () {
+      toast('Temperature in °' + this.value);
+    });
+  });
+
+  var dlg = $('confirm'), input = $('dlg-input'), ok = $('dlg-confirm');
+  $('delete-open').addEventListener('click', function () {
+    input.value = ''; ok.disabled = true;
+    dlg.showModal();
+    input.focus();
+  });
+  $('dlg-cancel').addEventListener('click', function () { dlg.close(); });
+  input.addEventListener('input', function () {
+    ok.disabled = input.value.trim().toUpperCase() !== 'DELETE';
+  });
+  $('dlg-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (ok.disabled) return;
+    dlg.close();
+    toast('Account deletion requested');
+    // Hook up to your account-deletion API here.
+  });
+
+  updateQuiet();
+})();
+</script>
+</body>
+</html>

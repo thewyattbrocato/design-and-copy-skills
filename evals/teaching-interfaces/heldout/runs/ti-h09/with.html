@@ -8,95 +8,87 @@
   :root {
     --bg: #f4f2ec;
     --card: #ffffff;
-    --ink: #1d1d1b;
-    --muted: #5a5850;
-    --line: #d6d2c6;
+    --text: #1d1d1b;
+    --muted: #5c5a53;
+    --line: #d8d4c8;
     --accent: #b45309;
-    --accent-ink: #ffffff;
-    --good: #14532d;
+    --accent-text: #ffffff;
+    --good: #166534;
     --good-bg: #e3f4e8;
-    --bad: #8f1d1d;
-    --bad-bg: #fbe7e5;
+    --bad: #9f1239;
+    --bad-bg: #fde8ec;
+    --focus: #1d4ed8;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #17160f;
-      --card: #23221a;
-      --ink: #f2efe6;
-      --muted: #b4b09f;
-      --line: #46433a;
+      --bg: #151513;
+      --card: #201f1c;
+      --text: #f1efe8;
+      --muted: #b0ada2;
+      --line: #3b3932;
       --accent: #f59e0b;
-      --accent-ink: #1d1400;
-      --good: #8be0a5;
-      --good-bg: #16301e;
-      --bad: #ffb0a8;
-      --bad-bg: #3a1c1a;
+      --accent-text: #1a1200;
+      --good: #86efac;
+      --good-bg: #12301c;
+      --bad: #fda4af;
+      --bad-bg: #3a1620;
+      --focus: #93c5fd;
     }
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     background: var(--bg);
-    color: var(--ink);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     line-height: 1.5;
   }
-  main { max-width: 680px; margin: 0 auto; padding: 24px 16px 56px; }
-  header { border-left: 8px solid var(--accent); padding-left: 14px; margin-bottom: 24px; }
-  h1 { font-size: 1.6rem; margin: 0 0 4px; }
-  header p { margin: 0; color: var(--muted); }
-  fieldset {
+  main { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { border-left: 8px solid var(--accent); padding-left: 14px; margin-bottom: 20px; }
+  h1 { margin: 0; font-size: 1.7rem; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  fieldset.q {
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: 10px;
     margin: 0 0 16px;
     padding: 16px;
   }
-  fieldset.unanswered { border-color: var(--bad); box-shadow: 0 0 0 2px var(--bad); }
-  legend { font-weight: 700; padding: 0 6px; font-size: 1.05rem; }
-  .qnum { color: var(--accent); }
-  label {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    padding: 10px 12px;
-    margin-top: 8px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
+  legend { padding: 0 6px; font-weight: 700; font-size: 1.05rem; }
+  .num { color: var(--accent); }
+  .topic { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+  .opt {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 12px; margin-top: 8px;
+    border: 1px solid var(--line); border-radius: 8px;
     cursor: pointer;
   }
-  label:hover { border-color: var(--accent); }
-  label:has(input:checked) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
-  label:has(input:focus-visible) { outline: 3px solid var(--accent); outline-offset: 2px; }
-  input[type="radio"] { margin-top: 5px; accent-color: var(--accent); width: 18px; height: 18px; flex: none; }
-  .err { color: var(--bad); font-weight: 600; margin: 8px 0 0; }
+  .opt:hover { border-color: var(--accent); }
+  .opt:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .opt input { margin-top: 4px; accent-color: var(--accent); width: 18px; height: 18px; flex: none; }
+  .opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+  fieldset.missing { border-color: var(--bad); }
   button {
-    font: inherit;
-    font-weight: 700;
-    background: var(--accent);
-    color: var(--accent-ink);
-    border: 0;
-    border-radius: 8px;
-    padding: 12px 28px;
-    cursor: pointer;
-    min-height: 48px;
+    font: inherit; font-weight: 700;
+    background: var(--accent); color: var(--accent-text);
+    border: 0; border-radius: 8px; padding: 12px 24px; cursor: pointer;
   }
-  button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
-  button.secondary { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
-  #results { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
-  #results:focus { outline: none; }
-  .score { font-size: 2.2rem; font-weight: 800; margin: 0; }
-  .verdict { margin: 4px 0 16px; color: var(--muted); }
-  .item { border-radius: 8px; padding: 12px 14px; margin-top: 12px; }
-  .item.wrong { background: var(--bad-bg); border-left: 6px solid var(--bad); }
-  .item.right { background: var(--good-bg); border-left: 6px solid var(--good); }
-  .item h3 { margin: 0 0 6px; font-size: 1rem; }
-  .item p { margin: 2px 0; }
-  .tag { font-weight: 700; }
-  .wrong .tag { color: var(--bad); }
-  .right .tag { color: var(--good); }
-  .why { color: var(--muted); margin-top: 6px !important; }
-  .actions { margin-top: 20px; }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  button.secondary { background: transparent; color: var(--text); border: 2px solid var(--line); }
+  #warn { color: var(--bad); font-weight: 600; margin: 0 0 12px; }
+  #results { margin-top: 24px; }
+  .score {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px; margin-bottom: 14px;
+  }
+  .score strong { font-size: 2rem; display: block; }
+  .item { border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; background: var(--bad-bg); border: 1px solid var(--bad); }
+  .item h3 { margin: 0 0 8px; font-size: 1rem; }
+  .item p { margin: 4px 0; }
+  .wrong { color: var(--bad); font-weight: 600; }
+  .right { color: var(--good); font-weight: 600; }
+  .perfect { background: var(--good-bg); border: 1px solid var(--good); border-radius: 10px; padding: 14px 16px; color: var(--good); font-weight: 600; }
+  .why { color: var(--muted); font-size: .95rem; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -109,108 +101,116 @@
 
   <form id="quiz" novalidate>
     <div id="questions"></div>
+    <p id="warn" role="alert" hidden></p>
     <button type="submit">Submit answers</button>
   </form>
 
-  <section id="results" tabindex="-1" aria-live="polite" hidden></section>
+  <section id="results" aria-live="polite" tabindex="-1" hidden></section>
 </main>
 
 <script>
 (function () {
   var QUESTIONS = [
     {
-      q: "Before you lift a load, what must you confirm?",
+      topic: "Load limits",
+      q: "Where do you find the maximum weight your forklift can safely lift?",
       options: [
-        "The load looks stable and the forks are the same width as the pallet",
-        "The load weight is within the rated capacity on the truck's data plate",
-        "Another worker agrees the load is probably fine",
-        "The load is lighter than the last one you moved"
-      ],
-      answer: 1,
-      why: "Never exceed the capacity on the data plate. Adding attachments or an off-center load can lower it."
-    },
-    {
-      q: "A pedestrian steps into your travel path. What do you do?",
-      options: [
-        "Sound the horn and keep moving so they get out of the way",
-        "Steer around them as fast as you can",
-        "Stop, and wait until they are clear and have seen you",
-        "Flash your lights and speed up to pass"
+        "On the pallet or the shipping label",
+        "Ask the person who loaded the pallet",
+        "On the capacity data plate attached to the truck",
+        "It is the same for every forklift in the building"
       ],
       answer: 2,
-      why: "Pedestrians always have the right of way. Stop and make sure they know you are there before moving."
+      why: "Capacity depends on the specific truck and attachments, so always read its data plate. Never lift a load that exceeds it."
     },
     {
-      q: "You are approaching a blind corner or an intersection. What is correct?",
+      topic: "Pedestrians",
+      q: "A coworker on foot steps into your path while you are driving. What should you do?",
       options: [
-        "Slow down, sound the horn, and proceed carefully",
-        "Keep your speed so you clear the corner quickly",
-        "Stop only if you see someone",
-        "Speed up and sound the horn once you are past"
+        "Stop, and wait until they are clear and have seen you",
+        "Honk and keep going so they move out of the way",
+        "Steer around them at the same speed",
+        "Flash your lights and speed up to pass quickly"
       ],
       answer: 0,
-      why: "Slow down and warn others at blind spots and intersections. Always obey the posted site speed limit."
+      why: "Pedestrians always have the right of way. Stop and make eye contact before moving again."
     },
     {
-      q: "You are done and are leaving the forklift. How should you park it?",
+      topic: "Speed",
+      q: "You are approaching a blind corner or an intersection. What is the correct action?",
       options: [
-        "Leave it running with the forks raised so it is ready for the next driver",
-        "Park in the aisle and leave the keys in",
-        "Park on a ramp with the forks slightly raised",
-        "Lower the forks to the floor, neutralize controls, set the brake, and turn off the power"
+        "Keep your speed so traffic keeps flowing",
+        "Speed up to clear the intersection quickly",
+        "Coast through with the engine off",
+        "Slow down, sound the horn, and look before you proceed"
       ],
       answer: 3,
-      why: "Park in a designated area, not blocking aisles, exits, or equipment. Raised forks are a trip and strike hazard."
+      why: "Slow down and warn others at blind spots, doorways and intersections. Always stay within the posted speed limit."
     },
     {
-      q: "You are driving with a load. Where should the forks be?",
+      topic: "Parking",
+      q: "When you park the forklift and leave it, what must you do?",
       options: [
-        "Raised high for the best view under the load",
-        "Low, just a few inches off the floor, with the mast tilted back",
-        "At waist height so you can adjust quickly",
-        "It does not matter if you are going slowly"
+        "Leave the forks raised so they are ready for the next load",
+        "Lower the forks flat to the floor, set the brake, and turn the power off",
+        "Park in the aisle with the engine running for a quick return",
+        "Park next to a fire exit so it is easy to reach"
       ],
       answer: 1,
-      why: "Carry loads low (about 4 to 6 inches) with the mast tilted back. A high load raises the center of gravity and risks a tip-over."
+      why: "Forks down, controls neutral, parking brake set, and key out or power off. Never block aisles, exits or fire equipment."
+    },
+    {
+      topic: "Driving with a load",
+      q: "How should you carry a load while traveling?",
+      options: [
+        "Raised high so you can see over the pallet",
+        "Level with your head for easy balance",
+        "Low to the ground, with the mast tilted slightly back",
+        "Tilted forward to keep the load from sliding backward"
+      ],
+      answer: 2,
+      why: "Carry the load a few inches off the floor with the mast tilted back. This keeps the truck stable and the load secure."
     }
   ];
 
-  var LETTERS = ["A", "B", "C", "D"];
   var form = document.getElementById("quiz");
-  var qWrap = document.getElementById("questions");
+  var box = document.getElementById("questions");
+  var warn = document.getElementById("warn");
   var results = document.getElementById("results");
+  var LETTERS = ["A", "B", "C", "D"];
 
   function el(tag, cls, text) {
-    var n = document.createElement(tag);
-    if (cls) n.className = cls;
-    if (text !== undefined) n.textContent = text;
-    return n;
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
   }
 
   function build() {
+    box.textContent = "";
     QUESTIONS.forEach(function (item, i) {
-      var fs = el("fieldset");
+      var fs = el("fieldset", "q");
       fs.id = "q" + i;
       var lg = el("legend");
-      lg.appendChild(el("span", "qnum", "Question " + (i + 1) + " of " + QUESTIONS.length));
+      var topic = el("span", "topic", item.topic);
+      var title = el("span");
+      var n = el("span", "num", (i + 1) + ". ");
+      title.appendChild(n);
+      title.appendChild(document.createTextNode(item.q));
+      lg.appendChild(topic);
+      lg.appendChild(title);
       fs.appendChild(lg);
-      fs.appendChild(el("p", null, item.q)).style.cssText = "margin:0 0 4px;font-weight:600";
-      item.options.forEach(function (opt, j) {
-        var label = el("label");
+      item.options.forEach(function (text, j) {
+        var label = el("label", "opt");
         var input = document.createElement("input");
         input.type = "radio";
         input.name = "q" + i;
         input.value = j;
-        input.addEventListener("change", function () {
-          fs.classList.remove("unanswered");
-          var e = fs.querySelector(".err");
-          if (e) e.remove();
-        });
         label.appendChild(input);
-        label.appendChild(el("span", null, LETTERS[j] + ". " + opt));
+        label.appendChild(el("span", null, text));
         fs.appendChild(label);
       });
-      qWrap.appendChild(fs);
+      box.appendChild(fs);
     });
   }
 
@@ -219,81 +219,87 @@
     return c ? Number(c.value) : -1;
   }
 
-  function showResults(picks) {
-    results.textContent = "";
-    var score = 0;
-    picks.forEach(function (p, i) { if (p === QUESTIONS[i].answer) score++; });
+  form.addEventListener("change", function (e) {
+    var fs = e.target.closest("fieldset");
+    if (fs) fs.classList.remove("missing");
+  });
 
-    results.appendChild(el("p", "score", score + " / " + QUESTIONS.length));
-    results.appendChild(el("p", "verdict",
-      score === QUESTIONS.length
-        ? "Perfect score. You are ready for the floor."
-        : "Review the questions you missed below. Ask your supervisor if anything is unclear."));
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var missing = [];
+    QUESTIONS.forEach(function (_, i) {
+      var fs = document.getElementById("q" + i);
+      var none = selected(i) < 0;
+      fs.classList.toggle("missing", none);
+      if (none) missing.push(i);
+    });
+    if (missing.length) {
+      warn.hidden = false;
+      warn.textContent = missing.length === 1
+        ? "Please answer question " + (missing[0] + 1) + " before submitting."
+        : "Please answer all questions. Unanswered: " + missing.map(function (m) { return m + 1; }).join(", ") + ".";
+      var first = document.querySelector("#q" + missing[0] + " input");
+      if (first) first.focus();
+      return;
+    }
+    warn.hidden = true;
+    showResults();
+  });
 
+  function showResults() {
+    var score = 0, wrong = [];
     QUESTIONS.forEach(function (item, i) {
-      var ok = picks[i] === item.answer;
-      var box = el("div", "item " + (ok ? "right" : "wrong"));
-      box.appendChild(el("h3", null, (i + 1) + ". " + item.q));
-      var status = el("p");
-      status.appendChild(el("span", "tag", ok ? "Correct: " : "Incorrect"));
-      if (ok) status.appendChild(document.createTextNode(LETTERS[picks[i]] + ". " + item.options[picks[i]]));
-      box.appendChild(status);
-      if (!ok) {
-        var yours = el("p");
-        yours.appendChild(el("span", "tag", "Your answer: "));
-        yours.appendChild(document.createTextNode(LETTERS[picks[i]] + ". " + item.options[picks[i]]));
-        box.appendChild(yours);
-        var right = el("p");
-        right.appendChild(el("span", "tag", "Right answer: "));
-        right.appendChild(document.createTextNode(LETTERS[item.answer] + ". " + item.options[item.answer]));
-        box.appendChild(right);
-      }
-      box.appendChild(el("p", "why", item.why));
-      results.appendChild(box);
+      var pick = selected(i);
+      if (pick === item.answer) score++;
+      else wrong.push({ i: i, pick: pick });
     });
 
-    var actions = el("div", "actions");
-    var retry = el("button", "secondary", "Retake quiz");
-    retry.type = "button";
-    retry.addEventListener("click", function () {
+    results.textContent = "";
+    var s = el("div", "score");
+    s.appendChild(el("strong", null, "Score: " + score + " / " + QUESTIONS.length));
+    s.appendChild(el("span", null,
+      score === QUESTIONS.length ? "Great work. You got every question right." :
+      score >= 4 ? "Almost there. Review the question you missed below." :
+      "Please review the answers below and retake the check."));
+    results.appendChild(s);
+
+    if (!wrong.length) {
+      results.appendChild(el("div", "perfect", "No missed questions. Stay safe out there."));
+    } else {
+      results.appendChild(el("h2", null, "Questions to review"));
+      wrong.forEach(function (w) {
+        var item = QUESTIONS[w.i];
+        var card = el("div", "item");
+        card.appendChild(el("h3", null, (w.i + 1) + ". " + item.q));
+        var yours = el("p");
+        yours.appendChild(el("span", "wrong", "Your answer: "));
+        yours.appendChild(document.createTextNode(LETTERS[w.pick] + ". " + item.options[w.pick]));
+        var right = el("p");
+        right.appendChild(el("span", "right", "Correct answer: "));
+        right.appendChild(document.createTextNode(LETTERS[item.answer] + ". " + item.options[item.answer]));
+        card.appendChild(yours);
+        card.appendChild(right);
+        card.appendChild(el("p", "why", item.why));
+        results.appendChild(card);
+      });
+    }
+
+    var again = el("button", "secondary", "Retake the check");
+    again.type = "button";
+    again.addEventListener("click", function () {
       form.reset();
+      build();
       results.hidden = true;
       form.hidden = false;
       window.scrollTo(0, 0);
-      var first = form.querySelector("input");
-      if (first) first.focus();
     });
-    actions.appendChild(retry);
-    results.appendChild(actions);
+    results.appendChild(again);
 
     form.hidden = true;
     results.hidden = false;
     results.focus();
     window.scrollTo(0, 0);
   }
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var picks = [];
-    var firstMissing = null;
-    QUESTIONS.forEach(function (_, i) {
-      var p = selected(i);
-      picks.push(p);
-      var fs = document.getElementById("q" + i);
-      var existing = fs.querySelector(".err");
-      if (p === -1) {
-        fs.classList.add("unanswered");
-        if (!existing) fs.appendChild(el("p", "err", "Please choose an answer."));
-        if (!firstMissing) firstMissing = fs;
-      }
-    });
-    if (firstMissing) {
-      firstMissing.scrollIntoView({ block: "center" });
-      firstMissing.querySelector("input").focus();
-      return;
-    }
-    showResults(picks);
-  });
 
   build();
 })();

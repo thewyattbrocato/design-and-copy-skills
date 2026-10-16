@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder Lane Pantry · Saturday Shifts</title>
+<style>
+  :root {
+    --bg: #faf6ee;
+    --card: #ffffff;
+    --ink: #1f2a22;
+    --muted: #5d6a60;
+    --line: #e4dccb;
+    --accent: #2d6a3e;
+    --accent-ink: #ffffff;
+    --accent-soft: #e3f0e6;
+    --warn: #8a4b00;
+    --warn-soft: #fff0d6;
+    --danger: #a3261f;
+    --open-line: #bdb39c;
+    --radius: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151915;
+      --card: #1f251f;
+      --ink: #eef2ea;
+      --muted: #a2afa4;
+      --line: #313a31;
+      --accent: #7cc68f;
+      --accent-ink: #0e1a11;
+      --accent-soft: #24382a;
+      --warn: #ffc775;
+      --warn-soft: #3a2d14;
+      --danger: #ff8d85;
+      --open-line: #5a655b;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.35;
+    padding-bottom: 120px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 14px; }
+  header { padding: 22px 0 10px; }
+  .eyebrow { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  h1 { margin: 2px 0 4px; font-size: 28px; line-height: 1.15; }
+  .summary { margin: 0; color: var(--muted); font-size: 16px; }
+
+  .namebox {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px 14px;
+    margin: 12px 0;
+  }
+  .namebox label { display: block; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .namebox input {
+    width: 100%;
+    font: inherit;
+    font-size: 18px; /* 16px+ prevents iOS zoom */
+    padding: 12px 14px;
+    min-height: 48px;
+    border-radius: 10px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .namebox input:focus { outline: none; border-color: var(--accent); }
+  .namebox.need input { border-color: var(--danger); }
+  .hint { margin: 6px 0 0; font-size: 14px; color: var(--muted); min-height: 1.2em; }
+  .namebox.need .hint { color: var(--danger); font-weight: 600; }
+
+  .filters { display: flex; gap: 8px; margin: 14px 0; }
+  .filters button {
+    flex: 1;
+    min-height: 46px;
+    font: inherit; font-weight: 600; font-size: 16px;
+    border-radius: 999px;
+    border: 2px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+  .shift {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .shift.mine { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); }
+  .shift-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .time { font-weight: 700; font-size: 15px; color: var(--accent); }
+  .count { font-size: 14px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .count.full { color: var(--muted); }
+  .count.low { color: var(--warn); }
+  h2 { margin: 2px 0 2px; font-size: 21px; line-height: 1.2; }
+  .desc { margin: 0 0 10px; color: var(--muted); font-size: 15px; }
+
+  .slots { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0 0 12px; padding: 0; list-style: none; }
+  .slot {
+    min-height: 40px;
+    display: flex; align-items: center; justify-content: space-between; gap: 4px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    overflow: hidden;
+  }
+  .slot.filled { background: var(--accent-soft); font-weight: 600; }
+  .slot.me { outline: 2px solid var(--accent); }
+  .slot.open { border: 2px dashed var(--open-line); color: var(--muted); font-size: 15px; }
+  .slot .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .slot .x {
+    flex: none;
+    width: 32px; height: 32px; margin: -4px -6px -4px 0;
+    border: 0; background: transparent; color: var(--danger);
+    font-size: 22px; line-height: 1; cursor: pointer; border-radius: 8px;
+  }
+
+  .act {
+    width: 100%;
+    min-height: 52px;
+    font: inherit; font-size: 18px; font-weight: 700;
+    border-radius: 12px;
+    border: 2px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
+    cursor: pointer;
+  }
+  .act.drop { background: transparent; color: var(--danger); border-color: var(--danger); }
+  .act:disabled { background: transparent; color: var(--muted); border-color: var(--line); cursor: not-allowed; }
+  .act:active:not(:disabled) { transform: scale(.985); }
+  .overlap { margin: 8px 0 0; font-size: 14px; color: var(--warn); background: var(--warn-soft); padding: 6px 10px; border-radius: 8px; }
+
+  .empty { text-align: center; color: var(--muted); padding: 30px 10px; }
+
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 8px; }
+  .tools button {
+    flex: 1 1 140px;
+    min-height: 46px;
+    font: inherit; font-size: 15px; font-weight: 600;
+    border-radius: 10px;
+    border: 2px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .tools button[aria-pressed="true"] { border-color: var(--danger); color: var(--danger); }
+  .foot { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom));
+    transform: translate(-50%, 20px);
+    width: calc(100% - 28px); max-width: 560px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: #1f2a22; color: #fff;
+    padding: 8px 8px 8px 16px;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.3);
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s, transform .2s;
+    z-index: 10;
+  }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  #toast button {
+    font: inherit; font-weight: 700; font-size: 16px;
+    min-height: 44px; padding: 0 16px;
+    border-radius: 10px; border: 0;
+    background: #7cc68f; color: #0e1a11; cursor: pointer;
+  }
+  #toast button[hidden] { display: none; }
+
+  button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 340px) { .slots { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Larder Lane Pantry</p>
+    <h1>Saturday shifts · <span id="dateLabel"></span></h1>
+    <p class="summary" id="summary" aria-live="polite"></p>
+  </header>
+
+  <div class="namebox" id="namebox">
+    <label for="name">Your name</label>
+    <input id="name" type="text" maxlength="30" autocomplete="given-name" autocapitalize="words" placeholder="First name and last initial">
+    <p class="hint" id="nameHint">We'll remember it on this phone, so signing up is one tap.</p>
+  </div>
+
+  <div class="filters" role="group" aria-label="Filter shifts">
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    <button type="button" data-filter="open" aria-pressed="false">Open</button>
+    <button type="button" data-filter="mine" aria-pressed="false">Mine</button>
+  </div>
+
+  <main id="board"></main>
+
+  <div class="tools">
+    <button type="button" id="copyBtn">Copy roster to share</button>
+    <button type="button" id="manageBtn" aria-pressed="false">Coordinator: remove others</button>
+    <button type="button" id="resetBtn">Clear all sign-ups</button>
+  </div>
+  <p class="foot">Sign-ups are saved in this browser on this device and start fresh each new Saturday. To share the full list, use "Copy roster".</p>
+</div>
+
+<div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button type="button" id="toastUndo" hidden>Undo</button></div>
+
+<script>
+(function () {
+  var SHIFTS = [
+    { id: "pickup",  start: 450,  end: 540,  role: "Driver: food rescue pickup", desc: "Collect donations from the grocery partners. Valid license needed.", cap: 2 },
+    { id: "sort",    start: 480,  end: 600,  role: "Sorting donations",          desc: "Check dates, sort cans, boxes and produce onto shelves.", cap: 6 },
+    { id: "desk",    start: 540,  end: 720,  role: "Front desk check-in",        desc: "Greet neighbors, sign them in, hand out numbers.", cap: 3 },
+    { id: "bag",     start: 570,  end: 690,  role: "Bagging",                    desc: "Pack grocery bags from the list. Some lifting.", cap: 5 },
+    { id: "produce", start: 600,  end: 720,  role: "Produce table",              desc: "Help neighbors choose fresh fruit and vegetables.", cap: 4 },
+    { id: "carry",   start: 630,  end: 750,  role: "Carry-out helper",           desc: "Walk bags out to cars and carts.", cap: 3 },
+    { id: "deliver", start: 720,  end: 810,  role: "Driver: home deliveries",    desc: "Bring boxes to homebound neighbors. Route sheet provided.", cap: 2 },
+    { id: "clean",   start: 720,  end: 780,  role: "Cleanup and restock",        desc: "Break down tables, sweep, flatten boxes, restock shelves.", cap: 4 }
+  ];
+
+  var KEY = "larderLaneShifts.v1";
+  var NAMEKEY = "larderLaneName.v1";
+
+  function nextSaturday() {
+    var d = new Date();
+    d.setHours(12, 0, 0, 0);
+    d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7));
+    return d;
+  }
+  var sat = nextSaturday();
+  var satKey = sat.getFullYear() + "-" + (sat.getMonth() + 1) + "-" + sat.getDate();
+
+  function load() {
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY));
+      if (s && s.date === satKey && s.shifts) return s;
+    } catch (e) {}
+    return { date: satKey, shifts: {} };
+  }
+  var state = load();
+  var myName = "";
+  try { myName = localStorage.getItem(NAMEKEY) || ""; } catch (e) {}
+  var filter = "all";
+  var manage = false;
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function people(id) { return state.shifts[id] || (state.shifts[id] = []); }
+  function norm(s) { return s.trim().replace(/\s+/g, " "); }
+  function same(a, b) { return a.toLowerCase() === b.toLowerCase(); }
+  function has(id, name) { return people(id).some(function (n) { return same(n, name); }); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+  function t12(m) {
+    var h = Math.floor(m / 60), mm = m % 60, suf = h >= 12 ? "pm" : "am";
+    h = h % 12 || 12;
+    return { text: h + ":" + (mm < 10 ? "0" : "") + mm, suf: suf };
+  }
+  function range(s) {
+    var a = t12(s.start), b = t12(s.end);
+    return a.text + (a.suf !== b.suf ? " " + a.suf : "") + " – " + b.text + " " + b.suf;
+  }
+  function overlapWith(shift) {
+    if (!myName) return null;
+    for (var i = 0; i < SHIFTS.length; i++) {
+      var o = SHIFTS[i];
+      if (o.id !== shift.id && has(o.id, myName) && o.start < shift.end && shift.start < o.end) return o;
+    }
+    return null;
+  }
+
+  var board = document.getElementById("board");
+
+  function render() {
+    document.getElementById("dateLabel").textContent = sat.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    var total = 0, filled = 0;
+    SHIFTS.forEach(function (s) { total += s.cap; filled += people(s.id).length; });
+    document.getElementById("summary").textContent = filled + " of " + total + " spots filled · " + (total - filled) + " still open";
+
+    var html = "";
+    SHIFTS.forEach(function (s) {
+      var list = people(s.id);
+      var left = s.cap - list.length;
+      var mine = myName && has(s.id, myName);
+      if (filter === "open" && left <= 0) return;
+      if (filter === "mine" && !mine) return;
+
+      var slots = "";
+      for (var i = 0; i < s.cap; i++) {
+        if (i < list.length) {
+          var n = list[i];
+          var me = myName && same(n, myName);
+          slots += '<li class="slot filled' + (me ? " me" : "") + '"><span class="nm">' + esc(n) + (me ? " (you)" : "") + "</span>" +
+            (manage ? '<button type="button" class="x" data-act="remove" data-id="' + s.id + '" data-i="' + i + '" aria-label="Remove ' + esc(n) + ' from ' + esc(s.role) + '">×</button>' : "") + "</li>";
+        } else {
+          slots += '<li class="slot open">Open</li>';
+        }
+      }
+
+      var btn, note = "";
+      if (mine) {
+        btn = '<button type="button" class="act drop" data-act="drop" data-id="' + s.id + '">Drop out of this shift</button>';
+      } else if (left <= 0) {
+        btn = '<button type="button" class="act" disabled>Shift is full</button>';
+      } else {
+        btn = '<button type="button" class="act" data-act="join" data-id="' + s.id + '">Sign up' + (myName ? " as " + esc(myName) : "") + "</button>";
+        var ov = overlapWith(s);
+        if (ov) note = '<p class="overlap">Heads up: this overlaps your ' + esc(ov.role) + " shift.</p>";
+      }
+
+      var cls = left <= 0 ? "full" : left === 1 ? "low" : "";
+      var countTxt = left <= 0 ? "Full" : left + (left === 1 ? " spot left" : " spots left");
+      html += '<section class="shift' + (mine ? " mine" : "") + '" aria-labelledby="h-' + s.id + '">' +
+        '<div class="shift-top"><span class="time">' + range(s) + '</span><span class="count ' + cls + '">' + countTxt + "</span></div>" +
+        '<h2 id="h-' + s.id + '">' + esc(s.role) + "</h2>" +
+        '<p class="desc">' + esc(s.desc) + "</p>" +
+        '<ul class="slots">' + slots + "</ul>" + btn + note + "</section>";
+    });
+
+    if (!html) {
+      html = '<p class="empty">' + (filter === "mine"
+        ? (myName ? "You're not signed up for anything yet." : "Enter your name above to see your shifts.")
+        : "Every shift is full. Thank you, team!") + "</p>";
+    }
+    board.innerHTML = html;
+  }
+
+  // Toast / undo
+  var toast = document.getElementById("toast"), toastMsg = document.getElementById("toastMsg"), undoBtn = document.getElementById("toastUndo");
+  var toastTimer, undoFn = null;
+  function say(msg, undo) {
+    clearTimeout(toastTimer);
+    toastMsg.textContent = msg;
+    undoFn = undo || null;
+    undoBtn.hidden = !undo;
+    toast.classList.add("show");
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); undoFn = null; }, undo ? 7000 : 3000);
+  }
+  undoBtn.addEventListener("click", function () {
+    if (undoFn) undoFn();
+    undoFn = null;
+    toast.classList.remove("show");
+  });
+
+  // Name
+  var nameIn = document.getElementById("name"), nameBox = document.getElementById("namebox"), nameHint = document.getElementById("nameHint");
+  var defaultHint = nameHint.textContent;
+  nameIn.value = myName;
+  nameIn.addEventListener("input", function () {
+    myName = norm(nameIn.value);
+    try { localStorage.setItem(NAMEKEY, myName); } catch (e) {}
+    if (myName) { nameBox.classList.remove("need"); nameHint.textContent = defaultHint; }
+    render();
+  });
+  nameIn.addEventListener("keydown", function (e) { if (e.key === "Enter") nameIn.blur(); });
+
+  function needName() {
+    nameBox.classList.add("need");
+    nameHint.textContent = "Type your name first, then tap Sign up.";
+    nameBox.scrollIntoView({ behavior: "smooth", block: "center" });
+    nameIn.focus();
+  }
+
+  function find(id) { return SHIFTS.filter(function (s) { return s.id === id; })[0]; }
+
+  function join(id) {
+    if (!myName) return needName();
+    var s = find(id);
+    if (has(id, myName)) return;
+    if (people(id).length >= s.cap) { say("Sorry, that shift just filled up."); return render(); }
+    people(id).push(myName);
+    save(); render();
+    var who = myName;
+    say("You're in for " + s.role + ", " + range(s), function () { removeName(id, who, true); });
+  }
+
+  function removeName(id, name, silent) {
+    var list = people(id);
+    for (var i = 0; i < list.length; i++) if (same(list[i], name)) { list.splice(i, 1); break; }
+    save(); render();
+  }
+
+  function dropAt(id, idx) {
+    var s = find(id), list = people(id), name = list[idx];
+    if (name === undefined) return;
+    list.splice(idx, 1);
+    save(); render();
+    say(name + " removed from " + s.role, function () {
+      var l = people(id);
+      if (l.length < s.cap && !has(id, name)) { l.splice(Math.min(idx, l.length), 0, name); save(); render(); }
+      else say("Couldn't undo: that spot was taken.");
+    });
+  }
+
+  board.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-act]");
+    if (!b) return;
+    var id = b.getAttribute("data-id"), act = b.getAttribute("data-act");
+    if (act === "join") join(id);
+    else if (act === "drop") {
+      var idx = people(id).findIndex(function (n) { return same(n, myName); });
+      dropAt(id, idx);
+    } else if (act === "remove") dropAt(id, +b.getAttribute("data-i"));
+  });
+
+  document.querySelector(".filters").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-filter]");
+    if (!b) return;
+    filter = b.getAttribute("data-filter");
+    document.querySelectorAll(".filters button").forEach(function (x) {
+      x.setAttribute("aria-pressed", x === b ? "true" : "false");
+    });
+    render();
+  });
+
+  document.getElementById("manageBtn").addEventListener("click", function () {
+    manage = !manage;
+    this.setAttribute("aria-pressed", manage ? "true" : "false");
+    this.textContent = manage ? "Done removing" : "Coordinator: remove others";
+    render();
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    if (!confirm("Clear every sign-up for this Saturday? This can't be undone.")) return;
+    state.shifts = {};
+    save(); render();
+    say("All sign-ups cleared.");
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var lines = ["Larder Lane Pantry · Saturday " + sat.toLocaleDateString(undefined, { month: "short", day: "numeric" }), ""];
+    SHIFTS.forEach(function (s) {
+      var l = people(s.id);
+      lines.push(range(s) + " · " + s.role + " (" + l.length + "/" + s.cap + ")");
+      lines.push("   " + (l.length ? l.join(", ") : "(no one yet)"));
+    });
+    var text = lines.join("\n");
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+      say(ok ? "Roster copied." : "Couldn't copy on this browser.");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { say("Roster copied."); }, fallback);
+    } else fallback();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

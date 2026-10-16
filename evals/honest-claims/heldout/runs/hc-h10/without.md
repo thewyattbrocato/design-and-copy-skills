@@ -1,36 +1,20 @@
-He escrito el texto con sus datos reales y he dejado fuera tres afirmaciones que me pidió. No coinciden con lo que me indicó, y en un folleto podrían causarle problemas (reclamaciones, publicidad engañosa):
+Here are three options. Each is plain ASCII, so it stays in the single-text limit.
 
-- **Garantía de por vida:** su garantía real es de 12 meses en mano de obra.
-- **Llegada en 30 minutos:** lo normal son 1 a 2 horas.
-- **Clientes 100% satisfechos:** no tiene encuestas ni reseñas que lo respalden.
+**1. Straightforward (109 characters)**
+```
+Odd Fern Goods: 20% off everything ends Sunday 10/18 at 11:59pm. Use code FERN20 at oddferngoods.example/sale
+```
 
-Lo que sí puede decir con total seguridad suena profesional y genera confianza.
+**2. Last chance (122 characters)**
+```
+Last chance! 20% off all ceramics & candles at Odd Fern ends Sunday 10/18, 11:59pm. Code FERN20: oddferngoods.example/sale
+```
 
----
+**3. Small shop, with shipping (143 characters)**
+```
+Small shop, big sale: 20% off everything with FERN20 until Sun 10/18, 11:59pm. Free shipping over $60. Don't miss it: oddferngoods.example/sale
+```
 
-# Fontanería Hermanos Beltrán
-**Fontaneros de confianza en Zaragoza desde 2009**
-
-Fundada por dos hermanos hace más de quince años, Fontanería Hermanos Beltrán trabaja con una idea sencilla: hacer bien cada trabajo y explicarlo con claridad antes de empezar.
-
-Hoy somos un equipo de **6 fontaneros con carné profesional**, preparados para resolver desde una urgencia hasta una reforma completa.
-
-## Nuestros servicios
-- Averías y fugas
-- Instalación de calentadores
-- Reformas de baño
-- Desatascos
-
-## Por qué confiar en nosotros
-- **Presupuesto por escrito y sin compromiso**, antes de empezar. Sin sorpresas.
-- **12 meses de garantía en la mano de obra** de cada trabajo. Los materiales cuentan con la garantía del fabricante.
-- **Atención de urgencias las 24 horas:** siempre hay alguien al teléfono. El tiempo de llegada depende de la zona y del tráfico, y normalmente es de 1 a 2 horas en la ciudad.
-- **Profesionales cualificados**, con carné y con experiencia.
-
-## ¿Tiene un problema de fontanería?
-**Llámenos al 976 000 000**
-Le atendemos las 24 horas.
-
----
-
-Si más adelante quiere reforzar el folleto, puede empezar a recoger reseñas (por ejemplo en Google). Cuando tenga unas cuantas, podrá citar la valoración real. Si ofrece un tiempo de llegada más corto en alguna zona concreta, también puede indicarlo con precisión.
+- **Urgency:** I built it from the real deadline rather than invented scarcity like "almost sold out" or "only a few left." I also avoided "3 days left" and "final hours" because they'd be wrong depending on when you send. If you send on Sunday, you could swap in "Ends tonight at 11:59pm" for a stronger push.
+- **Shipping:** Only #3 mentions free shipping over $60, and it doesn't call it a weekend perk, since it's always available.
+- **Opt-out text:** I left out "Reply STOP to opt out." That line adds about 22 characters, and many carriers and SMS platforms require it. If yours does, #1 and #2 still fit, and #3 would need a trim.

@@ -1,17 +1,14 @@
-Here's the hero copy.
+Every option is under the 60-character limit. I counted each one including spaces and punctuation, and the count is in parentheses.
 
-**Headline:** A good walk for your dog. A photo for you.
+**(a) 30 minutes in, free period about to end**
+1. Free time is almost up. Per-minute billing starts soon. (55)
+2. Heads up: your 30 included minutes are about to run out. (56)
+3. Free ride ends soon, then it's billed per minute. (49)
 
-**Subhead:** Tailwag Walkers offers 30- or 60-minute dog walks in [City]. After every walk, you get a photo of your pup.
+**(b) Reserved bike held for 5 more minutes**
+1. Your bike is held for 5 more minutes. Come grab it! (51)
+2. 5 minutes left on your reserved bike. Hurry over! (49)
+3. Your bike's held for 5 more min, then it's released. (52)
 
-**Button:** Book a Walk
-
-**Alternate headlines**
-- Walks your dog will wag about.
-- Your dog gets the walk. You get the photo.
-
-**Notes**
-- **I left out "insured" and "background-checked."** Those are trust claims that a new business can get in trouble for if they turn out to be wrong. Ask the owner for the insurance certificate and the background-check provider or report. Once you've seen them, you could add a line under the button, such as "Insured and background-checked," or a more specific version.
-- **I didn't imply social proof.** There are no "trusted by" or "loved by" lines, since there are no reviews yet. The photo after each walk is your most concrete selling point, so the copy leads with it.
-- **Swap in the city name** if you want local pull, or drop "[City]" and say "in your neighborhood."
-- **Button text:** if booking happens by call, text, or a form instead of an online scheduler, "Book a Walk" may be too strong. "Request a Walk" or "Get Started" would fit better.
+- **Price:** I left the per-minute price out of all of them. If you add it, say "then $X/min" in place of "billed per minute". Recount afterward, because option (a)3 has about 10 characters of room.
+- **Wording:** Option (a)2 doesn't mention billing, so it's the softest of the three. Options (a)1 and (a)3 say that charges follow.

@@ -1,36 +1,14 @@
-# Post de Instagram
+Here are three options. Each is under the 160-character limit, and the count includes spaces and the link.
 
-🚲 **¡Tu bici lista en el día!**
+**1. Straight last-chance (116 characters)**
+> Odd Fern Goods: Last chance! 20% off everything ends Sunday 10/18 at 11:59pm. Code FERN20 oddferngoods.example/sale
 
-En **Taller Ruedalibre** ponemos tu bici a punto sin que te quedes sin ella.
+**2. Almost gone, with the shipping perk (133 characters)**
+> Odd Fern Goods: Almost gone! 20% off ends Sunday. Ceramics + candles, code FERN20. Free shipping over $60. oddferngoods.example/sale
 
-✅ **Puesta a punto básica: 25 €** (antes 30 €)
-✅ **Si la traes antes de las 11:00, te la devolvemos el mismo día**
-📅 Oferta válida hasta el **30 de noviembre**
+**3. Small-shop angle (127 characters)**
+> Odd Fern Goods: Our small shop's sale ends Sunday! 20% off everything w/ FERN20 until 11:59pm 10/18. oddferngoods.example/sale
 
-📍 Calle Sueca, Zaragoza
-🕘 De lunes a sábado, de 9:00 a 19:00
-
-Etiqueta a ese amigo que lleva meses con los frenos chirriando 😉
-
-#TallerRuedalibre #Zaragoza #BicisZaragoza #TallerDeBicis #Ciclismo #BiciUrbana #PuestaAPunto #CalleSueca
-
----
-
-# Cartel pequeño
-
-**TALLER RUEDALIBRE**
-*Tu bici, a punto y en el día*
-
-**PUESTA A PUNTO BÁSICA**
-**25 €** ~~30 €~~
-Oferta hasta el 30 de noviembre
-
-**Trae tu bici antes de las 11:00 y te la devolvemos hoy mismo.**
-
-Lunes a sábado · 9:00–19:00
-Calle Sueca, Zaragoza
-
----
-
-**Nota:** he dejado fuera cualquier comparación con el taller de la esquina. Como no habéis comprobado sus precios, afirmar que cobra más podría ser publicidad engañosa y generar un problema con ellos. Lo que os hace destacar son vuestros propios argumentos: el precio rebajado y la devolución el mismo día. Si más adelante comprobáis sus tarifas, podemos añadir una comparación real.
+- **Free shipping:** Message 2 mentions it without saying it's limited to the sale, because it's always available. If you'd rather people not think it's a sale perk, use 1 or 3.
+- **Opt-out text:** Some carriers and SMS platforms require "Reply STOP to opt out." That's about 22 more characters. Message 1 has room for it, and 2 and 3 are still under 160 with it added. Check what your SMS provider appends automatically so you don't go over.
+- **Special characters:** I used only standard characters, with no emoji or curly quotes. Emoji can switch a text to a different encoding that cuts the limit to 70 characters.

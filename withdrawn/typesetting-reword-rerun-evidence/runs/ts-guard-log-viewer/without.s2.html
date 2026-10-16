@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy Pipeline Logs · release-2026.10.14-3</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #151a20;
+    --line: #232a33;
+    --text: #d5dbe3;
+    --muted: #8591a0;
+    --info: #6cb6ff;
+    --warn: #e3b341;
+    --err: #ff7b72;
+    --err-bg: rgba(255, 123, 114, 0.09);
+    --warn-bg: rgba(227, 179, 65, 0.07);
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .wrap { padding: 20px 28px 40px; max-width: 2200px; margin: 0 auto; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    gap: 12px 32px; padding-bottom: 14px;
+  }
+  h1 { font-size: 20px; margin: 0; font-weight: 650; }
+  .meta { color: var(--muted); font-size: 14px; font-family: var(--mono); }
+  .meta b { color: var(--text); font-weight: 500; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .toolbar button {
+    font: inherit; font-size: 14px; color: var(--text); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 6px; padding: 5px 12px; cursor: pointer;
+  }
+  .toolbar button:hover { border-color: var(--muted); }
+  .toolbar button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  .toolbar button[aria-pressed="true"] { background: #222b36; border-color: var(--muted); }
+  .toolbar .n { font-family: var(--mono); color: var(--muted); margin-left: 6px; }
+
+  .log {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 14px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 12ch 7ch 20ch minmax(0, 1fr);
+    column-gap: 20px;
+    align-items: baseline;
+    padding: 6px 16px 6px 13px;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: rgba(255,255,255,0.03); }
+  .row.warn { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.error { background: var(--err-bg); border-left-color: var(--err); }
+  .ts { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lvl { font-weight: 700; letter-spacing: 0.04em; }
+  .info .lvl { color: var(--info); }
+  .warn .lvl { color: var(--warn); }
+  .error .lvl { color: var(--err); }
+  .svc { color: #b7a6f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; white-space: pre-wrap; }
+  .error .msg { color: #ffd9d6; }
+  .msg .hint { color: var(--muted); }
+  .msg .url { color: var(--info); text-decoration: underline; text-decoration-color: rgba(108,182,255,.4); }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 14px 12px; }
+    .row { grid-template-columns: auto auto minmax(0, 1fr); row-gap: 2px; }
+    .msg { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Deploy pipeline · production</h1>
+    <div class="meta">
+      run <b>#48213</b> · release <b>2026.10.14-3</b> · 2026-10-14 · UTC
+    </div>
+  </header>
+
+  <div class="toolbar" role="group" aria-label="Filter by level">
+    <button type="button" data-f="all" aria-pressed="true">All<span class="n" id="c-all"></span></button>
+    <button type="button" data-f="error" aria-pressed="false">ERROR<span class="n" id="c-error"></span></button>
+    <button type="button" data-f="warn" aria-pressed="false">WARN<span class="n" id="c-warn"></span></button>
+    <button type="button" data-f="info" aria-pressed="false">INFO<span class="n" id="c-info"></span></button>
+  </div>
+
+  <main class="log" id="log">
+    <div class="row info"><span class="ts">14:02:11.482</span><span class="lvl">INFO</span><span class="svc">pipeline-ctl</span><span class="msg">Deploy run #48213 started for release 2026.10.14-3 (commit 9f3c1ab) triggered by merge to main</span></div>
+    <div class="row info"><span class="ts">14:02:13.077</span><span class="lvl">INFO</span><span class="svc">build-runner</span><span class="msg">Docker image built: registry.internal.example.com/platform/checkout-api:2026.10.14-3 (sha256:4be1d07a9c52, 412 MB, 38.2s)</span></div>
+    <div class="row info"><span class="ts">14:02:51.930</span><span class="lvl">INFO</span><span class="svc">test-runner</span><span class="msg">Integration suite passed: 1,284 tests, 0 failed, 6 skipped in 96.4s</span></div>
+    <div class="row warn"><span class="ts">14:03:02.215</span><span class="lvl">WARN</span><span class="svc">scanner</span><span class="msg">Dependency advisory GHSA-7f2q-xv8h-m5c9 affects libxml-parse@2.4.1 (severity: moderate); not blocking, see https://advisories.internal.example.com/GHSA-7f2q-xv8h-m5c9?pkg=libxml-parse&amp;version=2.4.1&amp;ref=deploy-48213</span></div>
+    <div class="row info"><span class="ts">14:03:20.604</span><span class="lvl">INFO</span><span class="svc">k8s-deployer</span><span class="msg">Applying manifest deploy/prod/checkout-api.yaml to cluster prod-us-east-1 (namespace: checkout)</span></div>
+    <div class="row info"><span class="ts">14:03:24.118</span><span class="lvl">INFO</span><span class="svc">k8s-deployer</span><span class="msg">Rolling update: 3/12 pods ready, maxSurge=25%, maxUnavailable=0</span></div>
+    <div class="row warn"><span class="ts">14:03:41.870</span><span class="lvl">WARN</span><span class="svc">k8s-deployer</span><span class="msg">Pod checkout-api-7d9c6b5f4-x2k8p readiness probe slow: GET /healthz took 4.8s (threshold 2.0s); retrying, attempt 2 of 5</span></div>
+    <div class="row error"><span class="ts">14:03:58.342</span><span class="lvl">ERROR</span><span class="svc">migrations</span><span class="msg">Migration 0147_add_order_index failed: deadlock detected while acquiring lock on relation "orders" (SQLSTATE 40P01) at db.migrate.apply (migrate/runner.go:212) ← migrate.Run (migrate/run.go:88) ← main.deploy (cmd/deploy/main.go:41); hint: retry with --lock-timeout=30s or run off-peak</span></div>
+    <div class="row info"><span class="ts">14:04:00.011</span><span class="lvl">INFO</span><span class="svc">migrations</span><span class="msg">Rolled back transaction; schema remains at version 0146</span></div>
+    <div class="row warn"><span class="ts">14:04:03.659</span><span class="lvl">WARN</span><span class="svc">pipeline-ctl</span><span class="msg">Retry 1/3 for stage "migrate" scheduled in 15s</span></div>
+    <div class="row info"><span class="ts">14:04:19.402</span><span class="lvl">INFO</span><span class="svc">migrations</span><span class="msg">Applied 0147_add_order_index in 6.3s (CREATE INDEX CONCURRENTLY orders_customer_created_idx)</span></div>
+    <div class="row error"><span class="ts">14:04:44.786</span><span class="lvl">ERROR</span><span class="svc">smoke-test</span><span class="msg">POST https://canary.checkout.example.com/api/v2/orders?region=us-east-1&amp;trace=on returned 502 Bad Gateway (expected 201) — upstream connect error or disconnect/reset before headers, reset reason: connection termination; request-id=req_01J9ZK3M8T4W6Q2RXN5B7VHD0C</span></div>
+    <div class="row warn"><span class="ts">14:04:47.120</span><span class="lvl">WARN</span><span class="svc">traffic-shift</span><span class="msg">Canary error rate 4.1% exceeds 1.0% budget; holding traffic at 5% and pausing promotion</span></div>
+    <div class="row error"><span class="ts">14:04:49.553</span><span class="lvl">ERROR</span><span class="svc">pipeline-ctl</span><span class="msg">Run #48213 halted at stage "promote"; automatic rollback to 2026.10.14-2 initiated. Runbook: https://wiki.internal.example.com/runbooks/deploy/failed-canary-rollback#checklist</span></div>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+    var buttons = document.querySelectorAll('.toolbar button');
+    var counts = { all: rows.length, error: 0, warn: 0, info: 0 };
+    rows.forEach(function (r) {
+      ['error', 'warn', 'info'].forEach(function (l) { if (r.classList.contains(l)) counts[l]++; });
+    });
+    Object.keys(counts).forEach(function (k) {
+      document.getElementById('c-' + k).textContent = counts[k];
+    });
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = b.getAttribute('data-f');
+        buttons.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        rows.forEach(function (r) {
+          r.hidden = !(f === 'all' || r.classList.contains(f));
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

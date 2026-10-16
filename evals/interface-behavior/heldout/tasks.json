@@ -1,0 +1,122 @@
+[
+  {
+    "id": "ib-h01-seed-library-clearout",
+    "kind": "build",
+    "prompt": "I volunteer at a neighborhood seed library and we keep the inventory in a spreadsheet that nobody likes. Can you build me a single self-contained HTML file (inline CSS and JS, system fonts, no external assets) for the volunteer desk: a list of about 15 seed packets with name, type, year packed and how many are left. At the end of each season we need to clear out the old and empty ones, and that's the part that takes forever. Make it work with made-up data.",
+    "rubric": [
+      "The page lets a volunteer pick several packets at once (checkboxes or similar) and shows how many are picked; the screenshot or markup makes the selection control and the count visible.",
+      "There is a quick way to select the old or empty packets, such as a filter, a 'select all shown' control or a preset, so a season-end clear-out is not one packet at a time.",
+      "Removing the picked packets takes effect right away without a blocking 'Are you sure?' dialog for the routine case, and the page offers a visible way to bring them back (an undo message or a restore area).",
+      "After removal the list updates in place and says what happened (for example '6 packets removed'), instead of failing silently or reloading.",
+      "The data and interactions are real in the file: selecting, removing and restoring change the list, and the packets use plausible made-up data with no external assets."
+    ]
+  },
+  {
+    "id": "ib-h02-hive-monitor-settings",
+    "kind": "critique",
+    "prompt": "We make a little sensor kit for backyard beekeepers and the companion app keeps getting 'confusing' reviews. Here is what the settings screen does today: one long page with 38 toggles and number fields (alert thresholds, units, sync, notifications for every sensor, etc.) in the order engineering added them. Nothing saves until you tap Save at the bottom; if you leave without tapping it, a popup asks 'Discard changes?'. Changing the temperature unit pops up 'Are you sure?'. Every new hive you add starts with all alerts off, and you have to switch them on one by one. There's a red 'Reset everything' button right under Save. What would you change? We can't do user testing before the next release.",
+    "rubric": [
+      "It names the concrete behaviors that cause trouble (the all-alerts-off default per hive, the save-then-prompt model, the confirm on a harmless unit change, the destructive reset sitting next to Save) rather than generic 'simplify the UI' advice.",
+      "It proposes better defaults, for example sensible alert thresholds on for a new hive, or copying from an existing hive, so most people never open settings.",
+      "It proposes changes apply immediately with visible in-place status, or a clearly better save model, and removes the confirmation on the harmless change while moving the reset away from Save and keeping it recoverable or explicit.",
+      "It cuts or demotes the long list, for example by grouping common versus rare settings, without removing the options.",
+      "It is honest that without testing it cannot know which of these causes the reviews and says what to check or watch after release."
+    ]
+  },
+  {
+    "id": "ib-h03-pay-run-confirm",
+    "kind": "explain",
+    "prompt": "I run a small agency that pays about 60 freelancers once a month. Our payments screen has an 'Are you sure?' popup on nearly everything: archiving a freelancer, editing a rate, attaching a receipt, and 'Send payments'. My designer says we should delete every one of those popups because they're lazy design. Is that right? What should the screen do?",
+    "rubric": [
+      "It does not simply agree to remove every confirmation: it keeps a deliberate confirmation step for 'Send payments' because money sent cannot be pulled back by the app.",
+      "The kept confirmation is specific and useful, for example it states how many people and the total amount, rather than a generic 'Are you sure?'.",
+      "It removes the popups on the reversible actions (archiving, editing a rate, attaching a receipt) and gives each a different safety net, such as undo, restore, or a visible change history.",
+      "It explains the distinction in terms of what can be undone, so the user could apply it to a screen the answer did not mention.",
+      "It stays proportionate: a short, usable answer for a small-agency owner, not a long design lecture."
+    ]
+  },
+  {
+    "id": "ib-h04-dispatch-board-simplify",
+    "kind": "critique",
+    "prompt": "We build a scheduling board that six dock coordinators at a freight terminal live in for eight hours a day. A new product manager wants to 'make it friendlier' and sent this plan: (1) a guided setup wizard every morning to pick the day's filters, (2) a welcome tour with tooltips on first login, (3) bigger rows with more padding and a card per truck instead of the dense grid, (4) a confirmation after every drag that moves a truck to a different door. Today the board is a dense grid, keyboard-driven, and it remembers the coordinator's filters and sort between sessions. Give me your honest take on the plan.",
+    "rubric": [
+      "It recognizes these are daily expert users and pushes back on the daily wizard, the heavy tooltips and the per-drag confirmation as adding steps for people who do the task constantly.",
+      "It keeps the dense grid and the keyboard and remembered-filters behavior as strengths and says why dropping them would cost speed.",
+      "It separates what is worth doing for new users (for example a one-time, skippable intro or help that lives off the main path) from what the daily crew should see.",
+      "For moving a truck to another door it proposes undo or an easy move-back instead of a confirmation, and notes how the move shows in place.",
+      "It does not invent data about the users or claim the plan will fail with certainty; it frames the risk and suggests how to check."
+    ]
+  },
+  {
+    "id": "ib-h05-library-app-search",
+    "kind": "layout",
+    "prompt": "I'm designing the phone app for a county library system: catalog search, my holds, my checkouts, branch hours, and an events calendar. Right now it's a bottom bar with five tabs and a search icon in the top corner that opens a plain text box. People say they can never find anything. Lay out how navigation and search should work on the main screens, including what the search does while someone types and when it finds nothing.",
+    "rubric": [
+      "It places search prominently on the home screen (visible field or an obvious entry) rather than a hidden corner icon, and says where it appears.",
+      "It describes what happens while typing, such as suggestions, recent searches, or results that update, and what happens on zero results (a useful message, a way to loosen the search, alternatives) rather than a blank page.",
+      "It treats the library's real tasks (renew, check holds, hours) as reachable in one or two taps, and says which things go in the bar versus elsewhere, with a reason.",
+      "It says what the app remembers or carries over, for example recent searches, the home branch, or the last filter.",
+      "The answer is a usable layout of screens and behaviors, not a list of generic principles."
+    ]
+  },
+  {
+    "id": "ib-h06-good-spec-tighten",
+    "kind": "polish",
+    "prompt": "Here's the behavior spec I wrote for the rescheduling flow in our pottery-class booking app. Can you tighten it up before I hand it to the developers? Don't add features, I just want it clean.\n\nReschedule a class\n- Default: the Reschedule button shows only the student's next three booked classes; older ones are under 'Past'.\n- Tapping Reschedule opens the list of open sessions for the same class level, starting with the nearest dates, with the student's last-used studio pre-selected.\n- Picking a session moves the booking immediately. A banner at the top says 'Moved to Thu 14 Mar, 6 pm. Undo' and stays for 10 seconds; Undo puts the booking back and gives the old seat back if it is still free. If it is not free, the banner says so and offers the waitlist.\n- No confirmation dialog for this flow. Cancelling a booking inside 24 hours of class is the one place we ask first, and the question states the fee that will be charged.\n- While the new list loads, the old list stays on screen and a thin progress line shows at the top; if it takes more than 5 seconds, a 'Still loading' message appears with a retry link.\n- Search the session list by weekday or teacher; the choice is remembered for next time.",
+    "rubric": [
+      "It leaves the substance of the spec alone: the immediate move with an undo banner, the 24-hour cancel exception with a stated fee, the loading behavior and the remembered search all remain.",
+      "Its changes are small and specific (wording, ordering, a missing detail such as how long a seat is held), and it says what it changed instead of rewriting everything.",
+      "It does not add a confirmation dialog, new modes, new settings or extra sections, and does not turn the spec into a longer document.",
+      "It tells the user plainly that the spec is already in good shape, rather than inventing problems to justify the edit.",
+      "The returned spec is about the same length as the original or shorter."
+    ]
+  },
+  {
+    "id": "ib-h07-bulk-select-short",
+    "kind": "explain",
+    "prompt": "In 80 words or fewer: our accounting tool has an invoice list with 4,000 rows over many pages. Customers want to select a bunch of invoices and mark them paid or send reminders. How should selecting work?",
+    "rubric": [
+      "The answer is 80 words or fewer.",
+      "It covers a visible count of what is selected and an action bar or similar that appears with the selection.",
+      "It handles the many-pages case: selecting all on the page versus all matching rows, stated explicitly with a count, rather than silently acting on only the visible page.",
+      "It mentions a safety net for the bulk action, such as undo or a recoverable result, rather than only a warning popup.",
+      "It reads as a direct answer, with no preamble, headings or follow-up questions."
+    ]
+  },
+  {
+    "id": "ib-h08-lab-report-export",
+    "kind": "build",
+    "prompt": "Build a single self-contained HTML file (inline CSS and JS, system fonts, no external assets) for a screen in a water-quality lab's portal. There is an 'Export season report' button, and the export actually takes around 25 seconds on the server and ends in a downloadable file. I can't show you the server, so just fake the wait with a timer. People tend to click it and then stare at the screen wondering if anything happened. Include a small table of recent samples so the page isn't empty.",
+    "rubric": [
+      "Clicking the export button produces an immediate visible response in place (the button or a status area changes within the first moment), not a silent wait.",
+      "During the wait, the page shows real progress feedback appropriate to a 25-second job, such as a progress bar or stage text with an elapsed or remaining time, not only a generic spinner.",
+      "The rest of the page stays usable while the export runs (the table can still be scrolled or used) and the job can be cancelled.",
+      "When the export finishes, the result is clearly announced in place with a way to get the file, and a failed or cancelled run leaves a clear state with a way to try again.",
+      "It does this with working simulated behavior in the file, using plausible made-up sample data and no external assets."
+    ]
+  },
+  {
+    "id": "ib-h09-stage-lights-modes",
+    "kind": "choose",
+    "prompt": "We're building a tablet app for a community theater's lighting operator. There are three things the operator does on the same grid of 48 lights: pick lights to look at their settings, 'paint' a color or level across many lights by dragging, and 'record' the current look into a cue. The team is split: one camp wants three separate modes the operator switches between, the other wants one always-on mode where long-press means paint and a drag means select. Which should we go with? Show-time mistakes are costly.",
+    "rubric": [
+      "It makes a clear recommendation between (or a concrete variant of) the options instead of listing pros and cons without choosing.",
+      "It addresses the cost of mistakes at show time: how the operator always knows what a drag or tap will do, for example a persistent, hard-to-miss indicator of the current mode.",
+      "It deals with the risk of acting in the wrong mode, such as making painted changes easy to reverse and keeping 'record' deliberately separate from the quick, casual gestures.",
+      "It names the specific cost of the option it did not choose (for example hidden gestures being forgotten under pressure, or modes being slower to switch).",
+      "The reasoning is tied to this operator's situation (live, repeated, high stakes), not to generic interface advice."
+    ]
+  },
+  {
+    "id": "ib-h10-household-chores-settings",
+    "kind": "choose",
+    "prompt": "We're making an app where a household shares chores: a rotating list, points, reminders, and the occasional swap. Our first draft of the settings has 24 options (reminder times per person, point values per chore, rotation rules, quiet hours, who can edit what, theme, and so on) and every option is off or blank until someone sets it up. Which of these should be settings at all, what should the defaults be, and what should just happen without asking? Keep it practical, we have a week.",
+    "rubric": [
+      "It picks defaults for most options so the app works well on first use without setup, instead of starting everything blank, and names several concrete default values.",
+      "It sorts the 24 options into a few groups: ones that should just be automatic or learned, ones worth surfacing, and a small remainder tucked away or cut, and gives examples of each.",
+      "It proposes handling the first-run need with a minimal set of questions or none, rather than a long setup form.",
+      "It recommends letting changes take effect straight away with a visible indication, and making a changed setting easy to revert to the default.",
+      "It is scoped to a one-week team: a short prioritized list of what to ship first rather than a full redesign."
+    ]
+  }
+]

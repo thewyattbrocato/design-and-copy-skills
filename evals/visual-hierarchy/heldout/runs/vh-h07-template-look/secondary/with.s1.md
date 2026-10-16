@@ -1,21 +1,21 @@
-Your page reads as generic because every section uses the same default effects, and none of them ranks anything. Each one is a common startup-template signature, and stacked together they say "template" before a visitor reads a word. The copy is probably generic too, since nothing in the description mentions groomers, salons, or what the tool does for them.
+The page looks generic because it's built from the default AI-startup kit, and the kit carries no information about who the product is for. Most of the decoration is doing the work that the content should do.
 
-**What's costing the most, in order:**
+**What's making it generic, most costly first**
 
-1. **The hero has three loud things competing.** The gradient pill, the gradient headline, and the glowing button all fight for attention. The button should win, so the other two should go quiet. A solid-colour headline and a plain text label for "New" would let the button read first.
-2. **The feature and pricing sections are the same card repeated.** Three identical boxes with icon tiles treat every feature as equal and every plan as a peer. Nothing says which feature matters most or which plan you want people to pick. The icon tiles add nothing, since they don't tell anyone anything about the product.
-3. **The blobs are decoration with no job.** One behind every section adds noise and identifies nothing. They're the easiest thing to delete with no loss.
-4. **The page has no grooming-specific content.** This is the biggest reason it doesn't feel like yours. A groomer should see their own problems in the first screen: tips split between groomers, deposits, end-of-day card and cash reconciliation, booth rent or commission, mobile-van mileage, supplies. I'm inferring those from the category, so check them against what the product actually does.
+1. **Decoration is standing in for identity.** The purple-pink gradient, gradient headline, glowing button, and blobs are the signature of a template, and they're the same signature on every AI product. They also compete with each other. The gradient headline and glow on the button both ask for the eye, so neither wins. Viewers see the styling before they see the offer.
+2. **The hero is the default layout.** Centered pill, centered headline, centered button, nothing that shows the product. A stranger can't tell whether this is for groomers, vets, or accountants.
+3. **The features are not ranked.** Three identical cards with an icon, a bold title, and two grey lines give every feature equal weight. The layout says "we have three things," not "this is the thing you'll use every day."
+4. **The pricing repeats the feature pattern.** Three equal cards again means no plan is recommended, and the viewer has to compare from scratch.
+5. **The copy is probably generic too.** "AI-powered" tells a groomer nothing. The page needs the words they use: appointments, bath and trim, deposits, no-shows, tips, the Saturday rush.
 
-**What would make it feel like yours:**
+**What would make it yours**
 
-- **Lead with a specific sentence about groomers.** Something that names their workflow, like closing out the day's tills and tips in one step. Headline in one solid colour, with the sub-line stating what it does.
-- **Use the real product.** A screenshot of the actual ledger or daily close, cropped tightly, does more than any gradient. It's also the one visual that can't be mistaken for a template.
-- **Replace the feature cards with a ranked layout.** One large feature with a real screenshot, then two or three smaller ones as a plain list. Drop the icon tiles and keep an icon only where it carries meaning.
-- **Make one pricing plan the clear choice.** Put the recommended plan larger or with a heavier border, label it, and keep the others as quiet outlines. Use structure, not just colour.
-- **Replace blobs with one brand device.** A single background colour, a photo of a real salon or a groomer at work, or a dog-related illustration used once. Keep it quieter than the headline.
-- **Use a placeholder for proof** like "[number of salons]" or leave the slot out. Don't invent counts, ratings, or testimonials.
+- **Cut first:** the pill, the gradient text, the glow, and the blobs. Keep one brand color, used only on the primary action. Your palette should come from your users' world, not the purple default.
+- **Hero:** flush left. Headline in groomer language that names a problem they have. Next to it, a real screenshot of your app with a believable day on screen (a dog's name, a tip, a deposit applied). Your product is the most distinctive thing you have. Put it first.
+- **Replace the feature cards** with one section that walks through a real task, such as "Check in Biscuit → tip added → deposit applied → invoice sent." A sequence says more than three cards and is specific to this audience.
+- **Pricing:** one table or a single recommended plan with a clear structural emphasis (position and border weight, not just color). Don't add testimonials, logos, or customer counts unless they're real. Use a visible placeholder like "[customer count]" until you have them.
 
-**What already works:** the centred hero and the single primary button are sound structure. Keep those and change the surface treatment around them.
+**Two notes**
 
-I haven't opened your landing page source yet. If you point me at the file, I can make these changes directly and leave the rest of the content as it is.
+- I haven't seen your code, so I haven't changed anything. If you share the page's files, I can make these changes directly, starting with the hero and the feature section.
+- Removing the gradients may make the page feel plain at first. That's expected. The single brand color on the primary action should carry the energy instead.

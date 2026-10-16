@@ -1,137 +1,151 @@
-# Forklift safety quiz: 8 scenario questions
+# Forklift safety quiz for new hires
 
-**Assumptions:** the learners are new hires who've just finished the session, and this is a low-stakes practice quiz, so they get feedback straight after each answer. Answers are marked ✔.
-
----
-
-**1. Entering the freezer**
-Dev is driving a loaded forklift down an aisle at 8 km/h. The freezer chamber door is ahead and the path is clear. What does he do?
-
-- A. Keep 8 km/h, because the load and the path haven't changed.
-- B. Slow to 5 km/h once inside the freezer chamber. ✔
-- C. Slow to 5 km/h only if he can see someone ahead.
-- D. Stay at 8 km/h and tap the horn as he crosses the door.
-
-**Feedback**
-- A: The load and path are the same, but the limit isn't. It drops to 5 km/h inside freezer chambers. 8 km/h is the aisle limit.
-- B: Correct. 8 km/h in aisles, 5 km/h in the freezer chambers, whether or not anyone is in sight.
-- C: Part of this is right, because slowing down is good. The limit applies even when nobody is visible, so don't make it depend on who you can see.
-- D: The horn is useful at blind corners, but it doesn't change the speed limit. Inside the chamber it's still 5 km/h.
+I assumed this is a low-stakes practice quiz for people who have never driven a forklift. Each question is one decision, and the feedback explains every option.
 
 ---
 
-**2. Moving a pallet 40 metres**
-Carlos has just picked up a loaded pallet and needs to travel across the warehouse. How should he carry it?
+**1. Carrying height and tilt**
+Dana is carrying a loaded pallet down an aisle. How should she travel?
 
-- A. Forks 10 to 15 cm off the floor, mast tilted slightly back. ✔
-- B. Forks raised high, so nothing on the floor can catch them.
-- C. Forks 10 to 15 cm off the floor, mast upright.
-- D. Forks right at floor level, so the load sits as low as possible.
+- A. Forks at chest height, mast upright, so she can see well ahead
+- B. Forks 10–15 cm off the floor, mast tilted slightly back
+- C. Forks resting on the floor, mast tilted slightly forward
+- D. Forks 10–15 cm off the floor, mast tilted slightly forward
 
-**Feedback**
-- A: Correct. Low forks with the mast tilted slightly back keep the load stable and cradled against the carriage.
-- B: A high load is less stable, and it blocks more of your view. The travel position is 10 to 15 cm.
-- C: The height is right but the tilt isn't. Tilting the mast slightly back when loaded is what keeps the load from sliding forward.
-- D: Forks dragging at floor level can catch on the floor. Keep them 10 to 15 cm up.
-
----
-
-**3. The corner you can't see around**
-Priya is driving an empty forklift toward an aisle intersection with a solid rack on the corner. She can't see what's coming. What does she do?
-
-- A. Keep her speed, because the forklift is empty.
-- B. Slow a little and watch the mirror for movement.
-- C. Sound the horn and slow to a crawl as she reaches the corner. ✔
-- D. Stop completely and wait for someone to come through.
-
-**Feedback**
-- A: Being empty doesn't help the person walking out from behind the rack. The rule is the same whether the forklift is loaded or empty.
-- B: Slowing is part of it, but a slower forklift that nobody has heard coming is still a surprise. The horn is what warns people.
-- C: Correct. The horn warns people you can't see, and the crawl gives you time to stop if someone appears.
-- D: Waiting for traffic that may never come doesn't tell anyone you're there. Horn and crawl lets you keep moving safely.
+**Answer: B**
+- A: With the load that high, the truck is top-heavy and can tip on a turn or a bump. Travel low.
+- B: Correct. Low forks keep the center of gravity down, and the backward tilt cradles the load.
+- C: Forks dragging the floor can catch on a crack or debris. Forward tilt lets the pallet slide off the tips.
+- D: The height is right, but the forward tilt lets the load slide toward the tips of the forks. Tilt slightly back when loaded.
 
 ---
 
-**4. "Just 30 metres"**
-It's the end of a long shift. A coworker is tired and asks to ride on the back of your forklift to the far dock. "Just this once, it's right there." What do you say?
+**2. Entering the freezer**
+Marcus is carrying a pallet at 8 km/h down the aisle toward the freezer chamber door. He wants to finish quickly so he isn't in the cold long. What does he do?
 
-- A. "Okay, but hold on tight and I'll go slowly."
-- B. "I can't give anyone a ride on the forklift. Walk over, and I'll meet you there." ✔
-- C. "Stand on the forks, you'll be lower down."
-- D. "Only if the aisle is empty."
+- A. Speed up, because less time in the chamber means less time cold
+- B. Keep 8 km/h, since the same pallet and driver were fine in the aisle
+- C. Slow to 5 km/h before going in
+- D. Slow to 5 km/h only if the pallet looks heavy
 
-**Feedback**
-- A: Going slowly doesn't make it safe. There's nowhere safe to ride on a forklift, and one sudden stop could throw them off.
-- B: Correct. No passengers, ever, including short trips. Offering to meet them keeps it friendly.
-- C: Standing on the forks puts them in the most dangerous place. The rule is no passengers anywhere on the machine.
-- D: An empty aisle doesn't change the rule. It has no exceptions.
-
----
-
-**5. The heavy pallet**
-A pallet has a weight label that's a little over the maximum load on your forklift's capacity plate. Your team lead is waiting on it. What do you do?
-
-- A. Lift it slowly. A small overage is probably fine.
-- B. Lift it a few centimetres first to see how the forklift handles it.
-- C. Leave it on the floor and don't lift it. ✔
-- D. Lift it, but drive at 5 km/h instead of 8.
-
-**Feedback**
-- A: A forklift tips when it's overloaded, and "a little over" is still over. The plate gives the maximum, and a heavier load means you don't lift.
-- B: A test lift is still a lift. If the forklift handles the weight badly, you find out at the worst moment.
-- C: Correct. If the load is heavier than the capacity plate allows, don't lift it, no matter who is waiting.
-- D: Driving slower doesn't make the forklift able to carry more. The limit is on the lift itself.
+**Answer: C**
+- A: Going faster inside the chamber breaks the limit. Staying warm is not worth losing control.
+- B: 8 km/h is the aisle limit. Inside the freezer chambers the limit is 5 km/h, whatever the load.
+- C: Correct. 8 km/h in aisles, 5 km/h inside the freezer chambers.
+- D: The chamber limit applies to every trip, loaded or empty. It doesn't depend on how heavy the pallet looks.
 
 ---
 
-**6. The pedestrian with headphones**
-You're about to move off. A coworker wearing headphones is walking across your path, a few metres ahead. What do you do?
+**3. Blind corner**
+Priya is approaching a corner at the end of an aisle and can't see around it. She doesn't hear anything coming. What does she do?
 
-- A. Sound the horn and go, since they'll hear it and get out of the way.
-- B. Wait, make eye contact, and move only when they've seen you. ✔
-- C. Drive around behind them quickly while they're looking the other way.
-- D. Speed up and pass before they reach your path.
+- A. Keep her speed, because she heard nothing
+- B. Slow to a crawl without sounding the horn, so she doesn't startle anyone
+- C. Sound the horn and slow to a crawl
+- D. Sound the horn, then keep her speed so she clears the corner quickly
 
-**Feedback**
-- A: Headphones may block the horn, and pedestrians have right of way anyway. Don't count on them moving for you.
-- B: Correct. Pedestrians always have the right of way, and eye contact is how you know they've seen you.
-- C: Passing behind someone who hasn't seen you is exactly how people get hit. Make eye contact first.
-- D: Racing a pedestrian puts you in the wrong, because they have right of way. Let them go.
-
----
-
-**7. Down the ramp with a tall load**
-Mia has a tall stack on the forks that blocks her view ahead. She needs to take it down a ramp. How does she drive it?
-
-- A. Forward, forks pointing downhill, leaning out to see around the stack.
-- B. Forward, forks pointing uphill, going very slowly.
-- C. In reverse, forks pointing uphill. ✔
-- D. In reverse, forks pointing downhill.
-
-**Feedback**
-- A: Leaning out is a sign the view is blocked. If the load blocks your view, drive in reverse. Forks pointing downhill with a load is also the wrong direction on a ramp.
-- B: Slow doesn't fix the blocked view. When the load blocks your view, you drive in reverse.
-- C: Correct. Reverse solves the blocked view, and going down a ramp with a load, the forks point uphill.
-- D: Reverse is right for the view, but with a load going down a ramp the forks must point uphill.
+**Answer: C**
+- A: A forklift is not always audible over other noise, and someone walking can be silent. No sound doesn't mean no one is there.
+- B: Slowing helps, but nobody around the corner knows she's coming. The horn warns people she can't see.
+- C: Correct. The horn warns people, and the crawl gives her time to stop if someone appears.
+- D: The horn alone doesn't give her room to stop if someone steps out. Do both.
 
 ---
 
-**8. The small wet spot**
-During your pre-shift check, the forks, tires, horn, brakes and lights all pass. You notice a small hydraulic leak under the mast. The shift starts in five minutes. What do you do?
+**4. A ride offer**
+Luis finishes his shift at the far end of the warehouse. He asks to ride on your truck instead of walking. The aisle is clear, and you'd drive slowly. What do you say?
 
-- A. Drive it and mention the leak at the end of the shift.
-- B. Wipe it up and use the forklift if it doesn't come back.
-- C. Tag the forklift out and report it. ✔
-- D. Drive it, but keep the forks low in case the leak gets worse.
+- A. "Okay, if I stay at 5 km/h"
+- B. "Okay, if the forks are empty and lowered"
+- C. "No. I can't carry anyone. Walk, or wait for other transport."
+- D. "Okay, if you hold on to the mast"
 
-**Feedback**
-- A: Reporting at the end of the shift lets the next person pick up a forklift that isn't safe. Anything failing the check means tag it out and report it.
-- B: Wiping it up hides the symptom, not the fault. A hydraulic leak is a failed check even when it looks small.
-- C: Correct. One failed item is enough. Tag it out so nobody uses it, and report it.
-- D: Keeping the forks low won't stop a hydraulic fault. A leak means the forklift shouldn't be used at all.
+**Answer: C**
+- A: Slow speed doesn't make a passenger safe. A stop or bump can still throw them off.
+- B: Empty, lowered forks don't change the rule. There is no place on a forklift built for a rider.
+- C: Correct. Never carry passengers, ever, with no exceptions for a short or slow trip.
+- D: Holding the mast doesn't protect anyone, and a hand near the mast can be hurt. The rule is the same for every trip.
 
 ---
 
-**Two notes**
-- To make it stick, re-ask a mixed set of these tomorrow with different details, such as a different pallet or aisle. Don't repeat the same wording.
-- If you want a pass mark, a same-day score alone doesn't show the skill has stuck. Treat tomorrow's mixed set as the real check, and watch the floor too. Do new hires carry forks low, sound the horn at corners and tag out faults?
+**5. A heavy pallet**
+The capacity plate on your truck's mast shows [max load]. The next pallet looks heavier than that. A supervisor is nearby but busy. What do you do?
+
+- A. Lift it an inch to see if the truck can take it
+- B. Lift it slowly and drive at a crawl
+- C. Don't lift it, and tell [supervisor / lead] it's over the plate limit
+- D. Lift it if the pallet only looks a little over
+
+**Answer: C**
+- A: Even a small lift can destabilize the truck, and a load above the plate rating can tip it or damage it.
+- B: Slow driving doesn't fix an overload. The danger is in the weight, not the speed.
+- C: Correct. If a load is heavier than the plate allows, you don't lift it.
+- D: "A little over" is still over. The plate is the limit, and you don't judge the weight by eye.
+
+---
+
+**6. A pedestrian in the aisle**
+Aisha is driving a loaded truck and sees a coworker with headphones walking ahead in the same aisle. What does she do?
+
+- A. Sound the horn and keep going, since she gave a warning
+- B. Steer around the coworker at a crawl, leaving a little space
+- C. Wave for the coworker to move aside, then continue
+- D. Stop and make eye contact before moving near them
+
+**Answer: D**
+- A: Headphones may mean the horn isn't heard. A horn is not a clearance to pass.
+- B: Passing close at a crawl still puts a person near a moving load. They might step into her path.
+- C: Pedestrians always have right of way, so she can't direct them out of her way. And a wave isn't confirmation they've seen her.
+- D: Correct. Eye contact tells her the person knows where the truck is before she moves near them.
+
+---
+
+**7a. A load that blocks the view**
+Tom's stacked pallet blocks his view straight ahead. He needs to cross the warehouse. How does he drive?
+
+- A. Forward, leaning to one side to look past the load
+- B. Forward, sounding the horn the whole way
+- C. Forward at 5 km/h, since it's slower than the aisle limit
+- D. In reverse
+
+**Answer: D**
+- A: Leaning gives him a narrow view at best, and a person could still be hidden behind the load.
+- B: The horn warns others, but it doesn't let him see them.
+- C: Slower still leaves the view blocked. He can't stop for what he can't see.
+- D: Correct. If the load blocks your view, drive in reverse so you see where you're going.
+
+**7b. Down a ramp**
+Tom now has to take the loaded pallet down a ramp. How should the forks point?
+
+- A. Downhill, driving forward, so he can see the ramp
+- B. Uphill, so the load is on the uphill side of the truck
+- C. Downhill, with the forks raised high to keep the pallet clear
+- D. It doesn't matter if he goes slowly
+
+**Answer: B**
+- A: Forks pointing downhill put the load on the low side, where it can slide off the forks.
+- B: Correct. Going down a ramp with a load, the forks point uphill.
+- C: Raising the forks makes the truck less stable on a slope, and the pallet is still pointing downhill.
+- D: Speed doesn't change the physics of a slope. Fork direction matters on every ramp.
+
+---
+
+**8. A failed pre-shift check**
+Chen is doing the pre-shift check and the horn doesn't sound. Everything else works. Most other trucks are in use and Chen has a short job. What does Chen do?
+
+- A. Use the truck and avoid blind corners
+- B. Use it for the short job and report it at the end of the shift
+- C. Ask a coworker to walk ahead so people are warned
+- D. Tag it out and report it
+
+**Answer: D**
+- A: Blind corners are not the only place a horn matters, and Chen can't always see them coming.
+- B: Reporting later means the truck could be used by someone else in the meantime, with no horn.
+- C: A coworker walking ahead is a person put in front of a truck with a known fault.
+- D: Correct. Anything failing on the pre-shift check (forks, tires, horn, brakes, lights, hydraulic leaks) means tag it out and report it.
+
+---
+
+**Notes**
+- Fill in the bracketed items, [max load] and [supervisor / lead], with your site's details. I didn't have them.
+- Repeat a mixed set with changed details, such as different people, places and loads, on the new hires' second day. A same-day score on this quiz doesn't show they can apply it. Watching each person do a pre-shift check and a short drive is the real test.

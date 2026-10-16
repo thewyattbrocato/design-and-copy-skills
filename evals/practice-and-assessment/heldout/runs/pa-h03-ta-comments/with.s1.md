@@ -1,41 +1,54 @@
-**What's wrong with all three**
+## What's wrong with the three comments
 
-- **They don't point to anything in the work.** A student can't tell which line or decision the comment is about.
-- **They don't say what to do next.** "See the solution" and "needs improvement" leave the student to guess.
-- **Their tone doesn't match the content.** Comment 1 praises a query with real problems. Comment 3 gives a score that rates the query below its actual quality.
+**1. "Good job!"** This is praise with no information. The student gets the right rows, so they will assume the query is fine. They won't learn that `SELECT *` and the subquery are habits to fix, or that the query is about 3x slower than the join. The comment also hides what they did well.
 
-Each comment fails in its own way:
+**2. "Your query is wrong. See the solution."** It says the result is wrong but not how. It also sends the student to the solution, so they never find the cause themselves. The student used `INNER JOIN`, which drops customers with zero orders. That is a specific, learnable misunderstanding, and the comment doesn't name it.
 
-1. **"Good job!"** is praise with nothing behind it. The query returns the right rows but has two avoidable problems (`SELECT *` and a subquery where a join works, about 3x slower on the sample data). The student learns nothing and will repeat both habits. The praise is also misleading, because it signals nothing needs fixing.
-2. **"Your query is wrong. See the solution."** The comment is accurate but gives no diagnosis. The student has no way to learn that INNER JOIN drops customers with zero orders, which is the exact concept the exercise tests. Pointing at the solution makes them compare two queries and guess at the difference. The flat tone also reads as a verdict instead of help.
-3. **"Great effort. Needs improvement on joins. 6/10"** is wrong about the content. The joins are fine, since the result is correct and the query is clean. The real issue is readability: the aliases `a` and `b`, and confusing output column names. The comment sends the student to study the wrong topic, and "6/10" has no stated criteria. "Great effort" is also praise for trying, not for the work.
+**3. "Great effort. Needs improvement on joins. 6/10"** Three problems:
+- It praises effort rather than the work.
+- It says "joins" need work when the join was fine. The real issues are naming and readability.
+- The 6/10 has no stated criteria, so the student can't tell what would make it a 9.
 
-**Rewrites**
+All three comments describe the TA's impression instead of what the query did.
 
-1. > Your query returns the right rows, and that's the hard part. Two changes would make it better:
-   > - Replace `SELECT *` with only the columns you need. It's faster and won't break if someone adds a column later.
-   > - Your subquery can be a plain `JOIN`. On the sample data the join version runs about 3x faster. Try rewriting it and compare the two with `EXPLAIN`.
-   >
-   > Once you've done that, you'll have a pattern you can reuse: if a subquery just fetches matching rows from another table, a join usually does the same job.
+## Rewrites
 
-2. > You're close. The structure is right, but the `INNER JOIN` between `customers` and `orders` is dropping customers with zero orders. An inner join keeps only rows that match on both sides, so anyone who has never ordered disappears. The exercise asks for every customer.
-   >
-   > Try this: change the join so all customers are kept, then run the query and check that the customers with no orders now appear with a count of 0. Think about which table has to be on the "keep everything" side, and what `COUNT(o.order_id)` does with NULLs compared to `COUNT(*)`.
-   >
-   > If you're stuck after trying that, bring the query to office hours and we'll go through it together.
+**1. Correct, but inefficient**
 
-3. > Your result is correct and your query is clean. Your join logic is solid, so nothing to fix there.
-   >
-   > One thing to work on is readability. Aliasing the tables as `a` and `b` makes the query hard to follow, because nobody can tell which table is which without scrolling up. Use short names that mean something, like `c` for `customers` and `o` for `orders`.
-   >
-   > Also, give the output columns clear names with `AS`, for example `customer_name` and `order_count`. A teammate should be able to read your results without seeing the query.
+> Your query returns the right rows, and the logic is correct. Two things to change before this is production-style SQL:
+>
+> - **Subquery vs. join:** On the sample data, this runs about 3x slower than the equivalent join. A join lets the database plan the lookup once instead of repeating it. Try rewriting it as a `JOIN` and compare run times.
+> - **`SELECT *`:** List only the columns you need. It makes the output predictable if the table changes, and it avoids reading data you don't use.
+>
+> Rewrite it with both changes and confirm you still get the same rows.
 
-**What the rewrites do**
+**2. Missing customers with zero orders**
 
-- Each names the specific thing in the student's query.
-- Each says why it matters.
-- Each gives a concrete next step.
-- Each says what was right, so the student knows what to keep.
-- The score is gone from comment 3. If you want to keep scores, publish the criteria so the number means something.
+> Your query runs and the counts are right for customers who have orders. But the exercise asked for *every* customer, including those who have never ordered, and those customers are missing from your result.
+>
+> The cause is `INNER JOIN`. It keeps only rows that match on both sides, so a customer with no orders is dropped. To keep every customer, you need a join type that preserves all rows from `customers`.
+>
+> Try this: change the join type, then run `SELECT COUNT(*) FROM customers` and check that your result has that many rows. Also check what `COUNT` does with the `NULL`s that appear for customers with no orders. Which column should you count so those customers get 0?
 
-**Suggestion for the TAs:** have them check each comment against three questions: *what did the student do, why does it matter, and what should they do next?* A comment that can't answer all three isn't ready to send.
+**3. Correct, but hard to read**
+
+> Your result is correct and the query is cleanly structured, so the join logic is fine.
+>
+> The readability issue is naming. Aliasing the tables as `a` and `b` means a reader has to look back at the `FROM` clause to learn what `b.id` refers to. The output columns are confusing for the same reason.
+>
+> Next time:
+> - Use short but meaningful aliases, such as `c` for `customers` and `o` for `orders`.
+> - Name output columns with `AS`, for example `order_count` instead of `count`.
+>
+> Rename these in your query and reread it as if you'd never seen the exercise. Is it clear what each column holds?
+
+## Pattern for TAs
+
+Each rewrite follows the same structure:
+1. Say what the query did (the result).
+2. Name the one thing that matters most and why.
+3. Give a concrete next step the student can check themselves.
+
+If you use scores, publish the criteria. A rubric with correctness, efficiency, and readability would make the 6/10 in comment 3 meaningful.
+
+I haven't checked these against your course materials, so adjust the join type and function names to match what you've taught. If you want, I can turn the pattern into a one-page TA template with a short practice set for calibrating comments.

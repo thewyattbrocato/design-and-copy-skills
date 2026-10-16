@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings · Fernwick</title>
+<style>
+  :root {
+    --bg: #f4f6f1;
+    --card: #ffffff;
+    --ink: #1f2a22;
+    --ink-2: #546057;
+    --line: #e1e6dc;
+    --accent: #2f6b4a;
+    --accent-ink: #ffffff;
+    --track: #c3cbc0;
+    --danger: #b3261e;
+    --danger-bg: #fdf1f0;
+    --danger-line: #f1c9c5;
+    --focus: #1b5fd1;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141a16;
+      --card: #1d2520;
+      --ink: #e9efe9;
+      --ink-2: #a3afa6;
+      --line: #2e3932;
+      --accent: #6fbf8f;
+      --accent-ink: #0f1a13;
+      --track: #4a574e;
+      --danger: #ff8a80;
+      --danger-bg: #2a1a19;
+      --danger-line: #5a2f2c;
+      --focus: #8ab4ff;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 600px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { margin-bottom: 24px; }
+  .brand { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  h1 { margin: 4px 0 0; font-size: 28px; line-height: 1.2; }
+  h2 { margin: 28px 4px 8px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .row {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 16px 18px; border-top: 1px solid var(--line);
+  }
+  .row:first-child { border-top: 0; }
+  .text { min-width: 0; }
+  .label { font-weight: 600; display: block; }
+  .hint { display: block; margin-top: 2px; font-size: 14px; color: var(--ink-2); }
+
+  /* switch */
+  .switch { position: relative; flex: none; width: 52px; height: 32px; }
+  .switch input {
+    position: absolute; inset: 0; width: 100%; height: 100%; margin: 0;
+    opacity: 0; cursor: pointer; z-index: 1;
+  }
+  .switch .track {
+    position: absolute; inset: 0; border-radius: 16px; background: var(--track);
+    transition: background .15s;
+  }
+  .switch .track::after {
+    content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px;
+    border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    transition: transform .15s;
+  }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+  .switch input:focus-visible + .track { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  /* segmented */
+  .seg { display: inline-flex; flex: none; border: 1px solid var(--line); border-radius: 10px; padding: 3px; background: var(--bg); }
+  .seg label { position: relative; }
+  .seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .seg span {
+    display: block; padding: 6px 14px; border-radius: 7px; font-weight: 600; font-size: 15px;
+    color: var(--ink-2); min-width: 64px; text-align: center;
+  }
+  .seg input:checked + span { background: var(--accent); color: var(--accent-ink); }
+  .seg input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  /* quiet hours */
+  .quiet { display: block; }
+  .quiet .top { display: flex; justify-content: space-between; gap: 16px; }
+  .times { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+  .field { flex: 1 1 140px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-2); margin-bottom: 4px; }
+  input[type="time"] {
+    width: 100%; font: inherit; color: var(--ink); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px;
+  }
+  input[type="time"]:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+  input[type="time"]:disabled { opacity: .5; }
+  .summary { margin: 12px 0 0; font-size: 14px; color: var(--ink-2); }
+  .dim { opacity: .55; }
+
+  /* danger */
+  .danger { border-color: var(--danger-line); background: var(--danger-bg); }
+  .danger .row { border-color: var(--danger-line); }
+  button {
+    font: inherit; font-weight: 600; border-radius: 10px; padding: 9px 16px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+  @media (prefers-color-scheme: dark) { .btn-danger { color: #1a0b0a; } }
+  .btn-outline-danger { background: transparent; border-color: var(--danger); color: var(--danger); flex: none; }
+
+  dialog {
+    border: 1px solid var(--line); border-radius: 16px; padding: 24px; max-width: 420px; width: calc(100% - 32px);
+    background: var(--card); color: var(--ink);
+  }
+  dialog::backdrop { background: rgba(0,0,0,.5); }
+  dialog h3 { margin: 0 0 8px; font-size: 20px; }
+  dialog p { margin: 0 0 14px; color: var(--ink-2); }
+  dialog input[type="text"] {
+    width: 100%; font: inherit; color: var(--ink); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px;
+  }
+  dialog input[type="text"]:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+  .actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+
+  #status { margin-top: 16px; min-height: 22px; font-size: 14px; color: var(--ink-2); text-align: center; }
+  .deleted { text-align: center; padding: 48px 16px; }
+  .deleted h2 { text-transform: none; letter-spacing: 0; font-size: 22px; color: var(--ink); margin: 0 0 8px; }
+  [hidden] { display: none !important; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <div id="app">
+    <header>
+      <div class="brand">Fernwick</div>
+      <h1>Settings</h1>
+    </header>
+
+    <h2 id="h-notif">Notifications</h2>
+    <section class="card" aria-labelledby="h-notif">
+      <div class="row">
+        <div class="text">
+          <label class="label" for="reminders">Watering reminders</label>
+          <span class="hint" id="reminders-hint">Get a nudge when a plant is due for water.</span>
+        </div>
+        <span class="switch">
+          <input type="checkbox" role="switch" id="reminders" aria-describedby="reminders-hint" checked>
+          <span class="track" aria-hidden="true"></span>
+        </span>
+      </div>
+
+      <div class="row quiet" id="quiet-row">
+        <div class="top">
+          <div class="text">
+            <span class="label" id="quiet-label">Quiet hours</span>
+            <span class="hint">Reminders stay silent between these times.</span>
+          </div>
+        </div>
+        <div class="times" role="group" aria-labelledby="quiet-label">
+          <div class="field">
+            <label for="quiet-start">Start</label>
+            <input type="time" id="quiet-start" value="22:00">
+          </div>
+          <div class="field">
+            <label for="quiet-end">End</label>
+            <input type="time" id="quiet-end" value="07:00">
+          </div>
+        </div>
+        <p class="summary" id="quiet-summary" aria-live="polite"></p>
+      </div>
+
+      <div class="row">
+        <div class="text">
+          <label class="label" for="weekly">Weekly summary email</label>
+          <span class="hint" id="weekly-hint">A Sunday recap of how your plants are doing.</span>
+        </div>
+        <span class="switch">
+          <input type="checkbox" role="switch" id="weekly" aria-describedby="weekly-hint" checked>
+          <span class="track" aria-hidden="true"></span>
+        </span>
+      </div>
+    </section>
+
+    <h2 id="h-privacy">Privacy</h2>
+    <section class="card" aria-labelledby="h-privacy">
+      <div class="row">
+        <div class="text">
+          <label class="label" for="photos">Show my plant photos on my public profile</label>
+          <span class="hint" id="photos-hint">When off, only your name and plant count are visible.</span>
+        </div>
+        <span class="switch">
+          <input type="checkbox" role="switch" id="photos" aria-describedby="photos-hint">
+          <span class="track" aria-hidden="true"></span>
+        </span>
+      </div>
+    </section>
+
+    <h2 id="h-units">Units</h2>
+    <section class="card" aria-labelledby="h-units">
+      <div class="row">
+        <div class="text">
+          <span class="label" id="temp-label">Temperature</span>
+          <span class="hint">Used for care tips and room readings.</span>
+        </div>
+        <div class="seg" role="radiogroup" aria-labelledby="temp-label">
+          <label><input type="radio" name="temp" value="C"><span>°C</span></label>
+          <label><input type="radio" name="temp" value="F" checked><span>°F</span></label>
+        </div>
+      </div>
+    </section>
+
+    <h2 id="h-account">Account</h2>
+    <section class="card danger" aria-labelledby="h-account">
+      <div class="row">
+        <div class="text">
+          <span class="label">Delete account</span>
+          <span class="hint">Permanently removes your profile, plants, photos and care history. This can’t be undone.</span>
+        </div>
+        <button type="button" class="btn-outline-danger" id="delete-open">Delete…</button>
+      </div>
+    </section>
+
+    <div id="status" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="deleted" id="deleted" hidden>
+    <h2>Your account has been deleted</h2>
+    <p class="hint">Thanks for growing with Fernwick. We’ll miss your plants.</p>
+  </div>
+
+  <dialog id="confirm" aria-labelledby="dlg-title">
+    <form method="dialog" id="confirm-form">
+      <h3 id="dlg-title">Delete your account?</h3>
+      <p>This permanently deletes all your data. Type <strong>DELETE</strong> to confirm.</p>
+      <label class="label" for="confirm-text" style="font-size:13px">Confirmation</label>
+      <input type="text" id="confirm-text" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <div class="actions">
+        <button type="button" id="delete-cancel">Cancel</button>
+        <button type="submit" class="btn-danger" id="delete-confirm" disabled>Delete account</button>
+      </div>
+    </form>
+  </dialog>
+</main>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var KEY = "fernwick-settings";
+  var fields = ["reminders", "weekly", "photos", "quiet-start", "quiet-end"];
+  var statusEl = $("status"), timer;
+
+  function load() {
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY) || "null");
+      if (!s) return;
+      ["reminders", "weekly", "photos"].forEach(function (k) { if (k in s) $(k).checked = s[k]; });
+      if (s.start) $("quiet-start").value = s.start;
+      if (s.end) $("quiet-end").value = s.end;
+      if (s.temp) document.querySelector('input[name="temp"][value="' + s.temp + '"]').checked = true;
+    } catch (e) {}
+  }
+
+  function save() {
+    var s = {
+      reminders: $("reminders").checked,
+      weekly: $("weekly").checked,
+      photos: $("photos").checked,
+      start: $("quiet-start").value,
+      end: $("quiet-end").value,
+      temp: document.querySelector('input[name="temp"]:checked').value
+    };
+    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {}
+    statusEl.textContent = "Saved";
+    clearTimeout(timer);
+    timer = setTimeout(function () { statusEl.textContent = ""; }, 1800);
+  }
+
+  function fmt(t) {
+    if (!t) return "";
+    var p = t.split(":"), h = +p[0], m = p[1];
+    return ((h + 11) % 12 + 1) + ":" + m + " " + (h < 12 ? "AM" : "PM");
+  }
+
+  function render() {
+    var on = $("reminders").checked;
+    $("quiet-start").disabled = !on;
+    $("quiet-end").disabled = !on;
+    $("quiet-row").classList.toggle("dim", !on);
+    var a = $("quiet-start").value, b = $("quiet-end").value, msg;
+    if (!on) msg = "Turn on watering reminders to use quiet hours.";
+    else if (!a || !b) msg = "Choose a start and end time.";
+    else if (a === b) msg = "Start and end match, so quiet hours are off.";
+    else msg = "Silent from " + fmt(a) + " to " + fmt(b) + (a > b ? " (overnight)." : ".");
+    $("quiet-summary").textContent = msg;
+  }
+
+  load(); render();
+
+  fields.forEach(function (id) {
+    $(id).addEventListener("change", function () { render(); save(); });
+  });
+  document.querySelectorAll('input[name="temp"]').forEach(function (r) {
+    r.addEventListener("change", save);
+  });
+
+  var dlg = $("confirm"), txt = $("confirm-text"), go = $("delete-confirm");
+  $("delete-open").addEventListener("click", function () {
+    txt.value = ""; go.disabled = true;
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+    txt.focus();
+  });
+  $("delete-cancel").addEventListener("click", function () { dlg.close(); $("delete-open").focus(); });
+  txt.addEventListener("input", function () { go.disabled = txt.value.trim() !== "DELETE"; });
+  $("confirm-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (txt.value.trim() !== "DELETE") return;
+    try { localStorage.removeItem(KEY); } catch (err) {}
+    dlg.close();
+    $("app").hidden = true;
+    $("deleted").hidden = false;
+  });
+})();
+</script>
+</body>
+</html>

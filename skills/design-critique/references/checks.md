@@ -8,8 +8,8 @@ Short passes; use only those the design contains. Thresholds match the focused s
 - **Visible state.** Selected, active filter, on or off, loading, saved, disabled, signed in. A disabled button with no reason is a finding.
 - **Feedback.** Acknowledge an action within about a tenth of a second; show progress if longer.
 - **Errors are a design fault first.** Prevention (constraints, sensible defaults, tolerant formats), then a message that says what happened and how to fix it next to the field, then recovery (undo, confirmation only for destructive acts, nothing lost). A message that only shows in a disappearing toast or only in color, or that blames ("Invalid input"), is a finding.
-- **Forms.** Visible labels (placeholder-only labels vanish while typing); ask only what is needed; validate when a field is finished, not on each keystroke; right input types; many errors summarized and linked.
-- **Deep page.** Can a stranger tell the site, the page, the main sections, the current item (clearly marked), how to search, how to go back? Page names match the link that led there.
+- **Forms.** Visible labels (placeholder-only labels vanish while typing); ask only what is needed; validate on submit, then re-check a field live once it has shown an error; never flag a first attempt while it is being typed; right input types; many errors summarized and linked.
+- **Inner page.** A newcomer can tell where they are and how to leave or search; the page name matches the link that led there.
 
 ## Accessibility
 
@@ -57,9 +57,10 @@ Report with place, who is affected, harm (money, privacy, time, trust) and an ho
 
 Use when a finding hinges on comprehension, a team argues over opinion, or someone asks whether to test.
 
-- Three to five people who roughly resemble the audience; people differ enough that a rough match teaches more than waiting for a perfect one.
+- Start by stating the question and the result that would change the design.
 - Two or three concrete tasks ("find what this costs for two people"), one person at a time, thinking aloud. Do not help or explain; silence is data.
-- Same-day debrief: each observer lists the three worst problems; the group fixes the few most serious. Fix by cutting, renaming or moving before adding explanation.
+- Three to five people who roughly resemble the audience; a rough match taught early beats waiting for a perfect one.
+- Debrief: collect every observed failure, merge duplicates, rank by how many people hit it and how central the task is. Fix by cutting, renaming or moving before adding explanation.
 - It shows problems, not preference or statistical difference. Report what happened, not percentages from a handful of people.
 - Which of two versions wins at scale: a live comparison with enough traffic. Where a flow is abandoned: analytics first, then watch people for why.
-- In the critique, state the question, the task, how many people, and the result that would change the design, in a few lines.
+- In the critique, give the question, the task, how many people, and the result that would change the design, in a few lines.

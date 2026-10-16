@@ -1,0 +1,1 @@
+Big text is viewed from a distance as a single shape, so uneven gaps between letters stand out and designers tighten or adjust them by hand to make the headline look even and polished. Paragraph text is read up close, one word at a time, and the font's default spacing is already tuned for that, so adjusting it mostly just makes it harder to read.

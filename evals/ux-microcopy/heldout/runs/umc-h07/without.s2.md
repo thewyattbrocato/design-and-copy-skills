@@ -1,20 +1,26 @@
-I'd take the designer's note as a small tweak, not a rewrite. Your copy already does the hard part: it says what happened, reassures the user, and tells them what to do. The coldness comes mostly from the blunt "Couldn't save." opener.
+Most of these should be fixed, but the removal words are partly legitimate. They describe different actions, so I wouldn't collapse them into one word.
 
-**Options, from lightest to warmest touch:**
+## Fix and standardise
 
-1. **"We couldn't save that. Your changes are still here, so give it another try."**
-   This is the minimal change. "We" and "give it another try" soften it, and the structure stays the same.
+| Concept | Today | Use | Notes |
+|---|---|---|---|
+| Scheduled thing | Appointments / Bookings / Visits / Session | **Appointment** everywhere | Use "Book appointment" for the action. This covers the nav, page title, tooltip and email. |
+| Ending your login | Log off / Exit / Sign in | **Sign in** / **Sign out** | "Log off" becomes "Sign out" so it pairs with the login screen. |
+| Staff vs patient-app wording | Practitioners / Your therapist | **Practitioner** everywhere | In the member app, use "Your practitioner". "Therapist" is wrong for clinics that employ osteopaths or chiropractors, and one noun is easier to translate and support. |
+| People receiving care | patient (record, email) / Member | **Member** everywhere | This follows the founder's decision. Your list still has "patient" in the delete wording, the email and "patient app". Search the UI strings, emails and error messages for "patient" and "client". |
 
-2. **"Your changes are safe, but we couldn't save them just yet. Try again in a moment."**
-   This leads with the reassurance, which is what users care about most when a save fails. I'd pick this one.
+Two points need checking:
 
-3. **"Hmm, that didn't save. Your changes are still here. Want to try again?"**
-   This is the most casual. It fits if the app's voice is already playful elsewhere.
+- **"Exit" on the settings page:** I can't tell what it does. If it signs the user out, use "Sign out". If it leaves settings, use "Back" or "Close". Either way, "Exit" is vague.
+- **"Session" in the email:** if you ever distinguish a clinical session from a booked slot, keep that distinction. If it's just the appointment, change it to "Appointment".
 
-**If you'd rather push back, these are reasons you can give:**
+## Removal: keep distinct, but make the rules explicit
 
-- **Errors aren't the place for personality.** Someone who just hit a failure is mildly anxious about losing work. Cheerful or cute copy can feel flippant, and clarity and reassurance help more than charm.
-- **Toasts are short-lived.** Every extra word is time the user has to read before it disappears.
-- **The current copy already reassures.** "Your changes are still here" is the warm part, and it's easy to bury it if you add more.
+- **Cancel appointment:** keep this. The appointment still exists with a cancelled status. Always write "Cancel appointment" in full, never a bare "Cancel", because "Cancel" is also the usual label for dismissing a dialog. Label the dismiss button "Keep appointment" or "Go back" on that dialog.
+- **Delete:** use this for permanent removal. "Remove" on a note should become "Delete" if it's permanent. Keep "Remove" only for detaching something that still exists elsewhere, for example removing a practitioner from a clinic.
+- **Discard:** keep this for drafts, since it's the standard word for unsaved work.
+- **Member records:** consider whether "Delete member" is really what happens. Clinics often have to retain health records, so "Archive member" may be more accurate than "Delete member". That's a product and legal question, not just wording.
 
-I'd go with option 1 or 2. They give the designer the warmer tone they asked for and keep what makes your version work. If you tell me where the string lives, I can make the change.
+## Next step
+
+Write these decisions into a short glossary (term, definition, banned alternatives) and keep it where the team writes copy. Then grep the codebase for the old terms. I can do that if you point me at the repo. The working directory I'm in right now isn't a Kneeline project.

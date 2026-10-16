@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orchard FM – Settings</title>
+<style>
+  :root{
+    --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2a26; --muted:#6b675d; --line:#e4dccb;
+    --accent:#3f7a3a; --accent-ink:#fff; --danger:#b3412f; --focus:#1b5fb8;
+    --scale:1;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1b1d19; --card:#242722; --ink:#f0ede4; --muted:#a9a69a; --line:#383c34;
+      --accent:#7fc178; --accent-ink:#10200e; --danger:#ee8a77; --focus:#8fbcff; }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:calc(16px * var(--scale)); line-height:1.4;
+  }
+  .wrap{max-width:600px; margin:0 auto; padding:16px 16px 48px}
+  header{display:flex; align-items:center; gap:12px; padding:12px 0 16px}
+  .logo{width:44px; height:44px; border-radius:12px; background:var(--accent); color:var(--accent-ink);
+    display:grid; place-items:center; font-weight:700; font-size:1.3em}
+  h1{font-size:1.5em; margin:0}
+  header p{margin:0; color:var(--muted); font-size:.875em}
+  h2{font-size:.8em; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:24px 4px 8px}
+  .group{background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden}
+  .row{display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:14px 16px; min-height:60px; border-top:1px solid var(--line)}
+  .row:first-child{border-top:0}
+  .row.stack{flex-direction:column; align-items:stretch; gap:10px}
+  .label{flex:1; min-width:0}
+  .label b{display:block; font-weight:600}
+  .label span{display:block; color:var(--muted); font-size:.875em}
+  label.row{cursor:pointer}
+  /* switch */
+  .switch{position:relative; width:52px; height:32px; flex:none}
+  .switch input{position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; cursor:pointer; z-index:1}
+  .track{position:absolute; inset:0; border-radius:16px; background:#9a968a; transition:background .2s}
+  .track::after{content:""; position:absolute; top:3px; left:3px; width:26px; height:26px; border-radius:50%;
+    background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.35); transition:transform .2s}
+  .switch input:checked + .track{background:var(--accent)}
+  .switch input:checked + .track::after{transform:translateX(20px)}
+  .switch input:focus-visible + .track{outline:3px solid var(--focus); outline-offset:2px}
+  /* segmented */
+  .seg{display:flex; background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:3px; gap:3px}
+  .seg label{flex:1; position:relative}
+  .seg input{position:absolute; inset:0; opacity:0; margin:0; cursor:pointer}
+  .seg span{display:block; text-align:center; padding:10px 4px; border-radius:9px; font-size:.9375em; font-weight:500; min-height:44px; line-height:1.5}
+  .seg input:checked + span{background:var(--accent); color:var(--accent-ink); font-weight:600}
+  .seg input:focus-visible + span{outline:3px solid var(--focus); outline-offset:1px}
+  /* select + range */
+  select{font:inherit; color:var(--ink); background:var(--bg); border:1px solid var(--line); border-radius:10px;
+    padding:10px 12px; min-height:44px; max-width:50%}
+  select:focus-visible,button:focus-visible,input[type=range]:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+  input[type=range]{width:100%; accent-color:var(--accent); height:32px; margin:0}
+  .val{color:var(--accent); font-weight:700; font-variant-numeric:tabular-nums}
+  .head{display:flex; justify-content:space-between; gap:12px; align-items:baseline}
+  .sample{background:var(--bg); border:1px dashed var(--line); border-radius:10px; padding:10px 12px}
+  .sample i{color:var(--muted)}
+  .row[hidden]{display:none}
+  .disabled{opacity:.5; pointer-events:none}
+  button.reset{
+    width:100%; font:inherit; font-weight:600; color:var(--danger); background:var(--card);
+    border:1px solid var(--danger); border-radius:14px; padding:14px; min-height:48px; cursor:pointer; margin-top:24px}
+  button.reset:hover{background:var(--danger); color:var(--card)}
+  .toast{position:fixed; left:50%; bottom:24px; transform:translate(-50%,40px); opacity:0;
+    background:var(--ink); color:var(--bg); padding:12px 18px; border-radius:24px; font-size:.9375em;
+    transition:.25s; pointer-events:none; max-width:90vw}
+  .toast.show{transform:translate(-50%,0); opacity:1}
+  /* dialog */
+  dialog{border:1px solid var(--line); border-radius:16px; background:var(--card); color:var(--ink); padding:20px; max-width:340px; width:calc(100% - 32px)}
+  dialog::backdrop{background:rgba(0,0,0,.5)}
+  dialog h3{margin:0 0 6px}
+  dialog p{margin:0 0 18px; color:var(--muted)}
+  .btns{display:flex; gap:10px; justify-content:flex-end}
+  .btns button{font:inherit; font-weight:600; padding:10px 16px; min-height:44px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); cursor:pointer}
+  .btns button.danger{background:var(--danger); border-color:var(--danger); color:#fff}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo" aria-hidden="true">O</div>
+    <div>
+      <h1>Settings</h1>
+      <p>Orchard FM · changes save automatically</p>
+    </div>
+  </header>
+
+  <main>
+    <h2>Listening</h2>
+    <div class="group">
+      <div class="row stack">
+        <div class="label"><b id="q-l">Streaming quality</b><span id="q-d"></span></div>
+        <div class="seg" role="radiogroup" aria-labelledby="q-l">
+          <label><input type="radio" name="quality" value="low"><span>Low</span></label>
+          <label><input type="radio" name="quality" value="normal"><span>Normal</span></label>
+          <label><input type="radio" name="quality" value="high"><span>High</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="label"><b id="x-l">Crossfade between songs</b><span id="x-d">Off</span></div>
+        <div style="flex:none;width:45%">
+          <input type="range" id="crossfade" min="0" max="12" step="1" aria-labelledby="x-l" aria-describedby="x-d">
+        </div>
+      </div>
+      <div class="row">
+        <div class="label"><b>Default sleep timer</b><span>Used when you start a sleep timer</span></div>
+        <select id="sleep" aria-label="Default sleep timer">
+          <option value="0">Off</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="90">90 minutes</option>
+        </select>
+      </div>
+      <label class="row">
+        <span class="label"><b>Show lyrics</b><span>Display lyrics on the Now Playing screen when available</span></span>
+        <span class="switch"><input type="checkbox" id="lyrics" role="switch"><span class="track"></span></span>
+      </label>
+    </div>
+
+    <h2>Downloads &amp; alerts</h2>
+    <div class="group">
+      <label class="row">
+        <span class="label"><b>Download only on Wi-Fi</b><span id="wifi-d"></span></span>
+        <span class="switch"><input type="checkbox" id="wifi" role="switch"><span class="track"></span></span>
+      </label>
+      <label class="row">
+        <span class="label"><b>New-show notifications</b><span id="notif-d"></span></span>
+        <span class="switch"><input type="checkbox" id="notif" role="switch"><span class="track"></span></span>
+      </label>
+    </div>
+
+    <h2>Display</h2>
+    <div class="group">
+      <div class="row stack">
+        <div class="head">
+          <div class="label"><b id="t-l">Text size</b></div>
+          <span class="val" id="t-v"></span>
+        </div>
+        <input type="range" id="textsize" min="0" max="4" step="1" aria-labelledby="t-l">
+        <div class="sample" id="sample">Now playing: <i>Morning on Maple Street</i> with Dottie Hale</div>
+      </div>
+    </div>
+
+    <button class="reset" id="resetBtn" type="button">Reset all to defaults</button>
+  </main>
+</div>
+
+<dialog id="dlg">
+  <h3>Reset all settings?</h3>
+  <p>Every setting will go back to its original value.</p>
+  <div class="btns">
+    <button type="button" id="cancel">Cancel</button>
+    <button type="button" class="danger" id="confirm">Reset</button>
+  </div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var KEY="orchardfm.settings.v1";
+  var DEFAULTS={quality:"normal",wifi:true,sleep:"0",crossfade:0,notif:true,lyrics:true,textsize:1};
+  var SIZES=[{n:"Small",s:.9},{n:"Default",s:1},{n:"Large",s:1.15},{n:"Larger",s:1.3},{n:"Largest",s:1.5}];
+  var QDESC={low:"Saves data · about 48 kbps",normal:"Balanced · about 96 kbps",high:"Best sound · about 192 kbps"};
+  var $=function(id){return document.getElementById(id)};
+  var state=load();
+
+  function load(){
+    var s=Object.assign({},DEFAULTS);
+    try{var raw=localStorage.getItem(KEY); if(raw) Object.assign(s,JSON.parse(raw));}catch(e){}
+    return s;
+  }
+  function save(){ try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} }
+
+  var tt;
+  function toast(msg){
+    var t=$("toast"); t.textContent=msg; t.classList.add("show");
+    clearTimeout(tt); tt=setTimeout(function(){t.classList.remove("show")},1800);
+  }
+
+  function render(){
+    document.querySelectorAll('input[name=quality]').forEach(function(r){r.checked=r.value===state.quality});
+    $("q-d").textContent=QDESC[state.quality];
+    $("wifi").checked=state.wifi;
+    $("wifi-d").textContent=state.wifi?"Downloads wait until you're on Wi-Fi":"Downloads may use mobile data";
+    $("sleep").value=state.sleep;
+    $("crossfade").value=state.crossfade;
+    $("crossfade").setAttribute("aria-valuetext",state.crossfade?state.crossfade+" seconds":"Off");
+    $("x-d").textContent=state.crossfade?state.crossfade+" seconds":"Off";
+    $("notif").checked=state.notif;
+    $("notif-d").textContent=state.notif?"We'll tell you when a new show starts":"You won't get alerts about new shows";
+    $("lyrics").checked=state.lyrics;
+    $("textsize").value=state.textsize;
+    var z=SIZES[state.textsize];
+    $("t-v").textContent=z.n;
+    $("textsize").setAttribute("aria-valuetext",z.n);
+    document.documentElement.style.setProperty("--scale",z.s);
+  }
+
+  function set(k,v,msg){ state[k]=v; save(); render(); if(msg) toast(msg); }
+
+  document.querySelectorAll('input[name=quality]').forEach(function(r){
+    r.addEventListener("change",function(){set("quality",r.value)});
+  });
+  $("wifi").addEventListener("change",function(e){set("wifi",e.target.checked)});
+  $("notif").addEventListener("change",function(e){set("notif",e.target.checked)});
+  $("lyrics").addEventListener("change",function(e){set("lyrics",e.target.checked)});
+  $("sleep").addEventListener("change",function(e){set("sleep",e.target.value)});
+  $("crossfade").addEventListener("input",function(e){set("crossfade",+e.target.value)});
+  $("textsize").addEventListener("input",function(e){set("textsize",+e.target.value)});
+
+  var dlg=$("dlg");
+  function openDlg(){ if(dlg.showModal) dlg.showModal(); else if(confirm("Reset all settings?")) doReset(); }
+  function doReset(){ state=Object.assign({},DEFAULTS); save(); render(); toast("Settings reset to defaults"); }
+  $("resetBtn").addEventListener("click",openDlg);
+  $("cancel").addEventListener("click",function(){dlg.close()});
+  $("confirm").addEventListener("click",function(){dlg.close(); doReset();});
+  dlg.addEventListener("click",function(e){ if(e.target===dlg) dlg.close(); });
+
+  render();
+})();
+</script>
+</body>
+</html>

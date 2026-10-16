@@ -1,0 +1,1 @@
+No, skip them. A break-room TV has no one at a keyboard, so interactive controls would go unused. Show the current shift's parcels against target in large, glanceable numbers, and if teams matter, auto-rotate or tile per-team views instead.

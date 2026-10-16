@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder Lane Food Bank: Progress to $300k goal</title>
+<style>
+  :root { color-scheme: light dark; }
+  .viz-root {
+    --page: #f9f9f7; --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b; --text-secondary: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;
+  }
+  @media (prefers-color-scheme: dark) {
+    .viz-root {
+      --page: #0d0d0d; --surface-1: #1a1a19;
+      --text-primary: #f0efec; --text-secondary: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px; background: var(--page);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--text-primary);
+  }
+  .viz-root {
+    max-width: 880px; margin: 0 auto; padding: 28px 28px 22px;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+  }
+  h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+  .sub { font-size: 13px; color: var(--text-secondary); margin: 0 0 22px; }
+  .hero { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .hero .big { font-size: 44px; font-weight: 600; line-height: 1; }
+  .hero .of { font-size: 15px; color: var(--text-secondary); }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--text-secondary); margin: 14px 0 34px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .sw.rem { background: transparent; border: 1.5px dashed var(--muted); }
+
+  .track { position: relative; padding-top: 22px; }
+  .goal-flag { position: absolute; top: 0; right: 0; font-size: 12px; color: var(--text-secondary); text-align: right; }
+  .goal-flag::after { content: ""; position: absolute; right: 0; top: 18px; height: 22px; width: 2px; background: var(--text-primary); }
+  .bar { display: flex; gap: 2px; height: 44px; }
+  .seg { position: relative; min-width: 0; cursor: default; outline-offset: 2px; }
+  .seg:first-child { border-radius: 4px 0 0 4px; }
+  .seg:last-child { border-radius: 0 4px 4px 0; }
+  .seg.rem { border: 1.5px dashed var(--muted); background: transparent; }
+  .seg:hover, .seg:focus-visible { filter: brightness(1.08); outline: 2px solid var(--text-primary); }
+
+  .labels { display: flex; gap: 2px; margin-top: 10px; }
+  .lab { min-width: 0; font-size: 12px; color: var(--text-secondary); padding-right: 6px; border-top: 1px solid var(--axis); padding-top: 8px; }
+  .lab b { display: block; font-size: 17px; font-weight: 600; color: var(--text-primary); }
+  .lab .pct { color: var(--muted); }
+
+  .axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+  .note { margin: 26px 0 0; padding-top: 14px; border-top: 1px solid var(--grid); font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .note strong { color: var(--text-primary); font-weight: 600; }
+
+  details { margin-top: 16px; font-size: 13px; }
+  summary { cursor: pointer; color: var(--text-secondary); }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: 600; color: var(--text-secondary); }
+  tfoot td { font-weight: 600; border-bottom: 0; }
+
+  #tip {
+    position: fixed; pointer-events: none; opacity: 0; transition: opacity .1s;
+    background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--axis);
+    border-radius: 6px; padding: 6px 10px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.18); z-index: 5;
+  }
+  @media (max-width: 560px) {
+    body { padding: 10px; } .viz-root { padding: 18px 14px; }
+    .lab { font-size: 11px; } .lab b { font-size: 14px; }
+  }
+  @media (forced-colors: active) {
+    .seg:not(.rem) { forced-color-adjust: none; background-image: repeating-linear-gradient(45deg, transparent 0 4px, rgba(0,0,0,.35) 4px 5px); }
+  }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <h1>Larder Lane Food Bank: progress to the $300k annual goal</h1>
+  <p class="sub">Donations received January–September, by donor type ($ thousands)</p>
+
+  <div class="hero"><span class="big">$256k</span><span class="of">of $300k raised &middot; 85% of goal &middot; $44k to go</span></div>
+
+  <div class="legend" aria-label="Legend">
+    <span><i class="sw" style="background:var(--s1)"></i>Individuals</span>
+    <span><i class="sw" style="background:var(--s2)"></i>Businesses</span>
+    <span><i class="sw" style="background:var(--s3)"></i>Events</span>
+    <span><i class="sw rem"></i>Still to raise</span>
+  </div>
+
+  <div class="track">
+    <div class="goal-flag">Goal $300k</div>
+    <div class="bar" role="img" aria-label="Stacked bar: individuals $126k, businesses $81k, events $49k, remaining $44k toward a $300k goal">
+      <div class="seg" tabindex="0" data-tip="Individuals: $126k (42% of goal)" style="flex:126;background:var(--s1)"></div>
+      <div class="seg" tabindex="0" data-tip="Businesses: $81k (27% of goal)" style="flex:81;background:var(--s2)"></div>
+      <div class="seg" tabindex="0" data-tip="Events: $49k (16% of goal)" style="flex:49;background:var(--s3)"></div>
+      <div class="seg rem" tabindex="0" data-tip="Still to raise: $44k (15% of goal)" style="flex:44"></div>
+    </div>
+    <div class="labels">
+      <div class="lab" style="flex:126"><b>$126k</b>Individuals <span class="pct">&middot; 49% of raised</span></div>
+      <div class="lab" style="flex:81"><b>$81k</b>Businesses <span class="pct">&middot; 32%</span></div>
+      <div class="lab" style="flex:49"><b>$49k</b>Events <span class="pct">&middot; 19%</span></div>
+      <div class="lab" style="flex:44"><b>$44k</b>To go</div>
+    </div>
+    <div class="axis"><span>$0</span><span>$300k</span></div>
+  </div>
+
+  <p class="note">
+    <strong>Ahead of a straight-line pace:</strong> nine months in, an even pace would be $225k. Hitting the goal takes about $15k a month for October–December, below the $28k monthly average so far.
+    Individuals and businesses give steadily ($12–17k and $7–11k a month). Events are lumpy: $49k came from just four months, so the year-end total depends on whether events run this fall.
+  </p>
+
+  <details>
+    <summary>View as table</summary>
+    <table>
+      <thead><tr><th>Month</th><th>Individuals</th><th>Businesses</th><th>Events</th><th>Total</th></tr></thead>
+      <tbody>
+        <tr><td>Jan</td><td>14</td><td>8</td><td>0</td><td>22</td></tr>
+        <tr><td>Feb</td><td>12</td><td>9</td><td>4</td><td>25</td></tr>
+        <tr><td>Mar</td><td>15</td><td>7</td><td>0</td><td>22</td></tr>
+        <tr><td>Apr</td><td>13</td><td>10</td><td>15</td><td>38</td></tr>
+        <tr><td>May</td><td>16</td><td>9</td><td>0</td><td>25</td></tr>
+        <tr><td>Jun</td><td>14</td><td>11</td><td>12</td><td>37</td></tr>
+        <tr><td>Jul</td><td>12</td><td>8</td><td>0</td><td>20</td></tr>
+        <tr><td>Aug</td><td>13</td><td>9</td><td>0</td><td>22</td></tr>
+        <tr><td>Sep</td><td>17</td><td>10</td><td>18</td><td>45</td></tr>
+      </tbody>
+      <tfoot><tr><td>Year to date</td><td>126</td><td>81</td><td>49</td><td>256</td></tr></tfoot>
+    </table>
+  </details>
+</div>
+<div id="tip" role="tooltip"></div>
+<script>
+  const tip = document.getElementById('tip');
+  document.querySelectorAll('.seg').forEach(s => {
+    const show = e => {
+      tip.textContent = s.dataset.tip;
+      const r = s.getBoundingClientRect();
+      const x = e.clientX || r.left + r.width / 2, y = e.clientY || r.top;
+      tip.style.left = Math.min(x + 12, innerWidth - tip.offsetWidth - 8) + 'px';
+      tip.style.top = (y - 40) + 'px';
+      tip.style.opacity = 1;
+    };
+    s.addEventListener('mousemove', show);
+    s.addEventListener('focus', show);
+    s.addEventListener('mouseleave', () => tip.style.opacity = 0);
+    s.addEventListener('blur', () => tip.style.opacity = 0);
+  });
+</script>
+</body>
+</html>

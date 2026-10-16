@@ -1,17 +1,5 @@
-**Empty cart**
-> Your cart's a blank patch of soil for now.
-> Find something green to fill it. [Browse plants]
+**Security you can verify**
 
-**Password reset confirmation**
-> Check your inbox. If there's a Fernside account for that email, a reset link is on its way. It can take a few minutes, so look in spam if you don't see it.
+Brindle Backup holds a SOC 2 Type II report, issued in August 2026. Your data is encrypted with AES-256 at rest and TLS 1.3 in transit. Uptime was 99.95% over the 12 months ending September 30, 2026, measured on our public status page, so you can check it yourself. We have had no customer data breaches since we were founded in 2019.
 
-This wording doesn't confirm whether an account exists, which keeps email addresses private.
-
-**Button after a plant is added**
-> **View cart**
-
-Alternatives:
-- **Go to checkout**, if you'd rather push toward purchase
-- **See my plants**, if you want a bit more personality
-
-I'd use "View cart" as the button, with a small "Added to your cart" line above it. Buttons are where people want clarity most, so the leafy tone works best in the other two pieces.
+The total is 67 words.

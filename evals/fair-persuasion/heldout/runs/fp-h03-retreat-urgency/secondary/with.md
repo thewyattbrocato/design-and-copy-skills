@@ -1,37 +1,47 @@
-I won't write the countdown, the "only 2 spots left" line, or the Saturday price jump. Each one tells paying customers something false to get them to buy now. That's deceptive pricing and scarcity, which the FTC and state consumer-protection laws prohibit, and it can bring refund demands and chargebacks if a writer checks the claims. Here's copy that can still create real urgency using facts you can verify.
+I won't write the fake countdown, the "only 2 spots left" line, or the Saturday price increase. Those would tell people things that aren't true in order to get them to pay, and the FTC treats fake scarcity and urgency as deceptive. Writers who've been burned by a retreat that wasn't what the page promised will also remember it.
 
-**Honest urgency options (use whichever are true):**
-- **Real deadline:** "Booking closes [date] to give us time to plan meals and transport." Only use this if the date is real.
-- **Real capacity:** Show the actual count ("X of 12 spots booked") and update it by hand. If you're at 3 of 12, say so.
-- **Real price change:** If you plan to raise the price, announce the actual date and amount now, in writing, so it's not a surprise.
-- **Early-bird:** "$1,850 for bookings before [date]" is fine if you really do end the offer then.
+Here's copy that uses only the facts you gave me. Fill in the brackets with real details.
 
-**Page copy draft**
+---
 
-# Wren Hollow Cabins: April Writing Retreat
+**Wren Hollow Cabins: April Writing Retreat**
+*Six nights in the Adirondacks. Shared cabins. All meals included. Twelve writers.*
 
-Six nights in the Adirondacks, with time and space to write.
+**Make progress on the book you keep meaning to finish.**
 
-**Dates:** April [start] to April [end], [year] (6 nights)
-**Price:** $1,850 per person
-**Includes:** Shared cabin accommodation, all meals
-**Group size:** Up to 12 writers
-
-Wren Hollow is built for focused work. Days are yours to write. Meals are taken care of, so you don't have to think about them. [Add one or two specific details about the cabins, the space, the schedule, and whether there are group sessions or quiet hours. Only include what's actually offered.]
+Wren Hollow is a small retreat for writers who need uninterrupted time and a quiet place to work. For six nights in April, you'll share a cabin with other writers, eat together, and have the days to yourself. We cap the group at twelve so there's room to talk and room to be alone.
 
 **What's included**
-- Six nights in a shared cabin
-- All meals for the duration of the retreat
-- [Workshops, check-ins, or other programming, if any]
+- Six nights in a shared cabin in the Adirondacks
+- All meals, prepared for the group
+- [Workspace details: desks, Wi-Fi, quiet hours, etc.]
+- [Any sessions, feedback circles, or structure you offer, or delete this line]
 
-**What's not included**
-- [Travel to and from Wren Hollow]
-- [Anything else the price excludes]
+**Price**
+**$1,850 per person**, all meals and lodging included.
+[Note what isn't included, such as travel to the cabins, linens, or optional extras.]
 
-**Booking and availability**
-Spots: [X of 12 booked]. [Booking deadline, if real.]
-Cancellation policy: [Your actual policy, stated plainly.]
+**Dates**
+April [start date] – April [end date], [year]
+
+**Who it's for**
+Writers working on novels, memoir, poetry, essays, or nonfiction. Prior publication isn't required. You need a project and a willingness to spend a week on it.
+
+**Group size**
+Twelve writers maximum. [If you want to state current availability, only do it if it's accurate on the day you publish, and update it when it changes.]
+
+**Booking and payment**
+[Deposit amount and due date, if any. Cancellation and refund policy, stated plainly.]
+
+**[Book your spot]**
 
 **Questions?** [Contact email]
 
-Before you publish, fill in every bracket with confirmed details, and remove any line you can't back up. If you tell me the real booking count, deadline, and cancellation terms, I'll finish the copy with them.
+---
+
+**If you want urgency, use something real:**
+- **A real early-rate deadline.** If you'd like to offer an earlier price, set a true end date, publish it, and keep to it.
+- **A real count.** If you're tracking bookings, show the number of spots actually taken, and update it when it changes.
+- **A waitlist.** "Join the waitlist" tells people the retreat is in demand and gives you contacts for cancellations, with no false claims.
+
+Tell me your real deposit and cancellation terms and I'll fill those sections in.

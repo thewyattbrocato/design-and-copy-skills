@@ -1,0 +1,121 @@
+[
+  {
+    "id": "dash-01-dispatch-screen",
+    "kind": "build",
+    "prompt": "I dispatch for Tidewater Cold Freight. We run 8 refrigerated vans out of one depot. Can you build me a single HTML file (inline CSS, system fonts, nothing loaded from outside) for the 6am dispatch screen? I look at it on a laptop before I hand out the day's routes. I need to see which vans are fit to go, what's at risk of running late, and whether any cargo is out of temperature range. This morning's data:\n\nVan | Status | Last service | Trailer temp (target -18 to -15 C) | First booking | Driver\nV1 | Ready | 2 weeks ago | -17.2 | 07:30 | Marta L.\nV2 | Ready | 5 weeks ago | -16.4 | 07:45 | Dev P.\nV3 | In workshop (brake job) | 3 days ago | n/a | 08:00 | unassigned\nV4 | Ready | 11 weeks ago (limit is 10) | -16.8 | 08:15 | Joss K.\nV5 | Loaded, waiting on release | 4 weeks ago | -11.4 | 06:45 | Ines R.\nV6 | Ready | 6 weeks ago | -17.9 | 09:00 | Tomas B.\nV7 | Ready | 1 week ago | -15.6 | 09:30 | driver called in sick\nV8 | Ready | 8 weeks ago | -16.1 | 10:00 | Aiko S.",
+    "rubric": [
+      "Without reading every row, the dispatcher can see how many vans can go and which cannot or need action, and the problem vans come before the healthy ones or are clearly set apart.",
+      "The van sitting at -11.4 C, the van past its service limit, the van in the workshop and the van with no driver are each distinguishable from normal vans, and the reason for each is stated in words, not only by color.",
+      "Uses only the supplied data: all 8 vans appear with correct values and the page does not invent trends, history, KPIs or extra charts.",
+      "Core picture fits a 1280x800 laptop viewport without scrolling, with text that is comfortably legible.",
+      "Rows are ordered or grouped in a way that supports the decision (for example by urgency or first booking time) rather than left arbitrary."
+    ]
+  },
+  {
+    "id": "dash-02-support-overload",
+    "kind": "critique",
+    "prompt": "My VP asked me to look at our support team's dashboard before Monday and everyone says it's too much and nobody trusts it. It's one page. Top row has 6 number tiles: open tickets, avg first response, CSAT, tickets created today, backlog age, SLA %. Each tile has a red/green light that turns red whenever it's worse than yesterday. Under that: three donut charts (tickets by channel, by priority, by product area), a 3D pie of CSAT by agent, a line chart of tickets per day for the last 12 months where the y axis starts at 4,000, and a table of all 46 agents with 11 columns. One of the tiles says 'Tickets this month: 3,120 vs 8,940 last month, down 65%' and it's the 11th of the month today. What's wrong with it, and what would you do? Be specific.",
+    "rubric": [
+      "Identifies that the month-to-date figure is being compared with a full previous month, so the 65% drop is not a real change, and says how to compare fairly (same days elapsed, or same period last month, or a run-rate).",
+      "Says that lights comparing to yesterday will flip red and green on ordinary daily noise and recommends a threshold or target tied to something that matters.",
+      "Gives a concrete cut-and-keep plan for the page (what stays, what goes, what moves) instead of generic advice to simplify.",
+      "Flags at least two chart-level problems among the 3D pie, the truncated y axis, and a 46-row 11-column table sitting on the main view, and says what to use instead.",
+      "Gives a prioritized order of fixes or says which problem to fix first, and notes what already works if anything does."
+    ]
+  },
+  {
+    "id": "dash-03-library-board",
+    "kind": "choose",
+    "prompt": "I manage the Harbor Hill library system (4 branches). The board meets six times a year and wants a one-page dashboard each time. They're volunteers, not data people, and what they care about is whether we're serving the town and whether the money is okay. I brainstormed these candidates:\n\n1. Door counts (visits)\n2. Items checked out\n3. New library cards issued\n4. Total registered cardholders\n5. Program attendance (story time, classes, etc.)\n6. Computer/wifi sessions\n7. Holds waiting more than 14 days\n8. Budget spent vs plan year to date\n9. Social media followers\n10. Cost per visit\n11. Volunteer hours\n12. Items per capita in the collection\n13. Overdue items out\n14. Donations received\n\nWhich should go on the page, which should I leave off, and what should each thing on the page be compared against? I don't want all 14.",
+    "rubric": [
+      "Recommends a small set (roughly 5 to 8) rather than most of the list, and leaves a clear group off with a reason for each omission.",
+      "Every recommended measure comes with a comparison basis (for example same month last year, a target, plan, or prior period) and the choice is explained; a bare total with no yardstick is not presented as enough.",
+      "Covers both questions the board asked, service to the community and financial health, instead of leaning almost entirely on one.",
+      "Notes at least one measure that can mislead as defined (for example total cardholders including inactive cards, raw visits, or year-to-date spend read without seasonality) and how to define or caveat it.",
+      "Plainly worded for non-specialists and ends with a usable answer (a list or short layout idea) rather than a discussion of every candidate."
+    ]
+  },
+  {
+    "id": "dash-04-wind-wall",
+    "kind": "layout",
+    "prompt": "We have a 55 inch screen on the control-room wall at a small wind farm (22 turbines, 3 operators on shift, people sit 3 to 6 metres away but sometimes walk up to it). I need to decide what goes where. The pieces I've got: farm output in MW against the forecast, a status grid of all 22 turbines, wind speed and direction, the active alarm list, a 7-day output chart, grid curtailment status (are we being told to cut output), the maintenance schedule for this week, and weather warnings. No code needed, just tell me the layout: where each thing goes, how big it is relative to the others, and what's readable from across the room versus up close.",
+    "rubric": [
+      "All eight pieces are placed, with a clear position and relative size for each, so the layout could be drawn from the answer.",
+      "Alarms and abnormal turbine state get the most prominent position and are tied together with the turbine grid or clearly reachable at a glance, instead of being buried in a corner.",
+      "Separates what must be read from 3 to 6 metres (large numbers, status colors with shapes or words) from what is only for walking up (maintenance, 7-day chart, detail text), with sizes consistent with that.",
+      "Grouping and reading order are explained so related items sit together (for example output with forecast, curtailment with output) and the least urgent items sit lowest or smallest.",
+      "Respects the wall-display setting: nothing depends on scrolling, tabs, hover or clicking."
+    ]
+  },
+  {
+    "id": "dash-05-bike-shop-guard",
+    "kind": "polish",
+    "prompt": "I built this weekly view for the owner of our bike shop and I'm about to send it. Can you tidy it up first? Here's how it's laid out.\n\nTop: one sentence, 'Sales are $2,140 above last week; the repair queue is the only thing needing attention.'\nNext row, three numbers: Sales this week $18,420 (last week $16,280, +13%). Repair backlog 9 bikes, oldest 6 days, our promise is 7 days (shown in amber, the only amber on the page). Stock-outs 2: 700c tubes and chain lube.\nLeft below: a bar chart of daily sales this week next to the same weekday last week, bars labeled directly with the values, no legend needed because the two series are labeled at the end of the first pair.\nRight below: a small table of 5 items to reorder with quantity and supplier lead time in days, sorted by lead time, longest first.\nFooter, small: 'Data as of Friday 5pm. Excludes online orders, which are in a separate system.'\nColors: one blue accent, grays, and that one amber.\n\nWhat should I change?",
+    "rubric": [
+      "Recognizes that the dashboard is already well built and says so specifically (for example the summary sentence, the single warning, the labeled chart, the data-scope footer), instead of inventing problems.",
+      "Proposes few and small changes (at most about three), each concrete and tied to a reason; it does not restructure the page or replace its main components.",
+      "Does not add new widgets, filters, tabs, extra metrics or a 'more insight' section, and does not invent data not given.",
+      "Keeps the footer caveat about online orders and the sparing use of amber for the one real warning.",
+      "It is acceptable and even good to conclude that it can be sent as is or with a minor tweak; the answer does not pad itself to look busy."
+    ]
+  },
+  {
+    "id": "dash-06-pool-guard",
+    "kind": "build",
+    "prompt": "Could you make a little page for the screen at our community pool's front desk? Parents keep asking staff one thing: is the pool open and okay to swim right now. Single HTML file, inline CSS, system fonts, no external assets, and it needs to be easy to read from a few metres away. The numbers we have right now:\n\nWater temperature: 27.8 C (okay range 26 to 29)\nChlorine: 1.6 ppm (okay range 1 to 3)\npH: 7.4 (okay range 7.2 to 7.8)\nLast tested: 14:05\nLifeguards on duty: 3 (we need at least 2)",
+    "rubric": [
+      "The first thing anyone sees is a single clear answer to whether the pool is open and OK to swim, readable from a distance, and it is consistent with the data (every reading in range, 3 guards on duty against a minimum of 2).",
+      "Each of the readings is shown with its value and its acceptable range, plus the last test time, so staff can back up the answer; none are hidden.",
+      "The page stays simple: it does not add trend charts, history, comparison periods, filters or other content that was not requested or backed by supplied data.",
+      "The status does not rely on color alone; it is also stated in words, and text and numbers are large with strong contrast.",
+      "No invented data, links, logos or external assets; the page fits one screen without scrolling."
+    ]
+  },
+  {
+    "id": "dash-07-alert-wall",
+    "kind": "explain",
+    "prompt": "We have a monitoring dashboard for our payments service with about 40 status tiles, all red/amber/green. Last month a real outage sat red for 25 minutes before anyone noticed, and on that day 11 other tiles were also red or amber. My director's reaction was 'just make the red brighter'. I need to explain to him why that won't fix it and what we should do instead. Can you help me explain it in a way he'll accept? He's not technical.",
+    "rubric": [
+      "Explains the actual cause in plain language: when many things are flagged at once and most do not need action, people stop being able to tell which one matters, so a brighter color does not solve it.",
+      "Recommends concrete changes, such as reducing the page to things that need a human decision, making thresholds meaningful so tiles are normally quiet, separating urgent from informational, or a single place that shows what needs action right now.",
+      "Gives the director a way to see or check it for himself (for example how many tiles were non-green on a normal day, or replaying last month's outage) instead of just asserting it.",
+      "Does not make up statistics, studies or figures beyond what the user gave (40 tiles, 11 others, 25 minutes).",
+      "Written so a non-technical director could follow it; short enough to use, without jargon or a long lecture."
+    ]
+  },
+  {
+    "id": "dash-08-breakroom-guard",
+    "kind": "choose",
+    "prompt": "Quick one, two sentences max please. We're putting a dashboard on a TV in the warehouse break room that shows parcels packed against target for the shift. Should I add date pickers and filters so people can slice it by team and by product?",
+    "rubric": [
+      "Gives a clear recommendation (a firm no or not on the wall display) rather than a survey of options.",
+      "The reason given is tied to the setting: a wall TV in a break room that people glance at and do not operate.",
+      "Respects the length limit: two sentences at most, and no list, headings or follow-up essay.",
+      "May offer a brief alternative (for example a fixed useful view, or filters only on a separate manager view) without exceeding the limit."
+    ]
+  },
+  {
+    "id": "dash-09-garden-story",
+    "kind": "build",
+    "prompt": "I need a one-page data story for our annual report: community gardens, five sites. The point I want readers to get is that the harvest is growing but the waitlist is growing faster. Single HTML file, inline CSS, system fonts, no external anything, fits on one landscape page or screen. Here's what we have (2026 numbers are through Nov 15):\n\nGarden | Plots | Harvest 2025 (kg) | Harvest 2026 (kg)\nAlder Street | 40 | 3,100 | 3,480\nMillrace | 28 | 1,900 | 2,150\nFoundry Lot | 35 | 2,600 | 2,480\nBluebird Terrace | 22 | 1,150 | 1,420\nPepper Hill (opened June 2026) | 30 | none | 910\n\nWaitlist (people): Jan 2025: 118. Jan 2026: 164. Nov 2026: 231.\nVolunteer hours: 2025: 4,200. 2026 so far: 4,950.",
+    "rubric": [
+      "The headline or title states the finding (harvest up, waitlist up faster) rather than only naming the topic, and the visuals support that specific point.",
+      "Figures do not overstate growth: the new Pepper Hill site and the partial 2026 year are flagged or handled (for example like-for-like for the four gardens that existed in 2025), not silently compared with full 2025 as if equal.",
+      "Any bar or column chart starts at zero, and values are labeled directly on the marks or lines instead of relying on a legend and gridlines.",
+      "All numbers shown match the supplied data or are correct arithmetic from it; nothing is invented, and it states the as-of date.",
+      "Reads as one cohesive page in reading order with a small number of visuals (a handful at most), not a grid of every possible chart."
+    ]
+  },
+  {
+    "id": "dash-10-wallboard-guard",
+    "kind": "critique",
+    "prompt": "This is the wallboard on our support floor. It's dense on purpose: supervisors glance at it all day, they know where everything is, and when we tried a 'cleaner' version last year they hated it and we rolled it back. Here's what's on it. Across the top, a strip of 8 small numbers in monospace: calls waiting, longest wait, answered within target %, agents ready, on call, after-call work, away, and calls abandoned today. Under it, a table of 12 queues (one per row): queue name, calls waiting, longest wait, agents staffed, answered-in-target %, and a tiny 30 minute sparkline of calls waiting. Rows are in a fixed order that never changes. 'Answered in target' turns red below 80%. 'Longest wait' is shown as 2:14 in some rows and as 134s in others because two queues come from an older system. The 'away' agent count also turns red when it's over 6. Is there anything actually worth fixing? Please don't send me a redesign.",
+    "rubric": [
+      "Respects the stated context: does not recommend wholesale decluttering, fewer metrics, larger cards or more whitespace, and does not propose a redesign.",
+      "Finds the real defects in what was described: the mixed time formats for longest wait, and red meaning two different things (a service-level miss and an agent count).",
+      "Keeps the fixed queue order and positions as a strength for glance reading and tells the user not to reorder or move things.",
+      "Limits itself to a short list of targeted fixes (about two to four), each concrete enough to apply, and says what works for this audience.",
+      "Does not invent problems about things the user did not describe, such as missing fonts or colors."
+    ]
+  }
+]

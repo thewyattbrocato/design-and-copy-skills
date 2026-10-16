@@ -1,1 +1,1 @@
-Use a near-white with a faint teal cast, like `#f5f8f8`, for page backgrounds, and a deep blue-gray like `#1c2a2c` for body text, which gives about 14:1 contrast. Your teal itself is about 5:1 on white, so it's safe for links and buttons with text.
+Pair the teal with a cool gray that has a slight teal tint, such as #f5f8f8 for page backgrounds and #1c2729 for body text, which gives about 14:1 contrast. Keep #0f7c80 for accents and links, since it reaches only about 5:1 on white and reads better in small type when it isn't the text color.

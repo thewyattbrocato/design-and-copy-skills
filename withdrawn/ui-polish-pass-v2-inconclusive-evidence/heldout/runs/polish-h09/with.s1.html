@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Triage queue · Spoke &amp; Wheel Support</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f4f5f2;
+  --panel: #ffffff;
+  --ink: #1b1f1d;
+  --muted: #5d6762;
+  --line: #e1e4df;
+  --accent: #0f6b4f;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3f1ea;
+  --sel: #eef6f1;
+  --urgent: #b42318;
+  --high: #a15c07;
+  --normal: #3b5a8c;
+  --low: #5d6762;
+  --shadow: 0 1px 2px rgba(20,30,25,.06), 0 8px 24px rgba(20,30,25,.06);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121614;
+    --panel: #1a1f1c;
+    --ink: #e9eeea;
+    --muted: #9aa6a0;
+    --line: #2a312d;
+    --accent: #4cc79b;
+    --accent-ink: #08241a;
+    --accent-soft: #1d3329;
+    --sel: #1f2a24;
+    --urgent: #ff8a7d;
+    --high: #f0b45a;
+    --normal: #8fb2ee;
+    --low: #9aa6a0;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.45 var(--font);
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px 24px;
+}
+.app {
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 4px 16px;
+}
+h1 { margin: 0; font-size: 22px; letter-spacing: -.01em; }
+.sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.stats { display: flex; gap: 8px; }
+.stat {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 6px 12px;
+  text-align: right;
+  min-width: 78px;
+}
+.stat b { display: block; font-size: 20px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.stat.mine b { color: var(--accent); }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+#list {
+  list-style: none;
+  margin: 0; padding: 0;
+  max-height: calc(100vh - 230px);
+  min-height: 120px;
+  overflow-y: auto;
+  outline: none;
+}
+#list:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); border-radius: 14px; }
+.item {
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  transition: height .22s ease, opacity .22s ease;
+}
+.item:last-child { border-bottom: 0; }
+.item.leaving { height: 0 !important; opacity: 0; border-bottom-width: 0; }
+.row {
+  position: relative;
+  padding: 12px 16px 12px 20px;
+  cursor: pointer;
+  transition: transform .22s ease, background .12s;
+}
+.item.leaving.assign .row { transform: translateX(40px); }
+.item.leaving.dismiss .row { transform: translateX(-40px); }
+.row::before {
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: transparent;
+}
+.item[aria-selected="true"] .row { background: var(--sel); }
+.item[aria-selected="true"] .row::before { background: var(--accent); }
+.row:hover { background: var(--sel); }
+
+.top { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.pri {
+  font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 11px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.pri::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.pri.urgent { color: var(--urgent); }
+.pri.high { color: var(--high); }
+.pri.normal { color: var(--normal); }
+.pri.low { color: var(--low); }
+.id { font-family: var(--mono); }
+.tag {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 8px;
+  font-size: 11px;
+}
+.age { margin-left: auto; font-variant-numeric: tabular-nums; }
+.subject { font-weight: 600; margin-top: 3px; }
+.who { color: var(--muted); font-size: 13px; }
+.body {
+  display: none;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  font-size: 14px;
+  color: var(--ink);
+  max-width: 62ch;
+}
+.item[aria-selected="true"] .body { display: block; }
+.item[aria-selected="true"] .subject { color: var(--ink); }
+
+.empty {
+  display: none;
+  text-align: center;
+  padding: 56px 24px 60px;
+}
+.empty.show { display: block; }
+.empty .check {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent);
+  display: grid; place-items: center; margin: 0 auto 14px;
+}
+.empty h2 { margin: 0 0 4px; font-size: 18px; }
+.empty p { margin: 0; color: var(--muted); font-size: 14px; }
+
+.bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+  padding: 14px 4px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.bar .spacer { flex: 1; }
+button.act {
+  font: inherit; font-size: 13px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 10px 5px 6px;
+  display: inline-flex; align-items: center; gap: 8px;
+  cursor: pointer;
+}
+button.act:hover:not(:disabled) { border-color: var(--muted); }
+button.act:disabled { opacity: .45; cursor: not-allowed; }
+button.act.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+kbd {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  min-width: 22px; height: 22px; padding: 0 5px;
+  display: inline-grid; place-items: center;
+  background: var(--bg); color: var(--ink);
+  border: 1px solid var(--line); border-bottom-width: 2px;
+  border-radius: 5px;
+}
+.primary kbd { background: rgba(255,255,255,.2); color: inherit; border-color: rgba(255,255,255,.35); }
+@media (prefers-color-scheme: dark) { .primary kbd { background: rgba(0,0,0,.15); border-color: rgba(0,0,0,.3); } }
+.hint { display: inline-flex; align-items: center; gap: 6px; }
+
+#toast {
+  position: fixed; left: 50%; bottom: 24px;
+  transform: translate(-50%, 24px);
+  opacity: 0; pointer-events: none;
+  background: var(--ink); color: var(--bg);
+  border-radius: 10px;
+  padding: 10px 12px 10px 16px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px;
+  box-shadow: var(--shadow);
+  transition: opacity .18s, transform .18s;
+  max-width: calc(100vw - 32px);
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+#toast button {
+  font: inherit; font-weight: 600; font-size: 13px;
+  background: transparent; color: inherit;
+  border: 1px solid currentColor; border-radius: 6px;
+  padding: 2px 8px; cursor: pointer; opacity: .9;
+}
+#toast button:hover { opacity: 1; }
+#toast button:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+@media (max-width: 540px) {
+  body { padding: 20px 10px 16px; }
+  header { flex-direction: column; align-items: stretch; }
+  .stats { justify-content: stretch; }
+  .stat { flex: 1; text-align: left; }
+  #list { max-height: calc(100vh - 290px); }
+  .age { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .item, .row, #toast { transition: none; }
+}
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <h1>Triage queue</h1>
+      <div class="sub">Spoke &amp; Wheel Support · Dana Reyes</div>
+    </div>
+    <div class="stats" aria-label="Queue statistics">
+      <div class="stat"><b id="nWaiting">0</b><span>Waiting</span></div>
+      <div class="stat mine"><b id="nMine">0</b><span>Mine</span></div>
+      <div class="stat"><b id="nDone">0</b><span>Dismissed</span></div>
+    </div>
+  </header>
+
+  <main class="card">
+    <ul id="list" role="listbox" tabindex="0" aria-label="Incoming tickets"></ul>
+    <div class="empty" id="empty">
+      <div class="check" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h2>Queue clear</h2>
+      <p id="emptyMsg">Nothing waiting. Enjoy it while it lasts.</p>
+    </div>
+  </main>
+
+  <div class="bar">
+    <button class="act primary" id="bAssign" type="button"><kbd>A</kbd> Assign to me</button>
+    <button class="act" id="bDismiss" type="button"><kbd>D</kbd> Dismiss</button>
+    <button class="act" id="bUndo" type="button"><kbd>Z</kbd> Undo</button>
+    <span class="spacer"></span>
+    <span class="hint"><kbd>↑</kbd><kbd>↓</kbd> move</span>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button id="toastUndo" type="button">Undo</button></div>
+
+<script>
+(function () {
+  var tickets = [
+    { id: 4821, pri: "urgent", tag: "Safety", age: "2m", who: "Priya Nair · Pier 9 dock",
+      subject: "Front brake failed on bike #2231 mid-ride",
+      body: "Rider says the brake lever went to the grip and did nothing on the downhill by the marina. No injury, but she walked the bike back. Bike is still with her. Needs lockout and a pickup." },
+    { id: 4820, pri: "urgent", tag: "Safety", age: "6m", who: "Marcus Webb · Linden Park station",
+      subject: "E-bike battery smoking at dock",
+      body: "Staff member on site reports smoke and a burning smell from the battery on e-bike #E-118 while charging. Dock power has been switched off. Needs safety team and a note on the batch." },
+    { id: 4817, pri: "high", tag: "Billing", age: "14m", who: "Tomás Ibarra · Day pass",
+      subject: "Charged twice for a single day pass",
+      body: "Two identical $18.00 charges from yesterday, 10:42. Only one ride in the app history. Customer has sent screenshots from their bank and wants the duplicate reversed." },
+    { id: 4815, pri: "high", tag: "Unlock", age: "21m", who: "Hannah Okafor · Member",
+      subject: "Unlock code rejected at three docks in a row",
+      body: "Member has an active annual plan, but codes fail at Pier 9, Mill Street and the library. App shows 'payment method required'. Card on file was replaced last week." },
+    { id: 4812, pri: "normal", tag: "Refund", age: "38m", who: "Lucas Berg · Group tour",
+      subject: "Refund request for rained-out group tour",
+      body: "Booked 6 riders for Saturday's riverside tour, which was cancelled for weather. Offered a reschedule but the group can't make any of the new dates. Asking for a full refund of $234." },
+    { id: 4809, pri: "normal", tag: "Equipment", age: "52m", who: "Aiko Tanaka · Riverside station",
+      subject: "No helmet in locker 4 at Riverside",
+      body: "Rented a bike with a helmet add-on. Locker opened but was empty. Customer rode without one and would like the $3 add-on refunded and the locker checked." },
+    { id: 4806, pri: "normal", tag: "App", age: "1h", who: "Sam Duarte · Android 14",
+      subject: "App crashes when scanning the QR code",
+      body: "Crash happens right after the camera permission prompt. Reinstalling didn't help. App version 5.2.1 on a Pixel 7. Customer ended up unlocking by typing the bike number." },
+    { id: 4801, pri: "low", tag: "Account", age: "2h", who: "Nora Feldman · Acme Logistics",
+      subject: "Invoice for corporate membership, Q3",
+      body: "Finance needs a PDF invoice with the company VAT number for 14 seats. No urgency, but the quarter-end close is next Friday." }
+  ];
+  var LABEL = { urgent: "Urgent", high: "High", normal: "Normal", low: "Low" };
+
+  var list = document.getElementById("list");
+  var emptyEl = document.getElementById("empty");
+  var emptyMsg = document.getElementById("emptyMsg");
+  var nWaiting = document.getElementById("nWaiting");
+  var nMine = document.getElementById("nMine");
+  var nDone = document.getElementById("nDone");
+  var bAssign = document.getElementById("bAssign");
+  var bDismiss = document.getElementById("bDismiss");
+  var bUndo = document.getElementById("bUndo");
+  var toast = document.getElementById("toast");
+  var toastMsg = document.getElementById("toastMsg");
+  var toastUndo = document.getElementById("toastUndo");
+
+  var items = tickets.slice();
+  var els = {};
+  var history = [];
+  var sel = null;
+  var mine = 0, done = 0;
+  var toastTimer = null;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function makeEl(t) {
+    var li = document.createElement("li");
+    li.className = "item";
+    li.id = "t-" + t.id;
+    li.setAttribute("role", "option");
+    li.setAttribute("aria-selected", "false");
+    li.dataset.id = t.id;
+    var row = document.createElement("div");
+    row.className = "row";
+    var top = document.createElement("div");
+    top.className = "top";
+    var pri = document.createElement("span");
+    pri.className = "pri " + t.pri;
+    pri.textContent = LABEL[t.pri];
+    var id = document.createElement("span");
+    id.className = "id";
+    id.textContent = "#" + t.id;
+    var tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = t.tag;
+    var age = document.createElement("span");
+    age.className = "age";
+    age.textContent = t.age + " ago";
+    top.append(pri, id, tag, age);
+    var subj = document.createElement("div");
+    subj.className = "subject";
+    subj.textContent = t.subject;
+    var who = document.createElement("div");
+    who.className = "who";
+    who.textContent = t.who;
+    var body = document.createElement("div");
+    body.className = "body";
+    body.textContent = t.body;
+    row.append(top, subj, who, body);
+    li.appendChild(row);
+    li.addEventListener("click", function () { select(t.id); list.focus({ preventScroll: true }); });
+    els[t.id] = li;
+    return li;
+  }
+
+  function select(id) {
+    if (sel != null && els[sel]) els[sel].setAttribute("aria-selected", "false");
+    sel = id;
+    if (id == null) { list.removeAttribute("aria-activedescendant"); return; }
+    var el = els[id];
+    el.setAttribute("aria-selected", "true");
+    list.setAttribute("aria-activedescendant", el.id);
+    el.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+  }
+
+  function index() {
+    for (var i = 0; i < items.length; i++) if (items[i].id === sel) return i;
+    return -1;
+  }
+
+  function move(delta, absolute) {
+    if (!items.length) return;
+    var i = absolute != null ? absolute : Math.max(0, Math.min(items.length - 1, index() + delta));
+    select(items[i].id);
+  }
+
+  function refresh() {
+    nWaiting.textContent = items.length;
+    nMine.textContent = mine;
+    nDone.textContent = done;
+    var none = items.length === 0;
+    emptyEl.classList.toggle("show", none);
+    list.style.display = none ? "none" : "";
+    bAssign.disabled = none;
+    bDismiss.disabled = none;
+    bUndo.disabled = history.length === 0;
+    if (none) {
+      emptyMsg.textContent = mine
+        ? "You picked up " + mine + (mine === 1 ? " ticket" : " tickets") + " today. Press Z to bring the last one back."
+        : "Nothing waiting. Press Z to bring the last one back.";
+    }
+  }
+
+  function showToast(msg) {
+    toastMsg.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 6000);
+  }
+
+  function act(kind) {
+    var i = index();
+    if (i < 0) return;
+    var t = items[i];
+    var el = els[t.id];
+    items.splice(i, 1);
+    history.push({ t: t, i: i, kind: kind });
+    if (kind === "assign") mine++; else done++;
+    var next = items[i] || items[i - 1];
+    el.setAttribute("aria-selected", "false");
+    sel = null;
+    el.removeAttribute("id");
+    el.classList.add(kind);
+    if (reduce) {
+      el.remove();
+    } else {
+      el.style.height = el.offsetHeight + "px";
+      void el.offsetHeight;
+      el.classList.add("leaving");
+      el._timer = setTimeout(function () { el.remove(); }, 260);
+    }
+    delete els[t.id];
+    el._ticket = t;
+    leaving[t.id] = el;
+    select(next ? next.id : null);
+    refresh();
+    showToast((kind === "assign" ? "Assigned #" : "Dismissed #") + t.id + (kind === "assign" ? " to you" : ""));
+  }
+
+  var leaving = {};
+
+  function undo() {
+    var h = history.pop();
+    if (!h) return;
+    var old = leaving[h.t.id];
+    if (old) { clearTimeout(old._timer); old.remove(); delete leaving[h.t.id]; }
+    if (h.kind === "assign") mine--; else done--;
+    items.splice(h.i, 0, h.t);
+    var el = makeEl(h.t);
+    var after = items[h.i + 1];
+    list.insertBefore(el, after ? els[after.id] : null);
+    select(h.t.id);
+    refresh();
+    showToast("Restored #" + h.t.id + " to the queue");
+  }
+
+  items.forEach(function (t) { list.appendChild(makeEl(t)); });
+  select(items[0].id);
+  refresh();
+  list.focus({ preventScroll: true });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea" || tag === "select") return;
+    var k = e.key;
+    var handled = true;
+    if (k === "ArrowDown" || k === "j") move(1);
+    else if (k === "ArrowUp" || k === "k") move(-1);
+    else if (k === "Home") move(0, 0);
+    else if (k === "End") move(0, items.length - 1);
+    else if (k === "a" || k === "A") act("assign");
+    else if (k === "d" || k === "D") act("dismiss");
+    else if (k === "z" || k === "Z") undo();
+    else handled = false;
+    if (handled) e.preventDefault();
+  });
+
+  bAssign.addEventListener("click", function () { act("assign"); });
+  bDismiss.addEventListener("click", function () { act("dismiss"); });
+  bUndo.addEventListener("click", undo);
+  toastUndo.addEventListener("click", function () { toast.classList.remove("show"); undo(); });
+})();
+</script>
+</body>
+</html>

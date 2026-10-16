@@ -15,6 +15,7 @@ A position is a choice a reader can repeat: who this is for, what they would use
 - "The X of Y" in place of a category, or an invented category word with no plain descriptor beside it.
 - A voice guide made only of adjectives ("friendly, professional, bold").
 - A customer quote, pain, number, rival fact, market size or "teams like yours" the user did not give.
+- A rank or superlative ("number one", "best rated", "leading") the supplied facts do not show. Write the smaller true claim with its count and a [source, date] placeholder, and say why in one line.
 
 ## When not to use
 
@@ -31,11 +32,11 @@ A one-liner or a naming question can skip straight to steps 3, 4 and 6.
 
 Work toward the one-sentence idea, then test it and name its category.
 
-1. **Know who it is for.** If the user has customer data, look at who bought fastest, stayed and referred others, and what they share. If not, describe the likely best fit by situation and need ("sends dozens of invoices a month from a spreadsheet"), label it an assumption, and say who it is not for. Company size alone is not a segment.
-2. **Draft the one sentence first.** The single idea people should repeat. A teammate should be able to use it to reject a feature request or a headline; if not, it is too vague.
-3. **Test it against "what would they do without us?"** Name two to five real alternatives: a rival, a spreadsheet, an assistant, a manual routine, doing nothing. Use the one the buyer actually considers, including the unglamorous one, not the rivals the user admires. Then list the differences those alternatives lack and say what each lets the customer do, in the customer's words. One theme is a fine result.
-4. **Test it against "what proof do we have?"** Proof is a figure the user gave, a feature anyone can check, or a third-party statement. If a difference has no proof, keep it but mark it [unproven: how it could be shown] so the user sees the gap.
-5. **Then choose the category word a stranger already knows.** Compete inside an existing category, or a narrower slice of it with a plain modifier. A new label only when every existing category would make buyers misjudge the product; then pair it with a plain descriptor every time and explain the problem before the solution. Introduce only one unfamiliar thing at a time: either the problem or the solution, with a familiar anchor for the other. A trend ("AI-native") is at most a real why-now line beside the category, never the category.
+1. **Know who it is for.** If the user has customer data, look at the customers who got value soonest and kept using it, and what they share. If not, describe the likely best fit by situation and need ("runs a clinic's rota on a whiteboard"), label it an assumption, and say who it is not for. Company size alone is not a segment.
+2. **Write the line.** The single idea people should repeat, rooted in something the buyer already feels or says (from supplied quotes or tickets), with features as its proof. A real limit that follows from the strength is stated once, plainly. A teammate should be able to use it to reject a feature request or a headline; if not, it is too vague.
+3. **Name the habit it replaces**: what the buyer does today, including putting up with it. Use the one they actually rely on, including the unglamorous one, not the rivals the user admires. List what that habit lacks and say what each difference lets the customer do, in the customer's words.
+4. **Prove each clause.** Proof is a figure the user gave, a feature anyone can check, or a third-party statement. If a difference has no proof, keep it but mark it [unproven: how it could be shown] so the user sees the gap.
+5. **Name the shelf a stranger would put it on.** Use a category word a stranger knows, with a plain modifier if the slice is narrower. A coined label only with a plain descriptor beside it, every time.
 6. **Check the wording against four questions.** Could a rival put their name on it and stay truthful? Would someone in the group recognize their own situation, and place the product in a known category within seconds? Can every clause be backed by what the user gave? Does it use the customer's words rather than internal ones? Fix what fails; do not report passes.
 
 Voice and naming follow from the position, not before it.
@@ -75,3 +76,4 @@ Deliver the requested thing first, with nothing before it. A one-liner request g
 ## References
 
 - [brief-and-voice.md](references/brief-and-voice.md): load when producing a full message brief or a voice guide; has the field list, the voice-habit format and a short worked pair.
+- [truth-and-proof-families.md](references/truth-and-proof-families.md): load when rooting the idea in buyer language, stating a real trade-off, handling a rank or superlative request, choosing practical, felt or vouched-for messages, or deriving a voice from customer and company vocabulary.

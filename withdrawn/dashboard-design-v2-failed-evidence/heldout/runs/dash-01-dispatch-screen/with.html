@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewater Cold Freight – 6am Dispatch</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --card:#fff; --ink:#1b2430; --mute:#5d6877; --line:#dde1e7;
+    --alert:#b3261e; --alert-bg:#fdecea; --alert-line:#f1b8b3;
+    --ok:#2f3b4a; --band:#dbe7f5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.4}
+  .wrap{max-width:1180px;margin:0 auto;padding:20px 24px 28px}
+  header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+  h1{font-size:15px;font-weight:600;margin:0;color:var(--mute);letter-spacing:.02em;text-transform:uppercase}
+  .asof{font-size:13px;color:var(--mute)}
+
+  .headline{margin:14px 0 18px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  .big{font-size:44px;font-weight:700;line-height:1}
+  .big small{font-size:22px;font-weight:600;color:var(--mute)}
+  .headline p{margin:0;font-size:17px}
+  .headline .sub{color:var(--mute);font-size:14px;display:block;margin-top:2px}
+
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin:0 0 8px;font-weight:600}
+  section{margin-bottom:22px}
+
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .act{background:var(--alert-bg);border:1px solid var(--alert-line);border-left:5px solid var(--alert);
+    border-radius:6px;padding:11px 13px}
+  .act .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .act .van{font-size:20px;font-weight:700}
+  .act .time{font-size:13px;color:var(--ink);font-variant-numeric:tabular-nums}
+  .act .what{font-weight:700;color:var(--alert);margin:4px 0 2px;font-size:14px}
+  .act .detail{font-size:13.5px;margin:0}
+  .act .next{font-size:13px;color:var(--mute);margin:6px 0 0}
+  .note{font-size:13px;color:var(--mute);margin:8px 0 0}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mute);text-align:left;
+    font-weight:600;padding:9px 12px;border-bottom:1px solid var(--line);background:#fafbfc}
+  td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  td.van{font-weight:700;width:56px}
+  td.num,th.num{font-variant-numeric:tabular-nums}
+  tr.ok td{color:var(--ink)}
+  tr.bad td.verdict{color:var(--alert);font-weight:700}
+  tr.bad{background:#fff8f7}
+  td.verdict{width:210px}
+  .go{color:var(--mute);font-weight:600}
+  .flag{color:var(--alert);font-weight:700}
+  .muted{color:var(--mute)}
+
+  .temp{display:flex;align-items:center;gap:10px}
+  .temp .val{width:62px;font-variant-numeric:tabular-nums}
+  .track{position:relative;width:120px;height:8px;background:#eceff3;border-radius:4px}
+  .track .band{position:absolute;left:20%;width:30%;top:0;bottom:0;background:var(--band);border-radius:2px}
+  .track .dot{position:absolute;top:-3px;width:4px;height:14px;background:var(--ok);border-radius:2px;margin-left:-2px}
+  .track .dot.bad{background:var(--alert);width:6px;margin-left:-3px}
+  .scale{font-size:12px;color:var(--mute);margin:8px 0 0}
+  .swatch{display:inline-block;width:18px;height:8px;background:var(--band);vertical-align:middle;border-radius:2px;margin:0 4px}
+
+  @media (max-width:980px){ .actions{grid-template-columns:repeat(2,1fr)} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Tidewater Cold Freight · Dispatch</h1>
+    <span class="asof">Wed 14 Oct 2026 · data as of 06:00 (static snapshot)</span>
+  </header>
+
+  <div class="headline">
+    <div class="big">4 <small>of 8</small></div>
+    <p><strong>vans ready to go as booked</strong>
+      <span class="sub">V1, V2, V6, V8 · 4 need action before their booking: V5, V3, V4, V7</span></p>
+  </div>
+
+  <section aria-labelledby="act-h">
+    <h2 id="act-h">Needs action, by first booking time</h2>
+    <div class="actions">
+      <div class="act">
+        <div class="top"><span class="van">V5</span><span class="time">booking 06:45 · 45 min</span></div>
+        <div class="what">✕ Cargo out of range</div>
+        <p class="detail">−11.4 °C vs −18 to −15 target: 3.6 °C too warm. Loaded, waiting on release. Ines R.</p>
+        <p class="next">Check trailer refrigeration before release.</p>
+      </div>
+      <div class="act">
+        <div class="top"><span class="van">V3</span><span class="time">booking 08:00</span></div>
+        <div class="what">✕ In workshop</div>
+        <p class="detail">Brake job in progress. No driver assigned.</p>
+        <p class="next">08:00 booking needs another van.</p>
+      </div>
+      <div class="act">
+        <div class="top"><span class="van">V4</span><span class="time">booking 08:15</span></div>
+        <div class="what">✕ Service overdue</div>
+        <p class="detail">Last serviced 11 weeks ago, limit is 10 (1 week over). Joss K. assigned.</p>
+        <p class="next">Not fit to go until serviced.</p>
+      </div>
+      <div class="act">
+        <div class="top"><span class="van">V7</span><span class="time">booking 09:30</span></div>
+        <div class="what">✕ No driver</div>
+        <p class="detail">Driver called in sick. Van is fit: −15.6 °C, serviced 1 week ago.</p>
+        <p class="next">Needs a driver.</p>
+      </div>
+    </div>
+    <p class="note">V7 is a fit van with no driver; V4 has a driver but no fit van.</p>
+  </section>
+
+  <section aria-labelledby="fleet-h">
+    <h2 id="fleet-h">All vans</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Van</th><th>Verdict</th><th class="num">First booking</th><th>Driver</th>
+          <th>Trailer temp</th><th>Last service (limit 10 wks)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="ok">
+          <td class="van">V1</td><td class="verdict go">Ready</td><td class="num">07:30</td><td>Marta L.</td>
+          <td><div class="temp"><span class="val">−17.2 °C</span><span class="track"><span class="band"></span><span class="dot" style="left:28%"></span></span></div></td>
+          <td>2 weeks ago</td>
+        </tr>
+        <tr class="ok">
+          <td class="van">V2</td><td class="verdict go">Ready</td><td class="num">07:45</td><td>Dev P.</td>
+          <td><div class="temp"><span class="val">−16.4 °C</span><span class="track"><span class="band"></span><span class="dot" style="left:36%"></span></span></div></td>
+          <td>5 weeks ago</td>
+        </tr>
+        <tr class="bad">
+          <td class="van">V3</td><td class="verdict">✕ In workshop (brake job)</td><td class="num">08:00</td><td class="muted">unassigned</td>
+          <td class="muted">n/a</td>
+          <td>3 days ago</td>
+        </tr>
+        <tr class="bad">
+          <td class="van">V4</td><td class="verdict">✕ Service overdue</td><td class="num">08:15</td><td>Joss K.</td>
+          <td><div class="temp"><span class="val">−16.8 °C</span><span class="track"><span class="band"></span><span class="dot" style="left:32%"></span></span></div></td>
+          <td class="flag">11 weeks ago · 1 over</td>
+        </tr>
+        <tr class="bad">
+          <td class="van">V5</td><td class="verdict">✕ Cargo out of range; waiting on release</td><td class="num">06:45</td><td>Ines R.</td>
+          <td><div class="temp"><span class="val flag">−11.4 °C</span><span class="track"><span class="band"></span><span class="dot bad" style="left:86%"></span></span></div></td>
+          <td>4 weeks ago</td>
+        </tr>
+        <tr class="ok">
+          <td class="van">V6</td><td class="verdict go">Ready</td><td class="num">09:00</td><td>Tomas B.</td>
+          <td><div class="temp"><span class="val">−17.9 °C</span><span class="track"><span class="band"></span><span class="dot" style="left:21%"></span></span></div></td>
+          <td>6 weeks ago</td>
+        </tr>
+        <tr class="bad">
+          <td class="van">V7</td><td class="verdict">✕ Ready, no driver</td><td class="num">09:30</td><td class="flag">called in sick</td>
+          <td><div class="temp"><span class="val">−15.6 °C</span><span class="track"><span class="band"></span><span class="dot" style="left:44%"></span></span></div></td>
+          <td>1 week ago</td>
+        </tr>
+        <tr class="ok">
+          <td class="van">V8</td><td class="verdict go">Ready</td><td class="num">10:00</td><td>Aiko S.</td>
+          <td><div class="temp"><span class="val">−16.1 °C</span><span class="track"><span class="band"></span><span class="dot" style="left:39%"></span></span></div></td>
+          <td>8 weeks ago</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="scale">Temp scale −20 to −10 °C; <span class="swatch"></span>shaded band is the −18 to −15 °C target. Vans are in fixed order V1–V8.</p>
+  </section>
+
+</div>
+</body>
+</html>

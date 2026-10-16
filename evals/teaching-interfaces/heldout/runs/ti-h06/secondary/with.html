@@ -1,194 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Starter Cycle | Rye &amp; Ember</title>
+<title>The Starter Cycle: When to Mix Your Dough | Rye &amp; Ember</title>
 <style>
   :root {
-    --bg: #fbf6ee;
-    --card: #ffffff;
+    --cream: #fbf6ee;
     --ink: #3b2a1e;
     --muted: #7a6657;
-    --line: #e5d8c7;
-    --ember: #c4572a;
-    --rye: #b8860b;
-    --sage: #6f8f6a;
-    --band-feed: #f4ead9;
-    --band-rise: #f7e3c6;
-    --band-peak: #f3c7a2;
-    --band-collapse: #e9d6cf;
-    --mix: rgba(196, 87, 42, 0.14);
+    --ember: #c2581f;
+    --ember-soft: #f6dccb;
+    --rye: #8a5a2b;
+    --line: #e6d8c6;
+    --card: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #1f1812;
-      --card: #2a2118;
-      --ink: #f1e6d8;
-      --muted: #b9a593;
-      --line: #4a3b2e;
-      --ember: #f0844f;
-      --rye: #e0b04a;
-      --sage: #9ab894;
-      --band-feed: #2e251c;
-      --band-rise: #3a2d1f;
-      --band-peak: #4a3322;
-      --band-collapse: #3b2a28;
-      --mix: rgba(240, 132, 79, 0.22);
+      --cream: #1f1813;
+      --ink: #f3e8da;
+      --muted: #b9a592;
+      --ember: #f08a4b;
+      --ember-soft: #3d2a1d;
+      --rye: #d9a46b;
+      --line: #4a3a2c;
+      --card: #2a211a;
     }
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     padding: 24px 16px;
-    background: var(--bg);
+    background: var(--cream);
     color: var(--ink);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
   }
   main { max-width: 760px; margin: 0 auto; }
-  .brand { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ember); font-weight: 600; margin: 0; }
-  h1 { font-size: 26px; line-height: 1.2; margin: 4px 0 6px; }
-  .lede { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
-  .figure {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 12px;
+  header small {
+    display: block;
+    color: var(--ember);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
   }
-  svg { width: 100%; height: auto; display: block; }
-  svg text { fill: var(--ink); font-size: 12px; }
-  svg .small { fill: var(--muted); font-size: 11px; }
-  svg .stage { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; fill: var(--muted); }
-  .caption { font-size: 12px; color: var(--muted); margin: 8px 4px 0; }
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 16px 0;
-  }
-  .step {
+  h1 { font-size: 1.6rem; line-height: 1.2; margin: 4px 0 6px; }
+  .lede { margin: 0 0 16px; color: var(--muted); }
+  .diagram {
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: 12px;
     padding: 12px;
-    font-size: 13.5px;
   }
-  .step h2 { font-size: 14px; margin: 0 0 4px; }
-  .step .when { font-size: 12px; color: var(--muted); margin: 0 0 6px; }
-  .step p { margin: 0; }
-  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
-  .why {
+  .diagram svg { width: 100%; height: auto; display: block; }
+  .diagram text { fill: var(--ink); font-size: 14px; }
+  .diagram .sub { fill: var(--muted); font-size: 12px; }
+  .diagram .stage { font-weight: 700; font-size: 15px; }
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .stage-card {
     background: var(--card);
-    border-left: 4px solid var(--ember);
+    border: 1px solid var(--line);
     border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  .stage-card strong { display: block; margin-bottom: 2px; }
+  .stage-card.key {
+    border-color: var(--ember);
+    background: var(--ember-soft);
+  }
+  .takeaway {
+    background: var(--ember-soft);
+    border-left: 4px solid var(--ember);
+    border-radius: 8px;
     padding: 12px 16px;
-    font-size: 14px;
-    margin: 0;
+    margin: 14px 0 0;
   }
-  .why h2 { font-size: 15px; margin: 0 0 4px; }
-  .why p { margin: 0 0 6px; }
-  .why p:last-child { margin-bottom: 0; }
-  @media (max-width: 640px) {
-    .steps { grid-template-columns: 1fr 1fr; }
+  .takeaway p { margin: 0 0 6px; }
+  .takeaway p:last-child { margin-bottom: 0; }
+  .why { font-size: 0.92rem; color: var(--muted); margin: 10px 0 0; }
+  footer {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    color: var(--muted);
   }
-  @media (max-width: 420px) {
-    .steps { grid-template-columns: 1fr; }
+  @media (max-width: 600px) {
+    .stages { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
 <main>
-  <p class="brand">Rye &amp; Ember</p>
-  <h1>The starter cycle, from feeding to collapse</h1>
-  <p class="lede">After you feed a sourdough starter, it swells, peaks, and falls again. Knowing where it is in that cycle tells you when to mix your dough.</p>
+  <header>
+    <small>Rye &amp; Ember · Starter basics</small>
+    <h1>How your starter cycles, and when to mix</h1>
+    <p class="lede">After you feed a starter, it goes through a predictable rise and fall. Mix your dough near the top of that curve, not after it has fallen.</p>
+  </header>
 
-  <div class="figure">
-    <svg viewBox="0 0 720 262" role="img" aria-labelledby="cycle-title cycle-desc">
-      <title id="cycle-title">Starter volume over one cycle</title>
-      <desc id="cycle-desc">A curve starts low after feeding, rises to a peak around hour 5, then falls. The window just before and at the peak is marked for mixing dough.</desc>
+  <section class="diagram" aria-labelledby="cycle-title">
+    <h2 id="cycle-title" style="font-size:1rem;margin:4px 8px 6px;">The cycle after one feeding</h2>
+    <svg viewBox="0 0 640 280" role="img" aria-describedby="cycle-desc">
+      <desc id="cycle-desc">A curve starts low right after feeding, rises to a peak where the starter is domed and bubbly, then falls back as it collapses. A shaded band marks the peak as the time to mix dough.</desc>
 
-      <!-- Stage bands -->
-      <rect x="60" y="28" width="50" height="194" fill="var(--band-feed)"/>
-      <rect x="110" y="28" width="310" height="194" fill="var(--band-rise)"/>
-      <rect x="420" y="28" width="60" height="194" fill="var(--band-peak)"/>
-      <rect x="480" y="28" width="200" height="194" fill="var(--band-collapse)"/>
+      <!-- Vertical axis label -->
+      <text class="sub" x="14" y="30">Height in jar</text>
 
-      <!-- Stage labels -->
-      <text x="62" y="20" class="stage">Feed</text>
-      <text x="115" y="20" class="stage">Rise</text>
-      <text x="425" y="20" class="stage">Peak</text>
-      <text x="485" y="20" class="stage">Collapse</text>
+      <!-- Baseline -->
+      <line x1="40" y1="230" x2="620" y2="230" stroke="var(--line)" stroke-width="2"/>
+      <text class="sub" x="40" y="252">Right after feeding</text>
+      <text class="sub" x="620" y="252" text-anchor="end">Hours later</text>
 
-      <!-- Mix window -->
-      <rect x="400" y="28" width="100" height="194" fill="var(--mix)" stroke="var(--ember)" stroke-dasharray="4 4" stroke-width="1.2"/>
-      <text x="450" y="212" text-anchor="middle" class="stage" style="fill:var(--ember)">Mix window</text>
-
-      <!-- Baseline and hour ticks -->
-      <line x1="60" y1="222" x2="680" y2="222" stroke="var(--muted)" stroke-width="1"/>
-      <g class="small" text-anchor="middle">
-        <line x1="60" y1="222" x2="60" y2="228" stroke="var(--muted)"/>
-        <line x1="215" y1="222" x2="215" y2="228" stroke="var(--muted)"/>
-        <line x1="370" y1="222" x2="370" y2="228" stroke="var(--muted)"/>
-        <line x1="525" y1="222" x2="525" y2="228" stroke="var(--muted)"/>
-        <line x1="680" y1="222" x2="680" y2="228" stroke="var(--muted)"/>
-        <text x="60" y="243">0 h</text>
-        <text x="215" y="243">2 h</text>
-        <text x="370" y="243">4 h</text>
-        <text x="525" y="243">6 h</text>
-        <text x="680" y="243">8 h</text>
-      </g>
-      <text x="370" y="258" text-anchor="middle" class="small">Hours after feeding, warm kitchen (about 24&#176;C / 75&#176;F)</text>
+      <!-- Mix window band around peak -->
+      <rect x="282" y="20" width="116" height="210" rx="10" fill="var(--ember)" opacity="0.14"/>
+      <text x="340" y="268" text-anchor="middle" fill="var(--ember)" font-weight="700" font-size="13">Mix window</text>
 
       <!-- Volume curve -->
-      <path d="M60,200 C120,196 200,170 300,120 S420,62 447,62 S560,100 602,150 S660,186 680,192"
-            fill="none" stroke="var(--ember)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M60,200 C120,192 150,120 200,110 C260,98 290,44 340,44 C392,44 440,120 520,166 C550,182 580,190 610,194"
+            fill="none" stroke="var(--rye)" stroke-width="4" stroke-linecap="round"/>
 
-      <!-- Feed marker -->
-      <circle cx="60" cy="200" r="5" fill="var(--rye)"/>
-      <text x="70" y="186" class="small">Fed</text>
+      <!-- Stage markers -->
+      <circle cx="60" cy="200" r="7" fill="var(--rye)"/>
+      <circle cx="200" cy="110" r="7" fill="var(--rye)"/>
+      <circle cx="340" cy="44" r="9" fill="var(--ember)"/>
+      <circle cx="520" cy="166" r="7" fill="var(--rye)"/>
 
-      <!-- Peak marker -->
-      <circle cx="447" cy="62" r="6" fill="var(--ember)" stroke="var(--card)" stroke-width="2"/>
-      <text x="447" y="50" text-anchor="middle">Peak: doubled, domed</text>
+      <!-- Stage labels, placed on their parts -->
+      <text class="stage" x="60" y="182" text-anchor="middle">1 Feed</text>
+      <text class="sub" x="60" y="222" text-anchor="middle">fresh flour + water</text>
 
-      <!-- Collapse marker -->
-      <circle cx="602" cy="150" r="4" fill="var(--sage)"/>
-      <text x="612" y="142" class="small">Top sinks</text>
+      <text class="stage" x="200" y="92" text-anchor="middle">2 Rise</text>
+      <text class="sub" x="200" y="144" text-anchor="middle">bubbles form</text>
+
+      <text class="stage" x="340" y="24" text-anchor="middle" fill="var(--ember)">3 Peak</text>
+      <text class="sub" x="340" y="72" text-anchor="middle">domed, bubbly</text>
+
+      <text class="stage" x="520" y="148" text-anchor="middle">4 Collapse</text>
+      <text class="sub" x="520" y="206" text-anchor="middle">top sinks, flattens</text>
     </svg>
-    <p class="caption">Illustrative curve. Real timing depends on your starter, flour, and room temperature.</p>
-  </div>
+  </section>
 
-  <div class="steps">
-    <div class="step">
-      <h2><span class="dot" style="background:var(--rye)"></span>1. Feed</h2>
-      <p class="when">Time 0</p>
-      <p>Fresh flour and water go in. The starter is dense, smooth, and barely bubbly. This resets the cycle.</p>
+  <section class="stages" aria-label="The four stages">
+    <div class="stage-card">
+      <strong>1. Feed</strong>
+      Fresh flour and water go in. The starter is dense and mostly flat.
     </div>
-    <div class="step">
-      <h2><span class="dot" style="background:var(--rye)"></span>2. Rise</h2>
-      <p class="when">About 0 to 4 hours</p>
-      <p>Yeast and bacteria multiply and make gas. Bubbles form throughout, and the starter grows in volume.</p>
+    <div class="stage-card">
+      <strong>2. Rise</strong>
+      Yeast wakes up and makes gas. Bubbles appear and the level climbs.
     </div>
-    <div class="step">
-      <h2><span class="dot" style="background:var(--ember)"></span>3. Peak</h2>
-      <p class="when">About 4 to 6 hours</p>
-      <p>The starter has roughly doubled, with a domed top and large bubbles. This is when most recipes call for mixing.</p>
+    <div class="stage-card key">
+      <strong>3. Peak</strong>
+      Highest point. The top is domed and full of bubbles. This is the window to mix.
     </div>
-    <div class="step">
-      <h2><span class="dot" style="background:var(--sage)"></span>4. Collapse</h2>
-      <p class="when">After peak</p>
-      <p>The gas escapes faster than it forms, so the top sinks and flattens. The starter turns more acidic, and its leavening weakens.</p>
+    <div class="stage-card">
+      <strong>4. Collapse</strong>
+      Gas escapes, the top sinks, and the starter turns more sour with less lift.
     </div>
-  </div>
+  </section>
 
-  <div class="why">
-    <h2>Why the timing matters</h2>
-    <p><strong>Mix at or just before peak</strong> for the most lift and a predictable bulk rise.</p>
-    <p><strong>Mix too early</strong> and the dough has less lift, so bulk fermentation runs long.</p>
-    <p><strong>Mix after collapse</strong> and the loaf rises less and tastes more sour.</p>
-    <p>Tip: put a rubber band around the jar at the starter's level right after feeding. Mix when it has about doubled and domed. In a cool kitchen this can take 10 hours or more.</p>
-  </div>
+  <section class="takeaway" aria-label="Why timing matters">
+    <p><strong>Mix when the starter is at or just before its peak.</strong></p>
+    <p>At peak, the yeast is most active and the starter has the most lift to give your dough. After collapse, the yeast has used much of its food, acidity has built up, and the dough will rise more slowly and may taste sharper.</p>
+    <p class="why">Timing depends on kitchen warmth: a warm room moves through the cycle faster, a cool one slower. Watch the jar, not the clock.</p>
+  </section>
+
+  <footer>Rye &amp; Ember · Starter notes for home bakers</footer>
 </main>
 </body>
 </html>

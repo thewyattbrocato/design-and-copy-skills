@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pool Status</title>
+<style>
+  :root {
+    --ink: #10202b;
+    --paper: #f4f7f9;
+    --card: #ffffff;
+    --line: #c5d0d8;
+    --ok: #0b6b2e;
+    --ok-bg: #e3f4e9;
+    --bad: #a30f1f;
+    --bad-bg: #fbe4e6;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 2vmin;
+    padding: 2.5vmin;
+  }
+  .banner {
+    background: var(--ok);
+    color: #fff;
+    border-radius: 2vmin;
+    padding: 3vmin 4vmin;
+    display: flex;
+    align-items: center;
+    gap: 3vmin;
+  }
+  .banner.bad { background: var(--bad); }
+  .banner .icon {
+    flex: none;
+    width: 12vmin; height: 12vmin;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--ok);
+    display: grid; place-items: center;
+    font-size: 9vmin; font-weight: 800; line-height: 1;
+  }
+  .banner.bad .icon { color: var(--bad); }
+  .banner h1 {
+    margin: 0;
+    font-size: clamp(36px, 8vmin, 140px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .banner p {
+    margin: 0.6vmin 0 0;
+    font-size: clamp(20px, 3.6vmin, 64px);
+    font-weight: 500;
+  }
+  .grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 2vmin;
+  }
+  .tile {
+    background: var(--card);
+    border: 0.6vmin solid var(--ok);
+    border-radius: 2vmin;
+    padding: 2vmin 3vmin;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 0;
+  }
+  .tile.bad { border-color: var(--bad); background: var(--bad-bg); }
+  .top {
+    display: flex; justify-content: space-between; align-items: center; gap: 2vmin;
+  }
+  .label {
+    font-size: clamp(20px, 3.8vmin, 64px);
+    font-weight: 700;
+  }
+  .badge {
+    font-size: clamp(18px, 3.2vmin, 56px);
+    font-weight: 800;
+    color: #fff;
+    background: var(--ok);
+    padding: 0.3em 0.7em;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .tile.bad .badge { background: var(--bad); }
+  .value {
+    font-size: clamp(48px, 13vmin, 220px);
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .value small {
+    font-size: 0.32em;
+    font-weight: 600;
+    margin-left: 0.2em;
+  }
+  .range {
+    font-size: clamp(16px, 2.8vmin, 48px);
+    color: #33454f;
+  }
+  .bar {
+    position: relative;
+    height: 2.2vmin;
+    background: #d9dfe4;
+    border-radius: 999px;
+    margin: 1vmin 0;
+  }
+  .bar .zone {
+    position: absolute; top: 0; bottom: 0;
+    left: 25%; width: 50%;
+    background: #7fc79a;
+    border-radius: 999px;
+  }
+  .bar .mark {
+    position: absolute; top: -0.9vmin;
+    width: 1vmin; height: 4vmin;
+    margin-left: -0.5vmin;
+    background: var(--ink);
+    border-radius: 0.5vmin;
+    border: 0.25vmin solid #fff;
+  }
+  footer {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 2vmin;
+    font-size: clamp(20px, 3.8vmin, 64px);
+    padding: 0 1vmin;
+  }
+  footer strong { font-size: 1.25em; font-variant-numeric: tabular-nums; }
+  footer .note { font-size: 0.7em; color: #33454f; }
+  @media (max-width: 700px) {
+    .grid { grid-template-columns: 1fr; }
+    body { height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner" id="banner" role="status" aria-live="polite">
+  <div class="icon" id="icon" aria-hidden="true">✓</div>
+  <div>
+    <h1 id="headline">Pool open – OK to swim</h1>
+    <p id="sub">All readings are within safe limits.</p>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<footer>
+  <span>Last tested: <strong id="tested"></strong></span>
+  <span class="note">Questions? Please ask at the front desk.</span>
+</footer>
+
+<script>
+  // Staff: edit the numbers below when new readings are taken.
+  var lastTested = "14:05";
+  var readings = [
+    { label: "Water temperature", value: 27.8, unit: "°C", min: 26, max: 29, decimals: 1 },
+    { label: "Chlorine",          value: 1.6,  unit: "ppm", min: 1,  max: 3,  decimals: 1 },
+    { label: "pH",                value: 7.4,  unit: "",    min: 7.2, max: 7.8, decimals: 1 }
+  ];
+  var guards = { onDuty: 3, required: 2 };
+
+  var grid = document.getElementById("grid");
+  var allOk = true;
+
+  function tile(opts) {
+    var el = document.createElement("div");
+    el.className = "tile" + (opts.ok ? "" : " bad");
+    el.innerHTML =
+      '<div class="top"><span class="label"></span><span class="badge"></span></div>' +
+      '<div class="value"></div>' +
+      (opts.bar ? '<div class="bar"><div class="zone"></div><div class="mark"></div></div>' : '') +
+      '<div class="range"></div>';
+    el.querySelector(".label").textContent = opts.label;
+    el.querySelector(".badge").textContent = opts.ok ? "✓ OK" : "✗ " + opts.problem;
+    var v = el.querySelector(".value");
+    v.textContent = opts.display;
+    if (opts.unit) { var s = document.createElement("small"); s.textContent = opts.unit; v.appendChild(s); }
+    el.querySelector(".range").textContent = opts.range;
+    if (opts.bar) {
+      var span = opts.max - opts.min;
+      var pct = (opts.value - (opts.min - span / 2)) / (span * 2) * 100;
+      el.querySelector(".mark").style.left = Math.max(1, Math.min(99, pct)) + "%";
+    }
+    grid.appendChild(el);
+  }
+
+  readings.forEach(function (r) {
+    var ok = r.value >= r.min && r.value <= r.max;
+    if (!ok) allOk = false;
+    tile({
+      label: r.label, value: r.value, display: r.value.toFixed(r.decimals), unit: r.unit,
+      ok: ok, problem: r.value < r.min ? "TOO LOW" : "TOO HIGH",
+      range: "Okay range: " + r.min + " to " + r.max + (r.unit ? " " + r.unit : ""),
+      bar: true, min: r.min, max: r.max
+    });
+  });
+
+  var guardsOk = guards.onDuty >= guards.required;
+  if (!guardsOk) allOk = false;
+  tile({
+    label: "Lifeguards on duty", display: String(guards.onDuty), unit: guards.onDuty === 1 ? "guard" : "guards",
+    ok: guardsOk, problem: "NOT ENOUGH",
+    range: "Minimum needed: " + guards.required
+  });
+
+  document.getElementById("tested").textContent = lastTested;
+
+  if (!allOk) {
+    document.getElementById("banner").className = "banner bad";
+    document.getElementById("icon").textContent = "!";
+    document.getElementById("headline").textContent = "Not OK to swim right now";
+    document.getElementById("sub").textContent = "Please check with a staff member.";
+  }
+</script>
+</body>
+</html>

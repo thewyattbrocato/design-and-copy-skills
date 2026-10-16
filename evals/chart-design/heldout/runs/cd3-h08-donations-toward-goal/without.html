@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder Lane Food Bank: 2026 fundraising progress</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0; padding: 24px;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #f9f9f7; color: #0b0b0b;
+  }
+  .viz-root {
+    --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e;
+    --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;
+    max-width: 820px; margin: 0 auto; padding: 24px 24px 16px;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    position: relative;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0d0d0d; color: #f0efec; }
+    .viz-root {
+      --surface-1: #1a1a19; --text-primary: #f0efec; --text-secondary: #c3c2b7;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+    }
+  }
+  h1 { font-size: 13px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: var(--text-secondary); margin: 0 0 6px; }
+  .hero { font-size: 40px; font-weight: 650; line-height: 1.1; color: var(--text-primary); }
+  .hero span { font-size: 18px; font-weight: 500; color: var(--text-secondary); }
+  .sub { margin: 6px 0 16px; font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0 0 8px; padding: 0; list-style: none; }
+  .legend li { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary); }
+  .legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .legend b { color: var(--text-primary); font-weight: 600; }
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+  svg text { font-family: inherit; fill: var(--muted); font-size: 12px; }
+  svg text.ink { fill: var(--text-primary); }
+  svg text.sec { fill: var(--text-secondary); }
+  .tip {
+    position: absolute; pointer-events: none; opacity: 0; transition: opacity .1s;
+    background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--axis);
+    border-radius: 8px; padding: 8px 10px; font-size: 12px; line-height: 1.5;
+    box-shadow: 0 4px 14px rgba(0,0,0,.14); white-space: nowrap; z-index: 2;
+  }
+  .tip .r { display: flex; justify-content: space-between; gap: 16px; }
+  .tip i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 6px; }
+  .tip .h { font-weight: 600; margin-bottom: 2px; }
+  details { margin-top: 10px; font-size: 13px; color: var(--text-secondary); }
+  summary { cursor: pointer; padding: 4px 0; }
+  table { border-collapse: collapse; width: 100%; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 4px 8px; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-primary); font-weight: 600; }
+  .note { margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="viz-root" id="root">
+  <h1>Larder Lane Food Bank · 2026 fundraising, through September</h1>
+  <div class="hero">$256k <span>of $300k goal · 85%</span></div>
+  <p class="sub">$44k to go with three months left. The year is 75% over, so pace to goal is about $225k and we're roughly $31k ahead. Chart shows cumulative giving by donor type.</p>
+  <ul class="legend">
+    <li><i style="background:var(--s1)"></i>Individuals <b>$126k</b> (49%)</li>
+    <li><i style="background:var(--s2)"></i>Businesses <b>$81k</b> (32%)</li>
+    <li><i style="background:var(--s3)"></i>Events <b>$49k</b> (19%)</li>
+  </ul>
+  <svg id="chart" viewBox="0 0 780 400" role="img" aria-label="Stacked area chart of cumulative donations by month, January to September, reaching $256 thousand against a $300 thousand goal. Individuals $126k, businesses $81k, events $49k."></svg>
+  <div class="tip" id="tip"></div>
+  <details>
+    <summary>View as table (monthly gifts, $ thousands)</summary>
+    <table id="tbl"></table>
+  </details>
+  <p class="note">Events raised money only in Feb, Apr, Jun and Sep, which is why that band rises in steps.</p>
+</div>
+<script>
+(function () {
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"];
+  var data = [
+    {n:"Individuals", c:"var(--s1)", v:[14,12,15,13,16,14,12,13,17]},
+    {n:"Businesses", c:"var(--s2)", v:[8,9,7,10,9,11,8,9,10]},
+    {n:"Events", c:"var(--s3)", v:[0,4,0,15,0,12,0,0,18]}
+  ];
+  var GOAL = 300, YMAX = 320;
+  var W = 780, H = 400, L = 44, R = 150, T = 16, B = 34;
+  var pw = W - L - R, ph = H - T - B;
+  var cum = data.map(function (s) { var a = 0; return s.v.map(function (x) { return (a += x); }); });
+  var tot = months.map(function (_, i) { return cum[0][i] + cum[1][i] + cum[2][i]; });
+  var X = function (i) { return L + i * pw / 8; };
+  var Y = function (v) { return T + ph * (1 - v / YMAX); };
+  var svg = document.getElementById("chart"), NS = "http://www.w3.org/2000/svg";
+  var out = "";
+
+  [0,100,200,300].forEach(function (t) {
+    out += '<line x1="'+L+'" x2="'+(L+pw)+'" y1="'+Y(t)+'" y2="'+Y(t)+'" stroke="'+(t===0?'var(--axis)':'var(--grid)')+'"/>';
+    out += '<text x="'+(L-8)+'" y="'+(Y(t)+4)+'" text-anchor="end">'+(t?'$'+t+'k':'0')+'</text>';
+  });
+  months.forEach(function (m, i) {
+    out += '<text x="'+X(i)+'" y="'+(H-12)+'" text-anchor="middle">'+m+'</text>';
+  });
+
+  // stacked areas, bottom to top; 2px surface stroke separates fills
+  var base = months.map(function () { return 0; });
+  data.forEach(function (s, k) {
+    var top = cum.slice(0, k+1).reduce(function (a, c) { return a.map(function (x, i) { return x + c[i]; }); }, base.map(function(){return 0;}));
+    var lower = k === 0 ? base : cum.slice(0, k).reduce(function (a, c) { return a.map(function (x, i) { return x + c[i]; }); }, base.map(function(){return 0;}));
+    var d = "M" + top.map(function (v, i) { return X(i)+","+Y(v); }).join("L");
+    d += "L" + lower.map(function (v, i) { return [X(i), Y(v)]; }).reverse().map(function (p) { return p.join(","); }).join("L") + "Z";
+    out += '<path d="'+d+'" fill="'+s.c+'" stroke="var(--surface-1)" stroke-width="2" stroke-linejoin="round"/>';
+    s.top = top;
+  });
+
+  // goal line
+  out += '<line x1="'+L+'" x2="'+(L+pw)+'" y1="'+Y(GOAL)+'" y2="'+Y(GOAL)+'" stroke="var(--text-primary)" stroke-width="1.5" stroke-dasharray="6 4"/>';
+  out += '<text class="ink" x="'+(L+pw+10)+'" y="'+(Y(GOAL)+4)+'" style="font-weight:600">Goal $300k</text>';
+
+  // direct labels at the right end
+  var last = 8;
+  data.forEach(function (s, k) {
+    var lo = k ? data[k-1].top[last] : 0, hi = s.top[last], mid = (lo+hi)/2;
+    out += '<text class="ink" x="'+(L+pw+10)+'" y="'+(Y(mid)-1)+'" style="font-weight:600">'+s.n+'</text>';
+    out += '<text class="sec" x="'+(L+pw+10)+'" y="'+(Y(mid)+14)+'">$'+cum[k][last]+'k</text>';
+  });
+  out += '<text class="ink" x="'+(L+pw)+'" y="'+(Y(tot[last])-8)+'" text-anchor="end" style="font-weight:600">$256k to date</text>';
+
+  // hover layer
+  out += '<line id="xh" y1="'+T+'" y2="'+(T+ph)+'" stroke="var(--text-primary)" stroke-width="1" opacity="0"/>';
+  months.forEach(function (_, i) {
+    var x0 = i === 0 ? L : X(i) - pw/16, w = (i === 0 || i === 8) ? pw/16 : pw/8;
+    out += '<rect data-i="'+i+'" x="'+x0+'" y="'+T+'" width="'+w+'" height="'+ph+'" fill="transparent"/>';
+  });
+  svg.innerHTML = out;
+
+  var tip = document.getElementById("tip"), xh = document.getElementById("xh"), root = document.getElementById("root");
+  function show(i, ev) {
+    var h = '<div class="h">'+months[i]+' · $'+tot[i]+'k cumulative</div>';
+    for (var k = 2; k >= 0; k--) {
+      h += '<div class="r"><span><i style="background:'+data[k].c+'"></i>'+data[k].n+'</span><span>$'+cum[k][i]+'k <span style="color:var(--muted)">(+'+data[k].v[i]+')</span></span></div>';
+    }
+    tip.innerHTML = h;
+    xh.setAttribute("x1", X(i)); xh.setAttribute("x2", X(i)); xh.setAttribute("opacity", .5);
+    var rb = root.getBoundingClientRect(), sb = svg.getBoundingClientRect();
+    var px = sb.left - rb.left + X(i) * sb.width / W;
+    var left = px + 14;
+    tip.style.opacity = 1;
+    if (left + tip.offsetWidth > rb.width - 8) left = px - tip.offsetWidth - 14;
+    tip.style.left = left + "px";
+    tip.style.top = (sb.top - rb.top + 30) + "px";
+  }
+  function hide() { tip.style.opacity = 0; xh.setAttribute("opacity", 0); }
+  svg.querySelectorAll("rect[data-i]").forEach(function (r) {
+    r.addEventListener("mousemove", function (e) { show(+r.getAttribute("data-i"), e); });
+    r.addEventListener("mouseleave", hide);
+  });
+
+  // table view
+  var t = "<tr><th>Month</th><th>Individuals</th><th>Businesses</th><th>Events</th><th>Month total</th><th>Cumulative</th></tr>";
+  months.forEach(function (m, i) {
+    var mt = data[0].v[i] + data[1].v[i] + data[2].v[i];
+    t += "<tr><td>"+m+"</td><td>"+data[0].v[i]+"</td><td>"+data[1].v[i]+"</td><td>"+data[2].v[i]+"</td><td>"+mt+"</td><td>"+tot[i]+"</td></tr>";
+  });
+  t += "<tr><th>Total</th><th>126</th><th>81</th><th>49</th><th>256</th><th></th></tr>";
+  document.getElementById("tbl").innerHTML = t;
+})();
+</script>
+</body>
+</html>

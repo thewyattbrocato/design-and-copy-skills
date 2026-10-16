@@ -2,7 +2,7 @@
 
 ## Try no query first
 
-Wrapping rows, auto grids, sidebar splits and switching rows adapt without any query. A query is for the cases they cannot express: a different arrangement rather than a different count per row.
+Wrapping rows and auto grids adapt without any query. A query (a container query first) is for the cases they cannot express: a different arrangement rather than a different count per row, such as a row that stacks or a side-by-side split.
 
 ## Container query or media query
 

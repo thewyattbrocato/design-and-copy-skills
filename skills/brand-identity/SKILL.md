@@ -1,6 +1,6 @@
 ---
 name: brand-identity
-description: Use whenever a logo, mark, wordmark, app icon or visual identity is being made, judged or changed, in any language and at any length - "design a logo for...", "our logo looks generic or dated", "make the brand feel more modern or trustworthy", "rebrand or keep our logo", "does this icon work small", "guarantee it is unique". Covers the idea behind a mark, small-size, one-color and reversed versions, lockups, app icons and favicons, identity systems beyond the logo, refine versus replace, how to present directions, clean SVG. Not for interface palettes (color-palette), type choice (typeface-selection), design tokens (design-system-builder), product screens (design-critique) or naming and trademark law.
+description: Use whenever a logo, mark, wordmark, app icon or visual identity is being made, judged or changed, in any language and at any length - "design a logo for...", "our logo looks generic or dated", "make the brand feel more modern or trustworthy", "rebrand or keep our logo", "does this icon work small". Covers the idea behind a mark, small-size, one-color and reversed versions, lockups, app icons and favicons, identity systems beyond the logo, refine versus replace, how to present directions, clean SVG. Not for interface palettes (color-palette), type choice (typeface-selection), design tokens (design-system-builder), product screens (design-critique) or naming and trademark law.
 ---
 
 # Brand identity
@@ -24,7 +24,7 @@ Drawing or critiquing a logo, wordmark, monogram, icon or favicon; deciding whet
 - **Brief first, in one paragraph.** What the organization does, for whom, three adjectives it should be known for, what rivals already use (to leave it), where the mark must live (smallest, largest, dark grounds), who decides. For a quick job write these as stated assumptions and proceed.
 - **One idea.** Say the mark in one spoken sentence. If it needs "and", it is two ideas; keep the strongest. Relevance can be a quiet hint rather than a picture of the product; a plain picture is fine when recognition at a glance is the job.
 - **Black, then small, then color.** Judge the form solid black on white first, at the smallest real size (16 to 32 pixels for icons), then reversed on dark. Hairlines and fine detail die small: draw a heavier simplified small version. Choose color last, with a reason, and keep a shortlist in one palette so color does not decide the vote.
-- **Craft the wordmark.** Readable in a second, checked aloud and upside down for unintended words, spacing tuned by eye, one custom adjustment (a cut, ligature or reshaped letter) so it is not an untouched stock font. Symbol and lettering share weight and temperament.
+- **Craft the wordmark.** Readable in a second, read aloud and in every orientation and crop it will meet (stacked, rotated on a spine, cropped in an avatar), listening for unintended words, spacing tuned by eye, one custom adjustment (a cut, ligature or reshaped letter) so it is not an untouched stock font. Symbol and lettering share weight and temperament.
 - **Lockups.** Horizontal, stacked and symbol-only, with clear space and a minimum size. A tagline is a separate optional line, never inside the mark.
 - **Gradients, glass, shine and 3D are not ideas.** The core mark is flat and solid; effects belong to specific applications.
 - **Refine or replace on evidence.** A widely recognized mark whose meaning still fits is redrawn and adapted (sizes, weight, one outdated detail) and keeps its known color; novelty is not a reason to replace. Replace when it misleads, fails at needed sizes, is generic or confusable with another, or blocks the strategy. Recognition evidence means asking customers, so propose that rather than asserting a number. Details in [existing marks and systems](references/existing-marks-and-systems.md).
@@ -55,7 +55,7 @@ Deliver the requested thing first (the mark, the versions, the verdict, the outl
 
 - The idea fits one sentence without "and".
 - Solid black reads; reversed reads; the smallest size reads without hairlines.
-- Name read aloud and upside down says nothing else.
+- Name read aloud and in each crop says nothing else.
 - Cover the mark: is the system still recognizable?
 - Existing mark kept, redrawn or replaced on stated evidence.
 - No guarantee, forecast or invented proof; direction count and length cap met.

@@ -1,11 +1,3 @@
-**Headline:** Your jungle starts here
+Marrow & Rye began in 2019, in a converted garage on Pell Street, when Dani Okafor and her brother Tunde decided to build a bakery of their own. The heart of it is a rye starter Dani has kept alive since 2016. Every loaf we make is naturally leavened with it, so the bread takes its time and tastes like it. Our flour comes from a mill two counties over. We bake six days a week and rest on Mondays. Tunde runs the counter, and he also drives our loaves to four cafes nearby. Come by, say hello, and take something warm home with you.
 
-**Body:** Join 40,000 happy plant parents. Add your first plant and we'll tell you when it needs water.
-
-**Button:** Add your first plant
-
-A couple of alternates for the headline, depending on tone:
-- "No plants yet, let's fix that"
-- "Let's get your first plant growing"
-
-I'd keep the 40,000 in one place, like a constant or remote config value, so you can swap in the real count at launch without editing the copy.
+That's about 108 words. If you'd like it closer to 120, I can add a sentence. I kept to your facts, so "take something warm home" is the only flourish, and it's easy to cut if you'd rather not have it.

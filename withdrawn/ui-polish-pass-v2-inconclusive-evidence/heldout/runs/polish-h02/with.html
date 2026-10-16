@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign the waiver</title>
+<style>
+  :root {
+    --ink: #1c2024;
+    --muted: #596270;
+    --line: #8a93a0;
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --accent: #1f5fbf;
+    --accent-dark: #174a96;
+    --error: #b3261e;
+    --ok: #1b6e3c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  form, .done {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 28px 24px;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12);
+  }
+  h2 { margin: 0 0 20px; font-size: 1.5rem; line-height: 1.25; }
+  .field { margin-bottom: 18px; }
+  label { display: block; margin-bottom: 4px; font-weight: 600; }
+  .hint { margin: 0 0 6px; color: var(--muted); font-size: .875rem; }
+  input[type=text], input[type=email], input[type=date] {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  input:focus-visible, button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  input[aria-invalid=true] { border: 2px solid var(--error); }
+  .error {
+    margin: 6px 0 0;
+    color: var(--error);
+    font-size: .9rem;
+    font-weight: 600;
+  }
+  .error:empty { display: none; }
+  .error::before { content: "\26A0\FE0E  "; }
+  .check { display: flex; gap: 12px; align-items: flex-start; }
+  .check input {
+    flex: none;
+    width: 24px; height: 24px;
+    margin: 2px 0 0;
+    accent-color: var(--accent);
+  }
+  .check label { margin: 0; font-weight: 400; }
+  .check-wrap { padding: 12px; border: 1px solid #d3d8df; border-radius: 8px; }
+  .check-wrap.invalid { border: 2px solid var(--error); }
+  button {
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 16px;
+    font: inherit;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button:hover { background: var(--accent-dark); }
+  button[aria-disabled=true] { background: #5d6b80; cursor: progress; }
+  button.secondary {
+    color: var(--accent);
+    background: #fff;
+    border: 2px solid var(--accent);
+  }
+  button.secondary:hover { background: #eef3fb; }
+  .summary {
+    margin: 0 0 18px;
+    padding: 12px;
+    color: var(--error);
+    background: #fdecea;
+    border: 1px solid var(--error);
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .summary:empty { display: none; }
+  .done h2 { color: var(--ok); }
+  .done p { overflow-wrap: anywhere; }
+  [hidden] { display: none !important; }
+  @media (max-width: 360px) {
+    form, .done { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<form id="f" novalidate aria-labelledby="title">
+  <h2 id="title">Sign the waiver</h2>
+
+  <div class="summary" id="summary" role="alert"></div>
+
+  <div class="field">
+    <label for="name">Full name</label>
+    <input type="text" id="name" name="name" autocomplete="name" aria-describedby="name-err" required>
+    <p class="error" id="name-err"></p>
+  </div>
+
+  <div class="field">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" autocomplete="email" inputmode="email"
+           autocapitalize="off" spellcheck="false" aria-describedby="email-err" required>
+    <p class="error" id="email-err"></p>
+  </div>
+
+  <div class="field">
+    <label for="dob">Date of birth</label>
+    <p class="hint" id="dob-hint">Day, month and year</p>
+    <input type="date" id="dob" name="dob" autocomplete="bday" min="1900-01-01"
+           aria-describedby="dob-hint dob-err" required>
+    <p class="error" id="dob-err"></p>
+  </div>
+
+  <div class="field">
+    <div class="check-wrap check" id="agree-wrap">
+      <input type="checkbox" id="agree" name="agree" aria-describedby="agree-err" required>
+      <label for="agree">I have read the waiver</label>
+    </div>
+    <p class="error" id="agree-err"></p>
+  </div>
+
+  <button type="submit" id="submit">Submit</button>
+</form>
+
+<section class="done" id="done" hidden tabindex="-1" aria-labelledby="done-title">
+  <h2 id="done-title">Waiver signed</h2>
+  <p id="done-msg"></p>
+  <button type="button" class="secondary" id="again">Sign for another person</button>
+</section>
+
+<script>
+(function () {
+  var form = document.getElementById('f');
+  var done = document.getElementById('done');
+  var summary = document.getElementById('summary');
+  var submit = document.getElementById('submit');
+  var busy = false;
+
+  var fields = {
+    name: document.getElementById('name'),
+    email: document.getElementById('email'),
+    dob: document.getElementById('dob'),
+    agree: document.getElementById('agree')
+  };
+
+  // Today's date as YYYY-MM-DD in local time, used as the latest allowed birth date.
+  function today() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+  fields.dob.max = today();
+
+  var checks = {
+    name: function (v) {
+      return v.trim() ? '' : 'Enter your full name.';
+    },
+    email: function (v) {
+      v = v.trim();
+      if (!v) return 'Enter your email address.';
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Enter an email like name@example.com.';
+    },
+    dob: function (v) {
+      if (!v) return 'Enter your date of birth.';
+      if (v > today()) return 'Date of birth can\u2019t be in the future.';
+      if (v < '1900-01-01') return 'Check the year in your date of birth.';
+      return '';
+    },
+    agree: function () {
+      return fields.agree.checked ? '' : 'Check the box to confirm you have read the waiver.';
+    }
+  };
+
+  function setError(key, msg) {
+    var el = fields[key];
+    document.getElementById(key + '-err').textContent = msg;
+    if (msg) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
+    if (key === 'agree') {
+      document.getElementById('agree-wrap').classList.toggle('invalid', !!msg);
+    }
+  }
+
+  function validateOne(key) {
+    var el = fields[key];
+    var msg = checks[key](key === 'agree' ? '' : el.value);
+    setError(key, msg);
+    return msg;
+  }
+
+  // Clear an error as soon as the person fixes it; check a field when they leave it.
+  Object.keys(fields).forEach(function (key) {
+    var el = fields[key];
+    el.addEventListener('input', function () {
+      if (el.getAttribute('aria-invalid')) validateOne(key);
+      summary.textContent = '';
+    });
+    el.addEventListener('change', function () {
+      if (el.getAttribute('aria-invalid')) validateOne(key);
+    });
+    el.addEventListener('blur', function () {
+      if (key === 'agree') return;
+      if (el.value !== '') validateOne(key);
+    });
+  });
+
+  // Placeholder for the real call. Replace with the gym's endpoint; reject on failure.
+  function sendWaiver(data) {
+    return new Promise(function (resolve) { setTimeout(resolve, 600); });
+  }
+
+  function setBusy(on) {
+    busy = on;
+    submit.setAttribute('aria-disabled', on ? 'true' : 'false');
+    submit.textContent = on ? 'Submitting\u2026' : 'Submit';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (busy) return;
+    summary.textContent = '';
+
+    var firstBad = null;
+    var count = 0;
+    Object.keys(fields).forEach(function (key) {
+      if (validateOne(key)) {
+        count++;
+        if (!firstBad) firstBad = fields[key];
+      }
+    });
+    if (firstBad) {
+      summary.textContent = count === 1
+        ? 'One thing needs fixing before you can submit.'
+        : count + ' things need fixing before you can submit.';
+      firstBad.focus();
+      return;
+    }
+
+    setBusy(true);
+    sendWaiver({
+      name: fields.name.value.trim(),
+      email: fields.email.value.trim(),
+      dob: fields.dob.value
+    }).then(function () {
+      document.getElementById('done-msg').textContent =
+        'Thanks, ' + fields.name.value.trim() + '. Your waiver is signed. You\u2019re good to climb.';
+      form.hidden = true;
+      done.hidden = false;
+      done.focus();
+    }).catch(function () {
+      summary.textContent = 'We couldn\u2019t submit your waiver. Your answers are still here. Check your connection and press Submit again, or ask the front desk for help.';
+      summary.scrollIntoView({ block: 'nearest' });
+    }).then(function () {
+      setBusy(false);
+    });
+  });
+
+  document.getElementById('again').addEventListener('click', function () {
+    form.reset();
+    Object.keys(fields).forEach(function (key) { setError(key, ''); });
+    summary.textContent = '';
+    done.hidden = true;
+    form.hidden = false;
+    fields.name.focus();
+  });
+})();
+</script>
+</body>
+</html>

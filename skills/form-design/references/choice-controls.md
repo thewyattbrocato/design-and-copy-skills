@@ -43,7 +43,7 @@ Round means choose one; square means choose any. Do not mix the shapes.
 
 - A filter earns its place when the list is too long to scan.
 - Use a group label per filter ("Brand") with checkboxes or radios inside, never links styled like checkboxes.
-- Default: batch. People choose several values and press "Apply filters". This avoids the panel snatching focus and reloading after the first tick. Use live filtering only with an in-place update that keeps focus and scroll position, and with a way to pick several values.
+- Update live when the update keeps focus and scroll and is fast; use one "Apply filters" when results reload or the query is slow, so the panel does not snatch focus after the first tick. Live filtering still needs a way to pick several values.
 - Show active filters as removable chips or a summary above the results, plus a "Clear all" control.
 - An empty result says "No products match" and offers to remove a named filter.
 - The page structure reads in order: page title, filter heading, results heading.

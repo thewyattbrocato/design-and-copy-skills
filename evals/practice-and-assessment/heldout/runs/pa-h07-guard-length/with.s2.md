@@ -1,3 +1,3 @@
-A refund now could pay out a charge that isn't a duplicate. First check the payments dashboard for a duplicate posting; refund only if confirmed or a manager approves.
+Refunding now could return money for a valid charge. Check the payments dashboard for a duplicate posting first. Refund only if you confirm a duplicate or a manager approves.
 
 (29 words)

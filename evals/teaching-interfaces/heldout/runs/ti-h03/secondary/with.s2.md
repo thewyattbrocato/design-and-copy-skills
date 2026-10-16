@@ -1,22 +1,22 @@
-**Build (c), the interactive setup with a live preview.**
+**Ship (c), the interactive setup.** It's the only option that teaches the thing new users actually get wrong, which is choosing values. The other two explain settings. Neither helps someone pick a 2-4 ft swell range or a westerly wind limit that fits their break.
 
-- **It fixes the actual failure.** New users struggle because the four settings interact. A height range that's fine on paper can be impossible with the wind limit you picked. A passive explanation (a or b) teaches what each setting means, but people still have to guess how they combine. With (c), they see the effect of each choice on today's real conditions as they make it.
-- **It gives feedback they can check.** A preview like "this alert would have fired 2 of the last 7 days at your beach" shows whether the setup makes sense, and users can see the result without trusting the explanation.
-- **It targets the first alert.** The first alert is the moment users either trust the product or leave. Getting that one right probably matters more for retention than general education.
-- **It reuses what you already have.** You already compute current tide and swell conditions, so the preview is mostly a UI on existing data. The risk is in the scope of the flow, not in building new infrastructure.
+**Why (c)**
 
-The case against (c) is that it's the most work and the most that can go wrong in one sprint. To limit that:
+- **People learn by doing a configuration, not by watching one.** A video or carousel is seen once and then forgotten, usually before the user reaches the settings screen. Building the alert in the flow is where the learning happens.
+- **The live preview grounds abstract values.** "Swell 2-4 ft, wind offshore only" means little until the user sees "Today at this beach: 3 ft SW swell, wind 8 kt onshore, so this alert would not fire." That shows what each setting does and why the defaults are sensible.
+- **It ends with a working alert.** Passive intros end when the user taps "Got it." An interactive setup ends with the thing you wanted them to have, so you can measure whether it worked.
+- **The explanation can be cut down.** A short run of four steps (beach, swell, wind, time) with a sensible default at each step covers most of what the carousel would say.
 
-- Keep it to the four inputs with sensible defaults pre-filled, so a user can finish in a few taps and still see the preview.
-- Ship it behind a flag or to a slice of new users, so you can compare it with the current setup.
-- Skip the video. It's the most expensive to produce and update, and most people skip it.
-- Treat the carousel as a cheap fallback if (c) slips. It can be a help screen attached to each setting later.
+**Risks and how to reduce them**
 
-Since you have no data yet, instrument the flow from day one so the sprint produces an answer as well as a feature. Track:
+- **Drop-off mid-flow.** Keep it to four steps, pre-fill every field with a reasonable default, and allow "Set up later." Users should be able to get an alert with two taps.
+- **Build cost.** (c) is the most work. Reusing the existing live-conditions data for the preview keeps it manageable. Don't build a bespoke simulator.
+- **Experienced surfers may skip it.** That's fine. The defaults and "Skip" cover them, and they're less likely to be the ones who get the setup wrong.
 
-- setup completion rate (started vs. first alert saved)
-- time to first alert
-- how many first alerts are edited or deleted within 48 hours
-- whether the first alert fires and the user opens the app afterward
+**Measure it, since you have no baseline**
 
-If (c) ships and completion is high but edits are also high, the preview is probably working but the defaults are off. If completion is low, the flow is too long.
+- Share of new users who create at least one alert in their first session.
+- Step-by-step drop-off within the setup flow.
+- Whether the alert fires and gets opened in the first week, and whether it's still on after 30 days. This matters more than creation alone, because a badly chosen alert that never fires will be deleted.
+
+**What would change my answer:** if most users already know their surf spot's conditions, or if a well-chosen default alert could be created in one tap, the problem is less about teaching and more about defaults. In that case, put the effort into the defaults and the preview, not a longer tutorial.

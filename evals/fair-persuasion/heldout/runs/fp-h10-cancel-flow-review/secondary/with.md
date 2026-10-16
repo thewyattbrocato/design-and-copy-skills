@@ -1,34 +1,27 @@
-**Partly. The flow works against the user in two places: cancelling is much harder than joining, and the buttons steer the choice.** The pause offer and the "No thanks" option are fine.
+**Partly. The offer is fine, but the flow as a whole is a dark pattern, mainly because cancelling is harder than joining.**
 
 **What's fine**
-- The pause offer is a real alternative: free, specific, and declinable.
-- "No thanks" is a neutral decline.
-- Asking why they're leaving is reasonable, as long as it isn't required to finish.
+- The pause offer. It's a real alternative with a clear free term.
+- The "Sorry to see you go" tone.
+- Asking why they're leaving, as long as it's optional.
 
 **What isn't**
-- **Phone-only cancellation for an online sign-up.** Joining takes two taps; leaving requires a call during weekday business hours. This is the core problem.
-- **The cancel path is buried.** It's the last item, in small grey text, under "Billing FAQs."
-- **Unequal button weight.** "Keep" is big and green, and "Continue" is a small grey link.
-- **A required survey before cancelling.** The reason dropdown is a gate, not a question.
-- **No confirmation at cancel time.** The user gets no written proof until after a call they may not be able to make.
-- **Guilt-adjacent copy.** "Members who stay 6+ months are 3x more likely to hit their goals" implies the user is failing themselves. It's also a claim that needs a source.
+- **Leaving takes a different channel.** Joining is two taps online. Cancelling needs a phone call during business hours. That's the core problem.
+- **The cancel path is hidden.** It's a small grey link, last under "Billing FAQs".
+- **The reason is required.** The dropdown blocks cancelling until they answer.
+- **Unequal buttons.** "Keep my membership" is big and green, "Continue" is a small grey link.
+- **Guilt framing.** "Before you go" plus a stat that implies they'll fail their goals. The stat is also a claim you need to source or cut.
+- **No written confirmation.** The email comes only after the call, and it's the only record of the cancellation.
+- **Missing facts.** Nothing says when access ends, what happens to bookings, or what happens to their data.
 
-**Fair version**
+**What to change**
 
-1. **Settings > Membership.** Show "Cancel membership" as its own row, at the same level as "Manage."
+1. **Entry:** Settings > Membership shows a visible "Cancel membership" row next to "Manage", not last under FAQs.
+2. **Pause offer (one alternative, shown once):** "Pause instead? Freeze your membership for up to 2 months, free." Buttons: [Pause] [Continue cancelling], same size and weight.
+3. **Cancel screen:** "You'll keep access until [end date]. After that, your bookings are removed and you won't be charged again. Your data: [what happens and for how long]." Optional field: "Tell us why (optional)." Buttons: [Cancel membership] [Go back].
+4. **Confirmation (on screen and by email, sent immediately):** "Your membership ends on [end date]. To rejoin, [how to rejoin]." No phone step.
+5. **Drop** the "3x more likely" line, or keep it only if it's sourced and presented as information, not as "before you go."
 
-2. **Screen: "Want to keep your membership?"** [Keep my membership] [Continue to cancel], same size and weight. Drop the statistic unless you can source it, and if you keep it, state it neutrally: "Members who stay 6+ months [verified figure, source]."
-
-3. **Screen: "Pause instead?"** "Freeze your membership for up to 2 months, free." [Pause membership] [Not now, continue cancelling]. Keep both buttons equal.
-
-4. **Screen: "Cancel your membership?"**
-   - "You'll keep access until [end date]. Your billing stops after that. You can rejoin any time at [rejoin link]."
-   - Optional: "Tell us why (optional)" with the dropdown.
-   - [Cancel membership] [Keep my membership], equal weight.
-
-5. **Immediately after cancelling.** Show an in-app confirmation and send the email at the same time: "Your membership is cancelled. Access continues until [end date]. Reference [ID]." Add "Questions? Call (555) 0142, Mon–Fri 9–5 [or add a weekend/chat option]" as help, not as a required step.
-
-**Notes**
-- Fill in `[end date]`, `[rejoin link]`, and the statistic's source (or remove the statistic).
-- If the phone call is there to prevent fraudulent cancellations, verify through the account (for example, a confirmation code sent to the account email) instead of making the phone call the only route.
-- Rules on subscription cancellation vary by location and change over time, so have the final flow checked against the rules where you operate.
+Notes:
+- Fill in `[end date]`, the data policy, and the rejoin path. I didn't invent them.
+- Cancellation rules vary by place and change over time. Some US states, California among them, require online cancellation when signup was online, so have counsel check this.

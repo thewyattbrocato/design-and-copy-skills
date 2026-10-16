@@ -3,62 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spokeline · Saved routes (empty)</title>
+<title>Spokeline – Saved routes (empty)</title>
 <style>
   :root {
-    --accent: #0a7c59;
-    --accent-ink: #ffffff;
-    --bg: #f6f7f5;
+    --bg: #f5f6f4;
     --surface: #ffffff;
-    --text: #1b1f1d;
-    --muted: #5d6661;
-    --line: #e2e6e3;
-    --tab-h: 72px;
+    --text: #1d2420;
+    --muted: #5d6762;
+    --line: #e1e5e2;
+    --accent: #0b7a57;
+    --accent-ink: #ffffff;
+    --accent-soft: #e4f2ec;
+    --record: #d6453d;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html, body { height: 100%; }
+
   body {
-    min-height: 100vh;
+    font-family: var(--font);
+    background: #e7e9e6;
+    color: var(--text);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #dfe3e0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: var(--text);
+    min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
 
-  .phone {
+  .app {
     width: 390px;
+    max-width: 100%;
     height: 844px;
     max-height: 100vh;
     background: var(--bg);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     position: relative;
-    border-radius: 28px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
   }
 
-  .status-bar {
-    height: 44px;
-    flex: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    font-size: 15px;
-    font-weight: 600;
+  .header {
+    padding: 56px 20px 12px;
+    background: var(--bg);
   }
 
-  .app-header {
-    flex: none;
-    padding: 8px 20px 16px;
-  }
-
-  .app-header h1 {
+  .header h1 {
     font-size: 28px;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -67,39 +59,35 @@
   .content {
     flex: 1;
     overflow-y: auto;
-    padding: 0 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    padding: 8px 20px 24px;
   }
 
-  /* Empty state */
+  /* Empty state hero */
   .empty {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 28px 20px 24px;
+    padding: 28px 20px 22px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
   .empty-icon {
     width: 64px;
     height: 64px;
+    margin: 0 auto 16px;
     border-radius: 50%;
-    background: #e6f3ee;
-    color: var(--accent);
+    background: var(--accent-soft);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
+    color: var(--accent);
   }
 
+  .empty-icon svg { width: 30px; height: 30px; }
+
   .empty h2 {
-    font-size: 20px;
-    font-weight: 650;
+    font-size: 19px;
+    font-weight: 700;
     margin-bottom: 8px;
   }
 
@@ -111,8 +99,12 @@
   }
 
   .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     width: 100%;
-    min-height: 48px;
+    height: 50px;
     border: none;
     border-radius: 12px;
     background: var(--accent);
@@ -120,59 +112,60 @@
     font: inherit;
     font-size: 16px;
     font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
     cursor: pointer;
   }
 
-  .btn-primary:focus-visible,
-  .save-btn:focus-visible,
-  .tab:focus-visible {
-    outline: 3px solid #9fd8c4;
-    outline-offset: 2px;
-  }
+  .btn-primary svg { width: 20px; height: 20px; }
 
-  .hint {
-    margin-top: 8px;
-    font-size: 13px;
-    color: var(--muted);
+  .btn-primary:focus-visible,
+  .row-add:focus-visible,
+  .tab:focus-visible {
+    outline: 3px solid #9fd6c1;
+    outline-offset: 2px;
   }
 
   /* Popular nearby */
   .section-title {
     font-size: 13px;
-    font-weight: 650;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--muted);
-    margin-bottom: 10px;
+    margin: 28px 4px 10px;
   }
 
-  .route-list {
-    list-style: none;
+  .routes {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 16px;
     overflow: hidden;
   }
 
-  .route-item {
+  .route-row {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 14px 16px;
-  }
-
-  .route-item + .route-item {
     border-top: 1px solid var(--line);
   }
 
-  .route-info {
-    flex: 1;
-    min-width: 0;
+  .route-row:first-child { border-top: none; }
+
+  .route-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
+
+  .route-thumb svg { width: 22px; height: 22px; }
+
+  .route-info { flex: 1; min-width: 0; }
 
   .route-name {
     font-size: 16px;
@@ -188,10 +181,9 @@
     margin-top: 2px;
   }
 
-  .save-btn {
-    flex: none;
-    width: 44px;
-    height: 44px;
+  .row-add {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     border: 1.5px solid var(--accent);
     background: transparent;
@@ -200,138 +192,169 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .row-add svg { width: 18px; height: 18px; }
+
+  .footnote {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 16px;
   }
 
   /* Tab bar */
-  .tab-bar {
-    flex: none;
-    height: var(--tab-h);
+  .tabbar {
+    display: flex;
     background: var(--surface);
     border-top: 1px solid var(--line);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding-bottom: 16px;
+    padding: 8px 8px 28px;
   }
 
   .tab {
-    border: none;
-    background: none;
-    font: inherit;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--muted);
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 4px;
+    padding: 4px 0;
+    background: none;
+    border: none;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    color: #8a938e;
     cursor: pointer;
   }
 
-  .tab[aria-current="page"] {
-    color: var(--accent);
-    font-weight: 650;
+  .tab svg { width: 24px; height: 24px; }
+
+  .tab.active { color: var(--accent); font-weight: 600; }
+
+  .tab.record .dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #8a938e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tab.record .dot::after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--record);
   }
 </style>
 </head>
 <body>
-  <div class="phone">
-    <div class="status-bar" aria-hidden="true">
-      <span>9:41</span>
-      <span>●●● 100%</span>
-    </div>
-
-    <header class="app-header">
+  <div class="app">
+    <header class="header">
       <h1>Saved routes</h1>
     </header>
 
     <main class="content">
       <section class="empty" aria-labelledby="empty-title">
         <div class="empty-icon" aria-hidden="true">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/>
-            <path d="M9 4v14"/>
-            <path d="M15 6v14"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+            <path d="M18 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+            <path d="M6 15l4-7h4l3 4"/>
+            <path d="M14 8l1-3h2"/>
           </svg>
         </div>
         <h2 id="empty-title">No saved routes yet</h2>
         <p>Saving a route keeps it available offline and shows it on your watch.</p>
         <button class="btn-primary" type="button">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 15V3"/>
             <path d="M7 8l5-5 5 5"/>
-            <path d="M5 21h14"/>
+            <path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/>
           </svg>
-          Import a route file
+          Import route file
         </button>
-        <p class="hint">GPX, FIT or TCX</p>
       </section>
 
-      <section aria-labelledby="popular-title">
-        <h3 class="section-title" id="popular-title">Popular nearby</h3>
-        <ul class="route-list">
-          <li class="route-item">
-            <div class="route-info">
-              <div class="route-name">Ridge Loop</div>
-              <div class="route-meta">24.1 km · 610 m climb</div>
-            </div>
-            <button class="save-btn" type="button" aria-label="Save Ridge Loop">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </button>
-          </li>
-          <li class="route-item">
-            <div class="route-info">
-              <div class="route-name">River Path to Millbrook</div>
-              <div class="route-meta">18.7 km · 120 m climb</div>
-            </div>
-            <button class="save-btn" type="button" aria-label="Save River Path to Millbrook">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </button>
-          </li>
-          <li class="route-item">
-            <div class="route-info">
-              <div class="route-name">Summit Road Out and Back</div>
-              <div class="route-meta">32.5 km · 980 m climb</div>
-            </div>
-            <button class="save-btn" type="button" aria-label="Save Summit Road Out and Back">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </button>
-          </li>
-        </ul>
-      </section>
+      <h3 class="section-title">Popular nearby</h3>
+      <ul class="routes" role="list">
+        <li class="route-row">
+          <div class="route-thumb" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l6-6 4 4 8-8"/>
+            </svg>
+          </div>
+          <div class="route-info">
+            <div class="route-name">Ridge Loop</div>
+            <div class="route-meta">28 km · 420 m climb</div>
+          </div>
+          <button class="row-add" type="button" aria-label="Save Ridge Loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+        </li>
+        <li class="route-row">
+          <div class="route-thumb" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l6-6 4 4 8-8"/>
+            </svg>
+          </div>
+          <div class="route-info">
+            <div class="route-name">Riverside 30</div>
+            <div class="route-meta">30 km · 60 m climb</div>
+          </div>
+          <button class="row-add" type="button" aria-label="Save Riverside 30">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+        </li>
+        <li class="route-row">
+          <div class="route-thumb" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l6-6 4 4 8-8"/>
+            </svg>
+          </div>
+          <div class="route-info">
+            <div class="route-name">Hilltop Climb Repeats</div>
+            <div class="route-meta">12 km · 510 m climb</div>
+          </div>
+          <button class="row-add" type="button" aria-label="Save Hilltop Climb Repeats">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+        </li>
+      </ul>
+      <p class="footnote">Tap + to save a route to this list.</p>
     </main>
 
-    <nav class="tab-bar" aria-label="Main">
-      <button class="tab" type="button">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 11l9-7 9 7"/>
-          <path d="M5 10v10h14V10"/>
+    <nav class="tabbar" aria-label="Main">
+      <button class="tab" type="button" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5"/>
+          <path d="M5 9.5V21h14V9.5"/>
         </svg>
         Home
       </button>
-      <button class="tab" type="button" aria-current="page">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 4h12v17l-6-4-6 4z"/>
+      <button class="tab active" type="button" aria-label="Saved routes" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/>
         </svg>
         Saved routes
       </button>
-      <button class="tab" type="button">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="8"/>
-          <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
-        </svg>
+      <button class="tab record" type="button" aria-label="Record">
+        <span class="dot" aria-hidden="true"></span>
         Record
       </button>
-      <button class="tab" type="button">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <button class="tab" type="button" aria-label="Profile">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="8" r="4"/>
-          <path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>
+          <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
         Profile
       </button>

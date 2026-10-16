@@ -1,29 +1,33 @@
-**The problem is that all six colors are the same color.** They share a muddy yellow-olive hue and a middle lightness, and none is saturated. The browns, olives and khakis only differ by a few steps. Nothing contrasts with anything else, so the app reads as one beige wash. Warm and friendly needs light, clean surfaces and a few clear colors, not a uniformly dim palette.
+Your six colors are too close together, so nothing stands out. I couldn't run code here, so these contrast ratios are hand-calculated estimates.
 
-I couldn't run code here, so these ratios are hand-calculated estimates and may be off by a little.
+**What's going wrong, by impact**
 
-**Findings, by impact**
+1. **Body text is nearly invisible.** `#a39b82` on `#cfc8b0` is about **1.7:1**. Body text needs about 4.5:1. This is the main reason the app looks tired.
+2. **Every color is the same muted olive-khaki at mid-lightness.** Hues sit in a narrow yellow-olive band and saturation is low. Everything except the background has about the same lightness.
+3. **The buttons and links can't be told apart.** Primary `#8a7f5c`, secondary `#7d8a6b` and links `#9c8b5e` differ by about 1.1:1 from each other. Users can't see which button is the main action or which text is a link.
+4. **Nothing separates from the page.** Primary on background is about 2.4:1, secondary about 2.2:1 and links about 2.0:1. Controls need about 3:1.
+5. **The error color is the only different hue, but it's weak.** `#b5654a` on the background is about 2.5:1. It's also a dusty terracotta, close to the khaki family, so it doesn't read as a warning.
+6. **The background is a dark khaki.** A tan page with khaki content reads as faded paper, not friendly. Warm and friendly usually means a light, creamy ground with a few clear colors on it.
 
-1. **Body text on the page background is about 1.65 to 1.** The floor is 4.5 to 1. This is the biggest cause of the tired look, and it makes the text hard to read.
-2. **Links are indistinguishable from body text.** `#9c8b5e` against `#a39b82` is about 1.2 to 1, and the link is only about 2.0 to 1 against the background.
-3. **The primary and secondary buttons look almost the same.** `#8a7f5c` and `#7d8a6b` have nearly identical lightness, about 1.09 to 1 apart. A user can't tell which action matters most. Both are only about 2.2–2.4 to 1 against the page, so the buttons barely stand out from it. White text on the primary is about 4.0 to 1, which fails for small button labels.
-4. **Errors are weak.** `#b5654a` is about 2.5 to 1 against the page, and it is the same dusty brown as everything else, so it doesn't read as a warning.
+**Replacement palette**
 
-**Replacement palette** (a warm cream ground, a deep teal lead for a calm, trustworthy medical feel, and a warm gold accent for friendliness)
+I used a deep teal as the lead because it's calm and trustworthy for health, and it stays warm when paired with cream and apricot.
 
-| Role | Value | Check |
+| Role | Hex | Pair and ratio |
 |---|---|---|
-| Page background | `#faf5ea` | warm cream, clean and light |
-| Body text | `#2e2a22` | about 13 to 1 on the background |
-| Primary button | fill `#1f6f68`, text `#ffffff` | about 5.9 to 1 text on fill, and about 5.4 to 1 fill against the page |
-| Secondary button | fill `#d9ebe5`, text and border `#17524d` | about 6.9 to 1 text on fill, and it looks clearly lighter than the primary |
-| Links | `#1f6f68`, underlined | about 5.4 to 1 on the background, and distinct from the dark body text |
-| Highlight (badges, selected states) | fill `#f2b84b`, text `#2e2a22` | about 7.9 to 1, and it is the one warm pop |
-| Error | `#b42318` | about 6.0 to 1 on the background |
+| Page background | `#fbf6ec` (warm cream) | — |
+| Cards / surfaces | `#fffdf8` | — |
+| Body text | `#2e2a22` (warm near-black) | on cream about 13:1 |
+| Primary button | fill `#2f6f5e`, text `#ffffff` | text about 5.9:1, fill on cream about 5.5:1 |
+| Secondary button | fill `#dcebe3`, text and border `#2f6f5e` | text about 4.8:1 |
+| Links | `#24604f`, underlined | on cream about 7:1 |
+| Highlight (badges, "online now") | fill `#f6c177`, text `#2e2a22` | text about 9:1 |
+| Error | `#b42318`, with an icon and a message | on cream about 6:1 |
 
-**How to apply it**
-- Teal should be the dominant color after the cream. Use gold sparingly, such as one badge or one highlighted item per screen.
-- Keep the error text paired with an icon or the word "Error", so the meaning isn't carried by color alone.
-- Check the pairs again on any tinted card or hover state. I tested them only on the cream background.
+- **Lead and accent:** Teal dominates the buttons and links. Apricot appears only in small highlights, which gives the warmth without adding a second loud color.
+- **Primary versus secondary:** They differ by form (solid versus pale tint with outline), so they don't rely on a hue difference.
+- **Error color:** Red is clearly separate from the teal and apricot. Pair it with an icon and words so it doesn't rely on color alone.
 
-I chose teal and gold because you gave no brand color. If Pawline already has a logo color, tell me and I'll rebuild the palette around it.
+**Notes**
+- You gave no brand color, so I chose teal. If you have a logo color, tell me and I'll rebuild around it.
+- Run the final pairs through a contrast checker before launch, since my ratios are estimates.

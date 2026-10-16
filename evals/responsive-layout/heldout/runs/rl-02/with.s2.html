@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnside Ceramics</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --clay: #b5502f;
+    --clay-deep: #7e3219;
+    --cream: #f6ede0;
+    --ink: #2a1a12;
+    --sage: #8a9a78;
+    --glaze: #e3a33b;
+    --pad: clamp(1.25rem, 4vmin + 0.5rem, 4rem);
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif;
+    line-height: 1.5;
+  }
+
+  .hero {
+    min-block-size: 100vh;
+    min-block-size: 100dvh;
+    padding: var(--pad);
+    padding-inline: max(var(--pad), env(safe-area-inset-left)) max(var(--pad), env(safe-area-inset-right));
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(1.5rem, 4vmin, 3rem);
+    max-inline-size: 120rem;
+    margin-inline: auto;
+  }
+
+  .title {
+    margin: 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+    /* vmin keeps it on-screen on short/landscape windows; ceiling keeps it sane on huge monitors */
+    font-size: clamp(3rem, 15vmin + 4vw, 14rem);
+    overflow-wrap: anywhere;
+    color: var(--clay-deep);
+  }
+  .title span { display: block; }
+  .title span + span { color: var(--clay); }
+
+  .lower {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    gap: clamp(1.5rem, 4vmin, 3rem);
+    align-items: stretch;
+  }
+
+  .copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(1.25rem, 3vmin, 2rem);
+    min-inline-size: 0;
+  }
+
+  .tagline {
+    margin: 0;
+    max-inline-size: 28ch;
+    font-size: clamp(1.25rem, 1rem + 1.6vmin + 0.6vw, 2.5rem);
+    line-height: 1.25;
+    font-weight: 500;
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 0.9em 1.8em;
+    background: var(--ink);
+    color: var(--cream);
+    font: inherit;
+    font-size: clamp(1.05rem, 0.9rem + 0.6vmin + 0.3vw, 1.6rem);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 999px;
+    border: 2px solid var(--ink);
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .cta:hover { background: var(--glaze); color: var(--ink); }
+  .cta:focus-visible { outline: 3px solid var(--clay); outline-offset: 4px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .cta:hover { transform: translateY(-2px); }
+  }
+
+  /* Decorative color block: abstract vessel shapes, no images */
+  .art {
+    position: relative;
+    min-block-size: clamp(14rem, 40vmin, 40rem);
+    border-radius: 1.5rem 1.5rem 1.5rem 12rem;
+    background:
+      radial-gradient(circle at 72% 28%, var(--glaze) 0 14%, transparent 14.5%),
+      linear-gradient(160deg, var(--clay) 0 55%, var(--clay-deep) 55% 100%);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .art::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 12%;
+    inset-block-end: 0;
+    inline-size: 38%;
+    block-size: 62%;
+    background: var(--sage);
+    border-radius: 50% 50% 0 0 / 38% 38% 0 0;
+    z-index: -1;
+  }
+  .art::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: 10%;
+    inset-block-end: 0;
+    inline-size: 30%;
+    block-size: 42%;
+    background: var(--cream);
+    border-radius: 45% 45% 0 0 / 30% 30% 0 0;
+    box-shadow: inset 0 0 0 clamp(6px, 1vmin, 14px) var(--glaze);
+  }
+
+  /* Short, wide windows (landscape phones): tighten so headline and button stay visible */
+  @media (max-height: 30em) and (orientation: landscape) {
+    .title { font-size: clamp(2.5rem, 18vmin, 6rem); }
+    .art { min-block-size: 8rem; }
+  }
+</style>
+</head>
+<body>
+  <main class="hero">
+    <h1 class="title"><span>Kilnside</span><span>Ceramics</span></h1>
+    <div class="lower">
+      <div class="copy">
+        <p class="tagline">Hand-built pots, glazed by you, fired by us.</p>
+        <a class="cta" href="#book">Book a class</a>
+      </div>
+      <div class="art" aria-hidden="true"></div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,20 +1,32 @@
-Your instinct is sound. The message does three things well: it says what happened, reassures the user that nothing is lost, and tells them what to do next. The coldest part is the blunt "Couldn't save." opener.
+Most of these are real inconsistencies, but the removal verbs mostly aren't.
 
-**Warmer options that keep the structure**
+## Fix these
 
-1. "We couldn't save that just now. Your changes are still here, so give it another try."
-2. "Hmm, that didn't save. Don't worry, your changes are still here. Try again?"
-3. "Sorry, we couldn't save. Your changes are safe and still here, so try again when you're ready."
+| Concept | Today | Standardise on | Why |
+|---|---|---|---|
+| The thing you book | Appointments / Bookings / Visits / Session | **Appointment** | One noun in the nav, page title, tooltip and email. It's the standard word in clinic software. Retire "Bookings", "Visits" and "Session". |
+| Ending access | Log off / Exit / Sign in | **Sign in / Sign out** | They're a pair, so "Sign in" settles it. "Exit" is also ambiguous because it sounds like closing a screen. |
+| The clinician | Practitioner (staff) / Your therapist (member app) | **Practitioner** in both, "Your practitioner" in the member app | Staff and members are looking at the same person. "Therapist" also won't fit clinics that employ other roles. |
 
-I'd pick option 1. It adds a human touch ("we", "just now") without getting chatty. Option 2 is the friendliest, but "Hmm" and the question mark can feel flippant to someone who thinks they just lost work. Option 3 is longer, and toasts get skimmed.
+If "Session" in the email means the treatment itself rather than the booking, you could keep it. But then use it deliberately and consistently, not as a synonym for "appointment".
 
-**If you want to push back, here are some reasons:**
+## Keep the removal verbs, mostly
 
-- **The reassurance is already doing the warmth work.** The most stressful moment in a failed save is wondering whether the work is gone. "Your changes are still here" answers that right away. Warmth in an error state comes from reducing anxiety, not from friendly vocabulary.
-- **Toasts are brief and skimmed.** Extra words push the action ("try again") further from where the eye lands.
-- **Tone should match the stakes.** Playful wording on a failure that touches the user's data can read as dismissive.
-- **Consistency.** If the other error messages in the app are this plain, one chattier toast will feel out of place.
+These are different actions, so different verbs are correct. The goal is that each verb always means one thing:
 
-You could tell the designer: "I agree the opener is abrupt, so I softened it to 'We couldn't save that just now.' I kept the rest because the reassurance and clear next step are what make it feel caring." That gives them a concrete change without dropping your reasoning.
+- **Cancel** is for an appointment. The record stays, and its status changes.
+- **Discard** is for a draft. It's unsaved work being thrown away.
+- **Delete** is for permanent removal.
+- **Remove** is for detaching something from a container. It's not destroying it.
 
-I haven't looked at the codebase. If you want, I can find the string and make the change.
+Two things to change:
+1. **Note: "Remove" vs "Delete".** If the note is permanently gone, call it **Delete**. Use "Remove" only if it's just detached.
+2. **"Cancel" is overloaded.** It also usually means "close this dialog". Label the appointment action **Cancel appointment**. Make the dialog's dismiss button something like **Keep appointment** or **Close**.
+
+One question on the patient record: you may have retention obligations for clinical records. If so, "Delete" may be the wrong action, and **Archive** might fit better. Check with whoever handles compliance.
+
+## Members
+
+I'll treat "Member" as settled. The practical step is to search every string, including emails, empty states, error messages and the "Delete" confirmation on the record, for "patient" and "client". Replace them with "Member" so the brand term appears everywhere. If the clinic-facing side is free to be configurable, "client" can be a per-clinic label later. That's optional and doesn't conflict with the founder's call.
+
+Once you've settled these, put them in a short glossary (term, definition, banned synonyms) so new strings stay consistent. I can draft one, or search the codebase for the strings, if you point me at the repo.

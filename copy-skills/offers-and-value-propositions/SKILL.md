@@ -1,6 +1,6 @@
 ---
 name: offers-and-value-propositions
-description: Use whenever you word what is offered and why it is worth the price, in any language and at any length - "why would anyone pay for this", "make the pricing page convert", "write our value prop", "our plans all sound the same", "is this guarantee any good", "should we discount". Covers value propositions, plan and tier names and blurbs, pricing-page copy, free trials and free plans, guarantees and refund wording, discounts, bonuses, bundles, offer names, renewal and price-change wording, "what you get" sections. Not for audience or category (positioning-and-messaging), table layout (data-tables), checkout fields (form-design) or legal terms.
+description: Use whenever you word what is offered and why it is worth the price, in any language and at any length - "why would anyone pay for this", "make the pricing page convert", "write our value prop", "our plans all sound the same", "is this guarantee any good", "should we discount". Covers value propositions, plan and tier names and blurbs, pricing-page copy, free guides, trials and plans, referral offers, guarantees and refund wording, discounts, bonuses, bundles, offer names, renewal and price-change wording, "what you get" sections. Not for audience or category (positioning-and-messaging), table layout (data-tables), checkout fields (form-design) or legal terms.
 ---
 
 # Offers and value propositions
@@ -36,11 +36,11 @@ If a value proposition or terms line already names who, the result and the cost,
 1. **Result first.** Name the buyer, the result they want in their words, and a realistic time to the first result. Phrase it as a milestone ("first invoice sent"), not a guaranteed money or health outcome. Features follow as proof; lead with specifications only when buyers compare them (hardware, technical, procurement), most decisive first.
 2. **Value proposition.** One sentence: who, the result, and how it differs from what they do now, including a spreadsheet, a person or nothing. One supporting line, using only proof the user gave. Swap test: if a rival could sign it unchanged, add the specific difference.
 3. **Shorten the path before enlarging the claim.** Faster, fewer steps, less effort. Make one believable promise, not a stack; the smallest one that still compels, because a delivered promise earns referrals and a bigger one earns refunds.
-4. **Terms at the decision.** Price with its period, and the yearly total beside any monthly figure. What is and is not included, and any real cap behind "unlimited". For a trial or free plan: whether a card is needed, then the date and amount of the first charge, or that there is none. Renewal price. How to cancel. Refund path. One plain line near the button plus a link to the full terms.
-5. **Guarantees.** Shape: "if X has not happened by Y, we do Z", with a condition the buyer can meet and a remedy the business will honor. Use the policy the user stated. If none was given, write none and leave [refund policy]; never invent one. If the business cannot honor a guarantee, state the plain refund policy instead of a weaker-sounding promise.
+4. **Terms at the decision.** Price with its period. When the user gave the yearly price, or billing is plainly monthly by twelve, put the yearly total beside the monthly figure; otherwise leave [yearly total]. What is and is not included, and any real cap behind "unlimited". For a trial or free plan: whether a card is needed, then the date and amount of the first charge, or that there is none. "Free" means nothing charged unless they act; charged-then-returned is "refundable". Renewal price. How to cancel. Refund path. One plain line near the button plus a link to the full terms.
+5. **Guarantees.** Say what the buyer must do, by when the result should show, what the business will do if it doesn't, and where to claim. For example: "If your first payroll run fails because of us in the first month, we refund that month; email billing@." Use the policy the user stated. If none was given, write none and leave [refund policy]; never invent one. If the business cannot honor a guarantee, state the plain refund policy instead of a weaker-sounding promise.
 6. **Deals.** Every discount has its true reason (annual billing, a dated launch, a season), shown as the same arithmetic both ways. A regular price may appear only if it was actually charged. Prefer added value to a lower core price. Per-day framing sits beside the full total. A genuine annual saving or dated price change should be stated plainly and confidently, not hedged.
 7. **Bonuses.** Real and deliverable only; describe what each does. Give a money value only if it is or was sold at that price.
-8. **Tiers.** Two to four, sharing a core, each higher one adding something a real buyer needs. Name them plainly and say in the blurb who or which situation each suits; state what lower tiers lack. No tier exists to make another look cheap. Recommend one with a reason. Three or fewer when buyers compare; for complex configurations hand the table to data-tables, if installed, and keep blurbs short.
+8. **Tiers.** Two to four tiers (three when buyers compare them side by side), sharing a core, each higher one adding something a real buyer needs. Name them plainly and say in the blurb who or which situation each suits; state what lower tiers lack. No tier exists to make another look cheap. When asked, or when the brief names who each tier suits, recommend one with the reason; otherwise say which situation each fits and stop. For complex configurations hand the table to data-tables, if installed, and keep blurbs short.
 9. **Price visibility.** Show the price where the decision is. "Contact sales" only when pricing is truly custom, and say what it depends on. A pricing-page reader is already interested: lead with price, inclusions and terms, then answer worries (migration, contract length, data export, what if it fails) with facts the user gave.
 10. **"Free"** says what is free, for how long and what happens after.
 
@@ -55,7 +55,7 @@ Deliver the requested copy first, with nothing before it. When a count or set is
 ## Quick checks
 
 - The value proposition names who, the result and the difference.
-- Every price has its period and total; every trial states its first charge.
+- Every price has its period (and a total when the figures allow); every trial states its first charge.
 - Every guarantee has a condition and a remedy; every discount has a reason.
 - No figure, badge or policy appears that the user did not give.
 - A buyer could choose a plan from this copy alone.
@@ -63,3 +63,4 @@ Deliver the requested copy first, with nothing before it. When a count or set is
 ## References
 
 - [terms-and-tiers.md](references/terms-and-tiers.md): load for a full pricing section or any trial, renewal or guarantee wording, for short before-and-after pairs.
+- [free-items-trials-reasons.md](references/free-items-trials-reasons.md): load for a free guide or lead magnet, a token price, a referral or other offer asking effort, a reason to act now, or a comparison with a rival.

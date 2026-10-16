@@ -1,6 +1,6 @@
 ---
 name: typesetting
-description: Use whenever text is being set, judged or fixed, in any language and at any length - "make it easier to read", "feels cramped", "looks amateur", "more editorial", "the type is too small", "numbers won't line up". Covers body size, line length, line height, size scales, heading and paragraph spacing, prices and figures, all-caps labels, justification, dark-theme text, quotes and dashes, in CSS, pages, documents and designs. Not for choosing typefaces (typeface-selection), ranking a whole view (visual-hierarchy), palettes (color-palette) or logos (brand-identity).
+description: Use whenever text is being set, judged or fixed, in any language and at any length - "make it easier to read", "feels cramped", "looks amateur", "more editorial", "the type is too small", "numbers won't line up". Covers body size, line length, line height, size scales, heading and paragraph spacing, prices and figures, all-caps labels, justification, dark-theme text, quotes and dashes, in CSS, pages, documents and designs. Not for choosing typefaces (typeface-selection), ranking a whole view (visual-hierarchy), palettes (color-palette), table layout (data-tables) or logos (brand-identity).
 ---
 
 # Typesetting
@@ -40,15 +40,15 @@ A short request ("this looks cramped") is not a small one. Check the whole text 
 
 ## Defaults, and when to change them
 
-**Body size.** 1rem for reading text, 1.125 to 1.25rem on long-form reading pages; never fixed px on the root. Dense tools may drop secondary text to about 14px if it stays legible. Anything read to act (errors, prices, instructions, field help) stays at body size; about 12px is for metadata and captions.
+**Body size.** 1rem for reading text, 1.125 to 1.25rem on long-form reading pages; never fixed px on the root. Typical comfortable screen body is about 15 to 18px; text under about 14px is for labels and captions, and 12px is the floor for secondary metadata (13px in dense tables). Anything read to act (errors, prices, instructions, field help) stays at body size. These are typical ranges, not rules: leave a design already inside them alone.
 
 **Measure.** 45 to 75 characters for continuous reading, near 60 to 70; 35 to 50 in narrow columns and cards. Cap the text element (`max-width: 65ch`), not the page wrapper. Captions, labels, titles, code, logs and table cells are not prose and are exempt.
 
-**Leading.** Unitless, about 1.5 for screen body text and 1.1 to 1.25 for headings; it falls as size rises and rises with line length, large x-height or heavy faces. If lines run long, shorten the line before adding leading. Keep line space clearly larger than word space.
+**Leading.** Unitless, about 1.5 for screen body text and 1.1 to 1.25 for headings and about 0.9 to 1.15 for display headlines (about 40px and up), where body leading on a big hero is a common miscalibration; it falls as size rises and rises with line length, large x-height or heavy faces. If lines run long, shorten the line before adding leading. Keep line space clearly larger than word space.
 
-**Scale.** Name the roles (display, title, section, body, small, label, code), give each one size: four to six in all. Ratio about 1.2 to 1.25 for interfaces, up to about 1.4 for editorial and marketing display only. Round to tidy rem values. Heading levels follow the outline; looks come from classes, so two levels may share a size. On small screens big sizes shrink faster than small ones (`clamp()` with a rem floor).
+**Scale.** Name the roles (display, title, section, body, small, label, code), give each one size: four to six in all. Ratio about 1.2 to 1.25 for interfaces, up to about 1.4 for editorial and marketing display only. Round to tidy rem values. Heading levels follow the outline; looks come from classes, so two levels may share a size. On small screens big sizes shrink faster than small ones (`clamp()` with a rem floor); phone headlines run about half to three-quarters of desktop size.
 
-**One variable per step.** Add emphasis as space, then weight, then size; as size rises, weight may fall. A pull quote, caption or total differs from body by one or two properties, not all of them. One device sets off a quotation: italic, indent or size, not all three. Change for a hero, where a big jump is the point.
+**Move one step at a time.** Add emphasis as more space first, then weight, then size. Large bold text looks heavier than it is, so headlines rarely need the heaviest weight. A pull quote, caption or total differs from body by one or two properties, not all of them. A hero is the exception, where a big jump is the point.
 
 **Spacing.** About twice as much space above a heading as below it. Separate paragraphs by a gap of half to one line or a first-line indent of about 1em, never both; no indent after a heading. Print and ebook flip this: indents, no gaps, justified with hyphenation.
 

@@ -1,0 +1,1 @@
+The form should preserve everything they entered, not discard it. On Submit, detect the expired session, show a prompt to re-authenticate (modal or new tab) without leaving the page, then automatically resubmit the retained data once they log back in. Ideally, also autosave drafts periodically and warn before expiry.

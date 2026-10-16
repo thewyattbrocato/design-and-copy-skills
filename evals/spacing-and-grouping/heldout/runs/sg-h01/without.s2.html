@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palabra – Profile settings</title>
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --card: #ffffff;
+    --ink: #1f2430;
+    --muted: #5f6675;
+    --line: #dcd8cf;
+    --brand: #d9480f;
+    --brand-dark: #b53a09;
+    --focus: #1c5fd4;
+    --danger: #b42318;
+    --danger-bg: #fef3f2;
+    --danger-line: #f3b8b2;
+    --ok: #1a7f4b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181d;
+      --card: #20232a;
+      --ink: #f0eee9;
+      --muted: #a4aab8;
+      --line: #383d48;
+      --brand: #ff8a50;
+      --brand-dark: #ffa070;
+      --focus: #7aa7ff;
+      --danger: #ff8f84;
+      --danger-bg: #2c1c1b;
+      --danger-line: #6b2f2a;
+      --ok: #5fd195;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    padding: 32px 16px 64px;
+  }
+  .panel {
+    max-width: 560px;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  header { margin-bottom: 24px; }
+  .brand {
+    font-weight: 700;
+    letter-spacing: .02em;
+    color: var(--brand);
+    font-size: .875rem;
+    text-transform: uppercase;
+  }
+  h1 { font-size: 1.5rem; margin: 4px 0 4px; line-height: 1.25; }
+  header p { margin: 0; color: var(--muted); font-size: .9375rem; }
+  fieldset { border: 0; padding: 0; margin: 0 0 24px; }
+  legend {
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+    padding: 0;
+    margin-bottom: 12px;
+  }
+  .field { margin-bottom: 16px; }
+  label.lbl { display: block; font-weight: 600; font-size: .9375rem; margin-bottom: 6px; }
+  .hint { color: var(--muted); font-size: .8125rem; margin: 4px 0 0; }
+  input[type="text"], input[type="time"], select {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  input:hover, select:hover { border-color: var(--muted); }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } .panel { padding: 20px; } }
+
+  .toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .toggle:last-child { border-bottom: 1px solid var(--line); }
+  .toggle .t-title { font-weight: 600; font-size: .9375rem; }
+  .toggle .t-desc { color: var(--muted); font-size: .8125rem; }
+  .switch { position: relative; flex: none; width: 48px; height: 28px; }
+  .switch input {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    margin: 0; opacity: 0; cursor: pointer; z-index: 1;
+  }
+  .track {
+    position: absolute; inset: 0;
+    background: var(--line);
+    border-radius: 999px;
+    transition: background .15s;
+  }
+  .track::after {
+    content: "";
+    position: absolute; top: 3px; left: 3px;
+    width: 22px; height: 22px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,.35);
+    transition: transform .15s;
+  }
+  .switch input:checked + .track { background: var(--ok); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+  .switch input:focus-visible + .track { outline: 3px solid var(--focus); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .track, .track::after { transition: none; } }
+
+  .danger {
+    border: 1px solid var(--danger-line);
+    background: var(--danger-bg);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .danger h2 { margin: 0 0 4px; font-size: 1rem; color: var(--danger); }
+  .danger p { margin: 0 0 12px; font-size: .875rem; color: var(--muted); }
+  .btn {
+    font: inherit;
+    font-weight: 600;
+    min-height: 44px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn-danger { background: transparent; color: var(--danger); border-color: var(--danger); }
+  .btn-danger:hover { background: var(--danger); color: var(--card); }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-primary:hover { background: var(--brand-dark); }
+  @media (prefers-color-scheme: dark) { .btn-primary { color: #1a1208; } }
+  .actions { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
+  #status { color: var(--ok); font-size: .875rem; font-weight: 600; margin-right: auto; }
+  #confirm { display: none; margin-top: 12px; }
+  #confirm.open { display: block; }
+  #confirm .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .btn-solid-danger { background: var(--danger); color: var(--card); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn-solid-danger:disabled { opacity: .5; cursor: not-allowed; }
+</style>
+</head>
+<body>
+<main class="panel">
+  <header>
+    <div class="brand">Palabra</div>
+    <h1>Profile settings</h1>
+    <p>Manage how Palabra looks, sounds and nudges you.</p>
+  </header>
+
+  <form id="form" novalidate>
+    <fieldset>
+      <legend>Profile</legend>
+      <div class="field">
+        <label class="lbl" for="name">Display name</label>
+        <input type="text" id="name" name="name" value="Alex Rivera" maxlength="40" autocomplete="nickname">
+        <p class="hint">Shown on leaderboards and to friends.</p>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="lbl" for="native">Native language</label>
+          <select id="native" name="native">
+            <option>English</option>
+            <option>Spanish</option>
+            <option>French</option>
+            <option>German</option>
+            <option>Portuguese</option>
+            <option>Mandarin</option>
+            <option>Japanese</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl" for="goal">Learning goal</label>
+          <select id="goal" name="goal">
+            <option>Travel &amp; conversation</option>
+            <option>Career &amp; business</option>
+            <option>School or exams</option>
+            <option>Family &amp; relationships</option>
+            <option>Just for fun</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Preferences</legend>
+      <div class="field">
+        <label class="lbl" for="time">Daily reminder time</label>
+        <input type="time" id="time" name="time" value="19:00">
+        <p class="hint">We'll send a gentle nudge at this time in your local timezone.</p>
+      </div>
+      <div class="toggle">
+        <div>
+          <div class="t-title" id="l-sound">Sound effects</div>
+          <div class="t-desc" id="d-sound">Play sounds for correct answers and level-ups.</div>
+        </div>
+        <span class="switch">
+          <input type="checkbox" role="switch" id="sound" checked aria-labelledby="l-sound" aria-describedby="d-sound">
+          <span class="track"></span>
+        </span>
+      </div>
+      <div class="toggle">
+        <div>
+          <div class="t-title" id="l-email">Streak emails</div>
+          <div class="t-desc" id="d-email">Get an email when your streak is at risk.</div>
+        </div>
+        <span class="switch">
+          <input type="checkbox" role="switch" id="email" checked aria-labelledby="l-email" aria-describedby="d-email">
+          <span class="track"></span>
+        </span>
+      </div>
+    </fieldset>
+
+    <section class="danger" aria-labelledby="del-h">
+      <h2 id="del-h">Delete account</h2>
+      <p>Permanently remove your account, progress and streak. This can't be undone.</p>
+      <button type="button" class="btn btn-danger" id="del" aria-expanded="false" aria-controls="confirm">Delete account…</button>
+      <div id="confirm">
+        <label class="lbl" for="typed">Type <strong>DELETE</strong> to confirm</label>
+        <input type="text" id="typed" autocomplete="off">
+        <div class="btns">
+          <button type="button" class="btn btn-solid-danger" id="really" disabled>Permanently delete</button>
+          <button type="button" class="btn btn-ghost" id="cancel">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="actions">
+      <span id="status" role="status" aria-live="polite"></span>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </form>
+</main>
+
+<script>
+  var form = document.getElementById('form');
+  var status = document.getElementById('status');
+  var confirmBox = document.getElementById('confirm');
+  var del = document.getElementById('del');
+  var typed = document.getElementById('typed');
+  var really = document.getElementById('really');
+  var timer;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('name');
+    if (!name.value.trim()) {
+      status.style.color = 'var(--danger)';
+      status.textContent = 'Please enter a display name.';
+      name.focus();
+      return;
+    }
+    status.style.color = 'var(--ok)';
+    status.textContent = 'Settings saved ✓';
+    clearTimeout(timer);
+    timer = setTimeout(function () { status.textContent = ''; }, 3000);
+  });
+
+  del.addEventListener('click', function () {
+    var open = confirmBox.classList.toggle('open');
+    del.setAttribute('aria-expanded', open);
+    if (open) typed.focus();
+  });
+  typed.addEventListener('input', function () {
+    really.disabled = typed.value !== 'DELETE';
+  });
+  document.getElementById('cancel').addEventListener('click', function () {
+    confirmBox.classList.remove('open');
+    del.setAttribute('aria-expanded', 'false');
+    typed.value = '';
+    really.disabled = true;
+    del.focus();
+  });
+  really.addEventListener('click', function () {
+    status.style.color = 'var(--danger)';
+    status.textContent = 'Demo only: account deletion would happen here.';
+  });
+</script>
+</body>
+</html>

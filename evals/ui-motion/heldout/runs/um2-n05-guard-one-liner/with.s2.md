@@ -1,0 +1,1 @@
+Aim for roughly 150–250 ms: fast enough to feel instant, but with just enough motion to show where the menu came from. Keep closing quicker than opening (around 100–150 ms), and use ease-out so it starts responding right away.

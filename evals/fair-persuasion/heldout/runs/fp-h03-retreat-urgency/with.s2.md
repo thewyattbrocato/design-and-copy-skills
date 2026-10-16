@@ -1,52 +1,60 @@
-I won't write the fake countdown, the "only 2 spots left" line, or the Saturday price jump to $2,300. If none of it is true, it's a false claim made to get people to pay. Writers who book on it can be misled about what they're buying, and retreat communities are small enough that people compare notes. Everything below is true, and it can still create urgency.
+I won't write the fake countdown, the "only 2 spots left" line, or the Saturday price jump. None of it is true, and people would be paying $1,850 based on made-up facts. Writers talk to each other, and a retreat lives on word of mouth. The copy below fills the space with urgency that's real.
 
 ---
 
 ## Page copy
 
-**Headline:** Six Nights to Write. Wren Hollow Cabins, Adirondacks, April.
+**Wren Hollow Writing Retreat**
+*Six nights in the Adirondacks. Twelve writers. One job: write.*
 
-**Subhead:** A small-group writing retreat: 12 writers, six nights, and nothing to do but the work.
+**April [dates] · Wren Hollow Cabins, Adirondacks, NY**
+**$1,850 per person · all meals included · 12 spots**
 
-**Hero line:** Leave the inbox, the laundry, and the dinner question behind. Come write in the mountains.
-
-**What's included**
-- 6 nights at Wren Hollow Cabins in the Adirondacks
-- Shared cabin lodging
-- All meals included
-- A group capped at 12 writers
-
-**Why it's small**
-We cap the retreat at 12 so everyone gets room to work and real conversation at the table. Once the cabins are full, registration closes.
-
-**Price**
-**$1,850 per person.** It covers lodging, meals, and everything on the schedule.
-
-**[Reserve your spot]**
-
-**Who it's for**
-Writers at any stage who want focused time, good company, and a place with no distractions. Bring a draft, a half-formed idea, or a blank page.
-
-**A typical day** *(edit to match your real schedule)*
-- Morning: quiet writing time
-- Midday: a shared meal
-- Afternoon: [workshop / one-on-one / free time]
-- Evening: dinner, reading, conversation
-
-**FAQ**
-- **Are the cabins shared?** Yes. [Add how many per cabin and the bed setup.]
-- **Are meals included?** All of them. Tell us about dietary needs when you register.
-- **How many people attend?** 12 at most.
-- **What's the refund policy?** [Add yours.]
+[Reserve your spot]
 
 ---
 
-## Honest ways to create urgency
+**What this is**
+Six nights in the woods with eleven other writers. You get quiet mornings for your own work, shared meals at night, and no obligations in between. Bring a manuscript, a half-finished idea, or a blank page.
 
-1. **Real spot count.** If 7 of 12 are taken, say "5 of 12 spots remaining" and update it as people book. If it's true, it works.
-2. **Real deadline.** Choose an actual early-bird date and price, such as $1,850 until [date], then $2,000. Then honor it. You can also set a real registration close date, since you need headcounts and deposits before April.
-3. **Real reasons.** Say why the cap is 12, such as cabin capacity or workshop quality. Capacity is a better pitch than a manufactured countdown.
-4. **Waitlist.** Once you're full, a waitlist shows demand honestly and helps you fill cancellations.
-5. **Direct outreach.** For a retreat this size, a personal email to past attendees or your list usually fills more spots than page tricks.
+**What's included**
+- 6 nights in a shared cabin
+- All meals, from breakfast through dinner
+- [Workshops, readings, or one-on-one sessions, if you offer them]
+- A group capped at 12, so no one gets lost
 
-If you want, tell me the real deadline or tier, and I'll add the matching banner copy and a countdown that points to the real date.
+**A typical day**
+- Morning: quiet writing hours
+- Midday: lunch together, then free time for walks, the lake, or more writing
+- Evening: dinner, and [optional readings or conversation]
+
+**Where you'll stay**
+Wren Hollow Cabins are shared, rustic, and quiet. [Add details: beds per cabin, bathrooms, heat, wifi. Be specific, because people book on this.]
+
+**Who it's for**
+Writers at any stage who want focused time and good company. [Genres? Experience level?]
+
+**The details**
+- **Price:** $1,850 per person, meals included
+- **Group size:** 12 writers, maximum
+- **Getting there:** [nearest airport or train, any shuttle]
+- **Cancellation:** [your real policy]
+
+**Reserve your spot**
+[Deposit amount] holds your place. Balance due [date].
+
+[Reserve your spot]
+
+---
+
+## Real urgency you can use
+
+All of these work, and they're true:
+
+- **Real early-bird price.** Pick a price and date you'll honor, like "$1,850 through [date], then $2,100." Only post it if you'll actually charge the higher price afterward.
+- **Real deadline.** If you need a headcount by a certain date to confirm the cabins, say so: "Registration closes [date]." A countdown to that date is fine.
+- **Live spot count.** "7 of 12 spots remaining," updated as people book. Once a few spots are gone, it's the strongest signal you can show, and it's true.
+- **Small group as the reason.** "Capped at 12 so every writer gets real attention" gives people a reason to decide soon.
+- **Direct outreach.** Past attendees, your email list, and writing groups usually fill a retreat faster than page tricks do. I can draft a launch email or a short social post if you want.
+
+If you give me real dates and a real early-bird price, I'll add a countdown and a spots-remaining line to the page.

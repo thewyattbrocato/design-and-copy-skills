@@ -40,6 +40,11 @@ class CheckLinksTest(unittest.TestCase):
             t.write("withdrawn/x/SKILL.md", "[bad](references/none.md)\n")
             self.assertEqual(run_main(mod, t.root)[0], 1)
 
+    def test_withdrawn_evidence_folders_are_not_scanned(self):
+        with TempRoot() as t:
+            t.write("withdrawn/x-v1-evidence/runs/t1/with.md", "[ignored](missing.md)\n")
+            self.assertEqual(run_main(mod, t.root)[0], 0)
+
     def test_top_level_and_evals_docs_are_scanned_but_run_folders_are_not(self):
         with TempRoot() as t:
             t.write("CONTRIBUTING.md", "[bad](nope.md)\n")

@@ -1,0 +1,129 @@
+[
+  {
+    "id": "polish-h01",
+    "kind": "build",
+    "prompt": "My tide lookup page works but it feels rough and I want to put it in front of the harbor club members on Friday. Can you make it feel finished? Keep it one self-contained HTML file, inline CSS and JS, system fonts, nothing loaded from outside. Here is what I have:\n\n<!doctype html>\n<html><head><title>Tide lookup</title>\n<style>\nbody{font-family:sans-serif;margin:20px}\ninput,button{font-size:16px;padding:6px}\ntable{border-collapse:collapse;margin-top:16px}\ntd,th{border:1px solid #ccc;padding:4px 10px}\n</style></head><body>\n<h1>Tide lookup</h1>\n<input id=\"port\" placeholder=\"Port name\">\n<button onclick=\"go()\">Search</button>\n<div id=\"out\"></div>\n<script>\nconst DATA={\"Kellmouth\":[[\"04:12\",\"High\",\"4.1 m\"],[\"10:30\",\"Low\",\"0.6 m\"],[\"16:44\",\"High\",\"4.3 m\"],[\"22:51\",\"Low\",\"0.5 m\"]],\"Port Arnley\":[[\"05:02\",\"High\",\"3.2 m\"],[\"11:19\",\"Low\",\"0.9 m\"]]};\nfunction go(){\n  const p=document.getElementById('port').value;\n  const rows=DATA[p]||[];\n  let h='<table><tr><th>Time</th><th>Tide</th><th>Height</th></tr>';\n  rows.forEach(r=>{h+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>'});\n  document.getElementById('out').innerHTML=h+'</table>';\n}\n</script></body></html>",
+    "rubric": [
+      "Searching a port that is not in the data (or an empty box) shows a plain-language message saying so, not an empty table with only a header row.",
+      "The page has a visible first-use state before any search, and the search shows some in-progress or result-arrived feedback rather than the table just appearing.",
+      "The input has a real label, Enter submits the search, and keyboard focus is clearly visible on the input and button.",
+      "The result table is readable: times and heights line up, high and low tides are distinguishable by more than color alone, and the page holds up at a 360px wide viewport.",
+      "The two known ports and their data still work exactly as before; the page is not rebuilt into something unrelated (no new frameworks, no invented ports presented as real data).",
+      "Everything is in one file with inline CSS and JS, system fonts and no external assets."
+    ]
+  },
+  {
+    "id": "polish-h02",
+    "kind": "build",
+    "prompt": "Our climbing gym's waiver sign-up form technically works, but front desk says people get stuck on it and it looks unfinished. Please polish it so it's ready for the weekend. One HTML file, inline CSS and JS only, system fonts, no external files. Current version:\n\n<form id=\"f\">\n<h2>Sign the waiver</h2>\n<input name=\"name\" placeholder=\"Name\"><br>\n<input name=\"email\" placeholder=\"Email\"><br>\n<input name=\"dob\" placeholder=\"Date of birth\"><br>\n<input type=\"checkbox\"> I have read the waiver<br>\n<button>Submit</button>\n</form>\n<script>\ndocument.getElementById('f').onsubmit=e=>{e.preventDefault();alert('done')}\n</script>",
+    "rubric": [
+      "Each field has a visible label (not placeholder-only) and an appropriate input type or autocomplete hint (email, date of birth, name).",
+      "Submitting with missing or malformed fields shows specific, human error messages next to the field, and focus moves to the first problem.",
+      "There is a distinct in-progress state while submitting and a real success state in the page that replaces the alert, telling the person what happens next.",
+      "Checkbox and button have clearly visible keyboard focus and hit areas comfortable for a phone at the front desk; the layout works at 360px wide.",
+      "The polish stays a waiver form: it does not add unrelated fields, marketing, or heavy decoration, and the field set (name, email, date of birth, read-the-waiver) is preserved.",
+      "One self-contained file with inline CSS and JS, system fonts, no external assets."
+    ]
+  },
+  {
+    "id": "polish-h03",
+    "kind": "critique",
+    "prompt": "We're releasing our freelancer invoicing app to paying customers next week. Core features all work. I'm too close to it. What's still missing before we ship? Here's what exists:\n\n- Invoice list (table: client, amount, due date, status). Sorted by due date. Has a search box.\n- Invoice editor: client picker, line items, tax, notes, Save and Send buttons.\n- Send flow: a modal that asks for the recipient email and shows \"Send\".\n- Dashboard with three numbers: outstanding, overdue, paid this month.\n- Settings: business name, logo upload, default payment terms.\n- Light theme only. Tested on a laptop in Chrome.\n\nBe straight with me about what you can and can't tell from this.",
+    "rubric": [
+      "Names concrete missing states for the described screens (for example first-run empty list and empty dashboard, loading, failed send, failed save, logo upload errors, search with no results) rather than generic advice.",
+      "Orders the findings so the ones likely to hurt real customers on launch week come first and the cosmetic ones last.",
+      "Covers more than states: at least some of keyboard and screen-reader access of the modal and table, narrow screens or phones, and long content (long client names, many line items), tied to the described screens.",
+      "Is honest about limits: says what cannot be judged from a text description (actual contrast, motion, spacing) instead of inventing visual defects.",
+      "Does not suggest redesigning working flows or adding new features; it acknowledges what already seems fine.",
+      "Reads as a usable checklist: specific enough that someone could act on each item without asking what it means."
+    ]
+  },
+  {
+    "id": "polish-h04",
+    "kind": "polish",
+    "prompt": "Dark mode shipped on our app last week and support is already getting complaints about the confirm-delete dialog. I need it tidied up, not redesigned. Fix whatever needs fixing and tell me what you changed. Here's the code:\n\n<div class=\"overlay\" id=\"ov\">\n  <div class=\"dialog\">\n    <div class=\"title\">Delete project?</div>\n    <p>This removes \"Harvest Planner\" and its 14 tasks.</p>\n    <span class=\"btn cancel\" onclick=\"closeD()\">Cancel</span>\n    <span class=\"btn del\" onclick=\"del()\">Delete</span>\n  </div>\n</div>\n<style>\n:root{--bg:#16181d;--text:#9aa0a6;--panel:#1f2229}\n.overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);display:grid;place-items:center}\n.dialog{background:var(--panel);color:var(--text);padding:24px;border-radius:10px;width:420px;animation:pop .6s ease}\n.title{font-size:18px;color:#555}\n.btn{display:inline-block;padding:8px 14px;margin-right:8px;cursor:pointer}\n.cancel{color:#444}\n.del{background:#7a1f1f;color:#8c3b3b}\n@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}\n</style>",
+    "rubric": [
+      "Raises the low-contrast text and button colors in the dark theme to readable levels (title, body, Cancel, Delete label) and states or shows the colors used.",
+      "Replaces the clickable spans with real buttons (or equivalent) so the dialog works from the keyboard, and adds a visible focus indicator.",
+      "Handles dialog behavior: Escape closes it, focus moves into it when it opens and returns to the trigger on close, and it is exposed as a dialog to screen readers with a name.",
+      "Tones down the entrance animation (shorter, gentler, no scale from 50%) and respects reduced-motion preference.",
+      "Changes are limited to what is needed: same copy, same width and structure, same destructive/cancel pairing, with Delete still clearly the destructive action and Cancel the safe default.",
+      "Closes with a short list of what changed, not a long essay."
+    ]
+  },
+  {
+    "id": "polish-h05",
+    "kind": "polish",
+    "prompt": "I'm about to merge this notification settings panel. A teammate already went through it twice, so I just want a last finishing pass before release. Look it over and fix what's still needed. Here's the component:\n\n<section aria-labelledby=\"n-h\" class=\"panel\">\n  <h2 id=\"n-h\">Notifications</h2>\n  <p class=\"hint\" id=\"n-d\">Choose what we email you about. Changes save automatically.</p>\n  <div role=\"group\" aria-describedby=\"n-d\">\n    <label class=\"row\"><span>Order updates</span><input type=\"checkbox\" role=\"switch\" checked></label>\n    <label class=\"row\"><span>Weekly digest</span><input type=\"checkbox\" role=\"switch\"></label>\n    <label class=\"row\"><span>Product news</span><input type=\"checkbox\" role=\"switch\" disabled aria-describedby=\"n-lock\"></label>\n    <p class=\"hint\" id=\"n-lock\">Product news is managed by your workspace admin.</p>\n  </div>\n  <p class=\"status\" role=\"status\" aria-live=\"polite\"><!-- \"Saved\" or \"Couldn't save. Try again.\" injected here --></p>\n</section>\n<style>\n:root{--text:#1d2330;--muted:#5a6475;--line:#d9dde5;--accent:#2457d6}\n@media (prefers-color-scheme:dark){:root{--text:#e8ebf2;--muted:#a3adbf;--line:#2e3646;--accent:#7aa2ff}}\n.panel{max-width:34rem;padding:1.5rem;color:var(--text)}\n.row{display:flex;justify-content:space-between;gap:1rem;padding:.875rem 0;border-bottom:1px solid var(--line);min-height:44px}\n.hint{color:var(--muted);font-size:.875rem}\ninput:focus-visible{outline:2px solid var(--accent);outline-offset:2px}\ninput:disabled+*,input:disabled{opacity:.6}\n@media (prefers-reduced-motion:reduce){*{transition:none!important}}\n</style>",
+    "rubric": [
+      "Recognizes that the component already handles labels, focus, the disabled explanation, dark theme, live status and reduced motion, and says it is essentially ready.",
+      "Makes no more than a few small, justified changes (or none), each tied to a real issue, and leaves the structure, copy, tokens and layout as they are.",
+      "Does not add new features, new states nobody asked for, a redesign, animations, or a rewrite of the markup; it does not pad the answer with invented problems.",
+      "If it suggests anything, the suggestion is something actually true of the code shown (for example an unclear bit of the status message flow), not a defect that the code already handles.",
+      "Keeps the answer short and plain about the verdict up front."
+    ]
+  },
+  {
+    "id": "polish-h06",
+    "kind": "choose",
+    "prompt": "We have an address autocomplete on checkout. The lookup is local and comes back in about 120 ms on average, occasionally up to 600 ms on bad connections. Design wants a skeleton loader in the dropdown, engineering says a spinner, and I'm tempted to just add both so it feels polished. What should we actually do?",
+    "rubric": [
+      "Gives a clear recommendation rather than listing options: for a typically ~120 ms lookup, do not flash a skeleton or spinner on every keystroke.",
+      "Explains the reasoning in observable terms: a loader that appears and disappears within a fraction of a second reads as flicker, so show nothing or delay any indicator until the wait is noticeably long.",
+      "Covers the slow case (up to ~600 ms or worse): for example keep the previous results visible, a small unobtrusive indicator after a short delay, and not shifting the layout.",
+      "Mentions what else matters more for this control than the loader, such as the no-results and error states, keyboard use of the list, or screen-reader announcement of results.",
+      "Says not to add both loaders, and is short enough to be acted on."
+    ]
+  },
+  {
+    "id": "polish-h07",
+    "kind": "layout",
+    "prompt": "Users on small phones say our \"Saved routes\" list is broken. On my laptop it looks fine. A route name like \"Ödenwaldstraße–Hauptbahnhof via Schlossbergtunnel (scenic)\" overflows and pushes the whole page sideways, and the distance badge gets squished. Here's the CSS and markup:\n\n<li class=\"route\">\n  <img class=\"thumb\" src=\"map.png\" width=\"64\" height=\"64\" alt=\"\">\n  <div class=\"info\">\n    <div class=\"name\">Ödenwaldstraße–Hauptbahnhof via Schlossbergtunnel (scenic)</div>\n    <div class=\"meta\">12.4 km · 38 min</div>\n  </div>\n  <span class=\"badge\">12.4 km</span>\n  <button class=\"more\">⋯</button>\n</li>\n.route{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid #e3e3e3}\n.info{flex:1}\n.name{font-weight:600;white-space:nowrap}\n.badge{background:#eef;border-radius:12px;padding:2px 8px}\n.more{width:28px;height:28px}\n\nFix it for narrow screens without changing how it looks on desktop. What do I change?",
+    "rubric": [
+      "Identifies the actual cause: the nowrap name inside a flex child that is allowed to grow beyond its container (the info block cannot shrink below its content), so the row overflows.",
+      "Gives a concrete working fix to the supplied CSS: lets the text container shrink and either wraps or truncates the long name, and keeps the badge and the more button from shrinking.",
+      "Keeps the desktop appearance unchanged and does not rewrite the component or switch to a different layout system for the whole list.",
+      "Addresses the long-content case beyond one string: very long words with no break points, and the choice between wrapping and ellipsis (and that truncated names should remain readable somewhere).",
+      "Notes that the ⋯ button is too small to tap comfortably on a phone, or fixes the touch target, without making the row look different on desktop.",
+      "Presents the changed CSS clearly enough to paste in."
+    ]
+  },
+  {
+    "id": "polish-h08",
+    "kind": "explain",
+    "prompt": "I'm a solo dev with a small booking app for dog groomers, and I have two days before launch. Everything works in the happy path. How do I use the time for the finishing touches? Keep it under 150 words, please.",
+    "rubric": [
+      "The answer is 150 words or fewer.",
+      "Gives a prioritized order, not an unordered list, with the highest-risk things first (for example the failure and empty states of booking, forms and errors, mobile use).",
+      "Items are specific to a booking app (double booking or slot taken, payment or confirmation failure, empty calendar, cancellation) rather than generic design advice.",
+      "Includes at least one non-visual item such as keyboard use, screen-reader labels or contrast, and at least one item about what to leave alone or not start in two days.",
+      "Does not ask clarifying questions in place of answering."
+    ]
+  },
+  {
+    "id": "polish-h09",
+    "kind": "build",
+    "prompt": "Build me a tiny triage queue for our support team's internal tool, one HTML file with inline CSS and JS, system fonts, no external anything. A list of about eight incoming tickets (invent plausible fake ones for a bike-rental company). Agents work it all day with the keyboard: arrow keys to move, A to assign to me, D to dismiss, and the ticket disappears from the queue. Make it feel finished.",
+    "rubric": [
+      "Screenshot shows a dense, scannable queue of about eight tickets with a clear current-row indication that does not rely on color alone, and the keyboard shortcuts are visible somewhere on the page.",
+      "Assigning and dismissing work from the keyboard and the removed ticket leaves the list without a jarring jump; the selection moves sensibly to a neighbor row.",
+      "Motion on these repeated actions is minimal or absent (no long fades or bounces on every dismiss) and a reduced-motion preference is respected.",
+      "There is an empty state for when the queue is cleared, and some way to recover from an accidental dismiss (undo or a visible way to restore), not just silent removal.",
+      "Rows hold up with a very long ticket subject (truncation or wrapping that does not break the layout), and the page works at a narrow width.",
+      "One self-contained file, inline CSS and JS, system fonts, no external assets."
+    ]
+  },
+  {
+    "id": "polish-h10",
+    "kind": "build",
+    "prompt": "Make me a bulk photo upload panel for our building surveyors to attach site photos to an inspection, as a single self-contained HTML file with inline CSS and JS, system fonts and no external assets. Simulate the uploads in JS (some succeed, one fails). I don't want a mockup of one happy state; it should behave like the real thing, ready for customers.",
+    "rubric": [
+      "The page shows several files across different states at once (waiting, uploading with progress, done, failed), each distinguishable by text or icon and not only by color.",
+      "The failed file shows what went wrong in plain language and offers a retry, and the other uploads are unaffected.",
+      "There is a sensible idle state with a clear drop-or-choose action that works with the keyboard, plus a visible focus indicator and a disabled state for actions that do not apply (for example Retry or Clear when nothing qualifies).",
+      "Progress is communicated accessibly (a text percentage or status, not only a bar) and updates are announced or at least readable; the layout holds up at a narrow phone width with long filenames.",
+      "Colors give readable contrast on the page as rendered, and the design reads as one cohesive finished tool rather than a pile of default controls.",
+      "One self-contained file with inline CSS and JS, system fonts, no external assets."
+    ]
+  }
+]

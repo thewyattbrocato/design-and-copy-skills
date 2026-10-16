@@ -1,17 +1,27 @@
-**Tarn R2 Front Light**
+**Tallybee: Budget for Lumpy Income**
 
-Bright enough to be seen, light enough to forget. The Tarn R2 puts out up to 400 lumens, with three modes: high for dark roads, low for longer rides, and flash for getting noticed. Pick the mode to suit the ride, from unlit lanes to lit city streets.
+Know what's safe to spend this week, even when your income changes every month.
 
-In our own bench tests it ran about 4 hours on high and about 14 hours on low, and it recharges over USB-C.
+Tallybee is a budgeting app for freelancers. It sets tax money aside from every client payment, so a big invoice doesn't turn into a surprise tax bill.
 
-At just 62 g, it won't weigh down your bars, and the tool-free clamp fits handlebars from 22 to 35 mm.
+**HOW IT WORKS**
 
-It's IPX4 rated against splashes. As Marta K. in Bristol put it: "Rode home in a proper downpour and it didn't miss a beat."
+• **Tax money, set aside automatically.** Log a client payment or let it sync, and Tallybee sets aside your tax share right away.
+• **A "safe to spend this week" number.** One figure shows what you can spend after taxes are covered. It's useful in a month with three invoices and in a month with none.
+• **Read-only bank connection.** Link your bank to pull in client payments. Tallybee can see your transactions but can't move your money.
+• **Built for uneven income.** Most budgeting apps assume a steady paycheck. Tallybee doesn't.
 
-Charge it, clamp it, ride.
+**WHO IT'S FOR**
 
-£39, with a 12-month warranty.
+Freelancers, contractors, and independent creatives who get paid by clients on no fixed schedule.
 
-*Notes:*
-- *IPX4 means splash resistance, not full waterproofing. I kept the copy to "splashes" so the rating isn't oversold, and Marta's quote stands as her experience.*
-- *The copy is about 130 words, in your 120–150 range.*
+**PRICING**
+
+Try Tallybee free for two weeks. After that, it's $6 a month.
+
+Tallybee is available on iPhone. Other platforms aren't available yet.
+
+---
+
+- I left out the "$412 a month" line because you haven't measured it. A made-up savings figure in an App Store listing can get the listing flagged and create ad-claim problems. Once you have real data, I can put the number back in the first line with its basis, for example "In a survey of [N] Tallybee users, freelancers saved an average of $X a month."
+- I didn't add "cancel anytime" or any security claims beyond read-only access, because you didn't give me those. Tell me if they're true and I'll add them.

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder Lane Pantry – Saturday Shift Board</title>
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --card: #ffffff;
+    --ink: #1f2a24;
+    --muted: #5b675f;
+    --line: #ddd7c8;
+    --accent: #1f6b4a;
+    --accent-ink: #ffffff;
+    --accent-soft: #dff0e6;
+    --warn: #a3321f;
+    --warn-soft: #fbe6e1;
+    --open: #f3efe3;
+    --focus: #0b57d0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151a17;
+      --card: #1e2521;
+      --ink: #eef2ee;
+      --muted: #a5b1a9;
+      --line: #35403a;
+      --accent: #5fc490;
+      --accent-ink: #0d1f16;
+      --accent-soft: #23402f;
+      --warn: #ff9b86;
+      --warn-soft: #43241e;
+      --open: #262e29;
+      --focus: #8ab4ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding-bottom: 90px;
+  }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  header {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 16px 10px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  h1 { font-size: 1.2rem; margin: 0; line-height: 1.2; }
+  .sub { color: var(--muted); font-size: .9rem; margin-top: 2px; }
+  .me {
+    flex: none; min-height: 44px; padding: 6px 14px;
+    border: 1.5px solid var(--line); border-radius: 22px;
+    background: var(--card); max-width: 46%;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .me.empty { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .controls { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+  .chip {
+    min-height: 40px; padding: 6px 14px; border-radius: 20px;
+    border: 1.5px solid var(--line); background: var(--card);
+  }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .count { margin-left: auto; color: var(--muted); font-size: .9rem; text-align: right; }
+
+  main { padding: 14px 16px; }
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .shift {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 14px;
+  }
+  .shift.mine { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  .time { font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+  .badge {
+    font-size: .85rem; padding: 2px 10px; border-radius: 12px; white-space: nowrap;
+    background: var(--accent-soft); color: var(--accent); font-weight: 600;
+  }
+  .badge.full { background: var(--open); color: var(--muted); }
+  .role { font-size: 1.15rem; font-weight: 600; margin: 2px 0 0; }
+  .note { color: var(--muted); font-size: .9rem; margin: 2px 0 0; }
+  .slots { list-style: none; padding: 0; margin: 10px 0 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .slot {
+    min-height: 36px; padding: 5px 10px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    background: var(--open); font-size: .95rem; overflow: hidden;
+  }
+  .slot span.n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .slot.empty { background: transparent; border: 1.5px dashed var(--line); color: var(--muted); }
+  .slot.me { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+  .slot .x {
+    flex: none; width: 32px; height: 32px; margin: -4px -8px -4px 0;
+    border: 0; background: transparent; color: var(--warn); font-size: 1.2rem; border-radius: 8px;
+  }
+  .act {
+    width: 100%; min-height: 48px; border-radius: 12px; font-weight: 700;
+    border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+  }
+  .act:active { transform: scale(.99); }
+  .act.drop { background: transparent; color: var(--warn); border-color: var(--warn); }
+  .act:disabled { background: var(--open); border-color: var(--line); color: var(--muted); cursor: default; }
+  .empty-msg { text-align: center; color: var(--muted); padding: 30px 10px; }
+
+  .tools { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .tools h2 { font-size: .95rem; margin: 0 0 8px; color: var(--muted); }
+  .tools .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .tools label { display: flex; align-items: center; gap: 8px; min-height: 40px; }
+  .tools input[type=checkbox] { width: 22px; height: 22px; accent-color: var(--accent); }
+  .fine { color: var(--muted); font-size: .85rem; margin: 10px 0 0; }
+
+  dialog {
+    border: 0; border-radius: 16px; padding: 20px; width: min(92vw, 380px);
+    background: var(--card); color: var(--ink);
+  }
+  dialog::backdrop { background: rgba(0,0,0,.45); }
+  dialog h2 { margin: 0 0 4px; font-size: 1.15rem; }
+  dialog p { margin: 0 0 12px; color: var(--muted); font-size: .92rem; }
+  dialog input[type=text] {
+    width: 100%; min-height: 48px; padding: 8px 12px; border-radius: 10px;
+    border: 1.5px solid var(--line); background: var(--bg); font-size: 1.05rem;
+  }
+  dialog .btns { display: flex; gap: 8px; margin-top: 14px; }
+  dialog .btns button { flex: 1; min-height: 48px; border-radius: 12px; font-weight: 700; border: 2px solid var(--accent); }
+  dialog .btns .go { background: var(--accent); color: var(--accent-ink); }
+  dialog .btns .no { background: transparent; color: var(--ink); border-color: var(--line); }
+
+  #toast {
+    position: fixed; left: 12px; right: 12px; bottom: 14px; z-index: 20;
+    max-width: 616px; margin: 0 auto;
+    background: #1f2a24; color: #fff; border-radius: 12px;
+    padding: 8px 8px 8px 16px; display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.3);
+    transition: transform .2s, opacity .2s;
+  }
+  #toast[hidden] { display: flex; opacity: 0; transform: translateY(20px); pointer-events: none; }
+  #toast .msg { flex: 1; font-size: .95rem; }
+  #toast button { min-height: 44px; padding: 0 16px; border: 0; border-radius: 8px; background: #fff; color: #1f2a24; font-weight: 700; }
+  @media (prefers-reduced-motion: reduce) { #toast { transition: none; } .act:active { transform: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Larder Lane Pantry</h1>
+        <div class="sub" id="dateLine">Saturday shifts</div>
+      </div>
+      <button class="me" id="meBtn" type="button"></button>
+    </div>
+    <div class="controls">
+      <button class="chip" id="fOpen" type="button" aria-pressed="false">Open spots</button>
+      <button class="chip" id="fMine" type="button" aria-pressed="false">My shifts</button>
+      <div class="count" id="count" aria-live="polite"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <ul class="list" id="list"></ul>
+
+  <section class="tools">
+    <h2>Coordinator</h2>
+    <div class="row">
+      <label><input type="checkbox" id="coord"> Edit anyone's spot</label>
+      <button class="chip" id="copyBtn" type="button">Copy roster</button>
+      <button class="chip" id="resetBtn" type="button">Clear board</button>
+    </div>
+    <p class="fine">Sign-ups are saved on this phone or browser only. Others won't see them live, so use "Copy roster" to share the list.</p>
+  </section>
+</main>
+
+<dialog id="nameDlg">
+  <form method="dialog" id="nameForm">
+    <h2 id="nameTitle">Your name</h2>
+    <p>We'll remember it so signing up is one tap.</p>
+    <input type="text" id="nameInput" list="known" autocomplete="name" maxlength="30" aria-label="Your name" enterkeyhint="done">
+    <datalist id="known"></datalist>
+    <div class="btns">
+      <button type="button" class="no" id="nameCancel">Cancel</button>
+      <button type="submit" class="go">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" hidden role="status" aria-live="polite">
+  <span class="msg" id="toastMsg"></span>
+  <button type="button" id="toastUndo">Undo</button>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var SHIFTS = [
+    { id: "driver-am",  start: 450, end: 540,  role: "Driver: morning pickups", note: "Grocery store runs. Valid license needed.", cap: 2 },
+    { id: "sorting",    start: 480, end: 600,  role: "Sorting donations",       note: "Check dates, box by type.",               cap: 6 },
+    { id: "bagging",    start: 540, end: 660,  role: "Bagging",                 note: "Fill client bags from the list.",         cap: 5 },
+    { id: "desk",       start: 570, end: 720,  role: "Front desk",              note: "Check-in and greeting. Doors open 9:30.", cap: 3 },
+    { id: "produce",    start: 600, end: 720,  role: "Produce table",           note: "Set up and restock fresh items.",         cap: 4 },
+    { id: "driver-pm",  start: 660, end: 780,  role: "Driver: home deliveries", note: "Deliveries to homebound neighbors.",      cap: 3 },
+    { id: "carryout",   start: 720, end: 810,  role: "Carry-out help",          note: "Help clients carry bags to cars.",        cap: 3 },
+    { id: "cleanup",    start: 720, end: 840,  role: "Cleanup",                 note: "Wipe down, sweep, haul recycling.",       cap: 4 }
+  ];
+  var SEED = {
+    "driver-am": ["Hank"],
+    "sorting": ["Dolores", "Marcus", "Priya", "Tom"],
+    "bagging": ["Aisha", "Ben", "Lucía", "Jo", "Wei"],
+    "desk": ["Rosa", "Dolores"],
+    "produce": ["Marcus"],
+    "driver-pm": [],
+    "carryout": ["Ben"],
+    "cleanup": ["Tom", "Priya"]
+  };
+
+  var KEY = "larder-lane-board-v1", NAME_KEY = "larder-lane-name-v1";
+  var mem = {};
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return mem[k] || null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) { mem[k] = v; } }
+
+  var roster, me = load(NAME_KEY) || "", coord = false, fOpen = false, fMine = false;
+  try { roster = JSON.parse(load(KEY)); } catch (e) { roster = null; }
+  if (!roster || typeof roster !== "object") roster = JSON.parse(JSON.stringify(SEED));
+  SHIFTS.forEach(function (s) { if (!Array.isArray(roster[s.id])) roster[s.id] = []; });
+
+  var $ = function (id) { return document.getElementById(id); };
+  function persist() { save(KEY, JSON.stringify(roster)); }
+  function same(a, b) { return a.trim().toLowerCase() === b.trim().toLowerCase(); }
+  function idx(sid, name) { return roster[sid].findIndex(function (n) { return same(n, name); }); }
+  function mineIn(s) { return !!me && idx(s.id, me) >= 0; }
+
+  function fmt(m) {
+    var h = Math.floor(m / 60), mi = m % 60, ap = h >= 12 ? "pm" : "am";
+    h = h % 12 || 12;
+    return h + (mi ? ":" + (mi < 10 ? "0" : "") + mi : "") + ap;
+  }
+  function range(s) { return fmt(s.start) + " – " + fmt(s.end); }
+
+  // Next Saturday (today if it is Saturday)
+  var d = new Date(); d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7));
+  $("dateLine").textContent = d.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" }) + " shifts";
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function render() {
+    var list = $("list");
+    list.textContent = "";
+    var openTotal = 0, shown = 0;
+    SHIFTS.forEach(function (s) {
+      var people = roster[s.id], left = Math.max(0, s.cap - people.length);
+      openTotal += left;
+      var mine = mineIn(s);
+      if (fOpen && left === 0 && !mine) return;
+      if (fMine && !mine) return;
+      shown++;
+
+      var li = el("li", "shift" + (mine ? " mine" : ""));
+      var head = el("div", "head");
+      head.appendChild(el("div", "time", range(s)));
+      head.appendChild(el("div", "badge" + (left ? "" : " full"), left ? left + " open" : "Full"));
+      li.appendChild(head);
+      li.appendChild(el("h2", "role", s.role));
+      li.appendChild(el("p", "note", s.note));
+
+      var ul = el("ul", "slots");
+      ul.setAttribute("aria-label", "Volunteers for " + s.role);
+      var n = Math.max(s.cap, people.length);
+      for (var i = 0; i < n; i++) {
+        var name = people[i];
+        var isMe = name && me && same(name, me);
+        var slot = el("li", "slot" + (name ? (isMe ? " me" : "") : " empty"));
+        slot.appendChild(el("span", "n", name ? name : "Open"));
+        if (name && coord && !isMe) {
+          var x = el("button", "x", "×");
+          x.type = "button";
+          x.setAttribute("aria-label", "Remove " + name + " from " + s.role);
+          x.dataset.act = "remove"; x.dataset.sid = s.id; x.dataset.name = name;
+          slot.appendChild(x);
+        }
+        ul.appendChild(slot);
+      }
+      li.appendChild(ul);
+
+      var b = el("button", "act");
+      b.type = "button"; b.dataset.sid = s.id;
+      if (mine) {
+        b.classList.add("drop"); b.textContent = "Drop out"; b.dataset.act = "drop";
+        b.setAttribute("aria-label", "Drop out of " + s.role + ", " + range(s));
+      } else if (left === 0) {
+        b.textContent = "Full"; b.disabled = true;
+      } else {
+        b.textContent = "Sign up"; b.dataset.act = "join";
+        b.setAttribute("aria-label", "Sign up for " + s.role + ", " + range(s));
+      }
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+
+    if (!shown) {
+      list.appendChild(el("li", "empty-msg", fMine ? (me ? "You're not signed up for anything yet." : "Add your name to see your shifts.") : "Every spot is taken. Thank you, everyone!"));
+    }
+    $("count").textContent = openTotal ? openTotal + " spots open" : "All spots filled";
+    var meBtn = $("meBtn");
+    meBtn.textContent = me ? me + " ✎" : "Add your name";
+    meBtn.classList.toggle("empty", !me);
+    meBtn.setAttribute("aria-label", me ? "Signed in as " + me + ". Change name" : "Add your name");
+
+    var known = {};
+    SHIFTS.forEach(function (s) { roster[s.id].forEach(function (nm) { known[nm] = 1; }); });
+    $("known").textContent = "";
+    Object.keys(known).sort().forEach(function (nm) { var o = document.createElement("option"); o.value = nm; $("known").appendChild(o); });
+  }
+
+  // Undo
+  var undoSnap = null, toastTimer;
+  function toast(msg, snap) {
+    undoSnap = snap || null;
+    $("toastMsg").textContent = msg;
+    $("toastUndo").style.display = snap ? "" : "none";
+    $("toast").hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $("toast").hidden = true; undoSnap = null; }, snap ? 7000 : 3500);
+  }
+  $("toastUndo").addEventListener("click", function () {
+    if (!undoSnap) return;
+    roster = JSON.parse(undoSnap); undoSnap = null;
+    persist(); render();
+    $("toast").hidden = true;
+  });
+  function snapshot() { return JSON.stringify(roster); }
+
+  // Actions
+  var pendingJoin = null;
+  function join(sid) {
+    if (!me) { pendingJoin = sid; openName(); return; }
+    var s = SHIFTS.filter(function (x) { return x.id === sid; })[0];
+    if (idx(sid, me) >= 0) return;
+    if (roster[sid].length >= s.cap) { toast("Sorry, that shift just filled up."); render(); return; }
+    var snap = snapshot();
+    roster[sid].push(me);
+    persist(); render();
+    var clash = SHIFTS.filter(function (o) { return o.id !== sid && mineIn(o) && o.start < s.end && s.start < o.end; });
+    toast("You're in: " + s.role + ", " + fmt(s.start) + "." + (clash.length ? " Overlaps with " + clash[0].role + "." : ""), snap);
+  }
+  function drop(sid, name) {
+    var i = idx(sid, name); if (i < 0) return;
+    var s = SHIFTS.filter(function (x) { return x.id === sid; })[0];
+    var snap = snapshot();
+    roster[sid].splice(i, 1);
+    persist(); render();
+    toast((same(name, me) ? "You dropped" : name + " removed from") + ": " + s.role + ", " + fmt(s.start) + ".", snap);
+  }
+  $("list").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-act]"); if (!b) return;
+    if (b.dataset.act === "join") join(b.dataset.sid);
+    else if (b.dataset.act === "drop") drop(b.dataset.sid, me);
+    else if (b.dataset.act === "remove") drop(b.dataset.sid, b.dataset.name);
+  });
+
+  // Name dialog
+  var dlg = $("nameDlg");
+  function openName() {
+    $("nameTitle").textContent = me ? "Change your name" : "Who's signing up?";
+    $("nameInput").value = me;
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+    setTimeout(function () { $("nameInput").focus(); $("nameInput").select(); }, 30);
+  }
+  function closeName() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); }
+  $("meBtn").addEventListener("click", function () { pendingJoin = null; openName(); });
+  $("nameCancel").addEventListener("click", function () { pendingJoin = null; closeName(); });
+  dlg.addEventListener("cancel", function () { pendingJoin = null; });
+  $("nameForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = $("nameInput").value.replace(/\s+/g, " ").trim();
+    if (!v) { $("nameInput").focus(); return; }
+    // Match existing spelling/case if this person is already on the board
+    SHIFTS.forEach(function (s) { roster[s.id].forEach(function (nm) { if (same(nm, v)) v = nm; }); });
+    me = v; save(NAME_KEY, me);
+    closeName();
+    var p = pendingJoin; pendingJoin = null;
+    render();
+    if (p) join(p);
+  });
+
+  // Filters & tools
+  $("fOpen").addEventListener("click", function () { fOpen = !fOpen; this.setAttribute("aria-pressed", fOpen); render(); });
+  $("fMine").addEventListener("click", function () { fMine = !fMine; this.setAttribute("aria-pressed", fMine); render(); });
+  $("coord").addEventListener("change", function () { coord = this.checked; render(); });
+  $("resetBtn").addEventListener("click", function () {
+    var snap = snapshot();
+    SHIFTS.forEach(function (s) { roster[s.id] = []; });
+    persist(); render();
+    toast("Board cleared.", snap);
+  });
+  $("copyBtn").addEventListener("click", function () {
+    var lines = [d.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" }) + " – Larder Lane Pantry"];
+    SHIFTS.forEach(function (s) {
+      var p = roster[s.id];
+      lines.push("", range(s) + "  " + s.role + " (" + p.length + "/" + s.cap + ")");
+      lines.push(p.length ? p.join(", ") : "(no one yet)");
+    });
+    var text = lines.join("\n");
+    function ok() { toast("Roster copied."); }
+    function fallback() {
+      var t = document.createElement("textarea");
+      t.value = text; t.style.position = "fixed"; t.style.opacity = "0";
+      document.body.appendChild(t); t.select();
+      var done = false; try { done = document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(t);
+      done ? ok() : toast("Couldn't copy. Long-press to select the roster instead.");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback);
+    else fallback();
+  });
+
+  // Pick up changes made in another tab
+  window.addEventListener("storage", function (e) {
+    if (e.key === KEY) { try { roster = JSON.parse(e.newValue) || roster; } catch (x) {} render(); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

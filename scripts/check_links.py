@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check relative markdown links and images in top-level *.md, docs/, evals/*.md, and every skill folder (skills/, copy-skills/, withdrawn/)."""
+"""Check relative markdown links and images in top-level *.md, docs/, evals/*.md, and every skill folder (skills/, copy-skills/, withdrawn/ skills; evidence-only folders are skipped)."""
 import argparse
 import sys
 from pathlib import Path
@@ -16,7 +16,11 @@ def markdown_files(root):
         yield from sorted(p for p in (root / "evals").glob("*.md") if p.is_file())
     for sub in ("docs", *SKILL_ROOTS):
         if (root / sub).is_dir():
-            yield from sorted((root / sub).rglob("*.md"))
+            for f in sorted((root / sub).rglob("*.md")):
+                # Evidence-only folders in withdrawn/ (no SKILL.md) are archived answers, kept as written.
+                if sub == "withdrawn" and not (root / sub / f.relative_to(root / sub).parts[0] / "SKILL.md").is_file():
+                    continue
+                yield f
 
 
 def main(argv=None):

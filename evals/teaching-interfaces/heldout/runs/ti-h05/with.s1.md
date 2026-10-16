@@ -1,10 +1,10 @@
-I'd ship it nearly as is. It's three short screens, each tied to a real task, and every screen has a Skip. The drop in setup tickets is the evidence I'd trust most. I'd change one word.
+**My verdict is to ship the copy as it is.** It already does what first-run help should. Each screen has one job, and the text sits next to the thing it explains. The steps are real tasks in the product, not a tour. It's three screens with a Skip, and the whole thing is a few short sentences. I wouldn't tidy the wording, because any rewrite would only make it different.
 
-**Screen 2:** "Draw a circle" doesn't match the screen, because the circle is already placed and the person only moves it.
+Two things are worth checking before tomorrow. Neither is about wording:
 
-> Drag the circle over where you walk. We'll only offer you walks inside it.
+1. **Screen 3 can be false.** "Your first walk is on the calendar" is only true if they actually saved a walk on screen 1. If they tapped Skip or Next without saving, they'll land on the calendar with nothing on it, after being told otherwise. Either show screen 3 only when a walk exists, or use a fallback line when it doesn't. For example: "You're ready. Add a walk from the calendar any time." I haven't seen your flow logic, so I can't tell which case you have.
+2. **Skip on the last screen does nothing.** "Go to calendar" already ends the flow, so I'd hide Skip there. It's a small change.
 
-Screens 1 and 3 stay exactly as written.
+Your ticket drop is a good sign, but it doesn't prove this flow caused it. A better check is whether new users add a second walk, and set up their area, a few days later without help. If you can pull that number, it will tell you more than completion time.
 
-- **Check before you ship:** Screen 3 says "Your first walk is on the calendar." If someone taps Next on Screen 1 without adding a walk, that sentence is false. Either block Next until a walk exists, or show a different Screen 3 line in that case. I didn't rewrite it, because I don't know how your app handles this.
-- **How to measure it:** Check whether people who finish this add a second walk, and set their service area, days later without help. That tells you more than completion rate.
+I assumed Skip leaves the walking area unset and that you have some way to get back to this help later. If you don't, a "Help" entry in settings would cover it.

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy Pipeline Logs · run #4821</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --panel: #151b22;
+    --line: #232c36;
+    --text: #d9dee3;
+    --muted: #8e99a5;
+    --info-bg: #1b3556; --info-fg: #a9d1ff;
+    --warn-bg: #4a3908; --warn-fg: #ffd67a;
+    --err-bg: #5c1b21;  --err-fg: #ffb8bd;
+    --warn-row: rgba(255, 196, 61, 0.06);
+    --err-row: rgba(255, 82, 94, 0.10);
+    --err-edge: #ff5c68;
+    --warn-edge: #e0a82e;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0;
+    padding: 32px clamp(16px, 3vw, 56px) 48px;
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1920px; margin: 0 auto; }
+
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px 32px;
+    margin-bottom: 20px;
+  }
+  h1 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.005em; }
+  .meta { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+  .meta b { color: var(--text); font-weight: 500; }
+
+  .counts { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .counts li {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .counts strong { font: 600 15px var(--mono); color: var(--text); font-variant-numeric: tabular-nums; }
+
+  .log {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 11ch 7ch 17ch minmax(0, 1fr);
+    column-gap: 20px;
+    align-items: baseline;
+    padding: 7px 20px 7px 17px;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 0; }
+  .row.warn  { background: var(--warn-row); border-left-color: var(--warn-edge); }
+  .row.error { background: var(--err-row);  border-left-color: var(--err-edge); }
+  .row:hover { background: rgba(255,255,255,0.045); }
+
+  .ts { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .lvl {
+    display: inline-block;
+    width: 7ch;
+    padding: 0 0;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    border-radius: 4px;
+    line-height: 1.6;
+  }
+  .info .lvl  { background: var(--info-bg); color: var(--info-fg); }
+  .warn .lvl  { background: var(--warn-bg); color: var(--warn-fg); }
+  .error .lvl { background: var(--err-bg);  color: var(--err-fg); }
+
+  .svc { color: #b9c4d0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .msg { overflow-wrap: anywhere; min-width: 0; }
+  .error .msg { color: #ffe3e5; }
+  .msg .hint { color: var(--muted); }
+  .error .msg .hint { color: #e3a6ab; }
+  .msg .url { color: #8fc2ff; }
+
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 11ch 7ch minmax(0, 1fr); row-gap: 2px; }
+    .svc { grid-column: 3; }
+    .msg { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Deploy pipeline · run #4821</h1>
+      <p class="meta"><b>checkout-api</b> → production · 2026-10-14 · commit <b>9f3c2ab</b> on <b>main</b></p>
+    </div>
+    <ul class="counts" aria-label="Log level totals">
+      <li>INFO <strong>9</strong></li>
+      <li>WARN <strong>3</strong></li>
+      <li>ERROR <strong>2</strong></li>
+    </ul>
+  </header>
+
+  <main class="log" role="log" aria-label="Deploy pipeline log output">
+    <div class="row info">
+      <span class="ts">14:02:11.482</span><span><span class="lvl">INFO</span></span><span class="svc">git-checkout</span>
+      <span class="msg">Cloned git@github.com:acme/checkout-api.git at 9f3c2ab (main), 214 files changed since last deploy</span>
+    </div>
+    <div class="row info">
+      <span class="ts">14:02:14.907</span><span><span class="lvl">INFO</span></span><span class="svc">build-runner</span>
+      <span class="msg">Restored dependency cache key=npm-linux-x64-7be1d0 (412 MB) in 2.3s</span>
+    </div>
+    <div class="row warn">
+      <span class="ts">14:02:31.116</span><span><span class="lvl">WARN</span></span><span class="svc">build-runner</span>
+      <span class="msg">Deprecated package detected: request@2.88.2 is no longer maintained; pulled in transitively via legacy-metrics-client@1.4.0 <span class="hint">(see https://docs.acme.internal/engineering/dependency-policy#deprecated-packages for the approved replacement list and migration timeline)</span></span>
+    </div>
+    <div class="row info">
+      <span class="ts">14:03:02.350</span><span><span class="lvl">INFO</span></span><span class="svc">docker-build</span>
+      <span class="msg">Built image registry.acme.internal/checkout-api:9f3c2ab (sha256:41c8e0d7b2a9) in 28.4s</span>
+    </div>
+    <div class="row info">
+      <span class="ts">14:03:09.771</span><span><span class="lvl">INFO</span></span><span class="svc">artifact-store</span>
+      <span class="msg">Pushed 6 layers to <span class="url">https://registry.acme.internal/v2/checkout-api/manifests/9f3c2ab</span></span>
+    </div>
+    <div class="row error">
+      <span class="ts">14:03:48.025</span><span><span class="lvl">ERROR</span></span><span class="svc">test-runner</span>
+      <span class="msg">FAIL tests/integration/payments.spec.ts › refunds partial amount: expected 4250 received 4249 <span class="hint">at RefundService.calculate (src/payments/refund.ts:118:23) at processTicksAndRejections (node:internal/process/task_queues:95:5) at async Context.&lt;anonymous&gt; (tests/integration/payments.spec.ts:57:20)</span></span>
+    </div>
+    <div class="row warn">
+      <span class="ts">14:03:48.610</span><span><span class="lvl">WARN</span></span><span class="svc">test-runner</span>
+      <span class="msg">Retrying 1 failed test (attempt 2 of 3); flaky-test quarantine list not applied to payments.spec.ts</span>
+    </div>
+    <div class="row info">
+      <span class="ts">14:04:21.339</span><span><span class="lvl">INFO</span></span><span class="svc">test-runner</span>
+      <span class="msg">Retry passed. 1,284 tests passed, 0 failed, 12 skipped in 63.9s</span>
+    </div>
+    <div class="row info">
+      <span class="ts">14:04:30.002</span><span><span class="lvl">INFO</span></span><span class="svc">migrations</span>
+      <span class="msg">Applying 2 pending migrations: 20261012_add_refund_reason_idx, 20261013_backfill_currency_minor_units</span>
+    </div>
+    <div class="row warn">
+      <span class="ts">14:04:44.718</span><span><span class="lvl">WARN</span></span><span class="svc">migrations</span>
+      <span class="msg">Migration 20261013_backfill_currency_minor_units took 14.2s and held a lock on table "orders"; threshold is 5s. <span class="hint">Consider batching with LIMIT 5000 per the runbook at https://wiki.acme.internal/runbooks/db/online-backfills?section=batching</span></span>
+    </div>
+    <div class="row info">
+      <span class="ts">14:04:51.264</span><span><span class="lvl">INFO</span></span><span class="svc">deploy-controller</span>
+      <span class="msg">Starting rolling update of deployment/checkout-api in namespace prod-us-east-1 (maxSurge=25%, maxUnavailable=0)</span>
+    </div>
+    <div class="row error">
+      <span class="ts">14:05:37.894</span><span><span class="lvl">ERROR</span></span><span class="svc">k8s-rollout</span>
+      <span class="msg">Pod checkout-api-7d9c6b5f4-x2k8q failed readiness probe 3 times: GET http://10.42.7.19:8080/healthz returned 503 <span class="hint">(upstream connect error or disconnect/reset before headers. reset reason: connection failure, transport failure reason: delayed connect error: 111)</span></span>
+    </div>
+    <div class="row info">
+      <span class="ts">14:05:38.120</span><span><span class="lvl">INFO</span></span><span class="svc">deploy-controller</span>
+      <span class="msg">Automatic rollback triggered; restoring revision 118 (image checkout-api:c41d7e0)</span>
+    </div>
+    <div class="row info">
+      <span class="ts">14:06:09.553</span><span><span class="lvl">INFO</span></span><span class="svc">health-check</span>
+      <span class="msg">All 6 pods Ready on revision 118; p95 latency 142ms, error rate 0.02%. Deploy marked failed, see <span class="url">https://deploys.acme.internal/runs/4821</span></span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

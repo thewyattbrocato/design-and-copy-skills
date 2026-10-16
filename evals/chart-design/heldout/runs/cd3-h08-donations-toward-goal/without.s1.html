@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder Lane Food Bank – Progress toward $300k, through September</title>
+<style>
+  :root { color-scheme: light; }
+  .viz-root {
+    --page: #f9f9f7;
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --series-3: #1baf7a;
+    --good-text: #006300;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) { color-scheme: dark; }
+    :root:where(:not([data-theme="light"])) .viz-root {
+      --page: #0d0d0d;
+      --surface-1: #1a1a19;
+      --text-primary: #f0efec;
+      --text-secondary: #c3c2b7;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --series-3: #199e70;
+      --good-text: #0ca30c;
+    }
+  }
+  :root[data-theme="dark"] { color-scheme: dark; }
+  :root[data-theme="dark"] .viz-root {
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255,255,255,0.10);
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --good-text: #0ca30c;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--text-primary);
+  }
+  .viz-root {
+    background: var(--page);
+    padding: 24px 16px;
+  }
+  .card {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px 20px;
+  }
+  .eyebrow { font-size: 13px; color: var(--text-secondary); margin: 0 0 4px; }
+  h1 { font-size: 20px; font-weight: 600; margin: 0 0 16px; line-height: 1.3; }
+  .hero { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .hero .num { font-size: 44px; font-weight: 600; line-height: 1; }
+  .hero .of { font-size: 16px; color: var(--text-secondary); }
+  .takeaway { font-size: 14px; color: var(--text-secondary); margin: 6px 0 28px; line-height: 1.45; }
+  .takeaway b { color: var(--good-text); font-weight: 600; }
+
+  /* chart */
+  .chart { position: relative; padding: 0 0 0; }
+  .markers { position: relative; height: 34px; }
+  .marker-label {
+    position: absolute; bottom: 8px; font-size: 12px; color: var(--text-secondary);
+    white-space: nowrap; line-height: 1.2;
+  }
+  .marker-label strong { color: var(--text-primary); font-weight: 600; }
+  .marker-tick { position: absolute; bottom: 0; width: 0; height: 8px; border-left: 1px solid var(--text-secondary); }
+  .bar { position: relative; height: 44px; display: flex; gap: 2px; }
+  .seg {
+    height: 100%; border: 0; padding: 0; cursor: default; outline: none;
+    transition: opacity .12s;
+  }
+  .seg.s1 { background: var(--series-1); border-radius: 0; }
+  .seg.s2 { background: var(--series-2); }
+  .seg.s3 { background: var(--series-3); border-radius: 0 4px 4px 0; }
+  .seg:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+  .bar:hover .seg:not(:hover) { opacity: .55; }
+  .bar:focus-within .seg:not(:focus-visible) { opacity: .55; }
+  .gap {
+    height: 100%; border: 1px dashed var(--baseline); border-radius: 4px;
+    background: transparent;
+  }
+  .pace-line {
+    position: absolute; top: -8px; bottom: -4px; width: 0;
+    border-left: 2px solid var(--text-primary); pointer-events: none;
+  }
+  .axis { position: relative; height: 22px; border-top: 1px solid var(--baseline); margin-top: 8px; }
+  .axis span { position: absolute; top: 4px; font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums; transform: translateX(-50%); }
+  .axis span:first-child { transform: none; }
+  .axis span:last-child { transform: translateX(-100%); }
+  .axis i { position: absolute; top: -5px; height: 5px; border-left: 1px solid var(--baseline); }
+
+  .labels { position: relative; height: 62px; margin-top: 6px; }
+  .lab { position: absolute; top: 0; font-size: 12px; line-height: 1.35; color: var(--text-secondary); padding-right: 4px; }
+  .lab .name { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); white-space: nowrap; }
+  .lab .sw { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+  .lab .val { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-top: 2px; }
+  .lab .sub { font-size: 12px; color: var(--text-secondary); white-space: nowrap; }
+  .lab.rem .name span.dash { width: 10px; height: 10px; border: 1px dashed var(--text-muted); border-radius: 2px; flex: none; }
+
+  .tip {
+    position: absolute; z-index: 5; pointer-events: none; opacity: 0;
+    background: var(--surface-1); border: 1px solid var(--border);
+    box-shadow: 0 4px 14px rgba(0,0,0,.18);
+    border-radius: 8px; padding: 8px 10px; font-size: 12px; color: var(--text-secondary);
+    line-height: 1.4; min-width: 150px; transform: translate(-50%, -100%);
+    transition: opacity .1s;
+  }
+  .tip.on { opacity: 1; }
+  .tip b { display: block; color: var(--text-primary); font-size: 13px; margin-bottom: 2px; }
+
+  .foot { font-size: 12px; color: var(--text-muted); margin: 14px 0 0; }
+  details { margin-top: 14px; border-top: 1px solid var(--grid); padding-top: 10px; }
+  summary { font-size: 13px; color: var(--text-secondary); cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; font-size: 12px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--grid); color: var(--text-secondary); }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { color: var(--text-primary); font-weight: 600; }
+  tfoot td { color: var(--text-primary); font-weight: 600; border-bottom: 0; }
+
+  @media (max-width: 560px) {
+    .card { padding: 18px 16px; }
+    .hero .num { font-size: 36px; }
+    .lab .val { font-size: 14px; }
+    .lab .sub { white-space: normal; }
+  }
+  @media (forced-colors: active) {
+    .seg { border: 1px solid CanvasText; }
+  }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="card">
+    <p class="eyebrow">Larder Lane Food Bank · Annual fundraising goal $300k · Jan–Sep</p>
+    <h1>We've raised $256k, 85% of the way to our goal</h1>
+    <div class="hero"><span class="num">$256k</span><span class="of">of $300k raised</span></div>
+    <p class="takeaway"><b>$31k ahead</b> of an even pace ($225k after nine months). $44k to go, about $14.7k a month through December.</p>
+
+    <div class="chart" id="chart">
+      <div class="markers">
+        <div class="marker-tick" style="left:75%"></div>
+        <div class="marker-label" style="left:75%; transform:translateX(-50%)">Even pace <strong>$225k</strong></div>
+        <div class="marker-tick" style="right:0"></div>
+        <div class="marker-label" style="right:0">Goal <strong>$300k</strong></div>
+      </div>
+
+      <div class="bar" role="img" aria-label="Stacked bar of $256k raised toward $300k: individuals $126k, businesses $81k, events $49k, $44k remaining.">
+        <button class="seg s1" style="width:calc(42% - 2px)" data-k="0" aria-label="Individuals $126k"></button>
+        <button class="seg s2" style="width:calc(27% - 2px)" data-k="1" aria-label="Businesses $81k"></button>
+        <button class="seg s3" style="width:calc(16.333% - 2px)" data-k="2" aria-label="Events $49k"></button>
+        <div class="gap" style="flex:1" data-k="3"></div>
+        <div class="pace-line" style="left:75%"></div>
+      </div>
+
+      <div class="axis">
+        <i style="left:0"></i><i style="left:33.333%"></i><i style="left:66.667%"></i><i style="right:0"></i>
+        <span style="left:0">$0</span><span style="left:33.333%">$100k</span><span style="left:66.667%">$200k</span><span style="left:100%">$300k</span>
+      </div>
+
+      <div class="labels">
+        <div class="lab" style="left:0; width:41%">
+          <div class="name"><span class="sw" style="background:var(--series-1)"></span>Individuals</div>
+          <div class="val">$126k</div><div class="sub">49% of raised</div>
+        </div>
+        <div class="lab" style="left:42%; width:26%">
+          <div class="name"><span class="sw" style="background:var(--series-2)"></span>Businesses</div>
+          <div class="val">$81k</div><div class="sub">32% of raised</div>
+        </div>
+        <div class="lab" style="left:69%; width:16%">
+          <div class="name"><span class="sw" style="background:var(--series-3)"></span>Events</div>
+          <div class="val">$49k</div><div class="sub">19% of raised</div>
+        </div>
+        <div class="lab rem" style="left:85.5%; width:14.5%">
+          <div class="name"><span class="dash"></span>To go</div>
+          <div class="val">$44k</div><div class="sub">15% of goal</div>
+        </div>
+      </div>
+      <div class="tip" id="tip"></div>
+    </div>
+
+    <p class="foot">Cumulative donations, January through September. Events: four fundraisers (Feb, Apr, Jun, Sep).</p>
+
+    <details>
+      <summary>View data table</summary>
+      <table>
+        <thead><tr><th>Month</th><th>Individuals</th><th>Businesses</th><th>Events</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Jan</td><td>$14k</td><td>$8k</td><td>$0k</td><td>$22k</td></tr>
+          <tr><td>Feb</td><td>$12k</td><td>$9k</td><td>$4k</td><td>$25k</td></tr>
+          <tr><td>Mar</td><td>$15k</td><td>$7k</td><td>$0k</td><td>$22k</td></tr>
+          <tr><td>Apr</td><td>$13k</td><td>$10k</td><td>$15k</td><td>$38k</td></tr>
+          <tr><td>May</td><td>$16k</td><td>$9k</td><td>$0k</td><td>$25k</td></tr>
+          <tr><td>Jun</td><td>$14k</td><td>$11k</td><td>$12k</td><td>$37k</td></tr>
+          <tr><td>Jul</td><td>$12k</td><td>$8k</td><td>$0k</td><td>$20k</td></tr>
+          <tr><td>Aug</td><td>$13k</td><td>$9k</td><td>$0k</td><td>$22k</td></tr>
+          <tr><td>Sep</td><td>$17k</td><td>$10k</td><td>$18k</td><td>$45k</td></tr>
+        </tbody>
+        <tfoot><tr><td>Year to date</td><td>$126k</td><td>$81k</td><td>$49k</td><td>$256k</td></tr></tfoot>
+      </table>
+    </details>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var info = [
+      { n: "Individuals", v: "$126k", d: "49% of raised · 42% of goal", x: 21 },
+      { n: "Businesses", v: "$81k", d: "32% of raised · 27% of goal", x: 55.5 },
+      { n: "Events", v: "$49k", d: "19% of raised · 16% of goal<br>Four events: Feb, Apr, Jun, Sep", x: 77.2 },
+      { n: "Still to raise", v: "$44k", d: "15% of goal<br>≈ $14.7k a month, Oct–Dec", x: 92.7 }
+    ];
+    var chart = document.getElementById("chart");
+    var tip = document.getElementById("tip");
+    var bar = chart.querySelector(".bar");
+    function show(k) {
+      var i = info[k];
+      tip.innerHTML = "<b>" + i.n + ": " + i.v + "</b>" + i.d;
+      var w = chart.clientWidth, half = 90;
+      var px = Math.min(Math.max(i.x / 100 * w, half), w - half);
+      tip.style.left = px + "px";
+      tip.style.top = (bar.offsetTop - 6) + "px";
+      tip.classList.add("on");
+    }
+    function hide() { tip.classList.remove("on"); }
+    bar.querySelectorAll("[data-k]").forEach(function (el) {
+      var k = +el.getAttribute("data-k");
+      el.addEventListener("mouseenter", function () { show(k); });
+      el.addEventListener("mouseleave", hide);
+      el.addEventListener("focus", function () { show(k); });
+      el.addEventListener("blur", hide);
+    });
+  })();
+</script>
+</body>
+</html>

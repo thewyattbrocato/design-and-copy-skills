@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing · Pennywick Books</title>
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --card: #fdfcf9;
+    --ink: #1f2a27;
+    --ink-soft: #55625e;
+    --line: #dcd8cc;
+    --accent: #2f5d50;
+    --accent-ink: #ffffff;
+    --accent-tint: #e6eee9;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+  }
+  .pricing {
+    max-width: 66rem;
+    margin: 0 auto;
+    padding: 5rem 1.5rem 4.5rem;
+  }
+  .intro {
+    max-width: 40rem;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    font-weight: 650;
+    text-wrap: balance;
+  }
+  .lede {
+    margin: 0 auto;
+    max-width: 34rem;
+    color: var(--ink-soft);
+    font-size: 1.125rem;
+    text-wrap: pretty;
+  }
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .plan {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 2rem 1.75rem 1.75rem;
+  }
+  .plan.featured {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .plan-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 1.75rem;
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    font-weight: 650;
+  }
+  .badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-tint);
+    border-radius: 999px;
+    padding: 0.25rem 0.625rem;
+  }
+  .tagline {
+    margin: 0.5rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+  }
+  .price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    margin: 1.5rem 0 1.5rem;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .price .amount {
+    font-size: 2.5rem;
+    line-height: 1;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+  .price .per {
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+  .features {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 0.75rem;
+    flex: 1;
+  }
+  .features li {
+    position: relative;
+    padding-left: 1.75rem;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .features li::before {
+    content: "";
+    position: absolute;
+    left: 0.125rem;
+    top: 0.3rem;
+    width: 0.4rem;
+    height: 0.7rem;
+    border: solid var(--accent);
+    border-width: 0 2px 2px 0;
+    transform: rotate(40deg);
+  }
+  .btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font: inherit;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  .btn:hover { background: var(--accent-tint); }
+  .featured .btn { background: var(--accent); color: var(--accent-ink); }
+  .featured .btn:hover { background: #264c41; }
+  .btn:focus-visible { outline: 3px solid #8fb5a7; outline-offset: 2px; }
+
+  .limits {
+    margin-top: 2.5rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.25rem 1.75rem 0.5rem;
+  }
+  .limits h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  th, td {
+    padding: 0.75rem 0;
+    font-size: 0.9375rem;
+    text-align: right;
+    border-top: 1px solid var(--line);
+  }
+  thead th {
+    border-top: 0;
+    font-weight: 600;
+    color: var(--ink-soft);
+    padding-top: 0.25rem;
+  }
+  th:first-child, td:first-child { text-align: left; }
+  tbody th { font-weight: 500; }
+  td { font-weight: 600; }
+  .fine {
+    margin: 1.5rem 0 0;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 52rem) {
+    .pricing { padding-top: 3rem; }
+    .plans { grid-template-columns: 1fr; max-width: 28rem; margin: 0 auto; }
+    .limits { max-width: 28rem; margin-left: auto; margin-right: auto; padding: 1rem 1.25rem 0.25rem; }
+  }
+</style>
+</head>
+<body>
+<section class="pricing" aria-labelledby="pricing-title">
+  <div class="intro">
+    <p class="eyebrow">Pricing</p>
+    <h1 id="pricing-title">Simple plans for the way you work</h1>
+    <p class="lede">Pick the plan that fits your client list today. You can change plans whenever your business does.</p>
+  </div>
+
+  <div class="plans">
+    <article class="plan">
+      <div class="plan-head"><h2>Solo</h2></div>
+      <p class="tagline">For independent freelancers.</p>
+      <div class="price"><span class="amount">$9</span><span class="per">per month</span></div>
+      <ul class="features">
+        <li>Invoicing with payment reminders</li>
+        <li>Expense tracking and receipt capture</li>
+        <li>Bank feed import</li>
+        <li>Quarterly tax estimate</li>
+      </ul>
+      <a class="btn" href="#solo">Choose Solo</a>
+    </article>
+
+    <article class="plan featured">
+      <div class="plan-head"><h2>Studio</h2><span class="badge">Most chosen</span></div>
+      <p class="tagline">For growing practices with regular clients.</p>
+      <div class="price"><span class="amount">$29</span><span class="per">per month</span></div>
+      <ul class="features">
+        <li>Everything in Solo</li>
+        <li>Recurring invoices and retainers</li>
+        <li>Profit and loss reports by client</li>
+        <li>Multi-currency billing</li>
+        <li>Accountant access</li>
+      </ul>
+      <a class="btn" href="#studio">Choose Studio</a>
+    </article>
+
+    <article class="plan">
+      <div class="plan-head"><h2>Agency</h2></div>
+      <p class="tagline">For teams managing many accounts.</p>
+      <div class="price"><span class="amount">$89</span><span class="per">per month</span></div>
+      <ul class="features">
+        <li>Everything in Studio</li>
+        <li>Team members with role permissions</li>
+        <li>Project-level budgets and tracking</li>
+        <li>Custom invoice branding</li>
+        <li>Priority email support</li>
+      </ul>
+      <a class="btn" href="#agency">Choose Agency</a>
+    </article>
+  </div>
+
+  <div class="limits">
+    <h3>Usage limits</h3>
+    <table>
+      <thead>
+        <tr><th scope="col"><span class="visually">&nbsp;</span></th><th scope="col">Solo</th><th scope="col">Studio</th><th scope="col">Agency</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Invoices per month</th><td>25</td><td>250</td><td>2,500</td></tr>
+        <tr><th scope="row">Clients</th><td>5</td><td>50</td><td>500</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="fine">Prices are in US dollars and billed monthly.</p>
+</section>
+</body>
+</html>

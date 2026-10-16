@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples – Northfield Water Quality Lab</title>
+<style>
+  :root {
+    --bg: #f5f7f9; --panel: #fff; --text: #1b2a33; --muted: #5a6b76; --line: #d9e1e6;
+    --accent: #0b6e8f; --accent-text: #fff; --ok: #1c7a4a; --warn: #8a5a00; --bad: #a82b2b;
+    --track: #dbe8ee;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11191e; --panel: #19242b; --text: #e6eef2; --muted: #9bb0bb; --line: #2b3a43;
+      --accent: #4cb8d9; --accent-text: #08202a; --ok: #62c58f; --warn: #e3b04b; --bad: #f08a8a;
+      --track: #26414d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header { background: var(--panel); border-bottom: 1px solid var(--line); padding: 14px 24px; font-weight: 600; }
+  header span { color: var(--muted); font-weight: 400; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px; }
+  .top { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-start; }
+  h1 { margin: 0 0 4px; font-size: 22px; }
+  .sub { margin: 0; color: var(--muted); }
+  button {
+    font: inherit; border-radius: 6px; padding: 9px 16px; cursor: pointer;
+    border: 1px solid var(--accent); background: var(--accent); color: var(--accent-text); font-weight: 600;
+  }
+  button.secondary { background: transparent; color: var(--accent); }
+  button[aria-disabled="true"] { opacity: .65; cursor: progress; }
+  button:focus-visible, a.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  a.btn {
+    display: inline-block; text-decoration: none; border-radius: 6px; padding: 9px 16px; font-weight: 600;
+    background: var(--accent); color: var(--accent-text); border: 1px solid var(--accent);
+  }
+
+  .status {
+    margin-top: 20px; background: var(--panel); border: 1px solid var(--line);
+    border-left: 4px solid var(--accent); border-radius: 6px; padding: 14px 16px;
+  }
+  .status[hidden] { display: none; }
+  .status.done { border-left-color: var(--ok); }
+  .status.cancelled { border-left-color: var(--warn); }
+  .status-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+  .status-title { font-weight: 600; }
+  .status-detail { color: var(--muted); margin-top: 2px; }
+  .elapsed { font-variant-numeric: tabular-nums; }
+  .bar { height: 6px; background: var(--track); border-radius: 3px; overflow: hidden; margin-top: 12px; position: relative; }
+  .bar[hidden] { display: none; }
+  .bar::before {
+    content: ""; position: absolute; inset: 0 auto 0 0; width: 35%; background: var(--accent); border-radius: 3px;
+    animation: slide 1.4s ease-in-out infinite;
+  }
+  @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .bar::before { animation: none; width: 100%; opacity: .5; }
+  }
+  .actions { display: flex; gap: 8px; align-items: center; }
+
+  .card { margin-top: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; }
+  .card h2 { margin: 0; padding: 12px 16px; font-size: 15px; border-bottom: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 9px 16px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { font-weight: 600; }
+  .tag.pass { color: var(--ok); } .tag.review { color: var(--warn); } .tag.fail { color: var(--bad); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<header>Northfield Water Quality Lab <span>· Lab portal</span></header>
+<main>
+  <div class="top">
+    <div>
+      <h1>Recent samples</h1>
+      <p class="sub">2026 field season · 8 most recent results</p>
+    </div>
+    <button type="button" id="exportBtn">Export season report</button>
+  </div>
+
+  <section class="status" id="status" hidden>
+    <div class="status-row">
+      <div>
+        <div class="status-title" id="statusTitle"></div>
+        <div class="status-detail" id="statusDetail"></div>
+      </div>
+      <div class="actions" id="actions"></div>
+    </div>
+    <div class="bar" id="bar" hidden></div>
+  </section>
+  <div class="sr" role="status" aria-live="polite" id="announce"></div>
+
+  <div class="card">
+    <h2>Latest results</h2>
+    <table>
+      <thead>
+        <tr><th>Sample ID</th><th>Site</th><th>Collected</th><th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Status</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+(function () {
+  var EXPORT_MS = 25000;
+  var samples = [
+    ["WQ-26-0412", "Miller Creek upstream", "2026-10-14", 7.4, 1.8, "Pass"],
+    ["WQ-26-0411", "Miller Creek outfall", "2026-10-14", 6.9, 4.2, "Review"],
+    ["WQ-26-0410", "Harlow Reservoir", "2026-10-13", 7.8, 0.9, "Pass"],
+    ["WQ-26-0409", "Eastside well 3", "2026-10-13", 7.1, 0.4, "Pass"],
+    ["WQ-26-0408", "Pine Bend intake", "2026-10-12", 6.4, 7.6, "Fail"],
+    ["WQ-26-0407", "Harlow Reservoir", "2026-10-12", 7.7, 1.1, "Pass"],
+    ["WQ-26-0406", "Northfield tap 12", "2026-10-11", 7.3, 0.3, "Pass"],
+    ["WQ-26-0405", "Eastside well 1", "2026-10-11", 7.0, 0.5, "Pass"]
+  ];
+
+  var tbody = document.getElementById("rows");
+  samples.forEach(function (s) {
+    var tr = document.createElement("tr");
+    var cls = s[5].toLowerCase();
+    tr.innerHTML = "<td>" + s[0] + "</td><td>" + s[1] + "</td><td>" + s[2] +
+      '</td><td class="num">' + s[3].toFixed(1) + '</td><td class="num">' + s[4].toFixed(1) +
+      '</td><td><span class="tag ' + cls + '">' + s[5] + "</span></td>";
+    tbody.appendChild(tr);
+  });
+
+  var btn = document.getElementById("exportBtn");
+  var box = document.getElementById("status");
+  var title = document.getElementById("statusTitle");
+  var detail = document.getElementById("statusDetail");
+  var actions = document.getElementById("actions");
+  var bar = document.getElementById("bar");
+  var announce = document.getElementById("announce");
+
+  var tick = null, startedAt = 0, fileUrl = null, announced = {};
+
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2);
+  }
+  function say(msg) { announce.textContent = msg; }
+  function setBox(state) { box.className = "status" + (state ? " " + state : ""); }
+  function clearActions() { actions.innerHTML = ""; }
+
+  function render() {
+    var el = Date.now() - startedAt;
+    title.textContent = "Building your season report…";
+    detail.innerHTML = 'Elapsed <span class="elapsed">' + fmt(el) + "</span> · usually takes about 25 seconds. " +
+      "You can keep browsing this page; the download will appear here.";
+    if (el > 10000 && !announced.a) { announced.a = 1; say("Still working on the season report."); }
+    if (el > 20000 && !announced.b) { announced.b = 1; say("Almost done."); }
+    if (el >= EXPORT_MS) finish();
+  }
+
+  function start() {
+    if (btn.getAttribute("aria-disabled") === "true") return;
+    btn.setAttribute("aria-disabled", "true");
+    btn.textContent = "Exporting…";
+    announced = {};
+    startedAt = Date.now();
+    box.hidden = false; bar.hidden = false; setBox("");
+    clearActions();
+    var cancel = document.createElement("button");
+    cancel.type = "button"; cancel.className = "secondary"; cancel.textContent = "Cancel";
+    cancel.addEventListener("click", cancelExport);
+    actions.appendChild(cancel);
+    render();
+    say("Export started. This usually takes about 25 seconds.");
+    tick = setInterval(render, 250);
+  }
+
+  function stop() { clearInterval(tick); tick = null; bar.hidden = true; clearActions(); }
+  function reset() { btn.removeAttribute("aria-disabled"); btn.textContent = "Export season report"; }
+
+  function cancelExport() {
+    stop(); reset(); setBox("cancelled");
+    title.textContent = "Export cancelled";
+    detail.textContent = "No file was created. You can start the export again any time.";
+    say("Export cancelled.");
+    btn.focus();
+  }
+
+  function finish() {
+    stop(); reset(); setBox("done");
+    var csv = "sample_id,site,collected,ph,turbidity_ntu,status\n" + samples.map(function (s) {
+      return '"' + s.join('","') + '"';
+    }).join("\n") + "\n";
+    if (fileUrl) URL.revokeObjectURL(fileUrl);
+    fileUrl = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+    title.textContent = "Season report is ready";
+    detail.textContent = "season-report-2026.csv · built in " + fmt(Date.now() - startedAt);
+    var a = document.createElement("a");
+    a.className = "btn"; a.href = fileUrl; a.download = "season-report-2026.csv"; a.textContent = "Download report";
+    actions.appendChild(a);
+    say("Season report is ready. Use the Download report button.");
+    a.focus();
+  }
+
+  btn.addEventListener("click", start);
+  window.addEventListener("beforeunload", function (e) {
+    if (tick) { e.preventDefault(); e.returnValue = ""; }
+  });
+})();
+</script>
+</body>
+</html>

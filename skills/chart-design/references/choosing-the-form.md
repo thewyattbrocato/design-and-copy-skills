@@ -8,13 +8,13 @@ Ask what comparison the reader must make, then pick the form that makes that com
 
 | Question | Form that answers it |
 | --- | --- |
-| Is it going up or down, and how fast? | Line over time |
 | Which is biggest, which is smallest? | Bars sorted by value |
-| How did each piece change between two moments? | Slope chart, or paired dots |
+| Is it going up or down, and how fast? | Line over time |
 | Who is above or below a target? | Bars or dots with a target line; or plot the gap itself |
 | What share is each part? | One 100% bar, or labeled bars |
 | How are values spread? | Histogram, dot strip, or box summary |
 | Do two measures move together? | Scatter, one point per item |
+| How did each piece change between two moments? | Slope chart, or paired dots |
 | How does one series compare with many others? | Highlight it in color, gray the rest, or use small multiples |
 | Where is it? | Map, only if location explains the pattern |
 

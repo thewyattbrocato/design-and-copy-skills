@@ -1,0 +1,1 @@
+Don't discard their work. Preserve the entered data (save it as a draft or hold it in the page), then prompt re-authentication in place, like a modal or a new tab. After login succeeds, resubmit automatically or restore the form with everything filled in. Explain clearly what happened.

@@ -1,21 +1,21 @@
-I'd push back on the day-one walkthrough too. People who live in a tool all day learn shortcuts by repeating an action until the key is faster than the mouse. Forty steps on day one will mostly be forgotten, and the users most likely to skip it are the ones you most want to keep.
+**Your instinct is right.** A day-one walkthrough of 40 shortcuts is an inventory tour. People won't retain most of it, and the ones who do are power users who will feel slowed down by a mandatory tutorial. Lawyers who are in the app eight hours a day already have a working method, so they need the shortcuts to show up where they're already working.
 
-**What I'd do instead:**
+**What to build instead**
 
-1. **Make a command palette the main discovery surface.** A searchable ⌘K list of every action, with its shortcut shown next to it, teaches the whole set without memorization. Power users go there when they want something new, and it doubles as the reference.
+1. **Fix before teaching.** For each of the 40, ask whether the action is hard to find or hard to remember. If a frequent action is buried in a menu, make it reachable and label it with its shortcut. That beats any tutorial.
 
-2. **Show the shortcut where the mouse action happens.** When someone uses a menu item or button that has a shortcut, display the key in the menu or as a small hint. This is passive and costs no attention. Lawyers already read menus, so the hint is seen at the moment it's useful.
+2. **Teach at the moment of need.** When someone uses the mouse to do something that has a shortcut (say, opening a matter from the sidebar), show the shortcut once, right at that control, as a small inline hint. Show each shortcut only a few times, then stop. Keep the hint dismissible, and never gate the task behind it.
 
-3. **Nudge at the moment of repetition.** If someone does the same mouse action several times (say, opening split view five times in a session), show a one-line tip: "⌘⇧\ does this." Include a "don't show again" option, and never interrupt while they're typing or in the middle of a citation.
+3. **Make a searchable command palette the main discovery path.** Keyboard-heavy users find things by typing, not by reading lists. A palette that lists each command with its shortcut teaches the whole set without anyone memorizing it. Put a reference reachable from a `?` key or the Help menu.
 
-4. **Teach a small, role-relevant set on day one, if at all.** Pick three to five shortcuts tied to the first real task (for example, creating a note in a matter and quick-citing). Keep the rest out of the first session. Jump-between-matters matters a lot to someone juggling a dozen matters and not at all to someone on one. Let the first-run flow ask one question about role or workflow and surface the relevant ones.
+4. **Offer a short, optional keyboard path on first run.** Pick two or three shortcuts that matter most for lawyers and paralegals, such as jumping between matters, split view, and quick-cite. Have the new user do a real task with them in a real matter, with a skip option. This is the "guided first task" pattern, and it teaches by doing.
 
-5. **Make a cheat sheet reachable with one key** (`?` or similar), not a tour. It's for the moment someone forgets, not for learning.
+5. **Put the rest in settings and release notes.** Add a shortcut settings page where people can review and rebind keys. Mention new shortcuts in release notes or a "what's new" note, not in onboarding.
 
-6. **Let people rebind keys and check for conflicts early.** Paralegals often arrive with muscle memory from Word, Outlook, or a practice-management tool. Shortcuts that collide with OS or common app keys will be hated more than missing ones.
+**Things to check before the PM meeting**
 
-**Measure it before arguing about it.** Instrument two things: which actions are done by mouse vs. keyboard, and how adoption of each shortcut changes over 30 days. That will show which of the forty are worth promoting and which nobody uses. A simple A/B test of "full tour" vs. "three-key intro plus palette" on 30-day shortcut use would give the PM something concrete. The metric to agree on with the PM is probably sustained keyboard use, not whether people finished the tour. Tour completion will look good and tell you nothing.
+- **Which 40 matter?** Cutting or merging rarely used shortcuts is cheaper than teaching them.
+- **Collisions.** Check whether any shortcut clashes with OS, browser, or Word-plugin shortcuts your users rely on.
+- **How to measure it.** Don't use "completed onboarding." Look at whether people are doing matter-jumps and quick-cites from the keyboard a few weeks later, compared with a baseline you capture now.
 
-**For the PM conversation:** The day-one tour is a feature checklist, and it spends the one moment when a new user is most distracted and most likely to judge the tool. A short intro plus a palette and in-context hints gets people to the shortcuts they'll actually use without that cost.
-
-If it helps, I can draft the one-page proposal for the PM, or sketch the palette and tip behavior in more detail. The teaching-interfaces skill also covers this kind of design if you want a fuller pass on the tour, tips, and empty states.
+**Assumption:** I don't know your current onboarding flow or whether the palette exists yet. If you tell me what's there, I can sketch the day-one path and the hint rules in more detail.

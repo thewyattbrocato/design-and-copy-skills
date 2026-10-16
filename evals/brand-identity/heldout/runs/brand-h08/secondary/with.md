@@ -1,17 +1,25 @@
-Your designer is right about the physics but wrong that it's unavoidable. Embroidery has hard limits, and the artwork has to be adapted to them. Nobody should have sent the same file to the embroiderer and to the screen without changes.
+The designer is partly right. Embroidery does have physical limits, but those limits should have been handled in the design before stitching, so "that's just how it works" doesn't cover the whole problem.
 
 **Why it happens**
 
-- **Thread has width.** A stitch is roughly 0.3 to 0.5 mm thick, and a satin stitch is a dense block of them. Any line thinner than about 1 mm, and any gap narrower than that, fills in or closes up. Fine hairlines in the logo can't exist in thread.
-- **Small text is the first casualty.** Letters under roughly 5 to 6 mm tall lose their counters (the holes in a, e, o) and their serifs. A tagline printed at a size that looks fine on a PDF is usually far too small for stitching.
-- **Knit fabric makes it worse.** Polos stretch and shift under the needle, so the stitches pull and blur fine detail more than they would on a woven fabric.
-- **The 32 px favicon is the same problem at a smaller scale.** At 32 px, a 1 px line is a fraction of a pixel, so it antialiases into gray. Thin strokes and low-contrast colors become a smudge. Anything that works at 512 px needs a simpler version to work at 32.
+- **Embroidery:** Thread has a real width, roughly half a millimeter, and it spreads and pulls when stitched. Hairlines and thin strokes merge, and small lettering fills in or turns to blobs. Designs made for screens and print often have strokes and text well below what thread can reproduce. A good digitizer will flag these before stitching, and shops publish minimums for line weight and text height. The tagline was probably below that minimum.
+- **32px favicon:** At that size the browser draws roughly one pixel per design unit. Any stroke thinner than about a pixel gets averaged with the background, which produces gray. A logo that works at website size isn't designed for 32px, and the favicon needs its own simplified version.
 
-**What to do (small-firm version, not a rebrand)**
+Both problems come from a logo that was designed for large, high-resolution use and never adapted to smaller or stitched versions.
 
-1. **Make a small-size mark.** Ask the designer for a simplified version of the logo for small uses: bolder strokes (the thinnest line should be a few pixels at 32 px), fewer elements, no hairlines, and no tagline. A monogram or a simple shape from the mark often works well. Test it at 16 px and 32 px before approving it. Export a favicon set (ICO or PNG at 16, 32, and 180 for Apple touch, plus SVG).
-2. **Make an embroidery version with the digitizer.** Ask the shop for a stitch-out sample on the actual polo fabric before you approve a run. Ask for the following: text at least about 6 mm cap height, lines at least about 1.5 mm thick, no more than 2 or 3 thread colors, no gradients or fine shading, and no tagline unless it's large enough to read. If the tagline has to stay, put it on a separate, larger line or drop it from the polos.
-3. **Ask for fixes in plain terms.** "Thicken the fine lines to a minimum of about 1.5 mm, enlarge the tagline or remove it, and reduce to three colors" is something a digitizer can act on. The numbers are rough guides, so confirm the minimums with the shop.
-4. **Redo the polos with a sample first.** A test stitch-out costs little compared with a full order of polos that have to be remade.
+**What to do (small scope)**
 
-For the favicon, the fastest fix is a bold, high-contrast version of the mark on a solid tile, not a scaled-down copy of the full logo. If you'd like, I can help you write the brief for the designer or check a candidate small-size version against the 16 and 32 px tests.
+1. **Ask the embroidery shop for two things:** their minimum stroke width and minimum text height, and a digitized proof or test stitch-out before the next run. Their numbers are the authority, and a proof costs little.
+2. **Make an embroidery version of the logo:**
+   - Thicken every line to the shop's minimum.
+   - Drop the tagline from the polos, or enlarge it to the minimum text height if it has to stay.
+   - Reduce to 1–3 flat colors, with no gradients or fine details.
+   - Keep the full-detail logo for the website and PDF.
+3. **Make a favicon version:**
+   - Use a bold simplified mark, such as a monogram, a single shape, or the most distinctive part of the logo.
+   - Use thick strokes and high contrast, and drop anything that doesn't read at 16px.
+   - Export a 16px and 32px PNG, a 180px apple-touch icon, and optionally an SVG favicon that adapts to dark mode.
+   - Check it at actual size in a browser tab before you call it done.
+4. **Keep a one-page spec** for vendors with minimums, approved colors, and the embroidery-version file, so the next order doesn't repeat this.
+
+If you share the logo file (SVG or the vector source), I can make the simplified favicon set and an embroidery-ready version, and check them at real pixel sizes. I haven't seen your files yet, so I can't tell which strokes or text are the problem.

@@ -1,36 +1,35 @@
-**Use container queries.** Your teammate who said "respond to its own container" is right.
+**Verdict: this CSS is already responsive, and I'd leave it as is.** The developer was right. Only a few small hardening gaps are worth adding.
 
-**Why, for this card specifically**
-- **The same viewport gives different card widths.** At a 1440px viewport, the card is about 300px wide in the 4-up dashboard row. In the transaction page's right rail it's about 320px. In a modal it might be 480px or more. A viewport media query can't tell these apart. It would give the dashboard card and the modal card the same layout even though their widths differ.
-- **Viewport queries make the card depend on the page.** If the rail width changes, or the dashboard goes from 4-up to 3-up, every media query tied to the old layout breaks. With a container query, the card adapts to whatever space it gets, and nobody has to change the card.
-- **Reuse is the point of a design system.** A fourth placement later (a drawer, a mobile list) should work without anyone touching the card's CSS.
+**What already works (no changes)**
+- `--gutter` uses `clamp()` with rem bounds, so the side padding scales smoothly.
+- `.wrap` uses `max-width: 72rem` with `margin-inline: auto`, so it follows the reader's text size and stays centered.
+- `.prose` caps the text measure at `65ch`, so lines stay readable on wide monitors.
+- `.grid` uses `minmax(min(100%, 16rem), 1fr)`. The `min(100%, …)` stops a card from overflowing at 320px, and that's the usual place this pattern breaks.
+- `h1` has a rem floor and ceiling, so it stays readable and can't get huge.
+- `img` is capped at its container, so it can't push the page sideways.
+- There are no media queries, no `100vw`, and no fixed heights, so there's nothing to maintain.
 
-**What viewport queries are still for**
-Use them for questions about the whole page or device, such as the main navigation pattern, `prefers-reduced-motion`, `hover`/`pointer`, and print. The card doesn't need any of these.
+**Optional hardening (these only matter for edge cases)**
 
-**Sketch**
 ```css
-.account-card-slot { container: account-card / inline-size; }
+*, *::before, *::after { box-sizing: border-box; }
 
-.account-card {
-  display: grid;
-  gap: 0.75rem;
-  padding: 1rem;
-}
-.account-card__spark { display: none; }          /* compact default */
+/* Long URLs or compound words in a card can overflow its grid track */
+.grid > * { min-inline-size: 0; overflow-wrap: anywhere; }
 
-@container account-card (min-width: 22rem) {
-  .account-card { grid-template-columns: 1fr auto; }
-  .account-card__spark { display: block; }
-  .account-card__transfer { grid-column: 1 / -1; }
-}
+h1 { overflow-wrap: break-word; }
 ```
 
-**Practical points for the meeting**
-1. **Put `container-type` on a wrapper, not on the card itself.** An element can't query its own size, so the card's root needs a parent that is the container.
-2. **Use one breakpoint to start.** Compact below about 22rem, roomy above it. Find the real value by resizing until the content breaks, and write it in `rem`.
-3. **Add `min-inline-size: 0` and `overflow-wrap: anywhere` to the balance and transaction text.** This guards against long merchant names.
-4. **Browser support is not a concern.** Container queries are supported in all evergreen browsers. If you must support something older, fall back to the compact layout, which is the default above.
-5. **Test it in Storybook, or any harness, at three container widths.** Use about 16rem, 22rem and 32rem, with a long merchant name. Check zoom at 200% too.
+1. **Grid children:** a grid item defaults to `min-width: auto`, so a long unbroken string can push past its track. `min-inline-size: 0` plus `overflow-wrap` fixes that.
+2. **Box sizing:** the border-box reset stops padding and borders from adding to any widths set later. Skip it if the project already has a reset.
+3. **Headline on landscape phones:** `1.2rem + 2.5vw` reaches the 3.25rem cap at about 844px wide, which is a large headline on a screen about 390px tall. If the hero looks cramped there, change it to `clamp(1.75rem, 1.2rem + 2.5vmin, 3.25rem)`. I'd only do this if you see the problem.
 
-**Assumptions:** you target evergreen browsers, use plain CSS (tell me if it's Tailwind or CSS-in-JS and I'll translate), and the narrowest card is about 16rem.
+**Widths I reasoned through**
+- **320px:** the gutter is 1rem, the grid is one column of full width, and the h1 is about 2rem. Nothing overflows.
+- **About 700px:** the grid fits two columns, since two 16rem tracks plus the gap fit.
+- **1440px:** the page is capped at 72rem, prose stays at 65ch, and the h1 is at its 3.25rem cap.
+
+**Assumptions**
+- Your HTML has `<meta name="viewport" content="width=device-width, initial-scale=1">`. Without it, phones ignore all of this. I couldn't check, because I only have the CSS.
+- The target is evergreen browsers, since `min()` and `clamp()` need reasonably current ones.
+- I haven't run this in a browser. The checks above come from reading the CSS, so a quick look at 320px and 200% zoom would confirm them.

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restoring a snapshot · Brine docs</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f5f7f8;
+    --text: #1d2529;
+    --muted: #5a6870;
+    --border: #dde3e6;
+    --accent: #0b6e8a;
+    --accent-bg: #e4f3f7;
+    --code-bg: #12191d;
+    --code-text: #e3edf0;
+    --warn-bg: #fff6e0;
+    --warn-border: #c98a00;
+    --warn-text: #5c3f00;
+    --sidebar-w: 17rem;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1518;
+      --surface: #161e22;
+      --text: #e3eaed;
+      --muted: #9aaab2;
+      --border: #28343a;
+      --accent: #5cc3df;
+      --accent-bg: #15303a;
+      --code-bg: #0a0f11;
+      --code-text: #e3edf0;
+      --warn-bg: #2b2310;
+      --warn-border: #d9a21b;
+      --warn-text: #f3dca0;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--bg);
+  }
+  a { color: var(--accent); }
+  a:focus-visible, summary:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+    padding: .75rem 1.25rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { font-weight: 700; font-size: 1.15rem; letter-spacing: -.01em; color: var(--text); text-decoration: none; }
+  .brand span { color: var(--accent); }
+  .ver { font-size: .8rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: .1rem .6rem; }
+
+  .layout { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); max-width: 76rem; margin: 0 auto; }
+
+  nav.side {
+    position: sticky; top: 3.4rem; align-self: start;
+    max-height: calc(100vh - 3.4rem); overflow-y: auto;
+    padding: 1.5rem 1rem 2rem 1.25rem;
+    border-right: 1px solid var(--border);
+    font-size: .93rem;
+  }
+  nav.side h2 {
+    margin: 1.4rem 0 .4rem;
+    font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  nav.side h2:first-child { margin-top: 0; }
+  nav.side ul { list-style: none; margin: 0; padding: 0; }
+  nav.side a {
+    display: block; padding: .3rem .65rem; margin: 1px 0;
+    color: var(--text); text-decoration: none; border-radius: 6px;
+  }
+  nav.side a:hover { background: var(--surface); }
+  nav.side a[aria-current="page"] { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+
+  .nav-toggle { display: none; }
+  .nav-toggle summary {
+    list-style: none; cursor: pointer;
+    padding: .7rem 1.25rem; font-weight: 600; font-size: .95rem;
+    border-bottom: 1px solid var(--border); background: var(--surface);
+  }
+  .nav-toggle summary::-webkit-details-marker { display: none; }
+  .nav-toggle summary::after { content: "▾"; float: right; color: var(--muted); }
+  .nav-toggle[open] summary::after { content: "▴"; }
+
+  main { padding: 2rem clamp(1.25rem, 4vw, 3.5rem) 4rem; min-width: 0; }
+  article { max-width: 46rem; }
+  .crumbs { font-size: .85rem; color: var(--muted); margin-bottom: .75rem; }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.4rem); line-height: 1.2; letter-spacing: -.02em; margin: 0 0 1rem; }
+  .lede { font-size: 1.1rem; color: var(--muted); margin: 0 0 1.5rem; }
+  h2.sec { font-size: 1.4rem; margin: 2.5rem 0 .75rem; letter-spacing: -.01em; }
+  p { margin: 0 0 1rem; }
+  code {
+    font-family: var(--mono); font-size: .88em;
+    background: var(--surface); border: 1px solid var(--border);
+    padding: .08em .35em; border-radius: 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .prereq { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: .9rem 1.1rem; margin: 0 0 1rem; }
+  .prereq strong { display: block; margin-bottom: .25rem; }
+  .prereq ul { margin: 0; padding-left: 1.2rem; }
+
+  ol.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; }
+  ol.steps > li {
+    counter-increment: step;
+    position: relative;
+    padding: 0 0 1.75rem 2.9rem;
+    min-width: 0;
+  }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 0;
+    width: 2rem; height: 2rem; border-radius: 50%;
+    background: var(--accent); color: var(--bg);
+    font-weight: 700; font-size: .95rem;
+    display: grid; place-items: center;
+  }
+  ol.steps > li::after {
+    content: ""; position: absolute; left: 1rem; top: 2.4rem; bottom: .3rem;
+    width: 2px; background: var(--border);
+  }
+  ol.steps > li:last-child::after { display: none; }
+  ol.steps h3 { margin: .2rem 0 .5rem; font-size: 1.1rem; }
+
+  pre {
+    margin: .75rem 0 0;
+    padding: 1rem 1.1rem;
+    background: var(--code-bg); color: var(--code-text);
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: var(--mono); font-size: .87rem; line-height: 1.55;
+    -webkit-overflow-scrolling: touch;
+  }
+  pre code { background: none; border: 0; padding: 0; font-size: inherit; overflow-wrap: normal; }
+  .c { color: #7f929b; }
+  .p { color: #7fd1e8; user-select: none; }
+
+  .warning {
+    margin: 2rem 0;
+    padding: 1rem 1.2rem;
+    background: var(--warn-bg);
+    border-left: 4px solid var(--warn-border);
+    border-radius: 0 8px 8px 0;
+    color: var(--warn-text);
+  }
+  .warning strong.t { display: block; margin-bottom: .3rem; }
+  .warning p:last-child { margin-bottom: 0; }
+  .warning code { background: rgba(0,0,0,.07); border-color: transparent; }
+
+  .next { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .9rem; margin-top: 1rem; }
+  .card {
+    display: block; padding: 1rem 1.1rem; text-decoration: none; color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
+  }
+  .card:hover { border-color: var(--accent); }
+  .card b { display: block; color: var(--accent); margin-bottom: .2rem; }
+  .card span { font-size: .9rem; color: var(--muted); }
+
+  footer.page { margin-top: 3rem; font-size: .85rem; color: var(--muted); }
+
+  @media (max-width: 52rem) {
+    .layout { display: block; }
+    nav.side { display: none; }
+    .nav-toggle { display: block; }
+    .nav-toggle nav { padding: 1rem 1.25rem 1.25rem; font-size: 1rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .nav-toggle nav h2 { margin: 1.1rem 0 .3rem; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .nav-toggle nav h2:first-child { margin-top: 0; }
+    .nav-toggle nav ul { list-style: none; margin: 0; padding: 0; }
+    .nav-toggle nav a { display: block; padding: .5rem .4rem; color: var(--text); text-decoration: none; border-radius: 6px; }
+    .nav-toggle nav a[aria-current="page"] { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+    main { padding-top: 1.5rem; }
+    ol.steps > li { padding-left: 2.6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#">Brine<span>.</span> <span style="color:var(--muted);font-weight:400">docs</span></a>
+  <span class="ver">v2.4</span>
+</header>
+
+<details class="nav-toggle">
+  <summary>Documentation menu</summary>
+  <nav aria-label="Documentation">
+    <h2>Getting started</h2>
+    <ul>
+      <li><a href="#">Introduction</a></li>
+      <li><a href="#">Installation</a></li>
+      <li><a href="#">Quickstart</a></li>
+      <li><a href="#">Configuring a repository</a></li>
+    </ul>
+    <h2>Backups</h2>
+    <ul>
+      <li><a href="#">Creating a backup</a></li>
+      <li><a href="#">Scheduling backups</a></li>
+      <li><a href="#">Listing snapshots</a></li>
+      <li><a href="#" aria-current="page">Restoring a snapshot</a></li>
+      <li><a href="#">Pruning old snapshots</a></li>
+    </ul>
+    <h2>Reference</h2>
+    <ul>
+      <li><a href="#">Command-line options</a></li>
+      <li><a href="#">Configuration file</a></li>
+      <li><a href="#">Exit codes</a></li>
+    </ul>
+  </nav>
+</details>
+
+<div class="layout">
+  <nav class="side" aria-label="Documentation">
+    <h2>Getting started</h2>
+    <ul>
+      <li><a href="#">Introduction</a></li>
+      <li><a href="#">Installation</a></li>
+      <li><a href="#">Quickstart</a></li>
+      <li><a href="#">Configuring a repository</a></li>
+    </ul>
+    <h2>Backups</h2>
+    <ul>
+      <li><a href="#">Creating a backup</a></li>
+      <li><a href="#">Scheduling backups</a></li>
+      <li><a href="#">Listing snapshots</a></li>
+      <li><a href="#" aria-current="page">Restoring a snapshot</a></li>
+      <li><a href="#">Pruning old snapshots</a></li>
+    </ul>
+    <h2>Reference</h2>
+    <ul>
+      <li><a href="#">Command-line options</a></li>
+      <li><a href="#">Configuration file</a></li>
+      <li><a href="#">Exit codes</a></li>
+    </ul>
+  </nav>
+
+  <main id="content">
+    <article>
+      <div class="crumbs">Backups &rsaquo; Restoring a snapshot</div>
+      <h1>Restoring a snapshot</h1>
+      <p class="lede">A snapshot is only useful if you can get your files back. This page walks through finding the right snapshot, previewing what a restore will do, and writing the files back to disk.</p>
+
+      <div class="prereq">
+        <strong>Before you begin</strong>
+        <ul>
+          <li>Brine 2.4 or later is installed and your repository is configured.</li>
+          <li>You have the repository password, or <code>BRINE_PASSWORD</code> is set in your environment.</li>
+        </ul>
+      </div>
+
+      <h2 class="sec">Steps</h2>
+
+      <ol class="steps">
+        <li>
+          <h3>Find the snapshot you want</h3>
+          <p>List the snapshots in your repository. Each one has a short ID you can use in later commands. Use <code>--path</code> to filter to snapshots that include a particular directory.</p>
+<pre><code><span class="p">$ </span>brine snapshots --path ~/Documents
+<span class="c">ID        Taken                Host       Paths</span>
+a3f91c02  2026-10-12 02:00:04  laptop     /Users/sam/Documents
+7be4d810  2026-10-13 02:00:03  laptop     /Users/sam/Documents
+c10e5a77  2026-10-14 02:00:05  laptop     /Users/sam/Documents</code></pre>
+        </li>
+        <li>
+          <h3>Preview the restore</h3>
+          <p>Run the restore with <code>--dry-run</code> first. Brine reports which files would be written or overwritten without touching anything on disk.</p>
+<pre><code><span class="p">$ </span>brine restore 7be4d810 --target ~/restored --dry-run
+<span class="c">Would restore 1,284 files (3.2 GiB) to /Users/sam/restored
+  new:        1,284
+  overwrite:      0
+  unchanged:      0</span></code></pre>
+        </li>
+        <li>
+          <h3>Run the restore</h3>
+          <p>Remove <code>--dry-run</code> to restore for real. Restoring to an empty directory with <code>--target</code> is the safest option, since nothing already on disk can be replaced.</p>
+<pre><code><span class="p">$ </span>brine restore 7be4d810 --target ~/restored
+<span class="c">Enter repository password:</span>
+<span class="c">[################################] 100%  3.2 GiB  41 MiB/s
+Restored 1,284 files to /Users/sam/restored in 1m18s</span></code></pre>
+        </li>
+        <li>
+          <h3>Restore only what you need</h3>
+          <p>To recover a single file or folder, pass one or more <code>--include</code> patterns. Paths are matched relative to the snapshot root.</p>
+<pre><code><span class="p">$ </span>brine restore 7be4d810 --target ~/restored \
+    --include "Documents/taxes/2025/**"
+<span class="c">Restored 37 files to /Users/sam/restored in 2s</span></code></pre>
+        </li>
+      </ol>
+
+      <div class="warning" role="note">
+        <strong class="t">⚠ Restoring over existing files</strong>
+        <p>If you omit <code>--target</code>, Brine restores to the original paths and <strong>replaces any files that already exist there</strong> with the snapshot's version. Changes made since the snapshot was taken will be lost, and this can't be undone.</p>
+        <p>Always run with <code>--dry-run</code> first and check the <code>overwrite</code> count. To keep your current files, restore to a separate directory with <code>--target</code> and copy across what you need.</p>
+      </div>
+
+      <section class="next">
+        <h2 class="sec" style="margin-top:0">Next steps</h2>
+        <p>Now that you can get your data back, make sure you won't run out of room for new snapshots, and check the full list of restore flags.</p>
+        <div class="cards">
+          <a class="card" href="#"><b>Pruning old snapshots</b><span>Free up space with retention rules.</span></a>
+          <a class="card" href="#"><b>Command-line options</b><span>Every flag for <code>brine restore</code>.</span></a>
+          <a class="card" href="#"><b>Exit codes</b><span>Handle failures in scripts and cron.</span></a>
+        </div>
+      </section>
+
+      <footer class="page">Last updated October 2026 · <a href="#">Edit this page</a></footer>
+    </article>
+  </main>
+</div>
+
+</body>
+</html>

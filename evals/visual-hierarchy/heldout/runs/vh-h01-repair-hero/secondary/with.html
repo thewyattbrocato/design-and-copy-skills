@@ -1,192 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tern &amp; Wick: Repair cafe bookings</title>
-  <meta name="description" content="Book a 30-minute slot at a repair cafe near you. Volunteers, tools and tea are free.">
-  <style>
-    :root {
-      --paper: #faf6ef;
-      --ink: #1f2a24;
-      --muted: #4d5b52;
-      --moss: #2f5d46;
-      --moss-dark: #244a37;
-      --ember: #c8643b;
-      --rule: #e4dccd;
-      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tern &amp; Wick: Book a repair cafe slot</title>
+<style>
+  :root {
+    --paper: #f7f3ec;
+    --ink: #1f2a26;
+    --muted: #55625d;
+    --accent: #2f6b4f;
+    --accent-ink: #ffffff;
+    --line: #d9d1c4;
+  }
 
-    * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
 
-    html, body { margin: 0; padding: 0; }
+  html, body { height: 100%; margin: 0; }
 
-    body {
-      font-family: var(--font);
-      background: var(--paper);
-      color: var(--ink);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    .screen {
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      padding: 0 clamp(20px, 5vw, 56px);
-    }
+  .page {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--rule);
-    }
+  header {
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--line);
+  }
 
-    .brand {
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: 0.01em;
-      color: var(--ink);
-      text-decoration: none;
-    }
+  .wordmark {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
 
-    .brand span {
-      color: var(--ember);
-    }
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+  }
 
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      max-width: 760px;
-      padding: 48px 0;
-    }
+  .hero {
+    max-width: 640px;
+    text-align: center;
+  }
 
-    .eyebrow {
-      margin: 0 0 16px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--moss);
-    }
+  h1 {
+    margin: 0 0 20px;
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
 
-    h1 {
-      margin: 0 0 24px;
-      font-size: clamp(2.6rem, 7vw, 4.6rem);
-      line-height: 1.04;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      text-wrap: balance;
-    }
+  .lede {
+    margin: 0 auto 36px;
+    max-width: 30ch;
+    font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+    color: var(--muted);
+  }
 
-    .lede {
-      margin: 0 0 40px;
-      max-width: 34ch;
-      font-size: clamp(1.1rem, 2.2vw, 1.3rem);
-      color: var(--muted);
-      text-wrap: pretty;
-    }
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 16px 28px;
-    }
+  .btn-primary {
+    display: inline-block;
+    padding: 16px 32px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
 
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 14px 30px;
-      border-radius: 999px;
-      background: var(--moss);
-      color: #ffffff;
-      font: inherit;
-      font-weight: 700;
-      font-size: 1.05rem;
-      text-decoration: none;
-      transition: background-color 0.15s ease;
-    }
+  .btn-primary:hover { background: #265741; }
 
-    .btn-primary:hover {
-      background: var(--moss-dark);
-    }
+  .btn-primary:focus-visible,
+  .secondary:focus-visible,
+  .wordmark:focus-visible {
+    outline: 3px solid #1a4fa0;
+    outline-offset: 3px;
+  }
 
-    .link-secondary {
-      color: var(--moss);
-      font-weight: 600;
-      font-size: 1rem;
-      text-decoration: underline;
-      text-decoration-thickness: 1.5px;
-      text-underline-offset: 4px;
-    }
+  .secondary {
+    color: var(--accent);
+    font-size: 0.98rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 
-    .link-secondary:hover {
-      color: var(--moss-dark);
-    }
+  .secondary:hover { color: #1f4a37; }
 
-    a:focus-visible {
-      outline: 3px solid var(--ember);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
+  footer {
+    padding: 20px 32px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
 
-    footer {
-      padding: 24px 0 32px;
-      border-top: 1px solid var(--rule);
-    }
-
-    .stats {
-      margin: 0;
-      font-size: 0.95rem;
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .stats strong {
-      color: var(--ink);
-      font-weight: 700;
-    }
-
-    @media (max-width: 480px) {
-      header { padding: 22px 0; }
-      .btn-primary { width: 100%; }
-      .actions { flex-direction: column; align-items: stretch; }
-      .link-secondary { text-align: center; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .btn-primary { transition: none; }
-    }
-  </style>
+  @media (max-width: 480px) {
+    header, footer { padding-left: 20px; padding-right: 20px; }
+    main { padding: 48px 20px; }
+  }
+</style>
 </head>
 <body>
-  <div class="screen">
-    <header>
-      <a class="brand" href="#">Tern <span>&amp;</span> Wick</a>
-    </header>
+<div class="page">
 
-    <main>
-      <p class="eyebrow">Community repair cafes</p>
-      <h1>Don't bin it. Bring it in.</h1>
+  <header>
+    <a class="wordmark" href="#">Tern &amp; Wick</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="headline">
+      <h1 id="headline">Don't bin it. Bring it in.</h1>
       <p class="lede">Book a 30-minute slot at a repair cafe near you. Volunteers, tools and tea are free.</p>
 
       <div class="actions">
         <a class="btn-primary" href="#book">Book a slot</a>
-        <a class="link-secondary" href="#how-it-works">How a repair cafe works</a>
+        <a class="secondary" href="#how-it-works">How a repair cafe works</a>
       </div>
-    </main>
+    </section>
+  </main>
 
-    <footer>
-      <p class="stats"><strong>214</strong> cafes in <strong>9</strong> countries, <strong>41,000</strong> things fixed</p>
-    </footer>
-  </div>
+  <footer>
+    214 cafes in 9 countries, 41,000 things fixed
+  </footer>
+
+</div>
 </body>
 </html>

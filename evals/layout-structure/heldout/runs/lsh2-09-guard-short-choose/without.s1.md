@@ -1,0 +1,1 @@
+Go with the full-bleed illustration. For an illustrator the work is the pitch, and a huge image shows her style in the first second, which a smaller image beside a tagline can't do. Keep her name legible in the corner and add a short line about what she does, either under the name or as a quiet caption, so visitors know what she does and how to hire her.

@@ -1,0 +1,1 @@
+Aim for roughly 100–200 ms: fast enough to feel instant, but with just enough motion to show where the menu came from. Keep it under about 300 ms, and make closing a bit faster than opening (around 100 ms).

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fernwick Nursery – Quarterly Stock Count</title>
+<style>
+  @page { size: letter portrait; margin: 0.5in; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    padding: 0.5in;
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.25;
+    color: #1a1a1a;
+    background: #fff;
+  }
+  @media print { body { padding: 0; } }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2.5pt solid #2f4a2f;
+    padding-bottom: 8pt;
+    margin-bottom: 8pt;
+  }
+  h1 { margin: 0; font-size: 20pt; letter-spacing: 0.01em; color: #2f4a2f; }
+  .sub { margin: 2pt 0 0; font-size: 11pt; color: #444; }
+  .meta { text-align: right; font-size: 10pt; color: #333; }
+  .meta strong { font-size: 11pt; }
+
+  .key {
+    display: flex;
+    gap: 16pt;
+    align-items: center;
+    font-size: 9pt;
+    color: #444;
+    margin: 0 0 8pt;
+  }
+  .flag {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 8pt;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1.25pt solid #9a2a1a;
+    color: #9a2a1a;
+    padding: 1pt 4pt;
+    border-radius: 2pt;
+    white-space: nowrap;
+  }
+  .flag.out { background: #9a2a1a; color: #fff; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead { display: table-header-group; }
+  th {
+    text-align: left;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+    background: #2f4a2f;
+    padding: 4pt 5pt;
+  }
+  td { padding: 5pt 5pt; border-bottom: 0.5pt solid #bbb; vertical-align: middle; }
+  tr { break-inside: avoid; page-break-inside: avoid; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .sku { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 9.5pt; white-space: nowrap; }
+  .plant { font-weight: 600; }
+  .low td { background: #f6e9e6; }
+  .low .qty { font-weight: 800; }
+
+  tr.bench td {
+    background: #e4ebe0;
+    color: #2f4a2f;
+    font-weight: 800;
+    font-size: 11pt;
+    letter-spacing: 0.04em;
+    border-top: 1.5pt solid #2f4a2f;
+    border-bottom: 0.75pt solid #2f4a2f;
+    padding: 4pt 5pt;
+    break-after: avoid;
+  }
+  tr.bench span { font-weight: 500; font-size: 9pt; letter-spacing: 0; color: #444; margin-left: 8pt; }
+
+  th.recount, td.recount { width: 0.95in; }
+  td.recount { border-left: 0.5pt solid #bbb; background: #fff !important; }
+
+  footer { margin-top: 10pt; font-size: 9pt; color: #555; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Fernwick Nursery</h1>
+    <p class="sub">Quarterly Stock Count</p>
+  </div>
+  <div class="meta">
+    <div><strong>Counted Oct 3</strong></div>
+    <div>Thursday crew</div>
+  </div>
+</header>
+
+<div class="key">
+  <span><span class="flag">Reorder</span> on hand is below reorder level</span>
+  <span><span class="flag out">Out</span> none on hand</span>
+  <span>Use the Recount box to note any change at the bench.</span>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Plant</th>
+      <th>Pot</th>
+      <th class="num">On hand</th>
+      <th class="num">Reorder at</th>
+      <th>Status</th>
+      <th class="num">Cost ea.</th>
+      <th class="recount">Recount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr class="bench"><td colspan="8">BENCH A<span>4 plants</span></td></tr>
+    <tr>
+      <td class="sku">FW-101</td><td class="plant">Lavender ’Hidcote’</td><td>1 gal</td>
+      <td class="num qty">48</td><td class="num">20</td><td></td><td class="num">$6.40</td><td class="recount"></td>
+    </tr>
+    <tr class="low">
+      <td class="sku">FW-102</td><td class="plant">Rosemary ’Tuscan Blue’</td><td>1 gal</td>
+      <td class="num qty">12</td><td class="num">20</td><td><span class="flag">Reorder</span></td><td class="num">$6.40</td><td class="recount"></td>
+    </tr>
+    <tr>
+      <td class="sku">FW-103</td><td class="plant">Catmint ’Walker’s Low’</td><td>1 gal</td>
+      <td class="num qty">66</td><td class="num">25</td><td></td><td class="num">$5.90</td><td class="recount"></td>
+    </tr>
+    <tr>
+      <td class="sku">FW-110</td><td class="plant">Salvia ’May Night’</td><td>2 gal</td>
+      <td class="num qty">31</td><td class="num">15</td><td></td><td class="num">$9.25</td><td class="recount"></td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="bench"><td colspan="8">BENCH B<span>4 plants</span></td></tr>
+    <tr>
+      <td class="sku">FW-204</td><td class="plant">Hosta ’Blue Angel’</td><td>2 gal</td>
+      <td class="num qty">22</td><td class="num">12</td><td></td><td class="num">$11.50</td><td class="recount"></td>
+    </tr>
+    <tr class="low">
+      <td class="sku">FW-205</td><td class="plant">Hosta ’Sum and Substance’</td><td>2 gal</td>
+      <td class="num qty">9</td><td class="num">12</td><td><span class="flag">Reorder</span></td><td class="num">$11.50</td><td class="recount"></td>
+    </tr>
+    <tr>
+      <td class="sku">FW-210</td><td class="plant">Fern, Japanese painted</td><td>1 gal</td>
+      <td class="num qty">40</td><td class="num">18</td><td></td><td class="num">$7.80</td><td class="recount"></td>
+    </tr>
+    <tr>
+      <td class="sku">FW-214</td><td class="plant">Astilbe ’Visions’</td><td>1 gal</td>
+      <td class="num qty">27</td><td class="num">15</td><td></td><td class="num">$7.25</td><td class="recount"></td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="bench"><td colspan="8">BENCH C<span>4 plants</span></td></tr>
+    <tr>
+      <td class="sku">FW-301</td><td class="plant">Hydrangea ’Limelight’</td><td>3 gal</td>
+      <td class="num qty">14</td><td class="num">10</td><td></td><td class="num">$24.00</td><td class="recount"></td>
+    </tr>
+    <tr class="low">
+      <td class="sku">FW-302</td><td class="plant">Hydrangea ’Little Lime’</td><td>3 gal</td>
+      <td class="num qty">0</td><td class="num">10</td><td><span class="flag out">Out</span></td><td class="num">$22.50</td><td class="recount"></td>
+    </tr>
+    <tr>
+      <td class="sku">FW-305</td><td class="plant">Viburnum ’Winterthur’</td><td>5 gal</td>
+      <td class="num qty">6</td><td class="num">4</td><td></td><td class="num">$38.00</td><td class="recount"></td>
+    </tr>
+    <tr>
+      <td class="sku">FW-309</td><td class="plant">Boxwood ’Green Velvet’</td><td>3 gal</td>
+      <td class="num qty">52</td><td class="num">20</td><td></td><td class="num">$19.75</td><td class="recount"></td>
+    </tr>
+  </tbody>
+
+  <tbody>
+    <tr class="bench"><td colspan="8">BENCH D<span>4 plants</span></td></tr>
+    <tr>
+      <td class="sku">FW-401</td><td class="plant">Maple, Japanese ’Bloodgood’</td><td>7 gal</td>
+      <td class="num qty">5</td><td class="num">3</td><td></td><td class="num">$89.00</td><td class="recount"></td>
+    </tr>
+    <tr>
+      <td class="sku">FW-402</td><td class="plant">Serviceberry</td><td>7 gal</td>
+      <td class="num qty">7</td><td class="num">3</td><td></td><td class="num">$74.50</td><td class="recount"></td>
+    </tr>
+    <tr class="low">
+      <td class="sku">FW-407</td><td class="plant">Redbud ’Forest Pansy’</td><td>7 gal</td>
+      <td class="num qty">2</td><td class="num">3</td><td><span class="flag">Reorder</span></td><td class="num">$82.00</td><td class="recount"></td>
+    </tr>
+    <tr>
+      <td class="sku">FW-410</td><td class="plant">Magnolia ’Ann’</td><td>7 gal</td>
+      <td class="num qty">4</td><td class="num">2</td><td></td><td class="num">$96.00</td><td class="recount"></td>
+    </tr>
+  </tbody>
+</table>
+
+<footer>
+  <span>16 plants listed · 4 flagged for reorder</span>
+  <span>Counted Oct 3 · Thursday crew</span>
+</footer>
+
+</body>
+</html>

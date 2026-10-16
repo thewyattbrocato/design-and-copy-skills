@@ -1,31 +1,35 @@
-Your instinct is right. Don't teach all forty on day one. People won't retain them, and the audience is the wrong one for a mandatory tour. Teach a few shortcuts in the middle of real work, and make the rest easy to find when someone wants them.
+You're right. A mandatory forty-shortcut walkthrough on day one is the wrong tool for this audience. Don't replace it with nothing. Replace it with help that shows up while people work.
+
+**Why the tour fails**
+- People can hold only a few new things in mind at once. Forty shortcuts means they retain none of them.
+- Nobody practices a shortcut they have no use for yet. Nothing in a tour makes a new user need "jump between matters" in the first five minutes.
+- These users work eight hours a day and have habits in other tools. A forced tutorial reads as an interruption, and they will skip it as fast as they can.
+- Shortcuts are the one thing here that users tend to learn well on their own. The only open question is when and how you tell them.
 
 **What to do instead**
 
-1. **Fix before you teach.** Check whether any of the forty need a shortcut to be discoverable at all. Put the key combo in every menu item, button tooltip and command-palette entry that has one. Then the interface teaches the shortcut each time someone uses the mouse path.
+The goal is that in week two, users reach for a shortcut without thinking about it. Everything below serves that.
 
-2. **Pick the "one thing" for day one.** For example: "Afterwards they can open any matter and start a note without touching the mouse." That's two or three shortcuts at most, probably jump-between-matters, new note, and the command palette (if you have one). Use your usage data or a few interviews to choose, rather than guessing. The first-run flow is a guided real task with those few, not a tour. It needs a visible skip and a way back later.
+1. **Show the shortcut where the mouse action happens.** Put the key combo in menu items, button tooltips, and the command palette. Every mouse use then teaches the keyboard route for free. This does most of the work, and it costs nothing in onboarding time.
 
-3. **Teach the rest at the moment of action.** When someone does something by mouse that has a shortcut, show a small, dismissible hint that names the key. Quick-cite is a good example: after they insert a citation via the menu a few times, show "Quick-cite: [key]". Rules for these hints:
-   - Trigger on repeated mouse use, not on a timer.
-   - Show one at a time and never during a deadline-style flow.
-   - Stop showing a hint once they've used that shortcut.
-   - Tell them what it does in their terms, not "Pro tip!"
+2. **Add a command palette that shows shortcuts beside every action.** Users who search for "split view" see the key next to it. Searching becomes the way they learn.
 
-4. **Give them a reference.** Lawyers will want a searchable, printable cheat sheet, grouped by task (matters, citing, layout) and not alphabetically. Open it from the help menu or from a key such as `?`. It should be the same list the hints draw from. Reference material stays separate from the tutorial.
+3. **Nudge after repeated mouse use.** If someone clicks "split view" for the third time, show one small, dismissible hint: "Split view: `[shortcut]`". Wait until they've done the action by hand a few times, because that's when they're ready to hear it. One hint at a time, with a "don't show these" option.
 
-5. **Bring it back through real work.** Instead of drip emails or streaks, use a lightweight "shortcuts you haven't tried" section in the reference, ranked by how often the person does the mouse equivalent. Don't send nudges.
+4. **Teach a starter set of 3 to 5 in the first session.** Pick the ones tied to the first real task, such as creating a note, jumping to a matter, and quick-cite. Introduce each one when the user is doing that task for the first time, not in a separate tour. Use "try it now" in the real product.
 
-6. **Offer a way in for people with other habits.** If a shortcut conflicts with Word or Westlaw habits, let them rebind it. Mention that in the hint and in the cheat sheet.
+5. **Give the rest a reference, not a lesson.** Provide a searchable cheat sheet, grouped by task (research, drafting, matter navigation), opened with `?` or from the Help menu. Pair it with a short "what's new" note when you ship new shortcuts, so power users aren't left finding them by accident.
+
+6. **Offer an optional "Keyboard tips" track.** Make it opt-in, surfaced in settings and the cheat sheet, and mention it once. Experts can choose to take it. It shouldn't gate anything.
+
+7. **Fix the design first.** Check that shortcuts are guessable and consistent (a pattern like one modifier for navigation and another for editing). Check that they don't collide with the OS, with browsers, or with Word and Westlaw habits your users already have. A predictable scheme means fewer shortcuts need teaching.
 
 **What to tell the PM**
 
-The PM's goal is that people actually use the shortcuts, and a day-one tour of forty works against it. Nobody remembers forty keystrokes they've never needed yet, and eight-hour-a-day users resent a mandatory tour. The better measure is whether people use a shortcut a week later without being prompted. You could propose tracking that per shortcut, with these cohorts:
-- Tour of everything (the PM's version).
-- Guided 2–3 plus contextual hints (the proposal above).
+The PM wants every user to know the shortcuts. That's a fair goal. A day-one walkthrough doesn't achieve it, because people forget what they haven't used. Frame it as "teach each shortcut at the moment it's useful." Both approaches aim at the same outcome, and this one gets there more reliably.
 
-I'd expect the second to win, but that's a hypothesis. The test will tell you.
+**How to settle it**
 
-**Assumptions**
-- I assumed you have a command palette or menus where key combos can be shown. If not, adding them is the first fix.
-- Which 2–3 shortcuts go in the day-one task should come from your usage data. I didn't want to guess at them.
+Don't use tour completion as the measure. Use shortcut use at days 7 and 30: the share of users who run each core action by keyboard unprompted. You could test it directly by sending half of new users through the full tour and half through the in-context approach. If the tour wins on that measure, you'll have the evidence to say so.
+
+Two assumptions: I assumed a desktop app with a menu bar and tooltips, and I haven't named specific key combos because I don't have your shortcut map. If you share the list, I can help pick the starter 3 to 5 and decide which shortcuts deserve a nudge.

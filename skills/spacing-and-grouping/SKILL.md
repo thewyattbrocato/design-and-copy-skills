@@ -29,8 +29,8 @@ Space is how a layout says what belongs together. Left to defaults, models pad e
 
 Scale this to the task. A single component gets steps 1, 2, 4 and 8; a full page gets all of them.
 
-1. **Map relationships before picking numbers.** List which items form a unit, which units are siblings, and which must be pushed apart. A label belongs to its field, a field to its section, a section to the page. Write the map down, even as a few lines, then choose values.
-2. **Make within clearly smaller than between.** Space inside a group is about half of the space between groups, or less. A heading sits closer to what it introduces than to what precedes it, roughly one part above to one part below at the least, more often two to one.
+1. **Map relationships before picking numbers.** List which items form a unit, which units are siblings, and which must be pushed apart. A caption belongs to its photo, a photo to its story, a story to the page. Write the map down, even as a few lines, then choose values.
+2. **Make within clearly smaller than between.** Space inside a group is about half of the space between groups, or less. More space above a heading than below it, about two to one; never equal.
 3. **Use a small scale.** Five to eight steps cover most products. Build them from a base unit or from the body line height (see the scale reference). Every gap and padding comes from the scale; no 13s, 22s, or 37s.
 4. **Step outward.** Space grows with the size of what it separates: letters, words, lines, paragraphs, groups, sections, page margins. A gap between columns stays smaller than the outer margin around them.
 5. **Group with the lightest device that works.** Try space first. Add a hairline rule when space alone cannot separate (dense lists, unlike items that must sit close). Add a tinted region when a cluster must read as one unit and cannot be moved. Use a card only for a discrete object. See the grouping reference.

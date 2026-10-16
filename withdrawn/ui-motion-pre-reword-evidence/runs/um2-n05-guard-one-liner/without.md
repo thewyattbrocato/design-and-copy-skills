@@ -1,0 +1,1 @@
+Aim for roughly 100–200 ms for the open animation. That feels instant but still gives a smooth visual cue, and anything over about 300 ms starts to feel sluggish. If there's no animation, it should open immediately (under 100 ms).

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seed Library – Volunteer Desk</title>
+<style>
+  :root {
+    --bg: #f6f4ee; --card: #ffffff; --ink: #23291f; --muted: #626b5a;
+    --line: #dcd9cc; --accent: #2f6b3a; --accent-ink: #ffffff;
+    --warn-bg: #fbefd2; --warn-ink: #6b4a00;
+    --empty-bg: #f3dcd8; --empty-ink: #7a2418;
+    --sel: #e6f0e2; --focus: #1a5fb4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1d17; --card: #23271f; --ink: #ecebe2; --muted: #a2a998;
+      --line: #3a3f33; --accent: #7fc08a; --accent-ink: #12200f;
+      --warn-bg: #4a3a12; --warn-ink: #f2d98f;
+      --empty-bg: #503029; --empty-ink: #f3c1b8;
+      --sel: #2d3a2b; --focus: #8ab8f5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 20px 16px 120px; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  button, input, select { font: inherit; color: inherit; }
+  button {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 14px; cursor: pointer; min-height: 40px;
+  }
+  button:hover { border-color: var(--muted); }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  button.link { border: 0; background: none; padding: 4px 6px; min-height: 0; text-decoration: underline; color: inherit; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  input[type=text], input[type=number], input[type=search], select {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-height: 40px;
+  }
+
+  .cleanup {
+    background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--accent);
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;
+    display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between;
+  }
+  .cleanup h2 { font-size: 1.05rem; margin: 0 0 2px; }
+  .cleanup p { margin: 0; color: var(--muted); }
+  .cleanup label { color: var(--muted); font-size: .9rem; }
+  .cleanup input[type=number] { width: 4.5em; }
+
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
+  .tools input[type=search] { flex: 1 1 200px; }
+  .count { color: var(--muted); margin-left: auto; font-size: .9rem; }
+
+  .tablewrap { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); background: var(--card); }
+  th button { background: none; border: 0; padding: 4px 0; min-height: 0; text-transform: inherit; letter-spacing: inherit; font-weight: 700; color: inherit; }
+  th button[aria-sort]::after { content: " ↕"; opacity: .4; }
+  th button[aria-sort=ascending]::after { content: " ↑"; opacity: 1; }
+  th button[aria-sort=descending]::after { content: " ↓"; opacity: 1; }
+  td.chk, th.chk { width: 44px; text-align: center; }
+  input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer; }
+  tr.selected td { background: var(--sel); }
+  .name { font-weight: 600; }
+  .num { font-variant-numeric: tabular-nums; }
+  .qty { display: inline-flex; align-items: center; gap: 4px; }
+  .qty button { width: 36px; padding: 0; min-height: 36px; font-size: 1.1rem; line-height: 1; }
+  .qty output { min-width: 2.2em; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; margin-right: 4px; white-space: nowrap; }
+  .badge.empty { background: var(--empty-bg); color: var(--empty-ink); }
+  .badge.old { background: var(--warn-bg); color: var(--warn-ink); }
+  .none { padding: 28px; text-align: center; color: var(--muted); }
+
+  details { margin-top: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+  summary { cursor: pointer; font-weight: 600; }
+  form.add { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: end; }
+  form.add label { display: grid; gap: 2px; font-size: .85rem; color: var(--muted); }
+  form.add input[type=number] { width: 6em; }
+  footer { margin-top: 16px; color: var(--muted); font-size: .85rem; }
+
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px;
+    background: var(--card); border-top: 1px solid var(--line);
+    display: none; justify-content: center; gap: 12px; align-items: center; flex-wrap: wrap;
+    box-shadow: 0 -4px 16px rgba(0,0,0,.12);
+  }
+  .bar.show { display: flex; }
+  button.danger { background: #a53a2a; border-color: #a53a2a; color: #fff; font-weight: 600; }
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 82px;
+    background: #23291f; color: #fff; border-radius: 10px; padding: 10px 14px;
+    display: none; gap: 12px; align-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.3); max-width: 92vw;
+  }
+  .toast.show { display: flex; }
+  .toast button { background: #fff; color: #23291f; border: 0; font-weight: 700; min-height: 34px; padding: 4px 12px; }
+  .toast .x { background: none; color: #fff; padding: 4px 8px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  @media (max-width: 560px) { th:nth-child(3), td:nth-child(3) { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>🌱 Seed Library Desk</h1>
+  <p class="sub">Handing out seeds, counting what's left, and tidying up at season's end.</p>
+
+  <section class="cleanup" aria-labelledby="cu-h">
+    <div>
+      <h2 id="cu-h">End-of-season cleanup</h2>
+      <p id="cu-text"></p>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <label>Count as old after <input type="number" id="age" min="1" max="20" value="3"> years</label>
+      <button class="primary" id="pick">Select them</button>
+    </div>
+  </section>
+
+  <div class="tools">
+    <input type="search" id="q" placeholder="Search packets…" aria-label="Search packets">
+    <select id="type" aria-label="Filter by type"></select>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="chk"><input type="checkbox" id="all" aria-label="Select all shown"></th>
+          <th><button data-sort="name">Name</button></th>
+          <th><button data-sort="type">Type</button></th>
+          <th><button data-sort="year">Packed</button></th>
+          <th><button data-sort="left">Left</button></th>
+          <th><span class="sr">Status</span></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="none" id="none" hidden>No packets match.</div>
+  </div>
+
+  <details>
+    <summary>Add a packet</summary>
+    <form class="add" id="addForm">
+      <label>Name <input type="text" id="aName" required maxlength="60"></label>
+      <label>Type <select id="aType"></select></label>
+      <label>Year packed <input type="number" id="aYear" required></label>
+      <label>How many <input type="number" id="aLeft" min="0" value="20" required></label>
+      <button class="primary" type="submit">Add</button>
+    </form>
+  </details>
+
+  <footer>Sample data only. Changes are saved in this browser. <button class="link" id="reset">Reset sample data</button></footer>
+</main>
+
+<div class="bar" id="bar">
+  <strong id="selText"></strong>
+  <button class="danger" id="remove">Remove selected</button>
+  <button id="clear">Clear selection</button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span id="toastText"></span>
+  <button id="undo">Undo</button>
+  <button class="x" id="toastX" aria-label="Dismiss">✕</button>
+</div>
+
+<script>
+(function () {
+  var NOW = new Date().getFullYear();
+  var TYPES = ["Vegetable", "Herb", "Flower", "Fruit"];
+  var KEY = "seedDesk.v1";
+
+  function sample() {
+    var d = [
+      ["Cherokee Purple Tomato","Vegetable",0,24],["Sugar Snap Pea","Vegetable",1,12],
+      ["Lacinato Kale","Vegetable",4,9],["Detroit Dark Red Beet","Vegetable",2,0],
+      ["Rainbow Chard","Vegetable",3,0],["Scarlet Runner Bean","Vegetable",1,15],
+      ["Genovese Basil","Herb",1,31],["Italian Parsley","Herb",3,6],
+      ["Slow-Bolt Cilantro","Herb",0,18],["Chives","Herb",5,14],
+      ["Zinnia State Fair Mix","Flower",1,22],["Calendula Pacific Beauty","Flower",2,0],
+      ["Mammoth Sunflower","Flower",0,40],["Cosmos Sensation Mix","Flower",3,8],
+      ["Moon and Stars Watermelon","Fruit",4,3]
+    ];
+    return d.map(function (r, i) { return { id: i + 1, name: r[0], type: r[1], year: NOW - r[2], left: r[3] }; });
+  }
+
+  var items = load();
+  var nextId = items.reduce(function (m, i) { return Math.max(m, i.id); }, 0) + 1;
+  var selected = {};
+  var sortKey = "name", sortDir = 1;
+  var undoStack = null, toastTimer = null;
+
+  function load() {
+    try { var s = JSON.parse(localStorage.getItem(KEY)); if (Array.isArray(s)) return s; } catch (e) {}
+    return sample();
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
+
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function ageLimit() { var n = parseInt($("age").value, 10); return n > 0 ? n : 3; }
+  function isEmpty(i) { return i.left === 0; }
+  function isOld(i) { return i.year <= NOW - ageLimit(); }
+  function flagged(i) { return isEmpty(i) || isOld(i); }
+
+  function visible() {
+    var q = $("q").value.trim().toLowerCase(), t = $("type").value;
+    return items.filter(function (i) {
+      return (!t || i.type === t) && (!q || i.name.toLowerCase().indexOf(q) > -1);
+    }).sort(function (a, b) {
+      var x = a[sortKey], y = b[sortKey];
+      var c = typeof x === "string" ? x.localeCompare(y) : x - y;
+      return (c || a.name.localeCompare(b.name)) * sortDir;
+    });
+  }
+
+  function render(focusSel) {
+    var list = visible();
+    var ids = {}; items.forEach(function (i) { ids[i.id] = 1; });
+    Object.keys(selected).forEach(function (k) { if (!ids[k]) delete selected[k]; });
+
+    $("rows").innerHTML = list.map(function (i) {
+      var badges = (isEmpty(i) ? '<span class="badge empty">Empty</span>' : "") +
+                   (isOld(i) ? '<span class="badge old">Old · ' + (NOW - i.year) + ' yr</span>' : "");
+      return '<tr class="' + (selected[i.id] ? "selected" : "") + '">' +
+        '<td class="chk"><input type="checkbox" data-id="' + i.id + '" data-act="sel"' + (selected[i.id] ? " checked" : "") + ' aria-label="Select ' + esc(i.name) + '"></td>' +
+        '<td class="name">' + esc(i.name) + '</td>' +
+        '<td>' + esc(i.type) + '</td>' +
+        '<td class="num">' + i.year + '</td>' +
+        '<td><span class="qty">' +
+          '<button data-id="' + i.id + '" data-act="dec" aria-label="One fewer ' + esc(i.name) + '"' + (i.left === 0 ? " disabled" : "") + '>−</button>' +
+          '<output>' + i.left + '</output>' +
+          '<button data-id="' + i.id + '" data-act="inc" aria-label="One more ' + esc(i.name) + '">+</button>' +
+        '</span></td>' +
+        '<td>' + badges + '</td></tr>';
+    }).join("");
+
+    $("none").hidden = list.length > 0;
+    $("count").textContent = list.length + " of " + items.length + " packets";
+
+    var nSel = list.filter(function (i) { return selected[i.id]; }).length;
+    $("all").checked = list.length > 0 && nSel === list.length;
+    $("all").indeterminate = nSel > 0 && nSel < list.length;
+    $("bar").classList.toggle("show", nSel > 0);
+    $("selText").textContent = nSel + " selected";
+    $("remove").textContent = "Remove " + nSel + " packet" + (nSel === 1 ? "" : "s");
+
+    var e = items.filter(isEmpty).length, o = items.filter(isOld).length;
+    var both = items.filter(function (i) { return isEmpty(i) && isOld(i); }).length;
+    var total = items.filter(flagged).length;
+    $("cu-text").textContent = total
+      ? total + " packet" + (total === 1 ? "" : "s") + " ready to clear out: " + e + " empty, " + o + " packed " + (NOW - ageLimit()) + " or earlier" + (both ? " (" + both + " both)" : "") + "."
+      : "Nothing to clear out. Everything is stocked and fresh.";
+    $("pick").disabled = !total;
+
+    document.querySelectorAll("th button[data-sort]").forEach(function (b) {
+      b.setAttribute("aria-sort", b.dataset.sort === sortKey ? (sortDir > 0 ? "ascending" : "descending") : "none");
+    });
+    if (focusSel) { var f = document.querySelector(focusSel); if (f && !f.disabled) f.focus(); }
+  }
+
+  function removeItems(ids) {
+    var gone = items.filter(function (i) { return ids.indexOf(i.id) > -1; });
+    if (!gone.length) return;
+    items = items.filter(function (i) { return ids.indexOf(i.id) < 0; });
+    ids.forEach(function (id) { delete selected[id]; });
+    undoStack = (undoStack && toastTimer ? undoStack : []).concat(gone);
+    save(); render();
+    showToast("Removed " + undoStack.length + " packet" + (undoStack.length === 1 ? "" : "s") + ".");
+  }
+  function showToast(msg) {
+    $("toastText").textContent = msg;
+    $("toast").classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 30000);
+  }
+  function hideToast() { $("toast").classList.remove("show"); undoStack = null; clearTimeout(toastTimer); toastTimer = null; }
+
+  $("rows").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-act]"); if (!b) return;
+    var it = items.filter(function (i) { return i.id == b.dataset.id; })[0];
+    if (!it) return;
+    if (b.dataset.act === "inc") it.left++;
+    else if (b.dataset.act === "dec" && it.left > 0) it.left--;
+    save(); render('button[data-act="' + b.dataset.act + '"][data-id="' + it.id + '"]');
+  });
+  $("rows").addEventListener("change", function (e) {
+    if (e.target.dataset.act !== "sel") return;
+    if (e.target.checked) selected[e.target.dataset.id] = 1; else delete selected[e.target.dataset.id];
+    render('input[data-act="sel"][data-id="' + e.target.dataset.id + '"]');
+  });
+  $("all").addEventListener("change", function () {
+    var on = $("all").checked;
+    visible().forEach(function (i) { if (on) selected[i.id] = 1; else delete selected[i.id]; });
+    render();
+  });
+  $("pick").addEventListener("click", function () {
+    $("q").value = ""; $("type").value = ""; selected = {};
+    items.filter(flagged).forEach(function (i) { selected[i.id] = 1; });
+    render();
+    $("remove").focus();
+  });
+  $("remove").addEventListener("click", function () {
+    var ids = visible().filter(function (i) { return selected[i.id]; }).map(function (i) { return i.id; });
+    removeItems(ids);
+  });
+  $("clear").addEventListener("click", function () { selected = {}; render(); });
+  $("undo").addEventListener("click", function () {
+    if (!undoStack) return;
+    items = items.concat(undoStack);
+    var n = undoStack.length;
+    undoStack.forEach(function (i) { selected[i.id] = 1; });
+    save(); hideToast(); render();
+    $("count").textContent = n + " restored. " + $("count").textContent;
+  });
+  $("toastX").addEventListener("click", hideToast);
+
+  document.querySelectorAll("th button[data-sort]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (sortKey === b.dataset.sort) sortDir = -sortDir; else { sortKey = b.dataset.sort; sortDir = 1; }
+      render();
+    });
+  });
+  $("q").addEventListener("input", function () { selected = {}; render(); });
+  $("type").addEventListener("change", function () { selected = {}; render(); });
+  $("age").addEventListener("input", render);
+
+  $("addForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("aName").value.trim(); if (!name) return;
+    items.push({ id: nextId++, name: name, type: $("aType").value, year: parseInt($("aYear").value, 10), left: Math.max(0, parseInt($("aLeft").value, 10) || 0) });
+    $("aName").value = ""; save(); render(); $("aName").focus();
+  });
+  $("reset").addEventListener("click", function () {
+    items = sample(); nextId = 100; selected = {}; hideToast(); save(); render();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && Object.keys(selected).length) { selected = {}; render(); }
+  });
+
+  $("type").innerHTML = '<option value="">All types</option>' + TYPES.map(function (t) { return '<option>' + t + '</option>'; }).join("");
+  $("aType").innerHTML = TYPES.map(function (t) { return '<option>' + t + '</option>'; }).join("");
+  $("aYear").value = NOW;
+  render();
+})();
+</script>
+</body>
+</html>

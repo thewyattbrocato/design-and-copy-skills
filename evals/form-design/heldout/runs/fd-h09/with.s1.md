@@ -1,0 +1,1 @@
+Preserve their work. On submit, catch the expired session, keep all entered data (in memory or local storage), and show a re-login prompt, ideally a modal or new tab so the form isn't lost. After they re-authenticate, automatically resubmit or restore the form with everything intact. Never show a generic error or wipe the form.

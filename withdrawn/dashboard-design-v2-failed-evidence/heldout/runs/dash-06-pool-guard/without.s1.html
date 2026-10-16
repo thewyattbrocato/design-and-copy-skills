@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pool Status</title>
+<style>
+  :root {
+    --ok: #0a6b36;
+    --bad: #b3261e;
+    --ink: #0f1c24;
+    --muted: #46555f;
+    --bg: #eef4f7;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 2vmin;
+    padding: 2.5vmin;
+  }
+  #banner {
+    background: var(--ok);
+    color: #fff;
+    border-radius: 2vmin;
+    padding: 3vmin 4vmin;
+    text-align: center;
+    flex: 0 0 auto;
+  }
+  #banner.bad { background: var(--bad); }
+  #banner .headline {
+    font-size: clamp(2.5rem, 9vmin, 9rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  #banner .sub {
+    font-size: clamp(1.25rem, 3.6vmin, 3.5rem);
+    margin-top: 1vmin;
+    font-weight: 500;
+  }
+  main {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 2vmin;
+    align-content: stretch;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 2vmin;
+    border: 0.8vmin solid var(--ok);
+    padding: 2.5vmin 3vmin;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1vmin;
+  }
+  .card.bad { border-color: var(--bad); }
+  .label {
+    font-size: clamp(1.25rem, 3.4vmin, 3.2rem);
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .value {
+    font-size: clamp(2.75rem, 10vmin, 10rem);
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .value small {
+    font-size: 0.4em;
+    font-weight: 600;
+    color: var(--muted);
+    margin-left: 0.15em;
+  }
+  .range {
+    font-size: clamp(1rem, 2.6vmin, 2.4rem);
+    color: var(--muted);
+  }
+  .status {
+    align-self: flex-start;
+    font-size: clamp(1.25rem, 3.4vmin, 3.2rem);
+    font-weight: 800;
+    color: #fff;
+    background: var(--ok);
+    border-radius: 999px;
+    padding: 0.2em 0.8em;
+  }
+  .card.bad .status { background: var(--bad); }
+  footer {
+    flex: 0 0 auto;
+    text-align: center;
+    font-size: clamp(1.25rem, 3.6vmin, 3.5rem);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  footer strong { font-weight: 800; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<!-- To update: edit data-value / data-min / data-max and the visible numbers, then reload. -->
+<div id="banner">
+  <div class="headline" id="headline">&#10003; Pool is open &mdash; OK to swim</div>
+  <div class="sub" id="sub">Water quality and lifeguard cover are all within safe limits</div>
+</div>
+
+<main>
+  <section class="card" data-value="27.8" data-min="26" data-max="29">
+    <div class="label">Water temperature</div>
+    <div class="value">27.8<small>&deg;C</small></div>
+    <div class="range">Okay range: 26 &ndash; 29 &deg;C</div>
+    <div class="status">&#10003; OK</div>
+  </section>
+
+  <section class="card" data-value="1.6" data-min="1" data-max="3">
+    <div class="label">Chlorine</div>
+    <div class="value">1.6<small>ppm</small></div>
+    <div class="range">Okay range: 1 &ndash; 3 ppm</div>
+    <div class="status">&#10003; OK</div>
+  </section>
+
+  <section class="card" data-value="7.4" data-min="7.2" data-max="7.8">
+    <div class="label">pH</div>
+    <div class="value">7.4</div>
+    <div class="range">Okay range: 7.2 &ndash; 7.8</div>
+    <div class="status">&#10003; OK</div>
+  </section>
+
+  <section class="card" data-value="3" data-min="2">
+    <div class="label">Lifeguards on duty</div>
+    <div class="value">3</div>
+    <div class="range">We need at least 2</div>
+    <div class="status">&#10003; OK</div>
+  </section>
+</main>
+
+<footer>Last tested at <strong>14:05</strong></footer>
+
+<script>
+(function () {
+  var cards = document.querySelectorAll('.card');
+  var allOk = true;
+  cards.forEach(function (c) {
+    var v = parseFloat(c.dataset.value);
+    var min = c.dataset.min !== undefined ? parseFloat(c.dataset.min) : -Infinity;
+    var max = c.dataset.max !== undefined ? parseFloat(c.dataset.max) : Infinity;
+    var ok = v >= min && v <= max;
+    c.classList.toggle('bad', !ok);
+    c.querySelector('.status').innerHTML = ok ? '&#10003; OK' : '&#33; CHECK';
+    if (!ok) allOk = false;
+  });
+  var banner = document.getElementById('banner');
+  banner.classList.toggle('bad', !allOk);
+  if (!allOk) {
+    document.getElementById('headline').innerHTML = '&#33; Please ask staff before swimming';
+    document.getElementById('sub').textContent = 'One or more readings are outside the safe range';
+  }
+})();
+</script>
+</body>
+</html>

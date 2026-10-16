@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Triage queue</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --panel: #ffffff; --ink: #1b1f27; --muted: #667085; --line: #e3e6ec;
+    --accent: #2457d6; --accent-soft: #e8eefc; --sel: #eef3ff;
+    --urgent: #c8321f; --high: #b8620a; --normal: #2457d6; --low: #6b7280;
+    --good: #14803c; --toast: #1b1f27; --toast-ink: #fff;
+    --shadow: 0 1px 2px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1218; --panel: #171b23; --ink: #e8ebf1; --muted: #8b94a5; --line: #262c38;
+      --accent: #7aa2ff; --accent-soft: #1e2a47; --sel: #1c2538;
+      --urgent: #ff7a66; --high: #f0a04b; --normal: #7aa2ff; --low: #9aa3b2;
+      --good: #4cc38a; --toast: #e8ebf1; --toast-ink: #12151b;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex; flex-direction: column;
+  }
+  header {
+    display: flex; align-items: center; gap: 16px; padding: 14px 20px;
+    background: var(--panel); border-bottom: 1px solid var(--line);
+  }
+  h1 { font-size: 16px; margin: 0; font-weight: 650; letter-spacing: -.01em; }
+  .count {
+    font-variant-numeric: tabular-nums; background: var(--accent-soft); color: var(--accent);
+    border-radius: 999px; padding: 2px 10px; font-weight: 600; font-size: 12px;
+  }
+  .stats { margin-left: auto; display: flex; gap: 18px; color: var(--muted); font-size: 13px; }
+  .stats b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  main {
+    flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(300px, 420px) 1fr;
+    gap: 16px; padding: 16px 20px;
+  }
+  .list-wrap, .detail {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: var(--shadow); min-height: 0; overflow: hidden;
+  }
+  .list-wrap { display: flex; flex-direction: column; }
+  #list { list-style: none; margin: 0; padding: 6px; overflow-y: auto; flex: 1; outline: none; }
+  #list:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); border-radius: 12px; }
+  .row {
+    position: relative; display: grid; grid-template-columns: 4px 1fr auto; gap: 12px;
+    padding: 10px 12px 10px 8px; border-radius: 8px; cursor: pointer;
+    max-height: 90px; overflow: hidden;
+    animation: in .18s ease-out;
+  }
+  .row + .row { margin-top: 2px; }
+  .row:hover { background: color-mix(in srgb, var(--sel) 55%, transparent); }
+  .row[aria-selected="true"] { background: var(--sel); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); }
+  .bar { border-radius: 4px; background: var(--c); }
+  .row .subj { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .meta { color: var(--muted); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .age { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .row .main { min-width: 0; }
+  .row.leaving { animation: out .2s ease-in forwards; pointer-events: none; }
+  .p-urgent { --c: var(--urgent); } .p-high { --c: var(--high); }
+  .p-normal { --c: var(--normal); } .p-low { --c: var(--low); }
+  @keyframes in { from { opacity: 0; transform: translateY(-4px); } }
+  @keyframes out {
+    to { opacity: 0; transform: translateX(24px); max-height: 0; padding-top: 0; padding-bottom: 0; margin: 0; }
+  }
+  .detail { padding: 24px 28px; overflow-y: auto; }
+  .detail .pill {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600;
+    color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent);
+    padding: 2px 10px; border-radius: 999px; text-transform: capitalize;
+  }
+  .detail .pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+  .detail h2 { font-size: 22px; line-height: 1.25; margin: 12px 0 6px; letter-spacing: -.015em; }
+  .detail .sub { color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+  .detail .sub code, .tid { font-family: var(--mono); font-size: 12px; }
+  .detail .body {
+    margin: 20px 0; padding: 16px 18px; border-left: 3px solid var(--line);
+    background: var(--bg); border-radius: 0 8px 8px 0; white-space: pre-wrap; max-width: 62ch;
+  }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  button {
+    font: inherit; font-weight: 600; border-radius: 8px; padding: 8px 14px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  button:hover { border-color: var(--muted); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  @media (prefers-color-scheme: light) { button.primary { color: #fff; } }
+  kbd {
+    font-family: var(--mono); font-size: 11px; min-width: 20px; text-align: center;
+    padding: 1px 6px; border-radius: 5px; border: 1px solid var(--line);
+    border-bottom-width: 2px; background: var(--panel); color: var(--muted); font-weight: 600;
+  }
+  button.primary kbd { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.35); color: inherit; }
+  .empty { display: grid; place-content: center; text-align: center; height: 100%; min-height: 260px; color: var(--muted); padding: 20px; }
+  .empty .tick {
+    width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 14px; display: grid; place-items: center;
+    background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good); font-size: 28px;
+  }
+  .empty h3 { margin: 0 0 4px; color: var(--ink); font-size: 18px; }
+  footer {
+    display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; padding: 10px 20px;
+    border-top: 1px solid var(--line); background: var(--panel); color: var(--muted); font-size: 12.5px;
+  }
+  footer span { display: inline-flex; gap: 6px; align-items: center; }
+  #toast {
+    position: fixed; left: 50%; bottom: 60px; transform: translate(-50%, 20px); opacity: 0;
+    background: var(--toast); color: var(--toast-ink); padding: 10px 12px 10px 16px; border-radius: 10px;
+    box-shadow: var(--shadow); display: flex; gap: 14px; align-items: center;
+    transition: opacity .18s, transform .18s; pointer-events: none; max-width: 92vw;
+  }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  #toast button { background: transparent; color: inherit; border-color: color-mix(in srgb, var(--toast-ink) 35%, transparent); padding: 3px 10px; }
+  #toast kbd { background: transparent; color: inherit; border-color: currentColor; opacity: .7; }
+  dialog {
+    border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink);
+    padding: 22px 26px; box-shadow: var(--shadow); min-width: 300px;
+  }
+  dialog::backdrop { background: rgba(10,12,18,.45); }
+  dialog h3 { margin: 0 0 12px; }
+  dialog dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0 0 16px; align-items: center; }
+  dialog dd { margin: 0; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  @media (max-width: 760px) {
+    main { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; padding: 12px; }
+    .detail { padding: 18px; }
+    .stats { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Triage queue</h1>
+  <span class="count" id="count" aria-live="polite">0 waiting</span>
+  <div class="stats">
+    <span>Assigned to you <b id="nMine">0</b></span>
+    <span>Dismissed <b id="nGone">0</b></span>
+  </div>
+</header>
+
+<main>
+  <section class="list-wrap" aria-label="Incoming tickets">
+    <ul id="list" role="listbox" tabindex="0" aria-label="Ticket queue"></ul>
+  </section>
+  <section class="detail" id="detail" aria-live="polite"></section>
+</main>
+
+<footer>
+  <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
+  <span><kbd>A</kbd> assign to me</span>
+  <span><kbd>D</kbd> dismiss</span>
+  <span><kbd>Z</kbd> undo</span>
+  <span><kbd>?</kbd> help</span>
+</footer>
+
+<div id="toast" role="status"><span id="toastMsg"></span><button id="toastUndo">Undo <kbd>Z</kbd></button></div>
+
+<dialog id="help">
+  <h3>Keyboard shortcuts</h3>
+  <dl>
+    <dt><kbd>↑</kbd> <kbd>↓</kbd> or <kbd>K</kbd> <kbd>J</kbd></dt><dd>Previous / next ticket</dd>
+    <dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>First / last ticket</dd>
+    <dt><kbd>A</kbd></dt><dd>Assign to me</dd>
+    <dt><kbd>D</kbd></dt><dd>Dismiss</dd>
+    <dt><kbd>Z</kbd></dt><dd>Undo last action</dd>
+    <dt><kbd>?</kbd></dt><dd>Show / hide this panel</dd>
+  </dl>
+  <button id="helpClose" class="primary">Got it <kbd>Esc</kbd></button>
+</dialog>
+
+<script>
+(function () {
+  var now = Date.now();
+  var tickets = [
+    { id: 4821, pri: "urgent", subj: "Brake lever snapped mid-ride", who: "Marcus Webb", loc: "Harbor Street", bike: "E-217", mins: 4,
+      body: "The right brake lever came off in my hand going down the Harbor Street hill. I managed to stop using my foot and I'm fine, but the bike is not safe. It's still locked to a rail near the ferry terminal. Please pull it before someone else rides it." },
+    { id: 4820, pri: "high", subj: "Charged twice for the same rental", who: "Priya Nair", loc: "Online", bike: "C-088", mins: 11,
+      body: "I was billed $18.50 two times for my Saturday day pass. Both charges are pending on my card ending 4417. I only unlocked one bike. Can you reverse the duplicate?" },
+    { id: 4819, pri: "high", subj: "Dock 14 won't release my bike", who: "Tom Okafor", loc: "Central Station", bike: "—", mins: 17,
+      body: "I've paid and the app says \"ready\" but dock 14 just blinks amber. Tried docks 13 and 15 as well, same thing. There's a queue of people behind me, and I'm going to miss my train if this isn't sorted." },
+    { id: 4818, pri: "normal", subj: "App says \"payment pending\" and won't unlock", who: "Elena Rossi", loc: "Riverside Park", bike: "C-132", mins: 26,
+      body: "I added a new card this morning and since then every unlock attempt shows payment pending. Old card was removed. Logging out and back in didn't help. iOS app, latest version." },
+    { id: 4817, pri: "normal", subj: "Helmet missing from locker at Riverside", who: "Devon Clarke", loc: "Riverside Park", bike: "C-097", mins: 38,
+      body: "My rental included a helmet but locker 3 was empty. Staff kiosk was unmanned. I rode without one, which I'm not thrilled about. Would like a partial refund and for someone to restock the locker." },
+    { id: 4816, pri: "normal", subj: "Refund for weather-cancelled guided tour", who: "Hannah Lindqvist", loc: "Old Town", bike: "—", mins: 52,
+      body: "Our Sunday coastal tour (party of 4) was cancelled by your team because of the storm warning. We were offered a credit, but we're travelling home Tuesday and can't use it. Requesting a full refund to the original card." },
+    { id: 4815, pri: "low", subj: "Lost the key fob for my lock", who: "Sam Adeyemi", loc: "Monthly member", bike: "C-051", mins: 94,
+      body: "I'm a monthly member with the personal lock add-on. The fob fell off my keys somewhere. The lock is fine, I just can't open it. What does a replacement cost and how long does it take?" },
+    { id: 4814, pri: "low", subj: "Request: child seat add-on", who: "Grace Whitfield", loc: "Email", bike: "—", mins: 140,
+      body: "Is there any chance you'll offer rear child seats on the cargo e-bikes? We'd rent weekly if so. Not urgent, just passing it along as a suggestion." }
+  ];
+  tickets.forEach(function (t) { t.at = now - t.mins * 60000; });
+
+  var queue = tickets.slice(), sel = 0, mine = 0, gone = 0, history = [], nodes = new Map(), toastTimer;
+  var $ = function (id) { return document.getElementById(id); };
+  var list = $("list"), detail = $("detail"), toast = $("toast"), help = $("help");
+
+  function age(t) {
+    var m = Math.max(1, Math.round((Date.now() - t.at) / 60000));
+    return m < 60 ? m + "m" : Math.floor(m / 60) + "h " + (m % 60 ? m % 60 + "m" : "");
+  }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function makeRow(t) {
+    var li = el("li", "row p-" + t.pri);
+    li.id = "t" + t.id; li.setAttribute("role", "option");
+    var main = el("div", "main");
+    main.appendChild(el("div", "subj", t.subj));
+    main.appendChild(el("div", "meta", t.who + " · " + t.loc));
+    var a = el("div", "age", age(t)); a.dataset.age = t.id;
+    li.append(el("div", "bar"), main, a);
+    li.addEventListener("click", function () {
+      var i = queue.indexOf(t); if (i > -1) { sel = i; paint(); }
+    });
+    nodes.set(t.id, li);
+    return li;
+  }
+  function syncList() {
+    var ref = list.firstChild;
+    queue.forEach(function (t) {
+      var n = nodes.get(t.id) || makeRow(t);
+      while (ref && ref.classList.contains("leaving")) ref = ref.nextSibling;
+      if (n === ref) ref = ref.nextSibling; else list.insertBefore(n, ref);
+    });
+    nodes.forEach(function (n, id) {
+      if (!queue.some(function (t) { return t.id === id; })) {
+        nodes.delete(id); n.classList.add("leaving"); n.setAttribute("aria-hidden", "true");
+        setTimeout(function () { n.remove(); }, 220);
+      }
+    });
+  }
+  function paintDetail() {
+    detail.textContent = "";
+    var t = queue[sel];
+    if (!t) {
+      var e = el("div", "empty");
+      e.appendChild(el("div", "tick", "✓"));
+      e.appendChild(el("h3", null, "Queue clear"));
+      e.appendChild(el("div", null, mine + " assigned to you · " + gone + " dismissed" ));
+      e.appendChild(el("div", null, history.length ? "Press Z to undo the last action." : "Nice work."));
+      detail.appendChild(e); return;
+    }
+    detail.style.setProperty("--c", "var(--" + t.pri + ")");
+    var pill = el("span", "pill", t.pri);
+    var h = el("h2", null, t.subj);
+    var sub = el("div", "sub");
+    [["#" + t.id, "tid"], [t.who], [t.loc], ["Bike " + t.bike], ["Waiting " + age(t)]].forEach(function (p) {
+      sub.appendChild(el("span", p[1], p[0]));
+    });
+    var body = el("div", "body", t.body);
+    var acts = el("div", "actions");
+    var a = el("button", "primary"); a.append("Assign to me ", el("kbd", null, "A"));
+    var d = el("button"); d.append("Dismiss ", el("kbd", null, "D"));
+    a.onclick = function () { act("assign"); }; d.onclick = function () { act("dismiss"); };
+    acts.append(a, d);
+    detail.append(pill, h, sub, body, acts);
+  }
+  function paint() {
+    if (queue.length) sel = Math.max(0, Math.min(sel, queue.length - 1)); else sel = 0;
+    syncList();
+    queue.forEach(function (t, i) {
+      var n = nodes.get(t.id), on = i === sel;
+      n.setAttribute("aria-selected", on);
+      if (on) { list.setAttribute("aria-activedescendant", n.id); n.scrollIntoView({ block: "nearest" }); }
+    });
+    if (!queue.length) list.removeAttribute("aria-activedescendant");
+    $("count").textContent = queue.length + " waiting";
+    $("nMine").textContent = mine; $("nGone").textContent = gone;
+    document.title = (queue.length ? "(" + queue.length + ") " : "") + "Triage queue";
+    paintDetail();
+  }
+  function showToast(msg) {
+    $("toastMsg").textContent = msg; toast.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 5000);
+  }
+  function act(kind) {
+    var t = queue[sel]; if (!t) return;
+    history.push({ t: t, i: sel, kind: kind });
+    queue.splice(sel, 1);
+    if (kind === "assign") mine++; else gone++;
+    paint();
+    showToast((kind === "assign" ? "Assigned #" + t.id + " to you" : "Dismissed #" + t.id));
+  }
+  function undo() {
+    var h = history.pop(); if (!h) return;
+    queue.splice(h.i, 0, h.t); sel = h.i;
+    if (h.kind === "assign") mine--; else gone--;
+    paint(); showToast("Restored #" + h.t.id);
+  }
+  function move(i) { if (queue.length) { sel = Math.max(0, Math.min(queue.length - 1, i)); paint(); } }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (help.open) { if (e.key === "?") { help.close(); e.preventDefault(); } return; }
+    if (e.target.closest && e.target.closest("button") && (e.key === "Enter" || e.key === " ")) return;
+    var k = e.key.toLowerCase();
+    if (k === "arrowdown" || k === "j") move(sel + 1);
+    else if (k === "arrowup" || k === "k") move(sel - 1);
+    else if (k === "home") move(0);
+    else if (k === "end") move(queue.length - 1);
+    else if (k === "a") act("assign");
+    else if (k === "d") act("dismiss");
+    else if (k === "z") undo();
+    else if (e.key === "?") help.showModal();
+    else return;
+    e.preventDefault();
+  });
+  $("toastUndo").onclick = undo;
+  $("helpClose").onclick = function () { help.close(); };
+  setInterval(function () {
+    queue.forEach(function (t) {
+      var n = nodes.get(t.id); if (n) n.querySelector(".age").textContent = age(t);
+    });
+    if (queue[sel]) paintDetail();
+  }, 30000);
+
+  paint();
+  list.focus();
+})();
+</script>
+</body>
+</html>

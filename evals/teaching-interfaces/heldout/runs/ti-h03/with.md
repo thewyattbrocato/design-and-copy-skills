@@ -1,28 +1,31 @@
-**Build (c), the interactive setup with a live preview of today's conditions.**
+**Ship (c), the interactive setup with a live preview.**
 
-**Why (c)**
-- **It's the only option where users do the task.** People learn a setting by using it. In (a) and (b) they watch or read about four settings and then have to remember them when they reach the real form. In (c) they build their first alert, so the first alert is already set up when they finish.
-- **The preview shows what the settings mean.** Wind direction limit and swell height range are hard to picture in the abstract. If the preview says "with these settings, today at [beach] would [match / not match]," each choice gets immediate feedback in terms the surfer cares about. Neither the video nor the carousel can give that.
-- **It fixes the problem where it happens.** You said users get the setup wrong. A guided flow that shows one setting at a time, keeps earlier choices on screen, and previews the result removes much of the confusion. The video and carousel only explain a form that stays as confusing as before.
-- **(a) and (b) are weak for this audience.** A 90-second video before the product opens will mostly be skipped, and nobody can remember four settings from it. The carousel is shorter but works the same way: it's a benefits-style explainer shown before the task.
+**Why**
 
-**Risk and how to contain it**
-- (c) costs the most to build, and you have no data, so you can't be sure it's the best choice. I'm judging from how people learn interfaces, not from your users.
-- To limit the cost, build the preview from data you already have for the beach (swell, wind, timing) and keep the flow short. A sensible version is:
-  1. Pick a beach.
-  2. Set the swell height range, with the preview showing today's swell.
-  3. Set the wind direction limit, with the preview showing today's wind.
-  4. Set the time window.
-  5. Show the result: "today this alert would [fire / not fire] because [reason]."
-- Offer sensible defaults per beach so nobody starts from a blank form. Mark them clearly as suggested, not as the user's own choices.
-- Add a visible skip for experienced surfers, and a way to reopen the guide later.
+- **It's the only option where users do the real task.** The problem is that new users set up alerts wrongly. A video or carousel can only describe the four settings. Option (c) has them build their first real alert, so they finish with a working alert and the skill to make another.
+- **The live preview shows what each setting does.** Height range, wind direction limit and time window are abstract until you see them against today's conditions. "Your alert would have fired 3 of the last 7 days" or "this would trigger now" tells users whether their settings make sense. A carousel can't show that, and a video would be out of date the next day.
+- **Users don't have to remember anything.** With (a), someone watches 90 seconds and then has to recall wind limits and swell ranges later on a different screen. With (b), the cards disappear before the setting is used. In (c) the explanation sits next to the control, and earlier choices stay visible while they work.
+- **Both alternatives sit between the user and the task.** People tend to skip videos and swipe through carousels. Neither one changes the alert form itself, so the confusion is still there afterwards.
 
-**How to find out if it worked**
-Without any data, treat this as a bet and measure it:
-- Compare the share of new users who save a first alert, and who still have it active after about a week. That's a better signal than whether they finished the flow.
-- Check how many edit or delete that alert in the first few days. Frequent edits suggest they set it up wrong.
-- Check whether those users create a second alert on their own, without the guide.
+**How to keep it small enough for one sprint**
 
-If (c) doesn't beat your current baseline on those measures, the cheapest fallback is a lightweight version of (b), with each card sitting beside its field in the form.
+- Take the four settings one at a time, in your order: beach, swell height, wind, time window. Give each a one-line "what this does" beside the control, and a sensible default so nobody starts from a blank form.
+- Make the preview a single strip or card that updates as they change a value. Use today's real conditions at the chosen beach, and a plain sentence such as "Right now: 4 ft, offshore. This alert would fire."
+- Include a visible skip for experienced surfers, and keep a way to reopen the guidance later from the alert screen.
+- End by confirming what the alert will do ("You'll be notified when…") and not with a celebration screen.
+- Fix confusing labels and defaults as you go. For example, wind "limit" may be unclear without saying whether it means offshore or onshore. Label changes can fix some of the confusion without any teaching.
 
-**Assumption:** I'm assuming the app can already get today's conditions for a chosen beach. If it can't, (c) gets much more expensive, and that would change my answer.
+**How to check it worked**
+
+Since you have no data, treat this as a bet and measure it. Track these:
+
+1. The share of new users who save a first alert.
+2. Whether they create or edit an alert unaided about a week later.
+3. How often their alerts fire, and how often they're deleted or edited soon after. Frequent deletions would mean the settings are still wrong.
+
+Compare these against your current cohort. Don't use "completed the tutorial" as the measure.
+
+**Assumptions and trade-offs**
+
+- I assumed the preview can use data you already fetch, such as the forecast for the chosen beach. If it can't, a simplified preview is still better than none.
+- (c) is the most engineering work of the three. If it won't fit, a cut-down version (defaults plus one live line of conditions) still beats a video.

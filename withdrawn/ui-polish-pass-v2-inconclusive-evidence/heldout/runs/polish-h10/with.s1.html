@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site photos – Inspection upload</title>
+<style>
+:root{
+  color-scheme: light dark;
+  --bg:#f3f5f7; --surface:#ffffff; --surface2:#f6f8fa; --text:#14202b; --muted:#566574;
+  --border:#d5dce3; --accent:#0b5cad; --accent-ink:#ffffff; --accent-soft:#e3effb;
+  --ok:#136c3a; --ok-soft:#e1f4e8; --err:#b3261e; --err-soft:#fdeceb; --warn:#7a4b00; --warn-soft:#fff3d6;
+  --track:#e1e6eb; --shadow:0 1px 2px rgba(20,32,43,.06),0 4px 16px rgba(20,32,43,.06);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0e141a; --surface:#161e26; --surface2:#1b2530; --text:#e8eef3; --muted:#9aabba;
+    --border:#2b3947; --accent:#5aa6ee; --accent-ink:#06121e; --accent-soft:#16293c;
+    --ok:#5fd18a; --ok-soft:#14291d; --err:#ff8a80; --err-soft:#3a1a18; --warn:#f2c46a; --warn-soft:#33270f;
+    --track:#2b3947; --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 var(--font);padding:24px 16px 48px}
+button,select,input{font:inherit;color:inherit}
+.panel{max-width:820px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+header.head{padding:20px 22px 16px;border-bottom:1px solid var(--border)}
+.eyebrow{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{margin:2px 0 6px;font-size:21px;line-height:1.25}
+.meta{display:flex;flex-wrap:wrap;gap:4px 18px;color:var(--muted);font-size:13.5px;margin:0;padding:0;list-style:none}
+.meta b{color:var(--text);font-weight:600}
+.body{padding:20px 22px}
+.banner{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;margin-bottom:14px;font-size:14px;background:var(--warn-soft);color:var(--warn);border:1px solid currentColor}
+.banner[hidden]{display:none}
+.banner.err{background:var(--err-soft);color:var(--err)}
+.banner .txt{flex:1;color:var(--text)}
+.banner ul{margin:4px 0 0;padding-left:18px}
+.banner button{background:none;border:0;cursor:pointer;color:var(--muted);padding:2px 6px;border-radius:6px;min-height:28px}
+.drop{border:2px dashed var(--border);border-radius:12px;background:var(--surface2);padding:26px 18px;text-align:center;transition:border-color .15s,background .15s}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop svg{width:38px;height:38px;color:var(--accent)}
+.drop h2{margin:8px 0 2px;font-size:16px}
+.drop p{margin:0 0 14px;color:var(--muted);font-size:13.5px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-weight:600;font-size:14.5px;transition:background .12s,border-color .12s}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.small{min-height:36px;padding:0 12px;font-size:13.5px}
+.btn.ghost{background:transparent}
+.link{background:none;border:0;padding:4px 2px;color:var(--accent);text-decoration:underline;cursor:pointer;font-size:13.5px;border-radius:4px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.summary{margin-top:22px}
+.summary[hidden]{display:none}
+.sumtop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.sumtop strong{font-size:15px}
+.sumtop span{color:var(--muted);font-size:13.5px}
+.bar{height:8px;border-radius:99px;background:var(--track);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .2s linear}
+.bar.done i{background:var(--ok)}
+.bar.has-err i{background:var(--accent)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.empty{margin:22px 0 0;text-align:center;color:var(--muted);font-size:14px}
+.empty[hidden]{display:none}
+ul.list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.item{display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:start;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);animation:in .22s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.item[data-status=error]{border-color:var(--err);background:var(--err-soft)}
+.thumb{width:72px;height:72px;border-radius:8px;overflow:hidden;background:var(--track);display:grid;place-items:center;color:var(--muted)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb svg{width:28px;height:28px}
+.info{min-width:0}
+.r1{display:flex;gap:8px;align-items:baseline;min-width:0}
+.name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.size{color:var(--muted);font-size:12.5px;flex:none}
+.status{display:flex;align-items:center;gap:6px;font-size:13.5px;margin:2px 0 6px;color:var(--muted)}
+.status svg{width:16px;height:16px;flex:none}
+[data-status=done] .status{color:var(--ok)}
+[data-status=error] .status{color:var(--err);font-weight:600}
+[data-status=uploading] .status{color:var(--accent)}
+.item .bar{height:6px}
+[data-status=done] .bar i{background:var(--ok)}
+[data-status=error] .bar i{background:var(--err)}
+[data-status=queued] .bar i{background:var(--muted)}
+.area{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:var(--muted)}
+.area select{min-height:36px;border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:0 8px;max-width:100%}
+.acts{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.acts [hidden]{display:none}
+.spin{animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.final{margin-top:18px;padding:12px 14px;border-radius:10px;background:var(--ok-soft);color:var(--ok);font-weight:600;display:flex;gap:10px;align-items:center}
+.final[hidden]{display:none}
+.final svg{width:20px;height:20px;flex:none}
+footer.foot{padding:12px 22px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;background:var(--surface2)}
+@media (max-width:560px){
+  body{padding:0}
+  .panel{border-radius:0;border-left:0;border-right:0}
+  .body,header.head{padding-left:14px;padding-right:14px}
+  .item{grid-template-columns:56px 1fr}
+  .thumb{width:56px;height:56px}
+  .acts{grid-column:1 / -1;flex-direction:row}
+  .acts .btn{flex:1}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<main class="panel" aria-labelledby="ttl">
+  <header class="head">
+    <div class="eyebrow">Inspection INS-2041</div>
+    <h1 id="ttl">Attach site photos</h1>
+    <ul class="meta">
+      <li><b>Site:</b> 14 Harbour Row, Unit 3</li>
+      <li><b>Visit:</b> 14 Oct 2026</li>
+      <li><b>Type:</b> Pre-purchase building survey</li>
+    </ul>
+  </header>
+
+  <div class="body">
+    <div id="offline" class="banner" role="status" hidden>
+      <span class="txt"><b>You're offline.</b> Uploads are paused and will resume when your connection returns.</span>
+    </div>
+    <div id="issues" class="banner err" role="alert" hidden>
+      <div class="txt"><b id="issuesTitle"></b><ul id="issuesList"></ul></div>
+      <button type="button" id="issuesClose" aria-label="Dismiss message">✕</button>
+    </div>
+
+    <div class="drop" id="drop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16.5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.5"/><path d="M12 15V4"/><path d="m7.5 8.5 4.5-4.5 4.5 4.5"/></svg>
+      <h2>Drag photos here</h2>
+      <p>JPEG, PNG, WebP or HEIC · up to 25&nbsp;MB each · up to 100 per inspection</p>
+      <div class="btns">
+        <button type="button" class="btn primary" id="pick">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 9"/></svg>
+          Choose photos
+        </button>
+        <button type="button" class="btn" id="cam">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          Take photo
+        </button>
+      </div>
+      <p style="margin:12px 0 0"><button type="button" class="link" id="sample">No photos handy? Add 8 sample photos</button></p>
+      <input type="file" id="fileIn" class="sr" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif" multiple tabindex="-1" aria-hidden="true">
+      <input type="file" id="camIn" class="sr" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+    </div>
+
+    <p class="empty" id="empty">No photos added yet. Photos upload as soon as you add them.</p>
+
+    <section class="summary" id="summary" hidden aria-label="Upload progress">
+      <div class="sumtop"><strong id="sumMain"></strong><span id="sumSub"></span></div>
+      <div class="bar" id="sumBar" role="progressbar" aria-label="Overall upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+      <div class="toolbar">
+        <button type="button" class="btn small" id="retryAll" hidden>Retry failed (<span id="failN">0</span>)</button>
+        <button type="button" class="btn small ghost" id="cancelAll" hidden>Cancel remaining</button>
+        <button type="button" class="btn small ghost" id="clearDone" hidden>Clear finished from list</button>
+      </div>
+      <div class="final" id="final" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16 9.5"/></svg>
+        <span id="finalTxt"></span>
+      </div>
+    </section>
+
+    <ul class="list" id="list" aria-label="Photos"></ul>
+  </div>
+  <footer class="foot">Photos are attached to the inspection as they finish uploading. Leaving this page cancels any uploads still in progress.</footer>
+  <div class="sr" aria-live="polite" id="live"></div>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const MAX_BYTES = 25 * 1024 * 1024, MAX_FILES = 100, CONCURRENCY = 3;
+  const AREAS = ['Not set','Exterior','Roof','Structure','Interior','Services','Defect','Other'];
+  const REF = 'INS-2041';
+  const $ = id => document.getElementById(id);
+  const els = {
+    drop:$('drop'), list:$('list'), empty:$('empty'), summary:$('summary'), sumMain:$('sumMain'), sumSub:$('sumSub'),
+    sumBar:$('sumBar'), retryAll:$('retryAll'), failN:$('failN'), cancelAll:$('cancelAll'), clearDone:$('clearDone'),
+    final:$('final'), finalTxt:$('finalTxt'), issues:$('issues'), issuesTitle:$('issuesTitle'), issuesList:$('issuesList'),
+    offline:$('offline'), live:$('live')
+  };
+  const items = [];          // {id,file,url,status,progress,error,area,failFirst,attempts,timer,li,refs}
+  let uid = 0, announceT = 0;
+
+  const ICON = {
+    queued:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    uploading:'<svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9" /></svg>',
+    done:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16 9.5"/></svg>',
+    error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>'
+  };
+  const PH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 9"/></svg>';
+
+  const fmt = b => b < 1024*1024 ? Math.max(1, Math.round(b/1024)) + ' KB' : (b/1024/1024).toFixed(1) + ' MB';
+  const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+  const announce = msg => { clearTimeout(announceT); announceT = setTimeout(() => { els.live.textContent = msg; }, 250); };
+
+  /* ---------- adding files ---------- */
+  function isImage(f){ return /^image\/(jpeg|png|webp|heic|heif)$/i.test(f.type) || /\.(jpe?g|png|webp|heic|heif)$/i.test(f.name); }
+  const keyOf = f => [f.name, f.size, f.lastModified].join('|');
+
+  function addFiles(fileList){
+    const files = Array.from(fileList || []);
+    if (!files.length) return;
+    const problems = [];
+    const accepted = [];
+    const seen = new Set(items.map(i => keyOf(i.file)));
+    for (const f of files){
+      if (!isImage(f)) { problems.push(`${f.name}: not a supported image type`); continue; }
+      if (f.size === 0) { problems.push(`${f.name}: file is empty`); continue; }
+      if (f.size > MAX_BYTES) { problems.push(`${f.name}: ${fmt(f.size)} exceeds the 25 MB limit`); continue; }
+      if (seen.has(keyOf(f))) { problems.push(`${f.name}: already added`); continue; }
+      if (items.length + accepted.length >= MAX_FILES) { problems.push(`${f.name}: limit of ${MAX_FILES} photos reached`); continue; }
+      seen.add(keyOf(f)); accepted.push(f);
+    }
+    accepted.forEach((f, idx) => {
+      // Simulation: the 4th photo of a batch fails on its first attempt (retry succeeds).
+      createItem(f, accepted.length >= 4 && idx === 3);
+    });
+    showIssues(problems, files.length);
+    if (accepted.length) announce(`${plural(accepted.length, 'photo')} added.`);
+    render(); pump();
+  }
+
+  function showIssues(problems, total){
+    if (!problems.length){ els.issues.hidden = true; return; }
+    els.issuesTitle.textContent = problems.length === total
+      ? `${plural(problems.length, 'file')} couldn't be added`
+      : `${problems.length} of ${total} files weren't added`;
+    els.issuesList.replaceChildren(...problems.slice(0, 6).map(p => { const li = document.createElement('li'); li.textContent = p; return li; }));
+    if (problems.length > 6){ const li = document.createElement('li'); li.textContent = `…and ${problems.length - 6} more`; els.issuesList.appendChild(li); }
+    els.issues.hidden = false;
+  }
+
+  function createItem(file, failFirst){
+    const it = { id:++uid, file, url:URL.createObjectURL(file), status:'queued', progress:0, error:'', area:AREAS[0], failFirst, attempts:0, timer:0, confirm:0 };
+    const li = document.createElement('li');
+    li.className = 'item';
+    li.innerHTML =
+      `<div class="thumb"><img alt="" hidden>${PH}</div>
+       <div class="info">
+         <div class="r1"><span class="name"></span><span class="size"></span></div>
+         <div class="status"><span class="ico"></span><span class="stext"></span></div>
+         <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i></i></div>
+         <label class="area"><span>Area</span><select></select></label>
+       </div>
+       <div class="acts">
+         <button type="button" class="btn small" data-act="retry" hidden>Retry</button>
+         <button type="button" class="btn small ghost" data-act="remove"></button>
+       </div>`;
+    const q = s => li.querySelector(s);
+    it.li = li;
+    it.r = { img:q('img'), ph:q('.thumb svg'), ico:q('.ico'), stext:q('.stext'), bar:q('.bar'), fill:q('.bar i'), sel:q('select'), retry:q('[data-act=retry]'), remove:q('[data-act=remove]') };
+    q('.name').textContent = file.name; q('.name').title = file.name;
+    q('.size').textContent = fmt(file.size);
+    it.r.sel.setAttribute('aria-label', `Area for ${file.name}`);
+    AREAS.forEach(a => it.r.sel.add(new Option(a, a)));
+    it.r.sel.addEventListener('change', () => { it.area = it.r.sel.value; });
+    it.r.img.addEventListener('load', () => { it.r.img.hidden = false; it.r.ph.style.display = 'none'; });
+    it.r.img.addEventListener('error', () => { it.r.img.hidden = true; it.r.ph.style.display = ''; }); // e.g. HEIC not previewable
+    it.r.img.src = it.url;
+    it.r.retry.addEventListener('click', () => retry(it));
+    it.r.remove.addEventListener('click', () => removeClick(it));
+    els.list.appendChild(li);
+    items.push(it);
+    updateItem(it);
+  }
+
+  /* ---------- per-item UI ---------- */
+  function updateItem(it){
+    const r = it.r, p = Math.round(it.progress);
+    it.li.dataset.status = it.status;
+    r.ico.innerHTML = ICON[it.status];
+    r.fill.style.width = (it.status === 'queued' ? 0 : p) + '%';
+    r.bar.setAttribute('aria-valuenow', p);
+    r.bar.setAttribute('aria-label', `Upload progress for ${it.file.name}`);
+    r.stext.textContent =
+      it.status === 'queued' ? 'Waiting to upload…' :
+      it.status === 'uploading' ? `Uploading… ${p}%` :
+      it.status === 'done' ? 'Attached to inspection' :
+      `Upload failed – ${it.error}`;
+    r.retry.hidden = it.status !== 'error';
+    r.retry.setAttribute('aria-label', `Retry upload of ${it.file.name}`);
+    const active = it.status === 'queued' || it.status === 'uploading';
+    r.remove.textContent = it.confirm ? 'Confirm remove' : (active ? 'Cancel' : 'Remove');
+    r.remove.setAttribute('aria-label', `${active ? 'Cancel upload of' : 'Remove'} ${it.file.name}`);
+  }
+
+  /* ---------- upload simulation ---------- */
+  function pump(){
+    if (!navigator.onLine) return;
+    let running = items.filter(i => i.status === 'uploading').length;
+    for (const it of items){
+      if (running >= CONCURRENCY) break;
+      if (it.status === 'queued'){ start(it); running++; }
+    }
+  }
+
+  function start(it){
+    it.status = 'uploading'; it.progress = 0; it.error = ''; it.attempts++;
+    const shouldFail = it.failFirst && it.attempts === 1;
+    const failAt = 35 + Math.random() * 40;
+    const speed = 4 + Math.random() * 7 + Math.min(6, 4e6 / Math.max(it.file.size, 1e5)); // % per tick
+    it.timer = setInterval(() => {
+      if (!navigator.onLine) return fail(it, 'no connection');
+      it.progress = Math.min(100, it.progress + speed * (0.5 + Math.random()));
+      if (shouldFail && it.progress >= failAt) return fail(it, 'server timed out');
+      if (it.progress >= 100) return succeed(it);
+      updateItem(it); renderSummary();
+    }, 140);
+    updateItem(it);
+  }
+
+  function succeed(it){
+    clearInterval(it.timer); it.status = 'done'; it.progress = 100;
+    updateItem(it); render(); pump();
+  }
+  function fail(it, msg){
+    clearInterval(it.timer); it.status = 'error'; it.error = msg;
+    updateItem(it); announce(`Upload failed for ${it.file.name}: ${msg}.`);
+    render(); pump();
+  }
+
+  function retry(it){
+    if (it.status !== 'error') return;
+    it.status = 'queued'; it.progress = 0; it.error = '';
+    updateItem(it); render(); pump();
+    it.r.remove.focus();
+  }
+
+  function removeClick(it){
+    if (it.status === 'done' && !it.confirm){
+      it.confirm = setTimeout(() => { it.confirm = 0; updateItem(it); }, 4000);
+      updateItem(it); return;
+    }
+    removeItem(it);
+  }
+
+  function removeItem(it){
+    clearInterval(it.timer); clearTimeout(it.confirm);
+    const idx = items.indexOf(it);
+    items.splice(idx, 1);
+    const next = items[idx] || items[idx - 1];
+    URL.revokeObjectURL(it.url); it.li.remove();
+    announce(`${it.file.name} removed.`);
+    if (next) next.r.remove.focus(); else document.getElementById('pick').focus();
+    render(); pump();
+  }
+
+  /* ---------- summary ---------- */
+  function render(){ renderSummary(); }
+  function renderSummary(){
+    const n = items.length;
+    els.empty.hidden = n > 0;
+    els.summary.hidden = n === 0;
+    if (!n) return;
+    const c = { done:0, error:0, active:0 };
+    let pct = 0;
+    for (const i of items){
+      if (i.status === 'done') c.done++; else if (i.status === 'error') c.error++; else c.active++;
+      pct += i.status === 'queued' ? 0 : i.progress;
+    }
+    pct = Math.round(pct / n);
+    els.sumMain.textContent = `${c.done} of ${n} uploaded`;
+    const sub = [];
+    if (c.active) sub.push(`${c.active} in progress`);
+    if (c.error) sub.push(`${c.error} failed`);
+    els.sumSub.textContent = sub.join(' · ');
+    els.sumBar.setAttribute('aria-valuenow', pct);
+    els.sumBar.setAttribute('aria-valuetext', `${pct}% – ${c.done} of ${n} uploaded`);
+    els.sumBar.firstElementChild.style.width = pct + '%';
+    els.sumBar.classList.toggle('done', c.done === n);
+    els.retryAll.hidden = !c.error; els.failN.textContent = c.error;
+    els.cancelAll.hidden = !c.active;
+    els.clearDone.hidden = !c.done || c.done === n && false;
+    const allDone = c.done === n;
+    els.final.hidden = !allDone;
+    if (allDone){
+      const msg = `All ${plural(n, 'photo')} attached to ${REF}.`;
+      if (els.finalTxt.textContent !== msg){ els.finalTxt.textContent = msg; announce(msg); }
+    } else els.finalTxt.textContent = '';
+  }
+
+  /* ---------- toolbar ---------- */
+  els.retryAll.addEventListener('click', () => { items.filter(i => i.status === 'error').forEach(i => { i.status='queued'; i.progress=0; i.error=''; updateItem(i); }); render(); pump(); });
+  els.cancelAll.addEventListener('click', () => { items.filter(i => i.status === 'queued' || i.status === 'uploading').forEach(i => { clearInterval(i.timer); URL.revokeObjectURL(i.url); i.li.remove(); items.splice(items.indexOf(i), 1); }); announce('Remaining uploads cancelled.'); render(); });
+  els.clearDone.addEventListener('click', () => {
+    items.filter(i => i.status === 'done').forEach(i => { URL.revokeObjectURL(i.url); i.li.remove(); items.splice(items.indexOf(i), 1); });
+    announce('Finished photos cleared from the list. They remain attached to the inspection.'); render();
+  });
+  $('issuesClose').addEventListener('click', () => { els.issues.hidden = true; });
+
+  /* ---------- inputs ---------- */
+  const fileIn = $('fileIn'), camIn = $('camIn');
+  $('pick').addEventListener('click', () => fileIn.click());
+  $('cam').addEventListener('click', () => camIn.click());
+  [fileIn, camIn].forEach(inp => inp.addEventListener('change', () => { addFiles(inp.files); inp.value = ''; }));
+
+  let depth = 0;
+  const hasFiles = e => e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files');
+  els.drop.addEventListener('dragenter', e => { if (!hasFiles(e)) return; e.preventDefault(); depth++; els.drop.classList.add('over'); });
+  els.drop.addEventListener('dragover', e => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+  els.drop.addEventListener('dragleave', () => { depth = Math.max(0, depth - 1); if (!depth) els.drop.classList.remove('over'); });
+  els.drop.addEventListener('drop', e => { e.preventDefault(); depth = 0; els.drop.classList.remove('over'); addFiles(e.dataTransfer.files); });
+  // a missed drop shouldn't navigate away from the page
+  ['dragover','drop'].forEach(t => window.addEventListener(t, e => { if (hasFiles(e)) e.preventDefault(); }));
+
+  /* ---------- sample photos ---------- */
+  const SAMPLES = [['Front elevation','Exterior','#5b8db8','#cfe0ee'],['Roof – north slope','Roof','#8a6f5a','#e2d2c4'],['Gutter downpipe','Exterior','#6b8f71','#d3e4d5'],
+    ['Cracking – east wall','Defect','#9a6a6a','#ecd5d5'],['Roof void','Structure','#6a6f8f','#d6d9ea'],['Kitchen','Interior','#8f8a5a','#e8e5c8'],
+    ['Consumer unit','Services','#5a8a8f','#cde6e8'],['Damp – bedroom 2','Defect','#7a6a8f','#e0d6ea']];
+  $('sample').addEventListener('click', async () => {
+    const stamp = Date.now();
+    const files = await Promise.all(SAMPLES.map(([label,, c1, c2], i) => new Promise(res => {
+      const cv = document.createElement('canvas'); cv.width = 800; cv.height = 600;
+      const g = cv.getContext('2d'), gr = g.createLinearGradient(0,0,800,600);
+      gr.addColorStop(0,c1); gr.addColorStop(1,c2); g.fillStyle = gr; g.fillRect(0,0,800,600);
+      g.fillStyle = 'rgba(255,255,255,.25)'; g.fillRect(60,380,680,160);
+      g.fillStyle = 'rgba(0,0,0,.65)'; g.font = '600 44px system-ui,sans-serif'; g.fillText(label, 60, 300);
+      g.font = '28px system-ui,sans-serif'; g.fillText('Sample site photo ' + (i+1), 60, 350);
+      cv.toBlob(b => res(new File([b], `IMG_${String(1040+i)}_${label.replace(/[^\w]+/g,'-').toLowerCase()}.jpg`, { type:'image/jpeg', lastModified:stamp + i })), 'image/jpeg', .85);
+    })));
+    const before = items.length;
+    addFiles(files);
+    items.slice(before).forEach((it, i) => { it.area = SAMPLES[i][1]; it.r.sel.value = it.area; });
+  });
+
+  /* ---------- connectivity & unload ---------- */
+  function conn(){ els.offline.hidden = navigator.onLine; if (navigator.onLine) pump(); }
+  window.addEventListener('online', conn); window.addEventListener('offline', conn); conn();
+  window.addEventListener('beforeunload', e => {
+    if (items.some(i => i.status === 'uploading' || i.status === 'queued')){ e.preventDefault(); e.returnValue = ''; }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

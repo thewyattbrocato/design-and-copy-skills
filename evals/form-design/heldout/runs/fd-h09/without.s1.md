@@ -1,0 +1,1 @@
+Don't lose their work. On Submit, save the form data (server-side draft or local storage), then show a re-authentication prompt, as a modal or in a new tab, without leaving the page. After login succeeds, restore the data and automatically resubmit or let them confirm. Never show a generic error or blank form.

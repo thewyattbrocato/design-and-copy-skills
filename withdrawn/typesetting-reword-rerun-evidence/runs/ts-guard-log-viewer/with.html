@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy #4812 · Log viewer</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #151a20;
+    --line: #232a33;
+    --text: #d5dbe3;
+    --muted: #8b95a3;
+    --info: #6fb3ff;
+    --warn: #f0b64a;
+    --err: #ff6b6b;
+    --warn-bg: rgba(240, 182, 74, 0.07);
+    --err-bg: rgba(255, 107, 107, 0.10);
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    padding: 32px clamp(16px, 3vw, 56px) 56px;
+  }
+  .wrap { max-width: 1680px; }
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 32px;
+    margin-bottom: 20px;
+  }
+  h1 { margin: 0 0 6px; font-size: 22px; font-weight: 650; letter-spacing: -0.01em; }
+  .meta { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+  .meta b { color: var(--text); font-weight: 550; }
+  .filters { display: flex; gap: 8px; }
+  .filters button {
+    font: inherit;
+    font-size: 13px;
+    color: var(--muted);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .filters button:hover { color: var(--text); border-color: #36404c; }
+  .filters button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  .filters button[aria-pressed="true"] { color: var(--text); background: #1f2630; border-color: #3a4655; }
+
+  .log {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 112px 68px 200px minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 7px 20px 7px 17px;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: #1a2028; }
+  .row.WARN { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.ERROR { background: var(--err-bg); border-left-color: var(--err); }
+  .row[hidden] { display: none; }
+
+  .ts { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .lvl { font-weight: 700; letter-spacing: 0.04em; font-size: 13px; }
+  .INFO .lvl { color: var(--info); }
+  .WARN .lvl { color: var(--warn); }
+  .ERROR .lvl { color: var(--err); }
+  .svc { color: #aab4c2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; max-width: 130ch; }
+  .ERROR .msg { color: #ffe3e3; }
+  .msg a { color: inherit; text-decoration: underline; text-decoration-color: #5b6675; text-underline-offset: 3px; }
+  .msg a:hover { text-decoration-color: currentColor; }
+  .msg code { color: #9fd1a8; }
+
+  @media (max-width: 820px) {
+    .row { grid-template-columns: 96px 60px minmax(0, 1fr); row-gap: 2px; }
+    .msg { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Deploy #4812 · payments-api → production</h1>
+      <p class="meta">Release <b>2026.10.15-rc2</b> · commit <b>9f3c1ab</b> · 2026-10-15 · times in UTC · status <b style="color:var(--err)">Failed, rolled back</b></p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter by level">
+      <button type="button" data-level="ALL" aria-pressed="true">All <span data-count="ALL"></span></button>
+      <button type="button" data-level="INFO" aria-pressed="false">INFO <span data-count="INFO"></span></button>
+      <button type="button" data-level="WARN" aria-pressed="false">WARN <span data-count="WARN"></span></button>
+      <button type="button" data-level="ERROR" aria-pressed="false">ERROR <span data-count="ERROR"></span></button>
+    </div>
+  </header>
+
+  <main class="log" id="log">
+    <div class="row INFO"><span class="ts">14:02:11.043</span><span class="lvl">INFO</span><span class="svc">pipeline-orchestrator</span><span class="msg">Deploy #4812 started for release 2026.10.15-rc2 (commit 9f3c1ab), triggered by merge of PR #3391 into main by m.okafor</span></div>
+    <div class="row INFO"><span class="ts">14:02:12.310</span><span class="lvl">INFO</span><span class="svc">git-fetcher</span><span class="msg">Checked out 9f3c1ab in 1.2s</span></div>
+    <div class="row INFO"><span class="ts">14:02:19.882</span><span class="lvl">INFO</span><span class="svc">build-runner</span><span class="msg">Docker build step 6/11 complete: <code>npm ci --omit=dev</code> (cache hit, 412 packages)</span></div>
+    <div class="row WARN"><span class="ts">14:02:47.105</span><span class="lvl">WARN</span><span class="svc">build-runner</span><span class="msg">Base image node:18-bullseye-slim is past end of life and will stop resolving after 2026-11-30; migrate to node:22-bookworm-slim, see <a href="#">https://wiki.internal.example.com/platform/base-images#migration-guide-2026</a></span></div>
+    <div class="row INFO"><span class="ts">14:03:05.771</span><span class="lvl">INFO</span><span class="svc">test-runner</span><span class="msg">1,284 tests passed, 0 failed, 3 skipped in 16.4s</span></div>
+    <div class="row INFO"><span class="ts">14:03:22.019</span><span class="lvl">INFO</span><span class="svc">artifact-registry</span><span class="msg">Pushed registry.internal.example.com/payments/api:2026.10.15-rc2 (sha256:4be1c07a93d85f2e6a0c1d7b9e3f48a25c6d0e71b8a94f3c2d5e6a7b8c9d0e1f, 187 MB, 9 layers)</span></div>
+    <div class="row INFO"><span class="ts">14:03:40.552</span><span class="lvl">INFO</span><span class="svc">config-service</span><span class="msg">Rendered 14 manifests for env=production, 0 drift warnings</span></div>
+    <div class="row WARN"><span class="ts">14:03:58.230</span><span class="lvl">WARN</span><span class="svc">k8s-deployer</span><span class="msg">Readiness probe slow on pod payments-api-7d9f8b6c4-x2k9p: GET /healthz took 4812ms (threshold 2000ms), retry 2 of 5, previous failure: context deadline exceeded</span></div>
+    <div class="row ERROR"><span class="ts">14:04:16.904</span><span class="lvl">ERROR</span><span class="svc">k8s-deployer</span><span class="msg">Rollout of deployment/payments-api timed out after 90s: 2 of 6 replicas updated, 4 old replicas pending termination, new pods in CrashLoopBackOff (restarts=4)</span></div>
+    <div class="row ERROR"><span class="ts">14:04:17.002</span><span class="lvl">ERROR</span><span class="svc">payments-api</span><span class="msg">java.lang.IllegalStateException: Flyway migration V202__add_ledger_idx failed: lock timeout on ledger_entries at com.acme.payments.db.MigrationRunner.run(MigrationRunner.java:88) at com.acme.payments.Main.boot(Main.java:41)</span></div>
+    <div class="row WARN"><span class="ts">14:04:18.340</span><span class="lvl">WARN</span><span class="svc">pipeline-orchestrator</span><span class="msg">Health gate failed, starting automatic rollback to revision 117 (release 2026.10.14-r3)</span></div>
+    <div class="row INFO"><span class="ts">14:04:31.667</span><span class="lvl">INFO</span><span class="svc">k8s-deployer</span><span class="msg">Rollback to revision 117 complete, 6/6 replicas ready</span></div>
+    <div class="row INFO"><span class="ts">14:04:33.120</span><span class="lvl">INFO</span><span class="svc">notifier</span><span class="msg">Posted failure summary to #deploys and paged on-call (payments-platform). Full logs: <a href="#">https://ci.internal.example.com/deploys/4812?tab=logs&amp;step=rollout&amp;level=warn</a></span></div>
+    <div class="row ERROR"><span class="ts">14:04:33.480</span><span class="lvl">ERROR</span><span class="svc">pipeline-orchestrator</span><span class="msg">Deploy #4812 failed at stage rollout (exit 1) after 142s; production remains on revision 117</span></div>
+  </main>
+</div>
+
+<script>
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.filters button'));
+  function count(level) {
+    return level === 'ALL' ? rows.length : rows.filter(function (r) { return r.classList.contains(level); }).length;
+  }
+  buttons.forEach(function (b) {
+    b.querySelector('[data-count]').textContent = '(' + count(b.dataset.level) + ')';
+    b.addEventListener('click', function () {
+      var level = b.dataset.level;
+      buttons.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+      rows.forEach(function (r) { r.hidden = level !== 'ALL' && !r.classList.contains(level); });
+    });
+  });
+</script>
+</body>
+</html>

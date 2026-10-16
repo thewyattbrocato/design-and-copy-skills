@@ -1,17 +1,20 @@
-**Why it feels generic:** every section uses the same few SaaS moves (gradient pill, gradient headline, glowing button, blobs, icon-card rows), so nothing ranks above anything else. The hero has four loud elements competing: the pill, the gradient headline, the glowing button, and the blob. The copy and visuals also say nothing about grooming, so the page could be for any startup. I'm working from your description, since I don't see the page source in this directory.
+The page looks generic because it's built from the default startup template, and every part of that template is a decoration with no job. The hierarchy is also flat where it counts. The hero's gradient pill, gradient headline and glowing button all pull for attention at once, and the two identical card rows give the eye nothing to rank. Nothing on the page is specific to dog groomers, so it could be a scheduling app or a CRM.
 
-**What to change, in order of effect:**
+Fixes, in order of effect:
 
-1. **Make the headline the one focal point.** Use a solid ink color with no gradient. Remove the glow from the button and keep one solid primary style. Keep the button as the only saturated element in the hero.
-2. **Replace the pill with a plain eyebrow or nothing.** "New: AI-powered" is an announcement, and a groomer is not buying an announcement. A line like "Bookkeeping for grooming salons" tells them what it is.
-3. **Delete every blob.** They add no information or identity. Use one background color per section, or a single real photo.
-4. **Show the product instead of icons.** A real screenshot of the day view, with clearly fake dog names like "Biscuit, 9:00, Full groom", does more than three icon cards. Put it on the right of the headline in the hero.
-5. **Replace the feature cards with the jobs groomers actually have.** Write specific rows such as "Split tips across groomers at close," "Hold deposits against no-shows," "Track shampoo and product costs per appointment." Use an alternating layout with one small screenshot each, or a plain list. Drop the icon tiles unless an icon says something.
-6. **Make pricing look like a grooming ticket, not a SaaS grid.** Try a single table with services as line items and dotted leaders to prices, then one recommended plan marked by a heavier border and position, not color. This is the best place for an ownable device, and it's where the product's pricing logic lives.
-7. **Keep the proof honest.** Don't add invented logos, counts or ratings. Use a visible placeholder like "[number] grooming salons" or leave the slot out.
+1. **Rank the features instead of repeating cards.** Choose the one thing a groomer cares about most, such as taking payment at the table, end-of-day close, or tip splits, and give it one large block with a real product view. Demote the rest to a plain list or a short row. Drop the gradient icon tiles.
+2. **Make pricing a comparison, not a second card trio.** A single table or a row of plans works. Mark the recommended plan with size or border weight, not only color.
+3. **Simplify the hero.** Set the headline in one solid color, flush left, next to the product or a photo of a real grooming station. Replace the gradient pill with plain text like "For dog groomers" or remove it. Make the primary button one solid color with no glow.
+4. **Delete the blobs.** Use one background decision for the whole page, or at most one tinted panel for a section where it helps the reading order.
+5. **Keep one effect per element.** If a shadow stays, drop the gradient on that surface. Don't stack glow, gradient and shadow.
 
-**Quick check after the changes:** squint at the page. The headline should be the first thing you see, then the screenshot, then the button.
+To make it feel like yours:
 
-**Notes:**
-- Keep the one brand moment, likely the ticket-style pricing or a distinctive accent color, and let everything else stay plain. Ownership comes from a few specific choices, not from more decoration.
-- I haven't seen your copy or palette. If you paste the hero copy or share the source, I can mark exactly which lines and styles to cut.
+- **Use the trade's language.** Words like appointments, no-shows, tip split, deposits, pet-owner invoices and end-of-day close say more about the product than any visual device. Let the copy name the work groomers do.
+- **Show the product in its own world.** An invoice or appointment screen with believable (clearly placeholder) data beats an abstract illustration. A photo of a real grooming table does too, if you have one.
+- **Pick one brand color from the trade.** Something from a towel, a shampoo label or a salon wall. Avoid the default purple-to-pink.
+- **Don't invent proof.** If you lack customer counts, logos or testimonials, use visible placeholders like "[number of salons]" or leave those slots out.
+
+Quick check for the current page: blur it and the gradient pill, headline and button glow compete with each other rather than with a clear primary action.
+
+I haven't seen your code, so I've judged this from your description. If you share the landing page file, I can apply the changes directly and leave the parts that already work alone.

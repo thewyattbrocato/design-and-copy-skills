@@ -1,6 +1,6 @@
 ---
 name: honest-claims
-description: Use whenever copy states a fact, number, result, comparison, quote, rating, customer count, award, guarantee, price, deadline or stock limit, or someone asks to make it more persuasive, urgent, credible or "more official", to add social proof or reviews, to write quotes or statistics they have not supplied, or to check a page for claims that could get them in trouble, in any language; not for defaults, cancellation flows or other choice design (fair-persuasion), or general line editing (editing-and-cutting).
+description: Use whenever copy states a fact, number, result, comparison, quote, rating, customer count, award, guarantee, price, deadline or stock limit, or someone asks to make it more persuasive, urgent, credible or "more official", to add social proof or reviews, to write quotes or statistics they have not supplied, or to check a page for claims that could get them in trouble, or as a last check on those lines inside other copy, in any language; not for defaults, cancellation flows or other choice design (fair-persuasion), or general line editing (editing-and-cutting).
 ---
 
 # Honest claims
@@ -22,7 +22,7 @@ Copy that states a fact or makes a promise needs a true basis, and the strongest
 - Writing, rewriting or reviewing copy that contains facts, figures, proof, comparisons, prices, guarantees, deadlines or limits.
 - Requests to make copy more credible, urgent, scarier or "more official", or to write reviews, quotes, counts or statistics.
 - A page or draft to check for claims that could mislead or draw a complaint.
-- Any other copy task, as a last pass on what the draft asserts.
+- Other copy that asserts a figure, proof line, price, deadline or guarantee, as a last pass on those lines only.
 
 ## When not to use
 
@@ -40,7 +40,7 @@ Do the work anyway. Ask once, in one short list with a default for each item, on
 
 ## Rules
 
-- **Scope every number.** Keep its basis, date and conditions ("in our tests", "as of May"). Round down, never up, and never make a figure more exact than the evidence. Keep every true qualifier ("typical", "weekdays"); drop one only if the user's evidence supports the flat claim.
+- **Scope every number.** Keep its basis, date and conditions ("in our tests", "as of May"). Round against the claim: down for results, savings and counts, up for prices, fees and risks; never make a figure more exact than the evidence. Keep every true qualifier ("typical", "weekdays"); drop one only if the user's evidence supports the flat claim.
 - **A measured result is not a cause.** What happened after the product is not what the product did. Write the measurement, or "we think", unless the user states the cause.
 - **Typical, not best.** Show the typical result; label an exceptional one as exceptional, with the typical range if known.
 - **Quotes** are the user's words, trimmed, never reworded, spliced or composed. If asked to write testimonials, give a short request message to real customers plus placeholders.
@@ -48,7 +48,7 @@ Do the work anyway. Ask once, in one short list with a default for each item, on
 - **Counts and "most popular"** only from data, with basis and date; a perfect rating reads as fake, so show the sample. With none, use true growth, a softer true label, or no proof line. Never present a bad habit as the norm; say what people like the reader do, or name the step.
 - **Comparisons** use real alternatives on one dimension, dated, crediting a rival where it wins. Do not name or characterize a rival without a fact the user gave; with none, state the differentiator without naming anyone, or ask for the checkable fact when interactive.
 - **Fear** needs a documented risk at true scale beside a step the reader can take now. No invented statistic, no shame, no hint of a cover-up.
-- **Terms sit beside the claim** at similar weight: "free", trials, renewals, fees, "was" prices, and guarantees stated as condition and remedy ("if X has not happened by Y, we Z"). A condition in fine print or a tooltip does not count.
+- **Terms sit beside the claim** at similar weight: "free", trials, renewals, fees, "was" prices, and guarantees stated as what the buyer must do, by when, and what the business does if the result doesn't show, with where to claim. A condition in fine print or a tooltip does not count.
 - **Plain mechanism.** Describe how it really works; do not invent an ingredient or method to make a promise feel new, borrow the look of news or official mail, or tease with no payoff.
 - **Candor is persuasive.** A stated limit, a true reason for a price, or a demo the reader can repeat often beats a superlative.
 
@@ -89,3 +89,4 @@ Deliver the requested text first, with nothing before it. When a count or a set 
 ## References
 
 - [claim-fixes.md](references/claim-fixes.md): load for a device-by-device honest form (urgency, proof, comparisons, interface tactics), the customer request message, or high-risk categories.
+- [substantiation-ladder.md](references/substantiation-ladder.md): load when a claim's strength is the question ("make it stronger", one customer's result, a comparison, thin proof) or for pressure-request replacements.

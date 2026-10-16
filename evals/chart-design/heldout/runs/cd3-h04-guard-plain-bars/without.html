@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernbrook Nursery – Monthly Sales 2025</title>
+<style>
+  :root {
+    --surface: #ffffff;
+    --ink: #1f2a24;
+    --ink-2: #4d5a52;
+    --muted: #6b7770;
+    --grid: #e3e8e4;
+    --bar: #2f7d5b;
+    --bar-hover: #20593f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #1a1f1c;
+      --ink: #eef2ef;
+      --ink-2: #b9c4bd;
+      --muted: #94a199;
+      --grid: #2f3833;
+      --bar: #5fb88a;
+      --bar-hover: #86d0a9;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  figure { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; font-weight: 650; }
+  .sub { margin: 0 0 20px; color: var(--ink-2); font-size: .9rem; }
+  .chart {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    grid-template-rows: 280px auto;
+  }
+  .yaxis {
+    position: relative;
+    font-size: .75rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .yaxis span {
+    position: absolute;
+    right: 8px;
+    transform: translateY(50%);
+  }
+  .plot {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
+    border-bottom: 1px solid var(--muted);
+  }
+  .gridline {
+    position: absolute;
+    left: 0; right: 0;
+    border-top: 1px solid var(--grid);
+  }
+  .col {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
+    z-index: 1;
+    outline: none;
+  }
+  .bar {
+    width: 56%;
+    max-width: 36px;
+    background: var(--bar);
+    border-radius: 4px 4px 0 0;
+    transition: background .12s;
+  }
+  .col:hover .bar, .col:focus-visible .bar { background: var(--bar-hover); }
+  .col:focus-visible { box-shadow: 0 0 0 2px var(--ink-2) inset; border-radius: 4px; }
+  .peak {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    padding-bottom: 4px;
+  }
+  .tip {
+    position: absolute;
+    bottom: calc(var(--h) + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--surface);
+    font-size: .8rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .1s;
+    z-index: 5;
+  }
+  .col:hover .tip, .col:focus-visible .tip { opacity: 1; }
+  .xaxis {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    padding-top: 6px;
+    font-size: .75rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .note { margin: 16px 0 0; font-size: .85rem; color: var(--ink-2); }
+  @media (max-width: 480px) {
+    .chart { grid-template-columns: 36px 1fr; }
+    .xaxis { font-size: .65rem; }
+  }
+</style>
+</head>
+<body>
+<figure>
+  <h1>Fernbrook Nursery: Monthly Sales, 2025</h1>
+  <p class="sub">Sales in US dollars. Spring is the peak season, with May the strongest month.</p>
+
+  <div class="chart" role="img" aria-label="Bar chart of Fernbrook Nursery monthly sales in 2025. January $8,200, February $9,100, March $15,600, April $27,400, May $38,900, June $31,200, July $22,800, August $19,500, September $24,300, October $17,700, November $10,400, December $6,100.">
+    <div class="yaxis" aria-hidden="true">
+      <span style="bottom:0%">$0</span>
+      <span style="bottom:25%">$10k</span>
+      <span style="bottom:50%">$20k</span>
+      <span style="bottom:75%">$30k</span>
+      <span style="bottom:100%">$40k</span>
+    </div>
+    <div class="plot" id="plot">
+      <div class="gridline" style="bottom:25%"></div>
+      <div class="gridline" style="bottom:50%"></div>
+      <div class="gridline" style="bottom:75%"></div>
+      <div class="gridline" style="bottom:100%"></div>
+    </div>
+    <div class="xaxis" aria-hidden="true">
+      <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+      <span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+    </div>
+  </div>
+
+  <p class="note">Total for the year: $231,200.</p>
+</figure>
+
+<script>
+  var data = [
+    ["January", 8200], ["February", 9100], ["March", 15600], ["April", 27400],
+    ["May", 38900], ["June", 31200], ["July", 22800], ["August", 19500],
+    ["September", 24300], ["October", 17700], ["November", 10400], ["December", 6100]
+  ];
+  var max = 40000;
+  var plot = document.getElementById("plot");
+  var fmt = function (n) { return "$" + n.toLocaleString("en-US"); };
+  data.forEach(function (d) {
+    var pct = (d[1] / max * 100) + "%";
+    var col = document.createElement("div");
+    col.className = "col";
+    col.tabIndex = 0;
+    col.style.setProperty("--h", pct);
+    col.setAttribute("aria-label", d[0] + ": " + fmt(d[1]));
+    var bar = document.createElement("div");
+    bar.className = "bar";
+    bar.style.height = pct;
+    col.appendChild(bar);
+    var tip = document.createElement("div");
+    tip.className = "tip";
+    tip.textContent = d[0] + ": " + fmt(d[1]);
+    col.appendChild(tip);
+    if (d[1] === 38900) {
+      var p = document.createElement("div");
+      p.className = "peak";
+      p.style.bottom = pct;
+      p.textContent = fmt(d[1]);
+      col.appendChild(p);
+    }
+    plot.appendChild(col);
+  });
+</script>
+</body>
+</html>

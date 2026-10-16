@@ -1,15 +1,13 @@
-**Go with B.** Dispatchers spend their day working down a list of late loads, and B puts that list at the center of the screen.
+**Go with B**, with a few changes.
 
-- **Sorting by lateness** puts the most urgent load at the top, so the first thing a dispatcher sees is the next thing to fix.
-- **Filter chips** let them narrow to their own region or carrier without leaving the list.
-- **No sidebar** gives the table the full 27 inches. A table with many columns needs that width, and a sidebar mostly takes space from it.
-- **The map on row click** keeps location detail tied to the load they're working on. A map that's always visible competes with the table for attention and rarely answers "what do I fix next?"
+Dispatchers spend their day working down a list of late loads, so the sorted table should be the main surface. A's four big KPI tiles take the top band of a 27-inch screen and mostly show numbers people glance at once an hour. The sidebar also costs width that a wide table can use. B puts the most urgent loads first and makes each row a direct path to action.
 
-A has the right ingredients but the wrong priority. On-time % and average dwell time describe performance, not what to do now. Four large tiles across the top take prime vertical space on a monitor that should be showing late loads. The sidebar costs width, and the table ends up squeezed under a map that a dispatcher looks at only occasionally.
+Changes I'd make to B:
 
-Two things to address in B:
+- **Replace the tiles with a slim summary strip.** Keep on-time %, late count, and avg dwell as one line of text above the filter chips. Make "Late" a chip so the count doubles as a filter.
+- **Keep the map visible while the panel is open.** A drawer that covers the table breaks the scan-and-pick loop. Shrink the table or pin a small map inside the panel so dispatchers can still see where the load is.
+- **Support the keyboard.** Arrow keys should move through rows and update the panel, and Enter should open the detail view. Dispatchers on a long shift will reward this more than anything else.
+- **Limit the columns.** At 27 inches, a full-width table can get hard to scan. Show about 8 to 10 columns that matter for lateness (ETA vs. promise, lateness in minutes, driver, truck, next stop, status), and use a dense row height.
+- **Add a map toggle if needed.** If dispatchers sometimes need to see regional patterns, such as a closed corridor or a weather event, a map that can expand to full width covers that without a permanent two-thirds reservation.
 
-1. **Lost overview.** Someone may want to see where trucks are clustered. Add a map toggle in the header, or a small always-visible strip of late-load pins, so the spatial view is one click away without taking over the screen.
-2. **Summary counts.** Keep a compact count in the header or chips, like "14 late · 6 due within 2h." That gives the at-a-glance number without the tiles. If the company needs on-time % for reporting, move it to a separate reports view.
-
-Before you commit, watch two or three dispatchers work through a bad morning with a prototype of B. The fastest way to confirm this is to see whether they reach for the map or the row first.
+The one case where A wins is if dispatchers mostly reason about geography, like "which trucks are near this depot." Before you commit, watch two or three dispatchers work for a shift and count how often they go to the map versus the list. If the map is their main reference, consider A with the tiles reduced to a strip.

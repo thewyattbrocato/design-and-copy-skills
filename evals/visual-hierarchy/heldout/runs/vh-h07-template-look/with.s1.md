@@ -1,45 +1,24 @@
-# Why it feels generic
+**Why it feels generic**
 
-**1. Every element is loud, so nothing is.** The pill, the gradient headline, the glowing button, the gradient icon tiles and the blobs all compete. A glowing purple shadow under the button turns it into another effect, so it stops reading as the one action. The page has no quiet parts, so no part stands out.
+Nothing on the page says "dog groomer bookkeeping". Every choice is the default for a SaaS template. You could swap in "AI note-taking for lawyers" and nothing would need to change except the words.
 
-**2. The same effects appear everywhere.** Purple-to-pink gradients, glows and blobs are the default look of the genre. They say "startup" and nothing about dog groomers or bookkeeping. If you swapped in a different product, nothing would need to change, and that's the generic part.
+1. **Every element is loud, so none of them stands out.** The pill, the gradient headline, the glowing button, the gradient icon tiles and the blobs all use the same purple-to-pink effect. That makes the effect the background texture. The eye has no focal point, and the page reads as a template.
+2. **The decoration has no job.** The blobs, glow, gradient text and gradient tiles don't organize anything or say anything about your product. The purple-pink gradient is the most common startup palette, so it identifies you as "a startup" and nothing more.
+3. **The "New: AI-powered" pill is the wrong lead.** It's what every tool says. A groomer doesn't care about AI. They care about not spending Sunday night on receipts. It's also the first thing people read, and it says nothing about them.
+4. **Identical cards rank nothing.** Three equal boxes with an icon, a bold title and two grey lines claim that all three features matter equally. The pricing section repeats the same pattern. The recommended plan has no structural emphasis, so choosing a plan takes work.
+5. **The centered hero over everything is the default composition.** It has no point of view, and it gives you no room for anything specific, like a real screenshot or a real number.
 
-**3. The cards are equal, so they carry no ranking.** Three identical cards, each with a gradient tile, a bold title and two grey lines, say "here are three things" without saying which matters. The pricing section repeats the same pattern, so the page has one rhythm all the way down. The "recommended" plan also needs more than color to show it.
+**What would make it yours**
 
-**4. The copy and imagery have no subject.** "New: AI-powered" is the most common pill on the web, and it describes the tech rather than the groomer's problem. Nothing on the page shows a grooming shop, a dog or a groomer's actual numbers.
+- **Use the groomer's world as your identity.** Their work has tips, add-ons, deposits, no-shows, breed-based pricing, and a day of back-to-back appointments. Make the hero a real piece of your product, like a day's appointments turning into a clean "this week" ledger. Use the actual UI instead of a blob or an illustration. Your own screenshot is the most distinctive thing you can show.
+- **Write the headline in their language.** Compare "Bookkeeping, supercharged with AI" with "Know what you actually made this week, tips and all." Drop the pill or replace it with something concrete. Gradient text becomes unnecessary when the words do the work.
+- **Pick one palette that isn't purple-pink.** Choose one or two colors with a reason: a warm neutral paper background with one confident accent, for example. Use the accent for one thing only, the primary action. Then it works as a signal.
+- **One primary button, no glow.** A solid fill with strong contrast is enough. Give the secondary action a quieter outline or text-link style.
+- **Rank the features instead of boxing them.** Lead with the one that matters most (say, tips and cash-out tracking) at larger size with a real screenshot. Show the other two as plain text rows with no boxes. Keep an icon only where it carries meaning, such as a paw or a receipt tied to that feature, and drop the gradient tiles.
+- **Make pricing structural, not a repeat.** Keep the plans as peers with one shared treatment. Mark the recommended plan with a label plus a heavier border or more size, not just color. If you only have one or two plans, don't force three columns.
+- **Delete the blobs.** If you want atmosphere, use something that belongs to the product, like the ledger lines or appointment-card shapes.
+- **Use real proof, or leave the slot empty.** A quote from an actual groomer beats any stat. If you don't have one yet, leave it out. A placeholder like "[customer quote]" is fine in the design until you do.
 
-**5. Everything is centered.** A centered hero over centered card grids is the safest layout, and it's the one everyone ships.
+**The fastest test:** blur your eyes at the page. You should see one headline, one button and one screenshot. If you see a pile of glowing purple shapes, remove effects until you don't.
 
-# What would make it yours
-
-**Start from the groomer's world.** Groomers deal with tips, cash and card mix, no-shows, deposits, per-dog pricing by breed and size, product costs and booth rental or commission splits. Pick the one or two pains that hurt most and build the page around them.
-
-**Show the product instead of describing it.**
-- Put a real screenshot or a hand-built mock in the hero. For example, a day's appointments (Biscuit, Full groom, $85 + $15 tip) rolling up into a "Today" total.
-- Real-looking rows of dog names and services do more than any gradient. Use plausible sample data, and label it as sample.
-
-**Rewrite the headline around the outcome.** Something like "Know what you actually made this week" beats a gradient on a generic claim. Plain dark text is enough. Drop the AI pill, or replace it with something true and specific, like a small line naming who it's for ("Built for solo groomers and small salons").
-
-**Fix the hierarchy.**
-- Pick one primary button: a solid, flat color with no glow. Make the secondary action a text link.
-- Choose one brand color and one accent, and drop the purple-pink gradient. A color from the grooming world (a warm towel-and-suds palette, or something with more character than purple) will separate you faster than any effect.
-- Spend emphasis on roughly a tenth of the page: the headline, the main button and the recommended plan.
-
-**Rank the features and drop the card boxes.**
-- Lead with the one feature that matters most. Give it a large screenshot with a short paragraph beside it, left-aligned.
-- Group the other two as plain text with a small heading. Keep an icon only if it carries meaning, such as a paw for appointments or a receipt for expenses.
-- Alternating left and right text and screenshot rows already reads very differently from a row of cards.
-
-**Make pricing a comparison.**
-- Use a table-like layout or columns that share one treatment, and mark the recommended plan with a label plus structure (a thicker border, extra height), not color alone.
-- Put the one question groomers will have, such as "what do I get at this tier?", in the first line of each plan.
-- Don't fill the section with invented numbers or testimonials. Use clear placeholders like "[price]" or "[customer quote]" until you have real ones.
-
-**Cut the blobs and glow.** If a mark doesn't organize, emphasize or identify something, delete it. If you want a brand device, pick one with a link to the subject, like a paw-print pattern, a hand-drawn dog or a receipt-tape edge. Keep it quieter than the headline and the button.
-
-**Break the symmetry.** Left-align the hero text and put the product mock on the right. Left-aligned headings over left-aligned body text also read as more deliberate than everything centered.
-
-# Quick test
-Squint at the page. If the headline, one button and one product image remain, it's working. If you see only glowing shapes, keep subtracting.
-
-If you share the HTML/CSS or a screenshot, I can mark up what to cut and what to change, section by section.
+I can rewrite the hero and one feature section if you want to see it. Paste the code or tell me where the file is.

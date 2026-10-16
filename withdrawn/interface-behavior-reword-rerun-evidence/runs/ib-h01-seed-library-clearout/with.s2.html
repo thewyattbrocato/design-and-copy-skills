@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seed Library – Volunteer Desk</title>
+<style>
+  :root {
+    --bg: #f6f4ee; --card: #ffffff; --ink: #24291f; --muted: #6a7060;
+    --line: #e1ddd0; --accent: #2f6b3a; --accent-ink: #ffffff;
+    --warn-bg: #fff3d6; --warn-ink: #7a5300; --bad-bg: #fde4e0; --bad-ink: #8f2a1c;
+    --flag-row: #fffaf0; --focus: #1b5fd1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1d17; --card: #23271f; --ink: #ecebe3; --muted: #a2a898;
+      --line: #383d31; --accent: #7fc48a; --accent-ink: #12200f;
+      --warn-bg: #4a3b12; --warn-ink: #f5d98a; --bad-bg: #4d2620; --bad-ink: #f7b4a8;
+      --flag-row: #2c2a1d; --focus: #8ab4ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 920px; margin: 0 auto; padding: 20px 16px 96px; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  button, input, select {
+    font: inherit; color: inherit; border: 1px solid var(--line); background: var(--card);
+    border-radius: 8px; padding: 8px 12px; min-height: 40px;
+  }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--muted); }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  button.danger { background: var(--bad-ink); color: var(--bad-bg); border-color: var(--bad-ink); font-weight: 600; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+  .toolbar .grow { flex: 1 1 200px; }
+  .toolbar input[type=search] { width: 100%; }
+
+  .summary { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; font-size: .9rem; }
+  .pill { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px; margin-bottom: 12px;
+  }
+  .panel h2 { font-size: 1.05rem; margin: 0 0 4px; }
+  .panel p { margin: 0 0 10px; color: var(--muted); }
+  .panel .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .panel label { display: inline-flex; gap: 8px; align-items: center; }
+  .panel input[type=number] { width: 72px; }
+  .cleanup { border-color: var(--warn-ink); }
+  .grid-add { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr auto; gap: 8px; }
+  @media (max-width: 640px) { .grid-add { grid-template-columns: 1fr 1fr; } }
+
+  .tablewrap { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; white-space: nowrap; }
+  th button { all: unset; cursor: pointer; padding: 4px 0; }
+  th button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.flagged { background: var(--flag-row); }
+  td.name { font-weight: 600; }
+  .tag { display: inline-block; font-size: .78rem; font-weight: 600; border-radius: 6px; padding: 1px 8px; margin-right: 4px; white-space: nowrap; }
+  .tag.empty { background: var(--bad-bg); color: var(--bad-ink); }
+  .tag.old { background: var(--warn-bg); color: var(--warn-ink); }
+  .count { display: inline-flex; align-items: center; gap: 4px; }
+  .count button { min-height: 34px; min-width: 34px; padding: 0; font-weight: 700; }
+  .count output { min-width: 2.2ch; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
+  td.check { width: 40px; }
+  td.check input { width: 22px; height: 22px; min-height: 0; padding: 0; }
+  .empty-state { padding: 28px; text-align: center; color: var(--muted); }
+  .rm { color: var(--muted); padding: 4px 10px; min-height: 34px; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+    background: #23271f; color: #f2f0e8; border-radius: 10px; padding: 10px 12px 10px 16px;
+    display: none; gap: 14px; align-items: center; box-shadow: 0 6px 24px rgba(0,0,0,.3);
+    max-width: calc(100vw - 24px); z-index: 10;
+  }
+  .toast.show { display: flex; }
+  .toast button { background: transparent; color: #a9e0b1; border-color: #a9e0b1; font-weight: 600; }
+  @media (prefers-color-scheme: dark) { .toast { background: #f2f0e8; color: #23271f; } .toast button { color: #1f5a2b; border-color: #1f5a2b; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Seed Library – Volunteer Desk</h1>
+  <p class="sub">Hand out packets, adjust counts, and clear out the old and empty ones at season's end.</p>
+
+  <div class="toolbar">
+    <div class="grow"><input type="search" id="q" placeholder="Search by name or type…" aria-label="Search packets"></div>
+    <button id="btnAdd" aria-expanded="false" aria-controls="addPanel">+ Add packet</button>
+    <button id="btnClean" class="primary" aria-expanded="false" aria-controls="cleanPanel">End-of-season cleanup</button>
+  </div>
+
+  <div class="panel" id="addPanel" hidden>
+    <form class="grid-add" id="addForm">
+      <input name="name" placeholder="Name (e.g. Black Krim Tomato)" required aria-label="Name">
+      <select name="type" aria-label="Type"></select>
+      <input name="year" type="number" aria-label="Year packed" required>
+      <input name="left" type="number" min="0" value="10" required aria-label="Number left">
+      <button class="primary" type="submit">Add</button>
+    </form>
+  </div>
+
+  <div class="panel cleanup" id="cleanPanel" hidden>
+    <h2>Cleanup</h2>
+    <p>Empty packets and old ones are already ticked. Untick any you want to keep, tick extras, then remove. You can undo.</p>
+    <div class="row">
+      <label>Count as old after <input type="number" id="age" min="1" max="15" value="3"> years</label>
+      <span id="cleanInfo" class="pill"></span>
+      <span style="flex:1"></span>
+      <button id="btnCancel">Cancel</button>
+      <button id="btnRemove" class="danger">Remove selected</button>
+    </div>
+  </div>
+
+  <div class="summary" id="summary"></div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr id="head"></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+    <div class="empty-state" id="none" hidden>No packets match.</div>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span id="toastMsg"></span><button id="btnUndo">Undo</button>
+</div>
+
+<script>
+(function () {
+  var YEAR = new Date().getFullYear();
+  var TYPES = ["Vegetable", "Herb", "Flower", "Fruit", "Grain & Bean"];
+  var KEY = "seedlib-desk-v1";
+
+  function demo() {
+    var d = [
+      ["Black Krim Tomato", "Vegetable", 0, 18], ["Genovese Basil", "Herb", 0, 24],
+      ["Cosmos 'Sensation'", "Flower", 1, 9], ["Dragon Tongue Bean", "Grain & Bean", 1, 0],
+      ["Lacinato Kale", "Vegetable", 1, 14], ["Calendula", "Flower", 2, 6],
+      ["Cilantro 'Santo'", "Herb", 2, 3], ["Moon & Stars Watermelon", "Fruit", 3, 11],
+      ["Detroit Dark Red Beet", "Vegetable", 3, 0], ["Zinnia Mix", "Flower", 3, 17],
+      ["Sugar Snap Pea", "Grain & Bean", 4, 5], ["Flat-Leaf Parsley", "Herb", 4, 8],
+      ["Danvers Carrot", "Vegetable", 5, 2], ["Alpine Strawberry", "Fruit", 5, 0],
+      ["Painted Mountain Corn", "Grain & Bean", 6, 12]
+    ];
+    return d.map(function (r, i) { return { id: i + 1, name: r[0], type: r[1], year: YEAR - r[2], left: r[3] }; });
+  }
+
+  var items, nextId, sort = { key: "name", dir: 1 };
+  var cleaning = false, selected = {}, undoSnap = null, toastTimer;
+
+  try { var s = JSON.parse(localStorage.getItem(KEY)); if (Array.isArray(s) && s.length) items = s; } catch (e) {}
+  if (!items) items = demo();
+  nextId = items.reduce(function (m, i) { return Math.max(m, i.id); }, 0) + 1;
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
+
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function ageLimit() { return Math.max(1, parseInt($("age").value, 10) || 3); }
+  function reasons(it) {
+    var r = [];
+    if (it.left === 0) r.push("empty");
+    if (YEAR - it.year >= ageLimit()) r.push("old");
+    return r;
+  }
+
+  // type select + default year in add form
+  $("addForm").type.innerHTML = TYPES.map(function (t) { return "<option>" + t + "</option>"; }).join("");
+  $("addForm").year.value = YEAR;
+
+  function visible() {
+    var q = $("q").value.trim().toLowerCase();
+    var list = items.filter(function (i) { return !q || (i.name + " " + i.type).toLowerCase().indexOf(q) > -1; });
+    list.sort(function (a, b) {
+      var x = a[sort.key], y = b[sort.key];
+      var c = typeof x === "number" ? x - y : String(x).localeCompare(String(y));
+      return (c || a.name.localeCompare(b.name)) * sort.dir;
+    });
+    return list;
+  }
+
+  function render() {
+    var cols = [["name", "Name"], ["type", "Type"], ["year", "Packed", "num"], ["left", "Left", "num"]];
+    $("head").innerHTML = (cleaning ? '<th class="check"><span class="sr" style="position:absolute;left:-9999px">Select</span></th>' : "") +
+      cols.map(function (c) {
+        var arrow = sort.key === c[0] ? (sort.dir > 0 ? " ▲" : " ▼") : "";
+        var asc = sort.key === c[0] ? (sort.dir > 0 ? "ascending" : "descending") : "none";
+        return '<th class="' + (c[2] || "") + '" aria-sort="' + asc + '"><button data-sort="' + c[0] + '">' + c[1] + arrow + "</button></th>";
+      }).join("") + "<th>" + (cleaning ? "Why flagged" : "") + "</th>";
+
+    var list = visible();
+    $("body").innerHTML = list.map(function (it) {
+      var r = reasons(it), flagged = cleaning && r.length;
+      var tags = r.map(function (x) {
+        return x === "empty" ? '<span class="tag empty">Empty</span>' : '<span class="tag old">Old (' + it.year + ")</span>";
+      }).join("");
+      return '<tr class="' + (flagged ? "flagged" : "") + '" data-id="' + it.id + '">' +
+        (cleaning ? '<td class="check"><input type="checkbox" data-sel="' + it.id + '"' + (selected[it.id] ? " checked" : "") + ' aria-label="Select ' + esc(it.name) + '"></td>' : "") +
+        '<td class="name">' + esc(it.name) + "</td><td>" + esc(it.type) + '</td><td class="num">' + it.year + "</td>" +
+        '<td class="num"><span class="count"><button data-dec="' + it.id + '" aria-label="One fewer ' + esc(it.name) + '"' + (it.left === 0 ? " disabled" : "") + '>−</button><output>' + it.left +
+        '</output><button data-inc="' + it.id + '" aria-label="One more ' + esc(it.name) + '">+</button></span></td>' +
+        "<td>" + (cleaning ? tags : '<button class="rm" data-rm="' + it.id + '" aria-label="Remove ' + esc(it.name) + '">Remove</button>') + "</td></tr>";
+    }).join("");
+    $("none").hidden = list.length > 0;
+
+    var empties = items.filter(function (i) { return i.left === 0; }).length;
+    var olds = items.filter(function (i) { return YEAR - i.year >= ageLimit(); }).length;
+    $("summary").innerHTML = '<span class="pill">' + items.length + ' packets</span><span class="pill">' + empties + ' empty</span><span class="pill">' + olds + " " + ageLimit() + "+ years old</span>";
+
+    if (cleaning) {
+      var n = Object.keys(selected).length;
+      $("cleanInfo").textContent = n + " selected";
+      $("btnRemove").textContent = "Remove " + n + " selected";
+      $("btnRemove").disabled = n === 0;
+    }
+  }
+
+  function preselect() {
+    selected = {};
+    items.forEach(function (i) { if (reasons(i).length) selected[i.id] = true; });
+  }
+  function setCleaning(on) {
+    cleaning = on; $("cleanPanel").hidden = !on;
+    $("btnClean").setAttribute("aria-expanded", on);
+    if (on) { preselect(); $("addPanel").hidden = true; $("btnAdd").setAttribute("aria-expanded", false); }
+    render();
+  }
+
+  function toast(msg, canUndo) {
+    $("toastMsg").textContent = msg; $("btnUndo").hidden = !canUndo;
+    $("toast").classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $("toast").classList.remove("show"); undoSnap = null; }, 12000);
+  }
+  function removeIds(ids, label) {
+    undoSnap = items.slice();
+    items = items.filter(function (i) { return !ids[i.id]; });
+    save();
+    toast(label, true);
+  }
+
+  $("btnClean").onclick = function () { setCleaning(!cleaning); };
+  $("btnCancel").onclick = function () { setCleaning(false); };
+  $("age").oninput = function () { if (cleaning) preselect(); render(); };
+  $("q").oninput = render;
+  $("btnAdd").onclick = function () {
+    var open = $("addPanel").hidden;
+    $("addPanel").hidden = !open; this.setAttribute("aria-expanded", open);
+    if (open) { if (cleaning) setCleaning(false); $("addForm").name.focus(); }
+  };
+  $("addForm").onsubmit = function (e) {
+    e.preventDefault();
+    var f = e.target;
+    items.push({ id: nextId++, name: f.name.value.trim(), type: f.type.value, year: parseInt(f.year.value, 10), left: Math.max(0, parseInt(f.left.value, 10) || 0) });
+    save(); toast("Added " + f.name.value.trim(), false);
+    f.name.value = ""; f.name.focus(); render();
+  };
+  $("btnRemove").onclick = function () {
+    var n = Object.keys(selected).length;
+    if (!n) return;
+    removeIds(selected, "Removed " + n + " packet" + (n === 1 ? "" : "s"));
+    setCleaning(false);
+  };
+  $("btnUndo").onclick = function () {
+    if (!undoSnap) return;
+    items = undoSnap; undoSnap = null; save();
+    $("toast").classList.remove("show");
+    if (cleaning) preselect();
+    render();
+  };
+
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("button, input");
+    if (!t) return;
+    var d = t.dataset, it;
+    if (d.sort) {
+      sort = { key: d.sort, dir: sort.key === d.sort ? -sort.dir : 1 }; render();
+    } else if (d.inc || d.dec) {
+      it = items.filter(function (i) { return i.id == (d.inc || d.dec); })[0];
+      it.left = Math.max(0, it.left + (d.inc ? 1 : -1)); save(); render();
+      var again = document.querySelector('[data-' + (d.inc ? "inc" : "dec") + '="' + it.id + '"]');
+      if (again && !again.disabled) again.focus();
+    } else if (d.rm) {
+      it = items.filter(function (i) { return i.id == d.rm; })[0];
+      var m = {}; m[it.id] = true; removeIds(m, "Removed " + it.name); render();
+    } else if (d.sel) {
+      if (t.checked) selected[d.sel] = true; else delete selected[d.sel];
+      render();
+      var box = document.querySelector('[data-sel="' + d.sel + '"]'); if (box) box.focus();
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

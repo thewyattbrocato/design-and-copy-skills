@@ -6,214 +6,194 @@
 <title>Invoice summary</title>
 <style>
   :root {
-    --bg: #f2f3f5;
-    --panel: #ffffff;
-    --ink: #1b1f27;
-    --muted: #5f6877;
-    --rule: #e3e6eb;
-    --tint: #f6f7f9;
-    --accent: #2f5bd8;
+    --s1: 4px;
+    --s2: 8px;
+    --s3: 12px;
+    --s4: 16px;
+    --s5: 24px;
+    --s6: 32px;
+    --ink: #1c2330;
+    --muted: #5d6675;
+    --rule: #e3e6ec;
+    --bg: #f3f4f7;
+    --surface: #ffffff;
+    --accent: #2f5bd9;
     --accent-ink: #ffffff;
-    --accent-hover: #2449b3;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: flex-end;
-    background: var(--bg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: var(--ink);
-    font-size: 14px;
-    line-height: 1.45;
   }
   aside {
     width: 100%;
     max-width: 380px;
     min-height: 100vh;
-    background: var(--panel);
+    background: var(--surface);
     border-left: 1px solid var(--rule);
     display: flex;
     flex-direction: column;
   }
-  header {
-    padding: 24px 24px 20px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .eyebrow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 0 6px;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: .04em;
-    text-transform: uppercase;
-  }
-  .status {
-    font-size: 12px;
-    text-transform: none;
-    letter-spacing: 0;
-    padding: 2px 10px;
-    border-radius: 999px;
-    background: var(--tint);
-    border: 1px solid var(--rule);
-    color: var(--muted);
-  }
-  h1 {
-    margin: 0;
-    font-size: 20px;
-    line-height: 1.25;
-    font-weight: 650;
-  }
   .body {
     flex: 1;
-    padding: 0 24px;
-    overflow-y: auto;
+    padding: var(--s6) var(--s5) var(--s5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s6);
   }
-  section { padding: 20px 0; border-bottom: 1px solid var(--rule); }
-  section:last-child { border-bottom: 0; }
-  h2 {
-    margin: 0 0 10px;
+  header { display: flex; flex-direction: column; gap: var(--s1); }
+  .eyebrow {
     font-size: 12px;
-    font-weight: 600;
     letter-spacing: .06em;
     text-transform: uppercase;
     color: var(--muted);
-  }
-  .client-name { font-weight: 600; font-size: 15px; margin: 0 0 2px; }
-  address { font-style: normal; color: var(--muted); }
-  dl.meta {
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px 16px;
-  }
-  dl.meta div:first-child { grid-column: 1 / -1; }
-  dt { font-size: 12px; color: var(--muted); margin: 0 0 1px; }
-  dd { margin: 0; font-weight: 550; font-variant-numeric: tabular-nums; }
-  ul.items { list-style: none; margin: 0; padding: 0; }
-  ul.items li {
     display: flex;
     justify-content: space-between;
-    gap: 16px;
-    padding: 10px 0;
+    align-items: center;
   }
-  ul.items li + li { border-top: 1px solid var(--rule); }
-  ul.items li:first-child { padding-top: 0; }
-  ul.items li:last-child { padding-bottom: 0; }
-  .item-name { font-weight: 550; }
-  .item-sub { font-size: 12.5px; color: var(--muted); }
-  .amt { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 550; }
-  .totals {
-    margin: 0 -24px;
-    padding: 20px 24px 22px;
-    background: var(--tint);
-    border-top: 1px solid var(--rule);
-  }
-  .totals .row {
-    display: flex;
-    justify-content: space-between;
+  .status {
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: none;
     color: var(--muted);
-    font-variant-numeric: tabular-nums;
+    background: var(--bg);
+    padding: 2px var(--s2);
+    border-radius: 999px;
   }
-  .totals .row + .row { margin-top: 6px; }
-  .totals .row.total {
-    margin-top: 14px;
-    padding-top: 14px;
+  h1 { margin: 0; font-size: 22px; line-height: 1.25; font-weight: 650; }
+  h2 {
+    margin: 0 0 var(--s2);
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  address { font-style: normal; color: var(--ink); }
+  address span { display: block; }
+  address .name { font-weight: 600; }
+  address .line { color: var(--muted); }
+  dl { margin: 0; display: grid; grid-template-columns: 1fr auto; row-gap: var(--s1); column-gap: var(--s4); }
+  dt { color: var(--muted); }
+  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  .items li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: var(--s4);
+    padding: var(--s3) 0;
     border-top: 1px solid var(--rule);
-    color: var(--ink);
+  }
+  .items li:last-child { border-bottom: 1px solid var(--rule); }
+  .items .desc { font-weight: 500; }
+  .items .meta { color: var(--muted); font-size: 13px; grid-column: 1; }
+  .items .amt { grid-row: 1; grid-column: 2; font-variant-numeric: tabular-nums; }
+  .totals { display: grid; grid-template-columns: 1fr auto; row-gap: var(--s1); column-gap: var(--s4); font-variant-numeric: tabular-nums; }
+  .totals dt, .totals dd { margin: 0; }
+  .totals .total-label, .totals .total-value {
+    margin-top: var(--s2);
+    padding-top: var(--s3);
+    border-top: 1px solid var(--rule);
     font-size: 18px;
     font-weight: 700;
-    align-items: baseline;
-  }
-  footer {
-    padding: 16px 24px 24px;
-    border-top: 1px solid var(--rule);
-    display: grid;
-    gap: 10px;
-    background: var(--panel);
-  }
-  button {
-    font: inherit;
-    font-weight: 600;
-    padding: 11px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 1px solid var(--rule);
-    background: var(--panel);
     color: var(--ink);
   }
-  button:hover { background: var(--tint); }
-  button.primary {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--accent-ink);
+  footer {
+    padding: var(--s4) var(--s5);
+    border-top: 1px solid var(--rule);
+    background: var(--bg);
+    display: flex;
+    gap: var(--s2);
   }
-  button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
-  button:focus-visible { outline: 3px solid #9db5f5; outline-offset: 2px; }
+  button {
+    flex: 1;
+    font: inherit;
+    font-weight: 600;
+    min-height: 44px;
+    padding: var(--s2) var(--s5);
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  button:hover { filter: brightness(.96); }
+  button.primary:hover { filter: brightness(1.1); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   @media (max-width: 420px) {
-    aside { max-width: none; border-left: 0; }
+    .body { padding: var(--s5) var(--s4); gap: var(--s5); }
+    footer { padding: var(--s4); }
   }
 </style>
 </head>
 <body>
-  <aside aria-label="Invoice summary">
+<aside aria-label="Invoice summary">
+  <div class="body">
     <header>
-      <p class="eyebrow">Invoice summary <span class="status">Draft</span></p>
-      <h1>INV-2026-042</h1>
+      <div class="eyebrow"><span>Invoice</span><span class="status">Draft</span></div>
+      <h1>INV-2026-0042</h1>
     </header>
 
-    <div class="body">
-      <section aria-labelledby="h-client">
-        <h2 id="h-client">Bill to</h2>
-        <p class="client-name">Harbor &amp; Pine Coffee Co.</p>
-        <address>
-          Attn: Maria Alvarez<br>
-          418 Alder Street, Suite 2<br>
-          Portland, OR 97209
-        </address>
-      </section>
+    <section>
+      <h2>Bill to</h2>
+      <address>
+        <span class="name">Harbor &amp; Pine Studio</span>
+        <span class="line">Attn: Maya Okafor</span>
+        <span class="line">418 Alder Street, Suite 2</span>
+        <span class="line">Portland, OR 97209</span>
+      </address>
+    </section>
 
-      <section aria-labelledby="h-details">
-        <h2 id="h-details">Details</h2>
-        <dl class="meta">
-          <div><dt>Invoice number</dt><dd>INV-2026-042</dd></div>
-          <div><dt>Issued</dt><dd>Oct 5, 2026</dd></div>
-          <div><dt>Due</dt><dd>Nov 4, 2026</dd></div>
-        </dl>
-      </section>
+    <section>
+      <h2>Dates</h2>
+      <dl>
+        <dt>Issued</dt><dd>Oct 15, 2026</dd>
+        <dt>Due</dt><dd>Nov 14, 2026</dd>
+        <dt>Terms</dt><dd>Net 30</dd>
+      </dl>
+    </section>
 
-      <section aria-labelledby="h-items">
-        <h2 id="h-items">Line items</h2>
-        <ul class="items">
-          <li>
-            <div><div class="item-name">Brand identity refresh</div><div class="item-sub">24 hrs × $75.00</div></div>
-            <span class="amt">$1,800.00</span>
-          </li>
-          <li>
-            <div><div class="item-name">Landing page design</div><div class="item-sub">Fixed fee</div></div>
-            <span class="amt">$1,200.00</span>
-          </li>
-          <li>
-            <div><div class="item-name">Monthly maintenance</div><div class="item-sub">October retainer</div></div>
-            <span class="amt">$450.00</span>
-          </li>
-        </ul>
-      </section>
+    <section>
+      <h2>Line items</h2>
+      <ul class="items">
+        <li>
+          <span class="desc">Brand identity design</span>
+          <span class="amt">$2,400.00</span>
+          <span class="meta">24 hrs × $100</span>
+        </li>
+        <li>
+          <span class="desc">Website copywriting</span>
+          <span class="amt">$900.00</span>
+          <span class="meta">6 pages × $150</span>
+        </li>
+        <li>
+          <span class="desc">Social media templates</span>
+          <span class="amt">$450.00</span>
+          <span class="meta">Flat fee</span>
+        </li>
+      </ul>
+    </section>
 
-      <div class="totals" role="group" aria-label="Totals">
-        <div class="row"><span>Subtotal</span><span>$3,450.00</span></div>
-        <div class="row"><span>Tax (8%)</span><span>$276.00</span></div>
-        <div class="row total"><span>Total due</span><span>$3,726.00</span></div>
-      </div>
-    </div>
+    <section>
+      <h2 class="sr" style="position:absolute;left:-9999px">Totals</h2>
+      <dl class="totals">
+        <dt>Subtotal</dt><dd>$3,750.00</dd>
+        <dt>Tax (8%)</dt><dd>$300.00</dd>
+        <dt class="total-label">Total due</dt><dd class="total-value">$4,050.00</dd>
+      </dl>
+    </section>
+  </div>
 
-    <footer>
-      <button type="button" class="primary">Send invoice</button>
-      <button type="button">Save draft</button>
-    </footer>
-  </aside>
+  <footer>
+    <button type="button">Save draft</button>
+    <button type="button" class="primary">Send invoice</button>
+  </footer>
+</aside>
 </body>
 </html>

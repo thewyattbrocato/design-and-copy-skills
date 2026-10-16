@@ -1,6 +1,6 @@
 ---
 name: design-critique
-description: Use whenever someone wants a design judged, in any words, any length or language: "what do you think", "is this good", "why does it feel off", "make it feel more professional", "tear this apart", "will people get it", "which one is better", "give me feedback"; critique, review, audit, score or compare a screenshot, mockup, wireframe, HTML page, live site, flow, dashboard, chart, form or a described design; findings with severity, anchored scores, a fix order, what to keep; not for building or applying fixes (including the last small polish pass on a nearly finished screen), logo or identity critique (brand-identity) or code review.
+description: Use whenever someone wants a design judged, in any words, any length or language: "what do you think", "is this good", "why does it feel off", "tear this apart", "will people get it", "which one is better", "give me feedback"; critique, review, audit, score or compare a screenshot, mockup, wireframe, HTML page, live site, flow, dashboard, chart, form or a described design; findings with severity, anchored scores, a fix order, what to keep; not for building or applying fixes, even a final polish pass (do the work instead), logo or identity critique (brand-identity) or code review.
 ---
 
 # Design critique
@@ -46,7 +46,7 @@ Judge a design like a careful colleague: what it is for, what works, what fails 
 
 ## Judgment calls
 
-**What the design is for comes first.** Check the first screen before details: could a stranger say what this is, what they can do, and why here? Failing that is usually the top finding. For a deep page: which site, which page, where am I, how do I get back.
+**What the design is for comes first.** Check the first screen before details: a newcomer can name the offer and their next action. Failing that is usually the top finding. On an inner page they can tell where they are and how to leave or search.
 
 **Match depth to fidelity.** Sketches and wireframes: purpose, structure, flow, content priority, task fit. High fidelity adds type, color, spacing, states, copy. Shipped adds accessibility, consistency, perceived speed. Polish notes on a rough piece only if asked, labeled premature.
 
@@ -60,7 +60,7 @@ Judge a design like a careful colleague: what it is for, what works, what fails 
 
 **Does it already work?** Say so plainly and list only real issues. Do not invent problems to look thorough.
 
-**Comprehension questions.** If a finding hinges on whether people understand something, recommend three to five people doing real tasks without help and a same-day debrief; fixes should remove things before adding explanations. Use analytics or a larger study only when the question is volume.
+**Comprehension questions.** If a finding hinges on whether people understand something, recommend three to five people doing real tasks without help, then a ranked list of what failed; fixes should remove things before adding explanations. Use analytics or a larger study only when the question is volume.
 
 **Audits at scale.** Inventory the screens, sample key flows and one screen per pattern, check consistency (duplicate components, one-off values, mismatched labels), report patterns with counts, give a deliverable shape. For a huge set, deliver the first slice in full, then continue.
 

@@ -1,29 +1,40 @@
-The muddiness comes from three problems: everything sits in the same dull mid-tone band, the text is too faint to read, and the page background is dingy.
+## Why it looks muddy
 
-**1. Everything is the same value and the same hue.** Five of the six colors are low-chroma khaki, olive, or tan, all at roughly 40–50% lightness. Nothing is clearly light or dark, so the eye has no anchor. Only the terracotta error color is saturated, which makes it the one thing with energy, and it clashes with the olive.
+The problem is value, not hue. All six colors sit in the same middle lightness band, and the page and text are nearly the same brightness.
 
-**2. The text is too faint to read.** Body text `#a39b82` on background `#cfc8b0` is about 1.7:1 contrast (WCAG asks for 4.5:1 for body text). Your eye reads that as washed out, and it's probably the biggest reason the whole thing feels tired.
+I computed these from the WCAG sRGB formula by hand:
 
-**3. The background is the wrong starting point.** `#cfc8b0` is a darkened tan, not a warm cream. Because it's the largest area on screen, it makes everything on top of it look dirty.
-
-Approximate contrast of your current pairs on the page background:
-
-| Pair | Contrast | Problem |
+| Pair | Ratio | Needs |
 |---|---|---|
-| Body text on background | ~1.7:1 | Unreadable |
-| Primary button vs. background | ~2.3:1 | Button edge barely visible |
-| Links vs. background | ~2:1 | Indistinguishable from body text |
-| Error text vs. background | ~2.5:1 | Fails |
+| Body text `#a39b82` on background `#cfc8b0` | **1.8:1** | 4.5:1 |
+| Links `#9c8b5e` on background | **2.2:1** | 4.5:1 |
+| Error `#b5654a` on background | **2.8:1** | 4.5:1 |
+| Error on white | 4.3:1 | 4.5:1 |
+| White on primary `#8a7f5c` | 4.0:1 | 4.5:1 (passes 3:1 for large text only) |
+| White on secondary `#7d8a6b` | 3.7:1 | 4.5:1 |
 
-Primary and secondary buttons are both olive-khaki at similar lightness, so they also don't read as different.
+- **Body text is the main culprit.** At 1.8:1 it nearly disappears into the background, so the whole page reads as washed out.
+- **Nothing has a clear top or bottom.** There is no dark ink, no light surface, and no real lightness step between them. Everything lands in the same tan-olive mid-tones.
+- **The background is a dull greige.** Its yellow cast with low saturation reads as dirty rather than warm. Warm light usually comes from a cream or off-white ground.
+- **The hues are close cousins.** Four of the six are olive, khaki, or tan, so the palette has little hue contrast to lean on either.
 
-**A direction that stays warm and friendly:**
+## Suggested fix
 
-- **Background:** a clean cream, such as `#FBF7F0`. Use white for cards.
-- **Body text:** a warm near-black ink, such as `#2E2A24` (about 13:1 on the cream).
-- **Primary button:** a deep teal, such as `#1E6B66` (about 6:1 with white text). It's calm and trustworthy, and it's a different hue from everything else. Avoid coral or terracotta here, since those would compete with your error color.
-- **Links:** the same teal, underlined, so they're clearly tappable.
-- **Secondary button:** a soft sage tint, such as `#E3ECE6` background with deep green text. Keep your sage `#7d8a6b` for illustrations, dividers, and tints rather than text.
-- **Error:** keep `#b5654a` for icons and borders, but use a deeper red-brown such as `#A4482F` for error text so it passes on cream.
+Keep the earthy olive identity, but move the values apart and warm up the ground.
 
-These are my estimates, not measured values, so run the final pairs through a contrast checker before you ship. If you send me your stylesheet or theme file, I can apply the changes and check the contrast ratios in the code.
+| Role | Value | Why |
+|---|---|---|
+| Page background | `#faf6ee` (cream) | Light, warm ground that lets everything else breathe |
+| Card / surface | `#fffdf8` | Small lightness step above the page |
+| Body text | `#2e2a22` (warm near-black) | About 13:1 on cream (estimate) |
+| Primary button | `#4f5a2f` (deep olive), white label | About 7.4:1 with white (estimate) |
+| Secondary button | Outline `#4f5a2f` on cream, or `#e4e9d6` fill with `#2f3a1f` text | About 6.8:1 for the outline version (estimate) |
+| Links | `#4f5a2f`, underlined | About 6.8:1 on cream (estimate); keeps links distinct from body text |
+| Highlight (decorative) | `#e8a24a` (apricot) | Friendly warmth for badges and illustrations, never for text on cream |
+| Error | `#a8432a` (brick) | About 5.5:1 on cream (estimate); reads as a different role from the brand olive |
+
+Two notes:
+- The apricot highlight is the one place the palette gets some lift and warmth. Use it sparingly, and pair it with dark ink text if it sits behind words.
+- The error color now differs from the brand by shade and deep red-brown rather than sitting close to the old tan. Still pair errors with an icon or a word so meaning does not rest on hue alone.
+
+I could not run code here, so the ratios for the new colors are hand estimates. Run them through a contrast checker before shipping. Also check the button labels against the actual font size, since 4.5:1 applies to normal text.

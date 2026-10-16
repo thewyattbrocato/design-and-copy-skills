@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Check - Brannock Cold Storage</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #000;
+    color: #fff;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.25;
+  }
+  header {
+    background: #10161c;
+    border-bottom: 3px solid #ffd54a;
+    padding: 8px 10px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  h1 { font-size: 20px; margin: 0 0 6px 0; color: #ffd54a; }
+  .searchrow { display: table; width: 100%; }
+  .searchrow .cell { display: table-cell; vertical-align: middle; }
+  .searchrow .btncell { width: 1%; padding-left: 8px; }
+  label.sr { position: absolute; left: -9999px; }
+  #search {
+    width: 100%;
+    height: 60px;
+    font-size: 26px;
+    font-family: inherit;
+    padding: 0 12px;
+    background: #fff;
+    color: #000;
+    border: 3px solid #8a96a3;
+    border-radius: 6px;
+  }
+  button {
+    height: 60px;
+    min-width: 88px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: inherit;
+    background: #2b3643;
+    color: #fff;
+    border: 3px solid #8a96a3;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  #search:focus, #search:active, button:focus, .count:focus {
+    outline: 4px solid #ffd54a;
+    outline-offset: 1px;
+    border-color: #fff;
+  }
+  #summary { margin-top: 6px; font-size: 18px; color: #d5dde5; }
+  #summary b { color: #fff; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #b8c2cc;
+    padding: 8px 10px;
+    border-bottom: 2px solid #8a96a3;
+  }
+  td {
+    padding: 8px 10px;
+    border-bottom: 2px solid #3a4550;
+    vertical-align: middle;
+    font-size: 22px;
+  }
+  th.num, td.num { text-align: right; }
+  td.sku { font-weight: bold; letter-spacing: 0.5px; }
+  .count {
+    width: 110px;
+    height: 56px;
+    font-size: 28px;
+    font-weight: bold;
+    font-family: inherit;
+    text-align: center;
+    background: #fff;
+    color: #000;
+    border: 3px solid #8a96a3;
+    border-radius: 6px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 6px 8px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid #c8d0d8;
+    color: #c8d0d8;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .ok    { color: #5cff8a; border-color: #5cff8a; }
+  .short { color: #ff8a80; border-color: #ff8a80; }
+  .over  { color: #ffd54a; border-color: #ffd54a; }
+  tr.done td { background: #0b1710; }
+  tr.bad td  { background: #1c1010; }
+  tr.high td { background: #1c1808; }
+  #empty { display: none; padding: 20px 10px; font-size: 22px; color: #ffd54a; }
+
+  @media (max-width: 520px) {
+    body { font-size: 18px; }
+    table, thead, tbody, tr, td { display: block; }
+    thead { display: none; }
+    tr { overflow: hidden; border-bottom: 3px solid #5b6672; padding: 6px 0; }
+    td { float: left; width: 50%; border: 0; padding: 4px 10px; font-size: 24px; }
+    td.num { text-align: left; }
+    td.sku { float: none; width: 100%; font-size: 26px; }
+    td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 14px;
+      font-weight: normal;
+      text-transform: uppercase;
+      color: #b8c2cc;
+    }
+    td.sku::before { display: none; }
+    .count { width: 100%; max-width: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Stock Check &ndash; Night Shift</h1>
+  <div class="searchrow">
+    <div class="cell">
+      <label class="sr" for="search">Search SKU or bin</label>
+      <input id="search" type="text" placeholder="Scan or type SKU / bin" autocomplete="off" autocapitalize="characters">
+    </div>
+    <div class="cell btncell"><button id="clear" type="button">CLEAR</button></div>
+  </div>
+  <div id="summary" aria-live="polite"></div>
+</header>
+
+<table>
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Bin</th>
+      <th class="num">Expected</th>
+      <th class="num">Counted</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="rows"></tbody>
+</table>
+<div id="empty">No SKU or bin matches. Check the entry and try again.</div>
+
+<script>
+(function () {
+  var DATA = [
+    { sku: "FRZ-1042", bin: "F1-A03-2", exp: 48 },
+    { sku: "FRZ-1187", bin: "F1-A04-1", exp: 120 },
+    { sku: "FRZ-2210", bin: "F1-B01-3", exp: 36 },
+    { sku: "FRZ-2275", bin: "F1-B02-1", exp: 72 },
+    { sku: "FRZ-3016", bin: "F2-C05-2", exp: 24 },
+    { sku: "FRZ-3098", bin: "F2-C06-4", exp: 60 },
+    { sku: "CLR-4401", bin: "C1-D02-1", exp: 90 },
+    { sku: "CLR-4456", bin: "C1-D02-3", exp: 54 },
+    { sku: "CLR-5120", bin: "C1-E07-2", exp: 18 },
+    { sku: "CLR-5183", bin: "C2-E09-1", exp: 144 },
+    { sku: "ICE-6007", bin: "F2-G01-1", exp: 200 },
+    { sku: "ICE-6032", bin: "F2-G03-2", exp: 96 }
+  ];
+  var KEY = "brannock-stockcheck-v1";
+  var counts = {};
+  var rowsEl = document.getElementById("rows");
+  var searchEl = document.getElementById("search");
+  var summaryEl = document.getElementById("summary");
+  var emptyEl = document.getElementById("empty");
+  var items = [];
+
+  try { counts = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { counts = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(counts)); } catch (e) {} }
+  function norm(s) { return String(s).toLowerCase().replace(/[^a-z0-9]/g, ""); }
+
+  function evaluate(exp, val) {
+    if (val === "" || val === undefined) return { cls: "", row: "", text: "TO COUNT" };
+    var diff = parseInt(val, 10) - exp;
+    if (diff === 0) return { cls: "ok", row: "done", text: "OK" };
+    if (diff < 0) return { cls: "short", row: "bad", text: "SHORT " + diff };
+    return { cls: "over", row: "high", text: "OVER +" + diff };
+  }
+
+  function td(cls, label, text) {
+    var c = document.createElement("td");
+    c.className = cls;
+    c.setAttribute("data-label", label);
+    if (text !== undefined) c.appendChild(document.createTextNode(text));
+    return c;
+  }
+
+  function refreshRow(it) {
+    var s = evaluate(it.d.exp, counts[it.d.sku]);
+    it.badge.className = "badge " + s.cls;
+    it.badge.firstChild.nodeValue = s.text;
+    it.tr.className = s.row;
+  }
+
+  function updateSummary() {
+    var n = 0, ok = 0, sh = 0, ov = 0, i, s;
+    for (i = 0; i < items.length; i++) {
+      s = evaluate(items[i].d.exp, counts[items[i].d.sku]);
+      if (s.text !== "TO COUNT") n++;
+      if (s.cls === "ok") ok++;
+      if (s.cls === "short") sh++;
+      if (s.cls === "over") ov++;
+    }
+    summaryEl.innerHTML = "Counted <b>" + n + "/" + items.length + "</b> &nbsp; OK <b>" + ok +
+      "</b> &nbsp; Short <b>" + sh + "</b> &nbsp; Over <b>" + ov + "</b>";
+  }
+
+  function visibleInputs() {
+    var out = [], i;
+    for (i = 0; i < items.length; i++) {
+      if (items[i].tr.style.display !== "none") out.push(items[i].input);
+    }
+    return out;
+  }
+
+  function build() {
+    var i, d, tr, inp, badge, it;
+    for (i = 0; i < DATA.length; i++) {
+      d = DATA[i];
+      tr = document.createElement("tr");
+      tr.appendChild(td("sku", "SKU", d.sku));
+      tr.appendChild(td("bin", "Bin", d.bin));
+      tr.appendChild(td("num", "Expected", String(d.exp)));
+
+      var cc = td("num", "Counted");
+      inp = document.createElement("input");
+      inp.type = "text";
+      inp.className = "count";
+      inp.setAttribute("inputmode", "numeric");
+      inp.setAttribute("pattern", "[0-9]*");
+      inp.setAttribute("maxlength", "5");
+      inp.setAttribute("autocomplete", "off");
+      inp.setAttribute("aria-label", "Counted quantity for " + d.sku);
+      if (counts[d.sku] !== undefined) inp.value = counts[d.sku];
+      cc.appendChild(inp);
+      tr.appendChild(cc);
+
+      var sc = td("status", "Status");
+      badge = document.createElement("span");
+      badge.appendChild(document.createTextNode(""));
+      sc.appendChild(badge);
+      tr.appendChild(sc);
+
+      rowsEl.appendChild(tr);
+      it = { d: d, tr: tr, input: inp, badge: badge, key: norm(d.sku + d.bin) };
+      items.push(it);
+      bindInput(it);
+      refreshRow(it);
+    }
+    updateSummary();
+  }
+
+  function bindInput(it) {
+    it.input.onfocus = function () {
+      var el = this;
+      setTimeout(function () { try { el.select(); } catch (e) {} }, 0);
+    };
+    it.input.oninput = it.input.onkeyup = function () {
+      var v = this.value.replace(/[^0-9]/g, "");
+      if (v !== this.value) this.value = v;
+      if (v === "") { delete counts[it.d.sku]; } else { counts[it.d.sku] = v; }
+      save();
+      refreshRow(it);
+      updateSummary();
+    };
+    it.input.onkeydown = function (e) {
+      e = e || window.event;
+      if (e.keyCode === 13) {
+        var list = visibleInputs(), i;
+        for (i = 0; i < list.length; i++) {
+          if (list[i] === this) {
+            if (i + 1 < list.length) { list[i + 1].focus(); } else { searchEl.focus(); }
+            break;
+          }
+        }
+        return false;
+      }
+    };
+  }
+
+  function filter() {
+    var q = norm(searchEl.value), shown = 0, i, match;
+    for (i = 0; i < items.length; i++) {
+      match = q === "" || items[i].key.indexOf(q) !== -1;
+      items[i].tr.style.display = match ? "" : "none";
+      if (match) shown++;
+    }
+    emptyEl.style.display = shown === 0 ? "block" : "none";
+  }
+
+  searchEl.oninput = searchEl.onkeyup = filter;
+  searchEl.onkeydown = function (e) {
+    e = e || window.event;
+    if (e.keyCode === 13) {
+      var list = visibleInputs();
+      if (list.length) list[0].focus();
+      return false;
+    }
+  };
+  document.getElementById("clear").onclick = function () {
+    searchEl.value = "";
+    filter();
+    searchEl.focus();
+  };
+
+  build();
+  filter();
+})();
+</script>
+</body>
+</html>

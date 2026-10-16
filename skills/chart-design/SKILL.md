@@ -1,6 +1,6 @@
 ---
 name: chart-design
-description: Use when you make, choose, fix or review a single chart, graph, sparkline or simple map (HTML, SVG, canvas or a chart library) - including a chart card, a trend line for a report or newsletter, or a survey result chart: picking the form for the question, honest axes and baselines, money and time handling, direct labels, restrained color, small multiples and chart accessibility. Not for multi-chart dashboards or KPI screens, data tables, interface or brand palettes, diagrams that explain a mechanism, or statistical analysis.
+description: Use when you make, choose, fix or review a single chart, graph, sparkline or simple map (HTML, SVG, canvas or a chart library), in any words - "chart this", "does this graph mislead", "show who is over budget", "make it clearer", "they want a funnel or donut": a chart card, a report or newsletter trend line, a survey result chart. Covers form for the question, honest axes and baselines, variance and target displays, money and time handling, direct labels, restrained color, small multiples and accessibility. Not for multi-chart dashboards or KPI screens, data tables, interface or brand palettes, diagrams that explain a mechanism, or statistical analysis.
 ---
 
 # Chart design
@@ -44,12 +44,12 @@ Work through these in order. Skip steps that are already settled.
 11. **Make it accessible.** A text takeaway, the data reachable as a table, and no meaning carried by color or hover alone; see [many series and accessibility](references/multiples-and-accessible-charts.md).
 12. **Re-read the finished chart** against the quick checks at the end.
 
-### Form by relation
+### Form by question
 
 | The reader needs to see | Default form | Notes |
 | --- | --- | --- |
-| Change over time | Line | Bars when there are few, discrete periods or counts per period |
 | Compare categories | Bars sorted by value | Horizontal when labels are long; keep the order stable across related charts |
+| Change over time | Line | Bars when there are few, discrete periods or counts per period |
 | Part of a whole | One stacked or 100% bar, or labeled bars | A pie only under the rule below |
 | Independent shares (multi-select answers) | Bars on a common base | They do not sum to 100%, so a whole-shaped chart is false |
 | Distribution | Histogram, box summary or dot strip | Choose bin widths deliberately |
@@ -69,6 +69,8 @@ Work through these in order. Skip steps that are already settled.
 **Log scales.** Default: linear. Change when values span orders of magnitude or the question is about growth rate. Label the axis as logarithmic, use round powers for ticks, and consider whether the audience will read it.
 
 **Money and populations.** Default: long money series in constant terms, or as an index or a share of income; counts as rates per person when group sizes differ; equal-length periods. Change when the nominal figure is the point (a contract price, a budget actually approved). Say which one is plotted.
+
+**Missing facts.** Default: chart only the numbers, dates and sources the user gave. If a value, unit, period or source is missing, ask once only when the exchange is interactive and the answer is cheap; otherwise build the chart with a visible bracketed placeholder ("[source]", "[as of date]") and say so in one line. Never fill in a plausible figure.
 
 **Annotation.** Default for an explanatory chart: a title that states the finding, plus one or two notes at the moments that matter. Default for an exploratory view: a neutral title and no editorializing. Change when the audience will not read a legend or caption: put the note on the chart.
 
@@ -93,7 +95,6 @@ Work through these in order. Skip steps that are already settled.
 | Title says "Sales by month" for a chart meant to persuade | State the finding; keep the descriptive title for exploration |
 | Trend line or fit added without being asked | Remove it, or say what it is and why |
 | One KPI number turned into a full chart | Show the number with its comparison |
-| A written answer that runs past a length limit the user gave | Keep to it; cut material before the limit |
 
 ## Quick checks
 
@@ -113,4 +114,5 @@ Work through these in order. Skip steps that are already settled.
 - [choosing-the-form.md](references/choosing-the-form.md): load when the form is not obvious, when picking between a chart, a number and a table, or when a map or unusual relation is involved.
 - [honest-scales.md](references/honest-scales.md): load when setting axes, comparing across time, adjusting money, handling partial periods, sizing bubbles, binning, or choosing an aspect ratio.
 - [labels-and-color.md](references/labels-and-color.md): load when styling: direct labels, legends, annotation, gridlines, text sizes, and sequential, diverging or categorical color.
+- [relationship-recipes.md](references/relationship-recipes.md): load for over or under a target, a few items dominating, funnel, waterfall, donut, radar or stacked-area requests, irregular sample dates, one series against many, or averages and typical values.
 - [multiples-and-accessible-charts.md](references/multiples-and-accessible-charts.md): load for many series, tiny inline trend lines, or any chart that must be accessible or work without hover.

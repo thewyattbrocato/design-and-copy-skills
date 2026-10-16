@@ -1,29 +1,37 @@
-I can't see the file, so this is feedback on the description. The concept is lovely, but the spec has real problems at your three sizes.
+I haven't seen the file, so this is feedback on the concept as you've described it. The main problem is that the design is built for the sign, and the cups and favicon will work against it.
 
-**What works**
-- A script wordmark in gold on white suits a tea shop. It feels warm, a bit upscale, and a bit old-world.
-- The leaf above the "i" is a good idea. It replaces the dot with something meaningful, so it's memorable without adding a separate icon.
+**What's working**
+- A script wordmark suits a small tea shop. It feels personal and a bit old-fashioned, in a good way.
+- The leaf above the "i" is a nice idea. It replaces the dot with something that says "tea" without a cliché teacup icon.
+- Gold on white reads as refined, and the name "Pemberly" fits that tone.
 
-**Main concerns**
+**Concerns, roughly in order of severity**
 
-1. **Contrast.** #c9a227 on white is about 2.4:1, well under the 3:1 minimum for graphic elements and 4.5:1 for text. Thin gold on white will look washed out, especially on a sign in daylight and on a cup under shop lighting.
+1. **Gold #c9a227 on white has low contrast.** It comes out around 2.4:1, well under the 3:1 minimum for graphics and 4.5:1 for text. Thin strokes make it worse, because the line is so fine that anti-aliasing blends it into the white. At a distance on a sign, or on a cup in someone's hand, it will look pale and washed out.
 
-2. **Hairline strokes.** This is the biggest risk.
-   - On paper cups, flexo printing usually can't hold strokes under about 0.25 pt. Fine lines fill in, break up, or vary from cup to cup.
-   - On a sign, hairlines vanish from any distance. Vinyl or routed signage needs much heavier strokes.
-   - At 32px, they'll render as faint, anti-aliased smudges.
+2. **Hairline strokes won't survive the real uses.**
+   - **Cups:** flexographic printing and ink spread on curved paper will fill in or break up hairlines.
+   - **Sign:** hairlines vanish at viewing distance, especially in daylight.
+   - **Favicon:** at 32px (and 16px in a tab), hairline script becomes a blur.
 
-3. **The leaf at 32px.** At that size it will be 1–2 pixels, so it will read as a stray mark or disappear. A full "Pemberly Tea" script wordmark won't be legible in a favicon anyway.
+3. **The tiny leaf will disappear.** At small sizes it will read as a smudge or just a dot, and that dot may make the "i" look like a plain "i" again. At 32px it's gone.
 
-4. **Script legibility.** Thin script plus light color makes letters like "m", "b", and "e" blur together. "Pemberly" has a lot of minims (vertical strokes), which are the first thing to go at small sizes.
+4. **A full script wordmark can't work as a favicon.** "Pemberly Tea" won't be legible in 32px. This is normal, and the fix is to design a separate small mark rather than shrink the logo.
+
+5. **Script legibility.** Check that "Pemberly" doesn't read oddly, since the "mb" and "rl" pairs are easy to muddle in thin script. Also check that the "P" and "T" capitals are clear.
 
 **What I'd do**
-- **Thicken the strokes.** Keep the contrast between thick and thin, but set the minimum stroke to something that survives printing and reduction. Test by shrinking the logo to about 1 inch wide. If any part disappears, it's too thin.
-- **Darken the gold,** or add a dark variant. Something like #8a6d0b is closer to 4.5:1 and still reads as gold. For the sign and cups, consider pairing the gold with a deep green or charcoal, or putting the logo on a dark background where gold works well.
-- **Make a separate favicon.** Don't shrink the wordmark. Use a simple "P" monogram or just the leaf, on a solid background (a dark green square with a gold leaf, say), drawn to be crisp at 16 and 32px.
-- **Build a small logo system.** You'll want the full wordmark, a stacked or compact version, and the leaf or monogram alone. Each one gets used where it works best.
-- **Check the metallic question.** Flat #c9a227 will look mustard on a cup. If you want real gold, that means foil, which is a pricier print spec. Decide that early.
+- **Add weight.** Keep the elegant feel, but make the thinnest strokes noticeably heavier. A good test is to print it at about 1 inch wide and see if every stroke still holds.
+- **Deepen the gold for small and print uses.** Something like #a67c00 or #9a7b1c keeps the warmth with much better contrast. Keep the lighter gold only for large, high-quality applications like the sign, ideally on a dark background, where gold looks best.
+- **Consider a dark backing.** Gold on deep green, navy, or charcoal is far more legible than on white, and it feels more premium. A cup in dark green with the gold wordmark would look great.
+- **Make a simplified favicon and small-size mark.** Use a "P" monogram, or the leaf alone, in a solid shape with no hairlines. A filled leaf in a rounded square would hold up at 32px.
+- **Make the leaf bolder, and test it.** Make it a solid shape, not an outline, and scale it up slightly so it stays visible when small.
+- **Prepare a one-color version.** Cups and signs often need a single flat color, plus a version in black or white for stamps, receipts, and bags. Gold gradients or metallic effects won't print reliably.
 
-**Quick test before you commit:** print it at cup size on a regular printer, then view it from 10 feet away and at 32px on screen. If the name isn't readable in both, adjust the weight and color before going further.
+**Quick tests before you finalize**
+1. Shrink it to 32px and 16px and see what's left.
+2. Print it in grayscale at about 1 inch wide.
+3. View it from across a room, or squint at it.
+4. Mock it on a real cup and on the sign background.
 
-If you can export it as a PNG and describe what you see at small sizes, or share the stroke widths, I can be more specific.
+If you can describe the letterforms, or export a PNG and tell me what you see at small sizes, I can give more specific advice. The concept is good. The execution just needs to be sturdier to survive real-world use.

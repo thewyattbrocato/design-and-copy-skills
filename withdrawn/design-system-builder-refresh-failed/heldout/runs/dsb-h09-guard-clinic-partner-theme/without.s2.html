@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Health – Halden Family Clinic Theme Preview</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 32px 20px 48px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #ECEEF2;
+    color: #25304A;
+    line-height: 1.5;
+  }
+
+  .doc { max-width: 1040px; margin: 0 auto; }
+  .doc h1 { font-size: 24px; margin: 0 0 4px; color: #14213D; }
+  .doc > p { margin: 0 0 24px; color: #4A5470; }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
+
+  .label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #4A5470;
+  }
+  .label span:last-child { font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+  /* ---------- Theme tokens ---------- */
+  .theme-default {
+    --color-brand: #2F6FED;
+    --color-on-brand: #ffffff;
+    --color-brand-ink: #2F6FED;      /* brand-colored text/borders on light surfaces */
+    --color-brand-tint: #EAF1FE;
+    --color-heading: #14213D;
+    --color-surface: #ffffff;
+    --color-page: #F4F6FA;
+    --color-border: #D5DBE6;
+    --color-text: #25304A;
+    --radius: 10px;
+  }
+  .theme-halden {
+    --color-brand: #F5C842;
+    --color-on-brand: #1F4D3A;       /* white on yellow is too low contrast */
+    --color-brand-ink: #1F4D3A;      /* yellow text on white is unreadable */
+    --color-brand-tint: #FDF5DA;
+    --color-heading: #1F4D3A;
+    --color-surface: #ffffff;
+    --color-page: #F4F6FA;
+    --color-border: #D5DBE6;
+    --color-text: #25304A;
+    --radius: 10px;
+  }
+
+  /* ---------- Themed app surface ---------- */
+  .app {
+    background: var(--color-page);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) + 6px);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .app h2 {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    opacity: .75;
+  }
+  .app h3 { margin: 0; font-size: 18px; color: var(--color-heading); }
+
+  .btn {
+    font: inherit;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    border: 2px solid var(--color-brand);
+    cursor: pointer;
+    line-height: 1.2;
+  }
+  .btn:focus-visible { outline: 3px solid var(--color-heading); outline-offset: 2px; }
+  .btn-primary { background: var(--color-brand); color: var(--color-on-brand); }
+  .btn-secondary { background: transparent; color: var(--color-brand-ink); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .card .time { margin: 4px 0 0; font-weight: 600; color: var(--color-text); }
+  .card .doctor { margin: 0; font-size: 14px; color: var(--color-text); opacity: .85; }
+
+  .banner {
+    background: var(--color-brand-tint);
+    border: 1px solid var(--color-brand);
+    border-left-width: 6px;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    color: var(--color-text);
+    font-size: 15px;
+  }
+  .banner strong { color: var(--color-heading); }
+
+  /* ---------- Change summary ---------- */
+  .notes {
+    margin-top: 24px;
+    background: #fff;
+    border: 1px solid #D5DBE6;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 14px;
+  }
+  .notes h2 { margin: 0 0 8px; font-size: 16px; color: #14213D; }
+  .notes ul { margin: 0; padding-left: 20px; }
+  .notes li { margin-bottom: 4px; }
+  .swatch {
+    display: inline-block; width: 12px; height: 12px; border-radius: 3px;
+    border: 1px solid rgba(0,0,0,.25); vertical-align: -1px; margin-right: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+  <h1>Halden Family Clinic – Theme Preview</h1>
+  <p>Kestrel Health patient app: our default look beside Halden's branded version, using the same components.</p>
+
+  <div class="compare">
+
+    <section aria-labelledby="l-default">
+      <div class="label"><span id="l-default">Kestrel default</span><span>Current</span></div>
+      <div class="app theme-default">
+        <div>
+          <h2>Buttons</h2>
+          <div class="btn-row">
+            <button class="btn btn-primary" type="button">Book appointment</button>
+            <button class="btn btn-secondary" type="button">View records</button>
+          </div>
+        </div>
+        <div>
+          <h2>Appointment card</h2>
+          <div class="card">
+            <div>
+              <h3>Annual check-up</h3>
+              <p class="time">Tue, Nov 4 · 9:30 AM</p>
+              <p class="doctor">Dr. Maria Alvarez</p>
+            </div>
+            <button class="btn btn-secondary" type="button">Reschedule</button>
+          </div>
+        </div>
+        <div>
+          <h2>Info banner</h2>
+          <div class="banner"><strong>Reminder:</strong> Please arrive 10 minutes early to complete check-in.</div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="l-halden">
+      <div class="label"><span id="l-halden">Halden Family Clinic</span><span>Proposed</span></div>
+      <div class="app theme-halden">
+        <div>
+          <h2>Buttons</h2>
+          <div class="btn-row">
+            <button class="btn btn-primary" type="button">Book appointment</button>
+            <button class="btn btn-secondary" type="button">View records</button>
+          </div>
+        </div>
+        <div>
+          <h2>Appointment card</h2>
+          <div class="card">
+            <div>
+              <h3>Annual check-up</h3>
+              <p class="time">Tue, Nov 4 · 9:30 AM</p>
+              <p class="doctor">Dr. Maria Alvarez</p>
+            </div>
+            <button class="btn btn-secondary" type="button">Reschedule</button>
+          </div>
+        </div>
+        <div>
+          <h2>Info banner</h2>
+          <div class="banner"><strong>Reminder:</strong> Please arrive 10 minutes early to complete check-in.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="notes">
+    <h2>What changes for Halden</h2>
+    <ul>
+      <li><span class="swatch" style="background:#F5C842"></span>Brand <code>#F5C842</code>: primary button fill, outlines and banner accent.</li>
+      <li><span class="swatch" style="background:#1F4D3A"></span>Headings <code>#1F4D3A</code>: titles and card headings.</li>
+      <li>Text on yellow is dark green (<code>#1F4D3A</code>) rather than white, because white on this yellow is hard to read. The same green is used for secondary button text and outlines, since yellow text on white would be unreadable.</li>
+      <li>The banner tint is a light yellow (<code>#FDF5DA</code>). All other values (surface, page, border, body text, radius) are unchanged.</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

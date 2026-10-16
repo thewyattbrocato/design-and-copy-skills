@@ -1,0 +1,1 @@
+Aim for roughly 100–200 ms to open, and keep it under about 250 ms. Anything slower feels sluggish, and anything much faster than 100 ms can feel abrupt or like a flicker. Make closing a bit quicker (around 100–150 ms) than opening.

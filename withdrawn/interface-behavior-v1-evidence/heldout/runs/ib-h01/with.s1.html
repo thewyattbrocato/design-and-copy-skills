@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder Lane Pantry – Saturday Shifts</title>
+<style>
+:root{
+  --bg:#f6f3ec; --card:#fff; --ink:#1f2a22; --muted:#5c6a60; --line:#dcd6c6;
+  --green:#1f6b45; --green-ink:#fff; --green-soft:#e3f1e8;
+  --amber:#8a5a00; --amber-soft:#fbefd0; --red:#a12a2a; --red-soft:#fbe3e1;
+  --open:#fff; --shadow:0 1px 2px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#141a16; --card:#1d251f; --ink:#eef2ec; --muted:#a3b0a6; --line:#34403a;
+    --green:#5cc08a; --green-ink:#08210f; --green-soft:#1e3a2a;
+    --amber:#f0c36a; --amber-soft:#3b2f12; --red:#ff9a94; --red-soft:#432120;
+    --open:#1d251f; --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  padding-bottom:110px}
+.wrap{max-width:640px;margin:0 auto;padding:0 14px}
+header{padding:18px 0 10px}
+h1{font-size:1.35rem;margin:0;line-height:1.2}
+.sub{color:var(--muted);margin:2px 0 0}
+.me{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0;box-shadow:var(--shadow)}
+.me label{display:block;font-weight:600;margin-bottom:6px}
+.me .row{display:flex;gap:8px}
+input[type=text]{flex:1;min-width:0;font:inherit;font-size:1.05rem;padding:12px;border:1.5px solid var(--line);
+  border-radius:10px;background:var(--bg);color:var(--ink)}
+input[type=text]:focus{outline:3px solid var(--green);outline-offset:1px;border-color:var(--green)}
+.me.need{border-color:var(--amber);background:var(--amber-soft)}
+.hint{margin:6px 0 0;color:var(--muted);font-size:.9rem}
+.progress{margin:10px 0 4px}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--green);transition:width .3s}
+.progress p{margin:5px 0 0;font-size:.95rem;color:var(--muted)}
+.tabs{display:flex;gap:6px;margin:12px 0;position:sticky;top:0;z-index:5;padding:8px 0;background:var(--bg)}
+.tabs button{flex:1;min-height:44px;font:inherit;font-weight:600;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);border-radius:10px;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--green);color:var(--green-ink);border-color:var(--green)}
+.shift{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.shift.mine{border-color:var(--green);border-width:2px;padding:13px}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.time{font-weight:700;color:var(--green);font-size:.95rem}
+.shift h2{font-size:1.15rem;margin:2px 0 2px}
+.desc{margin:0;color:var(--muted);font-size:.92rem}
+.count{white-space:nowrap;font-weight:700;font-size:.85rem;padding:4px 10px;border-radius:99px;background:var(--green-soft);color:var(--ink)}
+.count.low{background:var(--amber-soft)}
+.count.full{background:var(--line);color:var(--muted)}
+.spots{list-style:none;padding:0;margin:12px 0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.spots li{min-height:38px;display:flex;align-items:center;justify-content:space-between;gap:4px;
+  padding:4px 10px;border-radius:9px;border:1.5px solid var(--line);font-size:.95rem;min-width:0}
+.spots li span.n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spots li.open{border-style:dashed;color:var(--muted);background:var(--open)}
+.spots li.you{background:var(--green-soft);border-color:var(--green);font-weight:700}
+.spots li button{min-width:36px;min-height:36px;border:0;background:transparent;color:var(--red);font-size:1.2rem;cursor:pointer;border-radius:8px}
+.act{width:100%;min-height:50px;font:inherit;font-size:1.05rem;font-weight:700;border-radius:12px;border:2px solid var(--green);cursor:pointer}
+.act.join{background:var(--green);color:var(--green-ink)}
+.act.drop{background:transparent;color:var(--red);border-color:var(--red)}
+.act:disabled{background:var(--line);color:var(--muted);border-color:var(--line);cursor:not-allowed}
+button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.empty{text-align:center;color:var(--muted);padding:30px 10px}
+.tools{margin:16px 0}
+.tools summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--muted)}
+.tools .btns{display:flex;flex-wrap:wrap;gap:8px;padding:6px 0}
+.tools button{min-height:44px;padding:0 14px;font:inherit;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;cursor:pointer}
+.tools button[aria-pressed=true]{background:var(--amber-soft);border-color:var(--amber)}
+.foot{color:var(--muted);font-size:.85rem}
+#toast{position:fixed;left:0;right:0;bottom:14px;display:flex;justify-content:center;padding:0 14px;pointer-events:none;z-index:10}
+#toast>div{pointer-events:auto;display:flex;align-items:center;gap:12px;max-width:600px;width:100%;
+  background:#1f2a22;color:#fff;padding:10px 10px 10px 16px;border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+@media (prefers-color-scheme:dark){#toast>div{background:#eef2ec;color:#141a16}}
+#toast span{flex:1}
+#toast button{min-height:44px;padding:0 14px;font:inherit;font-weight:700;border-radius:8px;border:0;background:#8fdcae;color:#08210f;cursor:pointer}
+#toast[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Larder Lane Pantry</h1>
+    <p class="sub" id="date"></p>
+  </header>
+
+  <form class="me" id="meBox" autocomplete="off">
+    <label for="name">Your name</label>
+    <div class="row">
+      <input type="text" id="name" maxlength="24" placeholder="First name + last initial" enterkeyhint="done" autocapitalize="words">
+    </div>
+    <p class="hint" id="nameHint">Type it once. We'll remember it on this phone.</p>
+  </form>
+
+  <div class="progress">
+    <div class="bar"><i id="fill"></i></div>
+    <p id="progText"></p>
+  </div>
+
+  <div class="tabs" role="group" aria-label="Filter shifts">
+    <button data-f="all" aria-pressed="true">All</button>
+    <button data-f="open" aria-pressed="false">Needs people</button>
+    <button data-f="mine" aria-pressed="false">My shifts</button>
+  </div>
+
+  <main id="list"></main>
+
+  <details class="tools">
+    <summary>Coordinator tools</summary>
+    <div class="btns">
+      <button id="manage" aria-pressed="false">Remove others: off</button>
+      <button id="copy">Copy roster</button>
+      <button id="reset">Reset board</button>
+    </div>
+    <p class="foot">Sign-ups are saved on this device only. To share the board, use “Copy roster” and paste it into your group chat.</p>
+  </details>
+</div>
+
+<div id="toast" hidden><div><span id="toastMsg"></span><button id="undo">Undo</button></div></div>
+
+<script>
+(function(){
+  var SHIFTS=[
+    {id:"d1",title:"Driver: morning pickups",desc:"Grocery store and bakery donation runs. Own car, gas reimbursed.",s:7.5,e:9,cap:3},
+    {id:"s1",title:"Sorting donations",desc:"Check dates, sort cans and boxes by type.",s:8,e:10,cap:6},
+    {id:"f1",title:"Front desk check-in",desc:"Greet neighbors, sign them in, hand out numbers.",s:9,e:11,cap:3},
+    {id:"b1",title:"Bagging and boxing",desc:"Pack pre-made bags and produce boxes.",s:9.5,e:11.5,cap:5},
+    {id:"h1",title:"Shopping helper",desc:"Walk with neighbors and carry bags to cars.",s:10,e:12,cap:4},
+    {id:"d2",title:"Driver: home deliveries",desc:"Deliver boxes to homebound neighbors.",s:11,e:13,cap:3},
+    {id:"k1",title:"Stocking shelves",desc:"Restock after the morning rush.",s:12,e:14,cap:4},
+    {id:"c1",title:"Cleanup and close",desc:"Wipe tables, sweep, break down boxes, take out trash.",s:13,e:14.5,cap:4}
+  ];
+  var SEED={d1:["Marcus T"],s1:["Ana R","Bill K","Joy M"],f1:["Dolores P","Sam W"],b1:["Priya N","Tom H","Lena S","Ravi D"],h1:["Grace O"],d2:[],k1:["Ana R"],c1:["Bill K","Joy M"]};
+  var KEY="larderlane.board.v1",NKEY="larderlane.name.v1";
+  var $=function(id){return document.getElementById(id)};
+
+  function load(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+  var board=load(KEY), me=load(NKEY)||"", filter="all", manage=false, lastSnap=null, tTimer=null;
+  function seed(){var b={};SHIFTS.forEach(function(s){b[s.id]=(SEED[s.id]||[]).slice()});return b}
+  if(!board||typeof board!=="object")board=seed();
+  SHIFTS.forEach(function(s){if(!Array.isArray(board[s.id]))board[s.id]=[]});
+
+  function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  function fmt(h){var H=Math.floor(h),m=Math.round((h-H)*60),ap=H>=12?"pm":"am",h12=H%12||12;return h12+(m?":"+(m<10?"0":"")+m:"")+ap}
+  function range(s){return fmt(s.s)+" – "+fmt(s.e)}
+  function key(n){return n.trim().toLowerCase()}
+  function has(id,n){return n&&board[id].some(function(x){return key(x)===key(n)})}
+  function persist(){save(BKEYSAFE(),board)}
+  function BKEYSAFE(){return KEY}
+  function snap(){lastSnap=JSON.stringify(board)}
+
+  // Date: the coming Saturday (today, if it is Saturday)
+  var d=new Date(),add=(6-d.getDay()+7)%7;d.setDate(d.getDate()+add);
+  $("date").textContent="Saturday, "+d.toLocaleDateString(undefined,{month:"long",day:"numeric"})+" · Doors open 9am";
+
+  function toast(msg,canUndo){
+    $("toastMsg").textContent=msg;
+    $("undo").style.display=canUndo?"":"none";
+    $("toast").hidden=false;
+    clearTimeout(tTimer);
+    tTimer=setTimeout(function(){$("toast").hidden=true},canUndo?9000:3500);
+  }
+  $("toast").setAttribute("aria-live","polite");
+  $("undo").onclick=function(){
+    if(!lastSnap)return;
+    board=JSON.parse(lastSnap);lastSnap=null;persist();render();
+    toast("Undone.",false);
+  };
+
+  function nameNeeded(){
+    var box=$("meBox");box.classList.add("need");
+    $("nameHint").textContent="Add your name first, then tap the shift again.";
+    $("name").focus();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function join(id){
+    if(!me){nameNeeded();return}
+    var s=SHIFTS.filter(function(x){return x.id===id})[0];
+    if(has(id,me)){return}
+    if(board[id].length>=s.cap){toast("Sorry, that shift just filled up.",false);render();return}
+    snap();
+    board[id].push(me);persist();
+    var clash=SHIFTS.filter(function(o){return o.id!==id&&has(o.id,me)&&s.s<o.e&&o.s<s.e})[0];
+    render(id);
+    toast("You're in: "+s.title+", "+range(s)+(clash?". Heads up, this overlaps "+clash.title+".":"."),true);
+  }
+  function drop(id,who){
+    var s=SHIFTS.filter(function(x){return x.id===id})[0];
+    var i=board[id].findIndex(function(x){return key(x)===key(who)});
+    if(i<0)return;
+    snap();board[id].splice(i,1);persist();render(id);
+    toast((key(who)===key(me)?"You dropped ":who+" removed from ")+s.title+".",true);
+  }
+
+  function render(focusId){
+    var total=0,filled=0,html="",shown=0;
+    SHIFTS.forEach(function(s){total+=s.cap;filled+=Math.min(board[s.id].length,s.cap)});
+    $("fill").style.width=(total?filled/total*100:0)+"%";
+    var need=total-filled;
+    $("progText").textContent=filled+" of "+total+" spots filled"+(need?" · "+need+" still open":" · We're fully staffed. Thank you!");
+
+    SHIFTS.forEach(function(s){
+      var list=board[s.id],mine=has(s.id,me),left=s.cap-list.length;
+      if(filter==="open"&&left<=0)return;
+      if(filter==="mine"&&!mine)return;
+      shown++;
+      var cls=left<=0?"full":(left<=1?"low":"");
+      var label=left<=0?"Full":(left+" open");
+      var spots="";
+      list.forEach(function(n){
+        var you=key(n)===key(me);
+        spots+='<li class="'+(you?"you":"")+'"><span class="n">'+esc(n)+(you?" (you)":"")+'</span>'+
+          (manage&&!you?'<button data-rm="'+s.id+'" data-who="'+esc(n)+'" aria-label="Remove '+esc(n)+'">×</button>':"")+'</li>';
+      });
+      for(var i=0;i<left;i++)spots+='<li class="open">Open spot</li>';
+      var btn;
+      if(mine)btn='<button class="act drop" data-drop="'+s.id+'">Drop out</button>';
+      else if(left<=0)btn='<button class="act" disabled>Shift is full</button>';
+      else btn='<button class="act join" data-join="'+s.id+'">Sign up</button>';
+      html+='<section class="shift'+(mine?" mine":"")+'" id="sh-'+s.id+'" aria-label="'+esc(s.title)+'">'+
+        '<div class="top"><div><div class="time">'+range(s)+'</div><h2>'+esc(s.title)+'</h2><p class="desc">'+esc(s.desc)+'</p></div>'+
+        '<span class="count '+cls+'">'+label+'</span></div>'+
+        '<ul class="spots">'+spots+'</ul>'+btn+'</section>';
+    });
+    if(!shown){
+      html='<p class="empty">'+(filter==="mine"?"You haven't signed up for anything yet.<br>Tap “All” to pick a shift.":"Every shift is full. Thank you, team!")+'</p>';
+    }
+    $("list").innerHTML=html;
+    if(focusId){
+      var b=document.querySelector('#sh-'+focusId+' .act:not(:disabled)');
+      if(b)b.focus({preventScroll:true});
+    }
+  }
+
+  $("list").addEventListener("click",function(e){
+    var t=e.target.closest("button");if(!t)return;
+    if(t.dataset.join)join(t.dataset.join);
+    else if(t.dataset.drop)drop(t.dataset.drop,me);
+    else if(t.dataset.rm)drop(t.dataset.rm,t.dataset.who);
+  });
+
+  document.querySelector(".tabs").addEventListener("click",function(e){
+    var t=e.target.closest("button");if(!t)return;
+    filter=t.dataset.f;
+    Array.prototype.forEach.call(this.children,function(b){b.setAttribute("aria-pressed",b===t)});
+    render();
+  });
+
+  $("name").value=me;
+  if(me)$("nameHint").textContent="Signing up as "+me+". Not you? Just change the name.";
+  function setName(){
+    me=$("name").value.trim().replace(/\s+/g," ");
+    save(NKEY,me);
+    $("meBox").classList.remove("need");
+    $("nameHint").textContent=me?"Signing up as "+me+". Not you? Just change the name.":"Type it once. We'll remember it on this phone.";
+    render();
+  }
+  $("name").addEventListener("input",setName);
+  $("meBox").addEventListener("submit",function(e){e.preventDefault();$("name").blur()});
+
+  $("manage").onclick=function(){
+    manage=!manage;this.setAttribute("aria-pressed",manage);
+    this.textContent="Remove others: "+(manage?"on":"off");render();
+  };
+  $("copy").onclick=function(){
+    var txt="Larder Lane Pantry – "+$("date").textContent.split(" · ")[0]+"\n\n"+SHIFTS.map(function(s){
+      var l=board[s.id],open=s.cap-l.length;
+      return range(s)+"  "+s.title+" ("+l.length+"/"+s.cap+")\n   "+(l.join(", ")||"nobody yet")+(open>0?"  [need "+open+"]":"");
+    }).join("\n");
+    function ok(){toast("Roster copied.",false)}
+    function fallback(){
+      var ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();
+      try{document.execCommand("copy");ok()}catch(e){toast("Couldn't copy on this browser.",false)}
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(ok,fallback);else fallback();
+  };
+  $("reset").onclick=function(){
+    snap();board=seed();
+    SHIFTS.forEach(function(s){board[s.id]=[]});
+    persist();render();toast("Board cleared for a new week.",true);
+  };
+
+  window.addEventListener("storage",function(e){
+    if(e.key===KEY){var b=load(KEY);if(b){board=b;render()}}
+  });
+
+  persist();render();
+})();
+</script>
+</body>
+</html>

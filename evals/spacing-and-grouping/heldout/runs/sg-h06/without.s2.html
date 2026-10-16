@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice Summary</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --panel: #ffffff;
+    --text: #1d2330;
+    --muted: #667085;
+    --line: #e4e7ec;
+    --accent: #3b5bdb;
+    --accent-dark: #2f49b3;
+    --chip-bg: #fff4e0;
+    --chip-text: #9a5b00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12151c;
+      --panel: #1a1f2b;
+      --text: #eef0f5;
+      --muted: #9aa3b5;
+      --line: #2a3142;
+      --accent: #6d86f5;
+      --accent-dark: #8a9ff7;
+      --chip-bg: #3a2c10;
+      --chip-text: #ffc66b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .sidebar {
+    width: 100%;
+    max-width: 380px;
+    min-height: 100vh;
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 22px 24px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  h1 { margin: 0; font-size: 18px; font-weight: 650; }
+  .chip {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    color: var(--chip-text);
+  }
+  .inv-no { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .content { padding: 20px 24px; flex: 1; overflow-y: auto; }
+  section { margin-bottom: 24px; }
+  h2 {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+  }
+  .client-name { font-weight: 600; font-size: 15px; }
+  address { font-style: normal; color: var(--muted); }
+  dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  .item {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .item:first-child { padding-top: 2px; }
+  .item-name { font-weight: 500; }
+  .item-meta { color: var(--muted); font-size: 12.5px; }
+  .amount { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 500; }
+  .totals { background: var(--bg); border-radius: 10px; padding: 14px 16px; }
+  .totals .row { display: flex; justify-content: space-between; padding: 3px 0; font-variant-numeric: tabular-nums; }
+  .totals .row span:first-child { color: var(--muted); }
+  .totals .total {
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .totals .total span:first-child { color: var(--text); }
+  footer {
+    padding: 16px 24px 22px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 10px;
+  }
+  button {
+    font: inherit;
+    font-weight: 600;
+    padding: 11px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .primary { background: var(--accent); color: #fff; }
+  .primary:hover { background: var(--accent-dark); }
+  .secondary { background: transparent; color: var(--text); border-color: var(--line); }
+  .secondary:hover { background: var(--bg); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 420px) { .sidebar { max-width: none; border-left: 0; } }
+</style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Invoice summary">
+    <header>
+      <div class="head-row">
+        <h1>Invoice summary</h1>
+        <span class="chip">Draft</span>
+      </div>
+      <div class="inv-no">#INV-2026-042</div>
+    </header>
+
+    <div class="content">
+      <section>
+        <h2>Bill to</h2>
+        <div class="client-name">Harborview Studio LLC</div>
+        <address>
+          Attn: Maria Alvarez<br>
+          418 Alder Street, Suite 6<br>
+          Portland, OR 97209
+        </address>
+      </section>
+
+      <section>
+        <h2>Details</h2>
+        <dl>
+          <dt>Invoice number</dt><dd>INV-2026-042</dd>
+          <dt>Issued</dt><dd>Oct 15, 2026</dd>
+          <dt>Due</dt><dd>Nov 14, 2026</dd>
+          <dt>Terms</dt><dd>Net 30</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Line items</h2>
+        <ul>
+          <li class="item">
+            <div>
+              <div class="item-name">Brand identity design</div>
+              <div class="item-meta">24 hrs × $85</div>
+            </div>
+            <div class="amount">$2,040.00</div>
+          </li>
+          <li class="item">
+            <div>
+              <div class="item-name">Website copywriting</div>
+              <div class="item-meta">8 pages × $120</div>
+            </div>
+            <div class="amount">$960.00</div>
+          </li>
+          <li class="item">
+            <div>
+              <div class="item-name">Stock photo licensing</div>
+              <div class="item-meta">Flat fee</div>
+            </div>
+            <div class="amount">$150.00</div>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <div class="totals">
+          <div class="row"><span>Subtotal</span><span>$3,150.00</span></div>
+          <div class="row"><span>Tax (8%)</span><span>$252.00</span></div>
+          <div class="row total"><span>Total due</span><span>$3,402.00</span></div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <button type="button" class="primary">Send invoice</button>
+      <button type="button" class="secondary">Save draft</button>
+    </footer>
+  </aside>
+</body>
+</html>

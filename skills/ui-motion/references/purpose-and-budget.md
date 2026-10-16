@@ -11,7 +11,7 @@ Animate only when the motion answers a question the person is asking right then:
 - **Did it work?** Tell people an action registered or finished, or connect an action to its result.
 - **How do I use it?** Preview what a gesture will do, or teach a gesture or control once.
 
-If a motion answers none of these, it is decoration. Decoration and brand motion (carrying a trait the brand has named, such as calm or energetic) are allowed only when the brief asks for them, and then only off frequent paths and out of the way of reading.
+If a motion answers none of these, it is decoration. Decoration and brand motion (carrying a trait the brand has named, such as quiet or lively) are allowed only when the brief asks for them, and then only off frequent paths and out of the way of reading.
 
 ## The frequency rule
 

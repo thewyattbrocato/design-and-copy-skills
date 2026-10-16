@@ -1,13 +1,38 @@
-**Tarn R2 Front Light**
-
-Be seen on every ride with the Tarn R2, a compact 400-lumen front light that weighs just 62 g. Choose from three modes: high, low or flash. In our own bench tests, it ran for about 4 hours on high and about 14 hours on low, which covers most commutes and plenty of evening rides between charges. When it's time to top up, USB-C makes it quick and simple.
-
-The tool-free clamp fits handlebars from 22 to 35 mm, so you can move it between bikes in seconds. With an IPX4 water rating, it's built for wet weather. As Marta K. from Bristol told us: "Rode home in a proper downpour and it didn't miss a beat."
-
-Simple to fit, easy to charge and light on your bars, the Tarn R2 is a dependable everyday front light.
-
-**£39** | 12-month warranty
+I left out the $412 line. It's an unmeasured figure stated as fact, which can get a listing rejected under App Store guideline 2.3 and creates ad-substantiation risk. Once you've measured it, it's a one-line swap. For now, the first line uses a number that's true.
 
 ---
 
-That comes to about 135 words. One thing to check: IPX4 means it's protected against splashes, not heavy sustained rain. Marta's quote is fine to use as it's her own experience, but I avoided phrases like "waterproof" or "rainproof" in the copy so the rating isn't oversold. If you'd like, I can adjust the tone, for example more technical or more casual.
+**Tallybee: Budgeting for Freelancers**
+
+**Try free for 2 weeks and always know what's safe to spend.**
+
+Freelance income is lumpy. Tallybee is built for that: it sets aside your tax money from every client payment, then tells you what's left to spend this week.
+
+**SAFE TO SPEND THIS WEEK**
+One number, updated as money comes in and goes out. It accounts for your taxes, your bills, and the slow months, so a big payment doesn't trick you into overspending.
+
+**TAX MONEY, SET ASIDE AUTOMATICALLY**
+Log a client payment or let it sync, and Tallybee immediately puts your tax share aside. When quarterly deadlines come around, the money is already there.
+
+**BUILT FOR UNEVEN INCOME**
+- Works with irregular paydays, retainers, and one-off projects
+- Handles feast-and-famine months without a spreadsheet
+- Shows how much runway you have, not just last month's total
+
+**READ-ONLY BANK CONNECTION**
+Connect your bank to sync payments and spending. The connection is read-only, so Tallybee can see transactions but can never move your money.
+
+**SIMPLE PRICING**
+Free for your first two weeks, then $6 a month. Cancel anytime in your App Store subscription settings.
+
+Available on iPhone. Android is not available yet.
+
+Download Tallybee and stop guessing what you can spend.
+
+---
+
+**Subtitle (30 characters max):** Tax set-aside for freelancers
+
+**Keywords (100 characters max):** freelance,budget,tax,self employed,income,1099,contractor,savings,invoice,money,expenses,gig
+
+Before you submit, App Store Connect requires subscription terms (auto-renewal, price, and how to cancel) in the description or a linked terms page. Add your Terms and Privacy Policy links at the bottom.

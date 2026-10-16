@@ -1,46 +1,32 @@
-I'd drop both ideas. Dispatchers won't scroll, page or hide trucks, so every pixel of height is spent on rows. A hero stat and bigger cards take space from rows and make the board less scannable.
+I'd skip both ideas. Your constraint is that nothing scrolls, pages or hides, so every pixel of height belongs to rows. A hero stat and larger cards take that height from 40 to 60 trucks, and they make the board less consistent to scan.
 
-**What I'd build** (assuming a 1920×1080 display, so tell me if it's different)
+**Layout**
 
 ```
-┌──────────────────────────────────────────────────────────────────────────┐
-│ Yard · 52 on site │ Arriving 6 │ Waiting 11 │ Loading 18 │ Unl. 12 │ Ready 5 │  ← 48px strip
-├───────────────────────────────────┬──────────────────────────────────────┤
-│ ID      Carrier   Door Status  Min Notes │ ID  Carrier  Door Status  Min Notes │
-│ ────────────────────────────────  │ ────────────────────────────────     │
-│ 26 rows × 36px, same height,      │ 26 rows, continues the sequence      │
-│ no cards, no gaps between groups  │ in the second column                 │
-└───────────────────────────────────┴──────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│ 52 on site │ Arriving 6 │ Waiting 9 │ Loading 14 │ Unl. 17 │ Ready 6 │  clock
+├───────────────────────────────┬──────────────────────────────┤
+│ Door  Truck   Carrier  Status Min  Notes │ Door  Truck  Carrier  Status Min  Notes │
+│ 01    …                              │ 31    …                                   │
+│ …     (≈30 rows)                     │ …     (≈30 rows)                          │
+└───────────────────────────────┴──────────────────────────────┘
 ```
 
-1. **Two columns of compact rows, filled top to bottom.**
-   - 1080px minus the strip leaves about 1000px. At 36px per row that's 27 rows a column, so 54 trucks fit.
-   - If you reach 60, drop to 32px rows. Check this against your real peak count.
-   - Each row is a full 960px wide, which is enough for all six fields.
+- **Top strip, one line tall.** It shows total on site and a count per status. This replaces the hero stat: it's the same information at about a tenth of the height, and it doubles as the status legend.
+- **Body in two side-by-side panels** with the same columns repeated. At 30 rows per panel, a 1080p screen gives roughly 30px rows. That fits 16–18px text and fits 60 trucks. One 60-row column would force rows of about 15px, which is unreadable.
+- **Stable order by dock door.** Trucks without a door (arriving, waiting) go in a block after the doored ones. Rows should never re-sort as statuses change. Dispatchers build spatial memory ("door 14 is bottom of the left panel"), and a jumping list destroys it.
+- **Columns in reading order:** door, truck ID, carrier, status, minutes, notes. Door and truck ID are the two things dispatchers look up by, so they get the strongest weight. Carrier and notes are regular weight in a softer value.
 
-2. **Replace the hero stat with a one-line summary strip.**
-   - It shows total on site plus a count per status.
-   - The counts double as the status legend and use the same chip styling as the rows.
-   - It's useful context, but it isn't what dispatchers act on, so it stays small.
+**Where the emphasis goes**
 
-3. **Rank within the row, not between rows.**
-   - **Primary:** truck ID and dock door, in the heaviest weight and largest size in the row.
-   - **Secondary:** status and minutes on site.
-   - **Tertiary:** carrier and notes, in a softer value (not a lighter weight).
-   - Only exceptions get emphasis, about a tenth of the board. That means minutes past a threshold (a bold number on a tinted cell) and "ready to leave". Everything else stays quiet, so the exceptions stand out.
+Most rows should look calm. Reserve loudness for trucks that need a dispatcher to act, which should be about 10% of rows:
+- **Waiting** (needs a door) and **ready to leave** (needs release) get a filled status chip. Loading, unloading and arriving stay plain text.
+- **Minutes** are bold and tabular-aligned. Past an overdue threshold, the number and a thin left edge on the row go to the alert color. The thresholds per status are `[to set with dispatchers]`. I haven't invented any.
+- **Status uses a label plus a shape or fill, never color alone.** The board has to hold up for color-blind dispatchers and in glare.
+- Zebra striping or hairlines between rows, one of them, not both.
 
-4. **Status needs two cues, not color alone.** Use a short text label plus a colored chip, so it still reads in grayscale and for colorblind users. Keep the palette to about three loud colors. "Waiting too long" should be the loudest.
+**Trade-offs**
+- **Notes are one line,** truncated, with a small marker on rows that have more. Full text shows on tap or hover. If notes are usually long, I'd widen that column and shrink carrier.
+- **This assumes a wall or desk display around 1080p or larger.** Tell me the real resolution and I'll recompute row height and the font sizes. A smaller screen may need three panels, or a denser status strip.
 
-5. **Keep rows in a stable order.**
-   - Group by status in a fixed order, and within a group sort by minutes descending. The longest waits then rise to the top of their group.
-   - Don't let rows jump around on every refresh, because dispatchers build spatial memory. Re-sort only when a truck changes status.
-   - Use thin zebra striping or hairlines to help the eye track across a 960px row. Skip boxes and shadows.
-
-6. **Notes are the hard column.**
-   - Give it a fixed width, one line, truncated with an ellipsis.
-   - A note marker (a dot) shows when a note exists. Tapping or hovering expands it in place without hiding other trucks.
-   - Long notes are mostly a sign the process needs a structured field, such as "hold" or "damaged".
-
-**Trade-offs:** The summary strip is the only thing I'd call a hero, and I deliberately kept it small. The exception threshold (for example, waiting over 45 minutes) needs real numbers from the dispatchers.
-
-I can mock this up as HTML with realistic dummy data to check the density at 60 trucks.
+I can mock this up as HTML with 52 placeholder rows to check the density on your actual screen. Want that?

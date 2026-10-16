@@ -1,0 +1,3 @@
+The footer has no space of its own to separate it from the content. Its `margin: 0` leaves only about 32px above the rule (main's 24px bottom padding plus the last section's 8px margin), which is the same as the page gutter. Its 8px of padding also puts the text right against the border. The single change is to give the footer its own gap, for example `footer { margin-top: 48px; }`. If the text itself feels tight against the rule, raise its vertical padding from 8px to about 16px as well.
+
+I didn't see the rendered page, so this is based on the CSS alone. If the footer is also short of the viewport bottom, that would be a separate sticky-footer issue.

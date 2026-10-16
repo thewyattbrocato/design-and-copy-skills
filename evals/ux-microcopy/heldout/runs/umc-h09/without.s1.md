@@ -1,19 +1,14 @@
-**Headline**
-Walks they'll wag about.
+Here are 3 options for each. The character counts include spaces, and every option fits under the 60-character limit.
 
-**Subhead**
-Reliable 30- or 60-minute walks for your dog, plus a photo after every outing so you can see how it went.
+**(a) Free-ride period about to end**
+1. `Your 30 free minutes are up soon. Per-minute billing next.` (58)
+2. `Heads up: your included 30 minutes are almost over.` (51)
+3. `Free time's nearly up. Per-minute billing starts after 30.` (58)
 
-**Button**
-Book a walk
+**(b) Reserved bike held for 5 more minutes**
+1. `Your bike is held for 5 more minutes. Come grab it!` (51)
+2. `5 minutes left on your reserved bike. Head over now!` (52)
+3. `Your reservation expires in 5 minutes. Unlock your bike!` (56)
 
-**Notes**
-- **I left out "insured and background-checked."** You haven't seen the paperwork, and trust claims like these are the ones that cause trouble if they turn out to be wrong. Once the owner sends proof, add a line under the button, such as "Fully insured. Background-checked walkers." Ask for the certificate and check that it's current first.
-- **I left out social proof.** With no reviews yet, the photo-after-every-walk detail is your strongest concrete selling point, so the subhead leads with it.
-- **Alternate headlines**, if you want a different tone:
-  - "Your dog's favorite part of the day." (warmer)
-  - "Dog walking, with photo proof." (playful, leans on the photo)
-  - "Good walks. Happy dogs. Photo included." (plain and direct)
-- **Button alternates:** "Schedule a walk" or "Book your first walk." The second suits a new service, especially if you add a first-walk offer later.
-
-If you tell me the city or neighborhoods you serve, I can work them into the subhead for local search. For example: "Dog walking in [City]: 30- or 60-minute walks, with a photo after every one."
+- **No price in the copy:** I left the per-minute price out of all of them. Options (a)1 and (a)3 are at 58 characters, so adding a price won't fit. If you want it in the text, (a)2 has the most room, at 9 characters to spare.
+- **Wording of (a):** The brief says the rental has been running 30 minutes and the free period is about to end. I worded these as "about to end" and didn't say "30 minutes have passed". Say so if you want it to read as "already 30 minutes in".

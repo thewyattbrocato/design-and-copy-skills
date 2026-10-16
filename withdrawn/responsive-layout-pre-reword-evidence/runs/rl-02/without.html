@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnside Ceramics</title>
+<style>
+  :root {
+    --clay: #c4572f;
+    --clay-deep: #8f3a1c;
+    --glaze: #2f5d62;
+    --cream: #f6ede0;
+    --ink: #2a1a12;
+    --sand: #e8c9a0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    width: 100%;
+    max-width: 2400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(7rem, 22vw, 28rem);
+    grid-template-rows: auto 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .headline-wrap {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding: clamp(1.25rem, 3vw, 3.5rem) clamp(1.25rem, 4vw, 5rem) 0;
+    position: relative;
+    z-index: 2;
+  }
+  .eyebrow {
+    font-size: clamp(0.75rem, 0.9vw + 0.4rem, 1.4rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--clay-deep);
+    margin-bottom: clamp(0.5rem, 1vw, 1.25rem);
+  }
+  h1 {
+    font-family: Impact, "Arial Black", "Helvetica Neue", system-ui, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+    font-size: clamp(3.4rem, 15.5vw, 24rem);
+    color: var(--ink);
+    overflow-wrap: break-word;
+  }
+  h1 span { display: block; }
+  h1 .second { color: var(--clay); }
+  .content {
+    grid-column: 1;
+    grid-row: 2;
+    padding: clamp(1.5rem, 3vw, 4rem) clamp(1.25rem, 4vw, 5rem) clamp(2rem, 4vw, 5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: clamp(1.25rem, 2vw, 2.5rem);
+    position: relative;
+    z-index: 2;
+  }
+  .tagline {
+    font-size: clamp(1.15rem, 1.6vw + 0.6rem, 3rem);
+    line-height: 1.3;
+    max-width: 28ch;
+    font-weight: 500;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--cream);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: clamp(1rem, 1vw + 0.7rem, 2rem);
+    letter-spacing: 0.04em;
+    padding: 0.9em 1.8em;
+    border-radius: 999px;
+    border: 3px solid var(--ink);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn:hover { background: var(--clay); border-color: var(--clay); transform: translateY(-2px); }
+  .btn:focus-visible { outline: 4px solid var(--glaze); outline-offset: 4px; }
+  .art {
+    grid-column: 2;
+    grid-row: 2;
+    position: relative;
+    background: var(--glaze);
+    overflow: hidden;
+    min-height: 12rem;
+  }
+  .art::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    aspect-ratio: 1;
+    left: -25%;
+    bottom: -35%;
+    border-radius: 50%;
+    background: var(--clay);
+  }
+  .art::after {
+    content: "";
+    position: absolute;
+    width: 55%;
+    aspect-ratio: 1;
+    top: 10%;
+    left: 22%;
+    border-radius: 50%;
+    background: var(--sand);
+  }
+  .art i {
+    position: absolute;
+    left: 0; right: 0;
+    height: 6%;
+    background: var(--clay-deep);
+    opacity: 0.55;
+    z-index: 1;
+  }
+  .art i:nth-child(1) { bottom: 12%; }
+  .art i:nth-child(2) { bottom: 24%; }
+  .art i:nth-child(3) { bottom: 36%; }
+
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
+    .content { grid-row: 2; justify-content: flex-start; padding-bottom: 2rem; }
+    .art { grid-column: 1; grid-row: 3; min-height: 38vw; }
+    .art::before { width: 80%; left: 10%; bottom: -40%; }
+    .art::after { width: 26%; top: 14%; left: 62%; }
+    h1 { font-size: clamp(3rem, 19vw, 6rem); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="hero">
+    <div class="headline-wrap">
+      <p class="eyebrow">Pottery studio &amp; classes</p>
+      <h1><span>Kilnside</span><span class="second">Ceramics</span></h1>
+    </div>
+
+    <div class="content">
+      <p class="tagline">Get your hands in the clay. Take home something you made.</p>
+      <a class="btn" href="#book">Book a class</a>
+    </div>
+
+    <div class="art" aria-hidden="true"><i></i><i></i><i></i></div>
+  </main>
+</body>
+</html>

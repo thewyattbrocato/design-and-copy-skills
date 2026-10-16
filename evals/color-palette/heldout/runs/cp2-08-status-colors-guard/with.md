@@ -1,22 +1,22 @@
-Not for all four. Deriving the status colors from the brand palette will cost you on the dashboard.
+Not a good idea, and it's riskier for you than for most products.
 
-- **Your brand red and "failed" would collide.** The primary buttons are #d93a35. A red "failed" badge next to a red "Deploy" button makes the main action look like an error, or the error look like an action.
-- **People already read these colors a certain way.** Green means succeeded, red means failed, amber means waiting, blue means in progress. Off-brand hues make people stop and decode them, which is the wrong cost on a screen that people scan during an incident.
-- **Keep the brand in the chrome.** Use it for buttons, links and the logo. Let the status colors be a separate semantic set.
+- **Your brand red is the status color for "failed."** Red already means failed or danger, so a red primary button next to a red "Failed" badge makes "Deploy" and "something broke" look alike. People shouldn't have to wonder whether a red element is an action or an alarm.
+- **Brand-derived hues make statuses hard to tell apart.** Tints of one palette sit close together, and people scan status columns quickly. Status colors need to be clearly different from each other, and users expect green to mean success.
 
-Here's a set that keeps "failed" visibly different from the brand red. Contrast figures are my estimates, not computed.
+**What I'd do:** use conventional status hues and keep the brand red for actions and identity. Make failed visibly different from the button red through form, not hue:
 
-| Status | Pill fill | Text/icon | Pair ratio | Icon + label |
-|---|---|---|---|---|
-| Running | #e3eefc | #1d4fa3 | ~7:1 | spinner, "Running" |
-| Succeeded | #e0f3e8 | #17663f | ~6.5:1 | check, "Succeeded" |
-| Failed | #fbe3e8 | #a31d3c | ~6.5:1 | ✕, "Failed" |
-| Waiting for approval | #fdf0d0 | #7a4e00 | ~6:1 | pause or clock, "Awaiting approval" |
+| Status | Badge text | Badge fill | Icon + label |
+|---|---|---|---|
+| Running | `#1d6fd1` | `#e8f1fc` | spinner, "Running" |
+| Succeeded | `#1a7f4b` | `#e6f4ec` | check, "Succeeded" |
+| Failed | `#9f1f1b` | `#fdecea` | ✕, "Failed" |
+| Waiting for approval | `#8a5a00` | `#fff4d6` | pause or clock, "Waiting for approval" |
 
-- **Failed is a crimson, not the brand red.** #a31d3c leans cooler and darker than #d93a35. It sits on a pale pink tint, so it doesn't look like a button. The icon and the word carry the meaning, so the hue difference only has to be enough, not large.
-- **Use pale tint pills with dark text.** This keeps every pair readable and keeps the dashboard calm. Reserve solid saturated fills for the single row or banner that needs attention, such as a failed production deploy.
-- **Amber needs dark text.** White on amber fails contrast, so the waiting state uses brown text on a cream tint.
-- **Never rely on hue alone.** Every state has an icon and a label, so it still reads in grayscale and for red-green color blindness.
-- **If you want it to feel on-brand,** tint your neutrals slightly warm to match the red, and use the same corner radius and type on the pills as on the buttons. That ties the statuses to the brand without borrowing its hues.
+- **Failed is a darker red than `#d93a35`.** It only ever appears as a pale tinted badge with an ✕ and a word. Your brand red stays a solid fill on buttons.
+- **Each status carries an icon and a label, not just color.** That keeps the set readable for red-green colorblind users and in grayscale.
+- **Amber text is the dark `#8a5a00`.** Bright amber text fails contrast on light backgrounds.
+- **Contrast is about 5:1 or better for each text color on its own fill.** These are my estimates, not measured, so run them through a checker before shipping.
 
-If you add a dark theme, don't reuse these values. Use the same hues with dark tinted fills and lighter text, and re-measure each pair.
+**Where to keep it on-brand:** use the neutrals and surfaces. Give the grays a faint warm-red tint, and use the brand red for buttons, focus, and the logo. Then the status colors read as a separate layer.
+
+I assumed a light theme. Dark mode needs these remapped to lighter, calmer values and re-measured.

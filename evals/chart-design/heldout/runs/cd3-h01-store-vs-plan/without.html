@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>September sales vs plan by shop</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --ahead: #2a78d6;
+    --behind: #e34948;
+    --border: rgba(11,11,11,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #1a1a19;
+      --ink: #f0efec;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --ahead: #3987e5;
+      --behind: #e66767;
+      --border: rgba(255,255,255,0.10);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .card {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 20px 20px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  h1 { margin: 0 0 4px; font-size: 20px; font-weight: 650; line-height: 1.25; }
+  .sub { margin: 0 0 14px; font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+  .legend { display: flex; gap: 16px; margin: 0 0 12px; font-size: 12px; color: var(--ink-2); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  .row, .head {
+    display: grid;
+    grid-template-columns: 88px 1fr 56px 84px;
+    column-gap: 10px;
+    align-items: center;
+  }
+  .head { font-size: 11px; color: var(--muted); padding-bottom: 6px; }
+  .head .num, .row .num { text-align: right; }
+  .axis { position: relative; height: 14px; }
+  .axis b { position: absolute; transform: translateX(-50%); font-weight: 400; }
+  .row { height: 32px; font-size: 13px; }
+  .name { color: var(--ink); white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .num.var { color: var(--ink); font-weight: 600; }
+  .plot {
+    position: relative;
+    height: 100%;
+    background:
+      linear-gradient(var(--grid), var(--grid)) 28.571% 0 / 1px 100% no-repeat,
+      linear-gradient(var(--grid), var(--grid)) 85.714% 0 / 1px 100% no-repeat;
+  }
+  .plot::before {
+    content: "";
+    position: absolute; left: 57.143%; top: 0; bottom: 0; width: 1px;
+    background: var(--axis);
+  }
+  .bar { position: absolute; top: 8px; height: 16px; }
+  .bar.pos { background: var(--ahead); border-radius: 0 4px 4px 0; }
+  .bar.neg { background: var(--behind); border-radius: 4px 0 0 4px; }
+  .onplan {
+    position: absolute; left: calc(57.143% + 8px); top: 0; line-height: 32px;
+    font-size: 11px; color: var(--muted);
+  }
+  .foot { margin: 12px 0 0; font-size: 11px; color: var(--muted); line-height: 1.4; }
+  .row:hover .name { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="card" role="figure" aria-labelledby="t" aria-describedby="d">
+  <h1 id="t">4 shops ahead of plan, 3 behind, 1 on plan</h1>
+  <p class="sub" id="d">September sales vs plan, % variance. Chain total $839k vs $833k plan (+0.7%). Airport and Eastgate are furthest behind.</p>
+
+  <div class="legend">
+    <span><i style="background:var(--behind)"></i>Behind plan</span>
+    <span><i style="background:var(--ahead)"></i>Ahead of plan</span>
+  </div>
+
+  <div class="head">
+    <div>Shop</div>
+    <div class="axis">
+      <b style="left:28.571%">−10%</b>
+      <b style="left:57.143%">Plan</b>
+      <b style="left:85.714%">+10%</b>
+    </div>
+    <div class="num">vs plan</div>
+    <div class="num">Actual / plan</div>
+  </div>
+
+  <div class="row" title="University: $156k vs $140k plan, +11.4%">
+    <div class="name">University</div>
+    <div class="plot"><div class="bar pos" style="left:57.143%;width:32.65%"></div></div>
+    <div class="num var">+$16k</div><div class="num">156 / 140</div>
+  </div>
+  <div class="row" title="Old Town: $141k vs $128k plan, +10.2%">
+    <div class="name">Old Town</div>
+    <div class="plot"><div class="bar pos" style="left:57.143%;width:29.0%"></div></div>
+    <div class="num var">+$13k</div><div class="num">141 / 128</div>
+  </div>
+  <div class="row" title="Harbor: $118k vs $110k plan, +7.3%">
+    <div class="name">Harbor</div>
+    <div class="plot"><div class="bar pos" style="left:57.143%;width:20.8%"></div></div>
+    <div class="num var">+$8k</div><div class="num">118 / 110</div>
+  </div>
+  <div class="row" title="Lakeside: $103k vs $100k plan, +3.0%">
+    <div class="name">Lakeside</div>
+    <div class="plot"><div class="bar pos" style="left:57.143%;width:8.6%"></div></div>
+    <div class="num var">+$3k</div><div class="num">103 / 100</div>
+  </div>
+  <div class="row" title="Northfield: $88k vs $88k plan, on plan">
+    <div class="name">Northfield</div>
+    <div class="plot"><span class="onplan">On plan</span></div>
+    <div class="num var">$0</div><div class="num">88 / 88</div>
+  </div>
+  <div class="row" title="Mill Street: $94k vs $102k plan, −7.8%">
+    <div class="name">Mill Street</div>
+    <div class="plot"><div class="bar neg" style="left:34.7%;width:22.44%"></div></div>
+    <div class="num var">−$8k</div><div class="num">94 / 102</div>
+  </div>
+  <div class="row" title="Eastgate: $77k vs $90k plan, −14.4%">
+    <div class="name">Eastgate</div>
+    <div class="plot"><div class="bar neg" style="left:15.9%;width:41.24%"></div></div>
+    <div class="num var">−$13k</div><div class="num">77 / 90</div>
+  </div>
+  <div class="row" title="Airport: $62k vs $75k plan, −17.3%">
+    <div class="name">Airport</div>
+    <div class="plot"><div class="bar neg" style="left:7.6%;width:49.54%"></div></div>
+    <div class="num var">−$13k</div><div class="num">62 / 75</div>
+  </div>
+
+  <p class="foot">Bars show variance as a % of each shop's plan; the right-hand columns give the dollar gap and actual / plan in $ thousands. Sorted from most ahead to most behind.</p>
+</div>
+</body>
+</html>

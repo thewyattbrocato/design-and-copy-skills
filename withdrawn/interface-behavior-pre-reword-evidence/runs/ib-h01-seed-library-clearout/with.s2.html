@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seed Library – Volunteer Desk</title>
+<style>
+  :root {
+    --bg: #f6f4ee; --card: #fff; --ink: #23291f; --muted: #666d5e; --line: #dcd9cc;
+    --accent: #2f6b3a; --accent-ink: #fff; --warn-bg: #fdf0d5; --warn-ink: #7a4b00;
+    --empty-bg: #f6dedb; --empty-ink: #8a2418; --sel: #e7f1e4; --focus: #1b5fd1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1d18; --card: #23271f; --ink: #ecebe2; --muted: #a2a898; --line: #3a3f34;
+      --accent: #7cc189; --accent-ink: #11200f; --warn-bg: #4a3913; --warn-ink: #f5d58d;
+      --empty-bg: #55231d; --empty-ink: #f5b9b1; --sel: #2b3a29; --focus: #8ab4ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 920px; margin: 0 auto; padding: 20px 16px 120px; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; border: 1px solid var(--line); background: var(--card);
+    border-radius: 8px; padding: 8px 14px; min-height: 40px; }
+  button:hover { border-color: var(--muted); }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  button.danger { background: var(--empty-ink); color: var(--card); border-color: var(--empty-ink); font-weight: 600; }
+  button:disabled { opacity: .5; cursor: default; }
+  input[type=text], input[type=number], input[type=search], select {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-height: 40px; }
+
+  .cleanup { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; }
+  .cleanup h2 { font-size: 1rem; margin: 0; width: 100%; }
+  .cleanup label { display: flex; align-items: center; gap: 8px; }
+  .cleanup .counts { color: var(--muted); }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
+  .toolbar input[type=search] { flex: 1 1 200px; }
+  .toolbar .total { margin-left: auto; color: var(--muted); }
+
+  .tablewrap { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-size: .85rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+  th button { all: unset; cursor: pointer; padding: 4px 2px; }
+  th button:focus-visible { outline: 3px solid var(--focus); }
+  th .arrow { display: inline-block; width: 1em; }
+  td.num, th.num { text-align: right; }
+  tbody tr.sel { background: var(--sel); }
+  input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); }
+  td.name { font-weight: 600; }
+  .stepper { display: inline-flex; align-items: center; gap: 6px; }
+  .stepper button { min-height: 34px; width: 34px; padding: 0; font-size: 1.1rem; line-height: 1; }
+  .stepper output { min-width: 2.2ch; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .badge { display: inline-block; font-size: .78rem; font-weight: 600; padding: 2px 8px; border-radius: 99px; margin-right: 4px; }
+  .badge.empty { background: var(--empty-bg); color: var(--empty-ink); }
+  .badge.old { background: var(--warn-bg); color: var(--warn-ink); }
+  .none { padding: 28px; text-align: center; color: var(--muted); }
+
+  details.add { margin-top: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; }
+  details.add summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+  details.add form { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; padding: 8px 0 6px; }
+  details.add label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: 3px; }
+  details.add input[type=number] { width: 100px; }
+  .foot { margin-top: 14px; font-size: .85rem; color: var(--muted); }
+  .foot button { all: unset; cursor: pointer; text-decoration: underline; }
+
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line);
+    padding: 12px 16px; display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap;
+    box-shadow: 0 -4px 16px rgba(0,0,0,.12); }
+  .bar[hidden] { display: none; }
+  .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 84px; background: var(--ink); color: var(--bg);
+    padding: 10px 14px; border-radius: 10px; display: flex; gap: 14px; align-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.3); max-width: 92vw; }
+  .toast[hidden] { display: none; }
+  .toast button { background: transparent; color: inherit; border-color: currentColor; min-height: 34px; padding: 4px 12px; font-weight: 600; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Seed Library – Volunteer Desk</h1>
+  <p class="sub">Sample data. Changes are saved in this browser only.</p>
+
+  <section class="cleanup" aria-labelledby="cu-h">
+    <h2 id="cu-h">End-of-season cleanup</h2>
+    <label>Treat as old if packed in or before
+      <select id="cutoff"></select>
+    </label>
+    <span class="counts" id="cu-counts"></span>
+    <button class="primary" id="cu-go" type="button">Select empty &amp; old packets</button>
+  </section>
+
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="Search by name" aria-label="Search by name">
+    <select id="typeFilter" aria-label="Filter by type"></select>
+    <span class="total" id="total"></span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:44px"><input type="checkbox" id="all" aria-label="Select all shown packets"></th>
+          <th aria-sort="none"><button data-sort="name" type="button">Name<span class="arrow"></span></button></th>
+          <th aria-sort="none"><button data-sort="type" type="button">Type<span class="arrow"></span></button></th>
+          <th class="num" aria-sort="none"><button data-sort="year" type="button">Year packed<span class="arrow"></span></button></th>
+          <th class="num" aria-sort="none"><button data-sort="left" type="button">Left<span class="arrow"></span></button></th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="none" id="none" hidden>No packets match.</div>
+  </div>
+
+  <details class="add">
+    <summary>Add a packet</summary>
+    <form id="addForm">
+      <label>Name <input type="text" id="nName" required maxlength="60"></label>
+      <label>Type <select id="nType"></select></label>
+      <label>Year packed <input type="number" id="nYear" required min="2000" max="2100"></label>
+      <label>How many <input type="number" id="nLeft" required min="0" max="999" value="20"></label>
+      <button class="primary" type="submit">Add</button>
+    </form>
+  </details>
+
+  <p class="foot">Demo data only. <button type="button" id="reset">Reset sample data</button></p>
+</main>
+
+<div class="bar" id="bar" hidden>
+  <strong id="barCount"></strong>
+  <button type="button" id="clearSel">Deselect</button>
+  <button type="button" class="danger" id="remove">Remove selected</button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden>
+  <span id="toastMsg"></span>
+  <button type="button" id="undo">Undo</button>
+  <button type="button" id="dismiss" aria-label="Dismiss">✕</button>
+</div>
+
+<script>
+(function () {
+  var THIS_YEAR = new Date().getFullYear();
+  var TYPES = ["Vegetable", "Herb", "Flower", "Legume"];
+  var KEY = "seedlib-desk-v1";
+
+  function sample() {
+    var d = [
+      ["Brandywine Tomato","Vegetable",2025,14],["Cherokee Purple Tomato","Vegetable",2023,3],
+      ["Lacinato Kale","Vegetable",2025,22],["Detroit Dark Red Beet","Vegetable",2022,0],
+      ["Genovese Basil","Herb",2026,18],["Italian Parsley","Herb",2023,7],
+      ["Cilantro","Herb",2021,5],["Zinnia State Fair Mix","Flower",2025,11],
+      ["Marigold Crackerjack","Flower",2024,0],["Sunflower Mammoth","Flower",2026,30],
+      ["Blue Lake Bush Bean","Legume",2024,9],["Sugar Snap Pea","Legume",2022,4],
+      ["Scarlet Runner Bean","Legume",2025,0],["Rainbow Chard","Vegetable",2023,12],
+      ["Calendula","Flower",2024,6]
+    ];
+    return d.map(function (r, i) { return { id: i + 1, name: r[0], type: r[1], year: r[2], left: r[3] }; });
+  }
+
+  var state = { items: sample(), cutoff: THIS_YEAR - 3, nextId: 100 };
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY));
+    if (saved && Array.isArray(saved.items)) state = saved;
+  } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  var ui = { q: "", type: "", sort: "name", dir: 1, sel: new Set(), undo: null };
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+  var isEmpty = function (p) { return p.left <= 0; };
+  var isOld = function (p) { return p.year <= state.cutoff; };
+
+  // setup selects
+  function fillSelect(el, opts, first) {
+    el.innerHTML = (first ? '<option value="">' + first + '</option>' : "") +
+      opts.map(function (o) { return '<option value="' + esc(o[0]) + '">' + esc(o[1]) + '</option>'; }).join("");
+  }
+  fillSelect($("typeFilter"), TYPES.map(function (t) { return [t, t]; }), "All types");
+  fillSelect($("nType"), TYPES.map(function (t) { return [t, t]; }));
+  var yrs = [];
+  for (var y = THIS_YEAR - 6; y < THIS_YEAR; y++) yrs.push([y, y]);
+  fillSelect($("cutoff"), yrs);
+  $("cutoff").value = state.cutoff;
+  $("nYear").value = THIS_YEAR;
+
+  function visible() {
+    var q = ui.q.trim().toLowerCase(), k = ui.sort, dir = ui.dir;
+    return state.items.filter(function (p) {
+      return (!ui.type || p.type === ui.type) && (!q || p.name.toLowerCase().indexOf(q) > -1);
+    }).sort(function (a, b) {
+      var x = a[k], y = b[k];
+      var c = typeof x === "string" ? x.localeCompare(y) : x - y;
+      return (c || a.name.localeCompare(b.name)) * dir;
+    });
+  }
+
+  function render() {
+    var list = visible();
+    $("rows").innerHTML = list.map(function (p) {
+      var badges = (isEmpty(p) ? '<span class="badge empty">Empty</span>' : "") +
+                   (isOld(p) ? '<span class="badge old">Old</span>' : "");
+      var on = ui.sel.has(p.id);
+      return '<tr class="' + (on ? "sel" : "") + '" data-id="' + p.id + '">' +
+        '<td><input type="checkbox" data-act="pick" aria-label="Select ' + esc(p.name) + '"' + (on ? " checked" : "") + '></td>' +
+        '<td class="name">' + esc(p.name) + '</td>' +
+        '<td>' + esc(p.type) + '</td>' +
+        '<td class="num">' + p.year + '</td>' +
+        '<td class="num"><span class="stepper">' +
+          '<button type="button" data-act="dec" aria-label="One fewer ' + esc(p.name) + '"' + (p.left <= 0 ? " disabled" : "") + '>−</button>' +
+          '<output>' + p.left + '</output>' +
+          '<button type="button" data-act="inc" aria-label="One more ' + esc(p.name) + '">+</button></span></td>' +
+        '<td>' + badges + '</td></tr>';
+    }).join("");
+    $("none").hidden = list.length > 0;
+
+    var shownSel = list.filter(function (p) { return ui.sel.has(p.id); }).length;
+    var all = $("all");
+    all.checked = list.length > 0 && shownSel === list.length;
+    all.indeterminate = shownSel > 0 && shownSel < list.length;
+
+    var ne = state.items.filter(isEmpty).length;
+    var no = state.items.filter(function (p) { return !isEmpty(p) && isOld(p); }).length;
+    $("cu-counts").textContent = (ne + no) + " to clear: " + ne + " empty, " + no + " old (not empty)";
+    $("cu-go").disabled = ne + no === 0;
+    $("total").textContent = list.length + " of " + state.items.length + " packets";
+
+    document.querySelectorAll("th[data-sort], th button[data-sort]").forEach(function (b) {
+      var on = b.dataset.sort === ui.sort;
+      b.querySelector(".arrow").textContent = on ? (ui.dir > 0 ? "▲" : "▼") : "";
+      b.parentNode.setAttribute("aria-sort", on ? (ui.dir > 0 ? "ascending" : "descending") : "none");
+    });
+
+    var n = ui.sel.size;
+    $("bar").hidden = n === 0;
+    $("barCount").textContent = n + " selected";
+    $("remove").textContent = "Remove " + n + " packet" + (n === 1 ? "" : "s");
+  }
+
+  function toast(msg, undoable) {
+    $("toastMsg").textContent = msg;
+    $("undo").hidden = !undoable;
+    $("toast").hidden = false;
+  }
+  function hideToast() { $("toast").hidden = true; ui.undo = null; }
+
+  // events
+  $("rows").addEventListener("click", function (e) {
+    var t = e.target.closest("[data-act]");
+    if (!t) return;
+    var id = +t.closest("tr").dataset.id;
+    var p = state.items.find(function (x) { return x.id === id; });
+    var act = t.dataset.act;
+    if (act === "pick") { t.checked ? ui.sel.add(id) : ui.sel.delete(id); }
+    else if (act === "inc") { p.left++; save(); }
+    else if (act === "dec" && p.left > 0) { p.left--; save(); }
+    var keep = document.activeElement && document.activeElement.getAttribute("aria-label");
+    render();
+    if (keep && act !== "pick") {
+      var again = Array.prototype.find.call($("rows").querySelectorAll("button"), function (b) {
+        return b.getAttribute("aria-label") === keep && !b.disabled; });
+      if (again) again.focus();
+    }
+  });
+  $("all").addEventListener("change", function () {
+    var on = this.checked;
+    visible().forEach(function (p) { on ? ui.sel.add(p.id) : ui.sel.delete(p.id); });
+    render();
+  });
+  document.querySelector("thead").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-sort]");
+    if (!b) return;
+    if (ui.sort === b.dataset.sort) ui.dir = -ui.dir; else { ui.sort = b.dataset.sort; ui.dir = 1; }
+    render();
+  });
+  $("q").addEventListener("input", function () { ui.q = this.value; render(); });
+  $("typeFilter").addEventListener("change", function () { ui.type = this.value; render(); });
+  $("cutoff").addEventListener("change", function () { state.cutoff = +this.value; save(); render(); });
+
+  $("cu-go").addEventListener("click", function () {
+    ui.q = ""; ui.type = ""; $("q").value = ""; $("typeFilter").value = "";
+    ui.sel = new Set(state.items.filter(function (p) { return isEmpty(p) || isOld(p); })
+      .map(function (p) { return p.id; }));
+    ui.sort = "year"; ui.dir = 1;
+    render();
+    toast(ui.sel.size + " packets selected. Look them over, untick any to keep, then remove.", false);
+  });
+  $("clearSel").addEventListener("click", function () { ui.sel.clear(); render(); });
+
+  $("remove").addEventListener("click", function () {
+    var removed = [];
+    state.items.forEach(function (p, i) { if (ui.sel.has(p.id)) removed.push({ p: p, i: i }); });
+    if (!removed.length) return;
+    state.items = state.items.filter(function (p) { return !ui.sel.has(p.id); });
+    ui.sel.clear();
+    ui.undo = removed;
+    save(); render();
+    toast("Removed " + removed.length + " packet" + (removed.length === 1 ? "" : "s") + ".", true);
+  });
+  $("undo").addEventListener("click", function () {
+    if (!ui.undo) return;
+    ui.undo.forEach(function (r) { state.items.splice(Math.min(r.i, state.items.length), 0, r.p); });
+    var n = ui.undo.length;
+    ui.undo = null;
+    save(); render();
+    toast("Put back " + n + " packet" + (n === 1 ? "" : "s") + ".", false);
+  });
+  $("dismiss").addEventListener("click", hideToast);
+
+  $("addForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("nName").value.trim();
+    if (!name) return;
+    state.items.push({ id: state.nextId++, name: name, type: $("nType").value,
+      year: +$("nYear").value, left: Math.max(0, +$("nLeft").value) });
+    save(); this.reset(); $("nYear").value = THIS_YEAR; $("nLeft").value = 20;
+    render(); toast("Added " + name + ".", false);
+  });
+
+  $("reset").addEventListener("click", function () {
+    var prev = state.items.slice();
+    state.items = sample(); state.nextId = 100; ui.sel.clear(); ui.undo = null;
+    save(); render(); toast("Sample data restored.", false);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

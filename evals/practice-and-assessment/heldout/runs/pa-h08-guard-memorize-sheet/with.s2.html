@@ -3,195 +3,132 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Marrow County Dispatch: Radio Signals M-1 to M-10</title>
+<title>Marrow County Dispatch – Radio Signals Study Sheet</title>
 <style>
-  @page { size: letter portrait; margin: 0.5in; }
+  @page { size: letter; margin: 0.5in; }
   * { box-sizing: border-box; }
   html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body {
     margin: 0;
-    background: #eef0f2;
+    padding: 0.5in;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #111;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #fff;
     font-size: 11pt;
     line-height: 1.3;
   }
-  .page {
-    width: 8.5in;
-    min-height: 11in;
-    margin: 0.25in auto;
-    padding: 0.5in;
-    background: #fff;
-  }
+  .page { max-width: 7.5in; margin: 0 auto; }
   header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    border-bottom: 3px solid #111;
-    padding-bottom: 6pt;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 3px solid #111; padding-bottom: 6px; margin-bottom: 10px;
   }
-  h1 { margin: 0; font-size: 22pt; letter-spacing: -0.3pt; line-height: 1.05; }
-  .org { font-size: 9.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2pt; color: #444; }
-  .name { font-size: 9.5pt; color: #333; white-space: nowrap; }
-  .name span { display: inline-block; width: 1.6in; border-bottom: 1px solid #111; }
-  .goal { margin: 8pt 0 10pt; font-size: 10.5pt; }
-
+  h1 { font-size: 20pt; margin: 0; letter-spacing: -0.01em; }
+  header .sub { font-size: 10pt; color: #333; text-align: right; }
   h2 {
-    margin: 12pt 0 5pt;
-    font-size: 10pt;
-    text-transform: uppercase;
-    letter-spacing: 1pt;
-    color: #111;
+    font-size: 11pt; text-transform: uppercase; letter-spacing: 0.06em;
+    margin: 14px 0 6px;
   }
-  h2 small { font-weight: 400; text-transform: none; letter-spacing: 0; color: #444; font-size: 9.5pt; }
-
-  /* Learn grid */
-  .codes { display: grid; grid-template-columns: 1fr 1fr; gap: 6pt 14pt; }
-  .code {
-    display: flex;
-    align-items: center;
-    gap: 10pt;
-    border: 1.5px solid #111;
-    border-radius: 6pt;
-    padding: 6pt 9pt;
-    break-inside: avoid;
+  table.signals { width: 100%; border-collapse: collapse; }
+  table.signals td { border: 1.5px solid #111; padding: 5px 10px; font-size: 14pt; }
+  table.signals td.code {
+    width: 1.3in; font-weight: 800; font-variant-numeric: tabular-nums;
+    background: #111; color: #fff; text-align: center; letter-spacing: 0.02em;
   }
-  .code b {
-    flex: none;
-    min-width: 0.78in;
-    padding: 3pt 0;
-    text-align: center;
-    background: #111;
-    color: #fff;
-    border-radius: 4pt;
-    font-size: 15pt;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.3pt;
+  table.signals td.meaning { font-weight: 600; }
+  .how { font-size: 10pt; margin: 0 0 4px; }
+  .rounds { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3in; }
+  .round h3 { font-size: 10.5pt; margin: 0 0 4px; }
+  .round ol { margin: 0; padding: 0; list-style: none; counter-reset: q; }
+  .round li {
+    counter-increment: q; display: flex; align-items: baseline; gap: 6px;
+    padding: 3px 0; font-size: 10.5pt;
   }
-  .code span { font-size: 14pt; font-weight: 600; line-height: 1.15; }
-
-  /* Recall */
-  .recall { display: grid; grid-template-columns: 1fr 1fr; gap: 14pt; }
-  .box { border: 1.5px dashed #555; border-radius: 6pt; padding: 7pt 10pt 8pt; }
-  .box h3 { margin: 0 0 4pt; font-size: 10pt; }
-  .box ol { margin: 0; padding: 0; list-style: none; }
-  .box li {
-    display: flex;
-    align-items: baseline;
-    gap: 6pt;
-    padding: 3.5pt 0;
-    font-size: 11.5pt;
-    font-weight: 600;
+  .round li::before { content: counter(q) "."; width: 1.4em; text-align: right; flex: none; }
+  .round li .q { flex: none; width: 1.55in; font-weight: 700; }
+  .round li .arrow { flex: none; }
+  .round li .blank { flex: 1; border-bottom: 1px solid #111; height: 1.15em; }
+  .schedule { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .schedule div {
+    border: 1.5px solid #111; padding: 5px 8px; font-size: 9.5pt; min-height: 0.7in;
   }
-  .box li i { flex: 1; border-bottom: 1px solid #111; height: 1em; }
-  .n { flex: none; width: 14pt; font-weight: 400; color: #555; font-size: 9pt; }
-
-  .how {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14pt;
-    font-size: 10pt;
+  .schedule b { display: block; margin-bottom: 2px; }
+  .box {
+    display: inline-block; width: 11px; height: 11px; border: 1.5px solid #111;
+    vertical-align: -1px; margin-right: 4px;
   }
-  .how ol { margin: 0; padding-left: 15pt; }
-  .how li { margin-bottom: 2pt; }
-  .sched { list-style: none; padding: 0 !important; }
-  .sched li { display: flex; align-items: center; gap: 6pt; margin-bottom: 4pt; }
-  .sched .cb { flex: none; width: 11pt; height: 11pt; border: 1.5px solid #111; border-radius: 2pt; }
-  .sched .date { display: inline-block; width: 1in; border-bottom: 1px solid #111; height: 1em; }
-
-  footer { margin-top: 10pt; padding-top: 5pt; border-top: 1px solid #999; font-size: 8.5pt; color: #444; }
-
+  .note { font-size: 9pt; color: #333; margin-top: 8px; }
   @media print {
-    body { background: #fff; }
-    .page { margin: 0; padding: 0; width: auto; min-height: 0; }
-  }
-  @media (max-width: 8.6in) {
-    .page { width: auto; min-height: 0; margin: 0; padding: 0.3in 0.2in; }
-    .codes, .recall, .how { grid-template-columns: 1fr; }
-    header { flex-direction: column; align-items: flex-start; gap: 6pt; }
+    body { padding: 0; }
+    .page { max-width: none; }
   }
 </style>
 </head>
 <body>
-<main class="page">
+<div class="page">
 
   <header>
-    <div>
-      <div class="org">Marrow County Dispatch</div>
-      <h1>Radio Signals M-1 to M-10</h1>
-    </div>
-    <div class="name">Name: <span></span></div>
+    <h1>Radio Signals M-1 to M-10</h1>
+    <div class="sub">Marrow County Dispatch<br>Know them cold: from memory, mid-call</div>
   </header>
 
-  <p class="goal"><strong>Goal:</strong> say the meaning of any signal the moment you hear it, and say the right signal when you need it, from memory, mid-call.</p>
+  <h2>1. The ten signals</h2>
+  <table class="signals">
+    <tr><td class="code">M-1</td><td class="meaning">Unit available</td></tr>
+    <tr><td class="code">M-2</td><td class="meaning">Unit en route</td></tr>
+    <tr><td class="code">M-3</td><td class="meaning">On scene</td></tr>
+    <tr><td class="code">M-4</td><td class="meaning">Need backup</td></tr>
+    <tr><td class="code">M-5</td><td class="meaning">Suspect in custody</td></tr>
+    <tr><td class="code">M-6</td><td class="meaning">Medical needed</td></tr>
+    <tr><td class="code">M-7</td><td class="meaning">Road blocked</td></tr>
+    <tr><td class="code">M-8</td><td class="meaning">Out of service</td></tr>
+    <tr><td class="code">M-9</td><td class="meaning">Traffic stop</td></tr>
+    <tr><td class="code">M-10</td><td class="meaning">Return to station</td></tr>
+  </table>
 
-  <h2>1. Study <small>(the 10 signals)</small></h2>
-  <div class="codes">
-    <div class="code"><b>M-1</b><span>Unit available</span></div>
-    <div class="code"><b>M-6</b><span>Medical needed</span></div>
-    <div class="code"><b>M-2</b><span>Unit en route</span></div>
-    <div class="code"><b>M-7</b><span>Road blocked</span></div>
-    <div class="code"><b>M-3</b><span>On scene</span></div>
-    <div class="code"><b>M-8</b><span>Out of service</span></div>
-    <div class="code"><b>M-4</b><span>Need backup</span></div>
-    <div class="code"><b>M-9</b><span>Traffic stop</span></div>
-    <div class="code"><b>M-5</b><span>Suspect in custody</span></div>
-    <div class="code"><b>M-10</b><span>Return to station</span></div>
-  </div>
-
-  <h2>2. Recall <small>(fold or cover Section 1, then fill in from memory)</small></h2>
-  <div class="recall">
-    <div class="box">
-      <h3>A. Signal &rarr; meaning</h3>
+  <h2>2. Recall practice: cover section 1 first</h2>
+  <p class="how">Write each answer from memory, then check against the table. Circle misses and try them again right away. Use Round 1 on day one and Round 2 on a later day.</p>
+  <div class="rounds">
+    <div class="round">
+      <h3>Round 1</h3>
       <ol>
-        <li><span class="n">1</span>M-7<i></i></li>
-        <li><span class="n">2</span>M-2<i></i></li>
-        <li><span class="n">3</span>M-9<i></i></li>
-        <li><span class="n">4</span>M-5<i></i></li>
-        <li><span class="n">5</span>M-10<i></i></li>
-        <li><span class="n">6</span>M-1<i></i></li>
-        <li><span class="n">7</span>M-4<i></i></li>
-        <li><span class="n">8</span>M-8<i></i></li>
-        <li><span class="n">9</span>M-6<i></i></li>
-        <li><span class="n">10</span>M-3<i></i></li>
+        <li><span class="q">M-6</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Road blocked</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">M-2</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Suspect in custody</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">M-10</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Unit available</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">M-4</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">On scene</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">M-8</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Traffic stop</span><span class="arrow">→</span><span class="blank"></span></li>
       </ol>
     </div>
-    <div class="box">
-      <h3>B. Meaning &rarr; signal</h3>
+    <div class="round">
+      <h3>Round 2</h3>
       <ol>
-        <li><span class="n">1</span>Medical needed<i></i></li>
-        <li><span class="n">2</span>Unit available<i></i></li>
-        <li><span class="n">3</span>Return to station<i></i></li>
-        <li><span class="n">4</span>Suspect in custody<i></i></li>
-        <li><span class="n">5</span>Out of service<i></i></li>
-        <li><span class="n">6</span>On scene<i></i></li>
-        <li><span class="n">7</span>Need backup<i></i></li>
-        <li><span class="n">8</span>Traffic stop<i></i></li>
-        <li><span class="n">9</span>Unit en route<i></i></li>
-        <li><span class="n">10</span>Road blocked<i></i></li>
+        <li><span class="q">M-9</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Medical needed</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">M-3</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">M-5</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Need backup</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">M-7</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Return to station</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">M-1</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Unit en route</span><span class="arrow">→</span><span class="blank"></span></li>
+        <li><span class="q">Out of service</span><span class="arrow">→</span><span class="blank"></span></li>
       </ol>
     </div>
   </div>
 
-  <h2>3. Practice plan</h2>
-  <div class="how">
-    <ol>
-      <li>Study Section 1 once, then cover it.</li>
-      <li>Fill in A and B from memory. Check against Section 1.</li>
-      <li>Circle every miss and redo only those, right away.</li>
-      <li>Next time, use a fresh copy and a different order, or have a partner call them out loud.</li>
-    </ol>
-    <ul class="sched">
-      <li><span class="cb"></span> Today <span class="date"></span></li>
-      <li><span class="cb"></span> Next day <span class="date"></span></li>
-      <li><span class="cb"></span> A few days later <span class="date"></span></li>
-      <li><span class="cb"></span> A week or more later <span class="date"></span></li>
-      <li><span class="cb"></span> All 20 correct on a later day <span class="date"></span></li>
-    </ul>
+  <h2>3. Come back to it</h2>
+  <div class="schedule">
+    <div><b>Day 1</b><span class="box"></span>Round 1<br>Date: ________</div>
+    <div><b>Next day</b><span class="box"></span>Round 2<br>Date: ________</div>
+    <div><b>A few days later</b><span class="box"></span>Fresh sheet, any order<br>Date: ________</div>
+    <div><b>A few weeks later</b><span class="box"></span>Fresh sheet, any order<br>Date: ________</div>
   </div>
+  <p class="note">Ready when you can answer all ten, in both directions, on a later day with the sheet covered. Ask a coworker to quiz you in random order.</p>
 
-  <footer>Marrow County Dispatch &middot; Radio signal study sheet &middot; Print one copy per attempt.</footer>
-
-</main>
+</div>
 </body>
 </html>

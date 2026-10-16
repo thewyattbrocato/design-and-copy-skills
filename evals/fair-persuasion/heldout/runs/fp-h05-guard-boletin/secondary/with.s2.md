@@ -1,16 +1,23 @@
-**Título:** ¿Te avisamos del pan del fin de semana?
+Aquí tienes el texto. Está pensado para que la gente que quiera apuntarse lo haga, y para que quien no quiera pueda decir que no con la misma facilidad.
 
-**Texto:** Una vez a la semana te escribimos con el pan que horneamos el fin de semana y nuestras promociones. Solo eso. Puedes darte de baja con un clic en cualquier correo.
+**Título:**
+¿Quieres el pan del fin de semana en tu correo?
 
-**Botón 1:** Sí, quiero recibirlo
-**Botón 2:** No, gracias
+**Texto:**
+Cada semana te enviamos un correo con el pan que horneamos el fin de semana y nuestras promociones. Nada más. Puedes darte de baja cuando quieras desde el enlace que aparece en cada correo.
 
-Algunas decisiones que tomé y que puedes cambiar:
+**Botones** (mismo tamaño, mismo estilo):
+- **Sí, quiero recibirlo**
+- **No, gracias**
 
-- **Los dos botones tienen el mismo peso visual.** Un "No" discreto o con un texto de culpa, como "No, prefiero perderme las ofertas", suele animar a la gente a aceptar sin pensar, pero también genera desconfianza.
-- **La ventana aparece después de confirmar el pedido**, no antes. Así el pedido no depende de la respuesta.
-- **Cerrar la ventana con la X cuenta como "No".** No la uses como aceptación.
-- **Ninguna casilla viene marcada por defecto.** En la Unión Europea (RGPD), el consentimiento para el boletín tiene que ser explícito, así que una casilla marcada no vale.
-- **Si el formulario de pedido ya pide el correo**, usa ese mismo dato para el boletín. Si no lo pide, añade un campo de correo en la ventana, junto al botón de aceptar.
+Al pulsar "Sí", pide solo el correo electrónico. Si quieres añadir una casilla de aceptación de la política de privacidad, déjala **sin marcar** y enlaza la política.
 
-Si quieres, puedo escribir el código de la ventana (HTML y JavaScript) para tu web, o una versión en otro idioma.
+**Recomendaciones:**
+
+- **No marques nada por defecto.** En España, el RGPD y la LSSI exigen un consentimiento explícito para el correo comercial. Una casilla premarcada no vale.
+- **No mezcles el boletín con el pedido.** La ventana aparece después de confirmar la compra, y el pedido no depende de si aceptan o no.
+- **No insistas.** Muestra la ventana una sola vez a cada persona. Si dice que no, no vuelvas a preguntarle en cada compra.
+- **Evita frases que culpen** como "No, prefiero perderme el pan". Ese tipo de texto hace que la gente sienta que la estás presionando, y eso perjudica la confianza.
+- **Cumple lo que prometes.** Si dices "solo eso", envía solo eso. Quien se apunta por esa promesa y recibe otra cosa se da de baja, o te marca el correo como spam.
+
+Si quieres, te escribo la versión en código para tu web (HTML y JavaScript) con esta lógica: no premarcado, una sola vez, y registro del consentimiento con fecha.

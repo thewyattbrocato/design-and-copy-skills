@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>September sales vs plan – Crumb &amp; Kettle</title>
+<style>
+  :root{
+    --ink:#1f2328; --ink2:#57606a; --grid:#e3e6ea; --surface:#ffffff;
+    --ahead:#1f5fa6; --behind:#c4551a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px;background:#f4f5f7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink)}
+  .card{max-width:760px;margin:0 auto;background:var(--surface);border-radius:8px;padding:24px 24px 18px}
+  h1{font-size:20px;line-height:1.25;margin:0 0 4px;font-weight:650}
+  .sub{font-size:13px;color:var(--ink2);margin:0 0 16px}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--ink2);margin-bottom:10px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .row{display:grid;grid-template-columns:92px 1fr 150px;align-items:center;gap:12px;height:36px}
+  .name{font-size:14px;text-align:right}
+  .plot{position:relative;height:100%}
+  .plot::before{content:"";position:absolute;left:var(--zero);top:0;bottom:0;border-left:1.5px solid var(--ink2)}
+  .gl{position:absolute;top:0;bottom:0;border-left:1px solid var(--grid)}
+  .bar{position:absolute;top:8px;bottom:8px;border:0}
+  .bar.pos{background:var(--ahead);border-radius:0 4px 4px 0}
+  .bar.neg{background:var(--behind);border-radius:4px 0 0 4px}
+  .bar.zero{background:var(--ink2);width:3px;left:calc(var(--zero) - 1.5px);border-radius:2px}
+  .val{font-size:13.5px;font-variant-numeric:tabular-nums;line-height:1.2}
+  .val b{font-weight:650}
+  .val small{display:block;font-size:11.5px;color:var(--ink2)}
+  .axis{display:grid;grid-template-columns:92px 1fr 150px;gap:12px;margin-top:2px}
+  .ticks{position:relative;height:18px;font-size:11.5px;color:var(--ink2)}
+  .ticks span{position:absolute;transform:translateX(-50%);font-variant-numeric:tabular-nums}
+  .foot{font-size:12px;color:var(--ink2);margin:12px 0 0;border-top:1px solid var(--grid);padding-top:10px}
+  @media (max-width:520px){
+    body{padding:10px}.card{padding:16px}
+    .row,.axis{grid-template-columns:70px 1fr 104px;gap:8px}
+    .name{font-size:12.5px}.val{font-size:12.5px}
+  }
+</style>
+</head>
+<body>
+<div class="card" role="figure" aria-labelledby="t" aria-describedby="d">
+  <h1 id="t">4 shops ahead of plan, 3 behind – Airport and Eastgate trail most</h1>
+  <p class="sub" id="d">September sales vs plan, % difference. Chain total: $839K vs $833K plan (+0.7%).</p>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--ahead)"></i>▲ Ahead of plan</span>
+    <span><i class="sw" style="background:var(--behind)"></i>▼ Behind plan</span>
+    <span><i class="sw" style="background:var(--ink2)"></i>On plan</span>
+  </div>
+  <div id="chart"></div>
+  <div class="axis"><div></div><div class="ticks" id="ticks"></div><div></div></div>
+  <p class="foot">Shops sorted from most ahead to most behind. Percent shown so shops of different size compare fairly; dollar gap and actual / plan in $ thousands at right.</p>
+</div>
+
+<script>
+  var data=[["Harbor",118,110],["Mill Street",94,102],["Old Town",141,128],["Eastgate",77,90],
+            ["Lakeside",103,100],["University",156,140],["Airport",62,75],["Northfield",88,88]];
+  var MIN=-20,MAX=14,span=MAX-MIN;
+  var zero=(0-MIN)/span*100+"%";
+  var rows=data.map(function(d){return{n:d[0],a:d[1],p:d[2],diff:d[1]-d[2],pct:(d[1]-d[2])/d[2]*100}})
+               .sort(function(x,y){return y.pct-x.pct});
+  var ticksVals=[-20,-10,0,10];
+  var chart=document.getElementById("chart");
+  function fmt(n,dec){return (n>0?"+":n<0?"−":"")+Math.abs(n).toFixed(dec)}
+  rows.forEach(function(r){
+    var cls=r.diff>0?"pos":r.diff<0?"neg":"zero";
+    var left=r.pct>=0?zero:((r.pct-MIN)/span*100)+"%";
+    var width=Math.abs(r.pct)/span*100+"%";
+    var icon=r.diff>0?"▲":r.diff<0?"▼":"●";
+    var row=document.createElement("div");
+    row.className="row";
+    row.style.setProperty("--zero",zero);
+    var grid=ticksVals.filter(function(t){return t!==0}).map(function(t){
+      return '<i class="gl" style="left:'+((t-MIN)/span*100)+'%"></i>'}).join("");
+    var bar=cls==="zero"?'<div class="bar zero"></div>'
+      :'<div class="bar '+cls+'" style="left:'+left+';width:'+width+'"></div>';
+    row.title=r.n+": $"+r.a+"K actual vs $"+r.p+"K plan ("+fmt(r.pct,1)+"%)";
+    row.innerHTML='<div class="name">'+r.n+'</div><div class="plot" style="--zero:'+zero+'">'+grid+bar+'</div>'+
+      '<div class="val"><b>'+icon+" "+(r.diff===0?"0.0%":fmt(r.pct,1)+"%")+'</b> · '+(r.diff===0?"$0K":fmt(r.diff,0).replace(/(\d)/,"$$$1")+"K")+
+      '<small>$'+r.a+'K / $'+r.p+'K plan</small></div>';
+    chart.appendChild(row);
+  });
+  var t=document.getElementById("ticks");
+  ticksVals.forEach(function(v){
+    var s=document.createElement("span");
+    s.style.left=((v-MIN)/span*100)+"%";
+    s.textContent=v===0?"Plan":(v>0?"+":"−")+Math.abs(v)+"%";
+    t.appendChild(s);
+  });
+</script>
+</body>
+</html>

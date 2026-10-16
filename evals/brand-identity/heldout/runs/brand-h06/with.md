@@ -1,38 +1,46 @@
-**Assumptions:** The mark is flat and one-color-capable, and the name is "Southbank Reading Room". Each version below should be built from the same three-book S. Call the master files **symbol**, **horizontal lockup** and **stacked lockup**. The wordmark is a separate asset the designer can reuse.
+**Assumptions:** The mark is flat and solid, with a three-book S stack. The name is "Southbank Reading Room". You haven't given brand colors, so I use "mark color" and "ground" below. Work out the colors last, after the black version holds up.
 
-## 1. Wide website header: horizontal lockup
-- **Arrangement:** The symbol sits at left. The name sits to its right, vertically centered on the symbol's optical middle.
-- **Name:** Set it on two lines, "Southbank" over "Reading Room". A single line makes the header too long and shrinks the type. Left-align both lines. "Reading Room" can be lighter or smaller, but keep both lines the same width if the spacing allows.
-- **Proportions:** Make the symbol about as tall as the two text lines together. Put the gap between symbol and text at roughly the width of one book spine.
-- **Size:** Use about 40–56 px of height on desktop. On mobile, drop to the symbol plus "Southbank" only, or the symbol alone, if the full lockup falls below the minimum size.
-- **Space:** Leave clear space equal to the height of one book around the lockup.
-- **Color:** Use the full-color version on a light header. Use a reversed one-color (white or cream) version if the header sits on a photo or dark band.
+**Master files for the designer**
+- **Symbol:** the three-book S on its own.
+- **Wordmark:** "Southbank Reading Room" set in two lines, "Southbank" over "Reading Room". Match the stroke weight to the book spines.
+- **Horizontal lockup:** symbol on the left, with the two-line name beside it. Set the name's cap height to about the height of the middle book.
+- **Stacked lockup:** symbol centered above the name.
+- **Clear space:** the height of one book on every side.
+- **Colors:** make a solid black version and a reversed (white) version first. Everything below should be buildable from those.
 
-## 2. Square social avatar: symbol only
-- **Arrangement:** Use the symbol alone, centered, with no name. Platforms crop avatars to a circle and show them around 40 px, so the name would be unreadable.
-- **Fit:** Keep the whole symbol inside a central circle about 70% of the canvas width. Nothing important should sit in the corners.
-- **Background:** Use a solid brand-color field with the symbol reversed out in white or cream. A flat field holds up better than a transparent background across light and dark platform themes.
-- **Small size:** Test at 32 px. If the gaps between the books close up, make an avatar-specific symbol with thicker books and wider gaps.
-- **Name:** The profile name field already carries it.
+**1. Wide website header**
+- Use the horizontal lockup, left-aligned, in one row.
+- Keep it short, about 40–56 px tall on desktop. Leave the width to the nav.
+- Give the symbol and the name a fixed gap of about half a book height.
+- On narrow screens (under about 600 px), drop to the symbol plus a one-line "Southbank Reading Room". If that is still too tight, use the symbol alone and put the name in text beside it.
+- Put no tagline in the lockup. If you want one, set it as a separate line elsewhere on the page.
+- The header ground is usually light, so use the full-color or black version. Use the reversed version if you ever run a dark header.
 
-## 3. Narrow bookmark: stacked, vertical
-- **Arrangement:** Stack everything in one centered column. Put the symbol at the top or in the upper third. Put the name below it in three short lines: "Southbank", "Reading", "Room". If you want a quieter look, use "Southbank" and "Reading Room" on two lines, but only if "Reading Room" fits the width at a legible size.
-- **Width:** Keep the logo to about 60–70% of the bookmark's width so there's a margin when trimmed.
-- **Option:** Rotate the horizontal lockup 90° to run up the length of the bookmark. It suits a spine-like look. Make sure the text reads bottom-to-top, as on a book spine.
-- **Print:** Use one or two flat colors, which keeps printing cheap. Leave the rest of the bookmark as quiet space. A tagline or hours can go at the bottom as separate small text, not as part of the logo.
-- **Safety:** Keep every element at least 4–5 mm from the trim edge.
+**2. Square social avatar**
+- Use the symbol alone, centered, with no name. The name is already beside the avatar in every feed, and at 40–64 px the wordmark turns to mush.
+- Fill about 60–65% of the square, with generous padding. Platforms crop avatars to circles, so keep the S well inside the circle.
+- Test it as a circle crop and at 32 px. If the book edges blur, make a heavier small version: thicker gaps between books and fewer details. Don't just scale the master down.
+- A solid brand-color ground with the reversed symbol will stand out in a feed better than a white ground.
 
-## 4. Canvas tote bag: one-color screen print
-- **Arrangement:** Use the stacked lockup, or the symbol large with the name beneath it. Center it on the upper-middle of the bag face, not at the very top, and keep it clear of the seams and handles.
-- **Color:** Use a single solid ink, such as navy or black on natural canvas, or cream on a dark bag. Screen printing can't reproduce gradients or fine hairlines, so drop any tints or thin lines from this version.
-- **Detail:** Thicken any gaps or thin strokes in the S so ink doesn't fill them in on fabric. The books should still read as three separate shapes.
-- **Size:** Make the print about 18–25 cm wide on a standard tote. That's big enough to read from a few feet away without dominating the bag.
-- **Option:** Treat the symbol as a large, bold graphic on the bag and put the name in a small line beneath it.
+**3. Narrow bookmark**
+- Use a vertical layout. A bookmark is roughly 2 × 6–7 in, so treat it as a tall, thin space.
+- Put the symbol near the top, centered, at about 70–80% of the width. Below it, set the name stacked one word per line ("Southbank / Reading / Room"), centered.
+- Don't rotate the wordmark. If you want a rotated name, set "Southbank Reading Room" along the spine as a secondary line, reading bottom to top, and keep the symbol upright.
+- Leave the lower two-thirds as quiet space. A volunteer can add a quote, a reading list, or the library's hours there.
+- Use one or two colors, since this is likely to be printed cheaply. Make sure it reads in black on cream.
 
-## Rules across all four
-- Don't put effects (gradients, shadows, textures) in the master files. Add them to a specific application only if needed.
-- Set a minimum size for each lockup, then check that the S and the three books are still clear at that size.
-- Use the same colors and the same type in every version so they read as one family.
-- Test every version in solid black on white and reversed on a dark background before approving it.
+**4. Canvas tote bag**
+- Use the stacked lockup, centered on the bag, one color. Screen printing on canvas needs flat shapes.
+- Make it large: about 7–9 in wide on a standard tote. Keep it centered about a third of the way down from the top, where it sits when carried.
+- Use the solid mark with no gradients or fine lines, because ink spreads on fabric. If the gaps between books are under about 1.5 mm at print size, open them up.
+- Choose the ink by the bag: dark ink on natural canvas, or the reversed (white or cream) version on a dark-dyed bag.
+- Optionally, make a second tote with the symbol alone, very large and cropped off the edge. Do this only if the S still reads when cropped.
 
-**Note:** I haven't seen the actual mark, so the spacing and proportions above are starting points. Adjust them once the designer builds the first round. The main thing to check is whether the S still reads when the books get thin at small sizes.
+**Check before sign-off**
+- The black version reads at 16–32 px.
+- The reversed version reads on a dark ground.
+- "Southbank Reading Room" stays legible in every crop and orientation above.
+
+**Notes**
+- I haven't seen the actual artwork, so I couldn't check that the S reads clearly at small sizes. That is the first thing to test, because the avatar and bookmark depend on it.
+- Trade-off: the avatar drops the name, so recognition relies on the S shape alone. That is the usual choice for a small neighborhood organization, and the name sits right beside it in feeds.

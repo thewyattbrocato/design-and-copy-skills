@@ -1,27 +1,29 @@
-**Partly.** The core problem is the phone-call requirement: it makes cancelling harder than the two-tap sign-up, and it delays the confirmation email until after the call. The pause offer and the "Keep" screen are closer to fair, but the buttons and the guilt line still steer.
+**Yes, mostly.** The phone-only exit is the core problem. The flow makes leaving harder than joining, and the pause offer is the one part that's fair.
 
-**What's fine**
-- The pause offer is a real alternative, free, and clearly described.
-- "Sorry to see you go" is a neutral goodbye.
-- Asking why someone is leaving is reasonable, as long as they can skip it.
+**What steers:**
 
-**What isn't**
-- **Phone-only cancellation (step 4).** Joining takes two taps online, so leaving must work online too. Requiring a call is the step most likely to be treated as a dark pattern, and it's the one most likely to break consumer rules.
-- **Required reason dropdown.** A reason can be asked for, but it can't be a condition of cancelling.
-- **Hidden cancel (step 1).** "Cancel membership" as the last item, in small grey text, under "Billing FAQs" makes the exit hard to find. Put it where the membership is managed, at normal weight.
-- **Unequal buttons (step 2).** A big green "Keep" beside a small grey "Continue" is a visual push. Both choices should have equal weight.
-- **Fear-based line (step 2).** "3x more likely to hit their goals" is a guilt lever. Drop it, or replace it with a neutral note. If you keep any statistic, it needs a source.
-- **Two retention screens (steps 2 and 3).** Offer one alternative, once.
-- **Delayed confirmation (step 5).** Sending the email only after a call means people don't know whether they've cancelled. That's risky for billing disputes.
+- **Hidden entry point.** Cancel sits last, as small grey text under "Billing FAQs."
+- **Channel gate.** Users signed up in two taps online, but can only finish cancelling by phone, and only Mon to Fri, 9 to 5. Working members can't cancel at all outside those hours.
+- **Required reason.** The dropdown must be answered before the cancel can finish. A reason can be asked for, but it can't be a condition.
+- **Unequal weight.** A big green "Keep my membership" beside a small grey "Continue" makes the exit look like the wrong choice.
+- **Stacked screens.** Three screens of retention come before the exit.
+- **Delayed confirmation.** No email until the call, so the user has no record that anything happened.
+- **Unsourced stat.** "3x more likely to hit their goals" implies guilt and needs a source or should go.
 
-**Fair version**
+**What's fine:** the pause offer. It's a real alternative with a clear price (free) and an equal "No thanks." It should appear once, not as a gate.
 
-1. **Settings > Membership.** "Cancel membership" sits with the other membership actions, at normal weight.
-2. **Cancel screen.** Heading: "Cancel your membership?" Body: "You'll keep access until [end date]. You won't be charged after that. Want to pause instead? You can freeze your membership for up to 2 months, free." Buttons, equal weight: **[Pause for up to 2 months]** and **[Cancel membership]**.
-3. **Reason (optional).** After cancelling, a dropdown with a **[Skip]** option next to **[Send]**.
-4. **Confirmation screen.** "Your membership ends on [end date]. A confirmation email is on its way. To rejoin, [sign-up path]." Send the email immediately when the cancel is confirmed.
-5. **Help line.** Put "Need help? Call (555) 0142, Mon to Fri 9 to 5" on the help or FAQ page. It shouldn't be a required step.
+**Fair version:**
 
-**Notes**
-- Replace `[end date]` and `[sign-up path]` with real values. I didn't assume either.
-- Rules on click-to-cancel vary by place and change over time, so have the flow checked by someone who knows the rules where you operate.
+1. **Settings > Membership.** "Cancel membership" is a visible row near the top.
+2. **Cancel screen.** Heading: "Cancel your membership." Body: "You keep access until [end date]. After that you won't be charged. To rejoin later: [rejoin terms]."
+   - [Cancel membership] (primary, same size as the keep option)
+   - [Keep membership] (equal weight)
+   - One text link: "Pause for up to 2 months, free instead" (shown once, not as a separate screen)
+3. **Reason.** Optional, below the buttons, after or alongside the cancel button. Never required.
+4. **Done in-app.** Cancellation completes immediately. Show the last day of access and the way back in.
+5. **Confirmation email** sent at the same moment, with the same details.
+6. **Phone line** stays listed as "Need help?" for anyone who wants to talk to a person. It isn't a required step.
+
+Two notes:
+- Fill the placeholders: [end date], [rejoin terms]. I haven't assumed a rejoin policy or access-end rule.
+- Rules on cancellation and auto-renewal vary by place and change over time. Have counsel check the flow, especially the phone-only requirement, before shipping.

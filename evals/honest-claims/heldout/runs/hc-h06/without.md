@@ -1,31 +1,37 @@
-## 1. Offer screen: use a free trial (7 days), with the monthly plan as the only option shown
+**Pinewake mattress review: three weeks on a medium-firm queen**
 
-With a single £3.99 plan, "pre-selected vs. unselected" barely matters, because there's nothing to choose between. The real decision is whether to lead with a trial, and I'd say yes.
+*Quick note: Pinewake sent me the queen for free, and I earn 8% if you buy through my link. Everything below is my honest take.*
 
-- **Why a trial:** Casual players don't know yet whether the daily bonus puzzle is worth paying for. A trial lets them find out, which cuts "I paid and it wasn't worth it" regret.
-- **Why it's safe for ratings:** Complaints come from surprise charges, not from trials. So make the terms impossible to miss:
-  - Put the real text on the button area: "7 days free, then £3.99/month. Cancel anytime."
-  - Show the first charge date.
-  - Add a clear close or "Not now" control.
-  - Send a reminder 1–2 days before the trial ends.
-- **Trade-off:** Some people will forget and be charged, and a few will complain or ask for refunds. You'll also see lower trial-to-paid conversion than a hard paywall. That's the cost of fewer angry reviews and a healthier base of subscribers who stay.
-- **Why not the alternatives:** A pre-selected plan with no trial asks for money before players have seen the value. An unselected plan adds a tap and a decision for a one-plan offer, so it just lowers conversion.
+I'm not a person who gets excited about mattresses. A mattress is furniture you lie on and ignore, and the best ones are the ones you forget about. So when I say I've been thinking about the Pinewake for three weeks, take that as a mild compliment.
 
-If you add an annual plan later, pre-select whichever you want to promote, but keep both prices visible.
+**The basics**
 
-## 2. Cancellation: one simple Manage Pass screen, no talking people out of it
+It's a medium-firm queen, $1,150. I'm a side sleeper at about 170 lb, which matters, because side sleepers are the ones who find out fast whether a firm mattress is going to be a problem for their shoulders and hips. For me, it wasn't. It has enough give to let me settle in, and enough push-back that I don't feel like I'm sinking into a hole. I woke up feeling fine, which is the whole job.
 
-**Put on the screen:**
-- Status (trial or active) and the next renewal or charge date
-- Price
-- What they get (no ads, daily bonus puzzle)
-- A "Manage or cancel subscription" button that deep-links straight to the App Store or Google Play subscription page
-- "Restore purchase"
+**What I liked**
 
-**Steps:** One screen, then the store's page. That's two taps from settings, with no confirmation maze, hidden links or "are you sure?" chains.
+The edges are the surprise. Most mattresses go soft and a little sad near the perimeter, so you end up sleeping in a polite rectangle in the middle. On the Pinewake I could sit on the edge to put on socks without feeling like I was sliding off, and I could sleep right out to the side without that rolling-off feeling. It makes the bed feel bigger than it is.
 
-**Retention:** Cancellation actually happens in the store, so any in-app friction only annoys people and shows up in reviews. At most, add one optional, skippable "why are you leaving?" question, or a single non-blocking line like "You'll keep your Pass until [date]." Don't use guilt copy, countdowns or forced offers.
+It also didn't sleep hot. I tested it through some properly warm summer weeks, and I never had that 3 a.m. moment of flipping the pillow and wishing I lived somewhere colder. I'm not claiming it's a cooling miracle, only that heat wasn't a problem, and for a lot of beds that's not nothing.
 
-**Trade-off:** You'll lose a few saves you might have won with aggressive retention flows. In return you avoid "impossible to cancel" reviews, which hurt a casual-game rating far more than the saved revenue is worth. Easy exits also make people more willing to subscribe in the first place and more likely to come back later.
+**What I didn't love**
 
-**Regulatory note:** UK subscription rules are tightening, with clearer pre-contract information, renewal reminders and easy exit. The setup above should fit them, but have someone check the exact requirements and dates before launch.
+It's heavy. 52 lb doesn't sound outrageous until you try to rotate it or wrestle sheets onto it. If you move often, or you like rearranging the bedroom the way some people like rearranging their feelings, factor that in. This is a bed you place once and leave alone.
+
+There was also a smell for the first two days. It faded, and I'd just air the room out and not unpack it right before bedtime. But it was there.
+
+And my partner found it a bit firm. I didn't, but I'm the one who sleeps on my side and likes a firmer feel. They didn't complain loudly, just in the tone of someone who has noticed. If you share a bed, I'd think about whether you two agree on firmness before buying, since "medium-firm" means different things to different bodies.
+
+**Who it's for**
+
+If you like a supportive mattress, sleep warm, or want to use the whole surface of your bed, I think it's a good pick. If you or your partner like that sink-in, hugged feeling, it probably isn't. At $1,150 it isn't cheap, though it also doesn't sit at the top of the price range.
+
+Pinewake's site says there's a 100-night trial. That's the part I'd lean on. Three weeks told me a lot, but a mattress is one of the few things where a longer test really matters, so check the return terms before you commit.
+
+**The verdict**
+
+I'd keep it, and I am. It's supportive, it stays cool, and it's easy to ignore once you're on it. Just don't plan to move it, and bring your partner along for the test lie-down.
+
+---
+
+A note on the disclosure: I kept it to one short line at the top, since Pinewake wanted a low-key tone. I'd keep it, though. A free product plus an affiliate commission needs a clear disclosure under FTC rules, and putting it before the review is the safe placement. It also sits fine next to the criticisms, which make the post read as organic anyway.

@@ -1,33 +1,44 @@
-I'd group the 14 settings by **what the notification is about**, and use a **topic × channel grid** instead of a flat list of switches. Most of the overwhelm comes from the list having no structure, and the two master toggles are doing a job the layout should handle.
+Group the 14 toggles by what they're about, put the two master switches at the top, and move the marketing emails to their own section.
 
-**Proposed layout**
+```
+Notifications
 
-1. **Top: Pause and quiet hours**
-   - Replace the two master toggles with a single "Pause all notifications" control, or keep them as "Push" and "Email" channel headers.
-   - Quiet hours goes right below, as a time-range row, since it governs push timing and is more than a switch.
+[Push notifications            ON ]   ← master
+[Email notifications           ON ]   ← master
+    Quiet hours        10pm–7am  >
 
-2. **Garden care** (the core value, so it comes first)
-   - Watering reminders, frost alerts, harvest windows
-   - Show Push and Email checkboxes per row. Most of these are push-only, so one cell may be empty.
+Garden care
+  Watering reminders            ON
+  Frost alerts                  ON
+  Harvest windows               ON
 
-3. **Community**
-   - Friend requests, comments on my beds, shared bed invites
+Community
+  Friend requests              ON
+  Comments on my beds          ON
+  Shared bed invites           ON
 
-4. **Ideas and discovery**
-   - New plant suggestions, plant of the week
+Ideas & summaries
+  New plant suggestions         OFF
+  Plant of the week             OFF
+  Weekly summary email          ON
 
-5. **Email updates** (lowest priority, so it goes last and can be collapsed)
-   - Weekly summary, product news, sale announcements
+Offers & news                          (marketing)
+  Product news email            OFF
+  Sale announcements            OFF
+```
 
-**Why the grid helps**
+**Why this works**
 
-Each row is a topic and each column is a channel (Push, Email). That reduces 14 switches to about 10 cells, and the user sees "what do I get and where" at a glance. Empty cells mean that channel isn't offered for that topic, which is clearer than a disabled switch.
+- **Two masters at the top, and they gate their section.** When push is off, the push-related toggles should look disabled, not just sit there. Users should understand that the master controls everything beneath it.
+- **Group by topic, not by channel.** People think "I want frost alerts," not "I want push for frost." Topic groups have 2–3 items each, which is easy to scan.
+- **Put marketing last and separate it.** Product news and sales are the ones people most want to switch off in one move. Keeping them apart with a clear label makes that easy. Default them off, and check consent rules for marketing email in your regions, since they're stricter than for transactional mail.
+- **Quiet hours is a schedule, not a notification type.** Put it under the push/email masters, or in a "Delivery" row. Its scope should match what it actually silences.
+- **Defaults do most of the work.** Keep the essentials on and the optional extras off. Most of the overwhelm comes from every toggle looking equally important.
 
-**Details that matter**
+**Other options, if this still feels heavy**
 
-- **Hide marketing from the default view.** Put product news and sales under a "Marketing emails" disclosure, off by default, so the main screen is only the garden and social items.
-- **Use a sensible default for the whole list.** Pre-enable garden care and social, and leave marketing off. Users who see a long list of "on" switches tend to feel they've been signed up for everything.
-- **Gray out, don't hide, children of a master switch.** If push is paused, the push column should show as disabled with a note like "Paused in quiet hours" or "All push paused," so users understand why.
-- **Add a one-line summary** at the top, such as "You'll get 4 push and 2 email notifications," so the screen reads as a status rather than a form.
+- **Presets at the top:** "Essentials only / Everything / Custom," with the full list collapsed under "Customize." Most people never need to open it.
+- **Matrix:** rows are categories, columns are Push and Email. Compact, but many cells don't apply (weekly summary is email-only, quiet hours isn't a category), so I'd only use it if every category supports both channels.
+- **Fewer rows:** merge friend requests, comments, and shared bed invites into one "Community activity" toggle with a sub-option. This cuts the count, but it's harder to get exactly what you want.
 
-If you tell me the platform (iOS, Android, web) or your component library, I can sketch the markup or a component structure for the grid.
+I'd start with the grouped layout plus defaults. Add the presets if user testing still shows overload. Each toggle should also get one line of helper text saying what triggers it and how often it sends, since that does more to reduce confusion than the layout does.

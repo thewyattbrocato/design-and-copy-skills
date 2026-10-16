@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Harbour Street Family Clinic – Welcome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html { font-size: calc(100vw / 96); } /* 20px at 1920 wide */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; cursor: none; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0b2540;
+    color: #ffffff;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3.5rem 4.5rem;
+    gap: 2.5rem;
+  }
+  header { border-bottom: 0.25rem solid #3ec9b4; padding-bottom: 2rem; }
+  .eyebrow { font-size: 2rem; letter-spacing: 0.2em; text-transform: uppercase; color: #8fe3d5; font-weight: 600; }
+  h1 { font-size: 6.2rem; line-height: 1.05; font-weight: 800; margin-top: 0.6rem; }
+
+  main { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3rem; min-height: 0; }
+  .card { background: #123a63; border-radius: 1.5rem; padding: 2.5rem 3rem; display: flex; flex-direction: column; justify-content: center; }
+  h2 { font-size: 2.4rem; font-weight: 700; color: #8fe3d5; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .today-day { font-size: 3.2rem; font-weight: 700; margin-top: 1.5rem; }
+  .today-hours { font-size: 8rem; line-height: 1.05; font-weight: 800; margin-top: 0.5rem; white-space: nowrap; }
+  .today-note { font-size: 2.2rem; color: #cfe3f5; margin-top: 1rem; }
+
+  .right { display: grid; grid-template-rows: auto 1fr; gap: 3rem; min-height: 0; }
+  .hours-list { list-style: none; margin-top: 1.5rem; }
+  .hours-list li { display: flex; justify-content: space-between; font-size: 2.8rem; padding: 0.9rem 1rem; border-radius: 0.75rem; }
+  .hours-list li + li { margin-top: 0.4rem; }
+  .hours-list li.today { background: #3ec9b4; color: #06243a; font-weight: 800; }
+  .hours-list span:last-child { font-weight: 700; }
+
+  .flu { background: #ffd54a; color: #1b1b1b; flex-direction: row; align-items: center; gap: 2.5rem; justify-content: flex-start; }
+  .flu .level { font-size: 7rem; font-weight: 800; line-height: 1; background: #1b1b1b; color: #ffd54a; border-radius: 1.25rem; padding: 1.2rem 2rem; white-space: nowrap; }
+  .flu .big { font-size: 4.2rem; font-weight: 800; line-height: 1.1; }
+  .flu .small { font-size: 2.4rem; font-weight: 600; margin-top: 0.4rem; }
+
+  footer { background: #3ec9b4; color: #06243a; border-radius: 1.5rem; text-align: center; font-size: 4.6rem; font-weight: 800; padding: 1.6rem 2rem; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Welcome to</div>
+    <h1>Harbour Street Family Clinic</h1>
+  </header>
+
+  <main>
+    <section class="card" aria-live="polite">
+      <h2>Walk-in hours today</h2>
+      <div class="today-day" id="day">Today</div>
+      <div class="today-hours" id="hours">See schedule</div>
+      <div class="today-note">No appointment needed during walk-in hours</div>
+    </section>
+
+    <div class="right">
+      <section class="card">
+        <h2>Walk-in hours</h2>
+        <ul class="hours-list">
+          <li data-days="1,2,3,4,5"><span>Monday – Friday</span><span>8:00 – 18:00</span></li>
+          <li data-days="6"><span>Saturday</span><span>9:00 – 13:00</span></li>
+        </ul>
+      </section>
+      <section class="card flu">
+        <div class="level">Level 2</div>
+        <div>
+          <div class="big">Flu clinic</div>
+          <div class="small">Please take the stairs or elevator to Level 2</div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>Please check in at the desk</footer>
+
+<script>
+(function () {
+  var names = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var d = new Date().getDay();
+  function update() {
+    d = new Date().getDay();
+    var hours = (d >= 1 && d <= 5) ? "8:00 – 18:00" : d === 6 ? "9:00 – 13:00" : "Closed";
+    document.getElementById("day").textContent = names[d];
+    document.getElementById("hours").textContent = hours;
+    var items = document.querySelectorAll(".hours-list li");
+    for (var i = 0; i < items.length; i++) {
+      var days = items[i].getAttribute("data-days").split(",");
+      items[i].className = days.indexOf(String(d)) > -1 ? "today" : "";
+    }
+  }
+  update();
+  setInterval(update, 60000);
+})();
+</script>
+</body>
+</html>

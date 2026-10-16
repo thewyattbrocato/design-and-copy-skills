@@ -1,50 +1,51 @@
-## Lockup versions
+**Assumptions:** the name is "Southbank Reading Room," set on one line beside the mark. Brand colors aren't given, so I've used placeholders: ink `#1F2A44` and paper `#F6F1E7`. Replace them with the real palette once chosen. The tote is printed in one ink on natural canvas.
 
-Build three arrangements. Each needs a full-color, one-color black, and reversed (light on dark) file.
+## Shared rules
 
-- **A. Horizontal:** symbol on the left, name on one line to its right. Name cap height is about 0.35× symbol height, vertically centered on the symbol.
-- **B. Stacked:** symbol centered above the name, which sits on one or two centered lines. Name width is about 1.6× symbol width.
-- **C. Symbol only:** the S of three books, no name.
+- **Clear space:** keep a margin equal to the height of the middle book on every side of any lockup.
+- **Mark-to-name ratio:** in the horizontal lockup, the mark's height equals the name's cap-to-baseline height ×2.4, so the stack reads as heavier than the type. Adjust by eye.
+- **Versions to build:** solid ink on paper, reversed (paper on ink), and one-color (for print and tote). Full color is optional.
+- **Heavier small version:** build a simplified symbol with thicker book spines and wider gaps for the avatar and bookmark, so it holds at 32 px and in print.
 
-Use one wordmark drawing for all three so the letterforms match. Any tagline is a separate optional line, never inside the mark.
+## 1. Wide website header
 
-**Shared rules**
-- Clear space on all sides equals the height of the top book in the symbol.
-- Solid color only. No gradients, shadows, or shine.
-- Use a heavier simplified symbol below about 32 px. Thin gaps between the books close up at small sizes.
-- Choose the final brand color last. Until then, use "ink" and "paper" as placeholders.
+- **Lockup:** horizontal. Mark on the left, name on the right, one line.
+- **Name:** set in one weight, sentence-free caps or title case as chosen, with one custom adjustment (for example, a tightened "RR" pair) so it isn't stock type.
+- **Size:** minimum 140 px wide. Keep the mark's top and bottom aligned to the name's cap height plus descender.
+- **Background:** ink on paper, or paper on ink in a dark header.
 
-## Placement specs
+## 2. Square social avatar
 
-**1. Wide website header (Lockup A)**
-- Symbol height 40–48 px at 1×. Header height 64–80 px.
-- Name left-aligned to the symbol with a gap of one book-height.
-- Minimum lockup width 160 px. Below that, switch to Lockup C.
-- Use the reversed version on a dark header, and the full-color version on paper.
-- Keep the tagline out of the header.
+- **Lockup:** symbol only, no name. The name won't read at avatar size.
+- **Use the heavier small version** of the mark.
+- **Size:** the mark fills about 70% of the square, centered, with even margins.
+- **Background:** solid paper or solid ink. No gradient, no photo.
+- **Files:** export at 400×400 and check it at 32×32.
 
-**2. Square social avatar (Lockup C)**
-- Master file 400 × 400 px, solid background in the brand color or paper.
-- Symbol fills about 60–65% of the width, centered.
-- Keep the mark inside the inner 80% circle, because platforms crop to a circle.
-- No name. At avatar sizes (around 40–180 px) the name is unreadable.
-- Export at 400 px and 180 px.
+## 3. Narrow bookmark
 
-**3. Narrow bookmark (Lockup B)**
-- Stacked lockup, because a horizontal one does not fit the width.
-- Target bookmark size about 50 × 200 mm. Symbol about 20 mm wide, placed in the upper third.
-- Name set on two lines ("Southbank" / "Reading Room") at least 6 pt, centered below the symbol.
-- Keep 5 mm from the trim edges, and keep the tassel or hole area at the top or bottom clear.
-- Print in one spot color, with no fine rules.
+- **Lockup:** stacked. Mark on top, name below in two lines: "Southbank" over "Reading Room."
+- **Layout:** centered, with the mark about half the bookmark's width and the name no wider than the mark.
+- **Orientation:** keep the name horizontal. Don't rotate it along the spine, since it will not read.
+- **Color:** one-color ink on paper, or reversed on a dark stock.
+- **Min size:** the name's cap height must be at least 2.5 mm in print.
 
-**4. Canvas tote (Lockup B or C)**
-- Stacked lockup for a wide, detailed front, or symbol only for a clean, large graphic.
-- Symbol 20–28 cm wide, centered on the front, at about the upper-middle of the bag.
-- Keep 2 cm from seams and hems. Canvas weave swallows fine detail, so avoid hairlines and small gaps.
-- Use a single ink on natural canvas, meaning the one-color black version. Reversed works only on dark canvas.
-- Send the artwork at actual print size as vector, and have the printer proof it on a sample bag before a full run.
+## 4. Canvas tote bag
 
-## Before the designer starts
+- **Lockup:** stacked, large. Mark centered at the top third of the front, name below in one line.
+- **Scale:** the mark about 40–50% of the bag's print width. Leave at least 25 mm of canvas on every side.
+- **Color:** one ink only, which keeps screen-printing to a single screen. Ink on natural canvas. Reversed only if the canvas is dark.
+- **Files:** supply a one-color vector (no gradients, no fine hairlines) and check it at the print width.
 
-- The wordmark still needs one custom adjustment, such as a reshaped letter or a cut, so it does not read as a stock font. Do this before building the lockups, since every placement depends on it.
-- Brand colors and final paper and ink values are not defined. Fill them in once chosen.
+## Files for the volunteer designer
+
+1. `srr-horizontal` (ink, paper, reversed)
+2. `srr-symbol-avatar` (heavier small version)
+3. `srr-stacked-bookmark` (ink, reversed)
+4. `srr-stacked-tote` (one-color vector)
+
+Each file should be an SVG with outlined text, so no font needs to be installed to open it.
+
+**Notes:**
+- The placeholder colors and the proportions above are starting points. The first test is a printed bookmark and a 32 px avatar, judged by eye.
+- Whether this mark is distinctive enough to protect is a legal question. It needs a trademark search by a lawyer before use.

@@ -6,7 +6,7 @@ Load this when you write validation logic, error summaries or error copy, or han
 
 Default: check on submit. After a field has shown an error, re-check it as the person edits so the message clears the moment it is true.
 
-Why not earlier: a half-typed value is not wrong yet, so an early message is false. Waiting for it to become valid means the message never helps. Checking when focus leaves a field fires when a password manager fills the field or when the person switches windows, so it is both early and late.
+Why not earlier: a half-typed value is not wrong yet, so an early message is false. Leaving a field is not a signal the person is finished: autofill, a password manager and tabbing away all fire it mid-task.
 
 Exceptions that stay:
 
@@ -24,7 +24,7 @@ Use a summary when there are two or more problems, or on any long form. A one-fi
 
 Structure, in prose:
 
-1. After a failed submit, show a box at the top of the form with a heading in plain words ("There is a problem" or "Fix 2 things to continue").
+1. After a failed submit, show a box at the top of the form with a heading in plain words ("Fix 2 things to continue").
 2. List each problem as a link. Each link goes to its field.
 3. Move focus to the box so a screen reader announces it first. The box is made focusable by script, without joining the normal tab order.
 4. Prefix the page title with the count ("2 problems - Book a table") so it shows in the tab and is announced.
@@ -36,7 +36,7 @@ Markup sketch (illustrative):
 
 ```html
 <div id="summary" tabindex="-1" role="alert">
-  <h2>There is a problem</h2>
+  <h2>Fix 2 things to continue</h2>
   <ul>
     <li><a href="#date">Choose a date that is today or later</a></li>
     <li><a href="#phone">Your phone number needs 10 digits. It has 8.</a></li>

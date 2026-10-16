@@ -1,12 +1,13 @@
-**Go with B, but don't have the team lead run every session.** Objection handling is a performance skill. A multiple-choice test shows whether a rep can recognize a good answer, not whether they can give one to a skeptical homeowner. A 40-question test would mostly measure recall and leave you unsure the reps can handle the call.
+**Go with B, but cut the lead's load by using peers for the early rounds.** Objection handling is a live skill. A multiple-choice test shows whether a rep can recognize a good answer, not whether they can respond well to a skeptical homeowner on the phone. A rep can ace 40 questions and still freeze on the first "I need to think about it."
 
-The team lead's bandwidth is the real constraint, and you can fix it without dropping the role-plays:
+**The lead-time math:** 15 reps × 3 role-plays × 20 min is about 15 hours of direct lead time, plus feedback. That's real, but it's spread over the onboarding window, not due at once. Lightening it:
 
-- **Run role-plays in trios, not one-on-one.** Each round has one rep handling the objection, one playing the customer, and one observing with a scorecard. Every rep gets three turns as the rep, and the lead floats between trios.
-- **Lead time drops to a few hours per cohort.** Lead-run one-on-one role-plays would take about 15 hours of lead time for 15 reps, plus feedback. Floating between trios is closer to 5 hours total.
-- **Use a short scorecard for feedback.** Three to five observable criteria, such as "acknowledged the objection before answering" or "asked a qualifying question." Observers can give most of the feedback, and the lead only steps in for coaching.
-- **Optionally, add a 10-question knowledge check first.** This is a good use of multiple choice: product facts, incentive eligibility, and the company's policy on what reps can promise. It takes about 15 minutes and screens out gaps before the live work.
+- **Round 1 (peer, 20 min):** Pair reps off and give them a one-page scoring card with 4–5 observable behaviors, such as acknowledging the objection before answering, asking a follow-up question, and proposing a next step. Reps practice without the lead.
+- **Round 2 (peer, 20 min):** Same pairs, swapped objections, and the rep must use the card to give feedback.
+- **Round 3 (lead, 20 min):** This is the one that counts. The lead watches and gives the feedback that matters most, and can see who needs more reps.
 
-For the VP, the scaling argument holds up better than it first seems. The scorecard and role-play scenarios are reusable, so the second and later cohorts cost much less to run. Also point out that the 40-question test scales the grading, not the learning. If the VP still wants a single automated score, the knowledge check gives them one without replacing the role-plays.
+That's roughly 5 hours of lead time instead of 15. A senior rep or a second trainer can take round 1 or 2 too if you have one.
 
-I'm assuming the reps' 2 hours is protected time and the lead can spare about 5 hours for this cohort. If the lead can't spare even that, a peer-led version of the same trio format, with the lead reviewing scorecards afterward, is the next fallback.
+**For your VP:** the scaling argument holds for knowledge checks, not for performance. If they need an auditable record that reps finished training, add a short auto-scored quiz (10–15 questions on the objection playbook) as a gate before role-play. It's cheap, it scales, and it covers the "did they read it" question. It shouldn't replace the role-plays.
+
+**What would change my answer:** if the lead can't spend about 5 hours across the cohort in the next few weeks, even with peer rounds, then you're choosing between a thin version of B and a test that doesn't measure the skill. In that case I'd still do the short quiz plus peer role-plays with the card, and have the lead review recordings of one call per rep.

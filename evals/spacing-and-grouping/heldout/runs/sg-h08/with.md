@@ -1,33 +1,30 @@
-Yes. The layout has one real problem: every gap is 16px, so nothing groups.
+Yes, the main problem is that the spacing is uniform. Everything is 16px (title→paragraph, paragraph→fields, field→field, fields→footer), so the modal doesn't show which things belong together.
 
 **What's wrong**
 
-- **Uniform gaps flatten the structure.** The title, paragraph, fields and footer are all 16px apart. Within-group space should be about half the between-group space, or less.
-  - The two fields are siblings in one group, so 16px between them is fine, or 12px if you want it tighter.
-  - The title-to-paragraph gap is a heading relationship. It should be tighter, around 8px.
-  - The gap before the footer separates the actions from the content. It should be larger, around 24px, to match the modal padding.
-  - The gap between the paragraph and the fields is a group boundary, so 16–24px works there.
-- **Field label spacing is unspecified.** Label-to-input gap should be about 4–8px, clearly smaller than the 16px between fields. Otherwise labels can read as belonging to the field above.
-- **Spacing may be set with per-child margins.** If each element has a `margin-bottom`, the last one doubles up against the padding. Use a container `gap` or flex/grid column instead.
+1. **Title→paragraph is 16px, the same as the gaps between sections.** The title and paragraph form one intro unit, so the gap between them should be smaller. Use 8px.
+2. **Field→field is 16px, the same as the gap between groups.** Fields in the same form belong together, so this gap should be tighter than the gaps around the form. 12px is a good starting value. Check that the label-to-input gap inside each field is smaller still, around 4–8px.
+3. **Fields→footer is 16px, the same as everything else.** The action row is its own group and should be clearly separate from the form. Use 24px, or 32px if you want more emphasis.
+4. **Paragraph→fields is 16px.** This boundary is fine to keep at 16–24px. It separates the intro from the form, so it should be larger than the 8px and 12px gaps inside those groups.
 
-**Suggested rhythm (4px scale)**
+**Suggested rhythm**
 
 | Relationship | Gap |
 |---|---|
 | Title → paragraph | 8px |
-| Paragraph → fields | 16–20px |
-| Field → field | 16px |
-| Label → input (inside a field) | 6px |
+| Paragraph → fields | 16–24px |
+| Field → field | 12px |
 | Fields → footer | 24px |
-| Button → button | 8–12px |
+| Cancel ↔ Confirm | 8–12px |
 
-**What's fine**
+The gaps should get larger as the groups get more separate: within a group is about 8–12px, intro to form is 16–24px, and form to actions is 24px or more. Keep every value on a 4px scale.
 
-- 24px padding all around is consistent. It also matches the larger gap before the footer, so the content has one outer edge.
-- Right-aligned Cancel and Confirm is a standard pattern.
-- A subtle shadow on a modal is appropriate. This is a discrete surface over a backdrop. Check that it doesn't also have a heavy border and a fill, since one or two of those is enough.
+**Smaller points**
 
-**Also check**
+- **24px padding** is fine. Keep it equal on all sides.
+- **Subtle shadow** is fine, as long as the modal doesn't also have a heavy border and a tinted fill. One or two of those is enough.
+- **Right-aligned Cancel and Confirm** is a common convention. Make sure the buttons have about 1.5–2× as much horizontal padding as vertical, and an 8–12px gap between them. Keep Confirm as the visually primary button.
+- **Implementation:** have the container own the gaps (flex or grid `gap`) instead of putting `margin-bottom` on each child. That way the last element doesn't add extra space above the 24px padding.
+- **Touch targets:** if the modal is used on mobile, make the inputs and buttons at least 44px tall.
 
-- Button padding should be roughly 1.5–2× horizontal to vertical, for example 8px 16px.
-- Targets should be at least 44px tall on touch devices, with 8px or more between the two buttons.
+Without these changes the modal will look like an evenly spaced stack of items instead of three groups: an intro, a form, and actions.

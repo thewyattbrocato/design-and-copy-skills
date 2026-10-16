@@ -1,24 +1,22 @@
-**Verdict:** The palette is already restrained and coherent. Warm paper with cool ink is a sound letterpress base, and one rust accent is the right call. Most of the premium lift will come from a few small fixes, not a new palette.
+**Short answer:** This palette already reads as premium. It has a warm paper ground, deep ink, and one accent, which is most of the work. I'd change only two things: don't set sage as text, and give rust a darker hover state. The rest is print prep.
 
-Contrast ratios below are hand-calculated with the WCAG 2.x formula. Please confirm them in a checker before print or launch.
+Ratios are computed by hand from the WCAG 2.x formula, so treat them as ±0.1:
 
 | Pair | Ratio | Verdict |
 |---|---|---|
-| Ink on Paper | 13.1:1 | Pass |
-| Muted on Paper | 4.9:1 | Pass, barely |
-| Rust on Paper | 4.8:1 | Pass, barely |
-| Paper on Rust (button label) | 4.8:1 | Pass |
-| Sage on Paper | 3.0:1 | Fails as text |
-| Rust link vs. Ink body text | 2.7:1 | Hue-only distinction |
+| Ink on Paper | 13.1:1 | Passes everything |
+| Muted on Paper | 4.9:1 | Passes body text, with a thin margin |
+| Rust on Paper (and Paper on Rust buttons) | 4.8:1 | Passes body text, barely |
+| Sage on Paper | 3.0:1 | Fails text; fine for rules and decoration |
 
-**Changes, by impact:**
+**Findings, by impact**
 
-1. **Sage text fails.** Keep `#7c9082` for rules and tag fills only. For tag text, use a deeper sage, `#56695b` (5.2:1 on Paper).
-2. **Links rely on color alone.** Rust against Ink is 2.7:1, so underline links in body copy (thin, rust, offset). Keep the rust button for calls to action.
-3. **Add a hover state.** Use `#9a3b22` for rust hover and pressed states (6.2:1 with Paper text).
-4. **Keep Muted on Paper only.** At 4.9:1 it has no margin, so any tinted card or panel would push it below 4.5:1. Separate sections with Sage rules instead of tinted boxes.
-5. **Proof for print.** `#f6f1e7` is a screen value. Your printed paper will be the stock, not this color. Light Sage will print pale, and small Muted type can thin out on uncoated stock. Ask the printer for a proof and match Rust and Sage to spot inks or Pantone, not hex.
+1. **Sage text fails (3.0:1).** If tags carry labels, keep the text Ink on a light sage tint, or use a darker sage for the text. `#5a6d5f` measures about 4.9:1 on Paper. Keep `#7c9082` for rules and tag fills.
+2. **Rust needs a hover/pressed step.** Right now a hover state would have to be a small shift from the base color. Use `#963820` (about 6.5:1 on Paper) so the state change reads clearly.
+3. **Print is a separate job.** Screen hex is not a print value. Ask your printer for a proof, or for Lab or Pantone matches for Rust, Sage, and Ink, before you commit to the price list. If the stock is cream, let the paper be the background and don't print a Paper-colored flood, which doubles the tint and muddies it.
+4. **Sage hairlines may drop out in print.** Make printed rules at least about 1 pt, or use the darker sage for them.
+5. **Muted captions** should be at least 8 pt on print, because light gray type loses definition under dot gain.
 
-**Beyond color:** Premium reads mostly from restraint. Keep rust to links and the one button, use generous margins and leading, and let type do the work. Those choices will do more than any hue change.
+**Keep as is:** Ink, Paper, Muted, and Rust as the sole accent. Don't add a second accent to chase a "richer" feel. Premium here will mostly come from type, spacing, and restraint, not more color.
 
-Assumptions: I took "Rust" as the only accent for both links and buttons, as you described. The ratios assume the standard body-text threshold of 4.5:1.
+**Assumption:** I treated the sage tags as text-bearing. If they're purely decorative, finding 1 doesn't apply.

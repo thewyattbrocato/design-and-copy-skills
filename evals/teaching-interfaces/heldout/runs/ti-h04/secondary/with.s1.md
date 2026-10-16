@@ -1,24 +1,33 @@
-**Layout, top to bottom**
+**Goal:** after reading, a homeowner can say what the unit does with electricity, where its heat comes from, and why it needs air around it. (I assumed this goal. Tell me if the page should aim at something else, such as choosing a unit.)
 
-1. **One heading and one sentence.** For example: "A heat pump water heater moves heat from the air into your water instead of making heat with an electric element." Everything else on the page serves this sentence.
+## Page layout, top to bottom
 
-2. **The full diagram, labeled on the parts.** Show your complete drawing once, full width, with each part named beside it: tank, cold-water inlet, hot-water outlet, fan, evaporator coil, compressor, condenser coil. No lettered legend. This is the reference the steps below return to.
+**1. Headline and one-sentence takeaway**
+Lead with the core idea: *A heat pump water heater moves heat from the surrounding air into your water. It does not make the heat from scratch.* Nothing else competes with this line.
 
-3. **Four steps, one still picture each.** Show the diagram four times, each time highlighting only the parts that step is about and dimming the rest. Put each step's heading and one or two sentences directly above its picture, so the words and the part stay together on a phone.
-   - **Step 1, air in, cool air out.** The fan pulls air across the evaporator coil. Introduce "refrigerant" here in one line: the fluid that carries heat around the loop. Show the air-in and cool-air-out arrows. Say the refrigerant absorbs heat from the air, so the air leaves cooler.
-   - **Step 2, the compressor.** The compressor squeezes the refrigerant gas, which raises its temperature.
-   - **Step 3, heat goes into the water.** The hot refrigerant flows through the condenser coil wrapped around the tank, and heat passes into the water. The refrigerant cools and returns to the evaporator to start again.
-   - **Step 4, hot water leaves the tank.** Cold water enters at the bottom. When a tap opens, hot water leaves at the top.
+**2. Name the parts (before the process)**
+Show the diagram once with each part labeled directly on it: tank, fan, evaporator coil, compressor, condenser coil. Use the words on the drawing, not a legend. Keep the cold-water inlet and hot-water outlet labels too. Limit the new terms to these parts. If you need "refrigerant," introduce it in one plain line: "the fluid that carries heat around the loop."
 
-   Each step adds at most two new things, which keeps the sequence within what a reader can hold.
+**3. The cycle as four steps**
+Show the same drawing four times, one step at a time. Each step has one sentence above its picture and highlights only the part that changes. Earlier parts stay visible but dimmed, so nothing has to be remembered.
 
-4. **"What this means for your home."** Two or three plain points you can back with real installation facts: clearance and airflow requirements, noise, and the cool air it puts out. That last point matters to homeowners, because the unit cools the space it sits in. Use visible placeholders such as `[clearance requirement]` and `[noise level]` until you have verified numbers.
+- **Step 1: Air in.** The fan pulls room air across the evaporator coil.
+- **Step 2: Heat absorbed.** The refrigerant picks up heat from that air.
+- **Step 3: Compressed.** The compressor squeezes the refrigerant, which raises its temperature.
+- **Step 4: Heat to water.** The condenser coil wrapped around the tank gives heat to the water. The cooled refrigerant returns, and the loop repeats.
 
-5. **"Learn more," collapsed by default.** Move the rest of the 600 words here: the detail on refrigerant, efficiency and how the system responds to demand. The main path then runs about 250 words, which a skimmer can finish, and a reader who wants depth can open it.
+Put the "cool air out" and "heat moving into water" arrows in steps 1 and 4 respectively, so each arrow appears with the sentence that explains it.
 
-6. **One next step.** For example: "Not sure it fits your home? Call us for a free look at [your basement / your current tank]." One action only.
+**4. "Why this matters at home"**
+Keep this short, around three items. Homeowners often ask about the cool air, so explain it here: it is a side effect of pulling heat out of the air. Other items could cover where the unit must sit and keeping the air intake clear. Use only the facts your technicians confirm. I did not add specific numbers, efficiency claims, or clearance distances.
 
-**Notes**
+**5. One next step**
+End with a single action: "Questions about your unit? Call Tidewater Plumbing at [phone]." No newsletter sign-up, no second offer.
 
-- I don't know where the compressor sits or whether the air comes from the room or outdoors. Confirm both before publishing, since the step 1 wording depends on it.
-- Skip animation. The four stills show the same sequence, can be read at the reader's pace, and work with reduced motion or no audio.
+## Writing and media notes
+
+- **Word budget:** Spread the 600 words across the sections. Most should sit beside the steps, and the intro and closing should be short.
+- **Motion:** If you animate the steps, keep each one short and pausable. Give reduced-motion visitors the four still images. Add captions and a transcript if there is narration, with no background music.
+- **Optional expert detail:** If you want more depth for curious readers, put it in a collapsed "How the refrigerant loop works" section after the steps, so the main path stays short.
+
+Two notes: I assumed the goal above and the four-step split, since the diagram has four distinct phases. Before publishing, have a technician check the wording of step 2 and the "why this matters" items.

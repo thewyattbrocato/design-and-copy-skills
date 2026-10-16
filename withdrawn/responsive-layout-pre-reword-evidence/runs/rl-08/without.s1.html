@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Harbour Street Family Clinic – Welcome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* 1rem = 10px at 1920px wide; whole layout scales with the screen */
+  html { font-size: 0.5208vw; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; cursor: none; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0b2a3d;
+    color: #ffffff;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 3.2rem;
+    padding: 6rem 8rem;           /* keeps content inside TV overscan */
+  }
+  header { text-align: center; }
+  .eyebrow {
+    font-size: 3.4rem; letter-spacing: 0.4rem; text-transform: uppercase;
+    color: #8fd3e8; font-weight: 600; margin-bottom: 1rem;
+  }
+  h1 { font-size: 10.4rem; line-height: 1.05; font-weight: 800; letter-spacing: -0.1rem; }
+
+  .hours {
+    align-self: center;
+    background: #123a52;
+    border: 0.4rem solid #1f5a7c;
+    border-radius: 2.4rem;
+    padding: 3.6rem 5rem;
+  }
+  .hours h2 {
+    font-size: 3.6rem; font-weight: 600; color: #8fd3e8;
+    text-transform: uppercase; letter-spacing: 0.3rem; margin-bottom: 2.2rem;
+  }
+  .row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 1.8rem 3rem; border-radius: 1.4rem;
+    font-size: 6.4rem; font-weight: 700;
+  }
+  .row span:last-child { font-variant-numeric: tabular-nums; }
+  .row.today { background: #ffffff; color: #0b2a3d; }
+  .row .tag {
+    font-size: 3rem; font-weight: 700; background: #0b6e4f; color: #fff;
+    padding: 0.4rem 1.6rem; border-radius: 5rem; margin-left: 2rem;
+    vertical-align: middle; display: none;
+  }
+  .row.today .tag { display: inline-block; }
+
+  .flu {
+    display: flex; align-items: center; justify-content: center; gap: 3rem;
+    background: #ffd166; color: #1b1b1b;
+    border-radius: 2.4rem; padding: 2.8rem 4rem;
+    font-size: 6rem; font-weight: 800; text-align: center;
+  }
+  .flu .level {
+    background: #1b1b1b; color: #ffd166; border-radius: 1.4rem;
+    padding: 0.4rem 2.4rem;
+  }
+
+  .checkin {
+    text-align: center; font-size: 6.8rem; font-weight: 800;
+    color: #8fd3e8; padding-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Welcome to</div>
+    <h1>Harbour Street Family Clinic</h1>
+  </header>
+
+  <section class="hours" aria-label="Walk-in hours">
+    <h2>Walk-in hours</h2>
+    <div class="row" id="weekdays"><span>Mon – Fri<span class="tag">Today</span></span><span>8:00 – 18:00</span></div>
+    <div class="row" id="saturday"><span>Saturday<span class="tag">Today</span></span><span>9:00 – 13:00</span></div>
+  </section>
+
+  <div class="flu" role="note">
+    <span>Flu clinic is on</span><span class="level">Level 2</span>
+  </div>
+
+  <div class="checkin">Please check in at the desk</div>
+
+<script>
+  // Highlight today's row (Sun shows neither; hours list stays visible)
+  var d = new Date().getDay();
+  if (d >= 1 && d <= 5) document.getElementById('weekdays').classList.add('today');
+  if (d === 6) document.getElementById('saturday').classList.add('today');
+  // Refresh at midnight-ish so the highlight stays correct on a always-on display
+  setTimeout(function () { location.reload(); }, 60 * 60 * 1000);
+</script>
+</body>
+</html>

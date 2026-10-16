@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community Gardens: harvest is growing, the waitlist is growing faster</title>
+<style>
+  :root{
+    --bg:#fbfaf6; --ink:#1d2421; --ink2:#4a5550; --muted:#6b7570; --rule:#dcdfd8; --grid:#e6e8e2;
+    --harvest:#1f7a55; --harvest-prev:#a9cfbd; --wait:#b8520a;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#14181a; --ink:#eef1ee; --ink2:#bcc5bf; --muted:#97a19b; --rule:#2e3633; --grid:#252c29;
+      --harvest:#4cb88a; --harvest-prev:#2f5b49; --wait:#f0894a;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg)}
+  body{
+    color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.35;
+    font-variant-numeric:tabular-nums;
+  }
+  .page{max-width:1280px;margin:0 auto;padding:28px 36px 20px}
+  header{margin-bottom:22px}
+  .kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  h1{font-size:34px;line-height:1.1;font-weight:750;letter-spacing:-.01em}
+  h1 em{font-style:normal;color:var(--wait)}
+  .dek{margin-top:8px;font-size:15px;color:var(--ink2);max-width:860px}
+  .cols{display:grid;grid-template-columns:1.3fr 1fr .95fr;gap:36px;align-items:start}
+  h2{font-size:15px;line-height:1.25;font-weight:700;margin-bottom:4px}
+  .sub{font-size:12px;color:var(--muted);margin-bottom:12px}
+
+  /* legend */
+  .legend{display:flex;gap:16px;font-size:12px;color:var(--ink2);margin-bottom:8px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend b{display:inline-block;width:12px;height:12px;border-radius:2px}
+
+  /* harvest bars */
+  .row{display:grid;grid-template-columns:104px 1fr 44px;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--grid)}
+  .row:first-of-type{border-top:0}
+  .gname{font-size:13px;font-weight:600;line-height:1.2}
+  .gname small{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+  .bar{display:flex;align-items:center;gap:6px;height:15px}
+  .bar+.bar{margin-top:2px}
+  .bar i{display:block;height:13px;width:calc(var(--p) * .8%);border-radius:0 3px 3px 0}
+  .bar.prev i{background:var(--harvest-prev)}
+  .bar.cur i{background:var(--harvest)}
+  .bar span{font-size:11px;color:var(--ink2)}
+  .bar.cur span{color:var(--ink);font-weight:600}
+  .bar .na{font-size:11px;color:var(--muted);font-style:italic}
+  .chg{font-size:13px;font-weight:700;text-align:right}
+  .chg.down{color:var(--ink)}
+  .totals{margin-top:6px;padding-top:9px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink2);display:grid;gap:3px}
+  .totals b{color:var(--ink)}
+
+  /* waitlist chart */
+  svg{display:block;width:100%;height:auto}
+  svg text{font-family:inherit;fill:var(--muted);font-size:10px}
+  svg .v{fill:var(--ink);font-size:12px;font-weight:700}
+  svg .vb{fill:var(--wait);font-size:14px;font-weight:800}
+  svg .note{fill:var(--ink2);font-size:10.5px}
+  .caption{margin-top:10px;font-size:12.5px;color:var(--ink2)}
+
+  /* gap bars */
+  .gap{margin-bottom:12px}
+  .gap .lab{font-size:12px;color:var(--ink2);margin-bottom:3px}
+  .gap .lab b{color:var(--ink)}
+  .track{display:flex;align-items:center;gap:8px}
+  .track i{display:block;height:20px;width:calc(var(--p) * .8%);border-radius:0 4px 4px 0}
+  .track span{font-size:17px;font-weight:800}
+  .w i{background:var(--wait)} .h i{background:var(--harvest)}
+  .facts{margin-top:18px;display:grid;gap:12px}
+  .fact{padding-top:10px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink2)}
+  .fact strong{display:block;font-size:22px;line-height:1.1;color:var(--ink);font-weight:800}
+
+  footer{margin-top:20px;padding-top:10px;border-top:1px solid var(--rule);font-size:11px;color:var(--muted);max-width:1100px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  @media (max-width:980px){
+    .cols{grid-template-columns:1fr;gap:28px}
+    h1{font-size:28px}
+    .page{padding:20px}
+  }
+  @media print{
+    @page{size:landscape;margin:10mm}
+    .page{padding:0;max-width:none}
+    h1{font-size:30px}
+    header{margin-bottom:14px}
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header>
+    <p class="kicker">Community Gardens · Annual Report · Five sites · 2026 through Nov 15</p>
+    <h1>The harvest is growing. <em>The waitlist is growing faster.</em></h1>
+    <p class="dek">Gardeners have grown 19% more food than in 2025, but the waitlist has grown 41% since January. Demand for plots is outpacing what the gardens produce.</p>
+  </header>
+
+  <div class="cols">
+    <!-- 1: harvest -->
+    <section aria-labelledby="h-harvest">
+      <h2 id="h-harvest">Three of four established gardens grew; Foundry Lot slipped 5%</h2>
+      <p class="sub">Harvest by garden, kilograms</p>
+      <div class="legend">
+        <span><b style="background:var(--harvest-prev)"></b>2025</span>
+        <span><b style="background:var(--harvest)"></b>2026 to Nov 15</span>
+      </div>
+
+      <div class="row">
+        <div class="gname">Alder Street<small>40 plots</small></div>
+        <div>
+          <div class="bar prev" title="Alder Street 2025: 3,100 kg"><i style="--p:88.6"></i><span>3,100</span></div>
+          <div class="bar cur" title="Alder Street 2026: 3,480 kg"><i style="--p:99.4"></i><span>3,480</span></div>
+        </div>
+        <div class="chg">+12%</div>
+      </div>
+      <div class="row">
+        <div class="gname">Foundry Lot<small>35 plots</small></div>
+        <div>
+          <div class="bar prev" title="Foundry Lot 2025: 2,600 kg"><i style="--p:74.3"></i><span>2,600</span></div>
+          <div class="bar cur" title="Foundry Lot 2026: 2,480 kg"><i style="--p:70.9"></i><span>2,480</span></div>
+        </div>
+        <div class="chg down">▼ 5%</div>
+      </div>
+      <div class="row">
+        <div class="gname">Millrace<small>28 plots</small></div>
+        <div>
+          <div class="bar prev" title="Millrace 2025: 1,900 kg"><i style="--p:54.3"></i><span>1,900</span></div>
+          <div class="bar cur" title="Millrace 2026: 2,150 kg"><i style="--p:61.4"></i><span>2,150</span></div>
+        </div>
+        <div class="chg">+13%</div>
+      </div>
+      <div class="row">
+        <div class="gname">Bluebird Terrace<small>22 plots</small></div>
+        <div>
+          <div class="bar prev" title="Bluebird Terrace 2025: 1,150 kg"><i style="--p:32.9"></i><span>1,150</span></div>
+          <div class="bar cur" title="Bluebird Terrace 2026: 1,420 kg"><i style="--p:40.6"></i><span>1,420</span></div>
+        </div>
+        <div class="chg">+23%</div>
+      </div>
+      <div class="row">
+        <div class="gname">Pepper Hill<small>30 plots · opened Jun 2026</small></div>
+        <div>
+          <div class="bar prev"><span class="na">not yet open in 2025</span></div>
+          <div class="bar cur" title="Pepper Hill 2026: 910 kg"><i style="--p:26"></i><span>910</span></div>
+        </div>
+        <div class="chg">new</div>
+      </div>
+
+      <div class="totals">
+        <div><b>All five gardens:</b> 10,440 kg vs 8,750 kg in 2025 (<b>+19%</b>)</div>
+        <div><b>Four open both years:</b> 9,530 kg vs 8,750 kg (<b>+9%</b>)</div>
+      </div>
+    </section>
+
+    <!-- 2: waitlist -->
+    <section aria-labelledby="h-wait">
+      <h2 id="h-wait">The waitlist is accelerating: +46 in 2025, +67 so far in 2026</h2>
+      <p class="sub">People on the waitlist</p>
+      <svg viewBox="0 0 400 235" role="img" aria-label="Line chart of people on the waitlist: 118 in January 2025, 164 in January 2026, 231 on November 15, 2026.">
+        <g>
+          <line x1="56" x2="380" y1="20" y2="20" stroke="var(--grid)"/>
+          <line x1="56" x2="380" y1="56" y2="56" stroke="var(--grid)"/>
+          <line x1="56" x2="380" y1="92" y2="92" stroke="var(--grid)"/>
+          <line x1="56" x2="380" y1="128" y2="128" stroke="var(--grid)"/>
+          <line x1="56" x2="380" y1="164" y2="164" stroke="var(--grid)"/>
+          <line x1="56" x2="380" y1="200" y2="200" stroke="var(--muted)" stroke-width="1"/>
+          <text x="46" y="23" text-anchor="end">250</text>
+          <text x="46" y="59" text-anchor="end">200</text>
+          <text x="46" y="95" text-anchor="end">150</text>
+          <text x="46" y="131" text-anchor="end">100</text>
+          <text x="46" y="167" text-anchor="end">50</text>
+          <text x="46" y="203" text-anchor="end">0</text>
+        </g>
+        <polyline points="56,115 218,81.9 360,33.7" fill="none" stroke="var(--wait)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="56" cy="115" r="5" fill="var(--wait)" stroke="var(--bg)" stroke-width="2"><title>Jan 2025: 118 people</title></circle>
+        <circle cx="218" cy="81.9" r="5" fill="var(--wait)" stroke="var(--bg)" stroke-width="2"><title>Jan 2026: 164 people</title></circle>
+        <circle cx="360" cy="33.7" r="6" fill="var(--wait)" stroke="var(--bg)" stroke-width="2"><title>Nov 15, 2026: 231 people</title></circle>
+        <text class="v" x="56" y="104" text-anchor="middle">118</text>
+        <text class="v" x="218" y="70" text-anchor="middle">164</text>
+        <text class="vb" x="360" y="21" text-anchor="middle">231</text>
+        <text class="note" x="140" y="123" text-anchor="middle">+46 in 2025</text>
+        <text class="note" x="296" y="92" text-anchor="middle">+67 so far in 2026</text>
+        <text x="56" y="218" text-anchor="middle">Jan 2025</text>
+        <text x="218" y="218" text-anchor="middle">Jan 2026</text>
+        <text x="360" y="218" text-anchor="middle">Nov 15, 2026</text>
+      </svg>
+      <p class="caption">That is roughly 4 more people a month in 2025 and 6 a month in 2026. Even with Pepper Hill's 30 new plots opening in June, the list is 67 longer than in January.</p>
+    </section>
+
+    <!-- 3: the gap -->
+    <section aria-labelledby="h-gap">
+      <h2 id="h-gap">Waitlist growth is more than double harvest growth</h2>
+      <p class="sub">Change vs 2025 for harvest; change since Jan 2026 for waitlist</p>
+
+      <div class="gap w">
+        <div class="lab"><b>Waitlist</b> · 231 vs 164 people</div>
+        <div class="track"><i style="--p:91.1"></i><span>+41%</span></div>
+      </div>
+      <div class="gap h">
+        <div class="lab"><b>Harvest, all five gardens</b> · 10,440 vs 8,750 kg</div>
+        <div class="track"><i style="--p:42.2"></i><span>+19%</span></div>
+      </div>
+      <div class="gap h">
+        <div class="lab"><b>Harvest, four gardens open both years</b> · 9,530 vs 8,750 kg</div>
+        <div class="track"><i style="--p:20"></i><span>+9%</span></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><strong>231 people, 155 plots</strong>About three people waiting for every two plots across the five gardens.</div>
+        <div class="fact"><strong>4,950 volunteer hours</strong>Given so far in 2026, already 18% above the 4,200 hours of 2025.</div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    2026 figures run through Nov 15, so year-end totals will be higher. Harvest change compares 2026 to date with the 2025 figures. Pepper Hill opened June 2026 and has no 2025 harvest, so "four gardens open both years" leaves it out. Waitlist change compares Nov 2026 (231) with Jan 2026 (164). Bars start at zero.
+  </footer>
+
+  <table class="sr">
+    <caption>Data behind the charts</caption>
+    <thead><tr><th>Garden</th><th>Plots</th><th>Harvest 2025 (kg)</th><th>Harvest 2026 to Nov 15 (kg)</th></tr></thead>
+    <tbody>
+      <tr><td>Alder Street</td><td>40</td><td>3,100</td><td>3,480</td></tr>
+      <tr><td>Millrace</td><td>28</td><td>1,900</td><td>2,150</td></tr>
+      <tr><td>Foundry Lot</td><td>35</td><td>2,600</td><td>2,480</td></tr>
+      <tr><td>Bluebird Terrace</td><td>22</td><td>1,150</td><td>1,420</td></tr>
+      <tr><td>Pepper Hill (opened June 2026)</td><td>30</td><td>none</td><td>910</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="4">Waitlist: Jan 2025 118; Jan 2026 164; Nov 2026 231. Volunteer hours: 2025 4,200; 2026 so far 4,950.</td></tr>
+    </tfoot>
+  </table>
+</main>
+</body>
+</html>

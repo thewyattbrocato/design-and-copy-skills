@@ -1,22 +1,39 @@
-**Verdict:** nothing on the page is ranked. Every element is styled at nearly the same level, so a visitor can't tell what matters first. That is what reads as amateur.
+**The page has no hierarchy and no system.** Everything is shouting at the same volume, and nothing repeats consistently enough to look deliberate.
 
-**Findings, in order of fix priority**
+**1. Three bold headings compete (high).**
+- The headline is 28px bold, the date is 26px bold, and the intro's first sentence is 24px bold. That is a 2px and 4px step, which reads as a mistake and not as a hierarchy.
+- A visitor can't tell what to read first. The date is the most important fact for a market, and it ties with the title.
+- A bold sentence at the start of a paragraph is a fourth heading in disguise.
+- Fix: make the headline about 40–48px, the date about 20–22px at a lighter weight or in a contrast color, and the intro plain 18px. Aim for three sizes, with each step at least 1.25×.
 
-1. **The type scale has no hierarchy (major).** The headline is 28px, the date is 26px, and the intro's first sentence is 24px, all bold. They differ by 2px each, which looks like a mistake rather than a choice. Bolding only the first sentence of a paragraph also makes a heading and a body line fight each other. Fix: make the headline clearly dominant (about 40px or more). Make the date a distinct secondary element, such as a smaller, lighter-weight line under the headline. Set the intro in plain 16–18px.
+**2. One color does every job (high).**
+- #8b0000 is used for headings, body text, and presumably borders and buttons. Because color carries no meaning, it can't mark importance.
+- Dark red on pale pink is a one-hue page. Contrast should be fine: against white it computes to about 10:1, and on pale pink I'd estimate somewhat lower but still passing. I didn't check the exact pink.
+- Fix: set body text in a near-black neutral. Keep the red for the headline, the primary button, and links. Use a warm off-white or cream background, which also looks less like a default.
 
-2. **The buttons have no priority and no consistent system (major).** There are four buttons in four styles: outlined, filled, a text link in a pill, and filled in a second red. "Get tickets" is probably the main goal, yet it's the outlined one, which looks weaker than "Vendor list". Fix: one primary style (filled) for "Get tickets" only, one secondary style (outlined) for "Vendor list" and "Map", and "Subscribe" as a quiet tertiary. Drop the second red.
+**3. Four buttons, four styles, no primary (high).**
+- "Get tickets" is outlined, "Vendor list" is filled, "Map" is a text link in a pill, and "Subscribe" is filled in a second red.
+- The main goal is ticket sales, and the ticket button is the weakest-looking of the four. The "Subscribe" red is a second accent color with no reason behind it.
+- Fix: make "Get tickets" the single filled primary. Give "Vendor list" and "Map" the same secondary style (outlined). Make "Subscribe" a quiet text link or put it in the footer. That leaves two button styles.
 
-3. **Everything is boxed, so nothing is grouped (moderate).** All five sections get the same 1px border and drop shadow. Tickets, the main action, looks the same as parking. Boxes and shadows also add visual noise. Fix: remove the borders and shadows and separate sections with spacing and headings. If you keep any container, use it only for tickets.
+**4. Five identical boxes (medium).**
+- Each of the about, vendors, food, parking and tickets sections gets a 1px border and a drop shadow. Giving all five the same weight says they are equally important, which they aren't. Tickets and vendors matter more than parking.
+- The drop shadows also add visual noise and look dated.
+- Fix: remove the borders and shadows, and separate sections with spacing (for example 64–96px) and a heading. Keep a card only for content that needs a container, such as a vendor tile. Give tickets a distinct band.
 
-4. **There's one color for everything (moderate).** Headline, date, body text, and borders are all #8b0000 on pink. Without a text/accent split, color can't signal what's important. Contrast is probably fine, since dark red on a pale background should be well above 4.5:1 (my rough estimate is 8–10:1, but I wasn't given the exact pink). Fix: use near-black or dark neutral for body text and keep the red as the accent for the headline and the primary button.
+**5. Vendor photos at different sizes (medium).**
+- Mismatched sizes break the edges and spacing, and they are probably the clearest "unfinished" signal on the page.
+- Fix: crop them all to one aspect ratio (for example 4:3 or square) and put them in a grid.
 
-5. **The vendor photos are different sizes (moderate).** Ragged sizes look unfinished and make the grid hard to scan. Fix: crop to one aspect ratio and size, such as 4:3 or square, and use one consistent gap.
+**6. Centered everything (medium, partly taste).**
+- Centered text works for a short title block. For the multi-line paragraphs, food and parking details, and vendor lists, it gives a ragged left edge that is hard to scan.
+- Fix: keep the hero centered, and left-align the body sections in a column about 60–70 characters wide.
 
-6. **Everything is centered (minor, partly taste).** Centering works for the headline and date. For the multi-line paragraphs and the vendor, food, and parking details, a ragged left edge makes reading harder. Fix: center the hero and left-align the content below it.
+**Keep these:**
+- The warm red is a good seasonal choice for a winter market. It only needs a neutral and a better background to support it.
+- The sections themselves (about, vendors, food, parking, tickets) cover what visitors need.
+- Having a distinct date line is the right instinct. It just needs the right rank.
 
-**What to keep**
-- A single brand red gives the page an identity, and a winter-market feel suits the pink. Use it with more restraint.
-- Splitting the content into five clear sections (about, vendors, food, parking, tickets) matches what visitors need to know.
-- The date and the headline sit up top, where visitors will look first.
+**Fix order:** buttons (3), then type scale (1), then color (2). After that, remove the boxes (4) and normalize the photos (5). The first three changes account for most of the amateur look.
 
-**Not checked:** exact contrast, mobile layout, and the real copy. I judged from your description, not a screenshot. If you send a screenshot or the HTML, I can check these.
+I'm working from your description, not a screenshot, so I didn't check spacing, mobile layout, or the exact pink. Send a screenshot or the HTML/CSS if you want those covered.

@@ -5,7 +5,8 @@ from helpers import TempRoot, load_script, run_main
 
 mod = load_script("before_after_gallery")
 RULE = "Chosen as the task with the largest judged difference."
-README = "# Demo\n\n" + mod.START + "\nstale\n" + mod.END + "\n\nTail.\n"
+README = ("# Demo\n\n" + mod.FEATURED_START + "\nstale\n" + mod.FEATURED_END + "\n\n" + mod.START + "\nstale\n" + mod.END
+          + "\n\nTail.\n")
 
 
 def meta(skill, kind="design", **over):
@@ -21,7 +22,13 @@ class GalleryTest(unittest.TestCase):
         self.t = TempRoot().__enter__()
         self.addCleanup(self.t.__exit__, None, None, None)
         self.t.write("README.md", README)
-        self.add("alpha", "design", without="Plain `code` | pipe\n\n- item\n[...]", with_="With <b>tags</b> & @user")
+        self.add("alpha", "design", without="Plain `code` | pipe\n\n- item\n[...]", with_="With <b>tags</b> & @user",
+                 featured=True, images=[{"file": "without.png", "alt": "Before", "side": "without"},
+                                        {"file": "with.png", "alt": "After", "side": "with"}])
+        self.t.write("evals/alpha/heldout/results.json", json.dumps({
+            "summary": {"judge": "claude:opus", "same_model_judge": False},
+            "verdicts": [{"task_id": "t1", "winner": "with", "samples": [
+                {"winner": "with"}, {"winner": "with"}, {"winner": "tie"}]}]}))
         self.add("beta", "copy", marginal=True, judge_gap="0.5")
 
     def add(self, skill, kind, without="without text", with_="with text", **over):
@@ -66,6 +73,33 @@ class GalleryTest(unittest.TestCase):
         self.assertIn("| ![Before \\[x\\]](docs/before-after/alpha/without.png) | "
                       "![After](docs/before-after/alpha/with.png) |", self.text())
 
+    def test_featured_block_shows_prompt_images_answers_and_the_judge_result(self):
+        text = "\n".join(mod.featured_lines(self.t.root))
+        self.assertIn("with and without the `alpha` skill installed:", text)
+        self.assertIn("> Make a \\*thing\\* &#124; now.", text)
+        self.assertIn("![Before](docs/before-after/alpha/without.png) | ![After](docs/before-after/alpha/with.png)", text)
+        self.assertIn("The answer with the skill won this task, 2 of 3 samples, by +1.30 rubric points", text)
+        self.assertIn("`claude:opus`, a different model from the one that wrote the answers", text)
+        self.assertIn("the skill won 5, lost 2 and tied 3", text)
+        self.assertIn("This is one example, not a typical one", text)
+        self.assertIn("Examples for 1 other skills", text)
+
+    def test_featured_block_says_so_when_the_skill_lost_the_task(self):
+        self.t.write("evals/alpha/heldout/results.json", json.dumps({
+            "summary": {"judge": "claude:opus", "same_model_judge": False},
+            "verdicts": [{"task_id": "t1", "winner": "without", "samples": [{"winner": "without"}]}]}))
+        self.assertIn("The answer without the skill won this task, 1 of 1 samples",
+                      "\n".join(mod.featured_lines(self.t.root)))
+
+    def test_exactly_one_skill_must_be_featured(self):
+        self.add("beta", "copy", featured=True)
+        with self.assertRaises(ValueError):
+            mod.featured_lines(self.t.root)
+        self.add("alpha", "design")
+        self.add("beta", "copy")
+        with self.assertRaises(ValueError):
+            mod.featured_lines(self.t.root)
+
     def test_missing_run_folder_is_an_error(self):
         (self.t.root / "evals/alpha/heldout/runs/t1/with.md").unlink()
         (self.t.root / "evals/alpha/heldout/runs/t1").rmdir()
@@ -83,6 +117,7 @@ class GalleryTest(unittest.TestCase):
     def test_main_writes_then_check_passes_and_detects_drift(self):
         self.assertEqual(run_main(mod, self.t.root)[0], 0)
         self.assertIn("<b>alpha</b>", (self.t.root / "README.md").read_text())
+        self.assertIn("**Judge result.**", (self.t.root / "README.md").read_text())
         self.assertIn("Tail.", (self.t.root / "README.md").read_text())
         self.assertEqual(mod.main(["--root", str(self.t.root), "--check"]), 0)
         self.t.write("docs/before-after/alpha/with.md", "changed")

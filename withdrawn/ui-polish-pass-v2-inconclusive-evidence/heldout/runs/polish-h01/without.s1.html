@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tide lookup</title>
+<style>
+:root{
+  --bg:#f3f6f9; --card:#fff; --text:#14232f; --muted:#5b6b78; --line:#dde5ec;
+  --accent:#0b6e8a; --accent-text:#fff; --high:#0b6e8a; --low:#8a5a0b;
+  --bar:#cfe6ee; --focus:#0b6e8a; --shadow:0 1px 2px rgba(20,35,47,.06),0 6px 20px rgba(20,35,47,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0e1a22; --card:#15262f; --text:#e6eef3; --muted:#93a6b3; --line:#243844;
+    --accent:#4cb8d4; --accent-text:#08202a; --high:#6cc8e0; --low:#e0b36c;
+    --bar:#1f4352; --focus:#6cc8e0; --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  line-height:1.45; -webkit-text-size-adjust:100%;
+}
+main{max-width:34rem; margin:0 auto; padding:2.5rem 1rem 3rem}
+header{margin-bottom:1.5rem}
+h1{margin:0 0 .25rem; font-size:1.75rem; letter-spacing:-.01em}
+.sub{margin:0; color:var(--muted)}
+form{display:flex; gap:.5rem}
+input,button{font:inherit; font-size:1rem; border-radius:10px}
+input{
+  flex:1; min-width:0; padding:.7rem .85rem; color:var(--text);
+  background:var(--card); border:1px solid var(--line);
+}
+input::placeholder{color:var(--muted)}
+button{cursor:pointer}
+.search{
+  padding:.7rem 1.2rem; font-weight:600; border:0;
+  background:var(--accent); color:var(--accent-text);
+}
+.search:hover{filter:brightness(1.08)}
+.search:active{transform:translateY(1px)}
+:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+.chips{display:flex; flex-wrap:wrap; gap:.5rem; margin:.9rem 0 0; padding:0; list-style:none}
+.chip{
+  padding:.35rem .8rem; font-size:.9rem; color:var(--text);
+  background:var(--card); border:1px solid var(--line); border-radius:999px;
+}
+.chip:hover{border-color:var(--accent)}
+#out{margin-top:1.5rem}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.card h2{margin:0; padding:1rem 1.1rem; font-size:1.15rem; border-bottom:1px solid var(--line)}
+.row{
+  display:grid; grid-template-columns:4.5rem 6rem 1fr; align-items:center; gap:.75rem;
+  padding:.8rem 1.1rem; border-bottom:1px solid var(--line);
+}
+.row:last-child{border-bottom:0}
+.time{font-variant-numeric:tabular-nums; font-weight:600; font-size:1.05rem}
+.kind{font-weight:600}
+.kind.high{color:var(--high)}
+.kind.low{color:var(--low)}
+.meter{display:flex; align-items:center; gap:.6rem; justify-content:flex-end}
+.track{flex:1; height:8px; background:var(--bar); border-radius:99px; overflow:hidden; min-width:2rem}
+.fill{display:block; height:100%; background:var(--accent); border-radius:99px}
+.height{font-variant-numeric:tabular-nums; min-width:3.6rem; text-align:right}
+.msg{
+  padding:1.1rem; background:var(--card); border:1px dashed var(--line);
+  border-radius:14px; color:var(--muted);
+}
+.msg strong{color:var(--text)}
+.note{margin-top:1.5rem; font-size:.85rem; color:var(--muted)}
+@media (max-width:420px){
+  .row{grid-template-columns:3.8rem 4.8rem 1fr; gap:.5rem; padding:.75rem .9rem}
+  .track{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .card,.msg{animation:in .2s ease-out}
+  @keyframes in{from{opacity:0; transform:translateY(4px)}to{opacity:1; transform:none}}
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Tide lookup</h1>
+    <p class="sub">Search a port to see its high and low tides.</p>
+  </header>
+
+  <form id="form" autocomplete="off" role="search">
+    <input id="port" type="search" placeholder="Port name" aria-label="Port name" list="ports" autocapitalize="words" spellcheck="false">
+    <datalist id="ports"></datalist>
+    <button class="search" type="submit">Search</button>
+  </form>
+
+  <ul class="chips" id="chips" aria-label="Available ports"></ul>
+
+  <div id="out" aria-live="polite"></div>
+
+  <p class="note">Times are local to each port. Heights are in metres.</p>
+</main>
+
+<script>
+const DATA={"Kellmouth":[["04:12","High","4.1 m"],["10:30","Low","0.6 m"],["16:44","High","4.3 m"],["22:51","Low","0.5 m"]],"Port Arnley":[["05:02","High","3.2 m"],["11:19","Low","0.9 m"]]};
+
+const portInput=document.getElementById('port');
+const out=document.getElementById('out');
+const names=Object.keys(DATA);
+const MAX_H=Math.max(...names.flatMap(n=>DATA[n].map(r=>parseFloat(r[2])||0)),1);
+
+function el(tag,cls,text){
+  const e=document.createElement(tag);
+  if(cls)e.className=cls;
+  if(text!==undefined)e.textContent=text;
+  return e;
+}
+
+function message(html){
+  out.replaceChildren();
+  const m=el('div','msg');
+  html(m);
+  out.appendChild(m);
+}
+
+function show(name){
+  const rows=DATA[name];
+  out.replaceChildren();
+  const card=el('section','card');
+  card.appendChild(el('h2',null,name));
+  rows.forEach(r=>{
+    const isHigh=r[1].toLowerCase()==='high';
+    const row=el('div','row');
+    row.appendChild(el('span','time',r[0]));
+    row.appendChild(el('span','kind '+(isHigh?'high':'low'),(isHigh?'▲ ':'▼ ')+r[1]));
+    const meter=el('span','meter');
+    const track=el('span','track');
+    const fill=el('span','fill');
+    fill.style.width=Math.min(100,(parseFloat(r[2])||0)/MAX_H*100)+'%';
+    track.appendChild(fill);
+    meter.appendChild(track);
+    meter.appendChild(el('span','height',r[2]));
+    row.appendChild(meter);
+    card.appendChild(row);
+  });
+  out.appendChild(card);
+}
+
+function go(){
+  const q=portInput.value.trim();
+  if(!q){
+    message(m=>m.textContent='Type a port name to see its tides.');
+    portInput.focus();
+    return;
+  }
+  const key=q.toLowerCase().replace(/\s+/g,' ');
+  const exact=names.find(n=>n.toLowerCase()===key);
+  const partial=names.filter(n=>n.toLowerCase().includes(key));
+  const match=exact||(partial.length===1?partial[0]:null);
+  if(match){
+    portInput.value=match;
+    show(match);
+  }else{
+    message(m=>{
+      m.appendChild(el('strong',null,'No tide data for “'+q+'”.'));
+      m.appendChild(document.createTextNode(' Try one of: '+names.join(', ')+'.'));
+    });
+  }
+}
+
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();go();});
+
+const list=document.getElementById('ports');
+const chips=document.getElementById('chips');
+names.forEach(n=>{
+  const o=document.createElement('option');
+  o.value=n;
+  list.appendChild(o);
+  const li=document.createElement('li');
+  const b=el('button','chip',n);
+  b.type='button';
+  b.addEventListener('click',()=>{portInput.value=n;go();});
+  li.appendChild(b);
+  chips.appendChild(li);
+});
+</script>
+</body>
+</html>

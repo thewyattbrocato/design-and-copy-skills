@@ -1,15 +1,5 @@
-**Empty state: My plants**
+Here's a draft for the About page:
 
-**Headline:** Your jungle starts here
+> Marrow & Rye started in 2019, when Dani Okafor and her brother Tunde opened the doors of a converted garage on Pell Street. The bread has a longer history than the bakery: Dani has kept her rye starter going since 2016, and everything we bake is naturally leavened with it. The flour comes from a mill two counties over. We bake six days a week and take Mondays off. Tunde runs the counter, so he's the one you'll meet when you come in, and he also delivers our bread to four cafes nearby. Come say hello. Bring an appetite, and we'll keep the starter fed.
 
-**Body:** Add your first plant and Fernwick will tell you when it's thirsty.
-
-**Button:** Add my first plant
-
-**Social proof (small, under the button):** Join 40,000 happy plant parents
-
-If you'd rather fold the proof into the body, so it's still one line:
-
-> Join 40,000 happy plant parents. Add your first plant to get care reminders.
-
-I'd keep it as a separate caption under the button. The body stays focused on the action, and the number reads as reassurance rather than a second pitch. I'd also store the count in a variable or remote config so you can update it as the real number grows.
+It's about 115 words and uses only the facts you gave me. If you'd like it closer to 120, or a bit more playful or more understated, I can adjust it.

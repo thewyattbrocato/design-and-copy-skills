@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brannock Cold Storage - Stock Check</title>
+<style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #000;
+    color: #fff;
+    font-family: Arial, "Segoe UI", Tahoma, sans-serif;
+    font-size: 18px;
+    line-height: 1.25;
+    padding: 8px;
+  }
+  h1 { font-size: 20px; margin: 0 0 8px 0; color: #ffd400; }
+  .search-row { margin-bottom: 8px; }
+  .search-row table { width: 100%; border-collapse: collapse; }
+  .search-row td { padding: 0; }
+  #search {
+    width: 100%;
+    -webkit-box-sizing: border-box; box-sizing: border-box;
+    height: 56px;
+    font-size: 24px;
+    padding: 0 10px;
+    background: #fff;
+    color: #000;
+    border: 4px solid #888;
+    border-radius: 0;
+  }
+  #clear {
+    height: 56px;
+    min-width: 64px;
+    margin-left: 6px;
+    font-size: 22px;
+    font-weight: bold;
+    background: #444;
+    color: #fff;
+    border: 4px solid #888;
+    border-radius: 0;
+  }
+  #search:focus, .count:focus, #clear:focus { outline: 4px solid #ffd400; outline-offset: 0; border-color: #ffd400; }
+  #summary { font-size: 18px; font-weight: bold; padding: 6px 0 8px 0; color: #fff; }
+  #summary span { color: #ffd400; }
+
+  table.stock { width: 100%; border-collapse: collapse; }
+  .stock th {
+    text-align: left;
+    background: #222;
+    color: #ffd400;
+    font-size: 16px;
+    padding: 8px 4px;
+    border-bottom: 3px solid #ffd400;
+  }
+  .stock td {
+    padding: 6px 4px;
+    border-bottom: 2px solid #555;
+    vertical-align: middle;
+    font-size: 20px;
+  }
+  .sku { font-weight: bold; word-break: break-all; }
+  .bin { font-size: 18px; color: #ddd; white-space: nowrap; }
+  .num { text-align: right; font-weight: bold; }
+  .stock th.num { text-align: right; }
+  .count {
+    width: 76px;
+    -webkit-box-sizing: border-box; box-sizing: border-box;
+    height: 52px;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: right;
+    padding: 0 6px;
+    background: #fff;
+    color: #000;
+    border: 4px solid #888;
+    border-radius: 0;
+  }
+  .status {
+    display: block;
+    min-width: 70px;
+    padding: 8px 4px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 3px solid #fff;
+  }
+  .s-open  { background: #000; color: #ccc; border-color: #777; }
+  .s-ok    { background: #0b6a1f; color: #fff; }
+  .s-short { background: #b00000; color: #fff; }
+  .s-over  { background: #ffd400; color: #000; border-color: #ffd400; }
+  #none { display: none; padding: 16px 4px; font-size: 22px; font-weight: bold; color: #ffd400; }
+  .note { font-size: 14px; color: #bbb; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Stock Check &ndash; Night Shift</h1>
+
+<div class="search-row">
+  <table>
+    <tr>
+      <td><input id="search" type="text" placeholder="Search SKU or bin" autocomplete="off" autocapitalize="characters"></td>
+      <td style="width:1%"><button id="clear" type="button">X</button></td>
+    </tr>
+  </table>
+</div>
+
+<div id="summary">Counted <span id="n-counted">0</span> of <span id="n-total">12</span> &middot; Mismatches <span id="n-diff">0</span></div>
+
+<table class="stock" id="stock">
+  <thead>
+    <tr>
+      <th>SKU / Bin</th>
+      <th class="num">Exp</th>
+      <th class="num">Count</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr data-exp="48"><td><div class="sku">FRZ-1001</div><div class="bin">A-01-02</div></td><td class="num">48</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted FRZ-1001"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="120"><td><div class="sku">FRZ-1014</div><div class="bin">A-01-05</div></td><td class="num">120</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted FRZ-1014"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="36"><td><div class="sku">FRZ-1022</div><div class="bin">A-02-01</div></td><td class="num">36</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted FRZ-1022"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="72"><td><div class="sku">FRZ-1037</div><div class="bin">A-02-04</div></td><td class="num">72</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted FRZ-1037"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="24"><td><div class="sku">CHL-2005</div><div class="bin">B-03-01</div></td><td class="num">24</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted CHL-2005"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="60"><td><div class="sku">CHL-2018</div><div class="bin">B-03-03</div></td><td class="num">60</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted CHL-2018"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="90"><td><div class="sku">CHL-2031</div><div class="bin">B-04-02</div></td><td class="num">90</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted CHL-2031"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="15"><td><div class="sku">ICE-3002</div><div class="bin">C-01-01</div></td><td class="num">15</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted ICE-3002"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="200"><td><div class="sku">ICE-3009</div><div class="bin">C-01-04</div></td><td class="num">200</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted ICE-3009"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="54"><td><div class="sku">PRD-4011</div><div class="bin">D-02-02</div></td><td class="num">54</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted PRD-4011"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="30"><td><div class="sku">PRD-4026</div><div class="bin">D-02-06</div></td><td class="num">30</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted PRD-4026"></td><td><span class="status s-open">Open</span></td></tr>
+    <tr data-exp="84"><td><div class="sku">PRD-4040</div><div class="bin">D-03-01</div></td><td class="num">84</td><td class="num"><input class="count" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" aria-label="Counted PRD-4040"></td><td><span class="status s-open">Open</span></td></tr>
+  </tbody>
+</table>
+
+<div id="none">No matching SKU or bin.</div>
+<div class="note">Type the counted quantity, then press Enter for the next item. Status shows SHORT or OVER with the difference.</div>
+
+<script>
+(function () {
+  var rows = document.getElementById('stock').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+  var search = document.getElementById('search');
+  var clearBtn = document.getElementById('clear');
+  var noneMsg = document.getElementById('none');
+  var nCounted = document.getElementById('n-counted');
+  var nDiff = document.getElementById('n-diff');
+  var nTotal = document.getElementById('n-total');
+  nTotal.innerHTML = rows.length;
+
+  function rowInput(row) { return row.getElementsByTagName('input')[0]; }
+  function rowStatus(row) { return row.getElementsByTagName('span')[0]; }
+
+  function updateRow(row) {
+    var val = rowInput(row).value.replace(/\s+/g, '');
+    var exp = parseInt(row.getAttribute('data-exp'), 10);
+    var s = rowStatus(row);
+    if (val === '' || isNaN(parseInt(val, 10))) {
+      s.className = 'status s-open';
+      s.innerHTML = 'Open';
+      return false;
+    }
+    var diff = parseInt(val, 10) - exp;
+    if (diff === 0) {
+      s.className = 'status s-ok';
+      s.innerHTML = 'OK';
+    } else if (diff < 0) {
+      s.className = 'status s-short';
+      s.innerHTML = 'Short ' + Math.abs(diff);
+    } else {
+      s.className = 'status s-over';
+      s.innerHTML = 'Over ' + diff;
+    }
+    return true;
+  }
+
+  function updateSummary() {
+    var counted = 0, diffs = 0, i;
+    for (i = 0; i < rows.length; i++) {
+      var cls = rowStatus(rows[i]).className;
+      if (cls.indexOf('s-open') === -1) { counted++; }
+      if (cls.indexOf('s-short') !== -1 || cls.indexOf('s-over') !== -1) { diffs++; }
+    }
+    nCounted.innerHTML = counted;
+    nDiff.innerHTML = diffs;
+  }
+
+  function applyFilter() {
+    var q = search.value.toUpperCase().replace(/^\s+|\s+$/g, '');
+    var shown = 0, i, text;
+    for (i = 0; i < rows.length; i++) {
+      text = (rows[i].getElementsByTagName('td')[0].innerText || rows[i].getElementsByTagName('td')[0].textContent).toUpperCase();
+      if (q === '' || text.indexOf(q) !== -1) {
+        rows[i].style.display = '';
+        shown++;
+      } else {
+        rows[i].style.display = 'none';
+      }
+    }
+    noneMsg.style.display = shown === 0 ? 'block' : 'none';
+  }
+
+  function nextVisibleInput(from) {
+    var i;
+    for (i = from + 1; i < rows.length; i++) {
+      if (rows[i].style.display !== 'none') { return rowInput(rows[i]); }
+    }
+    return null;
+  }
+
+  var i;
+  for (i = 0; i < rows.length; i++) {
+    (function (idx) {
+      var inp = rowInput(rows[idx]);
+      function onChange() {
+        var clean = inp.value.replace(/[^0-9]/g, '');
+        if (clean !== inp.value) { inp.value = clean; }
+        updateRow(rows[idx]);
+        updateSummary();
+      }
+      inp.onkeyup = function (e) {
+        e = e || window.event;
+        var k = e.keyCode || e.which;
+        if (k === 13) {
+          var nxt = nextVisibleInput(idx);
+          if (nxt) { nxt.focus(); if (nxt.select) { nxt.select(); } }
+          else { inp.blur(); }
+          return;
+        }
+        onChange();
+      };
+      inp.oninput = onChange;
+      inp.onchange = onChange;
+      inp.onfocus = function () { if (inp.select) { inp.select(); } };
+    })(i);
+  }
+
+  search.onkeyup = applyFilter;
+  search.oninput = applyFilter;
+  search.onchange = applyFilter;
+  search.onkeydown = function (e) {
+    e = e || window.event;
+    if ((e.keyCode || e.which) === 13) {
+      var first = nextVisibleInput(-1);
+      if (first) { first.focus(); }
+      return false;
+    }
+  };
+  clearBtn.onclick = function () {
+    search.value = '';
+    applyFilter();
+    search.focus();
+  };
+
+  applyFilter();
+  updateSummary();
+})();
+</script>
+</body>
+</html>

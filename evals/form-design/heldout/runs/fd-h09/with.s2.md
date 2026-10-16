@@ -1,0 +1,1 @@
+Never discard their input. Preserve the form data (server-side draft or local storage), then prompt re-authentication in place, such as a modal or a redirect that returns to the form. After login, restore everything and complete the submission, or let them press Submit again. Explain what happened in plain language.

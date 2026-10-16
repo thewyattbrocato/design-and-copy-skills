@@ -1,34 +1,34 @@
-Here's the main section. I left out the adopter quotes, for a reason I explain below the copy.
+Here's the description. I didn't use the $412 line. It would be an unmeasured savings claim stated as fact, which can get a listing rejected and creates ad-claim risk. The opening line below has a concrete number that's true. Once you've measured the average, you can swap the $412 line in.
 
 ---
 
-## 63 dogs found homes with us this past year.
+**Tallybee: Budgeting for Lumpy Income**
 
-Fernhill Dog Rescue is a registered charity, founded in 2022 and run by four volunteers and one part-time coordinator. Every one of those 63 dogs got a vet check, vaccinations and a microchip before going home. That costs about **£210 per dog**, and we can only keep doing it with your help.
+**Try free for 14 days. Know what's safe to spend every week.**
 
-### Your gift goes straight to the dogs
-Donations pay for:
-- **Vet bills**
-- **Food**
-- **Kennel upkeep**
+Freelance income doesn't arrive on a schedule, and your budget shouldn't pretend it does. Tallybee sets tax money aside from every client payment, then tells you what's left that you can spend.
 
-**£210 covers a vet check, vaccinations and microchipping for one dog.** That's what a dog needs to leave us healthy and ready for a new family.
+**TAX MONEY, SET ASIDE AUTOMATICALLY**
+Log a payment or sync it from your bank, and Tallybee puts your tax share aside right away. When tax time comes, the money is already accounted for.
 
-### Give today
-**[Donate by card]** for a one-off gift.
-**[Set up a monthly direct debit]** to give steady, reliable support. Regular gifts help us plan for the next dog who arrives.
+**YOUR "SAFE TO SPEND" NUMBER**
+Open the app and see one number: what you can spend this week without dipping into taxes or upcoming bills. It adjusts as payments come in, so a slow month doesn't catch you off guard.
 
-**UK taxpayer?** Add Gift Aid and we can claim extra on your donation at no cost to you.
+**BUILT FOR UNEVEN INCOME**
+- Works with big, small, and late payments
+- Tracks income by client
+- Smooths out good and bad months
 
-Small team. Real dogs. Every pound is put to work.
+**READ-ONLY BANK CONNECTION**
+Connect your bank to import payments automatically. The connection is read-only, so Tallybee can see your transactions but can never move your money.
+
+**SIMPLE PRICING**
+Free for your first two weeks, then $6 a month. Cancel anytime in your Apple ID settings.
+
+Available on iPhone. Android is not available yet.
 
 ---
 
-**Why there are no quotes:** Your fact sheet says you haven't collected any adopter feedback and have no permission to quote anyone. Invented quotes on a fundraising page would mislead donors. They could also break charity fundraising rules, and they would damage your credibility if anyone questioned them. The 63 adoptions are a strong number without them.
+Optional swap for the headline once you have data: "Freelancers save an average of $[measured figure] a month with Tallybee." Add a short footnote on how it was measured.
 
-**Easy ways to add real social proof:**
-- Message a few recent adopters and ask for a sentence and permission to use it. Even 2–3 replies would work well here.
-- Add a short "Where are they now?" photo section, with adopters' consent.
-- Put your charity registration number in the footer or under the intro. Donors look for it, and it supports the "serious organisation" feel.
-
-I also kept out any total-raised figure, outcomes beyond adoption, or "your £X does Y" breakdowns other than the £210 one, because the fact sheet doesn't support them. If you want, I can tidy this into HTML, or write a shorter version for the top of the page.
+I used "Cancel anytime in your Apple ID settings" as standard subscription wording. Apple also requires the full auto-renewal terms and links to your privacy policy and terms of use in the listing.

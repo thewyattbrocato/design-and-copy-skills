@@ -6,160 +6,172 @@
 <title>Welcome to Kilnbook</title>
 <style>
   :root{
-    --bg:#f6f1ea; --card:#fffdf9; --ink:#2b2420; --muted:#6b5f56; --line:#e2d8cb;
-    --accent:#a8472a; --accent-ink:#fff; --accent-soft:#f6e3da; --ok:#2f6b4a; --ok-soft:#e1f0e7;
-    --focus:#1d5fd1;
+    --bg:#f6f2ec; --card:#fffdf9; --ink:#2a2420; --muted:#6b5f56; --line:#ddd2c5;
+    --accent:#a8472a; --accent-ink:#fff; --soft:#f3e4dc; --ok:#2f6b4a; --okbg:#e4f1e9;
   }
   @media (prefers-color-scheme:dark){
-    :root{--bg:#1d1916; --card:#272220; --ink:#f3ece4; --muted:#b5a89c; --line:#3d3530;
-      --accent:#e0805f; --accent-ink:#1d1916; --accent-soft:#3b2a24; --ok:#7fcf9f; --ok-soft:#1f3328; --focus:#8ab4ff;}
+    :root{--bg:#1c1816; --card:#262120; --ink:#f1e9e0; --muted:#b2a499; --line:#40372f;
+      --accent:#e0805f; --accent-ink:#1c1816; --soft:#3a2a24; --ok:#8fd0a9; --okbg:#22332a;}
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
     font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-  .top{display:flex;justify-content:space-between;align-items:center;max-width:880px;margin:0 auto;padding:18px 20px}
+  header{display:flex;justify-content:space-between;align-items:center;
+    max-width:760px;margin:0 auto;padding:18px 20px}
   .brand{font-weight:700;letter-spacing:.2px}
   .skip{color:var(--muted);font-size:14px}
-  a{color:inherit}
-  main{max-width:880px;margin:0 auto;padding:8px 20px 56px}
-  h1{font-size:clamp(26px,4vw,34px);line-height:1.2;margin:12px 0 8px}
-  .lede{color:var(--muted);margin:0 0 24px;max-width:60ch;font-size:17px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
-  .step-label{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}
-  .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
-  .choice{all:unset;box-sizing:border-box;cursor:pointer;border:2px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
-  .choice:hover{border-color:var(--muted)}
-  .choice[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
-  .choice strong{display:block;font-size:17px}
-  .choice span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
-  button:focus-visible,.slot input:focus-visible+label,a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-  .sample{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;border:1px dashed var(--muted);color:var(--muted);margin-left:8px;vertical-align:middle}
-  .slots{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
-  .slot input{position:absolute;opacity:0}
-  .slot label{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer}
-  .slot label:hover{border-color:var(--muted)}
-  .slot input:checked+label{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
-  .when{font-weight:600}
-  .what{color:var(--muted);font-size:14px}
-  .tag{font-size:13px;color:var(--muted);white-space:nowrap}
-  .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-  .btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:12px 20px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
-  .btn:disabled{opacity:.45;cursor:not-allowed}
-  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  main{max-width:760px;margin:0 auto;padding:8px 20px 56px}
+  h1{font-size:clamp(26px,5vw,34px);line-height:1.15;margin:12px 0 8px}
+  .lede{color:var(--muted);margin:0 0 28px;max-width:56ch}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px;font-weight:600}
+  fieldset{border:0;padding:0;margin:0 0 28px}
+  legend{padding:0}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:560px){.choices{grid-template-columns:1fr}}
+  .opt{position:relative}
+  .opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0;width:100%;height:100%}
+  .opt .box{display:block;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:16px;height:100%}
+  .opt input:checked + .box{border-color:var(--accent);background:var(--soft)}
+  .opt input:focus-visible + .box{outline:3px solid var(--accent);outline-offset:2px}
+  .box strong{display:block;font-size:18px;margin-bottom:4px}
+  .box span{display:block;color:var(--muted);font-size:15px}
+  .box em{display:block;font-style:normal;font-size:14px;margin-top:10px}
+  .step[hidden]{display:none}
+  .sample{display:inline-block;font-size:12px;font-weight:600;color:var(--muted);
+    border:1px dashed var(--muted);border-radius:99px;padding:1px 9px;margin-left:8px;
+    text-transform:none;letter-spacing:0;vertical-align:1px}
+  .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px}
+  .slot{position:relative}
+  .slot input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+  .slot .box{padding:12px 14px}
+  .slot .box strong{font-size:15px;margin:0}
+  .slot .box span{font-size:14px}
+  .actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px}
+  button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:12px 20px;
+    background:var(--accent);color:var(--accent-ink);cursor:pointer}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
   .hint{color:var(--muted);font-size:14px}
-  .done{background:var(--ok-soft);border-color:var(--ok)}
-  .done h2{margin:0 0 6px;font-size:20px}
-  .done p{margin:0 0 14px}
-  [hidden]{display:none!important}
-  .foot{margin-top:22px;color:var(--muted);font-size:14px}
-  @media (max-width:520px){.choices{grid-template-columns:1fr}.slot label{flex-direction:column;align-items:flex-start;gap:2px}}
+  .done{background:var(--okbg);color:var(--ink);border-left:5px solid var(--ok);
+    border-radius:10px;padding:18px 20px}
+  .done h2{color:var(--ok);margin-bottom:6px}
+  .done p{margin:4px 0}
+  a{color:var(--accent)}
+  .next{margin-top:14px;display:flex;gap:16px;flex-wrap:wrap}
 </style>
 </head>
 <body>
-<header class="top">
+<header>
   <div class="brand">Kilnbook</div>
-  <a class="skip" href="#explore">Skip, I'll look around first</a>
+  <a class="skip" href="#dashboard" id="skip">Skip, go to my dashboard</a>
 </header>
 
 <main>
-  <h1>Welcome, Maya. Let's book your first session.</h1>
-  <p class="lede">Riverbend Clay Co-op runs on booked time: hours at a wheel and space in the kiln. Pick one below and you'll have a spot held in about a minute.</p>
+  <h1>Book your first session at Riverbend Clay Studio</h1>
+  <p class="lede">Two things get booked here. Pick one, choose a time, and it's held for you. It takes about a minute.</p>
 
-  <section class="card" aria-labelledby="s1">
-    <p class="step-label" id="s1">1 · What do you need first?</p>
-    <div class="choices">
-      <button class="choice" type="button" data-kind="wheel" aria-pressed="true">
-        <strong>A wheel</strong>
-        <span>A block of time at one pottery wheel to throw pots.</span>
-      </button>
-      <button class="choice" type="button" data-kind="kiln" aria-pressed="false">
-        <strong>Kiln space</strong>
-        <span>Shelf room in a shared firing for pieces you've already made.</span>
-      </button>
+  <div id="flow">
+    <fieldset>
+      <legend><h2>1. What do you want to do?</h2></legend>
+      <div class="choices">
+        <label class="opt">
+          <input type="radio" name="kind" value="wheel">
+          <span class="box"><strong>Use a wheel</strong>
+            <span>A pottery wheel station for a block of time, for shaping clay.</span>
+            <em>Good if you want to start making something.</em></span>
+        </label>
+        <label class="opt">
+          <input type="radio" name="kind" value="kiln">
+          <span class="box"><strong>Reserve kiln space</strong>
+            <span>A spot in a firing for pieces you've already made and dried.</span>
+            <em>Good if you have work ready to fire.</em></span>
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset class="step" id="step2" hidden>
+      <legend><h2>2. Pick a time <span class="sample">Sample times</span></h2></legend>
+      <div class="slots" id="slots"></div>
+    </fieldset>
+
+    <div class="step" id="step3" hidden>
+      <div class="actions">
+        <button type="button" id="book" disabled>Book this time</button>
+        <span class="hint" id="hint">Choose a time above.</span>
+      </div>
     </div>
+  </div>
 
-    <p class="step-label">2 · Choose a time <span class="sample">Sample schedule</span></p>
-    <p class="hint" id="kindHelp" style="margin:0 0 10px"></p>
-    <ul class="slots" id="slots" role="radiogroup" aria-label="Available times"></ul>
-
-    <div class="actions">
-      <button class="btn" id="confirm" type="button" disabled>Book this slot</button>
-      <span class="hint" id="pickHint">Select a time to continue.</span>
-    </div>
-  </section>
-
-  <section class="card done" id="result" role="status" aria-live="polite" hidden tabindex="-1">
-    <h2 id="rTitle"></h2>
-    <p id="rBody"></p>
-    <div class="actions">
-      <button class="btn" id="another" type="button"></button>
-      <button class="btn ghost" id="undo" type="button">Cancel this booking</button>
-    </div>
-  </section>
-
-  <p class="foot" id="explore">Just browsing? You can see the full calendar and studio rules from <a href="#explore">Schedule</a> any time. Nothing is booked until you press the button.</p>
+  <div class="done" id="done" role="status" aria-live="polite" hidden></div>
+  <div id="dashboard"></div>
 </main>
 
 <script>
-  const DATA = {
-    wheel: {
-      help: "Each slot is 2 hours at one wheel. Clay and tools are not included in this sample.",
-      noun: "wheel session",
-      next: "Add kiln space for your pieces",
-      slots: [
-        {id:"w1", when:"Fri, Oct 9 · 6:00–8:00 pm", what:"Wheel 3", tag:"2 of 6 wheels open"},
-        {id:"w2", when:"Sat, Oct 10 · 10:00 am–12:00 pm", what:"Wheel 1", tag:"4 of 6 wheels open"},
-        {id:"w3", when:"Sun, Oct 11 · 1:00–3:00 pm", what:"Wheel 5", tag:"5 of 6 wheels open"}
-      ]
-    },
-    kiln: {
-      help: "Pots need two firings. Bisque is the first, for dry unglazed pieces. Glaze is the second, after glazing.",
-      noun: "kiln space",
-      next: "Book a wheel session",
-      slots: [
-        {id:"k1", when:"Bisque firing · Tue, Oct 13", what:"Load pieces by Mon, Oct 12, 5 pm", tag:"3 shelves left"},
-        {id:"k2", when:"Glaze firing · Thu, Oct 15", what:"Load pieces by Wed, Oct 14, 5 pm", tag:"1 shelf left"},
-        {id:"k3", when:"Bisque firing · Sat, Oct 17", what:"Load pieces by Fri, Oct 16, 5 pm", tag:"5 shelves left"}
-      ]
-    }
+  var data = {
+    wheel: [
+      {t:"Thu, 6:00–8:00 pm", d:"Wheel 3"},
+      {t:"Fri, 10:00 am–12:00 pm", d:"Wheel 1"},
+      {t:"Sat, 1:00–3:00 pm", d:"Wheel 5"},
+      {t:"Sun, 9:00–11:00 am", d:"Wheel 2"}
+    ],
+    kiln: [
+      {t:"Fri firing, load by 5:00 pm", d:"Bisque, shelf space"},
+      {t:"Mon firing, load by noon", d:"Glaze, shelf space"},
+      {t:"Wed firing, load by 5:00 pm", d:"Bisque, shelf space"}
+    ]
   };
-  let kind = "wheel", picked = null;
-  const $ = s => document.querySelector(s);
+  var names = {wheel:"wheel session", kiln:"kiln slot"};
+  var kind = null, picked = null;
+  var $ = function(id){return document.getElementById(id)};
 
-  function render(){
-    const d = DATA[kind];
-    $("#kindHelp").textContent = d.help;
-    $("#slots").innerHTML = d.slots.map(s =>
-      `<li class="slot"><input type="radio" name="slot" id="${s.id}" value="${s.id}">
-       <label for="${s.id}"><span><span class="when">${s.when}</span><br><span class="what">${s.what}</span></span><span class="tag">${s.tag}</span></label></li>`).join("");
-    picked = null; update();
+  function renderSlots(){
+    var h = "";
+    data[kind].forEach(function(s,i){
+      h += '<label class="opt slot"><input type="radio" name="slot" value="'+i+'">' +
+           '<span class="box"><strong>'+s.t+'</strong><span>'+s.d+'</span></span></label>';
+    });
+    $("slots").innerHTML = h;
+    picked = null;
+    $("book").disabled = true;
+    $("hint").textContent = "Choose a time above.";
   }
-  function update(){
-    $("#confirm").disabled = !picked;
-    $("#pickHint").textContent = picked ? "You can cancel right after booking." : "Select a time to continue.";
-  }
-  document.querySelectorAll(".choice").forEach(b => b.addEventListener("click", () => {
-    kind = b.dataset.kind;
-    document.querySelectorAll(".choice").forEach(x => x.setAttribute("aria-pressed", x === b));
-    $("#result").hidden = true;
-    render();
-  }));
-  $("#slots").addEventListener("change", e => { picked = e.target.value; update(); });
 
-  $("#confirm").addEventListener("click", () => {
-    const d = DATA[kind], s = d.slots.find(x => x.id === picked);
-    $("#rTitle").textContent = "You're booked: " + s.when;
-    $("#rBody").textContent = s.what + ". It now appears under Your bookings, and you'll get a reminder before it starts. " +
-      (kind === "wheel" ? "Arrive a few minutes early to set up." : "Bring your pieces to the studio before the load deadline.");
-    $("#another").textContent = DATA[kind === "wheel" ? "kiln" : "wheel"].next;
-    $("#result").hidden = false; $("#result").focus();
+  document.querySelectorAll('input[name=kind]').forEach(function(r){
+    r.addEventListener("change", function(){
+      kind = r.value;
+      renderSlots();
+      $("step2").hidden = false;
+      $("step3").hidden = false;
+    });
   });
-  $("#another").addEventListener("click", () => {
-    document.querySelector(`.choice[data-kind="${kind === "wheel" ? "kiln" : "wheel"}"]`).click();
-    $(".card").scrollIntoView({behavior:"smooth"});
+
+  $("slots").addEventListener("change", function(e){
+    if(e.target.name !== "slot") return;
+    picked = data[kind][+e.target.value];
+    $("book").disabled = false;
+    $("hint").textContent = "You can review it before leaving this page.";
   });
-  $("#undo").addEventListener("click", () => { $("#result").hidden = true; render(); });
-  render();
+
+  $("book").addEventListener("click", function(){
+    $("flow").hidden = true;
+    var d = $("done");
+    d.hidden = false;
+    d.innerHTML =
+      '<h2>Booked</h2>' +
+      '<p><strong>' + picked.t + '</strong> · ' + picked.d + '</p>' +
+      '<p>Your ' + names[kind] + ' is held under your name. It now shows on your dashboard, which is where you\'ll book the next one.</p>' +
+      '<div class="next"><a href="#dashboard">Go to my dashboard</a>' +
+      '<a href="#" id="again">Book the other kind too</a></div>';
+    $("again").addEventListener("click", function(e){
+      e.preventDefault();
+      d.hidden = true; $("flow").hidden = false;
+      document.querySelectorAll('input[name=kind]').forEach(function(r){r.checked=false});
+      $("step2").hidden = true; $("step3").hidden = true;
+      kind = null; picked = null;
+    });
+    d.focus && d.setAttribute("tabindex","-1");
+    d.focus();
+  });
 </script>
 </body>
 </html>

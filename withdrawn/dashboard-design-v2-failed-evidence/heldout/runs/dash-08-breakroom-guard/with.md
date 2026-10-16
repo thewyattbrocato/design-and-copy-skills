@@ -1,0 +1,1 @@
+Mostly no. A break-room TV has no one to operate it, so filters and date pickers would sit unused or get left in a confusing state. Show the current shift against target at a glance, and if teams want their own numbers, give each team a fixed tile or a separate URL, and put the slicing in a desk-side version.

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seed Library – Volunteer Desk</title>
+<style>
+  :root{
+    --bg:#f6f3ec; --card:#fffdf8; --ink:#2b2a26; --muted:#6b675c; --line:#ddd7c8;
+    --green:#3d6b3a; --green-d:#2d5230; --amber:#9a5b00; --amber-bg:#fbeccc;
+    --red:#a3322a; --red-bg:#f7dcd8; --sel:#e6efdd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 120px}
+  h1{font-size:1.5rem;margin:0 0 2px}
+  .sub{color:var(--muted);margin:0 0 16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+  .card h2{font-size:1rem;margin:0 0 8px}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  button,input,select{font:inherit}
+  button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 12px;border-radius:8px;cursor:pointer}
+  button:hover{border-color:#b9b29d}
+  button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #7aa874;outline-offset:1px}
+  button.primary{background:var(--green);border-color:var(--green-d);color:#fff}
+  button.primary:hover{background:var(--green-d)}
+  button.danger{background:var(--red);border-color:var(--red);color:#fff}
+  button:disabled{opacity:.45;cursor:default}
+  input[type=text],input[type=number],select{border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:#fff}
+  input[type=number]{width:5.5em}
+  .stats{color:var(--muted);font-size:.9rem;margin-left:auto}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+  th{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+  th button{all:unset;cursor:pointer}
+  th button:hover{color:var(--ink)}
+  th button:focus-visible{outline:3px solid #7aa874}
+  td.num,th.num{text-align:right}
+  tr.sel{background:var(--sel)}
+  td.name{font-weight:600}
+  .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:middle}
+  .tag.empty{background:var(--red-bg);color:var(--red)}
+  .tag.old{background:var(--amber-bg);color:var(--amber)}
+  .qty{display:inline-flex;align-items:center;gap:6px}
+  .qty button{padding:2px 9px;line-height:1.2}
+  .qty span{min-width:2em;text-align:center;font-variant-numeric:tabular-nums}
+  input[type=checkbox]{width:20px;height:20px;accent-color:var(--green)}
+  .empty-msg{padding:24px;text-align:center;color:var(--muted)}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#2b2a26;color:#fff;padding:12px 16px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;transform:translateY(110%);transition:transform .15s}
+  .bar.show{transform:none}
+  .bar button{border-color:#555}
+  .toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#fff;border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.18);border-radius:10px;padding:10px 14px;display:none;gap:12px;align-items:center;max-width:92vw;z-index:5}
+  .toast.show{display:flex}
+  .hint{font-size:.85rem;color:var(--muted);margin:8px 0 0}
+  @media (max-width:560px){ .hide-s{display:none} th,td{padding:8px 4px} }
+  @media (prefers-reduced-motion:reduce){.bar{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌱 Seed Library Desk</h1>
+  <p class="sub">Sample data – changes are saved in this browser only.</p>
+
+  <div class="card">
+    <h2>End-of-season cleanup</h2>
+    <div class="row">
+      <button id="selEmpty" type="button"></button>
+      <span class="row" style="gap:6px">
+        <button id="selOld" type="button"></button>
+        <label for="cutoff" class="hint" style="margin:0">packed in or before</label>
+        <input id="cutoff" type="number" min="1990" max="2100">
+      </span>
+      <button id="selBoth" type="button" class="primary"></button>
+    </div>
+    <p class="hint">Pick what to clear, look over the highlighted rows, untick anything you want to keep, then remove. Removals can be undone.</p>
+  </div>
+
+  <div class="card">
+    <div class="row" style="margin-bottom:8px">
+      <input id="q" type="text" placeholder="Search name or type…" aria-label="Search" style="flex:1;min-width:160px">
+      <select id="typeFilter" aria-label="Filter by type"></select>
+      <span class="stats" id="stats"></span>
+    </div>
+    <table>
+      <thead><tr>
+        <th style="width:34px"><input type="checkbox" id="all" aria-label="Select all shown"></th>
+        <th><button type="button" data-k="name">Name</button></th>
+        <th class="hide-s"><button type="button" data-k="type">Type</button></th>
+        <th><button type="button" data-k="year">Packed</button></th>
+        <th class="num"><button type="button" data-k="left">Left</button></th>
+      </tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+    <div id="none" class="empty-msg" hidden>No packets match.</div>
+  </div>
+
+  <div class="card">
+    <h2>Add a packet</h2>
+    <form id="add" class="row">
+      <input id="aName" type="text" placeholder="Name" required style="flex:1;min-width:140px" aria-label="Name">
+      <select id="aType" aria-label="Type"></select>
+      <input id="aYear" type="number" aria-label="Year packed" required>
+      <input id="aLeft" type="number" min="0" value="10" aria-label="Number left">
+      <button class="primary" type="submit">Add</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"><span id="toastMsg"></span><button id="undo" type="button">Undo</button><button id="dismiss" type="button" aria-label="Dismiss">✕</button></div>
+
+<div class="bar" id="bar">
+  <strong id="barCount"></strong>
+  <button id="remove" type="button" class="danger"></button>
+  <button id="clear" type="button">Clear selection</button>
+</div>
+
+<script>
+(function(){
+  var NOW = new Date().getFullYear();
+  var TYPES = ["Vegetable","Herb","Flower","Fruit","Legume"];
+  var KEY = "seedlib-desk-v1";
+  var seed = [
+    ["Brandywine Tomato","Vegetable",2025,24],["Genovese Basil","Herb",2025,31],
+    ["Cosmos Sensation Mix","Flower",2024,18],["Cherokee Purple Tomato","Vegetable",2023,0],
+    ["Provider Bush Bean","Legume",2024,40],["Detroit Dark Red Beet","Vegetable",2022,9],
+    ["Calendula Resina","Flower",2021,6],["Lacinato Kale","Vegetable",2026,28],
+    ["Moon & Stars Watermelon","Fruit",2023,3],["Italian Parsley","Herb",2022,0],
+    ["Blue Lake Pole Bean","Legume",2026,35],["Zinnia State Fair","Flower",2025,0],
+    ["Sugar Snap Pea","Legume",2021,12],["Rainbow Chard","Vegetable",2024,15],
+    ["Lemon Balm","Herb",2023,7]
+  ];
+  var items, nextId = 1;
+  try { items = JSON.parse(localStorage.getItem(KEY)); } catch(e){}
+  if(!Array.isArray(items) || !items.length){
+    items = seed.map(function(s){return {name:s[0],type:s[1],year:s[2],left:s[3]};});
+  }
+  items.forEach(function(it){ it.id = nextId++; });
+
+  var selected = {}, sortK = "name", sortDir = 1, lastRemoved = null;
+  var $ = function(id){return document.getElementById(id);};
+  var cutoff = $("cutoff"); cutoff.value = NOW - 3;
+  $("aYear").value = NOW;
+
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(items)); }catch(e){} }
+  function isEmpty(it){ return it.left <= 0; }
+  function isOld(it){ return it.year <= (parseInt(cutoff.value,10) || 0); }
+
+  $("typeFilter").innerHTML = '<option value="">All types</option>' + TYPES.map(function(t){return '<option>'+t+'</option>';}).join("");
+  $("aType").innerHTML = TYPES.map(function(t){return '<option>'+t+'</option>';}).join("");
+
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+  function visible(){
+    var q = $("q").value.trim().toLowerCase(), t = $("typeFilter").value;
+    return items.filter(function(it){
+      return (!t || it.type===t) && (!q || (it.name+" "+it.type).toLowerCase().indexOf(q)>-1);
+    }).sort(function(a,b){
+      var x=a[sortK], y=b[sortK];
+      if(typeof x==="string"){ x=x.toLowerCase(); y=y.toLowerCase(); }
+      return (x<y?-1:x>y?1:a.name.localeCompare(b.name))*sortDir;
+    });
+  }
+
+  function render(){
+    var list = visible();
+    $("body").innerHTML = list.map(function(it){
+      var tags = (isEmpty(it)?'<span class="tag empty">Empty</span>':'') + (isOld(it)?'<span class="tag old">Old</span>':'');
+      return '<tr class="'+(selected[it.id]?'sel':'')+'">' +
+        '<td><input type="checkbox" data-id="'+it.id+'" aria-label="Select '+esc(it.name)+'"'+(selected[it.id]?' checked':'')+'></td>' +
+        '<td class="name">'+esc(it.name)+tags+'</td>' +
+        '<td class="hide-s">'+esc(it.type)+'</td>' +
+        '<td>'+it.year+'</td>' +
+        '<td class="num"><span class="qty"><button type="button" data-d="-1" data-id="'+it.id+'" aria-label="One fewer '+esc(it.name)+'">−</button><span>'+it.left+'</span><button type="button" data-d="1" data-id="'+it.id+'" aria-label="One more '+esc(it.name)+'">+</button></span></td></tr>';
+    }).join("");
+    $("none").hidden = list.length>0;
+    var shownSel = list.filter(function(it){return selected[it.id];}).length;
+    $("all").checked = list.length>0 && shownSel===list.length;
+    $("all").indeterminate = shownSel>0 && shownSel<list.length;
+
+    var ne = items.filter(isEmpty).length, no = items.filter(isOld).length,
+        nb = items.filter(function(i){return isEmpty(i)||isOld(i);}).length;
+    $("selEmpty").textContent = "Select empty ("+ne+")";
+    $("selOld").textContent = "Select old ("+no+")";
+    $("selBoth").textContent = "Select all empty + old ("+nb+")";
+    $("stats").textContent = items.length+" packets · "+ne+" empty · "+no+" old";
+
+    var n = Object.keys(selected).length;
+    $("bar").classList.toggle("show", n>0);
+    $("barCount").textContent = n+" selected";
+    $("remove").textContent = "Remove "+n+" packet"+(n===1?"":"s");
+    document.querySelectorAll("th button").forEach(function(b){
+      var th=b.parentNode; th.setAttribute("aria-sort", b.dataset.k===sortK?(sortDir>0?"ascending":"descending"):"none");
+      b.textContent = b.textContent.replace(/ [▲▼]$/,"") + (b.dataset.k===sortK?(sortDir>0?" ▲":" ▼"):"");
+    });
+    save();
+  }
+
+  function pick(fn){
+    selected = {};
+    items.forEach(function(it){ if(fn(it)) selected[it.id]=true; });
+    render();
+    // make sure the chosen rows are visible
+    $("q").value=""; $("typeFilter").value=""; render();
+  }
+  $("selEmpty").onclick = function(){ pick(isEmpty); };
+  $("selOld").onclick = function(){ pick(isOld); };
+  $("selBoth").onclick = function(){ pick(function(i){return isEmpty(i)||isOld(i);}); };
+  cutoff.oninput = render;
+  $("q").oninput = render; $("typeFilter").onchange = render;
+
+  $("body").addEventListener("click", function(e){
+    var t = e.target;
+    if(t.type==="checkbox"){ if(t.checked) selected[t.dataset.id]=true; else delete selected[t.dataset.id]; render(); }
+    else if(t.dataset.d){
+      var it = items.filter(function(i){return i.id==t.dataset.id;})[0];
+      it.left = Math.max(0, it.left + parseInt(t.dataset.d,10)); render();
+    }
+  });
+  $("all").onchange = function(){
+    var on = this.checked;
+    visible().forEach(function(it){ if(on) selected[it.id]=true; else delete selected[it.id]; });
+    render();
+  };
+  document.querySelectorAll("th button").forEach(function(b){
+    b.onclick = function(){ if(sortK===b.dataset.k) sortDir*=-1; else {sortK=b.dataset.k; sortDir=1;} render(); };
+  });
+
+  $("clear").onclick = function(){ selected={}; render(); };
+  $("remove").onclick = function(){
+    var gone = items.filter(function(it){return selected[it.id];});
+    if(!gone.length) return;
+    lastRemoved = gone;
+    items = items.filter(function(it){return !selected[it.id];});
+    selected = {};
+    $("toastMsg").textContent = "Removed "+gone.length+" packet"+(gone.length===1?"":"s")+".";
+    $("toast").classList.add("show");
+    render();
+  };
+  $("undo").onclick = function(){
+    if(lastRemoved){ items = items.concat(lastRemoved); lastRemoved=null; }
+    $("toast").classList.remove("show"); render();
+  };
+  $("dismiss").onclick = function(){ lastRemoved=null; $("toast").classList.remove("show"); };
+
+  $("add").onsubmit = function(e){
+    e.preventDefault();
+    items.push({id:nextId++, name:$("aName").value.trim(), type:$("aType").value,
+      year:parseInt($("aYear").value,10)||NOW, left:Math.max(0,parseInt($("aLeft").value,10)||0)});
+    $("aName").value=""; render();
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>

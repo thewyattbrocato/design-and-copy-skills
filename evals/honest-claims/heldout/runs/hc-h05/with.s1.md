@@ -1,10 +1,21 @@
-**Headlines**
-1. Perth Home Window Cleaning (26)
-2. From $8 Per Window (18)
-3. Quote Within 24 Hours (21)
+## Results and what patients say
 
-**Descriptions**
-1. Family-run since 2016, serving Perth metro homes. Get your quote within 24 hours. (81)
-2. Water-fed poles mean no ladders on most two-storey homes. Residential jobs only. (80)
+We opened five weeks ago, so we're not going to hand you a wall of numbers. Here is what we can promise and what you can check for yourself.
 
-The counts include spaces. I left out "free quote" because you only said a quote within 24 hours. Add "free" only if it's true.
+**What you get at your first visit.** A full assessment of your knee or shoulder, with a clear explanation of what we find and what we think is going on. You'll leave knowing the plan for your rehab.
+
+**How we measure progress.** Every session is 45 minutes with a physiotherapist, and we focus on knees and shoulders. [Add one line on how you track progress, e.g. range of motion, strength tests, a functional goal set at the first visit.]
+
+**What patients say.**
+> [Patient quote, in their own words, with first name and injury if they agree]
+
+We'll add more as patients choose to share their experience. We'd rather show you real words than write them ourselves.
+
+## About Northgate Physio
+
+Northgate Physio is a two-physiotherapist clinic focused on knee and shoulder rehab, in a converted bakery on the east side. Sessions are 45 minutes and cost $95. Your first visit includes a full assessment. We keep the practice small so the person who assesses your injury is the person who treats it. [Confirm this is true.]
+
+---
+
+- **Quote placeholder:** I didn't write a testimonial, since it would be invented. After five weeks you likely have a few patients who are doing well. Ask them for a sentence or two, with permission to publish. A message like this works: "Would you be willing to share a couple of sentences about your experience at Northgate Physio for our website? Feel free to say no, and tell us if you'd like us to use only your first name."
+- **Two bracketed items to confirm:** the progress-tracking line and the "same person assesses and treats" line. Delete the second if it isn't how you work. Because this is health care, have any outcome claims you add later checked first.

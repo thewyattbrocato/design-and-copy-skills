@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Walk-in clinic average wait time, Mar 1–21</title>
+<style>
+  :root {
+    --surface: #ffffff;
+    --ink: #1f2933;
+    --ink-2: #52606d;
+    --ink-3: #7b8794;
+    --grid: #e4e7eb;
+    --bar: #2b6cb0;
+    --nodata: #f3f4f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #1b1f24;
+      --ink: #f0f2f4;
+      --ink-2: #b4bcc5;
+      --ink-3: #8b95a1;
+      --grid: #343a41;
+      --bar: #63a4e8;
+      --nodata: #252a30;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.4;
+  }
+  .card { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
+  .sub { font-size: 14px; color: var(--ink-2); margin: 0 0 20px; }
+  .unit { font-size: 12px; color: var(--ink-3); margin: 0 0 8px 36px; }
+
+  .chart { position: relative; margin-left: 36px; height: 260px; }
+  .gridline {
+    position: absolute; left: 0; right: 0; height: 0;
+    border-top: 1px solid var(--grid);
+  }
+  .gridline.base { border-top-color: var(--ink-3); }
+  .gridline span {
+    position: absolute; left: -36px; width: 28px; text-align: right;
+    top: -8px; font-size: 12px; color: var(--ink-3);
+  }
+  .nodata {
+    position: absolute; top: 0; bottom: 0;
+    left: calc(100% * 8 / 21); width: calc(100% * 3 / 21);
+    background: var(--nodata);
+    border-left: 1px dashed var(--ink-3);
+    border-right: 1px dashed var(--ink-3);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 0 4px;
+    font-size: 12px; color: var(--ink-2);
+  }
+  .cols {
+    position: absolute; inset: 0;
+    display: grid; grid-template-columns: repeat(21, 1fr);
+  }
+  .col { display: flex; align-items: flex-end; justify-content: center; height: 100%; }
+  .bar {
+    position: relative; width: 62%;
+    background: var(--bar);
+    border-radius: 3px 3px 0 0;
+  }
+  .bar.partial {
+    background: repeating-linear-gradient(45deg, var(--bar) 0 3px, transparent 3px 6px);
+    border: 1.5px solid var(--bar);
+    border-bottom: 0;
+  }
+  .bar .v {
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    padding-bottom: 3px; font-size: 12px; font-weight: 600; color: var(--ink);
+    white-space: nowrap;
+  }
+  .days {
+    margin: 6px 0 0 36px;
+    display: grid; grid-template-columns: repeat(21, 1fr);
+    font-size: 12px; color: var(--ink-2); text-align: center;
+  }
+  .month { margin: 2px 0 0 36px; text-align: center; font-size: 12px; color: var(--ink-3); }
+  .legend {
+    margin: 16px 0 0 36px; display: flex; flex-wrap: wrap; gap: 8px 20px;
+    font-size: 13px; color: var(--ink-2);
+  }
+  .legend i {
+    display: inline-block; width: 12px; height: 12px; vertical-align: -1px; margin-right: 6px;
+    background: var(--bar); border-radius: 2px;
+  }
+  .legend i.p {
+    background: repeating-linear-gradient(45deg, var(--bar) 0 2px, transparent 2px 4px);
+    border: 1px solid var(--bar);
+  }
+  .legend i.n { background: var(--nodata); border: 1px dashed var(--ink-3); }
+  .note { margin: 16px 0 0 36px; font-size: 13px; color: var(--ink-2); }
+  @media (max-width: 520px) {
+    .days { font-size: 10px; }
+    .bar .v { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Daily average waits ran 16–35 minutes in early March</h1>
+  <p class="sub">Walk-in clinic, average wait by day, Mar 1–21. Mar 19 was the longest full day at 35 min.</p>
+  <p class="unit">Minutes</p>
+
+  <div class="chart" role="img" aria-label="Bar chart of average walk-in wait time in minutes for March 1 to 21. Values: Mar 1 24, Mar 2 26, Mar 3 25, Mar 4 31, Mar 5 29, Mar 6 18, Mar 7 16, Mar 8 27, Mar 9 to 11 no data, Mar 12 33, Mar 13 30, Mar 14 19, Mar 15 17, Mar 16 28, Mar 17 32, Mar 18 31, Mar 19 35, Mar 20 22, Mar 21 41 (morning only).">
+    <div class="gridline base" style="bottom:0"><span>0</span></div>
+    <div class="gridline" style="bottom:22.22%"><span>10</span></div>
+    <div class="gridline" style="bottom:44.44%"><span>20</span></div>
+    <div class="gridline" style="bottom:66.67%"><span>30</span></div>
+    <div class="gridline" style="bottom:88.89%"><span>40</span></div>
+
+    <div class="nodata">No data: check-in tablet down</div>
+
+    <div class="cols">
+      <div class="col" title="Mar 1: 24 min"><div class="bar" style="height:53.33%"></div></div>
+      <div class="col" title="Mar 2: 26 min"><div class="bar" style="height:57.78%"></div></div>
+      <div class="col" title="Mar 3: 25 min"><div class="bar" style="height:55.56%"></div></div>
+      <div class="col" title="Mar 4: 31 min"><div class="bar" style="height:68.89%"></div></div>
+      <div class="col" title="Mar 5: 29 min"><div class="bar" style="height:64.44%"></div></div>
+      <div class="col" title="Mar 6: 18 min"><div class="bar" style="height:40%"></div></div>
+      <div class="col" title="Mar 7: 16 min"><div class="bar" style="height:35.56%"><span class="v">16</span></div></div>
+      <div class="col" title="Mar 8: 27 min"><div class="bar" style="height:60%"></div></div>
+      <div class="col" title="Mar 9: no data"></div>
+      <div class="col" title="Mar 10: no data"></div>
+      <div class="col" title="Mar 11: no data"></div>
+      <div class="col" title="Mar 12: 33 min"><div class="bar" style="height:73.33%"></div></div>
+      <div class="col" title="Mar 13: 30 min"><div class="bar" style="height:66.67%"></div></div>
+      <div class="col" title="Mar 14: 19 min"><div class="bar" style="height:42.22%"></div></div>
+      <div class="col" title="Mar 15: 17 min"><div class="bar" style="height:37.78%"></div></div>
+      <div class="col" title="Mar 16: 28 min"><div class="bar" style="height:62.22%"></div></div>
+      <div class="col" title="Mar 17: 32 min"><div class="bar" style="height:71.11%"></div></div>
+      <div class="col" title="Mar 18: 31 min"><div class="bar" style="height:68.89%"></div></div>
+      <div class="col" title="Mar 19: 35 min"><div class="bar" style="height:77.78%"><span class="v">35</span></div></div>
+      <div class="col" title="Mar 20: 22 min"><div class="bar" style="height:48.89%"></div></div>
+      <div class="col" title="Mar 21: 41 min (morning only)"><div class="bar partial" style="height:91.11%"><span class="v">41*</span></div></div>
+    </div>
+  </div>
+
+  <div class="days" aria-hidden="true">
+    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+    <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+    <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+  </div>
+  <div class="month">March</div>
+
+  <div class="legend">
+    <span><i></i>Full-day average</span>
+    <span><i class="p"></i>Partial day (morning only)</span>
+    <span><i class="n"></i>No data</span>
+  </div>
+
+  <p class="note">* Mar 21 covers the morning only, because the log was exported before the day ended. It isn't comparable with full days, so it's left out of the 16–35 min range above. Mar 9–11 are blank because the check-in tablet was down, and those days are not zeros.</p>
+</div>
+</body>
+</html>

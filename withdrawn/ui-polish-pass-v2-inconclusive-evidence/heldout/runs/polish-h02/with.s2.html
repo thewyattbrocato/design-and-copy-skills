@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign the waiver</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #1d2127;
+    background: #f4f5f7;
+  }
+  form, .done {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 28px 24px;
+    background: #fff;
+    border: 1px solid #d5d9df;
+    border-radius: 12px;
+  }
+  h2 { margin: 0 0 4px; font-size: 1.5rem; line-height: 1.25; }
+  .lede { margin: 0 0 20px; color: #4a5260; }
+  .field { margin-bottom: 18px; }
+  label { display: block; margin-bottom: 6px; font-weight: 600; }
+  .hint { display: block; margin-top: 4px; font-size: .875rem; color: #4a5260; }
+  input[type="text"], input[type="email"], input[type="date"] {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 12px;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1.5px solid #6b7380;
+    border-radius: 8px;
+  }
+  input:focus-visible, button:focus-visible {
+    outline: 3px solid #1a5fd0;
+    outline-offset: 2px;
+  }
+  input[aria-invalid="true"] { border-color: #b3261e; border-width: 2px; }
+  .error {
+    display: none;
+    margin-top: 6px;
+    font-size: .9375rem;
+    font-weight: 600;
+    color: #b3261e;
+  }
+  .error.show { display: block; }
+  .error::before { content: "\26A0\FE0E  "; }
+  .check {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+  .check input {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    margin: 1px 0 0;
+    accent-color: #1a5fd0;
+  }
+  .check label { margin: 0; font-weight: 400; cursor: pointer; }
+  .check-wrap { margin-bottom: 22px; }
+  button {
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 20px;
+    font: inherit;
+    font-weight: 700;
+    color: #fff;
+    background: #1a5fd0;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button:hover { background: #164fae; }
+  button[aria-busy="true"] { background: #4a5260; cursor: progress; }
+  button.secondary {
+    margin-top: 20px;
+    color: #1a5fd0;
+    background: #fff;
+    border: 1.5px solid #1a5fd0;
+  }
+  button.secondary:hover { background: #eef3fc; }
+  .summary {
+    display: none;
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    color: #7a1a14;
+    background: #fdecea;
+    border: 1.5px solid #b3261e;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .summary.show { display: block; }
+  .summary:focus { outline: 3px solid #1a5fd0; outline-offset: 2px; }
+  .done { display: none; text-align: center; }
+  .done.show { display: block; }
+  .done h2 { overflow-wrap: anywhere; }
+  .done:focus { outline: none; }
+  .tick {
+    width: 56px; height: 56px; margin: 0 auto 12px;
+    display: grid; place-items: center;
+    font-size: 30px; color: #fff; background: #1e7a3c; border-radius: 50%;
+  }
+  [hidden] { display: none !important; }
+  @media (max-width: 360px) {
+    form, .done { padding: 20px 16px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    button, input { transition: background-color .15s, border-color .15s; }
+  }
+</style>
+</head>
+<body>
+
+<form id="f" novalidate>
+  <h2 id="title">Sign the waiver</h2>
+  <p class="lede">All fields are required.</p>
+
+  <div class="summary" id="summary" role="alert" tabindex="-1"></div>
+
+  <div class="field">
+    <label for="name">Full name</label>
+    <input type="text" id="name" name="name" autocomplete="name" aria-describedby="name-err" required>
+    <div class="error" id="name-err"></div>
+  </div>
+
+  <div class="field">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" autocomplete="email" inputmode="email"
+           autocapitalize="off" spellcheck="false" aria-describedby="email-err" required>
+    <div class="error" id="email-err"></div>
+  </div>
+
+  <div class="field">
+    <label for="dob">Date of birth</label>
+    <input type="date" id="dob" name="dob" autocomplete="bday" aria-describedby="dob-hint dob-err" required>
+    <span class="hint" id="dob-hint">Day, month and year.</span>
+    <div class="error" id="dob-err"></div>
+  </div>
+
+  <div class="check-wrap">
+    <div class="check">
+      <input type="checkbox" id="agree" name="agree" aria-describedby="agree-err" required>
+      <label for="agree">I have read the waiver</label>
+    </div>
+    <div class="error" id="agree-err"></div>
+  </div>
+
+  <button type="submit" id="submit">Submit</button>
+</form>
+
+<div class="done" id="done" tabindex="-1" role="status">
+  <div class="tick" aria-hidden="true">&#10003;</div>
+  <h2 id="done-title">Waiver signed</h2>
+  <p id="done-msg"></p>
+  <button type="button" class="secondary" id="another">Sign for another person</button>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('f');
+  var done = document.getElementById('done');
+  var summary = document.getElementById('summary');
+  var submit = document.getElementById('submit');
+  var fields = ['name', 'email', 'dob', 'agree'];
+  var els = {};
+  fields.forEach(function (id) { els[id] = document.getElementById(id); });
+
+  function todayStr() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+  els.dob.max = todayStr();
+  els.dob.min = '1900-01-01';
+
+  function check(id) {
+    var v = els[id].value.trim();
+    if (id === 'name') {
+      if (!v) return 'Enter your full name.';
+    } else if (id === 'email') {
+      if (!v) return 'Enter your email address.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'That email address looks incomplete. It should look like name@example.com.';
+    } else if (id === 'dob') {
+      if (!v) return 'Enter your date of birth.';
+      if (v > todayStr()) return 'Date of birth can\u2019t be in the future.';
+      if (v < '1900-01-01') return 'Check the year. Date of birth can\u2019t be before 1900.';
+    } else if (id === 'agree') {
+      if (!els.agree.checked) return 'Tick the box to confirm you have read the waiver.';
+    }
+    return '';
+  }
+
+  function show(id, msg) {
+    var err = document.getElementById(id + '-err');
+    err.textContent = msg;
+    err.classList.toggle('show', !!msg);
+    if (msg) els[id].setAttribute('aria-invalid', 'true');
+    else els[id].removeAttribute('aria-invalid');
+  }
+
+  fields.forEach(function (id) {
+    var evt = id === 'agree' ? 'change' : 'blur';
+    els[id].addEventListener(evt, function () {
+      if (id !== 'agree' && !els[id].value.trim() && !els[id].hasAttribute('aria-invalid')) return;
+      show(id, check(id));
+    });
+    els[id].addEventListener('input', function () {
+      if (els[id].hasAttribute('aria-invalid')) show(id, check(id));
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (submit.getAttribute('aria-busy') === 'true') return;
+
+    var problems = [];
+    fields.forEach(function (id) {
+      var msg = check(id);
+      show(id, msg);
+      if (msg) problems.push(id);
+    });
+
+    if (problems.length) {
+      summary.textContent = problems.length === 1
+        ? 'One thing needs fixing before you can submit.'
+        : problems.length + ' things need fixing before you can submit.';
+      summary.classList.add('show');
+      els[problems[0]].focus();
+      return;
+    }
+    summary.classList.remove('show');
+
+    submit.setAttribute('aria-busy', 'true');
+    submit.textContent = 'Submitting\u2026';
+
+    // Placeholder for the real submission; replace with the gym's endpoint.
+    setTimeout(function () {
+      var name = els.name.value.trim();
+      document.getElementById('done-msg').textContent =
+        'Thanks, ' + name + '. Your waiver is signed. Let the front desk know you\u2019re done.';
+      form.hidden = true;
+      done.classList.add('show');
+      done.focus();
+      submit.removeAttribute('aria-busy');
+      submit.textContent = 'Submit';
+    }, 400);
+  });
+
+  document.getElementById('another').addEventListener('click', function () {
+    form.reset();
+    fields.forEach(function (id) { show(id, ''); });
+    summary.classList.remove('show');
+    done.classList.remove('show');
+    form.hidden = false;
+    els.name.focus();
+  });
+})();
+</script>
+</body>
+</html>

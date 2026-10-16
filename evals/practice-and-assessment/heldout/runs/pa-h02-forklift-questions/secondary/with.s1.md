@@ -1,135 +1,136 @@
 # Forklift Safety Quiz: Kestrel Ridge Cold Storage
 
-Learners may look at the session notes or checklist while answering. Use one item per screen, then show the feedback.
-
-**1. Crossing the floor**
-You're carrying a pallet across an open area to the far aisle. What do you do with the forks and mast?
-
-- A. Keep forks 10 to 15 cm off the floor, mast tilted slightly back.
-- B. Raise forks to full height so the load clears the other pallets.
-- C. Drag the forks at floor level to keep the load steady.
-- D. Tilt the mast forward so the load sits level as you move.
-
-*Answer: A.*
-- **A:** Correct. Low, tilted-back travel keeps the load stable and the forks clear of the floor.
-- **B:** Full height makes the truck top-heavy and hides the load from view. Travel low.
-- **C:** Dragging forks damages the floor and can catch on joints. Keep them clear of the floor.
-- **D:** A forward tilt lets the load slide off. Tilt back when loaded.
-
-**2. Entering the freezer**
-You're driving at 8 km/h down an aisle and reach the freezer chamber door. What speed applies inside?
-
-- A. 8 km/h, the same as the aisles.
-- B. 5 km/h.
-- C. Stop, then continue at 8 km/h.
-- D. Whatever speed keeps the load moving.
-
-*Answer: B.*
-- **A:** The aisle limit doesn't carry into the chamber. Slow down when you enter.
-- **B:** Correct. The freezer chamber limit is 5 km/h.
-- **C:** Stopping isn't required. Just reduce to the chamber limit.
-- **D:** No speed is set by the load. Follow the posted limit, 5 km/h in the chamber.
-
-**3. Blind corner**
-You're approaching a corner where you can't see past the racking. What do you do?
-
-- A. Sound the horn and slow to a crawl.
-- B. Speed up so you clear the corner before anyone steps out.
-- C. Keep your speed and horn only if you see someone.
-- D. Turn off the horn so you don't startle anyone.
-
-*Answer: A.*
-- **A:** Correct. The horn warns unseen people and the slow speed gives you time to stop.
-- **B:** Speeding up leaves no time to stop if someone is there.
-- **C:** You can't see past the racking, so you won't see someone in time. Horn first.
-- **D:** The horn is the warning. Silence removes it.
-
-**4. A ride across the dock**
-A coworker wants a ride the length of the dock on your truck. They say it's only a short way. What do you do?
-
-- A. Say no. Never carry passengers.
-- B. Let them ride on the forks, since it's short.
-- C. Let them ride if you drive slowly.
-- D. Let them ride if the supervisor is watching.
-
-*Answer: A.*
-- **A:** Correct. No passengers, even for a short distance.
-- **B:** The forks are not a seat. Passengers are never allowed.
-- **C:** Slow speed doesn't make it safe. Passengers are never allowed.
-- **D:** Supervisor approval doesn't change the rule. Passengers are never allowed.
-
-**5. The capacity plate**
-A pallet looks only slightly heavier than the capacity plate allows. What do you do?
-
-- A. Lift it slowly, since it's only a little over.
-- B. Do not lift it.
-- C. Lift it with the mast tilted fully back.
-- D. Lift it, then check the weight after.
-
-*Answer: B.*
-- **A:** Being slightly over is still over. Don't lift it.
-- **B:** Correct. If the load is heavier than the plate, don't lift it.
-- **C:** Tilt doesn't change the rated capacity. Don't lift it.
-- **D:** Lifting first puts the truck and the people nearby at risk. Check before you lift.
-
-**6. Pedestrian in the path**
-You're driving toward a cross-aisle and a pedestrian is walking toward it. What do you do?
-
-- A. Keep moving. You'll be through before they reach it.
-- B. Make eye contact and stop until they've cleared the path.
-- C. Sound the horn and keep moving so they step aside.
-- D. Speed up to pass ahead of them.
-
-*Answer: B.*
-- **A:** Pedestrians always have right of way. Don't assume you'll clear them.
-- **B:** Correct. Eye contact confirms they see you, and you wait for them.
-- **C:** A horn doesn't give you the right of way. Stop and let them pass.
-- **D:** Speeding up puts the pedestrian at risk. Yield to them.
-
-**7. Load blocking your view**
-You're carrying a load that blocks your view ahead, and the way out is at the far end of the aisle. What do you do?
-
-- A. Drive forward and lean out to look.
-- B. Drive forward slowly and sound the horn.
-- C. Drive in reverse.
-- D. Ask a coworker to stand in front of the load and guide you.
-
-*Answer: C.*
-- **A:** Leaning out doesn't clear the blind spot. Reverse.
-- **B:** The horn doesn't show you what's ahead. Reverse.
-- **C:** Correct. When the load blocks your view, drive in reverse.
-- **D:** Standing in front of a moving truck puts a person in danger. Reverse.
-
-**8. Loaded ramp**
-You're taking a loaded truck down a ramp. Which way do the forks point?
-
-- A. Downhill, toward the bottom of the ramp.
-- B. Uphill.
-- C. Sideways, to keep the load from sliding.
-- D. Level, whatever the slope.
-
-*Answer: B.*
-- **A:** Forks pointing downhill is the wrong direction for a loaded descent. Point them uphill.
-- **B:** Correct. Going down a ramp with a load, the forks point uphill.
-- **C:** Sideways increases the chance of tipping. Forks point uphill.
-- **D:** Level forks don't apply on a slope. Forks point uphill.
-
-**9. Pre-shift check**
-During your pre-shift check, the horn doesn't sound, but the forks, tires, brakes, lights and hydraulics pass. What do you do?
-
-- A. Use the truck, since the horn is a minor fault.
-- B. Tag the truck out and report the horn.
-- C. Fix the horn yourself, then use the truck.
-- D. Tell the next shift and use the truck until then.
-
-*Answer: B.*
-- **A:** A failing horn is a failing check item. Don't use the truck.
-- **B:** Correct. Anything failing means tag it out and report it.
-- **C:** Repairing it yourself skips the report and may leave the truck unsafe. Tag it out and report it.
-- **D:** Passing the problem on leaves the truck in use. Tag it out now.
+Give this right after the session. Each item is a work situation with one best answer. Feedback for every option appears after the key so you can read it aloud or use it as a debrief.
 
 ---
 
-**Notes**
-- Items 1 to 9 map to the session points you gave, with one scenario each.
-- Item 8 uses the forks-uphill rule as you stated it. Check it against your site's procedure before the quiz goes out.
+**1. Pre-shift check**
+
+You start your shift and find that the horn does not sound. You also see a wet patch under the mast hose. What do you do?
+
+- A. Note both problems, run the truck carefully, and report them at end of shift.
+- B. Tag the truck out, report both problems to your supervisor now, and take a different truck or wait for a repair.
+- C. Use the truck, since the forks and tires passed, and mention the leak to the next shift.
+- D. Tag out only the leak, since you can shout to warn people if the horn fails.
+
+**Answer: B**
+
+- A: Any failing item means tag out and report right away. A truck with no working horn cannot warn people at blind corners.
+- B: Correct. A failing item takes the truck out of service and gets reported at once.
+- C: Passing checks on other items does not clear a failing one. The leak and the horn are both failing items.
+- D: The truck is tagged out for any failing item, and shouting does not replace a working horn.
+
+---
+
+**2. Capacity plate**
+
+A pallet on the staging line is labeled heavier than the capacity plate on your mast. Your supervisor says, "It's only a little over. Lift it slowly." What do you do?
+
+- A. Lift it slowly with the forks low, since slow lifting lowers the risk.
+- B. Do not lift it. Tell your supervisor and ask for a truck rated for that weight or another way to move it.
+- C. Lift it a short way to test the balance, then set it back down.
+- D. Lift it after you check that the load is centered on the forks.
+
+**Answer: B**
+
+- A: Lifting slowly does not change the rated maximum. Heavier than the plate means do not lift.
+- B: Correct. The plate sets the limit, and the decision goes to a supervisor with the load still on the floor.
+- C: A test lift is still a lift over the rating. The plate limit applies from the first movement.
+- D: Centering helps, but it does not make an over-capacity load safe to lift.
+
+---
+
+**3. Pedestrian at an intersection**
+
+You are driving toward a cross aisle in the freezer. A picker is walking across the aisle ahead of you, wearing ear protection and looking at a scanner. What do you do?
+
+- A. Keep moving, since you have the truck, and sound the horn as you go.
+- B. Stop, make eye contact with the picker, and wait until they have seen you and cleared your path.
+- C. Speed up to clear the intersection before the picker reaches it.
+- D. Honk once, then proceed slowly through the crossing.
+
+**Answer: B**
+
+- A: Pedestrians always have right of way. A horn alone does not show that the person heard it or saw you.
+- B: Correct. Eye contact confirms the person knows you are there, and you yield until the path is clear.
+- C: Speeding up puts the picker at risk and goes against the right-of-way rule.
+- D: A single honk does not confirm that the person has seen you. Wait for eye contact before moving.
+
+---
+
+**4. Freezer chamber with a blind corner**
+
+You are driving a loaded truck into a freezer chamber from an aisle where the limit is 8 km/h. Just inside, the path turns a corner you cannot see past. What speed and actions apply?
+
+- A. Keep 8 km/h through the corner, since you were already at that speed in the aisle.
+- B. Drop to 5 km/h inside the chamber, sound the horn, and slow to a crawl at the corner.
+- C. Drop to 5 km/h and sound the horn, then keep your normal pace through the corner.
+- D. Speed up through the corner to clear it before anyone can step out.
+
+**Answer: B**
+
+- A: The freezer chamber limit is lower than the aisle limit. Carrying 8 km/h into the chamber breaks that limit.
+- B: Correct. The chamber limit applies, and blind corners call for horn and slowing to a crawl.
+- C: Sounding the horn is right, but slowing to a crawl at the blind corner is also required.
+- D: Speeding up at a blind corner is the opposite of what the session teaches.
+
+---
+
+**5. Load blocks your view**
+
+You are carrying a tall load on the forks. The load blocks your view ahead. What do you do?
+
+- A. Lean to one side to see around the load and keep driving forward.
+- B. Drive in reverse so your view stays clear, and keep the load trailing.
+- C. Speed up to get past the blocked area faster.
+- D. Honk continuously and drive forward slowly.
+
+**Answer: B**
+
+- A: Leaning to see around the load does not give you a clear view of what is ahead, and it can pull your attention from the path.
+- B: Correct. If the load blocks your view, you drive in reverse.
+- C: Speed increases the risk when you cannot see. The session does not allow it.
+- D: Honking does not replace a clear view. Drive in reverse instead.
+
+---
+
+**6. Going down a ramp with a load**
+
+You are driving down a ramp into the loading dock with a pallet on the forks. How should the forks point?
+
+- A. Forks pointing downhill, so the load rests against the carriage.
+- B. Forks pointing uphill, so the load sits on the uphill side.
+- C. Forks pointing sideways across the ramp to spread the weight.
+- D. Whichever direction lets you see the ramp ahead; the forks do not matter.
+
+**Answer: B**
+
+- A: With forks pointing downhill, the load tends to slide off the forks as you descend.
+- B: Correct. Forks point uphill going down a ramp with a load.
+- C: Sideways forks are not safe on a ramp, and the load can slide off.
+- D: The forks direction is set by the ramp rule, not by where you want to look.
+
+---
+
+**7. Passenger request**
+
+A coworker asks for a ride across the freezer to save time walking. The distance is short. What do you say?
+
+- A. Yes, since the trip is short, if they stand on the forks.
+- B. Yes, since the trip is short, if they ride on the back of the truck.
+- C. No. Passengers are never allowed. Walk them there or wait for a different way.
+- D. Yes, but only if they keep both hands on the mast the whole time.
+
+**Answer: C**
+
+- A: Riding on the forks is carrying a passenger, and the length of the trip does not change that.
+- B: Riding on the back is still carrying a passenger.
+- C: Correct. Passengers are never allowed, no matter how short the trip.
+- D: Holding on does not make a passenger allowed.
+
+---
+
+**Notes for the trainer**
+
+- The items use only the figures and rules from the session. The crawl speed is not given as a number, so no item asks for one.
+- This is a same-day check. To see whether people keep the skill, bring back items 1, 3, and 5 the next day and again a week later, mixed with new situations.

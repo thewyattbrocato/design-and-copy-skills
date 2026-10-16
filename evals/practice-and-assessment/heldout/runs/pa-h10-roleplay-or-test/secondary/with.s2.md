@@ -1,11 +1,15 @@
-**Go with B, but cut the lead's time by having reps practice with each other.** Objection handling is a performance skill. A 40-question test can show that a rep recognizes a good response, but not that they can hold a prospect's pushback on a live call. Auto-scoring makes the test scale, but it doesn't tell you whether the training worked.
+**Go with B, but cut the team lead's load by adding a short auto-scored check.**
 
-Full B costs about 15 to 19 hours of the lead's time (15 reps × three 20-minute rounds, plus feedback). That's the real constraint, so restructure it:
+A 40-question multiple choice test measures whether reps can recognize the right answer. Objection handling is a live skill: under pressure, a rep has to say something credible to a skeptical homeowner. A test can't show that. Role-plays can, and they're the only option that does.
 
-- **Peer role-plays:** Pair the reps. Each rep runs the three 20-minute scenarios with a partner, playing the prospect and using a one-page rubric (acknowledged the objection, asked a clarifying question, handled it without discounting, and so on).
-- **Lead observes one round per rep:** Give the lead one 20-minute live role-play per rep with 3 to 5 minutes of feedback. That's about 6 to 7 hours total, spread over a week or so, which is manageable for someone who's stretched.
-- **Scenario script and rubric:** Have the lead write these once. That's a one-time cost of an hour or two and is what makes peer practice work.
+The VP's "scales" point is fair, but it doesn't fit this case. You have one cohort of 15. The scalable part is the scenario bank and scorecard, which you can reuse for future cohorts.
 
-If your VP needs something that scales, add a short scenario-based check (8 to 10 questions where the rep picks the best response to a realistic objection) as a gate before the live round. Keep it small so it doesn't turn into the 40-question recall test. It's a cheap addition, not a replacement for the role-play.
+The lead-time concern is real. Three 20-minute role-plays with feedback is about 15 hours of the lead's time across the cohort. To bring that down:
 
-If the lead truly can't give even the one-round-per-rep observation, that's the thing to escalate. Adding a test won't fix it, because the test would only measure what the lead's time was supposed to build.
+- **Gate with a short quiz.** Use 10–15 auto-scored questions on objection types and approved responses. This gives the VP a scalable, measurable piece, and it means the lead isn't spending role-play time on basic content.
+- **Lead runs only the first role-play live.** Reps do the second and third in pairs, using a one-page scorecard that the lead wrote. The lead spot-checks one recorded call per rep, which is much cheaper than live feedback each time.
+- **Keep the 60 minutes of prep.** That's where reps practice responses before they face the lead.
+
+If the lead can't take on even the first live session, the fallback is the same quiz plus peer role-plays with a scorecard. But you'd be giving up the one thing B gets you that A can't: evidence that reps can actually handle an objection out loud.
+
+Before you pitch this to the VP, check one assumption: does "20 minutes" include the feedback, or is it 20 minutes of role-play plus separate feedback time? That changes the lead's hours by about a third.

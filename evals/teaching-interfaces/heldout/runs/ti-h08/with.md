@@ -1,28 +1,33 @@
-You're right. A day-one walkthrough of all forty is the wrong design for people who use the app eight hours a day. Nobody retains forty chords after hearing them once. A mandatory tour also makes a skilled professional sit through a lesson before they can do their work.
+Your instinct is right. Don't do a forty-shortcut walkthrough on day one. Teach a few shortcuts in context, and make the rest easy to find when someone wants them.
 
-**What I'd do instead: let people learn shortcuts while they do the work the shortcuts speed up.**
+**The goal:** after a few weeks, each person uses the shortcuts that fit their own work without having to look them up.
 
-**1. Fix the interface before you teach it.**
-- Show the shortcut next to the action, in menus, the command palette, button tooltips, and context menus. Someone who clicks "Split view" for the tenth time sees the shortcut every time.
-- Add a command palette that searches by action name and shows the key beside each result. This is the best single tool for a set this large. It also means they never have to remember a shortcut they haven't learned yet.
-- Keep the mnemonics consistent, for example the same modifier for all matter navigation, so they can guess the keys. Consistent keys cut how much needs teaching.
+**Why the PM's plan fails for this crowd**
+- Forty new things at once is far more than anyone retains, and people won't remember shortcuts for actions they haven't done yet.
+- Lawyers and paralegals are in the app to do billable work. A mandatory tour on day one makes them skip it, and it teaches nothing.
+- Shortcuts are muscle memory. They stick when you use them at the moment you'd otherwise reach for the mouse, not when you read about them.
 
-**2. Teach a small number at a time, at the moment of use.**
-- Day one: three or four shortcuts that cover the most frequent actions. I'd pick them from usage data, not by guessing. Candidates are quick-cite, jump between matters, and the palette itself. Put them in one short, skippable first task done in a real matter, not a tour. The goal sentence is "afterwards they can open the palette and jump to a matter without the mouse."
-- After that, use contextual nudges tied to behavior. If someone opens split view by mouse for the third time, show a quiet one-line hint: "Split view: ⌘\ [placeholder key]". Show it once or twice per shortcut, then stop. Tying a hint to something they just did is fine. Streaks, daily tips, and scheduled drips are not.
-- Give the hint a way to say "I know this" or "stop hints."
+**What I'd do instead**
 
-**3. Give them a reference they can pull.**
-- A searchable shortcut sheet, opened by a key such as `?`. Group it by task (navigation, citing, layout), not alphabetically.
-- A printable cheat sheet. Lawyers and paralegals often like these, and they cost almost nothing.
-- Optional "What's new" notes when you add shortcuts later, so people learn them as they ship.
+1. **Show the shortcut where the action already happens.** Put the key combo in every menu item, button tooltip, and command-palette result. Someone who clicks "Split view" sees the shortcut right there, and the next time they can use it. This costs almost nothing and teaches the most.
 
-**4. Give the PM something concrete.**
-The PM probably worries that people won't discover the shortcuts. That's a real concern, and the plan above handles it. Discovery happens continuously through hints, menus, and the palette, and it doesn't depend on one day-one session. Offer an opt-in "Learn shortcuts" entry for anyone who wants the full walkthrough. The PM gets the tour, and nobody is forced through it.
+2. **Add a command palette** (something like Cmd+K) that searches every action and shows its shortcut. It's the single entry point for all forty, so nobody has to memorize anything up front. Searching "cite" finds quick-cite and shows the key.
 
-**5. Measure what matters.**
-Don't measure tour completion. Measure whether people use a shortcut unaided a week or two later, and whether time-to-complete for key actions drops. I'd compare the two designs on that: the full tour against the contextual approach. I won't predict the result, but it gives you evidence for the PM conversation.
+3. **Nudge after repeated mouse use.** If someone clicks "Jump to matter" for the fifth time, show a small, dismissible hint beside it: "Next time: ⌘J" (using the real binding). Tie it to something they just did, and show at most one at a time. Never use streaks or reminders on a schedule.
 
-**Assumptions and trade-offs**
-- I haven't seen your app, so the specific shortcuts above are placeholders. Pick the day-one few from real usage.
-- Contextual hints take more engineering than a tour (event tracking, hint limits). The cost is real, but it pays back in retention.
+4. **Teach three on day one, not forty.** Pick the ones everyone uses daily (probably jump between matters, quick-cite, and one more). Introduce them during the first real task, for example when they open their second matter, rather than in a separate tour. Give them a visible Skip and a way back.
+
+5. **Keep a reference sheet.** Provide a searchable, printable list grouped by task (navigating, citing, layout) and reachable from the Help menu and the palette. Lawyers like a printed cheat sheet, and it's the right place for the full forty.
+
+6. **Announce the rest as they become relevant.** Use a short "what's new" note or a contextual hint when someone first uses a feature, such as split view. Don't push all of it at once.
+
+7. **Let people opt in to more.** Offer a "Shortcut of the week" or a "Show me tips for what I do most" setting, off by default. Power users who want the full set can pull it.
+
+**A pitch for the PM:** the PM wants everyone to adopt the shortcuts, and so do you. The disagreement is only about method. Offer to measure it: of people who use split view, what share use the shortcut rather than the click after 30 days? A forced tour will probably score worse than in-context hints. A tour's completion rate only shows that people clicked through it.
+
+**What to check**
+- Do people use the three day-one shortcuts unaided a week later?
+- Does shortcut use rise for the actions where you show hints?
+- Do the shortcuts that have no hint get used at all? If not, the palette and reference aren't being found.
+
+I assumed this is a desktop app with a command palette that's feasible to build. I also left out the specific key bindings because I don't know them. If you tell me which three are the daily essentials, I can draft the day-one hint copy.

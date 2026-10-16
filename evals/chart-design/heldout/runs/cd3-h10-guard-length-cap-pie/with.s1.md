@@ -1,0 +1,1 @@
+A pie chart is fine here: three categories that sum to 100% is about the best case for one, and 52% is a clear majority. If you'd rather make the comparison easier, a sorted horizontal bar chart with direct labels does that better, especially if you add categories later or want to compare the split across time periods.

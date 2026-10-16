@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seed Library Desk</title>
+<style>
+  :root {
+    --bg: #f6f4ee; --card: #fff; --ink: #1f2a20; --muted: #5d6a5f; --line: #dcd8cb;
+    --accent: #2f6b3a; --accent-ink: #fff; --sel: #e6f0e3; --warn: #8a4b00; --warn-bg: #fdf0da;
+    --danger: #a12d2d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161b17; --card:#1e251f; --ink:#e8ece6; --muted:#a3ada4; --line:#334036;
+      --accent:#6fbf7d; --accent-ink:#0f1a11; --sel:#26382a; --warn:#f0c27a; --warn-bg:#3a2d14; --danger:#f08a8a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 920px; margin: 0 auto; padding: 20px 16px 96px; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  .cleanup { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+  .cleanup p { margin: 0; flex: 1 1 260px; }
+  .cleanup label { color: var(--muted); font-size: .9rem; }
+  .cleanup input[type=number] { width: 5.2em; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); }
+  .btn { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 8px 14px; min-height: 40px; }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  .btn.danger { background: var(--danger); color: #fff; border-color: var(--danger); font-weight: 600; }
+  .btn:disabled { opacity: .5; cursor: default; }
+
+  .tools { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:10px; }
+  .tools input[type=search] { flex: 1 1 200px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); min-height: 40px; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .chip { border:1px solid var(--line); background:var(--card); border-radius: 999px; padding: 6px 12px; min-height: 36px; }
+  .chip[aria-pressed=true] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  .wrap { background: var(--card); border:1px solid var(--line); border-radius:10px; overflow-x:auto; }
+  table { width:100%; border-collapse: collapse; min-width: 640px; }
+  th, td { text-align:left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { font-size:.85rem; color: var(--muted); font-weight:600; white-space:nowrap; }
+  th button { background:none; border:0; padding:4px 0; font-weight:600; color: inherit; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tr.sel { background: var(--sel); }
+  td.chk, th.chk { width: 44px; padding-right: 0; }
+  input[type=checkbox] { width: 22px; height: 22px; accent-color: var(--accent); }
+  .name { font-weight: 600; }
+  .tag { display:inline-block; font-size:.75rem; font-weight:700; padding:2px 8px; border-radius: 999px;
+    background: var(--warn-bg); color: var(--warn); border: 1px solid currentColor; margin-left: 6px; white-space:nowrap; }
+  .qty { display:inline-flex; align-items:center; gap:6px; }
+  .qty button { width: 36px; height: 36px; border-radius: 8px; border:1px solid var(--line); background: var(--card); font-size: 1.1rem; line-height:1; }
+  .qty output { min-width: 2.2ch; text-align:center; font-variant-numeric: tabular-nums; font-weight:600; }
+  .empty-state { padding: 28px; text-align:center; color: var(--muted); }
+
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--ink); color: var(--bg);
+    padding: 12px 16px; display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; }
+  .bar[hidden] { display:none; }
+  .bar .btn { background: transparent; color: var(--bg); border-color: currentColor; }
+  .bar .btn.danger { background: var(--danger); color:#fff; border-color: var(--danger); }
+
+  .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 76px; background: var(--card); color: var(--ink);
+    border: 1px solid var(--line); box-shadow: 0 6px 24px rgba(0,0,0,.25); border-radius: 10px;
+    padding: 10px 12px 10px 16px; display:flex; gap:12px; align-items:center; max-width: calc(100% - 24px); z-index: 5; }
+  .toast[hidden] { display:none; }
+  .foot { margin-top: 14px; color: var(--muted); font-size: .85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .foot button { background:none; border:0; text-decoration: underline; color: var(--muted); padding: 4px; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Seed Library Desk</h1>
+  <p class="sub">Sample data for demo. Changes save in this browser.</p>
+
+  <section class="cleanup" aria-label="End of season clean-up">
+    <p id="cleanText"></p>
+    <label>Old = packed in or before <input type="number" id="cutoff" min="1990" max="2100" inputmode="numeric"></label>
+    <button class="btn primary" id="review">Select clean-up packets</button>
+  </section>
+
+  <div class="tools">
+    <input type="search" id="q" placeholder="Search name or type" aria-label="Search packets">
+    <div class="chips" role="group" aria-label="Filter">
+      <button class="chip" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" data-f="clean" aria-pressed="false">Needs clearing</button>
+      <button class="chip" data-f="empty" aria-pressed="false">Empty</button>
+      <button class="chip" data-f="old" aria-pressed="false">Old</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <table>
+      <thead><tr>
+        <th class="chk"><input type="checkbox" id="all" aria-label="Select all shown packets"></th>
+        <th aria-sort="none"><button data-s="name">Name <span aria-hidden="true"></span></button></th>
+        <th aria-sort="none"><button data-s="type">Type <span aria-hidden="true"></span></button></th>
+        <th aria-sort="none"><button data-s="year">Year packed <span aria-hidden="true"></span></button></th>
+        <th aria-sort="none"><button data-s="left">Left <span aria-hidden="true"></span></button></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty-state" id="none" hidden>No packets match.</div>
+  </div>
+
+  <div class="foot">
+    <span id="count"></span>
+    <button id="reset">Reset sample data</button>
+  </div>
+</main>
+
+<div class="bar" id="bar" hidden>
+  <strong id="selCount"></strong>
+  <button class="btn danger" id="remove"></button>
+  <button class="btn" id="clear">Clear selection (Esc)</button>
+</div>
+
+<div class="toast" id="toast" hidden>
+  <span id="toastMsg"></span>
+  <button class="btn" id="undo">Undo</button>
+</div>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var YEAR = new Date().getFullYear();
+  var KEY = 'seedDesk.v1';
+  var seed = [
+    ['Brandywine Tomato','Vegetable',1,14],['Lacinato Kale','Vegetable',2,9],['Cosmos Sensation Mix','Flower',1,22],
+    ['Detroit Dark Red Beet','Vegetable',4,6],['Calendula Pacific Beauty','Herb',3,0],['Genovese Basil','Herb',0,18],
+    ['Scarlet Runner Bean','Vegetable',5,11],['Zinnia State Fair','Flower',2,0],['Sugar Snap Pea','Vegetable',1,25],
+    ['Dill Bouquet','Herb',4,7],['Marigold Crackerjack','Flower',6,3],['Rainbow Chard','Vegetable',0,12],
+    ['Borage','Herb',3,5],['Black-eyed Susan','Flower',1,0],['Little Gem Lettuce','Vegetable',5,8]
+  ];
+  function fresh() {
+    return seed.map(function (s, i) { return { id: i + 1, name: s[0], type: s[1], year: YEAR - s[2], left: s[3] }; });
+  }
+  var store = {
+    get: function () { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } },
+    set: function (v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
+  };
+  var saved = store.get() || {};
+  var items = Array.isArray(saved.items) ? saved.items : fresh();
+  var cutoff = Number.isFinite(saved.cutoff) ? saved.cutoff : YEAR - 3;
+  var sort = saved.sort || { key: 'name', dir: 1 };
+  var filter = 'all', query = '', selected = new Set(), undoStack = null, toastTimer = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  function persist() { store.set({ items: items, cutoff: cutoff, sort: sort }); }
+  function isEmpty(p) { return p.left <= 0; }
+  function isOld(p) { return p.year <= cutoff; }
+  function needs(p) { return isEmpty(p) || isOld(p); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function say(t) { $('live').textContent = ''; setTimeout(function () { $('live').textContent = t; }, 30); }
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+
+  function visible() {
+    var q = query.trim().toLowerCase();
+    var list = items.filter(function (p) {
+      if (q && (p.name + ' ' + p.type).toLowerCase().indexOf(q) < 0) return false;
+      if (filter === 'empty') return isEmpty(p);
+      if (filter === 'old') return isOld(p);
+      if (filter === 'clean') return needs(p);
+      return true;
+    });
+    list.sort(function (a, b) {
+      var x = a[sort.key], y = b[sort.key];
+      var r = typeof x === 'string' ? x.localeCompare(y) : x - y;
+      return (r || a.name.localeCompare(b.name)) * sort.dir;
+    });
+    return list;
+  }
+
+  function render() {
+    var list = visible();
+    var visIds = new Set(list.map(function (p) { return p.id; }));
+    selected.forEach(function (id) { if (!visIds.has(id)) selected.delete(id); });
+
+    $('rows').innerHTML = list.map(function (p) {
+      var tags = (isEmpty(p) ? '<span class="tag">Empty</span>' : '') + (isOld(p) ? '<span class="tag">Old</span>' : '');
+      return '<tr class="' + (selected.has(p.id) ? 'sel' : '') + '" data-id="' + p.id + '">' +
+        '<td class="chk"><input type="checkbox" ' + (selected.has(p.id) ? 'checked' : '') + ' aria-label="Select ' + esc(p.name) + '"></td>' +
+        '<td><span class="name">' + esc(p.name) + '</span>' + tags + '</td>' +
+        '<td>' + esc(p.type) + '</td>' +
+        '<td>' + p.year + '</td>' +
+        '<td><span class="qty"><button data-d="-1" aria-label="One fewer ' + esc(p.name) + '">−</button>' +
+        '<output aria-label="Left of ' + esc(p.name) + '">' + p.left + '</output>' +
+        '<button data-d="1" aria-label="One more ' + esc(p.name) + '">+</button></span></td></tr>';
+    }).join('');
+    $('none').hidden = list.length > 0;
+
+    var n = items.filter(needs).length;
+    var e = items.filter(isEmpty).length, o = items.filter(isOld).length;
+    $('cleanText').innerHTML = n
+      ? '<strong>' + plural(n, 'packet') + '</strong> to clear out: ' + e + ' empty, ' + o + ' packed in ' + cutoff + ' or earlier.'
+      : 'Nothing to clear out right now.';
+    $('review').disabled = !n;
+    $('cutoff').value = cutoff;
+    $('count').textContent = plural(items.length, 'packet') + ' in the library' + (list.length !== items.length ? ' (' + list.length + ' shown)' : '');
+
+    var all = $('all');
+    all.checked = list.length > 0 && selected.size === list.length;
+    all.indeterminate = selected.size > 0 && selected.size < list.length;
+
+    $('bar').hidden = selected.size === 0;
+    $('selCount').textContent = plural(selected.size, 'packet') + ' selected';
+    $('remove').textContent = 'Remove ' + selected.size;
+
+    document.querySelectorAll('th[aria-sort]').forEach(function (th) {
+      var b = th.querySelector('button'), on = b.dataset.s === sort.key;
+      th.setAttribute('aria-sort', on ? (sort.dir > 0 ? 'ascending' : 'descending') : 'none');
+      b.querySelector('span').textContent = on ? (sort.dir > 0 ? '▲' : '▼') : '';
+    });
+    document.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', c.dataset.f === filter); });
+  }
+
+  function showToast(msg) {
+    $('toastMsg').textContent = msg; $('toast').hidden = false; say(msg + ' Undo is available.');
+    clearTimeout(toastTimer); toastTimer = setTimeout(hideToast, 10000);
+  }
+  function hideToast() { $('toast').hidden = true; undoStack = null; }
+
+  function removeSelected() {
+    if (!selected.size) return;
+    var gone = items.map(function (p, i) { return { p: p, i: i }; }).filter(function (x) { return selected.has(x.p.id); });
+    items = items.filter(function (p) { return !selected.has(p.id); });
+    selected.clear();
+    undoStack = gone; persist(); render();
+    showToast('Removed ' + plural(gone.length, 'packet') + '.');
+  }
+  function undo() {
+    if (!undoStack) return;
+    var back = undoStack; undoStack = null;
+    back.forEach(function (x) { items.splice(Math.min(x.i, items.length), 0, x.p); });
+    persist(); render(); $('toast').hidden = true; clearTimeout(toastTimer);
+    say('Restored ' + plural(back.length, 'packet') + '.');
+    $('review').focus();
+  }
+
+  $('rows').addEventListener('change', function (e) {
+    if (e.target.type !== 'checkbox') return;
+    var id = +e.target.closest('tr').dataset.id;
+    e.target.checked ? selected.add(id) : selected.delete(id);
+    render();
+    var again = document.querySelector('tr[data-id="' + id + '"] input'); if (again) again.focus();
+  });
+  $('rows').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-d]'); if (!b) return;
+    var id = +b.closest('tr').dataset.id, p = items.find(function (x) { return x.id === id; });
+    p.left = Math.max(0, p.left + +b.dataset.d);
+    persist(); render();
+    var again = document.querySelector('tr[data-id="' + id + '"] button[data-d="' + b.dataset.d + '"]'); if (again) again.focus();
+  });
+  $('all').addEventListener('change', function (e) {
+    var list = visible();
+    selected = e.target.checked ? new Set(list.map(function (p) { return p.id; })) : new Set();
+    render();
+  });
+  document.querySelectorAll('th button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      sort = { key: b.dataset.s, dir: sort.key === b.dataset.s ? -sort.dir : 1 };
+      persist(); render();
+    });
+  });
+  document.querySelectorAll('.chip').forEach(function (c) {
+    c.addEventListener('click', function () { filter = c.dataset.f; render(); });
+  });
+  $('q').addEventListener('input', function (e) { query = e.target.value; render(); });
+  $('cutoff').addEventListener('change', function (e) {
+    var v = parseInt(e.target.value, 10);
+    if (Number.isFinite(v)) { cutoff = v; persist(); }
+    selected.clear(); render();
+  });
+  $('review').addEventListener('click', function () {
+    filter = 'clean'; query = ''; $('q').value = '';
+    selected = new Set(items.filter(needs).map(function (p) { return p.id; }));
+    render(); say(plural(selected.size, 'packet') + ' selected for clean-up. Review, then press Remove.');
+    $('remove').focus();
+  });
+  $('remove').addEventListener('click', removeSelected);
+  $('clear').addEventListener('click', function () { selected.clear(); render(); });
+  $('undo').addEventListener('click', undo);
+  $('toast').addEventListener('mouseenter', function () { clearTimeout(toastTimer); });
+  $('toast').addEventListener('mouseleave', function () { if (undoStack) toastTimer = setTimeout(hideToast, 6000); });
+  $('toast').addEventListener('focusin', function () { clearTimeout(toastTimer); });
+  $('reset').addEventListener('click', function () {
+    var before = items;
+    items = fresh(); selected.clear(); persist(); render();
+    undoStack = null; showToast('Sample data reset.');
+    undoStack = before.map(function (p, i) { return { p: p, i: i }; });
+    $('undo').onclick = function () {
+      items = before; undoStack = null; persist(); render(); $('toast').hidden = true; $('undo').onclick = null;
+    };
+  });
+  $('undo').addEventListener('click', function () { $('undo').onclick = null; });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && selected.size && document.activeElement.id !== 'q') { selected.clear(); render(); }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && undoStack && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); undo(); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

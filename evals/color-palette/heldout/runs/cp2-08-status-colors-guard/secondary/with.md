@@ -1,22 +1,19 @@
-**Not a good idea, at least not for the status colors.** Brand palettes are built to express identity, and status colors have to carry meaning fast. Three problems:
+I wouldn't pull the status colors from the brand palette. Status colors have to be read at a glance and told apart from each other, and brand colors are picked for mood and recognition, not for that job. Brand colors often sit close together (several reds, oranges, or muted tones) and can't always be distinguished quickly on a dashboard.
 
-1. **Your brand red is already the failure color.** Red means "error" to most people. If `failed` uses the brand red and your primary buttons use it too, a red "Retry" button sits next to a red "Failed" badge and the two compete. Users will read the button as a warning.
-2. **Brand colors are often similar in hue and lightness.** Brand palettes commonly include several reds, oranges, or purples that look nearly identical as small dots or badges. Running, waiting, and failed need to be clearly distinct at a glance.
-3. **Status colors need to be tuned for the job.** They have to pass contrast on the dashboard background, work for color-blind users, and match each other in lightness. Brand colors aren't chosen for any of that.
+Your red is the main problem. #d93a35 is the color most people expect for "failed," so if your buttons use it too, a red button can read as an error and a failed deploy can look like a call to action. You have three options:
 
-**What I'd do instead:**
+1. **Keep the brand red for buttons and use a different failure treatment.** For example, use a deeper or more orange-leaning red for failed, paired with an icon and the word "Failed." This keeps the red family but still separates it from the brand accent.
+2. **Make the brand red the primary button color and keep status colors out of the red family entirely.** Failed would be a different hue, which is less conventional. This works only if people will learn it quickly.
+3. **Use a neutral or dark primary for buttons** and let red stay reserved for failure and destructive actions. This is the cleanest option for a status-heavy tool.
 
-- **Keep the brand red for actions and identity only** (buttons, links, logo, focus accents).
-- **Use a separate, semantic status set**, one hue per state:
+For the other statuses, these conventions are familiar and easy to read:
+- **Running:** blue or a cool hue, optionally with a subtle animation
+- **Succeeded:** green
+- **Waiting for approval:** amber or yellow
 
-| Status | Hue | Example starting point |
-|---|---|---|
-| Running | Blue | `#2f6fdb` |
-| Succeeded | Green | `#1e8a4c` |
-| Failed | Deep red or crimson | `#b42318` |
-| Waiting for approval | Amber | `#b54708` (text) / `#f79009` (fills) |
+Some practical rules:
+- Don't rely on color alone. Pair each status with an icon and a text label, since red/green confusion affects a meaningful share of users.
+- Check contrast in both light and dark mode, and make sure the four statuses still look distinct in each.
+- Keep the status palette separate from the brand palette in your design tokens, so brand changes don't alter what "failed" looks like.
 
-- **Never rely on color alone.** Pair each status with an icon and a text label (spinner for running, check for succeeded, ✕ for failed, clock or hand for waiting). This matters for color-blind users and for anyone scanning quickly.
-- **Make the failed red visibly different from the brand red** (darker, or shifted toward crimson), and keep it away from primary buttons, or make the primary button a different color if you want them to coexist.
-
-These hex values are starting points, not validated. I haven't checked contrast against your actual backgrounds or the color-blind simulations. If you want, I can run them through the color-palette skill to check contrast and separation in light and dark modes.
+If you want, I can use the color-palette skill to build a status palette with contrast checks for light and dark mode, and show how it sits next to #d93a35.

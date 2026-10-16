@@ -1,1 +1,1 @@
-"Place order" should be the filled, prominent button, because it's the one action that finishes the step. Make "Back to cart" a quieter outline or text-link button so it stays easy to find without competing.
+"Place order" should be the filled, prominent button, because it's the one action that finishes the task on this step. Make "Back to cart" a quieter outline or text link so it's still easy to find but doesn't compete.

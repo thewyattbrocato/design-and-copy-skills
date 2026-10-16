@@ -1,31 +1,33 @@
-I'd skip both the hero stat and the bigger cards. With 40 to 60 trucks, no scrolling and nothing hidden, every pixel of height is needed for rows. A hero and large cards would cut the row budget, and the dispatchers would then have to scroll or you'd have to hide trucks. The overwhelm in the plain table probably comes from every row looking the same, not from the table being a table. So the fix is a ranking that makes a few rows stand out, not a bigger layout.
+I'd skip the hero stat and the bigger cards. Both spend space that 40 to 60 no-scroll rows can't spare, and neither fixes what makes the table overwhelming.
 
-**Job of the screen:** show who needs a dispatcher's action right now, while keeping every truck visible.
+**Why those two don't work**
+- **Bigger cards:** on a 1080p display, 60 rows in one column leaves about 16px each. Making some trucks larger forces the rest to shrink or drop off the screen, and the dispatchers have ruled that out.
+- **Hero stat:** a big number like "52 trucks on site" doesn't help a dispatcher decide anything. A slim summary strip does the job in about 56px.
+- **The real problem:** the table is overwhelming because every row and column is equally loud. The fix is to quiet the normal trucks and make the exceptions stand out.
 
-**Layout (1920×1080, no scroll)**
+**Layout (1920×1080, one screen, no scroll)**
 
-```
-┌──────────────────────────────────────────────────────────────────────────┐
-│ Yard   Arriving [n]  Waiting [n]  Loading [n]  Unloading [n]  Ready [n]  │  ~56px slim strip
-├───────────────────────────────────┬──────────────────────────────────────┤
-│ DOOR TRUCK    CARRIER     STATUS MIN NOTES │ DOOR TRUCK    CARRIER   STATUS MIN NOTES │
-│ 12   T-4471   Carrier A   ● Waiting  74 ▮ notes…   │ …                        │
-│ 07   T-4302   Carrier B   ● Ready    31   notes…   │                          │
-│ …    (≈30 rows per column, ~30px each)             │                          │
-└───────────────────────────────────┴──────────────────────────────────────┘
-```
+1. **Summary strip (about 56px, full width).** It's a single row of status counts that double as the legend: `Arriving 6 · Waiting 11 · Loading 14 · Unloading 9 · Ready 4`. Next to it are the clock and a count of trucks over their time limit. Keep it modest in size. This is the only place status counts appear.
 
-- **Two columns of about 30 rows**, each row one line at roughly 30px. That fits 60 trucks in about 900px under the strip. On a wall display, or if you need bigger text, go to three columns of 20 and let notes truncate.
-- **Slim status strip instead of a hero.** It's one line of counts per status, which also acts as the color legend. Clicking a count could highlight those rows, but it must never filter them out.
-- **Sort order:** group by status in priority order (ready to leave, waiting, then the rest). Within each group, put the longest time on site first. The trucks that need action end up at the top-left, where people look first.
+2. **Truck list (the remaining ~1000px).** It's one list that flows into two columns of up to 30 rows each, at about 32px per row. At 60 trucks that fits exactly. With fewer trucks, row height can grow slightly to fill the space, up to a cap.
+   - **Row order, left to right:** Door → Truck ID → Status → Minutes → Carrier → Notes.
+   - **Sort by dock door,** so each truck stays in the same spot while it's at the door. Rows that jump around as statuses change are hard to track on a screen watched all shift. Trucks with no door yet (arriving, waiting) go at the end, ordered by arrival time.
 
-**Ranking inside each row**
+3. **How the rows rank**
 
-1. **Primary:** door number, then truck ID. Dispatchers talk in doors and IDs, so these are bold and sit at the left edge.
-2. **Primary, by exception only:** rows over a time threshold get a tinted background and a bold minutes value. Each status needs its own threshold, for example waiting is the one that matters most. I haven't invented numbers; [threshold per status] is yours to set. At most about 10% of rows should ever look this way. If half the rows are flagged, the thresholds are wrong.
-3. **Secondary:** status, as a colored dot plus the word, so it still reads in grayscale and for color-blind users. Minutes are right-aligned in tabular numerals so they scan as a column.
-4. **Tertiary:** carrier and notes, in a regular weight and a softer gray. Notes are one line, truncated, with the full text on hover or click. If a row has a note, a small marker makes that visible at a glance.
+| Level | Content | Treatment |
+|---|---|---|
+| Primary | Trucks that need action: waiting or on site past the threshold, or ready to leave | Tinted row background, bold Minutes and Status, plus a text cue like "▲ 95m" |
+| Secondary | Door, truck ID, status | Regular text, high contrast, door and ID in bold or tabular figures |
+| Tertiary | Carrier, minutes (when normal) | Softer gray, same size |
+| Meta | Notes | Smallest, softest, truncated to one line. A small marker appears when a note is cut off |
 
-**Keep it calm:** use hairline dividers or very faint zebra striping, with no card borders, shadows or icons per row. Color is for status and for the over-threshold flag only.
+   - **Emphasis budget:** keep highlighted rows to about 10 to 15% of the list. If a quarter of the board is highlighted, the threshold is wrong, so make it configurable.
+   - **Status:** show it as a short word with a small colored dot, so it still reads in grayscale and for color-blind users. Use four or five muted hues at most. Only "ready to leave" and "overdue" should be saturated.
+   - **Minutes:** right-align it in tabular figures so the durations are easy to scan down the column.
 
-**Trade-off:** sorting by status and time means rows move when a truck changes status. If dispatchers rely on a truck staying in one place, sort by door instead and keep the same flagging. You lose the "urgent at top" grouping, but positions stay stable.
+4. **Notes.** Notes can't be hidden, but they can be quiet. Give them the widest flexible column, one line each, in muted text. Rows with a note get a small marker, and a tap or hover opens the full text.
+
+**Two assumptions to check**
+- I assumed a 1080p wall display or a large monitor. On a smaller screen the same design goes to three columns with Carrier and Notes dropped to a second line, and I'd need the actual resolution to size it.
+- I assumed "needs attention" is defined by dwell-time thresholds per status. If dispatchers define it differently (for example by carrier priority), the highlighted rows change, but the layout doesn't.

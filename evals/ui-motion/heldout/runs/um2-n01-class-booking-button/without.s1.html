@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnhouse – Saturday Wheel-Throwing</title>
+<style>
+  :root {
+    --bg: #f3ece4;
+    --card: #fffaf4;
+    --ink: #2b211b;
+    --muted: #6f625a;
+    --line: #e5d9cc;
+    --accent: #b4532a;
+    --accent-ink: #fff;
+    --accent-dark: #8f3f1d;
+    --ok: #2f6b45;
+    --warn: #a3401a;
+    --dot-off: #e2d6c8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1613;
+      --card: #251e1a;
+      --ink: #f3e9df;
+      --muted: #b3a498;
+      --line: #3a2f29;
+      --accent: #d9743f;
+      --accent-ink: #1b1613;
+      --accent-dark: #e88b58;
+      --ok: #7fd09c;
+      --warn: #f0a37c;
+      --dot-off: #3a2f29;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(43,33,27,.06), 0 8px 24px rgba(43,33,27,.08);
+  }
+  .studio {
+    margin: 0 0 6px;
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  h1 { margin: 0 0 4px; font-size: 24px; line-height: 1.2; }
+  .when { margin: 0 0 20px; color: var(--muted); font-size: 15px; }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .label { color: var(--muted); font-size: 14px; }
+  .price { font-size: 22px; font-weight: 700; }
+  .price small { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .seats { text-align: right; }
+  .seats strong { font-size: 18px; transition: color .2s; }
+  .seats strong.low { color: var(--warn); }
+  .dots { display: flex; gap: 5px; justify-content: flex-end; margin-top: 6px; }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+    transition: background .25s, transform .25s;
+  }
+  .dot.off { background: var(--dot-off); transform: scale(.8); }
+  button {
+    margin-top: 8px;
+    width: 100%;
+    min-height: 48px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background .15s, transform .08s;
+  }
+  button:hover:not(:disabled) { background: var(--accent-dark); }
+  button:active:not(:disabled) { transform: scale(.98); }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  button:disabled { cursor: default; }
+  button[aria-busy="true"] { opacity: .9; }
+  button.done { background: var(--ok); color: var(--card); }
+  button.soldout { background: var(--line); color: var(--muted); }
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .status { min-height: 20px; margin: 12px 0 0; font-size: 14px; text-align: center; color: var(--muted); }
+  .status.ok { color: var(--ok); }
+  .status.err { color: var(--warn); }
+  .undo {
+    background: none; border: 0; color: inherit; text-decoration: underline;
+    font: inherit; font-size: inherit; font-weight: 400;
+    width: auto; min-height: 0; margin: 0 0 0 6px; padding: 0; display: inline;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    .spinner { animation-duration: 1.6s; }
+  }
+</style>
+</head>
+<body>
+  <article class="card" aria-labelledby="title">
+    <p class="studio">Kilnhouse Pottery</p>
+    <h1 id="title">Saturday Wheel-Throwing</h1>
+    <p class="when">Sat, Oct 17, 2026 · 10:00 AM – 12:30 PM</p>
+
+    <div class="row">
+      <div>
+        <div class="label">Price</div>
+        <div class="price">$85 <small>/ person</small></div>
+      </div>
+      <div class="seats">
+        <div class="label">Seats left</div>
+        <div><strong id="seatCount">3</strong> <span class="label">of 8</span></div>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <button id="reserve" type="button">Reserve a seat</button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </article>
+
+<script>
+  const TOTAL = 8;
+  let seats = 3;
+  let state = 'idle'; // idle | pending | reserved
+
+  const btn = document.getElementById('reserve');
+  const countEl = document.getElementById('seatCount');
+  const dotsEl = document.getElementById('dots');
+  const statusEl = document.getElementById('status');
+
+  function render() {
+    countEl.textContent = seats;
+    countEl.classList.toggle('low', seats <= 3);
+    dotsEl.innerHTML = '';
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.createElement('span');
+      d.className = 'dot' + (i >= seats ? ' off' : '');
+      dotsEl.appendChild(d);
+    }
+    btn.className = '';
+    btn.removeAttribute('aria-busy');
+    btn.disabled = false;
+    if (state === 'pending') {
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+      btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Reserving…';
+    } else if (state === 'reserved') {
+      btn.disabled = true;
+      btn.className = 'done';
+      btn.textContent = '✓ Seat reserved';
+    } else if (seats === 0) {
+      btn.disabled = true;
+      btn.className = 'soldout';
+      btn.textContent = 'Class full';
+    } else {
+      btn.textContent = 'Reserve a seat';
+    }
+  }
+
+  function setStatus(msg, cls) {
+    statusEl.className = 'status' + (cls ? ' ' + cls : '');
+    statusEl.textContent = msg;
+  }
+
+  // Fake network request: resolves after 1.2–2s.
+  function fakeRequest() {
+    return new Promise(resolve => setTimeout(resolve, 1200 + Math.random() * 800));
+  }
+
+  async function reserve() {
+    if (state !== 'idle' || seats === 0) return;
+    // Optimistic update: react instantly, confirm later.
+    state = 'pending';
+    seats -= 1;
+    setStatus('Holding your seat…');
+    render();
+    try {
+      await fakeRequest();
+      state = 'reserved';
+      render();
+      setStatus("You're in! See you at the wheel.", 'ok');
+      const undo = document.createElement('button');
+      undo.type = 'button';
+      undo.className = 'undo';
+      undo.textContent = 'Undo';
+      undo.addEventListener('click', release);
+      statusEl.appendChild(undo);
+    } catch (e) {
+      // Roll back if the request fails.
+      seats += 1;
+      state = 'idle';
+      render();
+      setStatus("Couldn't reserve that seat. Please try again.", 'err');
+    }
+  }
+
+  function release() {
+    seats += 1;
+    state = 'idle';
+    render();
+    setStatus('Reservation cancelled.');
+  }
+
+  btn.addEventListener('click', reserve);
+  render();
+</script>
+</body>
+</html>

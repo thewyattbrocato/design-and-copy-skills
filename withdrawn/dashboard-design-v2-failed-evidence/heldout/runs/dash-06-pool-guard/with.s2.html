@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pool Status</title>
+<style>
+  :root {
+    --bg: #0b1f2e;
+    --card: #12304a;
+    --text: #ffffff;
+    --muted: #b8cde0;
+    --ok: #1f9d55;
+    --ok-text: #ffffff;
+    --bad: #c62828;
+    --bad-text: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 2vmin;
+    padding: 3vmin;
+    min-height: 100vh;
+  }
+  .banner {
+    border-radius: 2vmin;
+    padding: 4vmin 4vmin;
+    display: flex;
+    align-items: center;
+    gap: 4vmin;
+    background: var(--ok);
+    color: var(--ok-text);
+  }
+  .banner.bad { background: var(--bad); color: var(--bad-text); }
+  .banner .icon {
+    flex: none;
+    width: 16vmin; height: 16vmin;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--ok);
+    display: grid; place-items: center;
+    font-size: 11vmin; font-weight: 800; line-height: 1;
+  }
+  .banner.bad .icon { color: var(--bad); }
+  .banner h1 { margin: 0; font-size: clamp(40px, 9vmin, 140px); line-height: 1.05; }
+  .banner p { margin: 1vmin 0 0; font-size: clamp(22px, 4vmin, 64px); font-weight: 600; }
+
+  .grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2vmin;
+  }
+  @media (min-width: 1100px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--card);
+    border-radius: 2vmin;
+    padding: 3vmin;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5vmin;
+    border-top: 1.2vmin solid var(--ok);
+  }
+  .card.bad { border-top-color: var(--bad); }
+  .label { font-size: clamp(20px, 3.4vmin, 56px); font-weight: 700; color: var(--muted); }
+  .value { font-size: clamp(48px, 10vmin, 160px); font-weight: 800; line-height: 1; }
+  .value small { font-size: 0.4em; font-weight: 600; color: var(--muted); margin-left: 0.2em; }
+  .range { font-size: clamp(18px, 2.8vmin, 44px); color: var(--muted); }
+  .tag {
+    align-self: flex-start;
+    font-size: clamp(20px, 3.2vmin, 52px);
+    font-weight: 800;
+    padding: 0.6vmin 2vmin;
+    border-radius: 100px;
+    background: var(--ok);
+    color: var(--ok-text);
+  }
+  .card.bad .tag { background: var(--bad); color: var(--bad-text); }
+
+  .footer {
+    font-size: clamp(18px, 3vmin, 48px);
+    color: var(--muted);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1vmin;
+  }
+  .footer strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="banner" id="banner" role="status" aria-live="polite">
+  <div class="icon" id="icon" aria-hidden="true">✓</div>
+  <div>
+    <h1 id="headline">Pool is open</h1>
+    <p id="sub">Water and lifeguard cover are all OK</p>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="footer">
+  <div>Last tested: <strong id="tested"></strong></div>
+  <div>Questions? Please ask at the desk.</div>
+</div>
+
+<script>
+  // Update these values when the pool is tested.
+  const data = {
+    lastTested: "14:05",
+    measures: [
+      { label: "Water temperature", value: 27.8, unit: "°C",  min: 26,  max: 29,  decimals: 1 },
+      { label: "Chlorine",          value: 1.6,  unit: "ppm", min: 1,   max: 3,   decimals: 1 },
+      { label: "pH",                value: 7.4,  unit: "",    min: 7.2, max: 7.8, decimals: 1 }
+    ],
+    lifeguards: { onDuty: 3, required: 2 }
+  };
+
+  const grid = document.getElementById("grid");
+  const problems = [];
+
+  function card(label, valueText, unit, rangeText, ok) {
+    const el = document.createElement("div");
+    el.className = "card" + (ok ? "" : " bad");
+    el.innerHTML =
+      '<div class="label"></div>' +
+      '<div class="value"></div>' +
+      '<div class="range"></div>' +
+      '<div class="tag"></div>';
+    el.querySelector(".label").textContent = label;
+    const v = el.querySelector(".value");
+    v.textContent = valueText;
+    if (unit) { const s = document.createElement("small"); s.textContent = unit; v.appendChild(s); }
+    el.querySelector(".range").textContent = rangeText;
+    el.querySelector(".tag").textContent = ok ? "✓ OK" : "✕ Not OK";
+    grid.appendChild(el);
+  }
+
+  data.measures.forEach(m => {
+    const ok = m.value >= m.min && m.value <= m.max;
+    if (!ok) problems.push(m.label);
+    card(m.label, m.value.toFixed(m.decimals), m.unit,
+         "OK range: " + m.min + " to " + m.max + (m.unit ? " " + m.unit : ""), ok);
+  });
+
+  const g = data.lifeguards;
+  const guardsOk = g.onDuty >= g.required;
+  if (!guardsOk) problems.push("Lifeguards");
+  card("Lifeguards on duty", String(g.onDuty), "", "We need at least " + g.required, guardsOk);
+
+  document.getElementById("tested").textContent = data.lastTested;
+
+  if (problems.length) {
+    document.getElementById("banner").classList.add("bad");
+    document.getElementById("icon").textContent = "✕";
+    document.getElementById("headline").textContent = "Not OK to swim right now";
+    document.getElementById("sub").textContent = "Please check with staff at the desk";
+  }
+</script>
+</body>
+</html>

@@ -1,18 +1,17 @@
-**I'd refine it.** Keep the dog, redraw it cleanly, and set the new wordmark beside it.
+**Refine it. Keep the dog.**
 
-The dog is already recognized in the neighborhood, and a dog is the literal thing a vet clinic should show. Replacing it would throw away the one asset you can't buy, for a "modern" look your partner can get by redrawing. The problem is the execution, not the idea: a wobbly pencil line doesn't survive a small sign, a one-color fax, or a three-location system.
+The rule I'd apply: a mark people already recognize, whose meaning still fits, gets redrawn and adapted, not replaced. Your dog passes both tests. Neighbors know it, and a friendly dog with one ear up fits a vet clinic. The problem is the execution (wobbly line, pencil texture, no reversed or small version), not the idea.
 
-What I'd do:
+**What I'd do:**
 
-1. **Trace the silhouette and the pose.** Keep the head angle, the one ear up, and the overall shape people remember. Redraw it as a flat, solid vector with heavier, even strokes. Drop any hairlines and sketch texture.
-2. **Judge it in black first.** Test the solid black version at about 32 px (a favicon or avatar) and on a sign-sized mockup. If the ear or the eye disappears, thicken it. Add color only after the shape works.
-3. **Adjust the rounded wordmark rather than swapping it.** Keep the rounded feel so it still reads as the same clinic, but respace the letters and reshape one letter so it isn't a stock font.
-4. **Build the three-location system around the dog.** Use one lockup, with the location name on a second line below the clinic name, and keep the dog and colors identical at all three sites. Your partner gets the consistent, professional look they want, and the dog stays the anchor.
-5. **Deliver the versions you'll actually use:** horizontal, stacked, dog-only (signage, app icon, favicon), a solid black one, and a reversed one for dark backgrounds.
+1. **Redraw the dog as clean vector art, keeping the silhouette.** Keep the pose, the raised ear, and the proportions people remember. Replace the sketchy line with one confident weight. Hand-drawn character is fine to keep if it reads as intentional, but it must survive at favicon size.
+2. **Test the redraw in solid black first.** It has to work at 16 to 32 pixels, in one color, and reversed on dark. If the ear or any fine detail disappears small, simplify that detail. Don't add it back for the large version.
+3. **Keep the rounded name, but refine it.** Adjust spacing and maybe one custom letter so it isn't a stock font, and make sure the name and dog share the same weight and friendliness.
+4. **Build the system around the dog.** Give the three locations a shared color, the dog as a standalone device, and a horizontal and stacked lockup. Location names go on a separate line, not inside the mark.
 
-**Two things to check before you commit:**
+**Before you commit, two things to handle:**
 
-- **Who owns the drawing.** The kid's family may hold the copyright to the original sketch. Get written permission to adapt it, or a simple assignment, before you trademark or print the redraw. A lawyer can handle this in one short consult.
-- **Whether people still recognize it.** Show the new dog to 10 or 20 longtime clients and neighbors next to the old one, and ask if they know it's the same clinic. That's the real test, and it's cheap to run before the two new locations need signage.
+- **Ownership of the original.** Your friend's kid made the drawing, and a redraw is derivative of it. Confirm with the family that they're fine with you adapting it, ideally in writing. That's cheap now and awkward later.
+- **Trademark check.** Have a lawyer clear the final mark before you put it on three signs. I can't tell you it's unique.
 
-**The trade-off:** a refined dog will look more handmade than a fully abstract mark. If your partner wants it to read as a corporate brand, that's the point to decide, not to settle by picking a different logo.
+**The evidence test:** Show the redraw next to the original to 10 or so regular clients and ask which one they'd recognize on a sign. If they say the new one is the same clinic, you've kept the equity. If they don't recognize it, the redraw has lost too much, and that's the signal to rethink, not the instinct to replace.

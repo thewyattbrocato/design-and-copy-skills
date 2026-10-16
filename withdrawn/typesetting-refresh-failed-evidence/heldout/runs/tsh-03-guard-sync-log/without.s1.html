@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sync Log Viewer</title>
+<style>
+  :root {
+    --bg: #fafaf8; --panel: #ffffff; --fg: #1d2127; --dim: #6b7280; --line: #e6e6e1;
+    --err: #b42318; --err-bg: #fdecea; --warn: #8a5a00; --warn-bg: #fff4d6;
+    --info: #3b5b7a; --hot: #b42318; --sel: #2563eb; --mark: #ffe066;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a; --panel: #1b1e24; --fg: #dde1e7; --dim: #8b93a1; --line: #2b2f37;
+      --err: #ff8a80; --err-bg: #3a1c1c; --warn: #f5c451; --warn-bg: #3a2f14;
+      --info: #8fb1d1; --hot: #ff8a80; --sel: #6ea0ff; --mark: #7a6500;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { display: flex; flex-direction: column; background: var(--bg); color: var(--fg); font: 14px/1.4 var(--sans); }
+
+  header { background: var(--panel); border-bottom: 1px solid var(--line); padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+  h1 { font-size: 15px; margin: 0; font-weight: 650; }
+  #meta { color: var(--dim); font-size: 12px; }
+  .grow { flex: 1; }
+  .chips { display: flex; gap: 6px; }
+  .chip { font: inherit; font-size: 12px; font-weight: 600; border: 1px solid var(--line); background: transparent; color: var(--fg); padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+  .chip[aria-pressed="false"] { opacity: .4; text-decoration: line-through; }
+  .chip.error { color: var(--err); border-color: var(--err); }
+  .chip.warn  { color: var(--warn); border-color: var(--warn); }
+  .chip.info  { color: var(--info); border-color: var(--info); }
+  input[type=search], select, button.btn { font: inherit; font-size: 13px; padding: 5px 9px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+  input[type=search] { width: 220px; }
+  button.btn { cursor: pointer; }
+  button.btn:hover, .chip:hover { border-color: var(--sel); }
+  :focus-visible { outline: 2px solid var(--sel); outline-offset: 1px; }
+
+  main { flex: 1; min-height: 0; display: flex; }
+  #list { flex: 1; overflow: auto; font: 12.5px/1.55 var(--mono); padding: 4px 0 40px; }
+  #strip { width: 14px; position: relative; background: var(--panel); border-left: 1px solid var(--line); cursor: pointer; }
+  #strip i { position: absolute; left: 2px; right: 2px; min-height: 3px; border-radius: 1px; }
+  #strip i.error { background: var(--err); } #strip i.warn { background: var(--warn); }
+  #strip b { position: absolute; left: 0; right: 0; height: 2px; background: var(--sel); }
+
+  .row { display: flex; gap: 10px; padding: 1px 14px 1px 11px; border-left: 3px solid transparent; white-space: pre-wrap; word-break: break-word; cursor: default; }
+  .row:hover { background: color-mix(in srgb, var(--fg) 5%, transparent); }
+  .row.error { background: var(--err-bg); border-left-color: var(--err); }
+  .row.warn  { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.sel { outline: 2px solid var(--sel); outline-offset: -2px; }
+  .row.cont { padding-left: 120px; color: var(--dim); }
+  .ln { color: var(--dim); min-width: 4ch; text-align: right; user-select: none; opacity: .7; }
+  .ts { color: var(--dim); }
+  .lvl { font-weight: 700; min-width: 5ch; }
+  .error .lvl { color: var(--err); } .warn .lvl { color: var(--warn); } .info .lvl { color: var(--info); }
+  .comp { font-weight: 600; min-width: 15ch; }
+  .k { color: var(--dim); }
+  .hot { color: var(--hot); font-weight: 700; }
+  .warn .hot { color: var(--warn); }
+  mark { background: var(--mark); color: inherit; border-radius: 2px; }
+  #empty { padding: 40px; text-align: center; color: var(--dim); font-family: var(--sans); }
+  kbd { font: 11px var(--mono); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; }
+  #drop { position: fixed; inset: 0; background: color-mix(in srgb, var(--sel) 18%, transparent); border: 3px dashed var(--sel); display: none; align-items: center; justify-content: center; font-size: 20px; pointer-events: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sync Log</h1>
+  <span id="meta"></span>
+  <div class="chips" id="chips">
+    <button class="chip error" data-lvl="error" aria-pressed="true"></button>
+    <button class="chip warn" data-lvl="warn" aria-pressed="true"></button>
+    <button class="chip info" data-lvl="info" aria-pressed="true"></button>
+  </div>
+  <input type="search" id="q" placeholder="Search…  ( / )" aria-label="Search log">
+  <select id="comp" aria-label="Filter by component"></select>
+  <button class="btn" id="prev" title="Previous problem (k)">▲ Problem</button>
+  <button class="btn" id="next" title="Next problem (j)">▼ Problem</button>
+  <span class="grow"></span>
+  <label class="btn" style="cursor:pointer">Open file…<input type="file" id="file" hidden></label>
+</header>
+<main>
+  <div id="list" tabindex="0"></div>
+  <div id="strip" title="Errors and warnings across the log. Click to jump."></div>
+</main>
+<div id="drop">Drop log file to load</div>
+
+<script>
+const SAMPLE = `2025-03-11T02:00:04Z INFO  sync.orders  batch=0041 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=812 checksum=ok
+2025-03-11T02:00:05Z INFO  sync.orders  batch=0042 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=790 checksum=ok
+2025-03-11T02:00:07Z WARN  sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=4410 retry=1 reason=lock_timeout waited_ms=3000
+2025-03-11T02:00:12Z ERROR sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=9120 retry=3 reason=lock_timeout action=skipped_batch_for_rerun
+2025-03-11T02:00:13Z INFO  sync.orders  batch=0043 rows=4988 source=warehouse-east target=ledger-main elapsed_ms=801 checksum=ok
+2025-03-11T02:00:15Z INFO  sync.inventory batch=0102 rows=1830 source=warehouse-west target=ledger-main elapsed_ms=377 checksum=ok`;
+
+const $ = id => document.getElementById(id);
+const list = $('list'), strip = $('strip'), q = $('q'), compSel = $('comp');
+const LEVELS = { ERROR:'error', FATAL:'error', CRITICAL:'error', WARN:'warn', WARNING:'warn', INFO:'info', DEBUG:'info', TRACE:'info' };
+const HOT_KEYS = new Set(['retry','reason','action','error','err','waited_ms']);
+const show = { error:true, warn:true, info:true };
+let lines = [], visible = [], problems = [], sel = -1;
+
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LINE_RE = /^(\d{4}-\d{2}-\d{2}T\S+)\s+([A-Za-z]+)\s+(\S+)\s*(.*)$/;
+
+function parse(text) {
+  const out = []; let prev = 'info';
+  text.split(/\r?\n/).forEach((raw, n) => {
+    if (!raw.trim()) return;
+    const m = LINE_RE.exec(raw);
+    const lvl = m && LEVELS[m[2].toUpperCase()];
+    if (m && lvl) { prev = lvl; out.push({ n: n + 1, ts: m[1], lvlText: m[2].toUpperCase(), lvl, comp: m[3], rest: m[4], raw }); }
+    else out.push({ n: n + 1, lvl: prev, cont: true, raw });
+  });
+  return out;
+}
+
+function load(text, name) {
+  lines = parse(text);
+  const comps = [...new Set(lines.filter(l => !l.cont).map(l => l.comp))].sort();
+  compSel.innerHTML = '<option value="">All components</option>' + comps.map(c => `<option>${esc(c)}</option>`).join('');
+  const stamps = lines.filter(l => l.ts);
+  const day = stamps.length ? stamps[0].ts.slice(0, 10) : '';
+  const span = stamps.length ? ` · ${stamps[0].ts.slice(11, 19)} → ${stamps[stamps.length-1].ts.slice(11, 19)}` : '';
+  $('meta').textContent = `${name} · ${lines.length.toLocaleString()} lines · ${day}${span}`;
+  sel = -1; render(); list.scrollTop = 0;
+}
+
+function hl(text, re) { const e = esc(text); return re ? e.replace(re, '<mark>$&</mark>') : e; }
+
+function fmtRest(rest, re) {
+  return rest.split(/(\s+)/).map(tok => {
+    const i = tok.indexOf('=');
+    if (i < 1) return hl(tok, re);
+    const k = tok.slice(0, i), v = tok.slice(i + 1);
+    const bad = HOT_KEYS.has(k) || (k === 'checksum' && v !== 'ok');
+    return `<span class="k">${hl(k, re)}=</span><span class="${bad ? 'hot' : ''}">${hl(v, re)}</span>`;
+  }).join('');
+}
+
+function render() {
+  const term = q.value.trim().toLowerCase(), comp = compSel.value;
+  const re = term ? new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi') : null;
+  const counts = { error: 0, warn: 0, info: 0 };
+  lines.forEach(l => { if (!l.cont) counts[l.lvl]++; });
+  for (const b of document.querySelectorAll('.chip'))
+    b.textContent = `${b.dataset.lvl.toUpperCase()} ${counts[b.dataset.lvl].toLocaleString()}`;
+
+  // continuation lines follow their parent entry's visibility
+  let parentOk = true;
+  visible = lines.filter(l => {
+    let ok;
+    if (l.cont) ok = parentOk && show[l.lvl] && (!term || l.raw.toLowerCase().includes(term));
+    else {
+      ok = show[l.lvl] && (!comp || l.comp === comp) && (!term || l.raw.toLowerCase().includes(term));
+      parentOk = !comp || true;
+    }
+    if (l.cont && comp) { ok = ok && lastCompOk(l); }
+    return ok;
+  });
+  problems = visible.map((l, i) => l.lvl !== 'info' && !l.cont ? i : -1).filter(i => i >= 0);
+
+  if (!visible.length) { list.innerHTML = '<div id="empty">No lines match the current filters.</div>'; drawStrip(); return; }
+  list.innerHTML = visible.map((l, i) => {
+    if (l.cont) return `<div class="row cont ${l.lvl}" data-i="${i}">${hl(l.raw, re)}</div>`;
+    return `<div class="row ${l.lvl}" data-i="${i}"><span class="ln">${l.n}</span><span class="ts" title="${esc(l.ts)}">${esc(l.ts.slice(11, 19))}</span><span class="lvl">${l.lvlText}</span><span class="comp">${hl(l.comp, re)}</span><span>${fmtRest(l.rest, re)}</span></div>`;
+  }).join('');
+  if (sel >= visible.length) sel = -1;
+  if (sel >= 0) list.children[sel].classList.add('sel');
+  drawStrip();
+}
+
+// helper: continuation line belongs to the nearest preceding entry; check its component
+function lastCompOk(l) {
+  const idx = lines.indexOf(l);
+  for (let j = idx - 1; j >= 0; j--) if (!lines[j].cont) return lines[j].comp === compSel.value;
+  return false;
+}
+
+function drawStrip() {
+  const n = visible.length || 1;
+  strip.innerHTML = problems.map(i => `<i class="${visible[i].lvl}" style="top:${(i / n * 100).toFixed(3)}%;height:${Math.max(100 / n, 0)}%"></i>`).join('');
+}
+
+function select(i, scroll = true) {
+  if (i < 0 || i >= visible.length) return;
+  if (sel >= 0 && list.children[sel]) list.children[sel].classList.remove('sel');
+  sel = i;
+  const el = list.children[i]; if (!el) return;
+  el.classList.add('sel');
+  if (scroll) el.scrollIntoView({ block: 'center' });
+}
+
+function jump(dir) {
+  if (!problems.length) return;
+  let cur = sel;
+  if (cur < 0) { // start from what's on screen
+    const top = Math.floor(list.scrollTop / (list.firstElementChild?.offsetHeight || 20));
+    cur = dir > 0 ? top - 1 : top + 1;
+  }
+  const next = dir > 0 ? problems.find(i => i > cur) : [...problems].reverse().find(i => i < cur);
+  select(next ?? (dir > 0 ? problems[0] : problems[problems.length - 1]));
+}
+
+// events
+$('chips').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  const on = b.getAttribute('aria-pressed') !== 'true';
+  b.setAttribute('aria-pressed', on); show[b.dataset.lvl] = on; render();
+});
+q.addEventListener('input', () => { sel = -1; render(); });
+compSel.addEventListener('change', () => { sel = -1; render(); });
+$('next').onclick = () => jump(1);
+$('prev').onclick = () => jump(-1);
+list.addEventListener('click', e => { const r = e.target.closest('.row'); if (r) select(+r.dataset.i, false); });
+strip.addEventListener('click', e => {
+  const r = strip.getBoundingClientRect();
+  const i = Math.min(visible.length - 1, Math.floor((e.clientY - r.top) / r.height * visible.length));
+  // snap to the nearest problem
+  let best = i, d = Infinity;
+  for (const p of problems) if (Math.abs(p - i) < d) { d = Math.abs(p - i); best = p; }
+  select(best);
+});
+document.addEventListener('keydown', e => {
+  if (e.target === q) { if (e.key === 'Escape') { q.value = ''; q.blur(); render(); } return; }
+  if (e.target === compSel || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 'j') jump(1);
+  else if (e.key === 'k') jump(-1);
+  else if (e.key === '/') { e.preventDefault(); q.focus(); }
+});
+
+function readFile(f) { f.text().then(t => load(t, f.name)); }
+$('file').addEventListener('change', e => e.target.files[0] && readFile(e.target.files[0]));
+let depth = 0;
+addEventListener('dragenter', e => { e.preventDefault(); depth++; $('drop').style.display = 'flex'; });
+addEventListener('dragleave', () => { if (--depth <= 0) { depth = 0; $('drop').style.display = 'none'; } });
+addEventListener('dragover', e => e.preventDefault());
+addEventListener('drop', e => { e.preventDefault(); depth = 0; $('drop').style.display = 'none'; if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]); });
+addEventListener('paste', e => {
+  if (e.target === q) return;
+  const t = e.clipboardData.getData('text'); if (t) load(t, 'pasted text');
+});
+
+load(SAMPLE, 'sample (open or drop your log file; or paste text)');
+</script>
+</body>
+</html>

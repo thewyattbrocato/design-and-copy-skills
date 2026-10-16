@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pool status</title>
+<style>
+  :root {
+    --bg: #0b1b2b;
+    --card: #12293f;
+    --text: #ffffff;
+    --muted: #b6c7d9;
+    --ok: #3ddc84;
+    --ok-bg: #0f4a2e;
+    --zone: #2f6f55;
+    --track: #254260;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 2vmin;
+    padding: 3vmin 4vmin;
+  }
+  .banner {
+    background: var(--ok-bg);
+    border: 0.6vmin solid var(--ok);
+    border-radius: 2vmin;
+    padding: 3vmin 4vmin;
+    display: flex;
+    align-items: center;
+    gap: 4vmin;
+  }
+  .tick {
+    flex: none;
+    width: 14vmin; height: 14vmin;
+    border-radius: 50%;
+    background: var(--ok);
+    color: var(--ok-bg);
+    display: grid; place-items: center;
+    font-size: 10vmin; font-weight: 800; line-height: 1;
+  }
+  .banner h1 {
+    margin: 0;
+    font-size: clamp(40px, 10vmin, 140px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .banner p {
+    margin: 1vmin 0 0;
+    font-size: clamp(20px, 3.6vmin, 56px);
+    color: #d9f5e5;
+  }
+  .grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2vmin;
+    min-height: 0;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 2vmin;
+    padding: 2.5vmin 2.5vmin 3vmin;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5vmin;
+  }
+  .label {
+    font-size: clamp(18px, 3.4vmin, 52px);
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .value {
+    font-size: clamp(48px, 11vmin, 170px);
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .value small {
+    font-size: 0.4em;
+    font-weight: 600;
+    color: var(--muted);
+    margin-left: 0.15em;
+  }
+  .status {
+    font-size: clamp(20px, 3.8vmin, 58px);
+    font-weight: 700;
+    color: var(--ok);
+  }
+  .range { font-size: clamp(16px, 2.8vmin, 44px); color: var(--muted); }
+  .bar {
+    position: relative;
+    height: 2.2vmin; min-height: 12px;
+    background: var(--track);
+    border-radius: 99px;
+  }
+  .bar .zone {
+    position: absolute; top: 0; bottom: 0;
+    background: var(--zone);
+    border-radius: 99px;
+  }
+  .bar .mark {
+    position: absolute; top: -0.9vmin; bottom: -0.9vmin;
+    width: 1vmin; min-width: 6px;
+    margin-left: -0.5vmin;
+    background: #fff;
+    border-radius: 99px;
+  }
+  .foot {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: clamp(18px, 3.2vmin, 48px);
+    color: var(--muted);
+  }
+  .foot strong { color: var(--text); font-size: 1.15em; }
+  @media (max-width: 900px), (orientation: portrait) {
+    body { height: auto; min-height: 100%; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .tick { width: 12vmin; height: 12vmin; font-size: 8vmin; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="banner" role="status">
+    <div class="tick" aria-hidden="true">✓</div>
+    <div>
+      <h1>Pool is open.<br>OK to swim.</h1>
+      <p>Water quality is in the safe range and lifeguard cover is met.</p>
+    </div>
+  </header>
+
+  <main class="grid">
+
+    <section class="card" aria-label="Water temperature">
+      <div class="label">Water temperature</div>
+      <div class="value">27.8<small>°C</small></div>
+      <div>
+        <div class="status">✓ OK</div>
+        <div class="range">Safe range 26 to 29 °C</div>
+      </div>
+      <div class="bar" aria-hidden="true">
+        <div class="zone" style="left:28.6%; width:42.8%"></div>
+        <div class="mark" style="left:54.3%"></div>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Chlorine">
+      <div class="label">Chlorine</div>
+      <div class="value">1.6<small>ppm</small></div>
+      <div>
+        <div class="status">✓ OK</div>
+        <div class="range">Safe range 1 to 3 ppm</div>
+      </div>
+      <div class="bar" aria-hidden="true">
+        <div class="zone" style="left:25%; width:50%"></div>
+        <div class="mark" style="left:40%"></div>
+      </div>
+    </section>
+
+    <section class="card" aria-label="pH">
+      <div class="label">pH</div>
+      <div class="value">7.4</div>
+      <div>
+        <div class="status">✓ OK</div>
+        <div class="range">Safe range 7.2 to 7.8</div>
+      </div>
+      <div class="bar" aria-hidden="true">
+        <div class="zone" style="left:28.6%; width:42.8%"></div>
+        <div class="mark" style="left:42.9%"></div>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Lifeguards on duty">
+      <div class="label">Lifeguards on duty</div>
+      <div class="value">3</div>
+      <div>
+        <div class="status">✓ OK</div>
+        <div class="range">Minimum needed: 2</div>
+      </div>
+      <div class="foot" aria-hidden="true"><span>1 extra</span></div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <span>Water last tested at <strong>14:05</strong></span>
+    <span>Ask at the desk if you have any questions</span>
+  </footer>
+
+</body>
+</html>

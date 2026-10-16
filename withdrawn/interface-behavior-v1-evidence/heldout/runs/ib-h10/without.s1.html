@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Settings · Orchard FM</title>
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --card: #fffdf8;
+    --ink: #2a2620;
+    --muted: #6d6558;
+    --line: #e5dccb;
+    --accent: #3f7a3a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e3efdc;
+    --danger: #a8321f;
+    --danger-soft: #f8e4df;
+    --shadow: 0 1px 2px rgba(60, 45, 20, .06), 0 4px 14px rgba(60, 45, 20, .05);
+    font-size: 100%;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17160f;
+      --card: #211f17;
+      --ink: #f1ebdc;
+      --muted: #a79f8d;
+      --line: #3632240;
+      --line: #383425;
+      --accent: #8fcb82;
+      --accent-ink: #12200f;
+      --accent-soft: #2a3a25;
+      --danger: #f0907e;
+      --danger-soft: #3a211c;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.4;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 1rem 3rem; }
+
+  header.top {
+    position: sticky; top: 0; z-index: 5;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 1rem 0 .75rem;
+    margin-bottom: .5rem;
+  }
+  .brand { display: flex; align-items: center; gap: .6rem; }
+  .logo {
+    width: 2.2rem; height: 2.2rem; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink);
+    display: grid; place-items: center; flex: none;
+  }
+  .logo svg { width: 1.3rem; height: 1.3rem; }
+  h1 { font-size: 1.5rem; margin: 0; letter-spacing: -.01em; }
+  .brand small { display: block; color: var(--muted); font-size: .8rem; margin-top: -.1rem; }
+
+  h2 {
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .09em;
+    color: var(--muted); margin: 1.6rem .25rem .5rem; font-weight: 700;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .row {
+    padding: .95rem 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .row:first-child { border-top: 0; }
+  .row.inline {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .label { font-weight: 600; font-size: 1rem; }
+  .hint { color: var(--muted); font-size: .85rem; margin-top: .15rem; }
+  .row .head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .value { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  /* Switch */
+  .switch {
+    appearance: none; -webkit-appearance: none; border: 0; cursor: pointer;
+    width: 3.1rem; height: 1.85rem; border-radius: 999px; flex: none;
+    background: #b9b09d; position: relative; padding: 0;
+    transition: background .18s;
+  }
+  @media (prefers-color-scheme: dark) { .switch { background: #4b4636; } }
+  .switch::after {
+    content: ""; position: absolute; top: .2rem; left: .2rem;
+    width: 1.45rem; height: 1.45rem; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    transition: transform .18s;
+  }
+  .switch[aria-checked="true"] { background: var(--accent); }
+  .switch[aria-checked="true"]::after { transform: translateX(1.25rem); }
+  .tap { cursor: pointer; }
+
+  /* Segmented control (native radios) */
+  .seg {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+    gap: .25rem; margin-top: .7rem; padding: .25rem;
+    background: var(--bg); border-radius: .8rem; border: 1px solid var(--line);
+  }
+  .seg label { position: relative; cursor: pointer; }
+  .seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .seg span {
+    display: block; text-align: center; padding: .55rem .2rem;
+    border-radius: .6rem; font-size: .9rem; font-weight: 600; color: var(--muted);
+    transition: background .15s, color .15s;
+  }
+  .seg input:checked + span { background: var(--accent); color: var(--accent-ink); }
+  .seg input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .seg label:hover input:not(:checked) + span { background: var(--accent-soft); }
+
+  /* Select */
+  select {
+    font: inherit; font-weight: 600; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: .7rem; padding: .55rem .8rem; min-height: 2.6rem;
+    cursor: pointer; max-width: 100%;
+  }
+
+  /* Range */
+  input[type=range] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 2rem;
+    background: transparent; margin: .4rem 0 0; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: .5rem; border-radius: 999px;
+    background: linear-gradient(to right, var(--accent) var(--fill, 0%), var(--line) var(--fill, 0%));
+  }
+  input[type=range]::-moz-range-track { height: .5rem; border-radius: 999px; background: var(--line); }
+  input[type=range]::-moz-range-progress { height: .5rem; border-radius: 999px; background: var(--accent); }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 1.7rem; height: 1.7rem; margin-top: -.6rem;
+    border-radius: 50%; background: #fff; border: 3px solid var(--accent);
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #fff;
+    border: 3px solid var(--accent); box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  }
+  .scale { display: flex; justify-content: space-between; color: var(--muted); font-size: .75rem; }
+
+  .preview {
+    margin-top: .8rem; padding: .8rem .9rem; border-radius: .8rem;
+    background: var(--bg); border: 1px dashed var(--line);
+  }
+  .preview b { display: block; }
+  .preview span { color: var(--muted); }
+  .lyrics-line { margin-top: .45rem; font-style: italic; }
+  body:not(.lyrics-on) .lyrics-line { display: none; }
+
+  /* Reset */
+  .reset-zone { margin-top: 1.6rem; }
+  button.btn {
+    font: inherit; font-weight: 700; cursor: pointer; border-radius: .8rem;
+    padding: .75rem 1.1rem; min-height: 2.9rem; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink);
+  }
+  button.btn:hover { background: var(--accent-soft); }
+  button.btn.danger { color: var(--danger); border-color: var(--danger); width: 100%; background: var(--card); }
+  button.btn.danger:hover { background: var(--danger-soft); }
+  button.btn.solid { background: var(--danger); color: var(--card); border-color: var(--danger); }
+  button.btn.solid:hover { background: var(--danger); filter: brightness(1.1); }
+  .confirm { padding: 1rem; border: 1px solid var(--danger); border-radius: 1rem; background: var(--danger-soft); }
+  .confirm p { margin: 0 0 .8rem; font-weight: 600; }
+  .confirm .actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+  .confirm .actions .btn { flex: 1 1 8rem; }
+  [hidden] { display: none !important; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: calc(1.2rem + env(safe-area-inset-bottom));
+    transform: translate(-50%, 1.5rem); opacity: 0; pointer-events: none;
+    background: var(--ink); color: var(--bg); padding: .65rem 1.1rem;
+    border-radius: 999px; font-weight: 600; font-size: .9rem;
+    transition: opacity .2s, transform .2s; max-width: calc(100% - 2rem); text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 1.4rem; }
+
+  @media (min-width: 700px) {
+    .wrap { padding-top: 1rem; }
+    .row { padding: 1.1rem 1.25rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c0-2 1.5-3.5 3.5-3.5 0 2-1.5 3.5-3.5 3.5z"/><path d="M12 7c-4-1.5-8 1-8 6 0 4 3 8 5.5 8 1 0 1.700-.5 2.500-.5s1.500.5 2.500.5c2.500 0 5.500-4 5.500-8 0-5-4-7.500-8-6z"/></svg>
+      </div>
+      <div>
+        <h1>Settings</h1>
+        <small>Orchard FM</small>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h2>Listening</h2>
+    <section class="card">
+      <div class="row">
+        <div class="head">
+          <div class="label" id="q-label">Streaming quality</div>
+          <div class="value" id="q-value"></div>
+        </div>
+        <div class="hint" id="q-hint"></div>
+        <div class="seg" role="radiogroup" aria-labelledby="q-label" id="quality">
+          <label><input type="radio" name="quality" value="low"><span>Low</span></label>
+          <label><input type="radio" name="quality" value="normal"><span>Normal</span></label>
+          <label><input type="radio" name="quality" value="high"><span>High</span></label>
+          <label><input type="radio" name="quality" value="best"><span>Best</span></label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="head">
+          <label class="label" for="crossfade">Crossfade between songs</label>
+          <div class="value" id="cf-value"></div>
+        </div>
+        <div class="hint">Blend the end of one song into the start of the next.</div>
+        <input type="range" id="crossfade" min="0" max="12" step="1">
+        <div class="scale" aria-hidden="true"><span>Off</span><span>12 s</span></div>
+      </div>
+
+      <div class="row inline">
+        <div>
+          <label class="label" for="sleep">Default sleep timer</label>
+          <div class="hint">Used when you tap the moon in the player.</div>
+        </div>
+        <select id="sleep">
+          <option value="0">Off</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="90">1½ hours</option>
+          <option value="120">2 hours</option>
+        </select>
+      </div>
+
+      <div class="row inline tap" data-row-for="lyrics">
+        <div>
+          <div class="label" id="lyrics-l">Show lyrics</div>
+          <div class="hint">Display lyrics in the player when we have them.</div>
+        </div>
+        <button class="switch" role="switch" id="lyrics" aria-labelledby="lyrics-l" aria-checked="false"></button>
+      </div>
+    </section>
+
+    <h2>Downloads &amp; alerts</h2>
+    <section class="card">
+      <div class="row inline tap" data-row-for="wifiOnly">
+        <div>
+          <div class="label" id="wifi-l">Download only on Wi-Fi</div>
+          <div class="hint">Saved shows won’t use mobile data.</div>
+        </div>
+        <button class="switch" role="switch" id="wifiOnly" aria-labelledby="wifi-l" aria-checked="false"></button>
+      </div>
+      <div class="row inline tap" data-row-for="notify">
+        <div>
+          <div class="label" id="notify-l">New-show notifications</div>
+          <div class="hint">Get a nudge when a show you follow goes up.</div>
+        </div>
+        <button class="switch" role="switch" id="notify" aria-labelledby="notify-l" aria-checked="false"></button>
+      </div>
+    </section>
+
+    <h2>Display</h2>
+    <section class="card">
+      <div class="row">
+        <div class="head">
+          <div class="label" id="ts-label">Text size</div>
+          <div class="value" id="ts-value"></div>
+        </div>
+        <div class="seg" role="radiogroup" aria-labelledby="ts-label" id="textSize">
+          <label><input type="radio" name="textSize" value="small"><span>Small</span></label>
+          <label><input type="radio" name="textSize" value="default"><span>Default</span></label>
+          <label><input type="radio" name="textSize" value="large"><span>Large</span></label>
+          <label><input type="radio" name="textSize" value="xl"><span>Extra</span></label>
+        </div>
+        <div class="preview" aria-hidden="true">
+          <b>Morning on the Square</b>
+          <span>Now playing · with Dot Haverty</span>
+          <div class="lyrics-line">“…and the porch light’s still on for me.”</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="reset-zone">
+      <button class="btn danger" id="resetBtn" type="button">Reset to defaults</button>
+      <div class="confirm" id="confirm" hidden role="alertdialog" aria-labelledby="confirm-t">
+        <p id="confirm-t">Put every setting back to how it was when you installed Orchard FM?</p>
+        <div class="actions">
+          <button class="btn" id="cancelBtn" type="button">Keep my settings</button>
+          <button class="btn solid" id="confirmBtn" type="button">Yes, reset</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>Orchard FM · Made in town, heard everywhere</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var KEY = "orchardfm.settings.v1";
+  var DEFAULTS = {
+    quality: "normal", wifiOnly: true, sleep: "0", crossfade: 3,
+    notify: true, lyrics: true, textSize: "default"
+  };
+  var QUALITY = {
+    low:    ["Low · 24 kbps",     "Uses the least data. Good on a weak signal."],
+    normal: ["Normal · 64 kbps",  "A good balance for most connections."],
+    high:   ["High · 128 kbps",   "Clearer sound, about 1 GB per 18 hours."],
+    best:   ["Best · 256 kbps",   "Best sound. Uses the most data."]
+  };
+  var SIZES = { small: [88, "Small"], "default": [100, "Default"], large: [118, "Large"], xl: [136, "Extra large"] };
+
+  var state = load();
+  var $ = function (id) { return document.getElementById(id); };
+  var toastTimer;
+
+  function load() {
+    var s = {};
+    try { s = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+    var out = {};
+    for (var k in DEFAULTS) out[k] = (k in s && typeof s[k] === typeof DEFAULTS[k]) ? s[k] : DEFAULTS[k];
+    if (!QUALITY[out.quality]) out.quality = DEFAULTS.quality;
+    if (!SIZES[out.textSize]) out.textSize = DEFAULTS.textSize;
+    return out;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove("show"); }, 1800);
+  }
+
+  function render() {
+    document.querySelector('input[name=quality][value=' + state.quality + ']').checked = true;
+    $("q-value").textContent = QUALITY[state.quality][0].split(" · ")[1];
+    $("q-hint").textContent = QUALITY[state.quality][1];
+
+    ["wifiOnly", "notify", "lyrics"].forEach(function (k) {
+      $(k).setAttribute("aria-checked", String(state[k]));
+    });
+    document.body.classList.toggle("lyrics-on", state.lyrics);
+
+    $("sleep").value = state.sleep;
+
+    var cf = $("crossfade");
+    cf.value = state.crossfade;
+    cf.style.setProperty("--fill", (state.crossfade / 12 * 100) + "%");
+    cf.setAttribute("aria-valuetext", state.crossfade ? state.crossfade + " seconds" : "Off");
+    $("cf-value").textContent = state.crossfade ? state.crossfade + " s" : "Off";
+
+    document.querySelector('input[name=textSize][value=' + state.textSize + ']').checked = true;
+    $("ts-value").textContent = SIZES[state.textSize][1];
+    document.documentElement.style.fontSize = SIZES[state.textSize][0] + "%";
+  }
+
+  function set(key, val, msg) {
+    state[key] = val; save(); render();
+    if (msg) toast(msg);
+  }
+
+  document.querySelectorAll("input[name=quality]").forEach(function (r) {
+    r.addEventListener("change", function () { set("quality", r.value); });
+  });
+  document.querySelectorAll("input[name=textSize]").forEach(function (r) {
+    r.addEventListener("change", function () { set("textSize", r.value); });
+  });
+
+  ["wifiOnly", "notify", "lyrics"].forEach(function (k) {
+    var btn = $(k);
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      set(k, !state[k]);
+    });
+  });
+  // Tapping anywhere on a toggle row flips it
+  document.querySelectorAll("[data-row-for]").forEach(function (row) {
+    row.addEventListener("click", function () { $(row.dataset.rowFor).click(); });
+  });
+
+  $("sleep").addEventListener("change", function (e) { set("sleep", e.target.value); });
+  $("crossfade").addEventListener("input", function (e) { set("crossfade", +e.target.value); });
+
+  var confirmBox = $("confirm"), resetBtn = $("resetBtn");
+  resetBtn.addEventListener("click", function () {
+    resetBtn.hidden = true; confirmBox.hidden = false; $("cancelBtn").focus();
+  });
+  function closeConfirm() { confirmBox.hidden = true; resetBtn.hidden = false; resetBtn.focus(); }
+  $("cancelBtn").addEventListener("click", closeConfirm);
+  $("confirmBtn").addEventListener("click", function () {
+    state = JSON.parse(JSON.stringify(DEFAULTS));
+    save(); render(); closeConfirm();
+    toast("Settings restored to defaults");
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !confirmBox.hidden) closeConfirm();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

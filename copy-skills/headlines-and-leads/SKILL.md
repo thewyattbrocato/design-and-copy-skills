@@ -33,8 +33,8 @@ A brand guide, voice sample or house style beats every default below.
 Small tasks (polish one line, choose between options) can start at step 3.
 
 1. **Name the reader and the one idea**, as a sentence someone could disagree with. Two ideas joined by "and": keep the one this reader cares about most; the other goes lower on the page.
-2. **Match the opening to what the reader already knows**, judged from the traffic source and page, not taste. Someone about to buy needs the offer and its terms. Someone who knows the category needs the outcome and the one difference. Someone who feels a problem but not a fix needs the problem in their words, then the hope. Someone who has not noticed the problem needs a true, surprising fact or a very short scene tied to the product by the next line. Details in [openings-and-surfaces.md](references/openings-and-surfaces.md).
-3. **Check what the surface does with the line.** A page or article headline only has to earn the next sentence. A search result, ad unit, notification or title tag is the whole exposure, so it must also say what it is and who it is for, with the brand when the context does not supply it. Note truncation points and any cap.
+2. **Match the opening to what the reader already knows**, judged from the traffic source and page, not taste. Someone who came looking for this product (pricing, brand search, renewal) needs the offer and its terms. Someone who came with the problem needs it in their words, then what changes. Someone who came from elsewhere needs one concrete result or fact tied to the product by the next line. Details in [openings-and-surfaces.md](references/openings-and-surfaces.md).
+3. **Check what the surface does with the line.** A page or article headline only has to earn the next sentence. A search result, ad unit, notification or title tag is the whole exposure, so it must also say what it is and who it is for, with the brand when the context does not supply it. Note truncation points and any cap. For glance surfaces, run the glance and delete tests in [stopping-power-and-first-lines.md](references/stopping-power-and-first-lines.md).
 4. **Draft options that differ in approach, not wording:** the outcome stated plainly, the reader's problem in their words, the contrast with the old way, the reader's real question, a customer phrase the user supplied, the category plus one difference. Draft more than you show.
 5. **Cut any option that** needs the body to make sense, claims more than the facts support, could carry a rival's name unchanged, depends on a pun, or opens a question the next line does not answer.
 6. **Write the first sentence** short, carrying the news or the reader's situation, so the second sentence is necessary.
@@ -72,7 +72,9 @@ Deliver the lines first, with nothing before them. When a count or set is asked 
 - No fact is added that the user did not give, and no "always", "never" or superlative the facts do not support.
 - Within any stated length, counted.
 - Options differ in approach; headings in order tell the argument.
+- Delete any word group and the idea survives? Cut it. One benefit per line.
 
 ## References
 
 - [openings-and-surfaces.md](references/openings-and-surfaces.md): load when the reader's knowledge or the surface (search result, ad, article, section headings) is unclear, or when writing opening sentences.
+- [stopping-power-and-first-lines.md](references/stopping-power-and-first-lines.md): load for glance surfaces, a choice of form, high-stakes topics, a superlative the facts do not support, or the first body line.

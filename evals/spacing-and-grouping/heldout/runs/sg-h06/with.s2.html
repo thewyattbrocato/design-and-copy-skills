@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice summary</title>
+<style>
+  :root {
+    --bg: #f3f4f6;
+    --panel: #ffffff;
+    --ink: #1a1d23;
+    --muted: #5f6673;
+    --line: #e4e6eb;
+    --tint: #f6f7f9;
+    --accent: #2f5bea;
+    --accent-ink: #ffffff;
+    --accent-hover: #2349c4;
+    --focus: #2f5bea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1114;
+      --panel: #181b20;
+      --ink: #eceef2;
+      --muted: #9aa1ad;
+      --line: #2a2e36;
+      --tint: #1f232a;
+      --accent: #6b8cff;
+      --accent-ink: #0e1220;
+      --accent-hover: #86a0ff;
+      --focus: #86a0ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  aside {
+    width: 100%;
+    max-width: 380px;
+    min-height: 100vh;
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    margin: 0 0 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  h1 { margin: 0; font-size: 20px; font-weight: 650; letter-spacing: -.01em; }
+  .status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--tint);
+    border: 1px solid var(--line);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .body { flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 28px; }
+  h2 {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  address { font-style: normal; }
+  address strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  address span { display: block; color: var(--muted); }
+  dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  .item {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .item:first-child { padding-top: 0; }
+  .item:last-child { border-bottom: 0; padding-bottom: 0; }
+  .item .name { font-weight: 550; }
+  .item .meta { display: block; color: var(--muted); font-size: 13px; }
+  .amt { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 550; }
+  .totals {
+    background: var(--tint);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .totals .row { display: flex; justify-content: space-between; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .totals .row + .row { margin-top: 6px; }
+  .totals .total {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .total .label { font-size: 14px; font-weight: 600; }
+  footer {
+    padding: 16px 24px 24px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 10px;
+  }
+  button {
+    font: inherit;
+    font-weight: 600;
+    padding: 11px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .primary { background: var(--accent); color: var(--accent-ink); }
+  .primary:hover { background: var(--accent-hover); }
+  .secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+  .secondary:hover { background: var(--tint); }
+  .note { margin: 0; text-align: center; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+  <aside aria-label="Invoice summary">
+    <header>
+      <p class="eyebrow">Invoice summary</p>
+      <h1>INV-2026-042</h1>
+      <span class="status">Draft</span>
+    </header>
+
+    <div class="body">
+      <section aria-labelledby="bill-to">
+        <h2 id="bill-to">Bill to</h2>
+        <address>
+          <strong>Harbor &amp; Pine Coffee Co.</strong>
+          <span>Attn: Maria Delgado</span>
+          <span>418 Alder Street, Suite 2</span>
+          <span>Portland, OR 97209</span>
+        </address>
+      </section>
+
+      <section aria-labelledby="details">
+        <h2 id="details">Details</h2>
+        <dl>
+          <dt>Invoice no.</dt><dd>INV-2026-042</dd>
+          <dt>Issued</dt><dd>Oct 15, 2026</dd>
+          <dt>Due</dt><dd>Nov 14, 2026</dd>
+          <dt>Terms</dt><dd>Net 30</dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="items">
+        <h2 id="items">Line items</h2>
+        <ul>
+          <li class="item">
+            <span><span class="name">Discovery workshop</span><span class="meta">4 hrs × $150.00</span></span>
+            <span class="amt">$600.00</span>
+          </li>
+          <li class="item">
+            <span><span class="name">Logo &amp; identity system</span><span class="meta">Fixed fee</span></span>
+            <span class="amt">$2,400.00</span>
+          </li>
+          <li class="item">
+            <span><span class="name">Brand guidelines PDF</span><span class="meta">6 hrs × $150.00</span></span>
+            <span class="amt">$900.00</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="totals" aria-label="Totals">
+        <div class="row"><span>Subtotal</span><span>$3,900.00</span></div>
+        <div class="row"><span>Tax (8%)</span><span>$312.00</span></div>
+        <div class="total"><span class="label">Total due</span><span>$4,212.00</span></div>
+      </section>
+    </div>
+
+    <footer>
+      <button type="button" class="primary">Send invoice</button>
+      <button type="button" class="secondary">Save draft</button>
+      <p class="note">Sends to maria@harborandpine.example</p>
+    </footer>
+  </aside>
+</body>
+</html>

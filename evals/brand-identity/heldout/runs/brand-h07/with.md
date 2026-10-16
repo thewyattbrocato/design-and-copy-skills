@@ -1,47 +1,29 @@
-I couldn't save files here because the Write tool is disabled, so the cleaned SVGs are below to paste in.
+I couldn't save the file because the Write tool is disabled in this session, so the cleaned SVG is below. I haven't rendered it. The wordmark width is my estimate and needs a quick look.
 
-**Full color**
 ```svg
 <svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg" role="img">
-  <title>Boulderline – Indoor Climbing &amp; Training</title>
-  <!-- Live text: Papyrus (fallback fantasy) and Arial. Outline both before print or sign use. -->
+  <title>Boulderline: indoor climbing &amp; training</title>
+  <!-- Wordmark is live text; outline it before print or sign use. -->
   <g id="symbol">
-    <path d="M10 100 L45 30 L65 62 L82 40 L112 100 Z" fill="#ff5a36"/>
+    <path d="M10 100 L45 30 L65 62 L82 40 L112 100 Z" fill="#ff5a36" stroke="#ff5a36" stroke-width="2" stroke-linejoin="round"/>
     <path d="M25 100 L45 58 L58 80" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="45" cy="30" r="4" fill="#222"/>
   </g>
-  <text x="128" y="72" font-family="Papyrus, fantasy" font-size="34" fill="#222" letter-spacing="1">Boulderline</text>
-  <text x="130" y="96" font-family="Arial, sans-serif" font-size="9" fill="#666" letter-spacing=".5">INDOOR CLIMBING &amp; TRAINING</text>
+  <text x="128" y="72" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="28" fill="#222">Boulderline</text>
+  <text x="128" y="94" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#666" letter-spacing=".8">INDOOR CLIMBING &amp; TRAINING</text>
 </svg>
 ```
 
-**One color** (follows the CSS text color, so it works on dark backgrounds)
-```svg
-<svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg" role="img" fill="currentColor">
-  <title>Boulderline – Indoor Climbing &amp; Training</title>
-  <defs>
-    <mask id="cut">
-      <rect width="320" height="120" fill="#fff"/>
-      <path d="M25 100 L45 58 L58 80" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    </mask>
-  </defs>
-  <path d="M10 100 L45 30 L65 62 L82 40 L112 100 Z" mask="url(#cut)"/>
-  <text x="128" y="72" font-family="Papyrus, fantasy" font-size="34" letter-spacing="1">Boulderline</text>
-  <text x="130" y="96" font-family="Arial, sans-serif" font-size="9" letter-spacing=".5">INDOOR CLIMBING &amp; TRAINING</text>
-</svg>
-```
+I kept your mountain silhouette, the white route line, the summit hold and the horizontal layout. Here is what changed:
 
-I kept the mountain shape, the wordmark, its position and the orange.
+- **Gradient and drop shadow:** I removed both. The mark is now flat `#ff5a36`, so it holds up in one color, on dark backgrounds and at small sizes.
+- **Outline:** I swapped the 1px dark outline for a 2px outline in the fill color with rounded joins. This softens the corners slightly.
+- **Route line:** It went from 1px to 3px with round caps, because a hairline disappears small. The route is the best part of the idea, so I made it more visible.
+- **Summit circle:** It was the same color as the fill, so it did nothing. It's now dark `#222` and reads as the finishing hold.
+- **Alignment:** The tagline sat 2px off the wordmark (x=130 against x=128). I aligned both to x=128 and moved the tagline up a little.
+- **Tagline:** It's now `#666` instead of `#888`, which is easier to read, and has slight letter-spacing. It stays a separate text element, not part of the symbol.
+- **Structure:** I added `role="img"`, a `<title>` and a `<g id="symbol">` so the symbol can be exported alone for avatars and favicons.
 
-**What I changed**
-- **Gradient:** I flattened it to solid `#ff5a36`. Gradients turn to mud in one color and on embroidery or signs.
-- **Drop shadow:** I removed the filter. It blurs at small sizes and prints badly.
-- **Outline:** I removed the 1px dark stroke on the mountain.
-- **Peak dot:** I deleted it. It was the same orange as the mountain, so it was invisible.
-- **Route line:** I thickened the white inner line from 1 to 3 and rounded the ends. At 1 it disappears when the logo is small.
-- **Tagline:** I raised it from 8 to 9 and darkened it from `#888` to `#666` for contrast. It stays a separate line, so you can drop it in small uses.
-- **Accessibility:** I added a `<title>` and `role="img"`.
-- **Structure:** I grouped the symbol, added `sans-serif` as an Arial fallback, and added the one-color version.
+**Decision for you:** I replaced Papyrus with a bold sans-serif. Papyrus is a stock font that falls back unpredictably (`fantasy`) and looks different on every machine. It's also the part of the logo most likely to date it. This is the one change that alters the look, and it's easy to revert by restoring your original `font-family` and size on that line. If you'd rather keep Papyrus, I'd still outline the text before it goes on anything printed.
 
-**Not changed, but worth a look**
-- **Papyrus:** It's an untouched stock font, and it's closely tied to a cliché look. It also isn't installed on many machines, so the logo will fall back to a generic fantasy font for those viewers. I left it because you didn't ask for a type change. At minimum, convert the text to outlines before you send the logo to a printer or sign maker. I can swap in a sturdier face if you want to see one.
-- **Small sizes:** For a favicon or social avatar, use the mountain alone, not the full logo shrunk down. I can draw that version if you want it.
+**Next steps:** To finish the set, I'd add a one-color version using `currentColor`, a reversed version for dark backgrounds, and a symbol-only favicon redrawn for 16 and 32px. I can do those if you want them.

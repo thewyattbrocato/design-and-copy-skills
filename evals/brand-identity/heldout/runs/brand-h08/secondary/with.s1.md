@@ -1,25 +1,21 @@
-**Partly true, but "just how embroidery works" shouldn't be the end of the conversation.** Embroidery has real physical limits, and a logo designed only for screens will break on thread. Those limits are fixable, though, and the fix is a version of the logo built for each medium. You don't need a big project. You need two small derivative files and one test sample.
+**Your designer is partly right.** Embroidery does have hard limits, but "that's just how it works" misses the point. Embroidery is a different medium, and a logo needs a version designed for it, not a shrunk copy of the print version.
 
 **Why it happens**
 
-- **Thread has a minimum width.** A stitch line is roughly 0.4 to 0.5 mm wide, and fine lines get stitched too densely or too sparsely. Hairlines fill in or disappear.
-- **Small text can't be stitched legibly.** Letters need enough height and counter space (the openings in a, e, or o) to hold their shape. Taglines much under about 6 to 8 mm tall usually turn to blobs, and they look worse on a polo because the fabric stretches.
-- **Tight gaps close up.** Thread spreads a little when stitched, so narrow spaces between shapes merge.
-- **Screens hide these problems.** Your logo looks great on the website because pixels can show a 0.2 px line. Thread can't.
+- **Thread has a minimum width.** A stitch is a thread roughly 0.3 to 0.5 mm wide, and the fabric's weave and stretch blur anything finer. Hairlines and thin gaps close up, and a thin stroke of a few tenths of a millimeter won't hold.
+- **Text needs a minimum height.** Letters much under about 6 mm tall (roughly ¼ inch) turn to noise. A tagline at polo size usually falls below that. These are approximate figures, so confirm them with your embroiderer.
+- **Digitizing turns art into stitch paths.** The shop's digitizer makes choices about stitch direction, density and underlay. Fine detail that wasn't designed for stitches gets averaged away.
 
-**Why the favicon is a gray smudge**
+**The favicon has the same root cause.** At 32 px, a full logo with a tagline and thin strokes is too much detail for the pixels. A small version needs to be a different drawing.
 
-At 32 px, a thin line or small detail gets anti-aliased into a half-tone average. If the mark relies on thin strokes, low-contrast colors, or a tagline, it turns gray. This is the same problem as embroidery, just at a smaller scale.
+**What to do, kept lean**
 
-**What to do**
+1. **Make two simplified marks, not one.**
+   - *Small-size mark:* the symbol or a monogram only, with heavier strokes, no tagline, and no hairlines. Test it at 16 and 32 px on light and dark tab bars. Keep the full logo for the website and deck.
+   - *Embroidery mark:* the same symbol with strokes at least about 1 mm wide, text at least about 6 mm tall, no gradients or fine shading, and at most 2 or 3 thread colors. Drop the tagline from the polo or put it on a separate, larger line, or on a back-neck label.
+2. **Get a sew-out test before the full run.** Ask the shop for a stitched sample on the actual polo fabric and check it at arm's length. This costs a little and catches problems before you pay for a few dozen shirts.
+3. **Export the favicon set.** Provide `favicon.ico` (16, 32, 48 px), a 180×180 Apple touch icon, and optionally an SVG favicon that switches colors with dark mode.
 
-1. **Make a simplified "small-size" mark.** Keep the core shape and drop the hairlines, the tagline, and any tiny detail. Use bold strokes, solid fills, and high contrast. A monogram or a simplified symbol often works better than the full wordmark.
-2. **Build the favicon from that simplified mark.** Deliver a 16×16 and a 32×32 version, plus a 180×180 Apple touch icon. Hand-adjust them if needed rather than just scaling down the full logo. Check them at actual size in a browser tab.
-3. **For embroidery, make an embroidery-specific artwork.**
-   - Remove the tagline from the chest logo, or put it on the back or the sleeve at a readable size (usually 8 mm or more in height).
-   - Keep the minimum line weight around 1 mm and gaps at least 1 mm.
-   - Limit the design to 2 or 3 thread colors with flat fills. Avoid gradients and fine shading.
-   - Have the embroidery shop digitize it and ask for a test stitch-out on the same fabric you'll use (ideally the polo color). Approve the sample before you order the full run.
-4. **Ask for the thread file and the sample.** A reputable shop should be able to show you a stitch-out and give you a digitized file (for example, DST or PES) you can reuse for future orders.
+**What to ask your designer for:** the simplified small-size mark, the embroidery version with stroke and text minimums, and a sew-out sample reviewed before production. Don't need a rebrand for any of this. The main logo can stay as it is.
 
-If you can send me the logo as an SVG, I can prepare the simplified favicon set and an embroidery-ready version with minimum line weights and a suggested tagline size. I'd recommend sending that to the embroidery shop along with the test-sample request.
+I didn't check any logo files in your working directory, so these are general specs, not measurements from your artwork. If you send the logo file or a photo of the bad polo, I can point to the specific lines and text that need changes.

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site photos – Inspection INS-2041</title>
+<style>
+:root {
+  --bg: #f3f5f8; --card: #fff; --text: #17202e; --muted: #5b6678; --line: #dde2ea;
+  --accent: #0b5fd6; --accent-ink: #fff; --accent-soft: #e8f0fd;
+  --ok: #17703a; --ok-soft: #e4f4ea; --err: #b3261e; --err-soft: #fdeceb;
+  --warn: #8a5a00; --warn-soft: #fff4d9; --track: #e4e8ef;
+  --shadow: 0 1px 2px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f141b; --card: #171e28; --text: #e8edf4; --muted: #9aa6b8; --line: #2a3442;
+    --accent: #5b9bff; --accent-ink: #07111f; --accent-soft: #172a47;
+    --ok: #5fd08a; --ok-soft: #14291d; --err: #ff8a82; --err-soft: #34181a;
+    --warn: #f0c060; --warn-soft: #33290f; --track: #2a3442; --shadow: none;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 24px 16px 48px;
+}
+button, input, select { font: inherit; color: inherit; }
+.panel { max-width: 860px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+.head { padding: 20px 24px 16px; border-bottom: 1px solid var(--line); display: flex; gap: 16px; justify-content: space-between; flex-wrap: wrap; }
+.head h1 { margin: 0 0 2px; font-size: 20px; letter-spacing: -.01em; }
+.head p { margin: 0; color: var(--muted); font-size: 14px; }
+.badge { align-self: flex-start; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+.body { padding: 20px 24px; }
+
+.drop {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%;
+  padding: 28px 16px; border: 2px dashed var(--line); border-radius: 12px; background: transparent;
+  text-align: center; cursor: pointer; transition: border-color .15s, background .15s;
+}
+.drop:hover, .drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop svg { width: 34px; height: 34px; color: var(--accent); }
+.drop strong { font-size: 16px; }
+.drop span { color: var(--muted); font-size: 13px; }
+.actions-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--card); cursor: pointer; font-weight: 600; font-size: 14px;
+}
+.btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover:not(:disabled) { filter: brightness(1.08); color: var(--accent-ink); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn.sm { min-height: 32px; padding: 0 10px; font-size: 13px; }
+.btn.danger-text { color: var(--err); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.alert { margin-top: 12px; padding: 10px 12px; border-radius: 8px; font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+.alert.warn { background: var(--warn-soft); color: var(--warn); }
+.alert.offline { background: var(--warn-soft); color: var(--warn); font-weight: 600; }
+.alert ul { margin: 2px 0 0; padding-left: 18px; }
+.alert .grow { flex: 1; }
+.alert button { background: none; border: 0; cursor: pointer; font-size: 18px; line-height: 1; padding: 0 4px; color: inherit; }
+
+.summary { margin-top: 20px; }
+.sum-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.sum-top b { font-size: 15px; }
+.sum-top small { color: var(--muted); font-size: 13px; }
+.sum-top .fail { color: var(--err); font-weight: 600; }
+.bar { height: 8px; background: var(--track); border-radius: 99px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width .2s linear; }
+.summary .bar { margin: 8px 0 10px; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; }
+
+ul.list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.row { display: grid; grid-template-columns: 72px 1fr auto; gap: 14px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; align-items: start; }
+.row[data-status="error"] { border-color: var(--err); background: var(--err-soft); }
+.thumb { width: 72px; height: 72px; border-radius: 8px; background: var(--track); overflow: hidden; display: grid; place-items: center; color: var(--muted); font-size: 11px; font-weight: 700; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.main { min-width: 0; }
+.top { display: flex; gap: 8px; align-items: baseline; }
+.name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.size { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.meta { display: grid; grid-template-columns: 150px 1fr; gap: 8px; margin: 8px 0; }
+.meta select, .meta input { min-height: 34px; width: 100%; padding: 0 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); font-size: 14px; }
+.meta input::placeholder { color: var(--muted); }
+.prog { display: flex; align-items: center; gap: 10px; }
+.prog .bar { flex: 1; height: 6px; }
+.row[data-status="done"] .bar > i { background: var(--ok); }
+.row[data-status="error"] .bar > i { background: var(--err); }
+.row[data-status="queued"] .bar > i { background: var(--muted); }
+.status { font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; min-width: 150px; justify-content: flex-end; text-align: right; }
+.status svg { width: 15px; height: 15px; flex: none; }
+.row[data-status="done"] .status { color: var(--ok); }
+.row[data-status="error"] .status { color: var(--err); }
+.row[data-status="uploading"] .status { color: var(--accent); }
+.row[data-status="queued"] .status { color: var(--muted); }
+.errmsg { margin: 6px 0 0; font-size: 13px; color: var(--err); }
+.row-actions { display: flex; flex-direction: column; gap: 6px; }
+
+.empty { text-align: center; color: var(--muted); font-size: 14px; padding: 18px 0 2px; }
+.empty ul { display: inline-block; text-align: left; margin: 6px 0 0; padding-left: 18px; }
+
+.foot { padding: 14px 24px; border-top: 1px solid var(--line); display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: color-mix(in srgb, var(--bg) 50%, var(--card)); }
+.foot .hint { color: var(--muted); font-size: 13px; flex: 1; min-width: 200px; }
+.demo { max-width: 860px; margin: 12px auto 0; color: var(--muted); font-size: 12.5px; text-align: center; }
+.demo button { background: none; border: 0; color: var(--accent); text-decoration: underline; cursor: pointer; padding: 0; font-size: inherit; }
+
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 20px); background: #17202e; color: #fff; padding: 10px 16px; border-radius: 8px; font-size: 14px; opacity: 0; pointer-events: none; transition: .2s; max-width: 90vw; z-index: 10; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--text); padding: 20px; max-width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,.3); }
+dialog::backdrop { background: rgba(10,15,25,.5); }
+dialog h2 { margin: 0 0 6px; font-size: 17px; }
+dialog p { margin: 0 0 16px; color: var(--muted); }
+dialog .btns { display: flex; justify-content: flex-end; gap: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+[hidden] { display: none !important; }
+
+@media (max-width: 620px) {
+  .body, .head, .foot { padding-left: 16px; padding-right: 16px; }
+  .row { grid-template-columns: 56px 1fr; }
+  .thumb { width: 56px; height: 56px; }
+  .row-actions { grid-column: 1 / -1; flex-direction: row; }
+  .row-actions .btn { flex: 1; min-height: 40px; }
+  .meta { grid-template-columns: 1fr; }
+  .status { min-width: 0; }
+  .prog { flex-wrap: wrap; }
+  .prog .bar { flex-basis: 100%; }
+  .prog .status { justify-content: flex-start; text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<main class="panel" aria-labelledby="title">
+  <header class="head">
+    <div>
+      <h1 id="title">Site photos</h1>
+      <p>Inspection INS-2041 · 14 Harbour Row, Unit 3, Bristol BS1 4RT</p>
+    </div>
+    <span class="badge">Pre-purchase structural survey</span>
+  </header>
+
+  <section class="body">
+    <button type="button" class="drop" id="drop" aria-describedby="dropHelp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16.5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.5M12 4v11M7.5 8.5 12 4l4.5 4.5"/></svg>
+      <strong>Drop photos here, or tap to choose</strong>
+      <span id="dropHelp">JPEG, PNG, WebP or HEIC · up to 25 MB each · up to 40 photos · you can also paste</span>
+    </button>
+    <div class="actions-row">
+      <button type="button" class="btn" id="cameraBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+        Take photo
+      </button>
+    </div>
+    <input type="file" id="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif,.jpg,.jpeg,.png,.webp" multiple hidden>
+    <input type="file" id="camera" accept="image/*" capture="environment" hidden>
+
+    <div id="offline" class="alert offline" role="status" hidden>You're offline. Uploads are paused and will resume automatically when the connection returns.</div>
+    <div id="rejects" class="alert warn" role="alert" hidden></div>
+
+    <div class="summary" id="summary" hidden>
+      <div class="sum-top">
+        <b id="sumMain"></b>
+        <small id="sumSub"></small>
+      </div>
+      <div class="bar" role="progressbar" aria-label="Overall upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="sumBar"><i></i></div>
+      <div class="tools">
+        <button type="button" class="btn sm" id="retryAll" hidden>Retry failed</button>
+        <button type="button" class="btn sm" id="clearDone" hidden>Clear uploaded from list</button>
+      </div>
+    </div>
+
+    <ul class="list" id="list" aria-label="Photos for this inspection"></ul>
+
+    <div class="empty" id="empty">
+      No photos added yet. Tips for a useful record:
+      <ul>
+        <li>Capture wide shots first, then close-ups of defects</li>
+        <li>Include a scale or reference where you can</li>
+        <li>Set the area and add a short caption for each photo</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span class="hint" id="footHint">Photos upload automatically. Area and caption changes save as you type.</span>
+    <button type="button" class="btn primary" id="finish" disabled>Done</button>
+  </footer>
+</main>
+
+<p class="demo">Demo environment: uploads are simulated and nothing leaves this page. The 3rd photo you add fails once to show recovery.
+  <button type="button" id="sample">Add 6 sample photos</button></p>
+
+<div class="sr" aria-live="polite" id="live"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<dialog id="confirm">
+  <form method="dialog">
+    <h2>Remove this photo?</h2>
+    <p id="confirmText">It will be removed from the inspection record.</p>
+    <div class="btns">
+      <button class="btn" value="cancel">Keep</button>
+      <button class="btn primary" value="ok">Remove</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(() => {
+  const MAX_FILES = 40, MAX_BYTES = 25 * 1024 * 1024, CONCURRENCY = 3, TICK = 120;
+  const AREAS = ['Exterior', 'Roof', 'Interior', 'Basement / cellar', 'Services', 'Defect', 'Other'];
+  const $ = id => document.getElementById(id);
+  const els = { drop: $('drop'), file: $('file'), camera: $('camera'), cameraBtn: $('cameraBtn'), list: $('list'), empty: $('empty'),
+    summary: $('summary'), sumMain: $('sumMain'), sumSub: $('sumSub'), sumBar: $('sumBar'), retryAll: $('retryAll'), clearDone: $('clearDone'),
+    offline: $('offline'), rejects: $('rejects'), finish: $('finish'), footHint: $('footHint'), live: $('live'), toast: $('toast'), confirm: $('confirm') };
+
+  const items = [];
+  let seq = 0, uid = 0, toastTimer;
+
+  const ICONS = {
+    done: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>',
+    wait: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V6M6.5 11.5 12 6l5.5 5.5"/></svg>'
+  };
+
+  const fmtSize = b => b < 1024 ? b + ' B' : b < 1048576 ? (b / 1024).toFixed(0) + ' KB' : (b / 1048576).toFixed(1) + ' MB';
+  const isImage = f => /^image\/(jpeg|png|webp|heic|heif)$/i.test(f.type) || /\.(jpe?g|png|webp|heic|heif)$/i.test(f.name);
+  const announce = msg => { els.live.textContent = ''; setTimeout(() => els.live.textContent = msg, 30); };
+  function toast(msg) {
+    els.toast.textContent = msg; els.toast.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => els.toast.classList.remove('show'), 3200);
+  }
+
+  /* ---------- adding files ---------- */
+  function addFiles(fileList) {
+    const rejected = [];
+    for (const f of Array.from(fileList)) {
+      if (!isImage(f)) { rejected.push(`${f.name}: not a supported image type`); continue; }
+      if (f.size === 0) { rejected.push(`${f.name}: file is empty`); continue; }
+      if (f.size > MAX_BYTES) { rejected.push(`${f.name}: ${fmtSize(f.size)} exceeds the 25 MB limit`); continue; }
+      if (items.length >= MAX_FILES) { rejected.push(`${f.name}: limit of ${MAX_FILES} photos reached`); continue; }
+      const key = [f.name, f.size, f.lastModified].join('|');
+      if (items.some(i => i.key === key)) { rejected.push(`${f.name}: already added`); continue; }
+      const item = { id: ++uid, seq: ++seq, key, file: f, status: 'queued', progress: 0, elapsed: 0, duration: 0,
+        willFail: false, error: '', area: 'Exterior', caption: '', url: URL.createObjectURL(f) };
+      item.willFail = item.seq === 3;
+      items.push(item);
+      els.list.appendChild(buildRow(item));
+    }
+    showRejects(rejected);
+    const added = items.length;
+    if (added) announce('Photos added. Uploading started.');
+    pump(); render();
+  }
+
+  function showRejects(list) {
+    if (!list.length) { els.rejects.hidden = true; return; }
+    els.rejects.hidden = false;
+    els.rejects.innerHTML = '<div class="grow"><b>' + list.length + (list.length === 1 ? ' file was' : ' files were') + ' not added</b><ul></ul></div><button type="button" aria-label="Dismiss">×</button>';
+    const ul = els.rejects.querySelector('ul');
+    list.slice(0, 6).forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+    if (list.length > 6) { const li = document.createElement('li'); li.textContent = `…and ${list.length - 6} more`; ul.appendChild(li); }
+    els.rejects.querySelector('button').onclick = () => els.rejects.hidden = true;
+  }
+
+  /* ---------- row ---------- */
+  function buildRow(item) {
+    const li = document.createElement('li');
+    li.className = 'row';
+    li.innerHTML = `
+      <div class="thumb"><img alt=""></div>
+      <div class="main">
+        <div class="top"><span class="name"></span><span class="size"></span></div>
+        <div class="meta">
+          <select></select>
+          <input type="text" maxlength="120" placeholder="Add a caption (e.g. cracking above lintel)">
+        </div>
+        <div class="prog"><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i></i></div><span class="status"></span></div>
+        <p class="errmsg" hidden></p>
+      </div>
+      <div class="row-actions">
+        <button type="button" class="btn sm retry" hidden>Retry</button>
+        <button type="button" class="btn sm remove"></button>
+      </div>`;
+    const q = s => li.querySelector(s);
+    const img = q('img');
+    img.src = item.url;
+    img.onerror = () => { img.remove(); q('.thumb').textContent = (item.file.name.split('.').pop() || 'IMG').slice(0, 4).toUpperCase(); };
+    q('.name').textContent = item.file.name; q('.name').title = item.file.name;
+    q('.size').textContent = fmtSize(item.file.size);
+    const sel = q('select'); sel.setAttribute('aria-label', 'Area for ' + item.file.name);
+    AREAS.forEach(a => sel.add(new Option(a, a)));
+    sel.onchange = () => { item.area = sel.value; };
+    const cap = q('input'); cap.setAttribute('aria-label', 'Caption for ' + item.file.name);
+    cap.oninput = () => { item.caption = cap.value; };
+    q('.retry').onclick = () => retry(item);
+    q('.remove').onclick = () => removeItem(item);
+    item.el = li; item.q = q;
+    updateRow(item);
+    return li;
+  }
+
+  function updateRow(item) {
+    const q = item.q, li = item.el;
+    li.dataset.status = item.status;
+    const pct = Math.round(item.progress * 100);
+    q('.bar > i').style.width = (item.status === 'done' ? 100 : pct) + '%';
+    q('.bar').setAttribute('aria-valuenow', item.status === 'done' ? 100 : pct);
+    q('.bar').setAttribute('aria-label', 'Upload progress for ' + item.file.name);
+    const offline = !navigator.onLine;
+    let s = '';
+    if (item.status === 'queued') s = ICONS.wait + 'Waiting to upload';
+    else if (item.status === 'uploading') s = offline ? ICONS.wait + 'Paused – offline' : ICONS.up + 'Uploading ' + pct + '%';
+    else if (item.status === 'done') s = ICONS.done + 'Uploaded';
+    else s = ICONS.error + 'Upload failed';
+    q('.status').innerHTML = s;
+    const em = q('.errmsg');
+    em.hidden = item.status !== 'error';
+    em.textContent = item.error;
+    q('.retry').hidden = item.status !== 'error';
+    const rm = q('.remove');
+    rm.textContent = item.status === 'uploading' || item.status === 'queued' ? 'Cancel' : 'Remove';
+    rm.setAttribute('aria-label', rm.textContent + ' ' + item.file.name);
+  }
+
+  /* ---------- upload simulation ---------- */
+  function pump() {
+    let active = items.filter(i => i.status === 'uploading').length;
+    for (const it of items) {
+      if (active >= CONCURRENCY) break;
+      if (it.status !== 'queued') continue;
+      it.status = 'uploading'; it.elapsed = 0; it.progress = 0;
+      it.duration = Math.min(9000, 1800 + it.file.size / 1024 * 6) + Math.random() * 1400;
+      active++; updateRow(it);
+    }
+  }
+
+  setInterval(() => {
+    if (!navigator.onLine) return;
+    let changed = false;
+    for (const it of items) {
+      if (it.status !== 'uploading') continue;
+      it.elapsed += TICK;
+      const p = Math.min(1, it.elapsed / it.duration);
+      it.progress = p;
+      if (it.willFail && p >= 0.62) {
+        it.status = 'error'; it.willFail = false;
+        it.error = 'Connection dropped at 62%. Check your signal, then retry. Nothing was attached.';
+        announce(it.file.name + ' failed to upload.');
+      } else if (p >= 1) {
+        it.status = 'done'; it.progress = 1;
+        announce(it.file.name + ' uploaded.');
+      }
+      updateRow(it); changed = true;
+    }
+    if (changed) { pump(); render(); }
+  }, TICK);
+
+  function retry(item) {
+    if (item.status !== 'error') return;
+    item.status = 'queued'; item.progress = 0; item.error = '';
+    updateRow(item); pump(); render();
+  }
+
+  function removeItem(item) {
+    const doRemove = () => {
+      const idx = items.indexOf(item);
+      if (idx < 0) return;
+      const nextFocus = (items[idx + 1] || items[idx - 1]);
+      items.splice(idx, 1);
+      URL.revokeObjectURL(item.url); item.el.remove();
+      announce(item.file.name + ' removed.');
+      pump(); render();
+      (nextFocus ? nextFocus.q('.remove') : els.drop).focus();
+    };
+    if (item.status === 'done') {
+      $('confirmText').textContent = `“${item.file.name}” will be removed from the inspection record.`;
+      els.confirm.returnValue = '';
+      els.confirm.onclose = () => { if (els.confirm.returnValue === 'ok') doRemove(); };
+      els.confirm.showModal();
+    } else doRemove();
+  }
+
+  /* ---------- summary ---------- */
+  function render() {
+    const n = items.length;
+    const done = items.filter(i => i.status === 'done').length;
+    const failed = items.filter(i => i.status === 'error').length;
+    const active = items.filter(i => i.status === 'uploading').length;
+    const queued = items.filter(i => i.status === 'queued').length;
+    els.empty.hidden = n > 0;
+    els.summary.hidden = n === 0;
+    els.offline.hidden = navigator.onLine;
+    if (n) {
+      const overall = items.reduce((a, i) => a + (i.status === 'done' ? 1 : i.progress), 0) / n;
+      els.sumMain.textContent = `${done} of ${n} ${n === 1 ? 'photo' : 'photos'} uploaded`;
+      const parts = [];
+      if (active) parts.push(`${active} uploading`);
+      if (queued) parts.push(`${queued} waiting`);
+      els.sumSub.innerHTML = '';
+      if (failed) { const f = document.createElement('span'); f.className = 'fail'; f.textContent = `${failed} failed`; els.sumSub.append(f); if (parts.length) els.sumSub.append(' · '); }
+      els.sumSub.append(parts.join(' · ') || (failed ? '' : 'All photos attached'));
+      els.sumBar.firstElementChild.style.width = Math.round(overall * 100) + '%';
+      els.sumBar.setAttribute('aria-valuenow', Math.round(overall * 100));
+    }
+    els.retryAll.hidden = failed === 0;
+    els.retryAll.textContent = failed > 1 ? `Retry ${failed} failed` : 'Retry failed';
+    els.clearDone.hidden = done === 0;
+    const busy = active + queued > 0;
+    els.finish.disabled = n === 0 || busy || failed > 0;
+    els.finish.textContent = done ? `Done (${done} attached)` : 'Done';
+    els.footHint.textContent = n === 0 ? 'Add at least one photo to continue.'
+      : failed ? 'Retry or remove failed photos before finishing.'
+      : busy ? 'Keep this page open until uploads finish.'
+      : 'All photos are attached to this inspection.';
+    items.forEach(i => { if (i.status === 'uploading') updateRow(i); });
+  }
+
+  els.retryAll.onclick = () => items.filter(i => i.status === 'error').forEach(retry);
+  els.clearDone.onclick = () => {
+    // Hides finished rows from this list only; photos stay attached to the inspection.
+    const keep = [];
+    items.forEach(i => { if (i.status === 'done') { URL.revokeObjectURL(i.url); i.el.remove(); } else keep.push(i); });
+    const count = items.length - keep.length;
+    items.length = 0; items.push(...keep);
+    toast(`${count} uploaded ${count === 1 ? 'photo' : 'photos'} cleared from the list. They remain attached.`);
+    render(); els.drop.focus();
+  };
+  els.finish.onclick = () => {
+    const n = items.filter(i => i.status === 'done').length;
+    toast(`${n} ${n === 1 ? 'photo' : 'photos'} attached to INS-2041.`);
+  };
+
+  /* ---------- input wiring ---------- */
+  els.drop.onclick = () => els.file.click();
+  els.cameraBtn.onclick = () => els.camera.click();
+  els.file.onchange = () => { addFiles(els.file.files); els.file.value = ''; };
+  els.camera.onchange = () => { addFiles(els.camera.files); els.camera.value = ''; };
+  ['dragenter', 'dragover'].forEach(t => els.drop.addEventListener(t, e => { e.preventDefault(); els.drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(t => els.drop.addEventListener(t, e => { e.preventDefault(); els.drop.classList.remove('over'); }));
+  els.drop.addEventListener('drop', e => { if (e.dataTransfer && e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
+  // Stop the browser navigating away if a file is dropped outside the zone.
+  ['dragover', 'drop'].forEach(t => window.addEventListener(t, e => { if (!els.drop.contains(e.target)) e.preventDefault(); }));
+  document.addEventListener('paste', e => {
+    const files = Array.from(e.clipboardData ? e.clipboardData.files : []).filter(f => f.type.startsWith('image/'));
+    if (files.length) { e.preventDefault(); addFiles(files); }
+  });
+  window.addEventListener('online', () => { announce('Back online. Uploads resumed.'); toast('Back online. Uploads resumed.'); render(); });
+  window.addEventListener('offline', () => { announce('You are offline. Uploads paused.'); render(); });
+  window.addEventListener('beforeunload', e => {
+    if (items.some(i => i.status === 'uploading' || i.status === 'queued')) { e.preventDefault(); e.returnValue = ''; }
+  });
+
+  /* ---------- demo sample photos ---------- */
+  $('sample').onclick = async () => {
+    const scenes = [['roof-north', 'Roof – north slope', 205], ['front-elevation', 'Front elevation', 150], ['lintel-crack', 'Cracking above lintel', 15],
+      ['damp-ceiling', 'Damp staining, ceiling', 35], ['consumer-unit', 'Consumer unit', 260], ['cellar-wall', 'Cellar wall efflorescence', 95]];
+    const files = await Promise.all(scenes.map(([slug, label, hue], n) => new Promise(res => {
+      const c = document.createElement('canvas'); c.width = 1280; c.height = 853;
+      const x = c.getContext('2d');
+      const g = x.createLinearGradient(0, 0, 1280, 853);
+      g.addColorStop(0, `hsl(${hue},45%,68%)`); g.addColorStop(1, `hsl(${(hue + 40) % 360},40%,32%)`);
+      x.fillStyle = g; x.fillRect(0, 0, 1280, 853);
+      x.fillStyle = 'rgba(255,255,255,.16)';
+      for (let i = 0; i < 9; i++) x.fillRect(80 + i * 130, 120 + (i % 3) * 190, 100, 160);
+      x.fillStyle = 'rgba(0,0,0,.45)'; x.fillRect(0, 753, 1280, 100);
+      x.fillStyle = '#fff'; x.font = '600 38px system-ui, sans-serif'; x.fillText(label, 36, 815);
+      c.toBlob(b => res(new File([b], `IMG_${2040 + n * 7}_${slug}.jpg`, { type: 'image/jpeg', lastModified: Date.now() - n * 60000 + Math.floor(Math.random() * 1000) })), 'image/jpeg', 0.85);
+    })));
+    addFiles(files);
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>

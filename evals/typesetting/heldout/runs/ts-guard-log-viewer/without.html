@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy Pipeline Logs</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #151a20;
+    --line: #232a33;
+    --text: #d8dee6;
+    --dim: #8793a1;
+    --info: #5fb3f5;
+    --info-bg: rgba(95, 179, 245, 0.12);
+    --warn: #f2b648;
+    --warn-bg: rgba(242, 182, 72, 0.14);
+    --err: #ff6b6b;
+    --err-bg: rgba(255, 107, 107, 0.16);
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+  }
+  .wrap { padding: 24px clamp(16px, 3vw, 48px) 48px; }
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 28px;
+    margin-bottom: 18px;
+  }
+  h1 { font-size: 20px; margin: 0; font-weight: 650; letter-spacing: 0.01em; }
+  .meta { color: var(--dim); font-size: 14px; }
+  .meta b { color: var(--text); font-weight: 600; font-family: var(--mono); }
+  .toolbar {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+  }
+  .toolbar button {
+    font: inherit;
+    font-size: 13px;
+    font-family: var(--mono);
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .toolbar button:hover { border-color: var(--dim); }
+  .toolbar button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  .toolbar button[aria-pressed="true"] { background: #222b35; border-color: var(--dim); }
+  .toolbar .count { color: var(--dim); margin-left: 6px; }
+
+  .log {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .row, .head {
+    display: grid;
+    grid-template-columns: 12ch 8ch 18ch minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 7px 18px;
+    align-items: baseline;
+  }
+  .head {
+    font-family: var(--sans);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dim);
+    background: #12171c;
+    border-bottom: 1px solid var(--line);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .row {
+    border-bottom: 1px solid var(--line);
+    border-left: 3px solid transparent;
+    padding-left: 15px;
+  }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: #1a2028; }
+  .row.WARN  { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.ERROR { background: var(--err-bg);  border-left-color: var(--err); }
+  .row.WARN:hover, .row.ERROR:hover { filter: brightness(1.15); }
+
+  .ts { color: var(--dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .lvl {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-align: center;
+    padding: 1px 0;
+    border-radius: 4px;
+    align-self: start;
+    margin-top: 2px;
+  }
+  .INFO  .lvl { color: var(--info); background: var(--info-bg); }
+  .WARN  .lvl { color: var(--warn); background: rgba(242, 182, 72, 0.2); }
+  .ERROR .lvl { color: #1a0b0b; background: var(--err); }
+  .svc { color: #b9a6ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; }
+  .ERROR .msg { color: #ffd9d9; }
+  .msg .u { color: var(--info); text-decoration: underline; text-decoration-color: rgba(95,179,245,0.4); text-underline-offset: 2px; }
+  .msg .k { color: #e7c98a; }
+
+  @media (max-width: 720px) {
+    .row, .head { grid-template-columns: 8ch 7ch minmax(0, 1fr); }
+    .head span:last-child, .svc { display: none; }
+    .msg { grid-column: 1 / -1; }
+    .toolbar { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Deploy Pipeline · api-gateway v2.41.7</h1>
+    <span class="meta">Run <b>#18423</b></span>
+    <span class="meta">Env <b>prod-us-east-1</b></span>
+    <span class="meta">2026-10-14 · UTC</span>
+    <div class="toolbar" role="group" aria-label="Filter by level">
+      <button type="button" data-f="ALL" aria-pressed="true">All<span class="count" id="c-ALL"></span></button>
+      <button type="button" data-f="INFO" aria-pressed="false">INFO<span class="count" id="c-INFO"></span></button>
+      <button type="button" data-f="WARN" aria-pressed="false">WARN<span class="count" id="c-WARN"></span></button>
+      <button type="button" data-f="ERROR" aria-pressed="false">ERROR<span class="count" id="c-ERROR"></span></button>
+    </div>
+  </header>
+
+  <div class="log" id="log" role="table" aria-label="Deploy log">
+    <div class="head" role="row">
+      <span>Time</span><span>Level</span><span>Service</span><span>Message</span>
+    </div>
+
+    <div class="row INFO" role="row"><span class="ts">14:02:11.482</span><span class="lvl">INFO</span><span class="svc">pipeline-orch</span><span class="msg">Deploy run #18423 started by <span class="k">ci-bot</span> for commit a9f3c1e on branch main</span></div>
+
+    <div class="row INFO" role="row"><span class="ts">14:02:13.907</span><span class="lvl">INFO</span><span class="svc">build-runner</span><span class="msg">Docker build completed in 94.3s, image api-gateway:2.41.7 (412 MB, 18 layers)</span></div>
+
+    <div class="row WARN" role="row"><span class="ts">14:03:49.120</span><span class="lvl">WARN</span><span class="svc">artifact-store</span><span class="msg">Slow upload of build artifact <span class="u">https://artifacts.internal.example.com/builds/api-gateway/2.41.7/a9f3c1e/api-gateway-linux-amd64.tar.gz</span> took 48.2s (threshold 30s); retrying with multipart</span></div>
+
+    <div class="row INFO" role="row"><span class="ts">14:04:02.655</span><span class="lvl">INFO</span><span class="svc">test-runner</span><span class="msg">Integration suite passed: 1,284 tests, 0 failures, 3 skipped (212.8s)</span></div>
+
+    <div class="row INFO" role="row"><span class="ts">14:04:30.018</span><span class="lvl">INFO</span><span class="svc">security-scan</span><span class="msg">Image scan finished: 0 critical, 0 high, 4 medium vulnerabilities</span></div>
+
+    <div class="row WARN" role="row"><span class="ts">14:04:41.773</span><span class="lvl">WARN</span><span class="svc">config-sync</span><span class="msg">Deprecated key <span class="k">ingress.legacyTls</span> in values-prod.yaml:88; at ConfigLoader.resolve (config/loader.go:212) called from Renderer.render (render/helm.go:97), key will be removed in chart v3.0</span></div>
+
+    <div class="row INFO" role="row"><span class="ts">14:05:07.340</span><span class="lvl">INFO</span><span class="svc">migrations</span><span class="msg">Applying 2 pending migrations to orders-db (primary)</span></div>
+
+    <div class="row ERROR" role="row"><span class="ts">14:05:19.864</span><span class="lvl">ERROR</span><span class="svc">migrations</span><span class="msg">Migration 20261014_add_orders_idx failed: pq: deadlock detected at db/migrate/20261014_add_orders_idx.sql:14, see runbook <span class="u">https://wiki.internal.example.com/runbooks/db/migration-deadlock</span></span></div>
+
+    <div class="row INFO" role="row"><span class="ts">14:05:20.211</span><span class="lvl">INFO</span><span class="svc">migrations</span><span class="msg">Retry 1/3 scheduled in 5s with lock_timeout=2s</span></div>
+
+    <div class="row INFO" role="row"><span class="ts">14:05:27.502</span><span class="lvl">INFO</span><span class="svc">migrations</span><span class="msg">Migration 20261014_add_orders_idx applied successfully (6.9s)</span></div>
+
+    <div class="row INFO" role="row"><span class="ts">14:05:44.096</span><span class="lvl">INFO</span><span class="svc">deploy-worker</span><span class="msg">Starting rolling update: 12 replicas, maxSurge=25%, maxUnavailable=0</span></div>
+
+    <div class="row WARN" role="row"><span class="ts">14:07:12.389</span><span class="lvl">WARN</span><span class="svc">deploy-worker</span><span class="msg">Pod api-gateway-7d9f6c5b84-x2kq9 restarted 2 times; last state OOMKilled (limit 512Mi)</span></div>
+
+    <div class="row ERROR" role="row"><span class="ts">14:10:46.731</span><span class="lvl">ERROR</span><span class="svc">deploy-worker</span><span class="msg">Rollout failed for api-gateway@v2.41.7 in prod-us-east-1: readiness probe failed on 3/12 pods after 300s (HTTP 503 from <span class="u">http://10.42.7.18:8080/healthz</span>), aborting and triggering automatic rollback to v2.41.6</span></div>
+
+    <div class="row INFO" role="row"><span class="ts">14:10:47.002</span><span class="lvl">INFO</span><span class="svc">pipeline-orch</span><span class="msg">Rollback to v2.41.6 initiated, notifying <span class="k">#deploys-prod</span> and on-call</span></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var rows = Array.prototype.slice.call(document.querySelectorAll('#log .row'));
+    var buttons = document.querySelectorAll('.toolbar button');
+    var counts = { ALL: rows.length, INFO: 0, WARN: 0, ERROR: 0 };
+    rows.forEach(function (r) {
+      ['INFO', 'WARN', 'ERROR'].forEach(function (l) { if (r.classList.contains(l)) counts[l]++; });
+    });
+    Object.keys(counts).forEach(function (k) {
+      document.getElementById('c-' + k).textContent = counts[k];
+    });
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = b.getAttribute('data-f');
+        buttons.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        rows.forEach(function (r) {
+          r.style.display = (f === 'ALL' || r.classList.contains(f)) ? '' : 'none';
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

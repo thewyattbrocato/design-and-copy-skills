@@ -1,30 +1,32 @@
-**Top finding:** the hierarchy is inverted. The headline is smaller than the body text, so the page reads as a paragraph with a caption. That's probably the "off" feeling.
+**Verdict:** The page feels off because the hierarchy is inverted and the main actions don't read as actions. The nav and buttons also aren't clickable. Measured from the code, the body text is 2.5:1 contrast, below the 4.5:1 WCAG AA minimum.
 
-**Findings, by severity**
+Assumptions: a first-time visitor on desktop, high fidelity. I read the code and computed the numbers; I did not render the page.
 
-1. **Blocker: the links and buttons don't work.** Every nav item and the three CTAs are `<a>` tags with no `href`. They can't be clicked as links, can't be reached by keyboard, and get no focus state. Visitors can't book a class from the homepage. Give each a real destination.
+**Findings, most severe first**
 
-2. **Major: the headline is weaker than the body.** `h1` is 18px, weight 400. The paragraph below is 20px. Nothing in the first screen says "this is the page's main message." Try `h1` at 40–48px, weight 400 or 500, with a clear gap before the paragraph.
+1. **Blocker: the nav and buttons aren't links.** The `<a>` tags have no `href`, so they're styled text. They can't be clicked, don't show a pointer cursor, and can't be reached by keyboard. "Book a class," "Gift cards," and "Rent the studio" are the page's whole purpose, and none of them work. Fix: add real `href` targets to every link.
 
-3. **Major: body text fails contrast.** `#9a9a9a` on `#f6f1e7` is about **2.5:1**. WCAG AA needs 4.5:1 for body text. The button labels use the same gray, so they fail too. The whole page looks washed out, which fits "off." `#595959` on the same cream is about **6.2:1** and keeps the soft tone.
+2. **High: the headline is smaller than the paragraph.** The h1 is 18px and the body paragraph is 20px, so "Welcome to Tidewell" is the weakest text on the page. Fix: make the h1 clearly the largest element (roughly 36–48px) and bring the paragraph down to about 18px.
 
-4. **Major: the offerings are one run-on sentence.** Six services sit in one paragraph, so the visitor has to parse a list to learn what the studio sells. Split them into a short list or cards, one line each, with a link per item.
+3. **High: body text fails contrast.** `#9a9a9a` on `#f6f1e7` is about 2.5:1. It's the color for the paragraph, the buttons, and the nav-adjacent text. It also makes the whole page look washed out. Fix: use a dark ink such as `#2b2b2b` for body text (about 12:1 on the cream background), and keep gray only for secondary captions if needed.
 
-5. **Major: the paragraph measure and leading are off.** At 20px with `max-width:1100px`, a line runs roughly 100+ characters, and `line-height:1.2` is tight for multi-line text. Use about 18px, line-height 1.5, and a max-width near 640px.
+4. **High: no primary action.** The three buttons share one gray outline style, so "Book a class" looks no more important than "Gift cards," and the gray outline reads as disabled. Fix: make "Book a class" a filled button in the accent color and make the other two secondary.
 
-6. **Moderate: no primary action.** "Book a class," "Gift cards," and "Rent the studio" are the same outlined 11px buttons. Nothing stands out. Make "Book a class" a filled button and the other two secondary. Raise the targets to at least 44px tall with 15–16px text. Right now they're about 27px tall.
+5. **Medium: the paragraph is hard to scan.** It's about 270 characters of run-on prose listing six offers, set at 20px with `line-height: 1.2` and a `max-width` of 1100px. That gives about 100+ characters per line, which is too long to read comfortably. Fix: turn the offers into a short list or three cards, use `line-height` around 1.5, and cap the width near 60–70 characters.
 
-7. **Moderate: the nav lacks a brand mark and has too many items.** There's no Tidewell wordmark or home link, and nine links at 12px read as a list of equal options. "Gift cards" also appears in the nav and in the buttons. Add a wordmark on the left, cut to five or six items, and remove the duplicate.
+6. **Medium: the nav is overloaded.** Nine links at 12px, with "Cart (0)" sitting among "Classes" and "Glaze library," and no logo or "Tidewell" wordmark anywhere on the page. Fix: put the name on the left, keep 4–5 primary links (Classes, Wheel nights, Studio rental, Gift cards, About), and move Blog, Contact, and the cart to a secondary position.
 
-8. **Minor: left edges don't line up.** The nav uses 14px horizontal padding and the hero uses 10px, so the text starts at different x positions on the same screen.
+7. **Medium: small tap targets.** The buttons are 11px text with 6px padding, about 27px tall. That's below the 44px recommended for touch. Fix: use 16px text with about 12–14px padding.
 
-9. **Minor: tonal mismatch.** A near-black nav bar sits over a cream page with gray text. The two palettes don't feel like one system. This is taste, not a defect. A warmer nav color or a darker text color would fix it.
+8. **Low: left edges don't line up.** The nav uses 14px padding and the hero uses 10px, so the content sits at a different x-position than the menu. Fix: use one shared gutter value.
 
-10. **Not checked:** there's no image of the pottery, no hours, address, or price in the hero, and no mobile layout. Nine nav items at 12px will wrap or overflow on a phone. I didn't render the page, so these are judged from the code only.
+9. **Taste, labeled as preference:** The gray-on-cream palette feels cold and institutional, and there's no image of pottery, the studio, or the harbor. For a craft business, the work itself is the strongest sales tool, so one large photo would do more than any styling change. Test this with the owner before treating it as a requirement.
 
-**Fix order:** 1 (links), then 3 (contrast), then 2 and 5 (headline and measure), then 4 (offerings), then 6 and 7 (CTAs and nav), then 8 and 9.
+**What to keep**
+- The dark nav bar with light text is legible (about 10:1) and gives the page a clear top edge.
+- The copy names the offers concretely (six-week courses, Thursday wheel nights, kiln access), which is good content.
+- The three entry points match the studio's main revenue streams.
 
-**What to keep:**
-- The cream background and serif type. They suit a pottery studio and are the right base.
-- The nav's light text on dark. At about 10:1 it's the most legible part of the page.
-- The copy's specifics: six-week courses, Thursday wheel nights, rental for working potters. That gives a stranger concrete reasons to stay.
+**Fix order:** 1 (make the links work), then 2 and 3 together (headline and text color), then 4 (primary button), then 5 and 6. Items 7–9 can follow.
+
+**Not checked:** mobile layout, focus styles beyond what's in the CSS, and how the page looks in a real browser.

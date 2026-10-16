@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Check - Brannock Cold Storage</title>
+<style>
+  * { -webkit-box-sizing: border-box; box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #000;
+    color: #fff;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
+  .top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #111;
+    border-bottom: 3px solid #ffd400;
+    padding: 8px;
+  }
+  .top h1 { margin: 0 0 6px 0; font-size: 20px; font-weight: bold; }
+  .searchrow { width: 100%; }
+  .searchrow table { width: 100%; border-collapse: collapse; }
+  .searchrow td { padding: 0; }
+  .clearcell { width: 64px; padding-left: 6px !important; }
+
+  #search {
+    width: 100%;
+    height: 52px;
+    font-size: 22px;
+    padding: 0 10px;
+    color: #000;
+    background: #fff;
+    border: 3px solid #888;
+    border-radius: 0;
+  }
+  #clear {
+    width: 100%;
+    height: 52px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background: #444;
+    border: 3px solid #888;
+    border-radius: 0;
+    padding: 0;
+  }
+  #search:focus, #clear:focus, .count:focus {
+    outline: 4px solid #ffd400;
+    outline-offset: 0;
+  }
+  #summary { margin-top: 6px; font-size: 16px; color: #ddd; }
+  #summary b { color: #fff; }
+
+  #list { width: 100%; border-collapse: collapse; }
+  #list th {
+    text-align: left;
+    background: #222;
+    color: #ffd400;
+    font-size: 14px;
+    padding: 8px 6px;
+    border-bottom: 2px solid #666;
+    text-transform: uppercase;
+  }
+  #list td {
+    padding: 8px 6px;
+    border-bottom: 2px solid #444;
+    vertical-align: middle;
+  }
+  .num { text-align: right; }
+  #list th.num { text-align: right; }
+  .sku { font-weight: bold; font-size: 19px; }
+  .desc { font-size: 13px; color: #bbb; }
+  .bin { font-weight: bold; font-size: 19px; white-space: nowrap; }
+  .exp { font-size: 22px; font-weight: bold; }
+
+  .count {
+    width: 84px;
+    height: 52px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: right;
+    padding: 0 8px;
+    color: #000;
+    background: #fff;
+    border: 3px solid #888;
+    border-radius: 0;
+  }
+
+  .status {
+    display: inline-block;
+    min-width: 92px;
+    padding: 8px 6px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border: 3px solid #aaa;
+    color: #ddd;
+  }
+  .s-ok    { border-color: #3ddc6b; background: #0b3d1a; color: #8dffae; }
+  .s-short { border-color: #ff5a5a; background: #4a0b0b; color: #ffb0b0; }
+  .s-over  { border-color: #ffb000; background: #4a3300; color: #ffd98a; }
+
+  #empty {
+    display: none;
+    padding: 24px 12px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffd400;
+  }
+
+  /* Small screens: each row becomes a stacked card */
+  @media (max-width: 560px) {
+    body { font-size: 18px; }
+    #list thead { position: absolute; left: -9999px; top: -9999px; }
+    #list, #list tbody, #list tr, #list td { display: block; width: 100%; }
+    #list tr { border-bottom: 4px solid #666; padding: 6px 0; }
+    #list td { border-bottom: 0; padding: 4px 8px; text-align: left; }
+    #list td.num { text-align: left; }
+    #list td:before {
+      content: attr(data-label);
+      display: inline-block;
+      width: 40%;
+      font-size: 14px;
+      color: #ffd400;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+    #list td.skucell:before { display: none; }
+    #list td.skucell { background: #1a1a1a; padding: 8px; }
+    .count { width: 50%; text-align: left; }
+    .status { min-width: 50%; text-align: left; padding-left: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Stock Check &ndash; Brannock Cold Storage</h1>
+  <div class="searchrow">
+    <table>
+      <tr>
+        <td><input id="search" type="text" placeholder="Search SKU or bin" autocomplete="off" autocapitalize="off" aria-label="Search SKU or bin"></td>
+        <td class="clearcell"><button id="clear" type="button" aria-label="Clear search">X</button></td>
+      </tr>
+    </table>
+  </div>
+  <div id="summary" aria-live="polite"></div>
+</div>
+
+<table id="list">
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Bin</th>
+      <th class="num">Expected</th>
+      <th class="num">Counted</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="body"></tbody>
+</table>
+<div id="empty">No matching items</div>
+
+<script>
+(function () {
+  var items = [
+    { sku: "FZ-10234", desc: "Peas 12 x 1 kg",        bin: "A-01-03", exp: 48 },
+    { sku: "FZ-10311", desc: "Sweet corn 12 x 1 kg",  bin: "A-01-04", exp: 36 },
+    { sku: "FZ-10452", desc: "Fries 6 x 2.5 kg",      bin: "A-02-01", exp: 60 },
+    { sku: "FZ-20118", desc: "Chicken breast 10 kg",  bin: "B-03-02", exp: 24 },
+    { sku: "FZ-20125", desc: "Chicken thigh 10 kg",   bin: "B-03-03", exp: 18 },
+    { sku: "FZ-20376", desc: "Beef patties 40 x 4 oz",bin: "B-04-01", exp: 30 },
+    { sku: "FZ-30090", desc: "Cod fillet 5 kg",       bin: "C-02-05", exp: 22 },
+    { sku: "FZ-30147", desc: "Shrimp 31/40 2 kg",     bin: "C-02-06", exp: 40 },
+    { sku: "FZ-40215", desc: "Vanilla ice cream 4 L", bin: "D-01-02", exp: 72 },
+    { sku: "FZ-40233", desc: "Choc ice cream 4 L",    bin: "D-01-03", exp: 54 },
+    { sku: "FZ-50067", desc: "Pizza dough 20 x 350 g",bin: "E-05-01", exp: 16 },
+    { sku: "FZ-50102", desc: "Berry mix 6 x 1 kg",    bin: "E-05-04", exp: 28 }
+  ];
+
+  var body = document.getElementById("body");
+  var search = document.getElementById("search");
+  var clearBtn = document.getElementById("clear");
+  var summary = document.getElementById("summary");
+  var empty = document.getElementById("empty");
+  var rows = [];
+
+  function norm(s) { return String(s).toLowerCase().replace(/[^a-z0-9]/g, ""); }
+
+  function td(cls, label) {
+    var c = document.createElement("td");
+    if (cls) c.className = cls;
+    c.setAttribute("data-label", label);
+    return c;
+  }
+
+  function build() {
+    var i, it, tr, c, inp, st;
+    for (i = 0; i < items.length; i++) {
+      it = items[i];
+      tr = document.createElement("tr");
+
+      c = td("skucell", "SKU");
+      c.innerHTML = '<div class="sku"></div><div class="desc"></div>';
+      c.firstChild.appendChild(document.createTextNode(it.sku));
+      c.lastChild.appendChild(document.createTextNode(it.desc));
+      tr.appendChild(c);
+
+      c = td("bin", "Bin");
+      c.appendChild(document.createTextNode(it.bin));
+      tr.appendChild(c);
+
+      c = td("num exp", "Expected");
+      c.appendChild(document.createTextNode(it.exp));
+      tr.appendChild(c);
+
+      c = td("num", "Counted");
+      inp = document.createElement("input");
+      inp.type = "number";
+      inp.className = "count";
+      inp.min = "0";
+      inp.step = "1";
+      inp.setAttribute("inputmode", "numeric");
+      inp.setAttribute("aria-label", "Counted quantity for " + it.sku);
+      c.appendChild(inp);
+      tr.appendChild(c);
+
+      c = td("", "Status");
+      st = document.createElement("span");
+      c.appendChild(st);
+      tr.appendChild(c);
+
+      body.appendChild(tr);
+      rows.push({
+        item: it, tr: tr, input: inp, status: st,
+        key: norm(it.sku + it.bin + it.desc)
+      });
+      bind(rows[rows.length - 1]);
+      update(rows[rows.length - 1]);
+    }
+  }
+
+  function update(r) {
+    var v = r.input.value, n, d;
+    if (v === "" || isNaN(parseInt(v, 10))) {
+      r.status.className = "status";
+      r.status.firstChild ? r.status.firstChild.nodeValue = "TO COUNT"
+                          : r.status.appendChild(document.createTextNode("TO COUNT"));
+      r.state = "pending";
+      return;
+    }
+    n = parseInt(v, 10);
+    d = n - r.item.exp;
+    if (d === 0) {
+      r.status.className = "status s-ok"; setText(r.status, "OK"); r.state = "ok";
+    } else if (d < 0) {
+      r.status.className = "status s-short"; setText(r.status, "SHORT " + d); r.state = "bad";
+    } else {
+      r.status.className = "status s-over"; setText(r.status, "OVER +" + d); r.state = "bad";
+    }
+  }
+
+  function setText(el, t) {
+    if (el.firstChild) el.firstChild.nodeValue = t;
+    else el.appendChild(document.createTextNode(t));
+  }
+
+  function bind(r) {
+    var h = function () { update(r); summarize(); };
+    r.input.onkeyup = h;
+    r.input.onchange = h;
+    r.input.oninput = h;
+    r.input.onkeydown = function (e) {
+      e = e || window.event;
+      if ((e.keyCode || e.which) === 13) { focusNext(r); return false; }
+    };
+  }
+
+  function visible(r) { return r.tr.style.display !== "none"; }
+
+  function focusNext(r) {
+    var i, idx = -1;
+    for (i = 0; i < rows.length; i++) if (rows[i] === r) idx = i;
+    for (i = idx + 1; i < rows.length; i++) {
+      if (visible(rows[i])) { rows[i].input.focus(); return; }
+    }
+    r.input.blur();
+  }
+
+  function summarize() {
+    var done = 0, bad = 0, i;
+    for (i = 0; i < rows.length; i++) {
+      if (rows[i].state !== "pending") done++;
+      if (rows[i].state === "bad") bad++;
+    }
+    summary.innerHTML = "Counted <b>" + done + "</b> of <b>" + rows.length +
+      "</b> &nbsp;|&nbsp; Mismatches <b>" + bad + "</b>";
+  }
+
+  function filter() {
+    var q = norm(search.value), shown = 0, i, show;
+    for (i = 0; i < rows.length; i++) {
+      show = q === "" || rows[i].key.indexOf(q) !== -1;
+      rows[i].tr.style.display = show ? "" : "none";
+      if (show) shown++;
+    }
+    empty.style.display = shown === 0 ? "block" : "none";
+  }
+
+  search.onkeyup = filter;
+  search.oninput = filter;
+  search.onkeydown = function (e) {
+    var i;
+    e = e || window.event;
+    if ((e.keyCode || e.which) === 13) {
+      for (i = 0; i < rows.length; i++) {
+        if (visible(rows[i])) { rows[i].input.focus(); break; }
+      }
+      return false;
+    }
+  };
+  clearBtn.onclick = function () { search.value = ""; filter(); search.focus(); };
+
+  build();
+  summarize();
+  search.focus();
+})();
+</script>
+</body>
+</html>

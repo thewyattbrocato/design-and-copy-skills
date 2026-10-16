@@ -1,38 +1,43 @@
-I won't add the countdown, "only 2 spots left," or the Saturday price jump. Each one would tell people something false about a $1,850 purchase, and whether anyone checks doesn't change that. Fake deadlines also tend to cost more than they bring in: a few refund requests or a "this retreat lied about its spots" post can hurt a small event badly.
+I won't write the fake countdown, the "only 2 spots left" line, or the Saturday price jump. Those are false claims about price and availability, aimed at people deciding how to spend $1,850 or more. Visitors who book because of them are misled, and they're the ones who pay.
 
-You can still create urgency with things that are true. Tell me which of these apply and I'll write them in:
-
-- **Real early-bird pricing:** "$1,850 through [date], then $[X]," if you plan to raise the price.
-- **Real spot count:** "[N] of 12 spots filled," updated as bookings come in.
-- **Real deposit deadline:** "A $[X] deposit holds your spot by [date]," if you need money committed before a set date.
-- **Waitlist:** If it fills, let people join a waitlist. Interest in a full event is a real signal to others.
-
-Here's a draft with placeholders for the facts I don't have:
+Here's copy using only the facts you gave me. Fill in the brackets with real details.
 
 ---
 
-**Six nights. Twelve writers. One April in the Adirondacks.**
+**Wren Hollow Cabins: April Writing Retreat**
 
-Wren Hollow Cabins, [April dates]. A small writing retreat for people who want real stretches of uninterrupted time, away from the usual pull of email and errands.
+Six nights in the Adirondacks, built for focused work. Mornings are yours to write. Meals are taken care of. Evenings are for conversation with other writers, or for going to bed early.
 
 **What's included**
-- Six nights in a shared cabin ([sleeping arrangement, e.g., 2–3 per cabin])
+- 6 nights in a shared cabin
 - All meals
-- [Writing schedule: e.g., mornings reserved for focused work, optional group check-ins]
-- [Workspace details]
-- A cap of 12 writers, so everyone has room to settle in
+- [Workspace details: desks, quiet hours, Wi-Fi or not, etc.]
+- [Any sessions, feedback circles, or prompts you're offering]
 
-**Price**
-$1,850 per person. [Early-bird line, if applicable.]
+**Who it's for**
+Writers who want uninterrupted time away from their usual routine. Maybe you're drafting a novel, finishing a manuscript, or just need a deadline with a view. [Any other audience notes.]
 
-**Reserving your spot**
-[Deposit amount] holds your place by [date]. The balance is due [date]. [Cancellation and refund policy.]
+**Details**
+- **Dates:** April [dates], [year]
+- **Location:** Wren Hollow Cabins, Adirondacks, NY
+- **Group size:** Maximum 12 writers
+- **Price:** $1,850 per person, all meals and lodging included
+- **Availability:** [X] of 12 spots booked as of [date]
 
-**Questions**
-- *Is it accessible?* [Answer]
-- *What should I bring?* [Answer]
-- *Can I travel there without a car?* [Answer]
+**Booking and cancellation**
+[Deposit amount and due date, if any. Full refund policy, including the date after which refunds are no longer available. Payment options.]
+
+**Questions?**
+[Contact email or form]
 
 ---
 
-Send me the dates, how many spots are actually taken, whether you have a real early-bird or deposit deadline, the cabin setup, the writing schedule, and your cancellation policy, and I'll turn this into the finished page.
+**Ways to fill spots honestly:**
+
+- **Show real availability.** If 4 of 12 spots are taken, say "4 of 12 spots booked." Update that number as bookings come in. Real numbers can create urgency without any invention.
+- **Set a real early-bird deadline.** If you're truly considering a price change, decide the date and amount now, then publish it. Only do this if you'll actually honor it.
+- **Add testimonials** from past attendees, with their permission.
+- **Offer a clear next step**, like a short call or a sample schedule, so people can picture the week.
+- **Send the page to your existing list and past attendees first.** They're the most likely to book.
+
+If you tell me your real booking count, deadline, and what's included, I'll tighten the copy around those facts.

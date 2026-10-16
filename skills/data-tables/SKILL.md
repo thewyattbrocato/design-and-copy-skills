@@ -1,18 +1,11 @@
 ---
 name: data-tables
-description: Use when you build, style or review a table of data in a page, app, document or report - an invoice list, an order or admin table, a comparison of products, a financial statement - covering column order, alignment, number formats, units, missing values, headers and sorting, row separation, density, narrow screens, table markup, and empty or loading states. Not for charts, whole dashboards, page grids, short lists that are not tabular, or editing behavior inside spreadsheet engines.
+description: Use when you build, style or review a table of data in a page, app, document or report, in any words - "make this table readable", "the numbers don't line up", "who is behind", "make it work on a phone or on paper", "add a typical value": an invoice list, order or admin table, plan or product comparison, ranked list, financial statement. Covers column and row order, alignment, number formats, units, missing values, headers, summaries, sorting, row separation, density, narrow screens, print, markup, empty and loading states. Not for charts, whole dashboards, page grids, short lists that are not tabular, or editing inside spreadsheet engines.
 ---
 
 # Data tables
 
 A table is for looking things up and comparing across rows and columns. Make the numbers line up, keep the furniture light, say what each value means, and make the table work on small screens and with assistive technology.
-
-## When to use
-
-- Building or restyling any table: invoices, orders, comparisons, reports, admin lists, financial statements.
-- Reviewing table CSS or markup for alignment, number formatting, borders, density or semantics.
-- Deciding whether content should be a table at all, or how a wide table should behave on a phone.
-- Designing sorting, selection, row actions and the empty, loading and error states of a table.
 
 ## When not to use
 
@@ -50,6 +43,8 @@ Work through these in order and skip what the task does not touch.
 
 **Column order.** Default to the identifying column first, then the values people compare most, grouped by relationship, with the action or status column last. Drop internal ids and fields nobody reads. Change when a convention exists, such as a date column first in a log or a ledger.
 
+**Reading order.** Default to finishing "the reader opens this to ___" first, then ordering columns and rows to that job: derived columns next to their sources, compared columns adjacent, ranked data sorted by the value, a statement of the period or as-of date, and a median with a count when "typical" is asked for and extreme rows exist. Change when the user fixes the order. See [references/reading-order-and-context.md](references/reading-order-and-context.md).
+
 **Alignment.** Default to text and dates flush left, numbers right-aligned, or lined up on the decimal point if the count of decimals varies, and each header aligned like its data. Short fixed-width codes and icons can be centered. Never center numbers. Change when a column holds mixed text and numbers: treat it as text. See [references/alignment-and-numbers.md](references/alignment-and-numbers.md).
 
 **Figure style.** Default to tabular lining figures in every numeric column (`font-variant-numeric: tabular-nums`) so digits stack by place value. Change when the face has no tabular figures: set the column in a face that does, rather than leaving it ragged.
@@ -64,7 +59,7 @@ Work through these in order and skip what the task does not touch.
 
 **Row separation.** Default to generous row padding plus a light hairline under each row (or no rules, with space alone). Use a slightly heavier rule under the header and above totals. Pick one device per table. Alternating shading is fine for wide tables where the eye must follow a row across many columns. Change to full gridlines when cells are edited individually, as in a spreadsheet grid, or when the user asks. Add vertical rules only where columns sit dangerously close.
 
-**Density.** Default to rows about 40 to 48px tall for general use and 32 to 36px for expert tools that show many rows, with cell text at 14px or larger (13px at the lowest, and only in compact tables). Change when the table is very large and the reader scans, not reads: tighten the rows, not the text size. Give touch targets inside rows about 44px.
+**Density.** Default to rows about 40 to 48px tall for general use and 32 to 36px for expert tools that show many rows, with cell text at 14px or larger (13px is the floor in dense tables, 12px for secondary metadata, and text people read to act on stays at body size). Change when the table is very large and the reader scans, not reads: tighten the rows, not the text size. Give touch targets inside rows about 44px.
 
 **Wrapping and truncation.** Default to letting one designated text column wrap, and keeping numbers, dates and codes on one line. Truncate only non-critical text, and make the full value available through a title, a tooltip that works on focus, or an expand control. Change when one outlier row would stretch a column for everyone: cap the width and wrap or truncate that column.
 
@@ -99,7 +94,6 @@ See [references/structure-and-separation.md](references/structure-and-separation
 - Tiny text with oversized padding on every row → 14px or larger text, tighter padding if density is the goal.
 - A profile page or a three-step list built as a table → a list or a definition list.
 - Removing the grid from an editable spreadsheet-style grid → keep cell borders where cells are edited.
-- A written answer that runs past a length limit the user gave → keep to it; cut material before the limit.
 
 ## Quick checks
 
@@ -116,6 +110,7 @@ See [references/structure-and-separation.md](references/structure-and-separation
 
 ## References
 
+- [references/reading-order-and-context.md](references/reading-order-and-context.md): load for comparing or ranking tables, summaries and averages, print or multi-page tables, and the period and source line.
 - [references/alignment-and-numbers.md](references/alignment-and-numbers.md): load whenever a table has numbers, dates, currency, percentages, negatives or missing values.
 - [references/structure-and-separation.md](references/structure-and-separation.md): load when styling the table: header design, rules versus shading, density, totals, grouped rows, widths, wrapping.
 - [references/responsive-and-accessible-tables.md](references/responsive-and-accessible-tables.md): load for narrow screens, markup, captions, scrollable regions and sort announcements.

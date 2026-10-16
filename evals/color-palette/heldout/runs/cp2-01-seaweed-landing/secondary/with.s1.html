@@ -1,289 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tidewick | Roasted Seaweed Snacks</title>
-<style>
-  :root {
-    --paper: #f3ecdd;
-    --ink: #101a1f;
-    --ink-soft: #3d4a4f;
-    --cobalt: #1d3fd1;
-    --cobalt-deep: #142ea0;
-    --sea-glass: #cfe6e1;
-    --lime: #dcea8f;
-    --chili: #c8321e;
-    --sesame: #e8cf9e;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tidewick | Roasted Seaweed Snacks</title>
+  <style>
+    :root {
+      --paper: #f3ede0;
+      --paper-deep: #e8dfcb;
+      --nori: #14231f;
+      --nori-soft: #2b3f39;
+      --tide: #1d6b6e;
+      --signal: #ff6a3d;
+      --aqua: #bfe3dc;
+      --lime: #c9e265;
+      --chili: #d9432b;
+      --amber: #e9b872;
+      --sesame: #f6e7c8;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --serif: ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    }
 
-  * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--nori);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--sans);
-    line-height: 1.5;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-  .wrap {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 28px 24px 72px;
-  }
+    /* Top bar */
+    header {
+      padding: 22px 0;
+    }
+    header .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--nori);
+      text-decoration: none;
+    }
+    .logo span { color: var(--signal); }
+    nav a {
+      font-size: 0.9rem;
+      color: var(--nori-soft);
+      text-decoration: none;
+      margin-left: 22px;
+    }
+    nav a:hover { color: var(--tide); text-decoration: underline; }
 
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 56px;
-  }
+    /* Hero */
+    .hero {
+      padding: 56px 0 72px;
+      position: relative;
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--tide);
+      border: 1.5px solid var(--tide);
+      border-radius: 999px;
+      padding: 6px 14px;
+      margin-bottom: 26px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 6.5vw, 4.8rem);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      max-width: 14ch;
+      margin-bottom: 22px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--tide);
+    }
+    .lede {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--nori-soft);
+      max-width: 42ch;
+      margin-bottom: 36px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--signal);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 16px 34px;
+      border-radius: 4px;
+      box-shadow: 6px 6px 0 var(--nori);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 var(--nori);
+    }
+    .btn:focus-visible {
+      outline: 3px solid var(--tide);
+      outline-offset: 4px;
+    }
 
-  .wordmark {
-    font-family: var(--serif);
-    font-size: 1.35rem;
-    font-style: italic;
-    letter-spacing: 0.01em;
-  }
+    /* Products */
+    .products {
+      padding-bottom: 96px;
+    }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-top: 2px solid var(--nori);
+      padding-top: 18px;
+      margin-bottom: 36px;
+    }
+    .section-head h2 {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    .section-head p {
+      font-size: 0.9rem;
+      color: var(--nori-soft);
+    }
 
-  .tag {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-soft);
-  }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
 
-  .hero {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: 40px;
-    align-items: end;
-    margin-bottom: 72px;
-  }
+    .card {
+      background: #fbf8f1;
+      border: 2px solid var(--nori);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); }
 
-  h1 {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: clamp(2.8rem, 7vw, 5.4rem);
-    line-height: 0.98;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
+    .card-art {
+      position: relative;
+      height: 200px;
+      border-bottom: 2px solid var(--nori);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* Nori sheet: a grid of cut lines with a tilted tile */
+    .sheet {
+      width: 150px;
+      height: 150px;
+      background-color: var(--nori);
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 25px 25px;
+      transform: rotate(-6deg);
+      box-shadow: 8px 10px 0 rgba(20,35,31,0.22);
+      position: relative;
+    }
+    .sheet::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent 55%);
+    }
+    .sheet-dot {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      right: -14px;
+      top: -14px;
+      z-index: 1;
+      border: 2px solid var(--nori);
+    }
 
-  h1 em {
-    font-style: italic;
-    color: var(--cobalt);
-  }
+    .card-sea-salt .card-art { background: var(--aqua); }
+    .card-sea-salt .sheet-dot { background: #fff; }
 
-  .lede {
-    font-size: 1.15rem;
-    color: var(--ink-soft);
-    max-width: 30ch;
-    margin: 0 0 28px;
-  }
+    .card-chili-lime .card-art { background: var(--lime); }
+    .card-chili-lime .sheet-dot { background: var(--chili); }
 
-  .btn {
-    display: inline-block;
-    background: var(--cobalt);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 16px 30px;
-    border-radius: 999px;
-    letter-spacing: 0.02em;
-    transition: background 0.2s ease, transform 0.2s ease;
-  }
+    .card-sesame .card-art { background: var(--amber); }
+    .card-sesame .sheet-dot { background: var(--sesame); }
 
-  .btn:hover { background: var(--cobalt-deep); transform: translateY(-2px); }
-  .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+    .card-body {
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tide);
+      margin-bottom: 6px;
+    }
+    .card h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: var(--nori-soft);
+      margin-bottom: 20px;
+    }
+    .card-foot {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .price {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .add {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--nori);
+      background: transparent;
+      border: 2px solid var(--nori);
+      border-radius: 4px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+    .add:hover { background: var(--nori); color: var(--paper); }
+    .add:focus-visible { outline: 3px solid var(--tide); outline-offset: 3px; }
 
-  .hero-mark {
-    position: relative;
-    height: 220px;
-    border-radius: 0 0 220px 0;
-    background:
-      radial-gradient(circle at 30% 35%, var(--chili) 0 10px, transparent 11px),
-      radial-gradient(circle at 62% 60%, var(--lime) 0 8px, transparent 9px),
-      radial-gradient(circle at 76% 28%, var(--sesame) 0 7px, transparent 8px),
-      var(--ink);
-    overflow: hidden;
-  }
+    /* Footer */
+    footer {
+      background: var(--nori);
+      color: var(--paper);
+      padding: 28px 0;
+      font-size: 0.85rem;
+    }
+    footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer span { color: var(--aqua); }
 
-  .hero-mark::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(243,236,221,0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(243,236,221,0.08) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
+    @media (max-width: 640px) {
+      nav { display: none; }
+      .hero { padding: 36px 0 52px; }
+      .section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+    }
 
-  .products {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-  }
-
-  .card {
-    background: #fbf7ee;
-    border: 2px solid var(--ink);
-    border-radius: 6px;
-    padding: 18px 18px 24px;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s ease;
-  }
-
-  .card:hover { transform: translateY(-4px) rotate(-0.4deg); }
-
-  .sheet {
-    position: relative;
-    height: 180px;
-    border-radius: 4px;
-    border: 2px solid var(--ink);
-    margin-bottom: 20px;
-    overflow: hidden;
-    background-color: var(--ink);
-    background-image:
-      linear-gradient(rgba(251,247,238,0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(251,247,238,0.07) 1px, transparent 1px);
-    background-size: 22px 22px;
-  }
-
-  .sheet::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, var(--seasoning) 0 4px, transparent 5px);
-    background-size: 34px 30px;
-    background-position: 8px 6px;
-    opacity: 0.95;
-  }
-
-  .sea-salt { --seasoning: #f7fbfa; background-color: var(--sea-glass); }
-  .sea-salt .sheet, .sea-salt.sheet { background-color: #1c2d33; }
-  .chili-lime { --seasoning: var(--chili); }
-  .chili-lime .sheet { background-color: #1c2d33; }
-  .toasted-sesame { --seasoning: var(--sesame); }
-  .toasted-sesame .sheet { background-color: #1c2d33; }
-
-  .sheet .swatch {
-    position: absolute;
-    right: -20px;
-    bottom: -20px;
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-  }
-
-  .sea-salt .swatch { background: var(--sea-glass); }
-  .chili-lime .swatch { background: var(--lime); }
-  .toasted-sesame .swatch { background: var(--sesame); }
-
-  .card h2 {
-    font-family: var(--serif);
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin: 0 0 6px;
-    letter-spacing: -0.01em;
-  }
-
-  .card p {
-    margin: 0 0 22px;
-    color: var(--ink-soft);
-    font-size: 0.95rem;
-  }
-
-  .card .btn {
-    margin-top: auto;
-    align-self: flex-start;
-    padding: 12px 22px;
-    font-size: 0.92rem;
-  }
-
-  footer {
-    margin-top: 72px;
-    padding-top: 20px;
-    border-top: 2px solid var(--ink);
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; gap: 28px; }
-    .hero-mark { height: 140px; }
-    .products { grid-template-columns: 1fr; }
-    header { padding-bottom: 40px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .btn, .card { transition: none; }
-    .card:hover, .btn:hover { transform: none; }
-  }
-</style>
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="wordmark">Tidewick</div>
-      <div class="tag">Roasted seaweed snacks</div>
-    </header>
 
+  <header>
+    <div class="wrap">
+      <a href="#" class="logo">Tidewick<span>.</span></a>
+      <nav aria-label="Primary">
+        <a href="#shop">Shop</a>
+        <a href="#about">Our story</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
     <section class="hero">
-      <div>
-        <h1>Crunch that <em>comes in</em> from the coast.</h1>
-      </div>
-      <div>
-        <p class="lede">Thin sheets of roasted seaweed, seasoned by hand and light enough to eat by the handful.</p>
-        <a class="btn" href="#shop">Shop now</a>
+      <div class="wrap">
+        <span class="eyebrow">Roasted seaweed, small batch</span>
+        <h1>Crisp snacks that taste like <em>the coast.</em></h1>
+        <p class="lede">Thin-cut sheets, roasted in small batches and seasoned by hand. Light, salty, and ready when you are.</p>
+        <a href="#shop" class="btn">Shop now</a>
       </div>
     </section>
 
-    <section class="products" id="shop" aria-label="Flavors">
-      <article class="card sea-salt">
-        <div class="sheet" role="img" aria-label="Sea Salt seaweed sheet">
-          <div class="swatch"></div>
+    <section class="products" id="shop">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Three ways to snack</h2>
+          <p>Each bag, 4 oz</p>
         </div>
-        <h2>Sea Salt</h2>
-        <p>Just the sea, roasted until it shatters. Our everyday favorite.</p>
-        <a class="btn" href="#shop">Shop now</a>
-      </article>
 
-      <article class="card chili-lime">
-        <div class="sheet" role="img" aria-label="Chili Lime seaweed sheet">
-          <div class="swatch"></div>
-        </div>
-        <h2>Chili Lime</h2>
-        <p>Bright citrus up front, a slow chili warmth at the end.</p>
-        <a class="btn" href="#shop">Shop now</a>
-      </article>
+        <div class="grid">
+          <article class="card card-sea-salt">
+            <div class="card-art">
+              <div class="sheet"><span class="sheet-dot"></span></div>
+            </div>
+            <div class="card-body">
+              <div class="card-tag">Classic</div>
+              <h3>Sea Salt</h3>
+              <p>Just the sheet, a little flake salt, and a clean roast. Our most straightforward bag.</p>
+              <div class="card-foot">
+                <span class="price">$6</span>
+                <button class="add" type="button">Add to bag</button>
+              </div>
+            </div>
+          </article>
 
-      <article class="card toasted-sesame">
-        <div class="sheet" role="img" aria-label="Toasted Sesame seaweed sheet">
-          <div class="swatch"></div>
+          <article class="card card-chili-lime">
+            <div class="card-art">
+              <div class="sheet"><span class="sheet-dot"></span></div>
+            </div>
+            <div class="card-body">
+              <div class="card-tag">Bold</div>
+              <h3>Chili Lime</h3>
+              <p>Bright lime zest with a slow chili warmth. Tart, hot, and hard to stop at one.</p>
+              <div class="card-foot">
+                <span class="price">$7</span>
+                <button class="add" type="button">Add to bag</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card card-sesame">
+            <div class="card-art">
+              <div class="sheet"><span class="sheet-dot"></span></div>
+            </div>
+            <div class="card-body">
+              <div class="card-tag">Toasty</div>
+              <h3>Toasted Sesame</h3>
+              <p>Nutty toasted sesame over a deep roast. Warm, mellow, and a little bit sweet.</p>
+              <div class="card-foot">
+                <span class="price">$7</span>
+                <button class="add" type="button">Add to bag</button>
+              </div>
+            </div>
+          </article>
         </div>
-        <h2>Toasted Sesame</h2>
-        <p>Nutty, warm, and toasted golden. Tastes like a good afternoon.</p>
-        <a class="btn" href="#shop">Shop now</a>
-      </article>
+      </div>
     </section>
+  </main>
 
-    <footer>
+  <footer>
+    <div class="wrap">
       <span>Tidewick</span>
-      <span>Small batch. Roasted in small runs.</span>
-    </footer>
-  </div>
+      <span>Small batch. Hand seasoned. Shipped weekly.</span>
+    </div>
+  </footer>
+
 </body>
 </html>

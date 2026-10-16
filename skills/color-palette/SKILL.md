@@ -9,7 +9,7 @@ A color is a relationship, not a hex code: the same value reads differently on a
 
 ## When to use
 
-Choosing a palette for a screen, page, product, deck or graphic; fixing weak contrast, too many accents, muddy ramps, clashing edges or a flat or garish theme; status and interactive colors; dark themes; text over images; color for a given audience or print process. A short request ("make this look less like a template") is not a small one. After any interface build, use it as a last pass on the colors chosen.
+Choosing a palette for a screen, page, product, deck or graphic; fixing weak contrast, too many accents, muddy ramps, clashing edges or a flat or garish theme; status and interactive colors; dark themes; text over images; color for a given audience or print process. A short request ("make this look less like a template") is not a small one. When the build chose new colors, re-check them before delivering.
 
 ## When not to use
 
@@ -23,7 +23,7 @@ Choosing a palette for a screen, page, product, deck or graphic; fixing weak con
 
 - **Lead and structure.** Name the audience and the job, then choose a lead with a reason that is not "it pops". Default for products: tinted neutral base, one lead, a semantic set. Co-equal hues only when roles are co-equal (calendars, departments). A loud multicolor or clash brief (festival, kids, campaign) stays vivid: one dominant color, a few supporting, one action color, readable text on every ground. A category cliché is allowed on purpose.
 - **Quantity before hues.** Decide what dominates by area, what repeats, what appears once; white and near-black count. Light saturated colors need less area than dark quiet ones. On a phone one accent button can fill the view, so keep it small.
-- **Neutrals.** Lean grays toward the lead's temperature, raising saturation slightly at both ends so the temperature stays even; start from dark gray rather than pure black for large areas. Separate surface levels by small steady lightness steps.
+- **Neutrals.** Give neutrals a trace of the lead hue so they belong to the palette, and check that the darkest and lightest steps still show it; start from dark gray rather than pure black for large areas. Separate surface levels by small steady lightness steps.
 - **Ramps.** Build in a perceptual space, not even HSL or RGB steps; middle steps must look like real colors. Details in [ramps and roles](references/ramps-and-roles.md).
 - **Measure pairs, do not eyeball.** Cross-hue lightness judgments are often wrong. Test each text, icon and border pair on the surface it actually sits on (tint, hover, selected, banner, image, footer, disabled), with the ratio stated. The ratio comes from the accessibility standard in force: about 4.5 to 1 body text, 3 to 1 large text, icons, focus rings and control edges; confirm the version.
 - **Edges: lightness first.** Strong hue contrast at near-equal lightness makes text vibrate; neighbors at equal lightness lose their edge. Anything read, counted or clicked needs a clear lightness gap. Small, thin or pale items need more separation than large ones.

@@ -1,0 +1,1 @@
+Aim for roughly 100–200 ms: fast enough to feel instant, but long enough for a short fade or slide to read as smooth. Go closer to 100 ms for small menus and keep it under about 300 ms, and make closing a bit quicker than opening.

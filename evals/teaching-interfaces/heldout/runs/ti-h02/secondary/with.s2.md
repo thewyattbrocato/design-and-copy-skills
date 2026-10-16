@@ -1,25 +1,27 @@
-**Verdict:** The tour teaches the interface by inventory, so step 1 asks for a full minute of reading before anything useful happens. Skipping is the rational response. Fix the first run rather than polishing the copy.
+**Verdict:** Remove the tour. Step 1 is the first thing standing between a new user and their task, and its only promise is more of the same. Skipping it is a reasonable response to that.
 
 **Why people skip**
 
-- **Step 1 gives no reason to stay.** "Let's take a quick tour" promises nothing the person wants. They came to make an invoice, and the tour stands between them and that.
-- **It names the parts of the product, not the job.** Steps 2 to 4 list nine sidebar items, five top-bar controls and five dashboard figures. Nobody can hold that, and none of it says what to do first.
-- **It points at things that may be empty.** I'm assuming a new account's dashboard shows zeros and no invoices. A tour that highlights "revenue this month" and "overdue invoices" over empty figures teaches nothing.
-- **Stacked steps with no skip on the way.** Seven full-screen-style overlays make the person feel they must finish or dismiss each one, so the cheapest exit is Skip on step 1.
-- **Step 5 is the only action in the tour, and it's buried.** The one thing they need is in the middle of a list of features.
-- **Step 7 is ceremony.** "You're all set!" comes after nothing they did.
+- **Step 1 is a gate with no payoff.** "Let's take a quick tour" asks for time before anything useful happens, and the user has no reason yet to believe the tour is quick or worth it.
+- **Steps 2 to 4 describe what is already on screen.** They list nine sidebar items, five top-bar items and four dashboard metrics. That is an inventory, and nobody can remember it, so the effort buys nothing.
+- **The one useful action is buried.** Creating an invoice (step 5) is the task that matters, but it comes after four passive steps.
+- **Step 6 asks for a setup task inside a tour.** Connecting a bank needs credentials and time, so it is a poor fit for a passive walkthrough.
+- **Step 7 has no next action.** "You're all set!" ends the tour without pointing anywhere.
 
-**What I would change**
+**What to change**
 
-1. **Delete the tour.** Don't replace it with a shorter tour.
-2. **Make the empty dashboard the teacher.** Each empty area says what it is for in one line and gives one action: "Create your first invoice" as the primary button. Hide controls that do nothing yet, and don't show zeroed charts as if they were data.
-3. **Offer a guided first task.** "Create your first invoice" opens a draft with a sample client and a sample line item, both labelled as sample and replaceable in one action. The person edits the draft and sends it. Put the `+` and `N` hints on screen during this task, next to the button they refer to, not in a tour.
-4. **Introduce the bank connection when it matters.** After the first invoice is sent, show a single prompt: "Connect your bank to match payments automatically." Link it to Settings > Banking. Payment matching is meaningless before anyone has an invoice to match, so step 6 is the wrong moment.
-5. **Keep the sidebar and top bar unexplained.** Labels already name them. Explain a term only when it's unclear, like "workspace" if your product uses it in a way people won't guess.
-6. **Keep skip and return paths.** Skip should take them to the empty dashboard with the first-invoice action still visible, and Help Center should hold the walkthrough for anyone who wants it.
+1. **Replace the tour with a first task.** The first-login goal is "one invoice created." Put the user straight into the invoice form, with a single sentence saying what they're doing, and show the + button or the N shortcut in context.
+2. **Make the empty dashboard explain itself.** Say what the area is for, and give one action such as "Create your first invoice." Hide or disable controls that have no data yet, such as the cash-flow chart. Don't make an illustration the largest element.
+3. **Offer sample data only if you have it.** A "use a sample invoice" option is useful, but label it as sample and make it removable in one action. Don't show plausible numbers that could be mistaken for the user's own.
+4. **Explain fields where they appear.** Line items, taxes, discounts, due date and payment link are visible in the form, so give short hints beside the fields that need them. Don't list them in a tour.
+5. **Move bank connection out of onboarding.** Prompt for it after the first invoice is saved, with "Connect now" and "Later." Say what it does in their terms: "Connect your bank so payments match invoices automatically."
+6. **Keep skip and return paths visible.** Anything you do show needs a skip, and help should be findable later from the help center.
 
-**How to measure it**
+**What to measure**
 
-Don't judge the new flow by tour completion. Measure whether people create and send an invoice in their first session, and whether they come back a week later and do it again without help. Compare that with the current cohort's numbers.
+Track whether people create an invoice in their first session, and again within a week, without help. That matters more than whether they finish a tour. I don't have your baseline numbers, so set the target from your current data before you ship the change.
 
-**Assumptions:** I haven't seen your empty-state or sample-data behaviour. If the dashboard already has useful sample figures, I'd still keep the sample clearly labelled, and I'd check that no plausible-looking numbers could be mistaken for the person's real data.
+**Assumptions**
+
+- I haven't seen the product. I assumed the dashboard is empty for a new user and that the Welcome screen is the only gate before the tour.
+- If the 80% skip figure comes only from step 1, check how many people reached step 5 before you judge the later steps.

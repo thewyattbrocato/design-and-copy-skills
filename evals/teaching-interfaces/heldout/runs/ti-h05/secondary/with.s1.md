@@ -1,22 +1,23 @@
-Here's the tidied copy. Two of the changes fix mismatches with the screens, not just wording.
+Here's the tidied copy. The only real change is on screen 2, where "draw" doesn't match a circle that's already placed.
 
 **Screen 1: Add your first walk**
-> Choose a dog, a day and a time to book your first walk.
+> Pick a dog, a day and a time. That's all a walk needs.
 
-"That's all a walk needs" conflicts with Screen 2, which asks for a walking area too. The new line also says what the person will do.
+Button: **Next**. No change needed.
 
-**Screen 2: Set your walking area**
-> Drag the circle over the streets you usually walk. We'll only offer you walks inside it.
+**Screen 2: Add your walking area**
+> Drag the circle over the area where you walk. We'll only offer you walks inside it.
 
-The circle is already placed, so "Draw" tells people to do something they don't need to do. "Add" implies nothing exists yet, so "Set" fits better.
+Button: **Next**
 
 **Screen 3: You're ready**
-> Your first walk is on your calendar. Tap it to change or cancel.
+> Your first walk is on the calendar. Tap it any time to change or cancel.
 
-"Any time" added nothing, so I cut it. The title and "Go to calendar" button stay as they are.
+Button: **Go to calendar**
 
-**Skip link:** Keep it. If people can return to setup later, "Skip for now" tells them they aren't locked out. If they can't, keep plain "Skip."
+Two things to check before tomorrow:
 
-Two things to check before you ship:
-- I'm assuming the Dog field on Screen 1 already lists a dog, or the person has a way to add one there. If a new user has no dogs yet, that screen needs its own empty state, since "Pick a dog" has nothing to pick.
-- Screen 2 assumes the pre-placed circle is roughly in the right place for most users. If it's often off, that's the first thing to fix, and no wording will rescue it.
+1. **Skip can make screen 3 false.** If someone skips screen 1, there's no walk on the calendar, so "Your first walk is on the calendar" is wrong. Either show the alternate line when no walk was added, "Add your first walk any time from the calendar," or confirm that skipping still creates a default walk. The same applies to screen 2: if the circle is skipped, check that "We'll only offer you walks inside it" still holds.
+2. **Drop Skip on screen 3.** The last screen already leads to the calendar, so a Skip link there is redundant.
+
+I haven't changed any files, since this directory has no source for the app, only the copy you pasted.

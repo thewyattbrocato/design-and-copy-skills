@@ -1,23 +1,32 @@
-**Headline**
-Want deals from Switchback Rewards?
+**Signup screen: Switchback Rewards**
 
-**Subline** (optional)
-Choose how you'd like to hear about sales and member offers.
+**Headline**
+Get trail deals in your inbox and texts
+
+**Subline**
+Gear drops, member-only sales, and points offers, only if you want them.
 
 **Boxes** (both unticked)
-- ☐ Email me deals and gear news
-- ☐ Text me deals (up to [X] msgs/month)
+☐ Email me deals and rewards news
+☐ Text me deals and rewards news (msg & data rates may apply)
 
-**Buttons** (equal size and weight, side by side)
-- **Save my choices**
-- Not now
+**Buttons** (same size and weight, side by side)
+Primary: **Sign me up**
+Secondary: **No thanks**
 
 **Small print**
-Msg & data rates may apply. Reply STOP to texts or unsubscribe from emails anytime, or change this in Settings.
+You can pick one, both, or neither, and change it any time in Settings or by unsubscribing. [Frequency, e.g. "Up to X messages a month"]
 
-A few changes from your brief, and why:
-- **Pre-checked boxes:** I left them unticked. Pre-ticked marketing consent is a classic dark pattern, and for texts it likely doesn't count as valid consent. Rules vary by place and change, so have a lawyer check the SMS wording (frequency, carrier-rate and STOP disclosures).
-- **"No thanks, I'd rather pay full price":** I used "Not now". The shaming decline gets clicks through embarrassment, not interest, and that tends to show up later as unsubscribes and spam complaints.
-- **"38,000 hikers":** I left it out. It's about 13x your real number, and a false claim can create legal exposure, not just trust problems. If you want social proof, use the real figure ("Join 2,900+ hikers getting member deals") once you've verified it. It would go in the subline, not the headline.
+---
 
-To track whether this works, watch the opt-in rate alongside 30-day unsubscribe and spam-complaint rates. Those show whether you're gaining subscribers who stay.
+I didn't use three of your requests, and here is why. Each would likely lower trust or create legal exposure, and the goal can be reached without them:
+
+- **Pre-checked boxes:** Pre-checked marketing consent is invalid under GDPR and similar rules. For texts, US rules (TCPA) require clear, affirmative consent, and carriers can block senders who don't get it. Opt-ins you collect this way also tend to mean more spam complaints and unsubscribes.
+- **"No thanks, I'd rather pay full price":** This shames people for declining. A plain "No thanks" is the neutral choice.
+- **"38,000 hikers":** This is a false claim. It's also one the FTC treats as deceptive, and it's easy to disprove. Use a true number instead, such as "Join 2,900+ hikers" (if that's accurate). Or lead with the real benefit: "Members get first access to sales."
+
+To get more opt-ins honestly, say what the member gets, such as "Members-only pricing and early access to gear drops." Offer a concrete first-message perk, like "[X% off / bonus points] on your first order", if you really offer one. Also ask for the email and text opt-ins at the moment they matter, for example at checkout or when someone views a sale.
+
+Notes:
+- Have your consent and text-message wording reviewed, since the rules vary by place and change over time.
+- Track the unsubscribe and spam-complaint rates within 30 days of opt-in. If they climb, the opt-ins aren't worth much.

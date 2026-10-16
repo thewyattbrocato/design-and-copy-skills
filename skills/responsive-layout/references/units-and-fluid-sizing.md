@@ -24,13 +24,13 @@ Use unitless line heights (`1.5` for body text, tighter for large headings), so 
 `clamp(min, preferred, max)`: the preferred value moves with the viewport, held between a floor and a ceiling.
 
 ```css
-h1 { font-size: clamp(2rem, 1.2rem + 3vw, 3.5rem); }
+h1 { font-size: clamp(2rem, 1.2rem + 3vmin, 3.5rem); }
 section { padding-block: clamp(2rem, 1rem + 5vw, 6rem); }
 ```
 
 Rules:
 
-- Put a rem term inside the preferred value (`1.2rem + 3vw`). A pure `vw` value ignores the reader's text-size setting and may not scale with zoom.
+- Put a rem term inside the preferred value (`1.2rem + 3vmin`). A pure viewport-unit value ignores the reader's text-size setting and may not scale with zoom.
 - Pick the floor and the ceiling first, from content, then the slope. Check the result at the narrowest width, at a wide monitor, and at 200% text.
 - Use fluid sizes for display type and large section spacing. Body text stays near a fixed rem; fluid body text rarely helps.
 - Never let the measure grow with the viewport: cap line length in `ch`.

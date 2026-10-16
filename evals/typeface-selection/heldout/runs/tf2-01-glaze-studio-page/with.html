@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnfolk — Glazed stoneware mugs and bowls, in small monthly drops</title>
+<meta name="description" content="Kilnfolk is a two-person pottery studio making glazed stoneware mugs and bowls. New pieces arrive in small monthly drops.">
+<style>
+  :root {
+    --paper: #f4ece0;
+    --paper-deep: #eadfce;
+    --ink: #2f2520;
+    --ink-soft: #5e4f45;
+    --clay: #9a4424;
+    --clay-dark: #7b3519;
+    --line: #d6c7b2;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--clay); outline-offset: 3px; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header { padding: 22px 0; }
+  header .wrap { display: flex; justify-content: space-between; align-items: baseline; }
+  .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.01em; text-decoration: none; }
+  nav { display: flex; gap: 22px; font-family: var(--sans); font-size: 0.9rem; }
+  nav a { text-decoration: none; color: var(--ink-soft); padding: 4px 0; border-bottom: 1px solid transparent; }
+  nav a:hover { color: var(--ink); border-bottom-color: var(--clay); }
+
+  /* Hero */
+  .hero { padding: 48px 0 80px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+  .eyebrow {
+    font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--clay); font-weight: 600; margin: 0 0 18px;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 5.4vw, 4rem); line-height: 1.07; margin: 0 0 22px;
+    font-weight: 600; letter-spacing: -0.015em;
+  }
+  h1 em { font-style: italic; color: var(--clay); font-weight: 500; }
+  .lede { max-width: 30em; color: var(--ink-soft); margin: 0 0 32px; }
+  .btn {
+    display: inline-block; font-family: var(--sans); font-weight: 600; font-size: 0.95rem;
+    background: var(--clay); color: #fbf5ea; text-decoration: none; border: 0;
+    padding: 14px 26px; border-radius: 3px; cursor: pointer;
+    box-shadow: 0 2px 0 var(--clay-dark);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .btn:hover { background: var(--clay-dark); }
+  .btn:active { transform: translateY(1px); }
+  .link-quiet { font-family: var(--sans); font-size: 0.92rem; margin-left: 20px; color: var(--ink-soft); }
+
+  .hero-art {
+    position: relative; aspect-ratio: 1 / 1; border-radius: 46% 54% 50% 50% / 52% 46% 54% 48%;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,0.35), transparent 55%),
+      linear-gradient(160deg, #e2c9a6, #cfa77c);
+    display: grid; place-items: center;
+  }
+  .hero-art svg { width: 82%; height: auto; }
+
+  /* Sections */
+  section { padding: 76px 0; }
+  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); line-height: 1.15; margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+  .section-head p { margin: 0; max-width: 24em; color: var(--ink-soft); font-size: 1rem; }
+
+  /* Pieces */
+  .pieces { background: var(--paper-deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; list-style: none; margin: 0; padding: 0; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
+  .card .art { aspect-ratio: 5 / 4; display: grid; place-items: center; }
+  .card .art svg { width: 62%; height: auto; }
+  .card .body { padding: 20px 22px 24px; }
+  .card h3 { margin: 0 0 4px; font-size: 1.25rem; font-weight: 600; }
+  .card .desc { margin: 0 0 16px; font-size: 0.97rem; color: var(--ink-soft); line-height: 1.55; }
+  .card .meta { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 0.85rem; color: var(--ink-soft); border-top: 1px dashed var(--line); padding-top: 14px; }
+  .price { font-family: var(--serif); font-size: 1.3rem; color: var(--ink); font-weight: 600; }
+  .note { margin: 28px 0 0; font-family: var(--sans); font-size: 0.88rem; color: var(--ink-soft); }
+
+  /* About */
+  .about .wrap { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 56px; align-items: start; }
+  .about p { margin: 0 0 1.1em; max-width: 34em; }
+  .about p:last-child { margin-bottom: 0; }
+  .sign { font-style: italic; color: var(--clay); }
+
+  /* Newsletter */
+  .signup { background: var(--ink); color: #f1e7d8; }
+  .signup .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .signup h2 { color: #f8efe1; }
+  .signup p { margin: 14px 0 0; color: #d4c5b1; max-width: 27em; }
+  form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .field { flex: 1 1 220px; }
+  label { display: block; font-family: var(--sans); font-size: 0.82rem; margin-bottom: 6px; color: #d4c5b1; }
+  input[type="email"] {
+    width: 100%; font: inherit; font-family: var(--sans); font-size: 1rem;
+    padding: 13px 14px; border-radius: 3px; border: 1px solid #8a7766;
+    background: #fbf5ea; color: var(--ink);
+  }
+  input[type="email"]::placeholder { color: #7d6d60; }
+  .signup .btn { align-self: flex-end; background: #d98a5c; color: #2a1a10; box-shadow: 0 2px 0 #a8623a; }
+  .signup .btn:hover { background: #e59a6d; }
+  .signup :focus-visible { outline-color: #f0b78f; }
+  .fine { font-family: var(--sans); font-size: 0.8rem !important; color: #b3a393 !important; margin-top: 12px !important; }
+  .thanks { display: none; font-size: 1.15rem; color: #f8efe1; }
+  .thanks.show { display: block; }
+
+  footer { padding: 32px 0 40px; font-family: var(--sans); font-size: 0.85rem; color: var(--ink-soft); }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 860px) {
+    .hero .wrap, .about .wrap, .signup .wrap { grid-template-columns: 1fr; gap: 36px; }
+    .hero-art { max-width: 380px; order: -1; }
+    .grid { grid-template-columns: 1fr; max-width: 460px; }
+    section { padding: 60px 0; }
+  }
+  @media (max-width: 480px) {
+    body { font-size: 17px; }
+    nav { gap: 14px; }
+    .link-quiet { display: block; margin: 16px 0 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">Kilnfolk</a>
+    <nav aria-label="Primary">
+      <a href="#pieces">This month</a>
+      <a href="#about">About</a>
+      <a href="#drops">Drop list</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Stoneware · Small batches</p>
+        <h1>Mugs and bowls, <em>made to be used</em> every day.</h1>
+        <p class="lede">Two of us, one kiln, a shelf of test tiles we keep too long. Each month we glaze a small run of stoneware, and when it’s gone, it’s gone.</p>
+        <a class="btn" href="#pieces">See this month’s drop</a>
+        <a class="link-quiet" href="#about">Who we are</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 320 300" role="img" focusable="false">
+          <ellipse cx="160" cy="268" rx="130" ry="14" fill="#7b5535" opacity="0.28"/>
+          <!-- bowl -->
+          <path d="M150 150 H300 C300 218 262 258 225 258 C188 258 150 218 150 150 Z" fill="#6f7f66"/>
+          <path d="M150 150 H300 C299 160 298 168 295 176 C250 190 195 190 155 176 C152 168 151 160 150 150 Z" fill="#8a9a80"/>
+          <ellipse cx="225" cy="150" rx="75" ry="14" fill="#f1e5d0"/>
+          <ellipse cx="225" cy="152" rx="65" ry="10" fill="#5d6c55"/>
+          <rect x="198" y="256" width="54" height="8" rx="3" fill="#a87c55"/>
+          <!-- mug -->
+          <path d="M50 92 H150 V200 C150 232 130 250 100 250 C70 250 50 232 50 200 Z" fill="#c4743f"/>
+          <path d="M50 92 H150 V128 C135 118 128 140 112 128 C98 118 92 150 78 130 C66 116 58 126 50 120 Z" fill="#efe1c8"/>
+          <path d="M60 140 C58 180 62 215 74 236" stroke="#e39a68" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <path d="M150 112 C190 106 192 190 146 196" stroke="#c4743f" stroke-width="15" stroke-linecap="round" fill="none"/>
+          <ellipse cx="100" cy="92" rx="50" ry="10" fill="#f1e5d0"/>
+          <ellipse cx="100" cy="94" rx="43" ry="7" fill="#7a3d1d"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <section class="pieces" id="pieces">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>On the shelf this month</h2>
+        <p>Thrown, trimmed and glazed by hand. Expect small variations. They’re part of it.</p>
+      </div>
+
+      <ul class="grid">
+        <li class="card">
+          <div class="art" style="background:#e6d3b6" aria-hidden="true">
+            <svg viewBox="0 0 200 180" focusable="false">
+              <ellipse cx="100" cy="164" rx="66" ry="8" fill="#7b5535" opacity="0.25"/>
+              <path d="M44 44 H138 V116 C138 146 120 160 91 160 C62 160 44 146 44 116 Z" fill="#d8cdb9"/>
+              <path d="M44 44 H138 V70 C124 64 118 82 104 72 C92 64 84 84 70 72 C60 64 52 72 44 68 Z" fill="#3f4a52"/>
+              <g fill="#6a5a4a" opacity="0.55">
+                <circle cx="62" cy="96" r="1.8"/><circle cx="84" cy="108" r="1.6"/><circle cx="108" cy="92" r="1.8"/>
+                <circle cx="120" cy="120" r="1.5"/><circle cx="74" cy="132" r="1.7"/><circle cx="100" cy="136" r="1.5"/>
+                <circle cx="56" cy="118" r="1.4"/><circle cx="124" cy="100" r="1.4"/>
+              </g>
+              <path d="M138 62 C172 58 174 120 134 124" stroke="#d8cdb9" stroke-width="13" stroke-linecap="round" fill="none"/>
+              <ellipse cx="91" cy="44" rx="47" ry="8" fill="#ece3d2"/>
+              <ellipse cx="91" cy="46" rx="41" ry="5" fill="#4a3d33"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>Ash Speckle Mug</h3>
+            <p class="desc">Oatmeal glaze with a dark slate dip. Holds about 12 oz, with a handle that fits two fingers comfortably.</p>
+            <div class="meta"><span>Stoneware · 12 oz</span><span class="price">$38</span></div>
+          </div>
+        </li>
+
+        <li class="card">
+          <div class="art" style="background:#dfc9b0" aria-hidden="true">
+            <svg viewBox="0 0 200 180" focusable="false">
+              <ellipse cx="100" cy="162" rx="72" ry="8" fill="#7b5535" opacity="0.25"/>
+              <path d="M22 70 H178 C178 128 144 154 100 154 C56 154 22 128 22 70 Z" fill="#a85a34"/>
+              <path d="M22 70 H178 C177 82 175 92 171 101 C140 112 62 112 29 101 C25 92 23 82 22 70 Z" fill="#c9824f"/>
+              <path d="M40 112 C60 138 90 146 120 142" stroke="#d99a6c" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.55"/>
+              <rect x="74" y="150" width="52" height="8" rx="3" fill="#8a6a4c"/>
+              <ellipse cx="100" cy="70" rx="78" ry="12" fill="#efdfc4"/>
+              <ellipse cx="100" cy="72" rx="68" ry="8" fill="#8a4222"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>Rust Ember Serving Bowl</h3>
+            <p class="desc">A wide, shallow bowl in a deep iron-red glaze that breaks to amber at the rim. Good for pasta or fruit.</p>
+            <div class="meta"><span>Stoneware · 8 in wide</span><span class="price">$64</span></div>
+          </div>
+        </li>
+
+        <li class="card">
+          <div class="art" style="background:#e1d6bd" aria-hidden="true">
+            <svg viewBox="0 0 200 180" focusable="false">
+              <ellipse cx="100" cy="162" rx="62" ry="8" fill="#7b5535" opacity="0.25"/>
+              <path d="M38 56 H162 C162 114 136 152 100 152 C64 152 38 114 38 56 Z" fill="#6f7f66"/>
+              <path d="M38 56 H162 C161 72 158 84 153 94 C132 80 118 100 100 88 C82 76 66 98 47 92 C42 82 39 70 38 56 Z" fill="#e8dfc9"/>
+              <path d="M52 100 C62 128 82 142 100 144" stroke="#8fa085" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.6"/>
+              <rect x="76" y="148" width="48" height="8" rx="3" fill="#a08566"/>
+              <ellipse cx="100" cy="56" rx="62" ry="10" fill="#f0e7d3"/>
+              <ellipse cx="100" cy="58" rx="54" ry="6.5" fill="#566450"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>Moss &amp; Cream Noodle Bowl</h3>
+            <p class="desc">Deep and generous, with a soft green glaze that pools under a cream rim. Comfortable to hold when it’s hot.</p>
+            <div class="meta"><span>Stoneware · 24 oz</span><span class="price">$52</span></div>
+          </div>
+        </li>
+      </ul>
+
+      <p class="note">Every piece is dishwasher and microwave safe. Drops go live to the drop list first, and whatever remains goes up for everyone else.</p>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <h2>Two people, one small studio.</h2>
+      <div>
+        <p>Kilnfolk started in a shared garage with a secondhand kiln and a lot of cracked mugs. Two years on, there are two of us: one who throws and one who glazes. We argue happily about both.</p>
+        <p>We make fewer things on purpose. A small monthly run lets us pay attention to each piece, and it means you’re buying something we’d keep for our own cupboards.</p>
+        <p class="sign">— The Kilnfolk pair</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="signup" id="drops">
+    <div class="wrap">
+      <div>
+        <h2>Get the drop list.</h2>
+        <p>One email a month, a day before the new pieces go up. No filler, and you can leave whenever you like.</p>
+      </div>
+      <div>
+        <form id="signup-form" novalidate>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <button class="btn" type="submit">Sign me up</button>
+        </form>
+        <p class="thanks" id="thanks" role="status" aria-live="polite"></p>
+        <p class="fine" id="fine">We’ll only use your email for the monthly drop note.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Kilnfolk. Made by hand, in small batches.</span>
+    <span>Drops open monthly while pieces last.</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('signup-form');
+    var email = document.getElementById('email');
+    var thanks = document.getElementById('thanks');
+    var fine = document.getElementById('fine');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = email.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+        fine.textContent = 'Please enter a valid email address.';
+        fine.style.color = '#f0b78f';
+        email.focus();
+        return;
+      }
+      form.style.display = 'none';
+      fine.style.display = 'none';
+      thanks.textContent = 'Thank you. You’re on the list, and the next drop note will find you.';
+      thanks.classList.add('show');
+    });
+  })();
+</script>
+</body>
+</html>

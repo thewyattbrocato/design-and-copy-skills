@@ -8,7 +8,7 @@ A scale turns "how much space?" into "which step?". It keeps the same relationsh
 
 ## Two ways to build one
 
-**From a base unit.** Pick 4 px (finer, good for dense tools) or 8 px (coarser, good for marketing and reading pages). Use multiples, and let the steps grow faster as they get larger, because the eye cannot tell 60 from 64 but can tell 4 from 8.
+**From a base unit.** Pick 4 px (finer, good for dense tools) or 8 px (coarser, good for marketing and reading pages). Use multiples, and keep neighbouring steps far enough apart that two of them are never confused; widen the jumps at the top.
 
 | Step | 4 px base | Typical use |
 | --- | --- | --- |
@@ -19,7 +19,7 @@ A scale turns "how much space?" into "which step?". It keeps the same relationsh
 | 5 | 24 | between groups, card padding |
 | 6 | 32 | between larger groups |
 | 7 | 48 | between sections |
-| 8 | 64-96 | page sections, hero breathing room |
+| 8 | 80 | page sections, hero breathing room |
 
 **From the text.** When prose dominates, derive steps from the body line height (say 1.5 times a 16 px body, which is 24 px). Use half a line, one line, and two lines as the main steps, with a quarter line for tight pairs. Space then scales with the text if the user changes the font size, as long as you write it in `rem` or `em`.
 

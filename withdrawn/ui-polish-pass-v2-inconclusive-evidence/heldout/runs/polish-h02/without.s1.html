@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign the waiver</title>
+<style>
+  :root {
+    --bg: #f3f4f1;
+    --card: #ffffff;
+    --text: #1d2420;
+    --muted: #5d6862;
+    --border: #c5ccc7;
+    --accent: #1f6f50;
+    --accent-hover: #185a41;
+    --error: #b3261e;
+    --error-bg: #fdecea;
+    --ring: rgba(31, 111, 80, .35);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141815;
+      --card: #1e2420;
+      --text: #eef2ef;
+      --muted: #a2aea6;
+      --border: #3c4640;
+      --accent: #3fae83;
+      --accent-hover: #55c398;
+      --error: #ff8a80;
+      --error-bg: #3a1f1d;
+      --ring: rgba(63, 174, 131, .45);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.45;
+  }
+  .card {
+    width: 100%;
+    max-width: 460px;
+    margin-top: 4vh;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 8px 28px rgba(0,0,0,.08);
+  }
+  h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+  .lead { margin: 0 0 24px; color: var(--muted); }
+  .field { margin-bottom: 18px; }
+  label.lbl { display: block; font-weight: 600; margin-bottom: 6px; }
+  input[type="text"], input[type="email"], input[type="date"] {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 14px;
+    font: inherit;
+    font-size: 1rem; /* 16px+ prevents iOS zoom on focus */
+    color: var(--text);
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--ring);
+  }
+  input[aria-invalid="true"] { border-color: var(--error); }
+  .error {
+    margin: 6px 0 0;
+    color: var(--error);
+    font-size: .9rem;
+    font-weight: 500;
+  }
+  .error[hidden] { display: none; }
+  .check {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .check.invalid { border-color: var(--error); background: var(--error-bg); }
+  .check input {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .check input:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+  .check span { padding-top: 1px; }
+  button {
+    width: 100%;
+    min-height: 54px;
+    margin-top: 8px;
+    font: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background .15s, transform .05s;
+  }
+  @media (prefers-color-scheme: dark) { button { color: #0c1410; } }
+  button:hover { background: var(--accent-hover); }
+  button:active { transform: translateY(1px); }
+  button:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
+  button.secondary {
+    color: var(--text);
+    background: transparent;
+    border: 1.5px solid var(--border);
+  }
+  button.secondary:hover { background: var(--bg); }
+  .summary {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    color: var(--error);
+    background: var(--error-bg);
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .summary[hidden] { display: none; }
+  .done { text-align: center; padding: 12px 0 4px; }
+  .done[hidden], form[hidden] { display: none; }
+  .tick {
+    width: 64px; height: 64px; margin: 0 auto 16px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 34px;
+  }
+  .done h2 { margin: 0 0 6px; font-size: 1.4rem; }
+  .done p { margin: 0 0 20px; color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="card">
+  <form id="f" novalidate>
+    <h1>Sign the waiver</h1>
+    <p class="lead">Takes about a minute. Please fill in all fields.</p>
+
+    <div id="summary" class="summary" role="alert" hidden></div>
+
+    <div class="field">
+      <label class="lbl" for="name">Full name</label>
+      <input type="text" id="name" name="name" autocomplete="name" autocapitalize="words" placeholder="e.g. Alex Rivera" aria-describedby="name-err" required>
+      <p class="error" id="name-err" hidden></p>
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="email">Email</label>
+      <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" placeholder="you@example.com" aria-describedby="email-err" required>
+      <p class="error" id="email-err" hidden></p>
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="dob">Date of birth</label>
+      <input type="date" id="dob" name="dob" autocomplete="bday" min="1900-01-01" aria-describedby="dob-err" required>
+      <p class="error" id="dob-err" hidden></p>
+    </div>
+
+    <div class="field">
+      <label class="check" id="agree-box" for="agree">
+        <input type="checkbox" id="agree" name="agree" aria-describedby="agree-err" required>
+        <span>I have read the waiver</span>
+      </label>
+      <p class="error" id="agree-err" hidden></p>
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <section id="done" class="done" role="status" aria-live="polite" tabindex="-1" hidden>
+    <div class="tick" aria-hidden="true">&#10003;</div>
+    <h2 id="done-title">You're all set!</h2>
+    <p>Your waiver has been signed. Enjoy your climb.</p>
+    <button type="button" class="secondary" id="again">Sign for another person</button>
+  </section>
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById('f');
+  var done = document.getElementById('done');
+  var summary = document.getElementById('summary');
+  var agreeBox = document.getElementById('agree-box');
+  var dob = document.getElementById('dob');
+
+  // Prevent choosing a future birth date
+  function today() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+  dob.max = today();
+
+  var checks = {
+    name: function (el) {
+      return el.value.trim().length < 2 ? 'Please enter your full name.' : '';
+    },
+    email: function (el) {
+      var v = el.value.trim();
+      if (!v) return 'Please enter your email.';
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'That email doesn\u2019t look right. Check for typos.';
+    },
+    dob: function (el) {
+      if (!el.value) return 'Please enter your date of birth.';
+      if (el.value > today()) return 'Date of birth can\u2019t be in the future.';
+      if (el.value < '1900-01-01') return 'Please check the year.';
+      return '';
+    },
+    agree: function (el) {
+      return el.checked ? '' : 'You need to confirm you\u2019ve read the waiver.';
+    }
+  };
+
+  function setError(id, msg) {
+    var el = document.getElementById(id);
+    var err = document.getElementById(id + '-err');
+    err.textContent = msg;
+    err.hidden = !msg;
+    if (id === 'agree') {
+      agreeBox.classList.toggle('invalid', !!msg);
+    } else if (msg) {
+      el.setAttribute('aria-invalid', 'true');
+    } else {
+      el.removeAttribute('aria-invalid');
+    }
+  }
+
+  function validateField(id) {
+    var msg = checks[id](document.getElementById(id));
+    setError(id, msg);
+    return msg;
+  }
+
+  // Validate on leaving a field; re-validate live once a field has an error
+  Object.keys(checks).forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('blur', function () {
+      if (el.value || el.type === 'checkbox') validateField(id);
+    });
+    el.addEventListener(el.type === 'checkbox' || el.type === 'date' ? 'change' : 'input', function () {
+      var err = document.getElementById(id + '-err');
+      if (!err.hidden) validateField(id);
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var firstBad = null, count = 0;
+    Object.keys(checks).forEach(function (id) {
+      if (validateField(id)) {
+        count++;
+        if (!firstBad) firstBad = document.getElementById(id);
+      }
+    });
+    if (firstBad) {
+      summary.textContent = count === 1
+        ? 'Please fix the 1 item below.'
+        : 'Please fix the ' + count + ' items below.';
+      summary.hidden = false;
+      firstBad.focus();
+      return;
+    }
+    summary.hidden = true;
+
+    // TODO: send the data to the gym's waiver system here.
+    // (This page makes no network requests and stores nothing.)
+
+    var first = document.getElementById('name').value.trim().split(/\s+/)[0];
+    document.getElementById('done-title').textContent = "You're all set, " + first + "!";
+    form.hidden = true;
+    done.hidden = false;
+    done.focus();
+  });
+
+  document.getElementById('again').addEventListener('click', function () {
+    form.reset();
+    Object.keys(checks).forEach(function (id) { setError(id, ''); });
+    summary.hidden = true;
+    done.hidden = true;
+    form.hidden = false;
+    document.getElementById('name').focus();
+  });
+})();
+</script>
+</body>
+</html>

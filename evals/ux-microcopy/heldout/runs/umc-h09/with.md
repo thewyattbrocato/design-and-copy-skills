@@ -1,20 +1,12 @@
-**Headline:**
-A walk for your dog. A photo for you.
+**(a) Free period ending**
+1. `30 min in. Per-minute billing starts soon.` (42)
+2. `Day pass covers 30 min. Per-minute billing starts after.` (56)
+3. `Included time is almost up. Per-minute billing comes next.` (58)
 
-**Subhead:**
-Tailwag Walkers offers 30- or 60-minute walks, and you get a photo when each one's done so you can see how it went.
+**(b) Reservation hold**
+1. `Your bike is held for 5 more minutes.` (37)
+2. `5 minutes left to pick up your reserved bike.` (45)
+3. `Reservation ends in 5 minutes. Your bike is waiting.` (51)
 
-**Button:**
-Book a walk
-
-**Notes**
-
-- **Insured and background-checked:** I left both out. You haven't seen the paperwork, and "insured" and "background-checked" are claims people rely on when handing over their dog and house key. Ask the owner for the insurance certificate and the background check results. Once you have them, add a line under the button, such as "Insured and background-checked walkers."
-- **No reviews:** I didn't use "trusted by" or "loved by" language, and nothing implies existing customers. The copy leans on what's concrete: the two walk lengths and the photo.
-- **City name:** If you give me the city, I can work it into the subhead (for example, "Dog walking in [City]"). It helps with local search too.
-- **Button:** "Book a walk" assumes there's a booking flow behind it. If it's actually a quote or contact form, "Request a walk" is more accurate.
-
-**Alternate headlines**
-- Walks they'll wag about.
-- Your dog's walk, with proof.
-- Dog walking with a photo to prove it.
+- I counted every string by hand, spaces included. Run them through a character counter before you ship, since the limit is hard.
+- I left the price out. Adding it won't fit in most of the (a) options. Options 1 and 2 have 18 and 4 characters of room, so a figure like "$0.xx/min" only fits in option 1.

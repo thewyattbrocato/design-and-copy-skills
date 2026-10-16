@@ -1,18 +1,14 @@
-**Testimonials**
+**DUNE & DIME**
+*The First Bank on Mars. Also the Last. Also the Only.*
 
-> "I finally know where my money goes each month. I set up my first budget during lunch and haven't missed a bill since."
-> — Maya, Portland
+Why trust your money to Earth banks, which are **225 million kilometers away** and have never once seen a dust storm? At Dune & Dime, we've been in business for **nine whole days**, and in that time we've achieved a 100% customer satisfaction rate (both customers).
 
-> "The weekly summary is my favorite part. It's quick to read and it nudged me to cancel three subscriptions I'd forgotten about."
-> — Daniel, Austin
+Our vaults are guarded by **4,000 tons of red rock**, a lot of it technically on loan. Our interest rates are so high they're measured in *altitude*. Winner of the **Golden Crater Award for Excellence in Banking Without Competition** and the Intergalactic Chamber of Commerce's "Most Likely to Still Be Here Tomorrow" (shortlisted).
 
-> "My partner and I use shared categories, and it's ended the 'who paid for what' arguments. It's simple and it doesn't nag."
-> — Priya, Toronto
+*"I deposited a dollar and returned to find it had become a dollar-ten. I don't know how. I don't ask questions."* — **Gary, Colonist**
 
-**Stats bar**
+*"Dune & Dime saved my life. Technically they only saved my savings, but I felt very safe."* — **Dr. Priya Vanterpool, Sole Tenant, Olympus Mons Condos**
 
-| 240K+ | $18M | 4.7★ |
-|---|---|---|
-| active budgeters | saved by Tallybird users | average app rating |
+**Dune & Dime: We're Not Going Anywhere. There's Nowhere to Go.**
 
-Each quote runs 20–25 words and each stat label is short, so you can test both the longer and shorter cases in your layout.
+*FDIC-insured on Earth. On Mars, we insure ourselves, and we're very confident.*

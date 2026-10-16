@@ -1,47 +1,44 @@
-# Pocketlane first-run walkthrough
+## Walkthrough screens
 
-## Screen 1: Welcome
+**Screen 1: Welcome**
+> **Hi, welcome to Pocketlane!**
+> Let's get your money in one place. It only takes a few minutes, and you can skip any step.
 
-**Headline:** Hi, welcome to Pocketlane 👋
-**Body:** Let's get your money in one place. This takes about two minutes, and you can skip any step and come back to it later.
-**Buttons:** Let's go · Skip for now
+Buttons: **Let's go** · **Skip for now**
 
-## Screen 2: Connect your bank
+**Screen 2: Connect your bank**
+> **See all your transactions in one spot**
+> Link your bank in a minute or two. Pocketlane gets read-only access, so it can see your transactions but can't move any money.
 
-**Headline:** Connect your bank
-**Body:** Link an account so your transactions show up automatically. It takes about one to two minutes. Pocketlane gets read-only access: it can see your transactions, but it can't move money.
-**Buttons:** Link a bank · I'll do this later
+Buttons: **Link my bank** · **Maybe later**
 
-## Screen 3: Set a monthly budget
+**Screen 3: Set a monthly budget**
+> **Give each category a budget**
+> Pick a category, like Groceries or Eating out, and set a monthly limit. Budgets reset on the 1st of every month, so you get a fresh start each time.
 
-**Headline:** Give your categories a budget
-**Body:** Pick a category like Groceries or Eating out, and set how much you'd like to spend on it each month. Budgets reset on the 1st of every month, so you always start fresh.
-**Buttons:** Set a budget · Next
+Buttons: **Set a budget** · **Maybe later**
 
-## Screen 4: Add an expense
+**Screen 4: You're all set**
+> **You're all set!**
+> Spending happens all day, so add expenses as they come up. You only need an amount and a category. A note is optional.
 
-**Headline:** Track spending as it happens
-**Body:** Bank transactions appear on their own, but you can also add cash spending by hand. Enter an amount and a category, and add a note if you'd like.
-**Buttons:** Add an expense · Finish
+Buttons: **Start using Pocketlane**
+
+*Footer on screens 2–4:* "You can skip this walkthrough anytime. Find it later under Settings."
 
 ## Tooltips
 
-**Linking a bank account**
-Read-only access: Pocketlane can see your transactions but can't move money. Takes 1–2 minutes.
+**Link a bank account**
+> Takes 1–2 minutes. Pocketlane gets read-only access: it can see your transactions, but it can't move money.
 
-**Setting a monthly budget**
-Budgets reset on the 1st of each month.
+**Set a monthly budget**
+> Budgets reset on the 1st of every month, so each category starts fresh.
 
-**Adding an expense by hand**
-You'll need an amount and a category. A note is optional.
+**Add an expense by hand**
+> You'll need an amount and a category. Add a note if you want to remember what it was for.
 
-## Footer on every screen
+## Before launch
 
-"You can skip this anytime and find it later under Settings."
-
----
-
-**Choices I made:**
-- Screen order follows the setup flow: welcome, bank, budget, then manual expenses.
-- I kept to your facts. I didn't say what happens to unspent budget at reset, because you didn't tell me. If the app rolls it over or clears it, add a line to the budget screen so users aren't surprised.
-- I didn't mention security certifications or encryption. If you want that reassurance on the bank screen, send me the accurate details and I'll add them.
+- The category names (Groceries, Eating out) are examples. Swap in your app's real defaults.
+- I kept the copy to what you told me. If the app's security or privacy claims are going on these screens, check them with whoever owns that policy.
+- The button labels and "Settings" location are my guesses at your UI. Match them to what's actually built.

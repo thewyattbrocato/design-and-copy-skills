@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sync log viewer</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f7f7f5; --panel: #ffffff; --fg: #1d2127; --muted: #626b76; --line: #e2e4e8;
+    --err: #b3261e; --err-bg: #fdecea; --warn: #8a5a00; --warn-bg: #fff6df;
+    --info: #3a4a5c; --dbg: #7a828c; --accent: #1f5fbf; --ok: #2d6a3e;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --head-h: 110px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171b; --panel: #1b1f24; --fg: #dde1e6; --muted: #98a1ab; --line: #2a2f36;
+      --err: #ff8a80; --err-bg: #3a1c1b; --warn: #f2c066; --warn-bg: #352b14;
+      --info: #aab6c4; --dbg: #7f8892; --accent: #7fb0ff; --ok: #7fcf96;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 14px; padding-right: 14px; }
+
+  header {
+    position: sticky; top: 0; z-index: 5; background: var(--panel);
+    border-bottom: 1px solid var(--line); padding: 10px 16px;
+  }
+  .top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  h1 { font-size: 16px; margin: 0; font-weight: 650; }
+  #meta { color: var(--muted); font-size: 13px; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+  button, select, input[type=search] {
+    font: inherit; color: var(--fg); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px;
+  }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--muted); }
+  button:focus-visible, select:focus-visible, input:focus-visible, .row:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 1px;
+  }
+  input[type=search] { min-width: 220px; flex: 1 1 220px; max-width: 360px; }
+  .lvl { display: inline-flex; gap: 6px; align-items: center; font-weight: 600; }
+  .lvl[aria-pressed=false] { opacity: .5; text-decoration: line-through; }
+  .lvl .n { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lvl.ERROR { color: var(--err); } .lvl.WARN { color: var(--warn); }
+  .lvl.INFO { color: var(--info); } .lvl.DEBUG { color: var(--dbg); }
+  .sep { width: 1px; height: 20px; background: var(--line); }
+  .spacer { flex: 1; }
+
+  main { padding: 8px 0 60px; }
+  .row {
+    display: grid; grid-template-columns: 78px 62px 130px 1fr; gap: 0 10px;
+    padding: 3px 16px 3px 13px; border-left: 3px solid transparent;
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.55;
+    scroll-margin-top: calc(var(--head-h) + 8px);
+  }
+  .row:nth-child(even) { background: color-mix(in srgb, var(--panel) 55%, transparent); }
+  .row:hover { background: var(--panel); }
+  .row.ERROR { border-left-color: var(--err); background: var(--err-bg); }
+  .row.WARN { border-left-color: var(--warn); background: var(--warn-bg); }
+  .row.cur { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .time { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .badge { font-weight: 700; letter-spacing: .02em; }
+  .ERROR .badge { color: var(--err); } .WARN .badge { color: var(--warn); }
+  .INFO .badge { color: var(--info); } .DEBUG .badge { color: var(--dbg); }
+  .sys { color: var(--accent); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .msg { overflow-wrap: anywhere; }
+  .k { color: var(--muted); }
+  .f { margin-right: 12px; white-space: nowrap; }
+  .f.hot .v { font-weight: 700; color: var(--err); }
+  .WARN .f.hot .v { color: var(--warn); }
+  .f.slow .v { font-weight: 700; color: var(--warn); }
+  .ERROR .f.slow .v { color: var(--err); }
+  .f.good .v { color: var(--ok); }
+  .cont { grid-column: 4; color: var(--muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+  mark { background: #ffd54a; color: #000; border-radius: 2px; }
+
+  #empty { padding: 48px 16px; text-align: center; color: var(--muted); }
+  #strip { position: fixed; top: var(--head-h); right: 0; bottom: 0; width: 14px; background: var(--panel); border-left: 1px solid var(--line); z-index: 4; }
+  #strip i { position: absolute; left: 2px; right: 2px; min-height: 3px; border-radius: 1px; cursor: pointer; }
+  #strip i.ERROR { background: var(--err); } #strip i.WARN { background: var(--warn); }
+  #drop {
+    position: fixed; inset: 0; z-index: 20; display: none; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--bg) 85%, transparent); font-size: 20px; font-weight: 600;
+    border: 3px dashed var(--accent);
+  }
+  body.dragging #drop { display: flex; }
+  .hint { color: var(--muted); font-size: 12px; }
+  kbd { font-family: var(--mono); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; font-size: 11px; }
+  @media (max-width: 700px) {
+    .row { grid-template-columns: 70px 52px 1fr; }
+    .row .msg { grid-column: 1 / -1; }
+    .cont { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+<header id="head">
+  <div class="top">
+    <h1>Sync log</h1>
+    <span id="meta"></span>
+    <span class="spacer"></span>
+    <button id="open" type="button">Open log file…</button>
+    <input id="file" type="file" hidden>
+  </div>
+  <div class="controls">
+    <span id="levels" role="group" aria-label="Filter by level" style="display:contents"></span>
+    <span class="sep"></span>
+    <select id="sys" aria-label="Filter by job"><option value="">All jobs</option></select>
+    <input id="q" type="search" placeholder="Search (e.g. batch=0007, lock_timeout)" aria-label="Search log">
+    <span class="sep"></span>
+    <button id="prev" type="button" title="Previous problem (p)">▲ Prev</button>
+    <button id="next" type="button" title="Next problem (n)">▼ Next problem</button>
+    <button id="only" type="button" title="Show only warnings and errors">Problems only</button>
+  </div>
+</header>
+
+<main id="list" aria-label="Log lines"></main>
+<div id="empty" hidden>No lines match the current filters.</div>
+<div id="strip" aria-hidden="true"></div>
+<div id="drop">Drop a log file to load it</div>
+
+<script>
+(function () {
+  var SAMPLE = [
+    "2025-03-11T02:00:04Z INFO  sync.orders  batch=0041 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=812 checksum=ok",
+    "2025-03-11T02:00:05Z INFO  sync.orders  batch=0042 rows=5000 source=warehouse-east target=ledger-main elapsed_ms=790 checksum=ok",
+    "2025-03-11T02:00:07Z WARN  sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=4410 retry=1 reason=lock_timeout waited_ms=3000",
+    "2025-03-11T02:00:12Z ERROR sync.refunds batch=0007 rows=212 source=warehouse-west target=ledger-main elapsed_ms=9120 retry=3 reason=lock_timeout action=skipped_batch_for_rerun",
+    "2025-03-11T02:00:13Z INFO  sync.orders  batch=0043 rows=4988 source=warehouse-east target=ledger-main elapsed_ms=801 checksum=ok",
+    "2025-03-11T02:00:15Z INFO  sync.inventory batch=0102 rows=1830 source=warehouse-west target=ledger-main elapsed_ms=377 checksum=ok"
+  ].join("\n");
+
+  var LINE = /^(\S+)\s+(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|ERR|FATAL|CRITICAL|CRIT)\s+(\S+)\s*(.*)$/i;
+  var KV = /([A-Za-z_][\w.-]*)=("[^"]*"|\S*)/g;
+  var HOT_KEYS = { retry: 1, reason: 1, action: 1, error: 1, err: 1, exception: 1, waited_ms: 1 };
+  var SLOW_MS = 3000;
+  var ORDER = ["ERROR", "WARN", "INFO", "DEBUG"];
+
+  var $ = function (id) { return document.getElementById(id); };
+  var list = $("list"), strip = $("strip"), head = $("head");
+  var entries = [], fileName = "sample (6 lines)";
+  var state = { levels: {}, sys: "", q: "" };
+  var rowEls = [], problemEls = [], curIdx = -1;
+
+  function normLevel(l) {
+    l = l.toUpperCase();
+    if (l === "ERR" || l === "FATAL" || l === "CRITICAL" || l === "CRIT") return "ERROR";
+    if (l === "WARNING") return "WARN";
+    if (l === "TRACE") return "DEBUG";
+    if (l === "NOTICE") return "INFO";
+    return l;
+  }
+
+  function parse(text) {
+    var out = [], last = null;
+    text.split(/\r?\n/).forEach(function (raw) {
+      if (!raw.trim()) return;
+      var m = LINE.exec(raw);
+      if (m) {
+        var rest = m[4], fields = [], free = rest, mm;
+        KV.lastIndex = 0;
+        while ((mm = KV.exec(rest))) fields.push([mm[1], mm[2]]);
+        free = rest.replace(KV, "").replace(/\s+/g, " ").trim();
+        last = { ts: m[1], level: normLevel(m[2]), sys: m[3], fields: fields, free: free, cont: [], raw: raw };
+        out.push(last);
+      } else if (last) {
+        last.cont.push(raw);
+        last.raw += "\n" + raw;
+      } else {
+        last = { ts: "", level: "INFO", sys: "", fields: [], free: raw, cont: [], raw: raw };
+        out.push(last);
+      }
+    });
+    return out;
+  }
+
+  function load(text, name) {
+    entries = parse(text);
+    fileName = name;
+    var present = {};
+    entries.forEach(function (e) { present[e.level] = 1; });
+    state.levels = {};
+    ORDER.forEach(function (l) { if (present[l]) state.levels[l] = true; });
+    Object.keys(present).forEach(function (l) { if (!(l in state.levels)) state.levels[l] = true; });
+    state.sys = ""; state.q = ""; $("q").value = "";
+    buildControls();
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  function buildControls() {
+    var counts = {}, sysSet = {};
+    entries.forEach(function (e) { counts[e.level] = (counts[e.level] || 0) + 1; if (e.sys) sysSet[e.sys] = 1; });
+    var box = $("levels"); box.textContent = "";
+    Object.keys(state.levels).sort(function (a, b) {
+      var ia = ORDER.indexOf(a), ib = ORDER.indexOf(b);
+      return (ia < 0 ? 9 : ia) - (ib < 0 ? 9 : ib);
+    }).forEach(function (l) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "lvl " + l; b.dataset.level = l;
+      b.setAttribute("aria-pressed", String(state.levels[l]));
+      b.appendChild(document.createTextNode(l + " "));
+      var n = document.createElement("span"); n.className = "n"; n.textContent = counts[l];
+      b.appendChild(n);
+      box.appendChild(b);
+    });
+    var sel = $("sys"); sel.textContent = "";
+    var o = document.createElement("option"); o.value = ""; o.textContent = "All jobs"; sel.appendChild(o);
+    Object.keys(sysSet).sort().forEach(function (s) {
+      var op = document.createElement("option"); op.value = s; op.textContent = s; sel.appendChild(op);
+    });
+  }
+
+  function span(cls, text) {
+    var s = document.createElement("span"); if (cls) s.className = cls; s.textContent = text; return s;
+  }
+
+  function addHighlighted(parent, text, q) {
+    if (!q) { parent.appendChild(document.createTextNode(text)); return; }
+    var lo = text.toLowerCase(), i = 0, j;
+    while ((j = lo.indexOf(q, i)) !== -1) {
+      if (j > i) parent.appendChild(document.createTextNode(text.slice(i, j)));
+      var m = document.createElement("mark"); m.textContent = text.slice(j, j + q.length); parent.appendChild(m);
+      i = j + q.length;
+    }
+    if (i < text.length) parent.appendChild(document.createTextNode(text.slice(i)));
+  }
+
+  function buildRow(e, q) {
+    var r = document.createElement("div");
+    r.className = "row " + e.level; r.tabIndex = -1;
+    var t = span("time", e.ts.length >= 19 && e.ts.charAt(10) === "T" ? e.ts.slice(11, 19) : e.ts);
+    t.title = e.ts;
+    r.appendChild(t);
+    r.appendChild(span("badge", e.level));
+    var s = span("sys"); addHighlighted(s, e.sys, q); s.title = e.sys; r.appendChild(s);
+    var msg = span("msg");
+    if (e.free) { var fr = span("f"); addHighlighted(fr, e.free, q); msg.appendChild(fr); }
+    e.fields.forEach(function (kv) {
+      var k = kv[0], v = kv[1], cls = "f";
+      if (HOT_KEYS[k] && e.level !== "INFO") cls += " hot";
+      else if (/_ms$/.test(k) && +v >= SLOW_MS) cls += " slow";
+      else if (k === "checksum") cls += v === "ok" ? " good" : " hot";
+      var f = span(cls);
+      var ks = span("k"); addHighlighted(ks, k + "=", q);
+      var vs = span("v"); addHighlighted(vs, v, q);
+      f.appendChild(ks); f.appendChild(vs); msg.appendChild(f);
+    });
+    r.appendChild(msg);
+    e.cont.forEach(function (c) { var d = span("cont"); addHighlighted(d, c, q); r.appendChild(d); });
+    return r;
+  }
+
+  function render() {
+    var q = state.q.trim().toLowerCase();
+    var frag = document.createDocumentFragment();
+    rowEls = []; problemEls = []; curIdx = -1;
+    var shown = 0, errs = 0, warns = 0;
+    entries.forEach(function (e) {
+      if (!state.levels[e.level]) return;
+      if (state.sys && e.sys !== state.sys) return;
+      if (q && e.raw.toLowerCase().indexOf(q) === -1) return;
+      var r = buildRow(e, q);
+      frag.appendChild(r); rowEls.push(r); shown++;
+      if (e.level === "ERROR") { errs++; problemEls.push(r); }
+      else if (e.level === "WARN") { warns++; problemEls.push(r); }
+    });
+    list.textContent = ""; list.appendChild(frag);
+    $("empty").hidden = shown > 0;
+    var first = entries.length ? entries[0].ts : "", lastTs = entries.length ? entries[entries.length - 1].ts : "";
+    var totalErr = 0, totalWarn = 0;
+    entries.forEach(function (e) { if (e.level === "ERROR") totalErr++; else if (e.level === "WARN") totalWarn++; });
+    $("meta").textContent = fileName + " · " + entries.length + " entries · " + totalErr + " errors, " + totalWarn + " warnings · showing " + shown +
+      (first ? " · " + first + " → " + lastTs : "");
+    updateOnly();
+    requestAnimationFrame(drawStrip);
+  }
+
+  function drawStrip() {
+    head.style.cssText = "";
+    document.documentElement.style.setProperty("--head-h", head.offsetHeight + "px");
+    strip.textContent = "";
+    var total = list.offsetHeight || 1, h = strip.clientHeight || 1, top0 = list.offsetTop;
+    var frag = document.createDocumentFragment();
+    problemEls.forEach(function (r, i) {
+      var m = document.createElement("i");
+      m.className = r.classList.contains("ERROR") ? "ERROR" : "WARN";
+      m.style.top = ((r.offsetTop - top0) / total * h) + "px";
+      m.title = r.querySelector(".time").title + " " + m.className;
+      m.addEventListener("click", function () { goTo(i); });
+      frag.appendChild(m);
+    });
+    strip.appendChild(frag);
+  }
+
+  function goTo(i) {
+    if (!problemEls.length) return;
+    i = (i + problemEls.length) % problemEls.length;
+    if (curIdx >= 0 && problemEls[curIdx]) problemEls[curIdx].classList.remove("cur");
+    curIdx = i;
+    var r = problemEls[i]; r.classList.add("cur");
+    r.scrollIntoView({ block: "start" });
+  }
+
+  function step(dir) {
+    if (!problemEls.length) return;
+    var y = window.scrollY + head.offsetHeight + 12, i;
+    if (dir > 0) {
+      for (i = 0; i < problemEls.length; i++) if (problemEls[i].offsetTop > y + 2 || (i > curIdx && curIdx >= 0 && problemEls[i].offsetTop > y - 4 && false)) break;
+      if (curIdx >= 0 && problemEls[curIdx].offsetTop >= y - 40 && i <= curIdx) i = curIdx + 1;
+      goTo(i >= problemEls.length ? 0 : i);
+    } else {
+      for (i = problemEls.length - 1; i >= 0; i--) if (problemEls[i].offsetTop < y - 40) break;
+      goTo(i < 0 ? problemEls.length - 1 : i);
+    }
+  }
+
+  function updateOnly() {
+    var on = !state.levels.INFO && !state.levels.DEBUG && (state.levels.ERROR || state.levels.WARN);
+    $("only").setAttribute("aria-pressed", String(!!on));
+    $("only").textContent = on ? "Show all levels" : "Problems only";
+  }
+
+  $("levels").addEventListener("click", function (ev) {
+    var b = ev.target.closest("button"); if (!b) return;
+    var l = b.dataset.level; state.levels[l] = !state.levels[l];
+    b.setAttribute("aria-pressed", String(state.levels[l]));
+    render();
+  });
+  $("only").addEventListener("click", function () {
+    var on = $("only").getAttribute("aria-pressed") === "true";
+    Object.keys(state.levels).forEach(function (l) {
+      state.levels[l] = on ? true : (l === "ERROR" || l === "WARN");
+    });
+    document.querySelectorAll(".lvl").forEach(function (b) { b.setAttribute("aria-pressed", String(!!state.levels[b.dataset.level])); });
+    render();
+  });
+  $("sys").addEventListener("change", function (ev) { state.sys = ev.target.value; render(); });
+  var timer;
+  $("q").addEventListener("input", function (ev) {
+    clearTimeout(timer);
+    timer = setTimeout(function () { state.q = ev.target.value; render(); }, 150);
+  });
+  $("next").addEventListener("click", function () { step(1); });
+  $("prev").addEventListener("click", function () { step(-1); });
+  $("open").addEventListener("click", function () { $("file").click(); });
+  $("file").addEventListener("change", function (ev) { readFile(ev.target.files[0]); ev.target.value = ""; });
+
+  function readFile(f) {
+    if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function () { load(String(rd.result), f.name); };
+    rd.readAsText(f);
+  }
+
+  document.addEventListener("keydown", function (ev) {
+    var tag = (ev.target.tagName || "").toLowerCase();
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    if (ev.key === "/" && tag !== "input") { ev.preventDefault(); $("q").focus(); return; }
+    if (tag === "input" || tag === "select") { if (ev.key === "Escape") ev.target.blur(); return; }
+    if (ev.key === "n") step(1);
+    else if (ev.key === "p") step(-1);
+  });
+
+  var dragDepth = 0;
+  window.addEventListener("dragenter", function (ev) { ev.preventDefault(); dragDepth++; document.body.classList.add("dragging"); });
+  window.addEventListener("dragleave", function () { if (--dragDepth <= 0) { dragDepth = 0; document.body.classList.remove("dragging"); } });
+  window.addEventListener("dragover", function (ev) { ev.preventDefault(); });
+  window.addEventListener("drop", function (ev) {
+    ev.preventDefault(); dragDepth = 0; document.body.classList.remove("dragging");
+    if (ev.dataTransfer.files.length) readFile(ev.dataTransfer.files[0]);
+  });
+  window.addEventListener("paste", function (ev) {
+    if ((ev.target.tagName || "").toLowerCase() === "input") return;
+    var t = ev.clipboardData && ev.clipboardData.getData("text");
+    if (t && t.trim()) { ev.preventDefault(); load(t, "pasted text"); }
+  });
+  window.addEventListener("resize", function () { requestAnimationFrame(drawStrip); });
+
+  load(SAMPLE, "sample (6 lines)");
+  var hint = document.createElement("div");
+  hint.className = "hint"; hint.style.padding = "12px 16px";
+  hint.innerHTML = "Showing built-in sample. Use <b>Open log file…</b>, drop a file anywhere, or paste log text. Shortcuts: <kbd>n</kbd>/<kbd>p</kbd> next/previous problem, <kbd>/</kbd> search.";
+  list.parentNode.insertBefore(hint, $("empty"));
+})();
+</script>
+</body>
+</html>

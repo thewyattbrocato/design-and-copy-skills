@@ -1,23 +1,13 @@
-The flow is mostly sound, so I changed only two things. It teaches by doing: one sentence per screen, the real form and map, a pre-placed circle as a starting point, and a Skip on every screen. I'd keep it. The ticket drop is encouraging, but it doesn't show people can still add a walk days later without help. That's the check to watch after launch.
+This is already good, so I'd change one line and leave the rest. Each screen has one job and the text is short and plain. The first walk is added in the real form, and Skip is on every screen. Your support-ticket drop fits that. If you want to confirm it, check whether people who finished it still add walks unaided a week later.
 
-**Screen 1: Add your first walk**
-No change. "Pick a dog, a day and a time. That's all a walk needs." Button: Next.
+**Change (screen 2 only):**
+- Before: "Draw a circle on the map where you walk. We'll only offer you walks inside it."
+- After: "Move the circle to where you walk. We'll only offer you walks inside it."
 
-**Screen 2: Add your walking area**
-The old text says "Draw a circle", but the circle is already drawn, so the instruction doesn't match the screen.
+"Draw" doesn't match the screen, because the circle is already placed and the user drags it. If people can also resize it, add "and resize it". I can't tell that from your description, so I haven't added it.
 
-> Move the circle over where you walk. We'll only offer you walks inside it.
+**Before you ship, check one thing:**
+- Screen 3 says "Your first walk is on the calendar." That's false if someone tapped Skip on screen 1 or left the form unfinished.
+- Either show a fallback for that case, such as "Add a walk any time from the calendar." (I haven't confirmed the button or label, so use your real one.) Or make Skip on screens 1 and 2 jump straight to the calendar so screen 3 only appears after a walk exists.
 
-Button: Next.
-
-**Screen 3: You're ready**
-The old text says "Your first walk is on the calendar", which is false if someone skipped screen 1 or left the form empty. Use two variants:
-
-- Walk added: "Your first walk is on the calendar. Tap it any time to change or cancel." Button: Go to calendar.
-- No walk added: "Add a walk from the calendar whenever you're ready." Button: Go to calendar.
-
-I'd also drop Skip from screen 3, since the only thing left is the final button.
-
-**Check before shipping (I can't see the product):**
-- **Does Next on screen 1 save the walk?** If it does, "Add walk" would be a more honest label. If it doesn't, screen 3 shouldn't claim the walk exists.
-- **Is the area set after the first walk?** Screen 2 says walks are only offered inside the circle. A walk added first could fall outside it. If so, swap the order of screens 1 and 2.
+I left the titles, the button labels and screen 1 and screen 3's text as they are.

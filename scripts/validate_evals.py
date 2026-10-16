@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import activation as act  # noqa: E402
 import evalkit  # noqa: E402
 from roots import find_skill  # noqa: E402
 
@@ -429,7 +430,167 @@ def validate_suite(d, suite):
     return errors, warnings
 
 
-def validate_skill_evals(d, warnings=None):
+def words(text):
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+def quoted_phrases(description):
+    """The double-quoted phrases in a skill description, normalized to lower-case words."""
+    return [w for w in (words(q) for q in re.findall(r'"([^"]+)"', description or "")) if w]
+
+
+def validate_activation(data, skill, description=""):
+    """Errors for an activation.json: 6 should_load and 4 should_not_load requests, distinct, and phrased fresh.
+
+    A should_load request must not name the skill or repeat a quoted phrase of its description (a phrase of three
+    or more words may not appear inside it either): the check is whether a description routes a request it did not
+    write itself."""
+    if not isinstance(data, dict):
+        return ["activation.json: top level must be an object"]
+    errors = []
+    if set(data) != {"should_load", "should_not_load"}:
+        errors.append("activation.json: keys must be exactly should_load and should_not_load")
+    seen = []
+    for key, want in (("should_load", act.SHOULD_LOAD), ("should_not_load", act.SHOULD_NOT_LOAD)):
+        items = data.get(key)
+        if not (isinstance(items, list) and len(items) == want):
+            errors.append(f"activation.json: '{key}' must list {want} requests")
+            continue
+        for i, text in enumerate(items):
+            where = f"activation.json {key}[{i}]"
+            if not is_text(text):
+                errors.append(f"{where}: must be a non-empty string")
+                continue
+            if len(text) > act.MAX_REQUEST_CHARS:
+                errors.append(f"{where}: {len(text)} characters (max {act.MAX_REQUEST_CHARS})")
+            if words(text) in seen:
+                errors.append(f"{where}: repeats another request in the file")
+            seen.append(words(text))
+            if key == "should_load":
+                if skill in text.lower():
+                    errors.append(f"{where}: names the skill")
+                for quote in quoted_phrases(description):
+                    if words(text) == quote or (len(quote.split()) >= 3 and f" {quote} " in f" {words(text)} "):
+                        errors.append(f"{where}: repeats the description's phrase \"{quote}\"")
+    return errors
+
+
+def validate_section(section, label, key, skill, prompts, names):
+    """One half of an activation-results file, recomputed from its per-request records."""
+    errors = []
+    flag, count, rate = ("correct", "picked", "recall") if key == "should_load" else ("false_pick", "false_picks", "false_pick_rate")
+    if not isinstance(section, dict):
+        return [f"{label}: must be an object"]
+    results = section.get("results")
+    if not (isinstance(results, list) and len(results) == len(prompts)):
+        return [f"{label}: 'results' must hold one record per request in activation.json ({len(prompts)})"]
+    n = 0
+    for i, (r, prompt) in enumerate(zip(results, prompts)):
+        where = f"{label} results[{i}]"
+        if not isinstance(r, dict) or set(r) != {"prompt", "picked", flag}:
+            errors.append(f"{where}: must hold exactly prompt, picked and {flag}")
+            continue
+        if r["prompt"] != prompt:
+            errors.append(f"{where}: prompt is not the request at that place in activation.json")
+        if r["picked"] is not None and r["picked"] not in names:
+            errors.append(f"{where}: picked '{r['picked']}' is not a skill")
+        if r[flag] is not (r["picked"] == skill):
+            errors.append(f"{where}: '{flag}' does not match picked")
+        n += r["picked"] == skill
+    if errors:
+        return errors
+    if section.get("total") != len(prompts):
+        errors.append(f"{label}: 'total' must be {len(prompts)}")
+    if section.get(count) != n:
+        errors.append(f"{label}: '{count}' is {section.get(count)!r} but the records give {n}")
+    if not close(section.get(rate), round(n / len(prompts), 3)):
+        errors.append(f"{label}: '{rate}' does not match the records")
+    return errors
+
+
+def validate_activation_results(data, skill, activation, names, current_hash):
+    """(errors, warnings) for an activation-results.json checked against its activation.json."""
+    if not isinstance(data, dict):
+        return ["activation-results.json: top level must be an object"], []
+    errors, warnings = [], []
+    want = {"skill", "model", "date", "catalog_size", "catalog_hash", "should_load", "should_not_load"}
+    if not want <= set(data) <= want | {"model_id"}:
+        errors.append("activation-results.json: keys must be skill, model, (model_id), date, catalog_size, "
+                      "catalog_hash, should_load, should_not_load")
+    if data.get("skill") != skill:
+        errors.append(f"activation-results.json: 'skill' must be '{skill}'")
+    for key in ("model", "model_id", "catalog_hash"):
+        if key in data and not is_text(data[key]):
+            errors.append(f"activation-results.json: '{key}' must be a non-empty string")
+    try:
+        datetime.date.fromisoformat(data.get("date", ""))
+    except (TypeError, ValueError):
+        errors.append("activation-results.json: 'date' must be YYYY-MM-DD")
+    size = data.get("catalog_size")
+    if not (isinstance(size, int) and not isinstance(size, bool) and size >= 1):
+        errors.append("activation-results.json: 'catalog_size' must be a positive integer")
+    for key in ("should_load", "should_not_load"):
+        errors += validate_section(data.get(key), f"activation-results.json {key}", key, skill,
+                                   activation.get(key, []), names)
+    if is_text(data.get("catalog_hash")) and data["catalog_hash"] != current_hash:
+        warnings.append("skill descriptions have changed since this activation run (catalog_hash differs); "
+                        "rerun scripts/run_activation.py to refresh it")
+    return errors, warnings
+
+
+def activation_context(root):
+    """(descriptions by skill, names, catalog hash) for the live skills under `root`."""
+    rows = act.catalog(root)
+    return dict(rows), {n for n, _ in rows}, act.catalog_hash(rows)
+
+
+def validate_activation_files(d, context, warnings):
+    """Errors for the activation files of evals/<skill>/ when the skill is live; their warnings go to `warnings`."""
+    descriptions, names, current = context
+    skill = d.name
+    if skill not in names:
+        return []
+    errors = []
+    data = load(d / "activation.json", errors) if (d / "activation.json").is_file() else None
+    if data is not None:
+        errors += validate_activation(data, skill, descriptions.get(skill, ""))
+    results_path = d / "activation-results.json"
+    if results_path.is_file():
+        results = load(results_path, errors)
+        if results is not None and data is not None and not errors:
+            e, w = validate_activation_results(results, skill, data, names, current)
+            errors += e
+            if warnings is not None:
+                warnings += w
+    elif data is not None and warnings is not None:
+        warnings.append("activation-results.json is missing; run scripts/run_activation.py")
+    return errors
+
+
+def activation_coverage(evals, context):
+    """Errors for live skills with no evals/<skill>/activation.json, and for requests reused by two skills.
+    scripts/activation_summary.py --check reports these (every skill's eval needs an activation check)."""
+    _, names, _ = context
+    errors, owner = [], {}
+    for name in sorted(names):
+        path = evals / name / "activation.json"
+        if not path.is_file():
+            errors.append(f"evals/{name}: activation.json is missing (6 should_load and 4 should_not_load requests)")
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        for key in ("should_load", "should_not_load"):
+            for text in data.get(key, []) if isinstance(data, dict) and isinstance(data.get(key), list) else []:
+                if is_text(text):
+                    other = owner.setdefault(words(text), name)
+                    if other != name:
+                        errors.append(f"evals/{name}: a request is also in evals/{other}/activation.json")
+    return errors
+
+
+def validate_skill_evals(d, warnings=None, context=None):
     """All errors for one evals/<skill>/ folder; warnings are appended to `warnings`."""
     errors = []
     if not KEBAB.match(d.name):
@@ -437,6 +598,7 @@ def validate_skill_evals(d, warnings=None):
     heldout_only = (not (d / "tasks.json").is_file() and not (d / "results.json").is_file()
                     and (d / "heldout" / "tasks.json").is_file())  # a skill with no dev suite by design
     suites = ([] if heldout_only else ["dev"]) + (["heldout"] if (d / "heldout").is_dir() else [])
+    errors += validate_activation_files(d, context or activation_context(d.parent.parent), warnings)
     for suite in suites:
         e, w = validate_suite(d, suite)
         prefix = "" if suite == "dev" else "heldout/"
@@ -453,9 +615,10 @@ def main(argv=None):
     evals = Path(args.root) / "evals"
     dirs = sorted(d for d in evals.iterdir() if d.is_dir()) if evals.is_dir() else []
     failed, warned = 0, 0
+    context = activation_context(args.root)
     for d in dirs:
         warnings = []
-        for err in validate_skill_evals(d, warnings):
+        for err in validate_skill_evals(d, warnings, context):
             print(f"evals/{d.name}: {err}")
             failed += 1
         for w in warnings:

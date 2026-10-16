@@ -1,19 +1,24 @@
-Your palette already works, so I wouldn't change any of the five colors. The contrast ratios below are my hand-calculated estimates, not tool output.
+Your palette already works, so I wouldn't change any of the five colors. I did this by hand, so treat the contrast ratios as estimates.
 
-| Pair | Ratio |
-|---|---|
-| Ink on Paper | about 13:1 |
-| Muted on Paper | about 4.9:1 |
-| Rust on Paper (links) | about 4.8:1 |
-| Paper text on a Rust button | about 4.8:1 |
-| Sage on Paper | about 3.0:1 |
+**What's already working**
+- **Neutrals:** Ink and Muted lean slightly blue-green, and Paper leans warm. That's why it feels like stationery and not default black on white.
+- **One accent:** Rust is the only warm saturated color, so links and buttons stand out clearly.
+- **Contrast on Paper:**
+  - Ink: about 13:1.
+  - Muted: about 4.9:1.
+  - Rust: about 4.8:1, which passes for body-size links.
 
-The ink, paper and rust are a warm, restrained set with one accent, which already reads as letterpress. A few small changes would add polish:
+**Small fixes**
+1. **Sage tags with text.** Sage is about 3:1 against Paper, which is fine for rules but too low for text. Ink on a Sage tag is about 4.3:1, just under 4.5. Keep tag text at 14px or larger and semibold, or use a paler tag fill of `#dfe6df` with Ink text, which is roughly 11:1. Sage then stays as the rule or border color.
+2. **Rust hover state.** Add `#8f3720` for link and button hover. It's about 6.8:1 on Paper, and the darker shade reads as a deliberate press. You don't have a hover color yet.
+3. **Rust on a card.** If you add a card or panel color such as `#ede6d6`, Rust text on it drops to about 4.4:1. Keep small Rust links on Paper itself, or use the `#8f3720` shade on cards.
 
-1. **Sage text on Paper fails.** At about 3:1 it's fine for hairline rules and decorative marks. If the tags contain text, use a deeper sage for that text, **#56695c** (about 5.2:1 on Paper). Keep #7c9082 for the rules and the tag outlines or fills.
-2. **Add a second paper level for cards and panels.** Use **#ece5d6**, a small, steady step darker than Paper, with a 1px hairline in sage or a tinted ink. Layered paper tones look more premium than flat color, and they replace drop shadows. Ink on #ece5d6 is still about 11.5:1. Muted on it drops to about 4.2:1, which is slightly under 4.5. Keep captions on Paper itself, or darken Muted to **#566265** when it sits on the panel tone.
-3. **Add a hover state for Rust.** Use a deeper rust such as **#9a3a20** (about 6.5:1 on Paper) for link and button hover. Keep Rust for links and buttons only, so it stays your one accent.
-4. **Avoid pure white and pure black.** Don't use them anywhere on the site, including photo mats and the footer. A footer in Ink with Paper text is about 13:1 and gives a strong closing band.
-5. **Check Rust on the printed price list.** Rust may print differently as CMYK than as a spot ink. If you print it as a spot ink, proof it on your actual stock, because the screen hex won't match.
+**What will make it feel more premium**
+Your friend's impression probably comes from how the colors are used, not from the colors. These help most:
+- Use Rust sparingly, on one button or link per screen and not on headings.
+- Leave generous Paper space around things.
+- Use thin Sage hairlines as dividers.
+- Don't add gradients or shadows.
 
-Most of the "premium" feel will come from spacing, type and restraint rather than color changes.
+**Print**
+Hex values won't match your printed price list. Paper stock, ink, and press impression shift the result, so proof Rust and Sage on your actual stock. If you print with spot inks, pick the nearest ink match by eye on that stock.

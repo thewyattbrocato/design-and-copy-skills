@@ -1,0 +1,1 @@
+Sort by score, highest first, and add a rank column so the printout reads as results. Break ties alphabetically by title, and order the columns Rank, Title, Student, Grade, Score. If you'd rather group by grade level, sort by grade first and then by score within each grade.

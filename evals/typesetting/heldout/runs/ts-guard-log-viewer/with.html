@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy Pipeline Logs · checkout-api v2.14.3</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #151a20;
+    --line: #232a33;
+    --text: #d5dbe3;
+    --dim: #8a95a3;
+    --info: #6cb2ff;
+    --info-bg: rgba(108,178,255,.12);
+    --warn: #f0b440;
+    --warn-bg: rgba(240,180,64,.13);
+    --err: #ff6b6b;
+    --err-bg: rgba(255,107,107,.14);
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1680px; margin: 0 auto; padding: 28px 32px 48px; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 24px; margin-bottom: 18px; }
+  h1 { font-size: 20px; font-weight: 650; margin: 0; letter-spacing: .01em; }
+  .meta { color: var(--dim); font-size: 14px; font-family: var(--mono); }
+  .meta b { color: var(--text); font-weight: 600; }
+  .status { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--err);
+    border: 1px solid var(--err); background: var(--err-bg); padding: 2px 10px; border-radius: 999px; }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .toolbar button {
+    font: 600 13px var(--sans); color: var(--text); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer;
+  }
+  .toolbar button:hover { border-color: var(--dim); }
+  .toolbar button[aria-pressed="true"] { background: #222b36; border-color: var(--dim); }
+  .toolbar button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  .toolbar .n { color: var(--dim); font-family: var(--mono); margin-left: 6px; font-weight: 500; }
+
+  .log { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .row, .head {
+    display: grid;
+    grid-template-columns: 96px 72px 150px minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 0 20px;
+    align-items: baseline;
+  }
+  .head {
+    font: 600 12px var(--sans); text-transform: uppercase; letter-spacing: .08em;
+    color: var(--dim); padding-top: 10px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--line); background: #12171c;
+  }
+  .row {
+    font: 14px/1.55 var(--mono);
+    padding-top: 7px; padding-bottom: 7px;
+    border-bottom: 1px solid var(--line);
+    border-left: 3px solid transparent;
+    padding-left: 17px;
+  }
+  .head { padding-left: 20px; }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: #1a2028; }
+  .row.warn { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.error { background: var(--err-bg); border-left-color: var(--err); }
+  .row.warn:hover, .row.error:hover { filter: brightness(1.15); }
+
+  .ts { color: var(--dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .lvl { font-weight: 700; font-size: 12px; letter-spacing: .05em; }
+  .lvl span { display: inline-block; min-width: 56px; text-align: center; padding: 1px 6px; border-radius: 4px; }
+  .info .lvl span { color: var(--info); background: var(--info-bg); }
+  .warn .lvl span { color: var(--warn); background: rgba(240,180,64,.18); }
+  .error .lvl span { color: #fff; background: #c93c3c; }
+  .svc { color: #b9c4d2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; word-break: break-word; }
+  .error .msg { color: #ffd9d9; }
+  .msg .url { color: var(--info); }
+  .msg .k { color: var(--dim); }
+  .msg .hint { color: var(--warn); }
+  .hidden { display: none; }
+
+  @media (max-width: 800px) {
+    .row, .head { grid-template-columns: 84px 64px minmax(0,1fr); }
+    .svc { grid-column: 3; }
+    .msg { grid-column: 1 / -1; }
+    .head span:nth-child(4) { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Deploy pipeline · checkout-api</h1>
+    <span class="meta">release <b>v2.14.3</b> · run <b>#8841</b> · 2026-10-14 · UTC</span>
+    <span class="status">FAILED at rollout</span>
+  </header>
+
+  <div class="toolbar" role="group" aria-label="Filter by level">
+    <button type="button" data-f="all" aria-pressed="true">All<span class="n" id="c-all"></span></button>
+    <button type="button" data-f="info" aria-pressed="false">INFO<span class="n" id="c-info"></span></button>
+    <button type="button" data-f="warn" aria-pressed="false">WARN<span class="n" id="c-warn"></span></button>
+    <button type="button" data-f="error" aria-pressed="false">ERROR<span class="n" id="c-error"></span></button>
+  </div>
+
+  <div class="log" id="log" role="table" aria-label="Deploy log">
+    <div class="head" role="row"><span>Time</span><span>Level</span><span>Service</span><span>Message</span></div>
+
+    <div class="row info" role="row"><span class="ts">14:02:11.482</span><span class="lvl"><span>INFO</span></span><span class="svc">git-fetch</span><span class="msg">Checked out <span class="k">ref=</span>refs/tags/v2.14.3 <span class="k">sha=</span>9f3c1ab in 1.2s</span></div>
+
+    <div class="row info" role="row"><span class="ts">14:02:14.077</span><span class="lvl"><span>INFO</span></span><span class="svc">build-runner</span><span class="msg">Starting build for checkout-api on runner build-pool-eu-west-3a (cache: warm, layers reused: 14/17)</span></div>
+
+    <div class="row warn" role="row"><span class="ts">14:03:02.310</span><span class="lvl"><span>WARN</span></span><span class="svc">build-runner</span><span class="msg">Deprecated dependency detected: <span class="k">pkg=</span>left-padder@1.4.2 is unmaintained; see <span class="url">https://registry.internal.example.com/advisories/2026/DEP-4471?ref=pipeline&amp;project=checkout-api&amp;severity=moderate</span> for the suggested replacement</span></div>
+
+    <div class="row info" role="row"><span class="ts">14:04:47.905</span><span class="lvl"><span>INFO</span></span><span class="svc">test-suite</span><span class="msg">Unit tests passed: 1,284 passed, 0 failed, 3 skipped (duration 92.4s)</span></div>
+
+    <div class="row info" role="row"><span class="ts">14:05:30.118</span><span class="lvl"><span>INFO</span></span><span class="svc">registry</span><span class="msg">Pushed image <span class="url">registry.internal.example.com/payments/checkout-api:v2.14.3</span> <span class="k">digest=</span>sha256:6be1a0c4d9</span></div>
+
+    <div class="row warn" role="row"><span class="ts">14:05:41.652</span><span class="lvl"><span>WARN</span></span><span class="svc">scanner</span><span class="msg">Image scan found 2 medium vulnerabilities in base layer debian:12-slim (CVE-2026-1187, CVE-2026-2040); policy allows medium severity, continuing without blocking the release</span></div>
+
+    <div class="row info" role="row"><span class="ts">14:06:03.024</span><span class="lvl"><span>INFO</span></span><span class="svc">migrator</span><span class="msg">Applying 2 pending migrations: 0147_add_payment_intent_idx, 0148_backfill_currency</span></div>
+
+    <div class="row warn" role="row"><span class="ts">14:06:19.771</span><span class="lvl"><span>WARN</span></span><span class="svc">migrator</span><span class="msg">Migration 0148_backfill_currency is slow: 38.2s elapsed, table orders holds 41M rows. Consider batching with LIMIT 50000 to avoid long lock waits on the primary</span></div>
+
+    <div class="row info" role="row"><span class="ts">14:07:02.340</span><span class="lvl"><span>INFO</span></span><span class="svc">k8s-deployer</span><span class="msg">Rolling out deployment/checkout-api in namespace prod-payments (replicas 12, maxSurge 25%, maxUnavailable 0)</span></div>
+
+    <div class="row info" role="row"><span class="ts">14:07:48.209</span><span class="lvl"><span>INFO</span></span><span class="svc">canary</span><span class="msg">Canary at 10% traffic: p95 latency 212ms, error rate 0.04%. Within thresholds</span></div>
+
+    <div class="row warn" role="row"><span class="ts">14:08:25.563</span><span class="lvl"><span>WARN</span></span><span class="svc">canary</span><span class="msg">Canary at 50% traffic: p95 latency 487ms exceeds soft limit of 400ms. Dashboard: <span class="url">https://grafana.internal.example.com/d/checkout-latency/checkout-api?orgId=1&amp;var-env=prod&amp;var-release=v2.14.3&amp;from=now-15m&amp;to=now</span></span></div>
+
+    <div class="row error" role="row"><span class="ts">14:09:12.847</span><span class="lvl"><span>ERROR</span></span><span class="svc">healthcheck</span><span class="msg">Readiness probe failed for pod checkout-api-7d9f8b6c4-xk2lp: GET /healthz returned 503 (attempt 3/3), upstream payments-db connection pool exhausted</span></div>
+
+    <div class="row error" role="row"><span class="ts">14:09:13.002</span><span class="lvl"><span>ERROR</span></span><span class="svc">checkout-api</span><span class="msg">Unhandled PoolTimeoutError: timeout acquiring connection after 5000ms <span class="hint">at Pool.acquire (db/pool.js:212:19) at PaymentRepo.findIntent (repo/payment.js:88:24) at async CheckoutController.confirm (api/checkout.js:141:17)</span></span></div>
+
+    <div class="row error" role="row"><span class="ts">14:09:30.419</span><span class="lvl"><span>ERROR</span></span><span class="svc">k8s-deployer</span><span class="msg">Rollout failed: deployment/checkout-api exceeded progress deadline (600s), 4 of 12 replicas unavailable. Automatic rollback to v2.14.2 initiated. Runbook: <span class="url">https://wiki.internal.example.com/runbooks/deploy/rollback-checkout-api#db-pool</span></span></div>
+  </div>
+</div>
+
+<script>
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var btns = document.querySelectorAll('.toolbar button');
+  var counts = { all: rows.length, info: 0, warn: 0, error: 0 };
+  rows.forEach(function (r) { counts[r.classList.contains('error') ? 'error' : r.classList.contains('warn') ? 'warn' : 'info']++; });
+  Object.keys(counts).forEach(function (k) { document.getElementById('c-' + k).textContent = counts[k]; });
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.getAttribute('data-f');
+      btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      rows.forEach(function (r) { r.classList.toggle('hidden', f !== 'all' && !r.classList.contains(f)); });
+    });
+  });
+</script>
+</body>
+</html>

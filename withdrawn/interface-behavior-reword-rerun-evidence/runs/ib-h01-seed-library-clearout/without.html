@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seed Library Desk</title>
+<style>
+  :root {
+    --bg: #f6f3ea;
+    --surface: #fffdf8;
+    --ink: #26301f;
+    --muted: #667060;
+    --line: #ded8c6;
+    --accent: #2f6b3a;
+    --accent-ink: #ffffff;
+    --warn-bg: #fbeacb;
+    --warn-ink: #7a4a00;
+    --bad-bg: #f7d9d4;
+    --bad-ink: #8a2616;
+    --low-bg: #e9efd2;
+    --low-ink: #4b5a12;
+    --row-flag: #fdf6e6;
+    --shadow: 0 1px 2px rgba(40,40,20,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161a14;
+      --surface: #1f251c;
+      --ink: #e8ecdf;
+      --muted: #9aa592;
+      --line: #343c2f;
+      --accent: #7fc48a;
+      --accent-ink: #11200f;
+      --warn-bg: #4a3812;
+      --warn-ink: #f2cf8a;
+      --bad-bg: #55231b;
+      --bad-ink: #f4b6aa;
+      --low-bg: #3a4217;
+      --low-ink: #d4e394;
+      --row-flag: #262a1a;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 920px; margin: 0 auto; padding: 24px 16px 80px; }
+  header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  h1 { margin: 0; font-size: 1.6rem; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 2px 0 0; font-size: .95rem; }
+  button, input, select { font: inherit; color: inherit; }
+  button {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    min-height: 40px;
+  }
+  button:hover { border-color: var(--muted); }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  button.primary:disabled { opacity: .45; cursor: not-allowed; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  input[type=search], input[type=number], input[type=text], select {
+    border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 10px; min-height: 40px;
+  }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .toolbar input[type=search] { flex: 1 1 200px; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip[aria-pressed=true] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+
+  table { width: 100%; border-collapse: collapse; }
+  caption { text-align: left; padding: 10px 14px; color: var(--muted); font-size: .9rem; }
+  th, td { padding: 10px 14px; text-align: left; border-top: 1px solid var(--line); vertical-align: middle; }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+  th button { all: unset; cursor: pointer; display: inline-flex; gap: 4px; align-items: center; }
+  th button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  th .arrow { font-size: .75em; opacity: .3; }
+  th[aria-sort=ascending] .arrow, th[aria-sort=descending] .arrow { opacity: 1; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.flag td { background: var(--row-flag); }
+  td.name { font-weight: 600; }
+  .badge { display: inline-block; font-size: .72rem; font-weight: 700; padding: 1px 8px; border-radius: 99px; margin-left: 6px; vertical-align: 1px; }
+  .badge.empty { background: var(--bad-bg); color: var(--bad-ink); }
+  .badge.old { background: var(--warn-bg); color: var(--warn-ink); }
+  .badge.low { background: var(--low-bg); color: var(--low-ink); }
+  .qty { display: inline-flex; align-items: center; gap: 6px; }
+  .qty button { min-height: 32px; min-width: 32px; padding: 0; line-height: 1; font-size: 1.1rem; }
+  .qty output { min-width: 2ch; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .empty-state { padding: 28px; text-align: center; color: var(--muted); }
+
+  details.add { margin-top: 16px; padding: 12px 16px; }
+  details.add summary { cursor: pointer; font-weight: 600; }
+  .add form { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 12px; align-items: end; }
+  .add label { display: grid; gap: 4px; font-size: .85rem; color: var(--muted); }
+  .add input, .add select { width: 100%; color: var(--ink); }
+
+  #cleanup { padding: 16px; margin-bottom: 16px; border-color: var(--accent); border-width: 2px; }
+  #cleanup[hidden] { display: none; }
+  #cleanup h2 { margin: 0 0 4px; font-size: 1.15rem; }
+  .rules { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin: 10px 0; font-size: .95rem; }
+  .rules label { display: inline-flex; align-items: center; gap: 6px; }
+  .rules input[type=number] { width: 4.5rem; }
+  .rules input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); }
+  .clean-list { list-style: none; margin: 8px 0 12px; padding: 0; border: 1px solid var(--line); border-radius: 8px; max-height: 320px; overflow: auto; }
+  .clean-list li { border-top: 1px solid var(--line); }
+  .clean-list li:first-child { border-top: 0; }
+  .clean-list label { display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; }
+  .clean-list input { width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+  .clean-list .meta { margin-left: auto; color: var(--muted); font-size: .85rem; white-space: nowrap; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .actions .spacer { flex: 1; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+    background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 10px;
+    display: flex; gap: 12px; align-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    max-width: calc(100vw - 24px);
+  }
+  #toast[hidden] { display: none; }
+  #toast button { background: transparent; color: inherit; border-color: currentColor; min-height: 32px; padding: 4px 10px; }
+
+  @media (max-width: 620px) {
+    th, td { padding: 8px 8px; }
+    .hide-sm { display: none; }
+  }
+  @media print {
+    .toolbar, details.add, #cleanup, #toast, .qty button, header button { display: none !important; }
+    body { background: #fff; color: #000; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>🌱 Seed Library Desk</h1>
+      <p class="sub" id="summary"></p>
+    </div>
+    <button class="primary" id="openCleanup" aria-expanded="false" aria-controls="cleanup">End-of-season cleanup…</button>
+  </header>
+
+  <section id="cleanup" class="card" hidden aria-labelledby="cleanupTitle">
+    <h2 id="cleanupTitle">End-of-season cleanup</h2>
+    <p class="sub">Everything matching your rules is ticked. Untick anything you want to keep, then remove the rest in one go.</p>
+    <div class="rules">
+      <label><input type="checkbox" id="ruleEmpty" checked> Empty (0 left)</label>
+      <label><input type="checkbox" id="ruleOld" checked> Packed
+        <input type="number" id="ruleYears" min="1" max="20" value="3" aria-label="Years old"> or more years ago
+        <span class="sub" id="yearHint"></span></label>
+    </div>
+    <ul class="clean-list" id="cleanList"></ul>
+    <div class="actions">
+      <button id="selAll">Select all</button>
+      <button id="selNone">Select none</button>
+      <span class="spacer"></span>
+      <button id="closeCleanup">Cancel</button>
+      <button class="primary" id="doRemove">Remove</button>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="Search packets…" aria-label="Search packets">
+    <div class="chips" role="group" aria-label="Filter">
+      <button class="chip" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" data-f="clear" aria-pressed="false">Needs clearing</button>
+      <button class="chip" data-f="low" aria-pressed="false">Running low</button>
+    </div>
+  </div>
+
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <caption id="count" aria-live="polite"></caption>
+      <thead>
+        <tr>
+          <th scope="col" data-k="name"><button>Name <span class="arrow">▲</span></button></th>
+          <th scope="col" data-k="type" class="hide-sm"><button>Type <span class="arrow">▲</span></button></th>
+          <th scope="col" data-k="year" class="num"><button>Packed <span class="arrow">▲</span></button></th>
+          <th scope="col" data-k="left" class="num"><button>Left <span class="arrow">▲</span></button></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty-state" id="none" hidden>No packets match.</div>
+  </div>
+
+  <details class="card add">
+    <summary>Add a packet</summary>
+    <form id="addForm">
+      <label>Name <input type="text" id="aName" required maxlength="60"></label>
+      <label>Type
+        <select id="aType"></select>
+      </label>
+      <label>Year packed <input type="number" id="aYear" required min="2000" max="2100"></label>
+      <label>Packets <input type="number" id="aLeft" required min="0" max="999" value="20"></label>
+      <button class="primary" type="submit">Add</button>
+    </form>
+  </details>
+
+  <p class="sub" style="margin-top:16px"><button id="reset">Reset sample data</button></p>
+</main>
+
+<div id="toast" role="status" hidden><span id="toastMsg"></span><button id="undo">Undo</button></div>
+
+<script>
+(function () {
+  var THIS_YEAR = new Date().getFullYear();
+  var TYPES = ["Vegetable", "Herb", "Flower", "Fruit", "Cover crop"];
+  var KEY = "seed-desk-v1";
+  var LOW = 3;
+
+  function sample() {
+    var d = [
+      ["Cherokee Purple Tomato","Vegetable",THIS_YEAR-1,18],
+      ["Lacinato Kale","Vegetable",THIS_YEAR-1,24],
+      ["Sugar Snap Pea","Vegetable",THIS_YEAR-2,9],
+      ["Detroit Dark Red Beet","Vegetable",THIS_YEAR-4,6],
+      ["Rainbow Chard","Vegetable",THIS_YEAR-6,7],
+      ["Genovese Basil","Herb",THIS_YEAR-1,31],
+      ["Cilantro ‘Calypso’","Herb",THIS_YEAR-3,0],
+      ["Chives","Herb",THIS_YEAR-5,4],
+      ["Zinnia ‘State Fair’ Mix","Flower",THIS_YEAR-1,40],
+      ["Calendula ‘Pacific Beauty’","Flower",THIS_YEAR-2,2],
+      ["Sunflower ‘Mammoth Grey Stripe’","Flower",THIS_YEAR-3,12],
+      ["Cosmos Sensation Mix","Flower",THIS_YEAR-4,0],
+      ["Moon and Stars Watermelon","Fruit",THIS_YEAR-2,14],
+      ["Alpine Strawberry","Fruit",THIS_YEAR,11],
+      ["Crimson Clover","Cover crop",THIS_YEAR-1,22]
+    ];
+    return d.map(function (r, i) { return { id: i + 1, name: r[0], type: r[1], year: r[2], left: r[3] }; });
+  }
+
+  var packets, nextId, lastRemoved = null, toastTimer;
+  var sortKey = "name", sortDir = 1, filter = "all", query = "";
+  var unticked = {}; // ids the volunteer chose to keep during cleanup
+
+  function load() {
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY));
+      if (Array.isArray(s)) return s;
+    } catch (e) {}
+    return null;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(packets)); } catch (e) {} }
+
+  packets = load() || sample();
+  nextId = packets.reduce(function (m, p) { return Math.max(m, p.id); }, 0) + 1;
+
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+
+  function rules() {
+    var yrs = Math.max(1, parseInt($("ruleYears").value, 10) || 3);
+    return { empty: $("ruleEmpty").checked, old: $("ruleOld").checked, cutoff: THIS_YEAR - yrs };
+  }
+  function reasons(p, r) {
+    var out = [];
+    if (r.empty && p.left === 0) out.push("Empty");
+    if (r.old && p.year <= r.cutoff) out.push("Packed " + p.year);
+    return out;
+  }
+  function needsClearing(p) { return reasons(p, { empty: true, old: true, cutoff: rules().cutoff }).length > 0; }
+
+  function visible() {
+    var q = query.trim().toLowerCase();
+    var list = packets.filter(function (p) {
+      if (q && (p.name + " " + p.type + " " + p.year).toLowerCase().indexOf(q) < 0) return false;
+      if (filter === "clear") return needsClearing(p);
+      if (filter === "low") return p.left > 0 && p.left <= LOW;
+      return true;
+    });
+    list.sort(function (a, b) {
+      var x = a[sortKey], y = b[sortKey];
+      var c = typeof x === "number" ? x - y : String(x).localeCompare(String(y), undefined, { sensitivity: "base" });
+      return (c || a.name.localeCompare(b.name)) * sortDir;
+    });
+    return list;
+  }
+
+  function render() {
+    var list = visible(), cutoff = rules().cutoff;
+    $("rows").innerHTML = list.map(function (p) {
+      var badges = "";
+      if (p.left === 0) badges += '<span class="badge empty">Empty</span>';
+      else if (p.left <= LOW) badges += '<span class="badge low">Low</span>';
+      if (p.year <= cutoff) badges += '<span class="badge old">Old</span>';
+      return '<tr class="' + (needsClearing(p) ? "flag" : "") + '">' +
+        '<td class="name">' + esc(p.name) + badges + '</td>' +
+        '<td class="hide-sm">' + esc(p.type) + '</td>' +
+        '<td class="num">' + p.year + '</td>' +
+        '<td class="num"><span class="qty">' +
+          '<button data-id="' + p.id + '" data-d="-1" aria-label="Take one ' + esc(p.name) + ' packet"' + (p.left === 0 ? " disabled" : "") + '>−</button>' +
+          '<output>' + p.left + '</output>' +
+          '<button data-id="' + p.id + '" data-d="1" aria-label="Add one ' + esc(p.name) + ' packet">+</button>' +
+        '</span></td></tr>';
+    }).join("");
+    $("none").hidden = list.length > 0;
+    $("count").textContent = "Showing " + list.length + " of " + packets.length + " packets";
+
+    var clear = packets.filter(needsClearing).length;
+    var total = packets.reduce(function (s, p) { return s + p.left; }, 0);
+    $("summary").textContent = packets.length + " varieties · " + total + " packets on the shelf · " + clear + " ready to clear out";
+
+    document.querySelectorAll("th[data-k]").forEach(function (th) {
+      var on = th.dataset.k === sortKey;
+      if (on) th.setAttribute("aria-sort", sortDir === 1 ? "ascending" : "descending");
+      else th.removeAttribute("aria-sort");
+      th.querySelector(".arrow").textContent = on && sortDir === -1 ? "▼" : "▲";
+    });
+    document.querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c.dataset.f === filter)); });
+    if (!$("cleanup").hidden) renderCleanup(false);
+  }
+
+  function renderCleanup(reset) {
+    var r = rules();
+    if (reset) unticked = {};
+    $("yearHint").textContent = "(" + r.cutoff + " and earlier)";
+    var flagged = packets.filter(function (p) { return reasons(p, r).length; })
+      .sort(function (a, b) { return a.year - b.year || a.name.localeCompare(b.name); });
+    $("cleanList").innerHTML = flagged.length ? flagged.map(function (p) {
+      return '<li><label><input type="checkbox" data-id="' + p.id + '"' + (unticked[p.id] ? "" : " checked") + '>' +
+        '<span>' + esc(p.name) + '</span><span class="meta">' + esc(p.type) + ' · ' + reasons(p, r).join(", ") + '</span></label></li>';
+    }).join("") : '<li class="empty-state">Nothing matches these rules. 🎉</li>';
+    updateRemoveBtn();
+  }
+  function ticked() {
+    return Array.prototype.map.call($("cleanList").querySelectorAll("input:checked"), function (i) { return +i.dataset.id; });
+  }
+  function updateRemoveBtn() {
+    var n = ticked().length;
+    $("doRemove").textContent = n ? "Remove " + n + " packet" + (n === 1 ? "" : "s") : "Remove";
+    $("doRemove").disabled = n === 0;
+  }
+
+  function toast(msg, canUndo) {
+    $("toastMsg").textContent = msg;
+    $("undo").hidden = !canUndo;
+    $("toast").hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $("toast").hidden = true; }, 12000);
+  }
+
+  // events
+  $("rows").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-id]");
+    if (!b) return;
+    var p = packets.find(function (x) { return x.id === +b.dataset.id; });
+    p.left = Math.max(0, p.left + +b.dataset.d);
+    save(); render();
+    var again = $("rows").querySelector('button[data-id="' + p.id + '"][data-d="' + b.dataset.d + '"]');
+    if (again && !again.disabled) again.focus();
+  });
+  document.querySelector("thead").addEventListener("click", function (e) {
+    var th = e.target.closest("th[data-k]");
+    if (!th) return;
+    if (sortKey === th.dataset.k) sortDir = -sortDir; else { sortKey = th.dataset.k; sortDir = 1; }
+    render();
+  });
+  document.querySelector(".chips").addEventListener("click", function (e) {
+    var c = e.target.closest(".chip");
+    if (c) { filter = c.dataset.f; render(); }
+  });
+  $("q").addEventListener("input", function (e) { query = e.target.value; render(); });
+
+  $("openCleanup").addEventListener("click", function () {
+    var open = $("cleanup").hidden;
+    $("cleanup").hidden = !open;
+    $("openCleanup").setAttribute("aria-expanded", String(open));
+    if (open) { renderCleanup(true); $("cleanup").scrollIntoView({ block: "nearest" }); $("doRemove").focus({ preventScroll: true }); }
+  });
+  function closeCleanup() {
+    $("cleanup").hidden = true;
+    $("openCleanup").setAttribute("aria-expanded", "false");
+    $("openCleanup").focus();
+  }
+  $("closeCleanup").addEventListener("click", closeCleanup);
+  ["ruleEmpty", "ruleOld", "ruleYears"].forEach(function (id) {
+    $(id).addEventListener("input", function () { renderCleanup(true); render(); });
+  });
+  $("cleanList").addEventListener("change", function (e) {
+    unticked[e.target.dataset.id] = !e.target.checked;
+    updateRemoveBtn();
+  });
+  $("selAll").addEventListener("click", function () { unticked = {}; renderCleanup(false); });
+  $("selNone").addEventListener("click", function () {
+    $("cleanList").querySelectorAll("input").forEach(function (i) { unticked[i.dataset.id] = true; });
+    renderCleanup(false);
+  });
+  $("doRemove").addEventListener("click", function () {
+    var ids = ticked();
+    if (!ids.length) return;
+    lastRemoved = packets.filter(function (p) { return ids.indexOf(p.id) >= 0; });
+    packets = packets.filter(function (p) { return ids.indexOf(p.id) < 0; });
+    save();
+    $("cleanup").hidden = true;
+    $("openCleanup").setAttribute("aria-expanded", "false");
+    render();
+    toast("Removed " + ids.length + " packet" + (ids.length === 1 ? "" : "s") + ".", true);
+    $("openCleanup").focus();
+  });
+  $("undo").addEventListener("click", function () {
+    if (!lastRemoved) return;
+    packets = packets.concat(lastRemoved);
+    var n = lastRemoved.length;
+    lastRemoved = null;
+    save(); render();
+    toast("Restored " + n + " packet" + (n === 1 ? "" : "s") + ".", false);
+  });
+
+  $("aType").innerHTML = TYPES.map(function (t) { return "<option>" + t + "</option>"; }).join("");
+  $("aYear").value = THIS_YEAR;
+  $("addForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("aName").value.trim();
+    if (!name) return;
+    packets.push({ id: nextId++, name: name, type: $("aType").value, year: +$("aYear").value, left: +$("aLeft").value });
+    save(); render();
+    $("addForm").reset();
+    $("aYear").value = THIS_YEAR; $("aLeft").value = 20;
+    toast("Added " + name + ".", false);
+    $("aName").focus();
+  });
+
+  $("reset").addEventListener("click", function () {
+    if (!confirm("Replace the current list with the sample data? Your changes will be lost.")) return;
+    packets = sample(); nextId = packets.length + 1; lastRemoved = null;
+    save(); render();
+    toast("Sample data restored.", false);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

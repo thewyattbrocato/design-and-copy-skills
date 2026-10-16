@@ -1,29 +1,28 @@
-**What's going wrong:** every color sits in the same muted, mid-tone khaki band, so nothing anchors the page. The background is tan, the text is a greyed tan, and the buttons are dusty olive-browns. Without a clean light or a true dark, the whole screen reads as flat and dusty.
+**What's going wrong**
 
-Findings by impact (contrast ratios are hand-calculated estimates, not measured with a tool):
+Your palette is almost all one hue family (olive and khaki) at similar mid-lightness, on a mid-value greige background. Nothing has enough contrast to stand out, so the whole screen looks dull. The specific problems, by impact:
 
-1. **Body text is nearly invisible: about 1.7:1 on the page background.** Text needs 4.5:1. Your body text is about the same lightness as the background, so it reads as faded rather than as text.
-2. **Every pair fails:**
-   - Primary button, white label: about 4.0:1
-   - Secondary button, white label: about 3.7:1
-   - Links on background: about 2.0:1
-   - Error text on background: about 2.5:1
-3. **Low chroma everywhere.** All six colors are desaturated, so none reads as warm or friendly. Warmth comes from one clean, saturated accent against a light base, not from greying everything toward brown.
-4. **Error red is the same family as the brand.** It is dusty terracotta, so it doesn't signal alarm, and it is too close to a warm primary.
-5. **Primary and secondary buttons are close in lightness,** so the hierarchy between them is weak.
+1. **Body text is nearly invisible.** `#a39b82` on `#cfc8b0` is about 1.7:1. Body text needs 4.5:1. This is the biggest reason the app feels tired.
+2. **The background is too dark and too gray for a warm, friendly feel.** At mid-value it dulls everything placed on it, and there's no clean lighter ground for the content to sit on.
+3. **Primary, secondary, and link blend together.** All three are desaturated olive at similar lightness, so they don't read as different jobs.
+4. **Links fail.** `#9c8b5e` on the background is about 2:1.
+5. **Error reads as brown.** `#b5654a` is rust-brown on greige at about 2.5:1, so it doesn't signal alarm.
+6. **Buttons are borderline.** White text on the primary is about 4:1 and on the secondary about 3.7:1. Both fall short of 4.5:1 for normal-size labels.
 
-**Proposed palette**
+**A warmer, friendlier fix**
 
-| Role | Hex | Reason | Contrast |
+| Role | Hex | Why | Est. contrast |
 |---|---|---|---|
-| Page background | `#FBF6EE` | Warm cream, light enough to anchor the page | Base |
-| Body text | `#3B2F26` | Deep warm brown, keeps the warmth | About 11.8:1 on background |
-| Primary button | `#B4532F` | Warm terracotta, the friendly accent; white label | About 5.0:1 with white text |
-| Secondary button | `#3F6B5A` | Calm sage-teal, a cool counterweight; white label | About 6.1:1 with white text |
-| Links / highlight | `#2E6A5C` | Darker teal, readable on cream | About 5.7:1 on background |
-| Error | `#B3261E` | Clear red, darker and cooler than the primary | About 5.9:1 on background |
+| Page background | `#fbf6ef` | Warm off-white; a clean ground that lets color stand out | — |
+| Body text | `#3b3128` | Warm dark brown instead of gray; reads softly | ~11.7:1 on background |
+| Primary buttons | `#1f6f6a` (deep teal) | Calm and trustworthy for healthcare; white label | ~5.9:1 with white text |
+| Secondary buttons | Fill `#e3efec`, text `#1f6f6a` | Quieter tint with the same teal, so it stays in the family | Teal text on tint, roughly 5.5:1 |
+| Highlight / links | `#a8462a` (terracotta) | The warm accent, so links feel friendly; keeps the palette from going cold | ~5.4:1 on background |
+| Error | `#b42318` (clear red) | Reads as an alarm, not brand; add an icon and words too | ~6.1:1 on background |
 
-**Notes**
+Why this direction: teal carries the trust that a vet product needs, and terracotta supplies the warmth. The cream ground keeps the whole thing from feeling clinical. Teal and terracotta are different hues at different lightness, so primary and link no longer blur together.
 
-- Primary terracotta and error red are close in hue. Keep the error icon and the word "Error" on every message so meaning doesn't rely on color alone, and check the pair in grayscale.
-- Only the two button colors are used as fills. Keep the cream as the main surface so the terracotta stays small and warm. Cards can use white (`#FFFFFF`) for separation.
+**Caveats**
+
+- I couldn't run a contrast checker in this session, so the ratios above are hand-calculated estimates. Verify them with a tool such as WebAIM's contrast checker before you ship.
+- I assumed white text on the primary button. Check hover, pressed, and disabled states too.

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tidewater Cold Freight – 06:00 Dispatch</title>
+<style>
+  :root {
+    --bg: #f4f6f8; --card: #ffffff; --ink: #14202b; --muted: #55646f; --line: #d6dde3;
+    --go: #17692f; --go-bg: #e3f4e8;
+    --warn: #8a4b00; --warn-bg: #fff0d6;
+    --bad: #a1161f; --bad-bg: #fde6e7;
+    --off: #3d4a55; --off-bg: #e6eaee;
+    --band: #cfe8f7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10161b; --card: #19222a; --ink: #e8eef2; --muted: #9aabb7; --line: #2e3a44;
+      --go: #6fd68c; --go-bg: #14301e;
+      --warn: #ffc470; --warn-bg: #3a2a0c;
+      --bad: #ff8e94; --bad-bg: #3d1519;
+      --off: #b7c3cc; --off-bg: #26313a;
+      --band: #1f3f55;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px 28px 32px; background: var(--bg); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px; line-height: 1.4;
+  }
+  header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  h1 { font-size: 22px; margin: 0; }
+  .sub { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 24px 0 8px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; }
+  .tile .n { font-size: 34px; font-weight: 700; line-height: 1.1; }
+  .tile .l { font-size: 14px; color: var(--muted); }
+  .tile.go .n { color: var(--go); } .tile.bad .n { color: var(--bad); } .tile.warn .n { color: var(--warn); } .tile.off .n { color: var(--off); }
+
+  .alerts { display: grid; gap: 8px; }
+  .alert { display: grid; grid-template-columns: 70px 1fr; gap: 12px; align-items: start;
+    background: var(--card); border: 1px solid var(--line); border-left-width: 6px; border-radius: 6px; padding: 10px 14px; }
+  .alert.bad { border-left-color: var(--bad); } .alert.warn { border-left-color: var(--warn); }
+  .alert .van { font-weight: 700; font-size: 18px; }
+  .alert .t { font-weight: 600; }
+  .alert .d { color: var(--muted); font-size: 14px; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--bg); }
+  tr:last-child td { border-bottom: 0; }
+  td.van { font-weight: 700; font-size: 18px; }
+  td.time { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .sub2 { display: block; color: var(--muted); font-size: 13px; }
+  .flag { font-weight: 700; }
+  .flag.bad { color: var(--bad); } .flag.warn { color: var(--warn); }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .badge.go { background: var(--go-bg); color: var(--go); }
+  .badge.bad { background: var(--bad-bg); color: var(--bad); }
+  .badge.warn { background: var(--warn-bg); color: var(--warn); }
+  .badge.off { background: var(--off-bg); color: var(--off); }
+
+  .temp { display: flex; align-items: center; gap: 10px; }
+  .temp .v { width: 64px; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .gauge { position: relative; width: 130px; height: 10px; background: var(--off-bg); border-radius: 5px; }
+  .gauge .band { position: absolute; left: 20%; width: 30%; top: 0; bottom: 0; background: var(--band); }
+  .gauge .dot { position: absolute; top: -3px; width: 4px; height: 16px; margin-left: -2px; background: var(--ink); border-radius: 2px; }
+  .gauge .dot.bad { background: var(--bad); width: 6px; margin-left: -3px; }
+  .legend { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  tr.row-bad td:first-child { box-shadow: inset 5px 0 0 var(--bad); }
+  tr.row-warn td:first-child { box-shadow: inset 5px 0 0 var(--warn); }
+  tr.row-off td:first-child { box-shadow: inset 5px 0 0 var(--off); }
+  tr.row-go td:first-child { box-shadow: inset 5px 0 0 var(--go); }
+  @media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Tidewater Cold Freight · 06:00 Dispatch</h1>
+  <div class="sub">8 refrigerated vans · single depot · target trailer temp −18 to −15 °C · service limit 10 weeks</div>
+</header>
+
+<section class="tiles" aria-label="Summary">
+  <div class="tile go"><div class="n">4 of 8</div><div class="l">✔ Fit to go with a driver (V1, V2, V6, V8)</div></div>
+  <div class="tile bad"><div class="n">1</div><div class="l">✖ Cargo out of temp range (V5)</div></div>
+  <div class="tile warn"><div class="n">3</div><div class="l">⚠ Bookings at risk of running late (V5, V4, V7)</div></div>
+  <div class="tile off"><div class="n">1</div><div class="l">■ Van unavailable – workshop (V3)</div></div>
+</section>
+
+<h2>Needs action before routes go out</h2>
+<section class="alerts">
+  <div class="alert bad">
+    <div class="van">✖ V5</div>
+    <div>
+      <div class="t">Cargo at −11.4 °C – 3.6 °C above the −15 °C limit. First booking 06:45 (Ines R.), the earliest of the day.</div>
+      <div class="d">Loaded and still waiting on release. Check the load and the reefer unit before release; the 06:45 booking is at risk either way.</div>
+    </div>
+  </div>
+  <div class="alert warn">
+    <div class="van">⚠ V4</div>
+    <div>
+      <div class="t">Service overdue: 11 weeks since last service, limit is 10. First booking 08:15 (Joss K.).</div>
+      <div class="d">Not fit to go as it stands. Needs a service or a swap onto another van to protect the 08:15 booking.</div>
+    </div>
+  </div>
+  <div class="alert warn">
+    <div class="van">⚠ V7</div>
+    <div>
+      <div class="t">Van is fit (−15.6 °C, serviced 1 week ago) but the driver called in sick. First booking 09:30.</div>
+      <div class="d">Needs a replacement driver. Trailer is in range but only 0.6 °C from the warm limit, so keep an eye on it.</div>
+    </div>
+  </div>
+  <div class="alert warn">
+    <div class="van">■ V3</div>
+    <div>
+      <div class="t">In workshop (brake job, started 3 days ago). Booking at 08:00 has no van and no driver.</div>
+      <div class="d">Needs the 08:00 booking covered by another van, or confirmation from the workshop of a return time.</div>
+    </div>
+  </div>
+</section>
+
+<h2>All vans · in order of first booking</h2>
+<table>
+  <thead>
+    <tr><th>Van</th><th>Verdict</th><th>First booking</th><th>Driver</th><th>Trailer temp</th><th>Last service</th><th>Status as reported</th></tr>
+  </thead>
+  <tbody>
+    <tr class="row-bad">
+      <td class="van">V5</td>
+      <td><span class="badge bad">✖ HOLD · cargo warm</span></td>
+      <td class="time">06:45</td>
+      <td>Ines R.</td>
+      <td><div class="temp"><span class="v flag bad">−11.4 °C</span><div class="gauge"><div class="band"></div><div class="dot bad" style="left:86%"></div></div></div></td>
+      <td>4 weeks ago</td>
+      <td>Loaded, waiting on release</td>
+    </tr>
+    <tr class="row-go">
+      <td class="van">V1</td>
+      <td><span class="badge go">✔ GO</span></td>
+      <td class="time">07:30</td>
+      <td>Marta L.</td>
+      <td><div class="temp"><span class="v">−17.2 °C</span><div class="gauge"><div class="band"></div><div class="dot" style="left:28%"></div></div></div></td>
+      <td>2 weeks ago</td>
+      <td>Ready</td>
+    </tr>
+    <tr class="row-go">
+      <td class="van">V2</td>
+      <td><span class="badge go">✔ GO</span></td>
+      <td class="time">07:45</td>
+      <td>Dev P.</td>
+      <td><div class="temp"><span class="v">−16.4 °C</span><div class="gauge"><div class="band"></div><div class="dot" style="left:36%"></div></div></div></td>
+      <td>5 weeks ago</td>
+      <td>Ready</td>
+    </tr>
+    <tr class="row-off">
+      <td class="van">V3</td>
+      <td><span class="badge off">■ OUT · workshop</span></td>
+      <td class="time">08:00</td>
+      <td class="flag warn">Unassigned</td>
+      <td><span class="sub2">n/a</span></td>
+      <td>3 days ago</td>
+      <td>In workshop (brake job)</td>
+    </tr>
+    <tr class="row-warn">
+      <td class="van">V4</td>
+      <td><span class="badge warn">⚠ HOLD · service overdue</span></td>
+      <td class="time">08:15</td>
+      <td>Joss K.</td>
+      <td><div class="temp"><span class="v">−16.8 °C</span><div class="gauge"><div class="band"></div><div class="dot" style="left:32%"></div></div></div></td>
+      <td><span class="flag warn">11 weeks ago</span><span class="sub2">limit is 10 · 1 week over</span></td>
+      <td>Ready</td>
+    </tr>
+    <tr class="row-go">
+      <td class="van">V6</td>
+      <td><span class="badge go">✔ GO</span></td>
+      <td class="time">09:00</td>
+      <td>Tomas B.</td>
+      <td><div class="temp"><span class="v">−17.9 °C</span><div class="gauge"><div class="band"></div><div class="dot" style="left:21%"></div></div></div></td>
+      <td>6 weeks ago</td>
+      <td>Ready</td>
+    </tr>
+    <tr class="row-warn">
+      <td class="van">V7</td>
+      <td><span class="badge warn">⚠ NO DRIVER</span></td>
+      <td class="time">09:30</td>
+      <td class="flag warn">Called in sick</td>
+      <td><div class="temp"><span class="v">−15.6 °C</span><div class="gauge"><div class="band"></div><div class="dot" style="left:44%"></div></div></div></td>
+      <td>1 week ago</td>
+      <td>Ready</td>
+    </tr>
+    <tr class="row-go">
+      <td class="van">V8</td>
+      <td><span class="badge go">✔ GO</span></td>
+      <td class="time">10:00</td>
+      <td>Aiko S.</td>
+      <td><div class="temp"><span class="v">−16.1 °C</span><div class="gauge"><div class="band"></div><div class="dot" style="left:39%"></div></div></div></td>
+      <td>8 weeks ago<span class="sub2">2 weeks until 10-week limit</span></td>
+      <td>Ready</td>
+    </tr>
+  </tbody>
+</table>
+<p class="legend">Temperature gauge spans −20 °C (left) to −10 °C (right). The blue band is the target range, −18 to −15 °C. A marker outside the band means cargo is out of range.</p>
+
+</body>
+</html>

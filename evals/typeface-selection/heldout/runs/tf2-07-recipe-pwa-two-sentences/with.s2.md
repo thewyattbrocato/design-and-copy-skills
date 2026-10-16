@@ -1,0 +1,1 @@
+Use a system font stack, since an offline PWA can't count on a web font loading. For recipe reading text, a serif stack works well: `font-family: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;`. For UI controls, use `system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`.

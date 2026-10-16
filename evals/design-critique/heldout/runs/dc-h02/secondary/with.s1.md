@@ -1,24 +1,31 @@
-I reviewed the spec, not the running page. Nothing here is in a git repo, so if the code is somewhere else, point me to it and I'll check the built version.
+The layout is sound: one column, one primary action, the phone number always visible, and errors that use an icon and text, not color alone. The bigger risks are content and states the spec doesn't cover. I reviewed the spec, not the built page, so I haven't checked the rendering.
 
 **Fix before Friday**
 
-1. **The primary button is about 6.9:1, not 7:1.** By my math, #0b5cad on white is about 6.9:1. That passes AA (4.5:1) but misses the 7:1 AAA level you wrote. Darken it a notch and verify with a contrast checker, or change the spec to "passes AA." The title (#1b2430, about 15.7:1) and errors (#b42318, about 6.6:1) are fine.
-2. **"Mon–Fri" has no date.** It doesn't say which week, so the confirmation can't repeat a meaningful day. Show the next one or two weeks of dates, then times.
-3. **"Request this time" can read as "booked."** The confirmation needs to say plainly that the office will confirm, and by what method and when. Put "Call us to change this" on that screen too.
-4. **The source of "available slots" is undefined.** If the list is static, patients will pick slots that are gone. Decide where availability comes from. If a slot is taken between load and submit, show an inline error, refresh the slots, and keep the name and phone already entered.
-5. **Reason for visit is health information.** Check with whoever owns the practice's privacy and compliance obligations before launch. Confirm the privacy notice and any SMS consent wording next to the mobile field, and keep the reason text out of analytics, logs, and error emails.
-6. **Network failure isn't covered.** Disable the button while submitting to prevent double bookings. If the request fails, keep the form data and show a plain message with the phone number.
+1. **Confirm the phone number.** 555-0142 falls in the 555-0100 to 0199 range reserved for fictional use. If it's a placeholder, the header and "Call us instead" ship with a dead number. Make both `tel:` links.
+2. **Make the confirmation say "request," not "booked."** The button says "Request this time," so nothing is booked yet. The confirmation should say the request is pending, how and when the practice will confirm, and what to do if the time doesn't work. Otherwise patients will assume it's booked and skip the call.
+3. **Define the day-to-time dependency.** Does picking a day filter the slot grid? What shows before a day is chosen? Cover the empty state (no openings that day), loading, and a slot taken between selection and submit.
+4. **Add failure states.** Specify a network error that keeps the entered data, a disabled button with progress while submitting to prevent double-submits, and focus moving to the first error with `aria-invalid` and `aria-describedby`.
+5. **Handle consent and privacy.** If you'll text the mobile number, put the consent line next to the field (TCPA exposure). The free-text reason for visit can contain health information. Confirm the backend and any email or SMS content are appropriate for that, including a BAA if the practice is a HIPAA covered entity, and keep SMS details minimal.
 
-**Small fixes**
+**Small spec corrections**
 
-7. Set inputs to at least 16px. iOS zooms the page on focus when the font is smaller. Add `inputmode="tel"` and `autocomplete` on name and phone. Make the header number a `tel:` link.
-8. Treat "520px wide" as a max-width. At 360px the form should fill the screen with about 16px side padding.
-9. Define the focus ring, for example a 2px outline with a 2px offset and at least 3:1 contrast against its neighbors. Check it on the segmented buttons and time slots, since restyled controls often lose it.
-10. Build the day and time choices as radio groups with proper labels. Don't rely on color alone for the selected state; add a check icon or bold weight. Decide whether unavailable slots are hidden or shown as "booked."
-11. Write down that the 8px scale covers spacing, while the 44px and 52px heights are component sizes. That stops someone from rounding them to 48 or 56.
-12. Test at 320px and at 200% text zoom as well as 360px. Confirm the header doesn't wrap awkwardly with the phone number.
-13. Add the basics: `lang="en"`, a `<title>`, one `<h1>` ("Book a visit," with the practice name not an h1), and "Add a note" as a real button with `aria-expanded`.
+6. **Button contrast:** #0b5cad on white with white text is about 6.7:1, not 7:1. That passes AA but not AAA. Darken it slightly or change the claim.
+7. **8px scale:** 44px targets and a 52px button aren't on the scale. Use 48 and 56, or document them as an exception. 44px is the minimum tap size anyway.
+8. **Width:** "520px wide" should be `max-width: 520px` with the field at `width: 100%`. A fixed width will overflow at 360px.
+9. **Focus ring:** "clearly visible" can't be tested. Specify a ring of roughly 2 to 3px with an offset, in a color at least 3:1 against white and against the button fill.
+10. **Header at 360px:** the practice name plus an 18px phone number may not fit on one line. Decide whether they stack or the name truncates.
+11. **"Add a note":** the collapsed field has no visible label. Use a disclosure button with `aria-expanded`, and show the label once it's open.
+12. **Autocomplete and time zone:** set `autocomplete="name"` on the name field and `type="tel" autocomplete="tel"` on the mobile field. State the practice's time zone next to the slot grid.
 
-**Keep:** the single column, no nav, one primary action, always-visible phone number, and plain-language inline errors.
+**Test before shipping**
 
-If you point me to the source, I can make items 7 to 13 directly and check the contrast values in the code.
+- Widths of 320px and 360px, not just 360.
+- 200% and 400% text zoom, checking for reflow and clipping.
+- iOS Safari with the keyboard open, checking that the full-width button stays reachable.
+- Keyboard only: tab order, arrow keys in the day segmented control, and a visible focus state on every control.
+- A screen reader pass over the error states and the confirmation screen.
+
+**Keep:** the single column, the phone number in the header, no nav, and errors that use icon plus text.
+
+If you share the URL or the code for the built page, I can check the rendered layout, the contrast values, and the 360px overflow directly. I haven't changed any files.

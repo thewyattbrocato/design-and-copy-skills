@@ -1,30 +1,73 @@
-Here's the top section:
+# Copper Hollow Pepper Co. Homepage Copy
+
+## Hero
+
+**Small-batch hot sauce, fermented for three weeks.**
+Made in a commercial kitchen outside Duluth, with peppers from farms we know by name.
+
+[Shop the Sauces]
 
 ---
 
-**Headline:**
-# Trusted pet visits in Headingley, Meanwood and Hyde Park
+## The Sauces
 
-**Subheading:**
-Hollybush Pet Visits is just two people: me and my cousin Dani. When you're away, one of us will visit your home and look after your pets as if they were our own.
+**Smoked Peach Habanero**
+Sweet peach and smoke, with a habanero kick behind it.
 
-**Bullets:**
-- **Always one of two familiar faces.** Every visit is done by me or Dani, so we'll never send a stranger to your door.
-- **Local to you.** We cover Headingley, Meanwood and Hyde Park, so we're never far away.
-- **Simple, upfront pricing.** £14 for a 30-minute visit, £22 for an hour. There are no hidden extras.
+**Green Ghost**
+Jalapeño and tomatillo. Bright, tangy, and made for tacos, eggs, and anything off the grill.
+
+**Black Garlic Mild**
+Deep, savory black garlic with very little heat. This is the one for people who want flavor first.
+
+**Copper Reaper**
+Our hot one. Pour carefully.
+
+$9 a bottle. Every one is made the same way.
 
 ---
 
-**Why I wrote it this way**
-- **Trust comes from specifics.** Nervous customers respond to knowing exactly who will be in their house. Naming the two of you and promising no strangers does more than words like "established" or "experienced".
-- **I left out "established since…" claims.** You started taking bookings in March, and a claim like "years of experience" could backfire if someone asks. You can still sound established by being clear, local and confident. If you want to mention March, "Taking bookings in Leeds since March" is honest and still reads well.
-- **Swap in your first names.** I used "me and Dani" so it works as it is. If your site has an About section, "I'm [name], and this is my cousin Dani" would read well here.
+## Why Three Weeks?
 
-**Things to add if they're true**
-Only add these if they apply to you. I haven't included any of them.
-- Pet-sitting insurance
-- DBS checks
-- Pet first-aid training
-- A free meet-and-greet before the first booking
+Anyone can blend peppers and bottle them the same day. We give every batch three weeks to ferment first. That time lets the flavor develop, so the sauce tastes like more than heat and vinegar.
 
-Any of these would reassure nervous customers more than anything else on the page. A real photo of you and Dani next to the headline would also help.
+It's slower, and we do it that way on purpose.
+
+---
+
+## Know Your Farmer
+
+Our peppers come from two farms we know personally. One of them is in my own county. I've walked the rows and talked with the people who grow them. When you open a bottle, you can trace what's in it back to a real field.
+
+---
+
+## From the Farmers Market to Your Kitchen
+
+Copper Hollow started at a Saturday farmers market table. Customers tried a sauce, came back the next week, and brought friends. That's how we grew, one bottle and one conversation at a time.
+
+This month we opened the online store, so you no longer need to be in Duluth on a Saturday to get a bottle. We ship anywhere in the US.
+
+---
+
+## What People Are Saying
+
+*[Add 2–3 real customer quotes here, with first names or initials. Market regulars and early online orders both work.]*
+
+---
+
+## Closer
+
+**Find the one that's yours.**
+
+Four sauces, $9 a bottle, made in small batches and shipped to your door. Start with the one that sounds best to you. If you're not sure, pick two.
+
+[Shop Copper Hollow Pepper Co.]
+
+---
+
+## Notes
+
+- **I didn't invent a backstory.** I left out claims like "since 2012," "family recipe," awards, and bottle counts. The real story is the farmers market, the fermentation, and the farms, and it holds up without those. An invented detail can also hurt you if a customer checks it.
+- **Real quotes will make it feel established.** Pull them from market regulars, texts, or reviews. That will do more than any wording I could add.
+- **Fill in a few details.** If you tell me the farms' names or towns, I can make the farm section more specific. Heat guidance such as "mild / medium / hot" for each sauce would also help new buyers choose. Shipping times, if you have them, would be useful too.
+- **The word count is roughly 400 before you add quotes.** That leaves room for an FAQ or a short "About" paragraph, or I can expand any section to reach 600.

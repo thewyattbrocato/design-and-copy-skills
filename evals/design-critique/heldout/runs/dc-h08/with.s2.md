@@ -1,13 +1,11 @@
-I'd group the toggles by what the user cares about, not by how the app sends them, and put the two master switches and quiet hours in their own section.
+I'd group the 14 toggles into five labeled sections, ordered by how much people care about them.
 
-**1. Delivery (top of screen)**
-- Push notifications (master)
-- Email notifications (master)
-- Quiet hours, shown only when push is on, and expanding to a time range when enabled
+**1. Channels (top, two master switches)**
+- Push notifications
+- Email notifications
+- Put quiet hours directly under push, indented, and only show it when push is on. It only applies to push, so it shouldn't sit in the main list.
 
-These three are a different kind of control from the rest: they gate everything else. Giving them their own section fixes much of the "14 identical toggles" problem. When a master is off, grey out the toggles it controls and say why, for example "Turn on push to choose alerts".
-
-**2. Garden care** (the core value, so keep it open on the main screen)
+**2. Garden care (the reason people install the app)**
 - Watering reminders
 - Frost alerts
 - Harvest windows
@@ -17,19 +15,24 @@ These three are a different kind of control from the rest: they gate everything 
 - Comments on my beds
 - Shared bed invites
 
-**4. Tips & updates**
+**4. Tips and inspiration**
 - New plant suggestions
 - Plant-of-the-week
 - Weekly summary email
 
-**5. Promotions** (last, visually quieter)
+**5. News and offers (last, default off)**
 - Product news email
 - Sale announcements
 
-**Other suggestions**
-- **Show fewer toggles at once.** If it still feels long, make sections 3–5 tappable rows with a summary ("2 of 3 on") that open a sub-screen. Keep Delivery and Garden care inline.
-- **Make the channel clear.** Weekly summary and product news are email-only, but the rest are ambiguous. Either add a small "Email" or "Push" tag to each row, or give each row two small checkboxes (Push / Email) instead of one toggle. The second option is more powerful but denser, so I'd only use it if users really need per-channel control.
-- **Set defaults deliberately.** Garden care and direct social items (invites, comments) should default on. Promotions should default off or opt-in. A well-chosen default means most people never open this screen.
-- **Consider merging Promotions.** Product news and sale announcements are probably one decision for most users. A single "Promotions" toggle would cut a row, unless you need them separate for compliance or analytics.
+**Behavior that matters more than the grouping**
+- **Masters gate their children.** If email is off, grey out the email-only items (weekly summary, product news) and say why, e.g. "Turn on email notifications to enable." Don't hide them, or people won't know the option exists.
+- **Label the channel on each row.** Several of these are email-only, so a small "Email" or "Push" tag under the row title avoids confusion about where each one goes.
+- **Add one-line descriptions** to the vague ones, such as "Harvest windows" and "New plant suggestions". Skip them on self-explanatory rows like "Friend requests".
+- **Collapse sections 3–5 by default** if the screen still feels long. Section 2 stays open. That puts about 7 rows on screen at first instead of 14.
+- **Set sensible defaults.** Garden care and direct social items (invites, comments) default on. Marketing defaults off. Most people never change defaults, so this does more than the layout does.
+- **Consider a "Pause all" shortcut** at the top for people who just want quiet, which the two masters already mostly cover.
 
-If you tell me the platform (iOS, Android or web) and whether most of these are push, email or both, I can sketch the exact row structure and labels.
+**If you're willing to rework the model**
+Several of these topics probably should be settable per channel (watering by push but not email). A table with topics as rows and Push/Email columns of small toggles handles that in a compact layout. It's more work and denser on mobile, so I'd only do it if users are asking for that control.
+
+I can sketch this as a wireframe or write the component structure if you tell me your stack.

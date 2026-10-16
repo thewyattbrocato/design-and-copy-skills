@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pool Status</title>
+<style>
+  :root {
+    --ok: #0a6b3a;
+    --ok-bg: #e3f4ea;
+    --bad: #a30f26;
+    --bad-bg: #fbe6e9;
+    --ink: #10212b;
+    --muted: #4a5b66;
+    --page: #f2f7fa;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: clamp(14px, 1.7vw, 42px); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .banner {
+    border-radius: 1rem;
+    padding: 1.5rem 2rem;
+    color: #fff;
+    background: var(--ok);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .banner.bad { background: var(--bad); }
+  .banner .icon {
+    flex: none;
+    width: 4.5rem; height: 4.5rem;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--ok);
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 4.5rem;
+    text-align: center;
+  }
+  .banner.bad .icon { color: var(--bad); }
+  .banner h1 { margin: 0; font-size: 3.2rem; line-height: 1.05; letter-spacing: .01em; }
+  .banner p { margin: .35rem 0 0; font-size: 1.5rem; }
+  .grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 1rem;
+  }
+  .tile {
+    background: #fff;
+    border-radius: 1rem;
+    border-left: .6rem solid var(--ok);
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: .4rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  }
+  .tile.bad { border-left-color: var(--bad); }
+  .label { font-size: 1.5rem; font-weight: 700; color: var(--muted); }
+  .value { font-size: 4.2rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+  .value small { font-size: 1.6rem; font-weight: 700; color: var(--muted); margin-left: .25rem; }
+  .range { font-size: 1.2rem; color: var(--muted); }
+  .pill {
+    align-self: flex-start;
+    font-size: 1.4rem;
+    font-weight: 800;
+    padding: .2rem .9rem;
+    border-radius: 999px;
+    background: var(--ok-bg);
+    color: var(--ok);
+  }
+  .tile.bad .pill { background: var(--bad-bg); color: var(--bad); }
+  .tile.info { border-left-color: #5b7283; }
+</style>
+</head>
+<body>
+
+<div class="banner" id="banner" role="status" aria-live="polite">
+  <div class="icon" id="bannerIcon" aria-hidden="true">✓</div>
+  <div>
+    <h1 id="bannerTitle">Pool is open</h1>
+    <p id="bannerText">Water and staffing checks are all within safe limits.</p>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+  // Staff: edit these numbers. Status and banner update automatically.
+  var data = {
+    lastTested: "14:05",
+    temp:  { label: "Water temperature", value: 27.8, unit: "°C",  min: 26,  max: 29  },
+    cl:    { label: "Chlorine",          value: 1.6,  unit: "ppm", min: 1,   max: 3   },
+    ph:    { label: "pH",                value: 7.4,  unit: "",    min: 7.2, max: 7.8 },
+    guards:{ label: "Lifeguards on duty", value: 3,   unit: "",    atLeast: 2 }
+  };
+
+  var grid = document.getElementById("grid");
+  var allOk = true;
+
+  function tile(label, valueHtml, rangeText, ok, info) {
+    var el = document.createElement("div");
+    el.className = "tile" + (info ? " info" : ok ? "" : " bad");
+    var html = '<div class="label"></div><div class="value">' + valueHtml + '</div>';
+    if (rangeText) html += '<div class="range"></div>';
+    if (!info) html += '<div class="pill">' + (ok ? "✓ OK" : "⚠ CHECK") + '</div>';
+    el.innerHTML = html;
+    el.querySelector(".label").textContent = label;
+    if (rangeText) el.querySelector(".range").textContent = rangeText;
+    grid.appendChild(el);
+  }
+
+  ["temp", "cl", "ph"].forEach(function (k) {
+    var d = data[k];
+    var ok = d.value >= d.min && d.value <= d.max;
+    if (!ok) allOk = false;
+    tile(d.label,
+         d.value + (d.unit ? "<small>" + d.unit + "</small>" : ""),
+         "Safe range: " + d.min + " to " + d.max + (d.unit ? " " + d.unit : ""),
+         ok);
+  });
+
+  var g = data.guards;
+  var gOk = g.value >= g.atLeast;
+  if (!gOk) allOk = false;
+  tile(g.label, String(g.value), "Minimum required: " + g.atLeast, gOk);
+
+  tile("Last tested", data.lastTested, "", true, true);
+
+  var banner = document.getElementById("banner");
+  if (!allOk) {
+    banner.classList.add("bad");
+    document.getElementById("bannerIcon").textContent = "!";
+    document.getElementById("bannerTitle").textContent = "Please ask staff before swimming";
+    document.getElementById("bannerText").textContent = "One or more checks are outside the safe limits.";
+  }
+</script>
+</body>
+</html>

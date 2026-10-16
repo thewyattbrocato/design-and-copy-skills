@@ -1,21 +1,23 @@
-**Why it looked busy:** every element was emphasized. The card had a gradient, a border, a heavy shadow, a floating badge, a circled icon, and three identical solid 3D buttons. Everything was bold, and the title, meta line, price, and seat count were all 14–20px. Nothing was ranked.
-
-**Ranking I used:**
-1. Title
-2. Price and the Reserve button
-3. Schedule details and seats left
-4. Wishlist and Share
+I cut the effects and ranked the content. The card now reads title, then price and the Reserve button, then schedule and seats, then the two minor actions.
 
 ```html
 <div class="card">
-  <p class="eyebrow">New</p>
+  <div class="top">
+    <span class="icon" aria-hidden="true">&#127982;</span>
+    <span class="badge">New</span>
+  </div>
   <h3>Wheel Throwing for Beginners</h3>
-  <p class="meta">Tuesdays 6:30–9pm · 6 weeks · Studio B</p>
-  <p class="price">$185 <span class="seats">· 3 seats left</span></p>
+  <p class="meta">Tuesdays 6:30-9pm &middot; 6 weeks &middot; Studio B</p>
+  <div class="buy">
+    <p class="price">$185</p>
+    <p class="seats">3 seats left</p>
+  </div>
   <div class="actions">
     <button class="btn btn-primary">Reserve a seat</button>
-    <button class="btn btn-quiet">Add to wishlist</button>
-    <button class="btn btn-quiet">Share</button>
+    <div class="secondary">
+      <button class="btn btn-secondary">Add to wishlist</button>
+      <button class="btn btn-link">Share</button>
+    </div>
   </div>
 </div>
 ```
@@ -24,76 +26,38 @@
 .card {
   width: 320px;
   padding: 24px;
-  border: 1px solid #e6d9cc;
+  border: 1px solid #e6d5c3;
   border-radius: 12px;
-  background: #fff;
+  background: #fffaf5;
+  box-shadow: 0 2px 8px rgba(60, 40, 20, .08);
   font-family: system-ui, sans-serif;
-  color: #2b2118;
+  color: #2b1d12;
 }
-.eyebrow {
-  margin: 0 0 8px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: #b4532a;
-}
-.card h3 {
-  margin: 0 0 8px;
-  font-size: 24px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-.meta {
-  margin: 0 0 20px;
-  font-size: 14px;
-  color: #6b5d50;
-}
-.price {
-  margin: 0 0 16px;
-  font-size: 20px;
-  font-weight: 700;
-}
-.seats {
-  font-size: 14px;
-  font-weight: 600;
-  color: #b4532a;
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 16px;
-}
-.btn {
-  font: inherit;
-  font-size: 14px;
-  cursor: pointer;
-}
-.btn-primary {
-  flex: 1 0 100%;
-  padding: 12px 16px;
-  border: 0;
-  border-radius: 8px;
-  background: #b4532a;
-  color: #fff;
-  font-weight: 600;
-}
-.btn-quiet {
-  padding: 4px 0;
-  border: 0;
-  background: none;
-  color: #6b5d50;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
+.top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.icon { font-size: 28px; line-height: 1; }
+.badge { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: #8a4a1f; background: #f5e3d0; padding: 3px 8px; border-radius: 99px; }
+.card h3 { font-size: 22px; font-weight: 700; line-height: 1.25; margin: 0 0 6px; }
+.meta { font-size: 14px; font-weight: 400; color: #5f4b3b; margin: 0 0 20px; }
+.buy { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+.price { font-size: 28px; font-weight: 700; margin: 0; }
+.seats { font-size: 14px; font-weight: 600; color: #b3321d; margin: 0; }
+.actions { display: flex; flex-direction: column; gap: 8px; }
+.secondary { display: flex; justify-content: space-between; align-items: center; }
+.btn { font: inherit; font-size: 14px; font-weight: 600; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.btn-primary { font-size: 16px; padding: 12px 16px; background: #a85a24; color: #fff; border: 0; }
+.btn-secondary { background: transparent; color: #8a4a1f; border: 1px solid #c9a98c; }
+.btn-link { background: transparent; color: #8a4a1f; border: 0; text-decoration: underline; }
 ```
 
-**What changed:**
-- **Title:** it's now the largest and heaviest text. The schedule line dropped to regular weight in a softer color, so it reads as support.
-- **Price and seats:** price is the second-boldest item. "3 seats left" sits beside it as the only colored text, which is enough urgency without a badge.
-- **Buttons:** Reserve is the one solid, full-width button. Wishlist and Share are plain text links.
-- **Removed:** the gradient, heavy shadows, and floating badge are gone. So are the circled icon and the 3D button borders, none of which carried information. The 🍮 emoji was a custard, not pottery; if you want an icon, use a real pottery one, quieter than the title.
-- **NEW:** it's now a small label above the title instead of a badge.
+**Why it looked busy:**
+- **Competing emphasis:** The 2px border, gradient, big colored shadow, glowing badge, ringed icon circle and three identical 3D buttons were all shouting at once. Nothing was the main thing.
+- **Flat text:** The title, price and bold meta line were all about the same size and weight.
+- **Three equal buttons:** "Share" looked as important as "Reserve a seat".
 
-I kept your orange as the single accent, darkened to `#b4532a` so the white button text and the small text have enough contrast. I also changed the hyphen in the time range to an en dash, and swapped the `&middot;` entities for literal `·` characters.
+**What changed:**
+- **Decoration:** I removed the gradient, double border, heavy shadows and icon circle. The emoji stays as a small mark.
+- **Badge:** It now sits in the top row instead of floating off the corner, and it is quieter.
+- **Price and seats:** The price is larger, with "3 seats left" as the only red text, on the same row.
+- **Buttons:** There is one solid button, one outline button and one text link.
+
+I assumed "3 seats left" and the $185 price are real and kept them as written.

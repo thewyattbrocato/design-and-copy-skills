@@ -1,49 +1,53 @@
-**Subject:** 212 families. Last January. Don't let it happen again.
+**Subject line options**
+- 212 families. Turned away. Last January.
+- Your gift counts double until midnight, December 31
+- Don't let January happen again
 
-**Preview text:** Every dollar you give by Dec 31 is doubled, but only while the match lasts.
+**Preview text:** Every dollar becomes 8 meals, but only until December 31 at 11:59 pm.
 
 ---
+
+**Subject: 212 families. Turned away. Last January.**
 
 Dear friend,
 
-Last January, 212 families came to our doors and we had to tell them no.
+Last January, 212 families came to Eastgate Pantry Network for food, and we had to tell them no.
 
-The shelves were empty. There was nothing to put in their hands. Some of those parents had already skipped a meal so their kids wouldn't have to. They came to us as the last place left to ask, and we had to turn them away.
+The shelves were empty. There was nothing to hand them. Parents who had worked up the nerve to ask for help walked back out the door with nothing. I think about that number every day, and I don't want to say it again next year.
 
-I haven't forgotten that, and I never want to say those words again.
-
-That's why this year-end matters so much, and why I'm asking you directly.
+Right now you can help make sure we don't.
 
 **A local foundation will match every dollar you give, dollar for dollar, up to $25,000. The match ends December 31 at 11:59 pm.**
 
-So far, only $6,400 of that $25,000 has been claimed. That leaves $18,600 in matching money that disappears at midnight on New Year's Eve unless we raise it. Every dollar of it we leave unclaimed is food that never reaches a family.
-
-Here is what your gift does:
+Here is what that means:
 
 - **$1 buys about 4 meals** at our purchasing prices.
-- **With the match, your $1 becomes $2, or about 8 meals.**
-- **$25 becomes $50, or about 200 meals.**
-- **$100 becomes $200, or about 800 meals.**
+- **With the match, $1 becomes 8 meals.**
+- A gift of **$50 becomes $100, or about 400 meals.**
 
-The winter months are when our shelves are most at risk. They are also when the families who come to us have the least room to cope. Gifts made now are what keep the doors open and the shelves full in January.
+So far, only **$6,400 of the $25,000** has been claimed. That leaves **$18,600 in matching funds** that will go unused if we don't raise it by the deadline. The foundation will not extend it. When the clock runs out, that money is gone, and so are the meals it would have bought.
 
-I can't promise the match will still be there if you wait. It ends on December 31, and once it's gone, the same gift feeds half as many people.
+January is when our shelves run lowest and the need runs highest. Last year, those two things collided, and 212 families paid for it.
 
-**Please give now, while every dollar counts twice:**
+You can change that this year. A gift today stocks our shelves before the hardest months begin, and it counts twice.
 
 **[DONATE LINK]**
 
-Whatever you can give, the foundation will match it. If you've given before, thank you. This year I'm asking you to help us reach the whole $25,000, so that when a family walks in this January, we have something to give them.
+Please give today. Don't wait for the last week of December, when it's easy for this to slip away. The match is real, the deadline is real, and the families are real.
+
+Thank you for standing with your neighbors.
 
 With gratitude and urgency,
 
-**Marguerite Holt**
-Executive Director, Eastgate Pantry Network
+Marguerite Holt
+Executive Director
+Eastgate Pantry Network
 
-P.S. The match closes December 31 at 11:59 pm. As of today, $18,600 of it is still unclaimed. Give here: **[DONATE LINK]**
+**P.S.** $18,600 in matching funds is still unclaimed, and it disappears at 11:59 pm on December 31. Every dollar you give before then feeds twice as many people. **[DONATE LINK]**
 
 ---
 
-Notes:
-- Update the "$6,400 / $18,600" figures to the current total when you send, and again for any follow-up. The strongest line in the email only works if it's accurate on the day.
-- The meal figures ($2 for about 8 meals and so on) are straight math from your "$1 = about 4 meals" and the 1:1 match. I added no other claims. If you have a real, specific story from a family, with their permission, it would make the opening even stronger.
+**Notes**
+- **Update the $6,400 figure** before each send. It's your strongest proof point, and it gets stronger as the unclaimed amount shrinks. An outdated number will undercut the trust the email is built on.
+- **For a series, use the same facts with escalating framing.** For example, "$X left to match" in December, then "Final hours" on the 31st. The deadline is real, so repeated reminders are legitimate.
+- **If you have a true, permissioned story from a family you've served, add it.** I didn't invent one, and a real one will hit harder than anything I could write.

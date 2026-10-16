@@ -1,0 +1,1 @@
+Aim for roughly 100–200 ms: fast enough to feel instant, but just long enough for a subtle animation to read as smooth. Anything over about 300 ms starts to feel sluggish, and closing can be a bit quicker than opening.

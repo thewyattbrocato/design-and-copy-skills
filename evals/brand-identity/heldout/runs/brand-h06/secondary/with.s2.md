@@ -1,52 +1,50 @@
-## Lockups and placements for Southbank Reading Room
+**Assumptions:** the name is "Southbank Reading Room" as one line, the symbol is the three-book S, and the tote is screen-printed in one ink. Clear space ("x") is the height of one book in the stack. The minimum sizes below are starting points to verify with real proofs.
 
-**Build these versions first**, then assign them to placements:
+## 1. Website header (wide)
 
-1. **Horizontal lockup, full color:** symbol left, name right. Web header and print letterhead.
-2. **Horizontal lockup, one color (black):** same arrangement, one ink. Tote bag and bookmark on light stock.
-3. **Horizontal lockup, reversed:** same arrangement in white or the light tone, for dark grounds.
-4. **Stacked lockup:** symbol above the name, centered. Bookmark and tote.
-5. **Symbol only:** full color, one color, and reversed. Avatar and favicon.
-6. **Small-size symbol:** a heavier version with any hairline gaps between books closed or widened. Use at 32 px and below and on fabric.
+**Lockup:** horizontal. Symbol on the left, name on the right, on one baseline-aligned row.
 
-Use `x` = the height of the top book in the stack as the unit for spacing.
+- Symbol height is about 1.5× the name's cap height, with its bottom book sitting on the name's baseline.
+- The name is on one line, not wrapped.
+- Clear space is x on all sides. Keep nav and buttons out of that zone.
+- Minimum symbol height: 32 px (below that, switch to symbol-only).
+- Use the full-color version on light grounds and the reversed version on dark headers.
+- Do not add a tagline here. If one is needed, put it in the page body.
 
-- **Clear space:** keep 1x free on all sides of any version.
-- **Name:** the name sits beside the symbol, with its cap height about half the symbol height in the horizontal lockup. Set the name in a face you have adjusted, not an untouched stock font.
-- **No tagline inside the mark.** If a tagline is added, it goes on its own line below the lockup.
+## 2. Social avatar (square)
 
-## 1. Wide website header
+**Lockup:** symbol only, no name.
 
-- **Version:** horizontal lockup, full color on light backgrounds; reversed when the header sits on a dark image or dark bar.
-- **Placement:** left-aligned to the content column, vertically centered in the header bar.
-- **Size:** lockup height about 48–64 px on desktop. Keep the symbol at least 32 px tall.
-- **Narrow screens:** below roughly 600 px wide, swap to symbol only (version 5) so the name does not shrink below legibility.
-- **Background:** use a solid bar behind the lockup, not a photo, so the reversed version never sits on a busy image.
+- Center the symbol and scale it to fill about 60–70% of the square, so it stays clear of circular crops that many platforms apply.
+- Use the solid mark on a flat field, with the background in the brand's main color or white.
+- Do not place the name here. At avatar size it would be illegible.
+- Test the crop by previewing it as a circle before export.
 
-## 2. Square social avatar
+## 3. Bookmark (narrow, vertical)
 
-- **Version:** symbol only, full color on a solid light or dark square, or the reversed symbol on a solid brand-color square.
-- **Placement:** centered, with the symbol filling about 60–70% of the square's width.
-- **Circle crop:** many platforms crop to a circle. Keep the symbol inside the central 80% of the diameter so no book is clipped.
-- **Why no name:** at 40–200 px, the name will not read. Do not shrink it into the avatar.
+**Lockup:** stacked. Symbol on top, name below.
 
-## 3. Narrow bookmark
-
-- **Version:** stacked lockup, one color (black or a single dark ink), on light stock.
-- **Placement:** centered horizontally, in the upper third of the bookmark. Keep the lower two-thirds open for a tassel or clear space.
-- **Name:** break onto two lines, "Southbank" over "Reading Room," so the block fits a narrow strip.
-- **Size:** symbol about 60% of the bookmark's width, and no narrower than about 10 mm. Name cap height no smaller than about 2.5 mm.
-- **Fine detail:** if any gap between books is under about 0.5 mm, use the small-size symbol (version 6).
+- Set the name in two short lines ("Southbank" / "Reading Room"), horizontally, centered under the symbol. Do not rotate the name to fit the width; rotated text is hard to read.
+- Keep the symbol at least as wide as the bookmark's text column, with clear space of x on all sides.
+- Minimum symbol width: about 15 mm.
+- Use the one-color version. Bookmarks are often printed in a single ink or foil.
+- If the name is too small to read at that width, drop it and use the symbol alone. The name can be a line on the back.
 
 ## 4. Canvas tote bag
 
-- **Version:** stacked lockup, single ink (black or one dark ink), on natural canvas. Reversed only if the bag is dark.
-- **Method:** screen print or heat transfer. Assume one ink, so no tints or gradients.
-- **Placement:** centered on the front panel, with the top of the print about one-third of the way down the bag face.
-- **Size:** print about 25 cm wide. Keep at least 5 cm clear of seams, handle stitching, and folds.
-- **Texture:** canvas soaks up fine lines, so use the small-size symbol (version 6) and check it on a sample before a full run.
+**Lockup:** stacked, large, one color.
 
-## Assumptions and trade-off
+- Place the stacked lockup centered in the upper third of the front panel, with the symbol about 40–50% of the panel width.
+- Use the solid one-color version. Remove any fine detail, and keep the gaps between books wide enough to survive printing and ink spread.
+- If the canvas is dark, use the reversed one-color version (light ink on dark). Do not use a full-color version; canvas printing is usually limited to one or two inks.
+- Minimum symbol width: about 40 mm.
+- Keep clear space of x all around, and keep the bag's handles and seams out of the mark.
 
-- **Assumed:** the name is exactly "Southbank Reading Room," no existing brand guide exists, and the mark's palette is undecided. I used one-ink black as the default. If you choose a brand color, apply it to versions 1 and 5 first and keep the one-color versions for print.
-- **Trade-off:** the stacked lockup sets the name in two lines to fit narrow formats, which weakens the horizontal read. Keep the horizontal lockup as the primary and treat the stack as a secondary format.
+## Build notes for the volunteer designer
+
+- Build one master (black, solid) and derive every version from it.
+- Build four files: full-color, one-color black, reversed (white), and symbol-only.
+- Provide the four placements as separate export sets, not one file scaled to fit each use.
+- Test the bookmark and the tote with a physical proof before the run. Screen and screen-print ink spread closes gaps that look fine on screen.
+
+**Trade-off:** the stacked bookmark and tote lockups make the name smaller than the horizontal header does. If the name is hard to read on the bookmark, the next step is to make the symbol larger, not to rotate the name.

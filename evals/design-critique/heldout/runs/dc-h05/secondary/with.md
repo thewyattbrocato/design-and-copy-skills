@@ -1,10 +1,22 @@
-I can't tear this site apart yet because I can't reach it. I have no web-fetch or browser tool here, and `.example` is a reserved domain that won't resolve on the public internet, so it may be a placeholder for your real URL. If you give me the real address, I still can't load it myself.
+I can't critique the site yet because I can't reach it. I have no web-fetch or browser tool here, and `sundial-sauna.example` uses the `.example` domain, which is reserved for documentation and doesn't resolve. Check whether the real domain was meant to be something else.
 
-Here's what would let me give you a real critique:
+To get a real critique, send me one of these:
 
-1. **Walk the booking flow step by step.** For each screen, list what the user sees, what they must enter, and what happens on error. Include the click count from landing page to confirmed booking.
-2. **Paste or upload the markup and scripts** for the booking pages, or the repo path if the code is local. I can read the forms, validation, and API calls directly.
-3. **Send screenshots** of each step, including mobile widths and the error and empty states.
-4. **Share analytics if you have them.** Drop-off by step is the fastest way to find the real problem, and it tells us whether the booking flow is actually the bottleneck or just the one you're most annoyed with.
+- **The real URL**, if you have a browser tool or the `run` skill set up. I'd still need you to walk me through the booking steps, since I can't click through the flow.
+- **Screenshots** of each booking step, from landing page to confirmation.
+- **The source** for the booking pages, if it's in this working directory or pasted here.
+- **A written walkthrough**: each step, every field asked for, what happens on errors, and where people drop off, if you have analytics.
 
-Even before I see anything, the usual suspects for a sauna booking flow are: a forced account signup before showing availability, a calendar that doesn't show time-slot capacity or duration, no clear price until the final step, payment required too early, weak mobile layout for date and time pickers, and unclear cancellation or reschedule rules. Send the flow and I'll check each of these against what's actually there and rank the problems by how much they likely cost you in lost bookings.
+Once I have that, I'll use the design-critique approach: severity-ranked findings for the booking flow and the rest of the site, anchored scores, a fix order, and what's already working. You asked for brutal, so I'll be blunt about it.
+
+While you gather that, here are the usual suspects for "booking flow is the problem." Check them first:
+
+1. **Forced account creation** before the user can see a price or availability.
+2. **Too many steps or fields**, especially asking for address or payment before the time slot is confirmed.
+3. **Unclear availability**: slots that show as open but fail at checkout, or no indication of what's sold out.
+4. **Price surprises**: taxes, fees, or add-ons revealed only at the final step.
+5. **Mobile problems**: date pickers, tiny tap targets, or a payment form that breaks the keyboard.
+6. **Weak error recovery**: a generic error message, or a form that clears the user's input when something fails.
+7. **No confirmation path**: no email or SMS, or a confirmation page with no booking reference or cancellation info.
+
+If the drop-off happens before the booking page, the problem may be the landing page or pricing, not the booking flow itself. Your funnel data will tell you which.

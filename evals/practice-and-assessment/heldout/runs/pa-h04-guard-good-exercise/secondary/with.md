@@ -1,15 +1,17 @@
-The exercise is in good shape, but the answer key for Marguerite is wrong. Her hours total 37.5, not 38.5.
+I checked every sum and multiplication. **Marguerite's answer is wrong, and the key needs fixing before you print.**
 
-**Marguerite:** 8.0 + 7.5 + 8.5 + 7.0 + 6.5
-- Whole numbers: 8.0 + 7.0 = 15
-- Halves: 7.5 + 8.5 + 6.5 = 22.5
-- Total: 15 + 22.5 = **37.5 hours**
-- Regular pay: 37.5 × $22.00 = **$825.00**
+**Marguerite Oyelaran (Part 3)**
+- Hours: 8.0 + 7.5 + 8.5 + 7.0 + 6.5 = **37.5**, not 38.5. Grouped as the hint suggests: whole hours 8 + 7 = 15, halves 7.5 + 8.5 + 6.5 = 22.5, total 37.5.
+- Regular pay: 37.5 × $22.00 = **$825.00**, not $847.00. The $847 is what you get from 38.5 hours.
 
-The key says 38.5 hours and $847.00. That's 38.5 × 22, so the error is in the total, and the pay follows from it. Her answer and Tomas's both being 38.5 may be why it got through, so the likely fix is to change the key to 37.5 and $825.00.
+Your answer key is consistent with a different sheet, so pick one fix:
+- **Keep the key, change the sheet:** make Friday 7.5 instead of 6.5. That gives 38.5 hours and $847.00.
+- **Keep the sheet, change the key:** use 37.5 hours and $825.00.
 
-I checked the other figures and they're correct:
-- **Priya:** 38 hours, $760.00
-- **Tomas:** 7.5 + 8 + 8 + 7 + 8 = 38.5 hours, 38.5 × $26 = $1,001.00
+**Parts 1 and 2 are correct.**
+- Priya: 24 + 14 = 38 hours; 38 × $20 = $760.00.
+- Tomas: 31 + 7.5 = 38.5 hours; 38.5 × $26 = $1,001.00.
 
-The rest of the handout reads clearly. The "add again if over 40" check is a little odd, since none of these weeks is near 40 and a clerk who gets 37.5 might think they've made a mistake. You could replace it with something like "Hours should land between 35 and 45 for these weeks."
+**Other notes**
+- The worked example and the hint are clear, and the overtime check is useful. None of the weeks reaches 40 hours, so the check is sound.
+- Part 1 says "without a calculator," but multiplying by a half-hour total like 38.5 × $26 is harder than the whole-number multiplication in the example. If you want the exercise to stay calculator-free, you could use whole-hour totals for at least one week, or allow a calculator for the pay step only.

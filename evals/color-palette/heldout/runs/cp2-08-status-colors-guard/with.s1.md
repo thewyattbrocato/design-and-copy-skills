@@ -1,17 +1,25 @@
-Not a good idea, at least for failed. Your brand red is also your button color, so a failed deployment would look like your primary action. Users would have to work out which red is "click me" and which is "something broke". If green, amber, and blue were pulled from the brand palette, they'd also have to be bent away from the hues people already read as success, warning, and in-progress.
+Not a good idea, and your brand color is the reason.
 
-I'd keep the brand palette for buttons and chrome, and use conventional status hues in a separate semantic set. The brand red stays on solid fills, and status uses tinted badges (pale fill, dark text, icon). That way the two reds differ in treatment as well as shade.
+**Why it's risky**
+- **Red already means two things.** Your main buttons are red, and "failed" is red too. If the status colors come from the brand palette, a user can't tell "this is the action I can take" from "this broke". Pulling the other statuses from the brand palette would also blur their meaning, because green, amber and blue only read as success, waiting and in-progress by convention.
+- **People scan these colors without reading.** On a deploy dashboard, a green or red that doesn't match what people expect costs attention at the moment it matters most.
 
-| Status | Text/icon | Tint fill | Icon + label |
+**What I'd do**
+- Use conventional status hues for the four statuses.
+- Keep the brand red for buttons, links and focus states only.
+- Make "failed" a deeper, slightly cooler red than the brand red. Show it as an icon plus the word "Failed" in a pale pill, not as a solid filled button.
+- Carry meaning with an icon and a label as well as color, so status still reads in grayscale and for red-green colorblind users.
+
+| Status | Text/icon | Pill background | Icon |
 |---|---|---|---|
-| Running | `#1d5fd1` | `#e8f0fd` | spinner, "Running" |
-| Succeeded | `#1a7f4b` | `#e6f4ec` | check, "Succeeded" |
-| Failed | `#b42318` | `#fdeceb` | ✕, "Failed" |
-| Waiting for approval | `#8a5300` | `#fdf3dc` | clock or pause, "Awaiting approval" |
+| Running | `#1a62c7` | `#e6effb` | spinner |
+| Succeeded | `#1a7f4b` | `#e5f4ec` | check |
+| Failed | `#b42327` | `#fdeceb` | X |
+| Waiting for approval | `#8a5a00` | `#fff3d6` | clock |
 
-- **Failed vs. brand:** `#b42318` is deeper and darker than `#d93a35`. Only brand red is ever a solid fill, and only failed uses the tinted red badge.
-- **Contrast:** each text color on its tint should land around 4.5–6:1. These are my estimates and I haven't run a checker, so measure them before shipping. Dark text on pale tints leaves room to adjust within a family.
-- **Not color alone:** every status has an icon and a word, so the set still reads in grayscale and for red-green color blindness. Running blue and succeeded green are close in lightness, which is one more reason the icon and label matter.
-- **Dark mode:** don't invert these. Use lighter, calmer text colors on darker tints, and re-measure each pair.
+I couldn't run a contrast checker here, so these ratios are estimates. By hand, each text-on-pill pair should land around 5:1 or better, which clears the 4.5:1 floor for small text. Check them in your tooling before shipping. Your brand red with white text works out to about 4.6:1, so the buttons pass but with little room to spare.
 
-If you'd like the brand to show up in the status set, put it in the layout rather than the hues. Rounded badge shapes, the type, and the card styling can all carry it.
+**Keeping it on-brand**
+Tint your neutrals (page background, cards, borders) slightly toward the brand red's hue. That gives the dashboard a branded feel without touching the status colors.
+
+I assumed a light theme. A dark theme needs the status colors remapped and re-measured, and I can do that next if you want.

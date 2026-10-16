@@ -1,24 +1,21 @@
-Your designer is half right. Embroidery does have hard limits, but "just how embroidery works" is the reason to make a simplified version. It isn't a reason to accept a bad result.
+Your designer is half right. Embroidery has hard physical limits, but a designer should handle them by making a version that works, not by treating the failure as inevitable. The same goes for the favicon.
 
 **Why it happens**
 
-Your logo was drawn for screens and print, where detail is nearly free. Both failures come from physical or pixel limits that the full-detail artwork ignores.
+- **Favicon:** 32px is about 1,000 pixels in total, and many browsers show it at 16px. A logo drawn for a website or deck has thin strokes, small gaps and maybe a tagline. When you shrink it, those details blend into the background and you get a gray smudge.
+- **Embroidery:** The mark is made of thread, not ink. Each thread is about 0.3–0.4 mm wide, and stitches pull the fabric slightly and spread out. Lines thinner than about 1 mm fill in. Gaps narrower than about 1 mm close up. Text shorter than about 5–6 mm (roughly ¼") turns to mush. On a polo logo about 3.5" wide, a small tagline falls below that limit.
 
-- **Favicon:** 32px (and often 16px when it's actually rendered) is about 1,000 pixels in total. Fine lines, small letters and thin gaps blur into the colors around them, which gives you a gray smudge. This is a drawing problem. Shrinking the full logo can't fix it.
-- **Embroidery:** The artwork gets rebuilt from thread. A thread is roughly 0.4 mm wide, and the fabric stretches and puckers. Lines thinner than about 1 mm, gaps narrower than about 1 mm, and text shorter than about 5–6 mm tall fill in or merge. Gradients and shading also have to become flat thread colors. The melted lines and unreadable tagline are what you'd expect from a logo that wasn't adapted.
+So the designer is right that a full-detail logo can't be stitched as is. They're wrong if they mean you have to live with the smudges. Every mark needs small-size and single-color versions, and the logo was never given them.
 
-**What to do (small project)**
+**What to do (a small job, not a project)**
 
-You need a small set of simplified versions, not a new logo.
+1. **Make a simplified small-size mark.** For example, use just the symbol or monogram with heavier strokes, wider gaps, and no tagline or hairlines. Check it in solid black at 16 and 32px. If it reads there, it will almost certainly work for stitching too.
+2. **Use that mark as the favicon.** Don't shrink the full logo. Export it as SVG, plus a 32px PNG and a 180px touch icon.
+3. **Make a separate embroidery version.** Drop the tagline, thicken fine lines, open up tight gaps, and limit it to 1–3 flat colors with no gradients. Hand it to the digitizer with a stated size, such as 3–3.5" wide on the chest. A digitizer is the person who converts art to a stitch file. Ask them to proof it first; a sample stitch-out usually costs little or nothing.
+4. **Set a lockup rule.** Make the full logo for web and print, the simplified mark for icons and avatars, and the embroidery version for apparel. The tagline stays a separate optional line, never part of the mark.
 
-1. **Favicon / symbol-only mark.** Pull out the single strongest shape, or a monogram if you have one. Draw it heavier, with no tagline, no thin lines and no more than 2 colors. Check it at 16 and 32px before you approve it. It should be a separate drawing, not the full logo shrunk.
-2. **Embroidery version.**
-   - Make it flat, in 1–3 solid thread colors.
-   - Thicken the thin strokes and open up the tight gaps.
-   - Drop the tagline from the embroidery. Put it on the shirt back, on a tag, or leave it off. Taglines shouldn't be part of the mark anyway.
-   - Ask the digitizer for a proof, and for a stitch-out sample before they run the whole order. A good digitizer will also adjust the stitching for you. Tell them the size and the fabric.
-3. **A one-page spec.** List the three versions (full, simplified/embroidery, icon), minimum sizes, and which one goes where. Next time, a vendor will pick the right file.
+This is probably a few hours of the designer's time. Ask for the three files above. If the designer says the logo can't be adapted, the logo itself may be the problem. In that case, a quick look at whether its core idea survives in solid black at small size would be worth doing.
 
-**Who does it:** Ask your designer for the two simplified drawings. That's a few hours of work, and the request is reasonable. If they push back again, ask them to show you the mark at 16px and on a polo sample. If a vendor already digitized the polos, you can send them the new simplified file and ask for a redo, since the fault may be in the artwork.
+For the 12 polos already made, you may be able to ask the embroiderer about a remake. Don't count on a refund, though, since they stitched what they were given.
 
-**One caveat:** I haven't seen your logo, so I can't tell you which elements to cut. If you send the file (SVG or PNG), I can look at it and tell you what needs simplifying and what could be the icon.
+I'm assuming a typical detailed logo with a tagline. If you share the file, I can say specifically what to simplify.

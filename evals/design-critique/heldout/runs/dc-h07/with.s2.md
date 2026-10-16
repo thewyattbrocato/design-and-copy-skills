@@ -1,21 +1,19 @@
-**Go with B, with one change: keep a thin summary strip above the table.** The change is below.
+**Go with B, with one addition: keep a slim KPI strip above the table.** Fairly confident, based on the task you described. I haven't seen either design, only your descriptions.
 
-The main task is chasing late loads. B makes that the whole screen. A makes it a secondary element.
+**Why B wins for chasing late loads**
+- **The task is a ranked worklist.** Sorting by lateness puts the next load to call about in row one. In A the table sits under the map and tiles, so it gets the least space of any element. A dispatcher scans it all day, so that placement is backwards.
+- **A spends its prime space on things that rarely change a decision.** Four large tiles take a full-width band at the top. "Late loads" is the only one that points to action, and it only gives a count. Nothing in A says which loads are late. On-time % and avg dwell are shift-level numbers a dispatcher checks occasionally, not continuously.
+- **The map in A is always on, but the question it answers is per load.** "Where is this truck?" only matters once a load is selected. Showing all trucks at once on a map is useful for spatial problems like rerouting or clustering. If your dispatchers do that a lot, it weakens B (see below).
+- **B's click-to-open map is one click per load.** That's cheap compared with scanning a permanent map. The risk is that opening and closing the panel gets tedious on a 27-inch screen with plenty of room.
+- **Dropping the sidebar frees width for table columns.** Those would be ETA, delay, carrier, customer, driver contact, and last ping. Dispatchers need those columns to decide who to call.
 
-**Why B wins for this task**
-- **Lateness is the sort order.** In B the worst load is row one and the next action is one click away. In A the table sits under a map and four tiles. On a 27" monitor the table gets roughly the bottom third of the height, so a dispatcher sees only a handful of rows without scrolling. That is my rough estimate, not a measurement.
-- **The KPI tiles take the most space and give the least.** Of the four, only "late loads" prompts action, and the table already shows that. On-time % and avg dwell time change slowly, so they don't need to be that big for someone who is on the screen all day. Active trucks is context.
-- **The map is wrong as the default view.** A map shows where trucks are, not which ones are late. It takes two-thirds of the width to answer a question the table answers faster. Behind a row click, it appears when a dispatcher needs location for one load.
-- **The sidebar costs width and does little.** If the dispatcher works from one screen all day, a permanent nav takes columns from the table. Use a collapsed icon rail or a top bar.
-- **Filter chips fit the work.** "Late > 60 min", "Unassigned" and "At risk" are the questions a dispatcher asks repeatedly.
+**What to fix in B**
+1. **Make the side panel persistent and non-modal.** Keep it open as the selected row changes, and add up/down arrow navigation through rows. On a 27-inch screen the panel should sit beside the table and not cover it, so working through five late loads takes five keypresses, not ten clicks.
+2. **Add a compact KPI strip (one line, not tiles) above the chips.** Make "late loads" clickable so it applies the late filter. That keeps the useful part of A at a fraction of the height.
+3. **Make the lateness cue more than a sort order.** Show delay as a number ("+2h 40m") and use color together with text or an icon. Sorting alone won't show where "slightly late" turns into "customer will call".
+4. **Save filter state.** Dispatchers will reuse the same two or three filters (their region, their accounts) all day, so remember them per user.
 
-**Where B is weaker, and the fix**
-1. **Losing the aggregates.** Add one compact line above the chips, for example "Late 14 · At risk 6 · On-time 91% · Active 212". It should be small, with only late loads emphasized. This keeps what's useful about A in about 40px of height.
-2. **The map panel can slow comparison.** If the dispatcher clicks row after row, the panel should update in place and not close and reopen. Make it dockable, so hovering or arrow-keying through rows updates the map. On a 27" monitor you have room to leave it open at about 30% width.
-3. **Sorting by lateness alone can bury "about to be late."** Consider a visible "at risk" band (ETA slipping, not yet late) so the sort isn't only about loads already late.
+**When I'd change my answer**
+If dispatchers mostly work spatially (rerouting, reassigning nearby trucks, watching clusters in weather), A's always-visible map matters more. That's the cheapest thing to check: watch two or three dispatchers for an hour and note how often they look at the map without a specific load in mind. If it's rare, B holds.
 
-**Where A would win:** if dispatchers also act as supervisors who need a glanceable overview, or if geography drives decisions (rerouting nearby trucks). I'm assuming they don't, from what you described.
-
-**How sure I am:** fairly. The task description supports it strongly, but I haven't seen real mockups or how your dispatchers work. The cheapest check is to give 3–5 dispatchers a list of 10 late loads and time how long each takes to find and act on the worst one in a quick prototype of each layout.
-
-**Not checked:** visual design, density, color, and your real data volume. If you routinely have hundreds of active rows, table design (row height, sticky headers, column choice) matters more than the choice between A and B.
+**Not checked:** table row density, column set, alert/notification needs, and whether dispatchers use multiple monitors.

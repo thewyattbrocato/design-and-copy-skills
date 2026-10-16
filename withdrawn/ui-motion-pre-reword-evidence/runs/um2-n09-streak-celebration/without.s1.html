@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>21 days — Stillwater</title>
+<!--
+  Design note: the "flashing lights / whole screen pulsing" brief is delivered as
+  a slow, low-contrast glow (about 0.4 Hz) plus small, localized firework bursts
+  capped well under 3 per second. No full-screen strobing: that can trigger
+  seizures and migraines (WCAG 2.3.1), and it would undercut a journaling app's calm.
+  prefers-reduced-motion starts the screen in a static calm mode, and there is a
+  visible toggle for everyone else.
+-->
+<style>
+  :root {
+    --bg: #0b1424;
+    --ink: #f4f1ea;
+    --muted: #b9c3d6;
+    --gold: #f2c879;
+    --accent: #7fd1c7;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    overflow: hidden;
+  }
+  .stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: radial-gradient(ellipse at 50% 45%, #14264a 0%, var(--bg) 70%);
+  }
+  /* Slow, gentle glow "pulse": opacity only drifts between 0.35 and 0.65 */
+  .glow {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle at 50% 45%, rgba(242,200,121,.28) 0%, rgba(127,209,199,.12) 35%, transparent 65%);
+    animation: breathe 5s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .35; transform: scale(1); }
+    50% { opacity: .65; transform: scale(1.04); }
+  }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  main {
+    position: relative; z-index: 2; text-align: center;
+    padding: 2rem; max-width: 34rem;
+  }
+  .eyebrow {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing: .22em; text-transform: uppercase; font-size: .8rem;
+    color: var(--accent); margin: 0 0 1rem;
+  }
+  .number {
+    font-size: clamp(6rem, 22vw, 11rem); line-height: 1; margin: 0;
+    color: var(--gold); font-weight: 400;
+    text-shadow: 0 0 40px rgba(242,200,121,.45);
+  }
+  h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 400; margin: .5rem 0 1rem; }
+  p.sub {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--muted); font-size: 1.05rem; line-height: 1.55; margin: 0 0 2rem;
+  }
+  .actions { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+  button {
+    font: 600 1rem ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: .85rem 1.6rem; border-radius: 999px; cursor: pointer;
+    border: 1px solid rgba(244,241,234,.35); background: transparent; color: var(--ink);
+  }
+  button.primary { background: var(--gold); border-color: var(--gold); color: #1b1608; }
+  button:hover { filter: brightness(1.08); }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .calm .glow { animation: none; opacity: .5; }
+  @media (prefers-reduced-motion: reduce) {
+    .glow { animation: none; opacity: .5; }
+  }
+  .closed main { opacity: .0; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage" role="dialog" aria-modal="true" aria-labelledby="title" aria-describedby="desc">
+  <div class="glow" aria-hidden="true"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <main>
+    <p class="eyebrow">Streak unlocked</p>
+    <p class="number" aria-hidden="true">21</p>
+    <h1 id="title">21 days of showing up</h1>
+    <p class="sub" id="desc">Three full weeks of writing, one day at a time. That's a habit taking root. Be proud of the person who kept turning up.</p>
+    <div class="actions">
+      <button class="primary" id="continue">Continue</button>
+      <button id="toggle" aria-pressed="false">Calm mode</button>
+    </div>
+  </main>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('fx');
+  const ctx = canvas.getContext('2d');
+  const stage = document.getElementById('stage');
+  const toggle = document.getElementById('toggle');
+  const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const COLORS = [[242,200,121],[127,209,199],[244,241,234],[240,140,150],[150,170,255]];
+  const MAX_BURSTS_PER_SEC = 1.6; // well under the 3 flashes/sec safety threshold
+  let calm = reduceQuery.matches;
+  let w, h, dpr;
+  let rockets = [], sparks = [];
+  let last = performance.now(), sinceLaunch = 0, raf;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = canvas.clientWidth; h = canvas.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function launch() {
+    const x = w * (0.15 + Math.random() * 0.7);
+    rockets.push({
+      x, y: h, vx: (Math.random() - .5) * 40,
+      vy: -(h * (0.9 + Math.random() * 0.35)),
+      targetY: h * (0.15 + Math.random() * 0.3),
+      color: COLORS[Math.floor(Math.random() * COLORS.length)]
+    });
+  }
+
+  function explode(r) {
+    const n = 55 + Math.floor(Math.random() * 25);
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2 + Math.random() * .1;
+      const s = 60 + Math.random() * 130;
+      sparks.push({ x: r.x, y: r.y, vx: Math.cos(a) * s, vy: Math.sin(a) * s,
+        life: 1, decay: .45 + Math.random() * .35, color: r.color });
+    }
+  }
+
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, .05); last = now;
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,.22)';
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+
+    sinceLaunch += dt;
+    if (sinceLaunch > 1 / MAX_BURSTS_PER_SEC * (0.8 + Math.random() * .6)) {
+      sinceLaunch = 0; launch();
+    }
+    rockets = rockets.filter(r => {
+      r.vy += 380 * dt; r.x += r.vx * dt; r.y += r.vy * dt;
+      ctx.fillStyle = `rgb(${r.color})`;
+      ctx.fillRect(r.x - 1.5, r.y - 1.5, 3, 3);
+      if (r.vy >= -40 || r.y <= r.targetY) { explode(r); return false; }
+      return true;
+    });
+    sparks = sparks.filter(p => {
+      p.vy += 90 * dt; p.vx *= .985; p.vy *= .985;
+      p.x += p.vx * dt; p.y += p.vy * dt; p.life -= p.decay * dt;
+      if (p.life <= 0) return false;
+      ctx.fillStyle = `rgba(${p.color},${p.life})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 2 * p.life + .5, 0, 6.283); ctx.fill();
+      return true;
+    });
+    raf = requestAnimationFrame(frame);
+  }
+
+  function drawStaticBursts() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    const spots = [[.2,.25],[.8,.22],[.12,.65],[.88,.62]];
+    spots.forEach(([fx, fy], k) => {
+      const c = COLORS[k % COLORS.length];
+      for (let i = 0; i < 40; i++) {
+        const a = i / 40 * Math.PI * 2, d = 30 + (i % 3) * 18;
+        ctx.fillStyle = `rgba(${c},.55)`;
+        ctx.beginPath();
+        ctx.arc(w * fx + Math.cos(a) * d, h * fy + Math.sin(a) * d, 2, 0, 6.283);
+        ctx.fill();
+      }
+    });
+  }
+
+  function apply() {
+    cancelAnimationFrame(raf);
+    stage.classList.toggle('calm', calm);
+    toggle.setAttribute('aria-pressed', String(calm));
+    toggle.textContent = calm ? 'Play celebration' : 'Calm mode';
+    rockets = []; sparks = [];
+    ctx.clearRect(0, 0, w, h);
+    if (calm) drawStaticBursts();
+    else { last = performance.now(); raf = requestAnimationFrame(frame); }
+  }
+
+  toggle.addEventListener('click', () => { calm = !calm; apply(); });
+  document.getElementById('continue').addEventListener('click', () => {
+    cancelAnimationFrame(raf);
+    stage.style.display = 'none';
+  });
+  window.addEventListener('resize', () => { resize(); if (calm) drawStaticBursts(); });
+  reduceQuery.addEventListener?.('change', e => { calm = e.matches; apply(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(raf); else if (!calm) apply();
+  });
+
+  resize(); apply();
+  document.getElementById('continue').focus();
+})();
+</script>
+</body>
+</html>

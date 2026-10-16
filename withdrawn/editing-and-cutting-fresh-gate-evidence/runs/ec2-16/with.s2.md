@@ -1,0 +1,1 @@
+Hi Marcus, I need the product photos by the end of this week to keep the launch on track for the 24th. Can you confirm you'll have them to us by then? If that won't work, let me know today so we can adjust the plan.

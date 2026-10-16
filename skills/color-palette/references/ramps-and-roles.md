@@ -7,10 +7,10 @@ Load this when generating tonal scales or neutrals, mapping colors to jobs, or c
 - Work in a perceptual space (OKLCH or similar), not HSL or RGB: equal numeric steps there are not equal to the eye. If only HSL is available, tune by hand.
 - Eight to twelve steps for a hue that carries a product, five or six for one accent. Steps that look equal change in proportion, not by equal amounts: small moves near the light end, larger ones toward the dark end.
 - Ease chroma toward both ends. Keep it too high and the top looks neon and the bottom sooty; drop it too far and the shades look washed out.
-- To lighten a saturated color, rotate its hue slightly toward a brighter neighbor (toward yellow, cyan or magenta); to darken, toward a darker one (red, green, blue). Stay within about 20 to 30 degrees. Darkening yellow toward orange keeps it warm; straight darkening turns it to mud.
+- Let hue drift a little across a ramp so both ends stay vivid: yellow darks warm toward amber, blues cool toward cyan at the light end. Tune by eye and keep the drift small; straight darkening turns to mud.
 - Keep the same step number at the same lightness across hues, so a step-600 green and a step-600 red carry equal weight.
 - Generate, then tune by eye, then freeze. Adding a shade should be rare; if you add many, the scale has dissolved.
-- Neutrals are a ramp too: eight to ten steps, a trace of the lead's hue, saturation slightly higher at both ends.
+- Neutrals are a ramp too: eight to ten steps, each with a trace of the lead's hue.
 - Check evenness in grayscale: adjacent steps should differ by a similar visible amount, with no two nearly the same.
 
 ## Surfaces, text and borders

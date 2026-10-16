@@ -1,16 +1,5 @@
 I couldn't save the file because the Write tool is disabled in this session. The full HTML is below, so you can save it as `index.html`. I haven't opened it in a browser.
 
-The spacing is based on the relationships between the elements:
-- **Title and author:** 4px apart, so they read as one heading unit.
-- **Author and synopsis:** 12px.
-- **Synopsis and buttons:** 24px, so the actions read as a separate group.
-- **Cards:** each is now a bordered surface with 24px padding. The gap between cards is 24px, set once by the list container rather than by margins on each card, so cards no longer touch.
-- **Buttons:** 8px apart, at least 44px tall, with 24px side padding. "Reserve" is filled and "Details" is outlined, so the main action stands out.
-- **Synopsis:** clamped to 2 lines.
-- **Values:** every spacing value comes from a 4/8/12/16/24/32 scale.
-- **Narrow screens:** card padding and the gap above the buttons drop to 16px.
-- **Fonts and assets:** system fonts only, with no external assets.
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,125 +9,100 @@ The spacing is based on the relationships between the elements:
 <title>Library Catalog</title>
 <style>
   :root {
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 24px;
-    --space-6: 32px;
-    --ink: #1c1f24;
-    --muted: #5b6370;
-    --line: #dde1e6;
-    --bg: #f5f6f8;
-    --surface: #fff;
-    --accent: #1f5fbf;
+    /* spacing scale (4px base) */
+    --s1: 4px;
+    --s2: 8px;
+    --s3: 12px;
+    --s4: 16px;
+    --s5: 24px;
+    --s6: 32px;
   }
-
   * { box-sizing: border-box; margin: 0; }
-
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 16px;
     line-height: 1.5;
-    color: var(--ink);
-    background: var(--bg);
-    padding: var(--space-6) var(--space-4);
+    color: #1f2328;
+    background: #f4f5f7;
+    padding: var(--s6) var(--s4);
   }
-
-  .card-list {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
+  .list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: var(--s5);            /* between cards >= card padding */
+    max-width: 560px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
   }
-
   .card {
     display: flex;
     flex-direction: column;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: var(--space-5);
+    background: #fff;
+    border: 1px solid #dfe2e6;
+    border-radius: 10px;
+    padding: var(--s5);
   }
-
   .title {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     line-height: 1.3;
     font-weight: 650;
   }
-
   .author {
-    margin-top: var(--space-1);
-    font-size: 0.9375rem;
-    color: var(--muted);
+    margin-top: var(--s1);     /* title + author: tightest pair */
+    font-size: 0.875rem;
+    color: #5b636d;
   }
-
   .synopsis {
-    margin-top: var(--space-3);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    margin-top: var(--s3);     /* text block, one step out */
+    font-size: 0.9375rem;
+    color: #333a42;
   }
-
   .actions {
-    margin-top: var(--space-5);
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: var(--s2);
+    margin-top: var(--s5);     /* controls separated from content */
   }
-
   .btn {
     font: inherit;
+    font-size: 0.9375rem;
     font-weight: 600;
     min-height: 44px;
-    padding: var(--space-2) var(--space-5);
-    border-radius: 6px;
-    border: 1px solid var(--accent);
+    padding: var(--s2) var(--s5);
+    border-radius: 8px;
+    border: 1px solid #1d4ed8;
     cursor: pointer;
   }
-
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-secondary { background: transparent; color: var(--accent); }
-
-  .btn:hover { filter: brightness(0.94); }
-  .btn:focus-visible { outline: 3px solid #8db4ee; outline-offset: 2px; }
-
-  @media (max-width: 480px) {
-    body { padding: var(--space-5) var(--space-4); }
-    .card { padding: var(--space-4); }
-    .actions { margin-top: var(--space-4); }
-  }
+  .btn-primary { background: #1d4ed8; color: #fff; }
+  .btn-primary:hover { background: #1e40af; }
+  .btn-secondary { background: #fff; color: #1d4ed8; }
+  .btn-secondary:hover { background: #eef3ff; }
+  .btn:focus-visible { outline: 3px solid #93b4ff; outline-offset: 2px; }
 </style>
 </head>
 <body>
-  <ul class="card-list">
+  <ul class="list">
     <li class="card">
-      <h2 class="title">The Hollow Canopy</h2>
-      <p class="author">Reuben Ashgrove</p>
-      <p class="synopsis">Nine strangers are drawn together by trees, each bringing a story of loss and wonder. Their paths converge in a fight to protect what remains of the American forest.</p>
+      <h2 class="title">The Ashgrove</h2>
+      <p class="author">Robert Pearsall</p>
+      <p class="synopsis">Nine strangers are drawn together by an orchard and the fight to save it. A sweeping novel about how deeply human lives are rooted in the land.</p>
       <div class="actions">
         <button class="btn btn-primary" type="button">Reserve</button>
         <button class="btn btn-secondary" type="button">Details</button>
       </div>
     </li>
     <li class="card">
-      <h2 class="title">Halcyon Reach</h2>
-      <p class="author">Selwyn Ashcombe</p>
-      <p class="synopsis">Corvane lives in a vast house of endless halls and tides, keeping careful journals of its wonders. When strange signs appear, he begins to question everything he knows.</p>
+      <h2 class="title">Merriwick</h2>
+      <p class="author">Suzanne Clayborn</p>
+      <p class="synopsis">Merriwick lives in a vast house of endless corridors and fog. As he explores its mysteries, a dangerous truth about his world begins to surface.</p>
       <div class="actions">
         <button class="btn btn-primary" type="button">Reserve</button>
         <button class="btn btn-secondary" type="button">Details</button>
       </div>
     </li>
     <li class="card">
-      <h2 class="title">Weaving Wild Barley</h2>
-      <p class="author">Rowan Hale Tamsen</p>
-      <p class="synopsis">A field botanist weaves science and old family lore into essays on reciprocity. A guide to seeing the living world as a gift.</p>
+      <h2 class="title">Binding Switchgrass</h2>
+      <p class="author">Rowan Hale Kimbrough</p>
+      <p class="synopsis">A botanist weaves science and old family wisdom together. Essays on reciprocity between people and the living world.</p>
       <div class="actions">
         <button class="btn btn-primary" type="button">Reserve</button>
         <button class="btn btn-secondary" type="button">Details</button>
@@ -148,3 +112,12 @@ The spacing is based on the relationships between the elements:
 </body>
 </html>
 ```
+
+**What changed**
+- **Spacing scale:** every gap and padding now comes from a 4px-based scale (4, 8, 12, 16, 24, 32). The old uniform 16px margin is gone.
+- **Inside a card:** the title and author sit tight at 4px, since they read as one unit. The synopsis follows at 12px. The buttons sit further away at 24px, so they read as a separate action group.
+- **Between cards:** the cards are separated by a 24px gap, which matches the card padding, so they no longer touch. Each card is a distinct item you can reserve or open, so I kept the card surface, with a border and no shadow.
+- **Who owns the gaps:** the list container sets the space between cards, and the actions row sets the space between buttons. No child carries a bottom margin, so nothing doubles up.
+- **Buttons:** they are at least 44px tall with 24px side padding, and 8px apart. Reserve is the filled primary button and Details is the outlined secondary one. Both have a visible keyboard focus ring.
+- **Fonts and assets:** the page uses a system font stack and has no external assets.
+- **Placeholder content:** the three books and their synopses are placeholder text I wrote, so swap in your real data.

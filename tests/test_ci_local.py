@@ -23,6 +23,8 @@ EXPECTED_STEPS = [
         "python scripts/results_table.py --help > /dev/null",
         "python scripts/make_results_chart.py --help > /dev/null",
         "python scripts/before_after_gallery.py --help > /dev/null",
+        "python scripts/run_activation.py --help > /dev/null",
+        "python scripts/activation_summary.py --help > /dev/null",
         "python scripts/ci_local.py --help > /dev/null"]),
     ("Validate skills", ["python scripts/validate_skills.py"]),
     ("Check links", ["python scripts/check_links.py"]),
@@ -34,6 +36,7 @@ EXPECTED_STEPS = [
     ("Check README tables", ["python scripts/results_table.py --check"]),
     ("Check results chart", ["python scripts/make_results_chart.py --check"]),
     ("Check before-and-after gallery", ["python scripts/before_after_gallery.py --check"]),
+    ("Check activation summary", ["python scripts/activation_summary.py --check"]),
 ]
 
 WORKFLOW_TEXT = """name: checks

@@ -18,17 +18,17 @@ Load this when you need to separate levels and are not sure which lever to pull,
 - Motion sits outside this ranking: it pulls the eye harder than any static lever. Reserve it for a state change the user must notice, and keep it short.
 - Use a lever the same way each time. If bold means "label" in one place and "warning" in another, readers learn neither.
 - On a dark ground, value contrast is easy to overdo: light text glows and looks heavier than it is. Drop a weight step and dim secondary levels; the typesetting skill (if installed) has the weight and size defaults.
-- Surface area acts as weight. Bold text and solid icons look heavy, so soften an icon's color beside lighter text; strengthen a faint hairline by thickening it, not by darkening it to black.
+- Surface area acts as weight: a solid shape or bold run outweighs a thin one of the same color, so even out mass between neighbors before reaching for color.
 
 ## Text colors and weights
 
-Three text values (dark for primary, mid for secondary, lighter for tertiary) and two weights (regular to medium for normal, semibold to bold for emphasis) cover most interfaces. Avoid weights below regular on small text; to quiet something, use a lighter value or a smaller size, and keep it above the text contrast floor.
+Use as few text values as can be told apart, each still above the text contrast floor; that usually lands on primary, secondary and one quieter tier. Two weights (regular to medium for normal, semibold to bold for emphasis) cover most interfaces. Avoid weights below regular on small text; to quiet something, use a lighter value or a smaller size.
 
 ## Starting step sizes
 
 These are starting points, not rules; check them by squinting at the result.
 
-- Size: about 1.25 between neighbors in dense or tool-like views, 1.4 to 1.6 for content pages, 2 or more for a marketing headline against body copy.
+- Size: a step big enough to see at a glance, taken from typesetting's scale (calmer in dense views); larger jumps only for a hero or marketing headline against body copy.
 - Weight: skip at least one step in the family (regular to semibold, or medium to bold). Adjacent steps like regular to medium rarely register.
 - Value: if two text grays do not look different on a mid-quality screen, they are not different. Aim for a clear visible gap, while the quieter one still clears the accessibility contrast floor for text.
 - Space: separating a heading from the text above it should take clearly more room than separating it from the text it introduces; exact values are a spacing decision, not a hierarchy one.

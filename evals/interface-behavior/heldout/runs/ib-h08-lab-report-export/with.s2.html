@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples – Riverbend Water Quality Lab</title>
+<style>
+  :root {
+    --bg: #f4f6f7;
+    --surface: #ffffff;
+    --ink: #17252b;
+    --muted: #55666e;
+    --line: #d9e0e3;
+    --accent: #0b6e8a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e3f1f5;
+    --ok: #1b7a43;
+    --ok-soft: #e4f3ea;
+    --warn: #8a5a00;
+    --warn-soft: #fbf0d9;
+    --bad: #a3321f;
+    --bad-soft: #fbe7e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11191d;
+      --surface: #192328;
+      --ink: #e6eef1;
+      --muted: #9fb1b8;
+      --line: #2b3a41;
+      --accent: #4ab4d1;
+      --accent-ink: #08222b;
+      --accent-soft: #1b3640;
+      --ok: #5fcf8d;
+      --ok-soft: #173525;
+      --warn: #e8b64e;
+      --warn-soft: #3a2f14;
+      --bad: #f08a76;
+      --bad-soft: #3d1f19;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header.top {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 24px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .brand { font-weight: 650; letter-spacing: .01em; }
+  nav { display: flex; gap: 16px; color: var(--muted); font-size: 14px; }
+  nav a { color: inherit; text-decoration: none; padding: 4px 0; }
+  nav a[aria-current="page"] { color: var(--ink); border-bottom: 2px solid var(--accent); }
+  main { max-width: 900px; margin: 0 auto; padding: 28px 24px 56px; }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  h1 { font-size: 22px; margin: 0 0 2px; }
+  .sub { margin: 0; color: var(--muted); }
+
+  button.primary {
+    font: inherit; font-weight: 600;
+    background: var(--accent); color: var(--accent-ink);
+    border: 0; border-radius: 6px;
+    padding: 9px 16px; min-height: 40px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  button.primary:hover { filter: brightness(1.08); }
+  button.primary[aria-disabled="true"] { cursor: progress; filter: none; opacity: .75; }
+  button.link {
+    font: inherit; background: none; border: 0; padding: 4px 6px;
+    color: var(--accent); text-decoration: underline; cursor: pointer; border-radius: 4px;
+  }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  .spinner {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid currentColor; border-right-color: transparent;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .status { margin-top: 20px; }
+  .card {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .card.busy { border-color: var(--accent); background: var(--accent-soft); }
+  .card.done { border-color: var(--ok); background: var(--ok-soft); }
+  .card.err  { border-color: var(--bad); background: var(--bad-soft); }
+  .row { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .title { font-weight: 600; }
+  .meta { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .bar {
+    height: 8px; border-radius: 4px; margin: 10px 0 8px;
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    overflow: hidden;
+  }
+  .bar > i {
+    display: block; height: 100%; width: 0;
+    background: var(--accent);
+    border-radius: 4px;
+    transition: width .4s linear;
+  }
+  .note { margin: 0; font-size: 13px; color: var(--muted); }
+  .note.slow { color: var(--warn); font-weight: 600; }
+  .dl { display: inline-block; margin-top: 6px; font-weight: 600; color: var(--accent); }
+  [hidden] { display: none !important; }
+
+  .tablewrap { margin-top: 28px; }
+  h2 { font-size: 16px; margin: 0 0 8px; }
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill.pass { background: var(--ok-soft); color: var(--ok); }
+  .pill.review { background: var(--warn-soft); color: var(--warn); }
+  .pill.fail { background: var(--bad-soft); color: var(--bad); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation: none; border-right-color: currentColor; border-style: dotted; }
+    .bar > i { transition: none; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="brand">Riverbend Water Quality Lab</span>
+  <nav aria-label="Primary">
+    <a href="#">Dashboard</a>
+    <a href="#" aria-current="page">Samples</a>
+    <a href="#">Sites</a>
+    <a href="#">Reports</a>
+  </nav>
+</header>
+
+<main>
+  <div class="head">
+    <div>
+      <h1>Samples</h1>
+      <p class="sub">2026 field season · 6 recent samples shown</p>
+    </div>
+    <button type="button" class="primary" id="exportBtn" aria-describedby="hint">
+      <span class="spinner" id="btnSpin" hidden aria-hidden="true"></span>
+      <span id="btnLabel">Export season report</span>
+    </button>
+  </div>
+  <p class="note" id="hint" style="margin-top:6px; text-align:right">Takes about 25 seconds. You can keep browsing this page while it runs.</p>
+
+  <div class="status">
+    <div class="card busy" id="busyCard" hidden>
+      <div class="row">
+        <span class="title">Preparing your season report…</span>
+        <span class="meta"><span id="elapsed">0:00</span> elapsed · <span id="remaining">about 25 s left</span></span>
+      </div>
+      <div class="bar" role="progressbar" aria-label="Estimated export progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar"><i id="fill"></i></div>
+      <div class="row">
+        <p class="note" id="busyNote">Progress is an estimate based on typical export time. Keep this tab open.</p>
+        <button type="button" class="link" id="cancelBtn">Cancel</button>
+      </div>
+    </div>
+
+    <div class="card done" id="doneCard" hidden tabindex="-1">
+      <div class="row">
+        <span class="title">Season report ready</span>
+        <span class="meta" id="doneMeta"></span>
+      </div>
+      <a class="dl" id="dlLink" href="#" download>Download water-quality-season-2026.csv</a>
+      <p class="note">If the download didn’t start on its own, use the link above.</p>
+    </div>
+
+    <div class="card err" id="cancelCard" hidden tabindex="-1">
+      <div class="row">
+        <span class="title">Export cancelled</span>
+        <button type="button" class="link" id="retryBtn">Start again</button>
+      </div>
+      <p class="note">Nothing was downloaded.</p>
+    </div>
+  </div>
+
+  <div class="sr" role="status" aria-live="polite" id="live"></div>
+
+  <section class="tablewrap" aria-labelledby="tt">
+    <h2 id="tt">Recent samples</h2>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Sample ID</th>
+            <th scope="col">Site</th>
+            <th scope="col">Collected</th>
+            <th scope="col" class="num">pH</th>
+            <th scope="col" class="num">Turbidity (NTU)</th>
+            <th scope="col" class="num">Nitrate (mg/L)</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>RB-26-0412</td><td>Mill Creek Intake</td><td>Oct 14, 08:40</td><td class="num">7.4</td><td class="num">1.8</td><td class="num">2.1</td><td><span class="pill pass">Pass</span></td></tr>
+          <tr><td>RB-26-0411</td><td>North Fork Bridge</td><td>Oct 14, 07:55</td><td class="num">7.1</td><td class="num">3.2</td><td class="num">4.6</td><td><span class="pill pass">Pass</span></td></tr>
+          <tr><td>RB-26-0410</td><td>Cedar Pond Outlet</td><td>Oct 13, 15:20</td><td class="num">6.6</td><td class="num">7.9</td><td class="num">8.8</td><td><span class="pill review">Review</span></td></tr>
+          <tr><td>RB-26-0409</td><td>Hatchery Road Well</td><td>Oct 13, 13:05</td><td class="num">7.8</td><td class="num">0.6</td><td class="num">1.2</td><td><span class="pill pass">Pass</span></td></tr>
+          <tr><td>RB-26-0408</td><td>South Marsh Gauge</td><td>Oct 13, 10:30</td><td class="num">6.2</td><td class="num">12.4</td><td class="num">10.9</td><td><span class="pill fail">Fail</span></td></tr>
+          <tr><td>RB-26-0407</td><td>Mill Creek Intake</td><td>Oct 12, 08:35</td><td class="num">7.5</td><td class="num">1.5</td><td class="num">2.0</td><td><span class="pill pass">Pass</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var DURATION = 25000;          // stand-in for the real ~25 s server export
+  var btn = document.getElementById('exportBtn');
+  var btnLabel = document.getElementById('btnLabel');
+  var btnSpin = document.getElementById('btnSpin');
+  var busyCard = document.getElementById('busyCard');
+  var doneCard = document.getElementById('doneCard');
+  var cancelCard = document.getElementById('cancelCard');
+  var fill = document.getElementById('fill');
+  var bar = document.getElementById('bar');
+  var elapsedEl = document.getElementById('elapsed');
+  var remainingEl = document.getElementById('remaining');
+  var busyNote = document.getElementById('busyNote');
+  var dlLink = document.getElementById('dlLink');
+  var doneMeta = document.getElementById('doneMeta');
+  var live = document.getElementById('live');
+
+  var running = false, start = 0, tick = null, announced = {}, blobUrl = null;
+
+  function say(msg) { live.textContent = ''; setTimeout(function () { live.textContent = msg; }, 50); }
+  function fmt(ms) { var s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+  function onBeforeUnload(e) { e.preventDefault(); e.returnValue = ''; }
+
+  function setBusy(on) {
+    running = on;
+    btn.setAttribute('aria-disabled', on ? 'true' : 'false');
+    btnSpin.hidden = !on;
+    btnLabel.textContent = on ? 'Exporting…' : 'Export season report';
+    if (on) window.addEventListener('beforeunload', onBeforeUnload);
+    else window.removeEventListener('beforeunload', onBeforeUnload);
+  }
+
+  function update() {
+    var t = Date.now() - start;
+    var pct = Math.min(100, (t / DURATION) * 100);
+    fill.style.width = pct + '%';
+    bar.setAttribute('aria-valuenow', Math.round(pct));
+    elapsedEl.textContent = fmt(t);
+    var left = Math.max(0, Math.ceil((DURATION - t) / 1000));
+    remainingEl.textContent = left > 0 ? 'about ' + left + ' s left' : 'finishing up…';
+    if (t > 12000 && !announced.half) { announced.half = 1; say('Still exporting, about half done.'); }
+    if (t >= DURATION) finish();
+  }
+
+  function begin() {
+    if (running) return;
+    doneCard.hidden = true; cancelCard.hidden = true;
+    if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+    announced = {};
+    setBusy(true);
+    busyCard.hidden = false;
+    fill.style.width = '0%';
+    start = Date.now();
+    update();
+    tick = setInterval(update, 250);
+    say('Export started. This takes about 25 seconds.');
+  }
+
+  function finish() {
+    clearInterval(tick);
+    var csv = 'sample_id,site,collected,ph,turbidity_ntu,nitrate_mgl,status\n' +
+      'RB-26-0412,Mill Creek Intake,2026-10-14T08:40,7.4,1.8,2.1,Pass\n' +
+      'RB-26-0411,North Fork Bridge,2026-10-14T07:55,7.1,3.2,4.6,Pass\n' +
+      'RB-26-0410,Cedar Pond Outlet,2026-10-13T15:20,6.6,7.9,8.8,Review\n' +
+      'RB-26-0409,Hatchery Road Well,2026-10-13T13:05,7.8,0.6,1.2,Pass\n' +
+      'RB-26-0408,South Marsh Gauge,2026-10-13T10:30,6.2,12.4,10.9,Fail\n' +
+      'RB-26-0407,Mill Creek Intake,2026-10-12T08:35,7.5,1.5,2.0,Pass\n';
+    blobUrl = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    dlLink.href = blobUrl;
+    dlLink.download = 'water-quality-season-2026.csv';
+    busyCard.hidden = true;
+    setBusy(false);
+    doneMeta.textContent = 'Took ' + fmt(Date.now() - start) + ' · 6 rows';
+    doneCard.hidden = false;
+    doneCard.focus();
+    say('Season report ready. Download link available.');
+    dlLink.click();
+  }
+
+  function cancel() {
+    if (!running) return;
+    clearInterval(tick);
+    busyCard.hidden = true;
+    setBusy(false);
+    cancelCard.hidden = false;
+    cancelCard.focus();
+    say('Export cancelled.');
+  }
+
+  btn.addEventListener('click', begin);
+  document.getElementById('cancelBtn').addEventListener('click', cancel);
+  document.getElementById('retryBtn').addEventListener('click', function () { begin(); btn.focus(); });
+})();
+</script>
+</body>
+</html>

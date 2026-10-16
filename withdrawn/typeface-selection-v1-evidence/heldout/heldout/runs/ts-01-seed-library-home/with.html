@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernhollow Seed Library — borrow seeds, return seeds</title>
+<meta name="description" content="A volunteer-run seed library at the old grange hall. Borrow heirloom vegetable and flower seeds, and bring back seeds saved from your own plot.">
+<style>
+  :root{
+    --paper:#f6efdf;
+    --paper-deep:#ece1c8;
+    --ink:#3a2f22;
+    --ink-soft:#5f5140;
+    --fern:#3f6b3a;
+    --fern-dark:#2d4f2a;
+    --clay:#b4572f;
+    --rule:#d3c3a0;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Charter,"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    font-size:1.125rem;
+    line-height:1.65;
+  }
+  .wrap{max-width:44rem;margin:0 auto;padding:0 1.5rem}
+  a{color:var(--fern-dark);text-underline-offset:.2em}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--clay);outline-offset:2px}
+
+  header.top{
+    border-bottom:2px dashed var(--rule);
+    padding:1.1rem 0;
+  }
+  .brand{
+    font-weight:bold;
+    letter-spacing:.04em;
+    color:var(--fern-dark);
+    display:flex;align-items:center;gap:.6rem;
+  }
+  .brand svg{width:1.6rem;height:1.6rem;flex:none}
+
+  .hero{padding:3.5rem 0 2.5rem}
+  .hero .kicker{
+    font-family:"Avenir Next",Avenir,"Segoe UI",system-ui,sans-serif;
+    text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;
+    color:var(--clay);font-weight:700;margin:0 0 .75rem;
+  }
+  h1{
+    font-size:clamp(2.1rem,6vw,3.3rem);
+    line-height:1.12;
+    margin:0 0 1.25rem;
+    color:var(--fern-dark);
+  }
+  .lede{font-size:1.25rem;color:var(--ink-soft);margin:0;max-width:36rem}
+
+  section{padding:2.25rem 0}
+  h2{
+    font-size:1.7rem;line-height:1.2;margin:0 0 1.25rem;color:var(--fern-dark);
+  }
+  h2::after{
+    content:"";display:block;width:3.5rem;height:3px;background:var(--clay);
+    margin-top:.5rem;border-radius:2px;
+  }
+
+  ol.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:1rem}
+  ol.steps li{
+    counter-increment:s;
+    background:#fbf7ec;
+    border:1.5px solid var(--rule);
+    border-radius:10px 14px 11px 15px;
+    padding:1.1rem 1.25rem 1.1rem 4rem;
+    position:relative;
+  }
+  ol.steps li::before{
+    content:counter(s);
+    position:absolute;left:1.1rem;top:1rem;
+    width:2.2rem;height:2.2rem;border-radius:50%;
+    background:var(--fern);color:#fff;
+    display:grid;place-items:center;
+    font-weight:bold;font-size:1.1rem;
+  }
+  ol.steps strong{display:block;font-size:1.15rem;color:var(--ink)}
+  ol.steps span{color:var(--ink-soft)}
+
+  .hours{
+    background:var(--paper-deep);
+    border-radius:14px;
+    padding:1.5rem 1.5rem 1.6rem;
+    border:1.5px solid var(--rule);
+  }
+  .hours h2{margin-top:0}
+  .hours dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.5rem}
+  .hours dt{font-weight:bold}
+  .hours dd{margin:0}
+  .hours p{margin:1.1rem 0 0;color:var(--ink-soft)}
+
+  .join form{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+  .join label{position:absolute;left:-9999px}
+  .join input[type=email]{
+    flex:1 1 15rem;
+    font:inherit;padding:.65rem .85rem;
+    border:1.5px solid var(--ink-soft);border-radius:8px;
+    background:#fffdf7;color:var(--ink);
+  }
+  .join button{
+    font:inherit;font-weight:bold;padding:.65rem 1.3rem;
+    background:var(--fern);color:#fff;border:0;border-radius:8px;cursor:pointer;
+  }
+  .join button:hover{background:var(--fern-dark)}
+  .join .small{font-size:.95rem;color:var(--ink-soft);margin:.6rem 0 0}
+
+  footer{
+    border-top:2px dashed var(--rule);
+    padding:1.5rem 0 2.5rem;
+    color:var(--ink-soft);font-size:.98rem;
+  }
+  footer p{margin:0}
+
+  @media (max-width:30rem){
+    body{font-size:1.05rem}
+    .hours dl{grid-template-columns:1fr;gap:0}
+    .hours dd{margin-bottom:.6rem}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29V13" stroke="#3f6b3a" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M16 15C16 8 11 5 5 5c0 7 4 10 11 10Z" fill="#3f6b3a"/><path d="M16 19c0-6 4-9 11-9 0 6-4 9-11 9Z" fill="#b4572f"/></svg>
+      Fernhollow Seed Library
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="hero">
+      <p class="kicker">Run by neighbours, for neighbours</p>
+      <h1>Borrow a few seeds. Grow something good. Bring some back.</h1>
+      <p class="lede">We’re a small, volunteer-run library of heirloom vegetable and flower seeds, kept in drawers at the old grange hall. Take home a packet, plant it, and when your plants go to seed, return a handful from your own plot so the next neighbour can grow it too.</p>
+    </div>
+
+    <section aria-labelledby="how">
+      <h2 id="how">How borrowing works</h2>
+      <ol class="steps">
+        <li><strong>Pick your packets</strong><span>Come by during opening hours and browse the drawers. Ask a volunteer if you’d like help choosing what suits your garden.</span></li>
+        <li><strong>Plant and tend them</strong><span>Sow your seeds, look after them, and let a few of the best plants go all the way to seed.</span></li>
+        <li><strong>Save and return</strong><span>Dry your seeds, pop them in an envelope with the plant’s name, and bring them back to the library. No fees, no fuss.</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="hours">
+      <div class="hours">
+        <h2 id="hours">Opening hours</h2>
+        <dl>
+          <dt>Tuesday</dt><dd>4pm – 7pm</dd>
+          <dt>Thursday</dt><dd>4pm – 7pm</dd>
+          <dt>Saturday</dt><dd>10am – 1pm</dd>
+        </dl>
+        <p>Find us at the old grange hall. Everyone is welcome, whether you’ve gardened for fifty years or never yet.</p>
+      </div>
+    </section>
+
+    <section class="join" aria-labelledby="join">
+      <h2 id="join">Join the mailing list</h2>
+      <p>Join our mailing list for the occasional note about new seeds, swap days and volunteer evenings.</p>
+      <form action="#" method="post">
+        <label for="email">Email address</label>
+        <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+        <button type="submit">Sign me up</button>
+      </form>
+      <p class="small">We’ll only write when there’s something worth saying, and we’ll never share your address.</p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Fernhollow Seed Library · Volunteer-run at the old grange hall · Tue &amp; Thu 4–7pm, Sat 10–1</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,41 +1,56 @@
-**Subject:** Last January, we turned away 212 families.
+**Subject line options**
+- 212 families. One empty shelf. Don't let it happen again.
+- Your gift buys 8 meals, but only until Dec. 31
+- $18,600 in matching funds is still unclaimed
 
-**Preview text:** Until Dec 31, every dollar you give is doubled.
-
-Dear [First Name],
-
-Last January, our shelves ran empty.
-
-We had to tell 212 families we had nothing to give them. They had come to us for help, and we sent them home without it.
-
-I don't want to write that sentence again.
-
-Right now, you can help make sure we don't. Until **December 31 at 11:59 pm**, a local foundation will match every donation dollar for dollar, up to $25,000.
-
-Here is what that means:
-
-- **$1 buys about 4 meals** at our purchasing prices.
-- **With the match, $1 becomes about 8 meals.**
-- $50 becomes about 400 meals. $100 becomes about 800.
-
-So far, only **$6,400 of the $25,000 match has been claimed.** That leaves **$18,600** that will go unused unless it is claimed by the deadline. When the match is gone, or the clock runs out, a dollar goes back to being a dollar.
-
-Winter is when more neighbors come through our doors. It's also when our shelves have been at their emptiest. Meals bought now are on the shelves when families come, and a doubled gift buys twice as many.
-
-**[DONATE LINK]**
-
-Give whatever is right for you. If you can give more, the match makes it go further. If you can give less, it still counts twice. Either way, it needs to happen before midnight on December 31.
-
-Thank you for standing with the families we serve.
-
-With gratitude and urgency,
-
-Marguerite Holt
-Executive Director, Eastgate Pantry Network
-
-P.S. Every dollar you give by December 31 turns into about 8 meals, until the $25,000 match runs out. **[DONATE LINK]**
+**Preview text:** Last January we turned families away. Right now, every dollar you give is doubled.
 
 ---
 
-- **Check the match terms.** The email says the match ends at the deadline or when the $25,000 is claimed. That's my reading of "up to $25,000," so confirm it with the foundation. Also update the $6,400 figure to the real number whenever you send.
-- **Tracking:** If you send reminder emails, tie each one to a fresh match total so the urgency stays accurate.
+**Subject: 212 families. One empty shelf.**
+
+Dear [First Name],
+
+Last January, 212 families came to Eastgate Pantry Network for food, and we had to turn them away.
+
+The shelves were empty. There was nothing to hand them.
+
+Those weren't numbers to us. They were parents who had worked up the nerve to ask for help, and kids waiting in the car. We had to say, "I'm so sorry. We have nothing left."
+
+I don't want to say those words again, and with your help we won't have to.
+
+**Right now, your gift does twice the work.**
+
+A local foundation will match every donation dollar for dollar, up to $25,000, but only until **December 31 at 11:59 pm**. When the clock runs out, the match is gone.
+
+Here is what that means:
+
+- Every $1 buys about 4 meals at our purchasing prices.
+- With the match, every $1 you give becomes **$2, or about 8 meals**.
+- $25 becomes about 200 meals.
+- $100 becomes about 800 meals.
+
+So far, only $6,400 of the $25,000 match has been claimed. That leaves **$18,600 in matching funds that will disappear on December 31** if we don't reach it. Every dollar left unclaimed is food we could have put on a shelf and didn't.
+
+January is when our shelves run lowest and the need runs highest. The meals we can stock now decide whether the families who knock on our door this winter leave with food or leave with an apology.
+
+I can't promise that no one will go hungry. I can promise that your gift, doubled, will be on those shelves when they come.
+
+**[Double my gift before December 31 →]([DONATE LINK])**
+
+Please give today. The match deadline is real, and the families who need us in January are real.
+
+With gratitude and urgency,
+
+**Marguerite Holt**
+Executive Director, Eastgate Pantry Network
+
+P.S. Last January, 212 families left with empty hands. Give before December 31 at 11:59 pm, and your dollar becomes two. [Give now →]([DONATE LINK])
+
+---
+
+**Notes**
+- **Dates:** Today is Oct 15, so I avoided "tonight" or "today is the last day." If you send this closer to the deadline, add a "final days" or "final hours" version. I can draft a short follow-up series for that.
+- **Match status:** The $6,400 figure will go stale quickly. Update it at send time, or resend with the new number. A rising total is also good fuel for follow-ups.
+- **Meal math:** "8 meals per matched dollar" is just your 4-meals figure doubled. If the foundation's match is paid out as a lump sum rather than per gift, confirm that wording with them first.
+- **Optional:** One real, permissioned detail would strengthen it, such as a family, a volunteer, or a number from a shelf on its last day. I left it out rather than invent one.

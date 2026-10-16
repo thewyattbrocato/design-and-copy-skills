@@ -15,7 +15,7 @@ Short pairs with placeholders. Replace each bracket with the user's real fact, o
 ## Guarantee
 
 - Before: "Satisfaction guaranteed."
-- After: "If [result] has not happened by [date] after you [buyer step], email [address] and we will [remedy]."
+- After: "If your first payroll run fails because of us in the first month, we refund that month. Email billing@ to claim." The buyer's step, the time window, the remedy and where to claim are all stated.
 - No stated policy: leave "[refund policy]" and say it is missing. Do not write a guarantee for the business.
 
 ## Discount
@@ -32,4 +32,4 @@ Short pairs with placeholders. Replace each bracket with the user's real fact, o
 
 - Before: "Pro: more projects, more storage, more seats."
 - After: "[Name]: for [situation or buyer]. Adds [the thing that situation needs]. Lacks [what lower tier leaves out]."
-- Recommend one, with a reason ("[reason], so most [buyer type] start here"). Say "most popular" only from data the user gave.
+- If the brief says who each tier suits, recommend one, with the reason ("[reason], so most [buyer type] start here"). Say "most popular" only from data the user gave.

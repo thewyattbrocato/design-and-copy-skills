@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnhouse – Saturday Wheel Throwing</title>
+<style>
+  :root {
+    --clay: #b5532f;
+    --clay-dark: #94401f;
+    --ink: #2a211c;
+    --muted: #6f625a;
+    --paper: #fbf7f2;
+    --card: #ffffff;
+    --line: #e8dfd5;
+    --ok: #2f6b4a;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font);
+  }
+  .card {
+    width: 100%;
+    max-width: 360px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(42, 33, 28, 0.05), 0 8px 24px rgba(42, 33, 28, 0.06);
+  }
+  .studio {
+    margin: 0 0 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay);
+  }
+  h1 { margin: 0 0 4px; font-size: 22px; line-height: 1.25; }
+  .when { margin: 0; color: var(--muted); font-size: 15px; }
+  .row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .price { font-size: 28px; font-weight: 700; }
+  .price small { font-size: 14px; font-weight: 400; color: var(--muted); }
+  .seats { font-size: 14px; color: var(--muted); }
+  .seats strong {
+    display: inline-block;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .seats strong.bump { animation: bump 220ms var(--ease-out); }
+  @keyframes bump {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .meter {
+    height: 6px;
+    margin-top: 10px;
+    background: var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .meter i {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--clay);
+    transform-origin: left center;
+    transition: transform 250ms var(--ease-out), background-color 150ms linear;
+  }
+  button.reserve {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--clay);
+    color: #fff;
+    font: 600 16px/1.2 var(--font);
+    cursor: pointer;
+    transition: transform 100ms var(--ease-out), background-color 150ms linear;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button.reserve:hover { background: var(--clay-dark); }
+  button.reserve:active { transform: scale(0.97); }
+  button.reserve:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  button.reserve[aria-busy="true"] { cursor: progress; background: var(--clay-dark); }
+  button.reserve.done { background: var(--ok); cursor: default; }
+  .label { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    display: none;
+    animation: spin 700ms linear infinite;
+  }
+  .spinner.show { display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .status { min-height: 20px; margin: 12px 0 0; font-size: 14px; color: var(--muted); text-align: center; }
+  .status button {
+    border: 0;
+    background: none;
+    padding: 0;
+    margin-left: 4px;
+    color: var(--clay);
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .status button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation: none; border-top-color: rgba(255, 255, 255, 0.35); border-right-color: #fff; opacity: 0.8; }
+    .seats strong.bump { animation: none; }
+    .meter i { transition: background-color 150ms linear; }
+    button.reserve:active { transform: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <p class="studio">Kilnhouse</p>
+    <h1>Saturday Wheel Throwing</h1>
+    <p class="when">Sat, Oct 17 · 10:00 AM – 12:30 PM</p>
+
+    <div class="row">
+      <div class="price">$65 <small>per seat</small></div>
+      <div class="seats"><strong id="seats">4</strong> of 8 seats left</div>
+    </div>
+    <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+
+    <button class="reserve" id="btn" type="button">
+      <span class="label"><span class="spinner" id="spin" aria-hidden="true"></span><span id="label">Reserve a seat</span></span>
+    </button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </main>
+
+<script>
+(function () {
+  var TOTAL = 8;
+  var seats = 4;
+  var state = 'idle'; // idle | pending | done
+  var timer = null;
+  var spinTimer = null;
+  var spinShownAt = 0;
+
+  var btn = document.getElementById('btn');
+  var label = document.getElementById('label');
+  var spin = document.getElementById('spin');
+  var seatsEl = document.getElementById('seats');
+  var meter = document.getElementById('meter');
+  var status = document.getElementById('status');
+
+  function render() {
+    seatsEl.textContent = seats;
+    seatsEl.classList.remove('bump');
+    void seatsEl.offsetWidth;
+    seatsEl.classList.add('bump');
+    meter.style.transform = 'scaleX(' + (seats / TOTAL) + ')';
+  }
+  meter.style.transform = 'scaleX(' + (seats / TOTAL) + ')';
+
+  function hideSpinner() {
+    clearTimeout(spinTimer);
+    spin.classList.remove('show');
+  }
+
+  function finish() {
+    // Once a spinner appears, keep it at least 400ms to avoid a flash.
+    var wait = spinShownAt ? Math.max(0, 400 - (Date.now() - spinShownAt)) : 0;
+    setTimeout(function () {
+      hideSpinner();
+      spinShownAt = 0;
+      seats -= 1;
+      state = 'done';
+      btn.removeAttribute('aria-busy');
+      btn.classList.add('done');
+      label.textContent = 'Seat reserved ✓';
+      render();
+      status.innerHTML = 'You\u2019re in! See you Saturday. <button type="button" id="undo">Undo</button>';
+      document.getElementById('undo').addEventListener('click', undo);
+    }, wait);
+  }
+
+  function undo() {
+    seats += 1;
+    state = 'idle';
+    btn.classList.remove('done');
+    label.textContent = 'Reserve a seat';
+    status.textContent = 'Reservation cancelled.';
+    render();
+    btn.focus();
+  }
+
+  btn.addEventListener('click', function () {
+    if (state !== 'idle') return; // ignore repeat clicks without disabling the button
+    state = 'pending';
+    // Acknowledge instantly.
+    btn.setAttribute('aria-busy', 'true');
+    label.textContent = 'Reserving…';
+    status.textContent = '';
+    // Spinner only if the wait is noticeable.
+    spinTimer = setTimeout(function () {
+      spin.classList.add('show');
+      spinShownAt = Date.now();
+    }, 300);
+    // Fake network request: 1–2 seconds.
+    timer = setTimeout(finish, 1000 + Math.random() * 1000);
+  });
+})();
+</script>
+</body>
+</html>

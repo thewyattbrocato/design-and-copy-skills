@@ -1,6 +1,6 @@
 ---
 name: form-design
-description: Use when designing, building, reviewing or fixing a form or input flow - sign-up, sign-in, checkout, settings, booking, contact, search and filter panels, long applications and claims - or one field, control, button or error state inside one. Covers which fields to ask, labels and hints, input types and autofill, which control fits a question (radios, select, checkboxes, free text), required marking, when errors should appear and how to word them, whether the submit button may be disabled, steps and progress, review and confirmation. Also for questions about form behavior and for form markup or CSS fixes. Not for non-form widgets (tabs, menus, toasts), whole-app polish, editable data grids, or marketing copy around a form.
+description: Use when designing, building, reviewing or fixing a form, input flow or settings screen, in any words - "too many fields", "people abandon checkout", "the errors are useless", "should this be a switch", "how should these preferences save". Covers sign-up, sign-in, checkout, booking, contact, search and filter panels, long applications, notification and preference settings, and one field, control, button or error state. Fields to ask, labels, input types and autofill, control choice, required marking, validation and error wording, submit button, steps, review, instant-apply versus Save, defaults. Not for tabs, menus, toasts, data grids or marketing copy around a form.
 ---
 
 # Form design
@@ -13,33 +13,23 @@ A form is a conversation where the person wants to be done. Ask only what you ne
 - Reviewing a form spec, mockup or markup for usability problems.
 - Writing validation rules, error messages, button labels or confirmation screens, or answering a question about them.
 - Structuring a flow that spans several steps or several sittings.
+- Settings and preference screens, switches, mute or auto-off controls, defaults and input limits.
 
 ## When not to use
 
-- Tabs, dialogs, menus, toasts and toggles that are not part of a form; a full pre-release sweep of an app; editable data grids; onboarding that teaches the product. Use a dedicated skill for those if one is installed.
+- Tabs, dialogs, menus and toasts; a full pre-release sweep of an app; editable data grids; onboarding that teaches the product; whether something should be a setting at all (`interface-behavior`). Use a dedicated skill for those if one is installed.
 - Pages that contain a form only incidentally (a pricing table, a landing hero): do not add fields, validation or error machinery the brief did not ask for.
 - Marketing copy around a form, and back-end validation code beyond the reminder that the server must check everything again.
 
 An explicit instruction, an existing design system or a platform convention beats every default below. If the team already has form components, use them and report gaps instead of replacing them. A native desktop or mobile dialog follows its platform: label placement, button order and corner included.
 
-## Procedure
-
-1. Decide what to ask (default: less).
-2. Choose one page or several steps.
-3. Lay out each field: label, hint, control, width.
-4. Pick control and input type, with autofill.
-5. Mark required or optional.
-6. Plan validation and error display.
-7. Name and place the button.
-8. Finish the flow: review, confirmation, recovery.
-
-Scale the work to the task. A one-field newsletter box needs steps 3, 4 and 7 only. A fix to one error message needs only step 6.
+Scale the work to the task. A one-field newsletter box needs a label, an input type, a button and nothing else; a fix to one error message touches that message only.
 
 ## Judgment calls
 
 **What to ask.** Default: for each field, name the step that needs it right now; otherwise drop it, defer it, or infer it (a postal code implies a city). One "full name" field unless the system truly needs the parts. Ask for a phone number only when a reason you can print beside the field exists, and then print it. Change when the answer affects price, eligibility or safety: ask early, do not defer.
 
-**One page or steps.** Default: a short form on a single topic (about eight fields or fewer) stays on one page. Change to one topic per page when the form is long, branches on earlier answers, takes payment on a phone, or must survive interruption. Group two questions only when the person treats them as one decision (a start and end date). Order questions by when they feel reasonable to answer: commitment before payment, easy facts before hard ones.
+**One page or steps.** Default: a short form on a single topic (about eight fields or fewer) stays on one page. Change to short pages, each about one decision, when the form is long, branches on earlier answers, takes payment on a phone, or must survive interruption. Group two questions only when the person treats them as one decision (a start and end date). Order questions by when they feel reasonable to answer: commitment before payment, easy facts before hard ones.
 
 **Labels.** Default: a visible label above the field, outside it, still present while typing. Constraint hints go between the label and the field. A placeholder shows an example and never carries the field's name. Floating labels shrink the label and crowd out the hint, so skip them. Change when a design system or platform convention says otherwise, and in compact rows such as a footer sign-up, where a visually hidden label plus a clear button is enough.
 
@@ -51,19 +41,21 @@ Scale the work to the task. A one-field newsletter box needs steps 3, 4 and 7 on
 
 **Required or optional.** Default: after cutting questions, most remaining fields are required, so mark the optional minority with the word "optional" in the label. Change when most fields are optional: mark the required ones in words instead. Never leave an asterisk unexplained, and never use color alone. If all fields are required, say so once at the top or mark nothing.
 
-**Validation timing.** Default: check on submit. Once a field has shown an error, re-check it as the person edits so the message disappears as soon as it is true. Do not show errors while a first attempt is still being typed; the first characters of a valid value are not yet valid. Be wary of checking on blur: autofill and switching windows trigger it at odd moments. Change for a password checklist shown before typing that ticks off rules as they are met, and for an availability check (such as a username) that runs after a pause. Always run the same checks on the server.
+**Validation timing.** Default: check on submit. Once a field has shown an error, re-check it as the person edits so the message disappears as soon as it is true. Do not show errors while a first attempt is still being typed; the first characters of a valid value are not yet valid. Leaving a field does not mean the person is finished: autofill and tabbing away fire it mid-task, so do not treat it as a check point. Change for a password checklist shown before typing that ticks off rules as they are met, and for an availability check (such as a username) that runs after a pause. Always run the same checks on the server. When it costs nothing, make the invalid state impossible instead of reporting it (a return date that cannot precede departure, a stepper that stops at its limit with the reason shown).
 
 **Submit availability.** Default: keep the submit button pressable at all times and explain problems after the press. A button disabled until the form is valid gives no reason and is often unreachable by keyboard. Change when a request is in flight: show progress and block a double submit.
 
 **Errors.** Default: the message sits with the field, in words, with an icon or text cue as well as color, and names the fix ("Enter an email address with an @, like name@example.com"). With two or more problems, or on a long form, also put a summary at the top that lists each problem as a link to its field, move focus to the summary, and prefix the page title with the count. Change for a form with one field: one inline message, no summary. Write each message so it reads well in both places. Avoid "invalid", "please", jokes and blame. Keep everything the person typed, including after a server error. See [validation and errors](references/validation-and-errors.md).
 
-**The button.** Default: a verb phrase in the product's own words ("Create account", "Pay $24.00"), one primary action per form, placed directly under the last field and aligned with it so magnification and narrow windows do not lose it. Secondary actions look quieter. Change for native dialogs: use the platform's order and corner.
+**The button.** Default: a verb phrase in the product's own words ("Create account", "Pay $24.00"), one primary action per form, placed directly under the last field and aligned with it so magnification and narrow windows do not lose it. Secondary actions look quieter. Enter confirms the likely action; after a step, emphasize the likely next one. Change for native dialogs: use the platform's order and corner.
 
 **Finishing.** Default: show a review with edit links before anything the person cannot undo (payment, sending, deleting). Offer guest checkout and invite an account after success. The confirmation says what happens next, when, and what to do if it does not. Going back keeps answers. Change for a reversible, low-stakes form: no review step. See [multi-step and long forms](references/multi-step-and-long-forms.md).
 
 **Progress.** Default: put the step in the page heading ("Delivery, step 2 of 4"). Change to add a visual bar only for long or multi-session forms, or when people get lost. Do not use unnamed dots, and do not count steps that some paths skip.
 
 **Passwords, codes, sign-in, search.** Default: follow the field patterns reference: password rules shown before typing, paste allowed, a show-password control, one field for a one-time code with its autofill token, one sign-in wording used everywhere, a search box that says what it searches. Change when the platform or an identity provider dictates the sign-in flow: follow it. See [field patterns](references/field-patterns.md).
+
+**Settings and instant controls.** Default: pick one model per screen, instant-apply with a quiet saved state or a Save button, never both. A switch label names its effect, shows state without color, states its exceptions where the person acts, and a mode that is on stays visible next to its trigger. Anything the system does on its own needs a stop control where it appears, a settings entry and a manual way to do it. Defaults come from known context (locale, last choice), shown in the control, never inferred from sensitive traits. Change when a Save model is needed because settings depend on each other. See [settings and instant controls](references/settings-and-instant-controls.md).
 
 ## Common failures
 
@@ -78,7 +70,16 @@ Scale the work to the task. A one-field newsletter box needs steps 3, 4 and 7 on
 - **A dozen unnamed progress dots; tabs splitting one form** → step name and count in the heading; one form per page or one page of fields.
 - **A select for Yes/No, or radios for pick-many** → two radios; checkboxes.
 - **Heavy machinery on a tiny form** (summary panel, stepper, extra fields on a footer sign-up) → match the pattern to the size of the job.
+- **A grid of switches plus a Save button** → instant-apply with a saved state, or Save without switches; sensible row defaults.
+- **A red error for a choice the field could have prevented** → constrain the picker, keep typing working.
 - **A written answer that runs past a length limit the user gave** → keep to it; cut material before the limit.
+
+## Output
+
+- Deliver the requested design, text or fix first, then at most two one-line notes unless asked. A review gets ranked findings with what to leave alone.
+- If the existing form or message already works, say so and change at most a word; do not restyle what is fine.
+- Honor any stated length cap and count to check it. When a count or set is asked for, deliver exactly that.
+- When facts are missing (field list, limits, copy, numbers), ask once only if interactive and cheap; otherwise use a visible placeholder such as [limit] or a softer true sentence, and still deliver. Never invent a number, deadline, policy or legal wording.
 
 ## Quick checks
 
@@ -89,10 +90,12 @@ Scale the work to the task. A one-field newsletter box needs steps 3, 4 and 7 on
 - An error state exists and shows a message with a fix, at the field and in a summary when there are several; values survive an error, a back press and a reload where practical.
 - Irreversible actions have a review step; the confirmation says what happens next.
 - Existing design system, platform and brief constraints are followed.
+- On a settings screen, each switch's state and exceptions are visible and one save model is used.
 
 ## References
 
 - [field-patterns.md](references/field-patterns.md): load when a specific field is involved (names, email, phone, address, dates, money, quantities, passwords, one-time codes, files, consent).
 - [validation-and-errors.md](references/validation-and-errors.md): load when writing validation logic, error summaries or error copy, or handling server errors and timeouts.
 - [multi-step-and-long-forms.md](references/multi-step-and-long-forms.md): load when a form spans steps or sittings, or when designing checkout, review and confirmation.
+- [settings-and-instant-controls.md](references/settings-and-instant-controls.md): load for settings, preferences, switches, mute or auto-off, system-initiated prompts, remember-me, context defaults and input limits.
 - [choice-controls.md](references/choice-controls.md): load when choosing between radios, checkboxes, selects, autocomplete and switches, or when building filter panels.

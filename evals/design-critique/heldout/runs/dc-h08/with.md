@@ -1,42 +1,29 @@
-I'd group the toggles by what they're about, and put the channel controls and quiet hours in their own sections.
+# Recommended layout: group by channel and purpose, with masters on top
 
-**1. Channels (top)**
-- Push notifications (master)
-- Email notifications (master)
+**Top level (always visible)**
+1. **Push notifications** (master toggle)
+2. **Email notifications** (master toggle)
+3. **Quiet hours** (a row that opens a time picker, not a toggle)
 
-These work as gates. When one is off, grey out the items it controls and add a line like "Push is off, so these won't reach you."
+**Grouped sections below**
 
-**2. Garden care** (the core value, so it comes first)
-- Watering reminders
-- Frost alerts
-- Harvest windows
+| Section | Items | Channel controls |
+|---|---|---|
+| **Garden care** (the core value) | Watering reminders, Frost alerts, Harvest windows | Push, plus email if wanted |
+| **Community** | Friend requests, Comments on my beds, Shared bed invites | Push, plus email if wanted |
+| **Discover** | New plant suggestions, Plant-of-the-week | Push or email |
+| **Email digests and news** | Weekly summary, Product news, Sale announcements | Email only |
 
-**3. Community**
-- Friend requests
-- Comments on my beds
-- Shared bed invites
+**Key decisions**
 
-**4. Discover**
-- New plant suggestions
-- Plant of the week
+- **Masters first, and they gate everything.** If push is off, grey out and collapse the push-only items under it, with a line like "Push is off. Turn on to choose alerts." Users shouldn't have to wonder why a toggle does nothing.
+- **Quiet hours is a setting, not a notification type.** Make it a tappable row showing its current value ("10 PM – 7 AM"), and keep it near the push master since it only affects push.
+- **Put time-sensitive items first.** Frost alerts and watering reminders are why people use the app, so they lead. Marketing (sale announcements, product news) goes last.
+- **Consider per-row channel chips instead of 14 toggles.** If most items can be sent by both push and email, each row can show "Push · Email" chips. That's fewer rows overall, and the masters make sense as global switches.
+- **Use section headers with one-line descriptions.** For example, "Garden care: timely alerts about your plants." This makes the list scannable.
+- **Make defaults sensible.** Care alerts on, and marketing off (or opt-in). Most people never open this screen, so defaults matter more than the layout.
+- **Add a "Pause all" or "Marketing off" shortcut at the top** if you want a quick fix for people who are overwhelmed.
 
-**5. Email updates**
-- Weekly summary
-- Product news
-- Sale announcements
+**If you want to go further:** make the top level a short list of 4 rows (Garden care, Community, Discover, Email & news). Each row shows a summary like "3 on" and opens a detail screen. This is best if the list will grow. At 14 items, grouped sections on one screen are usually enough.
 
-**6. Quiet hours (bottom, or right under Channels)**
-- One row that opens a time picker when tapped, instead of a toggle. It's a schedule, not an on/off preference, so it shouldn't look like the others.
-
-**Why this works**
-- **Groups give people a handful of chunks to scan.** Four or five labeled sections with 2–3 items each read as much less than one list of 14.
-- **Order follows importance.** Frost alerts can save someone's plants, but sale announcements can't, so the first ones should be the first people see.
-- **Marketing is separated.** Product news and sale announcements sit in their own section, where people can switch them off without worrying they'll lose useful alerts. Default them to off if your legal and business constraints allow it.
-- **Sensible defaults cut the work.** Garden care on, marketing off, and most people never open the screen.
-
-**Optional refinements**
-- If the screen is still long, make each section collapsible with a summary ("Garden care · 2 of 3 on"). I'd try the flat grouped version first, since it's simpler and easier to scan.
-- If most topics can go out by either channel, a small grid with Push and Email columns per row would replace the two masters and reduce clutter. It only pays off if the channels really overlap. Right now the weekly summary and the other email items look email-only, so I wouldn't do it yet.
-- Add a one-line description under the less obvious items, such as "Harvest windows: when your crops are ready to pick."
-
-Does each topic go out on both push and email, or are some channel-specific? That would decide whether the matrix is worth building.
+I can sketch this as a wireframe in HTML or SwiftUI/React code if that would help.

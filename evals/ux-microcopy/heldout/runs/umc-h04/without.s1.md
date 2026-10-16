@@ -1,28 +1,23 @@
-I wrote this with two changes from your brief.
+I wrote both drafts without those two phrases. You're still checking which accounts were hit and you don't know the cause, so "no user data was lost" may be false, and "this will never happen again" is a promise you can't back yet. If either one turns out wrong, people who lost work will trust you less. It could also create legal exposure. Your cofounder's goal, reassuring people, is better served by saying what you're doing about it.
 
-**Countdown:** a 10:00 timer is fine if the offer really expires when it hits zero. If it resets on refresh or the offer is still available afterward, it's a fake-urgency tactic. That's the kind of thing the FTC and state consumer-protection regulators go after, and it's why I'd treat it as a requirement rather than a nicety. Since you haven't decided on the discount yet, build the test so the code enforces the expiry, for example by storing a server-side offer expiry for that session.
+**In-app notice (shown on open)**
 
-**Decline button:** I dropped "I'd rather overpay." Insulting the user at the exact moment they're leaving costs you goodwill and any chance they come back. It also sits close to the "confirmshaming" patterns regulators have cited. A neutral decline button usually tests about as well, and you can still A/B it.
+> **Some recent edits may not have saved**
+> A sync problem on our side may have prevented edits made between about 11:20pm and midnight UTC on [date] from saving. We're still working out which accounts were affected and why it happened. Please check any notes you edited during that window. We'll email affected users as soon as we know more. [Learn more]
 
----
+**Email, first paragraph**
 
-**Headline**
-Before you go: 30% off your next 3 months
+> Subject: Some of your Quillmark edits may not have saved
+>
+> Hi [name], last night a sync problem on our side may have prevented some edits from saving. Our records show your account was active between about 11:20pm and midnight UTC on [date], so changes you made during that window may be missing. We're sorry. We're still investigating the cause, and we're working on [recovering what we can from backups / restoring affected notes]. Below is how to check your notes and what we'll do next.
 
-**Body**
-We'd hate to see you leave your newsletter schedule behind. Stay on Quillpost and we'll take 30% off your next 3 months. Your scheduled sends, drafts, and subscriber lists stay exactly as they are.
+Edit the bracketed parts to match what's true. For example, only mention backups if you actually have them.
 
-This offer expires in **10:00**
+**For your cofounder:** once you know them, you can add claims like these:
 
-*(Small print: 30% off applies to your next 3 billing cycles, then your regular rate resumes. Cancel anytime.)*
+- "We've confirmed the cause was X and have fixed it." (after the root cause is found)
+- "We recovered all affected notes." (only if verified)
+- "We're adding [specific safeguard] to prevent this kind of failure." (a commitment you control)
+- "We'll send an update by [date/time]."
 
-**Primary button:** Keep my plan at 30% off
-
-**Decline button:** No thanks, continue cancelling
-
----
-
-Notes for the test:
-- The "3 months" is a placeholder I added. Swap in the real terms once you decide them, and keep the small print about the price after the discount ends.
-- Make the decline button a real, clearly visible button, not a faint text link. Hiding the cancel path is the part most likely to cause legal trouble.
-- If you still want an edgier decline variant for the A/B test, "No thanks, cancel my subscription" is blunt but not insulting.
+If you tell me what you find, I can write the follow-up with those stronger statements.

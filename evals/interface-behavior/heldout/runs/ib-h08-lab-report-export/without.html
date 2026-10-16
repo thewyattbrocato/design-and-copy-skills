@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples – Riverbend Water Quality Lab</title>
+<style>
+  :root {
+    --bg: #f4f7f9;
+    --surface: #ffffff;
+    --ink: #14262e;
+    --muted: #5a6e77;
+    --line: #dbe4e9;
+    --accent: #0b6e8a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e2f1f6;
+    --ok: #1c7a45;
+    --ok-soft: #e4f4ea;
+    --warn: #8a5a00;
+    --warn-soft: #fcf0d6;
+    --bad: #a3302a;
+    --bad-soft: #fbe6e4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1a1f;
+      --surface: #16252c;
+      --ink: #e6eff3;
+      --muted: #94a9b3;
+      --line: #28404a;
+      --accent: #4fb6d3;
+      --accent-ink: #072029;
+      --accent-soft: #17323d;
+      --ok: #6fd09a;
+      --ok-soft: #173324;
+      --warn: #f0c36a;
+      --warn-soft: #3a2f14;
+      --bad: #f08a83;
+      --bad-soft: #3b1d1b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header.top {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .brand { font-weight: 650; letter-spacing: .01em; }
+  .brand span { color: var(--muted); font-weight: 400; }
+  .user { color: var(--muted); font-size: 13px; }
+  main { max-width: 920px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 22px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 22px;
+  }
+  .export-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .export-row h2 { font-size: 16px; margin: 0 0 2px; }
+  .export-row p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .actions { display: flex; gap: 10px; align-items: center; }
+  button {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 9px 16px;
+    min-height: 40px;
+  }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  #exportBtn {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 190px;
+    justify-content: center;
+  }
+  #exportBtn[aria-disabled="true"] { cursor: progress; opacity: .85; }
+  #exportBtn:not([aria-disabled="true"]):hover { filter: brightness(1.08); }
+  #cancelBtn {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  #cancelBtn:hover { background: var(--bg); }
+  .spinner {
+    width: 15px; height: 15px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    display: none;
+  }
+  .busy .spinner { display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .status {
+    margin-top: 16px;
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: var(--accent-soft);
+    display: none;
+  }
+  .status.show { display: block; }
+  .status.done { background: var(--ok-soft); }
+  .status.error { background: var(--bad-soft); }
+  .status.cancelled { background: var(--warn-soft); }
+  .status-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-weight: 600;
+  }
+  .elapsed { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--muted); }
+  .status-detail { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+  .status a { color: var(--ok); font-weight: 600; }
+  .bar {
+    height: 6px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    margin-top: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar i {
+    position: absolute; top: 0; bottom: 0; width: 35%;
+    background: var(--accent);
+    border-radius: 3px;
+    animation: slide 1.4s ease-in-out infinite;
+  }
+  @keyframes slide { 0% { left: -35%; } 100% { left: 100%; } }
+  .status:not(.busy) .bar { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation-duration: 2.4s; }
+    .bar i { animation: none; width: 100%; opacity: .55; }
+  }
+
+  .table-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .table-head h2 { font-size: 16px; margin: 0; }
+  .table-head span { color: var(--muted); font-size: 13px; }
+  .wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:last-child td { border-bottom: 0; }
+  .pill { display: inline-block; padding: 1px 9px; border-radius: 99px; font-size: 12.5px; font-weight: 600; }
+  .pill.pass { background: var(--ok-soft); color: var(--ok); }
+  .pill.review { background: var(--warn-soft); color: var(--warn); }
+  .pill.fail { background: var(--bad-soft); color: var(--bad); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">Riverbend Water Quality Lab <span>· Lab Portal</span></div>
+  <div class="user">Signed in as Lab Staff</div>
+</header>
+
+<main>
+  <h1>Samples</h1>
+  <p class="sub">Field and lab results for the 2026 summer season.</p>
+
+  <section class="card" aria-labelledby="exp-title">
+    <div class="export-row">
+      <div>
+        <h2 id="exp-title">Season report</h2>
+        <p>All samples and results for the season, as a CSV file. Takes about 25 seconds to prepare.</p>
+      </div>
+      <div class="actions">
+        <button id="cancelBtn" type="button" hidden>Cancel</button>
+        <button id="exportBtn" type="button">
+          <span class="spinner" aria-hidden="true"></span>
+          <span id="exportLabel">Export season report</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="status" class="status" role="status" aria-live="polite">
+      <div class="status-head">
+        <span id="statusTitle"></span>
+        <span id="elapsed" class="elapsed"></span>
+      </div>
+      <div id="statusDetail" class="status-detail"></div>
+      <div class="bar" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="tbl-title">
+    <div class="table-head">
+      <h2 id="tbl-title">Recent samples</h2>
+      <span>Last 6 collected</span>
+    </div>
+    <div class="wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Sample</th><th>Site</th><th>Collected</th>
+            <th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var DURATION_MS = 25000; // stand-in for the real server wait
+  var samples = [
+    ["WQ-26-0412", "Miller Creek at Route 9", "2026-10-08", 7.4, 1.8, "pass"],
+    ["WQ-26-0411", "Harbor Intake", "2026-10-08", 7.9, 0.6, "pass"],
+    ["WQ-26-0410", "Quarry Pond Outflow", "2026-10-07", 8.8, 6.2, "review"],
+    ["WQ-26-0409", "Elm Street Well", "2026-10-07", 7.1, 0.3, "pass"],
+    ["WQ-26-0408", "Lower Basin North", "2026-10-06", 6.2, 11.4, "fail"],
+    ["WQ-26-0407", "Miller Creek at Route 9", "2026-10-05", 7.5, 1.5, "pass"]
+  ];
+  var labels = { pass: "Pass", review: "Needs review", fail: "Fail" };
+
+  var tbody = document.getElementById("rows");
+  samples.forEach(function (s) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + s[0] + "</td><td>" + s[1] + "</td><td>" + s[2] +
+      "</td><td class='num'>" + s[3].toFixed(1) + "</td><td class='num'>" + s[4].toFixed(1) +
+      "</td><td><span class='pill " + s[5] + "'>" + labels[s[5]] + "</span></td>";
+    tbody.appendChild(tr);
+  });
+
+  var btn = document.getElementById("exportBtn");
+  var label = document.getElementById("exportLabel");
+  var cancel = document.getElementById("cancelBtn");
+  var box = document.getElementById("status");
+  var title = document.getElementById("statusTitle");
+  var detail = document.getElementById("statusDetail");
+  var elapsedEl = document.getElementById("elapsed");
+  var baseTitle = document.title;
+
+  var running = false, startedAt = 0, tick = null, lastUrl = null;
+
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+  function setBox(kind, t, d) {
+    box.className = "status show " + kind;
+    title.textContent = t;
+    detail.innerHTML = d;
+  }
+  function warnUnload(e) { e.preventDefault(); e.returnValue = ""; }
+
+  function stop() {
+    running = false;
+    clearInterval(tick);
+    btn.setAttribute("aria-disabled", "false");
+    btn.classList.remove("busy");
+    label.textContent = "Export season report";
+    cancel.hidden = true;
+    document.title = baseTitle;
+    window.removeEventListener("beforeunload", warnUnload);
+  }
+
+  function buildCsv() {
+    var lines = ["sample_id,site,collected,ph,turbidity_ntu,status"];
+    samples.forEach(function (s) {
+      lines.push(['"' + s[0] + '"', '"' + s[1] + '"', s[2], s[3], s[4], s[5]].join(","));
+    });
+    return lines.join("\n");
+  }
+
+  function finish() {
+    stop();
+    if (lastUrl) URL.revokeObjectURL(lastUrl);
+    lastUrl = URL.createObjectURL(new Blob([buildCsv()], { type: "text/csv" }));
+    var name = "season-report-2026.csv";
+    elapsedEl.textContent = "";
+    setBox("done", "Report ready",
+      "Your download should start automatically. If it doesn’t, <a id='dl' href='" + lastUrl +
+      "' download='" + name + "'>download " + name + "</a>.");
+    var a = document.getElementById("dl");
+    a.click();
+  }
+
+  function update() {
+    var ms = Date.now() - startedAt;
+    if (ms >= DURATION_MS) { finish(); return; }
+    elapsedEl.textContent = "Elapsed " + fmt(ms);
+    document.title = "Exporting… " + fmt(ms) + " · " + baseTitle;
+  }
+
+  btn.addEventListener("click", function () {
+    if (running) return; // ignore repeat clicks while a job is in flight
+    running = true;
+    startedAt = Date.now();
+    btn.setAttribute("aria-disabled", "true");
+    btn.classList.add("busy");
+    label.textContent = "Preparing report…";
+    cancel.hidden = false;
+    box.classList.add("busy");
+    setBox("busy", "Preparing your season report",
+      "This takes about 25 seconds. You can keep this tab open and work in another one; the download starts when it’s ready. Please don’t close this page.");
+    box.classList.add("busy");
+    elapsedEl.textContent = "Elapsed 0:00";
+    window.addEventListener("beforeunload", warnUnload);
+    tick = setInterval(update, 250);
+  });
+
+  cancel.addEventListener("click", function () {
+    if (!running) return;
+    stop();
+    elapsedEl.textContent = "";
+    setBox("cancelled", "Export cancelled", "No file was created. You can start the export again whenever you’re ready.");
+    btn.focus();
+  });
+})();
+</script>
+</body>
+</html>

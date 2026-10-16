@@ -42,14 +42,12 @@ Write the objective before any activity: who does what, in what situation, to wh
 - Write the options from mistakes experienced people actually make. Make the most common one tempting with a realistic detail; one option is best and the rest are worse in different ways. Positive stem, options of similar length and form.
 - Each wrong option maps to one misunderstanding, so feedback can name it.
 - Let people look things up when the job allows it. Put the policy or checklist beside the question, and require memory only for what must be produced with nothing to consult.
-- Default to a mini-scenario: one decision, one consequence. Branch only when an early choice changes what happens or what is known later. Never loop people back until they guess the author's path.
+- Default to a single-decision item: one situation, one choice, one visible result. Branch only when an early choice changes what happens or what is known later. Never loop people back until they guess the author's path.
 - Use only the facts, numbers and policies the user gave. If the situation needs one they did not, bracket it.
 
 ## Writing feedback
 
-- Show the consequence first (the customer's next line, the result on screen), then the principle in one sentence, then the better move. Write it for each option, not just the wrong ones: people also pick the right answer for the wrong reason.
-- When an answer is partly right, say what was right.
-- Calm tone, no shame. After a miss, one sentence about the strategy to try next beats a pep talk.
+- Open with what happened as a result (the customer's next line, the result on screen), then the principle in one sentence, then the better move. Write it for every option, since people also pick the right answer for the wrong reason. Say what was right in a partly right answer, keep the tone calm, and after a miss give one sentence on what to try next instead of a pep talk.
 - During practice, give feedback right away. For a later retrieval attempt, withhold the answer until the person has tried, then show it.
 - A secure certifying exam may hold back per-item feedback. Give a score report by area, and put full feedback in separate practice tests.
 
@@ -66,7 +64,7 @@ Write the objective before any activity: who does what, in what situation, to wh
 
 - Start from the claim ("can tell which readings need a recheck a week later, among mixed cases"), then build items that would produce that evidence. One same-day score cannot certify it. Complex work needs observed performance scored against a short rubric.
 - Name the metric the organization already tracks and the observable behavior behind it, and write the check before the training. Add closer signals (choices in later practice, error rates, tickets, which aids get used) and compare people who applied the skill with those who did not; ask both why.
-- A satisfaction survey flags unhappiness only. Pilot with five or six people thinking aloud, and let them struggle instead of stepping in.
+- A satisfaction survey flags unhappiness only. Pilot with three to five people thinking aloud, and let them struggle instead of stepping in.
 
 ## Motivation and access
 

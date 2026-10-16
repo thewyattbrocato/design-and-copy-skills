@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy Pipeline Logs · release-2026.10.14.3</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: #151a20;
+    --line: #232a33;
+    --text: #d5dbe3;
+    --muted: #7d8794;
+    --info: #6cb6ff;
+    --warn: #e3b341;
+    --err: #ff7b72;
+    --err-bg: rgba(255, 123, 114, 0.09);
+    --warn-bg: rgba(227, 179, 65, 0.06);
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1900px; margin: 0 auto; padding: 24px 32px 48px; }
+
+  header {
+    display: flex; flex-wrap: wrap; align-items: end;
+    justify-content: space-between; gap: 16px;
+    padding-bottom: 16px;
+  }
+  h1 { margin: 0 0 4px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+  .meta { color: var(--muted); font-size: 13px; font-family: var(--mono); }
+  .meta b { color: var(--text); font-weight: 500; }
+
+  .filters { display: flex; gap: 8px; }
+  .filters button {
+    font: inherit; font-size: 13px; font-family: var(--mono);
+    color: var(--muted); background: transparent;
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 6px 12px; cursor: pointer;
+  }
+  .filters button:hover { border-color: var(--muted); color: var(--text); }
+  .filters button[aria-pressed="true"] {
+    color: var(--text); background: var(--panel); border-color: #3a4450;
+  }
+  .filters button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  .filters .n { color: var(--muted); margin-left: 6px; }
+
+  .log {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 13ch 7ch 17ch minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 7px 16px 7px 13px;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: rgba(255,255,255,0.025); }
+  .row.WARN  { background: var(--warn-bg); border-left-color: var(--warn); }
+  .row.ERROR { background: var(--err-bg);  border-left-color: var(--err); }
+  .row.hidden { display: none; }
+
+  .ts  { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .lvl { font-weight: 700; letter-spacing: 0.04em; font-size: 12.5px; }
+  .INFO .lvl  { color: var(--info); }
+  .WARN .lvl  { color: var(--warn); }
+  .ERROR .lvl { color: var(--err); }
+  .svc { color: #a9b4c2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; max-width: 150ch; }
+  .ERROR .msg { color: #ffd9d5; }
+  .msg .k { color: var(--muted); }
+
+  footer { margin-top: 12px; color: var(--muted); font-size: 12px; font-family: var(--mono); }
+
+  @media (max-width: 900px) {
+    .wrap { padding: 16px; }
+    .row { grid-template-columns: 1fr; row-gap: 2px; }
+    .svc { order: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Deploy pipeline · production</h1>
+      <div class="meta">run <b>#48213</b> · release <b>2026.10.14.3</b> · 2026-10-14 UTC · branch <b>main</b></div>
+    </div>
+    <div class="filters" role="group" aria-label="Filter by level">
+      <button type="button" data-level="ALL" aria-pressed="true">All<span class="n" id="n-ALL"></span></button>
+      <button type="button" data-level="INFO" aria-pressed="false">INFO<span class="n" id="n-INFO"></span></button>
+      <button type="button" data-level="WARN" aria-pressed="false">WARN<span class="n" id="n-WARN"></span></button>
+      <button type="button" data-level="ERROR" aria-pressed="false">ERROR<span class="n" id="n-ERROR"></span></button>
+    </div>
+  </header>
+
+  <main class="log" id="log">
+    <div class="row INFO"><span class="ts">14:02:11.204</span><span class="lvl">INFO</span><span class="svc">build-runner</span><span class="msg">Pipeline #48213 started for commit 9f3c2ab by deploy-bot (trigger: merge to main)</span></div>
+    <div class="row INFO"><span class="ts">14:02:14.871</span><span class="lvl">INFO</span><span class="svc">build-runner</span><span class="msg">Cache restored: pnpm store 1.8 GB in 3.2s; layer cache hit ratio 94% (212/225 layers) from registry.internal.example.com/cache/web-api:main</span></div>
+    <div class="row INFO"><span class="ts">14:03:42.019</span><span class="lvl">INFO</span><span class="svc">artifact-store</span><span class="msg">Pushed image registry.internal.example.com/platform/web-api@sha256:7d1e4a0b9c52f8e3a6b1d94c0e27f5a83b6d1c49e0a7f2b58d3c6e91a4f0b7d2 (418 MB, 14 layers)</span></div>
+    <div class="row WARN"><span class="ts">14:03:44.530</span><span class="lvl">WARN</span><span class="svc">artifact-store</span><span class="msg">Image scan found 2 medium vulnerabilities in base layer debian:12.5-slim; see https://scanner.internal.example.com/reports/web-api/9f3c2ab?severity=medium&amp;fixable=true</span></div>
+    <div class="row INFO"><span class="ts">14:04:03.112</span><span class="lvl">INFO</span><span class="svc">secrets-sync</span><span class="msg">Synced 37 secrets to namespace prod-web (0 created, 2 rotated, 35 unchanged)</span></div>
+    <div class="row INFO"><span class="ts">14:04:19.657</span><span class="lvl">INFO</span><span class="svc">db-migrate</span><span class="msg">Applying 2 pending migrations: 20261012_add_orders_index, 20261013_backfill_region_codes</span></div>
+    <div class="row WARN"><span class="ts">14:04:27.340</span><span class="lvl">WARN</span><span class="svc">db-migrate</span><span class="msg">Migration 20261013_backfill_region_codes holding ACCESS EXCLUSIVE lock on public.orders for 8.4s (threshold 5s); consider batching updates in chunks of 10k rows</span></div>
+    <div class="row INFO"><span class="ts">14:04:41.902</span><span class="lvl">INFO</span><span class="svc">db-migrate</span><span class="msg">Migrations applied successfully in 22.3s</span></div>
+    <div class="row INFO"><span class="ts">14:05:02.288</span><span class="lvl">INFO</span><span class="svc">k8s-deployer</span><span class="msg">Rolling update deployment/web-api in prod-web: 0/12 replicas updated (maxSurge=25%, maxUnavailable=0)</span></div>
+    <div class="row WARN"><span class="ts">14:05:48.763</span><span class="lvl">WARN</span><span class="svc">k8s-deployer</span><span class="msg">Pod web-api-7c9d8b6f54-x2k9p readiness probe slow: GET /healthz took 4210ms (timeout 5000ms), attempt 3/5</span></div>
+    <div class="row ERROR"><span class="ts">14:06:15.431</span><span class="lvl">ERROR</span><span class="svc">healthcheck</span><span class="msg">Readiness failed for web-api-7c9d8b6f54-x2k9p: dial tcp 10.42.7.19:8080: connect: connection refused (last probe: http://10.42.7.19:8080/healthz, status=0, retries exhausted 5/5)</span></div>
+    <div class="row ERROR"><span class="ts">14:06:15.502</span><span class="lvl">ERROR</span><span class="svc">k8s-deployer</span><span class="msg">Rollout stalled at 3/12 replicas. Hint: java.lang.IllegalStateException: Flyway checksum mismatch at com.example.web.db.MigrationGuard.verify(MigrationGuard.java:88) ← com.example.web.Bootstrap.main(Bootstrap.java:41)</span></div>
+    <div class="row WARN"><span class="ts">14:06:16.010</span><span class="lvl">WARN</span><span class="svc">ingress-ctl</span><span class="msg">Holding traffic shift at 0% to new revision web-api-r482; 9 pods still serve revision r481</span></div>
+    <div class="row INFO"><span class="ts">14:06:16.388</span><span class="lvl">INFO</span><span class="svc">notifier</span><span class="msg">Paged #deploy-oncall via https://hooks.internal.example.com/services/T01/B02/rollout-stalled with run link https://ci.internal.example.com/pipelines/48213/jobs/deploy-prod; automatic rollback in 120s</span></div>
+  </main>
+
+  <footer>Showing <span id="shown"></span> of <span id="total"></span> lines</footer>
+</div>
+
+<script>
+  const rows = [...document.querySelectorAll('.row')];
+  const buttons = [...document.querySelectorAll('.filters button')];
+  const count = l => l === 'ALL' ? rows.length : rows.filter(r => r.classList.contains(l)).length;
+  buttons.forEach(b => document.getElementById('n-' + b.dataset.level).textContent = count(b.dataset.level));
+  document.getElementById('total').textContent = rows.length;
+  document.getElementById('shown').textContent = rows.length;
+
+  buttons.forEach(b => b.addEventListener('click', () => {
+    const level = b.dataset.level;
+    buttons.forEach(x => x.setAttribute('aria-pressed', x === b));
+    let shown = 0;
+    rows.forEach(r => {
+      const show = level === 'ALL' || r.classList.contains(level);
+      r.classList.toggle('hidden', !show);
+      if (show) shown++;
+    });
+    document.getElementById('shown').textContent = shown;
+  }));
+</script>
+</body>
+</html>

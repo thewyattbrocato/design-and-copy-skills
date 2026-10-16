@@ -1,29 +1,22 @@
-**Subject:** Holiday pie orders close Thursday 18 Dec at noon
+**Website results section**
 
-Hello,
+## What 212 Greenwell homes saw after air sealing and attic insulation
 
-Our holiday pies are back, and the order window is short.
+Between 2023 and 2025, our own crew air-sealed and added attic insulation in 212 homes. For each one, we compared weather-adjusted heating bills for the 12 months before and after the job.
 
-Pre-orders close **Thursday 18 December at noon**. The deadline is firm because our ovens are booked after that, so we can't take late orders.
+- **Median reduction: 14%.** Half of the homes landed between 9% and 21%.
+- **Best result: 38%.** That was a 1920s farmhouse with no attic insulation at all. It's our high-water mark, not the typical result.
+- **Not every home changes.** 9 of the 212 (about 4%) saw no measurable change in their heating bills.
 
-Every pie is baked to order. Choose from:
+A typical job costs $2,900. We haven't worked out payback times, so we won't guess at them.
 
-- Apple-cranberry
-- Pecan
-- Savoury mushroom-leek
+Want to know where your home might fall? Ask us for a free assessment. [confirm you offer this, or swap in your actual call to action]
 
-Each 9-inch pie is £28. Collect yours from the shop on **Tuesday 23 December, 9am–4pm**, ready for the holiday table.
+**Postcard (two lines)**
 
-Last year we baked around 300 holiday pies. Order this week and yours will be one of them.
+Across 212 Greenwell retrofits, the median home cut its heating bill 14%.
+Typical job: $2,900. Done by our own crew.
 
-Order on our website or call the number below.
-
-Tuppence Bakehouse
-
-*[footer: phone number]*
-
----
-
-That's about 115 words. I left out "selling fast" and "only a few left" because your fact sheet says there's no cap and nothing has sold out. Those lines would be false, and customers could fairly complain about them. The urgency here is the real one: a firm noon cut-off, with the ovens booked after it.
-
-I used the "300 pies" figure as "around 300 last year", as you gave it. Before you send, fill in the phone number placeholder in the footer.
+**Notes**
+- I didn't use "Cut your heating bill by 38%". It was one farmhouse with no attic insulation, so it would read as a typical result and it isn't. If your partner wants the big number, the website section shows it with context. The postcard line "median home cut its heating bill 14%" is the strongest claim the data supports.
+- The call to action is a placeholder, since you didn't mention assessments or a contact method. Also, the data shows bills fell after the work, not that the work caused it. I kept the wording to what you measured.

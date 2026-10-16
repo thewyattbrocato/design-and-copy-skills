@@ -1,6 +1,6 @@
 ---
 name: typeface-selection
-description: Use whenever a font is being chosen, paired, judged or fixed, in any language and at any length - "what font should I use", "the fonts look generic, off or amateur", "does this pairing work", "make it feel more premium, friendly or technical", "which font for long reading", "it falls back to Times", "fonts for Arabic or Vietnamese". Covers roles, one family versus two, pairing, system font stacks, web-font loading and fallbacks, variable fonts, licensing and script coverage, in CSS, pages, apps, decks and brand work. Not for sizes, leading or line length (typesetting), drawing logos (brand-identity), type tokens (design-system-builder) or palettes (color-palette).
+description: Use whenever a font is being chosen, paired, judged or fixed, in any language and at any length - "what font should I use", "the fonts look generic, off or amateur", "does this pairing work", "make it feel more premium, friendly or technical", "which font for long reading", "it falls back to Times", "it looks thin or blurry", "fonts for Arabic or Vietnamese". Covers roles, one family versus two, pairing, system font stacks, web-font loading and fallbacks, variable fonts, licensing and script coverage, in CSS, pages, apps, decks and brand work. Not for sizes, leading or line length (typesetting), drawing logos (brand-identity), type tokens (design-system-builder) or palettes (color-palette).
 ---
 
 # Typeface selection
@@ -17,7 +17,7 @@ A short request ("this font feels off") is not a small one: name the role that f
 
 ## When not to use
 
-- Sizes, line length, leading, figures in use: typesetting if installed. Drawing a logo or custom lettering: brand-identity if installed. Type tokens: design-system-builder if installed. Contrast and palettes: color-palette if installed.
+- Sizes, line length, leading, figures in use: typesetting if installed; when a face must fit a physical screen, still give starting sizes for each role. Drawing a logo or custom lettering: brand-identity if installed. Type tokens: design-system-builder if installed. Contrast and palettes: color-palette if installed.
 - A brand font or design system already fixes the face: apply it, with its own fallbacks, and only fix what fails around it.
 - The text already works: say so in a sentence and change at most one thing. A good stack gets "this is sound", not a swap.
 
@@ -45,7 +45,9 @@ A short request ("this font feels off") is not a small one: name the role that f
 
 **Display.** Contrast, width and character are allowed where text is big and short. Keep the voice of the face tied to the brand's actual tone, not its subject. Pair a display face with a calm text face, not another display face.
 
-**Pairing.** Pair faces that share skeleton and proportions (same x-height, similar stroke contrast), or faces that differ plainly in category with roles fixed in advance: serif for reading, sans for interface; display serif over a sturdy sans. Two faces that differ only slightly look like a mistake. Bold and italic stay in the family that owns the text. If a pairing needs a third face to feel right, the first two are wrong.
+**Pairing.** Pair faces built the same way (similar stroke contrast and x-height), or faces that differ plainly in category with roles fixed in advance: serif for reading, sans for interface; display serif over a sturdy sans. Two faces that differ only slightly look like a mistake. Bold and italic stay in the family that owns the text. If a pairing needs a third face to feel right, the first two are wrong.
+
+**Delicate or mandated faces.** An ultralight, hairline or high-contrast face is a display tool. If a brief demands it for body or small labels, say what breaks (thin, blurry or vanishing strokes at small sizes and on low-density screens), keep it for the big lines, and propose a sturdy partner for the rest.
 
 **Monospace.** Code, inline identifiers, parameter names, terminal output, and columns that must align where no tabular figures exist. Keep prose around them proportional.
 
@@ -59,7 +61,7 @@ A short request ("this font feels off") is not a small one: name the role that f
 
 ## Missing information
 
-Do not stall on questions. Assume a screen, a Latin-script audience, no installed fonts beyond system ones, and deliver. Ask once only if interactive and the answer changes the pick (print versus screen, a locked brand face, languages). State at most two assumptions after the work. Never invent fonts the user did not name as installed, license terms, or claims such as "used by" or "most popular". If a face you would like cannot be verified, name the stack that works now and the one upgrade.
+Do not stall on questions. Assume a screen, a Latin-script audience, no installed fonts beyond system ones, and deliver. Ask once only if interactive and the answer changes the pick (print versus screen, a locked brand face, languages). State assumptions in one line, and inside any length cap. Never invent fonts the user did not name as installed, license terms, or claims such as "used by" or "most popular". If a face you would like cannot be verified, name the stack that works now and the one upgrade.
 
 ## Output discipline
 
@@ -67,7 +69,7 @@ Do not stall on questions. Assume a screen, a Latin-script audience, no installe
 - When a count is asked for (three pairings, two options), deliver exactly that many, each with a role and a one-line reason.
 - Honor any word cap. Count the words and cut the lowest-value point instead of asserting that it fits.
 - A critique names what works, then what fails, each with a fix.
-- After the work, at most two one-line notes unless asked for more.
+- Under a length cap, drop notes and extra checks before dropping the answer.
 
 ## Quick checks
 
@@ -82,3 +84,4 @@ Do not stall on questions. Assume a screen, a Latin-script audience, no installe
 
 - [references/judging-and-pairing.md](references/judging-and-pairing.md): load when shortlisting from several faces, comparing candidates or building a pair; the structure checklist and pairing table.
 - [references/stacks-loading-scripts.md](references/stacks-loading-scripts.md): load when fonts cannot load, or when shipping web fonts, variable fonts or several scripts; stacks by role, loading recipe, script notes.
+- [references/screen-fit-and-genres.md](references/screen-fit-and-genres.md): load for tiny or dense interface text, a delicate or mandated brand face, a thin or blurry render, a genre-only brief ("elegant", "quiet"), or fallback matching.

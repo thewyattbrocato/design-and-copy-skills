@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillwater – 21-day streak</title>
+<!--
+  Design note: the brief asked for flashing lights and a pulsing screen. Rapid flashes and
+  full-screen luminance changes can trigger photosensitive seizures (WCAG 2.3.1) and feel
+  jarring in a calm journaling app. This version keeps the "huge" feeling with fireworks,
+  a slow breathing glow (one cycle every ~6s), and a ripple on the number. Nothing flashes
+  more than once per second. prefers-reduced-motion gets a static version, and there is
+  an on-screen "Pause effects" button.
+-->
+<style>
+  :root {
+    --bg1: #0b1d2e;
+    --bg2: #050c14;
+    --ink: #eaf4f7;
+    --muted: #9db8c3;
+    --accent: #7fd6d0;
+    --accent2: #f2c879;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg2);
+    color: var(--ink);
+    overflow: hidden;
+  }
+  .stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: radial-gradient(ellipse at 50% 40%, var(--bg1) 0%, var(--bg2) 75%);
+    isolation: isolate;
+  }
+  /* slow breathing glow: low amplitude, ~6s cycle */
+  .glow {
+    position: absolute; inset: -10%;
+    background:
+      radial-gradient(circle at 50% 45%, rgba(127,214,208,.28), transparent 45%),
+      radial-gradient(circle at 50% 60%, rgba(242,200,121,.12), transparent 55%);
+    opacity: .7;
+    animation: breathe 6s ease-in-out infinite;
+    z-index: -2;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .55; transform: scale(1); }
+    50%      { opacity: .85; transform: scale(1.04); }
+  }
+  canvas#fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+  main {
+    text-align: center;
+    padding: 24px;
+    max-width: 560px;
+    animation: rise 1.2s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+  .eyebrow {
+    letter-spacing: .22em; text-transform: uppercase;
+    font-size: 13px; color: var(--accent); margin: 0 0 12px;
+  }
+  .badge {
+    position: relative;
+    width: 200px; height: 200px; margin: 0 auto 24px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    border: 1px solid rgba(127,214,208,.45);
+    background: radial-gradient(circle, rgba(127,214,208,.14), rgba(127,214,208,.02) 70%);
+  }
+  .badge::before, .badge::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    border: 1px solid rgba(127,214,208,.5);
+    animation: ripple 4.5s ease-out infinite;
+  }
+  .badge::after { animation-delay: 2.25s; }
+  @keyframes ripple {
+    from { transform: scale(1); opacity: .6; }
+    to   { transform: scale(1.7); opacity: 0; }
+  }
+  .num {
+    font-size: 104px; line-height: 1; font-weight: 200; letter-spacing: -.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .num small { display: block; font-size: 14px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 400; margin-top: 6px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 300; margin: 0 0 12px; letter-spacing: -.01em; }
+  p.lead { color: var(--muted); font-size: 17px; line-height: 1.55; margin: 0 auto 28px; max-width: 440px; }
+
+  .dots { display: grid; grid-template-columns: repeat(21, 1fr); gap: 5px; max-width: 360px; margin: 0 auto 32px; }
+  .dots i {
+    aspect-ratio: 1; border-radius: 50%; background: var(--accent);
+    opacity: 0; transform: scale(.4);
+    animation: dot .5s ease-out forwards;
+    animation-delay: calc(var(--i) * 60ms + 500ms);
+  }
+  .dots i:last-child { background: var(--accent2); }
+  @keyframes dot { to { opacity: 1; transform: scale(1); } }
+
+  .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 999px; padding: 13px 28px;
+    border: 1px solid transparent; transition: background .2s, border-color .2s, transform .15s;
+  }
+  .primary { background: var(--accent); color: #05222a; font-weight: 600; }
+  .primary:hover { background: #9ae6e0; }
+  .ghost { background: transparent; color: var(--muted); border-color: rgba(157,184,195,.35); font-size: 15px; }
+  .ghost:hover { color: var(--ink); border-color: rgba(157,184,195,.7); }
+  button:active { transform: scale(.97); }
+  button:focus-visible { outline: 3px solid var(--accent2); outline-offset: 3px; }
+
+  .stage.calm .glow, .stage.calm .badge::before, .stage.calm .badge::after { animation: none; }
+  .stage.calm .badge::before, .stage.calm .badge::after { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow, .badge::before, .badge::after { animation: none; }
+    .badge::before, .badge::after { display: none; }
+    main { animation: none; }
+    .dots i { animation: none; opacity: 1; transform: none; }
+  }
+  @media (max-width: 420px) { .num { font-size: 84px; } .badge { width: 170px; height: 170px; } }
+</style>
+</head>
+<body>
+<div class="stage" id="stage" role="dialog" aria-modal="true" aria-labelledby="title" aria-describedby="desc">
+  <div class="glow" aria-hidden="true"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <main>
+    <p class="eyebrow">Streak unlocked</p>
+    <div class="badge" aria-hidden="true">
+      <div class="num">21<small>days</small></div>
+    </div>
+    <h1 id="title">Twenty-one days of showing up.</h1>
+    <p class="lead" id="desc">You've written every day for three weeks. That's a real habit taking root, one quiet page at a time.</p>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <div class="actions">
+      <button class="primary" id="done">Keep writing</button>
+      <button class="ghost" id="pause" aria-pressed="false">Pause effects</button>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var dots = document.getElementById('dots');
+  for (var d = 0; d < 21; d++) { var el = document.createElement('i'); el.style.setProperty('--i', d); dots.appendChild(el); }
+
+  var canvas = document.getElementById('fx');
+  var ctx = canvas.getContext('2d');
+  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var paused = mq.matches;
+  var W, H, dpr;
+  var rockets = [], sparks = [];
+  var raf = null, last = 0, nextLaunch = 0, launched = 0;
+  var colors = [[127,214,208],[242,200,121],[170,200,255],[255,255,255],[200,170,255]];
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  addEventListener('resize', resize); resize();
+
+  function launch() {
+    rockets.push({
+      x: W * (0.15 + Math.random() * 0.7), y: H + 10,
+      ty: H * (0.15 + Math.random() * 0.3),
+      vy: -(380 + Math.random() * 120),
+      c: colors[(Math.random() * colors.length) | 0]
+    });
+  }
+  function burst(x, y, c) {
+    var n = 46 + (Math.random() * 20 | 0);
+    for (var i = 0; i < n; i++) {
+      var a = Math.PI * 2 * i / n + Math.random() * .1;
+      var s = 70 + Math.random() * 110;
+      sparks.push({ x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 1, c: c });
+    }
+  }
+
+  function frame(t) {
+    raf = requestAnimationFrame(frame);
+    var dt = Math.min((t - last) / 1000, .05); last = t;
+    ctx.clearRect(0, 0, W, H);
+
+    // gentle cadence: at most ~1 launch every 1.1–2s, so nothing strobes
+    if (t > nextLaunch) {
+      launch(); launched++;
+      nextLaunch = t + 1100 + Math.random() * 900;
+    }
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = rockets.length - 1; i >= 0; i--) {
+      var r = rockets[i];
+      r.y += r.vy * dt;
+      ctx.fillStyle = 'rgba(' + r.c.join(',') + ',.7)';
+      ctx.beginPath(); ctx.arc(r.x, r.y, 1.8, 0, 7); ctx.fill();
+      if (r.y <= r.ty) { burst(r.x, r.y, r.c); rockets.splice(i, 1); }
+    }
+    for (var j = sparks.length - 1; j >= 0; j--) {
+      var p = sparks[j];
+      p.vx *= .985; p.vy = p.vy * .985 + 55 * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      p.life -= dt * .55;
+      if (p.life <= 0) { sparks.splice(j, 1); continue; }
+      ctx.fillStyle = 'rgba(' + p.c.join(',') + ',' + (p.life * .8).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.6 + p.life, 0, 7); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function start() {
+    if (raf || paused) return;
+    last = performance.now(); nextLaunch = last + 300;
+    raf = requestAnimationFrame(frame);
+  }
+  function stop() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = null; rockets.length = 0; sparks.length = 0;
+    ctx.clearRect(0, 0, W, H);
+  }
+
+  var pauseBtn = document.getElementById('pause');
+  function applyPause() {
+    stage.classList.toggle('calm', paused);
+    pauseBtn.setAttribute('aria-pressed', paused);
+    pauseBtn.textContent = paused ? 'Resume effects' : 'Pause effects';
+    paused ? stop() : start();
+  }
+  pauseBtn.addEventListener('click', function () { paused = !paused; applyPause(); });
+  mq.addEventListener && mq.addEventListener('change', function (e) { paused = e.matches; applyPause(); });
+  document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+
+  function close() {
+    stop();
+    stage.style.transition = 'opacity .4s';
+    stage.style.opacity = '0';
+    setTimeout(function () { stage.style.display = 'none'; }, 400);
+  }
+  var done = document.getElementById('done');
+  done.addEventListener('click', close);
+  addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+  applyPause();
+  done.focus({ preventScroll: true });
+})();
+</script>
+</body>
+</html>

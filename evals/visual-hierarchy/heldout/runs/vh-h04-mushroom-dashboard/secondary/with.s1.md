@@ -1,17 +1,24 @@
-**What's wrong:** the page has no order, so the one thing that matters most, a room that has left its range, looks like everything else.
+**What's wrong**
 
-- **Everything is the same weight.** Eight identical cards with 32 identical 28px numbers give the eye nothing to land on. Room 5's 61% is styled the same as a healthy 90%.
-- **The alert is a color shift, the weakest signal available.** A slightly darker orange on a 28px bold number is a small value and hue change. It disappears in grayscale, in peripheral vision, and under a glance from across the room. Nothing about the card's shape or position changes.
-- **The alert word is styled like metadata.** An 11px grey "alert" is the same treatment as the labels. The status is quieter than the labels it sits beside, which inverts the hierarchy.
-- **No duration or target.** A reading that has been wrong for six hours looks identical to one that just crossed the line. The card doesn't show the target range either, so the viewer has to remember what "in range" means for each metric.
-- **Decoration without a job.** The shadow and border make each card look finished, but they don't separate levels. That's why it reads as flat: the design is uniform, not calm.
+The page gives every piece of information the same weight, so the one that matters most has nothing to separate it.
 
-**What to change first:** make out-of-range a structural change on the card, not a color change. For example:
+1. **The alert is the quietest thing on the card.** An out-of-range state changes one 28px number from one orange to a slightly darker orange, plus an 11px grey word. On a dark monitor or from across a room, that's almost invisible. Room 5 at 61% looked like every other card. The alert is a subtle color shift with no shape, position, or size change, so it fails the grayscale and squint tests.
+2. **Everything is the same size and weight.** Eight identical cards, and within each card four identical 28px bold numbers. Days to harvest (a slow planning number) competes with humidity (an urgent one). With no ranking, the eye has no starting point, which is why it reads as flat.
+3. **It shows state but not duration or target.** "61%" tells you nothing without the target band, and nothing about how long it has been wrong. Room 5 was off for six hours, and the page couldn't show that.
 
-- A thick left or top band in a strong status color, plus a bold status word in the card ("HUMIDITY HIGH · 6 h"). The status must still show in grayscale.
-- Show the target range under each metric (e.g., "target 85–95%") so the number can be judged without memory.
-- Sort out-of-range rooms to the top of the grid.
+**What to change first**
 
-After that, add a one-line summary above the grid ("7 in range · 1 out of range: Room 5 humidity, 6 h") so the answer is visible before anyone scans the cards. Then remove the shadow, since it does no work.
+Make out-of-range state a structural signal, not a color tint. For each card that's out of range:
 
-Two notes: I haven't seen your code, so these are based on your description. I also don't know your target ranges, so the page needs them from you (or from your config) before the range display can be built.
+- Give the card a visible border weight or a tinted header band (one cue, applied the same way every time).
+- Replace the 11px "alert" with a readable line such as **"Humidity 61% · target 85–90% · 6h"**, at a size close to the labels.
+- Add a status marker (a filled dot or triangle) so it survives in grayscale.
+
+Then move alerted rooms to the top of the grid, or add a single summary line above it: "1 room out of range: Room 5, humidity, 6h." Sorting by problem severity is the fastest way to make the page answer "what needs attention right now" in a few seconds.
+
+**Secondary changes, after that**
+
+- Demote "days to harvest" to a smaller or lighter-value number so the live environmental readings lead.
+- Show the target range on every metric so "in range" is visible on normal cards too, not only inferred from the absence of orange.
+
+**Assumptions:** I'm working from your description, not the code. I'd also check whether 61% counts as out of range for your target band. If your band is 85–90%, the page should have caught it, which suggests the alert threshold may also be wrong. That's worth confirming before you redesign.

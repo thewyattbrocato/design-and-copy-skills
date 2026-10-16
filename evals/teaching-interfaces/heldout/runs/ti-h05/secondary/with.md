@@ -1,22 +1,26 @@
-Only the second screen needs a change. Its text describes a step the screen doesn't ask for: it says "draw a circle," but the circle is already placed and only needs dragging.
+Here's a tidied version. The copy is close, but three things need fixing before it ships.
 
-**Screen 1: Add your first walk**
-> Pick a dog, a day and a time. That's all a walk needs.
+| Screen | Now | Proposed |
+|---|---|---|
+| 1. Title | Add your first walk | Add your first walk *(keep)* |
+| 1. Text | Pick a dog, a day and a time. That's all a walk needs. | Pick a dog, a day and a time. That's all a walk needs. *(keep)* |
+| 1. Button | Next | Next *(keep)* |
+| 2. Title | Add your walking area | Set your walking area *(optional; keep if you prefer)* |
+| 2. Text | Draw a circle on the map where you walk. We'll only offer you walks inside it. | Drag the circle over the area where you walk. We'll only offer you walks inside it. |
+| 2. Button | Next | Next *(keep)* |
+| 3. Title | You're ready | You're ready *(keep)* |
+| 3. Text | Your first walk is on the calendar. Tap it any time to change or cancel. | Your first walk is on the calendar. Tap it any time to change or cancel. *(only if they completed screen 1; see below)* |
+| 3. Button | Go to calendar | Go to calendar *(keep)* |
 
-No change. It names the three things they'll fill in, and the highlighted Dog field gives them a place to start.
+**Fixes that matter:**
 
-**Screen 2: Add your walking area**
-> Drag the circle over the area where you walk. We'll only offer you walks inside it.
+1. **Screen 2 says "Draw," but the circle is already placed and draggable.** Someone will look for a drawing tool and not find one. "Drag the circle over the area where you walk" matches what's on screen.
+2. **Screen 3 assumes a walk exists.** If someone taps Skip on screen 1, "Your first walk is on the calendar" is false. Show this line only when a walk was created. Otherwise use something like "You're set up. Add a walk any time from the calendar." (wording for that case is yours to confirm).
+3. **Screen 2 promises filtering the user may never have set.** If someone taps Skip here, the default circle over their city still decides which walks are offered. Either the default is a sensible starting area and the copy is fine, or Skip should say what happens to walk offers.
 
-Changed from "Draw a circle on the map where you walk." This matches the draggable circle that's already on screen.
+**Smaller points:**
 
-**Screen 3: You're ready**
-> Your first walk is on the calendar. Tap it to change or cancel.
+- Skip on screen 3 is redundant, since the only action there is "Go to calendar." Remove it on the last screen.
+- "Skip" is ambiguous for a help flow. If the person can get back to this help later, "Skip for now" says so. I don't know whether a way back exists, so I haven't changed the label. Tell me and I'll update it.
 
-Dropped "any time," which adds nothing. Button "Go to calendar" stays.
-
-**Skip link:** keep "Skip" if people can get back to this setup later. If they can't, change it to "Skip for now" only once you've added a way back.
-
-Two notes:
-- **Check what Skip does on screen 2.** If someone skips the walking area, the copy says walks will only be offered inside it. Confirm the app behaves sensibly when no area is set, and that the copy doesn't promise otherwise.
-- **Measure this by later behavior, not by time to finish.** Support tickets are a good proxy. Shortly after launch, check whether new users add a walk on their own a few days later without help.
+I only had the copy you pasted, not the screens or app code, so I haven't checked the layout or whether the default circle behaves as described. Those two checks are the ones to run before tomorrow.

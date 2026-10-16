@@ -1,14 +1,22 @@
-I can't critique the site yet, because I haven't seen it. I have no way to open URLs in this session. `.example` is also a reserved domain that never resolves on the public internet, so the address wouldn't load even with a browser. Anything I said about your booking flow now would be made up, and you asked for brutal, not fiction.
+I can't critique this yet, because I haven't seen the site. I have no way to fetch web pages in this session. The `.example` domain is also reserved and doesn't resolve on the public internet, so it may be a placeholder. Anything I said about your booking flow would be invented, and I'd rather not do that.
 
-**What I can't judge yet:** the first screen, the booking flow, and whether the flow is the real problem.
+**What to send (any of these works)**
+- Screenshots of each booking step, from landing page to confirmation. Include mobile if you can, since most sauna bookings probably happen on phones.
+- The page HTML, or a URL that's actually reachable.
+- A short description of the flow, such as the steps, what each one asks for, and where it ends (payment, confirmation email).
+- Anything you have on drop-off, such as how many people reach each step. That would show whether the booking flow is really the problem.
 
-**What to send, most useful first:**
-1. **Screenshots of every booking step**, from landing page to confirmation, on mobile as well as desktop. Most sauna bookings happen on phones, and mobile is where flows usually break.
-2. **Where people drop off.** Even rough numbers help: visits, clicks on "Book", reaching the payment step, completed bookings. This is how we find out if the flow is the problem or if it's something earlier, like the landing page not making people want to book.
-3. **The booking tool.** Is it Mindbody, Acuity, Square, a custom build, or something else? Embedded third-party widgets often have constraints that change what fixes are realistic.
-4. **Who the visitor is and what you want them to do.** For example: a first-time visitor booking a 60-minute private session.
-5. **If you can, the HTML or a saved copy of the pages.** I can then compute things like tap-target sizes, contrast and the number of clicks to book, instead of eyeballing them.
+**What I'll check once I have it**
+- **First screen:** Can a newcomer say what you offer and what to click within a few seconds?
+- **Clicks to book:** How many clicks and fields stand between landing and a confirmed slot?
+- **Availability:** Does the page show times and prices early, or does it ask for details first?
+- **Forced accounts and surprise costs:** Does anything force sign-up or add fees late in the flow?
+- **Form and error handling:** Are the date and time picker, the party-size and session-type fields, and the error messages clear?
+- **Mobile:** Are the tap targets big enough, and does the keyboard cover the fields?
+- **Accessibility and contrast:** I'll compute these from the markup, not guess.
+- **Confirmation step:** Does it tell people the booking worked?
 
-If you can get 3–5 people to try booking a session while you watch and say nothing, that will tell you more than any critique. Where they hesitate or backtrack is where the problem is.
+**A cheap test you can run now**
+Ask three to five people who've never seen the site to book a specific slot, while you watch and say nothing. Where they hesitate or backtrack is where the flow is broken. It will also tell you whether the booking flow is the problem or whether people are leaving before they get there.
 
-Once you send the screenshots and drop-off numbers, I'll give you a ranked, severity-labeled teardown.
+Send me one of those and I'll give you a ranked, severity-tagged teardown with a fix order. I'll also list what's working, so you don't break it while fixing the rest.

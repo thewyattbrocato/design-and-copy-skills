@@ -1,25 +1,16 @@
-Here's sample content for the Tallybird dashboard.
+**DUNE & DIME**
+*The First Bank on Mars. Also the Last. Also the Only. We're thrilled about all three.*
 
-**Testimonials strip**
+Why trust your money to Earth banks, which are **54 million miles away** and have never once survived a dust storm? At Dune & Dime, your savings are protected by **11 feet of premium Martian regolith** and our founder's unshakable confidence.
 
-1. "I finally know where my money goes each month. Tallybird made it feel easy instead of stressful."
-   **Maya, Portland**
+Our accounts earn a guaranteed **212% APY**, a figure we calculated ourselves, on a whiteboard, while excited. Every deposit is insured by the **Federal Deposit Insurance Pebble™**, a rock we found.
 
-2. "We paid off our credit card two months early just by following the weekly nudges."
-   **Daniel, Austin**
+*"I deposited one dollar and left with a feeling of wealth I cannot explain, and which my accountant says is not legal."* — Gary T., Our Only Customer
 
-3. "The category breakdown is clear enough that I actually check it every morning."
-   **Priya, Toronto**
+**Awards:** Best Bank on Mars (2031, 2032, 2033, and also retroactively 2019). Voted "Most Likely to Still Be Open Tomorrow" by a panel of three of our own vice presidents.
 
-**Stats bar**
+Zero overdraft fees. Zero competitors. Zero oxygen outside the lobby.
 
-| Stat | Value | Label |
-|---|---|---|
-| Users | **250,000+** | Active budgeters |
-| Money saved | **$18.4M** | Saved by our community |
-| Average rating | **4.8 ★** | From 32,000 reviews |
+**Dune & Dime: Rust in Us.**
 
-**Layout notes:**
-- The quotes run 14 to 17 words each, so they should wrap to about two or three lines in a typical card.
-- Each stat is a short value plus a short label. That makes it easy to test a three-column bar and how it stacks on mobile.
-- If you want to stress-test the layout, I can write a longer or shorter version of each quote.
+*Member FDIP. Not responsible for dust, gravity, or math.*

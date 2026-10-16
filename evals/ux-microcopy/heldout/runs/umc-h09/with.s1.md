@@ -1,22 +1,12 @@
-Here's a hero built only on what you can back up.
+**(a) Free-ride period ending (30 min)**
+1. `30 included minutes are almost up. Then per-minute billing.` (59)
+2. `Your included time ends soon. End your ride to avoid fees.` (58)
+3. `Included time almost used. Then it's billed per minute.` (55)
 
-**Headline**
-A walk for your dog. A photo for you.
+**(b) Reservation held 5 more minutes**
+1. `Your bike is held for 5 more minutes. Head over to ride.` (56)
+2. `Reservation: 5 minutes left. Then the bike is released.` (55)
+3. `Reservation ends in 5 minutes. Get to your bike to keep it.` (59)
 
-**Subhead**
-Tailwag Walkers offers 30- or 60-minute walks, and you get a photo when you're back. Pick the length that suits your dog.
-
-**Button**
-Book a walk
-
-**Alternates**
-- Headline: Good walks, and proof of it.
-- Headline: Your dog gets a walk. You get the photo.
-- Button: Schedule a walk (or "Book your first walk", if you offer a first-walk flow)
-
-**Left out on purpose**
-- **Insured and background-checked.** I left these out because you haven't seen the paperwork. If the claim turns out to be wrong, it's a legal and trust problem for a service people hand their house keys and dogs to. Ask the owner for the insurance certificate and the background-check confirmation. Once you have them, add a line under the button, such as "Insured and background-checked walkers."
-- **Reviews, "trusted by," or "local favorite."** You have no reviews yet, so I didn't imply any.
-- **City name.** I didn't know it. Adding it to the subhead, for example "Dog walking in [City]", would help local search and make the page feel less generic.
-
-I also assumed the button leads to a booking or contact form. If it leads to something else, such as a call or a quote request, tell me and I'll change the label to match.
+- I left the price out. Adding a figure to any (a) option will probably push it past 60, so recount after you edit. Option 3 has the most room, with 5 characters spare.
+- I used "released" for what happens when the hold expires. I assumed the bike goes back to general availability, so change it if that's wrong.

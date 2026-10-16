@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings – Fernwick</title>
+<style>
+  :root {
+    --bg: #f4f6f1; --card: #ffffff; --text: #1f2a22; --muted: #5a6a5f;
+    --line: #d9e0d5; --accent: #2f6b45; --accent-text: #ffffff;
+    --danger: #a3261f; --danger-bg: #fdf0ee; --focus: #1a56c4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141a16; --card: #1d2620; --text: #e8efe9; --muted: #a2b2a7;
+      --line: #34423a; --accent: #6fbf8b; --accent-text: #0f1a13;
+      --danger: #ff9b92; --danger-bg: #2c1b19; --focus: #8ab4ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.75rem; margin: 8px 0 4px; }
+  .lede { color: var(--muted); margin: 0 0 24px; }
+  h2 { font-size: 1.05rem; margin: 32px 0 8px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
+  .row { padding: 16px; display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; }
+  .row + .row { border-top: 1px solid var(--line); }
+  .text { flex: 1; min-width: 0; }
+  .label { font-weight: 600; display: block; }
+  .hint { color: var(--muted); font-size: .9rem; margin: 2px 0 0; }
+  .saved { color: var(--muted); font-size: .85rem; min-height: 1.3em; margin: 4px 0 0; }
+  .saved:not(:empty)::before { content: "✓ "; }
+
+  /* switch */
+  .switch { display: flex; align-items: center; gap: 10px; flex: none; min-height: 44px; cursor: pointer; }
+  .switch input { position: absolute; opacity: 0; width: 52px; height: 44px; margin: 0; cursor: pointer; }
+  .track {
+    width: 52px; height: 30px; border-radius: 15px; border: 2px solid var(--muted);
+    position: relative; flex: none; transition: background .15s;
+  }
+  .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
+    border-radius: 50%; background: var(--muted); transition: transform .15s, background .15s;
+  }
+  .switch input:checked + .track { background: var(--accent); border-color: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(22px); background: var(--accent-text); }
+  .switch input:focus-visible + .track { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .state { width: 2.2em; font-size: .9rem; font-weight: 600; }
+
+  /* radios as segmented choice */
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  legend { padding: 0; font-weight: 600; }
+  .seg { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .seg label {
+    display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px;
+    border: 1px solid var(--line); border-radius: 8px; cursor: pointer;
+  }
+  .seg input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
+  .seg label:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .seg label:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  /* time */
+  .times { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
+  .times label { display: block; font-size: .9rem; font-weight: 600; }
+  input[type="time"] {
+    display: block; margin-top: 4px; font: inherit; font-size: 1rem; min-height: 44px; padding: 0 10px;
+    color: var(--text); background: var(--card); border: 1px solid var(--muted); border-radius: 8px;
+  }
+  input[type="time"]:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .full { display: block; }
+
+  /* danger */
+  .danger { border-color: var(--danger); }
+  button {
+    font: inherit; font-weight: 600; min-height: 44px; padding: 0 18px; border-radius: 8px;
+    border: 1px solid var(--muted); background: var(--card); color: var(--text); cursor: pointer;
+  }
+  button.delete { background: var(--danger); border-color: var(--danger); color: var(--card); }
+  @media (prefers-color-scheme: dark) { button.delete { color: #2c0f0c; } }
+
+  dialog {
+    max-width: 440px; width: calc(100% - 32px); border: 1px solid var(--line); border-radius: 12px;
+    background: var(--card); color: var(--text); padding: 24px;
+  }
+  dialog::backdrop { background: rgba(0,0,0,.5); }
+  dialog h2 { margin-top: 0; }
+  .actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap; }
+  .deleted { padding: 24px 16px; text-align: center; }
+  [hidden] { display: none !important; }
+  @media (max-width: 480px) { .row { flex-direction: column; gap: 4px; } }
+</style>
+</head>
+<body>
+<main>
+  <div id="settings">
+    <h1>Settings</h1>
+    <p class="lede">Changes save as soon as you make them.</p>
+
+    <h2>Notifications</h2>
+    <div class="card">
+      <div class="row">
+        <div class="text">
+          <span class="label" id="l-remind">Remind me when plants need watering</span>
+          <p class="hint" id="h-remind">Reminders stay silent during your quiet hours.</p>
+          <p class="saved" id="s-remind" role="status"></p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" role="switch" id="remind" data-key="remind" aria-labelledby="l-remind" aria-describedby="h-remind">
+          <span class="track" aria-hidden="true"></span>
+          <span class="state" aria-hidden="true"></span>
+        </label>
+      </div>
+
+      <div class="row">
+        <div class="text">
+          <span class="label" id="l-weekly">Email me a weekly summary</span>
+          <p class="hint" id="h-weekly">Quiet hours don’t apply to this email.</p>
+          <p class="saved" id="s-weekly" role="status"></p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" role="switch" id="weekly" data-key="weekly" aria-labelledby="l-weekly" aria-describedby="h-weekly">
+          <span class="track" aria-hidden="true"></span>
+          <span class="state" aria-hidden="true"></span>
+        </label>
+      </div>
+
+      <div class="row">
+        <fieldset class="text" aria-describedby="h-quiet">
+          <legend>Quiet hours</legend>
+          <p class="hint" id="h-quiet">Watering reminders stay silent between these times. If the end is earlier than the start, quiet hours run overnight.</p>
+          <div class="times">
+            <div>
+              <label for="qstart">Start</label>
+              <input type="time" id="qstart" data-key="qstart" autocomplete="off">
+            </div>
+            <div>
+              <label for="qend">End</label>
+              <input type="time" id="qend" data-key="qend" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint" id="quiet-summary" aria-live="polite" style="margin-top:10px"></p>
+          <p class="saved" id="s-quiet" role="status"></p>
+        </fieldset>
+      </div>
+    </div>
+
+    <h2>Privacy</h2>
+    <div class="card">
+      <div class="row">
+        <div class="text">
+          <span class="label" id="l-photos">Show my plant photos on my public profile</span>
+          <p class="hint" id="h-photos">When off, your plant photos are hidden from your public profile.</p>
+          <p class="saved" id="s-photos" role="status"></p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" role="switch" id="photos" data-key="photos" aria-labelledby="l-photos" aria-describedby="h-photos">
+          <span class="track" aria-hidden="true"></span>
+          <span class="state" aria-hidden="true"></span>
+        </label>
+      </div>
+    </div>
+
+    <h2>Units</h2>
+    <div class="card">
+      <div class="row">
+        <fieldset class="text">
+          <legend>Temperature</legend>
+          <div class="seg">
+            <label><input type="radio" name="unit" value="C"> Celsius (°C)</label>
+            <label><input type="radio" name="unit" value="F"> Fahrenheit (°F)</label>
+          </div>
+          <p class="saved" id="s-unit" role="status"></p>
+        </fieldset>
+      </div>
+    </div>
+
+    <h2>Delete account</h2>
+    <div class="card danger">
+      <div class="row">
+        <div class="text">
+          <span class="label">Delete my account</span>
+          <p class="hint">Permanently deletes your Fernwick account and its data. This can’t be undone.</p>
+        </div>
+        <button type="button" class="delete" id="open-delete">Delete my account…</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gone" class="card deleted" hidden role="status">
+    <h1>Your account has been deleted</h1>
+    <p class="lede">We’re sorry to see you go.</p>
+  </div>
+
+  <dialog id="confirm" aria-labelledby="d-title" aria-describedby="d-desc">
+    <h2 id="d-title">Delete your account?</h2>
+    <p id="d-desc">This permanently deletes your Fernwick account and its data. You can’t undo this.</p>
+    <div class="actions">
+      <button type="button" id="cancel" autofocus>Keep my account</button>
+      <button type="button" class="delete" id="confirm-delete">Yes, delete my account</button>
+    </div>
+  </dialog>
+</main>
+
+<script>
+(function () {
+  var KEY = "fernwick-settings";
+  // Defaults: temperature unit follows the device's region.
+  var region = (navigator.language || "en-US").split("-")[1] || "";
+  var defaults = {
+    remind: true, weekly: true, photos: false,
+    unit: ["US", "LR", "MM", "BS", "BZ", "KY", "PW"].indexOf(region.toUpperCase()) > -1 ? "F" : "C",
+    qstart: "22:00", qend: "07:00"
+  };
+  var s = Object.assign({}, defaults);
+  try { Object.assign(s, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
+
+  var timers = {};
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} }
+  function flash(id) {
+    var el = document.getElementById("s-" + id);
+    el.textContent = "Saved";
+    clearTimeout(timers[id]);
+    timers[id] = setTimeout(function () { el.textContent = ""; }, 2500);
+  }
+  function fmt(t) {
+    var p = t.split(":"), d = new Date(2000, 0, 1, +p[0], +p[1]);
+    return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  }
+  function render() {
+    document.querySelectorAll('input[role="switch"]').forEach(function (cb) {
+      cb.checked = !!s[cb.dataset.key];
+      cb.parentNode.querySelector(".state").textContent = cb.checked ? "On" : "Off";
+    });
+    document.querySelectorAll('input[name="unit"]').forEach(function (r) { r.checked = r.value === s.unit; });
+    document.getElementById("qstart").value = s.qstart;
+    document.getElementById("qend").value = s.qend;
+    var sum = document.getElementById("quiet-summary");
+    if (!s.qstart || !s.qend) sum.textContent = "Choose both a start and an end time.";
+    else if (s.qstart === s.qend) sum.textContent = "Start and end are the same, so there are no quiet hours.";
+    else sum.textContent = "Reminders stay silent from " + fmt(s.qstart) + " to " + fmt(s.qend) +
+      (s.qend < s.qstart ? " the next morning" : "") + "." +
+      (s.remind ? "" : " Reminders are off, so this has no effect right now.");
+  }
+
+  document.querySelectorAll('input[role="switch"]').forEach(function (cb) {
+    cb.addEventListener("change", function () {
+      s[cb.dataset.key] = cb.checked; persist(); render(); flash(cb.id);
+    });
+  });
+  document.querySelectorAll('input[name="unit"]').forEach(function (r) {
+    r.addEventListener("change", function () { s.unit = r.value; persist(); render(); flash("unit"); });
+  });
+  ["qstart", "qend"].forEach(function (id) {
+    document.getElementById(id).addEventListener("change", function (e) {
+      if (!e.target.value) { e.target.value = s[id]; return; } // keep last valid time if cleared
+      s[id] = e.target.value; persist(); render(); flash("quiet");
+    });
+  });
+
+  var dlg = document.getElementById("confirm"), opener = document.getElementById("open-delete");
+  opener.addEventListener("click", function () { dlg.showModal(); });
+  document.getElementById("cancel").addEventListener("click", function () { dlg.close(); opener.focus(); });
+  document.getElementById("confirm-delete").addEventListener("click", function () {
+    dlg.close();
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    // Replace with a real account-deletion request in the app.
+    document.getElementById("settings").hidden = true;
+    document.getElementById("gone").hidden = false;
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

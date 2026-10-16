@@ -1,58 +1,61 @@
-Here are the problems, most damaging first. Each has the replacement for that line.
+The layout isn't ready to ship. The cause of both QA complaints is in the code you pasted. I reviewed it against the skill's checks and didn't open the reference files. Findings are in order of impact.
 
-**1. Fixed-pixel page widths (`.page`, `.content`, `.intro`)**
-`.page` is 1100px, and the media queries only swap it for other fixed widths (740px, 460px). Any screen narrower than the current width scrolls sideways. A 360px phone is narrower than the 460px "mobile" width, and so is a 320px one. `.intro` at 900px is wider than `.content` at 780px, so it overflows its parent even on a desktop.
-```css
-.page  { inline-size: min(100% - 2rem, 70rem); margin-inline: auto; }
-.intro { max-inline-size: 65ch; }   /* readable line length; no fixed width */
+## 1. The viewport meta locks phones to a desktop layout and blocks zoom
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
 ```
-Delete every `.content` width. It should fill whatever space the sidebar leaves.
+- `width=1024` makes every phone render a 1024px canvas and scale it down. That's why it "looks off on some phones". Text shrinks and the `@media (max-width: 768px)` rule never fires.
+- `maximum-scale=1` and `user-scalable=no` stop pinch-zoom. That blocks the older users QA mentioned, and it fails WCAG 1.4.4 (Resize Text) and 1.4.10 (Reflow).
 
-**2. `float` on a flex child (`.sidebar`)**
-Float has no effect on flex items, so it does nothing here. It also suggests the layout was patched rather than designed. Remove it. Give the sidebar a basis and let the content take the remaining space:
+## 2. The `html` font-size of 62.5% shrinks everyone's text
+`62.5%` of the default 16px is 10px, so `body { 1.4rem }` is 14px. That's small, and it's the likely source of "older users". The percentage does follow browser text-size settings. The 14px result is still too small, and the `line-height` in pixels (below) is a second problem. Leave the root alone and set the body size in rem:
 ```css
-.layout  { display: flex; flex-wrap: wrap; gap: 2rem; }
-.sidebar { flex: 1 1 15rem; }
-.content { flex: 999 1 30rem; min-inline-size: 0; }
+html { font-size: 100%; }
+body { font-size: 1rem; line-height: 1.5; }
 ```
-Both columns now stack on their own when there isn't room, so you don't need a breakpoint for this. `min-inline-size: 0` stops long strings in the content from forcing overflow.
+`line-height: 20px` is fixed. When text is enlarged it will overlap. Use a unitless value.
 
-**3. The sidebar is hidden on small screens (`display: none`)**
-Whatever is in the sidebar (hours, location, insurance, contact details?) disappears for phone users, who are likely a large share of clinic visitors. With the wrapping layout above, it stacks instead of vanishing. If it's long, put it after the booking content or collapse it into a `<details>`.
-
-**4. Slots that can't wrap (`.slots`, `.slot`)**
-`.slots` is a flex row with no wrap and fixed 120px items. Eight slots can't fit on a phone, and they overflow or get squashed. The 80px width at the smallest size also makes the tap targets too narrow. Text zoom clips the fixed `height: 48px`. The right-margin spacing also looks wrong in right-to-left languages and leaves a stray gap at the end of each row.
+## 3. The fixed 960px container and cards force sideways scroll
+`.content { width: 960px }` is wider than any phone. The `min-width: 1440px` rule sets the same 960px, so it does nothing and can be deleted. The cards use a float with a 280px width and 10px margins, and they only go full-width below 768px, which never triggers (see #1).
 ```css
-.slots { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.slot  { min-inline-size: 7.5rem; min-block-size: 3rem; padding-inline: 0.75rem; }
-```
-This drops the `.slot` widths from all the media queries. At 320px it gives two or three slots per row, and it keeps each tap target at least 48px tall.
+.content { inline-size: min(60rem, 100% - 2rem); margin-inline: auto; }
 
-**5. Fixed-size doctor photo (`.doctor-photo`)**
-320×320 forces a square crop and overflows narrow containers. The 200px override only helps at one breakpoint. If a `<img>` is stretched this way, the photo also distorts.
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(17.5rem, 100%), 1fr));
+  gap: 1.25rem;
+}
+.card { min-inline-size: 0; overflow-wrap: anywhere; }
+```
+Wrap the cards in a `.cards` element. This replaces the float and the 768px media query. The cards wrap by themselves, and `min()` keeps one card from overflowing a 320px screen.
+
+## 4. The hero can clip on short screens, and the h1 is fixed at 48px
+`height: 100vh` clips the content on landscape phones. On mobile browsers `100vh` is also taller than the visible area because of the address bar. A fixed 48px h1 is too big at 320px and doesn't scale with the user's text size.
 ```css
-.doctor-photo { inline-size: min(100%, 20rem); block-size: auto; aspect-ratio: 1; object-fit: cover; }
+.hero {
+  min-block-size: 100vh;   /* fallback */
+  min-block-size: 100dvh;
+  display: grid;
+  place-content: center;
+  padding: 2rem 1rem;
+  background: #14325c;
+  color: #fff;
+}
+.hero h1 {
+  font-size: clamp(2rem, 1.2rem + 4vmin, 3rem);
+  overflow-wrap: anywhere;
+}
 ```
+Add `box-sizing: border-box` globally, because the padding above relies on it.
 
-**6. Pixel font size (`.intro`)**
-`font-size: 15px` ignores the reader's browser text-size setting, which matters for an older patient population. It's also small for body copy. Use `1rem` (or more), and set no `px` sizes on text anywhere else in the file.
+## Already fine
+The hero's `#14325c` on white text has strong contrast (about 12:1), so leave it.
 
-**7. The media queries themselves**
-All three blocks are device-width patches (768, 480) that swap one fixed number for another. With the changes above they have nothing left to do, so I'd delete them all. The one query worth keeping would be a real viewport question, such as hiding decorative content or changing the primary navigation, and nothing here needs it yet.
+## Checks I reasoned through
+- At 320px, the container is 288px wide, there's one card column, and there's no sideways scroll.
+- At 200% text size, the line-height scales with the text and nothing overlaps.
+- At 1440px, the container stays at 60rem.
+- I removed 2 media queries and kept none. Wrapping is handled by the grid, and nothing here depends on the device.
 
-**What I'd keep:** `margin: 0 auto` for centering (now `margin-inline: auto`), and the basic idea of a two-column layout with a flex row of slots.
-
-**Missing globals:** I don't see these in the snippet, so check the rest of the stylesheet for them:
-```css
-*, *::before, *::after { box-sizing: border-box; }
-img { max-inline-size: 100%; }
-```
-Without `border-box`, any padding you add will push the widths past what you set.
-Also confirm the HTML has `<meta name="viewport" content="width=device-width, initial-scale=1">` without `user-scalable=no`. A missing viewport tag alone would make phones render this as a zoomed-out desktop page.
-
-**Widths I checked by reasoning (not in a browser):**
-- At 320px, the page is 288px wide, the sidebar and content stack, and slots wrap two or three per row, with no sideways scroll.
-- At 768px, the sidebar and content fit side by side if the content's 30rem basis fits (about 480px plus the sidebar's 240px). Otherwise they stack.
-- At 1440px, the page stops at 70rem, and the intro stops at 65ch.
-
-I haven't seen your HTML. If the sidebar holds something other than what I guessed, or `.doctor-photo` isn't an `<img>`, tell me and I'll adjust points 3 and 5.
+## Before Friday
+Test on a real phone at 320–390px wide and with the OS text size set to large. I haven't run the page. These are conclusions from reading the code, not from testing it. I can't see the rest of the stylesheet, so check that nothing else sets a fixed width, such as nav, forms or tables.

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnside Ceramics</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --clay: #b5522e;
+    --clay-deep: #8a3a1d;
+    --cream: #f6ede1;
+    --ink: #2b1a12;
+    --glaze: #2f5d62;
+    --sand: #e3b980;
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .hero {
+    min-block-size: 100vh;
+    min-block-size: 100dvh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(5rem, 22vw, 26rem);
+    max-inline-size: 120rem;
+    margin-inline: auto;
+    padding-inline-start: max(1.25rem, env(safe-area-inset-left));
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1.25rem, 4vmin, 3rem);
+    padding-block: clamp(1.5rem, 6vmin, 5rem);
+    padding-inline-end: clamp(1rem, 3vw, 3rem);
+    min-inline-size: 0;
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-size: clamp(0.8rem, 1.2vmin + 0.5rem, 1.25rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--clay-deep);
+  }
+
+  h1 {
+    margin: 0;
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-size: clamp(3rem, 15vw, 15rem);
+    overflow-wrap: anywhere;
+  }
+  h1 span { display: block; color: var(--clay); }
+
+  .tagline {
+    margin: 0;
+    max-inline-size: 28ch;
+    font-size: clamp(1.15rem, 1.2rem + 1vw, 2.25rem);
+    line-height: 1.3;
+  }
+
+  .btn {
+    align-self: flex-start;
+    display: inline-block;
+    padding: 1em 2em;
+    background: var(--ink);
+    color: var(--cream);
+    font-size: clamp(1rem, 0.9rem + 0.6vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border-radius: 999px;
+    border: 2px solid var(--ink);
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn:hover { background: var(--clay); border-color: var(--clay); }
+  .btn:focus-visible { outline: 3px solid var(--glaze); outline-offset: 4px; }
+
+  /* Decorative color block: stacked glaze bands with a kiln-arch shape */
+  .block {
+    position: relative;
+    background:
+      radial-gradient(circle at 50% 100%, var(--sand) 0 38%, transparent 38.2%),
+      linear-gradient(to bottom, var(--clay) 0 55%, var(--glaze) 55% 80%, var(--clay-deep) 80%);
+    overflow: hidden;
+  }
+  .block::before {
+    content: "";
+    position: absolute;
+    inset-inline: 18%;
+    inset-block-start: 10%;
+    block-size: 30%;
+    border-radius: 999px 999px 0 0;
+    background: var(--cream);
+    opacity: 0.9;
+  }
+
+  /* Narrow screens: block becomes a band under the content */
+  @media (max-width: 40em) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: 1fr clamp(4rem, 14vh, 8rem);
+      padding-inline-start: 0;
+    }
+    .content {
+      padding-inline: max(1.25rem, env(safe-area-inset-left)) max(1.25rem, env(safe-area-inset-right));
+    }
+    h1 { font-size: clamp(3rem, 21vw, 7rem); }
+  }
+
+  /* Short landscape screens: keep headline and button on screen */
+  @media (max-height: 30em) and (orientation: landscape) {
+    h1 { font-size: clamp(2.5rem, 16vmin, 6rem); }
+    .content { gap: 0.75rem; padding-block: 1rem; }
+  }
+</style>
+</head>
+<body>
+  <main class="hero">
+    <div class="content">
+      <p class="eyebrow">Pottery studio &amp; classes</p>
+      <h1>Kilnside <span>Ceramics</span></h1>
+      <p class="tagline">Get your hands in the clay and make something you'll use every day.</p>
+      <a class="btn" href="#book">Book a class</a>
+    </div>
+    <div class="block" aria-hidden="true"></div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marlowe Ferries – Style Guide</title>
+<style>
+  :root {
+    /* Color */
+    --navy: #0B3C5D;
+    --blue: #1D6FA3;
+    --sky: #2A8BD1;
+    --tint: #e8f1f8;
+    --surface: #f4f7fa;
+    --white: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #6b7785;
+    --line: #d7dee5;
+    --danger: #c0392b;
+    --success: #1e8e5a;
+    --warning: #f2b84b;
+
+    /* Type */
+    --fs-12: 12px; --fs-14: 14px; --fs-16: 16px; --fs-18: 18px;
+    --fs-20: 20px; --fs-24: 24px; --fs-32: 32px; --fs-40: 40px;
+
+    /* Spacing */
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+    --sp-6: 24px; --sp-8: 32px; --sp-12: 48px; --sp-16: 64px;
+
+    /* Radius */
+    --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-pill: 999px;
+
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: var(--fs-16);
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--surface);
+  }
+  code, .mono { font-family: var(--mono); font-size: var(--fs-12); }
+
+  .page { max-width: 1040px; margin: 0 auto; padding: var(--sp-12) var(--sp-6) var(--sp-16); }
+  header.doc h1 { font-size: var(--fs-40); line-height: 1.1; margin: 0 0 var(--sp-2); color: var(--navy); }
+  header.doc p { margin: 0; color: var(--muted); max-width: 62ch; }
+
+  section { margin-top: var(--sp-16); }
+  section > h2 {
+    font-size: var(--fs-24); margin: 0 0 var(--sp-1); color: var(--navy);
+    padding-bottom: var(--sp-2); border-bottom: 1px solid var(--line);
+  }
+  section > .lede { color: var(--muted); margin: var(--sp-2) 0 var(--sp-6); max-width: 70ch; }
+  h3 { font-size: var(--fs-14); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: var(--sp-8) 0 var(--sp-3); }
+
+  .panel { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--sp-6); }
+
+  /* Swatches */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--sp-4); }
+  .swatch { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+  .swatch .chip { height: 64px; border-bottom: 1px solid var(--line); }
+  .swatch .meta { padding: var(--sp-3); }
+  .swatch b { display: block; font-size: var(--fs-14); }
+  .swatch .mono { display: block; color: var(--muted); }
+  .swatch small { display: block; margin-top: var(--sp-1); font-size: var(--fs-12); color: var(--muted); line-height: 1.4; }
+
+  /* Type */
+  .type-row { display: grid; grid-template-columns: 150px 1fr; gap: var(--sp-4); align-items: baseline; padding: var(--sp-3) 0; border-bottom: 1px solid var(--line); }
+  .type-row:last-child { border-bottom: 0; }
+  .type-row .label { color: var(--muted); }
+  .type-row .label b { color: var(--ink); font-size: var(--fs-14); display: block; }
+
+  /* Spacing */
+  .sp-row { display: grid; grid-template-columns: 110px 60px 1fr; gap: var(--sp-4); align-items: center; padding: var(--sp-1) 0; }
+  .sp-bar { height: 16px; background: var(--sky); border-radius: var(--r-sm); }
+
+  /* Radii */
+  .radii { display: flex; flex-wrap: wrap; gap: var(--sp-6); }
+  .radius-demo { text-align: center; }
+  .radius-demo .box { width: 96px; height: 64px; background: var(--tint); border: 2px solid var(--blue); margin-bottom: var(--sp-2); }
+
+  /* ===== Components ===== */
+  .btn {
+    font: inherit; font-size: var(--fs-16); font-weight: 600;
+    min-height: 44px; padding: 0 var(--sp-6);
+    border-radius: var(--r-md); border: 2px solid transparent;
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    text-decoration: none;
+  }
+  .btn:focus-visible, .link:focus-visible, .field:focus-visible, .nav a:focus-visible {
+    outline: 3px solid var(--sky); outline-offset: 2px;
+  }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-primary:hover, .btn-primary.is-hover { background: var(--blue); }
+  .btn-secondary { background: var(--white); color: var(--navy); border-color: var(--navy); }
+  .btn-secondary:hover, .btn-secondary.is-hover { background: var(--tint); }
+  .btn:disabled { background: var(--line); border-color: var(--line); color: var(--muted); cursor: not-allowed; }
+
+  .link { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+  .link:hover, .link.is-hover { color: var(--navy); }
+
+  .label-text { display: block; font-size: var(--fs-14); font-weight: 600; margin-bottom: var(--sp-1); }
+  .help { font-size: var(--fs-12); color: var(--muted); margin-top: var(--sp-1); }
+  .help.error { color: var(--danger); }
+  .field {
+    font: inherit; font-size: var(--fs-16); color: var(--ink);
+    width: 100%; min-height: 44px; padding: 0 var(--sp-3);
+    background: var(--white); border: 1px solid var(--muted); border-radius: var(--r-md);
+  }
+  .field::placeholder { color: var(--muted); }
+  .field:hover { border-color: var(--navy); }
+  .field:focus { border-color: var(--blue); }
+  .field.is-error { border: 2px solid var(--danger); }
+  .field:disabled { background: var(--surface); border-color: var(--line); color: var(--muted); }
+  select.field { appearance: none; -webkit-appearance: none; padding-right: var(--sp-8);
+    background-image: linear-gradient(45deg, transparent 50%, var(--navy) 50%), linear-gradient(135deg, var(--navy) 50%, transparent 50%);
+    background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+    background-size: 6px 6px; background-repeat: no-repeat;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: var(--sp-2);
+    font-size: var(--fs-12); font-weight: 700; letter-spacing: .02em;
+    padding: var(--sp-1) var(--sp-3); border-radius: var(--r-pill);
+    background: var(--white); border: 1px solid var(--line); color: var(--ink);
+  }
+  .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .badge.ontime::before { background: var(--success); }
+  .badge.delayed::before { background: var(--warning); }
+  .badge.cancelled::before { background: var(--danger); border-radius: 1px; }
+  .badge.ontime { border-color: var(--success); }
+  .badge.delayed { border-color: var(--warning); }
+  .badge.cancelled { border-color: var(--danger); }
+
+  .card {
+    background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: var(--sp-4) var(--sp-6); display: grid;
+    grid-template-columns: 1fr auto; gap: var(--sp-2) var(--sp-6); align-items: center;
+  }
+  .card .route { font-size: var(--fs-14); color: var(--muted); }
+  .card .times { display: flex; align-items: baseline; gap: var(--sp-3); }
+  .card .depart { font-size: var(--fs-32); font-weight: 700; color: var(--navy); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .card .arrive { font-size: var(--fs-14); color: var(--muted); }
+  .card .vessel { font-size: var(--fs-14); }
+  .card .side { display: flex; flex-direction: column; align-items: flex-end; gap: var(--sp-3); grid-row: span 3; grid-column: 2; }
+  .card.is-cancelled .depart { color: var(--muted); text-decoration: line-through; }
+
+  .nav {
+    background: var(--navy); color: var(--white); border-radius: var(--r-lg);
+    display: flex; align-items: center; gap: var(--sp-6); padding: 0 var(--sp-6); min-height: 64px;
+  }
+  .nav .brand { font-weight: 700; font-size: var(--fs-20); letter-spacing: .01em; margin-right: auto; }
+  .nav a { color: var(--white); text-decoration: none; font-weight: 500; padding: var(--sp-3) 0; border-bottom: 3px solid transparent; }
+  .nav a:hover { border-bottom-color: var(--sky); }
+  .nav a[aria-current="page"] { border-bottom-color: var(--white); font-weight: 700; }
+
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-6); }
+  .row { display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: center; }
+  .caption { font-size: var(--fs-12); color: var(--muted); margin-top: var(--sp-2); }
+
+  /* Notes table */
+  table { width: 100%; border-collapse: collapse; font-size: var(--fs-14); }
+  th, td { text-align: left; padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: var(--fs-12); text-transform: uppercase; letter-spacing: .05em; }
+  tr:last-child td { border-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .type-row { grid-template-columns: 1fr; gap: var(--sp-1); }
+    .card { grid-template-columns: 1fr; }
+    .card .side { grid-column: 1; grid-row: auto; align-items: flex-start; }
+    .nav { flex-wrap: wrap; gap: var(--sp-4); padding: var(--sp-3) var(--sp-4); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="doc">
+    <h1>Marlowe Ferries Style Guide</h1>
+    <p>One set of colors, type sizes, spacing and radii for the booking site and the deck crew tablet app. This is a proposal: it reduces the ~80 values currently in the CSS to a small set of tokens. The final section lists what each old value maps to.</p>
+  </header>
+
+  <!-- COLOR -->
+  <section>
+    <h2>Color</h2>
+    <p class="lede">Twelve colors. Navy is the brand and the default for primary actions. Blue is for links and hover. Status colors are always paired with a text label and a shape, never used alone.</p>
+
+    <h3>Brand</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#0B3C5D"></div><div class="meta"><b>Navy</b><span class="mono">#0B3C5D</span><small>Nav bar, primary button, headings, key numbers.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#1D6FA3"></div><div class="meta"><b>Blue</b><span class="mono">#1D6FA3</span><small>Text links, primary button hover, focused input border.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#2A8BD1"></div><div class="meta"><b>Sky</b><span class="mono">#2A8BD1</span><small>Focus rings, nav hover underline, chart/accent fills. Not for text on white.</small></div></div>
+    </div>
+
+    <h3>Neutrals</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#ffffff"></div><div class="meta"><b>White</b><span class="mono">#ffffff</span><small>Cards, inputs, text on navy.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#f4f7fa"></div><div class="meta"><b>Surface</b><span class="mono">#f4f7fa</span><small>Page background.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#e8f1f8"></div><div class="meta"><b>Tint</b><span class="mono">#e8f1f8</span><small>Hover and selected backgrounds.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#d7dee5"></div><div class="meta"><b>Line</b><span class="mono">#d7dee5</span><small>Dividers, card borders, disabled fills.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#6b7785"></div><div class="meta"><b>Muted</b><span class="mono">#6b7785</span><small>Secondary text, placeholders, input borders. Darkest of the two greys so it passes contrast on white.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#1a1a1a"></div><div class="meta"><b>Ink</b><span class="mono">#1a1a1a</span><small>Body text.</small></div></div>
+    </div>
+
+    <h3>Status</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#1e8e5a"></div><div class="meta"><b>Success</b><span class="mono">#1e8e5a</span><small>On time. Indicator dot and border only.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#f2b84b"></div><div class="meta"><b>Warning</b><span class="mono">#f2b84b</span><small>Delayed. Indicator dot and border only; never text.</small></div></div>
+      <div class="swatch"><div class="chip" style="background:#c0392b"></div><div class="meta"><b>Danger</b><span class="mono">#c0392b</span><small>Cancelled, errors, destructive actions.</small></div></div>
+    </div>
+  </section>
+
+  <!-- TYPE -->
+  <section>
+    <h2>Typography</h2>
+    <p class="lede">System font stack, so each device uses its own native face. Eight sizes. Body text is 16px; nothing smaller than 12px, and 12px is for captions and badges only. Crew tablets should stay at 16px or above for anything they need to read at arm's length.</p>
+    <div class="panel">
+      <div class="type-row"><div class="label"><b>40 / Display</b>Bold</div><div style="font-size:40px;font-weight:700;line-height:1.1;color:var(--navy)">Plan your crossing</div></div>
+      <div class="type-row"><div class="label"><b>32 / Time</b>Bold, tabular</div><div style="font-size:32px;font-weight:700;line-height:1.1;color:var(--navy);font-variant-numeric:tabular-nums">14:30</div></div>
+      <div class="type-row"><div class="label"><b>24 / Heading 1</b>Bold</div><div style="font-size:24px;font-weight:700;color:var(--navy)">Today's departures</div></div>
+      <div class="type-row"><div class="label"><b>20 / Heading 2</b>Bold</div><div style="font-size:20px;font-weight:700;color:var(--navy)">Port Marlowe terminal</div></div>
+      <div class="type-row"><div class="label"><b>18 / Lead</b>Regular</div><div style="font-size:18px">Boarding opens 30 minutes before departure.</div></div>
+      <div class="type-row"><div class="label"><b>16 / Body</b>Regular, buttons semibold</div><div style="font-size:16px">Foot passengers and vehicles check in at separate lanes.</div></div>
+      <div class="type-row"><div class="label"><b>14 / Small</b>Labels, secondary</div><div style="font-size:14px">Arrives 15:20 · MV Kittiwake</div></div>
+      <div class="type-row"><div class="label"><b>12 / Caption</b>Badges, hints</div><div style="font-size:12px;color:var(--muted)">Prices include harbour fees.</div></div>
+    </div>
+  </section>
+
+  <!-- SPACING -->
+  <section>
+    <h2>Spacing</h2>
+    <p class="lede">A 4px base with eight steps. Use these for padding, margins and gaps. Inside a component, use 4–16. Between components, use 16–32. Between page sections, use 48–64.</p>
+    <div class="panel">
+      <div class="sp-row"><code>--sp-1</code><span>4</span><div class="sp-bar" style="width:4px"></div></div>
+      <div class="sp-row"><code>--sp-2</code><span>8</span><div class="sp-bar" style="width:8px"></div></div>
+      <div class="sp-row"><code>--sp-3</code><span>12</span><div class="sp-bar" style="width:12px"></div></div>
+      <div class="sp-row"><code>--sp-4</code><span>16</span><div class="sp-bar" style="width:16px"></div></div>
+      <div class="sp-row"><code>--sp-6</code><span>24</span><div class="sp-bar" style="width:24px"></div></div>
+      <div class="sp-row"><code>--sp-8</code><span>32</span><div class="sp-bar" style="width:32px"></div></div>
+      <div class="sp-row"><code>--sp-12</code><span>48</span><div class="sp-bar" style="width:48px"></div></div>
+      <div class="sp-row"><code>--sp-16</code><span>64</span><div class="sp-bar" style="width:64px"></div></div>
+    </div>
+  </section>
+
+  <!-- RADII -->
+  <section>
+    <h2>Corner radius</h2>
+    <p class="lede">Four values. Rounder means bigger or more self-contained.</p>
+    <div class="panel radii">
+      <div class="radius-demo"><div class="box" style="border-radius:4px"></div><b>4</b><div class="caption">Small: focus chips, status dots</div></div>
+      <div class="radius-demo"><div class="box" style="border-radius:8px"></div><b>8</b><div class="caption">Medium: buttons, inputs</div></div>
+      <div class="radius-demo"><div class="box" style="border-radius:12px"></div><b>12</b><div class="caption">Large: cards, nav, panels</div></div>
+      <div class="radius-demo"><div class="box" style="border-radius:999px"></div><b>999</b><div class="caption">Pill: badges</div></div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section>
+    <h2>Components</h2>
+    <p class="lede">All interactive controls are at least 44px tall so they work with gloves on the tablet. Every control has a visible focus ring.</p>
+
+    <h3>Top nav</h3>
+    <nav class="nav" aria-label="Example">
+      <span class="brand">Marlowe Ferries</span>
+      <a href="#" aria-current="page">Sailings</a>
+      <a href="#">My bookings</a>
+      <a href="#">Fares</a>
+      <a href="#">Help</a>
+    </nav>
+    <div class="caption">Navy bar, 64px tall. The current page is bold with a white underline. Hover shows a sky underline.</div>
+
+    <h3>Buttons</h3>
+    <div class="panel">
+      <div class="row">
+        <button class="btn btn-primary">Book this sailing</button>
+        <button class="btn btn-primary is-hover">Hover</button>
+        <button class="btn btn-primary" disabled>Disabled</button>
+      </div>
+      <div class="row" style="margin-top:var(--sp-4)">
+        <button class="btn btn-secondary">View details</button>
+        <button class="btn btn-secondary is-hover">Hover</button>
+        <button class="btn btn-secondary" disabled>Disabled</button>
+      </div>
+      <div class="caption">Use one primary button per screen. Secondary is for everything else. Both are 44px tall, 8px radius, 16px semibold.</div>
+    </div>
+
+    <h3>Text link</h3>
+    <div class="panel">
+      <p style="margin:0">Need to change plans? <a class="link" href="#">Manage your booking</a> or <a class="link is-hover" href="#">read the fare rules</a> (hover).</p>
+      <div class="caption">Always underlined so links don't rely on color alone.</div>
+    </div>
+
+    <h3>Text input and select</h3>
+    <div class="panel demo-grid">
+      <div>
+        <label class="label-text" for="i1">Booking reference</label>
+        <input id="i1" class="field" placeholder="e.g. MF-48213">
+        <div class="help">Found in your confirmation email.</div>
+      </div>
+      <div>
+        <label class="label-text" for="i2">Email</label>
+        <input id="i2" class="field is-error" value="ana@example" aria-describedby="e2">
+        <div id="e2" class="help error">Enter a full email address.</div>
+      </div>
+      <div>
+        <label class="label-text" for="s1">Route</label>
+        <select id="s1" class="field">
+          <option>Port Marlowe → Heron Island</option>
+          <option>Heron Island → Port Marlowe</option>
+          <option>Port Marlowe → Gull Point</option>
+        </select>
+        <div class="help">Same field styling as the text input.</div>
+      </div>
+      <div>
+        <label class="label-text" for="i3">Vehicle plate (unavailable)</label>
+        <input id="i3" class="field" disabled placeholder="Not needed for foot passengers">
+      </div>
+    </div>
+
+    <h3>Status badge</h3>
+    <div class="panel">
+      <div class="row">
+        <span class="badge ontime">On time</span>
+        <span class="badge delayed">Delayed</span>
+        <span class="badge cancelled">Cancelled</span>
+      </div>
+      <div class="caption">Text is always ink. Status is shown by the label, the colored border, and the dot shape (circle for running, square for cancelled), so it still reads in glare or for color-blind users.</div>
+    </div>
+
+    <h3>Sailing card</h3>
+    <div class="demo-grid" style="grid-template-columns:repeat(auto-fit,minmax(360px,1fr))">
+      <article class="card">
+        <div class="route">Port Marlowe → Heron Island</div>
+        <div class="times"><span class="depart">14:30</span><span class="arrive">arrives 15:20</span></div>
+        <div class="vessel">MV Kittiwake</div>
+        <div class="side">
+          <span class="badge ontime">On time</span>
+          <button class="btn btn-primary">Select</button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="route">Port Marlowe → Heron Island</div>
+        <div class="times"><span class="depart">16:00</span><span class="arrive">arrives 16:50 (est. 17:10)</span></div>
+        <div class="vessel">MV Osprey</div>
+        <div class="side">
+          <span class="badge delayed">Delayed 20 min</span>
+          <button class="btn btn-primary">Select</button>
+        </div>
+      </article>
+      <article class="card is-cancelled">
+        <div class="route">Port Marlowe → Heron Island</div>
+        <div class="times"><span class="depart">18:15</span><span class="arrive">was arriving 19:05</span></div>
+        <div class="vessel">MV Osprey</div>
+        <div class="side">
+          <span class="badge cancelled">Cancelled</span>
+          <button class="btn btn-secondary">See alternatives</button>
+        </div>
+      </article>
+    </div>
+    <div class="caption">One departure per card. Departure time is the largest thing on it. Cancelled cards show the time struck through and drop the primary action.</div>
+  </section>
+
+  <!-- MAPPING -->
+  <section>
+    <h2>What changed from the current CSS</h2>
+    <p class="lede">Near-duplicates are merged into the most-used value. Please review the items marked "decision".</p>
+    <div class="panel">
+      <table>
+        <thead><tr><th>Group</th><th>Old values</th><th>New token</th></tr></thead>
+        <tbody>
+          <tr><td>Navy</td><td><code>#0B3C5D #0c3d5e #0a3a5a</code></td><td><code>#0B3C5D</code></td></tr>
+          <tr><td>Blue</td><td><code>#1D6FA3 #1e70a4</code></td><td><code>#1D6FA3</code></td></tr>
+          <tr><td>Sky</td><td><code>#2A8BD1</code></td><td>Kept. Restricted to rings and accents.</td></tr>
+          <tr><td>Tint</td><td><code>#e8f1f8 #EAF2F9</code></td><td><code>#e8f1f8</code></td></tr>
+          <tr><td>Ink</td><td><code>#1a1a1a #222 #333</code></td><td><code>#1a1a1a</code> (decision: one text color, no mid-dark grey)</td></tr>
+          <tr><td>Muted</td><td><code>#6b7785 #7a8794</code></td><td><code>#6b7785</code> (the lighter one fails contrast on white)</td></tr>
+          <tr><td>Line</td><td><code>#d7dee5 #cfd8e0</code></td><td><code>#d7dee5</code></td></tr>
+          <tr><td>Danger</td><td><code>#c0392b #d64533</code></td><td><code>#c0392b</code></td></tr>
+          <tr><td>Success</td><td><code>#1e8e5a #23915c</code></td><td><code>#1e8e5a</code></td></tr>
+          <tr><td>Warning</td><td><code>#f2b84b</code></td><td>Kept.</td></tr>
+          <tr><td>Font size</td><td><code>11 12 13 14 15 16 17 18 20 22 24 28 32 40</code></td><td><code>12 14 16 18 20 24 32 40</code>. 11→12, 13→14, 15→16, 17→18, 22→24, 28→32.</td></tr>
+          <tr><td>Spacing</td><td><code>2 4 5 6 8 10 12 14 16 18 20 24 28 32 40 48 64</code></td><td><code>4 8 12 16 24 32 48 64</code>. 2/5/6→4 or 8, 10/14→12, 18/20→16 or 24, 28→24 or 32, 40→32 or 48 (decision: round to the nearest by context).</td></tr>
+          <tr><td>Radius</td><td><code>2 3 4 6 8 12 999</code></td><td><code>4 8 12 999</code>. 2/3→4, 6→8.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

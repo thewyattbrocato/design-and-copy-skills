@@ -1,100 +1,23 @@
-# Wordtab landing page
+Here's a lightly punched-up version. I kept every fact and claim as is.
 
-## Hero
+> **Tidewalk Kayak Rentals**
+>
+> Spend a few hours on the water at Pelican Creek. We rent single and tandem kayaks from $38 for a half day. Every boat is cleaned and checked after each rental, so you can just show up and paddle.
+>
+> **Guided sunset paddles**
+> Join us Fridays and Saturdays for a two-hour guided paddle at sunset. It's $55 per person, with groups of up to 10. No experience is needed, but you should be comfortable in the water. Life jackets are included. If rain cancels your tour, we'll refund you in full.
+>
+> **Plan your visit**
+> We're at the Pelican Creek boat ramp, open daily 8 to 5, May through September.
+>
+> In our first season, 1,240 people paddled with us, and none of those trips needed emergency services.
 
-**Invoicing built by a translator, for translators.**
-Bill per word, per hour, or per project. Import your word counts, send the invoice, and let Wordtab chase the late ones.
+Changes I made:
+- **Structure:** I split it into short sections so prices and hours are easy to find.
+- **Opening:** It now starts with the experience instead of the price.
+- **Refund line:** It now sits with the guided tours, so it's clear it applies to tours and not to rentals.
+- **Safety stat:** I moved it to the end as a closing note.
 
-**[Start your 30-day free trial]**  ·  $12/month flat after that
-
----
-
-## How it works
-
-1. **Set up a client once.** Save a rate card per client: per-word, hourly, or project rates, ready the next time they send work.
-2. **Import your word counts.** Drop in the CSV export from your translation tool. No retyping numbers.
-3. **Send the invoice.** Pick a template in English, German, Spanish, or French. Wordtab sends reminders when it's overdue, so you don't have to.
-
----
-
-## Features
-
-- **Three ways to bill.** Per word, per hour, or per project, on the same account.
-- **Rate cards per client.** Every client's rates are saved and applied automatically.
-- **CSV word-count import.** Works with the CSV exports from the usual translation tools.
-- **Invoice templates in four languages.** English, German, Spanish, and French.
-- **Automatic overdue reminders.** Polite follow-ups go out without you writing them.
-- **Your data stays yours.** Export everything as CSV, any time.
-
----
-
-## From translators using Wordtab
-
-> "[Real quote from a user: what they used before and what changed.]"
-> **[Name]**, [language pair]
-
-> "[Real quote from a user.]"
-> **[Name]**, [language pair]
-
-> "[Real quote from a user.]"
-> **[Name]**, [language pair]
-
-*I built Wordtab after getting sick of my own invoicing spreadsheets. I'm a translator too, and I use it every week.*
-
----
-
-## Wordtab vs. your spreadsheet
-
-| | Spreadsheet | Wordtab |
-|---|---|---|
-| Per-client rates | Copy, paste, hope | Saved rate card per client |
-| Word counts | Retype from your CAT tool | Import the CSV |
-| Invoice in German or French | Rebuild the template | Pick a template |
-| Late payers | You remember to chase | Automatic reminders |
-| Mixed billing (word, hour, project) | Separate tabs and formulas | One invoice flow |
-| Your data | Yours | Still yours: CSV export anytime |
-
-A spreadsheet is free, but you pay for it with your evenings.
-
----
-
-## Pricing
-
-**$12 a month. Flat.**
-Every feature included, with a 30-day free trial.
-
-**[Start free trial]**
-
----
-
-## FAQ
-
-**Which translation tools can I import word counts from?**
-Wordtab imports CSV exports from the usual translation tools. [List the specific tools you've tested here.]
-
-**Can I invoice in a language other than English?**
-Yes. Invoice templates come in English, German, Spanish, and French.
-
-**What happens after the 30-day trial?**
-It's $12 a month, flat. You can export all your data as CSV at any time.
-
-**What if I want to leave?**
-Export everything as CSV whenever you like. Your invoices and client data aren't locked in.
-
----
-
-## Final call to action
-
-**Stop wrestling with spreadsheets. Start getting paid.**
-Try Wordtab free for 30 days.
-
-**[Start your free trial]**
-
----
-
-### Things to fix before publishing
-
-- **Testimonials:** I left the quotes as placeholders because you didn't give me any, and I won't invent them. Fake quotes on a page that claims to be real users is a trust and legal risk. Three months in, you can ask your first few users for a sentence each. If you have none yet, drop the section or keep only the founder line, which is true and works well.
-- **Tool names:** Naming the tools you've actually tested (the first FAQ answer) will convince translators more than "the usual tools."
-- **Word count:** It runs close to 600, including the table and placeholders.
-- **No made-up numbers:** I left out user counts and invoice totals. Add real ones if you have them.
+Two things to check before it goes live:
+- **Rain policy:** The original only mentions refunds for guided tours. If rentals are also affected by weather, add a line about that.
+- **Safety stat:** It's accurate as written, but be ready to back it up. I kept the wording plain ("none of those trips needed emergency services") and didn't turn it into something like "perfect safety record."

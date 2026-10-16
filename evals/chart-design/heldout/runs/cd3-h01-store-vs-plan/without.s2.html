@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>September sales vs plan by shop</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; padding: 16px; background: #f9f9f7; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .viz-root {
+    --surface: #fcfcfb; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7; --ahead: #2a78d6; --behind: #e34948;
+    max-width: 720px; margin: 0 auto; padding: 20px 22px 18px;
+    background: var(--surface); color: var(--ink);
+    border-radius: 12px; box-shadow: 0 0 0 1px rgba(11,11,11,.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0d0d0d; }
+    .viz-root {
+      --surface: #1a1a19; --ink: #f0efec; --ink2: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --ahead: #3987e5; --behind: #e66767;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10);
+    }
+  }
+  h1 { font-size: 18px; line-height: 1.3; margin: 0 0 4px; font-weight: 650; }
+  .sub { margin: 0 0 16px; font-size: 13px; color: var(--ink2); }
+  .legend { display: flex; gap: 16px; font-size: 12px; color: var(--ink2); margin-bottom: 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .row { display: grid; grid-template-columns: 92px 1fr 118px; align-items: center; column-gap: 10px; height: 34px; }
+  .name { font-size: 13px; font-weight: 600; }
+  .abs { font-size: 12px; color: var(--ink2); text-align: right; font-variant-numeric: tabular-nums; }
+  .plot { position: relative; height: 100%; }
+  .grid { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid); }
+  .grid.zero { background: var(--axis); width: 2px; margin-left: -1px; }
+  .bar { position: absolute; top: 7px; height: 20px; }
+  .bar.a { background: var(--ahead); border-radius: 0 4px 4px 0; }
+  .bar.b { background: var(--behind); border-radius: 4px 0 0 4px; }
+  .lbl { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .axis { height: 20px; }
+  .axis .plot { height: 20px; }
+  .tick { position: absolute; transform: translateX(-50%); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .hdr .plot span { position: absolute; font-size: 12px; font-weight: 600; color: var(--ink2); }
+  .hdr { height: 22px; }
+  .foot { margin: 12px 0 0; font-size: 11px; color: var(--muted); }
+  @media (max-width: 520px) {
+    .row { grid-template-columns: 74px 1fr; height: 40px; }
+    .row .abs { display: none; }
+    .axis, .hdr { grid-template-columns: 74px 1fr; }
+    .axis > :last-child, .hdr > :last-child { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="viz-root" role="img" aria-label="Diverging bar chart of September sales variance to plan. Ahead: University +11.4%, Old Town +10.2%, Harbor +7.3%, Lakeside +3.0%. On plan: Northfield 0%. Behind: Mill Street -7.8%, Eastgate -14.4%, Airport -17.3%.">
+  <h1>4 shops ahead of plan, 3 behind, 1 on it</h1>
+  <p class="sub">September sales vs plan, % difference. Chain total $839K vs $833K plan (+0.7%).</p>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--ahead)"></i>Ahead of plan</span>
+    <span><i class="sw" style="background:var(--behind)"></i>Behind plan</span>
+  </div>
+
+  <div class="row hdr"><div></div>
+    <div class="plot"><span style="right:44.6%; padding-right:8px">← Behind</span><span style="left:55.6%; padding-left:8px">Ahead →</span></div>
+    <div class="abs">Actual vs plan</div></div>
+
+  <div class="row"><div class="name">University</div>
+    <div class="plot"><i class="grid" style="left:11.1%"></i><i class="grid" style="left:33.3%"></i><i class="grid zero" style="left:55.6%"></i><i class="grid" style="left:77.8%"></i><i class="grid" style="left:100%"></i>
+      <div class="bar a" style="left:55.6%;width:25.4%"></div><div class="lbl" style="left:82%">+11.4%</div></div>
+    <div class="abs">$156K vs $140K</div></div>
+
+  <div class="row"><div class="name">Old Town</div>
+    <div class="plot"><i class="grid" style="left:11.1%"></i><i class="grid" style="left:33.3%"></i><i class="grid zero" style="left:55.6%"></i><i class="grid" style="left:77.8%"></i><i class="grid" style="left:100%"></i>
+      <div class="bar a" style="left:55.6%;width:22.6%"></div><div class="lbl" style="left:79.2%">+10.2%</div></div>
+    <div class="abs">$141K vs $128K</div></div>
+
+  <div class="row"><div class="name">Harbor</div>
+    <div class="plot"><i class="grid" style="left:11.1%"></i><i class="grid" style="left:33.3%"></i><i class="grid zero" style="left:55.6%"></i><i class="grid" style="left:77.8%"></i><i class="grid" style="left:100%"></i>
+      <div class="bar a" style="left:55.6%;width:16.2%"></div><div class="lbl" style="left:72.8%">+7.3%</div></div>
+    <div class="abs">$118K vs $110K</div></div>
+
+  <div class="row"><div class="name">Lakeside</div>
+    <div class="plot"><i class="grid" style="left:11.1%"></i><i class="grid" style="left:33.3%"></i><i class="grid zero" style="left:55.6%"></i><i class="grid" style="left:77.8%"></i><i class="grid" style="left:100%"></i>
+      <div class="bar a" style="left:55.6%;width:6.7%"></div><div class="lbl" style="left:63.3%">+3.0%</div></div>
+    <div class="abs">$103K vs $100K</div></div>
+
+  <div class="row"><div class="name">Northfield</div>
+    <div class="plot"><i class="grid" style="left:11.1%"></i><i class="grid" style="left:33.3%"></i><i class="grid zero" style="left:55.6%"></i><i class="grid" style="left:77.8%"></i><i class="grid" style="left:100%"></i>
+      <div class="lbl" style="left:57.4%;color:var(--ink2)">On plan</div></div>
+    <div class="abs">$88K vs $88K</div></div>
+
+  <div class="row"><div class="name">Mill Street</div>
+    <div class="plot"><i class="grid" style="left:11.1%"></i><i class="grid" style="left:33.3%"></i><i class="grid zero" style="left:55.6%"></i><i class="grid" style="left:77.8%"></i><i class="grid" style="left:100%"></i>
+      <div class="bar b" style="left:38.2%;width:17.4%"></div><div class="lbl" style="right:62.6%">−7.8%</div></div>
+    <div class="abs">$94K vs $102K</div></div>
+
+  <div class="row"><div class="name">Eastgate</div>
+    <div class="plot"><i class="grid" style="left:11.1%"></i><i class="grid" style="left:33.3%"></i><i class="grid zero" style="left:55.6%"></i><i class="grid" style="left:77.8%"></i><i class="grid" style="left:100%"></i>
+      <div class="bar b" style="left:23.5%;width:32.1%"></div><div class="lbl" style="right:77.3%">−14.4%</div></div>
+    <div class="abs">$77K vs $90K</div></div>
+
+  <div class="row"><div class="name">Airport</div>
+    <div class="plot"><i class="grid" style="left:11.1%"></i><i class="grid" style="left:33.3%"></i><i class="grid zero" style="left:55.6%"></i><i class="grid" style="left:77.8%"></i><i class="grid" style="left:100%"></i>
+      <div class="bar b" style="left:17.1%;width:38.5%"></div><div class="lbl" style="right:83.7%">−17.3%</div></div>
+    <div class="abs">$62K vs $75K</div></div>
+
+  <div class="row axis"><div></div>
+    <div class="plot"><span class="tick" style="left:11.1%">−20%</span><span class="tick" style="left:33.3%">−10%</span><span class="tick" style="left:55.6%">Plan</span><span class="tick" style="left:77.8%">+10%</span><span class="tick" style="left:97%">+20%</span></div>
+    <div></div></div>
+
+  <p class="foot">Sorted from furthest ahead to furthest behind. Variance = (actual − plan) ÷ plan. Dollar figures in $ thousands.</p>
+</div>
+</body>
+</html>

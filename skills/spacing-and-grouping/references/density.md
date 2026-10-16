@@ -18,13 +18,13 @@ Offer a density setting only when a tool has both kinds of users and enough data
 - Vertical padding in rows and cells (for example 12 px down to 6 or 4 px).
 - Gaps between small items and between rows.
 - Section spacing, by one or two steps.
-- Control height, down to about 28 to 32 px for pointer-only tools.
+- Control height, down to about 30 px for pointer-only tools.
 
 ## What must not change
 
 - **The within/between ratio.** If groups sat at 8 inside and 24 between, compact may be 4 and 12. The ratio holds, so groups still read.
 - **The structure.** The same items, in the same order, in the same groups, in both modes.
-- **A readable text size.** Keep body and table text at a legible size (around 13 to 14 px at the smallest for sustained reading; smaller only for secondary data). Make density come from tighter space, not tiny type.
+- **A readable text size.** Keep body text at a legible size: 12 px is the floor for secondary metadata, 13 px in dense tables, and text people read to act on stays at body size. Make density come from tighter space, not tiny type.
 - **Alignment.** Numbers stay right-aligned and columns keep their edges.
 - **Row separation.** Subtle rules or shading keep tight rows from merging; space alone stops being enough as rows get close.
 - **Touch targets** if the screen can be used with touch. A compact mode is usually for pointer use; do not let it ship to phones unchanged.

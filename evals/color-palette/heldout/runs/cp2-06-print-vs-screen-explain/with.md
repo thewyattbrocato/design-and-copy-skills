@@ -1,21 +1,19 @@
-The printer is partly right, but "just how print works" doesn't excuse a dull, brownish result. That part is fixable.
+**Partly a cop-out.** The physics is real, but "that's how print works" shouldn't be the end of the conversation.
 
-**What's true**
-- **Your screen is too bright for ink.** #ff6a1a is an RGB color made of light. A monitor can show a very saturated, glowing orange. Standard CMYK ink on paper can't reach it, because ink only absorbs light and can't add any.
-- **The conversion is automatic and lossy.** If the file went to the printer as RGB, or the printer converted it, the orange gets pulled into the nearest CMYK color. That is usually a flatter, slightly muddy orange. Uncoated paper makes it worse because it soaks up ink and dulls the color further.
+**What's true:** #ff6a1a is a very saturated orange on a backlit screen. Standard CMYK inks can't reproduce the brightest oranges, so any CMYK version will be somewhat less vivid than the website. Some loss is normal.
 
-**What's not an excuse**
-- **Orange is one of the easier colors to approximate in CMYK.** A good orange is roughly 0% cyan, 65–70% magenta, 90–100% yellow, 0% black. Brown means something else went wrong, such as extra cyan or black in the mix, a bad automatic conversion, or an uncoated stock that wasn't accounted for.
-- **A professional printer should have told you** that the color would shift, and shown you a way to control it, before you got a proof.
+**What isn't an excuse:** a good CMYK orange (roughly 0–5% cyan, 60–70% magenta, 95–100% yellow, 0% black) looks like a warm, clearly orange color. It shouldn't look brown. Brownish usually means one of these:
+- The file was sent as RGB and auto-converted badly, so stray cyan or black crept into the mix.
+- The stock is uncoated. Uncoated paper soaks up ink and dulls everything, orange most of all.
+- Nobody picked a CMYK recipe on purpose, so the color landed wherever the conversion put it.
 
-**What I'd do**
-1. **Ask the printer which of two things went wrong.** Was the file RGB and converted automatically? And what exact CMYK values and paper stock were used on the proof?
-2. **Convert the orange yourself and set it explicitly in the file.** Start near C0 M68 Y100 K0 as a *starting point*. I haven't seen your proof, so don't treat those numbers as the answer. Make sure there is no cyan or black in the orange.
-3. **Ask for a new proof,** not a screenshot or PDF on your screen, and compare it with your own eyes.
-4. **Try a coated or silk stock** if the menu is on uncoated paper. It makes oranges look noticeably brighter.
-5. **For the exact match, use a spot ink.** Choose the nearest Pantone orange from a physical swatch book (the Pantone Formula Guide). A spot ink is mixed to a specific color rather than built from CMYK dots, so it can look brighter than a CMYK mix. It costs extra, but for one brand color on a bakery menu it's often worth it.
-6. **Judge the color on a physical sample,** in the light where the menu will be read. Don't judge it against your phone or laptop.
+**What to do:**
+1. **Ask the printer three things.** What are the exact CMYK values of the orange on the proof? What stock and ICC profile was it printed on (coated or uncoated, and which profile)? Was my file RGB or CMYK when you received it? Their answers will show whether it's a conversion problem or a limit of the process.
+2. **Pick the CMYK recipe yourself.** Ask for 2–3 orange variants on the proof, such as M60 Y100, M70 Y100 and M65 Y95, with black at 0. Don't leave it to auto-conversion.
+3. **Consider a spot ink.** Pantone 1585 C is very close to your orange, and 1585 U is the uncoated version. A spot ink is a premixed ink, so it's much brighter than CMYK can manage. It costs more, since it's an extra plate, and it makes sense if the orange is your signature color. Check a physical chip rather than trusting the number. Pantone is a close match, not an exact one.
+4. **Judge a physical proof, not a screen.** View it in daylight and under the bakery's lighting, next to the real packaging or signage. PDF previews and screenshots will mislead you.
+5. **Decide if the stock is the problem.** If the menu is on uncoated paper, expect it to look duller. A coated or silk stock will look noticeably brighter. Uncoated might suit a bakery's feel, though, so this is a trade-off.
 
-**A caveat for expectations:** even a good fix won't look as glowing as the website. Print orange will be a little less neon than the screen version. The goal is a warm, appetizing orange that is clearly your brand's, not an identical match.
+Whatever you choose, record the final recipe, either CMYK values or a Pantone number, in your brand notes. That way every future print job matches this one, and you won't have to redo this conversation. Don't change the website orange. It's fine where it is.
 
-If you can tell me the paper stock and what file format you sent, I can narrow down which of these is the real cause.
+I'm giving the CMYK ranges from general print practice, not from a conversion of your file. The printer's proof values and a test strip will decide the final recipe.

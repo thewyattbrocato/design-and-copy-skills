@@ -3,232 +3,162 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Harbor Line Freight – Dispatch</title>
+<title>Kilnside Ceramics</title>
 <style>
   :root {
-    --bg: #f3f5f8;
-    --panel: #ffffff;
-    --ink: #1b2430;
-    --muted: #5d6b7c;
-    --line: #dde3ea;
-    --nav: #12263a;
-    --nav-ink: #c9d6e3;
-    --accent: #1f6fb2;
-    --green-bg: #dff3e4; --green: #1d6b34;
-    --amber-bg: #fdf0d2; --amber: #8a5a00;
-    --blue-bg: #dcebfa; --blue: #174f86;
-    --red-bg: #fbdcdc; --red: #9b1c1c;
+    --clay: #c4572f;
+    --clay-deep: #8f3a1c;
+    --glaze: #2f5d62;
+    --cream: #f6ede0;
+    --ink: #2a1a12;
+    --sand: #e8c9a0;
   }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
+    background: var(--cream);
     color: var(--ink);
-    line-height: 1.4;
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  .app { display: flex; min-height: 100vh; }
-
-  /* Navigation */
-  nav {
-    flex: 0 0 200px;
-    background: var(--nav);
-    color: var(--nav-ink);
-    padding: 20px 12px;
-  }
-  .brand {
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.05rem;
-    padding: 0 10px 18px;
-    letter-spacing: .02em;
-  }
-  .brand small { display: block; font-weight: 400; color: var(--nav-ink); font-size: .75rem; }
-  nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-  nav a {
-    display: block;
-    padding: 10px;
-    border-radius: 6px;
-    color: inherit;
-    text-decoration: none;
-    font-size: .95rem;
-  }
-  nav a:hover { background: rgba(255,255,255,.08); }
-  nav a:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
-  nav a[aria-current="page"] { background: var(--accent); color: #fff; font-weight: 600; }
-
-  /* Main */
-  main { flex: 1 1 0; min-width: 0; padding: 24px; }
-  header.page { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 16px; }
-  h1 { margin: 0; font-size: 1.4rem; }
-  .date { color: var(--muted); font-size: .9rem; }
-
-  .list { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  .row {
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    width: 100%;
+    max-width: 2400px;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: 90px minmax(0,1.2fr) minmax(0,1.2fr) minmax(0,1fr) 110px 80px;
-    gap: 12px;
-    align-items: center;
-    padding: 12px 16px;
-    border-top: 1px solid var(--line);
+    grid-template-columns: minmax(0, 1fr) clamp(7rem, 22vw, 28rem);
+    grid-template-rows: auto 1fr;
+    position: relative;
+    overflow: hidden;
   }
-  .row:first-child { border-top: 0; }
-  .row.head {
-    background: #eef2f6;
-    color: var(--muted);
-    font-size: .75rem;
+  .headline-wrap {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding: clamp(1.25rem, 3vw, 3.5rem) clamp(1.25rem, 4vw, 5rem) 0;
+    position: relative;
+    z-index: 2;
+  }
+  .eyebrow {
+    font-size: clamp(0.75rem, 0.9vw + 0.4rem, 1.4rem);
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    letter-spacing: .05em;
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--clay-deep);
+    margin-bottom: clamp(0.5rem, 1vw, 1.25rem);
   }
-  .row > div { min-width: 0; overflow-wrap: anywhere; }
-  .num { font-weight: 600; font-variant-numeric: tabular-nums; }
-  .eta { font-variant-numeric: tabular-nums; }
-  .badge {
+  h1 {
+    font-family: Impact, "Arial Black", "Helvetica Neue", system-ui, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+    font-size: clamp(3.4rem, 15.5vw, 24rem);
+    color: var(--ink);
+    overflow-wrap: break-word;
+  }
+  h1 span { display: block; }
+  h1 .second { color: var(--clay); }
+  .content {
+    grid-column: 1;
+    grid-row: 2;
+    padding: clamp(1.5rem, 3vw, 4rem) clamp(1.25rem, 4vw, 5rem) clamp(2rem, 4vw, 5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: clamp(1.25rem, 2vw, 2.5rem);
+    position: relative;
+    z-index: 2;
+  }
+  .tagline {
+    font-size: clamp(1.15rem, 1.6vw + 0.6rem, 3rem);
+    line-height: 1.3;
+    max-width: 28ch;
+    font-weight: 500;
+  }
+  .btn {
     display: inline-block;
-    padding: 2px 9px;
+    background: var(--ink);
+    color: var(--cream);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: clamp(1rem, 1vw + 0.7rem, 2rem);
+    letter-spacing: 0.04em;
+    padding: 0.9em 1.8em;
     border-radius: 999px;
-    font-size: .78rem;
-    font-weight: 600;
-    white-space: nowrap;
+    border: 3px solid var(--ink);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
   }
-  .s-transit { background: var(--blue-bg); color: var(--blue); }
-  .s-loading { background: var(--amber-bg); color: var(--amber); }
-  .s-delivered { background: var(--green-bg); color: var(--green); }
-  .s-delayed { background: var(--red-bg); color: var(--red); }
-
-  /* Medium: nav becomes a horizontal bar */
-  @media (max-width: 760px) {
-    .app { flex-direction: column; }
-    nav { flex: none; padding: 12px; }
-    .brand { padding-bottom: 10px; }
-    nav ul { flex-direction: row; overflow-x: auto; gap: 4px; -webkit-overflow-scrolling: touch; }
-    nav a { white-space: nowrap; padding: 8px 12px; }
-    main { padding: 16px 12px; }
+  .btn:hover { background: var(--clay); border-color: var(--clay); transform: translateY(-2px); }
+  .btn:focus-visible { outline: 4px solid var(--glaze); outline-offset: 4px; }
+  .art {
+    grid-column: 2;
+    grid-row: 2;
+    position: relative;
+    background: var(--glaze);
+    overflow: hidden;
+    min-height: 12rem;
   }
+  .art::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    aspect-ratio: 1;
+    left: -25%;
+    bottom: -35%;
+    border-radius: 50%;
+    background: var(--clay);
+  }
+  .art::after {
+    content: "";
+    position: absolute;
+    width: 55%;
+    aspect-ratio: 1;
+    top: 10%;
+    left: 22%;
+    border-radius: 50%;
+    background: var(--sand);
+  }
+  .art i {
+    position: absolute;
+    left: 0; right: 0;
+    height: 6%;
+    background: var(--clay-deep);
+    opacity: 0.55;
+    z-index: 1;
+  }
+  .art i:nth-child(1) { bottom: 12%; }
+  .art i:nth-child(2) { bottom: 24%; }
+  .art i:nth-child(3) { bottom: 36%; }
 
-  /* Narrow: rows become stacked cards with labels */
-  @media (max-width: 620px) {
-    .row.head { display: none; }
-    .list { background: transparent; border: 0; border-radius: 0; display: flex; flex-direction: column; gap: 10px; overflow: visible; }
-    .row {
-      grid-template-columns: 1fr auto;
-      grid-template-areas:
-        "num status"
-        "route route"
-        "driver eta";
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      gap: 6px 12px;
-      padding: 12px;
-    }
-    .row:first-child { border-top: 1px solid var(--line); }
-    .c-num { grid-area: num; }
-    .c-status { grid-area: status; justify-self: end; }
-    .c-origin, .c-dest { display: inline; }
-    .c-origin { grid-area: route; }
-    .c-dest { grid-area: route; }
-    .c-driver { grid-area: driver; color: var(--muted); font-size: .9rem; }
-    .c-eta { grid-area: eta; justify-self: end; font-size: .9rem; }
-    .c-origin::before, .c-dest::before {
-      content: attr(data-label) " ";
-      color: var(--muted);
-      font-size: .75rem;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }
-    .c-driver::before { content: "Driver: "; }
-    .c-eta::before { content: "ETA "; color: var(--muted); }
-    .route { display: block; }
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
+    .content { grid-row: 2; justify-content: flex-start; padding-bottom: 2rem; }
+    .art { grid-column: 1; grid-row: 3; min-height: 38vw; }
+    .art::before { width: 80%; left: 10%; bottom: -40%; }
+    .art::after { width: 26%; top: 14%; left: 62%; }
+    h1 { font-size: clamp(3rem, 19vw, 6rem); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
   }
 </style>
 </head>
 <body>
-<div class="app">
-  <nav aria-label="Main">
-    <div class="brand">Harbor Line Freight<small>Dispatch</small></div>
-    <ul>
-      <li><a href="#" aria-current="page">Loads</a></li>
-      <li><a href="#">Drivers</a></li>
-      <li><a href="#">Trucks</a></li>
-      <li><a href="#">Invoices</a></li>
-      <li><a href="#">Reports</a></li>
-      <li><a href="#">Settings</a></li>
-    </ul>
-  </nav>
-
-  <main>
-    <header class="page">
-      <h1>Today's Loads</h1>
-      <span class="date">Tuesday, Oct 6, 2026 · 6 loads</span>
-    </header>
-
-    <div class="list" role="table" aria-label="Today's loads">
-      <div class="row head" role="row">
-        <div role="columnheader">Load #</div>
-        <div role="columnheader">Origin</div>
-        <div role="columnheader">Destination</div>
-        <div role="columnheader">Driver</div>
-        <div role="columnheader">Status</div>
-        <div role="columnheader">ETA</div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="num c-num" role="cell">HL-24817</div>
-        <div class="c-origin" role="cell">Columbus, OH</div>
-        <div class="c-dest" role="cell">Indianapolis, IN</div>
-        <div class="c-driver" role="cell">Marcus Webb</div>
-        <div class="c-status" role="cell"><span class="badge s-transit">In Transit</span></div>
-        <div class="eta c-eta" role="cell">2:15 PM</div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="num c-num" role="cell">HL-24818</div>
-        <div class="c-origin" role="cell">Cleveland, OH</div>
-        <div class="c-dest" role="cell">Fort Wayne, IN</div>
-        <div class="c-driver" role="cell">Dana Ortiz</div>
-        <div class="c-status" role="cell"><span class="badge s-loading">Loading</span></div>
-        <div class="eta c-eta" role="cell">4:40 PM</div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="num c-num" role="cell">HL-24819</div>
-        <div class="c-origin" role="cell">Toledo, OH</div>
-        <div class="c-dest" role="cell">South Bend, IN</div>
-        <div class="c-driver" role="cell">Priya Nair</div>
-        <div class="c-status" role="cell"><span class="badge s-delivered">Delivered</span></div>
-        <div class="eta c-eta" role="cell">11:05 AM</div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="num c-num" role="cell">HL-24820</div>
-        <div class="c-origin" role="cell">Evansville, IN</div>
-        <div class="c-dest" role="cell">Cincinnati, OH</div>
-        <div class="c-driver" role="cell">Tom Kessler</div>
-        <div class="c-status" role="cell"><span class="badge s-delayed">Delayed</span></div>
-        <div class="eta c-eta" role="cell">5:30 PM</div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="num c-num" role="cell">HL-24821</div>
-        <div class="c-origin" role="cell">Dayton, OH</div>
-        <div class="c-dest" role="cell">Lafayette, IN</div>
-        <div class="c-driver" role="cell">Luis Herrera</div>
-        <div class="c-status" role="cell"><span class="badge s-transit">In Transit</span></div>
-        <div class="eta c-eta" role="cell">1:50 PM</div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="num c-num" role="cell">HL-24822</div>
-        <div class="c-origin" role="cell">Akron, OH</div>
-        <div class="c-dest" role="cell">Muncie, IN</div>
-        <div class="c-driver" role="cell">Casey Brandt</div>
-        <div class="c-status" role="cell"><span class="badge s-loading">Loading</span></div>
-        <div class="eta c-eta" role="cell">6:10 PM</div>
-      </div>
+  <main class="hero">
+    <div class="headline-wrap">
+      <p class="eyebrow">Pottery studio &amp; classes</p>
+      <h1><span>Kilnside</span><span class="second">Ceramics</span></h1>
     </div>
+
+    <div class="content">
+      <p class="tagline">Get your hands in the clay. Take home something you made.</p>
+      <a class="btn" href="#book">Book a class</a>
+    </div>
+
+    <div class="art" aria-hidden="true"><i></i><i></i><i></i></div>
   </main>
-</div>
 </body>
 </html>

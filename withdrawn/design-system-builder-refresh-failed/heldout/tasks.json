@@ -1,0 +1,121 @@
+[
+  {
+    "id": "dsb-h01-ferry-reference-page",
+    "kind": "build",
+    "prompt": "I run the front end for Marlowe Ferries. We have a booking site and a little tablet app the deck crew uses at the terminals. Nobody ever wrote down our styles and it shows. This is what a script pulled out of the CSS, roughly in order of how often each shows up:\n\ncolors: #0B3C5D, #0c3d5e, #0a3a5a, #1D6FA3, #1e70a4, #2A8BD1, #e8f1f8, #EAF2F9, #f4f7fa, #ffffff, #1a1a1a, #222, #333, #6b7785, #7a8794, #d7dee5, #cfd8e0, #c0392b, #d64533, #1e8e5a, #23915c, #f2b84b\nfont sizes (px): 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 28, 32, 40\nspacing (px): 2, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 64\nradii (px): 2, 3, 4, 6, 8, 12, 999\n\nComponents we actually have: primary button, secondary button, text link, text input, select, a \"sailing card\" that shows one departure, a status badge (on time / delayed / cancelled), and a top nav.\n\nCan you make me a single HTML page I can send around that shows what our styles and components should be? One self-contained file, inline CSS, system fonts, no external assets.",
+    "rubric": [
+      "The page presents clearly fewer colors, font sizes, spacing steps and radii than the pasted lists (near-identical values such as the three dark blues are collapsed), and the kept values are visible as swatches or a scale",
+      "Colors and other values carry names that say what they are for or where they sit in a scale (for example text, surface, border, danger), not their hex code or an arbitrary label",
+      "Every listed component is drawn with the page's own values, and the badge shows all three statuses, the buttons and input show more than one state, and the sailing card looks like a departure rather than a generic box",
+      "Status is readable without color alone (each badge carries a word) and text is legible against its background in the screenshot",
+      "The page says what was merged or dropped (for example which near-duplicates became one) instead of silently discarding values, and is organized so a developer can find a value or a component quickly"
+    ]
+  },
+  {
+    "id": "dsb-h02-pharmacy-inventory",
+    "kind": "choose",
+    "prompt": "We're at Fernhill Pharmacy (online refills plus an in-store kiosk). I exported our component list from the repo and the design lead wants us to \"consolidate\" before the redesign. I don't have time to read all of it. What should be merged, what should stay separate, and is anything doing too much? Numbers are how many files import each one.\n\nButton (84), PrimaryButton (31), DangerButton (12), LinkButton (19), IconButton (22)\nTag (17), StatusPill (26), Chip (9)\nModal (41), ConfirmDialog (23), Drawer (7), Toast (15)\nTextField (60), TextInput (35), SearchField (11), PasswordInput (8)\nCard (73) - has 23 props, including variant, showImage, showPrice, showRefillButton, showStockWarning, layout and more\nProductCard (14), RefillCard (6)\nSpinner (30), Skeleton (12), LoadingOverlay (5)\n\nSome context: Chip is the removable filter thing in search, Tag is a read-only label, StatusPill is for things like \"ready for pickup\" or \"out of stock\". TextInput is the old 2021 one and TextField is the newer wrapper with label and error text.",
+    "rubric": [
+      "Merges the true duplicates it can justify from the list (for example the two button flavors that are just styling of a button, and the old text input into the newer field) and says what each becomes, without collapsing the whole list",
+      "Keeps components that behave differently as separate things and gives the reason for each (for example removable chips versus read-only tags, dialog versus drawer versus toast, a spinner versus a skeleton)",
+      "Calls out the 23-prop Card as doing too much and proposes a way to split it, rather than suggesting more props or leaving it",
+      "Gives a sensible order or first step that uses the import counts, and says what it cannot tell from a name list (for example whether two similar components actually look or behave the same)",
+      "The answer is organized so the reader can act on it (a grouped list or table of keep / merge / split), not a long essay"
+    ]
+  },
+  {
+    "id": "dsb-h03-guard-pottery-scale",
+    "kind": "explain",
+    "prompt": "two of us here, me (half designer half dev) and one contractor dev, building a booking site for a pottery studio called Glazeworks. one site, about 12 pages, maybe a small second site for their classes next year. a friend told me i need a \"proper design system\" with a component library, versioning, a docs site and a review board. is that true? what should i actually do, i have maybe a day or two for this",
+    "rubric": [
+      "Answers the question directly near the top: for a team and site this size the full machinery is not needed",
+      "Gives a short concrete list that fits a day or two of work (for example one shared stylesheet with named colors, type and spacing, a small set of reusable pieces, a one-page note), and does not tell them to set up a review board, versioned releases or a docs site now",
+      "Names the signals that would justify doing more later (for example the second site actually starting, more contributors, visible drift between pages)",
+      "Does not invent statistics or claim that every project needs a given process, and is honest about what staying light costs",
+      "Is short enough to read in a couple of minutes and written for a person doing the work, not a committee"
+    ]
+  },
+  {
+    "id": "dsb-h04-guard-tokens-handoff",
+    "kind": "polish",
+    "prompt": "new dev starts monday and i want to hand her our tokens file. can you tidy it up before i send it? this is the whole file:\n\n```css\n/* Tidewater Co-op, app tokens v3\n   Raw values live in --ref-*. Components only use --color-*, --space-*, --radius-*, --font-*.\n   Dark theme only remaps roles; it never touches --ref-*. */\n:root {\n  /* reference palette */\n  --ref-teal-100: #d9f0ee;\n  --ref-teal-500: #1a8a85;\n  --ref-teal-700: #0f5d5a;\n  --ref-teal-900: #0a3d3b;\n  --ref-slate-50: #f6f8f9;\n  --ref-slate-200: #dde3e7;\n  --ref-slate-600: #566471;\n  --ref-slate-700: #3d4954;\n  --ref-slate-900: #16202a;\n  --ref-red-600: #b83227;\n  --ref-amber-600: #a86a0a;\n  --ref-green-600: #207a4d;\n  --ref-white: #ffffff;\n\n  /* color roles */\n  --color-text: var(--ref-slate-900);\n  --color-text-muted: var(--ref-slate-600);\n  --color-surface: var(--ref-white);\n  --color-surface-sunken: var(--ref-slate-50);\n  --color-border: var(--ref-slate-200);\n  --color-border-strong: var(--ref-slate-300);\n  --color-accent: var(--ref-teal-700);\n  --color-accent-hover: var(--ref-teal-900);\n  --color-accent-subtle: var(--ref-teal-100);\n  --color-on-accent: var(--ref-white);\n  --color-focus-ring: var(--ref-teal-500);\n  --color-danger: var(--ref-red-600);\n  --color-warning: var(--ref-amber-600);\n  --color-success: var(--ref-green-600);\n\n  /* spacing, 4px base */\n  --space-1: 4px;\n  --space-2: 8px;\n  --space-3: 12px;\n  --space-4: 16px;\n  --space-5: 24px;\n  --space-6: 32px;\n  --space-7: 48px;\n\n  /* radius */\n  --radius-sm: 4px;\n  --radius-md: 8px;\n  --radius-pill: 999px;\n\n  /* type */\n  --font-body: system-ui, -apple-system, \"Segoe UI\", sans-serif;\n  --font-mono: ui-monospace, \"SF Mono\", Menlo, monospace;\n  --font-size-sm: 0.875rem;\n  --font-size-md: 1rem;\n  --font-size-lg: 1.25rem;\n  --font-size-xl: 1.75rem;\n  --line-height-body: 1.5;\n}\n\n[data-theme=\"dark\"] {\n  --color-text: var(--ref-slate-50);\n  --color-text-muted: #a9b5bf;\n  --color-surface: var(--ref-slate-900);\n  --color-surface-sunken: #0f161d;\n  --color-border: var(--ref-slate-700);\n  --color-border-strong: #5b6976;\n  --color-accent: #4fc4bd;\n  --color-accent-hover: #7fd8d2;\n  --color-accent-subtle: #123f3d;\n  --color-on-accent: var(--ref-slate-900);\n  --color-focus-ring: #7fd8d2;\n  --color-danger: #f0776b;\n  --color-warning: #e3a84a;\n  --color-success: #5fc58c;\n}\n```",
+    "rubric": [
+      "Finds and fixes the one real defect: --color-border-strong points at --ref-slate-300, which is not defined anywhere in the file (it defines the missing value or points it at an existing one, and says so)",
+      "Leaves the names, the two-layer structure (raw palette, then roles), the scales and the dark-theme block as they are; the changes are limited to a few lines and listed",
+      "Says plainly that the file is already in good shape for a handoff instead of inventing problems to look useful",
+      "Does not add a long list of new tokens, rename the scheme or reorganize the file; any further suggestions are few, clearly marked optional and not applied",
+      "Returns the corrected file or an exact patch the user can apply without hunting for what changed"
+    ]
+  },
+  {
+    "id": "dsb-h05-freight-docs-layout",
+    "kind": "layout",
+    "prompt": "We're a design system team of two at Brightline Logistics. Freight broker, about 15 front-end devs and 4 designers use it. Our docs are one long README that nobody reads. How should the docs be laid out: what pages, in what order, and what goes on a component page? Most people show up from a search or a Slack link to one specific component.",
+    "rubric": [
+      "Proposes a concrete page structure (a navigation outline, not just principles) ordered for someone who lands on one component or looks up a value, rather than a linear tutorial that must be read first",
+      "Gives a repeatable component page template with specific parts, such as a live example, when to use and when not to, variants and options, states, accessibility notes, and who owns it or how stable it is",
+      "Gives getting-started and what-changed a findable place instead of burying them, and keeps token or style reference pages separate from component pages",
+      "Is sized for a two-person team: starts with a small set of pages, says what to defer, and does not require writing every page before launch",
+      "Accounts for search and deep links (each component and each value reachable by its own name and link, status visible on the page itself)"
+    ]
+  },
+  {
+    "id": "dsb-h06-meal-kit-leadership",
+    "kind": "explain",
+    "prompt": "I need to explain to our leadership team (COO, head of sales, finance) why design system work should get a quarter of two people's time. We're Orchard & Pine, a meal-kit company with a website and an app and 3 product squads. They don't care about components. I also don't have hard numbers yet on how much time we waste. Can you write what I should say? Talking points I can use in the meeting is fine.",
+    "rubric": [
+      "Frames the benefit in terms leadership cares about (shipping speed, what customers see across web and app, rework and bugs, onboarding new people) and ties it to their three squads and two surfaces",
+      "Does not invent figures, percentages or savings; it admits there is no data yet and suggests a cheap way to get a rough number before or during the quarter (for example counting duplicates or timing a recent feature)",
+      "States what the quarter will deliver and what it will not (for example no visible redesign), so the ask is honest about cost",
+      "Fits on about a page in plain language, with no unexplained jargon",
+      "Ends with a clear ask and a way for leadership to tell afterwards whether it worked"
+    ]
+  },
+  {
+    "id": "dsb-h07-guard-pr-box-cap",
+    "kind": "explain",
+    "prompt": "our PR template for the component library needs a short box aimed at anyone who is about to add a new component. Max 100 words, it has to fit without scrolling. What should it say? small team, React, we already have Button, Input, Select, Modal and Tabs",
+    "rubric": [
+      "The text meant for the box is 100 words or fewer, counted from what it gives",
+      "Its first check is whether an existing component or a variant of one would do the job, naming or alluding to what they already have",
+      "Contains a few concrete requirements a contributor can answer yes or no to (for example states covered, keyboard use, shared values instead of raw ones, a docs entry, an owner)",
+      "Comes ready to paste, with no long preamble or explanation around it (at most one short line outside the box text)"
+    ]
+  },
+  {
+    "id": "dsb-h08-dental-forks",
+    "kind": "critique",
+    "prompt": "I maintain the design system at Coastline Dental Group, about 40 clinics, with a patient portal and a staff scheduling app. It's me and a part-time designer. The problem: I have 40+ open requests on the contribution board, some 6 months old, and two teams have copied our Button and DatePicker into their own repos and changed them. My manager says we need to \"enforce the system harder\". Is that the right call? What would you do?",
+    "rubric": [
+      "Takes a clear position on enforcing harder (not as the first or only move) and explains that copies are a symptom of needs not being met or slow answers, rather than blaming the teams",
+      "Proposes a concrete change to how requests are handled, such as triaging the backlog (close, merge or decline stale items), promising a response time, and showing status where requesters can see it",
+      "Deals with the two copies specifically: find out what each team changed and either fold it back or bless it as a variant, rather than ordering the copies deleted",
+      "Is sized for one maintainer and a part-time designer, with a short ordered list and something to stop doing, not a plan that needs a full team",
+      "Says what it cannot tell from the description and what to look at first (for example what the open requests ask for and what the copies changed)"
+    ]
+  },
+  {
+    "id": "dsb-h09-guard-clinic-partner-theme",
+    "kind": "build",
+    "prompt": "Kestrel Health's patient app is white-labeled for partner clinics. Below are our current values and the pieces we use. First partner is Halden Family Clinic. They want their colors: brand yellow #F5C842 as the main color and dark green #1F4D3A for headings. Make one HTML page that shows our default look and Halden's side by side so their director can approve it. One self-contained file, inline CSS, system fonts, no external assets.\n\n:root { --color-brand: #2F6FED; --color-on-brand: #ffffff; --color-heading: #14213D; --color-surface: #ffffff; --color-page: #F4F6FA; --color-border: #D5DBE6; --color-text: #25304A; --radius: 10px; }\n\nPieces: primary button (brand background), secondary button (outline), appointment card (title, time, doctor name, a \"Reschedule\" button), info banner (light tint of the brand color).",
+    "rubric": [
+      "Both versions appear side by side in the screenshot with the same four pieces, the same layout, spacing and radius, so the only difference between the two is color",
+      "In Halden's version the primary button label is easy to read: dark text on the yellow rather than white on yellow, and the page tells the director why",
+      "Nothing in Halden's panel is left in Kestrel blue: the banner tint, buttons, borders and links all follow Halden's colors",
+      "Halden's outline button, borders and card edges are clearly visible against their background (a pale yellow line on white would not count), so the dark green or a darker neutral does that work",
+      "A short visible note tells the director what was adjusted from the requested colors and why, instead of silently changing them"
+    ]
+  },
+  {
+    "id": "dsb-h10-outfitters-two-platforms",
+    "kind": "choose",
+    "prompt": "We're a small team at Ridgeback Outfitters: a React storefront and an iOS app, 3 devs total plus one designer who lives in the design tool. Colors and spacing are typed by hand in both places and they've drifted (the iOS orange is different from the web orange). Options I'm weighing: (a) the designer exports variables from the design tool and devs copy them over, (b) one JSON file in the repo that generates both the CSS and the Swift constants, (c) we just agree on a shared doc. Which should we do and how do we start?",
+    "rubric": [
+      "Picks one option (or a clearly stated variant of one) and reasons from their facts: two platforms, existing drift, three devs, a designer who works outside the repo",
+      "Explains why each option it rejects would or would not stop the drift they already have, rather than just listing pros and cons",
+      "Gives concrete first steps sized for this team (for example list the current values, pick the source, settle the orange, generate for one platform first) instead of a big migration",
+      "Says what the choice costs, who would own it, and what would change the recommendation",
+      "Keeps scope to what they mentioned (colors and spacing, maybe type) and does not add heavy extras like multi-brand or multi-tier setups"
+    ]
+  }
+]

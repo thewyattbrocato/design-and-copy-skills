@@ -1,22 +1,32 @@
-**What's going wrong:** almost every color sits in the same mid-tone, low-saturation olive-khaki band. Nothing is light enough to feel fresh or dark enough to feel crisp, so the whole screen reads as dim. The biggest problem is that the text and links fail contrast. Body text is about 1.5:1 on the background (4.5:1 is the minimum for body text), so it's hard to read, and that difficulty comes across as tired.
+**What's wrong:** the palette is all one value and one chroma. Every color sits in the same dull, desaturated middle band, so nothing has a clear lightness gap from its neighbors. Primary and secondary buttons are nearly the same olive-brown, and the body text is lighter than the page background's shadows, so it looks washed out. Low saturation reads as tired, and mid-tone text on a mid-tone beige reads as muddy.
 
-Ratios below are my hand calculations, not measured with a tool, so verify them before shipping.
+**Measured contrast on your current pairs** (WCAG 2.x, calculated by hand, so treat as estimates until a checker confirms them):
 
-| Pair | Current ratio | Result |
+| Pair | Ratio | Need |
 |---|---|---|
-| Body `#a39b82` on page `#cfc8b0` | ~1.5:1 | Fails badly |
-| Links `#9c8b5e` on page | ~1.9:1 | Fails badly |
-| Errors `#b5654a` on page | ~2.4:1 | Fails |
-| Secondary button `#7d8a6b` with white text | ~4.2:1 | Fails for normal text |
-| Primary button `#8a7f5c` with white text | ~4.8:1 | Passes, but just barely |
+| Body `#a39b82` on page `#cfc8b0` | 1.8:1 | 4.5:1 |
+| Link `#9c8b5e` on page | 2.1:1 | 4.5:1 |
+| Error `#b5654a` on page | 2.7:1 | 4.5:1 |
+| White on primary `#8a7f5c` | 4.0:1 | 4.5:1 |
+| White on secondary `#7d8a6b` | 3.7:1 | 4.5:1 |
 
-**Suggested fix:** keep the olive and rust identity, but add a light ground and darker ink.
+Every text pair fails. The body text fails badly.
 
-- **Page background:** `#f6f1e4`, a warm off-white. Use `#cfc8b0` only for tinted panels, not the whole page.
-- **Body text:** `#3b3628`, a warm near-black. About 10:1 on the new background.
-- **Primary button:** `#6b5a2e` with white text, about 6.7:1. It keeps the brand hue but has a clear lightness gap.
-- **Secondary button:** `#66724f` with white text, about 5.1:1.
-- **Links:** `#6b5a2e`, about 6:1 on the new background. Underline them so they don't depend on color alone.
-- **Error messages:** `#9a4a32`, about 5.5:1. It's a distinct rust, so it won't read as a brand color. Pair it with an icon and a word, such as "Error:".
+**Proposed palette** (keeps the warm cream and sage feel, adds lightness separation and one clear lead):
 
-**Trade-off:** the darker olive is calmer and more trustworthy, but it is less warm than your current palette. If you want more warmth, add one small saturated accent for the main call to action (such as a honey or apricot), and keep the olive for secondary actions.
+| Role | Hex | Why | Ratio |
+|---|---|---|---|
+| Page background | `#f8f3e8` | Lighter warm cream, so the page breathes | — |
+| Card / input surface | `#fffdf8` | Lifts content off the page | — |
+| Body text | `#3a3128` | Warm charcoal, reads as friendly rather than gray | 11.5:1 on page |
+| Muted text (captions, helper) | `#6b5f52` | Clearly secondary, still legible | 5.7:1 on page |
+| Primary button, links | `#2a6f61` | Deep teal, the one lead; calm and trustworthy for health | White on it 5.4:1; on page 4.9:1 |
+| Secondary button | `#e4ebe0` fill, `#24443b` text | Sage tint, quieter than primary | 8.8:1 |
+| Error | `#b03a2e` | Warm red, distinct from the teal lead | 5.4:1 on page |
+| Highlight (badges, illustrations only, not text) | `#e9a23b` | Sunny accent, kept small | Not for text |
+
+Rules for using it: error messages also get an icon and a word, not color alone. Hover on primary should be a step darker (around `#22594d`), not a tint change.
+
+**Trade-offs:**
+- Moving the lead from olive to teal is the biggest change. If the olive is a brand decision, keep its hue and just push it to `#5f6b3e` for primary (white text ratio about 6:1) and lift the page and text as above. That keeps the identity and still fixes the contrast.
+- I computed these ratios by hand, so run them through a contrast checker before shipping.

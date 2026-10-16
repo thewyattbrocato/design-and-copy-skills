@@ -1,0 +1,1 @@
+No, skip them. A break-room TV has no one standing at it to click, so pickers and filters would sit unused or get left in a confusing state. Show the current shift's packed count against target, and if teams or products matter, put a small fixed breakdown on screen (e.g. one bar per team), or make a separate interactive view for supervisors.

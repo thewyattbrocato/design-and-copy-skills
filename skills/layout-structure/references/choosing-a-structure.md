@@ -6,11 +6,11 @@ Load this at the start of a layout. It turns the intake answers into a structure
 
 Answer each in one line before drawing anything.
 
-- **Material:** continuous prose, comparable peers, separate chunks, bands of different content, or a mix?
+- **Task:** does the reader read it through, compare items, or work inside it? Who arrives, in what state, and what do they look for first?
 - **Volume:** how many items or paragraphs now, and how many in a year?
 - **Worst case:** the longest title, the longest word, an empty state, a single item, a thousand items, a translation that runs 30 to 40 percent longer, text enlarged by the user.
-- **Reader:** who arrives, in what state, and what do they look for first?
 - **Format:** reflowing screen, or fixed (slide, poster, print, social card)?
+- **Material:** continuous prose, comparable peers, separate chunks, bands of different content, or a mix?
 
 If the answer to any of these is "I don't know", make a reasonable assumption, say it, and design so the structure survives the opposite assumption.
 

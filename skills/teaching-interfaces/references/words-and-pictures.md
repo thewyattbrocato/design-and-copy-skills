@@ -27,7 +27,7 @@ Load for explainer cards, diagrams, instructional video or animation, and narrat
 
 - Over a graphic, short narration beats a paragraph beside it, because eyes and ears carry different channels.
 - Do not play narration and its identical full text at once. Offer captions as a mode: on, they replace the spoken track's role for those who need them; off, the screen stays clean. A few keywords next to the matching part are fine.
-- Exceptions: unfamiliar terms that people need to see spelled, content with no graphic, and readers working in a second language. Text is right there.
+- Add on-screen text when people need to see a word spelled or cannot listen.
 - With no audio at all, text carries the explanation; keep it short and put it by the picture.
 - Provide a transcript for any video and captions that match the speech. Nothing essential may live only in the animation.
 - Use a human, plain voice. Skip background music and filler lines added for interest.

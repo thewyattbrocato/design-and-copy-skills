@@ -2,56 +2,78 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Quokka wordmark</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quokka wordmark</title>
 <style>
-  :root { --ink: #1f2937; --smile: #e8743b; }
+  :root {
+    --ink: #1f2a37;
+    --accent: #c2410c;
+  }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #f4f4f5;
     color: var(--ink);
-    background: #f6f5f2;
   }
   .panel {
-    display: flex; align-items: center; justify-content: center;
-    padding: 64px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 72px 24px;
   }
-  .panel.dark { background: #111827; --ink: #f9fafb; color: var(--ink); }
-  .panel.small { padding: 24px; }
+  .panel.light { background: #ffffff; }
+  .panel.dark  { background: #111827; --ink: #f9fafb; --accent: #fb923c; }
+  .panel.small { padding: 20px 24px; justify-content: flex-start; border-top: 1px solid #e5e7eb; }
 
   .wordmark {
     display: inline-block;
-    font-family: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", system-ui, -apple-system, "Segoe UI", sans-serif;
-    font-weight: 800;
-    font-size: 72px;
+    position: relative;
+    font-weight: 700;
+    font-size: 64px;
     line-height: 1;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.03em;
     color: var(--ink);
-    text-transform: lowercase;
-    white-space: nowrap;
+    padding-bottom: 0.2em;
+    text-decoration: none;
   }
-  /* The "o" is a ring; its lower arc is the quokka's smile. */
-  .wordmark .o {
-    display: inline-block;
-    width: 0.58em; height: 0.58em;
-    margin: 0 0.035em 0 0.02em;
-    border: 0.14em solid var(--ink);
-    border-bottom-color: var(--smile);
-    border-radius: 50%;
-    vertical-align: baseline;
-    transform: translateY(0.01em);
+  .wordmark svg {
+    position: absolute;
+    left: 0.04em;
+    bottom: 0;
+    width: 2.1em;
+    height: 0.2em;
+    overflow: visible;
   }
-  .s-36 { font-size: 36px; }
-  .s-24 { font-size: 24px; }
-  .row { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
-  .mono .o { border-color: var(--ink); }
-  .mono { --smile: currentColor; }
+  .wordmark svg path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 5;
+    stroke-linecap: round;
+  }
+  .wordmark.sm { font-size: 24px; }
+  .wordmark.sm svg path { stroke-width: 7; }
 </style>
 </head>
 <body>
-  <div class="panel">
-    <span class="wordmark" role="img" aria-label="Quokka">quokk<span class="o" aria-hidden="true"></span></span>
+
+  <div class="panel light">
+    <span class="wordmark" role="img" aria-label="Quokka">Quokka
+      <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M3 3 Q50 14 97 3"/></svg>
+    </span>
   </div>
+
+  <div class="panel dark">
+    <span class="wordmark" role="img" aria-label="Quokka">Quokka
+      <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M3 3 Q50 14 97 3"/></svg>
+    </span>
+  </div>
+
+  <div class="panel light small">
+    <span class="wordmark sm" role="img" aria-label="Quokka">Quokka
+      <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M3 3 Q50 14 97 3"/></svg>
+    </span>
+  </div>
+
 </body>
 </html>

@@ -1,20 +1,20 @@
-I can't critique the site yet because I couldn't load it. I have no web-fetching tool in this session. Also, `.example` is a reserved top-level domain that never resolves on the public internet, so the URL may be a placeholder or a typo. Anything I said about the layout, copy or booking steps would be invented.
+I can't critique the site yet, because I can't see it. I have no way to browse in this session. The `.example` domain is also reserved and never resolves on the public internet, so even with a browser tool I'd get nothing back. Anything I said about your layout, copy or booking steps would be invented, and that wouldn't help you find the real problem.
 
-Here's what I need to review the booking flow properly. Any of these works:
+**What I need to judge the booking flow**
+1. **Screenshots of every step**, from the landing page's booking button to the confirmation screen. Include mobile if you can, since sauna bookings are often made on phones.
+2. **The error and edge states**: an empty form submitted, a sold-out slot, a failed payment, and the confirmation email.
+3. **Saved HTML, or a URL I can reach**, if you want contrast, tap-target and label checks. I'll compute those rather than guess.
+4. **Numbers, if you have them**: visitors at each step (landing, slot picked, details entered, payment, confirmed). This is how we test your hunch. If most people leave before they pick a slot, the problem isn't the booking flow.
 
-1. **Screenshots** of each booking step, in order, from landing page to confirmation. Mobile and desktop if you have both.
-2. **Saved HTML/CSS**, or a local folder I can read, if the site is in a repo on this machine.
-3. **A written walkthrough** of each step: what's on screen, what the buttons say, what fields are asked, and where the price first appears.
-4. **The real URL**, if it's different, plus a way to fetch it, such as a fetch tool enabled for this session.
+**Questions to answer**
+- What are you selling: drop-in sessions, private rentals, memberships or classes?
+- What's the symptom? Low bookings, abandoned carts, or lots of "can I change my time?" emails?
 
-If you have analytics, the most useful number is where people drop off between steps. Your hunch that booking is the problem is easy to test. If most visitors never reach step one, the problem is the landing page. If they start and abandon, it's the flow.
+**Likely suspects, to check once I can see it** (these are hypotheses, not findings):
+- The first screen doesn't say what you offer, where you are, or what a session costs.
+- Price or fees appear only at the last step.
+- The booking requires an account.
+- The calendar is hard to use on mobile.
+- Nothing tells people what to expect: duration, what to bring, cancellation policy.
 
-When I have material, I'll look hardest at these booking-flow issues:
-- Clicks and screens from landing page to confirmed slot.
-- Whether availability is visible before any form is filled in.
-- When the total price, fees and cancellation terms show up.
-- Whether an account is forced before booking.
-- Form fields, error handling, and tap-target sizes on mobile.
-- Whether the confirmation step leaves no doubt that the booking went through.
-
-I'll rank each finding by severity with a concrete fix, and I'll also list what's working so you don't break it.
+Send the screenshots and I'll give you a ranked teardown with severity on each finding, a fix order, and what's worth keeping.

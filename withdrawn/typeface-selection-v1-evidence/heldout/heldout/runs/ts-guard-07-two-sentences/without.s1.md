@@ -1,0 +1,1 @@
+The system font stack is fine for this audience. Developers on laptops get crisp, familiar fonts (SF Mono, Menlo, Consolas), you avoid load time and layout shift, and a paid font won't noticeably improve comprehension. If you want some brand personality, a free open-source pairing like Inter and JetBrains Mono, self-hosted, is a cheap upgrade, but it's optional.

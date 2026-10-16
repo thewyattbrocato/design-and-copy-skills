@@ -1,27 +1,18 @@
-The layout mostly holds. I'd change three small things before handing it over.
+The layout already works, so I wouldn't redesign anything. The order reads clearly: title, then section headings, then row names, then explanations. Teal is reserved for controls and the one primary action, and the page has no decoration. Here are the few things I'd change or specify, most important first.
 
-**What already works (leave alone)**
-- Type steps are clear: 28 → 18 → 16 → 14 are each a visible step. Weight and grey carry the rest, which is the right lever for a dense settings page.
-- Teal is used only for the switches and the save button, so "on" and "primary action" are the only things that stand out.
-- The hairline row dividers and the larger gaps between sections group things without cards, icons or shadows. No decoration is doing without a job.
-- One solid primary button, with the secondary action as a text link. The left alignment gives the page one reading edge.
+1. **Set a max content width.** The brief doesn't give one. If rows stretch across a wide screen, the switch ends up far from its label, and the eye loses the row. Cap the content at about 640–720px, with the switch at the right edge of that column. The left-aligned Save button then lines up with the content, as you intend.
 
-**Changes, in order of effect**
+2. **Check that the Save button is visible.** It's the only primary action, but it sits at the bottom of three sections. On a short screen it could be below the fold, and people may toggle switches and leave without saving. Either make the footer sticky, or make sure the full page fits on common laptop heights. Also say whether switches apply instantly or only on Save. I'd keep Save, disabled until something changes.
 
-1. **Teal is the only cue for a switch's on or off state.**
-   - Cost: in grayscale, or for colour-blind users, teal and grey can look alike. The state is the main information on this page.
-   - Fix: add a second cue. Have the knob sit clearly right when on and left when off, and make the off track a visibly lighter grey. Ask the developer to confirm the knob position is part of the build. If you want labels, add "On" and "Off" text beside the switch.
+3. **Handle "Reset to defaults" with care.** As a plain link beside the primary button, it has the right weight. But it's the one control that can wipe settings, so ask the developer to add a confirmation or an undo.
 
-2. **The section headings are only a small step above the row names.**
-   - What I see: the 18px semibold heading sits above 16px regular row names. That is a ratio of about 1.1, and weight is the only real difference.
-   - Cost: the three sections can blur together, especially since the dividing lines between rows look the same under every heading.
-   - Fix: keep the 18px size, but add a little more space above the heading than below it so it clearly belongs to its own rows. If it still reads flat, make the row names medium weight and the heading semibold with a darker value. Don't add a rule or a fill.
+4. **Give the developer the contrast requirements.** You say "grey" in three places, and they are where this design usually fails.
+   - The 14px description text needs at least 4.5:1 against white.
+   - The off-state switch track needs at least 3:1 against white. A pale grey track makes the off state look disabled.
+   - White text on the teal button needs at least 4.5:1. If the brand teal is light, use a darker shade for the button.
 
-3. **The grey for the descriptions and the page subtitle needs a contrast check.**
-   - What I see: 14px grey text is the easiest element to make too pale.
-   - Cost: low contrast is hard to read at that size, and these explanations are what users need to understand each setting.
-   - Fix: make sure the grey is at least 4.5:1 against white (about #6B6B6B or darker), and don't use a light font weight to make it quieter.
+5. **Optional: widen the step between the section heading and the row name.** 18px semibold over 16px regular is a small size step, and the weight difference is doing most of the work. That's fine. But if the sections blur together in testing, put more space above each heading than below it, or make the heading 20px.
 
-**Two notes**
-- I've assumed the Save button stays enabled. If it only enables after a change, the disabled state should be grey rather than a faded teal, so it doesn't look like a second teal element.
-- Check that "Reset to defaults" has a clear hover or focus state. Without an underline or icon, a plain text link is easy to miss with the keyboard.
+Leave these alone: the thin dividers between rows, the extra space between sections, the single teal button, and the absence of icons and cards.
+
+I assumed the switch's position (knob left or right) shows on versus off, so the state doesn't depend on teal versus grey alone. If it doesn't, add that.

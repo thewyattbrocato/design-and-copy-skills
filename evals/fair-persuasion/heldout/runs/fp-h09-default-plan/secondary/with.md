@@ -1,20 +1,12 @@
-**Partly.** Recommending annual is fine. The problem is pre-selecting it while the monthly price sits in small grey text. That makes the other option hard to see, and annual is a larger upfront charge, so it shouldn't win by default. Keep annual as the labelled recommendation with its real math, and give both plans equal visibility.
+**Partly.** Recommending annual is fine. Pre-selecting it while shrinking the monthly price to grey text is the steering part, because it works mainly on people who don't notice the toggle. Annual is also the bigger commitment: $89.99 charged up front, versus $12.99 a month.
 
-**Stillwater Premium**
+**Fair version:**
 
-**Annual, recommended**
-$89.99 billed once a year ($7.50/mo)
-Save $65.89 a year vs. monthly (42%)
+- **No pre-selection.** Leave the toggle unset, or default to whichever plan you'd expect a well-informed buyer to pick. Don't pick the one that makes the most money for you.
+- **Equal weight for both prices.** Show "$12.99/month" and "$89.99/year" at the same size. Label annual "Best value" with its reason.
+- **Show the real math next to annual:** "$89.99 billed yearly, about $7.50/month. Saves $65.89 vs. $155.88 paid monthly (42%)." Those numbers check out: 12 × $12.99 = $155.88, and 155.88 − 89.99 = 65.89.
+- **Put the charge on the button:** "Start annual: $89.99 today, renews each year until cancelled" and "Start monthly: $12.99 today, renews monthly." Put the renewal terms before the card field, at the same size as any "free" wording.
 
-**Monthly**
-$12.99 billed each month
-
-Button: *Start annual: $89.99 today* / *Start monthly: $12.99 today*
-
-Renews each year at $89.99 unless cancelled. [cancellation and refund terms]
-
-Notes:
-- Pre-selecting annual is defensible only if the monthly option is as visible as annual and the amount due today is on the button. If you can't meet both, leave the choice unselected.
-- Track the share who switch to monthly after picking annual, plus refunds and chargebacks within 30 days. Those show whether annual is a good deal or a regret purchase.
-
-Auto-renewal disclosure rules vary by place and change over time, so have the renewal and refund wording checked.
+**Notes:**
+- Auto-renewal and cancellation rules for subscriptions vary by location and change often, so have counsel check the renewal copy before launch.
+- If growth wants a lift, track annual-plan refund requests and cancellations within 30 days. A rise in those means the default is doing the work, not the value.

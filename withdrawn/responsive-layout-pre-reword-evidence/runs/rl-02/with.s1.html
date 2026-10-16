@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnside Ceramics</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --clay: #b5502f;
+    --clay-deep: #7e2f18;
+    --cream: #f6ede0;
+    --ink: #2a1a14;
+    --glaze: #2f5d62;
+    --sand: #e6b980;
+    --pad: clamp(1.25rem, 4vmin + 0.5rem, 4rem);
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.4;
+  }
+
+  .hero {
+    min-block-size: 100vh;
+    min-block-size: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--pad);
+    padding: var(--pad);
+    padding-inline: max(var(--pad), env(safe-area-inset-left)) max(var(--pad), env(safe-area-inset-right));
+    max-inline-size: 120rem;
+    margin-inline: auto;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: "Arial Black", "Helvetica Neue", Impact, system-ui, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+    color: var(--clay-deep);
+    /* each word on its own line on phones; one line on wide screens */
+    font-size: clamp(3rem, 17vmin, 9rem);
+    overflow-wrap: anywhere;
+  }
+  h1 span { display: block; }
+
+  @media (min-aspect-ratio: 4/3) {
+    /* viewport question: wide screens let the title run across the top */
+    h1 { font-size: clamp(3rem, 11vw, 15rem); }
+    h1 span { display: inline; }
+  }
+  @media (max-height: 32rem) {
+    h1 { font-size: clamp(2.5rem, 14vh, 5rem); }
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    gap: var(--pad);
+    align-items: stretch;
+  }
+
+  .copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.75rem;
+    min-inline-size: 0;
+  }
+
+  .tagline {
+    margin: 0;
+    max-inline-size: 28ch;
+    font-size: clamp(1.25rem, 1rem + 1.6vmin, 2.5rem);
+    font-weight: 500;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1em 1.9em;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 999px;
+    font-size: clamp(1.05rem, 1rem + 0.6vmin, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  .btn:hover { background: var(--clay); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 3px solid var(--glaze); outline-offset: 4px; }
+
+  /* decorative color block: overlapping shapes suggest a vase and kiln arch */
+  .art {
+    position: relative;
+    min-block-size: clamp(12rem, 35vmin, 40rem);
+    border-radius: 1.5rem;
+    background: var(--glaze);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .art::before {
+    content: "";
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 12%;
+    inline-size: 52%;
+    block-size: 78%;
+    background: var(--clay);
+    border-radius: 50% 50% 0 0 / 38% 38% 0 0;
+    z-index: 1;
+  }
+  .art::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 10%;
+    inset-inline-end: 10%;
+    inline-size: clamp(4rem, 22%, 12rem);
+    aspect-ratio: 1;
+    background: var(--sand);
+    border-radius: 50%;
+  }
+  .art i {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline: 0;
+    block-size: 14%;
+    background: var(--clay-deep);
+    z-index: 2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="hero">
+    <h1><span>Kilnside</span> <span>Ceramics</span></h1>
+    <div class="body">
+      <div class="copy">
+        <p class="tagline">Hand-built pots, shared tables, and clay under your nails.</p>
+        <a class="btn" href="#book">Book a class</a>
+      </div>
+      <div class="art" aria-hidden="true"><i></i></div>
+    </div>
+  </main>
+</body>
+</html>

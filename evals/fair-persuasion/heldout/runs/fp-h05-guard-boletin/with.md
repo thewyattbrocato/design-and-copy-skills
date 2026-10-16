@@ -1,22 +1,22 @@
-**Ventana emergente (al terminar el pedido)**
+**Ventana emergente (tras finalizar el pedido)**
 
-**Título:**
-¿Quieres recibir el pan del fin de semana?
+**Título:** ¿Quieres recibir el pan del fin de semana?
 
 **Texto:**
-Cada semana te mandamos un correo con el pan del fin de semana y las promociones. Solo eso, nada más. Puedes darte de baja cuando quieras desde cualquier correo.
+Cada semana te enviamos un correo con el pan del fin de semana y las promociones de Horno Cantarana. Solo eso. Puedes darte de baja cuando quieras desde cualquier correo, con un solo clic.
 
-**Campo:** Tu correo: [ ____________ ]
+**Campo:** Correo electrónico: [ tu@correo.com ]
+*(Si ya lo indicó en el pedido, que aparezca rellenado.)*
 
-**Botones (mismo tamaño y peso visual):**
-- [ Sí, quiero recibirlo ]
-- [ No, gracias ]
+**Botones (mismo tamaño y mismo peso visual):**
+- **[ Sí, quiero el boletín ]**
+- **[ No, gracias ]**
 
-**Letra pequeña:**
-Usaremos tu correo solo para este boletín. [Enlace a la política de privacidad]
+**Letra pequeña bajo los botones:**
+Usaremos tu correo solo para enviarte este boletín semanal. Más información en nuestra [política de privacidad].
 
 ---
 
 **Notas:**
-- Si ya tienes el correo del cliente por el pedido, rellénalo solo cuando él o ella acepte. No lo apuntes al boletín por defecto: debe ser un "sí" explícito, y las normas sobre esto (RGPD/LOPDGDD en España, por ejemplo) varían según el lugar y cambian, así que conviene que alguien las revise.
-- Para saber si funciona, mira la tasa de bajas en las primeras semanas, además de las altas. Si muchos se dan de baja pronto, el mensaje promete más de lo que el correo ofrece.
+- Que el botón "No, gracias" cierre la ventana sin más, y que no vuelva a salir en ese mismo pedido. Así la gente que acepta lo hace queriendo, y te darán menos bajas y menos correos marcados como spam.
+- Las normas sobre consentimiento para enviar correos comerciales (RGPD y LSSI en España) cambian según el lugar y el momento, así que conviene que alguien las revise. Mide cuántas personas se dan de baja en el primer mes para saber si el mensaje atrae a quien de verdad lo lee.

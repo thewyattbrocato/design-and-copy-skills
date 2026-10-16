@@ -1,0 +1,1 @@
+A pie chart is fine here: three categories that sum to 100%, with clearly different slice sizes, is the case where it works. If you'd rather make the comparison easier to read, a simple horizontal bar chart sorted by share is the safer alternative.

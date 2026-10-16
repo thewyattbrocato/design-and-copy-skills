@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larder Lane Pantry – Saturday Shifts</title>
+<style>
+  :root {
+    --bg: #f5f3ec;
+    --card: #ffffff;
+    --ink: #1e2922;
+    --muted: #5d6a62;
+    --line: #dcd8cb;
+    --accent: #2c6a4d;
+    --accent-ink: #ffffff;
+    --accent-soft: #e2f0e8;
+    --warn: #8a4b00;
+    --warn-soft: #fff0d9;
+    --danger: #a3341f;
+    --pip-off: #d9d5c7;
+    --shadow: 0 1px 2px rgba(30,41,34,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121815;
+      --card: #1b2420;
+      --ink: #eaf1ec;
+      --muted: #9fb0a5;
+      --line: #2f3c35;
+      --accent: #74c49a;
+      --accent-ink: #0b1a11;
+      --accent-soft: #23372c;
+      --warn: #f2c17a;
+      --warn-soft: #3a2d17;
+      --danger: #ff9a86;
+      --pip-off: #34413a;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding-bottom: 96px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 16px 14px; }
+  header h1 { font-size: 1.45rem; margin: 4px 0 0; line-height: 1.2; }
+  header .eyebrow { color: var(--muted); font-size: .9rem; font-weight: 600; letter-spacing: .02em; }
+  .summary { margin: 10px 0 0; color: var(--muted); }
+  .summary strong { color: var(--ink); }
+  .meter { height: 8px; border-radius: 4px; background: var(--pip-off); margin-top: 8px; overflow: hidden; }
+  .meter > i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+
+  .me {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 12px 14px; margin: 16px 0 12px; box-shadow: var(--shadow);
+  }
+  label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 6px; }
+  input[type=text] {
+    width: 100%; font: inherit; padding: 12px 14px; min-height: 48px;
+    border: 1.5px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink);
+  }
+  input[type=text]:focus-visible, button:focus-visible, dialog button:focus-visible {
+    outline: 3px solid var(--accent); outline-offset: 2px;
+  }
+
+  .tabs { display: flex; gap: 6px; margin: 0 0 14px; }
+  .tabs button {
+    flex: 1; min-height: 44px; font: inherit; font-weight: 600; color: var(--ink);
+    background: transparent; border: 1.5px solid var(--line); border-radius: 22px; cursor: pointer;
+  }
+  .tabs button[aria-pressed=true] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  ul.shifts { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .shift {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 14px; box-shadow: var(--shadow);
+  }
+  .shift.mine { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .time { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .badge {
+    font-size: .8rem; font-weight: 700; padding: 3px 9px; border-radius: 12px;
+    background: var(--accent-soft); color: var(--accent); white-space: nowrap;
+  }
+  .badge.need { background: var(--warn-soft); color: var(--warn); }
+  .badge.full { background: var(--pip-off); color: var(--muted); }
+  .role { font-size: 1.2rem; font-weight: 700; margin: 2px 0 0; }
+  .note { color: var(--muted); font-size: .92rem; margin: 2px 0 0; }
+  .pips { display: flex; gap: 5px; margin: 10px 0 0; }
+  .pips i { width: 14px; height: 14px; border-radius: 50%; background: var(--pip-off); }
+  .pips i.on { background: var(--accent); }
+  .people { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; min-height: 4px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 2px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 22px;
+    padding: 0 4px 0 12px; min-height: 40px; max-width: 100%;
+  }
+  .chip.me { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
+  .chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chip button {
+    border: 0; background: transparent; color: var(--muted); font-size: 1.3rem; line-height: 1;
+    min-width: 40px; min-height: 40px; border-radius: 50%; cursor: pointer;
+  }
+  .chip button:hover { color: var(--danger); }
+  .none { color: var(--muted); font-size: .92rem; margin: 10px 0 0; }
+
+  .act {
+    width: 100%; margin-top: 12px; min-height: 52px; font: inherit; font-weight: 700; font-size: 1.05rem;
+    border-radius: 12px; border: 2px solid var(--accent); cursor: pointer;
+    background: var(--accent); color: var(--accent-ink);
+  }
+  .act:active { transform: scale(.99); }
+  .act.drop { background: transparent; color: var(--danger); border-color: var(--danger); }
+  .act:disabled { background: transparent; color: var(--muted); border-color: var(--line); cursor: default; }
+  .empty { text-align: center; color: var(--muted); padding: 30px 10px; }
+
+  footer { margin-top: 26px; color: var(--muted); font-size: .88rem; }
+  footer .tools { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  footer button {
+    font: inherit; font-weight: 600; min-height: 44px; padding: 0 16px; border-radius: 10px;
+    border: 1.5px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer;
+  }
+  footer button.quiet { color: var(--danger); }
+
+  #toast {
+    position: fixed; left: 12px; right: 12px; bottom: 14px; max-width: 616px; margin: 0 auto;
+    background: var(--ink); color: var(--bg); border-radius: 12px; padding: 6px 8px 6px 16px;
+    display: none; align-items: center; gap: 10px; min-height: 52px; z-index: 10;
+    box-shadow: 0 6px 20px rgba(0,0,0,.28);
+  }
+  #toast.show { display: flex; }
+  #toast p { margin: 0; flex: 1; }
+  #toast button {
+    font: inherit; font-weight: 700; min-height: 44px; padding: 0 14px; border: 0; border-radius: 8px;
+    background: transparent; color: var(--accent); cursor: pointer; text-decoration: underline;
+  }
+  @media (prefers-color-scheme: light) { #toast button { color: #8fe0b4; } }
+
+  dialog {
+    border: 0; border-radius: 16px; padding: 18px; width: min(92vw, 420px);
+    background: var(--card); color: var(--ink);
+  }
+  dialog::backdrop { background: rgba(0,0,0,.5); }
+  dialog h2 { margin: 0 0 4px; font-size: 1.2rem; }
+  dialog p { margin: 0 0 12px; color: var(--muted); }
+  dialog .btns { display: flex; gap: 8px; margin-top: 14px; }
+  dialog .btns button {
+    flex: 1; min-height: 50px; font: inherit; font-weight: 700; border-radius: 10px;
+    border: 2px solid var(--accent); cursor: pointer;
+  }
+  dialog .go { background: var(--accent); color: var(--accent-ink); }
+  dialog .cancel { background: transparent; color: var(--ink); border-color: var(--line) !important; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">LARDER LANE PANTRY</div>
+    <h1 id="title">Saturday volunteer shifts</h1>
+    <p class="summary" id="summary" aria-live="polite"></p>
+    <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+  </header>
+
+  <div class="me">
+    <label for="name">Your name (so we can sign you up in one tap)</label>
+    <input type="text" id="name" autocomplete="name" autocapitalize="words" maxlength="40" placeholder="First name and last initial">
+  </div>
+
+  <div class="tabs" role="group" aria-label="Filter shifts">
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    <button type="button" data-filter="open" aria-pressed="false">Open spots</button>
+    <button type="button" data-filter="mine" aria-pressed="false">My shifts</button>
+  </div>
+
+  <ul class="shifts" id="list"></ul>
+
+  <footer>
+    <div class="tools">
+      <button type="button" id="copy">Copy roster</button>
+      <button type="button" id="reset" class="quiet">Clear board</button>
+    </div>
+    <p>Sign-ups are saved on this device. To share the board with everyone, copy the roster and send it to the group.</p>
+  </footer>
+</div>
+
+<div id="toast" role="status" aria-live="polite"><p id="toastMsg"></p><button type="button" id="toastBtn" hidden>Undo</button></div>
+
+<dialog id="nameDlg" aria-labelledby="dlgTitle">
+  <form method="dialog" id="nameForm">
+    <h2 id="dlgTitle">Who's signing up?</h2>
+    <p>We'll remember your name on this phone.</p>
+    <label for="dlgName">Your name</label>
+    <input type="text" id="dlgName" autocomplete="name" autocapitalize="words" maxlength="40" placeholder="First name and last initial">
+    <div class="btns">
+      <button type="button" class="cancel" id="dlgCancel">Cancel</button>
+      <button type="submit" class="go">Sign me up</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  var KEY = 'larder-lane-saturday-v1';
+  var SHIFTS = [
+    { id: 'unload',  start: 480,  end: 600,  cap: 4, role: 'Truck unload & receiving', note: 'Lifting boxes off the delivery truck. Closed shoes.' },
+    { id: 'produce', start: 510,  end: 660,  cap: 5, role: 'Produce sorting', note: 'Check, trim and box fresh produce.' },
+    { id: 'desk',    start: 540,  end: 720,  cap: 3, role: 'Front desk check-in', note: 'Greet families and sign them in.' },
+    { id: 'bagging', start: 570,  end: 690,  cap: 6, role: 'Bagging & boxing', note: 'Pack the grocery boxes from the list.' },
+    { id: 'drive1',  start: 600,  end: 720,  cap: 3, role: 'Delivery driver (morning)', note: 'Home deliveries. Own car, mileage noted.' },
+    { id: 'carry',   start: 660,  end: 780,  cap: 4, role: 'Carry-out & loading', note: 'Help clients load boxes into cars.' },
+    { id: 'drive2',  start: 720,  end: 840,  cap: 2, role: 'Delivery driver (afternoon)', note: 'Second delivery run. Own car.' },
+    { id: 'clean',   start: 780,  end: 870,  cap: 4, role: 'Cleanup & restock', note: 'Wipe down, sweep, break boxes, restock shelves.' }
+  ];
+  var SEED = {
+    unload: ['Marcus T.', 'Dolores R.'],
+    produce: ['Priya N.', 'Ken O.', 'Alma S.'],
+    desk: ['Joan B.'],
+    bagging: ['Luis G.', 'Tamika W.'],
+    drive1: ['Hal P.'],
+    carry: [], drive2: ['Rosa M.'],
+    clean: ['Ben A.', 'Nia C.', 'Sam F.']
+  };
+
+  var state = { me: '', signups: {} };
+  var filter = 'all';
+  var pending = null;     // shift id waiting on a name
+  var toastTimer = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var listEl = $('list'), nameEl = $('name');
+
+  /* ---------- storage ---------- */
+  function load() {
+    var raw = null;
+    try { raw = localStorage.getItem(KEY); } catch (e) {}
+    if (raw) {
+      try {
+        var d = JSON.parse(raw);
+        if (d && typeof d === 'object' && d.signups) {
+          state.me = typeof d.me === 'string' ? d.me : '';
+          state.signups = {};
+          SHIFTS.forEach(function (s) {
+            var a = Array.isArray(d.signups[s.id]) ? d.signups[s.id] : [];
+            state.signups[s.id] = a.filter(function (n) { return typeof n === 'string' && n; }).slice(0, s.cap);
+          });
+          return;
+        }
+      } catch (e) {}
+    }
+    SHIFTS.forEach(function (s) { state.signups[s.id] = (SEED[s.id] || []).slice(); });
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  /* ---------- helpers ---------- */
+  function fmt(m) {
+    var h = Math.floor(m / 60), mm = m % 60, ap = h >= 12 ? 'pm' : 'am';
+    h = h % 12 || 12;
+    return h + (mm ? ':' + (mm < 10 ? '0' : '') + mm : '') + ap;
+  }
+  function range(s) { return fmt(s.start) + ' – ' + fmt(s.end); }
+  function key(n) { return n.trim().replace(/\s+/g, ' ').toLowerCase(); }
+  function clean(n) { return n.trim().replace(/\s+/g, ' '); }
+  function esc(t) {
+    return String(t).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function find(id) { return SHIFTS.filter(function (s) { return s.id === id; })[0]; }
+  function indexOfName(id, name) {
+    var k = key(name);
+    return state.signups[id].findIndex(function (n) { return key(n) === k; });
+  }
+  function snapshot() { return JSON.stringify(state.signups); }
+  function restore(snap) { state.signups = JSON.parse(snap); save(); render(); }
+
+  function nextSaturday() {
+    var d = new Date();
+    d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7));
+    return d;
+  }
+
+  /* ---------- toast ---------- */
+  function toast(msg, undoSnap) {
+    clearTimeout(toastTimer);
+    $('toastMsg').textContent = msg;
+    var b = $('toastBtn');
+    b.hidden = !undoSnap;
+    b.onclick = function () { hideToast(); restore(undoSnap); toast('Undone.'); };
+    $('toast').classList.add('show');
+    toastTimer = setTimeout(hideToast, undoSnap ? 7000 : 3500);
+  }
+  function hideToast() { $('toast').classList.remove('show'); }
+
+  /* ---------- actions ---------- */
+  function signUp(id, name) {
+    var s = find(id), list = state.signups[id];
+    if (indexOfName(id, name) >= 0) { toast('You\u2019re already on ' + s.role + '.'); return; }
+    if (list.length >= s.cap) { toast('Sorry, that shift just filled up.'); return; }
+    var clash = SHIFTS.filter(function (o) {
+      return o.id !== id && indexOfName(o.id, name) >= 0 && o.start < s.end && s.start < o.end;
+    })[0];
+    if (clash) {
+      toast('That overlaps with ' + clash.role + ' (' + range(clash) + ').');
+      return;
+    }
+    var snap = snapshot();
+    list.push(name);
+    save(); render(id);
+    toast('You\u2019re in: ' + s.role + ', ' + range(s) + '.', snap);
+  }
+  function dropOut(id, idx) {
+    var s = find(id), who = state.signups[id][idx];
+    if (who === undefined) return;
+    var snap = snapshot();
+    state.signups[id].splice(idx, 1);
+    save(); render(id);
+    toast(who + ' removed from ' + s.role + '.', snap);
+  }
+
+  /* ---------- render ---------- */
+  function render(focusId) {
+    var me = clean(state.me), total = 0, filled = 0, mineCount = 0;
+    SHIFTS.forEach(function (s) { total += s.cap; filled += state.signups[s.id].length; });
+
+    var open = total - filled;
+    $('summary').innerHTML = open
+      ? '<strong>' + open + ' spots still open</strong> across ' + SHIFTS.length + ' shifts'
+      : '<strong>Every spot is filled.</strong> Thank you!';
+    $('meter').style.width = Math.round(filled / total * 100) + '%';
+
+    var html = '';
+    SHIFTS.forEach(function (s) {
+      var people = state.signups[s.id], n = people.length, left = s.cap - n;
+      var mineHere = me && indexOfName(s.id, me) >= 0;
+      if (mineHere) mineCount++;
+      if (filter === 'open' && left === 0) return;
+      if (filter === 'mine' && !mineHere) return;
+
+      var badge = left === 0 ? '<span class="badge full">Full</span>'
+        : n === 0 ? '<span class="badge need">' + left + ' open \u2013 needs people</span>'
+        : '<span class="badge' + (left >= 2 && n < s.cap / 2 ? ' need' : '') + '">' + left + ' open</span>';
+
+      var pips = '';
+      for (var i = 0; i < s.cap; i++) pips += '<i class="' + (i < n ? 'on' : '') + '"></i>';
+
+      var chips = people.map(function (p, idx) {
+        var isMe = me && key(p) === key(me);
+        return '<span class="chip' + (isMe ? ' me' : '') + '"><span>' + esc(p) + (isMe ? ' (you)' : '') + '</span>' +
+          '<button type="button" data-drop="' + s.id + '" data-idx="' + idx + '" aria-label="Remove ' + esc(p) + ' from ' + esc(s.role) + '">\u00d7</button></span>';
+      }).join('');
+
+      var btn = mineHere
+        ? '<button type="button" class="act drop" id="act-' + s.id + '" data-drop="' + s.id + '" data-idx="' + indexOfName(s.id, me) + '">Drop out</button>'
+        : left === 0
+          ? '<button type="button" class="act" disabled>Shift is full</button>'
+          : '<button type="button" class="act" id="act-' + s.id + '" data-join="' + s.id + '">Sign up</button>';
+
+      html += '<li class="shift' + (mineHere ? ' mine' : '') + '">' +
+        '<div class="row"><span class="time">' + range(s) + '</span>' + badge + '</div>' +
+        '<h2 class="role">' + esc(s.role) + '</h2>' +
+        '<p class="note">' + esc(s.note) + '</p>' +
+        '<div class="pips" aria-label="' + n + ' of ' + s.cap + ' spots filled">' + pips + '</div>' +
+        (n ? '<div class="people">' + chips + '</div>' : '<p class="none">Nobody yet. Be the first!</p>') +
+        btn + '</li>';
+    });
+
+    if (!html) {
+      html = '<li class="empty">' + (filter === 'mine'
+        ? (me ? 'You haven\u2019t signed up for anything yet.' : 'Enter your name above to see your shifts.')
+        : 'Nothing open right now. Every shift is full!') + '</li>';
+    }
+    listEl.innerHTML = html;
+
+    if (focusId) {
+      var f = $('act-' + focusId);
+      if (f) f.focus({ preventScroll: true });
+    }
+  }
+
+  /* ---------- events ---------- */
+  listEl.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    if (b.dataset.drop) { dropOut(b.dataset.drop, +b.dataset.idx); return; }
+    if (b.dataset.join) {
+      var me = clean(state.me);
+      if (!me) {
+        pending = b.dataset.join;
+        $('dlgName').value = '';
+        $('nameDlg').showModal();
+        $('dlgName').focus();
+        return;
+      }
+      signUp(b.dataset.join, me);
+    }
+  });
+
+  nameEl.addEventListener('input', function () {
+    state.me = nameEl.value;
+    save(); render();
+  });
+
+  $('nameForm').addEventListener('submit', function () {
+    var v = clean($('dlgName').value);
+    if (!v) { pending = null; return; }
+    state.me = v; nameEl.value = v; save();
+    var id = pending; pending = null;
+    render();
+    if (id) signUp(id, v);
+  });
+  $('dlgCancel').addEventListener('click', function () { pending = null; $('nameDlg').close(); });
+
+  document.querySelector('.tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    filter = b.dataset.filter;
+    document.querySelectorAll('.tabs button').forEach(function (x) {
+      x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+    });
+    render();
+  });
+
+  $('copy').addEventListener('click', function () {
+    var d = nextSaturday();
+    var out = 'Larder Lane Pantry \u2013 ' + d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }) + '\n';
+    SHIFTS.forEach(function (s) {
+      var p = state.signups[s.id];
+      out += '\n' + range(s) + '  ' + s.role + ' (' + p.length + '/' + s.cap + ')\n';
+      out += p.length ? p.map(function (n) { return '  - ' + n; }).join('\n') + '\n' : '  (open)\n';
+    });
+    function ok() { toast('Roster copied.'); }
+    function fallback() {
+      var t = document.createElement('textarea');
+      t.value = out; t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); ok(); } catch (e) { toast('Couldn\u2019t copy on this browser.'); }
+      document.body.removeChild(t);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(out).then(ok, fallback);
+    } else fallback();
+  });
+
+  $('reset').addEventListener('click', function () {
+    if (!confirm('Clear every sign-up from the board?')) return;
+    var snap = snapshot();
+    SHIFTS.forEach(function (s) { state.signups[s.id] = []; });
+    save(); render();
+    toast('Board cleared.', snap);
+  });
+
+  window.addEventListener('storage', function (e) {
+    if (e.key === KEY) { load(); if (document.activeElement !== nameEl) nameEl.value = state.me; render(); }
+  });
+
+  /* ---------- init ---------- */
+  load();
+  nameEl.value = state.me;
+  $('title').textContent = nextSaturday().toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' }) + ' shifts';
+  save();
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,32 +1,33 @@
-Based on your description, the concept suits a tea shop, but the execution has some practical problems. Gold, hairlines, and a tiny detail are all risky at the sizes you listed.
-
-**What works**
-- A script wordmark with a leaf suggests a small, refined, personal shop.
-- Putting the leaf on the "i" gives you one memorable detail without needing a separate icon.
+Going by your description, the biggest risk is that the logo won't hold up at the sizes you listed.
 
 **Main concerns**
 
-1. **Contrast.** #c9a227 on white is roughly 2.3:1. It looks fine in a mockup, but it will look washed out on a sign in daylight, on a cup under cafe lighting, and at small sizes. Gold is the most common reason a logo looks cheap or faint.
+1. **Gold on white has low contrast.** #c9a227 on white is about 2.4:1, well under the 3:1 minimum for graphics and the 4.5:1 for text. Thin strokes make it worse. On a sign in daylight, or on a cup held at arm's length, it will look faint and washed out.
 
-2. **Hairline strokes.** Thin script strokes break down in three places:
-   - **Paper cups:** flexo printing and textured or curved surfaces tend to fill in or drop out fine lines.
-   - **Signage:** vinyl, cut metal, and paint usually need a minimum stroke of a few millimeters.
-   - **Distance:** hairlines disappear first when the sign is viewed from across the street.
+2. **Hairline strokes will break up.**
+   - On paper cups, flexo or offset printing can fill in or drop strokes that fine, especially with a metallic or yellow ink.
+   - On a sign, thin vinyl or paint will look weak from the street.
+   - At 32px, hairlines will drop below a pixel and disappear. A script wordmark that is thin all the way through won't survive there.
 
-3. **The 32px favicon.** The full wordmark won't survive at 32px. The hairlines will vanish and the leaf will be a sub-pixel smudge. Don't shrink the wordmark. Make a separate mark, such as a "P" monogram or the leaf alone, with heavier strokes.
+3. **The leaf over the "i" is a nice idea, but it's tiny.** It's the most distinctive detail in the mark, and it will be the first thing lost when the logo shrinks. At favicon size it will either vanish or turn into a smudge.
 
-4. **The leaf.** At small sizes it will blur into the dot of the "i" or read as a stray mark. It needs to be large enough to read as a leaf, with a simple silhouette and no interior detail.
+4. **The full wordmark won't work as a 32px favicon.** "Pemberly Tea" in script would be unreadable at that size. Don't try to shrink it.
 
-**What I'd do**
-- **Thicken the strokes.** Keep the script, but use a heavier weight or add contrast so the thick strokes carry the shape and only the connectors are thin.
-- **Darken the gold for the main version.** Try something deeper like #8a6d10 to #a07c12, and keep the bright gold for accents or metallic foil. Real gold foil on cups or the sign can look great, but that's a print process, not a flat hex.
-- **Make a one-color version** in dark brown, green, or black for cups, stamps, and receipts. Also make a reversed (white-on-dark) version. A logo that only works on white is limiting for a sign and packaging.
-- **Make a simplified small-size mark** for the favicon and social avatars, as described above.
+**Suggestions**
 
-**Tests before you commit**
-- Shrink the logo to about 1 inch wide and look at it on your phone.
-- Print it in one color on cheap paper.
-- View it from about 10 feet away.
-- Squint at it. If the name and the leaf both disappear, the strokes are too light.
+- **Make a favicon mark.** Use a single "P" (script or a simple serif) or the leaf on its own, on a solid background. A white mark on a gold or deep green tile works well.
+- **Thicken the strokes.** Keep the elegance but add a stroke-weight contrast, so there are thick downstrokes and thin connectors, instead of uniform hairlines. Set a minimum stroke weight, such as 0.5pt in print, and test against it.
+- **Darken the gold, or add a dark companion color.** A deeper antique gold such as #9a7b10 or a bronze reads better. You could also pair the gold with a dark green or charcoal for small text and for cups. Keep the bright gold for large accents.
+- **Make the leaf bigger and bolder,** or give it a slightly different color from the wordmark if you can.
+- **Build a small set of variants:** the full wordmark, a stacked or compact version, the icon alone, and one-color versions (dark on light, white on dark).
 
-If you can export it as a PNG or describe the typeface, I can be more specific about the stroke weight and the leaf shape.
+**Quick tests before you finalize**
+
+- Shrink it to about 1 inch wide and view it on a screen. Then squint or blur it.
+- View it in grayscale. If the gold nearly disappears, the contrast is too low.
+- Print it on a cheap office printer and on a coffee cup or kraft paper if you can. That's close to what the real cups will do.
+- Check it at 32px and 16px.
+
+The elegant script and gold palette suit a tea shop. The fix is mostly practical: heavier strokes, a darker gold, and a separate simple mark for small sizes.
+
+If you can share the file later, or even a screenshot, I can give more specific feedback on letterforms, spacing, and the leaf placement.

@@ -1,20 +1,18 @@
-I found one real error, in the answer key. Fix it before you print.
+I found one error that needs fixing before you print: **Marguerite's answer is wrong.**
 
-**Marguerite's answer is wrong.**
-- 8.0 + 7.5 + 8.5 + 7.0 + 6.5 = **37.5 hours**, not 38.5.
-- Regular pay is 37.5 × $22.00 = **$825.00**, not $847.00. The key's $847 is 38.5 × $22, so the pay was computed from the wrong total.
-- A clerk who does it correctly will think they're wrong, which is the worst outcome for a self-check exercise.
+Her hours are 8.0 + 7.5 + 8.5 + 7.0 + 6.5 = **37.5**, not 38.5. Regular pay is 37.5 × $22.00 = **$825.00**, not $847.00. The key's $847 is 38.5 × $22, so the error is in the hours total. Clerks who add correctly would think they got it wrong.
 
-I checked the rest and it's right. Priya's 38 hours and $760.00 are correct, and so are Tomas's 38.5 hours and $1,001.00.
+I rechecked the other two:
+- **Priya:** 38 hours and $760.00 are correct.
+- **Tomas:** 38.5 hours and $1,001.00 are correct. 38 × 26 = 988, plus 13 is 1,001.
 
-**Suggestions (optional):**
-1. **The "no calculator" goal isn't supported for the pay step.** Part 1 shows how to add but not how to multiply. 38.5 × $26 and 37.5 × $22 are hard to do in your head without a method. You could add a line to Part 1 or the Part 2 hint, such as: "Split the rate: 37.5 × $22 = 37.5 × $20 + 37.5 × $2 = $750 + $75."
-2. **The "whole numbers first, then halves" method fits Part 3 poorly.**
-   - In Part 1, the "halves" step adds 6.5 + 7.5, which are full values and not just the half-hour parts.
-   - Part 2 has only one half-hour day.
-   - Part 3 has three (7.5, 8.5, 6.5), so the grouping is less obvious.
-   - Consider a short note like "the .5s pair up into whole hours: 7.5 + 8.5 = 16."
-3. **Part 1's "8 + 8 + 8" could confuse readers.** It doesn't say which days those are (Mon, Tue, Thu). Naming them would help a new clerk follow along.
-4. **The "over 40, add again" check can't catch the key error.** It only flags totals above 40. That's fine as written, but a second check might help, such as "Your total should be between 35 and 40."
+Corrected answer line: **Answers: Tomas 38.5 hours, $1,001.00. Marguerite 37.5 hours, $825.00.**
 
-I can give you a corrected version of the full handout if you'd like.
+A few smaller things to consider:
+- **Overtime check:** "If your total is over 40, add again" wouldn't have caught the Marguerite mistake, since 38.5 is under 40. It only catches large slips. You could add a second check, such as "re-add in reverse order and compare."
+- **Part 1 wording:** "Then the halves (6.5 + 7.5 = 14)" calls 6.5 and 7.5 "halves," but they're whole-plus-half numbers. Something like "then the two days with half hours (6.5 + 7.5 = 14)" would be clearer for new clerks.
+- **No calculator:** 38.5 × $26 is hard to do in your head. You could add a tip, such as "do 38 × 26, then add half of 26 ($13)." Without it, some clerks will reach for a calculator anyway.
+- **Formatting:** Marguerite's sheet writes 8.0 and 7.0, while the others use 8 and 7. It's harmless, but you could make them match.
+- **Timing:** 15 minutes seems fine for three short weeks.
+
+Do you want me to make these edits and give you a clean copy?

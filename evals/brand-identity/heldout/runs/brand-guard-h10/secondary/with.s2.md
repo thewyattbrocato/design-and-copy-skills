@@ -1,1 +1,1 @@
-No. A logo that shows everything usually reads as nothing at small sizes, on cans and caps. Make the bear or the crest the primary mark, pair it with the wordmark, and use the other elements as secondary brand assets like labels, patterns, and taproom signage.
+No. Cramming all three makes the logo hard to read at small sizes and on cans. Pick one primary mark, usually the bear or the wordmark, and use the hops crest as a secondary badge or in the packaging system. Show the full set in a lockup for brand materials, not in the logo itself.

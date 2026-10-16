@@ -5,7 +5,7 @@ description: Use whenever you write, plan, fix or judge email or direct messages
 
 # Email and sequences
 
-An email is read in a crowded inbox by someone who owes the sender nothing. It works when the envelope says honestly what is inside, the body does one job, and the sender stops when the reader has answered. The usual failures are one email that does everything, follow-ups with nothing new, and envelope tricks that spend the reader's trust for one open.
+An email is read in a crowded inbox by someone who owes the sender nothing. It works when what shows before the open says honestly what is inside, the body does one job, and the sender stops when the reader has answered. The usual failures are one email that does everything, follow-ups with nothing new, and tricks in the sender, subject and preview that spend the reader's trust for one open.
 
 ## Do not produce
 
@@ -28,12 +28,12 @@ An email is read in a crowded inbox by someone who owes the sender nothing. It w
 
 Name the trigger (a sign-up, an action, an inaction, a date) and the one job of this email: a single ask sized to where the reader is. For a series, give each message one job, something new, and a first message that continues the exact promise the sign-up or ad made.
 
-## Envelope
+## What shows before the open
 
 - **Sender:** a recognizable name that stays the same. A person only if that person stands behind the message.
 - **Subject:** says what is inside or what to do. About 40 characters survives most phone inboxes; treat it as a default to check against any stated cap, not a law.
 - **Preview text:** completes the subject with a detail, the deadline or the answer. Never "View in browser" or a repeat of the subject.
-- **Envelope test:** show only sender, subject and preview to a stranger. Can they say what this is and what it asks?
+- **Inbox test:** show only sender, subject and preview to a stranger. Can they say what this is and what it asks?
 - **Curiosity** is fine on a content email when the first lines pay it off. Not on billing, security, deadlines or promotions.
 - When comparing subject lines, judge them on clicks that lead to the outcome and on replies or purchases, not opens.
 
@@ -52,6 +52,7 @@ Name the trigger (a sign-up, an action, an inaction, a date) and the one job of 
 - Reminders escalate by helpfulness: reminder, then proof or an answer to the likely objection, then help, then an incentive only where earned (a first order, a long-lapsed customer).
 - Every series states its stop rule: a reply, a purchase, an unsubscribe or a clear no ends it.
 - Per-type jobs, spacing defaults and stop rules are in [sequence-patterns.md](references/sequence-patterns.md); load it for any series.
+- Link ranking with a skip list, subject sets, trial wording, reputation and testing: [inbox-decisions-and-sequence-logic.md](references/inbox-decisions-and-sequence-logic.md); load it for those.
 
 ## Cold outreach
 
@@ -76,7 +77,7 @@ Deliver the requested text first, with nothing before it. When a count or set is
 ## Quick checks
 
 - One ask per email; the first email continues the sign-up promise.
-- The envelope alone says what is inside; preview text adds, not repeats.
+- What shows before the open says what is inside; preview text adds, not repeats.
 - Nothing invented, no false urgency, no disguised sender.
 - Each follow-up is new; the series says when it stops.
 - Within every cap, counted.

@@ -1,117 +1,125 @@
 [
   {
-    "id": "fm-h01",
+    "id": "fd-h01",
     "kind": "build",
-    "prompt": "Make a sign-up form for the volunteer program of Pawprint Animal Rescue. We need their name, email, phone (optional), which days they can help (Mon-Sun), whether they've handled large dogs before, and a place to say anything else. Deliver a single self-contained HTML file with inline CSS, system fonts only, and no external assets.",
+    "prompt": "We run Saltmarsh Paddle Co., a little kayak rental on a tidal creek. People currently call to book and we miss half the calls. Can you build the booking form for our website? Singles are $35 an hour, tandems $55 an hour, up to 6 people per booking, trips leave between 9am and 4pm. Give me one self-contained HTML file with inline CSS, system fonts only and no external assets.",
     "rubric": [
-      "Every field has a visible label tied to its input (not placeholder-only).",
-      "Input types suit the data (email, tel) and autocomplete hints are present where useful.",
-      "Days use checkboxes and the yes/no question uses radios or an equally fitting control.",
-      "Optional fields are identified and the submit button is clearly the main action and always enabled.",
-      "Layout is a single column with comfortable tap targets."
+      "Every field has a visible label that stays on screen while typing; no field relies on placeholder text alone to say what it is.",
+      "Quantities and times that have a fixed range (hours, number of paddlers, kayak type, start time) use constrained controls such as a select, stepper or radio group, not free-text boxes where someone could type 40 or 'a few'.",
+      "The form is a single column with related fields sitting together (for example who is booking, then when, then what) and clear spacing between those groups.",
+      "Required and optional fields are told apart, and fields that are not needed to hold a booking are either absent or marked optional.",
+      "There is one clearly primary submit button with a specific label (for example Reserve or Book) and the price or total is visible before the person commits.",
+      "Uses only system fonts, inline CSS and no external assets, and renders without clipped or overlapping content."
     ]
   },
   {
-    "id": "fm-h02",
+    "id": "fd-h02",
     "kind": "critique",
-    "prompt": "Critique this checkout address form for an online plant shop: fields (all with placeholders and no labels) 'Name', 'Address line 1', 'Address line 2', 'City', 'State' as a free-text box, 'ZIP', 'Country' as a text input, 'Phone', and a Submit button that's grayed out until everything is valid. Validation errors say 'Invalid input' in red at the top of the page after submit. What would you change?",
+    "prompt": "Our checkout conversion dropped after we redesigned the payment step and I can't tell why. I'm the PM, not an engineer. Here's the form and a note from QA about how it behaves. What's wrong and what would you fix first?\n\n```html\n<form id=\"pay\">\n  <input type=\"text\" name=\"card\" placeholder=\"Card number\" oninput=\"check(this)\">\n  <input type=\"text\" name=\"exp\" placeholder=\"Expiry MM/YY\" oninput=\"check(this)\">\n  <input type=\"text\" name=\"cvv\" placeholder=\"CVV\" oninput=\"check(this)\">\n  <input type=\"text\" name=\"zip\" placeholder=\"Zip\" oninput=\"check(this)\">\n  <select name=\"country\"> ...all 195 countries, starting with Afghanistan... </select>\n  <button type=\"submit\" disabled>Pay now</button>\n</form>\n```\n\nQA notes: as soon as you type the first digit of the card number a red 'Invalid input' appears under it and stays until you've typed all 16 digits. The Pay button stays grey until every field is valid and nothing says what's missing. If the card is declined, the page reloads and every field is empty again.",
     "rubric": [
-      "Flags placeholder-only labeling.",
-      "Recommends a select or autocomplete for state/country and flags free text.",
-      "Recommends specific error messages next to the field with guidance on how to fix them.",
-      "Flags the disabled submit button and recommends keeping it enabled.",
-      "Mentions autocomplete attributes or fewer fields."
+      "Identifies that fields have only placeholders for labels, so once someone types they lose what the field is for, and recommends persistent labels.",
+      "Identifies the error timing as a problem: an error shown on the first keystroke tells people they are wrong before they have had a chance to finish, and recommends waiting until they leave the field or submit.",
+      "Calls out 'Invalid input' as unhelpful and gives concrete replacement wording that says what is wrong and how to fix it for at least one field.",
+      "Identifies that a silently disabled Pay button leaves people with no idea what is missing, and recommends a button that stays usable and explains problems on press (or says what is missing).",
+      "Identifies that wiping every field after a decline is a major cause of lost orders and says the entries should be kept, with the real reason for the decline shown.",
+      "Orders the fixes by likely impact, starting with the decline-wipe or the error and disabled-button problems, and does not pad the answer with unrelated visual restyling."
     ]
   },
   {
-    "id": "fm-h03",
-    "kind": "choose",
-    "prompt": "On our trip-booking form, 'Number of travelers' can be 1 to 8, and 'Room type' has 3 choices (Standard, Deluxe, Suite). Someone proposes a select dropdown for both, another proposes radio buttons for both, another proposes a stepper for travelers and radio cards for room type. What would you do?",
+    "id": "fd-h03",
+    "kind": "build",
+    "prompt": "Can you make the settings screen for Fernwick, our houseplant care app? Settings: watering reminders on/off, weekly summary email on/off, show my plant photos on my public profile on/off, temperature in Celsius or Fahrenheit, quiet hours (a start and end time when reminders stay silent), and a way to delete my account. Give me one self-contained HTML file with inline CSS, system fonts only and no external assets.",
     "rubric": [
-      "Gives a clear recommendation per field.",
-      "Justifies using visible options for a small set of choices like room type.",
-      "Notes that a stepper or small select/radios is appropriate for a small number range.",
-      "Mentions mobile or touch usability."
+      "On/off settings are switches that take effect when flipped, with no Save button needed for them, and the page gives some visible sign that a change was applied (for example a brief 'Saved' note).",
+      "Each switch has a label that says what happens in plain words, and the public-photos setting is explained well enough that someone knows who would see their photos.",
+      "Quiet hours are visibly tied to reminders: they are disabled, dimmed or hidden when watering reminders are off, rather than looking independently active.",
+      "Account deletion is separated from the everyday settings, styled and worded as a serious action, and is not a casual switch or an unmarked link at the same weight as the others.",
+      "Settings are grouped under short headings by meaning (for example notifications, privacy, display) with clear spacing between groups.",
+      "Uses only system fonts, inline CSS and no external assets, and renders without clipped or overlapping content."
     ]
   },
   {
-    "id": "fm-h04",
-    "kind": "polish",
-    "prompt": "Fix this contact form markup: <form><input placeholder='Your name'><input placeholder='Email' type='text'><textarea placeholder='Message'></textarea><button disabled id='send'>Send</button></form> Add the necessary improvements and return a complete HTML file with inline CSS, system fonts, no external assets. Include one sensible error state for an invalid email.",
-    "rubric": [
-      "Real labels are added for each field.",
-      "Email input uses the email type and an autocomplete value.",
-      "The button is no longer permanently disabled.",
-      "The error message is specific, near the field and not color-only.",
-      "Spacing and widths are consistent; inputs are comfortable to tap."
-    ]
-  },
-  {
-    "id": "fm-h05",
+    "id": "fd-h04",
     "kind": "explain",
-    "prompt": "Why is it recommended not to validate each field on every keystroke, and what's a better timing for error messages? We're building an event registration form with an email, a password with rules, and a promo code.",
+    "prompt": "I'm designing the 'New shift' screen in a scheduling tool for restaurant managers. Right now every field starts blank and managers say it's tedious. Context: a manager belongs to one or more locations; the tool knows their last 20 shifts, which location they have open right now, today's date, and each employee's usual role. Which fields could start prefilled and from what, and which should I leave blank on purpose? Keep it practical.",
     "rubric": [
-      "Explains that errors while someone is still typing are premature and irritating.",
-      "Recommends validating on blur or on submit, with exceptions like live guidance for password rules.",
-      "Mentions clearing errors as soon as the value becomes valid.",
-      "Applies the advice to the stated fields."
+      "Proposes prefilling at least three fields from the context given (for example location from the open location, date from today or the next open day, start and end times and role from recent shifts or the employee's usual role).",
+      "Names at least one field that should deliberately start empty or require an active choice (for example which employee, or anything where a wrong guess would be costly) and gives the reason.",
+      "States that prefilled values must be visibly editable and not locked, and that the person should be able to see where a suggestion came from or change it in one step.",
+      "Does not suggest prefilling something the given context cannot support or inventing data the tool would not have, and does not prefill a date in the past.",
+      "Stays within what was asked, concrete to this screen, without a general lecture on forms."
     ]
   },
   {
-    "id": "fm-h06",
+    "id": "fd-h05",
+    "kind": "choose",
+    "prompt": "I'm building three inputs for a small furniture shop's checkout and want to pick the right control for each. (1) Country to ship to, we ship to about 190. (2) Delivery speed: Standard (5 to 7 days, free), Express (2 days, $18), or Next day ($34). (3) A gift note, optional, up to 200 characters. What would you use for each? Give a one-line reason per input, nothing long.",
+    "rubric": [
+      "Country: recommends a control that can be searched or typed into (a typeahead or a select that responds to typing), and does not recommend about 190 radio buttons or an unsearchable scroll.",
+      "Delivery speed: recommends showing the three options openly as radio buttons or selectable cards, with the price and timing visible on each without opening anything.",
+      "Gift note: recommends a multi-line text area with a visible limit or remaining-character count, and marks it as optional.",
+      "Gives a single clear choice per input rather than listing several alternatives, and keeps each reason to about a line.",
+      "Does not add extra advice about unrelated checkout fields."
+    ]
+  },
+  {
+    "id": "fd-h06",
     "kind": "layout",
-    "prompt": "Design the layout of a multi-step claim form for a pet insurance company with sections: Policy details, Incident, Documents upload, Review and submit. Provide a single-page HTML file showing step 2 (Incident) with a progress indicator, fields (date of incident, type via radios: Accident / Illness / Other, description textarea) and back/continue buttons. Inline CSS, no external assets.",
+    "prompt": "We're building the vendor sign-up form for Harbor & Pine Caterers, a marketplace for local caterers. Vendors need to give us: legal business name, trading name, tax ID, business address (street, city, state, postal code), a contact person's name, email and phone, bank account name, routing number and account number for payouts, a food handler permit upload, an insurance certificate upload, how far they'll deliver, which cuisines they cook, and agreement to our terms. It's 17 things and people keep abandoning it. How should I lay it out?",
     "rubric": [
-      "Progress shows where the user is and how many steps remain.",
-      "Only one step's fields are shown with clear labels.",
-      "Continue is the primary button; Back is clearly secondary.",
-      "The incident type uses visible radio options.",
-      "Layout is single column and readable."
+      "Groups the fields by meaning into a small number of labeled sections or steps (such as business, contact, payout, documents) rather than one long undifferentiated list.",
+      "Puts the easy, familiar fields first and the sensitive or effortful ones (bank details, document uploads) later, and says why.",
+      "Addresses the bank details with a reason for asking and reassurance, or lets vendors come back to them later, rather than just presenting the fields.",
+      "Handles the two uploads sensibly, for example saying what file types and what the document must show, and allowing the vendor to save progress and finish them later.",
+      "Recommends a single column, makes clear what is required versus optional, and ends with a review or confirmation step before sending.",
+      "Gives a concrete proposed structure someone could build from, not only general principles."
     ]
   },
   {
-    "id": "fm-h07",
-    "kind": "build",
-    "prompt": "Build a login screen for a school's parent portal, with email, password and a 'Forgot password?' link, and also a link to create an account. Deliver a single self-contained HTML file with inline CSS, system fonts only, and no external assets.",
-    "rubric": [
-      "Labels are visible; email input has the right type and autocomplete attributes (username/current-password).",
-      "A show-password option is available or the password is not forced to be hidden permanently.",
-      "Submit is the primary action; the forgot/create links are secondary.",
-      "The form is concise with no unnecessary fields.",
-      "Error placement/wording is sensible if shown."
-    ]
-  },
-  {
-    "id": "fm-h08",
-    "kind": "critique",
-    "prompt": "Look at this newsletter signup: one visible email input with the label 'Email address', a single filled 'Subscribe' button, and below a small line 'We send one email a week. Unsubscribe anytime.' Review it.",
-    "rubric": [
-      "Recognizes the form is already well designed and says so.",
-      "Does not demand extra fields, steps or required acceptance checkboxes.",
-      "Any suggestions are minor.",
-      "Keeps response short."
-    ]
-  },
-  {
-    "id": "fm-h09",
-    "kind": "choose",
-    "prompt": "We need a field for date of birth in an adult-education enrollment form. Should it be a date picker, three dropdowns, or a single text input with a format hint? Users are mostly adults aged 25-70, on both phones and desktops.",
-    "rubric": [
-      "Makes a clear recommendation.",
-      "Reasons about the long distance back in time making calendar pickers tedious.",
-      "Mentions input formatting hint or separate day/month/year fields, and autocomplete (bday).",
-      "Considers mobile usability."
-    ]
-  },
-  {
-    "id": "fm-h10",
+    "id": "fd-h07",
     "kind": "explain",
-    "prompt": "A user complains: 'I filled in the entire 30-field grant application, hit submit, and it wiped everything because one field was wrong.' What should have happened, and how should we fix it so it never happens again?",
+    "prompt": "Two of us disagree about the sign-up form for our budgeting app. My developer wants every field to validate on every keystroke, so errors show instantly. Our designer says only validate when they hit submit. The form has email, a username that has to be unique, and a password with a minimum length. Who's right? What would you do?",
     "rubric": [
-      "States that the form should preserve entered data on error.",
-      "Recommends focusing on or linking to the first invalid field with an error summary or inline message.",
-      "Suggests saving progress or splitting into steps for a long form.",
-      "Keeps it practical."
+      "Does not simply side with either: says that checking while someone is mid-way through typing an email or password shows false errors, and that waiting until submit leaves them with a pile of problems at the end.",
+      "Recommends checking a field once the person leaves it (or has paused), and not showing a 'required' or format error on a field they have not yet touched.",
+      "Says that once a field is showing an error, it should re-check as the person types and clear as soon as it is fixed.",
+      "Treats the unique username and the password differently where it helps, for example checking availability after a short pause or on leaving the field, and showing a length hint or strength guidance up front so no one has to fail to learn the rule.",
+      "Gives a concrete behavior for each of the three fields rather than staying general."
+    ]
+  },
+  {
+    "id": "fd-h08",
+    "kind": "polish",
+    "prompt": "Our contact form for Kestrel Bike Repair is live and working fine, but my business partner says we should 'make it more professional'. Can you polish it? Here it is:\n\n```html\n<form action=\"/contact\" method=\"post\" style=\"max-width:420px;font-family:system-ui,sans-serif\">\n  <h2>Get in touch</h2>\n  <p>Questions about a repair or a quote? We reply within two business days.</p>\n  <label for=\"name\">Your name</label>\n  <input id=\"name\" name=\"name\" autocomplete=\"name\" required style=\"display:block;width:100%;margin:4px 0 16px\">\n  <label for=\"email\">Email</label>\n  <input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\" required style=\"display:block;width:100%;margin:4px 0 16px\">\n  <label for=\"phone\">Phone (optional)</label>\n  <input id=\"phone\" name=\"phone\" type=\"tel\" autocomplete=\"tel\" style=\"display:block;width:100%;margin:4px 0 16px\">\n  <label for=\"msg\">What can we help with?</label>\n  <textarea id=\"msg\" name=\"msg\" rows=\"5\" required style=\"display:block;width:100%;margin:4px 0 16px\"></textarea>\n  <button type=\"submit\">Send message</button>\n</form>\n```",
+    "rubric": [
+      "Says plainly that the form is already sound and names specific things that work (for example visible labels, appropriate input types and autocomplete, optional field marked, clear button label, a stated reply time).",
+      "Leaves the large majority of the markup unchanged; any edits are few and small, not a rewrite.",
+      "Does not add fields, steps, a captcha, placeholder-only labels, marketing flourishes or a lot of new decoration in response to 'more professional'.",
+      "Each change it does propose has a concrete reason tied to the person filling in the form.",
+      "Does not make the form worse, for example by turning labels into placeholders, removing the optional marking, or making the button vague."
+    ]
+  },
+  {
+    "id": "fd-h09",
+    "kind": "explain",
+    "prompt": "Quick question, answer in 50 words or fewer: someone has spent ten minutes filling in a long insurance claim form and their login session expires just as they press Submit. What should the form do?",
+    "rubric": [
+      "The answer is 50 words or fewer.",
+      "Says that nothing the person entered should be lost, and that submitting should resume after they sign back in.",
+      "Says to let them sign in without leaving the page (or to return them to the same filled form), not to dump them on a blank form or a generic error page.",
+      "Does not pad the answer with unrelated design advice."
+    ]
+  },
+  {
+    "id": "fd-h10",
+    "kind": "polish",
+    "prompt": "Can you tidy up the sign-in form copy for our members' portal at Millrace Public Library? Many of our members use the shared computers in the library to log in. Right now it looks like this and we'd like it clearer and friendlier:\n\n```html\n<form>\n  <h2>Welcome back!!</h2>\n  <label>Library card number <input name=\"card\"></label>\n  <label>PIN <input name=\"pin\" type=\"password\"></label>\n  <label><input type=\"checkbox\" name=\"remember\" checked> Remember me</label>\n  <p class=\"small\">By signing in you stay connected for as long as you need.</p>\n  <button>LOGIN</button>\n</form>\n```\n\nFor what it's worth, the 'remember me' keeps people signed in on that browser for about a month, and anything touching fines or payment asks for the PIN again.",
+    "rubric": [
+      "Notices that 'Remember me' is pre-checked in a place where many people use shared computers and recommends leaving it unchecked by default, or at least calls out the risk.",
+      "Rewrites the checkbox label or the small print so it says what the option actually does (stays signed in on this device for about a month) rather than an open-ended promise like 'as long as you need'.",
+      "Is honest about the limit: tells people that payments and fines will still ask for the PIN again, or otherwise does not overpromise what staying signed in covers.",
+      "Offers a short, friendly, plain heading and button label (not all-caps shouting and not double exclamation marks) without turning the form into a longer page.",
+      "Keeps the remember-me option available and leaves the two sign-in fields in place rather than redesigning the flow."
     ]
   }
 ]

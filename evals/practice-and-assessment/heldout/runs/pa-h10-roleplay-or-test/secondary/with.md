@@ -1,15 +1,14 @@
-**Go with B, but cut the lead's load by having reps practice with each other.** Don't run it as 45 one-on-one sessions with the lead.
+**Go with B, but run the role-plays as paired practice with the team lead coaching, not as 1:1 sessions.** A 40-question test can check whether reps know the right response to an objection. It can't check whether they can deliver it under pressure, and that's the skill you're onboarding for.
 
-**Why B:** Objection handling is a performance skill. A multiple-choice test checks whether someone can recognize the right response when it's written out in front of them. It doesn't show whether they can hold their ground when a homeowner says "I'm getting three other quotes" on a live call. A 40-question test would tell your VP that reps know the answers. It wouldn't tell you whether they can use them.
+The 1:1 version is too expensive for your lead. Fifteen reps × three 20-minute sessions is 45 sessions, roughly 20 hours of lead time once you add feedback and transitions.
 
-**The scaling argument is weaker than it looks.** You have 15 reps. The test scales to future cohorts, but the role-play scales too if reps run it with each other. Once the scorecard exists, it's reusable.
+A workable version:
 
-**Make the lead's time manageable:**
-- **Give the lead a one-page scorecard** with 4–6 objections and a rubric for each (acknowledged, asked a question, reframed, closed). Feedback becomes checking boxes plus one comment, which is quick.
-- **Run reps in trios:** one rep, one customer, one observer. The lead floats between trios and spends about 5 minutes with each rep for their role-play and feedback instead of sitting through each one.
-- **Limit the lead's direct time to the first and last rounds.** Rounds 2 and 3 can be peer-led using the same scorecard. The lead still checks the first round so reps don't drill bad habits.
-- **Add a 10-question knowledge check as a gate** if your VP needs something auditable. It covers product facts (financing terms, incentives, panel specs) and takes 10 minutes. It's the part of objection handling that MCQ is actually good at, and it doesn't replace the role-plays.
+- **Pairs run the role-plays.** Reps take turns as rep and customer, with a short scenario card and a 5-point rubric (acknowledged, probed, reframed, asked for next step, stayed on Halvorsen's value props). Each run is about 20 minutes including a peer debrief.
+- **The lead runs the first round live** with a few pairs so the rubric and feedback standard are set. After that, the lead circulates or drops in on one or two pairs per round.
+- **Every rep gets one lead-observed session** in the three rounds, so the lead's time goes to the people who most need coaching.
+- **Prep is the first 20–30 minutes:** objection cards, the product and pricing facts they'll need, and a short written version of the scenarios.
 
-**Total lead time:** roughly 1 to 1.5 hours per rep spread over the onboarding window, versus the 3 hours per rep I assume you're picturing. If the lead can't spare even that, the honest answer is that the lead is the constraint, and you should ask the VP for a backfill or a senior rep as co-facilitator, not swap the method for something that doesn't work.
+If you want the VP's scalability argument addressed, use a short scenario-based check at the end instead of a 40-question MC test. Ten to fifteen questions asking "a customer says X, what do you say?" is auto-gradable, scales to any cohort size, and tests what you actually want. Keep the MC test only for product facts, which can be checked more cheaply anyway.
 
-**What would change my answer:** if most of the objections your reps hit are factual (rates, rebates, install timelines), a test-heavy approach is fine for that slice. Even then, I'd still run at least one live role-play, because that's where the reps who know the facts still fail.
+What to tell the VP: the test scales, but it measures recall, and the role-plays measure the behavior. The cost of the paired version is the lead's first round plus a few drop-ins, not 45 sessions.

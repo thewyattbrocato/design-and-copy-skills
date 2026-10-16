@@ -1,23 +1,31 @@
-**Ship (c), the interactive setup with a live preview.**
+**Build (c), the interactive setup with a live preview of today's conditions.**
 
-**Why, given you have no data:**
+**Why**
 
-- **The task is the lesson.** Height range, wind limit and time window only make sense against real conditions. A surfer who sees "0.8–1.5 m, offshore only, 6–9 am" matched against today's forecast learns what the settings do. A video or carousel can only describe them. People learn an interface by doing a real task in it, and (c) is the only option that makes the first alert that task.
-- **Both alternatives rely on memory.** The video and the carousel run before the user has acted, so they have to remember a 90-second video or four cards when they reach the form. In (c) the instruction sits next to the control while they use it.
-- **It addresses the actual failure.** The problem is that new users set up alerts wrongly. (c) gives immediate feedback in their own terms, such as "With these settings, today's alert would have fired from 7 to 9 am." That shows them whether their limits are too tight or too loose. The other two options can't do that.
-- **Even without data, it's the safer bet.** If the preview helps, the user ends up with a working alert. If it helps less than hoped, they still end up with a working alert. Neither (a) nor (b) produces an alert by itself, and both are the kind of intro that many people skip.
+- **It's the only option where users do the task.** People learn a setup by doing it. (a) and (b) ask them to remember four settings and apply them later, when they're at the real form. (c) has them make their first alert and get feedback as they go.
+- **The live preview shows what each setting does.** Height range, wind direction limit and time window are abstract until you see them applied. "Wind limit: offshore only" is hard to picture. "Today at [beach], this alert would fire from 6–9am and not after, because wind turns onshore" is clear. The preview explains each setting using the user's own beach.
+- **The video and carousel come before the product and teach by exposure.** The 90-second video is also the worst fit. It can't be skimmed, many people will skip it or watch it with the sound off, and it can't be fixed once it ships. The carousel is cheaper, but it is still a benefits-style tour that people swipe through to get to the app.
+- **It's the safest pick when you have no data.** (a) and (b) only pay off if users watch or read, then remember, then apply it correctly. (c) has the fewest of those assumptions. If it underperforms, the user still ends up with a working first alert, which is the outcome you want.
 
-**Design notes to keep (c) small enough for one sprint:**
+**Design notes**
 
-1. **Four steps in a fixed order.** Beach, swell height, wind limit, time window. Each step shows its choice and the preview together. The preview updates after every change.
-2. **Use real data only.** Show today's real conditions for the beach they picked. Don't use sample numbers that could be mistaken for their own. If today's data is unavailable, fall back to a clearly labelled sample.
-3. **Give each setting a starting value.** Pre-fill it with a sensible default for the chosen beach, not a blank field. Users adjust a default more easily than they invent a value.
-4. **Add a one-line explanation per step.** Use plain wording, for example "Wind limit: the strongest wind you'll still surf in, and from which direction." Don't add a tour or a "Got it" gate.
-5. **Provide a visible Skip.** Experienced surfers should be able to go straight to the plain form. Keep a way to reopen the guided version later.
-6. **Make the end a real alert.** The last screen should say what was saved and what will trigger it. Skip the confetti.
+- Define the goal as "afterwards they can set an alert for their own break that fires when conditions are actually good." Keep everything in service of that sentence.
+- Take one setting per step: beach, swell height, wind, then time window. That is four things, but only one at a time, with earlier choices staying visible on screen.
+- Make the preview update as each control moves. It should say plainly what the alert would have done today, for example "This would fire at [time window] today" or "This would not fire today because [reason]."
+- Offer a sensible default for each setting, such as a typical range for the chosen beach, so no one starts from a blank form. If you show example values, label them as examples and make them easy to replace.
+- Add a visible Skip for experienced surfers, and a way to rerun the setup or reach short help later from the alert form.
+- Skip the confetti and "You're all set!" screen. End with a line saying what now works, for example "You'll get an alert when [conditions]," and point to the next step.
 
-**How to judge it afterward.** Look at how many new users have a working alert after day 1, and how many create or edit a second alert within a couple of weeks without the guide. Compare these with your current flow, which gives you the baseline you lack today. Also check how many alerts get edited or deleted soon after creation. That would suggest users are still setting wrong limits.
+**Main risk**
 
-**Assumptions and trade-off:**
-- I assumed the forecast data for the preview is already available in the app. If it needs new backend work, that is the main risk to fitting (c) into the sprint.
-- (c) costs more to build than (a) or (b), but it is the only option that fixes the problem instead of describing it.
+(c) costs the most to build, and the preview depends on forecast data being fast and reliable at first launch. If it's slow or fails, the step feels broken. Decide a fallback in advance, for example a static explanation of that setting.
+
+**How to check it**
+
+Since you have no data, measure it instead of guessing. Don't judge it by completion of the setup. Track these:
+
+1. Whether new users create a first alert.
+2. Whether that alert is still active, and not edited or deleted within about a week.
+3. Whether they create a second alert without the guided setup.
+
+If you can, run it against the current flow for a couple of weeks. Even a handful of 5-minute sessions with new users watching them set up an alert will show which settings still confuse them.

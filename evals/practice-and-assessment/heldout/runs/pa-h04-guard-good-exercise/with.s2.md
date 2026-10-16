@@ -1,15 +1,15 @@
-I found one error that matters: **the answer key is wrong for Marguerite.**
+I found one error, and it's in the answer key. Marguerite's answer is wrong.
 
-Her hours are 8.0 + 7.5 + 8.5 + 7.0 + 6.5 = **37.5**, not 38.5. Her regular pay is 37.5 × $22.00 = **$825.00**, not $847.00. The key's $847 is 38.5 × $22, so it follows from the wrong total. Priya ($760) and Tomas (38.5 hours, $1,001) both check out.
+**Marguerite Oyelaran:** 8.0 + 7.5 + 8.5 + 7.0 + 6.5 = **37.5 hours**, not 38.5. At $22.00/hr, regular pay is 37.5 × 22 = **$825.00**, not $847.00. The printed $847.00 is exactly 38.5 × 22, so the key carried the wrong total through. The corrected line is:
 
-Fix the last line to: "Answers: Tomas 38.5 hours, $1,001.00. Marguerite 37.5 hours, $825.00."
+> Answers: Tomas 38.5 hours, $1,001.00. Marguerite 37.5 hours, $825.00.
 
-Some smaller things you may want to change before printing:
+I checked the other numbers and they're right:
+- **Priya:** 24 + 14 = 38 hours, and 38 × $20 = $760.00.
+- **Tomas:** 7.5 + 8 + 8 + 7 + 8 = 38.5 hours, and 38.5 × $26 = $1,001.00.
 
-- **Part 1 wording:** "then the halves (6.5 + 7.5 = 14)" calls 6.5 and 7.5 "halves," but they're whole hours plus a half. A new clerk may wonder why the whole parts of those numbers aren't in the 24. Try: "then the two half-hour days (6.5 + 7.5 = 14)."
-- **Part 2 hint:** Tomas has only one half-hour day (7.5). The hint "group the whole numbers first, then the halves" fits Priya's week better. For Tomas, try "add the 8s and the 7 first, then the 7.5" (8 + 8 + 8 + 7 = 31, plus 7.5 = 38.5).
-- **Part 3 formatting:** "8.0" and "7.0" mix with "7.5" and "8.5." Keeping the decimals is fine, since it's realistic. If you want it consistent with Parts 1 and 2, write them as 8 and 7.
-- **"Without a calculator":** The pay step is the hard part, for example 38.5 × 26. A line showing a method would help, such as 38 × 26 = 988, plus half of 26 = 13, which gives 1,001.
-- **Self-check line:** "If your total is over 40, add again" only catches big mistakes. A wrong total like the 38.5 in the key would pass it. You could add a tip, such as "Check by adding the days in reverse order."
+Two optional suggestions:
+- **Part 3 is harder than the goal implies.** The goal says "without a calculator", but 38.5 × $26 is awkward to do in your head. The answer sheet could show the shortcut: 38 × 26 = 988, plus half of 26 (13), which is 1,001. Alternatively, give Part 2 a rate that's easier to work with, such as $24.
+- **Part 3 gives no method hint.** Marguerite's week has three half-hour days (7.5, 8.5, 6.5), so grouping the halves is the useful trick. Three halves make 1.5, which is easy to slip on. A short worked check on the answer sheet would help learners who get 38.5 or 37 and can't see why.
 
-I haven't changed any files. I can apply these edits and give you a clean copy if you'd like.
+I haven't changed any files. I can apply the fix to a copy if you'd like.

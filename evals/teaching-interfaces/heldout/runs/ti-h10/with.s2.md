@@ -1,45 +1,55 @@
-**Rewrite: a short welcome, then a checklist that stays on screen**
+# Stackwell setup: rewrite
 
-The original asks a new admin to remember nine steps from a modal they'll only see once. It also lists a dozen features before they've done anything. Par levels (step 3) come before the item import (step 8), so the order is wrong too. I'd split it into a short welcome and a persistent checklist.
+**The one thing:** after setup, an admin can place their first purchase order.
 
-**Welcome modal (about 25 words)**
+The main problem isn't the wording. A nine-step list in a one-time modal can't be learned, because the modal disappears the moment they start. I'd replace it with a short welcome and a setup checklist that stays on screen while they work.
+
+## Welcome modal (shown once, with Skip)
 
 > **Welcome to Stackwell**
-> Let's get your clinic ready to place its first purchase order. It takes four short steps, and you can finish the rest later.
+> Stackwell helps your clinic keep supplies stocked and orders organized.
 >
-> [Start setup]  ·  [Skip, I'll explore]
-
-**Setup checklist (a side panel or page that stays open while they work, with progress saved)**
-
-> **Get ready for your first order**
+> Let's get your first order ready. It takes three quick steps:
 >
-> 1. **Set your currency and time zone**
-> 2. **Add your locations**: for example front desk, exam rooms, storage
-> 3. **Import your items**: upload your spreadsheet of supplies
-> 4. **Add a vendor**: include their payment terms
+> 1. Add your items
+> 2. Add a vendor
+> 3. Place an order
 >
-> ✓ *When these are done:* **Create your first purchase order**
+> The rest can wait.
 >
-> **Set up when you're ready**
-> - Set par levels for your items
-> - Set approval rules for purchase orders
-> - Invite your team and assign roles
-> - Connect your accounting software
-> - Schedule weekly cycle counts
+> **[Start]**  ·  Skip for now
 
-**Short confirmation after each step (say what now works, then point to the next step)**
+## Checklist (a persistent panel, not a modal)
 
-> Example after step 3: "214 items imported. You can now add them to orders. Next: add a vendor."
+**Get ready to order**
+- ☐ **Add your items.** Import a spreadsheet of your supplies, or add a few by hand. *(Start with 5–10 if you like; you can add the rest later.)*
+- ☐ **Add a vendor.** Enter who you order from. Payment terms are optional for now.
+- ☐ **Place your first order.** Choose a vendor and items, then send it.
 
-**What changed and why**
-- **One goal:** after setup, they can place a real purchase order. Everything else is secondary.
-- **Four steps up front, five later:** the first four are the minimum an order needs. Approval rules, team, accounting, par levels and cycle counts matter, but none of them blocks a first order. The nine steps stay available under "Set up when you're ready."
-- **No feature list:** they'll meet lot tracking, expiration alerts, cost reports and audit logs when those features become relevant. Listing them now teaches nothing.
-- **Fixed the order:** items are imported before par levels, since par levels apply to items that already exist.
-- **Help stays reachable:** the checklist stays visible and can be skipped or reopened. I'd put a "Help Center" link in its footer rather than burying it in the last sentence.
+When step 3 is done, the panel confirms what now works: *"Your order to [vendor] is sent. When it arrives, open it here to record what you received."*
 
-**Notes**
-- I assumed the step order and four-step minimum from your list. If a vendor must exist before items can be imported in Stackwell, swap steps 3 and 4.
-- "214 items" is a placeholder. The real count should come from the import. Also check that "Import your items" and "Create your first purchase order" match your actual button labels.
+**Set up when you're ready** (collapsed, each item opens the real screen)
+- Set currency and time zone
+- Add locations (front desk, exam rooms, storage)
+- Set par levels, the stock amount you want on hand. *Do these after items are added; start with your most-used supplies.*
+- Set approval rules for orders
+- Invite your team and assign roles
+- Connect accounting software
+- Schedule weekly cycle counts
 
-To judge whether it works, measure how many new admins place a real order within their first week without opening the Help Center, not how many click Finish.
+A **Help Center** link stays at the bottom of the panel, so the panel doubles as the way back.
+
+## What changed and why
+
+- **Nine steps became three.** A first-time admin needs a few new ideas before acting, not nine. The rest is still there, but as optional later work.
+- **The order is fixed.** The original had par levels before the item import, but par levels need items to exist.
+- **The feature list is gone** (lot tracking, audit logs, cost reports, and so on). Listing features before someone has used the product teaches nothing. Let them discover those in context.
+- **"200+ items" no longer reads as homework.** The list says you can start with a handful.
+- **Currency and time zone are demoted.** If possible, default them from the clinic's address at sign-up so they aren't a step at all.
+
+## Assumptions
+
+- Items, vendor and order are the true minimum path. If Stackwell requires locations or currency before an order can be placed, move those into the first group.
+- I didn't name specific buttons or menu paths, since I don't know them. Tie each checklist row to its real screen.
+
+To judge whether it works, check how many new admins place a second order a week or two later without opening the Help Center. Finishing the checklist isn't the measure.

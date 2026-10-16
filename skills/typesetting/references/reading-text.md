@@ -11,7 +11,7 @@ Load this when setting a reading page, defining a scale, or handling dark and sm
 | Narrow column or card | 35 to 50 | 1.4 to 1.5 |
 | Mobile body | 30 to 45 | 1.45 to 1.55 |
 | Caption, label, metadata | not capped | 1.3 to 1.4 |
-| Large display, few words per line | not capped | 1.05 to 1.15 |
+| Large display, few words per line | not capped | 0.9 to 1.15 |
 | Code, logs, data cells | not capped | per the tool |
 
 `ch` is a good proxy for characters. Cap the text, not the container:
@@ -32,7 +32,7 @@ List the roles first: display, title, section heading, body, small, label, code.
 Dense interface (about 1.2): title 1.75rem, section 1.25rem, body 1rem, small 0.875rem, metadata 0.75rem.
 Editorial or marketing (about 1.4 at the top): display 3.5rem, title 2.25rem, section 1.5rem, body 1.125rem, small 0.875rem.
 
-If the product already has a scale, use it. Fluid display type: `clamp(2rem, 1.2rem + 3vw, 3.5rem)` with a rem floor so zoom works; keep the measure in `ch` so it does not grow with the viewport; lower leading as size rises. Body rarely needs to be fluid.
+If the product already has a scale, use it. Fluid display type: `clamp(2rem, 1.2rem + 3vmin, 3.5rem)` with a rem floor so zoom works; keep the measure in `ch` so it does not grow with the viewport; lower leading as size rises. Body rarely needs to be fluid.
 
 Heading levels follow the document outline, without skipping; the look comes from a class or token. Deeper than three levels, distinguish with weight or space rather than a new size.
 

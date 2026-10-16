@@ -1,1 +1,1 @@
-Pair it with a cool slate-tinted neutral: a near-white page background like `#f5f8f8` and body text around `#1e2b2e`, which gives roughly 13:1 contrast. Keep the teal for accents and links rather than body text, since it only reaches about 5:1 on white.
+Use a cool slate neutral with a slight teal tint: a page background of `#f5f8f8` and body text of `#1b2b2d`, about 14:1 contrast. Keep `#0f7c80` for accents, links, and buttons rather than body copy, since it reaches only about 5:1 on white.

@@ -1,11 +1,19 @@
-I'd keep the core and not do a full rebrand. A 41-year-old name, a bold orange-and-white sign, and a black receipt version are assets. Locals recognize them from across the street, and that recognition is hard to buy back once it's gone. A gradient icon would also work against you. Hardware buyers tend to trust sturdy, flat, no-nonsense signage, and a gradient can read as a retail chain or a tech startup.
+**Keep it. Refine it if you want, but don't rebrand on "dated" alone.**
 
-Your marketing hire may still be right that something needs attention. "Looks dated" is a feeling, though, so before deciding, ask what problem it's meant to solve:
+Your current mark already does the job a hardware store's identity needs. A heavy slab serif reads as sturdy and durable, which fits the trade. Safety orange on white is high-contrast and visible from across a parking lot. A plain black version works on receipts, photocopies, and anything printed cheaply. Forty-one years of recognition is an asset you can't buy back once you've thrown it out. I'm judging from your description, not the actual artwork, so check these against the real sign and bags.
 
-- **If newer customers don't find or trust you**, the fix is likely in the places they look: website, Google Business profile, social, and online reviews. Modernize those surfaces, such as a cleaner layout, a current font for body text, and good photos.
-- **If the sign or bags look worn or inconsistent**, refresh the execution rather than the identity: redraw the wordmark as clean vector art, tighten the letter spacing, standardize the orange, and make sure the sign, bags, receipts, and web all match.
-- **If you want a modern touch**, you can keep the slab serif and orange and add a secondary sans-serif for smaller text, or a simple flat accent. Keep the wordmark itself unchanged.
+The marketing hire's two proposals don't address a problem your mark has:
 
-To test it, show the current mark next to the proposed one to 10 to 15 longtime customers and a few newer ones, and ask what each one says about the store. If the answers are "solid," "trustworthy," or "that's Pinegate," keep the mark. If people say it's confusing or that they don't know what it is, that's real evidence for change.
+- **A gradient icon** is a trend effect, not an idea. It usually fails the one-color test, so it turns to mud on a receipt, a stamp, or a black-and-white ad. It also dates quickly.
+- **A modern sans-serif** is a legitimate choice, but "looks dated" isn't evidence that customers are confused, that the sign is hard to read, or that you're losing business. Replacing a recognized name is the expensive, hard-to-reverse move, so it needs a stronger reason.
 
-If you want, I can help draft the questions for that test or sketch what a light refresh would look like.
+**What I'd do instead:**
+
+1. **Test the current mark at the edges.** Check legibility from the street at sign distance, at favicon/app-icon size, and in black-only print. Fix anything that fails, such as hairline details or cramped letter spacing.
+2. **Make one small refinement if it helps.** For example, a custom tweak to one letter, tighter spacing, or a simplified small version for icons. Keep the heavy slab and the orange.
+3. **Let the marketing hire modernize around the mark.** Website layout, social templates, and digital body type can use a clean sans-serif while the sign, bags, and receipts keep the slab wordmark. That gives them room to experiment without touching the asset people recognize.
+4. **Ask regulars before changing anything.** Show them the current mark next to the proposed one and ask which feels like Pinegate. That's the evidence that would justify a change, and it costs little.
+
+**Next test:** photograph the current sign and bags from across the lot and show them to five or six regulars and a few newer customers. If nobody has trouble reading or recognizing it, the "dated" concern is a matter of taste, and taste alone doesn't justify a rebrand.
+
+Assumptions: I haven't seen the actual artwork, and I'm assuming the store has no legibility problems. If the sign is hard to read at distance or the bags look worn, that changes the answer toward a targeted refresh, not a full replacement.

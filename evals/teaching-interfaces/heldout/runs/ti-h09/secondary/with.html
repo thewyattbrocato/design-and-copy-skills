@@ -2,287 +2,278 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Forklift Safety Check</title>
 <style>
-  :root {
-    --bg: #f4f5f7;
-    --card: #ffffff;
-    --text: #1d232b;
-    --muted: #5b6573;
-    --accent: #1f6feb;
-    --accent-hover: #1858bd;
-    --ok: #1a7f37;
-    --ok-bg: #e6f4ea;
-    --bad: #b42318;
-    --bad-bg: #fdecea;
-    --border: #d7dce3;
-  }
-  * { box-sizing: border-box; }
+  :root { color-scheme: light dark; }
   body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 24px 16px;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #f4f5f7;
+    color: #1d1f23;
     line-height: 1.5;
   }
-  .wrap { max-width: 720px; margin: 0 auto; }
-  header h1 { margin: 0 0 4px; font-size: 1.6rem; }
-  header p { margin: 0 0 20px; color: var(--muted); }
-  .question {
-    background: var(--card);
-    border: 1px solid var(--border);
+  .card {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #fff;
     border-radius: 10px;
-    padding: 18px 20px;
-    margin-bottom: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   }
-  .question h2 { font-size: 1.05rem; margin: 0 0 12px; }
-  .options { display: flex; flex-direction: column; gap: 8px; }
-  .options label {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .intro { margin: 0 0 20px; color: #555; }
+  fieldset {
+    border: 1px solid #d9dce1;
     border-radius: 8px;
-    cursor: pointer;
+    margin: 0 0 16px;
+    padding: 12px 16px;
   }
-  .options label:hover { background: #f0f5ff; }
-  .options input { margin-top: 4px; }
-  .options label.correct { background: var(--ok-bg); border-color: var(--ok); }
-  .options label.wrong { background: var(--bad-bg); border-color: var(--bad); }
-  .feedback { margin-top: 10px; font-size: 0.95rem; }
-  .feedback.ok { color: var(--ok); }
-  .feedback.bad { color: var(--bad); }
-  .actions { display: flex; gap: 12px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+  fieldset.missing { border-color: #c0392b; }
+  legend { font-weight: 600; padding: 0 6px; }
+  label.option { display: block; padding: 6px 4px; cursor: pointer; }
+  label.option input { margin-right: 8px; }
+  .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
   button {
     font: inherit;
-    padding: 10px 20px;
+    font-weight: 600;
+    padding: 10px 18px;
     border: none;
-    border-radius: 8px;
-    background: var(--accent);
+    border-radius: 6px;
+    background: #1a5fb4;
     color: #fff;
     cursor: pointer;
   }
-  button:hover { background: var(--accent-hover); }
-  button.secondary { background: #e6e9ef; color: var(--text); }
-  button.secondary:hover { background: #d7dce3; }
-  .warn { color: var(--bad); font-size: 0.95rem; }
-  .result {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 16px;
-    text-align: center;
+  button.secondary { background: #e4e7ec; color: #1d1f23; }
+  .warn { color: #c0392b; margin: 0; font-weight: 600; }
+  .score { font-size: 1.75rem; font-weight: 700; margin: 16px 0 4px; }
+  .result-note { margin: 0 0 12px; color: #555; }
+  .wrong {
+    border-left: 4px solid #c0392b;
+    background: #fdf2f1;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
   }
-  .result .score { font-size: 2.2rem; font-weight: 700; margin: 0; }
-  .result .verdict { margin: 6px 0 0; color: var(--muted); }
+  .wrong p { margin: 4px 0; }
   .hidden { display: none; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #181a1f; color: #e6e8ec; }
+    .card { background: #22252b; box-shadow: none; }
+    .intro, .result-note { color: #aab0ba; }
+    fieldset { border-color: #3a3f48; }
+    button.secondary { background: #3a3f48; color: #e6e8ec; }
+    .wrong { background: #3a2423; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Forklift Safety Check</h1>
-    <p>New hire knowledge check. Answer all five questions, then submit.</p>
-  </header>
+<main class="card">
+  <h1>Forklift Safety Check</h1>
+  <p class="intro">Answer all five questions, then submit to see your score.</p>
 
   <form id="quiz" novalidate>
     <div id="questions"></div>
-    <div class="actions">
-      <button type="submit" id="submitBtn">Submit answers</button>
-      <span id="warn" class="warn hidden">Please answer every question before submitting.</span>
+    <p id="warning" class="warn hidden" role="alert"></p>
+    <div class="actions" id="submit-row">
+      <button type="submit">Submit</button>
     </div>
   </form>
 
-  <section id="results" class="hidden">
-    <div class="result">
-      <p class="score" id="scoreText"></p>
-      <p class="verdict" id="verdictText"></p>
-    </div>
-    <div id="review"></div>
+  <section id="results" class="hidden" aria-live="polite">
+    <div class="score" id="score"></div>
+    <p class="result-note" id="result-note"></p>
+    <div id="wrong-list"></div>
     <div class="actions">
-      <button type="button" class="secondary" id="retryBtn">Try again</button>
+      <button type="button" id="retry" class="secondary">Try again</button>
     </div>
   </section>
-</div>
+</main>
 
 <script>
-  const QUESTIONS = [
+  const questions = [
     {
-      prompt: "What should you check before lifting any load with a forklift?",
+      question: "A forklift's capacity plate rates it for 5,000 lb with the load center at 24 in. Your load's center is 36 in out from the front of the forks. What should you do?",
       options: [
-        "The load looks roughly the right weight",
-        "The capacity data plate, and that the load is within the rated capacity",
-        "Only the weight printed on the pallet label",
-        "Nothing, if the truck was used safely yesterday"
+        "The full 5,000 lb rating still applies as long as the load weighs less",
+        "Check the capacity plate for the reduced capacity at that load center and never exceed it",
+        "Lift it anyway if you drive slowly",
+        "Tilt the mast forward to make up for the extra distance"
       ],
       answer: 1,
-      explanation: "The data plate gives the rated capacity for the truck and its load center. Never exceed it, and remember that a load carried farther out from the forks reduces what the truck can safely lift."
+      explanation: "Capacity drops as the load center moves farther out. The plate shows the derated capacity for longer load centers, and you must stay within it."
     },
     {
-      prompt: "Your view of the path ahead is blocked by the load you are carrying. What should you do?",
+      question: "When you are traveling with a load, where should it be carried?",
       options: [
-        "Drive forward slowly and watch for obstacles",
-        "Ask a coworker to walk ahead and guide you only when they are nearby",
-        "Travel in reverse so you can see where you are going",
-        "Honk the horn and keep going"
-      ],
-      answer: 2,
-      explanation: "When the load blocks your view, drive in reverse with the load tilted back, so you can see the path. Pedestrians and obstacles are much harder to spot when you are driving forward blind."
-    },
-    {
-      prompt: "What is the safe speed to drive a forklift in a warehouse?",
-      options: [
-        "As fast as the truck can go, to keep the shift moving",
-        "A speed that lets you stop safely, typically no faster than walking pace indoors",
-        "Fast on straight aisles, but no limit in turns",
-        "Whatever speed other operators are driving"
+        "Raised high enough that you can see over it",
+        "Low, with the mast tilted back and forks about 4 to 6 inches off the floor",
+        "With the mast tilted forward to keep the load level",
+        "Fully raised so it clears pallets and floor obstacles"
       ],
       answer: 1,
-      explanation: "Drive at a speed that lets you stop safely, usually no faster than walking pace indoors. Slow down further at intersections, blind corners, doorways, and when carrying a load."
+      explanation: "A low load with the mast tilted back keeps the center of gravity stable and the load secure. A high load makes the truck more likely to tip."
     },
     {
-      prompt: "When you park a forklift, which steps are correct?",
+      question: "You are approaching a blind corner in a warehouse aisle. What should you do?",
       options: [
-        "Leave the forks raised so others can see the truck",
-        "Park on the ramp so the next operator can find it quickly",
-        "Lower the forks fully to the floor, neutralize the controls, set the parking brake, and turn off the truck",
-        "Leave the engine running and step off, as long as you are nearby"
+        "Keep your speed so pedestrians can get out of the way",
+        "Sound your horn, slow down, and be ready to stop",
+        "Pass as close to the corner as possible to save time",
+        "Flash your headlights and continue at normal speed"
       ],
-      answer: 2,
-      explanation: "Lower the forks fully, neutralize the controls, set the parking brake, and shut the truck off. Never park on a ramp or incline, and never block aisles, exits, or emergency equipment."
+      answer: 1,
+      explanation: "Pedestrians can step into your path without warning at blind corners and intersections. Sound your horn, slow down, and be ready to stop."
     },
     {
-      prompt: "You are driving on a ramp or incline. How should you position the forklift?",
+      question: "What is the right speed in a busy warehouse aisle, and what should you do before turns?",
       options: [
-        "Loaded: load facing downhill. Unloaded: forks facing uphill",
-        "Always drive straight up or down with the forks facing the same direction regardless of load",
-        "Loaded: load facing uphill. Unloaded: forks facing downhill",
-        "Turn across the ramp so the truck stays level"
+        "Travel as fast as the truck will go and brake hard if needed",
+        "Go top speed in empty aisles and slow down only near people",
+        "Travel at a walking pace in busy areas and slow down before turns, keeping enough distance to stop safely with the load",
+        "Speed does not matter as long as you use the horn"
       ],
       answer: 2,
-      explanation: "On an incline, keep a loaded truck with the load facing uphill, and an unloaded truck with the forks facing downhill. Never turn across a ramp, because the truck can tip sideways."
+      explanation: "Busy areas call for a walking pace, and you should slow before turns so you can stop safely with the load. Always follow your site's posted speed limits too."
+    },
+    {
+      question: "When you leave a forklift unattended, which steps are correct?",
+      options: [
+        "Leave the forks raised so the truck is ready for the next operator",
+        "Park on a ramp if it is close to the racking",
+        "Lower the forks fully to the floor, shift to neutral, set the parking brake, turn off the power, and keep aisles, exits, and fire equipment clear",
+        "Leave the key in and the engine running for a quick return"
+      ],
+      answer: 2,
+      explanation: "Lowered forks, neutral, the parking brake, and power off keep the truck from moving or falling. Never park on a ramp or block aisles, exits, or fire equipment."
     }
   ];
 
-  const form = document.getElementById("quiz");
-  const questionsEl = document.getElementById("questions");
-  const resultsEl = document.getElementById("results");
-  const reviewEl = document.getElementById("review");
-  const warnEl = document.getElementById("warn");
-  const scoreText = document.getElementById("scoreText");
-  const verdictText = document.getElementById("verdictText");
+  const form = document.getElementById('quiz');
+  const questionsContainer = document.getElementById('questions');
+  const submitRow = document.getElementById('submit-row');
+  const warning = document.getElementById('warning');
+  const results = document.getElementById('results');
+  const scoreEl = document.getElementById('score');
+  const resultNote = document.getElementById('result-note');
+  const wrongList = document.getElementById('wrong-list');
+  const retryBtn = document.getElementById('retry');
 
-  function renderQuestions() {
-    questionsEl.innerHTML = "";
-    QUESTIONS.forEach((q, qi) => {
-      const card = document.createElement("fieldset");
-      card.className = "question";
-      card.id = "q" + qi;
+  function buildQuiz() {
+    questionsContainer.innerHTML = '';
+    questions.forEach((item, qi) => {
+      const fieldset = document.createElement('fieldset');
+      fieldset.id = 'q' + qi;
 
-      const legend = document.createElement("legend");
-      legend.style.display = "none";
-      legend.textContent = "Question " + (qi + 1);
-      card.appendChild(legend);
+      const legend = document.createElement('legend');
+      legend.textContent = (qi + 1) + '. ' + item.question;
+      fieldset.appendChild(legend);
 
-      const h2 = document.createElement("h2");
-      h2.textContent = (qi + 1) + ". " + q.prompt;
-      card.appendChild(h2);
+      item.options.forEach((text, oi) => {
+        const label = document.createElement('label');
+        label.className = 'option';
 
-      const opts = document.createElement("div");
-      opts.className = "options";
-      q.options.forEach((text, oi) => {
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-        input.type = "radio";
-        input.name = "q" + qi;
-        input.value = String(oi);
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'q' + qi;
+        input.value = oi;
+
         label.appendChild(input);
         label.appendChild(document.createTextNode(text));
-        opts.appendChild(label);
+        fieldset.appendChild(label);
       });
-      card.appendChild(opts);
-      questionsEl.appendChild(card);
+
+      questionsContainer.appendChild(fieldset);
     });
   }
 
-  function getAnswer(qi) {
-    const checked = form.querySelector('input[name="q' + qi + '"]:checked');
-    return checked ? Number(checked.value) : null;
+  function getAnswers() {
+    return questions.map((_, qi) => {
+      const checked = form.querySelector(`input[name="q${qi}"]:checked`);
+      return checked ? Number(checked.value) : null;
+    });
   }
 
-  function showResults() {
+  function showResults(answers) {
     let score = 0;
-    reviewEl.innerHTML = "";
+    const wrong = [];
 
-    QUESTIONS.forEach((q, qi) => {
-      const chosen = getAnswer(qi);
-      const correct = chosen === q.answer;
-      if (correct) score++;
-
-      const card = document.createElement("div");
-      card.className = "question";
-
-      const h2 = document.createElement("h2");
-      h2.textContent = (qi + 1) + ". " + q.prompt;
-      card.appendChild(h2);
-
-      const opts = document.createElement("div");
-      opts.className = "options";
-      q.options.forEach((text, oi) => {
-        const label = document.createElement("label");
-        if (oi === q.answer) label.classList.add("correct");
-        else if (oi === chosen) label.classList.add("wrong");
-        label.textContent = text;
-        opts.appendChild(label);
-      });
-      card.appendChild(opts);
-
-      const fb = document.createElement("p");
-      fb.className = "feedback " + (correct ? "ok" : "bad");
-      fb.textContent = correct
-        ? "Correct. " + q.explanation
-        : "Incorrect. The right answer is: " + q.options[q.answer] + ". " + q.explanation;
-      card.appendChild(fb);
-
-      reviewEl.appendChild(card);
+    questions.forEach((item, qi) => {
+      if (answers[qi] === item.answer) {
+        score++;
+      } else {
+        wrong.push({ qi, item, picked: answers[qi] });
+      }
     });
 
-    scoreText.textContent = "Score: " + score + " / " + QUESTIONS.length;
-    verdictText.textContent = score === QUESTIONS.length
-      ? "Excellent. You got every question right."
-      : score >= 4
-        ? "Good work. Review the questions you missed below."
-        : "Please review the answers below and retake the check before operating a forklift.";
+    scoreEl.textContent = `Your score: ${score} / ${questions.length}`;
+    resultNote.textContent = score === questions.length
+      ? 'Great work. You got every question right.'
+      : 'Review the questions below. Ask your supervisor if anything is unclear.';
 
-    form.classList.add("hidden");
-    resultsEl.classList.remove("hidden");
-    resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    wrongList.innerHTML = '';
+    wrong.forEach(({ qi, item, picked }) => {
+      const box = document.createElement('div');
+      box.className = 'wrong';
+
+      const title = document.createElement('p');
+      title.innerHTML = '';
+      const strong = document.createElement('strong');
+      strong.textContent = `Question ${qi + 1}: ${item.question}`;
+      title.appendChild(strong);
+
+      const yours = document.createElement('p');
+      yours.textContent = 'Your answer: ' + (picked === null ? 'No answer' : item.options[picked]);
+
+      const correct = document.createElement('p');
+      correct.textContent = 'Correct answer: ' + item.options[item.answer];
+
+      const why = document.createElement('p');
+      why.textContent = item.explanation;
+
+      box.append(title, yours, correct, why);
+      wrongList.appendChild(box);
+    });
+
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const unanswered = QUESTIONS.some((_, qi) => getAnswer(qi) === null);
-    if (unanswered) {
-      warnEl.classList.remove("hidden");
+
+    document.querySelectorAll('fieldset').forEach(f => f.classList.remove('missing'));
+
+    const answers = getAnswers();
+    const unanswered = answers
+      .map((a, i) => (a === null ? i : -1))
+      .filter(i => i >= 0);
+
+    if (unanswered.length > 0) {
+      unanswered.forEach(i => document.getElementById('q' + i).classList.add('missing'));
+      warning.textContent = `Please answer every question. ${unanswered.length} left to answer.`;
+      warning.classList.remove('hidden');
+      document.getElementById('q' + unanswered[0]).scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-    warnEl.classList.add("hidden");
-    showResults();
+
+    warning.classList.add('hidden');
+    form.querySelectorAll('input').forEach(input => { input.disabled = true; });
+    submitRow.classList.add('hidden');
+    showResults(answers);
   });
 
-  document.getElementById("retryBtn").addEventListener("click", () => {
-    resultsEl.classList.add("hidden");
+  retryBtn.addEventListener('click', () => {
+    buildQuiz();
     form.reset();
-    form.classList.remove("hidden");
-    warnEl.classList.add("hidden");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    results.classList.add('hidden');
+    submitRow.classList.remove('hidden');
+    warning.classList.add('hidden');
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  renderQuestions();
+  buildQuiz();
 </script>
 </body>
 </html>

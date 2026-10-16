@@ -1,0 +1,1 @@
+Yes, a pie chart is fine here: with only three categories that sum to a whole, and clearly different sizes (52/31/17), readers can compare the slices easily. If you want exact comparisons or expect to add more categories later, a simple sorted horizontal bar chart is the safer choice.

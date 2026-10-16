@@ -1,36 +1,24 @@
-## Handoff: Invoices screen messages
+## Spec: Invoices screen messages
 
-**Job of the screen:** create, find and send invoices. Anything that competes with that has to earn its place.
+**Job of the screen:** create and send invoices. Billing and announcements support that job; they should not compete with it.
 
-**Ranking:** (1) payment failure is the only item with a consequence and a deadline. (2) the Portuguese announcement is informational. (3) the N-key tip is optional. Each gets a different treatment, and only one of them can use the top slot.
+**Rank:** 1. Card declined (needs action, has a deadline). 2. Keyboard tip (helps the main task). 3. Portuguese announcement (no action needed).
 
-### 1. Payment failure: loudest, persistent, top slot
+| | Message | Loudness | Placement | Behavior |
+|---|---|---|---|---|
+| 1 | Card declined | **Loudest, one only.** Full-width bar above the invoice list, warning color (not brand blue), warning icon, bold first line, one button: "Update card". | Top of Invoices screen, above the list. Also shown on Billing and Settings. | Stays until resolved. Not dismissable. Escalates copy and color in the final 7 days before the pause date. |
+| 2 | Keyboard tip "N" | **Quiet.** No banner. A key-hint chip on the "New invoice" button ("New invoice · N"). | Inline on the button it describes. | Shown only to users who haven't pressed N. Hides permanently after first use. |
+| 3 | Portuguese announcement | **Quiet.** A small dismissible toast, then a dot on the "What's new" menu item. | Toast in bottom corner, once. Long-term home is the "What's new" menu. | Shows once per user. Dismiss is permanent. Dot clears when the menu is opened. |
 
-- **Placement:** the only item in the top slot. Full width, above the invoice list.
-- **Style:** one warning treatment with an icon and text. It should be the strongest element on the screen, but not a red alarm. Use one solid button, "Update card," as the single primary action. No other buttons.
-- **Dismissal:** no close button. It stays until the card is fixed or the plan has paused. If you add "Remind me later," make it a text link, not a second button.
-- **Copy:** include the year in the date. Today is 7 October 2026, so "14 March" is already past if it means 2026. Confirm the year, then use something like: "Your card ending 4417 was declined. Update it by 14 March 2027 to keep your plan active."
-- **Trigger:** payment failure on the account, cleared automatically when a valid card is saved.
+### Rules for the developer
 
-### 2. Portuguese invoices: quiet, dismissible, shown once
+- **Only one banner ever shows on the Invoices screen,** and it is the billing alert when that is active. Tips and announcements never go into the banner slot.
+- **Use the warning/error color for billing,** not the blue used for information. Keep blue for the announcement's icon and link only, so the two don't look alike.
+- **Action buttons:** the billing bar has one button. The "New invoice" button stays the single primary action on the screen.
+- **Date handling:** compute the pause date in code and show it with the year, e.g. "14 March 2027". Today is 15 October 2026, so the next 14 March is 2027, not this year. A bare "14 March" is ambiguous.
+- **Persistence:** store "tip seen/used" and "announcement dismissed" per user, so they don't return on reload.
 
-- **Placement:** not in the top slot. Put it in the header area as a small "New" badge with a text link, or in the account/help menu as a "What's new" entry.
-- **Style:** text-only, same size as body, muted value. No fill, no border, no icon.
-- **Dismissal:** an × on the item. Once dismissed, or after the user opens the feature, it doesn't come back.
-- **Trigger:** shown to users who have not dismissed it. Remove the badge after about 30 days even if they haven't acted.
+### Notes
 
-### 3. N-key tip: lowest, contextual, retires itself
-
-- **Placement:** next to the "New invoice" button, as a small muted hint ("Press N"). Not on the banner line.
-- **Style:** smallest, lowest-contrast element of the three. Plain text, no color.
-- **Dismissal:** disappears the first time the user presses N, or after it has been shown about 5 sessions.
-- **Trigger:** only when no payment banner is showing.
-
-### Rules that hold across all three
-
-- At most one item in the top slot at a time. The payment message always wins.
-- While the payment banner shows, hide the Portuguese item from the header. Keep the N hint, since it sits by the button and doesn't add to the top.
-- Do not use the same blue banner for any of them. Each level has a different placement, size, and style.
-- Never show an announcement as a stacked banner.
-
-**Assumptions:** the year on the payment date needs confirming, and I've assumed the top slot is the only place for a full-width banner on this screen. If the design already has a "What's new" menu, use it for item 2.
+- If the billing failure is a sudden card decline, a one-sentence message that names the card ("Your card ending 4417 was declined") plus the pause date is enough. Don't add urgency words; the layout already carries the weight.
+- Copy for the billing bar should be the only text on the screen allowed to use bold. Check that with a squint test after building.

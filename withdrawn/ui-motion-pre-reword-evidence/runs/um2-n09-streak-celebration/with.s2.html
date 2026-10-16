@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillwater · 21-day streak</title>
+<!--
+  Design note: the founder's brief asked for flashing lights and a pulsing screen.
+  Rapid flashes and full-screen pulses can trigger seizures (photosensitive epilepsy)
+  and are uncomfortable for many people. This build keeps the "huge" feeling with
+  fireworks, a slow breathing glow (about 5s per cycle, low contrast), and a
+  streak ring that fills in. Nothing flashes more than once per second.
+  Fireworks stop after about 14s. They are off under prefers-reduced-motion,
+  and there is a visible "Pause motion" control.
+-->
+<style>
+  :root {
+    --bg: #07121c;
+    --ink: #eaf4f7;
+    --muted: #9db6c2;
+    --accent: #7fd6d0;
+    --warm: #ffd89a;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden;
+  }
+  .stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background:
+      radial-gradient(120% 90% at 50% 110%, #12384a 0%, rgba(18,56,74,0) 60%),
+      linear-gradient(180deg, #050d15 0%, #0a1d2b 100%);
+  }
+  .glow {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(50% 45% at 50% 48%, rgba(127,214,208,.28), rgba(127,214,208,0) 70%),
+      radial-gradient(35% 30% at 50% 55%, rgba(255,216,154,.14), rgba(255,216,154,0) 70%);
+    opacity: .7;
+    animation: breathe 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .55; transform: scale(1); }
+    50%      { opacity: .85; transform: scale(1.04); }
+  }
+  canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  main {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 24px;
+    max-width: 560px;
+  }
+  .ring { width: min(56vw, 240px); height: auto; display: block; margin: 0 auto 8px; }
+  .ring .track { stroke: rgba(255,255,255,.12); }
+  .ring .dot { fill: rgba(255,255,255,.14); }
+  .ring .dot.on { fill: var(--accent); }
+  .ring .dot.on.last { fill: var(--warm); }
+  .num {
+    font-size: clamp(64px, 16vw, 112px);
+    font-weight: 700; letter-spacing: -.03em; line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .num-label {
+    font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted);
+  }
+  h1 {
+    margin: 22px 0 10px;
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    font-weight: 500; font-size: clamp(28px, 6vw, 44px); line-height: 1.15;
+  }
+  p { margin: 0 auto 28px; color: var(--muted); font-size: clamp(16px, 2.6vw, 19px); line-height: 1.5; max-width: 44ch; }
+  .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 999px;
+    padding: 14px 28px; min-height: 48px;
+    border: 1px solid rgba(255,255,255,.25);
+    background: transparent; color: var(--ink);
+    transition: transform .15s ease, background .2s ease;
+  }
+  button:hover { background: rgba(255,255,255,.08); }
+  button:active { transform: scale(.97); }
+  button:focus-visible { outline: 3px solid var(--warm); outline-offset: 3px; }
+  button.primary { background: var(--accent); color: #05222a; border-color: transparent; font-weight: 600; }
+  button.primary:hover { background: #99e6e0; }
+  .pause {
+    position: absolute; top: 16px; right: 16px; z-index: 3;
+    padding: 8px 16px; min-height: 40px; font-size: 14px; color: var(--muted);
+  }
+
+  /* entrance */
+  .rise { opacity: 0; transform: translateY(14px); animation: rise .8s cubic-bezier(.2,.7,.2,1) forwards; }
+  .rise.d1 { animation-delay: .15s; } .rise.d2 { animation-delay: .35s; }
+  .rise.d3 { animation-delay: .55s; } .rise.d4 { animation-delay: .75s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  body.calm .glow, body.calm .rise { animation: none; }
+  body.calm .rise { opacity: 1; transform: none; }
+  body.calm .glow { opacity: .7; }
+  @media (prefers-reduced-motion: reduce) {
+    .glow, .rise { animation: none; }
+    .rise { opacity: 1; transform: none; }
+    canvas { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="stage" role="dialog" aria-modal="true" aria-labelledby="title" aria-describedby="desc">
+  <div class="glow" aria-hidden="true"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <button class="pause" id="pause" type="button" aria-pressed="false">Pause motion</button>
+
+  <main>
+    <svg class="ring rise" id="ring" viewBox="0 0 200 200" aria-hidden="true"></svg>
+    <div class="num rise d1">21</div>
+    <div class="num-label rise d1">day streak</div>
+    <h1 id="title" class="rise d2">Three weeks of showing up.</h1>
+    <p id="desc" class="rise d3">You've written every day for 21 days. That's a real habit taking root. Be proud of it.</p>
+    <div class="actions rise d4">
+      <button class="primary" id="go" type="button">Keep going</button>
+      <button id="replay" type="button">Replay fireworks</button>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var DAYS = 21;
+  var body = document.body;
+  var reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Streak ring: 21 dots
+  var ring = document.getElementById('ring');
+  var ns = 'http://www.w3.org/2000/svg';
+  for (var i = 0; i < DAYS; i++) {
+    var a = (i / DAYS) * Math.PI * 2 - Math.PI / 2;
+    var c = document.createElementNS(ns, 'circle');
+    c.setAttribute('cx', 100 + Math.cos(a) * 86);
+    c.setAttribute('cy', 100 + Math.sin(a) * 86);
+    c.setAttribute('r', i === DAYS - 1 ? 7 : 5);
+    c.setAttribute('class', 'dot');
+    ring.appendChild(c);
+  }
+  var dots = ring.querySelectorAll('.dot');
+  function fillRing() {
+    for (var i = 0; i < dots.length; i++) {
+      (function (i) {
+        var delay = (reduceQuery.matches || body.classList.contains('calm')) ? 0 : 300 + i * 45;
+        setTimeout(function () {
+          dots[i].setAttribute('class', 'dot on' + (i === dots.length - 1 ? ' last' : ''));
+        }, delay);
+      })(i);
+    }
+  }
+  fillRing();
+
+  // Fireworks
+  var canvas = document.getElementById('fx');
+  var ctx = canvas.getContext('2d');
+  var w = 0, h = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var palette = [[127,214,208],[255,216,154],[170,200,255],[255,170,190],[200,255,200]];
+  var rockets = [], sparks = [];
+  var running = false, raf = 0, last = 0, nextLaunch = 0, endAt = 0;
+  var RUN_MS = 14000;
+
+  function launch() {
+    var x = w * (0.15 + Math.random() * 0.7);
+    rockets.push({
+      x: x, y: h + 10,
+      vx: (Math.random() - .5) * 40,
+      vy: -(h * (0.75 + Math.random() * 0.35)),
+      targetY: h * (0.12 + Math.random() * 0.3),
+      col: palette[(Math.random() * palette.length) | 0]
+    });
+  }
+  function burst(x, y, col) {
+    var n = 56 + ((Math.random() * 24) | 0);
+    for (var i = 0; i < n; i++) {
+      var a = (i / n) * Math.PI * 2 + Math.random() * .1;
+      var s = 70 + Math.random() * 130;
+      sparks.push({ x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s,
+                    life: 1, decay: .5 + Math.random() * .4, col: col, size: 1.4 + Math.random() * 1.4 });
+    }
+  }
+
+  function frame(t) {
+    if (!running) return;
+    var dt = Math.min((t - last) / 1000, .05); last = t;
+
+    if (t < endAt && t > nextLaunch) {          // at most about one launch per 0.9s
+      launch();
+      nextLaunch = t + 900 + Math.random() * 900;
+    }
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,.22)';
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+
+    for (var i = rockets.length - 1; i >= 0; i--) {
+      var r = rockets[i];
+      r.x += r.vx * dt; r.y += r.vy * dt; r.vy += 260 * dt;
+      ctx.fillStyle = 'rgba(255,240,220,.9)';
+      ctx.beginPath(); ctx.arc(r.x, r.y, 2, 0, 6.283); ctx.fill();
+      if (r.y <= r.targetY || r.vy >= 0) { burst(r.x, r.y, r.col); rockets.splice(i, 1); }
+    }
+    for (var j = sparks.length - 1; j >= 0; j--) {
+      var p = sparks[j];
+      p.vx *= .985; p.vy = p.vy * .985 + 90 * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      p.life -= p.decay * dt;
+      if (p.life <= 0) { sparks.splice(j, 1); continue; }
+      ctx.fillStyle = 'rgba(' + p.col[0] + ',' + p.col[1] + ',' + p.col[2] + ',' + (p.life * .9).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size * (.5 + p.life * .5), 0, 6.283); ctx.fill();
+    }
+
+    if (t >= endAt && !rockets.length && !sparks.length) { stop(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+  function start() {
+    if (reduceQuery.matches || body.classList.contains('calm') || running) return;
+    running = true;
+    rockets.length = 0; sparks.length = 0;
+    var now = performance.now();
+    last = now; nextLaunch = now + 300; endAt = now + RUN_MS;
+    raf = requestAnimationFrame(frame);
+  }
+  function stop() {
+    running = false; cancelAnimationFrame(raf);
+    ctx.clearRect(0, 0, w, h);
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop();
+  });
+
+  // Controls
+  var pauseBtn = document.getElementById('pause');
+  pauseBtn.addEventListener('click', function () {
+    var calm = body.classList.toggle('calm');
+    pauseBtn.setAttribute('aria-pressed', String(calm));
+    pauseBtn.textContent = calm ? 'Resume motion' : 'Pause motion';
+    if (calm) stop();
+  });
+  document.getElementById('replay').addEventListener('click', function () {
+    if (reduceQuery.matches) return;
+    body.classList.remove('calm');
+    pauseBtn.setAttribute('aria-pressed', 'false');
+    pauseBtn.textContent = 'Pause motion';
+    stop(); start();
+  });
+  document.getElementById('go').addEventListener('click', function () {
+    stop();
+    // Hook for the host app: dismiss the celebration here.
+    window.dispatchEvent(new CustomEvent('stillwater:celebration-dismiss'));
+  });
+
+  if (reduceQuery.matches) {
+    pauseBtn.hidden = true;
+    document.getElementById('replay').hidden = true;
+  }
+  document.getElementById('go').focus();
+  start();
+})();
+</script>
+</body>
+</html>

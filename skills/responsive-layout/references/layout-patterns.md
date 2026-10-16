@@ -4,14 +4,13 @@ Find the problem you have, then take the short recipe under it. Recipes are star
 
 ## Content that must wrap or stack
 
-**A column that spaces itself.** The parent owns the space between children.
+**A column with even spacing.** The parent owns the space between children.
 
 ```css
-.column { display: grid; gap: var(--column-gap, 1rem); }
-.column > .new-section { margin-block-start: 1.5rem; }
+.column { display: grid; gap: 1rem; }
 ```
 
-Use `gap` for even spacing and one extra rule on the child that starts a new section. Failure: margins on every child collide, double, or leave a stray gap at the end of a card. If the column sits inside a padded box, give the box the same padding as the column's gap so it looks even; a full-bleed child (an image) takes a negative inline margin equal to that padding, or the padding moves onto its siblings.
+Failure: margins on every child collide, double, or leave a stray gap at the end of a card.
 
 **Items that wrap like words.** Tags, buttons, toolbars.
 
@@ -37,17 +36,14 @@ The inner `min()` stops the minimum from exceeding the container, so nothing ove
 **Peers that go from a row to a stack all at once.** Three items never become two and one.
 
 ```css
-.all-or-none { --breaks-at: 40rem; display: flex; flex-wrap: wrap; gap: 1rem; }
-.all-or-none > * { flex: 1 1 calc((var(--breaks-at) - 100%) * 999); }
+.group { container-type: inline-size; }
+.peers { display: grid; gap: 1rem; }
+@container (inline-size >= 40rem) {
+  .peers { grid-auto-flow: column; grid-auto-columns: 1fr; }
+}
 ```
 
-Below the threshold the basis is a huge positive number, so each item fills its row; above it the basis is negative and ignored. To stack once there are too many items (five or more here), add a rule on the container:
-
-```css
-.all-or-none:has(> :nth-child(5)) > * { flex-basis: 100%; }
-```
-
-A container query is the simpler choice when the team knows it.
+Below the container width the peers stack; at or above it they share one row. Choose the threshold from the widest expected count of items and the narrowest comfortable item.
 
 ## Text that must stay readable
 
@@ -62,15 +58,17 @@ Cap the text elements, not the page wrapper. Failure: a capped wrapper also narr
 
 ## Two regions side by side
 
-**A side area with a preferred width, and a main area that takes the rest.** They drop to one column when the main area would get too narrow.
+**A side area with a fixed width, and a main area that takes the rest.** One column until the container is wide enough for both.
 
 ```css
-.with-aside { display: flex; flex-wrap: wrap; gap: 1.5rem; }
-.with-aside > .aside { flex: 1 1 16rem; }
-.with-aside > .content { flex: 999 1 0; min-inline-size: 50%; }
+.region { container-type: inline-size; }
+.split { display: grid; gap: 1.5rem; }
+@container (inline-size >= 45rem) {
+  .split { grid-template-columns: 16rem minmax(0, 1fr); }
+}
 ```
 
-The content wraps below the aside once it cannot keep half the row. Tune the percentage (where it wraps) and the aside's basis from the real content. Failure: the aside stretching across a full row after wrapping; cap it with `max-inline-size` if that matters. A grid alternative: one `minmax(0, 1fr)` column by default and a two-column template inside a container query.
+Set the threshold from the aside's width plus the narrowest comfortable main area. `minmax(0, 1fr)` lets long content in the main area shrink instead of pushing the split wider. Failure: a split keyed to the viewport inside a component that lives in a narrow panel.
 
 ## Something that must keep a shape or size
 

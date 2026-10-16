@@ -1,0 +1,1 @@
+Mostly no. A break-room TV has no one at a keyboard, so pickers and filters would go unused, and the screen should show the current shift's packed count against target, readable from across the room. If teams or products matter, show a small fixed breakdown by team, or rotate through per-team views, and keep any slicing for a separate desk-side view.

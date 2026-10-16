@@ -6,15 +6,13 @@ Decide from where the reader came from and what the page is, then lead according
 
 | The reader | Lead with | Avoid |
 |---|---|---|
-| Ready to act (pricing page, brand search, renewal) | The offer, its terms and what is included | Re-explaining the category |
-| Knows the product | The promise and the reassurance they still need | Introductions |
-| Knows this kind of solution, not you | The outcome and the one way you differ | A bigger adjective than the rivals use |
-| Feels a problem, does not know a fix exists | The problem in their words, then the hope | Features, price |
-| Has not noticed the problem | A true, surprising fact or a very short scene, tied to the product in the next line | Mentioning price or product in the headline |
+| Came looking for this product (pricing page, brand search, renewal) | The offer, its terms and what is included | Re-explaining the category |
+| Came with the problem | The problem in their words, then what changes | Features, price |
+| Came from elsewhere (an ad, a feed, a link) | One concrete result or fact, tied to the product in the next line | Mentioning price or product in the headline |
 
 A line that works for one reader fails for another. When the audience is mixed, write for the traffic source that sends most visitors and say so in a clause.
 
-Crowded categories: readers have heard every promise. Lead with how this one works differently and a proof they can check, not a stronger word. If the user gave no such difference, say the line is generic rather than inventing one.
+When rivals all make the same promise, lead with the proof a reader can check, not a stronger word. If the user gave no such difference, say the line is generic rather than inventing one.
 
 ## Surfaces
 

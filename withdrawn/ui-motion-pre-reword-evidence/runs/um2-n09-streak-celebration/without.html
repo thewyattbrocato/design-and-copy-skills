@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillwater – 21-day streak</title>
+<!--
+  Design note: the brief asked for flashing lights and a pulsing screen. Rapid flashes and
+  full-screen pulsing can trigger photosensitive seizures and are a WCAG 2.3.1 failure.
+  This version gets the "huge" feeling from scale, color and motion instead:
+  - fireworks burst at most about once per second, with no white flash on burst
+  - the background glow breathes slowly (about a 4s cycle) at low contrast
+  - prefers-reduced-motion (or the in-screen toggle) swaps all of it for a still, calm version
+-->
+<style>
+  :root {
+    --bg: #0b1424;
+    --ink: #f4f1ea;
+    --muted: #b6c2d6;
+    --accent: #ffd28a;
+    --accent-2: #8fd3c8;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-rounded, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    overflow: hidden;
+  }
+  .stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: radial-gradient(ellipse at 50% 40%, #16264a 0%, var(--bg) 70%);
+  }
+  .glow {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 50% 45%, rgba(255,210,138,.20), transparent 55%),
+      radial-gradient(circle at 20% 80%, rgba(143,211,200,.12), transparent 50%);
+    animation: breathe 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .55; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.04); }
+  }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  .card {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    max-width: 34rem;
+    animation: rise .9s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px) scale(.97); }
+    to { opacity: 1; transform: none; }
+  }
+  .eyebrow {
+    letter-spacing: .22em; text-transform: uppercase;
+    font-size: .8rem; color: var(--accent-2); margin: 0 0 .75rem;
+  }
+  .number {
+    font-size: clamp(7rem, 26vw, 15rem);
+    line-height: .9; font-weight: 800; margin: 0;
+    background: linear-gradient(180deg, #fff3d6 0%, var(--accent) 55%, #f0a35e 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 28px rgba(255,210,138,.35));
+  }
+  h1 { font-size: clamp(1.5rem, 4.5vw, 2.25rem); margin: .4rem 0 .6rem; font-weight: 700; }
+  .sub { color: var(--muted); font-size: 1.05rem; line-height: 1.5; margin: 0 auto 1.75rem; max-width: 26rem; }
+  .actions { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    border-radius: 999px; padding: .85rem 1.6rem; border: 1px solid transparent;
+    transition: transform .15s ease, background .2s ease;
+  }
+  button:hover { transform: translateY(-1px); }
+  button:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 3px; }
+  .primary { background: var(--accent); color: #2a1a05; }
+  .primary:hover { background: #ffdca3; }
+  .ghost { background: transparent; color: var(--muted); border-color: rgba(182,194,214,.35); font-weight: 500; font-size: .9rem; }
+
+  .calm .glow, .calm .card { animation: none; }
+  .calm canvas { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .glow, .card { animation: none; }
+    button { transition: none; }
+  }
+</style>
+</head>
+<body>
+<main class="stage" id="stage" role="dialog" aria-modal="true" aria-labelledby="title" aria-describedby="desc">
+  <div class="glow" aria-hidden="true"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <section class="card">
+    <p class="eyebrow">Streak unlocked</p>
+    <p class="number" aria-hidden="true">21</p>
+    <h1 id="title">21 days of writing</h1>
+    <p class="sub" id="desc">Three full weeks of showing up for yourself. That quiet habit is becoming part of who you are.</p>
+    <div class="actions">
+      <button class="primary" id="done" type="button">Continue</button>
+      <button class="ghost" id="motion" type="button" aria-pressed="false">Reduce motion</button>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var canvas = document.getElementById('fx');
+  var ctx = canvas.getContext('2d');
+  var doneBtn = document.getElementById('done');
+  var motionBtn = document.getElementById('motion');
+  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var calm = mq.matches;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0, rockets = [], sparks = [], last = 0, nextLaunch = 0, raf = 0;
+  var palette = [[255,210,138],[143,211,200],[255,160,140],[190,170,255],[255,255,255]];
+
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function launch() {
+    rockets.push({
+      x: W * (0.15 + Math.random() * 0.7), y: H + 10,
+      vx: (Math.random() - 0.5) * 40,
+      vy: -(H * (0.75 + Math.random() * 0.25)),
+      targetY: H * (0.12 + Math.random() * 0.3),
+      color: palette[(Math.random() * palette.length) | 0]
+    });
+  }
+
+  function burst(x, y, c) {
+    var n = 70 + ((Math.random() * 30) | 0);
+    for (var i = 0; i < n; i++) {
+      var a = (i / n) * Math.PI * 2 + Math.random() * 0.1;
+      var s = 60 + Math.random() * 160;
+      sparks.push({ x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 1, decay: 0.45 + Math.random() * 0.35, c: c });
+    }
+  }
+
+  function frame(t) {
+    raf = requestAnimationFrame(frame);
+    var dt = Math.min((t - last) / 1000 || 0, 0.05);
+    last = t;
+
+    // Fade previous frame for trails (transparent canvas, so erase gradually)
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+
+    // Capped to roughly one launch per second, well under 3 flashes per second
+    if (t > nextLaunch) { launch(); nextLaunch = t + 900 + Math.random() * 700; }
+
+    for (var i = rockets.length - 1; i >= 0; i--) {
+      var r = rockets[i];
+      r.x += r.vx * dt; r.y += r.vy * dt; r.vy += 420 * dt;
+      ctx.fillStyle = 'rgba(' + r.color.join(',') + ',0.8)';
+      ctx.fillRect(r.x - 1.5, r.y - 1.5, 3, 3);
+      if (r.y <= r.targetY || r.vy >= -20) { burst(r.x, r.y, r.color); rockets.splice(i, 1); }
+    }
+
+    for (var j = sparks.length - 1; j >= 0; j--) {
+      var p = sparks[j];
+      p.vx *= 0.985; p.vy = p.vy * 0.985 + 90 * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt; p.life -= p.decay * dt;
+      if (p.life <= 0) { sparks.splice(j, 1); continue; }
+      ctx.fillStyle = 'rgba(' + p.c.join(',') + ',' + (p.life * 0.9).toFixed(2) + ')';
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.2 + p.life * 1.4, 0, 6.283); ctx.fill();
+    }
+  }
+
+  function apply() {
+    stage.classList.toggle('calm', calm);
+    motionBtn.setAttribute('aria-pressed', String(calm));
+    motionBtn.textContent = calm ? 'Enable motion' : 'Reduce motion';
+    cancelAnimationFrame(raf);
+    rockets = []; sparks = [];
+    if (!calm) { last = performance.now(); nextLaunch = last + 300; raf = requestAnimationFrame(frame); }
+  }
+
+  motionBtn.addEventListener('click', function () { calm = !calm; apply(); });
+  mq.addEventListener && mq.addEventListener('change', function (e) { calm = e.matches; apply(); });
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) cancelAnimationFrame(raf); else apply();
+  });
+  window.addEventListener('resize', resize);
+
+  function close() {
+    cancelAnimationFrame(raf);
+    stage.hidden = true;
+    stage.style.display = 'none';
+    // Hook for the app: dispatch so the host can route back to the journal
+    window.dispatchEvent(new CustomEvent('stillwater:celebration-closed'));
+  }
+  doneBtn.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+  resize(); apply(); doneBtn.focus();
+})();
+</script>
+</body>
+</html>

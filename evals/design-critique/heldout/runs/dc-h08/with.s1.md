@@ -1,39 +1,45 @@
-I'd group the toggles by what they're about, put the two master switches at the top, and collapse the rest into sections. Here's the layout I'd use.
+I'd group the toggles by what they're about, put the two master switches at the top, and use progressive disclosure so people don't see 14 rows at once.
 
-**Top: delivery channels (2 rows)**
+## Structure
+
+**1. Delivery channels (top, always visible)**
 - Push notifications (master)
 - Email notifications (master)
-- Quiet hours, as a row that opens a time picker rather than a plain toggle. It's a schedule, not an on/off setting, so it shouldn't look like the others.
+- Quiet hours (tap to expand: start and end time, and optionally which days)
 
-When a master is off, grey out and disable the child toggles that depend on it. Show a one-line note like "Push is off, so these won't be delivered." That alone removes much of the confusion.
+These gate everything below. When a master is off, grey out or collapse the rows that depend on it, so people see why nothing arrives.
 
-**Section 1: Garden care** (the core value of the app)
+**2. Garden care** (time-sensitive, the core value of the app)
 - Watering reminders
 - Frost alerts
 - Harvest windows
 
-**Section 2: Community**
+**3. Social**
 - Friend requests
 - Comments on my beds
 - Shared bed invites
 
-**Section 3: Discover and news**
+**4. Discovery and tips**
 - New plant suggestions
 - Plant-of-the-week
+
+**5. Email and marketing** (visually quietest, at the bottom)
 - Weekly summary email
 - Product news email
 - Sale announcements
 
-**Why this works**
-- **Five groups instead of 14 flat items.** Each section has 3–5 rows, which people can scan.
-- **Order by importance.** Garden care comes first because those alerts are time-sensitive, and the marketing items go last.
-- **Defaults carry the weight.** Garden care and community can default to on. Promotional items (sale announcements, product news) should default to off or be opt-in, so most people never need to visit them.
-- **Channel per row.** If you want to cut the list further, make each row a single item with small Push and Email chips (for example, "Frost alerts: Push ✓ Email ✗"). That removes the need for separate email toggles and could shrink the screen to about 10 rows. The weekly summary and product news are email-only by nature, so they'd show only the Email chip.
-- **Optional.** Collapse Discover and news by default, with a summary like "3 of 5 on".
+## Layout choices that reduce the overwhelm
 
-**Watch for**
-- Use plain labels with a short description under each. "Harvest windows" on its own is vague. "Tells you when crops are ready to pick" is clear.
-- Keep each section's header visible while scrolling.
-- Add a single "Pause everything" action, which is what most overwhelmed users actually want.
+- **Use section headers with one-line descriptions.** For example, "Garden care: alerts about your plants and weather." Headers let people scan instead of read every row.
+- **Give each row a short subtitle only where the label is ambiguous.** "Harvest windows" could use "When crops are ready to pick." Skip subtitles on self-explanatory rows.
+- **Split by channel only where it matters.** If people might want frost alerts by push but not email, make each row tappable to a detail screen with Push and Email checkboxes. The main screen then shows a summary like "Push, Email". This replaces what would otherwise be a doubled toggle list.
+- **Collapse the low-priority groups.** Social and Discovery can start collapsed, with a summary like "3 of 3 on". Garden care stays open.
+- **Set sensible defaults.** Care alerts and shared bed invites on, marketing off. Most people never open this screen, so the defaults matter more than the layout.
+- **Consider a "Pause all" shortcut.** Quiet hours covers scheduled silence, but a one-tap "Pause for 1 week" is useful for people on vacation.
 
-If you tell me whether this is iOS, Android, or web, I can adjust the pattern. For example, iOS conventionally uses grouped inset lists with a drill-down for the channel details.
+## Two notes
+
+- Quiet hours and the masters are *settings*, not *notification types*. Visually separate them from the toggles, for example with a card at the top, so they don't read as one more item in the list.
+- Frost alerts are the one type where a missed notification can cost someone their plants. Consider keeping them on by default even if the user turns off other push categories, or show a gentle confirmation when they turn them off.
+
+If you share a screenshot or mockup, I can critique the specific design.

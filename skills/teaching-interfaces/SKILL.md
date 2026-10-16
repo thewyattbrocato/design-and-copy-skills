@@ -1,6 +1,6 @@
 ---
 name: teaching-interfaces
-description: Use whenever a screen, page or flow has to teach someone to do or understand something, in any language and at any length - "design the first screen after sign-up", "nobody finishes our onboarding", "people don't get this feature", "the empty state is useless", "explain how this works with a diagram", "write the help article", "is this tour any good". Covers first-run and guided tasks, tours, coach marks, teaching tooltips, empty states, what's-new notes, explainer cards, in-product video, help articles. Not for quizzes or courses (practice-and-assessment), input fields (form-design), animation timing (ui-motion), data charts (chart-design), marketing pages or general interface strings.
+description: Use whenever a screen, page or flow has to teach someone to do or understand something, in any language - "design the first screen after sign-up", "nobody finishes our onboarding", "people don't get this feature", "the empty state is useless", "explain how this works with a diagram", "write the help article", "is this tour any good". Covers first-run and guided tasks, tours, coach marks, teaching tooltips, empty states, what's-new notes, explainer cards, in-product video, help articles. Not for quizzes or courses (practice-and-assessment), input fields (form-design), animation timing (ui-motion), data charts (chart-design), marketing pages or general interface strings (ux-microcopy).
 ---
 
 # Teaching interfaces
@@ -15,7 +15,7 @@ Any surface whose job includes getting someone to do or understand something new
 
 - Question banks, scenarios, drills, course or curriculum design: practice-and-assessment if installed.
 - A screen that only needs clear labels, such as a settings or preferences page. Do not add tours, overlays or tutorials to it; helper text only where a label cannot carry the meaning.
-- Marketing pages, general interface strings, dashboards, animation timing: use ordinary judgment or the matching skill if installed.
+- Marketing pages, dashboards, animation timing: use ordinary judgment or the matching skill if installed. General interface strings go to `ux-microcopy`: this skill decides what a screen teaches and how it is built, that one words single strings.
 - Expert tools: experts pull help when they want it. Offer optional, targeted help (what differs from tools they know) and a short reference; never a mandatory tutorial.
 - Text or a flow that already teaches well. Say so and change at most a word.
 
@@ -28,9 +28,9 @@ Any surface whose job includes getting someone to do or understand something new
 - **Explain the arbitrary, not the universal.** Your icons, terms and concepts need explaining; scrolling and dragging do not. Introduce the names and parts before the process that uses them.
 - **Starting points beat blank canvases.** Offer a template, sample content or a partly finished item. Label sample data as sample, make it replaceable in one action, and never show plausible-looking numbers that could be taken for the person's own.
 - **Novices guided, experts free.** A default path for newcomers, with an obvious skip and a way back to help later. Important examples and practice default on; people overrate what they know. Let people control pace (continue, back), not the syllabus.
-- **Words on the picture.** Label the parts themselves, not a legend; keep each sentence beside the part it explains; use still steps for conceptual sequences and motion only when the motion is the point; split long explanations into short segments the person advances. Details in [words and pictures](references/words-and-pictures.md).
-- **Do not double the channel.** Narration over a graphic gets captions as a mode, or a few keywords on screen, not the full script as well. With no audio, text carries the explanation. Captions and transcripts are not optional; nothing essential rides only on animation or hover.
-- **Cut what does not teach.** Background music, filler narration, decorative illustration, jokes the audience did not ask for. Warmth belongs on the essential object (a friendly sample, a plain voice), not in a new character. Conversational is good; forced chumminess is not.
+- **Where the text goes.** On or beside the part it explains, never in a legend or a caption far below. Long explanations become short segments the person advances. Details in [words and pictures](references/words-and-pictures.md).
+- **What plays.** Still steps for conceptual sequences; motion only when the motion is the point. Narration over a graphic gets captions as a mode or a few keywords on screen, not the full script as well; add on-screen text when people need to see a word spelled or cannot listen. With no audio, text carries the explanation. Captions and transcripts are not optional; nothing essential rides only on animation or hover.
+- **What gets cut.** Background music, filler narration, decorative illustration, jokes the audience did not ask for. Warmth belongs on the essential object (a friendly sample, a plain voice), not in a new character.
 - **Feedback updates their model.** Say what happened and why, in their terms ("3 emails moved to Receipts because they came from billing@"), not "Great job!" or "Incorrect". A brief confirmation that states what now works and points to the next step is fine; ceremony that delays the next action is not.
 - **Bring it back through real work.** Important actions reappear later as real tasks, ideally with different surface details. A reminder tied to a step the person started is fine; streaks, guilt copy and clock-based drips are not.
 - **Empty states explain.** Say what the area is for, give the one action that starts it, optionally show an example. Hide controls that do nothing yet. An illustration may show what the area will hold but is never the largest element.

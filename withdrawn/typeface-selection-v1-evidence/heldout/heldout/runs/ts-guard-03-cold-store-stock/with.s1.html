@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brannock Cold Storage - Stock Check</title>
+<style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #101418;
+    color: #ffffff;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+  .top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #101418;
+    padding: 6px 6px 4px 6px;
+    border-bottom: 2px solid #3a4550;
+  }
+  h1 { font-size: 16px; margin: 0 0 4px 0; color: #9fb3c4; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+  .searchrow { display: table; width: 100%; }
+  .searchrow .cellA { display: table-cell; width: 100%; }
+  .searchrow .cellB { display: table-cell; padding-left: 6px; }
+  #q {
+    width: 100%;
+    box-sizing: border-box;
+    height: 56px;
+    font-size: 24px;
+    padding: 0 10px;
+    background: #ffffff;
+    color: #000000;
+    border: 3px solid #6ab0ff;
+    border-radius: 6px;
+  }
+  #clr {
+    height: 56px;
+    min-width: 72px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #2b3640;
+    color: #ffffff;
+    border: 3px solid #6b7b8a;
+    border-radius: 6px;
+  }
+  #sum { margin: 6px 0 0 0; font-size: 16px; color: #cfd8e0; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th {
+    text-align: left;
+    font-size: 14px;
+    color: #9fb3c4;
+    padding: 6px 4px;
+    border-bottom: 2px solid #3a4550;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 6px 4px;
+    border-bottom: 1px solid #3a4550;
+    vertical-align: middle;
+    font-size: 18px;
+    word-wrap: break-word;
+  }
+  tr.alt td { background: #171d23; }
+  .sku { font-weight: bold; }
+  .num { text-align: right; }
+  th.num { text-align: right; }
+  .cnt {
+    width: 100%;
+    box-sizing: border-box;
+    height: 56px;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    background: #ffffff;
+    color: #000000;
+    border: 3px solid #6b7b8a;
+    border-radius: 6px;
+    padding: 0;
+  }
+  .cnt:focus, #q:focus, #clr:focus { outline: 4px solid #ffd54a; border-color: #ffd54a; }
+  .st {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 6px 2px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .st-todo  { background: #2b3640; color: #cfd8e0; border: 2px dashed #6b7b8a; }
+  .st-ok    { background: #1f8f3a; color: #ffffff; border: 2px solid #1f8f3a; }
+  .st-short { background: #c62828; color: #ffffff; border: 2px solid #c62828; }
+  .st-over  { background: #ffb300; color: #000000; border: 2px solid #ffb300; }
+  #none { display: none; padding: 20px 8px; font-size: 20px; text-align: center; color: #cfd8e0; }
+  @media (max-width: 380px) {
+    td { font-size: 16px; }
+    .st { font-size: 13px; }
+    .cnt { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Brannock Cold Storage - Stock Check</h1>
+  <div class="searchrow">
+    <div class="cellA"><input id="q" type="text" placeholder="Search SKU or bin" autocomplete="off" autocapitalize="characters"></div>
+    <div class="cellB"><button id="clr" type="button">Clear</button></div>
+  </div>
+  <p id="sum" aria-live="polite"></p>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:25%">SKU</th>
+      <th style="width:20%">Bin</th>
+      <th class="num" style="width:14%">Exp</th>
+      <th style="width:24%">Count</th>
+      <th style="width:17%">Status</th>
+    </tr>
+  </thead>
+  <tbody id="rows"></tbody>
+</table>
+<div id="none">No matching SKU or bin.</div>
+
+<script>
+(function () {
+  var data = [
+    ["FZ-1042", "A-01-1", 48],
+    ["FZ-1057", "A-01-2", 120],
+    ["FZ-2210", "A-02-1", 36],
+    ["FZ-2318", "A-02-3", 72],
+    ["FZ-3005", "B-04-1", 24],
+    ["FZ-3144", "B-04-2", 60],
+    ["CH-5521", "B-05-1", 18],
+    ["CH-5530", "B-05-3", 90],
+    ["CH-6102", "C-07-2", 40],
+    ["CH-6177", "C-07-4", 15],
+    ["IC-8001", "D-10-1", 64],
+    ["IC-8046", "D-10-2", 32]
+  ];
+
+  var tbody = document.getElementById("rows");
+  var q = document.getElementById("q");
+  var sum = document.getElementById("sum");
+  var none = document.getElementById("none");
+  var inputs = [], cells = [], trs = [];
+  var i;
+
+  function build() {
+    for (i = 0; i < data.length; i++) {
+      var tr = document.createElement("tr");
+      if (i % 2) { tr.className = "alt"; }
+      tr.innerHTML =
+        '<td class="sku"></td><td></td><td class="num"></td>' +
+        '<td><input class="cnt" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1"></td>' +
+        '<td><span class="st st-todo">To do</span></td>';
+      tr.cells[0].appendChild(document.createTextNode(data[i][0]));
+      tr.cells[1].appendChild(document.createTextNode(data[i][1]));
+      tr.cells[2].appendChild(document.createTextNode(String(data[i][2])));
+      var inp = tr.cells[3].firstChild;
+      inp.setAttribute("aria-label", "Counted quantity for " + data[i][0]);
+      inp.setAttribute("data-i", i);
+      inp.onkeydown = onKey;
+      inp.oninput = onCount;
+      inp.onchange = onCount;
+      inputs.push(inp);
+      cells.push(tr.cells[4].firstChild);
+      trs.push(tr);
+      tbody.appendChild(tr);
+    }
+  }
+
+  function status(i) {
+    var v = inputs[i].value;
+    var el = cells[i];
+    if (v === "" || isNaN(parseInt(v, 10))) { return { cls: "st-todo", txt: "To do", k: "todo" }; }
+    var diff = parseInt(v, 10) - data[i][2];
+    if (diff === 0) { return { cls: "st-ok", txt: "OK", k: "ok" }; }
+    if (diff < 0) { return { cls: "st-short", txt: "Short<br>" + diff, k: "short" }; }
+    return { cls: "st-over", txt: "Over<br>+" + diff, k: "over" };
+  }
+
+  function refresh() {
+    var done = 0, ok = 0, short = 0, over = 0;
+    for (var j = 0; j < data.length; j++) {
+      var s = status(j);
+      cells[j].className = "st " + s.cls;
+      cells[j].innerHTML = s.txt;
+      if (s.k !== "todo") { done++; }
+      if (s.k === "ok") { ok++; }
+      if (s.k === "short") { short++; }
+      if (s.k === "over") { over++; }
+    }
+    sum.innerHTML = "Counted " + done + " of " + data.length +
+      " &middot; OK " + ok + " &middot; Short " + short + " &middot; Over " + over;
+  }
+
+  function onCount() { refresh(); }
+
+  function visibleInputs() {
+    var out = [];
+    for (var j = 0; j < trs.length; j++) {
+      if (trs[j].style.display !== "none") { out.push(inputs[j]); }
+    }
+    return out;
+  }
+
+  function onKey(e) {
+    e = e || window.event;
+    var key = e.keyCode || e.which;
+    if (key === 13) {
+      var vis = visibleInputs();
+      for (var j = 0; j < vis.length; j++) {
+        if (vis[j] === (e.target || e.srcElement)) {
+          if (vis[j + 1]) { vis[j + 1].focus(); } else { vis[j].blur(); }
+          break;
+        }
+      }
+      if (e.preventDefault) { e.preventDefault(); }
+      return false;
+    }
+  }
+
+  function filter() {
+    var t = q.value.replace(/^\s+|\s+$/g, "").toUpperCase();
+    var shown = 0;
+    for (var j = 0; j < data.length; j++) {
+      var hit = t === "" || data[j][0].indexOf(t) !== -1 || data[j][1].indexOf(t) !== -1;
+      trs[j].style.display = hit ? "" : "none";
+      if (hit) { shown++; }
+    }
+    none.style.display = shown ? "none" : "block";
+  }
+
+  q.oninput = filter;
+  q.onkeyup = filter;
+  q.onkeydown = function (e) {
+    e = e || window.event;
+    if ((e.keyCode || e.which) === 13) {
+      var vis = visibleInputs();
+      if (vis.length) { vis[0].focus(); }
+      if (e.preventDefault) { e.preventDefault(); }
+      return false;
+    }
+  };
+  document.getElementById("clr").onclick = function () {
+    q.value = "";
+    filter();
+    q.focus();
+  };
+
+  build();
+  refresh();
+  filter();
+})();
+</script>
+</body>
+</html>

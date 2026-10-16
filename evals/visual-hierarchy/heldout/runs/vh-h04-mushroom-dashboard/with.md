@@ -1,30 +1,24 @@
-**What's wrong:** the page has no ranking. It's "flat" because every card, every number and every state looks the same. The room-5 miss follows directly from that. A bad room differs from a good one only by a slightly darker orange number and an 11px grey "alert". In a grid of 32 identical bold numbers, that doesn't register. The page's real job is "tell me which room needs me right now", and it currently shows all eight rooms as equally important.
+**What's wrong:** the page has no ranking, and the one thing it exists for, "which room needs me now?", is the quietest thing on it. Your co-founder's "flat" is the same problem.
 
-**Change this first: make out-of-range state the loudest thing on the page, and make healthy rooms quieter.**
+- **All 8 cards look the same, and all 32 numbers are equally loud.** Four 28px bold numbers per card means 32 things competing. Nothing is primary, so the eye has nowhere to land. Most of them are also fine at any given moment, so they're noise.
+- **An alert is a small change.** It's a slightly darker orange on one number plus an 11px grey "alert" label. That is a tint shift and a tiny word, where it should be a different state. Grey 11px text is the lowest-priority style on the page, and you used it for the highest-priority fact. Room 5 at 61% humidity looked like seven other cards.
+- **Status relies on color alone.** Orange against black text is a weak cue, and it disappears for anyone colorblind or glancing from across the room.
+- **The decoration does no work.** Every card has the same border and shadow, so they only add weight. They separate cards that already have gaps, and they don't carry any information.
+- **The room name is the only label, and it's small.** At 14px bold it's the smallest "loud" thing, so it can't act as a heading either.
 
-1. **Give an alerting card a different structure, not just a different number color.**
-   - Add a thick (4–6px) colored left edge or top bar, plus a tinted card background.
-   - Put a status line at the top of the card that names the problem, e.g. "Humidity 61% – low (target 85–95%)". Use real text at the card-title size or larger, not 11px grey.
-   - Pair the color with the text and a icon-free shape cue so it survives grayscale and works for colorblind viewers.
-   - Use one alert treatment, applied the same way everywhere.
+**What to change first:** make an out-of-range room look structurally different from a healthy one, and quiet the healthy ones.
 
-2. **Quiet the healthy rooms so the alert has something to stand out against.**
-   - Drop the shadow and keep a faint border.
-   - Make in-range numbers regular or medium weight in a dark neutral, not 28px bold.
-   - Emphasis should cover roughly a tenth of what's visible, so with 8 rooms, one or two loud cards is the right amount.
+1. **Healthy cards:** drop the shadow, use a flat light fill or a hairline border, and make the numbers regular weight at about 20px. A healthy room should be calm and easy to skip.
+2. **Alert cards:** give them a heavier border (2–3px) or a solid tinted background in your alert color. Add a status line at the top of the card that says what's wrong in plain words, for example "Humidity 61% · low (target 80–90%)". Make the out-of-range number itself larger and bold, and leave the other values quiet. That gives you two cues beyond color: structure and text.
+3. **Sort alert rooms first,** or pin them to the top row. Position beats styling. If six hours of 61% should never go unseen again, an alert card shouldn't sit at position 5 in a grid.
 
-3. **Rank the numbers inside each card.** Four equal 28px numbers mean none of them matters.
-   - Only the out-of-range metric gets the big, bold, colored treatment. The others drop to about 18–20px in a regular weight.
-   - In a healthy room, keep all four at the smaller size.
-   - "Days to harvest" is planning information, not a condition to watch. Make it the quietest of the four.
-   - Show the target range in small grey text next to each reading, so "61%" is read against "85–95%" without any mental lookup.
+Aim for emphasis on about 10% of what's visible. If 1–2 rooms are in alert, the page should be calm with those cards obviously loud. If most rooms are in alert, you have a thresholds problem, not a design one.
 
-4. **Sort or pin alerting rooms to the top-left.** Position is the strongest cue. If you'd rather keep a fixed room order, add a one-line banner above the grid: "1 room needs attention: Room 5 – humidity low for 6h".
+**Smaller fixes, later:**
+- Fold the labels into the values ("61% RH", "22 °C") so the cards need less small grey text.
+- Move "days to harvest" down a level. It's planning information, not an alarm, so it can be smaller and grey.
+- Use one alert style everywhere, with a second, quieter "warning" tier only if you need it.
 
-5. **Add duration to the alert.** Six hours out of range is a very different situation from six minutes. Escalate the treatment as time passes (e.g. normal alert → stronger red after 30 min). This catches exactly the failure you had, where the reading sat there unnoticed.
+**One thing the design can't fix:** a page nobody is looking at won't catch a six-hour excursion. If Room 5 matters that much, add a push, SMS or Slack alert when a value stays out of range for more than about 15 minutes. The redesign makes problems obvious to whoever's looking, and the notification covers the times nobody is.
 
-**Notes:**
-- A color-only change would repeat the original problem. The shape, position and text cues are what make it noticeable.
-- Page visuals alone won't wake anyone at 2am. If a 6-hour miss is costly, a push, SMS or email alert on out-of-range readings is worth adding alongside the redesign.
-
-I can mock this up as HTML/CSS if you share the page's code or path.
+I'm assuming your target ranges are already defined per room. If you share the HTML or CSS, I can make these changes directly.

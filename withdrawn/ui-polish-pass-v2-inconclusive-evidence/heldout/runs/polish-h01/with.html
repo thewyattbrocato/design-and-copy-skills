@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tide lookup</title>
+<style>
+body{font-family:sans-serif;margin:20px;max-width:40rem;line-height:1.4;color:#1a1a1a}
+h1{margin:0 0 12px}
+form{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+label{flex-basis:100%;font-weight:bold}
+input,button{font-size:16px;padding:6px;font-family:inherit}
+input{flex:1 1 12rem;min-width:0;border:1px solid #767676;border-radius:3px}
+input[aria-invalid="true"]{border-color:#b00020}
+button{border:1px solid #767676;border-radius:3px;background:#f2f2f2;color:inherit;cursor:pointer}
+button:hover{background:#e6e6e6}
+:focus-visible{outline:3px solid #0b5fd1;outline-offset:2px}
+#out{margin-top:16px}
+.msg{margin:0 0 8px}
+.msg.err{color:#b00020;font-weight:bold}
+.muted{color:#595959}
+.ports{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0;padding:0;list-style:none}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;margin-top:8px;min-width:16rem}
+caption{text-align:left;font-weight:bold;padding-bottom:4px}
+td,th{border:1px solid #ccc;padding:4px 10px;text-align:left}
+td.h,th.h{text-align:right;font-variant-numeric:tabular-nums}
+th{background:#f6f6f6}
+.note{margin-top:12px;font-size:14px}
+</style>
+</head>
+<body>
+<h1>Tide lookup</h1>
+<form id="f" novalidate>
+  <label for="port">Port name</label>
+  <input id="port" list="ports" placeholder="e.g. Kellmouth" autocomplete="off" autocapitalize="words" spellcheck="false" aria-describedby="out">
+  <datalist id="ports"></datalist>
+  <button type="submit">Search</button>
+</form>
+<div id="out" role="status" aria-live="polite">
+  <p class="muted msg">Enter a port name to see its high and low tides.</p>
+</div>
+<script>
+const DATA={"Kellmouth":[["04:12","High","4.1 m"],["10:30","Low","0.6 m"],["16:44","High","4.3 m"],["22:51","Low","0.5 m"]],"Port Arnley":[["05:02","High","3.2 m"],["11:19","Low","0.9 m"]]};
+const input=document.getElementById('port');
+const out=document.getElementById('out');
+const names=Object.keys(DATA);
+
+names.forEach(n=>{const o=document.createElement('option');o.value=n;document.getElementById('ports').appendChild(o)});
+
+function el(tag,cls,text){
+  const e=document.createElement(tag);
+  if(cls)e.className=cls;
+  if(text!==undefined)e.textContent=text;
+  return e;
+}
+
+function find(q){
+  const k=q.toLowerCase();
+  const exact=names.find(n=>n.toLowerCase()===k);
+  if(exact)return exact;
+  const part=names.filter(n=>n.toLowerCase().startsWith(k));
+  return part.length===1?part[0]:null;
+}
+
+function suggest(parent){
+  const ul=el('ul','ports');
+  names.forEach(n=>{
+    const li=document.createElement('li');
+    const b=el('button',null,n);
+    b.type='button';
+    b.addEventListener('click',()=>{input.value=n;go();input.focus()});
+    li.appendChild(b);ul.appendChild(li);
+  });
+  parent.appendChild(ul);
+}
+
+function show(node){out.replaceChildren(...node)}
+
+function go(){
+  const q=input.value.trim();
+  if(!q){
+    input.setAttribute('aria-invalid','true');
+    const p=el('p','msg err','Enter a port name to search.');
+    const w=el('p','muted msg','Available ports:');
+    show([p,w]);suggest(out);
+    input.focus();
+    return;
+  }
+  const name=find(q);
+  if(!name){
+    input.setAttribute('aria-invalid','true');
+    const p=el('p','msg err','No tide times for \u201C'+q+'\u201D.');
+    p.style.overflowWrap='anywhere';
+    const w=el('p','muted msg','Check the spelling, or pick one of the ports we have:');
+    show([p,w]);suggest(out);
+    return;
+  }
+  input.removeAttribute('aria-invalid');
+  input.value=name;
+  const wrap=el('div','scroll');
+  const t=document.createElement('table');
+  t.appendChild(el('caption',null,'Tides for '+name));
+  const head=document.createElement('tr');
+  [['Time',''],['Tide',''],['Height','h']].forEach(([h,c])=>{
+    const th=el('th',c,h);th.scope='col';head.appendChild(th);
+  });
+  const thead=document.createElement('thead');thead.appendChild(head);t.appendChild(thead);
+  const tb=document.createElement('tbody');
+  DATA[name].forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.appendChild(el('td',null,r[0]));
+    tr.appendChild(el('td',null,r[1]));
+    tr.appendChild(el('td','h',r[2]));
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);wrap.appendChild(t);
+  show([wrap]);
+}
+
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();go()});
+input.addEventListener('input',()=>input.removeAttribute('aria-invalid'));
+</script>
+</body>
+</html>

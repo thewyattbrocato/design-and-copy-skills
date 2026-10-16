@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples – Water Quality Lab Portal</title>
+<style>
+  :root {
+    --bg: #f5f7f9; --card: #fff; --ink: #1b2a33; --muted: #5b6b75; --line: #dde4e9;
+    --accent: #0a6c8f; --accent-ink: #fff; --ok: #1b7a4b; --warn: #9a5b00; --bad: #b3261e;
+    --focus: #0a6c8f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11181c; --card: #19232a; --ink: #e6edf1; --muted: #9bacb6; --line: #2b3943;
+      --accent: #4cb4d6; --accent-ink: #06222c; --ok: #5fcf93; --warn: #f0b255; --bad: #ff8a80;
+      --focus: #4cb4d6;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    background: var(--card); border-bottom: 1px solid var(--line);
+    padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;
+  }
+  header strong { font-size: 16px; }
+  header span { color: var(--muted); font-size: 13px; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+  .head { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
+  h1 { font-size: 22px; margin: 0; }
+  .head p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer; border-radius: 6px;
+    padding: 9px 16px; border: 1px solid var(--accent);
+    background: var(--accent); color: var(--accent-ink);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  button.secondary { background: transparent; color: var(--accent); }
+  button:focus-visible, a.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  button[aria-disabled="true"] { opacity: .65; cursor: progress; }
+  .spinner {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid currentColor; border-right-color: transparent;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #status { margin-bottom: 16px; }
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-left-width: 4px;
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .panel.working { border-left-color: var(--accent); }
+  .panel.done { border-left-color: var(--ok); }
+  .panel.err { border-left-color: var(--bad); }
+  .panel .row { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between; align-items: center; }
+  .panel h2 { font-size: 15px; margin: 0; }
+  .panel p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+  .bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 12px; position: relative; }
+  .bar i {
+    position: absolute; inset: 0 auto 0 0; width: 35%; background: var(--accent); border-radius: 3px;
+    animation: slide 1.4s ease-in-out infinite;
+  }
+  @keyframes slide { 0% { left: -35%; } 100% { left: 100%; } }
+  @media (prefers-reduced-motion: reduce) {
+    .spinner { animation-duration: 2.4s; }
+    .bar i { animation: none; width: 100%; opacity: .5; }
+  }
+  .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  a.btn {
+    font-weight: 600; text-decoration: none; border-radius: 6px; padding: 9px 16px;
+    background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent);
+  }
+  .elapsed { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
+
+  .tablewrap { background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  caption { text-align: left; font-weight: 600; padding: 12px 14px; }
+  th, td { padding: 9px 14px; text-align: left; border-top: 1px solid var(--line); white-space: nowrap; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { font-weight: 600; font-size: 13px; }
+  .pass { color: var(--ok); } .review { color: var(--warn); } .fail { color: var(--bad); }
+</style>
+</head>
+<body>
+<header><strong>Water Quality Lab Portal</strong><span>Samples</span></header>
+<main>
+  <div class="head">
+    <div>
+      <h1>Recent samples</h1>
+      <p>Season 2026 · 6 of 412 samples shown</p>
+    </div>
+    <button id="exportBtn" type="button">Export season report</button>
+  </div>
+
+  <div id="status" role="status" aria-live="polite"></div>
+
+  <div class="tablewrap">
+    <table>
+      <caption>Latest results</caption>
+      <thead>
+        <tr><th>Sample</th><th>Site</th><th>Collected</th><th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>WQ-2026-0412</td><td>Cedar Creek Intake</td><td>Oct 8, 2026</td><td class="num">7.4</td><td class="num">1.2</td><td><span class="tag pass">Pass</span></td></tr>
+        <tr><td>WQ-2026-0411</td><td>North Reservoir</td><td>Oct 8, 2026</td><td class="num">7.1</td><td class="num">0.8</td><td><span class="tag pass">Pass</span></td></tr>
+        <tr><td>WQ-2026-0410</td><td>Mill Road Well 3</td><td>Oct 7, 2026</td><td class="num">6.4</td><td class="num">3.9</td><td><span class="tag review">Review</span></td></tr>
+        <tr><td>WQ-2026-0409</td><td>Harbor Outfall</td><td>Oct 7, 2026</td><td class="num">8.9</td><td class="num">6.3</td><td><span class="tag fail">Fail</span></td></tr>
+        <tr><td>WQ-2026-0408</td><td>Cedar Creek Intake</td><td>Oct 6, 2026</td><td class="num">7.5</td><td class="num">1.0</td><td><span class="tag pass">Pass</span></td></tr>
+        <tr><td>WQ-2026-0407</td><td>East Treatment Plant</td><td>Oct 6, 2026</td><td class="num">7.2</td><td class="num">0.6</td><td><span class="tag pass">Pass</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+(function () {
+  var DURATION_MS = 25000;
+  var btn = document.getElementById('exportBtn');
+  var box = document.getElementById('status');
+  var timer, tick, started, blobUrl;
+
+  function fmt(s) { return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+
+  function setIdleButton() {
+    btn.removeAttribute('aria-disabled');
+    btn.textContent = 'Export season report';
+  }
+
+  function warnLeave(e) { e.preventDefault(); e.returnValue = ''; }
+
+  function start() {
+    if (btn.getAttribute('aria-disabled') === 'true') return;
+    if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+    started = Date.now();
+    btn.setAttribute('aria-disabled', 'true');
+    btn.innerHTML = '<span class="spinner" aria-hidden="true"></span> Exporting…';
+    box.innerHTML =
+      '<div class="panel working">' +
+        '<div class="row"><h2>Preparing your season report</h2><span class="elapsed" id="elapsed" aria-hidden="true">0:00</span></div>' +
+        '<p>This usually takes about 30 seconds. You can keep browsing the table; the download will appear here when it’s ready.</p>' +
+        '<div class="bar" aria-hidden="true"><i></i></div>' +
+        '<div class="actions"><button type="button" class="secondary" id="cancelBtn">Cancel</button></div>' +
+      '</div>';
+    document.getElementById('cancelBtn').addEventListener('click', cancel);
+    window.addEventListener('beforeunload', warnLeave);
+    tick = setInterval(function () {
+      var el = document.getElementById('elapsed');
+      if (el) el.textContent = fmt(Math.round((Date.now() - started) / 1000));
+    }, 500);
+    timer = setTimeout(finish, DURATION_MS);
+  }
+
+  function stop() {
+    clearTimeout(timer); clearInterval(tick);
+    window.removeEventListener('beforeunload', warnLeave);
+    setIdleButton();
+  }
+
+  function cancel() {
+    stop();
+    box.innerHTML = '<div class="panel err"><h2>Export canceled</h2><p>No file was created. You can start again whenever you like.</p></div>';
+    btn.focus();
+  }
+
+  function finish() {
+    stop();
+    var csv = 'sample,site,collected,ph,turbidity_ntu,status\n' +
+      'WQ-2026-0412,Cedar Creek Intake,2026-10-08,7.4,1.2,Pass\n' +
+      'WQ-2026-0411,North Reservoir,2026-10-08,7.1,0.8,Pass\n' +
+      'WQ-2026-0410,Mill Road Well 3,2026-10-07,6.4,3.9,Review\n' +
+      'WQ-2026-0409,Harbor Outfall,2026-10-07,8.9,6.3,Fail\n' +
+      'WQ-2026-0408,Cedar Creek Intake,2026-10-06,7.5,1.0,Pass\n' +
+      'WQ-2026-0407,East Treatment Plant,2026-10-06,7.2,0.6,Pass\n';
+    blobUrl = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    var secs = Math.round((Date.now() - started) / 1000);
+    box.innerHTML =
+      '<div class="panel done">' +
+        '<h2>Season report ready</h2>' +
+        '<p>Finished in ' + secs + ' seconds. File: season-report-2026.csv</p>' +
+        '<div class="actions"><a class="btn" id="dl" href="' + blobUrl + '" download="season-report-2026.csv">Download report</a></div>' +
+      '</div>';
+    document.getElementById('dl').focus();
+  }
+
+  btn.addEventListener('click', start);
+})();
+</script>
+</body>
+</html>

@@ -4,88 +4,98 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lantern Row Night Market</title>
+<!-- Note: Oct 17 2026 falls on a Saturday. The copy below follows the brief (Friday to Sunday, October 17 to 19); confirm the year/weekdays before launch. -->
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; }
   body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: #120d2b;
-    color: #fff8ee;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #120c24;
+    color: #fff;
   }
 
   .hero {
     position: relative;
-    isolation: isolate;
     min-height: 100vh;
     min-height: 100svh;
     display: grid;
     place-items: center;
-    padding: clamp(2rem, 6vw, 5rem) 1.5rem clamp(9rem, 22vw, 14rem);
     overflow: hidden;
-    text-align: center;
+    isolation: isolate;
+    /* dusk sky: night at top, plum, rose, then ember glow at the horizon */
     background:
-      radial-gradient(120% 55% at 50% 100%, rgba(255, 170, 80, .75) 0%, rgba(255, 120, 90, .35) 40%, transparent 70%),
-      linear-gradient(180deg, #14103a 0%, #2b1a5c 30%, #5a2a74 55%, #a8406f 78%, #e8704f 100%);
+      radial-gradient(ellipse 80% 40% at 50% 100%, rgba(255, 150, 70, .75), transparent 70%),
+      radial-gradient(ellipse 50% 30% at 82% 22%, rgba(255, 120, 150, .18), transparent 70%),
+      linear-gradient(180deg,
+        #0f0a26 0%,
+        #231445 28%,
+        #4a1d5c 52%,
+        #9a3566 72%,
+        #e0675a 88%,
+        #f7a65a 100%);
   }
 
-  /* stars */
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 45% 0;
-    z-index: -3;
+  /* faint stars */
+  .stars {
+    position: absolute; inset: 0 0 45% 0; z-index: -3;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent),
+      radial-gradient(1px 1px at 27% 8%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 44% 22%, #ffe9f3, transparent),
+      radial-gradient(1px 1px at 58% 10%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 73% 16%, #fff, transparent),
+      radial-gradient(1px 1px at 88% 7%, #ffe9f3, transparent),
+      radial-gradient(1px 1px at 36% 34%, #fff, transparent),
+      radial-gradient(1px 1px at 93% 30%, #fff, transparent),
+      radial-gradient(1px 1px at 6% 38%, #fff, transparent);
+    opacity: .7;
+  }
+
+  /* string lights */
+  .lights {
+    position: absolute; left: 0; right: 0; top: 0; height: 90px; z-index: -2;
     background:
-      radial-gradient(1.5px 1.5px at 12% 18%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 27% 8%, #fff 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 41% 24%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 58% 12%, #fff 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 73% 20%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 88% 9%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 94% 30%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 6% 36%, #fff 50%, transparent 51%);
-    opacity: .75;
-    animation: twinkle 6s ease-in-out infinite alternate;
+      radial-gradient(circle at center, #ffd98a 0 3px, rgba(255, 190, 90, .55) 4px, transparent 10px)
+      0 38px / 56px 28px repeat-x,
+      radial-gradient(circle at center, #ffb4c8 0 3px, rgba(255, 130, 170, .5) 4px, transparent 10px)
+      28px 52px / 56px 28px repeat-x;
+    -webkit-mask: linear-gradient(180deg, #000 60%, transparent);
+            mask: linear-gradient(180deg, #000 60%, transparent);
+  }
+  .lights::before {
+    content: ""; position: absolute; left: -5%; right: -5%; top: 20px; height: 40px;
+    border-bottom: 2px solid rgba(20, 10, 40, .8);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
   }
 
-  /* soft scrim so text stays readable over the brighter parts of the sky */
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background: radial-gradient(60% 50% at 50% 45%, rgba(20, 12, 50, .55), transparent 100%);
-  }
-
-  /* string of lanterns */
-  .lanterns {
-    position: absolute;
-    left: 0; right: 0;
-    bottom: clamp(3rem, 9vw, 6rem);
-    height: 90px;
-    z-index: -1;
-    background:
-      radial-gradient(circle at 50% 50%, #fff3c4 0 4px, #ffb347 8px, rgba(255, 150, 60, .35) 16px, transparent 26px)
-      0 0 / 110px 90px repeat-x,
-      radial-gradient(circle at 50% 50%, #ffe2e2 0 3px, #ff7a6b 7px, rgba(255, 100, 90, .3) 14px, transparent 22px)
-      55px 30px / 110px 90px repeat-x;
-    filter: drop-shadow(0 0 6px rgba(255, 170, 80, .6));
-  }
-
-  /* market stall silhouette */
+  /* stall silhouettes on the horizon */
   .skyline {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: clamp(3.5rem, 10vw, 6.5rem);
-    z-index: -1;
-    background: #0e0a22;
+    position: absolute; left: 0; right: 0; bottom: 0; height: 22%; min-height: 120px; z-index: -1;
+    background: #160b22;
     clip-path: polygon(
-      0 60%, 6% 60%, 10% 25%, 14% 60%, 22% 60%, 22% 45%, 30% 45%, 30% 60%,
-      38% 60%, 42% 18%, 46% 60%, 56% 60%, 56% 40%, 64% 40%, 64% 60%,
-      72% 60%, 76% 22%, 80% 60%, 88% 60%, 92% 30%, 96% 60%, 100% 60%, 100% 100%, 0 100%
-    );
+      0 100%, 0 62%, 5% 62%, 8% 38%, 11% 62%, 16% 62%, 16% 70%, 22% 70%,
+      25% 42%, 28% 70%, 34% 70%, 34% 58%, 40% 58%, 43% 30%, 46% 58%, 52% 58%,
+      52% 68%, 58% 68%, 61% 40%, 64% 68%, 70% 68%, 70% 56%, 76% 56%, 79% 34%,
+      82% 56%, 88% 56%, 88% 66%, 94% 66%, 97% 44%, 100% 66%, 100% 100%);
+  }
+  .skyline::after {
+    /* warm lamp glow along the ground */
+    content: ""; position: absolute; inset: auto 0 0 0; height: 40%;
+    background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255, 170, 80, .35), transparent 70%);
   }
 
-  .content { max-width: 52rem; }
+  /* soft darkening behind the text for legibility */
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(ellipse 70% 50% at 50% 45%, rgba(15, 8, 35, .5), transparent 75%);
+  }
+
+  .content {
+    width: min(100% - 2.5rem, 52rem);
+    padding: 7rem 0 9rem;
+    text-align: center;
+    text-shadow: 0 2px 24px rgba(15, 8, 35, .55);
+  }
 
   .eyebrow {
     margin: 0 0 1.25rem;
@@ -93,68 +103,74 @@
     font-weight: 600;
     letter-spacing: .28em;
     text-transform: uppercase;
-    color: #ffd48a;
+    color: #ffd98a;
   }
 
   h1 {
     margin: 0;
-    font-size: clamp(3rem, 10vw, 7rem);
+    font-size: clamp(3rem, 11vw, 7.5rem);
     line-height: .95;
     font-weight: 800;
-    letter-spacing: -.02em;
+    letter-spacing: -.03em;
     text-wrap: balance;
-    text-shadow: 0 2px 24px rgba(20, 8, 50, .6), 0 0 60px rgba(255, 170, 80, .25);
   }
-  h1 span { display: block; color: #ffc46b; }
-
-  .dates {
-    margin: 1.75rem 0 .5rem;
-    font-size: clamp(1.15rem, 3vw, 1.75rem);
-    font-weight: 600;
-    text-shadow: 0 1px 12px rgba(20, 8, 50, .7);
+  h1 span {
+    display: block;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -.01em;
+    font-size: .5em;
+    line-height: 1.1;
+    margin-top: .15em;
+    color: #ffe3b8;
   }
 
   .tagline {
-    margin: 0 0 2.25rem;
-    font-size: clamp(1rem, 2.4vw, 1.3rem);
-    color: #fbe9df;
-    text-shadow: 0 1px 12px rgba(20, 8, 50, .7);
+    margin: 1.75rem auto 0;
+    max-width: 30ch;
+    font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+    line-height: 1.4;
+    color: #fff;
+    text-wrap: balance;
   }
 
   .cta {
     display: inline-block;
+    margin-top: 2.25rem;
     padding: 1rem 2.4rem;
     border-radius: 999px;
-    background: #ffc46b;
-    color: #2a1238;
+    background: #ffc65c;
+    color: #2a1237;
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: .02em;
     text-decoration: none;
-    box-shadow: 0 0 0 0 rgba(255, 196, 107, .5), 0 8px 30px rgba(10, 5, 30, .45);
-    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    text-shadow: none;
+    box-shadow: 0 6px 28px rgba(255, 170, 70, .45);
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
   }
-  .cta:hover { background: #ffd48a; transform: translateY(-2px); box-shadow: 0 0 0 6px rgba(255, 196, 107, .25), 0 10px 34px rgba(10, 5, 30, .5); }
+  .cta:hover { background: #ffd47f; transform: translateY(-2px); box-shadow: 0 10px 34px rgba(255, 170, 70, .55); }
+  .cta:active { transform: translateY(0); }
   .cta:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 
-  @keyframes twinkle { from { opacity: .45; } to { opacity: .9; } }
   @media (prefers-reduced-motion: reduce) {
-    .hero::before { animation: none; }
     .cta { transition: none; }
+    .cta:hover { transform: none; }
   }
 </style>
 </head>
 <body>
   <header class="hero">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="lights" aria-hidden="true"></div>
+    <div class="skyline" aria-hidden="true"></div>
+
     <div class="content">
-      <p class="eyebrow">Friday – Sunday</p>
+      <p class="eyebrow">Friday to Sunday &middot; October 17&ndash;19</p>
       <h1>Lantern Row <span>Night Market</span></h1>
-      <p class="dates">October 17 – 19</p>
       <p class="tagline">Food, crafts and live music after dark</p>
       <a class="cta" href="#tickets">Get tickets</a>
     </div>
-    <div class="lanterns" aria-hidden="true"></div>
-    <div class="skyline" aria-hidden="true"></div>
   </header>
 </body>
 </html>

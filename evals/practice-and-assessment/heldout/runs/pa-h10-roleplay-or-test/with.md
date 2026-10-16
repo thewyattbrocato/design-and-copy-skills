@@ -1,16 +1,16 @@
-**Do B, but restructure it so the team lead isn't the bottleneck. Don't do A.**
+**Do B, but change how it's run so it doesn't swamp the team lead.** A 40-question multiple choice test measures whether a rep can recognize a good rebuttal. The job is saying one live, to a skeptical homeowner. A test score would tell your VP little about that skill, however easy it is to scale.
 
-**Why not A.** Objection handling is a spoken skill. A 40-question multiple choice test measures recognizing a good answer, not producing one live while a homeowner says "I need to talk to my spouse." Reps could score well and still freeze on the phone. Auto-scoring is only cheap because it measures something easier. It also gives you a one-time, same-day score, which doesn't show the skill will hold.
+**Why B fits the skill:** Objection handling is a spoken skill, and role-play is the closest thing to the real call. The feedback after each round is where most of the learning happens.
 
-**Why B, and how to cut the lead's load.** B tests the real behavior. The 15 × 3 × 20 minutes is 15 hours of lead time. You can reduce that:
+**Making B affordable for the team lead:**
+- **Cost:** 15 reps × 3 role-plays × 20 min is about 15 hours of live time if the lead runs every one. That's the real constraint.
+- **Pair reps for prep and practice.** Reps role-play each other with a one-page scenario card and a short rubric. The lead only joins for the scored round.
+- **Run the three rounds on different days.** Doing them across days lets reps improve between rounds, and the lead's load stays manageable.
+- **Share the load.** Ask one or two experienced reps or a manager to co-score using the same rubric. This also gets you consistent scoring.
+- **Use a short rubric the reps see beforehand.** Three to five observable behaviors work well, for example "acknowledges the concern before answering" and "asks one question to find the real objection". Feedback stays quick because the lead is checking against the rubric.
 
-- **Pair reps up.** Rep A plays the homeowner and rep B sells, then they swap. The lead observes and gives feedback on only one or two of the three rounds. This cuts lead time by roughly half or more.
-- **Use a short rubric.** A scorecard with 3–4 observable behaviors, such as acknowledging the concern before responding, asking one clarifying question, and proposing a specific next step. Peers can score with it, and the lead's feedback becomes quick spot checks.
-- **Use the prep time.** Give a one-page objection cheat sheet (your real top objections, with [your approved responses]). Reps rehearse in pairs during prep. This is practice, not dead time.
-- **Spread the sessions out.** Put round 1 on day 1 and the later rounds on later days. A skill checked on a later day with fresh scenarios shows more than one same-day pass.
+**What to keep from A:** Put the objection responses, pricing facts and policies on a one-page reference sheet that reps can use during prep. If the VP wants something that scales, a short, open-book scenario quiz ("A homeowner says X. What do you say next?") could be an optional warm-up. It shouldn't replace the live practice or be treated as proof of skill.
 
-**For your VP.** The scaling worry is legitimate, but 15 reps is small. Offer a hybrid: a short scenario-based quiz (about 10 questions, each a rep in a specific situation choosing a next move) as the pre-work, so role-play time goes to the harder judgment. That keeps something auto-scored without making it the verdict. The pass criterion for onboarding should be the observed role-play against the rubric.
+**For the VP:** The rubric scores give you a record per rep, so you still have something to show. You can compare them later against numbers you already track, such as [current appointment-set or close rate]. A pass on a quiz can't be compared that way.
 
-**Proof it worked.** Pick a metric you already track, such as [current appointment-set rate] or [call-to-quote conversion], and compare ramped reps against it at [30/60 days]. I haven't assumed any baseline numbers here.
-
-If the team lead truly can't spare even the reduced time, the fallback is a second senior rep or a top performer running the observer role, not a switch to A.
+If the lead really can't spare the time even with this setup, shrink B to two rounds before dropping to A. Two live rounds teach more than 40 questions.

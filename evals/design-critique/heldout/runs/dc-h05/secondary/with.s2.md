@@ -1,13 +1,9 @@
-I can't review the site yet, so I have no findings to give you. Two things block it:
+I can't tear apart the site because I can't see it. I have no web-fetch tool here, and `.example` is a reserved domain that won't resolve even if I could fetch it. Anything I said about the page would be made up.
 
-- **`sundial-sauna.example` can't be reached.** The `.example` TLD is reserved for documentation and never resolves, so this is probably a placeholder for your real domain.
-- **I have no web fetch tool here.** I can only read local files, and the working directory has no site source that I can see.
+Here's how to get a real critique:
 
-To get the brutal review you asked for, send me one of these:
+1. **Paste the booking flow.** Send the step-by-step text, or screenshots of each screen in order, from first click to confirmation. Include error states and what happens on mobile if you can.
+2. **Point me at the source.** If the site lives in a repo on this machine, give me the path. I can read the booking code and check validation, error handling, and payment logic directly.
+3. **Share analytics.** Funnel drop-off by step, if you have it, would show whether the booking flow is actually the problem or just the place you're looking.
 
-1. **The real URL.** I still can't load it, so this only helps if you can also send 2 or 3 of the items below.
-2. **Screenshots** of the homepage, each booking step, the payment step, and the confirmation or error states. Mobile screenshots of the booking flow are the most useful.
-3. **A step-by-step walkthrough of the booking flow.** Include the number of steps, every field asked for, whether an account is required, where the price first appears, the cancellation and deposit terms, and what happens when a slot is unavailable.
-4. **The source**, if the site is in a repo on your machine. Point me at the booking components and I'll read them.
-
-With the booking flow in hand, I'll rank the problems by severity and include a fix for each. I'll also say which part of the flow is actually the main drop-off point, so you're not guessing whether it's the booking flow or something upstream like the homepage or pricing page.
+Once I have one of those, I'll do a full critique. I'll rank findings by severity, say which problems are likely costing you bookings and which are cosmetic, and give a fix order. If the flow turns out to be fine and the real issue is traffic or the offer, I'll say that too.

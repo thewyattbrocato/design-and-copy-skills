@@ -1,16 +1,7 @@
-Your numbers are all real and come from the fact sheet, so I kept them blunt. The copy gives the seat count, the closing date and the reason for each.
+**Security built to be verified**
 
-**Registration banner**
+Brindle Backup holds a SOC 2 Type II report, issued in August 2026. Your data is encrypted with AES-256 at rest and TLS 1.3 in transit. Our uptime was 99.95% over the 12 months ending September 30, 2026, measured on our public status page, so you can check it yourself. And we have had no customer data breaches since we were founded in 2019.
 
-> **Only 9 places left. Registration closes Monday 3 November, or sooner if they go first.**
-> Saltmarsh Paddle Weekend, 15–16 November. £145. Beginners welcome. **Register at tidewrack.example/paddle**
+That's 69 words in total, including the headline.
 
-**Email**
-
-Subject: 9 places left. Registration closes 3 November
-
-> Only 9 of 40 places remain for the Saltmarsh Paddle Weekend (Saturday 15 and Sunday 16 November). Registration closes Monday 3 November, or sooner if those 9 go first. £145 covers two guided paddles, kayak and kit hire, and Saturday lunch. Beginners welcome; 16 or over. Meet at Brightwell Quay car park, 8:30am both days. Book now: tidewrack.example/paddle
-
-The body is about 58 words.
-
-The "9 places" figure is as of today, 6 October. Before you send the email or leave the banner up, check it against the live booking count. If places go, update the number. If it sells out, take the banner down. The banner's "or sooner" wording stays true either way.
+I added "so you can check it yourself" because the status page is public. I also kept the uptime figure tied to its 12-month window, since the date range is part of the claim.

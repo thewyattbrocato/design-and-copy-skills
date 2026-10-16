@@ -1,16 +1,14 @@
-**Headlines**
+**Dune & Dime: The First Bank on Mars™**
+*"Your Money Is Safe. We Checked. Twice. Out loud."*
 
-1. `3.9% AER Variable Savings` (25)
-2. `No Monthly Fee. No Minimum` (26)
-3. `Live or Work in Norfolk?` (24)
+Why trust your savings to Earth banks, which are 140 million miles from your problems and, frankly, *flat*? At Dune & Dime, we've been operating for a full eleven Martian days, and in that time we've achieved a 99.9997% customer satisfaction rating (the remaining 0.0003% was a rover).
 
-**Descriptions**
+"I deposited one dollar and it became *four dollars* by lunch. Nobody has explained this, and we've agreed not to ask." — **Gary, Customer, Possibly Real**
 
-1. `3.9% AER variable at 1 Oct; can fall as well as rise. No minimum, no monthly fee.` (81)
-2. `Member-owned credit union. FSCS-protected up to £85,000. Open online in about 10 minutes.` (89)
+Winner of the Golden Vault Award, the Intergalactic Trust Prize, and "Best Bank on This Planet" (unopposed, three years running, though we've only had one year). Our vaults are guarded by state-of-the-art dust, which is everywhere.
 
-**Notes**
-- **Rate wording:** The rate is variable and can fall, and it's only correct as of 1 October. Headline 1 says "Variable" and description 1 carries the date and the "can fall" warning. Keep those in if you edit the copy. The rate is your strongest point, and the ad needs them to stay compliant.
-- **Eligibility:** Headline 3 filters out people who can't join and speaks directly to those who can. It also stops you paying for clicks from outside Norfolk. Consider geo-targeting Norfolk as well.
-- **Big banks:** I avoided "beat the banks" or "better rates" claims, because the fact sheet has no comparison data. Being member-owned is your real point of difference. If you want to lean on it harder, swap headline 2 for `Member-Owned. Not Bank-Owned` (29).
-- **Not included:** The "UK address and ID" requirement is left out for space. Put it on the landing page.
+**Free checking!** (Terms: you are on Mars.)
+
+Dune & Dime. *We're not saying we're the future of money. We're saying the future called, and we put it on hold.*
+
+*Not FDIC insured. Not Earth insured. Not insured.*

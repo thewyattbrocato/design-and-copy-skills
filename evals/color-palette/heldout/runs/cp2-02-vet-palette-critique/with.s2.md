@@ -1,31 +1,32 @@
-**Short answer:** every color sits in the same narrow band of hue, lightness and saturation, so nothing stands out from anything else. I worked the contrast ratios out by hand, so treat them as estimates of about ±0.1.
+**The problem is that every color is the same color.** I worked these ratios out by hand (WCAG 2.x), so treat them as estimates.
 
-**What's going wrong, by impact**
+| Pair | Ratio | Needed |
+|---|---|---|
+| Body text #a39b82 on background #cfc8b0 | about 1.7 : 1 | 4.5 |
+| Links #9c8b5e on background | about 2.0 : 1 | 4.5 for link text |
+| Primary button #8a7f5c on background | about 2.4 : 1 | 3 |
+| Secondary button #7d8a6b on background | about 2.2 : 1 | 3 |
+| Error #b5654a on background | about 2.5 : 1 | 4.5 |
+| Primary vs. secondary button | about 1.1 : 1 | visibly different |
 
-1. **Body text is nearly invisible.** `#a39b82` on `#cfc8b0` is about **1.7:1**. The floor is 4.5:1. This is the main reason the app looks tired, because every paragraph fades into the page.
-2. **The background is mid-tone khaki.** At roughly 58% luminance it reads as dingy rather than warm. Light backgrounds feel friendly when they're clearly light, like cream. The khaki also takes away the headroom that the buttons and text need.
-3. **The buttons, link and page are all the same dull yellow-olive.** The two buttons differ by only about **1.09:1** in lightness, so primary and secondary look like the same button. The link `#9c8b5e` on the page is about **2.0:1**, which is too faint to read as a link.
-4. **Nothing has real color.** All of them are low-saturation, so there is no lead color to look warm or alive. Muddy greens and tans read as "field notes", not "caring vet".
-5. **The error color is too weak to work as an alert.** `#b5654a` is about **2.6:1** on the page, and it has the same dulled look as everything else.
+1. **Everything sits at the same mid lightness.** The background, text, buttons and links are all mid-tone khaki. Nothing is clearly lighter or darker than anything else, so the page has no edges. Your body text is the worst case: it's nearly the same tone as the page it sits on.
+2. **Everything sits in the same hue.** Primary, secondary, link and text are all low-saturation yellow-olive. A user can't tell a button from a link from a paragraph. Your two button colors are close to identical.
+3. **The saturation is low everywhere, and the background is the dullest color.** A grayish-khaki page fills the whole screen, which is where the "muddy and tired" feeling comes from. Warm and friendly usually comes from a light, creamy ground with a few clear, saturated colors on it.
+4. **Error is too quiet.** A muted terracotta at about 2.5 : 1 doesn't read as an alert. It also sits in the same earthy family as everything else.
 
-**Fix**
+**Proposed replacement.** I kept the earthy, green-leaning character but separated the roles by lightness and hue:
 
-| Role | Now | New | Check |
-|---|---|---|---|
-| Page background | `#cfc8b0` | `#faf6ec` (warm cream) | n/a |
-| Body text | `#a39b82` | `#2f2a1e` (warm dark brown) | ~13:1 on background |
-| Primary button | `#8a7f5c` | `#2f7d5b` (fresh green) with white text | ~5.0:1 text, ~4.6:1 edge on background |
-| Secondary button | `#7d8a6b` | `#dcebdd` fill, `#1f5a40` text | ~6.5:1 text; clearly lighter than primary |
-| Links | `#9c8b5e` | `#1f5a40`, underlined | ~7.5:1 on background |
-| Highlight (badges, selected states, not text) | (shared with link) | `#f0b44c` with `#2f2a1e` text | ~7.7:1 text |
-| Error | `#b5654a` | `#a2402a` | ~5.9:1 on background |
+| Role | Value | Check |
+|---|---|---|
+| Page background | #FBF6EA (warm cream) | — |
+| Body text | #2E2A1F (warm near-black) | about 13 : 1 on background |
+| Primary button | #2F6B4F with white text | about 6.3 : 1 text on button, about 5.8 : 1 button on background |
+| Secondary button | #E4EFE6 fill, #2F6B4F text and 1px border | text about 5 : 1 |
+| Links / highlight | #1F6F8B | about 5.2 : 1 on background |
+| Error | #B23A26, with an icon and the word "Error" | about 5.5 : 1 on background |
 
-**Why this works**
-- **Lead color:** green is the one lead color. It suggests care and health, and it avoids the clinical blue of most medical apps. Cream and brown keep it warm.
-- **Amber highlight:** it adds a friendly spark. Keep it small so green stays the lead.
-- **Error color:** error and amber are both warm, so always pair errors with an icon and words, not color alone.
-- **Hover and disabled states:** I haven't set them. Hover can move the primary one step darker, to about `#256548`.
+- **Why green:** it reads as calm and caring for a health product, and it stays close to your current olive.
+- **Why the link color is different:** the blue-teal link can't be mistaken for a button. The green stays reserved for actions.
+- **Why the error is red:** it's clearly separate from the brand green, and the icon and label mean it doesn't depend on color alone.
 
-**Two notes**
-- I changed the hue family on purpose. Tuning the olives alone can't give you lightness contrast and a lively lead color at the same time. If the olive is a brand requirement, I can build a version that keeps it as the lead, with a deeper and more saturated olive for buttons.
-- I had no way to run a contrast checker here, so confirm the figures in one before launch.
+I couldn't run a contrast checker here, so verify these in one before you ship. If you want more warmth, a soft amber like #F2B84B works as a fill for highlights with the dark text on top. Don't use it for text on the cream.

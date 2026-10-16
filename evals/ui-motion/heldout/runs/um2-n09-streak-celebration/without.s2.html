@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillwater – 21-day streak</title>
+<style>
+  /* Design note: fireworks and a slow, soft glow pulse deliver the "huge" feel.
+     Nothing flashes: bursts are rate-limited to under 3 per second, the pulse
+     cycles every 6s at low contrast, and there are no full-screen strobes.
+     This keeps the screen safe for people with photosensitive epilepsy (WCAG 2.3.1).
+     prefers-reduced-motion and the in-page toggle both turn the motion off. */
+  :root {
+    --ink: #eef6f8;
+    --muted: #a9c2cb;
+    --accent: #9fe3d6;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #06141c;
+    overflow: hidden;
+  }
+  .stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: radial-gradient(ellipse at 50% 110%, #12424f 0%, #0a2230 45%, #06141c 100%);
+  }
+  .glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(159,227,214,.22), rgba(159,227,214,0) 60%);
+    animation: breathe 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: .55; transform: scale(.96); }
+    50%      { opacity: 1;   transform: scale(1.04); }
+  }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .card {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    max-width: 34rem;
+    animation: rise .9s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .ring {
+    width: 9rem; height: 9rem; margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    border: 2px solid rgba(159,227,214,.55);
+    box-shadow: 0 0 40px rgba(159,227,214,.25), inset 0 0 30px rgba(159,227,214,.12);
+    animation: ring 6s ease-in-out infinite;
+  }
+  @keyframes ring {
+    0%, 100% { box-shadow: 0 0 30px rgba(159,227,214,.18), inset 0 0 24px rgba(159,227,214,.08); }
+    50%      { box-shadow: 0 0 56px rgba(159,227,214,.35), inset 0 0 36px rgba(159,227,214,.16); }
+  }
+  .num { font-size: 4.25rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+  .num small { display: block; font-size: .8rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-top: .35rem; }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 0 0 .75rem; font-weight: 700; letter-spacing: -.01em; }
+  p { margin: 0 auto 2rem; color: var(--muted); font-size: 1.1rem; line-height: 1.5; max-width: 28rem; }
+  .actions { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 999px; padding: .85rem 1.75rem;
+    border: 1px solid transparent; min-height: 44px;
+  }
+  .primary { background: var(--accent); color: #06232b; font-weight: 700; }
+  .primary:hover { background: #b5efe4; }
+  .ghost { background: transparent; color: var(--ink); border-color: rgba(238,246,248,.35); }
+  .ghost:hover { background: rgba(238,246,248,.08); }
+  button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .gone { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow, .ring, .card { animation: none; }
+    .glow { opacity: .8; }
+  }
+  body.calm .glow, body.calm .ring, body.calm .card { animation: none; }
+  body.calm .glow { opacity: .8; }
+</style>
+</head>
+<body>
+  <main class="stage" role="dialog" aria-modal="true" aria-labelledby="title" aria-describedby="desc">
+    <div class="glow" aria-hidden="true"></div>
+    <canvas id="fx" aria-hidden="true"></canvas>
+
+    <section class="card">
+      <div class="ring" aria-hidden="true">
+        <div class="num">21<small>days</small></div>
+      </div>
+      <h1 id="title">21 days of showing up</h1>
+      <p id="desc">You've written every day for three weeks. That's a real habit taking root, one quiet page at a time.</p>
+      <div class="actions">
+        <button class="primary" id="done" type="button">Continue</button>
+        <button class="ghost" id="motion" type="button" aria-pressed="false">Calm the effects</button>
+      </div>
+    </section>
+  </main>
+
+<script>
+(() => {
+  const canvas = document.getElementById('fx');
+  const ctx = canvas.getContext('2d');
+  const motionBtn = document.getElementById('motion');
+  const doneBtn = document.getElementById('done');
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  let w = 0, h = 0, dpr = 1;
+  let particles = [];
+  let running = false, raf = 0, lastBurst = 0, last = 0;
+  let calm = mq.matches;
+
+  const palette = [[159,227,214],[255,224,163],[190,214,255],[255,190,200],[220,255,240]];
+  const MIN_GAP = 650; // ms between bursts: ~1.5/s, well under the 3/s flash limit
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = innerWidth; h = innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function burst(x, y) {
+    const base = palette[(Math.random() * palette.length) | 0];
+    const n = 46 + ((Math.random() * 20) | 0);
+    const speed = 1.6 + Math.random() * 1.6;
+    for (let i = 0; i < n; i++) {
+      const a = (Math.PI * 2 * i) / n + Math.random() * .1;
+      const s = speed * (.55 + Math.random() * .45);
+      particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 1, decay: .008 + Math.random() * .008, c: base, r: 1.2 + Math.random() * 1.4 });
+    }
+  }
+
+  function randomBurst() {
+    burst(w * (.15 + Math.random() * .7), h * (.15 + Math.random() * .45));
+  }
+
+  function frame(t) {
+    if (!running) return;
+    const dt = Math.min((t - last) / 16.67, 3) || 1;
+    last = t;
+
+    ctx.clearRect(0, 0, w, h);
+    if (t - lastBurst > MIN_GAP + Math.random() * 500) { randomBurst(); lastBurst = t; }
+
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vx *= .985; p.vy = p.vy * .985 + .03 * dt;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      p.life -= p.decay * dt;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.fillStyle = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},${(p.life * .85).toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    raf = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (running || calm) return;
+    running = true; last = performance.now(); lastBurst = 0;
+    raf = requestAnimationFrame(frame);
+  }
+  function stop() {
+    running = false; cancelAnimationFrame(raf);
+    particles = []; ctx.clearRect(0, 0, w, h);
+  }
+
+  function setCalm(v) {
+    calm = v;
+    document.body.classList.toggle('calm', v);
+    motionBtn.setAttribute('aria-pressed', String(v));
+    motionBtn.textContent = v ? 'Bring back the effects' : 'Calm the effects';
+    v ? stop() : start();
+  }
+
+  motionBtn.addEventListener('click', () => setCalm(!calm));
+  mq.addEventListener && mq.addEventListener('change', e => setCalm(e.matches));
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+  addEventListener('resize', resize);
+
+  function dismiss() {
+    stop();
+    document.querySelector('.stage').classList.add('gone');
+  }
+  doneBtn.addEventListener('click', dismiss);
+  addEventListener('keydown', e => { if (e.key === 'Escape') dismiss(); });
+
+  resize();
+  setCalm(calm);
+  doneBtn.focus();
+})();
+</script>
+</body>
+</html>

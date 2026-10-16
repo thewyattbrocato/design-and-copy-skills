@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Harbour Street Family Clinic – Welcome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* 1rem = 20px at 1920x1080; everything scales from the screen height */
+  html { font-size: min(calc(100vh / 54), calc(100vw / 96)); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; cursor: none; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0b3c5d;
+    color: #ffffff;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3rem 4rem;
+    gap: 2.5rem;
+  }
+
+  header { text-align: center; }
+  .eyebrow {
+    font-size: 2rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #9fd3ee;
+    font-weight: 600;
+  }
+  h1 {
+    font-size: 6.4rem;
+    line-height: 1.1;
+    font-weight: 800;
+    margin-top: 0.6rem;
+  }
+  .rule {
+    width: 12rem; height: 0.4rem; border-radius: 0.2rem;
+    background: #f2b84b; margin: 1.6rem auto 0;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 2.5rem;
+    min-height: 0;
+  }
+  .card {
+    background: #ffffff;
+    color: #0b2a3f;
+    border-radius: 1.6rem;
+    padding: 2.4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+  .card h2 {
+    font-size: 2.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #1d6a96;
+    font-weight: 700;
+  }
+
+  .today .day { font-size: 3.6rem; font-weight: 700; margin-top: 1.2rem; }
+  .today .time { font-size: 7.6rem; font-weight: 800; line-height: 1.1; margin-top: 0.4rem; color: #0b3c5d; }
+  .today .sub { font-size: 2.4rem; margin-top: 1rem; color: #3d5a6e; }
+
+  .week { margin-top: 1.4rem; }
+  .row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 3.2rem; font-weight: 600;
+    padding: 1.3rem 1.4rem;
+    border-radius: 0.9rem;
+  }
+  .row + .row { margin-top: 0.4rem; }
+  .row span:last-child { font-weight: 800; }
+  .row.is-today { background: #fff1d0; outline: 0.2rem solid #f2b84b; }
+
+  .flu {
+    background: #f2b84b;
+    color: #1d1500;
+    border-radius: 1.6rem;
+    padding: 1.8rem 3rem;
+    display: flex; align-items: center; justify-content: center; gap: 2rem;
+    grid-column: 1 / -1;
+    font-size: 4rem; font-weight: 800;
+    text-align: center;
+  }
+  .flu .badge {
+    background: #1d1500; color: #f2b84b;
+    border-radius: 0.8rem; padding: 0.3rem 1.4rem;
+    font-size: 3.2rem;
+  }
+  main { grid-template-rows: 1fr auto; }
+
+  footer {
+    text-align: center;
+    font-size: 4.6rem;
+    font-weight: 700;
+    padding-top: 0.5rem;
+  }
+  footer .msg { color: #ffffff; }
+  footer .msg b { color: #f2b84b; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Welcome to</div>
+    <h1>Harbour Street Family Clinic</h1>
+    <div class="rule"></div>
+  </header>
+
+  <main>
+    <section class="card today" aria-live="polite">
+      <h2>Walk-in hours today</h2>
+      <div class="day" id="day">Today</div>
+      <div class="time" id="time">8:00 – 18:00</div>
+      <div class="sub" id="sub">Walk-ins welcome</div>
+    </section>
+
+    <section class="card">
+      <h2>Walk-in hours</h2>
+      <div class="week">
+        <div class="row" data-days="1,2,3,4,5"><span>Mon – Fri</span><span>8:00 – 18:00</span></div>
+        <div class="row" data-days="6"><span>Saturday</span><span>9:00 – 13:00</span></div>
+      </div>
+    </section>
+
+    <div class="flu">
+      <span class="badge">LEVEL 2</span>
+      <span>The flu clinic is on level 2</span>
+    </div>
+  </main>
+
+  <footer>
+    <div class="msg">Please <b>check in at the desk</b></div>
+  </footer>
+
+<script>
+  (function () {
+    var names = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    function update() {
+      var d = new Date().getDay();
+      var time = document.getElementById("time");
+      var sub = document.getElementById("sub");
+      document.getElementById("day").textContent = names[d];
+      if (d >= 1 && d <= 5) { time.textContent = "8:00 – 18:00"; sub.textContent = "Walk-ins welcome"; }
+      else if (d === 6)     { time.textContent = "9:00 – 13:00"; sub.textContent = "Walk-ins welcome"; }
+      else                  { time.textContent = "Closed"; sub.textContent = "Walk-in hours resume Monday at 8:00"; }
+      var rows = document.querySelectorAll(".row");
+      for (var i = 0; i < rows.length; i++) {
+        var days = rows[i].getAttribute("data-days").split(",");
+        rows[i].classList.toggle("is-today", days.indexOf(String(d)) !== -1);
+      }
+    }
+    update();
+    setInterval(update, 60000);
+  })();
+</script>
+</body>
+</html>

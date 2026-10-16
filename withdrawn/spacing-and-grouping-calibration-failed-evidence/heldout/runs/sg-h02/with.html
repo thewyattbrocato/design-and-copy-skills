@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notification settings · Fernlight</title>
+<style>
+  :root {
+    --s1: 4px;
+    --s2: 8px;
+    --s3: 12px;
+    --s4: 16px;
+    --s5: 24px;
+    --s6: 40px;
+    --s7: 64px;
+
+    --bg: #f4f6f1;
+    --surface: #ffffff;
+    --ink: #1c2a22;
+    --muted: #5b6b61;
+    --rule: #dfe5da;
+    --accent: #2f6b46;
+    --accent-ink: #ffffff;
+    --focus: #1d5fd1;
+    --off: #9aa89f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121a15;
+      --surface: #1a2420;
+      --ink: #e8efe9;
+      --muted: #9fb0a5;
+      --rule: #2b3830;
+      --accent: #6cc28b;
+      --accent-ink: #0d1a12;
+      --focus: #7fb0ff;
+      --off: #55645b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: clamp(var(--s5), 6vw, var(--s7)) var(--s4);
+  }
+  header { margin-bottom: var(--s6); }
+  .brand {
+    display: flex; align-items: center; gap: var(--s2);
+    color: var(--accent); font-weight: 600; font-size: 14px;
+    letter-spacing: .02em; margin-bottom: var(--s4);
+  }
+  .brand svg { width: 20px; height: 20px; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 var(--s2); letter-spacing: -.01em; }
+  header p { margin: 0; color: var(--muted); }
+
+  form { display: flex; flex-direction: column; gap: var(--s6); }
+
+  section h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin: 0 0 var(--s2); font-weight: 600;
+  }
+  .group {
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--rule);
+  }
+  .row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s5);
+    padding: var(--s4) var(--s5);
+    min-height: 64px;
+  }
+  .row + .row { border-top: 1px solid var(--rule); }
+  .text { min-width: 0; }
+  .title { font-weight: 600; display: block; }
+  .desc { color: var(--muted); font-size: 14px; line-height: 1.45; margin: var(--s1) 0 0; }
+
+  /* switch */
+  .switch { position: relative; flex: none; width: 48px; height: 28px; }
+  .switch input {
+    position: absolute; inset: -8px; width: calc(100% + 16px); height: calc(100% + 16px);
+    margin: 0; opacity: 0; cursor: pointer; z-index: 1;
+  }
+  .track {
+    position: absolute; inset: 0; border-radius: 14px; background: var(--off);
+    transition: background .15s;
+  }
+  .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;
+    border-radius: 50%; background: #fff; transition: transform .15s;
+    box-shadow: 0 1px 2px rgba(0,0,0,.25);
+  }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+  .switch input:focus-visible + .track { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  /* fields */
+  .field-row { flex-wrap: wrap; }
+  input[type="time"], input[type="email"] {
+    font: inherit; color: var(--ink); background: var(--bg);
+    border: 1px solid var(--rule); border-radius: 8px;
+    padding: var(--s3) var(--s3); min-height: 44px;
+  }
+  input[type="time"] { width: 140px; }
+  input[type="email"] { width: 100%; }
+  input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .email-row { flex-direction: column; align-items: stretch; gap: var(--s2); }
+  .email-row label.title { margin: 0; }
+  .email-row .desc { margin: 0; }
+
+  .actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--s4); }
+  #status { color: var(--muted); font-size: 14px; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    background: var(--accent); color: var(--accent-ink);
+    border: 0; border-radius: 8px;
+    padding: var(--s3) var(--s5); min-height: 44px;
+  }
+  button:hover { filter: brightness(1.08); }
+
+  @media (max-width: 480px) {
+    .row { padding: var(--s4); gap: var(--s4); }
+    .actions { flex-direction: column-reverse; align-items: stretch; }
+    button { width: 100%; }
+    #status { text-align: center; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9"/><path d="M12 12C12 7 8 4 3 4c0 5 3 8 9 8z"/><path d="M12 15c0-4 3-7 8-7 0 4-3 7-8 7z"/></svg>
+      Fernlight
+    </div>
+    <h1>Notification settings</h1>
+    <p>Choose what we tell you about your greenhouse, and when.</p>
+  </header>
+
+  <form id="settings">
+    <section aria-labelledby="h-alerts">
+      <h2 id="h-alerts">Alerts</h2>
+      <div class="group">
+        <div class="row">
+          <div class="text">
+            <label class="title" for="frost">Frost warning</label>
+            <p class="desc" id="d-frost">Get a heads-up when the temperature is about to drop near freezing.</p>
+          </div>
+          <span class="switch"><input type="checkbox" role="switch" id="frost" aria-describedby="d-frost" checked><span class="track"></span></span>
+        </div>
+        <div class="row">
+          <div class="text">
+            <label class="title" for="soil">Low soil moisture</label>
+            <p class="desc" id="d-soil">Know when your plants are getting thirsty and need watering.</p>
+          </div>
+          <span class="switch"><input type="checkbox" role="switch" id="soil" aria-describedby="d-soil" checked><span class="track"></span></span>
+        </div>
+        <div class="row">
+          <div class="text">
+            <label class="title" for="door">Door left open</label>
+            <p class="desc" id="d-door">Alert me if the greenhouse door stays open for more than a few minutes.</p>
+          </div>
+          <span class="switch"><input type="checkbox" role="switch" id="door" aria-describedby="d-door"><span class="track"></span></span>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-schedule">
+      <h2 id="h-schedule">Schedule</h2>
+      <div class="group">
+        <div class="row">
+          <div class="text">
+            <label class="title" for="qstart">Quiet hours start</label>
+            <p class="desc">Alerts are held back after this time.</p>
+          </div>
+          <input type="time" id="qstart" value="22:00">
+        </div>
+        <div class="row">
+          <div class="text">
+            <label class="title" for="qend">Quiet hours end</label>
+            <p class="desc">Alerts resume at this time.</p>
+          </div>
+          <input type="time" id="qend" value="07:00">
+        </div>
+        <div class="row">
+          <div class="text">
+            <label class="title" for="summary">Daily summary</label>
+            <p class="desc">One message with temperature, moisture and activity highlights.</p>
+          </div>
+          <input type="time" id="summary" value="08:00">
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-account">
+      <h2 id="h-account">Account</h2>
+      <div class="group">
+        <div class="row email-row">
+          <label class="title" for="email">Email address</label>
+          <p class="desc">Notifications and your daily summary are sent here.</p>
+          <input type="email" id="email" autocomplete="email" placeholder="you@example.com" value="">
+        </div>
+      </div>
+    </section>
+
+    <div class="actions">
+      <span id="status" role="status" aria-live="polite"></span>
+      <button type="submit">Save changes</button>
+    </div>
+  </form>
+</main>
+<script>
+  document.getElementById('settings').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var s = document.getElementById('status');
+    s.textContent = 'Changes saved';
+    setTimeout(function () { s.textContent = ''; }, 3000);
+  });
+</script>
+</body>
+</html>

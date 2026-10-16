@@ -1,28 +1,22 @@
-**Partly true, but "just how embroidery works" is too easy an answer.** Thread has a physical minimum width, so fine lines and tiny text will always struggle. But a good embroiderer can handle a lot of that by adjusting the design for stitching, and the favicon problem has nothing to do with embroidery. Both are fixable without a big project.
+Your designer is partly right, but "just how embroidery works" is not a good answer. Embroidery has real physical limits, and a logo designed only for screens will break against them. Those limits are known and can be designed around, and it's the designer's job to do that.
+
+**Why it happens**
+
+- **Thread has a minimum width.** A thread is roughly half a millimeter across, so any line thinner than about that, or any gap narrower than that, fills in or disappears. Hairlines in a logo are the first casualty.
+- **Small text needs bold letterforms.** Serif and light weights have thin strokes and small counters (the open holes in letters like "a," "e," and "o"). At tagline size, the stitches close those counters into a blob.
+- **Digitizing is translation.** Someone converts the artwork into stitch paths. Fine detail gets simplified or dropped, and a logo sent as a flat image or auto-traced file usually comes out worse.
+- **Fabric moves.** Pique and knit polos stretch and pucker, which blurs anything fine.
 
 **Why the favicon is a smudge**
 
-At 32px, the whole logo gets about 32 pixels to work with. Any detail thinner than about 2px disappears or turns into gray noise. The usual causes are thin strokes, a tagline or fine text, subtle gradients, or a light color on a light tab background. The full logo is designed for a 1000px-wide screen, and shrinking it doesn't make it work at 32px.
+The browser shrinks the whole logo to 16 to 32 pixels. A detailed mark, a thin outline, a tagline, or a low-contrast color has nothing left to show at that size. Browsers also show the icon on both light and dark tab bars, so a transparent background can disappear.
 
-**Why the polo came out muddy**
+**What to do (small scope)**
 
-- Stitches have a minimum practical width, roughly 1 mm. Lines thinner than that fill in or merge.
-- Text needs height to be legible. Around 6 mm (¼") tall is a common safe minimum for sans-serif. Thin scripts and serifs break down much sooner. A "little tagline" is often 3–4 mm, which is too small.
-- Knit polos stretch, so the stitching can distort and pull fine detail out of shape.
-- Too many colors or overlapping thread layers pile up and blur.
+1. **Make a simplified mark for small sizes.** Keep the main symbol or initial, drop the tagline, thicken the strokes, use two colors at most, and put the mark on a solid square or circle. Test it at 16px and 32px in Chrome and Safari, in light and dark mode, before approving it.
+2. **Generate the favicon set from that mark.** That means an SVG favicon, a `.ico` containing 16, 32, and 48 px images, and a 180px Apple touch icon. Your designer can do this in an hour or two.
+3. **Ask for an embroidery version of the logo.** It should have no tagline, or the tagline moved to a separate hang tag or back-of-shirt print. It should use bold sans-serif type, a minimum line weight of about 1 to 1.5 mm, and no more than two or three thread colors, since each color adds setup cost. The designer should supply it as a vector file (SVG, AI, or EPS).
+4. **Get a stitch-out sample before you order.** Ask the embroidery shop to digitize the logo and sew one sample on the same polo fabric you'll use. Digitizing is usually a one-time fee per logo, and the sample costs much less than reordering a batch of polos.
+5. **Keep the full logo for the website and PDF deck.** Those are fine. Only the small-use and embroidery versions need the simplified treatment.
 
-**What to do**
-
-1. **Make a small-size mark for the favicon.** Use a simplified version of the logo: bold shapes, thick strokes, no tagline, a solid background, and high contrast. Export it as an SVG favicon, plus 16px, 32px, and 180px PNG versions. Check it in an actual browser tab before you call it done. This is the cheapest fix and probably takes an hour or less.
-
-2. **Make an embroidery version, not a shrunken logo.** Ask the designer or embroiderer for:
-   - A version with a minimum line weight (about 1–1.5 mm) and no gradients.
-   - Two to four thread colors, not a full-color illustration.
-   - The tagline removed from the chest, or made larger and in a bolder font. If you want it, put it on the back or the hem where it can be bigger.
-   - A bold sans-serif for any text.
-
-3. **Ask for a sew-out before the full order.** Most embroidery shops will stitch a test on the same shirt style. Look at it at arm's length, the way a client would. This is the step that catches problems before you're paying for 40 shirts.
-
-4. **Ask the shop if the design was digitized for the fabric and size.** A good shop will tell you what they changed and why. If they say nothing can be changed, get a second quote.
-
-If you want a single sentence for the designer: "Please produce a stitch-ready version with a 1.5 mm minimum line weight, no more than four thread colors, and text no smaller than 6 mm, and show me a sew-out before we run the order."
+Your designer should reasonably include steps 1 and 3 in the job, since they're standard parts of a logo system. If they push back, ask them to show you the small-size and embroidery versions before you pay for any more work.

@@ -1,43 +1,40 @@
-**Subject:** 212 families were turned away last January. This time, your gift counts double.
+**Subject line options**
+- 212 families went home with empty hands. It can't happen again.
+- Your gift gets doubled. We have until December 31.
+- $18,600 in matching funds is still waiting for you
 
-Friend,
+**Preview text:** Every dollar you give today is matched, but only until the $25,000 is gone.
 
-Last January, 212 families came to Eastgate Pantry Network and found empty shelves.
+---
 
-They didn't get a box that day. They got a phone number for another pantry, a promise to try again next week, and a parent who had to tell their kids there would be less for dinner. Some of those families had never asked for help before. It took everything they had to walk through our door, and we had nothing to give them.
+Last January, our shelves ran empty.
 
-That can happen again this winter. It will happen unless we raise the money now.
+We had to turn away **212 families**. Parents who had come in hoping to feed their kids for the week. Grandparents stretching a fixed income. People who had never asked for help before and had finally worked up the courage to walk through our doors. We had to tell them no.
 
-**Right now, a local foundation will match every dollar you give, up to $25,000. The match ends December 31 at 11:59 pm.** Only $6,400 of that match has been claimed. That leaves $18,600 on the table. If it goes unclaimed, it's gone. Every dollar you give today will be doubled, and every one of those dollars buys about four meals at our purchasing prices.
+We don't want to have to say that again this year. We can prevent it, and you can help us do it right now.
 
-Here is what that means:
+A local foundation has committed to **match every donation dollar for dollar, up to $25,000**. That means your gift is doubled. And right now, only **$6,400 of that $25,000 has been claimed.** That leaves **$18,600 in matching funds still on the table.**
 
-- **$25** becomes $50, which is about 200 meals.
-- **$100** becomes $200, which is about 800 meals.
-- **$250** becomes $500, which is about 2,000 meals.
+Here is what that means. At our purchasing prices, every dollar buys about **4 meals**. A $25 gift becomes $50 with the match, which is roughly **200 meals** for a family that is counting on us. Once the full $25,000 is claimed, the match is gone, whether it's December 1 or December 31. Nobody can promise it will still be there if you wait.
 
-We have less than three months until the match expires. The families who depend on us don't get a holiday pause. Their rent, their groceries, and their hunger don't wait until January. Neither can we.
-
-[INSERT A REAL STORY FROM A FAMILY YOU SERVED, WITH THEIR PERMISSION. One specific person, one specific moment, in their own words if possible. This is the most powerful thing in this email.]
-
-Please don't wait until the last week of December. Give now, while the match is still open and your gift can be doubled.
+Please don't let the match slip away while a family goes hungry.
 
 **[DONATE LINK]**
 
-Every family we turn away is a family that came to us at the hardest moment of their year. We don't want to turn anyone else away this winter. With your help, we don't have to.
+The match ends **December 31 at 11:59 pm**. Give today, while your gift still counts twice.
+
+Thank you for standing with your neighbors. Because of you, the shelves stay stocked, and no family gets turned away.
 
 With gratitude and urgency,
 
 Marguerite Holt
 Executive Director, Eastgate Pantry Network
 
-**P.S.** The match closes at 11:59 pm on December 31. Please give today, and if you can, forward this to someone who would want to double their impact too.
-
 ---
 
-**Notes on what I wrote:**
+**Notes for you before sending:**
 
-- **Urgency is tied to real facts only:** the Dec 31 deadline, the $18,600 unclaimed match, and the 212 families from last January. I didn't invent scarcity or countdown language.
-- **The match math:** I assumed each donation is matched 1:1 until the $25,000 cap, so $1 donated becomes $2 and about 8 meals. The $18,600 remaining means donors can unlock about $37,200 in total impact. Confirm the foundation's matching terms match this before sending.
-- **Story placeholder:** I didn't invent a family's story. A real, consented story will move people more than anything I could make up, and fabricated stories can violate donor trust and fundraising rules.
-- **Bracket placeholders:** The donate link and the story need to be filled in before sending.
+- **The meal math is mine, not from your facts.** I assumed a matched donation counts twice (a $25 gift becomes $50, about 200 meals). Please confirm that is how the foundation's match works. If the match is handled differently, fix the example in the third paragraph.
+- **The deadline pressure depends on when you send it.** Today is October 15, so December 31 is about 11 weeks out. The strongest version is a send date near the end of the year, or a follow-up email with a countdown ("X days left") once the date is closer.
+- **A real family story would hit harder than anything above.** If a pantry guest or volunteer will share a short, real account (with permission and names changed if needed), I can work it into the opening. I didn't invent one, since a made-up story in an appeal would be a serious problem if a donor ever asked about it.
+- **Consider the $18,600 figure carefully.** It is the amount of match not yet claimed, so it's accurate as long as the $6,400 number is current on the day you send. Update it if the total changes.

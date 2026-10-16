@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernbrook Nursery – Monthly Sales, 2025</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #6b6a65;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series: #2a78d6;
+    --series-hover: #5598e7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #f0efec;
+      --ink-2: #c3c2b7;
+      --muted: #a09f98;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series: #3987e5;
+      --series-hover: #6da7ec;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .card {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 20px 16px;
+  }
+  h1 { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
+  .sub { margin: 0 0 24px; font-size: 14px; color: var(--ink-2); }
+
+  .chart { display: flex; gap: 8px; }
+  .yaxis {
+    position: relative;
+    width: 36px;
+    height: 260px;
+    flex: none;
+    font-size: 12px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .yaxis span { position: absolute; right: 0; transform: translateY(50%); }
+  .main { flex: 1; min-width: 0; }
+  .plot {
+    position: relative;
+    height: 260px;
+    border-bottom: 1px solid var(--axis);
+  }
+  .grid {
+    position: absolute; left: 0; right: 0;
+    border-top: 1px solid var(--grid);
+  }
+  .cols { position: absolute; inset: 0; display: flex; }
+  .col {
+    flex: 1;
+    position: relative;
+    outline: none;
+    cursor: default;
+  }
+  .bar {
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: min(24px, calc(100% - 4px));
+    transform: translateX(-50%);
+    background: var(--series);
+    border-radius: 4px 4px 0 0;
+    transition: background .12s;
+  }
+  .col:hover .bar, .col:focus-visible .bar { background: var(--series-hover); }
+  .col:focus-visible { box-shadow: inset 0 0 0 2px var(--axis); border-radius: 4px; }
+  .val {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .xaxis { display: flex; margin-top: 6px; }
+  .xaxis span {
+    flex: 1; text-align: center;
+    font-size: 12px; color: var(--muted);
+  }
+  .tip {
+    position: fixed;
+    z-index: 10;
+    pointer-events: none;
+    background: var(--surface);
+    border: 1px solid var(--axis);
+    border-radius: 8px;
+    padding: 6px 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    font-size: 12px;
+    color: var(--ink-2);
+    opacity: 0;
+    transition: opacity .1s;
+  }
+  .tip.on { opacity: 1; }
+  .tip strong { display: block; font-size: 15px; color: var(--ink); }
+
+  details { margin-top: 16px; font-size: 13px; color: var(--ink-2); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; max-width: 320px; margin-top: 8px; }
+  th, td { text-align: left; padding: 4px 0; border-bottom: 1px solid var(--grid); font-weight: 400; }
+  td:last-child, th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  th { color: var(--muted); }
+  .note { margin: 12px 0 0; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Fernbrook Nursery: monthly sales, 2025</h1>
+  <p class="sub">Sales peaked in May at $38,900. Full-year total: $231,200.</p>
+
+  <div class="chart" role="img" aria-label="Column chart of Fernbrook Nursery monthly sales in 2025, in dollars. Sales rise from $8,200 in January to a peak of $38,900 in May, then taper to $6,100 in December. A table view follows.">
+    <div class="yaxis" id="yaxis" aria-hidden="true"></div>
+    <div class="main">
+      <div class="plot" id="plot"></div>
+      <div class="xaxis" id="xaxis" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <details>
+    <summary>View as table</summary>
+    <table id="table">
+      <thead><tr><th>Month</th><th>Sales</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </details>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+(function () {
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var sales = [8200,9100,15600,27400,38900,31200,22800,19500,24300,17700,10400,6100];
+  var MAX = 40000, TICK = 10000;
+  var fmt = function (n) { return "$" + n.toLocaleString("en-US"); };
+  var short = function (n) { return "$" + (n / 1000).toFixed(1) + "K"; };
+
+  var plot = document.getElementById("plot");
+  var yaxis = document.getElementById("yaxis");
+  var xaxis = document.getElementById("xaxis");
+  var tip = document.getElementById("tip");
+  var tbody = document.querySelector("#table tbody");
+
+  for (var t = 0; t <= MAX; t += TICK) {
+    var pct = t / MAX * 100;
+    var lbl = document.createElement("span");
+    lbl.style.bottom = pct + "%";
+    lbl.textContent = t === 0 ? "$0" : "$" + (t / 1000) + "K";
+    yaxis.appendChild(lbl);
+    if (t > 0) {
+      var g = document.createElement("div");
+      g.className = "grid";
+      g.style.bottom = pct + "%";
+      plot.appendChild(g);
+    }
+  }
+
+  var cols = document.createElement("div");
+  cols.className = "cols";
+  plot.appendChild(cols);
+
+  var peak = sales.indexOf(Math.max.apply(null, sales));
+  var low = sales.indexOf(Math.min.apply(null, sales));
+
+  function showTip(el, i) {
+    tip.textContent = "";
+    var s = document.createElement("strong");
+    s.textContent = fmt(sales[i]);
+    tip.appendChild(s);
+    tip.appendChild(document.createTextNode(months[i] + " 2025"));
+    var r = el.querySelector(".bar").getBoundingClientRect();
+    tip.classList.add("on");
+    var w = tip.offsetWidth;
+    var x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
+    var y = r.top - tip.offsetHeight - 8;
+    if (y < 8) y = r.top + 8;
+    tip.style.left = x + "px";
+    tip.style.top = y + "px";
+  }
+  function hideTip() { tip.classList.remove("on"); }
+
+  sales.forEach(function (v, i) {
+    var col = document.createElement("div");
+    col.className = "col";
+    col.tabIndex = 0;
+    col.setAttribute("aria-label", months[i] + ": " + fmt(v));
+    var bar = document.createElement("div");
+    bar.className = "bar";
+    bar.style.height = (v / MAX * 100) + "%";
+    col.appendChild(bar);
+    if (i === peak || i === low) {
+      var val = document.createElement("div");
+      val.className = "val";
+      val.style.bottom = "calc(" + (v / MAX * 100) + "% + 4px)";
+      val.textContent = short(v);
+      col.appendChild(val);
+    }
+    col.addEventListener("pointerenter", function () { showTip(col, i); });
+    col.addEventListener("pointerleave", hideTip);
+    col.addEventListener("focus", function () { showTip(col, i); });
+    col.addEventListener("blur", hideTip);
+    cols.appendChild(col);
+
+    var x = document.createElement("span");
+    x.textContent = months[i];
+    xaxis.appendChild(x);
+
+    var tr = document.createElement("tr");
+    var th = document.createElement("td");
+    th.textContent = months[i];
+    var td = document.createElement("td");
+    td.textContent = fmt(v);
+    tr.appendChild(th); tr.appendChild(td);
+    tbody.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

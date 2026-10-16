@@ -1,16 +1,40 @@
-**Pre-prompt screen**
+Here's the copy for each screen.
 
-**Headline:** See bikes near you
+## 1. New coordinator, no shifts yet
 
-**Body:** Wheelhaus uses your location to show available bikes on the map and to start your ride when you scan a bike.
+**Headline:** No shifts yet
+**Body:** Post your first shift and parents can sign up for it.
+**Button:** Post a shift
 
-**Buttons**
-- Primary: **Continue** (this triggers the system dialog)
-- Secondary: **Not now** (this lets people browse the map without location)
+## 2. Parent, no open shifts
 
-**Notes**
+**Headline:** No open shifts right now
+**Body:** Every shift is covered, or none have been posted yet. Check back soon.
 
-- **The copy only says what you've confirmed.** It names the two uses, the map and ride start, and makes no claims about storage, retention, or sharing. Avoid adding lines like "we never store your location" or "your data stays private" until legal signs off. If those claims turn out to be wrong, they could be a real liability.
-- **Add a privacy link later if legal wants one.** Once the policy is settled, a small "How we use location" link under the body text is the usual spot. Anything about retention goes there, not in the headline or body.
-- **Use "Continue" rather than "Allow" for the primary button.** The system dialog has its own Allow/Don't Allow choice. A pre-prompt button that says "Allow" can read as the actual permission grant, and Apple's review guidelines discourage that kind of confusion.
-- **Your iOS `NSLocationWhenInUseUsageDescription` string is separate copy.** It appears inside the system dialog and has the same constraint. Something like "Wheelhaus uses your location to show nearby bikes and start rides" works without making data-handling claims. I can draft it, plus a "Location is off" fallback screen for people who tap Not now, if you want.
+(Add "We'll remind you about shifts you sign up for" only if parents can get reminders before they've signed up for anything. Otherwise leave it out.)
+
+## 3. Push notification permission prompt
+
+This is the screen shown *before* the browser's own permission popup. Make it clear these are browser notifications, not email.
+
+**Headline:** Want a reminder before your shift?
+**Body:** We'll send a notification to this browser shortly before a shift you've signed up for. That's all we'll use it for.
+**Primary button:** Yes, remind me
+**Secondary button:** Not now
+
+**If they decline or block it:**
+"No problem. You can turn reminders on later in your browser settings."
+
+Only show the browser's real popup after they tap "Yes, remind me". If they tap "Not now", you can ask again later. If they deny the browser popup itself, most browsers won't let you ask again, so the fallback message matters.
+
+## 4. Shift just taken by someone else
+
+**Headline:** Sorry, that shift was just taken
+**Body:** Someone else signed up a moment before you. Take a look at the other open shifts.
+**Button:** See open shifts
+
+If no other shifts are open, swap the body for: "Someone else signed up a moment before you. There aren't any other open shifts right now."
+
+Two notes:
+- I wrote "browser notification" instead of "push notification" in the prompt. Parents will recognize it, and it avoids the email confusion.
+- The "Not now" button keeps the prompt from feeling pushy on a first release.

@@ -1,17 +1,21 @@
-**Go with B.** It fits the job: finding the worst late load and acting on it. A is built for monitoring, and your dispatchers are mostly chasing.
+**Go with B**, with one addition: keep a slim strip of KPIs above the table. I'm fairly confident, but it rests on one assumption: dispatchers mostly work a list of problem loads and only sometimes need geography.
 
-**Why B wins for this task**
-- **The default view answers the main question.** Sorting by lateness puts the load that needs a call at the top, so the dispatcher can act the moment they look. In A, the table sits underneath a map and four tiles. Its first rows get pushed down, and the table is the part they'll work in all day.
-- **A spends the most prime space on the least actionable content.** The four KPI tiles run the full width at the top of the screen, and three of them (on-time %, active trucks, avg dwell) change slowly. Dispatchers will glance at them a few times a shift. "Late loads" is the only one that drives action, and B's sorted table and filter chips already show it.
-- **A's table is cramped.** It gets roughly a third of the height, and under the map it's only about two-thirds of the width. Fewer rows are visible, and columns like carrier, ETA, delay, driver and next stop will truncate or force horizontal scrolling. A 27-inch monitor helps, but A still spends that space on the map and tiles.
-- **A has a permanent sidebar.** That's a fixed-width strip for navigation that dispatchers use rarely. B gives that width to the table.
+**Why B wins for chasing late deliveries**
+- **The task is a queue.** Dispatchers need to find the worst load, act on it, and move to the next one. B's table is sorted by lateness, so the first row is the next action. In A the late loads sit in a table squeezed under a map, and the table gets roughly a third of the screen height after the tiles and map take theirs.
+- **Space goes to what they read all day.** On a 27" monitor, B gives the full width to columns like carrier, driver, ETA, minutes late, last ping and customer. Those are what a dispatcher uses to decide whether to call the driver or the customer. A's table shares the left two-thirds with the map, so it has fewer columns and fewer rows.
+- **A's tiles use space without prompting action.** Four big tiles take the most valuable band, the top of the screen, for numbers that change slowly. Only "late loads" connects to the work, and it's a count, not a list. Average dwell time and on-time % are shift-review metrics, not things a dispatcher acts on minute to minute.
+- **The map is context.** Dispatchers need it when they're investigating one load. B shows it on click, centered on that load. A shows every truck all the time, which gets cluttered and doesn't say which ones matter.
 
-**What B costs, and how to handle it**
-1. **The map is one click away.** Spatial context ("which other trucks are near this one?") matters for rerouting. Make the side panel quick: open it on row click, let arrow keys move between rows with the panel staying open, and let Esc close it. Dispatchers should be able to run down the late list without re-clicking.
-2. **There's no at-a-glance health number.** Keep a single slim summary strip, such as "14 late · 92% on-time", in the header or inside the filter-chip row. Don't bring back four large tiles. Make the late count clickable so it applies the "Late" filter.
-3. **No sidebar means navigation has to go somewhere.** Use a slim top bar. Dispatchers rarely leave this screen, so it doesn't need much.
+**Where B is weaker, and the fixes**
+1. **Row click opens a panel, which hides the list.** If the panel covers the table, the dispatcher loses their place with every load. Make it a docked panel that narrows the table. Add arrow-key or next/previous navigation so they can step through late loads without closing it. *(High severity if skipped, since this is the main loop.)*
+2. **No overview of the fleet.** You lose the glanceable "how bad is today." Add a single compact strip above the chips with late loads, on-time %, and active trucks. Make the late-loads number clickable as a filter. Drop dwell time from the strip unless dispatchers act on it. *(Medium.)*
+3. **No sidebar.** This is fine if dispatchers spend nearly all their time on this screen. If they regularly move to other areas like drivers, customers or reports, use a thin icon rail rather than a full sidebar. *(Low, depends on what else the product does.)*
+4. **Chips need good defaults.** Opening on "Late" or "At risk" sorted by minutes late is the entire value of B. If the default is "All," it becomes a plain list. *(Medium.)*
 
-**When A would be better**
-A fits a supervisor or control-room wall display, where the job is to watch overall network health. If some of your users are supervisors, give them a view with a map and tiles. That could be a toggle on B or a separate screen. Don't build the dispatcher screen around it.
+**What's worth keeping from A**
+- **The always-visible map.** If a lot of the work is regional, like rerouting or covering a breakdown with a nearby truck, a persistent map earns its space. That would change my answer toward A, or toward B with the map pinned open.
+- **A late-loads count that's always on screen.** B's KPI strip keeps this.
 
-**Confidence:** fairly high, based on the task you described. I haven't seen mockups, so I haven't judged density, type or color. The cheapest way to confirm is to give two or three dispatchers a "find and reroute the worst late load" task on each layout and time them. I'd expect B to be faster.
+**Cheapest way to check the assumption:** watch 3 to 5 dispatchers through a shift, or sit with them for an hour, and count how often they look at the map before they've picked which load to work on. If it's before, A is closer to right. If it's after, B is.
+
+I haven't seen mockups, so this is based on your descriptions. I haven't checked density, contrast or the actual column set.

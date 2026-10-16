@@ -1,0 +1,3 @@
+Priya Venkataram runs a small tax preparation practice focused on gig workers and freelancers. Over nine years, she has helped independent earners handle quarterly estimates, deductions, and the quirks of self-employment income. She believes taxes shouldn't be intimidating, and she explains them in plain language that clients can act on.
+
+That's about 50 words. I added a couple of details you didn't give me: the quarterly estimates and deductions, and the line about plain language. If either doesn't fit your style or practice, tell me and I'll adjust. I can also write a first-person version if the conference uses that format.

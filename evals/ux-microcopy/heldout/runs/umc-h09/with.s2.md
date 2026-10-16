@@ -1,19 +1,14 @@
-**Headline:** Walks your dog will wait by the door for.
+**(a) 30 minutes in, included time ending**
 
-**Subhead:** 30- or 60-minute walks, and a photo sent to you afterward so you can see how it went.
+1. `30 included minutes are ending. Per-minute billing next.` (56)
+2. `Included ride time is ending. Extra minutes are billed.` (55)
+3. `Your day pass covers 30 minutes. Then you pay per minute.` (56)
 
-**Button:** Book a walk
+**(b) Reservation held 5 more minutes**
 
-**Notes**
+1. `Your reserved bike is held for 5 more minutes.` (46)
+2. `5 minutes left to unlock your reserved bike.` (44)
+3. `Your bike is held for 5 more minutes, then released.` (52)
 
-- **Insured and background-checked:** I left both out on purpose. Until you've seen the paperwork, putting them on the site is a claim you can't back up. If a customer or insurer ever challenges it, that's a problem for the business. Once the owner sends proof, add a line like "Insured and background-checked" under the button.
-- **No reviews:** The copy doesn't imply any social proof. The photo after each walk is your strongest concrete selling point, so the subhead leads with it.
-- **Button:** "Book a walk" assumes there's a booking flow or form behind it. If it's really "request a walk" or "get in touch," change the label to match so it doesn't over-promise.
-
-**Alternate headlines**
-
-- Walks they'll love. Photos you will too.
-- A good walk for your dog. Proof for you.
-- Every walk ends with a photo.
-
-I didn't name the city or add "locally owned." You didn't give me either, and I didn't want to guess. If they're true, adding them would help a new business.
+- Fitting the price in the (a) options would take 4 to 5 characters or fewer, so it won't fit as written. Put it in the body text, or shorten the lead-in, for example `Included time is ending. Then [price]/min.`
+- Option (b)3 says the bike is released when the hold ends. That follows from the 15-minute hold, but confirm that's what happens.

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restoring a snapshot – Brine docs</title>
+<style>
+:root{
+  --bg:#fbfaf7; --surface:#ffffff; --ink:#1d2428; --muted:#5a666d; --line:#e1e3de;
+  --accent:#0b6b7a; --accent-soft:#e3f1f3;
+  --warn-bg:#fff4e0; --warn-line:#c77700; --warn-ink:#5c3600;
+  --code-bg:#14232a; --code-ink:#e6eef0; --code-mute:#8fa5ad;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --sidebar:16.5rem; --topbar:3.5rem;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#101619; --surface:#161e22; --ink:#e6ecee; --muted:#9aa9af; --line:#27343a;
+    --accent:#5cc2d1; --accent-soft:#16333a;
+    --warn-bg:#2b2112; --warn-line:#e0a03a; --warn-ink:#f3dcb4;
+    --code-bg:#0a1114; --code-ink:#e6eef0;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(var(--topbar) + 1rem)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.65 var(--sans);-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:10;height:var(--topbar);display:flex;align-items:center;gap:.75rem;
+  padding:0 1.25rem;background:var(--surface);border-bottom:1px solid var(--line)}
+.brand{font-weight:700;font-size:1.125rem;letter-spacing:.01em;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.brand b{display:inline-grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:6px;background:var(--accent);color:var(--bg);font-size:.85rem}
+.ver{font-size:.75rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:.05rem .55rem}
+.topbar .spacer{flex:1}
+.toplink{color:var(--muted);text-decoration:none;font-size:.9rem}
+.toplink:hover{color:var(--ink)}
+.menu-btn{display:none;font:inherit;font-size:.9rem;background:none;color:var(--ink);border:1px solid var(--line);
+  border-radius:6px;padding:.35rem .7rem;cursor:pointer;min-height:2.5rem}
+
+/* shell */
+.shell{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);max-width:78rem;margin:0 auto}
+.sidebar{position:sticky;top:var(--topbar);align-self:start;height:calc(100vh - var(--topbar));overflow-y:auto;
+  padding:1.5rem 1rem 2rem 1.25rem;border-right:1px solid var(--line)}
+.sidebar h2{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:1.5rem 0 .4rem .6rem;font-weight:600}
+.sidebar h2:first-child{margin-top:0}
+.sidebar ul{list-style:none;margin:0;padding:0}
+.sidebar a{display:block;padding:.3rem .6rem;border-radius:6px;color:var(--ink);text-decoration:none;font-size:.93rem;line-height:1.4}
+.sidebar a:hover{background:var(--accent-soft)}
+.sidebar a[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+
+main{padding:2.5rem clamp(1.25rem,4vw,3.5rem) 4rem}
+article{max-width:44rem}
+.crumbs{font-size:.85rem;color:var(--muted);margin:0 0 1rem}
+.crumbs a{color:var(--muted)}
+h1{font-size:clamp(1.9rem,4.5vw,2.5rem);line-height:1.15;margin:0 0 1rem;letter-spacing:-.015em}
+.lede{font-size:1.15rem;color:var(--muted);margin:0 0 1.5rem}
+p{margin:0 0 1rem}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);padding:.1em .35em;border-radius:4px;overflow-wrap:anywhere}
+.meta{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;font-size:.88rem;color:var(--muted);padding:.8rem 0;margin:0 0 2rem;
+  border-block:1px solid var(--line)}
+
+/* steps */
+ol.steps{list-style:none;margin:0 0 2.5rem;padding:0;counter-reset:s}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 2rem 3rem;min-width:0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-.1rem;width:2rem;height:2rem;border-radius:50%;
+  background:var(--accent);color:var(--bg);font-weight:700;display:grid;place-items:center;font-size:.95rem}
+ol.steps>li::after{content:"";position:absolute;left:1rem;top:2.2rem;bottom:.3rem;width:1px;background:var(--line)}
+ol.steps>li:last-child{padding-bottom:0}
+ol.steps>li:last-child::after{display:none}
+h2.step{font-size:1.2rem;line-height:1.35;margin:0 0 .5rem}
+h2.section{font-size:1.5rem;margin:2.5rem 0 .75rem;letter-spacing:-.01em}
+
+pre{margin:.9rem 0 0;background:var(--code-bg);color:var(--code-ink);border-radius:8px;padding:1rem 1.1rem;
+  overflow-x:auto;font:.85rem/1.6 var(--mono);tab-size:2;-webkit-overflow-scrolling:touch}
+pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}
+pre .c{color:var(--code-mute)}
+pre .p{color:#7fd1dd;user-select:none}
+.note{font-size:.9rem;color:var(--muted);margin:.7rem 0 0}
+
+/* warning */
+.warn{display:flex;gap:.9rem;background:var(--warn-bg);border:1px solid var(--warn-line);border-left-width:5px;
+  border-radius:8px;padding:1rem 1.2rem;margin:0 0 2.5rem;color:var(--warn-ink)}
+.warn svg{flex:none;width:1.4rem;height:1.4rem;margin-top:.15rem}
+.warn strong{display:block;margin-bottom:.25rem}
+.warn p{margin:0 0 .6rem}
+.warn p:last-child{margin:0}
+.warn code{background:rgba(199,119,0,.18)}
+
+/* next */
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1rem;margin:1rem 0 0}
+.next a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:1rem 1.1rem;
+  text-decoration:none;color:var(--ink);transition:border-color .15s}
+.next a:hover{border-color:var(--accent)}
+.next span{display:block;font-weight:600;color:var(--accent);margin-bottom:.2rem}
+.next small{color:var(--muted);font-size:.88rem;line-height:1.45;display:block}
+.pager{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:1.25rem;border-top:1px solid var(--line);font-size:.92rem}
+footer{margin-top:1.5rem;font-size:.82rem;color:var(--muted)}
+
+/* narrow */
+@media (max-width:52rem){
+  .menu-btn{display:inline-block}
+  .shell{display:block}
+  .sidebar{display:none;position:fixed;inset:var(--topbar) 0 0 0;z-index:9;height:auto;background:var(--surface);
+    border:0;padding:1rem 1.25rem 3rem}
+  #nav-toggle:checked ~ .shell .sidebar{display:block}
+  .sidebar a{padding:.6rem .6rem;font-size:1rem}
+  main{padding-top:1.75rem}
+  ol.steps>li{padding-left:2.6rem}
+  .toplink{display:none}
+}
+#nav-toggle{position:absolute;opacity:0;pointer-events:none}
+#nav-toggle:focus-visible ~ .topbar .menu-btn{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
+<header class="topbar">
+  <a class="brand" href="#"><b>B</b>Brine</a>
+  <span class="ver">v2.4</span>
+  <span class="spacer"></span>
+  <a class="toplink" href="#">Changelog</a>
+  <a class="toplink" href="#">GitHub</a>
+  <label class="menu-btn" for="nav-toggle" role="button">Menu</label>
+</header>
+
+<div class="shell">
+  <nav class="sidebar" aria-label="Documentation">
+    <h2>Getting started</h2>
+    <ul>
+      <li><a href="#">Introduction</a></li>
+      <li><a href="#">Installation</a></li>
+      <li><a href="#">Quickstart</a></li>
+      <li><a href="#">Configuring repositories</a></li>
+    </ul>
+    <h2>Backups</h2>
+    <ul>
+      <li><a href="#">Creating a backup</a></li>
+      <li><a href="#">Include and exclude rules</a></li>
+      <li><a href="#">Scheduling backups</a></li>
+      <li><a href="#" aria-current="page">Restoring a snapshot</a></li>
+      <li><a href="#">Pruning old snapshots</a></li>
+    </ul>
+    <h2>Reference</h2>
+    <ul>
+      <li><a href="#">Command-line options</a></li>
+      <li><a href="#">Configuration file</a></li>
+      <li><a href="#">Exit codes</a></li>
+    </ul>
+  </nav>
+
+  <main id="content">
+    <article>
+      <p class="crumbs"><a href="#">Backups</a> / Restoring a snapshot</p>
+      <h1>Restoring a snapshot</h1>
+      <p class="lede">A snapshot is only useful if you can get your files back. Brine restores a whole snapshot, a single folder, or one file, to the original location or anywhere else you choose.</p>
+      <p>This page walks through a typical restore from the command line. It assumes you have already <a href="#">created a backup</a> and that your repository is reachable. Most restores take under a minute for small folders; large snapshots are limited mainly by your network and disk speed.</p>
+      <div class="meta"><span>Time: about 5 minutes</span><span>Requires: Brine 2.0 or later</span><span>Updated: October 2026</span></div>
+
+      <ol class="steps">
+        <li>
+          <h2 class="step">List the snapshots in your repository</h2>
+          <p>Find the snapshot you want. Each one has a short ID, a timestamp, and the host it came from.</p>
+<pre><code><span class="p">$ </span>brine snapshots --repo ~/brine-repo
+<span class="c">ID        TIME                 HOST       PATHS</span>
+a3f91c0e  2026-10-12 02:00:04  laptop     /Users/sam
+7be2d418  2026-10-13 02:00:03  laptop     /Users/sam
+c05a77f2  2026-10-14 02:00:05  laptop     /Users/sam</code></pre>
+          <p class="note">Use <code>latest</code> in place of an ID to refer to the most recent snapshot.</p>
+        </li>
+        <li>
+          <h2 class="step">Preview what the snapshot contains</h2>
+          <p>Browse the file tree before you restore, so you know the paths you need. Add a path to narrow the listing.</p>
+<pre><code><span class="p">$ </span>brine ls c05a77f2 /Users/sam/Documents
+<span class="c">/Users/sam/Documents/budget-2026.xlsx</span>
+<span class="c">/Users/sam/Documents/notes/ideas.md</span>
+<span class="c">/Users/sam/Documents/notes/todo.md</span>
+<span class="c">3 files, 1.2 MiB</span></code></pre>
+        </li>
+        <li>
+          <h2 class="step">Run a dry-run restore</h2>
+          <p>Restore to a new, empty folder first. With <code>--dry-run</code>, Brine reports what it would write and changes nothing on disk.</p>
+<pre><code><span class="p">$ </span>brine restore c05a77f2 \
+    --repo ~/brine-repo \
+    --target ~/restore-test \
+    --include "/Users/sam/Documents" \
+    --dry-run
+<span class="c">would restore 3 files (1.2 MiB) to /Users/sam/restore-test</span></code></pre>
+        </li>
+        <li>
+          <h2 class="step">Restore and verify</h2>
+          <p>Remove <code>--dry-run</code> and add <code>--verify</code>. Brine re-reads each restored file and compares its checksum with the one stored in the snapshot.</p>
+<pre><code><span class="p">$ </span>brine restore c05a77f2 \
+    --repo ~/brine-repo \
+    --target ~/restore-test \
+    --include "/Users/sam/Documents" \
+    --verify
+<span class="c">restoring  3/3 files  [####################]  100%</span>
+<span class="c">verified 3 files, 0 errors</span></code></pre>
+        </li>
+      </ol>
+
+      <div class="warn" role="note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18v.01"/></svg>
+        <div>
+          <strong>Restoring over existing files</strong>
+          <p>If you set <code>--target</code> to a folder that already holds files, or to <code>/</code>, Brine overwrites any file with the same path. Changes made since the snapshot are lost and can't be undone.</p>
+          <p>To be safe, restore to an empty folder and copy files across by hand. If you do need to restore in place, add <code>--keep-newer</code> to skip files modified after the snapshot was taken.</p>
+        </div>
+      </div>
+
+      <h2 class="section">Next steps</h2>
+      <p>Now that you can get files back, make sure the backups keep coming and don't grow without limit.</p>
+      <div class="next">
+        <a href="#"><span>Scheduling backups →</span><small>Run Brine nightly with cron or launchd.</small></a>
+        <a href="#"><span>Pruning old snapshots →</span><small>Keep storage in check with retention rules.</small></a>
+        <a href="#"><span>Command-line options →</span><small>Every flag for <code>brine restore</code>.</small></a>
+      </div>
+
+      <div class="pager">
+        <a href="#">← Scheduling backups</a>
+        <a href="#">Pruning old snapshots →</a>
+      </div>
+      <footer>Found a problem with this page? <a href="#">Edit it on GitHub</a>.</footer>
+    </article>
+  </main>
+</div>
+</body>
+</html>

@@ -1,18 +1,16 @@
-I wouldn't pull the status colors from the brand palette. Brand palettes are built for identity, so they usually lack the semantic set you need, and brand red collides with failure.
+Not as a straight pull from the brand palette. Status colors have to be read at a glance and told apart, and brand colors are chosen for identity, not for that job.
 
-- **Red means both brand and failure.** Your primary buttons will look like error alerts, and a failed deploy won't stand out from the page chrome.
-- **Brand colors are often ambiguous as statuses.** A brand palette may have no clear green, blue, or amber, and similar hues make "running" and "waiting" hard to tell apart.
-- **Color alone fails some users.** Red/green is the classic problem for color-blind users, so each status also needs a shape and a label.
+The main problem is the red. Your brand red is also the natural color for "failed," so a red **Retry** or **Deploy** button would sit next to red failure badges. Users would have to read labels to tell whether red means "act" or "something broke." Pick one meaning for that red and keep it.
 
-I'd use a separate, semantic status set and keep brand red for actions:
+I'd do this:
 
-| Status | Hue | Cue beyond color |
-|---|---|---|
-| Succeeded | Green | Check icon, "Succeeded" |
-| Failed | Red, distinct from brand (deeper or more orange) | X icon, "Failed" |
-| Running | Blue | Animated spinner, "Running" |
-| Waiting for approval | Amber | Pause or clock icon, "Waiting" |
+- **Keep brand red for actions and emphasis.** Buttons, links, and the logo stay as they are.
+- **Give statuses their own set,** chosen for distinctness and meaning:
+  - **Succeeded:** green
+  - **Failed:** a red-orange or crimson, deliberately off-brand enough that it doesn't read as a button
+  - **Running:** blue or cyan, often animated
+  - **Waiting for approval:** amber or yellow
+- **Make them work without color.** Pair each with an icon and a text label, because red/green confusion affects about 8% of men. Check that the four are distinguishable in grayscale and under a deuteranopia simulation.
+- **Tie them to the brand loosely.** Choose status hues that sit well next to #d93a35 (a slightly warm green, a blue that doesn't clash), and use the same neutrals for backgrounds and text. That gets you the on-brand feel without borrowing the brand's most loaded color.
 
-The failed red is the one to test. Put a primary button and a failed badge side by side. If they read as the same kind of thing, shift the failed hue further from #d93a35 or make the button less alarming.
-
-Exact hex values need contrast checks for text on your light and dark backgrounds, which I haven't done here. I can build and check the full set, including dark mode, with the color-palette skill if you want.
+If you want, I can use the color-palette skill to build the four status colors with contrast checks for light and dark mode, starting from #d93a35 and your neutrals.

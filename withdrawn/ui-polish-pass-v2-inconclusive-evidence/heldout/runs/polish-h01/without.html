@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tide lookup</title>
+<style>
+  :root{
+    --bg:#f3f6f9; --card:#ffffff; --text:#14232f; --muted:#5b6b78; --line:#dde5ec;
+    --accent:#0b6b8a; --accent-hover:#08566f; --accent-text:#ffffff;
+    --high:#0b6b8a; --high-bg:#e1f1f6; --low:#8a5a0b; --low-bg:#f8eddb;
+    --err-bg:#fbeaea; --err:#8a1f1f;
+    --shadow:0 1px 2px rgba(20,35,47,.06),0 6px 20px rgba(20,35,47,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0e1a22; --card:#162630; --text:#e6eef3; --muted:#92a5b3; --line:#27404f;
+      --accent:#4cb6d6; --accent-hover:#76c9e3; --accent-text:#08202b;
+      --high:#7cd0e8; --high-bg:#173846; --low:#e8bd7a; --low-bg:#3b2f1a;
+      --err-bg:#3a1c1c; --err:#f2b3b3;
+      --shadow:none;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; background:var(--bg); color:var(--text);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5; padding:24px 16px 48px;
+  }
+  main{max-width:560px; margin:0 auto}
+  header{margin:8px 0 20px}
+  h1{margin:0; font-size:1.9rem; letter-spacing:-.02em}
+  .sub{margin:4px 0 0; color:var(--muted)}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:18px}
+  form{display:flex; gap:8px}
+  label.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+  input,button{font:inherit; font-size:16px; border-radius:10px; padding:10px 14px}
+  input{
+    flex:1; min-width:0; border:1px solid var(--line); background:var(--bg); color:var(--text);
+  }
+  input::placeholder{color:var(--muted)}
+  button{
+    border:0; background:var(--accent); color:var(--accent-text); font-weight:600; cursor:pointer;
+  }
+  button:hover{background:var(--accent-hover)}
+  input:focus-visible,button:focus-visible,.chip:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; align-items:center}
+  .chips span.lbl{color:var(--muted); font-size:.9rem}
+  .chip{
+    background:transparent; color:var(--accent); border:1px solid var(--line);
+    padding:5px 12px; border-radius:999px; font-weight:500; font-size:.9rem;
+  }
+  .chip:hover{background:var(--high-bg)}
+  #out{margin-top:20px}
+  #out:empty{display:none}
+  h2{margin:0 0 10px; font-size:1.2rem}
+  table{width:100%; border-collapse:collapse}
+  th{
+    text-align:left; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--muted); font-weight:600; padding:6px 10px; border-bottom:1px solid var(--line);
+  }
+  td{padding:12px 10px; border-bottom:1px solid var(--line)}
+  tr:last-child td{border-bottom:0}
+  td.time,td.height{font-variant-numeric:tabular-nums}
+  td.time{font-weight:600}
+  th.num,td.height{text-align:right}
+  .badge{
+    display:inline-block; padding:2px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+  }
+  .badge.high{background:var(--high-bg); color:var(--high)}
+  .badge.low{background:var(--low-bg); color:var(--low)}
+  .msg{margin:0; padding:12px 14px; border-radius:10px; background:var(--bg); color:var(--muted)}
+  .msg.err{background:var(--err-bg); color:var(--err)}
+  footer{margin-top:20px; text-align:center; color:var(--muted); font-size:.85rem}
+  @media (max-width:420px){
+    form{flex-direction:column}
+    button{padding:12px}
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Tide lookup</h1>
+    <p class="sub">Today's high and low tides for your harbor.</p>
+  </header>
+
+  <section class="card">
+    <form id="form" autocomplete="off">
+      <label class="sr" for="port">Port name</label>
+      <input id="port" list="ports" placeholder="Port name, e.g. Kellmouth" autofocus>
+      <datalist id="ports"></datalist>
+      <button type="submit">Search</button>
+    </form>
+    <div class="chips" id="chips"></div>
+    <div id="out" aria-live="polite"></div>
+  </section>
+
+  <footer>Times are local to each port.</footer>
+</main>
+
+<script>
+const DATA={"Kellmouth":[["04:12","High","4.1 m"],["10:30","Low","0.6 m"],["16:44","High","4.3 m"],["22:51","Low","0.5 m"]],"Port Arnley":[["05:02","High","3.2 m"],["11:19","Low","0.9 m"]]};
+
+const input=document.getElementById('port');
+const out=document.getElementById('out');
+const chips=document.getElementById('chips');
+const names=Object.keys(DATA);
+
+function el(tag,cls,text){
+  const e=document.createElement(tag);
+  if(cls)e.className=cls;
+  if(text!==undefined)e.textContent=text;
+  return e;
+}
+
+function showMessage(text,isErr){
+  out.replaceChildren(el('p','msg'+(isErr?' err':''),text));
+}
+
+function showPort(name){
+  const card=el('div');
+  card.appendChild(el('h2','',name));
+  const table=el('table');
+  const head=el('tr');
+  [['Time',''],['Tide',''],['Height','num']].forEach(([t,c])=>{
+    const th=el('th',c,t); th.scope='col'; head.appendChild(th);
+  });
+  const thead=el('thead'); thead.appendChild(head); table.appendChild(thead);
+  const tbody=el('tbody');
+  DATA[name].forEach(r=>{
+    const tr=el('tr');
+    tr.appendChild(el('td','time',r[0]));
+    const td=el('td');
+    td.appendChild(el('span','badge '+r[1].toLowerCase(),r[1]));
+    tr.appendChild(td);
+    tr.appendChild(el('td','height',r[2]));
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  card.appendChild(table);
+  out.replaceChildren(card);
+}
+
+function search(raw){
+  const q=raw.trim().toLowerCase();
+  if(!q){ showMessage('Enter a port name to see its tides.',false); return; }
+  let match=names.filter(n=>n.toLowerCase()===q);
+  if(!match.length) match=names.filter(n=>n.toLowerCase().includes(q));
+  if(match.length===1){ input.value=match[0]; showPort(match[0]); return; }
+  const list=names.join(', ');
+  showMessage(match.length
+    ? 'Several ports match "'+raw.trim()+'": '+match.join(', ')+'. Please be more specific.'
+    : 'No tide data for "'+raw.trim()+'". Available ports: '+list+'.', true);
+}
+
+names.forEach(n=>{
+  const o=document.createElement('option'); o.value=n;
+  document.getElementById('ports').appendChild(o);
+});
+chips.appendChild(el('span','lbl','Ports:'));
+names.forEach(n=>{
+  const b=el('button','chip',n); b.type='button';
+  b.addEventListener('click',()=>{ input.value=n; search(n); });
+  chips.appendChild(b);
+});
+
+document.getElementById('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  search(input.value);
+});
+</script>
+</body>
+</html>

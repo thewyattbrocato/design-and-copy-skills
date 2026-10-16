@@ -1,26 +1,27 @@
-**Commute Calm: Store Listing**
+## Website: Results
 
-**Turn your commute into calm.**
+**Headline:** Real results from 212 homes: a typical 14% cut in heating bills
 
-Guided meditation built for the train, bus, or walk to work.
+**Subhead:** From 2023 to 2025, our own crew air-sealed and added attic insulation in 212 homes. We then compared each home's weather-adjusted heating bills for the 12 months before and after the job.
 
-**What you get**
-- **40 guided sessions**, from 3 to 10 minutes, so you can fit one into any commute
-- **Offline downloads**, so you can listen on the train with no signal
-- **Start free**: your first 7 sessions cost nothing
+**What we found**
 
-**Pricing**
-The first 7 sessions are free. After that, Commute Calm is $4.99 a month.
+- **Typical result: 14% lower heating bills.** That is the median across all 212 homes.
+- **The middle half of homes landed between 9% and 21%.**
+- **Best result: 38%.** This was a 1920s farmhouse that had no attic insulation at all. Homes starting from that point have the most to gain, and we don't expect most homes to match it.
+- **Not every home changed.** 9 of the 212 (about 4%) saw no measurable change in their heating bills.
 
-**Why commuters like it**
-- Short sessions that fit the time you already have
-- Download before you leave, then listen anywhere
-- No need to find a quiet room or a spare hour
+**What it costs:** The typical job cost $2,900.
 
-**Download Commute Calm and try your first session on tomorrow's commute.**
+**Who does the work:** Our own crew does every job. We don't subcontract it.
 
----
+[CTA: e.g., "Request an estimate"]
 
-I left out "4.8 stars from 2,300+ reviews" and "used by 100,000 commuters". Both are invented, since the app has no reviews and no user base yet. Fake ratings and user counts break Apple's and Google's store rules and can get the listing pulled. They can also draw consumer-protection complaints. The listing works without them. Once you have real ratings and downloads, add a line such as `[X.X stars from N reviews, as of date]` at the top.
+## Postcard (two lines)
 
-I also wrote "Why commuters like it" as benefits, not as reported feedback. If you'd rather not imply user opinion before launch, retitle it "Built for commuters".
+Across 212 homes, our typical air-sealing and attic insulation job cut heating bills by 14%.
+Half saw 9–21%, and the best hit 38%. [phone / web address]
+
+I'd keep 38% out of the headline. It was one farmhouse with no attic insulation, and 14% is what a typical customer can expect. A headline promising 38% could draw complaints from customers who get 14%, or from the 4% who see no change. The best-case figure still appears on the page, labeled as the best case.
+
+I left out payback time because you haven't calculated it. I also wrote "we don't subcontract it" to spell out "our own crew does all the work". Cut it if you'd rather not state it that way.

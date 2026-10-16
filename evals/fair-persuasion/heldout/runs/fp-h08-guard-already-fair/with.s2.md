@@ -4,11 +4,11 @@ Your membership stays active until [end of billing period], and you can book cla
 
 If cost or schedule is the reason, you can pause for up to 3 months at no charge, or move to the 4-class plan ($39 a month). Either takes about a minute from here.
 
-[Pause my membership]   [Switch to 4 classes]   [Cancel membership]
+[Pause my membership]   [Switch to 4 classes]   [Continue cancelling]
 
 No reason needed. We'll email a confirmation as soon as you cancel.
 
-I changed only one thing: the last button now says "Cancel membership" instead of "Continue cancelling". The page already does what a retention page should. It puts a real pause and a real cheaper plan in front of people who are leaving for cost or schedule reasons. Those two options are probably what keeps the people who can be kept. Harsher copy would likely lose trust and cause chargebacks and complaints, and it would probably keep few extra members.
+---
 
-- **Button weight:** Keep the three buttons visually equal. If "Cancel membership" is hidden or greyed out, it becomes a dark pattern, and some places treat that as a legal problem. Rules on cancellation flows vary by place and change over time, so have the final flow checked.
-- **What to track:** Compare pause and downgrade take-up with how many of those members cancel anyway within 60 days, and with support complaints about cancelling. If the saves hold up and the complaints stay flat, the page is working.
+- I changed nothing. The page is already doing the retention work. It offers two real alternatives that match the usual reasons for leaving (cost and schedule), says what happens to their data, and keeps cancelling to one click. Guilt, hidden buttons or a fake discount would likely cost you more in complaints, chargebacks and lost goodwill than they'd save, and some places regulate cancel flows, so have any harder version checked.
+- To show your boss it's working, track how many people take the pause or the 4-class plan, and how many of those are still members 60 to 90 days later. The second number shows whether you kept those people or only delayed their cancellation.

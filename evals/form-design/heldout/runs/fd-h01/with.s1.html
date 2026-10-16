@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a kayak – Saltmarsh Paddle Co.</title>
+<style>
+  :root{
+    --ink:#17302f; --muted:#4b6362; --line:#9db3b0; --bg:#f1f6f4; --card:#fff;
+    --accent:#0d6b63; --accent-dark:#084f49; --err:#a31f1f; --errbg:#fdf0ee; --focus:#0b4fd1;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  main{max-width:560px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:1.65rem;line-height:1.2;margin:8px 0 4px}
+  .lede{margin:0 0 20px;color:var(--muted)}
+  form,.done{background:var(--card);border:1px solid #d3e0dd;border-radius:12px;padding:20px}
+  fieldset{border:0;margin:0 0 28px;padding:0;min-width:0}
+  legend{font-weight:700;font-size:1.1rem;padding:0;margin-bottom:12px}
+  .field{margin-bottom:18px}
+  label,.lbl{display:block;font-weight:600;margin-bottom:2px}
+  .opt{font-weight:400;color:var(--muted)}
+  .hint{margin:0 0 6px;color:var(--muted);font-size:.9rem}
+  input,select{font:inherit;font-size:16px;width:100%;min-height:46px;padding:8px 12px;color:var(--ink);
+    background:#fff;border:1.5px solid var(--line);border-radius:8px}
+  input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .short{max-width:220px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:480px){.row{grid-template-columns:1fr}.short{max-width:none}}
+  .kayak{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:12px 0;border-bottom:1px solid #e1ebe9}
+  .kayak:first-of-type{border-top:1px solid #e1ebe9}
+  .kayak small{display:block;color:var(--muted)}
+  .kayak b{display:block}
+  .step{display:flex;align-items:center;gap:8px}
+  .step button{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--accent);background:#fff;
+    color:var(--accent);font-size:1.4rem;line-height:1;cursor:pointer;padding:0}
+  .step button:disabled{border-color:#c4d2cf;color:#9aaeab;cursor:not-allowed}
+  .step output{min-width:28px;text-align:center;font-weight:700;font-size:1.15rem}
+  .cap{margin:10px 0 0;font-size:.95rem}
+  .cap.full{font-weight:600}
+  .total{background:#e7f2ef;border-radius:10px;padding:14px 16px;margin-bottom:18px}
+  .total div{display:flex;justify-content:space-between;gap:12px}
+  .total .sum{font-weight:700;font-size:1.2rem;margin-top:4px;padding-top:6px;border-top:1px solid #b9d3cd}
+  .total p{margin:6px 0 0;font-size:.9rem;color:var(--muted)}
+  button.primary{width:100%;min-height:52px;border:0;border-radius:10px;background:var(--accent);
+    color:#fff;font:inherit;font-size:1.05rem;font-weight:700;cursor:pointer}
+  button.primary:hover{background:var(--accent-dark)}
+  button.primary:disabled{opacity:.7;cursor:wait}
+  .error{color:var(--err);margin:6px 0 0;font-size:.95rem;font-weight:600}
+  .error::before{content:"\26A0\00a0"}
+  [aria-invalid="true"]{border-color:var(--err);border-width:2px}
+  .summary{background:var(--errbg);border:2px solid var(--err);border-radius:10px;padding:14px 16px;margin-bottom:20px}
+  .summary h2{margin:0 0 6px;font-size:1.05rem;color:var(--err)}
+  .summary ul{margin:0;padding-left:20px}
+  .summary a{color:var(--err);font-weight:600}
+  [hidden]{display:none!important}
+  .done h2{margin-top:0}
+  .done dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:14px 0}
+  .done dt{color:var(--muted)} .done dd{margin:0;font-weight:600}
+  .small{font-size:.9rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Book a kayak</h1>
+  <p class="lede">Saltmarsh Paddle Co. · Singles $35 an hour · Tandems $55 an hour · Trips leave 9:00 AM to 4:00 PM</p>
+
+  <form id="f" novalidate>
+    <div id="summary" class="summary" role="alert" tabindex="-1" hidden>
+      <h2 id="summary-h"></h2>
+      <ul id="summary-list"></ul>
+    </div>
+
+    <fieldset>
+      <legend>When</legend>
+      <div class="field">
+        <label for="date">Date</label>
+        <input class="short" type="date" id="date" name="date" autocomplete="off">
+        <div class="error" id="date-err" hidden></div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="time">Departure time</label>
+          <select id="time" name="time">
+            <option value="">Choose a time</option>
+          </select>
+          <div class="error" id="time-err" hidden></div>
+        </div>
+        <div class="field">
+          <label for="hours">Length of rental</label>
+          <select id="hours" name="hours"></select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Kayaks</legend>
+      <p class="hint" style="margin-top:-6px">Up to 6 people per booking. A tandem seats 2.</p>
+      <div class="kayak">
+        <div><b id="s-name">Single kayaks</b><small>1 person each · $35 an hour</small></div>
+        <div class="step">
+          <button type="button" id="s-minus" aria-label="Remove a single kayak">−</button>
+          <output id="s-n" aria-labelledby="s-name">0</output>
+          <button type="button" id="s-plus" aria-label="Add a single kayak">+</button>
+        </div>
+      </div>
+      <div class="kayak">
+        <div><b id="t-name">Tandem kayaks</b><small>2 people each · $55 an hour</small></div>
+        <div class="step">
+          <button type="button" id="t-minus" aria-label="Remove a tandem kayak">−</button>
+          <output id="t-n" aria-labelledby="t-name">0</output>
+          <button type="button" id="t-plus" aria-label="Add a tandem kayak">+</button>
+        </div>
+      </div>
+      <p class="cap" id="cap" aria-live="polite"></p>
+      <div class="error" id="kayaks-err" hidden tabindex="-1"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your details</legend>
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" autocomplete="name">
+        <div class="error" id="name-err" hidden></div>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <p class="hint" id="email-h">We send your booking confirmation here.</p>
+        <input type="email" id="email" name="email" autocomplete="email" inputmode="email"
+          autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="email-h">
+        <div class="error" id="email-err" hidden></div>
+      </div>
+      <div class="field">
+        <label for="phone">Mobile phone</label>
+        <p class="hint" id="phone-h">So we can text you if tides or weather change your trip.</p>
+        <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="phone-h">
+        <div class="error" id="phone-err" hidden></div>
+      </div>
+    </fieldset>
+
+    <div class="total" aria-live="polite">
+      <div><span id="line">No kayaks chosen yet</span><span id="line-amt"></span></div>
+      <div class="sum"><span>Total</span><span id="total">$0</span></div>
+      <p>Price is per hour for each kayak, multiplied by the length of rental.</p>
+    </div>
+
+    <button type="submit" class="primary" id="go">Request this booking</button>
+    <p class="small" style="margin:10px 0 0">This sends a request. Your spot is held once we confirm it by email.</p>
+    <div class="error" id="form-err" hidden></div>
+  </form>
+
+  <section class="done" id="done" hidden tabindex="-1" aria-live="polite">
+    <h2>Request received</h2>
+    <p>Here is what you asked for:</p>
+    <dl id="done-dl"></dl>
+    <p>We will email you at <b id="done-email"></b> to confirm. If you have not heard from us, check your spam folder, then call us.</p>
+  </section>
+</main>
+
+<script>
+/* ---- Setup: connect the form to your inbox or booking system ----
+   Set ENDPOINT to a URL that accepts a JSON POST (a form service or your own server),
+   or set BOOKING_EMAIL to open the visitor's email app with the request filled in.
+   Re-check every field on the server too. */
+var ENDPOINT = "";
+var BOOKING_EMAIL = "";
+
+var PRICE = {single: 35, tandem: 55}, MAX_PEOPLE = 6;
+var $ = function(id){return document.getElementById(id)};
+var state = {s: 0, t: 0};
+var submitted = false;
+
+/* time options: 9:00 AM to 4:00 PM, every 30 minutes */
+(function(){
+  var sel = $("time");
+  for (var m = 9*60; m <= 16*60; m += 30) {
+    var h = Math.floor(m/60), mm = m % 60, ap = h >= 12 ? "PM" : "AM", h12 = h % 12 || 12;
+    var o = document.createElement("option");
+    o.value = (h<10?"0":"")+h+":"+(mm?"30":"00");
+    o.textContent = h12+":"+(mm?"30":"00")+" "+ap;
+    sel.appendChild(o);
+  }
+  var hs = $("hours");
+  for (var i = 1; i <= 8; i++) {
+    var o2 = document.createElement("option");
+    o2.value = i; o2.textContent = i + (i === 1 ? " hour" : " hours");
+    hs.appendChild(o2);
+  }
+  /* earliest date is today, in the visitor's local time */
+  var d = new Date(), p = function(n){return (n<10?"0":"")+n};
+  $("date").min = d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());
+})();
+
+function people(){return state.s + state.t*2}
+function money(n){return "$"+n}
+
+function render(){
+  $("s-n").textContent = state.s; $("t-n").textContent = state.t;
+  var left = MAX_PEOPLE - people();
+  $("s-minus").disabled = state.s === 0;
+  $("t-minus").disabled = state.t === 0;
+  $("s-plus").disabled = left < 1;
+  $("t-plus").disabled = left < 2;
+  var cap = $("cap");
+  cap.textContent = people() + " of " + MAX_PEOPLE + " people" +
+    (left === 0 ? ". That is the most we take on one booking." :
+     left === 1 ? ". One seat left, so only a single kayak fits." : "");
+  cap.className = "cap" + (left === 0 ? " full" : "");
+  var hrs = +$("hours").value || 1;
+  var perHour = state.s*PRICE.single + state.t*PRICE.tandem;
+  var parts = [];
+  if (state.s) parts.push(state.s + (state.s===1?" single":" singles"));
+  if (state.t) parts.push(state.t + (state.t===1?" tandem":" tandems"));
+  $("line").textContent = parts.length ? parts.join(" + ") + " × " + hrs + (hrs===1?" hour":" hours") : "No kayaks chosen yet";
+  $("line-amt").textContent = "";
+  $("total").textContent = money(perHour*hrs);
+}
+
+function bump(k, d){
+  var next = {s: state.s, t: state.t}; next[k] += d;
+  if (next[k] < 0 || next.s + next.t*2 > MAX_PEOPLE) return;
+  state = next; render();
+  if (submitted) validate(false);
+}
+$("s-plus").onclick = function(){bump("s",1)};
+$("s-minus").onclick = function(){bump("s",-1)};
+$("t-plus").onclick = function(){bump("t",1)};
+$("t-minus").onclick = function(){bump("t",-1)};
+$("hours").onchange = render;
+
+/* ---- validation ---- */
+function check(){
+  var e = [], v = function(id){return $(id).value.trim()};
+  var date = v("date");
+  if (!date) e.push(["date","Choose the date you want to paddle."]);
+  else if (date < $("date").min) e.push(["date","Choose today or a later date."]);
+  if (!v("time")) e.push(["time","Choose a departure time between 9:00 AM and 4:00 PM."]);
+  if (people() < 1) e.push(["kayaks","Add at least one kayak."]);
+  if (!v("name")) e.push(["name","Enter your full name."]);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("email")))
+    e.push(["email", v("email") ? "Enter an email address with an @ and a domain, like name@example.com." : "Enter your email address, like name@example.com."]);
+  var digits = v("phone").replace(/\D/g,"");
+  if (digits.length < 10 || digits.length > 15 || !/^[\d\s().+\-]+$/.test(v("phone")))
+    e.push(["phone", v("phone") ? "Enter a phone number with area code, like 555 123 4567." : "Enter a mobile number we can text, like 555 123 4567."]);
+  return e;
+}
+
+var FIELDS = ["date","time","kayaks","name","email","phone"];
+function validate(focusSummary){
+  var errs = check(), by = {};
+  errs.forEach(function(x){by[x[0]] = x[1]});
+  FIELDS.forEach(function(id){
+    var box = $(id+"-err"), inp = $(id);
+    if (by[id]) { box.textContent = by[id]; box.hidden = false; if (id!=="kayaks") { inp.setAttribute("aria-invalid","true"); inp.setAttribute("aria-describedby", (id==="email"?"email-h ":id==="phone"?"phone-h ":"")+id+"-err"); } }
+    else { box.hidden = true; if (id!=="kayaks") { inp.removeAttribute("aria-invalid"); inp.setAttribute("aria-describedby", id==="email"?"email-h":id==="phone"?"phone-h":""); if(!inp.getAttribute("aria-describedby")) inp.removeAttribute("aria-describedby"); } }
+  });
+  var sum = $("summary");
+  if (errs.length) {
+    $("summary-h").textContent = errs.length === 1 ? "1 thing needs fixing" : errs.length + " things need fixing";
+    var ul = $("summary-list"); ul.innerHTML = "";
+    errs.forEach(function(x){
+      var li = document.createElement("li"), a = document.createElement("a");
+      a.href = "#" + x[0]; a.textContent = x[1];
+      a.onclick = function(ev){ev.preventDefault(); var t = x[0]==="kayaks" ? $("s-plus").disabled ? $("t-minus") : $("s-plus") : $(x[0]); t.focus();};
+      li.appendChild(a); ul.appendChild(li);
+    });
+    sum.hidden = false;
+    document.title = "(" + errs.length + (errs.length===1?" problem) ":" problems) ") + "Book a kayak – Saltmarsh Paddle Co.";
+    if (focusSummary) sum.focus();
+  } else { sum.hidden = true; document.title = "Book a kayak – Saltmarsh Paddle Co."; }
+  return errs.length === 0;
+}
+
+["date","time","name","email","phone"].forEach(function(id){
+  $(id).addEventListener("input", function(){ if (submitted) validate(false); });
+  $(id).addEventListener("change", function(){ if (submitted) validate(false); });
+});
+
+/* ---- submit ---- */
+function fmtDate(s){
+  var p = s.split("-"); return new Date(p[0], p[1]-1, p[2]).toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+}
+$("f").addEventListener("submit", function(ev){
+  ev.preventDefault();
+  submitted = true;
+  if (!validate(true)) return;
+  var hrs = +$("hours").value;
+  var data = {
+    date: $("date").value, time: $("time").value, hours: hrs,
+    singles: state.s, tandems: state.t, people: people(),
+    total: state.s*PRICE.single*hrs + state.t*PRICE.tandem*hrs,
+    name: $("name").value.trim(), email: $("email").value.trim(), phone: $("phone").value.trim()
+  };
+  var btn = $("go"), ferr = $("form-err");
+  ferr.hidden = true;
+
+  function finish(){
+    var tl = $("time").options[$("time").selectedIndex].textContent;
+    var rows = [
+      ["Date", fmtDate(data.date)], ["Departure", tl],
+      ["Length", hrs + (hrs===1?" hour":" hours")],
+      ["Kayaks", [state.s?state.s+(state.s===1?" single":" singles"):"", state.t?state.t+(state.t===1?" tandem":" tandems"):""].filter(Boolean).join(", ")],
+      ["People", String(data.people)], ["Total", money(data.total)]
+    ];
+    var dl = $("done-dl"); dl.innerHTML = "";
+    rows.forEach(function(r){
+      var dt = document.createElement("dt"), dd = document.createElement("dd");
+      dt.textContent = r[0]; dd.textContent = r[1]; dl.appendChild(dt); dl.appendChild(dd);
+    });
+    $("done-email").textContent = data.email;
+    $("f").hidden = true; $("done").hidden = false; $("done").focus();
+    window.scrollTo(0,0);
+  }
+  function fail(msg){
+    btn.disabled = false; btn.textContent = "Request this booking";
+    ferr.textContent = msg; ferr.hidden = false;
+  }
+
+  if (ENDPOINT) {
+    btn.disabled = true; btn.textContent = "Sending…";
+    fetch(ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(data)})
+      .then(function(r){ if (!r.ok) throw new Error(); finish(); })
+      .catch(function(){ fail("We could not send your request. Your details are still here. Try again, or call us to book."); });
+  } else if (BOOKING_EMAIL) {
+    var body = "Booking request\n\nDate: " + data.date + "\nDeparture: " + data.time + "\nHours: " + hrs +
+      "\nSingles: " + state.s + "\nTandems: " + state.t + "\nTotal: " + money(data.total) +
+      "\n\nName: " + data.name + "\nEmail: " + data.email + "\nPhone: " + data.phone;
+    window.location.href = "mailto:" + BOOKING_EMAIL + "?subject=" + encodeURIComponent("Kayak booking request – " + data.date) + "&body=" + encodeURIComponent(body);
+    finish();
+  } else {
+    fail("Online booking is not connected yet, so nothing was sent. Your details are still here. Please call us to book.");
+  }
+});
+
+render();
+</script>
+</body>
+</html>

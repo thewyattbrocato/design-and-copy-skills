@@ -1,0 +1,1 @@
+No. A break-room TV has no keyboard or mouse, so nobody can use the controls, and the point is a glanceable view of the current shift's packed vs. target. If you want team or product breakdowns, show them as fixed panels or rotate between views, and keep filtering for a separate desk-side version.

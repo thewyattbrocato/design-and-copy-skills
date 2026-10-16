@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Welcome – Harbour Street Family Clinic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 100%; height: 100%; overflow: hidden;
+    background: #0b2a3f; color: #ffffff;
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, system-ui, sans-serif;
+    cursor: none;
+  }
+  .board {
+    width: 100vw; height: 100vh;
+    min-width: 1920px; min-height: 1080px;
+    display: grid;
+    grid-template-rows: 200px 1fr 190px;
+    gap: 40px;
+    padding: 56px 80px;
+    background: linear-gradient(160deg, #0f3a56 0%, #0b2a3f 60%);
+  }
+  header {
+    display: flex; flex-direction: column; justify-content: center;
+    border-bottom: 6px solid #3fc1b0;
+    padding-bottom: 24px;
+  }
+  .eyebrow { font-size: 40px; letter-spacing: 0.18em; text-transform: uppercase; color: #8fe0d3; font-weight: 600; }
+  h1 { font-size: 112px; line-height: 1.05; font-weight: 800; letter-spacing: -0.01em; }
+
+  main { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; min-height: 0; }
+  .card {
+    border-radius: 28px; padding: 48px 56px;
+    display: flex; flex-direction: column; min-height: 0;
+  }
+  .hours { background: #ffffff; color: #0b2a3f; }
+  .flu { background: #ffd15c; color: #2a1c00; justify-content: center; }
+
+  .label { font-size: 40px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .hours .label { color: #0d7a6c; }
+  .today-time { font-size: 124px; font-weight: 800; line-height: 1.1; margin-top: 12px; font-variant-numeric: tabular-nums; }
+  .today-day { font-size: 52px; font-weight: 600; margin-top: 4px; }
+
+  .week { margin-top: auto; border-top: 3px solid #cfdde5; padding-top: 24px; display: grid; gap: 10px; }
+  .row { display: flex; justify-content: space-between; font-size: 44px; font-weight: 600; padding: 6px 20px; border-radius: 12px; font-variant-numeric: tabular-nums; }
+  .row.now { background: #0d7a6c; color: #fff; }
+
+  .flu .label { color: #5a3d00; }
+  .level { font-size: 150px; font-weight: 800; line-height: 1.05; margin-top: 16px; }
+  .flu p { font-size: 56px; font-weight: 600; line-height: 1.25; margin-top: 16px; }
+  .arrow { font-size: 120px; line-height: 1; margin-top: 20px; font-weight: 800; }
+
+  footer {
+    background: #3fc1b0; color: #05242e; border-radius: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 96px; font-weight: 800; text-align: center;
+    padding: 0 48px;
+  }
+</style>
+</head>
+<body>
+<div class="board">
+  <header>
+    <div class="eyebrow">Welcome to</div>
+    <h1>Harbour Street Family Clinic</h1>
+  </header>
+
+  <main>
+    <section class="card hours" aria-label="Walk-in hours">
+      <div class="label">Walk-in hours today</div>
+      <div class="today-time" id="todayTime">8:00 am – 6:00 pm</div>
+      <div class="today-day" id="todayDay">Monday – Friday</div>
+      <div class="week">
+        <div class="row" data-days="1,2,3,4,5"><span>Mon – Fri</span><span>8:00 am – 6:00 pm</span></div>
+        <div class="row" data-days="6"><span>Saturday</span><span>9:00 am – 1:00 pm</span></div>
+      </div>
+    </section>
+
+    <section class="card flu" aria-label="Flu clinic">
+      <div class="label">Flu clinic</div>
+      <div class="level">Level 2</div>
+      <p>The flu clinic is upstairs on level 2.</p>
+      <div class="arrow" aria-hidden="true">↑</div>
+    </section>
+  </main>
+
+  <footer>Please check in at the desk</footer>
+</div>
+
+<script>
+  (function () {
+    var names = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    function update() {
+      var d = new Date().getDay();
+      var time = document.getElementById("todayTime");
+      var day = document.getElementById("todayDay");
+      if (d >= 1 && d <= 5) time.textContent = "8:00 am – 6:00 pm";
+      else if (d === 6) time.textContent = "9:00 am – 1:00 pm";
+      else time.textContent = "Closed today";
+      day.textContent = names[d];
+      document.querySelectorAll(".row").forEach(function (r) {
+        var on = r.getAttribute("data-days").split(",").indexOf(String(d)) !== -1;
+        r.classList.toggle("now", on);
+      });
+    }
+    update();
+    setInterval(update, 60000);
+  })();
+</script>
+</body>
+</html>

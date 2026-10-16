@@ -73,3 +73,8 @@ Never leave a cell blank: the reader cannot tell missing from zero from a loadin
 ## Totals and sums
 
 Put totals in a final row or a pinned footer, above them a heavier rule, and in heavier weight. Label them in the first column ("Total"). Subtotals sit under their group with a lighter rule. Show the unit once on the total if the column header does not carry it.
+
+- Add a total only when the column adds up. A rate, price or score gets an average or no summary, not a sum.
+- Say which statistic it is: "Median", "Mean", "Total". When a few extreme rows exist, the mean is not "typical": show the median, the count and a spread cue (range or middle half), and name the outlier row in a note rather than letting it set the story. Keep a count beside any average ("n = 12").
+- Put the summary at the end of a short table; for a long one, repeat it at the top or pin it. Style it differently from detail rows, never as a second table.
+- Near-equal shares need one decimal, or the differences disappear (24% and 24% when the values are 24.4 and 23.6).
