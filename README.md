@@ -33,6 +33,12 @@ This is one example, not a typical one: it is the task with the biggest judged g
 
 How that number is counted is under [How the evals work](#how-the-evals-work); the per-skill rows are in [Results](#results).
 
+## Watch it work
+
+[![A 9-second preview of the demo video: a sweeping line reveals the answer with the skill over the answer without it for a well-drilling company's logo request, with the label "Now, with the skill installed" and a chip reading "skill: brand-identity". Click to open the full 82-second video.](docs/launch/demo-preview.gif)](docs/launch/demo.mp4)
+
+An 82-second silent demo with captions on screen ([open the MP4](docs/launch/demo.mp4)). It shows five real requests and the skill built for each, then two real before-and-after pairs from the stored test runs, a logo and a homepage audit, and ends on the full record, losses included. Each pair is the one this README already picks as that skill's largest judged difference, so they are the clearest examples, not typical ones.
+
 ## Try it
 
 Five requests to paste into an agent with the skill installed, each shown with the skill it should load. They are taken word for word from the activation check (see [Activation check](#activation-check)), and in the latest run of that check each one was routed to the right skill. Routing is the first step only; whether the skill then helps is what the held-out results show.
@@ -581,6 +587,16 @@ Judged difference on this task: +0.83 rubric points. Overall for this skill: 4 w
 
 </details>
 <!-- before-after:end -->
+
+## Share images
+
+Three cards in the same style as the banner. Each is a plain SVG with a PNG copy at 1600 x 900.
+
+![design-and-copy-skills set very large on two lines in heavy white sans-serif on near-black, with amber hyphens. Beneath it, an amber rule and an italic serif note: "31 skills for AI coding agents. Each tested against the same agent without it." Along the bottom, a strip of 31 small amber marks: 19 squares labelled "19 design", then 12 dashes labelled "12 copywriting".](docs/launch/hero.png)
+
+![Dark card headed "design-and-copy-skills" with the line "Each skill against the same agent without it, on held-out tasks". Three large numbers sit over a proportional bar: 157 wins with the skill (amber, the longest segment), 39 losses (off-white) and 45 ties (grey). Below: "241 held-out tasks where the skill loaded. A different model judged each pair blind, in both orders." A strip of 31 marks: 17 solid amber labelled "17 plain passes" and 14 outlined labelled "14 marginal passes, labelled". Last line: "Two more skills did not pass and are not in the library."](docs/launch/test-gate.png)
+
+![Dark card headed "design-and-copy-skills" with the italic line "31 skills for AI coding agents, in two families." Two lists of skill names. 19 design: brand-identity, chart-design, color-palette, data-tables, design-critique, design-system-builder, form-design, interface-behavior, layout-structure, practice-and-assessment, responsive-layout, spacing-and-grouping, teaching-interfaces, typeface-selection, typesetting, ui-motion, ui-polish-pass, user-research-basics, visual-hierarchy. 12 copywriting: campaign-ideas, content-strategy, editing-and-cutting, email-and-sequences, fair-persuasion, headlines-and-leads, honest-claims, landing-page-copy, offers-and-value-propositions, positioning-and-messaging, ux-microcopy, website-copy-audit.](docs/launch/skill-families.png)
 
 ## Contributing
 
