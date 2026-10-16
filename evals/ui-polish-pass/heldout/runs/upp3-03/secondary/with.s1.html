@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwick Plants: Care Tips</title>
+<style>
+  :root {
+    --bg: #f4f7f2;
+    --card: #ffffff;
+    --text: #1d2a1f;
+    --muted: #4a5a4d;
+    --accent: #2f6b3c;
+    --accent-hover: #245430;
+    --border: #7d8b80;
+    --error: #a12622;
+    --focus: #1a4fd6;
+    --radius: 10px;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px 28px;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    margin: 0 0 24px;
+    color: var(--muted);
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .row {
+    display: flex;
+    gap: 8px;
+  }
+
+  input[type="email"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 11px 12px;
+    font: inherit;
+    color: var(--text);
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+  }
+
+  input[type="email"]::placeholder {
+    color: #6b7a6e;
+  }
+
+  input[type="email"]:focus,
+  button:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  input[aria-invalid="true"] {
+    border-color: var(--error);
+  }
+
+  button {
+    flex: 0 0 auto;
+    padding: 11px 18px;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  button:hover:not(:disabled) {
+    background: var(--accent-hover);
+  }
+
+  button:disabled {
+    cursor: progress;
+    opacity: 0.7;
+  }
+
+  .message {
+    min-height: 1.5em;
+    margin: 10px 0 0;
+    font-size: 0.9375rem;
+  }
+
+  .message.error {
+    color: var(--error);
+  }
+
+  .message.success {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .hint {
+    margin: 14px 0 0;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 360px) {
+    .row { flex-direction: column; }
+    button { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>Fernwick Plants</h1>
+  <p class="subtitle">Get our care tips delivered to your inbox.</p>
+
+  <form id="signup" novalidate>
+    <label class="field-label" for="email">Email address</label>
+    <div class="row">
+      <input id="email" name="email" type="email" placeholder="you@example.com"
+             autocomplete="email" spellcheck="false" required
+             aria-describedby="email-message">
+      <button type="submit" id="submit">Subscribe</button>
+    </div>
+    <p id="email-message" class="message" role="status" aria-live="polite"></p>
+  </form>
+
+  <p class="hint">One email a week. Unsubscribe anytime with one click.</p>
+</main>
+
+<script>
+  (function () {
+    var form = document.getElementById('signup');
+    var input = document.getElementById('email');
+    var button = document.getElementById('submit');
+    var message = document.getElementById('email-message');
+    var idleLabel = button.textContent;
+
+    function setMessage(text, kind) {
+      message.textContent = text;
+      message.className = 'message' + (kind ? ' ' + kind : '');
+    }
+
+    function validate(value) {
+      if (!value.trim()) return 'Please enter your email address.';
+      if (!input.checkValidity()) return 'That email doesn\u2019t look right. Check for a typo, such as a missing @ or domain.';
+      return '';
+    }
+
+    input.addEventListener('input', function () {
+      if (input.getAttribute('aria-invalid') === 'true' && !validate(input.value)) {
+        input.removeAttribute('aria-invalid');
+        setMessage('');
+      }
+    });
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (button.disabled) return;
+
+      var error = validate(input.value);
+      if (error) {
+        input.setAttribute('aria-invalid', 'true');
+        setMessage(error, 'error');
+        input.focus();
+        return;
+      }
+
+      input.removeAttribute('aria-invalid');
+      button.disabled = true;
+      button.textContent = 'Subscribing\u2026';
+      setMessage('');
+
+      // Placeholder: replace with the real signup request. Keep the busy state
+      // and the error path below so failures are visible and the typed email is kept.
+      setTimeout(function () {
+        button.disabled = false;
+        button.textContent = idleLabel;
+        setMessage('You\u2019re subscribed. Watch for your first care tips soon.', 'success');
+        input.value = '';
+      }, 800);
+    });
+  })();
+</script>
+</body>
+</html>

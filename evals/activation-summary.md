@@ -4,7 +4,7 @@
 
 This is a routing check from descriptions only. A model is shown the name and description of every skill (what an agent sees before it loads anything) and one request, and says which single skill, if any, it would load. It does not show that a skill is good, and it is not the loaded rate of the held-out runs, which stays the evidence for whether the model uses a skill in a real task. No description was changed because of it. Requests are in `evals/<skill>/activation.json` and per-request picks in `evals/<skill>/activation-results.json`; regenerate with `python3 scripts/activation_summary.py`.
 
-**Overall:** recall 166 of 180 (92%); false-pick rate 0 of 120 (0%) across 30 skills. Model: haiku (claude-haiku-5-5); run 2026-10-15.
+**Overall:** recall 171 of 186 (92%); false-pick rate 0 of 124 (0%) across 31 skills. Model: haiku (claude-haiku-5-5); run 2026-10-15.
 
 ## Flagged
 
@@ -32,6 +32,7 @@ No skill is flagged.
 | typeface-selection | 5 of 6 | 0 of 4 | brand-identity 1 | brand-identity 1, design-system-builder 1, none 1, typesetting 1 |
 | typesetting | 5 of 6 | 0 of 4 | data-tables 1 | data-tables 1, none 1, typeface-selection 1, visual-hierarchy 1 |
 | ui-motion | 6 of 6 | 0 of 4 | - | none 3, form-design 1 |
+| ui-polish-pass | 5 of 6 | 0 of 4 | none 1 | design-critique 1, none 1, responsive-layout 1, typeface-selection 1 |
 | user-research-basics | 5 of 6 | 0 of 4 | none 1 | design-critique 1, form-design 1, landing-page-copy 1, none 1 |
 | visual-hierarchy | 6 of 6 | 0 of 4 | - | color-palette 1, none 1, spacing-and-grouping 1, typesetting 1 |
 | campaign-ideas | 5 of 6 | 0 of 4 | offers-and-value-propositions 1 | email-and-sequences 1, headlines-and-leads 1, none 1, positioning-and-messaging 1 |

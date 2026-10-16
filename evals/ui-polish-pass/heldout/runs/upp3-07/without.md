@@ -1,0 +1,5 @@
+- **XSS:** `i.name` (and `i.price`) go into `innerHTML` unescaped, so use `textContent` or escape them.
+- **Unencoded query:** `q.value` is concatenated into the URL, so wrap it in `encodeURIComponent`.
+- **Race conditions:** Out-of-order responses can overwrite newer results, so debounce and use `AbortController` or ignore stale responses.
+- **Error handling:** There's no `r.ok` check or `.catch`, and empty or failed searches show nothing, so add error and "no results" states.
+- **Accessibility and markup:** Clickable `div`s with inline `onclick` aren't keyboard-accessible, and the input has no label. Use buttons or links, and add a `<label>` or `aria-label`.

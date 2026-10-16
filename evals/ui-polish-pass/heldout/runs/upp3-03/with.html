@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwick Plants: Get our care tips</title>
+<style>
+  :root {
+    --bg: #f1f4ec;
+    --card: #fcfdf9;
+    --ink: #1f2a22;
+    --muted: #55645a;
+    --line: #8a9a8e;
+    --green: #2f5d3f;
+    --green-dark: #234730;
+    --focus: #1d6fd1;
+    --error: #a3261c;
+    --error-bg: #fbeceb;
+    --ok-bg: #e6f2e8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 1.5rem 1rem;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .card {
+    width: 100%;
+    max-width: 26rem;
+    background: var(--card);
+    border: 1px solid #d5dccd;
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
+    box-shadow: 0 1px 2px rgba(31, 42, 34, .06), 0 12px 32px rgba(31, 42, 34, .08);
+  }
+  .leaf {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--green);
+  }
+  h1 {
+    margin: 0 0 .25rem;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    overflow-wrap: anywhere;
+  }
+  .sub { margin: 0 0 1.5rem; color: var(--muted); }
+  label { display: block; margin-bottom: .375rem; font-weight: 600; font-size: .9375rem; }
+  .row { display: flex; gap: .5rem; }
+  input[type="email"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    font: inherit;
+    padding: .7rem .85rem;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+  }
+  input[type="email"]::placeholder { color: #6b786f; }
+  input[aria-invalid="true"] { border-color: var(--error); }
+  button {
+    flex: 0 0 auto;
+    font: inherit;
+    font-weight: 600;
+    padding: .7rem 1.1rem;
+    color: #fff;
+    background: var(--green);
+    border: 1.5px solid var(--green);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color .15s;
+  }
+  button:hover { background: var(--green-dark); }
+  button[aria-disabled="true"] { cursor: progress; opacity: .8; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .msg { margin: .75rem 0 0; font-size: .9375rem; }
+  .msg:empty { display: none; }
+  .msg.error {
+    color: var(--error);
+    background: var(--error-bg);
+    padding: .5rem .75rem;
+    border-radius: 8px;
+  }
+  .msg.error::before { content: "Problem: "; font-weight: 700; }
+  .success {
+    background: var(--ok-bg);
+    border-radius: 10px;
+    padding: .9rem 1rem;
+    overflow-wrap: anywhere;
+  }
+  .success strong { display: block; }
+  .success button {
+    margin-top: .5rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--green-dark);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  .fine { margin: 1rem 0 0; font-size: .8125rem; color: var(--muted); }
+  [hidden] { display: none !important; }
+  @media (max-width: 22rem) {
+    .row { flex-direction: column; }
+    .card { padding: 1.5rem 1.25rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    button { transition: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <svg class="leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/>
+      <path d="M5 19c3-5 6-8 10-10"/>
+    </svg>
+    <h1>Fernwick Plants</h1>
+    <p class="sub" id="sub">Get our care tips</p>
+
+    <form id="form" novalidate>
+      <label for="email">Email address</label>
+      <div class="row">
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+               placeholder="you@example.com" required aria-describedby="msg">
+        <button type="submit" id="btn">Subscribe</button>
+      </div>
+      <p class="msg" id="msg" role="alert"></p>
+      <p class="fine">Plant care tips by email. Unsubscribe any time.</p>
+    </form>
+
+    <div class="success" id="done" role="status" tabindex="-1" hidden>
+      <strong>You're on the list.</strong>
+      <span>We'll send care tips to <span id="who"></span>.</span>
+      <button type="button" id="again">Use a different email</button>
+    </div>
+  </div>
+</main>
+
+<script>
+  var form = document.getElementById('form');
+  var email = document.getElementById('email');
+  var btn = document.getElementById('btn');
+  var msg = document.getElementById('msg');
+  var done = document.getElementById('done');
+  var who = document.getElementById('who');
+  var busy = false;
+
+  function showError(text) {
+    msg.className = 'msg error';
+    msg.textContent = text;
+    email.setAttribute('aria-invalid', 'true');
+    email.focus();
+  }
+  function clearError() {
+    msg.className = 'msg';
+    msg.textContent = '';
+    email.removeAttribute('aria-invalid');
+  }
+
+  // Replace this with the real subscribe request; it must resolve on success and reject on failure.
+  function subscribe(address) {
+    return new Promise(function (resolve) { setTimeout(resolve, 600); });
+  }
+
+  email.addEventListener('input', clearError);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (busy) return;
+    var value = email.value.trim();
+    if (!value) { showError('Enter your email address.'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      showError('That doesn\u2019t look like an email address. Check it for a missing @ or domain, like name@example.com.');
+      return;
+    }
+    clearError();
+    busy = true;
+    btn.setAttribute('aria-disabled', 'true');
+    btn.textContent = 'Subscribing\u2026';
+    subscribe(value).then(function () {
+      who.textContent = value;
+      form.hidden = true;
+      done.hidden = false;
+      done.focus();
+    }).catch(function () {
+      showError('We couldn\u2019t sign you up just now. Your email is still here, so try again.');
+    }).then(function () {
+      busy = false;
+      btn.removeAttribute('aria-disabled');
+      btn.textContent = 'Subscribe';
+    });
+  });
+
+  document.getElementById('again').addEventListener('click', function () {
+    done.hidden = true;
+    form.hidden = false;
+    email.value = '';
+    email.focus();
+  });
+</script>
+</body>
+</html>

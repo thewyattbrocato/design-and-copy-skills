@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/img/banner.svg" alt="design-and-copy-skills set very large on two lines in heavy white sans-serif on near-black, with amber hyphens. Beside it, an amber rule and an italic serif note: 30 skills for AI coding agents. Along the bottom, a strip of 30 small amber marks: 18 squares labelled 18 design, then 12 dashes labelled 12 copywriting." width="720"></p>
+<p align="center"><img src="docs/img/banner.svg" alt="design-and-copy-skills set very large on two lines in heavy white sans-serif on near-black, with amber hyphens. Beside it, an amber rule and an italic serif note: 31 skills for AI coding agents. Along the bottom, a strip of 31 small amber marks: 19 squares labelled 19 design, then 12 dashes labelled 12 copywriting." width="720"></p>
 
 # design-and-copy-skills
 
@@ -28,7 +28,7 @@ This is one example, not a typical one: it is the task with the biggest judged g
 <!-- before-after:featured:end -->
 
 <!-- results-table:headline:start -->
-**Across 30 skills, counting only the held-out tasks where the skill loaded (233 in all): 153 wins, 37 losses and 43 ties against the same model without it. 14 of the 30 passes are marginal.**
+**Across 31 skills, counting only the held-out tasks where the skill loaded (241 in all): 157 wins, 39 losses and 45 ties against the same model without it. 14 of the 31 passes are marginal.**
 <!-- results-table:headline:end -->
 
 How that number is counted is under [How the evals work](#how-the-evals-work); the per-skill rows are in [Results](#results).
@@ -72,11 +72,12 @@ The design skills are listed below, and the copywriting skills in [their own tab
 | [typeface-selection](skills/typeface-selection/SKILL.md) | a font is being chosen, paired, judged or fixed, in any language and at any length | sizes, leading or line length (typesetting), drawing logos (brand-identity), type tokens (design-system-builder) or palettes (color-palette) |
 | [typesetting](skills/typesetting/SKILL.md) | text is being set, judged or fixed, in any language and at any length | choosing typefaces (typeface-selection), ranking a whole view (visual-hierarchy), palettes (color-palette), table layout (data-tables) or logos (brand-identity) |
 | [ui-motion](skills/ui-motion/SKILL.md) | someone wants an interface to feel smooth, responsive, alive, polished, premium or less janky, or asks what motion to add and in what order, or to add, fix, cut, time, specify or review animation | video, film or character animation, detailed chart animation, print or static deliverables, or carousel semantics |
+| [ui-polish-pass](skills/ui-polish-pass/SKILL.md) | an interface should be finished, not just functional, however the ask is worded | visual redesigns, scored critiques (design-critique) or one named fix |
 | [user-research-basics](skills/user-research-basics/SKILL.md) | someone needs to find out what people do, need or struggle with, in any words, length or language | judging a design (design-critique), form fields (form-design) or page copy |
 | [visual-hierarchy](skills/visual-hierarchy/SKILL.md) | a screen or page needs a clear order of importance, in any language and at any length | spacing values, type sizes, palettes and contrast numbers, page grids, chart encodings or logos |
 <!-- results-table:skills:end -->
 
-Three more skills were built and tested but did not meet the bar and are not shipped; see [Built and tested, not shipped](#built-and-tested-not-shipped).
+Two more skills were built and tested but did not meet the bar and are not shipped; see [Built and tested, not shipped](#built-and-tested-not-shipped).
 
 ## Copywriting skills
 
@@ -159,6 +160,7 @@ The tables below are generated from the results files by `scripts/results_table.
 | typeface-selection | 2 | 3 | 2 / 2 / 6 | 2 / 2 / 5 (9 tasks) | 4.467 / 4.187 | 25 of 30 samples (9 of 10 tasks) | pass, marginal (no win margin) | `claude:opus`, a different model from the generator | none |
 | typesetting | 2 | 3 | 4 / 4 / 2 | 4 / 3 / 0 (7 tasks) | 4.798 / 4.61 | 21 of 30 samples (7 of 10 tasks) | pass, marginal (one-task win margin) | `claude:opus`, a different model from the generator | none |
 | ui-motion | 2 | 3 | 4 / 3 / 3 | 4 / 1 / 2 (7 tasks) | 4.232 / 3.96 | 21 of 30 samples (7 of 10 tasks) | pass | `claude:opus`, a different model from the generator | none |
+| ui-polish-pass | 2 | 3 | 6 / 2 / 2 | 4 / 2 / 2 (8 tasks) | 4.345 / 3.999 | 24 of 30 samples (8 of 10 tasks) | pass | `claude:opus`, a different model from the generator | `haiku`: 5 / 1 / 0 loaded only |
 | user-research-basics | 2 | 3 | 9 / 0 / 1 | 6 / 0 / 0 (6 tasks) | 4.811 / 4.15 | 18 of 30 samples (6 of 10 tasks) | pass, marginal (6 loaded tasks) | `claude:opus`, a different model from the generator | none |
 | visual-hierarchy | 2 | 3 | 7 / 1 / 2 | 8 / 0 / 1 (9 tasks) | 4.645 / 4.063 | 24 of 30 samples (9 of 10 tasks) | pass | `claude:opus`, a different model from the generator | `haiku`: 6 / 0 / 0 loaded only |
 | campaign-ideas | 2 | 3 | 7 / 3 / 0 | 6 / 0 / 0 (6 tasks) | 4.508 / 3.933 | 16 of 30 samples (6 of 10 tasks) | pass, marginal (6 loaded tasks) | `claude:opus`, a different model from the generator | none |
@@ -254,6 +256,7 @@ The method, commands and the headless CLI setup are in [evals/README.md](evals/R
 | typeface-selection | no development results | | | | | | | | | |
 | typesetting | no development results | | | | | | | | | |
 | ui-motion | no development results | | | | | | | | | |
+| ui-polish-pass | no development results | | | | | | | | | |
 | user-research-basics | no development results | | | | | | | | | |
 | visual-hierarchy | 1 | 1 | 7 / 2 / 1 | 6 / 1 / 1 (8 tasks) | 4.537 / 4.155 | 8 of 10 samples (8 of 10 tasks) | pass | `claude:sonnet`, same model as the generator | none | superseded by the held-out run |
 | campaign-ideas | no development results | | | | | | | | | |
@@ -339,15 +342,16 @@ The `typesetting` skill was then rewritten. The first rewrite went 4 / 5 / 1 (me
 
 ### Built and tested, not shipped
 
-Three skills were built and run against held-out tasks, did not meet the bar, and are not in `skills/` or installable:
+Two skills were built and run against held-out tasks, did not meet the bar, and are not in `skills/` or installable:
 
 | Skill | Held-out result, wins / losses / ties where the skill loaded |
 |---|---|
 | accessible-components | 2 / 5 / 3 |
 | dashboard-design | 1 / 2 / 6 |
-| ui-polish-pass | inconclusive: the model rarely loaded the skill, so too few tasks had a loaded sample to judge |
 
 Only their held-out task files are kept, under `withdrawn/<name>-pulled-evidence/heldout/`.
+
+`ui-polish-pass` failed two earlier tests and was shipped only after a rewritten description and a fresh blind test; the earlier evidence is under [`withdrawn/ui-polish-pass-pulled-evidence/`](withdrawn/ui-polish-pass-pulled-evidence/) and [`withdrawn/ui-polish-pass-v2-inconclusive-evidence/`](withdrawn/ui-polish-pass-v2-inconclusive-evidence/).
 
 ## Showcase
 

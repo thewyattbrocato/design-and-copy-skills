@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnworks Weekend Classes</title>
+<style>
+  :root {
+    --clay: #9a4a2a;
+    --clay-dark: #7c3a20;
+    --ink: #2b211c;
+    --muted: #6b5c53;
+    --paper: #f7f1ea;
+    --card: #fffdfa;
+    --line: #8f7f74;
+    --soft-line: #e4d8cb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem 1rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+  }
+  main {
+    max-width: 30rem;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--soft-line);
+    border-top: 6px solid var(--clay);
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 1px 3px rgba(60, 40, 25, .08);
+  }
+  h1 {
+    margin: 0 0 .25rem;
+    font-size: 1.75rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  .lede { margin: 0 0 1.5rem; color: var(--muted); }
+  .field { margin-bottom: 1.1rem; }
+  label { display: block; margin-bottom: .3rem; font-weight: 600; }
+  input[type="text"], input[type="email"], input[type="number"], select {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: .5rem .75rem;
+    font: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  input[type="number"] { max-width: 7rem; }
+  input:focus-visible, select:focus-visible, button:focus-visible {
+    outline: 3px solid #1d5fbf;
+    outline-offset: 2px;
+  }
+  input:user-invalid { border-color: #a3261d; }
+  .check {
+    display: flex;
+    gap: .6rem;
+    align-items: center;
+    min-height: 2.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .check input { width: 1.25rem; height: 1.25rem; accent-color: var(--clay); margin: 0; }
+  .check label { margin: 0; font-weight: 400; }
+  button {
+    width: 100%;
+    min-height: 3rem;
+    padding: .6rem 1rem;
+    font: inherit;
+    font-weight: 700;
+    color: #fff;
+    background: var(--clay);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover { background: var(--clay-dark); }
+  button:disabled { background: var(--muted); cursor: progress; }
+  .policy {
+    margin: 1.5rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--soft-line);
+    color: var(--muted);
+    font-size: .925rem;
+  }
+  @media (max-width: 380px) {
+    main { padding: 1.5rem 1rem; }
+    h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Kilnworks Weekend Classes</h1>
+  <p class="lede">Pick a class and save your spot.</p>
+
+  <form id="signup">
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" autocomplete="name" required>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" autocomplete="email" required>
+    </div>
+
+    <div class="field">
+      <label for="class">Class</label>
+      <select id="class" name="class">
+        <option>Wheel basics (Sat 10am)</option>
+        <option>Hand-building (Sat 2pm)</option>
+        <option>Glazing day (Sun 11am)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="guests">Guests</label>
+      <input type="number" id="guests" name="guests" value="1" min="1" step="1" inputmode="numeric" required>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="news" name="news">
+      <label for="news">Send me studio news</label>
+    </div>
+
+    <button type="submit" id="reserve">Reserve</button>
+  </form>
+
+  <p class="policy">Cancel up to 48 hours before class for a full refund.</p>
+</main>
+
+<script>
+  var form = document.getElementById('signup');
+  var btn = document.getElementById('reserve');
+  form.addEventListener('submit', function () {
+    if (!form.checkValidity()) return;
+    btn.disabled = true;
+    btn.textContent = 'Reserving\u2026';
+  });
+  window.addEventListener('pageshow', function () {
+    btn.disabled = false;
+    btn.textContent = 'Reserve';
+  });
+</script>
+</body>
+</html>

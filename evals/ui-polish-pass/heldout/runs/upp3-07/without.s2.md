@@ -1,0 +1,5 @@
+- **XSS:** `i.name` and `i.price` go into `innerHTML` unescaped, so use `textContent` or escape them.
+- **Query encoding:** `q.value` isn't URL-encoded, so `&`, `#` or spaces break the request; use `encodeURIComponent`.
+- **Race conditions:** responses can arrive out of order, so stale results can overwrite newer ones. Abort the previous request or ignore stale responses.
+- **No debounce:** every keystroke fires a request, so debounce the input (~200–300ms).
+- **Error and empty states:** there's no `r.ok` check or `.catch`, and no "no results" message, so failures and empty searches show nothing.

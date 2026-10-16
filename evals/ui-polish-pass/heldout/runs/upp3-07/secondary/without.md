@@ -1,0 +1,5 @@
+- **XSS:** `name` and `price` go into `innerHTML` unescaped, so a product name containing markup will execute. Build the nodes with `textContent` instead.
+- **Unencoded query:** `q.value` is concatenated into the URL without `encodeURIComponent`, so `&`, `#`, and `+` in searches break the request.
+- **Out-of-order responses:** every keystroke fires a fetch with no debounce or abort, so a slow earlier response can overwrite newer results.
+- **No error handling:** non-OK responses and network failures are ignored, leaving stale results or a silent failure on screen.
+- **Inline handlers and globals:** `onclick` with string interpolation and reliance on implicit `id` globals (`q`, `results`) is fragile; use `addEventListener`, event delegation, and a real `<button>` or link for keyboard access.

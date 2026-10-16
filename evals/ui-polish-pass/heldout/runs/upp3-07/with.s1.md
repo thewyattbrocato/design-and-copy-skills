@@ -1,0 +1,5 @@
+- **XSS (fix first):** `item.name` and `price` go into `innerHTML` unescaped, and `onclick` interpolates `id`, so a hostile product name runs script. Build the nodes with `textContent` and `addEventListener`.
+- **Silent failures and stale results:** there's no `.catch` or `r.ok` check, so errors show nothing. Without debounce or abort, a slow earlier response can overwrite newer results. Show a message with a retry, and cancel the in-flight request.
+- **Unencoded, empty queries:** `q.value` goes into the URL without `encodeURIComponent`, so `&` or `#` break the search. Empty input also still fires a request.
+- **Missing states:** there's no loading indicator, and no "No results for 'x'" message when the list comes back empty.
+- **Accessibility:** the input has only a placeholder, with no label. Rows are clickable `div`s that keyboard users can't reach, so use buttons or links. Results aren't announced (add an `aria-live` region). The `#888` 11px price text is low contrast. I only read the code and didn't test it with a screen reader.

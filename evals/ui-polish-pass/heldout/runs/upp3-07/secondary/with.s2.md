@@ -1,0 +1,5 @@
+- Escape `name` and `price` before putting them into `innerHTML`, or a product name containing markup becomes an XSS hole.
+- Don't build the `onclick` attribute from `id`. Attach listeners in JS so bad data can't inject script.
+- URL-encode the query. Typing `&` or `#` currently breaks the request.
+- Discard stale responses (abort the previous request or check the query still matches), or fast typing can show old results.
+- Debounce input, handle non-OK responses and network errors, and add loading, empty, and error states.

@@ -1,0 +1,5 @@
+- **XSS:** `name` and `price` go into `innerHTML` unescaped, so a product name containing markup will execute. Build the nodes with `textContent` instead.
+- **Unencoded query:** `q.value` is concatenated into the URL raw, so `&`, `#`, or `+` in a search will break or alter the request. Wrap it in `encodeURIComponent`.
+- **Stale responses:** Fast typing can let an older response land after a newer one and overwrite the results. Abort the previous request or drop responses that aren't from the latest query.
+- **No error or debounce handling:** A failed fetch or non-JSON response fails silently, and every keystroke fires a request. Add a catch and debounce the input by roughly 200–300ms.
+- **Inline `onclick` and non-focusable rows:** Interpolating the id into an inline handler is fragile, and clickable `div`s can't be reached by keyboard. Use a `button` or link with a delegated listener.

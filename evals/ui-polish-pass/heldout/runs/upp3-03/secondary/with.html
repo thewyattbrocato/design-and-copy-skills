@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fernwick Plants | Care Tips</title>
+  <meta name="description" content="Get our plant care tips delivered to your inbox.">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f3f7f1;
+      --card: #ffffff;
+      --text: #1d2a1f;
+      --muted: #5b6b5e;
+      --accent: #2f7d4f;
+      --accent-hover: #256640;
+      --on-accent: #ffffff;
+      --border: #c9d6cb;
+      --error: #b42318;
+      --success: #2f7d4f;
+      --focus: #2f7d4f;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121a14;
+        --card: #1a251c;
+        --text: #e6efe7;
+        --muted: #a3b5a7;
+        --accent: #6fcf97;
+        --accent-hover: #8fdcae;
+        --on-accent: #0c150e;
+        --border: #34463a;
+        --error: #ff8a80;
+        --success: #6fcf97;
+        --focus: #6fcf97;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 26rem;
+      padding: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--accent);
+    }
+
+    .lead {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    input {
+      flex: 1 1 14rem;
+      min-width: 0;
+      padding: 0.75rem 1rem;
+      font: inherit;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    input::placeholder {
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    input[aria-invalid="true"] {
+      border-color: var(--error);
+    }
+
+    button {
+      padding: 0.75rem 1.25rem;
+      font: inherit;
+      font-weight: 600;
+      color: var(--on-accent);
+      background: var(--accent);
+      border: 1px solid transparent;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    input:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .message {
+      min-height: 1.5em;
+      margin: 0.75rem 0 0;
+      font-size: 0.9rem;
+    }
+
+    .message.success {
+      color: var(--success);
+    }
+
+    .message.error {
+      color: var(--error);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .card {
+        padding: 1.5rem;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Fernwick Plants</h1>
+    <p class="lead">Get our care tips delivered to your inbox.</p>
+
+    <form id="signup" novalidate>
+      <label for="email" class="sr-only">Email address</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+      <button type="submit">Sign up</button>
+    </form>
+
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+  </main>
+
+  <script>
+    const form = document.getElementById('signup');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const valid = email.value.trim() !== '' && email.checkValidity();
+
+      email.setAttribute('aria-invalid', String(!valid));
+      message.className = `message ${valid ? 'success' : 'error'}`;
+      message.textContent = valid
+        ? 'Thanks for subscribing! Watch your inbox for care tips.'
+        : 'Please enter a valid email address.';
+
+      if (valid) {
+        form.reset();
+      } else {
+        email.focus();
+      }
+    });
+
+    email.addEventListener('input', () => {
+      email.removeAttribute('aria-invalid');
+    });
+  </script>
+</body>
+</html>

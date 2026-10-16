@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilnworks Weekend Classes</title>
+<style>
+  :root {
+    --bg: #f6efe7;
+    --card: #fffdfa;
+    --ink: #2b2420;
+    --muted: #61564e;
+    --line: #8c7f74;
+    --accent: #9a4a2a;
+    --accent-dark: #7d3a20;
+    --error: #b3261e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem 1rem;
+    background: var(--bg);
+    color: var(--ink);
+    font: 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main {
+    max-width: 30rem;
+    margin: 0 auto;
+  }
+  h1 {
+    margin: 0 0 .25rem;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.9rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  .lede { margin: 0 0 1.5rem; color: var(--muted); }
+  form {
+    background: var(--card);
+    border: 1px solid #e3d8cb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px rgba(60, 40, 20, .08);
+  }
+  .field { margin-bottom: 1.1rem; }
+  label { display: block; margin-bottom: .3rem; font-weight: 600; }
+  input[type="text"], input[type="email"], input[type="number"], select {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: .5rem .75rem;
+    font: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+  }
+  input[type="number"] { max-width: 8rem; }
+  input:focus-visible, select:focus-visible, button:focus-visible {
+    outline: 3px solid #1f5fbf;
+    outline-offset: 2px;
+  }
+  input[aria-invalid="true"] { border-color: var(--error); }
+  .error {
+    margin: .3rem 0 0;
+    color: var(--error);
+    font-size: .9rem;
+  }
+  .error:empty { display: none; }
+  .check {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    margin-bottom: 1.4rem;
+  }
+  .check input { width: 1.25rem; height: 1.25rem; accent-color: var(--accent); flex: none; }
+  .check label { margin: 0; font-weight: 400; }
+  button {
+    width: 100%;
+    min-height: 3rem;
+    padding: .6rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button:hover { background: var(--accent-dark); }
+  button:disabled { background: #6f6259; cursor: progress; }
+  .policy {
+    margin: 1.25rem 0 0;
+    font-size: .9rem;
+    color: var(--muted);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Kilnworks Weekend Classes</h1>
+  <p class="lede">Pick a class and save your spot.</p>
+
+  <form id="signup" novalidate>
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" autocomplete="name" required aria-describedby="name-err">
+      <p class="error" id="name-err"></p>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="email-err">
+      <p class="error" id="email-err"></p>
+    </div>
+
+    <div class="field">
+      <label for="class">Class</label>
+      <select id="class" name="class">
+        <option>Wheel basics (Sat 10am)</option>
+        <option>Hand-building (Sat 2pm)</option>
+        <option>Glazing day (Sun 11am)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="guests">Guests</label>
+      <input type="number" id="guests" name="guests" value="1" min="1" step="1" inputmode="numeric" aria-describedby="guests-err">
+      <p class="error" id="guests-err"></p>
+    </div>
+
+    <div class="check">
+      <input type="checkbox" id="news" name="news">
+      <label for="news">Send me studio news</label>
+    </div>
+
+    <button type="submit" id="submit">Reserve</button>
+  </form>
+
+  <p class="policy">Cancel up to 48 hours before class for a full refund.</p>
+</main>
+
+<script>
+  (function () {
+    var form = document.getElementById('signup');
+    var button = document.getElementById('submit');
+    var checks = [
+      { id: 'name', test: function (el) { return el.value.trim() !== ''; },
+        msg: 'Enter your name so we can hold your spot.' },
+      { id: 'email', test: function (el) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()); },
+        msg: 'Enter an email address like name@example.com.' },
+      { id: 'guests', test: function (el) { return /^\d+$/.test(el.value) && Number(el.value) >= 1; },
+        msg: 'Guests must be a whole number, 1 or more.' }
+    ];
+
+    function setError(id, msg) {
+      var el = document.getElementById(id);
+      document.getElementById(id + '-err').textContent = msg;
+      if (msg) el.setAttribute('aria-invalid', 'true');
+      else el.removeAttribute('aria-invalid');
+    }
+
+    form.addEventListener('submit', function (e) {
+      var first = null;
+      checks.forEach(function (c) {
+        var el = document.getElementById(c.id);
+        var ok = c.test(el);
+        setError(c.id, ok ? '' : c.msg);
+        if (!ok && !first) first = el;
+      });
+      if (first) {
+        e.preventDefault();
+        first.focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = 'Reserving…';
+    });
+
+    checks.forEach(function (c) {
+      document.getElementById(c.id).addEventListener('input', function () {
+        if (this.getAttribute('aria-invalid')) setError(c.id, c.test(this) ? '' : c.msg);
+      });
+    });
+
+    // Re-enable if the page is restored from the back/forward cache.
+    window.addEventListener('pageshow', function () {
+      button.disabled = false;
+      button.textContent = 'Reserve';
+    });
+  })();
+</script>
+</body>
+</html>

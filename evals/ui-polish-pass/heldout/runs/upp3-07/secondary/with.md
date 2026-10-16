@@ -1,0 +1,5 @@
+- Escape `name` and `price` before setting `innerHTML`, since a product name containing markup would run as HTML (XSS).
+- URL-encode the query, because characters like `&` or `#` currently break the request.
+- Debounce input and ignore stale responses so a slow earlier request can't overwrite newer results.
+- Check `r.ok` and add a `catch`, or a failed request leaves the list stale or blank with no feedback.
+- Make rows focusable and operable by keyboard, and give the input a label, since clickable divs can't be tabbed to.

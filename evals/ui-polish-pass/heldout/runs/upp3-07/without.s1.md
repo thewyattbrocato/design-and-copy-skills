@@ -1,0 +1,5 @@
+- **XSS:** `i.name` and `i.price` go into `innerHTML` unescaped, so use `textContent` or escape them.
+- **Inline handler:** `onclick="openItem(${i.id})"` is injectable and depends on a global. Use a `data-id` attribute with a delegated listener.
+- **Unencoded query:** `'?q=' + q.value` breaks on `&`, `#` and `%`. Wrap it in `encodeURIComponent`.
+- **Race conditions and request spam:** there's no debounce or abort, so slow, stale responses can overwrite newer ones. Debounce the input and use `AbortController`.
+- **Missing states and a11y:** there's no `r.ok` check, `.catch`, empty-results message or label on the input. Items are clickable divs, so make them buttons or links. It also relies on implicit globals (`q`, `results`), so use `getElementById`.

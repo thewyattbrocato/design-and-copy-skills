@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwick Plants — Care Tips Newsletter</title>
+<style>
+  :root {
+    --bg: #eef2e8;
+    --card: #fbfcf8;
+    --ink: #1f2a22;
+    --muted: #5b6b5f;
+    --accent: #2f6b45;
+    --accent-dark: #234f33;
+    --line: #cdd8c6;
+    --ring: #8fc4a0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121a15;
+      --card: #1b261f;
+      --ink: #e8efe9;
+      --muted: #9fb2a5;
+      --accent: #6fbf88;
+      --accent-dark: #8fd3a5;
+      --line: #2f4035;
+      --ring: #3f7a54;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(111,191,136,.18), transparent 45%),
+      radial-gradient(circle at 90% 90%, rgba(47,107,69,.14), transparent 50%),
+      var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 40px 32px 32px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 12px 32px rgba(31,42,34,.10);
+    text-align: center;
+  }
+  .leaf {
+    width: 52px; height: 52px;
+    margin: 0 auto 18px;
+    display: grid; place-items: center;
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--accent);
+  }
+  .leaf svg { width: 28px; height: 28px; }
+  h1 {
+    margin: 0 0 8px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  p {
+    margin: 0 0 24px;
+    color: var(--muted);
+    font-size: 1.02rem;
+  }
+  form { display: flex; flex-direction: column; gap: 12px; }
+  label {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    font: inherit;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input::placeholder { color: var(--muted); opacity: .8; }
+  input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--ring);
+  }
+  button {
+    padding: 14px 18px;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent-dark);
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform .1s, filter .15s;
+  }
+  @media (prefers-color-scheme: dark) { button { color: #0f1a13; background: var(--accent); } }
+  button:hover { filter: brightness(1.08); }
+  button:active { transform: translateY(1px); }
+  button:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+  .note {
+    margin: 16px 0 0;
+    font-size: .82rem;
+    color: var(--muted);
+  }
+  .thanks { display: none; color: var(--accent); font-weight: 600; margin: 0; }
+  .done form, .done .intro, .done .note { display: none; }
+  .done .thanks { display: block; }
+  @media (min-width: 480px) {
+    form { flex-direction: row; }
+    button { flex: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="card" id="card">
+    <div class="leaf" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 15"/>
+        <path d="M5 19c3-4 6-7 10-9"/>
+      </svg>
+    </div>
+    <h1>Fernwick Plants</h1>
+    <p class="intro">Get our care tips — watering, light, and troubleshooting, delivered to your inbox.</p>
+    <form onsubmit="event.preventDefault(); document.getElementById('card').classList.add('done');">
+      <label for="email">Email address</label>
+      <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="note">No spam. Unsubscribe anytime.</p>
+    <p class="thanks" role="status">Thanks for subscribing! Watch your inbox for our first tips. 🌿</p>
+  </main>
+</body>
+</html>

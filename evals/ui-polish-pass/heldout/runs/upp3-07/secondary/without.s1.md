@@ -1,0 +1,5 @@
+- Escape `name` and `price` before `innerHTML`, since user-editable product names are a stored XSS hole as written.
+- URL-encode the query; characters like `&` or `#` currently break the request.
+- Debounce the input and cancel stale requests so a slow earlier response can't overwrite newer results.
+- Check `r.ok` and handle errors; right now a failed request leaves old results on screen with no feedback.
+- Replace the inline `onclick` with event delegation so the id isn't interpolated into HTML.

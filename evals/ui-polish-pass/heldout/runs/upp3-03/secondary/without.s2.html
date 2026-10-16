@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwick Plants: Get Our Care Tips</title>
+<meta name="description" content="Get plant care tips from Fernwick Plants, delivered to your inbox.">
+<style>
+  :root {
+    --bg: #f4f7f2;
+    --surface: #ffffff;
+    --text: #1d2a22;
+    --muted: #5b6b61;
+    --accent: #2f7d4f;
+    --accent-hover: #256640;
+    --border: #cfd9d1;
+    --focus: #8fd1a6;
+    --error: #b42318;
+    --success: #1f6b43;
+    --radius: 12px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101a14;
+      --surface: #182820;
+      --text: #e6efe9;
+      --muted: #9fb3a6;
+      --accent: #4fb57a;
+      --accent-hover: #6cc690;
+      --border: #2d4236;
+      --focus: #4fb57a;
+      --error: #f97066;
+      --success: #6cc690;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 36px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 16px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+  }
+
+  .lede {
+    margin: 0 0 28px;
+    color: var(--muted);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .field-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  input[type="email"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    font: inherit;
+    padding: 12px 14px;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  input[type="email"]::placeholder { color: var(--muted); opacity: 0.8; }
+
+  input[type="email"]:focus,
+  button:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  input[type="email"][aria-invalid="true"] {
+    border-color: var(--error);
+  }
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    padding: 12px 20px;
+    color: #ffffff;
+    background: var(--accent);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+  }
+
+  button:hover { background: var(--accent-hover); }
+  button:disabled { opacity: 0.6; cursor: default; }
+
+  .hint {
+    min-height: 1.25em;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .hint.error { color: var(--error); }
+  .hint.success { color: var(--success); font-weight: 500; }
+
+  .fine-print {
+    margin: 24px 0 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 420px) {
+    .card { padding: 28px 22px; }
+    .field-row { flex-direction: column; }
+    button { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    button { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <p class="brand">Fernwick Plants</p>
+    <h1>Get our care tips</h1>
+    <p class="lede">Seasonal watering schedules, repotting guides, and fixes for common plant problems, sent straight to your inbox.</p>
+
+    <form id="signup" novalidate>
+      <label for="email">Email address</label>
+      <div class="field-row">
+        <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="status">
+        <button type="submit">Subscribe</button>
+      </div>
+      <p id="status" class="hint" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="fine-print">No spam. Unsubscribe anytime.</p>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('signup');
+      var input = document.getElementById('email');
+      var status = document.getElementById('status');
+      var button = form.querySelector('button');
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var value = input.value.trim();
+        var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+        if (!valid) {
+          input.setAttribute('aria-invalid', 'true');
+          status.className = 'hint error';
+          status.textContent = 'Please enter a valid email address.';
+          input.focus();
+          return;
+        }
+
+        input.removeAttribute('aria-invalid');
+        button.disabled = true;
+        status.className = 'hint success';
+        status.textContent = 'Thanks! Your first care tip is on its way.';
+        input.value = '';
+        setTimeout(function () { button.disabled = false; }, 1500);
+      });
+
+      input.addEventListener('input', function () {
+        if (input.getAttribute('aria-invalid') === 'true') {
+          input.removeAttribute('aria-invalid');
+          status.className = 'hint';
+          status.textContent = '';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

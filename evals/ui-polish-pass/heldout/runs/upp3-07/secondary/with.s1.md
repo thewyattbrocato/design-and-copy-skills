@@ -1,0 +1,5 @@
+- Escape `name` and `price` before inserting them into the HTML, or a product name containing markup becomes an XSS hole.
+- URL-encode the query; a `&`, `#`, or `+` in the input currently breaks the request.
+- Debounce the input and ignore stale responses so a slow earlier request can't overwrite newer results.
+- Check `r.ok` and show an error or "no results" state, since failures currently leave the list silently blank.
+- Use real buttons or links for results and give the input a real label, since the clickable divs can't be reached by keyboard and placeholder text isn't a label.

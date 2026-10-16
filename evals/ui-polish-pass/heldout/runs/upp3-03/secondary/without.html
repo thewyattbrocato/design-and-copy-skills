@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fernwick Plants | Care Tips</title>
+  <style>
+    :root {
+      --bg: #f4f7f2;
+      --card: #ffffff;
+      --text: #1d2a1f;
+      --muted: #5b6b5e;
+      --accent: #2f7d4f;
+      --accent-hover: #256640;
+      --border: #cdd9cf;
+      --focus: #9fd8b5;
+      --error: #b3261e;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111812;
+        --card: #1a241c;
+        --text: #e6efe8;
+        --muted: #9db0a2;
+        --accent: #5fbf85;
+        --accent-hover: #7ccf9d;
+        --border: #33443a;
+        --focus: #2e6b4a;
+        --error: #f2b8b5;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 440px;
+      padding: 40px 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .brand {
+      margin: 0 0 4px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--accent);
+    }
+
+    .tagline {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    input[type="email"] {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 14px;
+      font: inherit;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    input[type="email"]::placeholder {
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    input[type="email"]:focus,
+    button:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    input[aria-invalid="true"] {
+      border-color: var(--error);
+    }
+
+    button {
+      padding: 12px 20px;
+      font: inherit;
+      font-weight: 600;
+      color: #ffffff;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    .message {
+      min-height: 1.5em;
+      margin: 12px 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .message.error {
+      color: var(--error);
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 32px 20px;
+      }
+
+      .row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1 class="brand">Fernwick Plants</h1>
+    <p class="tagline">Get our care tips delivered to your inbox.</p>
+
+    <form id="signup" novalidate>
+      <label for="email">Email address</label>
+      <div class="row">
+        <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+        <button type="submit">Subscribe</button>
+      </div>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <script>
+    // Client-side check only. Wire the submit to your own backend endpoint to store addresses.
+    const form = document.getElementById("signup");
+    const input = document.getElementById("email");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const value = input.value.trim();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+      input.setAttribute("aria-invalid", String(!valid));
+      message.classList.toggle("error", !valid);
+
+      if (!valid) {
+        message.textContent = "Please enter a valid email address.";
+        input.focus();
+        return;
+      }
+
+      message.textContent = "Thanks! Your first care tip is on its way.";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
