@@ -60,6 +60,8 @@ Judge a design like a careful colleague: what it is for, what works, what fails 
 
 **Does it already work?** Say so plainly and list only real issues. Do not invent problems to look thorough.
 
+**Finished versus formed.** A screen can have every state and still be unformed. Judge whether the main task works end to end and whether anything in it was clearly decided for this audience, not only whether it is polished.
+
 **Comprehension questions.** If a finding hinges on whether people understand something, recommend three to five people doing real tasks without help, then a ranked list of what failed; fixes should remove things before adding explanations. Use analytics or a larger study only when the question is volume.
 
 **Audits at scale.** Inventory the screens, sample key flows and one screen per pattern, check consistency (duplicate components, one-off values, mismatched labels), report patterns with counts, give a deliverable shape. For a huge set, deliver the first slice in full, then continue.

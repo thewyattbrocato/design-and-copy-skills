@@ -1,0 +1,1 @@
+Too generic: "Work smarter, not harder" and "one powerful platform" could describe any SaaS product. Name the bookshop and the outcome instead, e.g. "Know what's on your shelves, without closing for inventory," and say what the product does in the subhead.

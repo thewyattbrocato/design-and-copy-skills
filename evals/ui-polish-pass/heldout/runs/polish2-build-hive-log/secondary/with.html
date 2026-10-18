@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hive Inspection Log</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbf7ee; --card: #ffffff; --text: #2b2416; --muted: #6b5f4a;
+  --line: #e2d9c4; --accent: #b7790f; --accent-text: #ffffff;
+  --danger: #a33a2a; --focus: #1f5fbf;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1812; --card: #26221a; --text: #f1ead9; --muted: #b0a48a;
+    --line: #4a4131; --accent: #e0a33a; --accent-text: #1b1812;
+    --danger: #ef8a7a; --focus: #8ab4ff;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text); line-height: 1.4;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+main { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.6rem; margin: 0 0 4px; }
+h2 { font-size: 1.15rem; margin: 0 0 12px; }
+.sub { color: var(--muted); margin: 0 0 20px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 20px; }
+.grid { display: grid; gap: 12px 16px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+label { display: flex; flex-direction: column; gap: 4px; font-size: .9rem; font-weight: 600; }
+input, select, textarea {
+  font: inherit; font-weight: 400; color: var(--text); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%;
+}
+textarea { min-height: 72px; resize: vertical; }
+input:focus, select:focus, textarea:focus, button:focus-visible {
+  outline: 3px solid var(--focus); outline-offset: 2px;
+}
+fieldset { border: 1px solid var(--line); border-radius: 8px; margin: 14px 0 0; padding: 10px 12px 12px; }
+legend { font-weight: 600; font-size: .9rem; padding: 0 4px; }
+.checks { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.checks label { flex-direction: row; align-items: center; font-weight: 400; gap: 6px; }
+.checks input { width: auto; }
+.stack { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center; }
+button {
+  font: inherit; font-weight: 600; border-radius: 8px; padding: 9px 16px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--card); color: var(--text);
+}
+button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+button.danger { color: var(--danger); padding: 4px 10px; font-weight: 500; }
+.status { color: var(--muted); font-size: .9rem; margin: 0; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.toolbar select { width: auto; }
+.entry { border-top: 1px solid var(--line); padding: 12px 0; }
+.entry:first-of-type { border-top: 0; padding-top: 0; }
+.entry-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.meta { color: var(--muted); font-size: .9rem; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 3px 12px; margin: 8px 0 0; font-size: .92rem; }
+dt { color: var(--muted); }
+dd { margin: 0; }
+.empty { color: var(--muted); font-style: italic; margin: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Hive Inspection Log</h1>
+  <p class="sub">Record what you saw each time you open a hive. Entries are saved in this browser.</p>
+
+  <section class="card" aria-labelledby="new-heading">
+    <h2 id="new-heading">New inspection</h2>
+    <form id="inspect-form">
+      <div class="grid">
+        <label>Hive
+          <select name="hive" id="hive-select" required></select>
+        </label>
+        <label>Date
+          <input type="date" name="date" required>
+        </label>
+        <label>Time
+          <input type="time" name="time">
+        </label>
+        <label>Weather
+          <select name="weather">
+            <option value="">—</option>
+            <option>Sunny</option>
+            <option>Partly cloudy</option>
+            <option>Overcast</option>
+            <option>Light rain</option>
+            <option>Windy</option>
+          </select>
+        </label>
+        <label>Temp (°F)
+          <input type="number" name="tempF" inputmode="numeric" step="1">
+        </label>
+        <label>Temperament
+          <select name="temper">
+            <option value="">—</option>
+            <option>Calm</option>
+            <option>Mildly defensive</option>
+            <option>Defensive</option>
+            <option>Aggressive</option>
+          </select>
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Queen &amp; brood</legend>
+        <div class="grid">
+          <label>Queen
+            <select name="queen">
+              <option value="">—</option>
+              <option>Seen</option>
+              <option>Not seen, eggs present</option>
+              <option>Not seen, no eggs</option>
+              <option>Queen cells present</option>
+            </select>
+          </label>
+          <label>Brood pattern
+            <select name="broodPattern">
+              <option value="">—</option>
+              <option>Solid</option>
+              <option>Spotty</option>
+              <option>Sparse</option>
+              <option>None</option>
+            </select>
+          </label>
+          <label>Brood frames
+            <input type="number" name="broodFrames" min="0" step="0.5">
+          </label>
+          <label>Bee frames
+            <input type="number" name="beeFrames" min="0" step="0.5">
+          </label>
+          <label>Honey frames
+            <input type="number" name="honeyFrames" min="0" step="0.5">
+          </label>
+          <label>Varroa count (per sample)
+            <input type="number" name="varroa" min="0" step="1">
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Problems observed</legend>
+        <div class="checks">
+          <label><input type="checkbox" name="problems" value="Swarm cells"> Swarm cells</label>
+          <label><input type="checkbox" name="problems" value="Queen cells"> Queen cells</label>
+          <label><input type="checkbox" name="problems" value="Chalkbrood"> Chalkbrood</label>
+          <label><input type="checkbox" name="problems" value="Hive beetles"> Hive beetles</label>
+          <label><input type="checkbox" name="problems" value="Wax moths"> Wax moths</label>
+          <label><input type="checkbox" name="problems" value="Robbing"> Robbing</label>
+          <label><input type="checkbox" name="problems" value="Deformed wings"> Deformed wings</label>
+          <label><input type="checkbox" name="problems" value="Dysentery"> Dysentery</label>
+        </div>
+      </fieldset>
+
+      <div class="stack">
+        <label>Actions taken
+          <textarea name="actions" placeholder="e.g. added super, fed 1:1 syrup, treated for mites"></textarea>
+        </label>
+        <label>Notes
+          <textarea name="notes" placeholder="Anything else worth remembering"></textarea>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="primary">Save inspection</button>
+        <p class="status" id="status" role="status"></p>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="log-heading">
+    <div class="toolbar">
+      <h2 id="log-heading">Log</h2>
+      <div class="actions" style="margin-top:0">
+        <select id="filter" aria-label="Filter by hive"></select>
+        <button type="button" id="export">Export JSON</button>
+      </div>
+    </div>
+    <div id="list"></div>
+  </section>
+</main>
+
+<script>
+const KEY = 'hiveInspections';
+const hiveNames = Array.from({ length: 12 }, (_, i) => `Hive ${i + 1}`);
+
+const form = document.getElementById('inspect-form');
+const hiveSel = document.getElementById('hive-select');
+const filter = document.getElementById('filter');
+const list = document.getElementById('list');
+const status = document.getElementById('status');
+const exportBtn = document.getElementById('export');
+
+const FIELDS = [
+  ['Weather', en => v(en.weather, en.tempF && `${en.tempF} °F`)],
+  ['Temperament', en => en.temper],
+  ['Queen', en => en.queen],
+  ['Brood', en => v(en.broodPattern, en.broodFrames && `${en.broodFrames} frames`)],
+  ['Bees', en => en.beeFrames && `${en.beeFrames} frames`],
+  ['Honey', en => en.honeyFrames && `${en.honeyFrames} frames`],
+  ['Varroa', en => en.varroa && `${en.varroa} per sample`],
+  ['Problems', en => v(...(en.problems || []))],
+  ['Actions', en => en.actions],
+  ['Notes', en => en.notes],
+];
+
+function v(...parts) { return parts.filter(Boolean).join(', '); }
+
+function el(tag, attrs = {}, text) {
+  const node = document.createElement(tag);
+  for (const [k, val] of Object.entries(attrs)) node.setAttribute(k, val);
+  if (text != null) node.textContent = text;
+  return node;
+}
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; }
+}
+
+function save(entries) {
+  localStorage.setItem(KEY, JSON.stringify(entries));
+}
+
+function setNow() {
+  const now = new Date();
+  form.date.value = now.toLocaleDateString('en-CA');
+  form.time.value = now.toTimeString().slice(0, 5);
+}
+
+function renderEntry(en) {
+  const wrap = el('article', { class: 'entry' });
+  const head = el('div', { class: 'entry-head' });
+  const title = el('div');
+  title.append(
+    el('strong', {}, en.hive), ' ',
+    el('span', { class: 'meta' }, `${en.date}${en.time ? ' · ' + en.time : ''}`)
+  );
+  const del = el('button', {
+    type: 'button', class: 'danger', 'data-id': en.id,
+    'aria-label': `Delete ${en.hive} inspection from ${en.date}`
+  }, 'Delete');
+  head.append(title, del);
+  wrap.append(head);
+
+  const dl = el('dl');
+  for (const [label, get] of FIELDS) {
+    const val = get(en);
+    if (!val) continue;
+    dl.append(el('dt', {}, label), el('dd', {}, val));
+  }
+  if (dl.children.length) wrap.append(dl);
+  return wrap;
+}
+
+function render() {
+  const f = filter.value;
+  const shown = load()
+    .filter(en => f === 'all' || en.hive === f)
+    .sort((a, b) => `${b.date} ${b.time}`.localeCompare(`${a.date} ${a.time}`));
+
+  list.replaceChildren();
+  if (!shown.length) {
+    list.append(el('p', { class: 'empty' }, 'No inspections logged yet.'));
+    return;
+  }
+  for (const en of shown) list.append(renderEntry(en));
+}
+
+// Populate hive pickers
+hiveSel.append(...hiveNames.map(n => new Option(n, n)));
+filter.append(new Option('All hives', 'all'), ...hiveNames.map(n => new Option(n, n)));
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(form);
+  const entry = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6) };
+  for (const [k, val] of fd.entries()) {
+    if (k !== 'problems') entry[k] = String(val).trim();
+  }
+  entry.problems = fd.getAll('problems');
+
+  const entries = load();
+  entries.push(entry);
+  save(entries);
+
+  // Advance to the next hive so walking the yard is one step per hive
+  const next = hiveNames[(hiveNames.indexOf(entry.hive) + 1) % hiveNames.length];
+  form.reset();
+  setNow();
+  hiveSel.value = next;
+
+  status.textContent = `Saved ${entry.hive} inspection.`;
+  render();
+  hiveSel.focus();
+});
+
+list.addEventListener('click', e => {
+  const btn = e.target.closest('button[data-id]');
+  if (!btn) return;
+  if (!window.confirm('Delete this inspection?')) return;
+  save(load().filter(en => en.id !== btn.dataset.id));
+  render();
+});
+
+filter.addEventListener('change', render);
+
+exportBtn.addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(load(), null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = el('a', { href: url, download: `hive-inspections-${new Date().toLocaleDateString('en-CA')}.json` });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+setNow();
+render();
+</script>
+</body>
+</html>

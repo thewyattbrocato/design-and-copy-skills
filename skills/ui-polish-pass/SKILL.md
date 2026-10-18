@@ -32,11 +32,12 @@ Walk each component in scope through [the states for its type](references/states
 - **Undo or confirm:** reversible actions (archive, remove, move) act now and offer undo for several seconds. Confirm only what cannot be taken back, name the consequence, and put verbs on the buttons ("Delete project", "Keep it"). Leaving (cancel, unsubscribe, export) is never harder than joining.
 - **Access floor:** every control has an accessible name (repeated "open" links or icon-only buttons name their target); focus is visible on every control and never lost after a deletion or dialog close; the task works by keyboard; meaning never rests on color or hover alone (severity gets a word or icon); text and input borders meet contrast; the layout survives 200% text and a 320-pixel width. Numbers are in the reference.
 - **Long and many:** the longest realistic name, long unbroken words and URLs, zero, one and hundreds of items, and a slow or offline network. Wrap or truncate with a route to the full text; never clip a label that names an action.
+- **Specific to this screen:** labels, empty and error messages, sample values and defaults use this product's own nouns and the person's situation. If the same words would fit any other product, replace them using only facts the request gives. Put the help or detail the person likely needs next (a failed payment, a changed time, a wait) at that point. No mascots, slogans or new features.
 - **Motion:** keep what has a job (feedback, orientation); frequent paths fast and interruptible; reduced-motion removes movement but keeps the state change visible.
 
 ## Fix in order of harm
 
-Blocks a task or excludes people (no name, no focus, trapped, lost input), then misleads (silent failure, false success), then degrades (truncation, layout break), then cosmetic. Fix at the source, a token or shared component, once. Re-walk the states you touched, with real text lengths.
+Blocks a task or excludes people (no name, no focus, trapped, lost input), then misleads (silent failure, false success), then degrades (truncation, layout break), then cosmetic. Fix at the source, a token or shared component, once. Re-walk the states you touched, with real text lengths. Then walk the main task once, first screen to result: parts fine alone can still disagree in name, order or wording.
 
 ## Missing facts
 

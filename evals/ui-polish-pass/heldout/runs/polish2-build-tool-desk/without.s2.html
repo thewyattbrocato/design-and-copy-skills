@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tool Library · Front Desk</title>
+<style>
+  :root{
+    --bg:#f4f1ea; --card:#fffdf8; --ink:#23261f; --muted:#6b6f63; --line:#ddd8c9;
+    --green:#2f5d3a; --green-d:#244a2d; --green-l:#e3eedf;
+    --amber:#b4540a; --amber-l:#fbe9d6; --red:#a3261d; --red-l:#f9dedb;
+    --blue:#27506e; --blue-l:#dfeaf2;
+    --r:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  button,input{font:inherit;color:inherit}
+  button{cursor:pointer}
+  :focus-visible{outline:3px solid #1d6fd1;outline-offset:2px}
+  header{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;padding:14px 24px;background:var(--green-d);color:#fff}
+  header h1{margin:0;font-size:20px;letter-spacing:.2px}
+  header .date{opacity:.8;font-size:14px}
+  .stats{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
+  .stat{background:rgba(255,255,255,.12);border-radius:10px;padding:6px 14px;min-width:92px}
+  .stat b{display:block;font-size:22px;line-height:1.1}
+  .stat span{font-size:12px;opacity:.85;text-transform:uppercase;letter-spacing:.6px}
+  .stat.warn{background:#f3c9a0;color:#5a2605}
+  .wrap{display:grid;grid-template-columns:1fr 380px;gap:20px;padding:20px 24px;max-width:1400px;margin:0 auto;align-items:start}
+  @media(max-width:960px){.wrap{grid-template-columns:1fr}}
+  .tabs{display:flex;gap:8px;margin-bottom:16px}
+  .tab{flex:1;min-height:56px;font-size:19px;font-weight:700;border:2px solid var(--line);background:var(--card);border-radius:var(--r)}
+  .tab[aria-selected=true]{background:var(--green);border-color:var(--green);color:#fff}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:16px}
+  .panel h2{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+  .search{width:100%;min-height:48px;padding:0 14px;border:2px solid var(--line);border-radius:10px;background:#fff;font-size:17px}
+  .search:focus{border-color:var(--green);outline:none}
+  .members{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{min-height:48px;padding:6px 14px;border:2px solid var(--line);border-radius:10px;background:#fff;text-align:left}
+  .chip small{display:block;color:var(--muted);font-size:12px}
+  .chip.sel{border-color:var(--green);background:var(--green-l)}
+  .picked{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;padding:10px 14px;border-radius:10px;background:var(--green-l)}
+  .picked.bad{background:var(--red-l)}
+  .picked .x{margin-left:auto;border:0;background:none;text-decoration:underline;color:var(--muted);min-height:36px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:12px}
+  .tool{position:relative;text-align:left;min-height:84px;padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:#fff}
+  .tool b{display:block;font-size:17px;padding-right:22px}
+  .tool small{color:var(--muted);display:block;font-size:13px}
+  .tool.sel{border-color:var(--green);background:var(--green-l)}
+  .tool.sel::after{content:"✓";position:absolute;top:8px;right:12px;font-weight:700;color:var(--green)}
+  .tool[disabled]{cursor:not-allowed;background:#efece3;color:#7b7e72}
+  .tool .tag{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--blue-l);color:var(--blue)}
+  .tag.over{background:var(--red-l);color:var(--red)} .tag.rep{background:var(--amber-l);color:var(--amber)}
+  .row{display:flex;align-items:center;gap:14px;padding:12px 4px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .row:last-child{border-bottom:0}
+  .row .main{flex:1;min-width:200px}
+  .row .main b{font-size:17px}
+  .row .main small{display:block;color:var(--muted)}
+  .due{font-weight:700;font-size:14px;padding:3px 10px;border-radius:99px;background:var(--blue-l);color:var(--blue);white-space:nowrap}
+  .due.over{background:var(--red-l);color:var(--red)} .due.soon{background:var(--amber-l);color:var(--amber)}
+  .btn{min-height:48px;padding:0 18px;border-radius:10px;border:2px solid var(--green);background:#fff;color:var(--green);font-weight:700}
+  .btn.on{background:var(--green);color:#fff}
+  .btn.primary{width:100%;min-height:58px;font-size:19px;background:var(--green);color:#fff}
+  .btn.primary:disabled{background:#c9c6b8;border-color:#c9c6b8;color:#6b6f63;cursor:not-allowed}
+  .btn:hover:not(:disabled){filter:brightness(.95)}
+  aside{position:sticky;top:16px}
+  @media(max-width:960px){aside{position:static}}
+  .ticket h2{margin-bottom:6px}
+  .ticket .who{font-size:20px;font-weight:700;margin-bottom:10px}
+  .empty{color:var(--muted);padding:14px 0}
+  .line{display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+  .line .n{flex:1;min-width:120px}.line small{display:block;color:var(--muted)}
+  .rm{border:0;background:none;color:var(--muted);font-size:22px;min-width:40px;min-height:40px}
+  .seg{display:flex;border:2px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;min-height:44px;border:0;background:#fff;font-weight:600}
+  .seg button[aria-pressed=true]{background:var(--green);color:#fff}
+  .seg button.rep[aria-pressed=true]{background:var(--amber)}
+  .seg.small button{min-height:38px;padding:0 10px;font-size:14px}
+  .duebox{margin:14px 0;padding:10px 14px;background:var(--green-l);border-radius:10px}
+  .lbl{font-size:13px;color:var(--muted);margin:14px 0 6px}
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#23261f;color:#fff;padding:12px 18px;border-radius:12px;display:none;gap:16px;align-items:center;box-shadow:0 6px 24px rgba(0,0,0,.3);z-index:9}
+  #toast.show{display:flex}
+  #toast button{background:none;border:0;color:#9fd3a8;font-weight:700;text-decoration:underline;min-height:36px}
+  .note{font-size:14px;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Neighborhood Tool Library · Front desk</h1>
+  <div class="date" id="today"></div>
+  <div class="stats" id="stats" aria-live="polite"></div>
+</header>
+
+<div class="wrap">
+  <main>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-lend" data-act="mode" data-v="lend">Lend out</button>
+      <button class="tab" role="tab" id="tab-return" data-act="mode" data-v="return">Take back</button>
+    </div>
+    <div id="left"></div>
+  </main>
+  <aside><div class="panel ticket" id="ticket"></div></aside>
+</div>
+<div id="toast" role="status"><span id="toastMsg"></span><button id="undo">Undo</button></div>
+
+<script>
+const DAY = 86400000;
+const startOfDay = d => { const x = new Date(d); x.setHours(0,0,0,0); return x.getTime(); };
+const today = startOfDay(new Date());
+const fmt = t => new Date(t).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let members = [
+  {id:'M-1042',name:'Priya Raman'},{id:'M-1017',name:'Tom Okafor'},{id:'M-1088',name:'Elena Marchetti'},
+  {id:'M-1103',name:'Dale Whitfield'},{id:'M-1061',name:'Grace Liu'},{id:'M-1125',name:'Marcus Bell'},
+  {id:'M-1034',name:'Sofia Alvarez'},{id:'M-1150',name:'Henry Ostrowski'}
+];
+const T = (id,name,cat,loan) => ({id,name,cat,status:loan?'out':'in',loan:loan||null});
+let tools = [
+  T('T-001','Cordless drill','Power tools',{m:'M-1017',due:today-5*DAY}),
+  T('T-002','Circular saw','Power tools'),
+  T('T-003','Orbital sander','Power tools'),
+  T('T-004','Extension ladder (6 m)','Ladders',{m:'M-1088',due:today+2*DAY}),
+  T('T-005','Step ladder','Ladders'),
+  T('T-006','Wheelbarrow','Garden',{m:'M-1103',due:today-1*DAY}),
+  T('T-007','Hedge trimmer','Garden'),
+  T('T-008','Lawn aerator','Garden'),
+  T('T-009','Pipe wrench set','Hand tools'),
+  T('T-010','Socket set','Hand tools',{m:'M-1061',due:today+4*DAY}),
+  T('T-011','Tile cutter','Specialty'),
+  T('T-012','Wet/dry vacuum','Cleaning'),
+  T('T-013','Pressure washer','Cleaning',{m:'M-1125',due:today+0*DAY}),
+  T('T-014','Post-hole digger','Garden'),
+  T('T-015','Stud finder','Hand tools'),
+  T('T-016','Paint sprayer','Specialty'),
+];
+tools[8].status='repair'; // pipe wrench set awaiting repair
+
+let S = {mode:'lend', member:null, cart:[], days:7, q:'', mq:'', rets:{}};
+let lastSnap = null, toastTimer;
+const mName = id => (members.find(m=>m.id===id)||{}).name || id;
+const loansOf = id => tools.filter(t=>t.status==='out' && t.loan.m===id);
+const isOver = t => t.status==='out' && t.loan.due < today;
+
+function dueInfo(t){
+  const d = Math.round((t.loan.due - today)/DAY);
+  if (d<0) return {cls:'over', txt:`Overdue ${-d} day${d===-1?'':'s'}`};
+  if (d===0) return {cls:'soon', txt:'Due today'};
+  if (d===1) return {cls:'soon', txt:'Due tomorrow'};
+  return {cls:'', txt:'Due '+fmt(t.loan.due)};
+}
+
+function renderStats(){
+  const c = k => tools.filter(t=>t.status===k).length;
+  const over = tools.filter(isOver).length;
+  document.getElementById('stats').innerHTML =
+    `<div class="stat"><b>${c('in')}</b><span>On shelf</span></div>
+     <div class="stat"><b>${c('out')}</b><span>Out on loan</span></div>
+     <div class="stat ${over?'warn':''}"><b>${over}</b><span>Overdue</span></div>
+     <div class="stat"><b>${c('repair')}</b><span>In repair</span></div>`;
+}
+
+function renderLeft(){
+  const el = document.getElementById('left');
+  const q = S.q.trim().toLowerCase();
+  if (S.mode==='lend'){
+    const mq = S.mq.trim().toLowerCase();
+    const found = mq ? members.filter(m=>(m.name+' '+m.id).toLowerCase().includes(mq)) : members;
+    let memberHtml;
+    if (S.member){
+      const m = members.find(x=>x.id===S.member), L = loansOf(m.id), od = L.filter(isOver).length;
+      memberHtml = `<div class="picked ${od?'bad':''}"><div><b>${esc(m.name)}</b> · card ${m.id}<br>
+        <small>${L.length} tool${L.length===1?'':'s'} currently out${od?` — <b>${od} overdue</b>`:''}</small></div>
+        <button class="x" data-act="clearMember">Change member</button></div>`;
+    } else {
+      memberHtml = `<input class="search" id="mq" placeholder="Find member by name or card number" value="${esc(S.mq)}" autocomplete="off">
+        <div class="members">${found.map(m=>{const L=loansOf(m.id),od=L.filter(isOver).length;
+          return `<button class="chip" data-act="member" data-v="${m.id}">${esc(m.name)}<small>${m.id} · ${L.length} out${od?` · ${od} overdue`:''}</small></button>`}).join('')||'<div class="empty">No member found.</div>'}</div>`;
+    }
+    const list = tools.filter(t=>!q || (t.name+' '+t.id+' '+t.cat).toLowerCase().includes(q));
+    el.innerHTML = `
+      <section class="panel"><h2>1 · Who is borrowing?</h2>${memberHtml}</section>
+      <section class="panel"><h2>2 · Which tools?</h2>
+        <input class="search" id="q" placeholder="Search tools by name, category or tag number" value="${esc(S.q)}" autocomplete="off">
+        <div class="grid">${list.map(t=>{
+          const sel = S.cart.includes(t.id);
+          if (t.status==='in') return `<button class="tool ${sel?'sel':''}" data-act="cart" data-v="${t.id}" aria-pressed="${sel}"><b>${esc(t.name)}</b><small>${t.id} · ${t.cat}</small></button>`;
+          if (t.status==='repair') return `<button class="tool" disabled><b>${esc(t.name)}</b><small>${t.id} · ${t.cat}</small><span class="tag rep">In repair</span></button>`;
+          const d = dueInfo(t);
+          return `<button class="tool" disabled><b>${esc(t.name)}</b><small>${t.id} · ${esc(mName(t.loan.m))}</small><span class="tag ${d.cls==='over'?'over':''}">${d.txt}</span></button>`;
+        }).join('')||'<div class="empty">No tools match.</div>'}</div>
+      </section>`;
+  } else {
+    const loans = tools.filter(t=>t.status==='out' && (!q || (t.name+' '+t.id+' '+mName(t.loan.m)).toLowerCase().includes(q)))
+      .sort((a,b)=>a.loan.due-b.loan.due);
+    el.innerHTML = `<section class="panel"><h2>Tools out on loan — tap to add to this return</h2>
+      <input class="search" id="q" placeholder="Search by tool, tag number or borrower" value="${esc(S.q)}" autocomplete="off">
+      <div style="margin-top:8px">${loans.map(t=>{
+        const d = dueInfo(t), on = t.id in S.rets;
+        return `<div class="row"><div class="main"><b>${esc(t.name)}</b><small>${t.id} · ${esc(mName(t.loan.m))}</small></div>
+          <span class="due ${d.cls}">${d.txt}</span>
+          <button class="btn ${on?'on':''}" data-act="ret" data-v="${t.id}" aria-pressed="${on}">${on?'Added ✓':'Take back'}</button></div>`;
+      }).join('')||'<div class="empty">Nothing matches — or everything is back on the shelf.</div>'}</div></section>`;
+  }
+}
+
+function renderTicket(){
+  const el = document.getElementById('ticket');
+  if (S.mode==='lend'){
+    const due = today + S.days*DAY;
+    const items = S.cart.map(id=>tools.find(t=>t.id===id));
+    const m = S.member && members.find(x=>x.id===S.member);
+    const od = m ? loansOf(m.id).filter(isOver).length : 0;
+    el.innerHTML = `<h2>Lending ticket</h2>
+      <div class="who">${m?esc(m.name):'<span style="color:var(--muted)">No member chosen</span>'}</div>
+      ${od?`<div class="picked bad" style="margin:0 0 8px">This member has ${od} overdue tool${od>1?'s':''}. Worth a friendly reminder.</div>`:''}
+      ${items.length?items.map(t=>`<div class="line"><div class="n"><b>${esc(t.name)}</b><small>${t.id}</small></div><button class="rm" data-act="cart" data-v="${t.id}" aria-label="Remove ${esc(t.name)}">×</button></div>`).join(''):'<div class="empty">Pick tools from the list.</div>'}
+      <div class="lbl">Loan length</div>
+      <div class="seg" role="group" aria-label="Loan length">${[3,7,14].map(d=>`<button data-act="days" data-v="${d}" aria-pressed="${S.days===d}">${d} days</button>`).join('')}</div>
+      <div class="duebox">Due back <b>${fmt(due)}</b></div>
+      <button class="btn primary" data-act="lend" ${m&&items.length?'':'disabled'}>Lend ${items.length||''} tool${items.length===1?'':'s'}</button>
+      <div class="note">${!m?'Choose a member first.':!items.length?'Choose at least one tool.':'Hand over the tools, then tap Lend.'}</div>`;
+  } else {
+    const ids = Object.keys(S.rets);
+    el.innerHTML = `<h2>Return ticket</h2>
+      ${ids.length?ids.map(id=>{const t=tools.find(x=>x.id===id), c=S.rets[id];
+        return `<div class="line"><div class="n"><b>${esc(t.name)}</b><small>${id} · ${esc(mName(t.loan.m))}</small></div>
+          <button class="rm" data-act="ret" data-v="${id}" aria-label="Remove ${esc(t.name)}">×</button>
+          <div class="seg small" style="flex-basis:100%" role="group" aria-label="Condition">
+            <button data-act="cond" data-v="${id}:ok" aria-pressed="${c==='ok'}">Good condition</button>
+            <button class="rep" data-act="cond" data-v="${id}:repair" aria-pressed="${c==='repair'}">Needs repair</button></div></div>`}).join('')
+        :'<div class="empty">Tap “Take back” on a tool as the borrower hands it over.</div>'}
+      <div style="margin-top:14px"><button class="btn primary" data-act="doReturn" ${ids.length?'':'disabled'}>Take back ${ids.length||''} tool${ids.length===1?'':'s'}</button></div>
+      <div class="note">Tools marked “Needs repair” stay off the shelf until fixed.</div>`;
+  }
+}
+
+function render(){
+  document.getElementById('tab-lend').setAttribute('aria-selected', S.mode==='lend');
+  document.getElementById('tab-return').setAttribute('aria-selected', S.mode==='return');
+  renderStats(); renderTicket();
+  // keep search focus while typing
+  const a = document.activeElement, id = a && a.id, pos = a && a.selectionStart;
+  renderLeft();
+  if (id==='q'||id==='mq'){ const n=document.getElementById(id); if(n){n.focus(); n.setSelectionRange(pos,pos);} }
+}
+
+function snap(){ lastSnap = JSON.stringify(tools); }
+function toast(msg){
+  document.getElementById('toastMsg').textContent = msg;
+  const t = document.getElementById('toast'); t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'), 9000);
+}
+
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  const v = b.dataset.v;
+  switch(b.dataset.act){
+    case 'mode': S.mode=v; S.q=''; break;
+    case 'member': S.member=v; S.mq=''; break;
+    case 'clearMember': S.member=null; break;
+    case 'cart': S.cart = S.cart.includes(v) ? S.cart.filter(x=>x!==v) : [...S.cart, v]; break;
+    case 'days': S.days=+v; break;
+    case 'ret': if (v in S.rets) delete S.rets[v]; else S.rets[v]='ok'; break;
+    case 'cond': { const [id,c]=v.split(':'); S.rets[id]=c; break; }
+    case 'lend': {
+      snap();
+      const due = today + S.days*DAY;
+      S.cart.forEach(id=>{ const t=tools.find(x=>x.id===id); t.status='out'; t.loan={m:S.member,due}; });
+      toast(`Lent ${S.cart.length} tool${S.cart.length>1?'s':''} to ${mName(S.member)} — due ${fmt(due)}`);
+      S.cart=[]; S.member=null; break;
+    }
+    case 'doReturn': {
+      snap();
+      const ids = Object.keys(S.rets), rep = ids.filter(i=>S.rets[i]==='repair').length;
+      ids.forEach(id=>{ const t=tools.find(x=>x.id===id); t.status = S.rets[id]==='repair'?'repair':'in'; t.loan=null; });
+      toast(`${ids.length} tool${ids.length>1?'s':''} back${rep?` (${rep} sent to repair)`:' on the shelf'}`);
+      S.rets={}; break;
+    }
+  }
+  render();
+});
+document.addEventListener('input', e=>{
+  if (e.target.id==='q'){ S.q=e.target.value; render(); }
+  if (e.target.id==='mq'){ S.mq=e.target.value; render(); }
+});
+document.getElementById('undo').addEventListener('click', ()=>{
+  if (lastSnap){ tools = JSON.parse(lastSnap); lastSnap=null; }
+  document.getElementById('toast').classList.remove('show'); render();
+});
+document.getElementById('today').textContent = new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+render();
+</script>
+</body>
+</html>

@@ -24,5 +24,6 @@ Walk each component through its row. Skip any state that cannot happen. A state 
 - Dark theme (only where one exists): layers raised by lightness, page off pure black and text off pure white, borders visible against both neighbors, saturated accents softened and button text contrast rechecked, bright images dimmed or framed, focus and error colors recomputed, forced-colors keeps borders and focus (real outlines, `currentColor` icons). Fix through theme variables.
 - Text: longest realistic name, long unbroken strings, right-to-left, short labels that can double in translation. Containers: narrow columns, not only narrow pages. Check at the size it will really appear.
 - Consistency: values come from the existing scale; replace a one-off with the nearest token. One primary action per decision; same action, same name, same place.
+- Swap test: put another product's name and nouns into the headline, labels, empty states, errors and sample data; if they still read true, they are not about this screen yet.
 
 For full procedures: form-design, ui-motion, color-palette, typesetting, visual-hierarchy, spacing-and-grouping, responsive-layout, each if installed.

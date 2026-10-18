@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instrument Repair Drop-Off</title>
+<style>
+  :root {
+    --bg: #f5efe4;
+    --paper: #fffdf8;
+    --ink: #2b211a;
+    --muted: #6d5d50;
+    --accent: #8a3b12;
+    --accent-dark: #692b0b;
+    --line: #d9ccb8;
+    --focus: #1d5fa8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 24px 16px 56px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  header { margin-bottom: 20px; }
+  h1 {
+    font: 700 2rem/1.15 Georgia, "Times New Roman", serif;
+    margin: 0 0 6px;
+  }
+  header p { margin: 0; color: var(--muted); }
+  form, .ticket {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(60, 40, 20, .08);
+  }
+  fieldset { border: 0; padding: 0; margin: 0 0 28px; min-width: 0; }
+  legend {
+    font: 700 1.15rem Georgia, "Times New Roman", serif;
+    color: var(--accent);
+    padding: 0 0 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    width: 100%;
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } form, .ticket { padding: 18px; } }
+  .field { margin-bottom: 14px; }
+  label, .label { display: block; font-weight: 600; margin-bottom: 4px; font-size: .95rem; }
+  .hint { font-weight: 400; color: var(--muted); font-size: .85rem; }
+  input[type=text], input[type=tel], input[type=email], input[type=date], select, textarea {
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #b9a98f;
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+  .choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+  .choice {
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    background: #fff;
+    font-weight: 400;
+    margin: 0;
+    cursor: pointer;
+  }
+  .choice:has(input:checked) { border-color: var(--accent); background: #fbeee4; }
+  .choice input { width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+  .req { color: var(--accent); }
+  button {
+    font: inherit; font-weight: 700;
+    border-radius: 6px;
+    padding: 12px 22px;
+    cursor: pointer;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+  button:hover { background: var(--accent-dark); }
+  button.secondary { background: #fff; color: var(--accent); }
+  button.secondary:hover { background: #fbeee4; }
+  .fine { font-size: .85rem; color: var(--muted); margin-top: 12px; }
+  .ticket { display: none; }
+  .ticket h2 { font: 700 1.5rem Georgia, serif; margin: 0 0 4px; }
+  .ticket pre {
+    white-space: pre-wrap;
+    font: .95rem/1.55 ui-monospace, Menlo, Consolas, monospace;
+    background: #fff;
+    border: 1px dashed #b9a98f;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 14px 0;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .status { min-height: 1.4em; margin-top: 10px; color: var(--muted); font-size: .9rem; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    header, form, .actions, .status, .fine { display: none !important; }
+    .ticket { display: block !important; border: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Instrument Repair Drop-Off</h1>
+    <p>Guitars, violins, and friends. Tell me what's going on with your instrument and I'll take it from there.</p>
+  </header>
+
+  <form id="form" novalidate>
+    <fieldset>
+      <legend>1. About you</legend>
+      <div class="field">
+        <label for="name">Full name <span class="req" aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" autocomplete="name" required>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="phone">Phone <span class="req" aria-hidden="true">*</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email">
+        </div>
+      </div>
+      <div class="field">
+        <label for="contact">Best way to reach you</label>
+        <select id="contact" name="contact">
+          <option>Phone call</option>
+          <option>Text message</option>
+          <option>Email</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Your instrument</legend>
+      <div class="row">
+        <div class="field">
+          <label for="type">Type <span class="req" aria-hidden="true">*</span></label>
+          <select id="type" name="type" required>
+            <option value="">Choose one…</option>
+            <option>Acoustic guitar</option>
+            <option>Electric guitar</option>
+            <option>Classical guitar</option>
+            <option>Bass guitar</option>
+            <option>Violin</option>
+            <option>Viola</option>
+            <option>Cello</option>
+            <option>Double bass</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="make">Make / model <span class="hint">(if known)</span></label>
+          <input type="text" id="make" name="make" placeholder="e.g. Yamaha FG800">
+        </div>
+      </div>
+      <div class="field">
+        <label for="id">Serial number or identifying marks <span class="hint">(optional)</span></label>
+        <input type="text" id="id" name="id" placeholder="Serial, stickers, existing dings…">
+      </div>
+      <div class="field">
+        <span class="label">Left with the instrument</span>
+        <div class="choices">
+          <label class="choice"><input type="checkbox" name="extras" value="Case"> Case</label>
+          <label class="choice"><input type="checkbox" name="extras" value="Bow"> Bow</label>
+          <label class="choice"><input type="checkbox" name="extras" value="Strap / accessories"> Strap / accessories</label>
+          <label class="choice"><input type="checkbox" name="extras" value="Nothing else"> Instrument only</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. What's wrong?</legend>
+      <div class="field">
+        <span class="label">Check all that apply</span>
+        <div class="choices" id="issues"></div>
+      </div>
+      <div class="field">
+        <label for="details">Describe the problem <span class="req" aria-hidden="true">*</span></label>
+        <textarea id="details" name="details" required placeholder="When did it start? Where on the instrument? Does it happen all the time or only sometimes? Any drops, humidity swings, or past repairs?"></textarea>
+      </div>
+      <div class="field">
+        <label for="work">What would you like done?</label>
+        <select id="work" name="work">
+          <option>Diagnose and quote me first</option>
+          <option>Fix it as described</option>
+          <option>Full setup / tune-up</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Timing and budget</legend>
+      <div class="row">
+        <div class="field">
+          <label for="needed">Needed back by <span class="hint">(if any)</span></label>
+          <input type="date" id="needed" name="needed">
+        </div>
+        <div class="field">
+          <label for="budget">Go ahead without calling if cost is under</label>
+          <select id="budget" name="budget">
+            <option>Call me with a quote first</option>
+            <option>$50</option>
+            <option>$100</option>
+            <option>$200</option>
+            <option>$300</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <button type="submit">Create drop-off ticket</button>
+    <p class="fine">Fields marked * are required. Nothing is sent anywhere until you choose to email or print the ticket.</p>
+  </form>
+
+  <section class="ticket" id="ticket" aria-live="polite">
+    <h2>Drop-off ticket</h2>
+    <p class="hint">Review it, then email it to the shop or print a copy to leave with the instrument.</p>
+    <pre id="summary"></pre>
+    <div class="actions">
+      <button type="button" id="email-btn">Email to shop</button>
+      <button type="button" class="secondary" id="copy-btn">Copy text</button>
+      <button type="button" class="secondary" id="print-btn">Print</button>
+      <button type="button" class="secondary" id="edit-btn">Edit</button>
+    </div>
+    <div class="status" id="status" role="status"></div>
+  </section>
+</div>
+
+<script>
+  // Set this to your shop's email address so the "Email to shop" button works.
+  var SHOP_EMAIL = "";
+
+  var ISSUES = {
+    guitar: ["Buzzing / fret buzz", "Action too high or low", "Cracked or split wood", "Loose or lifted bridge", "Worn frets", "Broken or loose tuning machine", "Electronics / crackling pot or jack", "Neck bow or truss rod adjustment", "Intonation problems", "Nut issues"],
+    bowed: ["Open seam / unglued", "Crack in top, back, or ribs", "Sound post fell or needs adjusting", "Bridge warped or broken", "Pegs slipping or sticking", "Buzzing or wolf tone", "Fingerboard needs planing", "Chin rest / tailpiece problem", "Bow needs rehair"],
+    other: ["Cracked or split wood", "Hardware problem", "Won't stay in tune", "Buzzing or rattling", "Cosmetic damage"]
+  };
+  var BOWED = ["Violin", "Viola", "Cello", "Double bass"];
+
+  var form = document.getElementById("form");
+  var ticket = document.getElementById("ticket");
+  var summary = document.getElementById("summary");
+  var statusEl = document.getElementById("status");
+  var issuesEl = document.getElementById("issues");
+  var typeEl = document.getElementById("type");
+
+  function renderIssues() {
+    var t = typeEl.value;
+    var list = !t ? ISSUES.other : BOWED.indexOf(t) > -1 ? ISSUES.bowed : t === "Other" ? ISSUES.other : ISSUES.guitar;
+    var checked = {};
+    Array.prototype.forEach.call(issuesEl.querySelectorAll("input:checked"), function (i) { checked[i.value] = true; });
+    issuesEl.textContent = "";
+    list.concat(["Not sure / something else"]).forEach(function (txt) {
+      var l = document.createElement("label");
+      l.className = "choice";
+      var i = document.createElement("input");
+      i.type = "checkbox"; i.name = "issues"; i.value = txt;
+      if (checked[txt]) i.checked = true;
+      l.appendChild(i);
+      l.appendChild(document.createTextNode(" " + txt));
+      issuesEl.appendChild(l);
+    });
+  }
+  typeEl.addEventListener("change", renderIssues);
+  renderIssues();
+
+  function vals(name) {
+    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (i) { return i.value; });
+  }
+
+  function markInvalid(el, bad) {
+    if (bad) el.setAttribute("aria-invalid", "true"); else el.removeAttribute("aria-invalid");
+    el.style.borderColor = bad ? "#b00020" : "";
+  }
+
+  function build() {
+    var f = form.elements;
+    var today = new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+    var needed = f.needed.value ? new Date(f.needed.value + "T12:00:00").toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }) : "No deadline";
+    var lines = [
+      "REPAIR DROP-OFF — " + today,
+      "",
+      "CUSTOMER",
+      "  Name:    " + f.name.value.trim(),
+      "  Phone:   " + f.phone.value.trim(),
+      "  Email:   " + (f.email.value.trim() || "—"),
+      "  Contact: " + f.contact.value,
+      "",
+      "INSTRUMENT",
+      "  Type:    " + f.type.value,
+      "  Model:   " + (f.make.value.trim() || "—"),
+      "  Marks:   " + (f.id.value.trim() || "—"),
+      "  Left:    " + (vals("extras").join(", ") || "—"),
+      "",
+      "PROBLEM",
+      "  Issues:  " + (vals("issues").join("; ") || "—"),
+      "  Details: " + f.details.value.trim().replace(/\n/g, "\n           "),
+      "  Request: " + f.work.value,
+      "",
+      "TIMING / BUDGET",
+      "  Needed by:     " + needed,
+      "  Approve up to: " + f.budget.value
+    ];
+    return lines.join("\n");
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var required = ["name", "phone", "type", "details"];
+    var first = null;
+    required.forEach(function (id) {
+      var el = document.getElementById(id);
+      var bad = !el.value.trim();
+      markInvalid(el, bad);
+      if (bad && !first) first = el;
+    });
+    if (first) { first.focus(); return; }
+    summary.textContent = build();
+    statusEl.textContent = "";
+    form.style.display = "none";
+    ticket.style.display = "block";
+    ticket.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  ["name", "phone", "type", "details"].forEach(function (id) {
+    document.getElementById(id).addEventListener("input", function () { markInvalid(this, false); });
+  });
+
+  document.getElementById("edit-btn").addEventListener("click", function () {
+    ticket.style.display = "none";
+    form.style.display = "block";
+    window.scrollTo(0, 0);
+  });
+
+  document.getElementById("print-btn").addEventListener("click", function () { window.print(); });
+
+  document.getElementById("copy-btn").addEventListener("click", function () {
+    var text = summary.textContent;
+    function fallback() {
+      var r = document.createRange();
+      r.selectNodeContents(summary);
+      var s = window.getSelection();
+      s.removeAllRanges(); s.addRange(r);
+      try { document.execCommand("copy"); statusEl.textContent = "Copied."; }
+      catch (err) { statusEl.textContent = "Text selected — press Ctrl/Cmd+C to copy."; }
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function () { statusEl.textContent = "Copied."; }, fallback);
+    } else { fallback(); }
+  });
+
+  document.getElementById("email-btn").addEventListener("click", function () {
+    var subject = "Repair drop-off: " + form.elements.type.value + " — " + form.elements.name.value.trim();
+    location.href = "mailto:" + encodeURIComponent(SHOP_EMAIL).replace("%40", "@") +
+      "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(summary.textContent);
+    statusEl.textContent = SHOP_EMAIL ? "Opening your email app…" : "Opening your email app — add the shop address as the recipient.";
+  });
+</script>
+</body>
+</html>

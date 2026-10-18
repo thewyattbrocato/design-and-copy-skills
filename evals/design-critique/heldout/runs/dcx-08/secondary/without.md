@@ -1,0 +1,1 @@
+Too generic. "Work smarter, not harder" and "one powerful platform" could be on any SaaS homepage, and a bookseller can't tell what Tallyhouse does from this. Lead with the concrete job, like "Stock counts that take an afternoon, not a weekend" or "Know what's on your shelves without closing the shop," and make the subhead say how.

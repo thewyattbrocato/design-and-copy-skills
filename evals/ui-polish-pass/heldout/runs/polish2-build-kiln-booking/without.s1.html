@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Kiln</title>
+<style>
+  :root {
+    --bg: #f6f1ea;
+    --surface: #fffdf9;
+    --ink: #2b2420;
+    --muted: #6d6159;
+    --line: #ddd2c5;
+    --accent: #a8431f;
+    --accent-ink: #fff;
+    --accent-soft: #f4dfd3;
+    --taken: #ebe5dd;
+    --ok: #2f6b3f;
+    --focus: #1d5fd1;
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1815;
+      --surface: #262120;
+      --ink: #f1e9e0;
+      --muted: #b0a398;
+      --line: #4a403a;
+      --accent: #e0724a;
+      --accent-ink: #1c1815;
+      --accent-soft: #46291f;
+      --taken: #302a27;
+      --ok: #7cc58d;
+      --focus: #8ab4ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.75rem; margin: 0 0 4px; font-family: Georgia, "Times New Roman", serif; }
+  h2 { font-size: 1.05rem; margin: 0 0 12px; }
+  .lede { color: var(--muted); margin: 0 0 24px; }
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  legend { font-weight: 600; padding: 0; margin-bottom: 12px; }
+  .num {
+    display: inline-grid; place-items: center;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink);
+    font-size: .8rem; margin-right: 8px;
+  }
+  .choices { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .choice { position: relative; }
+  .choice input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .choice .card {
+    display: block; height: 100%;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 12px 14px; background: var(--surface);
+  }
+  .choice .card strong { display: block; }
+  .choice .card span { color: var(--muted); font-size: .88rem; }
+  .choice input:checked + .card { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+  .choice input:focus-visible + .card { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .choice input:disabled + .card { background: var(--taken); color: var(--muted); }
+  .choice input:disabled { cursor: not-allowed; }
+
+  .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .days .card { text-align: center; padding: 8px 2px; }
+  .days .card strong { font-size: 1.1rem; }
+  .nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .nav .range { font-weight: 600; }
+  button {
+    font: inherit; cursor: pointer;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    border-radius: 8px; padding: 6px 12px;
+  }
+  button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; padding: 10px 20px; }
+  button.link { border: 0; background: none; color: var(--accent); text-decoration: underline; padding: 2px 4px; }
+
+  .form-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  label.field { display: block; font-weight: 600; font-size: .92rem; }
+  label.field small { font-weight: 400; color: var(--muted); }
+  input[type=text], input[type=email], select, textarea {
+    display: block; width: 100%; margin-top: 4px;
+    font: inherit; color: var(--ink); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px;
+  }
+  textarea { min-height: 70px; resize: vertical; }
+  .full { grid-column: 1 / -1; }
+
+  .summary {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center;
+    margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--line);
+  }
+  .summary p { margin: 0; }
+  .hint { color: var(--muted); font-size: .88rem; }
+  .err { color: #b3261e; font-size: .88rem; margin: 4px 0 0; min-height: 1.2em; }
+  @media (prefers-color-scheme: dark) { .err { color: #ff8a80; } }
+  #status { margin: 0 0 16px; padding: 12px 14px; border-radius: var(--radius); background: var(--accent-soft); border: 1px solid var(--accent); display: none; }
+  #status.show { display: block; }
+
+  ul.bookings { list-style: none; margin: 0; padding: 0; }
+  ul.bookings li {
+    display: flex; justify-content: space-between; gap: 12px; align-items: center;
+    padding: 10px 0; border-top: 1px solid var(--line);
+  }
+  ul.bookings li:first-child { border-top: 0; }
+  ul.bookings .meta { color: var(--muted); font-size: .88rem; }
+  .empty { color: var(--muted); margin: 0; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @media (max-width: 520px) { .days { gap: 3px; } .wrap { padding: 16px 10px 48px; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Book a kiln</h1>
+  <p class="lede">Reserve a firing slot in the shared studio kilns. Bookings are for members only. Please cancel at least 24 hours ahead if your plans change.</p>
+
+  <p id="status" role="status" aria-live="polite"></p>
+
+  <form id="form" novalidate>
+    <fieldset class="step">
+      <legend><span class="num" aria-hidden="true">1</span>Choose a kiln</legend>
+      <div class="choices" id="kilns"></div>
+    </fieldset>
+
+    <fieldset class="step">
+      <legend><span class="num" aria-hidden="true">2</span>Pick a day</legend>
+      <div class="nav">
+        <button type="button" id="prev" aria-label="Previous week">← Prev</button>
+        <span class="range" id="range" aria-live="polite"></span>
+        <button type="button" id="next" aria-label="Next week">Next →</button>
+      </div>
+      <div class="days choices" id="days"></div>
+      <p class="hint">The studio is closed on Mondays for cleaning.</p>
+    </fieldset>
+
+    <fieldset class="step">
+      <legend><span class="num" aria-hidden="true">3</span>Pick a time block</legend>
+      <div class="choices" id="slots"></div>
+      <p class="hint" id="slotHint"></p>
+    </fieldset>
+
+    <fieldset class="step">
+      <legend><span class="num" aria-hidden="true">4</span>Your firing</legend>
+      <div class="form-grid">
+        <label class="field">Name
+          <input type="text" id="name" autocomplete="name" required>
+          <p class="err" id="nameErr"></p>
+        </label>
+        <label class="field">Email
+          <input type="email" id="email" autocomplete="email" required>
+          <p class="err" id="emailErr"></p>
+        </label>
+        <label class="field">Firing type
+          <select id="firing"></select>
+        </label>
+        <label class="field">Shelves needed <small>(max per booking: <span id="maxShelves">3</span>)</small>
+          <select id="shelves"></select>
+        </label>
+        <label class="field full">Notes <small>(optional – special glazes, fragile pieces, etc.)</small>
+          <textarea id="notes"></textarea>
+        </label>
+      </div>
+      <div class="summary">
+        <p id="summary" aria-live="polite">Select a kiln, day and time block.</p>
+        <button type="submit" class="primary">Confirm booking</button>
+      </div>
+      <p class="err" id="formErr" role="alert"></p>
+    </fieldset>
+  </form>
+
+  <section class="step" aria-labelledby="mineH">
+    <h2 id="mineH">Your upcoming bookings</h2>
+    <ul class="bookings" id="mine"></ul>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  var KILNS = [
+    { id: "electric", name: "Electric Kiln “Big Bertha”", desc: "10 cu ft · cone 04 – 6 · oxidation",
+      firings: ["Bisque (cone 04)", "Glaze (cone 6)", "Low-fire glaze (cone 05)"], shelves: 4 },
+    { id: "gas", name: "Gas Kiln “Ember”", desc: "24 cu ft · cone 6 – 10 · reduction",
+      firings: ["Glaze reduction (cone 6)", "High-fire reduction (cone 10)"], shelves: 5 },
+    { id: "test", name: "Test Kiln", desc: "1.5 cu ft · small loads & tiles",
+      firings: ["Glaze test (cone 6)", "Bisque test (cone 04)", "Overglaze / lustre (cone 018)"], shelves: 1 },
+    { id: "raku", name: "Raku Kiln", desc: "4 cu ft · outdoor, supervised only",
+      firings: ["Raku (cone 06)"], shelves: 2 }
+  ];
+  var SLOTS = [
+    { id: "am",    name: "Morning load",   time: "8:00 am – 12:00 pm" },
+    { id: "pm",    name: "Afternoon load", time: "12:00 pm – 4:00 pm" },
+    { id: "eve",   name: "Evening load",   time: "4:00 pm – 8:00 pm" },
+    { id: "night", name: "Overnight firing", time: "8:00 pm – 8:00 am" }
+  ];
+  var KEY = "kilnBookings.v1";
+  var DAY = 86400000;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var state = { kiln: null, date: null, slot: null, weekStart: null };
+  var bookings = load();
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; }
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(bookings)); } catch (e) {}
+  }
+
+  function atMidnight(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function iso(d) {
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function parseISO(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function fmtLong(d) { return d.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" }); }
+  function fmtShort(d) { return d.toLocaleDateString(undefined, { month: "short", day: "numeric" }); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  var today = atMidnight(new Date());
+  var maxDate = new Date(today.getTime() + 60 * DAY);
+  state.weekStart = today;
+
+  // Deterministic stand-in for other members' bookings.
+  function hash(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return (h >>> 0) % 100;
+  }
+  function othersHold(kiln, date, slot) {
+    return hash(kiln + "|" + date + "|" + slot) < 32;
+  }
+  function mineAt(kiln, date, slot) {
+    return bookings.filter(function (b) { return b.kiln === kiln && b.date === date && b.slot === slot; })[0];
+  }
+  function isClosed(d) { return d.getDay() === 1; }
+  function slotPassed(dateStr, slotId) {
+    if (dateStr !== iso(today)) return false;
+    var startHour = { am: 8, pm: 12, eve: 16, night: 20 }[slotId];
+    return new Date().getHours() >= startHour;
+  }
+  function slotStatus(kiln, dateStr, slotId) {
+    if (mineAt(kiln, dateStr, slotId)) return "mine";
+    if (slotPassed(dateStr, slotId)) return "past";
+    if (othersHold(kiln, dateStr, slotId)) return "taken";
+    return "free";
+  }
+
+  function renderKilns() {
+    $("kilns").innerHTML = KILNS.map(function (k) {
+      return '<label class="choice"><input type="radio" name="kiln" value="' + k.id + '"' +
+        (state.kiln === k.id ? " checked" : "") + '><span class="card"><strong>' + esc(k.name) +
+        "</strong><span>" + esc(k.desc) + "</span></span></label>";
+    }).join("");
+  }
+
+  function renderDays() {
+    var start = state.weekStart, html = "";
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(start.getTime() + i * DAY);
+      var s = iso(d);
+      var off = d < today || d > maxDate || isClosed(d);
+      html += '<label class="choice"><input type="radio" name="day" value="' + s + '"' +
+        (off ? " disabled" : "") + (state.date === s ? " checked" : "") +
+        ' aria-label="' + esc(fmtLong(d)) + (isClosed(d) ? " (closed)" : "") + '">' +
+        '<span class="card"><span>' + d.toLocaleDateString(undefined, { weekday: "short" }) +
+        "</span><strong>" + d.getDate() + "</strong><span>" +
+        d.toLocaleDateString(undefined, { month: "short" }) + "</span></span></label>";
+    }
+    $("days").innerHTML = html;
+    var end = new Date(start.getTime() + 6 * DAY);
+    $("range").textContent = fmtShort(start) + " – " + fmtShort(end);
+    $("prev").disabled = start <= today;
+    $("next").disabled = new Date(start.getTime() + 7 * DAY) > maxDate;
+  }
+
+  function renderSlots() {
+    var box = $("slots");
+    if (!state.kiln || !state.date) {
+      box.innerHTML = "";
+      $("slotHint").textContent = "Choose a kiln and a day to see open time blocks.";
+      return;
+    }
+    var free = 0;
+    box.innerHTML = SLOTS.map(function (sl) {
+      var st = slotStatus(state.kiln, state.date, sl.id);
+      if (st === "free") free++;
+      var label = { free: "", mine: "Booked by you", taken: "Already booked", past: "Passed" }[st];
+      var disabled = st !== "free";
+      return '<label class="choice"><input type="radio" name="slot" value="' + sl.id + '"' +
+        (disabled ? " disabled" : "") + (state.slot === sl.id && !disabled ? " checked" : "") +
+        '><span class="card"><strong>' + sl.name + "</strong><span>" + sl.time + "</span>" +
+        (label ? "<br><span>" + label + "</span>" : "") + "</span></label>";
+    }).join("");
+    if (state.slot && slotStatus(state.kiln, state.date, state.slot) !== "free") state.slot = null;
+    $("slotHint").textContent = free ? free + " of " + SLOTS.length + " blocks open." : "Nothing open this day — try another date or kiln.";
+  }
+
+  function renderOptions() {
+    var k = KILNS.filter(function (x) { return x.id === state.kiln; })[0];
+    var f = $("firing"), s = $("shelves");
+    var prevF = f.value, prevS = s.value;
+    var firings = k ? k.firings : ["Select a kiln first"];
+    f.innerHTML = firings.map(function (x) { return "<option>" + esc(x) + "</option>"; }).join("");
+    if (firings.indexOf(prevF) > -1) f.value = prevF;
+    f.disabled = !k;
+    var max = k ? k.shelves : 1, opts = "";
+    for (var i = 1; i <= max; i++) opts += "<option value='" + i + "'>" + i + (i === 1 ? " shelf" : " shelves") + "</option>";
+    s.innerHTML = opts;
+    if (+prevS <= max && prevS) s.value = prevS;
+    s.disabled = !k;
+    $("maxShelves").textContent = max;
+  }
+
+  function renderSummary() {
+    var k = KILNS.filter(function (x) { return x.id === state.kiln; })[0];
+    var sl = SLOTS.filter(function (x) { return x.id === state.slot; })[0];
+    if (k && state.date && sl) {
+      $("summary").innerHTML = "<strong>" + esc(k.name) + "</strong><br>" +
+        esc(fmtLong(parseISO(state.date))) + " · " + sl.time;
+    } else {
+      $("summary").textContent = "Select a kiln, day and time block.";
+    }
+  }
+
+  function renderMine() {
+    var upcoming = bookings.filter(function (b) { return parseISO(b.date) >= today; })
+      .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+    if (!upcoming.length) {
+      $("mine").innerHTML = '<li><p class="empty">Nothing booked yet.</p></li>';
+      return;
+    }
+    $("mine").innerHTML = upcoming.map(function (b) {
+      var k = KILNS.filter(function (x) { return x.id === b.kiln; })[0];
+      var sl = SLOTS.filter(function (x) { return x.id === b.slot; })[0];
+      return "<li><div><strong>" + esc(fmtLong(parseISO(b.date))) + " · " + sl.time + "</strong>" +
+        '<div class="meta">' + esc(k.name) + " — " + esc(b.firing) + ", " + b.shelves +
+        (b.shelves === 1 ? " shelf" : " shelves") + (b.notes ? " — “" + esc(b.notes) + "”" : "") + "</div></div>" +
+        '<button type="button" class="link" data-cancel="' + b.id + '">Cancel</button></li>';
+    }).join("");
+  }
+
+  function say(msg) {
+    var el = $("status");
+    el.textContent = msg;
+    el.classList.toggle("show", !!msg);
+  }
+
+  function renderAll() {
+    renderKilns(); renderDays(); renderSlots(); renderOptions(); renderSummary(); renderMine();
+  }
+
+  $("kilns").addEventListener("change", function (e) {
+    state.kiln = e.target.value; say("");
+    renderSlots(); renderOptions(); renderSummary();
+  });
+  $("days").addEventListener("change", function (e) {
+    state.date = e.target.value; say("");
+    renderSlots(); renderSummary();
+  });
+  $("slots").addEventListener("change", function (e) {
+    state.slot = e.target.value; say("");
+    renderSummary();
+  });
+  $("prev").addEventListener("click", function () {
+    var d = new Date(state.weekStart.getTime() - 7 * DAY);
+    state.weekStart = d < today ? today : d; renderDays();
+  });
+  $("next").addEventListener("click", function () {
+    state.weekStart = new Date(state.weekStart.getTime() + 7 * DAY); renderDays();
+  });
+
+  $("mine").addEventListener("click", function (e) {
+    var id = e.target.getAttribute("data-cancel");
+    if (!id) return;
+    bookings = bookings.filter(function (b) { return String(b.id) !== id; });
+    save(); say("Booking cancelled."); renderSlots(); renderMine();
+  });
+
+  $("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("name").value.trim(), email = $("email").value.trim();
+    $("nameErr").textContent = name ? "" : "Please enter your name.";
+    $("emailErr").textContent = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? "" : "Please enter a valid email address.";
+    $("formErr").textContent = "";
+    if (!state.kiln || !state.date || !state.slot) {
+      $("formErr").textContent = "Please choose a kiln, a day and a time block first.";
+      return;
+    }
+    if ($("nameErr").textContent) { $("name").focus(); return; }
+    if ($("emailErr").textContent) { $("email").focus(); return; }
+    if (slotStatus(state.kiln, state.date, state.slot) !== "free") {
+      $("formErr").textContent = "Sorry, that block is no longer available.";
+      renderSlots(); return;
+    }
+    var b = {
+      id: Date.now(), kiln: state.kiln, date: state.date, slot: state.slot,
+      name: name, email: email, firing: $("firing").value,
+      shelves: +$("shelves").value, notes: $("notes").value.trim()
+    };
+    bookings.push(b); save();
+    var k = KILNS.filter(function (x) { return x.id === b.kiln; })[0];
+    var sl = SLOTS.filter(function (x) { return x.id === b.slot; })[0];
+    say("Booked: " + k.name + ", " + fmtLong(parseISO(b.date)) + ", " + sl.time + ". A confirmation will be sent to " + email + ".");
+    state.slot = null;
+    $("notes").value = "";
+    renderSlots(); renderSummary(); renderMine();
+    $("status").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

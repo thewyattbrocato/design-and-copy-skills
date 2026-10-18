@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hive Inspection Log</title>
+<style>
+  :root {
+    --bg: #faf6ec;
+    --card: #fffdf7;
+    --ink: #2b2417;
+    --muted: #7a6d55;
+    --line: #e4d9bf;
+    --amber: #e0a216;
+    --amber-d: #8a5a00;
+    --amber-soft: #fbeab8;
+    --ok: #4b7a2a;
+    --warn: #b3541e;
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1810;
+      --card: #262015;
+      --ink: #f3ead6;
+      --muted: #b0a283;
+      --line: #3d3422;
+      --amber: #f0b429;
+      --amber-d: #f6cf72;
+      --amber-soft: #4a3a12;
+      --ok: #8fc05f;
+      --warn: #f0925a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 60px; }
+  header h1 { margin: 0; font-size: 1.6rem; letter-spacing: -0.01em; }
+  header p { margin: 2px 0 18px; color: var(--muted); }
+
+  h2 { font-size: 1.05rem; margin: 0 0 10px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* hive overview */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+  .tile {
+    text-align: left;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  .tile:hover { border-color: var(--amber); }
+  .tile.sel { border-color: var(--amber); box-shadow: 0 0 0 2px var(--amber-soft); }
+  .tile b { display: block; font-size: 0.95rem; }
+  .tile span { font-size: 0.8rem; color: var(--muted); }
+  .tile.stale span { color: var(--warn); }
+  .tile .flag { color: var(--warn); font-weight: 600; }
+
+  /* form */
+  form .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 520px) { form .grid { grid-template-columns: 1fr; } }
+  label.f, .fl { display: block; font-size: 0.85rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+  input[type=text], input[type=number], input[type=datetime-local], select, textarea {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 10px;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  input:focus, select:focus, textarea:focus, .chip input:focus-visible + span, button:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 1px;
+  }
+  fieldset { border: 0; padding: 0; margin: 0 0 14px; min-width: 0; }
+  legend { padding: 0; }
+  .sect { margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .sect > h2 { color: var(--amber-d); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .chip span {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg);
+    font-size: 0.9rem;
+    user-select: none;
+  }
+  .chip input:checked + span {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: #2b2417;
+    font-weight: 600;
+  }
+  .chip.bad input:checked + span { background: var(--warn); border-color: var(--warn); color: #fff; }
+
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  button.btn {
+    font: inherit;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  button.primary { background: var(--amber); border-color: var(--amber); color: #2b2417; }
+  button.primary:hover { filter: brightness(1.05); }
+  button.small { padding: 5px 10px; font-size: 0.85rem; font-weight: 500; }
+  .toast { color: var(--ok); font-weight: 600; align-self: center; }
+
+  /* history */
+  .histhead { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .histhead .right { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .histhead select { width: auto; }
+  .entry { border-top: 1px solid var(--line); padding: 12px 0; }
+  .entry:first-of-type { border-top: 0; }
+  .entry .top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .entry .top strong { font-size: 1.05rem; }
+  .entry .when { color: var(--muted); font-size: 0.85rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
+  .tag { font-size: 0.78rem; padding: 2px 9px; border-radius: 999px; background: var(--amber-soft); color: var(--amber-d); }
+  .tag.bad { background: var(--warn); color: #fff; }
+  .tag.act { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+  .entry p { margin: 6px 0 0; white-space: pre-wrap; }
+  .empty { color: var(--muted); text-align: center; padding: 24px 0; }
+  .link { background: none; border: 0; color: var(--warn); cursor: pointer; font: inherit; font-size: 0.82rem; padding: 0; }
+  .link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🐝 Hive Inspection Log</h1>
+    <p>Behind the barn · jot down what you saw each time you open a hive.</p>
+  </header>
+
+  <section class="card" aria-label="Hive overview">
+    <h2>Hives at a glance</h2>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <form class="card" id="form" autocomplete="off">
+    <h2>New inspection</h2>
+    <div class="grid">
+      <div>
+        <label class="f" for="hive">Hive</label>
+        <select id="hive" required></select>
+      </div>
+      <div>
+        <label class="f" for="when">Date &amp; time</label>
+        <input type="datetime-local" id="when" required>
+      </div>
+      <div>
+        <label class="f" for="temp">Air temp (°F)</label>
+        <input type="number" id="temp" inputmode="numeric" min="-40" max="130" placeholder="e.g. 72">
+      </div>
+      <div>
+        <label class="f" for="sky">Conditions</label>
+        <select id="sky">
+          <option value="">—</option>
+          <option>Sunny</option><option>Partly cloudy</option><option>Overcast</option>
+          <option>Windy</option><option>Drizzle</option><option>Cool / damp</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>Queen &amp; brood</h2>
+      <fieldset>
+        <legend class="fl">Seen this visit</legend>
+        <div class="chips" data-name="seen">
+          <label class="chip"><input type="checkbox" value="Queen seen"><span>Queen</span></label>
+          <label class="chip"><input type="checkbox" value="Eggs"><span>Eggs</span></label>
+          <label class="chip"><input type="checkbox" value="Young larvae"><span>Young larvae</span></label>
+          <label class="chip"><input type="checkbox" value="Capped brood"><span>Capped brood</span></label>
+          <label class="chip"><input type="checkbox" value="Drone brood"><span>Drone brood</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="fl">Queen cells</legend>
+        <div class="chips" data-radio="qcells">
+          <label class="chip"><input type="radio" name="qcells" value="" checked><span>None</span></label>
+          <label class="chip"><input type="radio" name="qcells" value="Swarm cells"><span>Swarm</span></label>
+          <label class="chip"><input type="radio" name="qcells" value="Supersedure cells"><span>Supersedure</span></label>
+          <label class="chip"><input type="radio" name="qcells" value="Emergency cells"><span>Emergency</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="fl">Brood pattern</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="pattern" value="" checked><span>Not checked</span></label>
+          <label class="chip"><input type="radio" name="pattern" value="Solid pattern"><span>Solid</span></label>
+          <label class="chip"><input type="radio" name="pattern" value="Spotty pattern"><span>Spotty</span></label>
+          <label class="chip"><input type="radio" name="pattern" value="No brood"><span>No brood</span></label>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="sect">
+      <h2>Colony</h2>
+      <fieldset>
+        <legend class="fl">Strength (1 weak – 5 booming)</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="strength" value="" checked><span>—</span></label>
+          <label class="chip"><input type="radio" name="strength" value="1"><span>1</span></label>
+          <label class="chip"><input type="radio" name="strength" value="2"><span>2</span></label>
+          <label class="chip"><input type="radio" name="strength" value="3"><span>3</span></label>
+          <label class="chip"><input type="radio" name="strength" value="4"><span>4</span></label>
+          <label class="chip"><input type="radio" name="strength" value="5"><span>5</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="fl">Temperament</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="temper" value="" checked><span>—</span></label>
+          <label class="chip"><input type="radio" name="temper" value="Calm"><span>Calm</span></label>
+          <label class="chip"><input type="radio" name="temper" value="Nervous"><span>Nervous</span></label>
+          <label class="chip"><input type="radio" name="temper" value="Defensive"><span>Defensive</span></label>
+        </div>
+      </fieldset>
+      <div class="grid">
+        <fieldset>
+          <legend class="fl">Honey stores</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="honey" value="" checked><span>—</span></label>
+            <label class="chip"><input type="radio" name="honey" value="Honey low"><span>Low</span></label>
+            <label class="chip"><input type="radio" name="honey" value="Honey ok"><span>OK</span></label>
+            <label class="chip"><input type="radio" name="honey" value="Honey full"><span>Full</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="fl">Pollen</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="pollen" value="" checked><span>—</span></label>
+            <label class="chip"><input type="radio" name="pollen" value="Pollen low"><span>Low</span></label>
+            <label class="chip"><input type="radio" name="pollen" value="Pollen ok"><span>OK</span></label>
+            <label class="chip"><input type="radio" name="pollen" value="Pollen plenty"><span>Plenty</span></label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="grid">
+        <div>
+          <label class="f" for="boxes">Boxes on hive</label>
+          <input type="number" id="boxes" min="0" max="20" inputmode="numeric" placeholder="e.g. 3">
+        </div>
+        <div>
+          <label class="f" for="mites">Mite count (per 300 bees)</label>
+          <input type="number" id="mites" min="0" max="300" inputmode="numeric" placeholder="optional">
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>Problems spotted</h2>
+      <div class="chips" data-name="issues">
+        <label class="chip bad"><input type="checkbox" value="Varroa"><span>Varroa</span></label>
+        <label class="chip bad"><input type="checkbox" value="Small hive beetle"><span>Hive beetle</span></label>
+        <label class="chip bad"><input type="checkbox" value="Wax moth"><span>Wax moth</span></label>
+        <label class="chip bad"><input type="checkbox" value="Deformed wings"><span>Deformed wings</span></label>
+        <label class="chip bad"><input type="checkbox" value="Chalkbrood"><span>Chalkbrood</span></label>
+        <label class="chip bad"><input type="checkbox" value="Foulbrood suspected"><span>Foulbrood?</span></label>
+        <label class="chip bad"><input type="checkbox" value="Dysentery"><span>Dysentery</span></label>
+        <label class="chip bad"><input type="checkbox" value="Robbing"><span>Robbing</span></label>
+        <label class="chip bad"><input type="checkbox" value="Ants"><span>Ants</span></label>
+        <label class="chip bad"><input type="checkbox" value="Queenless"><span>Queenless</span></label>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>What I did</h2>
+      <div class="chips" data-name="actions">
+        <label class="chip"><input type="checkbox" value="Added box"><span>Added box</span></label>
+        <label class="chip"><input type="checkbox" value="Removed box"><span>Removed box</span></label>
+        <label class="chip"><input type="checkbox" value="Fed syrup"><span>Fed syrup</span></label>
+        <label class="chip"><input type="checkbox" value="Fed pollen patty"><span>Pollen patty</span></label>
+        <label class="chip"><input type="checkbox" value="Mite treatment"><span>Mite treatment</span></label>
+        <label class="chip"><input type="checkbox" value="Swapped frames"><span>Swapped frames</span></label>
+        <label class="chip"><input type="checkbox" value="Made a split"><span>Split</span></label>
+        <label class="chip"><input type="checkbox" value="Combined"><span>Combined</span></label>
+        <label class="chip"><input type="checkbox" value="Requeened"><span>Requeened</span></label>
+        <label class="chip"><input type="checkbox" value="Reduced entrance"><span>Reduced entrance</span></label>
+        <label class="chip"><input type="checkbox" value="Harvested honey"><span>Harvested</span></label>
+      </div>
+    </div>
+
+    <div class="sect">
+      <label class="f" for="notes">Notes</label>
+      <textarea id="notes" placeholder="Anything else: smells, sounds, what to check next time…"></textarea>
+    </div>
+
+    <div class="btns">
+      <button type="submit" class="btn primary">Save inspection</button>
+      <button type="button" class="btn" id="reset">Clear form</button>
+      <span class="toast" id="toast" role="status"></span>
+    </div>
+  </form>
+
+  <section class="card" aria-label="Inspection history">
+    <div class="histhead">
+      <h2 style="margin:0">History</h2>
+      <div class="right">
+        <select id="filter" aria-label="Filter by hive"></select>
+        <button class="btn small" id="csv" type="button">Export CSV</button>
+        <button class="btn small" id="json" type="button">Export JSON</button>
+      </div>
+    </div>
+    <div id="list"></div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var HIVES = 12;
+  var KEY = 'hive-inspections-v1';
+  var memory = [];
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return memory; }
+  }
+  function save(list) {
+    memory = list;
+    try { localStorage.setItem(KEY, JSON.stringify(list)); return true; }
+    catch (e) { return false; }
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var entries = load();
+
+  // populate hive selects
+  var hiveSel = $('hive'), filterSel = $('filter');
+  var allOpt = document.createElement('option');
+  allOpt.value = ''; allOpt.textContent = 'All hives';
+  filterSel.appendChild(allOpt);
+  for (var i = 1; i <= HIVES; i++) {
+    var o = document.createElement('option');
+    o.value = i; o.textContent = 'Hive ' + i;
+    hiveSel.appendChild(o);
+    filterSel.appendChild(o.cloneNode(true));
+  }
+
+  function nowLocal() {
+    var d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 16);
+  }
+  $('when').value = nowLocal();
+
+  function checked(container) {
+    return Array.prototype.map.call(
+      container.querySelectorAll('input:checked'), function (n) { return n.value; });
+  }
+  function radio(name) {
+    var n = document.querySelector('input[name="' + name + '"]:checked');
+    return n ? n.value : '';
+  }
+
+  function fmtWhen(s) {
+    var d = new Date(s);
+    if (isNaN(d)) return s;
+    return d.toLocaleString(undefined, {
+      weekday: 'short', month: 'short', day: 'numeric', year: 'numeric',
+      hour: 'numeric', minute: '2-digit'
+    });
+  }
+  function ago(s) {
+    var days = Math.floor((Date.now() - new Date(s).getTime()) / 86400000);
+    if (days <= 0) return 'today';
+    if (days === 1) return 'yesterday';
+    return days + ' days ago';
+  }
+
+  function renderTiles() {
+    var box = $('tiles');
+    box.textContent = '';
+    var selected = hiveSel.value;
+    for (var h = 1; h <= HIVES; h++) {
+      var last = null;
+      entries.forEach(function (e) {
+        if (+e.hive === h && (!last || e.when > last.when)) last = e;
+      });
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tile';
+      if (String(h) === selected) b.classList.add('sel');
+      var t = document.createElement('b');
+      t.textContent = 'Hive ' + h;
+      var s = document.createElement('span');
+      if (last) {
+        s.textContent = ago(last.when);
+        var age = (Date.now() - new Date(last.when).getTime()) / 86400000;
+        if (age > 14) b.classList.add('stale');
+        if (last.issues && last.issues.length) {
+          var f = document.createElement('span');
+          f.className = 'flag';
+          f.textContent = ' ⚠';
+          f.title = last.issues.join(', ');
+          s.appendChild(f);
+        }
+      } else {
+        s.textContent = 'never opened';
+        b.classList.add('stale');
+      }
+      b.appendChild(t); b.appendChild(s);
+      b.addEventListener('click', (function (n) {
+        return function () {
+          hiveSel.value = n;
+          filterSel.value = n;
+          renderTiles(); renderList();
+        };
+      })(h));
+      box.appendChild(b);
+    }
+  }
+
+  function tag(text, cls) {
+    var s = document.createElement('span');
+    s.className = 'tag' + (cls ? ' ' + cls : '');
+    s.textContent = text;
+    return s;
+  }
+
+  function renderList() {
+    var box = $('list');
+    box.textContent = '';
+    var f = filterSel.value;
+    var rows = entries.filter(function (e) { return !f || String(e.hive) === f; })
+      .sort(function (a, b) { return a.when < b.when ? 1 : -1; });
+    if (!rows.length) {
+      var em = document.createElement('div');
+      em.className = 'empty';
+      em.textContent = entries.length ? 'No inspections for that hive yet.' : 'No inspections logged yet. Your first one will show up here.';
+      box.appendChild(em);
+      return;
+    }
+    rows.forEach(function (e) {
+      var div = document.createElement('div');
+      div.className = 'entry';
+
+      var top = document.createElement('div');
+      top.className = 'top';
+      var st = document.createElement('strong');
+      st.textContent = 'Hive ' + e.hive;
+      var wh = document.createElement('span');
+      wh.className = 'when';
+      wh.textContent = fmtWhen(e.when);
+      top.appendChild(st); top.appendChild(wh);
+      div.appendChild(top);
+
+      var tags = document.createElement('div');
+      tags.className = 'tags';
+      var wx = [];
+      if (e.temp !== '') wx.push(e.temp + '°F');
+      if (e.sky) wx.push(e.sky);
+      if (wx.length) tags.appendChild(tag(wx.join(', '), 'act'));
+      if (e.strength) tags.appendChild(tag('Strength ' + e.strength + '/5'));
+      if (e.temper) tags.appendChild(tag(e.temper));
+      (e.seen || []).forEach(function (x) { tags.appendChild(tag(x)); });
+      if (e.qcells) tags.appendChild(tag(e.qcells, 'bad'));
+      if (e.pattern) tags.appendChild(tag(e.pattern));
+      if (e.honey) tags.appendChild(tag(e.honey));
+      if (e.pollen) tags.appendChild(tag(e.pollen));
+      if (e.boxes !== '') tags.appendChild(tag(e.boxes + ' box' + (+e.boxes === 1 ? '' : 'es'), 'act'));
+      if (e.mites !== '') tags.appendChild(tag(e.mites + ' mites/300', 'act'));
+      (e.issues || []).forEach(function (x) { tags.appendChild(tag(x, 'bad')); });
+      (e.actions || []).forEach(function (x) { tags.appendChild(tag('✓ ' + x, 'act')); });
+      div.appendChild(tags);
+
+      if (e.notes) {
+        var p = document.createElement('p');
+        p.textContent = e.notes;
+        div.appendChild(p);
+      }
+
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'link';
+      del.textContent = 'Delete';
+      del.addEventListener('click', function () {
+        if (confirm('Delete this inspection of Hive ' + e.hive + '?')) {
+          entries = entries.filter(function (x) { return x.id !== e.id; });
+          save(entries);
+          renderTiles(); renderList();
+        }
+      });
+      var wrap = document.createElement('div');
+      wrap.style.marginTop = '6px';
+      wrap.appendChild(del);
+      div.appendChild(wrap);
+
+      box.appendChild(div);
+    });
+  }
+
+  function clearForm() {
+    var keep = hiveSel.value;
+    $('form').reset();
+    hiveSel.value = keep;
+    $('when').value = nowLocal();
+  }
+
+  $('form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var e = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      hive: +hiveSel.value,
+      when: $('when').value,
+      temp: $('temp').value,
+      sky: $('sky').value,
+      seen: checked(document.querySelector('[data-name=seen]')),
+      qcells: radio('qcells'),
+      pattern: radio('pattern'),
+      strength: radio('strength'),
+      temper: radio('temper'),
+      honey: radio('honey'),
+      pollen: radio('pollen'),
+      boxes: $('boxes').value,
+      mites: $('mites').value,
+      issues: checked(document.querySelector('[data-name=issues]')),
+      actions: checked(document.querySelector('[data-name=actions]')),
+      notes: $('notes').value.trim()
+    };
+    entries.push(e);
+    var ok = save(entries);
+    var t = $('toast');
+    t.textContent = ok ? 'Saved Hive ' + e.hive + ' ✓' : 'Saved for this session only (browser storage unavailable)';
+    setTimeout(function () { t.textContent = ''; }, 3500);
+    clearForm();
+    renderTiles(); renderList();
+  });
+
+  $('reset').addEventListener('click', clearForm);
+  hiveSel.addEventListener('change', renderTiles);
+  filterSel.addEventListener('change', renderList);
+
+  function download(name, type, text) {
+    var blob = new Blob([text], { type: type });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  $('json').addEventListener('click', function () {
+    download('hive-inspections.json', 'application/json', JSON.stringify(entries, null, 2));
+  });
+
+  $('csv').addEventListener('click', function () {
+    var cols = ['hive', 'when', 'temp', 'sky', 'seen', 'qcells', 'pattern', 'strength', 'temper',
+      'honey', 'pollen', 'boxes', 'mites', 'issues', 'actions', 'notes'];
+    function cell(v) {
+      if (Array.isArray(v)) v = v.join('; ');
+      v = v == null ? '' : String(v);
+      return '"' + v.replace(/"/g, '""') + '"';
+    }
+    var lines = [cols.join(',')];
+    entries.slice().sort(function (a, b) { return a.when < b.when ? -1 : 1; })
+      .forEach(function (e) { lines.push(cols.map(function (c) { return cell(e[c]); }).join(',')); });
+    download('hive-inspections.csv', 'text/csv', lines.join('\n'));
+  });
+
+  renderTiles();
+  renderList();
+})();
+</script>
+</body>
+</html>

@@ -1,121 +1,122 @@
 [
   {
-    "id": "upp3-01",
+    "id": "polish2-build-hive-log",
     "kind": "build",
-    "prompt": "Here's the signup page for our weekend pottery classes at Kilnworks. It works, the form submits fine, but it looks rough to me. Can you make it feel finished? Single self-contained HTML file please, inline CSS, system fonts, no external assets.\n\n```html\n<html><body>\n<h1>Kilnworks Weekend Classes</h1>\n<p>Pick a class and save your spot.</p>\n<form>\nName <input type=\"text\" name=\"name\"><br>\nEmail <input type=\"text\" name=\"email\"><br>\nClass <select name=\"class\">\n  <option>Wheel basics (Sat 10am)</option>\n  <option>Hand-building (Sat 2pm)</option>\n  <option>Glazing day (Sun 11am)</option>\n</select><br>\nGuests <input type=\"number\" name=\"guests\" value=\"1\"><br>\n<input type=\"checkbox\" name=\"news\"> Send me studio news<br>\n<button>Reserve</button>\n</form>\n<p>Cancel up to 48 hours before class for a full refund.</p>\n</body></html>\n```",
+    "prompt": "Make a page where I can log a beehive inspection. I keep about a dozen hives behind the barn and I want to jot down what I saw each time I open one. One self-contained HTML file, inline CSS, system fonts, no external assets.",
     "rubric": [
-      "Each field has a visible label sitting clearly with its input, and the inputs, select and button look deliberately styled and consistent with each other rather than raw browser defaults.",
-      "The form sits in a contained, readable width instead of stretching across the whole viewport, with comfortable spacing between fields.",
-      "Reserve is clearly the one main action on the page and is easy to tell apart from the surrounding text.",
-      "The page hints at behavior beyond the happy path without clutter, for example required marks, short helper text, or a reserved spot for an error or confirmation message.",
-      "All the original content survives (heading, intro line, four fields, newsletter checkbox, Reserve button, cancellation note) and nothing factual is invented such as new classes, prices or testimonials."
+      "Field labels, headings and buttons use beekeeping words for what is being recorded (hive, queen, brood, frames, stores or similar) rather than generic words like Item, Details, Notes 1 or Entry.",
+      "Before any entry exists, the log area says what it is for and what to do first in the keeper's situation, not just 'No data' or 'Nothing here'.",
+      "The form suits someone standing at a hive: few required fields, large tap targets, and saving gives a visible confirmation that names the hive that was logged and leaves the page ready for the next entry.",
+      "No invented specifics: no made-up treatment products, dosages, mite thresholds, weather figures, hive histories or advice stated as fact; any sample entry is plainly marked as an example.",
+      "Stays a single inspection-log page: no accounts, charts, shop, forum or weather widgets."
     ]
   },
   {
-    "id": "upp3-02",
-    "kind": "polish",
-    "prompt": "We ship the billing page on Thursday. This statements list works fine on my machine. What's still missing before release?\n\n```html\n<div class=\"stmts\" id=\"stmts\"></div>\n<style>\n.row{display:flex;justify-content:space-between;padding:8px}\n.dl{color:#06c;cursor:pointer}\n</style>\n<script>\nfetch('/api/statements').then(r => r.json()).then(list => {\n  document.getElementById('stmts').innerHTML = list.map(s =>\n    `<div class=\"row\"><span>${s.month}</span><span>${s.total}</span>` +\n    `<div class=\"dl\" onclick=\"download('${s.id}')\">Download</div></div>`).join('');\n});\nfunction download(id) { location.href = '/api/statements/' + id + '.pdf'; }\n</script>\n```",
-    "rubric": [
-      "Covers what the user sees before the list arrives and when there is nothing to show: a loading state and an empty state, not a blank box.",
-      "Covers a failed request with a visible message and a way to retry, rather than leaving the area silently empty.",
-      "Makes Download reachable and operable by keyboard and screen reader (a real link or button, with a name that says which statement), and gives it a visible focus indication.",
-      "Keeps the working fetch and the download behavior intact; the existing endpoints are still used.",
-      "Gives concrete fixes or code for the gaps it names, specific to this list, instead of only a generic pre-launch checklist.",
-      "Totals read cleanly as money and line up for scanning, or the answer explains why that is fine as is."
-    ]
-  },
-  {
-    "id": "upp3-03",
+    "id": "polish2-build-kiln-booking",
     "kind": "build",
-    "prompt": "make this good. Single self-contained HTML file please, inline CSS, system fonts, no external assets.\n\n```html\n<body>\n<div>\n<h2>Fernwick Plants</h2>\n<p>Get our care tips</p>\n<input placeholder=\"email\">\n<button>Go</button>\n</div>\n</body>\n```",
+    "prompt": "A page where members of our pottery studio can book time in the shared kilns. Just the booking part, not the whole website. One self-contained HTML file, inline CSS, system fonts, no external assets.",
     "rubric": [
-      "The signup block reads as a finished, contained card or panel placed deliberately on the page, not text stuck to the top-left corner.",
-      "The email input and button are styled to match, sit together neatly, and the button is clearly the action.",
-      "The email field is identifiable without relying only on placeholder text, through a visible label or equivalent text.",
-      "The result stays small and in scope: no invented subscriber counts, testimonials, discounts or extra sections.",
-      "Text is comfortably legible with clear contrast and a sensible size hierarchy between the title and the supporting line."
+      "Wording comes from a ceramics studio (kiln, firing, load, shelf space, bisque or glaze) and one thing is called one name throughout; no generic 'resource', 'appointment' or 'slot' mix.",
+      "A member who is unsure what to pick gets help beside the field where they are unsure (what the choice means for their work), not in a separate FAQ block or a tooltip-only icon.",
+      "There is a sensible state for a day with no room left and a confirmation state; each tells the member what they can do next.",
+      "No invented facts: no made-up prices, studio hours, kiln models, temperatures, firing schedules, rules or member names beyond obviously placeholder sample data.",
+      "Stays the booking screen only: no gallery, class listings, shop or newsletter sign-up."
     ]
   },
   {
-    "id": "upp3-04",
-    "kind": "polish",
-    "prompt": "the Save button goes see-through on hover, white text on a pale background. can you fix that\n\n```css\n.card { max-width: 360px; padding: 20px; border: 1px solid #d5ddd9; border-radius: 8px; }\n.save { background: #1f6f5c; color: #fff; border: 0; border-radius: 6px; padding: 10px 18px; font: inherit; }\n.save:hover { background: #e8f3f0; }\n.cancel { background: none; border: 0; color: #55635f; font: inherit; }\n```",
-    "rubric": [
-      "Fixes the hover so the Save text is clearly readable against its background (for example a darker green with white text).",
-      "Changes only the hover treatment; the card, Cancel button and base Save styling are left as they were.",
-      "The reply is short: it names the problem and shows only the changed rule or a small diff, not a rewritten stylesheet.",
-      "Does not add unrequested features such as a dark theme, animations, new states or a design overhaul."
-    ]
-  },
-  {
-    "id": "upp3-05",
-    "kind": "choose",
-    "prompt": "Our ticket list page loads 40 rows from the API, usually 1 to 2 seconds. Skeleton rows or a spinner? Just tell me which and why, I don't want any code changes.",
-    "rubric": [
-      "Commits to one option clearly instead of listing both and leaving the decision open.",
-      "Ties the reasoning to this case (a 40-row list, a 1 to 2 second wait), not to generic principles alone.",
-      "Stays short, roughly a short paragraph, and does not rewrite or restyle the page or provide a code implementation.",
-      "Mentions at most a brief caveat or edge case (for example very fast loads or an empty result) without turning it into a long survey."
-    ]
-  },
-  {
-    "id": "upp3-06",
-    "kind": "polish",
-    "prompt": "I think this is basically done. Can you give it a last polish pass before I send it to the client?\n\n```html\n<form id=\"reserve\" novalidate>\n  <h2>Reserve a tool</h2>\n  <label for=\"tool\">Tool</label>\n  <select id=\"tool\" required>\n    <option value=\"\">Choose a tool</option>\n    <option>Cordless drill</option>\n    <option>Tile saw</option>\n    <option>Step ladder</option>\n  </select>\n  <label for=\"pickup\">Pickup date</label>\n  <input id=\"pickup\" type=\"date\" required aria-describedby=\"pickup-help\">\n  <p id=\"pickup-help\" class=\"help\">We're open Tuesday to Saturday. Loans run 7 days.</p>\n  <p id=\"err\" class=\"err\" role=\"alert\" hidden></p>\n  <button id=\"go\" type=\"submit\">Reserve</button>\n  <p id=\"ok\" class=\"ok\" role=\"status\" hidden>Reserved. We'll email a confirmation.</p>\n</form>\n<style>\n:root{--ink:#1d2b2a;--muted:#55635f;--line:#c9d3cf;--accent:#1f6f5c;--bad:#a4271f}\nbody{font:16px/1.5 system-ui,sans-serif;color:var(--ink);margin:0;padding:24px;background:#f7faf8}\nform{max-width:380px;margin:auto;background:#fff;border:1px solid var(--line);border-radius:10px;padding:24px}\nh2{margin:0 0 16px;font-size:1.25rem}\nlabel{display:block;font-weight:600;margin-top:14px}\nselect,input{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:6px;min-height:44px;margin-top:4px}\n.help{color:var(--muted);font-size:.875rem;margin:4px 0 0}\n.err{color:var(--bad);margin:12px 0 0}\n.ok{color:var(--accent);font-weight:600}\nbutton{margin-top:18px;width:100%;min-height:44px;font:inherit;font-weight:600;color:#fff;background:var(--accent);border:0;border-radius:6px;cursor:pointer}\nbutton:hover{background:#185a4a}\nbutton:disabled{background:#9db8b0;cursor:not-allowed}\n:focus-visible{outline:3px solid #1b5fd1;outline-offset:2px}\n[aria-invalid=true]{border-color:var(--bad)}\n@media (prefers-reduced-motion:no-preference){button{transition:background .15s}}\n</style>\n<script>\nconst f = document.getElementById('reserve'), go = document.getElementById('go');\nf.addEventListener('submit', async e => {\n  e.preventDefault();\n  const err = document.getElementById('err'), ok = document.getElementById('ok');\n  err.hidden = ok.hidden = true;\n  const missing = [...f.querySelectorAll('[required]')].filter(x => !x.value);\n  f.querySelectorAll('[required]').forEach(x => x.setAttribute('aria-invalid', !x.value));\n  if (missing.length) { err.textContent = 'Choose a tool and a pickup date.'; err.hidden = false; missing[0].focus(); return; }\n  go.disabled = true; go.textContent = 'Reserving...';\n  try { await fetch('/api/reserve', {method: 'POST'}); ok.hidden = false; }\n  catch (x) { err.textContent = \"That didn't go through. Check your connection and try again.\"; err.hidden = false; }\n  go.disabled = false; go.textContent = 'Reserve';\n});\n</script>\n```",
-    "rubric": [
-      "Recognizes in plain words that the form is already in good shape and names specific things it already handles well (for example labels, helper text, error and success messages, focus, disabled and in-progress states).",
-      "Makes few or no changes: at most a small handful of minor, individually justified edits, with no wholesale rewrite.",
-      "Does not restyle the palette, layout or typography, and does not add a dark theme, new libraries, animation or extra features.",
-      "Any code it returns keeps the existing structure, IDs, classes and behavior so the client version still works the same.",
-      "Does not pad the answer with invented problems; anything it flags is real and tied to the supplied code."
-    ]
-  },
-  {
-    "id": "upp3-07",
-    "kind": "polish",
-    "prompt": "anything you'd fix before we ship this? 5 bullets max, one line each, no code\n\n```html\n<input id=\"q\" placeholder=\"Search stationery\">\n<div id=\"results\"></div>\n<style>\n.item{padding:6px;border-bottom:1px solid #eee;cursor:pointer}\n.item span{color:#888;font-size:11px}\n</style>\n<script>\nq.addEventListener('input', () => {\n  fetch('/api/search?q=' + q.value).then(r => r.json()).then(items => {\n    results.innerHTML = items.map(i =>\n      `<div class=\"item\" onclick=\"openItem(${i.id})\">${i.name} <span>${i.price}</span></div>`).join('');\n  });\n});\n</script>\n```",
-    "rubric": [
-      "Respects the format: at most 5 bullets, each a single line, with no code block and no long preamble or closing summary.",
-      "Prioritizes the most consequential gaps for a search box shipping to users, such as what shows with no results, while loading, or when the request fails.",
-      "Flags that result rows are not reachable or operable by keyboard or screen reader (clickable divs), or that the field has only a placeholder for a label.",
-      "Each bullet is specific to this code rather than a generic quality platitude."
-    ]
-  },
-  {
-    "id": "upp3-08",
+    "id": "polish2-build-tool-desk",
     "kind": "build",
-    "prompt": "this looks okay on my screen but a coworker says it falls apart on her phone, and the long names are getting cut off or shoving stuff around. clean it up so it feels finished. Single self-contained HTML file please, inline CSS, system fonts, no external assets.\n\n```html\n<html><body style=\"font-family:sans-serif\">\n<div style=\"width:720px;margin:20px auto\">\n<h2>Harbor Lane Lunch Club - Friday order</h2>\n<div style=\"display:flex;border-bottom:1px solid #ccc;padding:6px 0\">\n  <div style=\"width:180px;white-space:nowrap\">Bartholomew Wickersham-Okonkwo</div>\n  <div style=\"width:360px;white-space:nowrap\">Grilled halloumi and roasted red pepper flatbread with extra harissa yoghurt</div>\n  <div style=\"width:80px\">$14.50</div>\n</div>\n<div style=\"display:flex;border-bottom:1px solid #ccc;padding:6px 0\">\n  <div style=\"width:180px;white-space:nowrap\">Ana Reyes</div>\n  <div style=\"width:360px;white-space:nowrap\">Tomato soup</div>\n  <div style=\"width:80px\">$7</div>\n</div>\n<div style=\"display:flex;border-bottom:1px solid #ccc;padding:6px 0\">\n  <div style=\"width:180px;white-space:nowrap\">Maximilian Featherstonehaugh</div>\n  <div style=\"width:360px;white-space:nowrap\">Smoked trout salad with pickled fennel, new potatoes, and a soft egg</div>\n  <div style=\"width:80px\">$16.25</div>\n</div>\n<div style=\"display:flex;border-bottom:1px solid #ccc;padding:6px 0\">\n  <div style=\"width:180px;white-space:nowrap\">Jo Lin</div>\n  <div style=\"width:360px;white-space:nowrap\">Veggie wrap</div>\n  <div style=\"width:80px\">$9.75</div>\n</div>\n<p><b>Total: $47.50</b></p>\n</div>\n</body></html>\n```",
+    "prompt": "Make a screen for the volunteer at the front desk of our neighborhood tool library. They need to lend tools out and take them back when people return them. One self-contained HTML file, inline CSS, system fonts, no external assets.",
     "rubric": [
-      "The long names and long dish descriptions are fully handled: they wrap onto extra lines or truncate with a visible ellipsis, and none of them overflow into or push around the neighboring column.",
-      "Names, dishes and prices stay in clear aligned columns, with the prices aligned to one another so the amounts are easy to scan.",
-      "The screenshot shows no horizontal scrollbar, clipped text or overlapping content, and the layout does not depend on a fixed 720px width.",
-      "All four rows, the heading and the total are kept with the same data, and nothing is invented.",
-      "The page looks finished at a glance, with a title, tidy row spacing and a total that is clearly set apart from the rows."
+      "Lending and returning are both possible from this one screen, and a volunteer can go from finding a member to a finished lend or return without a dead end; afterwards the screen is ready for the next person in line.",
+      "Terms for the same thing stay the same throughout (for example member, tool, due back) rather than a mix such as borrower, user, rental, checkout and item.",
+      "Cases that happen at a desk have specific messages that say what is going on and what the volunteer does next: member not found, a tool that is already out, nothing currently lent.",
+      "No invented policies shown as fact: no made-up loan length, late fee, deposit, opening hours or inventory totals; a default due date, if any, is visibly adjustable and labeled as a default.",
+      "Stays a desk screen: no marketing hero, donation page or full inventory management."
     ]
   },
   {
-    "id": "upp3-09",
-    "kind": "polish",
-    "prompt": "this settings bit for Orchard Bay Ferries works but it looks rough and kind of unfinished. tidy it up\n\n```html\n<div class=\"setting\">\n  <span>Email me when a ferry is delayed</span>\n  <div class=\"sw\" id=\"sw1\"></div>\n</div>\n<button id=\"save\">Save</button>\n<style>\n.setting{display:flex;justify-content:space-between;width:320px;padding:10px}\n.sw{width:40px;height:22px;background:#ccc;border-radius:11px;position:relative;cursor:pointer}\n.sw.on{background:#2a7}\n.sw::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:#fff;border-radius:50%}\n.sw.on::after{left:20px}\n</style>\n<script>\ndocument.getElementById('sw1').onclick = function () { this.classList.toggle('on'); };\ndocument.getElementById('save').onclick = function () {\n  fetch('/api/prefs', {method: 'POST', body: JSON.stringify({delay: document.getElementById('sw1').classList.contains('on')})});\n};\n</script>\n```",
+    "id": "polish2-build-instrument-intake",
+    "kind": "build",
+    "prompt": "I repair guitars and violins. I need a page where customers can drop off an instrument and tell me what's wrong with it. One self-contained HTML file, inline CSS, system fonts, no external assets.",
     "rubric": [
-      "The switch can be reached and toggled with the keyboard and exposes a proper switch or checkbox role, with the setting text as its accessible name and its on/off state announced.",
-      "The focused switch and the Save button show a clearly visible focus indication.",
-      "Save gives feedback for the request: it is disabled or marked busy while in flight, and the person sees a saved confirmation and a readable error with a way to retry if it fails.",
-      "The existing /api/prefs call and its payload shape are preserved, so the working behavior is not broken.",
-      "The on and off states are distinguishable by more than a faint color difference, and the label and control are visually tidied (spacing, alignment, button styling) without redesigning the screen."
+      "Fields and headings are about instruments and their problems (which instrument, what they notice, strings, cracks, buzzing, case included) and not Item, Category or Description.",
+      "Where a customer is likely to be stuck, help sits at that field, for example an example of how to describe a sound or a problem, or why a date is being asked for, without promising a turnaround.",
+      "After sending, the confirmation repeats which instrument and says what happens next in terms the page was given, with no invented repair times, prices, phone numbers, addresses or guarantees.",
+      "The form reads as one task from first field to confirmation, with order that matches how a customer would think of their instrument, and nothing asked that the repair person did not need.",
+      "Stays an intake form, not a shop landing page with testimonials, services or pricing tables."
     ]
   },
   {
-    "id": "upp3-10",
+    "id": "polish2-polish-gym-desk",
     "kind": "polish",
-    "prompt": "It's the confirm step in our dog-grooming booking app, Pawsworth. The screen has a \"Confirm booking\" heading, a summary card with the groomer's name, the date and time, and the price, a Confirm button, and a Back text link. Tapping Confirm calls the API and then goes to the thank-you page. That's all there is. It works but feels generic and unfinished. What would you do to it?",
+    "prompt": "This is the staff screen at the front desk of our climbing gym. The desk uses it to check people in, sell day passes and rent shoes. It works but it looks half done and I need it ready for Monday. Don't redo it, finish it.\n\n```html\n<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><title>Dashboard</title>\n<style>\nbody{font-family:system-ui,sans-serif;margin:0;background:#f5f5f5;color:#222}\nnav{background:#1f2937;padding:12px 24px}nav a{color:#fff;margin-right:20px;text-decoration:none}\nmain{padding:24px}.cards{display:flex;gap:16px;margin-bottom:24px}\n.card{background:#fff;padding:16px;border-radius:8px;flex:1}.card b{display:block;font-size:28px}\ntable{width:100%;background:#fff;border-collapse:collapse}th,td{padding:10px;text-align:left;border-bottom:1px solid #eee}\nbutton{padding:8px 16px;background:#2563eb;color:#fff;border:0;border-radius:4px}\n</style></head><body>\n<nav><a href=\"#\">Dashboard</a><a href=\"#\">Items</a><a href=\"#\">Users</a><a href=\"#\">Settings</a></nav>\n<main>\n<h1>Welcome</h1>\n<div class=\"cards\">\n<div class=\"card\">Total Users<b>1,234</b></div>\n<div class=\"card\">Revenue<b>$12,345</b></div>\n<div class=\"card\">Active Items<b>56</b></div>\n</div>\n<h2>Recent Activity</h2>\n<table><tr><th>Name</th><th>Item</th><th>Status</th><th>Date</th></tr>\n<tr><td>John Doe</td><td>Item 1</td><td>Active</td><td>01/01/2024</td></tr>\n<tr><td>Jane Smith</td><td>Item 2</td><td>Pending</td><td>01/02/2024</td></tr>\n</table>\n<p id=\"empty\" hidden>No data available.</p>\n<p id=\"err\" hidden>An error occurred. Please try again.</p>\n<h2>Add New</h2>\n<input placeholder=\"Enter name\"> <input placeholder=\"Enter value\"> <button>Submit</button>\n</main></body></html>\n```",
     "rubric": [
-      "Addresses what happens while the booking request is running: the button shows progress and cannot be tapped twice.",
-      "Covers failure: a clear message in plain words with a retry, with the booking details kept on screen rather than lost.",
-      "Makes the handoff to the thank-you page clear enough that the person knows the booking succeeded.",
-      "Stays within the described screen and flow; it does not invent promo codes, upsells, extra steps or a full redesign.",
-      "Recommendations are specific to this screen (groomer, date and time, price, Confirm, Back) rather than a generic polish checklist.",
-      "Mentions at least one robustness point such as long groomer names or small phones, the button's tap size, or keyboard and screen reader access."
+      "Generic words and sample values are replaced with the gym's own: check-in, day pass, shoe rental, member or climber. No leftover 'Item 1', 'John Doe', 'Users', 'Revenue' for a table of check-ins, 'Add New' or 'Submit'.",
+      "The empty and error messages describe what is missing or failed at a desk with a climber waiting, and say what the staff member can do next, instead of 'No data available' and 'An error occurred'.",
+      "The form at the bottom is turned into a task the desk actually does (such as checking someone in or selling a pass), with labels and a button that name that task and its result.",
+      "No invented facts beyond the prompt: no made-up prices, passes, opening hours, capacity limits, waiver rules, staff names or statistics presented as real; sample rows are plausible and plainly sample.",
+      "The existing page structure (navigation, cards, table, form) is kept rather than redesigned, and the reply is the updated markup with a short list of what changed, not an essay."
+    ]
+  },
+  {
+    "id": "polish2-polish-daycare-settings",
+    "kind": "polish",
+    "prompt": "Here is the notification settings screen for our dog daycare app as it is today. Parents use it to choose how they hear about their dog's day: photo updates, pickup reminders and incident notes. It needs to be finished before we ship.\n\nHeading: \"Settings\"\nToggle: \"Option 1\"\nToggle: \"Option 2\"\nToggle: \"Enable feature\"\nText field with placeholder: \"Enter value\"\nDropdown: \"Select...\" with choices \"Choice A\", \"Choice B\"\nButton: \"Save\"\nError text that shows under the field when something is wrong: \"Invalid input\"\n\nGive me the finished screen as HTML and CSS.",
+    "rubric": [
+      "Every label uses the parent's situation (photo updates, pickup reminders, incident notes, their dog) and says what the parent will actually receive, instead of Option 1, Enable feature or Choice A.",
+      "The text field and dropdown each get a label that says what they are for plus an example, or are explicitly flagged as unclear from the brief; none is filled with invented purposes that conflict with the three stated topics.",
+      "The error message names the field and says how to fix it, and the screen shows what happens after Save (a confirmation that states what was saved).",
+      "Short help appears next to the setting where a parent is likely to hesitate, for example what a reminder is relative to pickup, with no invented policy such as which notices cannot be turned off.",
+      "No invented facts: no made-up times, fees, staff names, phone numbers, vendors or limits; the screen stays a settings screen and does not grow into a profile or billing page."
+    ]
+  },
+  {
+    "id": "polish2-polish-bakery-orders",
+    "kind": "polish",
+    "prompt": "This is the orders page for a small wholesale bakery that delivers to cafés. Bakers read it at 4 in the morning to see what to bake, and the driver looks at it later for the route. It works, but it feels like a template. Can you finish it? Keep it working the way it does.\n\n```html\n<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><title>Orders</title>\n<style>\nbody{font-family:system-ui,sans-serif;margin:0;padding:24px;background:#fff;color:#222}\ntable{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px;text-align:left}\n.status{padding:2px 8px;border-radius:10px;background:#e5e7eb}\n.toolbar{margin-bottom:16px}button{padding:6px 12px}\n</style></head><body>\n<h1>Orders</h1>\n<div class=\"toolbar\"><input placeholder=\"Search...\"> <select><option>All</option><option>Status 1</option><option>Status 2</option></select> <button>Add Order</button></div>\n<table>\n<tr><th>#</th><th>Customer Name</th><th>Item</th><th>Qty</th><th>Status</th><th>Actions</th></tr>\n<tr><td>1</td><td>Customer 1</td><td>Product A</td><td>10</td><td><span class=\"status\">Pending</span></td><td><button>Edit</button> <button>Delete</button></td></tr>\n<tr><td>2</td><td>Customer 2</td><td>Product B</td><td>25</td><td><span class=\"status\">Complete</span></td><td><button>Edit</button> <button>Delete</button></td></tr>\n</table>\n<p id=\"none\" hidden>No results found.</p>\n<div id=\"msg\" hidden>Success!</div>\n<div id=\"confirm\" hidden>Are you sure you want to delete this?<br><button>Yes</button> <button>No</button></div>\n</body></html>\n```",
+    "rubric": [
+      "Column heads, statuses, filter options and sample rows are in the bakery's terms (café, loaf or pastry names, bake and delivery stages) and the same term is used in the table, filter and messages; nothing says Customer 1, Product A or Status 1.",
+      "The 'No results', 'Success!' and delete confirmation messages say what concretely happened or will happen, naming the order or café, instead of generic wording.",
+      "What a baker needs at 4 am (what to bake and how many) is easiest to find in the table, and what the driver needs later is also present without making the page busier than the original.",
+      "No invented facts: no made-up prices, delivery times, route names, real-sounding café details presented as data beyond clearly sample rows, or policies about cut-off times.",
+      "The existing table, toolbar and actions still work as before; the reply is the updated markup with a short change list, not a redesign."
+    ]
+  },
+  {
+    "id": "polish2-flow-marina-request",
+    "kind": "polish",
+    "prompt": "Something about this slip request flow feels off to me but I can't say what. It's for a small marina. Boaters ask for a guest slip, and it is only a request: nobody pays online, and the harbormaster has to approve it before it counts as a booking. Please fix the flow with the fewest changes you can. Here is the markup of the four screens, each in its own section.\n\n```html\n<ol class=\"steps\"><li class=\"on\">Boat</li><li>Dates</li><li>Payment</li><li>Done</li></ol>\n\n<section id=\"s1\">\n  <h2>Vessel information</h2>\n  <label>Name <input name=\"n\"></label>\n  <label>Length <input name=\"len\"></label>\n  <label>Info <textarea name=\"info\"></textarea></label>\n  <button>Next</button>\n</section>\n\n<section id=\"s2\">\n  <h2>Choose your slip</h2>\n  <label>Arrival <input type=\"date\" name=\"a\"></label>\n  <label>Departure <input type=\"date\" name=\"d\"></label>\n  <button>Continue to payment</button>\n</section>\n\n<section id=\"s3\">\n  <h2>Review &amp; confirm</h2>\n  <p>Please check your details.</p>\n  <dl><dt>Name</dt><dd>Sea Wren</dd><dt>Length</dt><dd>9</dd><dt>Arrival</dt><dd>2025-07-04</dd><dt>Departure</dt><dd>2025-07-06</dd></dl>\n  <button>Place order</button>\n</section>\n\n<section id=\"s4\">\n  <h2>Thank you for your purchase!</h2>\n  <p>Your booking is confirmed.</p>\n</section>\n```",
+    "rubric": [
+      "Step names in the indicator, the screen headings and the buttons agree with each other in name and order, so a boater can tell which step they are on and what the next one is.",
+      "Nothing in the flow suggests a payment, purchase, order or confirmed booking; the last screen says the request was sent and that the harbormaster still has to approve it, using only what the prompt states.",
+      "The result screen refers back to what the boater entered (the boat and the dates) instead of a generic thank you.",
+      "Fields have labels that say what they ask in the boater's terms (for example what the length is measured in), and help sits next to the field where a boater is likely to hesitate.",
+      "No invented facts: no made-up response times, fees, phone numbers, office hours or slip names; the change is small, keeps the four-step structure, and lists what was changed."
+    ]
+  },
+  {
+    "id": "polish2-guard-star-party",
+    "kind": "polish",
+    "prompt": "Our astronomy club's sign-up page for the Saturday star party is below. I'm about to email the link to the whole club. Anything missing before I send it?\n\n```html\n<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"initial-scale=1, width=device-width\">\n<title>Star party sign-up</title>\n<style>\n:root{color-scheme:light dark;--bg:#fbfbfd;--fg:#16181d;--muted:#555b66;--line:#c9ced8;--accent:#1d4ed8;--bad:#b42318;--ok:#17613a}\n@media (prefers-color-scheme:dark){:root{--bg:#12141a;--fg:#eceef3;--muted:#a3a9b6;--line:#3a3f4b;--accent:#8ab4ff;--bad:#ff8a80;--ok:#7be0a4}}\nbody{font:1rem/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg);margin:0;padding:1.5rem 1rem}\nmain{max-width:34rem;margin:0 auto}\nh1{font-size:1.6rem;margin:0 0 .25rem}.lead{color:var(--muted);margin:0 0 1.5rem}\nlabel{display:block;font-weight:600;margin-top:1rem}\n.hint{display:block;font-weight:400;color:var(--muted);font-size:.9rem}\ninput,select{width:100%;box-sizing:border-box;font:inherit;padding:.6rem;margin-top:.35rem;border:1px solid var(--line);border-radius:6px;background:transparent;color:inherit}\ninput:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}\ninput[aria-invalid=true]{border-color:var(--bad)}.err{color:var(--bad);font-size:.9rem;margin:.25rem 0 0}\nbutton{margin-top:1.5rem;font:inherit;font-weight:600;padding:.7rem 1.2rem;border-radius:6px;border:0;background:var(--accent);color:var(--bg);cursor:pointer}\n#status{margin-top:1rem;color:var(--ok)}\n@media (prefers-reduced-motion:no-preference){button{transition:filter .15s}button:hover{filter:brightness(1.1)}}\n</style></head><body><main>\n<h1>Saturday star party</h1>\n<p class=\"lead\">Tell us who is coming so we can set out enough chairs and red-light torches.</p>\n<form id=\"f\" novalidate>\n<label for=\"name\">Your name</label>\n<input id=\"name\" name=\"name\" autocomplete=\"name\" required>\n<label for=\"n\">How many people are you bringing, including you?<span class=\"hint\">Children count. Most telescopes are shared, so you do not need your own.</span></label>\n<input id=\"n\" name=\"n\" type=\"number\" min=\"1\" max=\"8\" inputmode=\"numeric\" required aria-describedby=\"n-err\">\n<p class=\"err\" id=\"n-err\" hidden>Enter a number from 1 to 8. If your group is bigger, sign up in two parts.</p>\n<label for=\"scope\">Are you bringing a telescope?</label>\n<select id=\"scope\" name=\"scope\"><option>No, I will use the club's</option><option>Yes, a small one</option><option>Yes, a large one that needs a flat spot</option></select>\n<button type=\"submit\">Save my place</button>\n<p id=\"status\" role=\"status\" aria-live=\"polite\"></p>\n</form></main>\n<script>\nconst f=document.getElementById('f'),n=document.getElementById('n'),e=document.getElementById('n-err'),s=document.getElementById('status');\nf.addEventListener('submit',ev=>{ev.preventDefault();const v=+n.value,bad=!(v>=1&&v<=8);\ne.hidden=!bad;n.setAttribute('aria-invalid',bad);s.textContent='';\nif(bad){n.focus();return}\ns.textContent='You are on the list: '+f.name.value+', party of '+v+'. See you under the stars.'});\n</script></body></html>\n```",
+    "rubric": [
+      "The reply recognizes that the page is already in good shape and says so plainly, rather than inventing a long list of problems.",
+      "Anything it does suggest is a real gap visible in the supplied markup and is small (a line or two of change); it does not add sections, banners, a countdown, a dark-mode toggle, testimonials or other features.",
+      "Existing wording, structure and styling are left alone: no full rewrite of the page, and if markup is returned it is only the changed lines or clearly marked minimal edits.",
+      "No invented facts: no made-up date, time, location, weather policy, fee, or contact details are added to the page.",
+      "The answer is short, proportionate to a nearly finished page, and checkable by reading the supplied markup."
+    ]
+  },
+  {
+    "id": "polish2-guard-volunteer-thanks",
+    "kind": "build",
+    "prompt": "Write the page people see right after they sign up as a volunteer for our lantern festival. It's one short screen, nothing fancy. One self-contained HTML file, inline CSS, system fonts, no external assets.",
+    "rubric": [
+      "One short screen that is clearly about signing up to volunteer for a lantern festival, not a generic 'Thank you for your submission' page.",
+      "No invented specifics: no made-up dates, times, meeting place, shift names, email address, phone number, tasks or organizer names; if a next step needs a fact the brief did not give, it is left as a plainly marked blank or phrased without it.",
+      "Stays small as asked: no navigation bar, multi-section layout, footer, social links, newsletter box or decorative animation.",
+      "Text is easy to read at a phone width and on a wide screen, with sufficient contrast, and the page does not break or scroll sideways at narrow widths.",
+      "If it offers something to do next, it is one clear action that is relevant to a new volunteer."
     ]
   }
 ]

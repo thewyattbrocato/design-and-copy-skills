@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hive inspection log</title>
+<style>
+  :root {
+    --bg: #faf6ec;
+    --card: #fffdf7;
+    --ink: #2b2417;
+    --muted: #6b5f48;
+    --line: #cdbf9f;
+    --honey: #e0a21b;
+    --honey-dark: #7a5200;
+    --accent: #5a3d00;
+    --warn-bg: #fdecc8;
+    --err: #a3231a;
+    --ok: #2f6b2f;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 1rem 1rem 4rem; }
+  header { border-bottom: 4px solid var(--honey); margin-bottom: 1.25rem; padding-bottom: .5rem; }
+  h1 { font-size: 1.6rem; margin: .5rem 0 0; }
+  header p { margin: .25rem 0 0; color: var(--muted); }
+  h2 { font-size: 1.2rem; margin: 0 0 .75rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .row { display: grid; gap: .75rem 1rem; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 30rem) { .row { grid-template-columns: 1fr; } }
+  .field { margin-bottom: 1rem; min-width: 0; }
+  label, legend { display: block; font-weight: 600; margin-bottom: .25rem; padding: 0; }
+  .hint { color: var(--muted); font-size: .875rem; font-weight: 400; }
+  fieldset { border: 0; margin: 0 0 1rem; padding: 0; min-width: 0; }
+  input[type=text], input[type=number], input[type=datetime-local], select, textarea {
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #8a7b57;
+    border-radius: 6px;
+    padding: .55rem .65rem;
+    min-height: 2.75rem;
+  }
+  textarea { min-height: 7rem; resize: vertical; }
+  .choices { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .choices label {
+    display: inline-flex; align-items: center; gap: .45rem;
+    margin: 0; font-weight: 400;
+    border: 1px solid #8a7b57; border-radius: 6px; background: #fff;
+    padding: .5rem .75rem; min-height: 2.75rem; cursor: pointer;
+  }
+  .choices label:has(input:checked) { background: var(--warn-bg); border-color: var(--honey-dark); font-weight: 600; }
+  .choices label:has(input:focus-visible) { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .choices input { width: 1.15rem; height: 1.15rem; accent-color: var(--accent); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  button {
+    font: inherit; min-height: 2.75rem; padding: .5rem 1rem;
+    border-radius: 6px; border: 1px solid var(--accent);
+    background: #fff; color: var(--accent); cursor: pointer; font-weight: 600;
+  }
+  button.primary { background: var(--accent); color: #fff; }
+  button:disabled { opacity: .6; cursor: not-allowed; }
+  .error { color: var(--err); font-weight: 600; margin: .3rem 0 0; }
+  input[aria-invalid=true] { border-color: var(--err); border-width: 2px; }
+  .actions { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; }
+  #status { margin: .75rem 0 0; font-weight: 600; color: var(--ok); min-height: 1.5em; }
+  .banner { background: var(--warn-bg); border: 1px solid var(--honey-dark); border-radius: 8px; padding: .6rem .8rem; margin-bottom: 1rem; }
+  .toolbar { display: flex; gap: .75rem; flex-wrap: wrap; align-items: end; margin-bottom: 1rem; }
+  .toolbar .field { margin: 0; flex: 1 1 10rem; }
+  ul.log { list-style: none; padding: 0; margin: 0; }
+  .entry { border-top: 1px solid var(--line); padding: .9rem 0; }
+  .entry:first-child { border-top: 0; }
+  .entry h3 { margin: 0; font-size: 1.05rem; overflow-wrap: anywhere; }
+  .entry time { color: var(--muted); font-size: .9rem; }
+  .entry dl { margin: .5rem 0 0; display: grid; grid-template-columns: max-content 1fr; gap: .15rem .75rem; }
+  .entry dt { color: var(--muted); }
+  .entry dd { margin: 0; overflow-wrap: anywhere; }
+  .entry .notes { margin: .5rem 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+  .tag { border: 1px solid var(--line); border-radius: 999px; padding: .1rem .6rem; font-size: .875rem; background: #fff; }
+  .tag.alert { background: var(--warn-bg); border-color: var(--honey-dark); font-weight: 600; }
+  .entry-head { display: flex; justify-content: space-between; gap: .75rem; align-items: start; }
+  .empty { text-align: center; color: var(--muted); padding: 1.5rem .5rem; }
+  .empty strong { display: block; color: var(--ink); font-size: 1.05rem; margin-bottom: .25rem; }
+  #undoBar {
+    position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%);
+    width: calc(100% - 2rem); max-width: 28rem;
+    background: var(--ink); color: #fff; border-radius: 8px; padding: .6rem .8rem;
+    display: flex; gap: .75rem; align-items: center; justify-content: space-between;
+  }
+  #undoBar[hidden] { display: none; }
+  #undoBar button { background: #fff; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Hive inspection log</h1>
+    <p>Jot down what you saw each time you open a hive. Saved on this device only.</p>
+  </header>
+
+  <div id="storageWarn" class="banner" role="alert" hidden>
+    This browser won't let the page save entries. What you log will be lost when you close or reload the page, so use Export before you leave.
+  </div>
+
+  <form id="form" class="card" novalidate aria-labelledby="formTitle">
+    <h2 id="formTitle">New inspection</h2>
+
+    <div class="row">
+      <div class="field">
+        <label for="hive">Hive <span class="hint">(pick or type a name)</span></label>
+        <input type="text" id="hive" name="hive" list="hiveList" autocomplete="off" required aria-describedby="hiveErr" maxlength="60">
+        <datalist id="hiveList"></datalist>
+        <p class="error" id="hiveErr" hidden></p>
+      </div>
+      <div class="field">
+        <label for="when">Date and time</label>
+        <input type="datetime-local" id="when" name="when" required aria-describedby="whenErr">
+        <p class="error" id="whenErr" hidden></p>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>Queen</legend>
+      <div class="choices">
+        <label><input type="radio" name="queen" value="Queen seen"> Queen seen</label>
+        <label><input type="radio" name="queen" value="Eggs only"> Eggs only</label>
+        <label><input type="radio" name="queen" value="No sign of queen"> No sign of queen</label>
+        <label><input type="radio" name="queen" value="Not checked"> Not checked</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Brood pattern</legend>
+      <div class="choices">
+        <label><input type="radio" name="brood" value="Solid"> Solid</label>
+        <label><input type="radio" name="brood" value="Spotty"> Spotty</label>
+        <label><input type="radio" name="brood" value="No brood"> No brood</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Temperament</legend>
+      <div class="choices">
+        <label><input type="radio" name="temper" value="Calm"> Calm</label>
+        <label><input type="radio" name="temper" value="Touchy"> Touchy</label>
+        <label><input type="radio" name="temper" value="Defensive"> Defensive</label>
+      </div>
+    </fieldset>
+
+    <div class="row">
+      <div class="field">
+        <label for="frames">Frames covered in bees <span class="hint">(optional)</span></label>
+        <input type="number" id="frames" name="frames" min="0" max="60" step="1" inputmode="numeric" aria-describedby="framesErr">
+        <p class="error" id="framesErr" hidden></p>
+      </div>
+      <fieldset>
+        <legend>Honey stores</legend>
+        <div class="choices">
+          <label><input type="radio" name="stores" value="Low"> Low</label>
+          <label><input type="radio" name="stores" value="Okay"> Okay</label>
+          <label><input type="radio" name="stores" value="Plenty"> Plenty</label>
+        </div>
+      </fieldset>
+    </div>
+
+    <fieldset>
+      <legend>Problems spotted <span class="hint">(tick any)</span></legend>
+      <div class="choices" id="problems">
+        <label><input type="checkbox" name="problem" value="Varroa"> Varroa</label>
+        <label><input type="checkbox" name="problem" value="Small hive beetle"> Small hive beetle</label>
+        <label><input type="checkbox" name="problem" value="Wax moth"> Wax moth</label>
+        <label><input type="checkbox" name="problem" value="Disease signs"> Disease signs</label>
+        <label><input type="checkbox" name="problem" value="Queen cells"> Queen cells</label>
+        <label><input type="checkbox" name="problem" value="Swarm cells"> Swarm cells</label>
+        <label><input type="checkbox" name="problem" value="Robbing"> Robbing</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>What I did <span class="hint">(tick any)</span></legend>
+      <div class="choices">
+        <label><input type="checkbox" name="did" value="Added super"> Added super</label>
+        <label><input type="checkbox" name="did" value="Fed syrup"> Fed syrup</label>
+        <label><input type="checkbox" name="did" value="Treated"> Treated</label>
+        <label><input type="checkbox" name="did" value="Split"> Split</label>
+        <label><input type="checkbox" name="did" value="Requeened"> Requeened</label>
+        <label><input type="checkbox" name="did" value="Removed honey"> Removed honey</label>
+      </div>
+    </fieldset>
+
+    <div class="field">
+      <label for="notes">Notes <span class="hint">(optional)</span></label>
+      <textarea id="notes" name="notes" maxlength="3000" placeholder="Anything else: smell, flight traffic, what to check next time"></textarea>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="primary">Save inspection</button>
+      <button type="button" id="clearForm">Clear form</button>
+    </div>
+    <p id="status" role="status" aria-live="polite"></p>
+  </form>
+
+  <section aria-labelledby="logTitle" class="card">
+    <h2 id="logTitle">Past inspections</h2>
+    <div class="toolbar">
+      <div class="field">
+        <label for="filter">Show hive</label>
+        <select id="filter"><option value="">All hives</option></select>
+      </div>
+      <button type="button" id="export">Export backup</button>
+    </div>
+    <p id="count" class="hint" aria-live="polite"></p>
+    <ul class="log" id="log"></ul>
+    <div class="empty" id="empty" hidden></div>
+  </section>
+</div>
+
+<div id="undoBar" role="status" hidden>
+  <span id="undoMsg"></span>
+  <button type="button" id="undoBtn">Undo</button>
+</div>
+
+<script>
+(function () {
+  var KEY = "hive-inspections-v1";
+  var entries = [];
+  var persist = true;
+  var undoItem = null, undoTimer = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("form");
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      entries = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(entries)) entries = [];
+    } catch (e) {
+      entries = [];
+      if (e instanceof SyntaxError) {
+        persist = true;
+      } else {
+        persist = false;
+      }
+    }
+    try { localStorage.setItem(KEY + "-t", "1"); localStorage.removeItem(KEY + "-t"); }
+    catch (e) { persist = false; }
+    $("storageWarn").hidden = persist;
+  }
+  function save() {
+    if (!persist) return false;
+    try { localStorage.setItem(KEY, JSON.stringify(entries)); return true; }
+    catch (e) { persist = false; $("storageWarn").hidden = false; return false; }
+  }
+
+  function nowLocal() {
+    var d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 16);
+  }
+  function fmt(iso) {
+    var d = new Date(iso);
+    if (isNaN(d)) return iso || "";
+    return d.toLocaleString([], { weekday: "short", month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+
+  // hive suggestions: Hive 1-12 plus any names used before
+  function hiveNames() {
+    var set = {}, list = [], i;
+    for (i = 1; i <= 12; i++) { set["Hive " + i] = 1; list.push("Hive " + i); }
+    entries.forEach(function (e) { if (!set[e.hive]) { set[e.hive] = 1; list.push(e.hive); } });
+    return list;
+  }
+  function renderHiveLists() {
+    var names = hiveNames();
+    var dl = $("hiveList"); dl.textContent = "";
+    names.forEach(function (n) { var o = document.createElement("option"); o.value = n; dl.appendChild(o); });
+    var sel = $("filter"), cur = sel.value;
+    sel.textContent = "";
+    var all = document.createElement("option"); all.value = ""; all.textContent = "All hives"; sel.appendChild(all);
+    var used = {};
+    entries.forEach(function (e) { used[e.hive] = 1; });
+    names.filter(function (n) { return used[n]; }).forEach(function (n) {
+      var o = document.createElement("option"); o.value = n; o.textContent = n; sel.appendChild(o);
+    });
+    sel.value = used[cur] ? cur : "";
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function render() {
+    renderHiveLists();
+    var f = $("filter").value;
+    var shown = entries.filter(function (e) { return !f || e.hive === f; });
+    shown.sort(function (a, b) { return a.when < b.when ? 1 : a.when > b.when ? -1 : 0; });
+    var ul = $("log"); ul.textContent = "";
+    var empty = $("empty"); empty.textContent = "";
+
+    if (!shown.length) {
+      empty.hidden = false;
+      if (!entries.length) {
+        empty.appendChild(el("strong", null, "No inspections logged yet"));
+        empty.appendChild(el("span", null, "Open a hive, then fill in the form above and save. Your entries will show up here, newest first."));
+      } else {
+        empty.appendChild(el("strong", null, "Nothing logged for " + f));
+        var b = el("button", null, "Show all hives");
+        b.type = "button";
+        b.addEventListener("click", function () { $("filter").value = ""; render(); $("filter").focus(); });
+        empty.appendChild(b);
+      }
+      $("count").textContent = "";
+      return;
+    }
+    empty.hidden = true;
+    $("count").textContent = shown.length + (shown.length === 1 ? " inspection" : " inspections") + (f ? " for " + f : "");
+
+    shown.forEach(function (e) {
+      var li = el("li", "entry");
+      var head = el("div", "entry-head");
+      var left = el("div");
+      left.appendChild(el("h3", null, e.hive));
+      var t = el("time", null, fmt(e.when)); t.setAttribute("datetime", e.when);
+      left.appendChild(t);
+      head.appendChild(left);
+      var del = el("button", null, "Delete");
+      del.type = "button";
+      del.setAttribute("aria-label", "Delete inspection of " + e.hive + ", " + fmt(e.when));
+      del.addEventListener("click", function () { remove(e.id); });
+      head.appendChild(del);
+      li.appendChild(head);
+
+      var dl = el("dl");
+      [["Queen", e.queen], ["Brood", e.brood], ["Temperament", e.temper],
+       ["Bees cover", e.frames !== "" && e.frames != null ? e.frames + (Number(e.frames) === 1 ? " frame" : " frames") : ""],
+       ["Honey stores", e.stores]].forEach(function (p) {
+        if (!p[1]) return;
+        dl.appendChild(el("dt", null, p[0]));
+        dl.appendChild(el("dd", null, p[1]));
+      });
+      if (dl.children.length) li.appendChild(dl);
+
+      var tags = el("div", "tags");
+      var alerting = { "Swarm cells": 1, "Disease signs": 1, "Varroa": 1, "Small hive beetle": 1, "Robbing": 1 };
+      (e.problems || []).forEach(function (p) {
+        tags.appendChild(el("span", "tag" + (alerting[p] ? " alert" : ""), "Problem: " + p));
+      });
+      (e.did || []).forEach(function (d) { tags.appendChild(el("span", "tag", "Did: " + d)); });
+      if (tags.children.length) li.appendChild(tags);
+
+      if (e.notes) li.appendChild(el("p", "notes", e.notes));
+      ul.appendChild(li);
+    });
+  }
+
+  function showErr(inputId, errId, msg) {
+    var i = $(inputId), p = $(errId);
+    if (msg) { p.textContent = msg; p.hidden = false; i.setAttribute("aria-invalid", "true"); }
+    else { p.textContent = ""; p.hidden = true; i.removeAttribute("aria-invalid"); }
+  }
+
+  function radio(name) {
+    var r = form.querySelector('input[name="' + name + '"]:checked');
+    return r ? r.value : "";
+  }
+  function checks(name) {
+    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (c) { return c.value; });
+  }
+
+  function resetForm(keepHive) {
+    var hive = $("hive").value;
+    form.reset();
+    $("when").value = nowLocal();
+    if (keepHive) $("hive").value = hive;
+    showErr("hive", "hiveErr", ""); showErr("when", "whenErr", ""); showErr("frames", "framesErr", "");
+  }
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    $("status").textContent = "";
+    var hive = $("hive").value.trim();
+    var when = $("when").value;
+    var frames = $("frames").value;
+    var first = null;
+
+    if (!hive) { showErr("hive", "hiveErr", "Enter which hive you inspected, for example Hive 4."); first = first || $("hive"); }
+    else showErr("hive", "hiveErr", "");
+    if (!when) { showErr("when", "whenErr", "Enter the date and time you opened the hive."); first = first || $("when"); }
+    else showErr("when", "whenErr", "");
+    if (frames !== "" && (isNaN(Number(frames)) || Number(frames) < 0 || Number(frames) > 60 || Math.floor(Number(frames)) !== Number(frames))) {
+      showErr("frames", "framesErr", "Use a whole number of frames from 0 to 60, or leave it blank.");
+      first = first || $("frames");
+    } else showErr("frames", "framesErr", "");
+    if (first) { first.focus(); return; }
+
+    var entry = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      hive: hive, when: when,
+      queen: radio("queen"), brood: radio("brood"), temper: radio("temper"),
+      frames: frames, stores: radio("stores"),
+      problems: checks("problem"), did: checks("did"),
+      notes: $("notes").value.trim()
+    };
+    entries.push(entry);
+    var ok = save();
+    resetForm(false);
+    render();
+    var st = $("status");
+    st.style.color = ok ? "" : "var(--err)";
+    st.textContent = ok
+      ? "Saved inspection of " + hive + "."
+      : "Added " + hive + " to the list, but it could not be stored on this device. Use Export backup before leaving.";
+    $("hive").focus();
+  });
+
+  $("clearForm").addEventListener("click", function () {
+    resetForm(false);
+    $("status").textContent = "";
+    $("hive").focus();
+  });
+
+  function hideUndo() {
+    clearTimeout(undoTimer); undoTimer = null; undoItem = null;
+    $("undoBar").hidden = true;
+  }
+  function remove(id) {
+    var idx = -1;
+    entries.forEach(function (e, i) { if (e.id === id) idx = i; });
+    if (idx < 0) return;
+    undoItem = { entry: entries[idx], index: idx };
+    entries.splice(idx, 1);
+    save();
+    render();
+    $("undoMsg").textContent = "Deleted inspection of " + undoItem.entry.hive + ".";
+    $("undoBar").hidden = false;
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(hideUndo, 8000);
+    // keep keyboard focus somewhere sensible
+    var btn = $("log").querySelector("button");
+    (btn || $("hive")).focus();
+  }
+  $("undoBtn").addEventListener("click", function () {
+    if (!undoItem) return;
+    entries.splice(Math.min(undoItem.index, entries.length), 0, undoItem.entry);
+    save();
+    hideUndo();
+    render();
+  });
+
+  $("filter").addEventListener("change", render);
+
+  $("export").addEventListener("click", function () {
+    if (!entries.length) {
+      $("count").textContent = "Nothing to export yet. Save an inspection first.";
+      return;
+    }
+    var blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "hive-inspections-" + nowLocal().slice(0, 10) + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  load();
+  $("when").value = nowLocal();
+  render();
+})();
+</script>
+</body>
+</html>

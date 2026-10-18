@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instrument Repair Drop-Off</title>
+<style>
+  :root {
+    --bg: #f5efe4;
+    --paper: #fffdf8;
+    --ink: #2b211a;
+    --muted: #6d5d50;
+    --line: #d9ccb8;
+    --accent: #8a3b12;
+    --accent-ink: #fff;
+    --focus: #1d5fa8;
+    --ok: #2f6b3a;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1612;
+      --paper: #261e18;
+      --ink: #f0e6d8;
+      --muted: #b4a492;
+      --line: #4a3d32;
+      --accent: #e0905a;
+      --accent-ink: #1c1612;
+      --focus: #7db4ee;
+      --ok: #8fcf9a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 var(--sans);
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { margin-bottom: 24px; }
+  header .kicker {
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin: 0 0 6px;
+  }
+  h1 { font: 700 clamp(28px, 6vw, 40px)/1.15 var(--serif); margin: 0 0 8px; }
+  header p { margin: 0; color: var(--muted); max-width: 56ch; }
+  form, .ticket {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 24px 24px;
+  }
+  fieldset { border: 0; border-top: 1px solid var(--line); margin: 0; padding: 20px 0 4px; }
+  fieldset:first-of-type { border-top: 0; }
+  legend { font: 700 20px var(--serif); padding: 0; margin-bottom: 12px; float: left; width: 100%; }
+  legend + * { clear: both; }
+  .grid { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+  .full { grid-column: 1 / -1; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } form, .ticket { padding: 4px 16px 20px; } }
+  label.f { display: block; font-size: 14px; font-weight: 600; }
+  label.f span.opt { font-weight: 400; color: var(--muted); }
+  input[type=text], input[type=tel], input[type=email], input[type=date], select, textarea {
+    display: block; width: 100%; margin-top: 4px;
+    font: inherit; color: var(--ink); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .choices { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+  .choice {
+    display: flex; gap: 10px; align-items: center;
+    border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px;
+    background: var(--bg); cursor: pointer; font-size: 15px;
+  }
+  .choice:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .choice input { accent-color: var(--accent); width: 18px; height: 18px; margin: 0; flex: none; }
+  .hint { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  button, .btn {
+    font: 600 16px var(--sans); cursor: pointer; text-decoration: none;
+    border-radius: 6px; padding: 12px 20px; border: 1px solid var(--accent);
+    background: var(--accent); color: var(--accent-ink); display: inline-block;
+  }
+  button.secondary, .btn.secondary { background: transparent; color: var(--accent); }
+  button:hover, .btn:hover { filter: brightness(1.08); }
+  .error { color: #b3261e; font-size: 14px; margin: 4px 0 0; }
+  @media (prefers-color-scheme: dark) { .error { color: #ff9a92; } }
+  .ticket { display: none; padding-top: 24px; }
+  .ticket h2 { font: 700 26px var(--serif); margin: 0 0 4px; }
+  .ticket .id { color: var(--muted); margin: 0 0 16px; }
+  .ticket dl { margin: 0; display: grid; grid-template-columns: 140px 1fr; gap: 8px 16px; }
+  .ticket dt { color: var(--muted); font-size: 14px; }
+  .ticket dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .ticket .note { margin-top: 18px; padding: 12px 14px; border-left: 4px solid var(--ok); background: var(--bg); font-size: 15px; }
+  .status { color: var(--ok); font-weight: 600; min-height: 1.5em; margin: 10px 0 0; }
+  @media (max-width: 560px) { .ticket dl { grid-template-columns: 1fr; gap: 2px; } .ticket dd { margin-bottom: 10px; } }
+  @media print {
+    body { background: #fff; color: #000; }
+    form, header, .actions, .status { display: none !important; }
+    .ticket { display: block !important; border: 2px solid #000; background: #fff; }
+    .ticket dt, .ticket .id { color: #333; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">Guitar &amp; Violin Repair</p>
+    <h1>Drop-off form</h1>
+    <p>Tell me about your instrument and what's wrong with it. The more detail you give, the better I can quote and plan the work. When you're done you'll get a ticket to print or send, and I'll bring it up when you hand the instrument over.</p>
+  </header>
+
+  <form id="form" novalidate>
+    <fieldset>
+      <legend>You</legend>
+      <div class="grid">
+        <label class="f">Name
+          <input type="text" id="name" autocomplete="name" required>
+          <p class="error" id="name-err" hidden>Please enter your name.</p>
+        </label>
+        <label class="f">Phone
+          <input type="tel" id="phone" autocomplete="tel" required>
+          <p class="error" id="phone-err" hidden>Please enter a phone number.</p>
+        </label>
+        <label class="f full">Email <span class="opt">(optional)</span>
+          <input type="email" id="email" autocomplete="email">
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>The instrument</legend>
+      <div class="grid">
+        <label class="f">Type
+          <select id="type" required>
+            <option value="">Choose…</option>
+            <option>Acoustic guitar</option>
+            <option>Electric guitar</option>
+            <option>Bass guitar</option>
+            <option>Classical / nylon-string guitar</option>
+            <option>Violin</option>
+            <option>Viola</option>
+            <option>Cello</option>
+            <option>Other</option>
+          </select>
+          <p class="error" id="type-err" hidden>Please choose an instrument.</p>
+        </label>
+        <label class="f">Make &amp; model <span class="opt">(if known)</span>
+          <input type="text" id="model" placeholder="e.g. Yamaha FG800">
+        </label>
+        <label class="f">Serial number or distinguishing marks <span class="opt">(optional)</span>
+          <input type="text" id="serial">
+        </label>
+        <label class="f">Case or bow included?
+          <select id="case">
+            <option>Instrument only</option>
+            <option>Instrument and case</option>
+            <option>Instrument, case and bow</option>
+            <option>Instrument and bow</option>
+          </select>
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>What's wrong?</legend>
+      <p class="hint" id="issue-hint">Choose an instrument above to see common problems. Tick everything that applies.</p>
+      <div class="choices" id="issues" role="group" aria-labelledby="issue-hint"></div>
+      <label class="f" style="margin-top:16px">Describe it in your own words
+        <textarea id="desc" placeholder="When did it start? Does it happen on every string or only some? Any recent drops, humidity changes, or earlier repairs?" required></textarea>
+        <p class="error" id="desc-err" hidden>Please describe the problem.</p>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Timing &amp; budget</legend>
+      <div class="grid">
+        <label class="f">Do you need it back by? <span class="opt">(optional)</span>
+          <input type="date" id="needby">
+        </label>
+        <label class="f">Call me for approval if the estimate exceeds
+          <select id="limit">
+            <option>Any amount, call me first</option>
+            <option>$50</option>
+            <option>$100</option>
+            <option>$200</option>
+            <option>$400</option>
+            <option>Just quote me, don't start work</option>
+          </select>
+        </label>
+        <label class="f full">Best way to reach you
+          <select id="contact">
+            <option>Phone call</option>
+            <option>Text message</option>
+            <option>Email</option>
+          </select>
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="actions">
+      <button type="submit">Create drop-off ticket</button>
+      <button type="reset" class="secondary" id="reset">Clear form</button>
+    </div>
+  </form>
+
+  <section class="ticket" id="ticket" aria-live="polite" tabindex="-1">
+    <h2>Repair ticket</h2>
+    <p class="id" id="t-id"></p>
+    <dl id="t-body"></dl>
+    <div class="note">Please keep a copy of this ticket. I'll go over the details with you at drop-off and contact you with a quote before any work begins, within the limit you chose.</div>
+    <div class="actions">
+      <button type="button" id="print">Print ticket</button>
+      <button type="button" class="secondary" id="copy">Copy as text</button>
+      <a class="btn secondary" id="mail" href="#">Send by email</a>
+      <button type="button" class="secondary" id="edit">Edit details</button>
+    </div>
+    <p class="status" id="status" role="status"></p>
+  </section>
+</div>
+
+<script>
+  // Change this to the shop's email address for the "Send by email" button.
+  var SHOP_EMAIL = "";
+
+  var ISSUES = {
+    guitar: [
+      "Buzzing or fret rattle", "High action / hard to play", "Dead or worn frets",
+      "Neck bow or twist", "Crack in the body or top", "Loose or lifted bridge",
+      "Broken headstock or neck joint", "Tuning machines slipping", "Nut or saddle problem",
+      "Intonation is off", "Needs setup and restring", "Pickup or electronics fault",
+      "Crackling pots or jack", "Finish damage"
+    ],
+    electric: null,
+    violin: [
+      "Open seam or crack", "Soundpost fell or needs adjusting", "Bridge warped or broken",
+      "Pegs slipping or sticking", "Fingerboard worn or needs planing", "Buzz or wolf tone",
+      "Broken or loose chinrest", "Tailpiece or tailgut problem", "Fine tuner problem",
+      "Needs new strings", "Bow needs rehair", "Bow stick or frog damage", "Varnish damage"
+    ],
+    other: [
+      "Won't stay in tune", "Cracks or open seams", "Buzzing or rattling",
+      "Hard to play", "Hardware loose or broken", "General check-up"
+    ]
+  };
+  ISSUES.electric = ISSUES.guitar;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("form"), ticket = $("ticket"), issuesBox = $("issues");
+  var lastText = "";
+
+  function family(t) {
+    if (/guitar/i.test(t)) return /electric|bass/i.test(t) ? "electric" : "guitar";
+    if (/violin|viola|cello/i.test(t)) return "violin";
+    return t ? "other" : null;
+  }
+
+  function renderIssues() {
+    var fam = family($("type").value);
+    issuesBox.innerHTML = "";
+    if (!fam) { $("issue-hint").textContent = "Choose an instrument above to see common problems. Tick everything that applies."; return; }
+    $("issue-hint").textContent = "Tick everything that applies, then add detail below.";
+    ISSUES[fam].forEach(function (text) {
+      var l = document.createElement("label");
+      l.className = "choice";
+      var c = document.createElement("input");
+      c.type = "checkbox"; c.value = text;
+      l.appendChild(c);
+      l.appendChild(document.createTextNode(text));
+      issuesBox.appendChild(l);
+    });
+  }
+  $("type").addEventListener("change", renderIssues);
+
+  function check(id, ok) {
+    $(id + "-err").hidden = ok;
+    $(id).setAttribute("aria-invalid", ok ? "false" : "true");
+    return ok;
+  }
+
+  function fmtDate(v) {
+    if (!v) return "";
+    var p = v.split("-");
+    return new Date(p[0], p[1] - 1, p[2]).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var ok = [
+      check("name", $("name").value.trim() !== ""),
+      check("phone", $("phone").value.trim() !== ""),
+      check("type", $("type").value !== ""),
+      check("desc", $("desc").value.trim() !== "")
+    ];
+    if (ok.indexOf(false) !== -1) {
+      var first = form.querySelector("[aria-invalid=true]");
+      if (first) first.focus();
+      return;
+    }
+    var now = new Date();
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    var id = "R-" + now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate()) + "-" +
+             pad(now.getHours()) + pad(now.getMinutes());
+    var checked = Array.prototype.map.call(issuesBox.querySelectorAll("input:checked"), function (c) { return c.value; });
+
+    var rows = [
+      ["Customer", $("name").value.trim()],
+      ["Phone", $("phone").value.trim()],
+      ["Email", $("email").value.trim()],
+      ["Preferred contact", $("contact").value],
+      ["Instrument", $("type").value],
+      ["Make / model", $("model").value.trim()],
+      ["Serial / marks", $("serial").value.trim()],
+      ["Left with me", $("case").value],
+      ["Problems", checked.join("\n")],
+      ["Description", $("desc").value.trim()],
+      ["Needed by", fmtDate($("needby").value)],
+      ["Approval limit", $("limit").value]
+    ].filter(function (r) { return r[1]; });
+
+    $("t-id").textContent = "Ticket " + id + " · " + now.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+    var dl = $("t-body");
+    dl.innerHTML = "";
+    rows.forEach(function (r) {
+      var dt = document.createElement("dt"); dt.textContent = r[0];
+      var dd = document.createElement("dd"); dd.textContent = r[1];
+      dl.appendChild(dt); dl.appendChild(dd);
+    });
+
+    lastText = "REPAIR TICKET " + id + "\n\n" + rows.map(function (r) {
+      return r[0] + ": " + (r[1].indexOf("\n") > -1 ? "\n  " + r[1].split("\n").join("\n  ") : r[1]);
+    }).join("\n");
+
+    $("mail").href = "mailto:" + encodeURIComponent(SHOP_EMAIL).replace("%40", "@") +
+      "?subject=" + encodeURIComponent("Repair drop-off " + id + " - " + $("type").value) +
+      "&body=" + encodeURIComponent(lastText);
+
+    $("status").textContent = "";
+    form.style.display = "none";
+    ticket.style.display = "block";
+    ticket.focus();
+    ticket.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  $("edit").addEventListener("click", function () {
+    ticket.style.display = "none";
+    form.style.display = "";
+    $("name").focus();
+  });
+  $("print").addEventListener("click", function () { window.print(); });
+  $("copy").addEventListener("click", function () {
+    var done = function () { $("status").textContent = "Copied to clipboard."; };
+    var fail = function () {
+      var ta = document.createElement("textarea");
+      ta.value = lastText; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (x) { $("status").textContent = "Couldn't copy. Please select the text and copy it manually."; }
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(lastText).then(done, fail);
+    else fail();
+  });
+  $("form").addEventListener("reset", function () {
+    setTimeout(function () {
+      renderIssues();
+      form.querySelectorAll(".error").forEach(function (p) { p.hidden = true; });
+    }, 0);
+  });
+
+  // Don't allow picking a past date.
+  var today = new Date();
+  $("needby").min = today.getFullYear() + "-" + ("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2);
+</script>
+</body>
+</html>

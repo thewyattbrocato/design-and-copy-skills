@@ -51,7 +51,7 @@ Use thousands separators in any number of four or more digits in a table (some s
 
 - Use a real minus sign or parentheses and keep one convention in the table. Accounting-style parentheses are right for statements; a minus sign is right almost everywhere else.
 - Color can add a second cue (red for negative), never the only cue.
-- For change columns, show an explicit sign on positive values too (+4.2%), so direction is readable without color.
+- For change columns, show an explicit sign on positive values too (+3.7%), so direction is readable without color.
 - With parentheses, add a trailing space to positive values or use a figure-width pad so the digits still line up.
 
 ## Dates and times

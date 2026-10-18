@@ -1,0 +1,1 @@
+It's generic. "Work smarter, not harder" and "one powerful platform" could be on any SaaS site, and nothing says stock counting or bookshops. Lead with the real job, something like "Count your shelves in an afternoon, not a weekend." Then follow it with a line about independent bookshops, and make the button say what happens next (e.g. "Start your first count").

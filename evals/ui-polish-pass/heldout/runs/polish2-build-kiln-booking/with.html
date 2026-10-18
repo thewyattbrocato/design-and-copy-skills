@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a kiln</title>
+<style>
+:root{
+  --bg:#f6f1ea; --card:#fffdf9; --ink:#2b2420; --muted:#6b5e55; --line:#c9bcae;
+  --accent:#9a4a2a; --accent-ink:#fff; --accent-soft:#f3e0d4;
+  --ok:#2f6b3f; --ok-bg:#e4f1e5; --err:#a3281f; --err-bg:#fbe6e3;
+  --focus:#1c5fb8;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5;font-size:1rem}
+main{max-width:62rem;margin:0 auto;padding:1.5rem 1rem 4rem}
+h1{font-size:1.75rem;margin:0 0 .25rem;font-family:Georgia,"Times New Roman",serif}
+h2{font-size:1.15rem;margin:0 0 .75rem}
+.lede{color:var(--muted);margin:0 0 1.5rem;max-width:42rem}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:1.5rem;align-items:start}
+@media (max-width:52rem){.layout{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.25rem}
+.card + .card{margin-top:1.5rem}
+fieldset{border:0;padding:0;margin:0 0 1.5rem;min-width:0}
+legend,label.l{font-weight:600;display:block;margin-bottom:.4rem;padding:0}
+.hint{color:var(--muted);font-size:.875rem;margin:0 0 .5rem}
+input[type=text],input[type=email],input[type=date],select,textarea{
+  width:100%;font:inherit;color:inherit;background:#fff;border:1px solid #8a7b6e;border-radius:6px;padding:.55rem .65rem;min-height:2.75rem}
+textarea{min-height:4.5rem;resize:vertical}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+[aria-invalid=true]{border-color:var(--err);border-width:2px}
+.field{margin-bottom:1.25rem}
+.err{color:var(--err);font-size:.9rem;margin:.35rem 0 0;display:none}
+.err.show{display:block}
+.err::before{content:"Problem: ";font-weight:700}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:34rem){.row2{grid-template-columns:1fr}}
+
+/* choice cards (radios) */
+.choices{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr))}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.choice span.box{display:block;border:1px solid #8a7b6e;border-radius:8px;padding:.65rem .75rem;background:#fff;min-height:3rem;overflow-wrap:anywhere}
+.choice .sub{display:block;font-size:.85rem;color:var(--muted)}
+.choice input:checked + .box{background:var(--accent-soft);border:2px solid var(--accent);padding:calc(.65rem - 1px) calc(.75rem - 1px)}
+.choice input:checked + .box .name::after{content:" ✓";color:var(--accent)}
+.choice input:focus-visible + .box{outline:3px solid var(--focus);outline-offset:2px}
+.choice input:disabled{cursor:not-allowed}
+.choice input:disabled + .box{background:#ebe4db;color:#5d5249;border-style:dashed;text-decoration:none}
+.choice .tag{font-weight:600}
+
+.notice{border-radius:8px;padding:.75rem .9rem;margin:0 0 1rem;border:1px solid}
+.notice.info{background:#f0ebe3;border-color:var(--line);color:var(--muted)}
+.notice.error{background:var(--err-bg);border-color:var(--err);color:#6e1912}
+.notice.ok{background:var(--ok-bg);border-color:var(--ok);color:#1d4a2a}
+.notice strong{display:block}
+.notice[hidden]{display:none}
+
+button{font:inherit;cursor:pointer;border-radius:6px;min-height:2.75rem;padding:.55rem 1.1rem;border:1px solid var(--accent);background:#fff;color:var(--accent);font-weight:600}
+button.primary{background:var(--accent);color:var(--accent-ink)}
+button:disabled{cursor:progress;opacity:.8}
+button.link{border:0;background:none;text-decoration:underline;padding:.5rem;min-height:2.75rem}
+.actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+.spin{display:none;width:1em;height:1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;vertical-align:-.15em;margin-right:.4rem;animation:r .8s linear infinite}
+.busy .spin{display:inline-block}
+@keyframes r{to{transform:rotate(360deg)}}
+
+dl.sum{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.35rem .9rem}
+dl.sum dt{color:var(--muted)}
+dl.sum dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+dd.todo{font-weight:400;color:var(--muted)}
+
+ul.bookings{list-style:none;margin:0;padding:0}
+ul.bookings li{border-top:1px solid var(--line);padding:.75rem 0;display:flex;gap:.75rem;justify-content:space-between;align-items:flex-start}
+ul.bookings li:first-child{border-top:0}
+ul.bookings .what{min-width:0;overflow-wrap:anywhere}
+ul.bookings .when{color:var(--muted);font-size:.9rem}
+.empty{color:var(--muted);margin:0}
+
+.undo{position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);background:#2b2420;color:#fff;border-radius:8px;padding:.5rem .5rem .5rem 1rem;display:flex;gap:.75rem;align-items:center;max-width:calc(100% - 2rem);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.undo[hidden]{display:none}
+.undo button{background:#fff;border-color:#fff;color:#2b2420}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+noscript p{background:var(--err-bg);padding:1rem;border-radius:8px}
+@media (prefers-reduced-motion:reduce){.spin{animation:none;border-right-color:currentColor;border-style:dotted}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Book a kiln</h1>
+  <p class="lede">Pick a kiln, a day and a time block for your firing. Your booking appears under “Your bookings” as soon as it’s saved.</p>
+  <noscript><p>This booking form needs JavaScript. Please turn it on, or ask studio staff to book for you.</p></noscript>
+
+  <div class="layout">
+    <div>
+      <form class="card" id="form" novalidate>
+        <div class="notice error" id="formError" role="alert" tabindex="-1" hidden></div>
+        <div class="notice ok" id="formOk" role="status" tabindex="-1" hidden></div>
+
+        <div class="row2">
+          <div class="field">
+            <label class="l" for="name">Your name</label>
+            <input type="text" id="name" autocomplete="name" aria-describedby="name-err" required>
+            <p class="err" id="name-err"></p>
+          </div>
+          <div class="field">
+            <label class="l" for="email">Email</label>
+            <input type="email" id="email" autocomplete="email" aria-describedby="email-hint email-err" required>
+            <p class="hint" id="email-hint" style="margin:.35rem 0 0">For your booking confirmation.</p>
+            <p class="err" id="email-err"></p>
+          </div>
+        </div>
+
+        <fieldset id="kilnSet" aria-describedby="kiln-err">
+          <legend>Kiln</legend>
+          <div class="choices" id="kilns"></div>
+          <p class="err" id="kiln-err"></p>
+        </fieldset>
+
+        <div class="row2">
+          <div class="field">
+            <label class="l" for="date">Date</label>
+            <input type="date" id="date" aria-describedby="date-err" required>
+            <p class="err" id="date-err"></p>
+          </div>
+          <div class="field">
+            <label class="l" for="firing">Firing type</label>
+            <select id="firing">
+              <option>Bisque</option>
+              <option>Glaze</option>
+            </select>
+          </div>
+        </div>
+
+        <fieldset id="slotSet" aria-describedby="slot-help slot-err">
+          <legend>Time block</legend>
+          <p class="hint" id="slot-help">Choose a kiln and date to see open blocks.</p>
+          <div class="choices" id="slots"></div>
+          <p class="err" id="slot-err"></p>
+        </fieldset>
+
+        <div class="field">
+          <label class="l" for="notes">Notes for studio staff <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <textarea id="notes" maxlength="300" placeholder="e.g. 6 mugs and a large platter"></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="primary" id="submit"><span class="spin" aria-hidden="true"></span><span id="submitLabel">Book this kiln</span></button>
+          <button type="reset" class="link" id="reset">Clear form</button>
+        </div>
+      </form>
+    </div>
+
+    <aside>
+      <section class="card" aria-labelledby="sumH">
+        <h2 id="sumH">Your selection</h2>
+        <dl class="sum" id="summary"></dl>
+      </section>
+      <section class="card" aria-labelledby="bkH">
+        <h2 id="bkH">Your bookings</h2>
+        <ul class="bookings" id="bookings"></ul>
+        <p class="empty" id="bkEmpty">No bookings yet. Once you book a block, it will be listed here and you can cancel it if plans change.</p>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<div class="undo" id="undo" hidden role="status">
+  <span id="undoMsg"></span>
+  <button type="button" id="undoBtn">Undo</button>
+</div>
+<div class="sr" aria-live="polite" id="live"></div>
+
+<script>
+(function(){
+  // Edit these to match the studio's real kilns and time blocks.
+  var KILNS=[
+    {id:"k1",name:"Kiln 1",sub:"[type / max cone]"},
+    {id:"k2",name:"Kiln 2",sub:"[type / max cone]"},
+    {id:"k3",name:"Kiln 3",sub:"[type / max cone]"}
+  ];
+  var SLOTS=[{s:8,e:12},{s:12,e:16},{s:16,e:20}];
+  var KEY="kilnBookings.v1";
+
+  var $=function(id){return document.getElementById(id)};
+  var form=$("form"),bookings=[],undoTimer=null,pending=null,busy=false;
+
+  function load(){try{bookings=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){bookings=[]}}
+  function save(){localStorage.setItem(KEY,JSON.stringify(bookings))}
+  function pad(n){return n<10?"0"+n:""+n}
+  function iso(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+  function hr(h){var s=h<12?"am":"pm";h=h%12||12;return h+s}
+  function range(sl){return hr(sl.s)+"–"+hr(sl.e)}
+  function nice(d){var p=d.split("-");return new Date(+p[0],p[1]-1,+p[2]).toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"})}
+  function esc(t){var d=document.createElement("div");d.textContent=t;return d.innerHTML}
+  // Placeholder for other members' bookings; replace with real data from the studio.
+  function takenByOthers(k,d,i){var h=0,s=k+d+i;for(var j=0;j<s.length;j++)h=(h*31+s.charCodeAt(j))|0;return Math.abs(h)%4===0}
+  function status(k,d,i){
+    var sl=SLOTS[i],now=new Date();
+    if(d===iso(now)&&now.getHours()>=sl.e)return "Passed";
+    if(bookings.some(function(b){return b.kiln===k&&b.date===d&&b.slot===i}))return "Booked";
+    if(takenByOthers(k,d,i))return "Booked";
+    return "";
+  }
+  function val(name){var r=form.querySelector('input[name="'+name+'"]:checked');return r?r.value:""}
+
+  function renderKilns(){
+    $("kilns").innerHTML=KILNS.map(function(k){
+      return '<label class="choice"><input type="radio" name="kiln" value="'+k.id+'"><span class="box"><span class="name tag">'+esc(k.name)+'</span><span class="sub">'+esc(k.sub)+'</span></span></label>';
+    }).join("");
+  }
+  function renderSlots(){
+    var k=val("kiln"),d=$("date").value,prev=val("slot"),help=$("slot-help"),box=$("slots");
+    if(!k||!d){box.innerHTML="";help.textContent="Choose a kiln and date to see open blocks.";return}
+    var openCount=0;
+    box.innerHTML=SLOTS.map(function(sl,i){
+      var st=status(k,d,i);if(!st)openCount++;
+      return '<label class="choice"><input type="radio" name="slot" value="'+i+'"'+(st?" disabled":"")+(!st&&String(i)===prev?" checked":"")+'><span class="box"><span class="name tag">'+range(sl)+'</span><span class="sub">'+(st||"Open")+'</span></span></label>';
+    }).join("");
+    help.textContent=openCount?openCount+" of "+SLOTS.length+" blocks open on "+nice(d)+". Greyed blocks are taken or already past.":"Every block is taken on "+nice(d)+". Try another day or kiln.";
+    $("live").textContent=help.textContent;
+  }
+  function renderSummary(){
+    var k=KILNS.filter(function(x){return x.id===val("kiln")})[0],d=$("date").value,s=val("slot");
+    function row(t,v,ph){return '<dt>'+t+'</dt><dd'+(v?'':' class="todo"')+'>'+esc(v||ph)+'</dd>'}
+    $("summary").innerHTML=row("Kiln",k&&k.name,"Not chosen")+row("Date",d&&nice(d),"Not chosen")+row("Time",s!==""?range(SLOTS[+s]):"","Not chosen")+row("Firing",$("firing").value,"");
+  }
+  function renderBookings(){
+    var list=bookings.slice().sort(function(a,b){return (a.date+a.slot)<(b.date+b.slot)?-1:1});
+    $("bkEmpty").hidden=list.length>0;
+    $("bookings").innerHTML=list.map(function(b){
+      var k=KILNS.filter(function(x){return x.id===b.kiln})[0];
+      var label=(k?k.name:"Kiln")+", "+nice(b.date)+", "+range(SLOTS[b.slot]);
+      return '<li><div class="what"><strong>'+esc(k?k.name:"Kiln")+' · '+esc(b.firing)+'</strong><div class="when">'+esc(nice(b.date))+', '+range(SLOTS[b.slot])+'</div></div><button type="button" data-id="'+b.id+'" aria-label="Cancel booking: '+esc(label)+'">Cancel</button></li>';
+    }).join("");
+  }
+
+  function setErr(id,msg,inputEl){
+    var p=$(id);p.textContent=msg||"";p.classList.toggle("show",!!msg);
+    if(inputEl)inputEl.setAttribute("aria-invalid",msg?"true":"false");
+  }
+  function validate(){
+    var bad=[],n=$("name"),e=$("email"),d=$("date");
+    var ne=n.value.trim()?"":"Enter your name so staff know whose pots these are.";
+    setErr("name-err",ne,n);if(ne)bad.push(n);
+    var ee=!e.value.trim()?"Enter your email.":(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e.value.trim())?"That email looks incomplete. It should look like name@example.com.":"");
+    setErr("email-err",ee,e);if(ee)bad.push(e);
+    var ke=val("kiln")?"":"Choose which kiln you want.";
+    setErr("kiln-err",ke);if(ke)bad.push(form.querySelector('input[name="kiln"]'));
+    var de=!d.value?"Pick a date.":(d.value<d.min?"That date has passed. Pick today or later.":"");
+    setErr("date-err",de,d);if(de)bad.push(d);
+    var se="";if(val("kiln")&&d.value&&!de&&val("slot")==="")se="Choose an open time block.";
+    else if(!val("kiln")||!d.value)se="Choose a kiln and date first, then a time block.";
+    setErr("slot-err",se);if(se)bad.push(form.querySelector('input[name="slot"]:not(:disabled)')||d);
+    return bad;
+  }
+
+  function showBanner(kind,html){
+    var er=$("formError"),ok=$("formOk");er.hidden=ok.hidden=true;
+    var el=kind==="error"?er:ok;el.innerHTML=html;el.hidden=false;return el;
+  }
+  function setBusy(b){
+    busy=b;$("submit").disabled=b;$("submit").classList.toggle("busy",b);
+    $("submit").setAttribute("aria-busy",b);
+    $("submitLabel").textContent=b?"Booking…":"Book this kiln";
+  }
+
+  function fakeSave(rec){
+    // Stands in for a call to the studio's booking service.
+    return new Promise(function(res,rej){
+      setTimeout(function(){
+        if(navigator.onLine===false)return rej({kind:"offline"});
+        load();
+        if(bookings.some(function(b){return b.kiln===rec.kiln&&b.date===rec.date&&b.slot===rec.slot})||takenByOthers(rec.kiln,rec.date,rec.slot))return rej({kind:"taken"});
+        try{bookings.push(rec);save();res(rec)}catch(e){rej({kind:"storage"})}
+      },800);
+    });
+  }
+
+  form.addEventListener("submit",function(ev){
+    ev.preventDefault();if(busy)return;
+    $("formOk").hidden=true;$("formError").hidden=true;
+    var bad=validate();
+    if(bad.length){
+      var el=showBanner("error","<strong>Fix "+bad.length+" thing"+(bad.length>1?"s":"")+" before booking.</strong>Details are next to each field below.");
+      bad[0].focus();return;
+    }
+    var rec={id:"b"+Date.now(),kiln:val("kiln"),date:$("date").value,slot:+val("slot"),firing:$("firing").value,name:$("name").value.trim(),email:$("email").value.trim(),notes:$("notes").value.trim()};
+    setBusy(true);
+    fakeSave(rec).then(function(){
+      setBusy(false);
+      var k=KILNS.filter(function(x){return x.id===rec.kiln})[0];
+      renderBookings();renderSlots();renderSummary();
+      showBanner("ok","<strong>Booked.</strong>"+esc(k.name)+", "+esc(nice(rec.date))+", "+range(SLOTS[rec.slot])+" ("+esc(rec.firing.toLowerCase())+"). Confirmation for "+esc(rec.email)+" is [email sending not connected in this page].").focus();
+    },function(err){
+      setBusy(false);
+      var msg={
+        offline:"<strong>You appear to be offline.</strong>Your choices are still here. Reconnect and press “Book this kiln” again.",
+        taken:"<strong>Someone just took that block.</strong>Nothing was booked. Pick another open block below and try again.",
+        storage:"<strong>The booking couldn’t be saved.</strong>Your details are still here. Try again, or ask studio staff to book it for you."
+      }[err.kind];
+      renderSlots();renderSummary();
+      showBanner("error",msg).focus();
+    });
+  });
+
+  function change(){renderSlots();renderSummary();setErr("slot-err","");setErr("kiln-err","");}
+  form.addEventListener("change",function(ev){
+    var t=ev.target;
+    if(t.name==="kiln"||t.id==="date")change();
+    else if(t.name==="slot"){setErr("slot-err","");renderSummary()}
+    else if(t.id==="firing")renderSummary();
+    if(t.getAttribute&&t.getAttribute("aria-invalid")==="true"&&t.value)setErr(t.id+"-err","",t);
+  });
+  form.addEventListener("reset",function(){
+    setTimeout(function(){
+      ["name-err","email-err","kiln-err","date-err","slot-err"].forEach(function(i){setErr(i,"")});
+      form.querySelectorAll("[aria-invalid]").forEach(function(x){x.removeAttribute("aria-invalid")});
+      $("date").value=$("date").min;$("formError").hidden=$("formOk").hidden=true;
+      renderSlots();renderSummary();
+    });
+  });
+
+  // Cancel with undo (cancelling is reversible for a few seconds)
+  $("bookings").addEventListener("click",function(ev){
+    var btn=ev.target.closest("button[data-id]");if(!btn)return;
+    var i=bookings.findIndex(function(b){return b.id===btn.dataset.id});if(i<0)return;
+    commitPending();
+    pending=bookings.splice(i,1)[0];
+    try{save()}catch(e){bookings.splice(i,0,pending);pending=null;showBanner("error","<strong>Couldn’t cancel that booking.</strong>It’s still on your list. Try again.").focus();return}
+    renderBookings();renderSlots();
+    $("undoMsg").textContent="Booking cancelled.";$("undo").hidden=false;
+    $("live").textContent="Booking cancelled. Undo is available for 8 seconds.";
+    clearTimeout(undoTimer);undoTimer=setTimeout(commitPending,8000);
+    (($("bookings").querySelector("button")||$("kilnSet").querySelector("input"))).focus();
+  });
+  function commitPending(){pending=null;clearTimeout(undoTimer);$("undo").hidden=true}
+  $("undoBtn").addEventListener("click",function(){
+    if(!pending)return;
+    bookings.push(pending);pending=null;
+    try{save()}catch(e){}
+    clearTimeout(undoTimer);$("undo").hidden=true;
+    renderBookings();renderSlots();$("live").textContent="Booking restored.";
+    var b=$("bookings").querySelector("button");if(b)b.focus();
+  });
+
+  // Init
+  load();renderKilns();
+  var today=iso(new Date());$("date").min=today;$("date").value=today;
+  renderBookings();renderSlots();renderSummary();
+})();
+</script>
+</body>
+</html>

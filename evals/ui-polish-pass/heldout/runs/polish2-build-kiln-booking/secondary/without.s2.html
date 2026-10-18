@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln Booking</title>
+<style>
+  :root {
+    --bg: #f6f3ee;
+    --card: #ffffff;
+    --ink: #2a2521;
+    --muted: #6f655c;
+    --line: #e2dbd1;
+    --accent: #a94f25;
+    --accent-ink: #ffffff;
+    --block: #d9854f;
+    --block-ink: #ffffff;
+    --track: #efe9e1;
+    --error: #a12e1f;
+    --ok: #2f6b3a;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1915; --card: #272219; --ink: #efe8df; --muted: #a79b8e; --line: #3d352b;
+      --accent: #e08a5c; --accent-ink: #1c1915; --block: #b9643a; --track: #322b22;
+      --error: #f09a8a; --ok: #9ccc8f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px; }
+  main { max-width: 1080px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  h2 { font-size: 1.05rem; margin: 0 0 12px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .layout { display: grid; grid-template-columns: minmax(280px, 360px) 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; }
+  input, select, textarea, button { font: inherit; }
+  input, select, textarea {
+    display: block; width: 100%; margin-top: 4px; padding: 8px 10px;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink);
+  }
+  textarea { resize: vertical; min-height: 64px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  button.primary {
+    width: 100%; padding: 10px; border: 0; border-radius: 8px;
+    background: var(--accent); color: var(--accent-ink); font-weight: 600; cursor: pointer;
+  }
+  button.primary:hover { filter: brightness(1.06); }
+  button.link { background: none; border: 0; color: var(--error); cursor: pointer; padding: 4px; font-size: 0.85rem; }
+  .msg { min-height: 1.3em; margin: 12px 0 0; font-size: 0.9rem; }
+  .msg.error { color: var(--error); }
+  .msg.ok { color: var(--ok); }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .toolbar h2 { margin: 0; }
+  .toolbar label { margin: 0; }
+  .toolbar input { width: auto; }
+  .krow { display: grid; grid-template-columns: 150px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .axis-row { margin-bottom: 4px; }
+  .hours { display: flex; font-size: 0.72rem; color: var(--muted); }
+  .hours span { flex: 1; }
+  .klabel { font-size: 0.9rem; }
+  .track { position: relative; height: 36px; border-radius: 6px; background: var(--track); }
+  .block {
+    position: absolute; top: 3px; bottom: 3px; border-radius: 5px;
+    background: var(--block); color: var(--block-ink); font-size: 0.75rem;
+    padding: 0 6px; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+  .list { list-style: none; padding: 0; margin: 12px 0 0; }
+  .list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 0.9rem; }
+  .list li.empty { border-top: 0; color: var(--muted); }
+  .list small { display: block; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Kiln Booking</h1>
+  <p class="sub">Reserve a shared kiln for your firing. Bookings are saved in this browser.</p>
+
+  <div class="layout">
+    <section class="card">
+      <h2>New booking</h2>
+      <form id="bookForm" novalidate>
+        <label>Your name
+          <input id="name" type="text" autocomplete="name" maxlength="60" required>
+        </label>
+        <label>Kiln
+          <select id="kiln"></select>
+        </label>
+        <label>Date
+          <input id="date" type="date" required>
+        </label>
+        <div class="row">
+          <label>Start
+            <select id="start"></select>
+          </label>
+          <label>Length
+            <select id="duration"></select>
+          </label>
+        </div>
+        <label>Firing type
+          <select id="firing">
+            <option>Bisque</option>
+            <option>Glaze</option>
+            <option>Raku</option>
+            <option>Test / other</option>
+          </select>
+        </label>
+        <label>Notes for the kiln tech (optional)
+          <textarea id="notes" maxlength="300"></textarea>
+        </label>
+        <button class="primary" type="submit">Book kiln</button>
+        <p id="formMsg" class="msg" role="status"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="toolbar">
+        <h2>Schedule</h2>
+        <label>Showing <input id="viewDate" type="date"></label>
+      </div>
+      <div class="krow axis-row">
+        <div></div>
+        <div class="hours" id="axis"></div>
+      </div>
+      <div id="kilns"></div>
+      <h2 style="margin-top: 20px">Bookings on this day</h2>
+      <ul id="dayList" class="list"></ul>
+    </section>
+  </div>
+</main>
+
+<script>
+(() => {
+  // Storage is localStorage, so bookings live on one device/browser.
+  // For shared use across members, swap saveBookings/loadBookings for a server API.
+  const KILNS = [
+    { id: 'k1', name: 'Large electric (1280°C)' },
+    { id: 'k2', name: 'Small electric (1280°C)' },
+    { id: 'k3', name: 'Raku / low-fire (1000°C)' },
+  ];
+  const OPEN = 8;          // 8:00 AM
+  const CLOSE = 21;        // 9:00 PM
+  const MAX_HOURS = 8;     // longest single booking
+  const MAX_PER_DAY = 2;   // bookings per member per day
+  const STORE_KEY = 'kiln-bookings-v1';
+
+  const $ = (sel) => document.querySelector(sel);
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  };
+
+  const pad = (n) => String(n).padStart(2, '0');
+  const isoDate = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const fmtTime = (t) => {
+    const h = Math.floor(t), m = Math.round((t - h) * 60);
+    return `${h % 12 || 12}:${pad(m)} ${h < 12 ? 'AM' : 'PM'}`;
+  };
+  const fmtShort = (h) => `${h % 12 || 12}${h < 12 ? 'a' : 'p'}`;
+  const fmtLen = (h) => (h === 1 ? '1 hour' : `${h} hours`);
+  const nowDecimal = () => { const d = new Date(); return d.getHours() + d.getMinutes() / 60; };
+  const endOf = (b) => b.start + b.hours;
+  const kilnName = (id) => KILNS.find((k) => k.id === id)?.name ?? 'Unknown kiln';
+
+  let bookings = loadBookings();
+
+  function loadBookings() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function saveBookings() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(bookings)); }
+    catch { /* storage unavailable; bookings last only for this page view */ }
+  }
+
+  function populate() {
+    const kilnSel = $('#kiln');
+    KILNS.forEach((k) => kilnSel.append(new Option(k.name, k.id)));
+
+    const startSel = $('#start');
+    for (let t = OPEN; t <= CLOSE - 1; t += 0.5) startSel.append(new Option(fmtTime(t), t));
+    startSel.value = 9;
+    startSel.addEventListener('change', refreshDurations);
+    refreshDurations();
+  }
+
+  // Only offer lengths that fit before closing time.
+  function refreshDurations() {
+    const start = Number($('#start').value);
+    const durSel = $('#duration');
+    const prev = Number(durSel.value) || 2;
+    const maxLen = Math.min(MAX_HOURS, CLOSE - start);
+    durSel.innerHTML = '';
+    for (let h = 1; h <= maxLen; h += 0.5) durSel.append(new Option(fmtLen(h), h));
+    durSel.value = Math.min(prev, maxLen);
+  }
+
+  $('#bookForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = $('#formMsg');
+    const fail = (text) => { msg.className = 'msg error'; msg.textContent = text; };
+
+    const name = $('#name').value.trim();
+    const kiln = $('#kiln').value;
+    const date = $('#date').value;
+    const start = Number($('#start').value);
+    const hours = Number($('#duration').value);
+    const firing = $('#firing').value;
+    const notes = $('#notes').value.trim();
+    const today = isoDate(new Date());
+
+    if (!name) return fail('Please enter your name.');
+    if (!date) return fail('Please pick a date.');
+    if (date < today) return fail('That date has already passed.');
+    if (date === today && start <= nowDecimal()) return fail('That start time has already passed today.');
+
+    const newEnd = start + hours;
+    if (newEnd > CLOSE) return fail(`Bookings must finish by ${fmtTime(CLOSE)}.`);
+
+    const dayBookings = bookings.filter((b) => b.date === date);
+
+    const clash = dayBookings.find((b) => b.kiln === kiln && b.start < newEnd && start < endOf(b));
+    if (clash) {
+      return fail(`${kilnName(kiln)} is already booked from ${fmtTime(clash.start)} to ${fmtTime(endOf(clash))}.`);
+    }
+
+    const mine = dayBookings.filter((b) => b.name.toLowerCase() === name.toLowerCase()).length;
+    if (mine >= MAX_PER_DAY) return fail(`Members can book up to ${MAX_PER_DAY} slots per day.`);
+
+    bookings.push({
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+      name, kiln, date, start, hours, firing, notes,
+    });
+    saveBookings();
+
+    $('#notes').value = '';
+    $('#viewDate').value = date;
+    msg.className = 'msg ok';
+    msg.textContent = `Booked ${kilnName(kiln)} ${fmtTime(start)} to ${fmtTime(newEnd)} on ${date}.`;
+    render();
+  });
+
+  function render() {
+    const date = $('#viewDate').value;
+    const day = bookings.filter((b) => b.date === date).sort((a, b) => a.start - b.start);
+    const span = CLOSE - OPEN;
+
+    const axis = $('#axis');
+    axis.innerHTML = '';
+    for (let h = OPEN; h < CLOSE; h++) axis.append(el('span', null, fmtShort(h)));
+
+    const kilns = $('#kilns');
+    kilns.innerHTML = '';
+    KILNS.forEach((k) => {
+      const row = el('div', 'krow');
+      row.append(el('div', 'klabel', k.name));
+      const track = el('div', 'track');
+      day.filter((b) => b.kiln === k.id).forEach((b) => {
+        const blk = el('div', 'block', b.name);
+        blk.style.left = ((b.start - OPEN) / span * 100) + '%';
+        blk.style.width = (b.hours / span * 100) + '%';
+        blk.title = `${b.name} · ${b.firing} · ${fmtTime(b.start)} to ${fmtTime(endOf(b))}`;
+        track.append(blk);
+      });
+      row.append(track);
+      kilns.append(row);
+    });
+
+    const list = $('#dayList');
+    list.innerHTML = '';
+    if (!day.length) {
+      list.append(el('li', 'empty', 'Nothing booked on this day.'));
+      return;
+    }
+    day.forEach((b) => {
+      const li = el('li');
+      const info = el('div');
+      info.append(el('strong', null, `${fmtTime(b.start)} to ${fmtTime(endOf(b))} · ${kilnName(b.kiln)}`));
+      info.append(el('small', null, `${b.name} · ${b.firing} · ${fmtLen(b.hours)}${b.notes ? ' · ' + b.notes : ''}`));
+
+      const cancel = el('button', 'link', 'Cancel');
+      cancel.type = 'button';
+      cancel.addEventListener('click', () => {
+        if (!confirm('Cancel this booking?')) return;
+        bookings = bookings.filter((x) => x.id !== b.id);
+        saveBookings();
+        render();
+      });
+
+      li.append(info, cancel);
+      list.append(li);
+    });
+  }
+
+  const todayISO = isoDate(new Date());
+  $('#date').min = todayISO;
+  $('#date').value = todayISO;
+  $('#viewDate').value = todayISO;
+  $('#viewDate').addEventListener('change', render);
+
+  populate();
+  render();
+})();
+</script>
+</body>
+</html>

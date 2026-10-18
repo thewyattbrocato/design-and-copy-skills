@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hive Inspection Log</title>
+<style>
+  :root {
+    --bg: #faf6ea;
+    --card: #fffdf6;
+    --ink: #2b2415;
+    --muted: #6b5f45;
+    --line: #cdbf98;
+    --honey: #e0a21b;
+    --honey-dark: #7a5200;
+    --accent: #5a3d00;
+    --ok: #2f6b2f;
+    --bad: #a3261a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    background: var(--honey);
+    border-bottom: 4px solid var(--accent);
+    padding: 18px 16px;
+  }
+  header h1 { margin: 0; font-size: 1.5rem; color: #2b1a00; }
+  header p { margin: 2px 0 0; color: #3d2b00; font-size: .95rem; }
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 820px) { main { grid-template-columns: 1fr 1fr; align-items: start; } }
+  section {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+    min-width: 0;
+  }
+  h2 { margin: 0 0 12px; font-size: 1.15rem; }
+  .row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
+  .field { margin-bottom: 14px; }
+  label, legend { display: block; font-weight: 600; margin-bottom: 4px; padding: 0; }
+  .hint { color: var(--muted); font-size: .85rem; font-weight: 400; }
+  input, select, textarea {
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1.5px solid #8a7a50;
+    border-radius: 6px;
+    padding: 9px 10px;
+    min-height: 44px;
+  }
+  textarea { min-height: 96px; resize: vertical; }
+  fieldset { border: 0; padding: 0; margin: 0 0 14px; }
+  .checks { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 12px; }
+  .checks label {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 400; margin: 0; min-height: 40px;
+  }
+  .checks input { width: 22px; height: 22px; min-height: 0; flex: none; accent-color: var(--accent); }
+  :focus-visible { outline: 3px solid #1a4fb5; outline-offset: 2px; }
+  button {
+    font: inherit; font-weight: 600;
+    min-height: 44px; padding: 0 18px;
+    border-radius: 6px; border: 1.5px solid var(--accent);
+    background: var(--accent); color: #fff; cursor: pointer;
+  }
+  button.secondary { background: transparent; color: var(--accent); }
+  button.small { min-height: 36px; padding: 0 12px; font-size: .9rem; }
+  button[disabled] { opacity: .6; cursor: not-allowed; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .error { color: var(--bad); font-size: .9rem; margin-top: 4px; }
+  .error::before { content: "Problem: "; font-weight: 700; }
+  input[aria-invalid="true"] { border-color: var(--bad); }
+  .status { min-height: 1.5em; margin-top: 10px; font-weight: 600; }
+  .status.ok { color: var(--ok); }
+  .status.bad { color: var(--bad); }
+  .tools { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tools select { width: auto; flex: 1 1 140px; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  li.entry { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fff; }
+  .entry-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+  .entry-head strong { overflow-wrap: anywhere; }
+  .entry-date { color: var(--muted); font-size: .85rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; padding: 0; }
+  .tag { background: #f3e7bd; border: 1px solid var(--line); border-radius: 99px; padding: 1px 10px; font-size: .82rem; }
+  .tag.warn { background: #fbd9d3; border-color: #d98f84; color: #6e1409; }
+  .tag.warn::before { content: "⚠ "; }
+  .notes { margin: 4px 0 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .meta { color: var(--muted); font-size: .88rem; }
+  .empty {
+    border: 2px dashed var(--line); border-radius: 8px;
+    padding: 20px 14px; text-align: center; color: var(--muted);
+  }
+  .empty strong { display: block; color: var(--ink); margin-bottom: 4px; }
+  .toast {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
+    background: #2b2415; color: #fff; border-radius: 8px;
+    padding: 8px 8px 8px 16px; display: flex; gap: 12px; align-items: center;
+    max-width: calc(100% - 24px); z-index: 10;
+  }
+  .toast[hidden] { display: none; }
+  .toast button { background: transparent; border-color: #fff; min-height: 36px; }
+  .banner { background: #fbe9c0; border: 1px solid var(--honey-dark); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; font-size: .9rem; }
+  .banner[hidden] { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Hive Inspection Log</h1>
+  <p>Behind the barn. Write down what you saw each time you open a hive.</p>
+</header>
+
+<main>
+  <section aria-labelledby="form-h">
+    <h2 id="form-h">New inspection</h2>
+    <form id="form" novalidate>
+      <div class="row">
+        <div class="field">
+          <label for="hive">Hive <span class="hint">(number or name)</span></label>
+          <input id="hive" name="hive" list="hive-list" autocomplete="off" required aria-describedby="hive-err" placeholder="e.g. 7 or Old Oak">
+          <datalist id="hive-list"></datalist>
+          <div id="hive-err" class="error" hidden></div>
+        </div>
+        <div class="field">
+          <label for="when">Date and time</label>
+          <input id="when" type="datetime-local" required aria-describedby="when-err">
+          <div id="when-err" class="error" hidden></div>
+        </div>
+      </div>
+
+      <fieldset>
+        <legend>What you saw</legend>
+        <div class="checks">
+          <label><input type="checkbox" name="obs" value="Queen seen"> Queen seen</label>
+          <label><input type="checkbox" name="obs" value="Eggs"> Eggs</label>
+          <label><input type="checkbox" name="obs" value="Young larvae"> Young larvae</label>
+          <label><input type="checkbox" name="obs" value="Capped brood"> Capped brood</label>
+          <label><input type="checkbox" name="obs" value="Stores of honey"> Stores of honey</label>
+          <label><input type="checkbox" name="obs" value="Pollen"> Pollen</label>
+          <label><input type="checkbox" name="obs" value="Queen cells" data-warn> Queen cells</label>
+          <label><input type="checkbox" name="obs" value="Varroa mites" data-warn> Varroa mites</label>
+          <label><input type="checkbox" name="obs" value="Wax moth / beetles" data-warn> Wax moth / beetles</label>
+          <label><input type="checkbox" name="obs" value="Signs of disease" data-warn> Signs of disease</label>
+          <label><input type="checkbox" name="obs" value="Fed syrup"> Fed syrup</label>
+          <label><input type="checkbox" name="obs" value="Added a super"> Added a super</label>
+        </div>
+      </fieldset>
+
+      <div class="row">
+        <div class="field">
+          <label for="temper">Temperament</label>
+          <select id="temper">
+            <option value="">Not noted</option>
+            <option>Calm</option>
+            <option>Nervous</option>
+            <option>Defensive</option>
+            <option>Aggressive</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="pop">Colony strength</label>
+          <select id="pop">
+            <option value="">Not noted</option>
+            <option>Weak</option>
+            <option>Fair</option>
+            <option>Strong</option>
+            <option>Very strong</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="frames">Frames of brood <span class="hint">(optional)</span></label>
+          <input id="frames" type="number" min="0" max="40" inputmode="numeric" aria-describedby="frames-err">
+          <div id="frames-err" class="error" hidden></div>
+        </div>
+        <div class="field">
+          <label for="temp">Air temp, °F <span class="hint">(optional)</span></label>
+          <input id="temp" type="number" min="-40" max="130" inputmode="numeric" aria-describedby="temp-err">
+          <div id="temp-err" class="error" hidden></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="notes">Notes</label>
+        <textarea id="notes" placeholder="Anything else: what you did, what to do next visit…"></textarea>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="save">Save inspection</button>
+        <button type="reset" class="secondary" id="reset">Clear form</button>
+      </div>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <section aria-labelledby="log-h">
+    <h2 id="log-h">Past inspections <span class="hint" id="count"></span></h2>
+    <div id="storage-warn" class="banner" role="alert" hidden>
+      Saving to this browser isn't working here, so entries will be lost when you close the page. Use "Export" to keep a copy.
+    </div>
+    <div class="tools">
+      <label for="filter" class="hint" style="margin:0;align-self:center">Show:</label>
+      <select id="filter" aria-label="Filter by hive"><option value="">All hives</option></select>
+      <button type="button" class="secondary small" id="export">Export</button>
+    </div>
+    <ul id="list" aria-live="off"></ul>
+    <div id="empty" class="empty" hidden></div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" hidden>
+  <span id="toast-msg"></span>
+  <button type="button" id="undo">Undo</button>
+</div>
+
+<script>
+(function () {
+  var KEY = "hive-inspections-v1";
+  var entries = [];
+  var storageOK = true;
+  var lastRemoved = null, toastTimer = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("form"), list = $("list"), empty = $("empty"), filter = $("filter");
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      entries = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(entries)) entries = [];
+    } catch (e) { storageOK = false; entries = []; }
+  }
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(entries)); storageOK = true; return true; }
+    catch (e) { storageOK = false; return false; }
+  }
+
+  function nowLocal() {
+    var d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 16);
+  }
+  function fmt(iso) {
+    var d = new Date(iso);
+    if (isNaN(d)) return iso;
+    return d.toLocaleString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+
+  function setErr(inputId, errId, msg) {
+    var i = $(inputId), e = $(errId);
+    if (msg) { e.textContent = msg; e.hidden = false; i.setAttribute("aria-invalid", "true"); }
+    else { e.hidden = true; e.textContent = ""; i.removeAttribute("aria-invalid"); }
+  }
+  function status(msg, cls) {
+    var s = $("status"); s.textContent = msg; s.className = "status " + (cls || "");
+  }
+
+  function hiveNames() {
+    var seen = {}, out = [];
+    entries.forEach(function (e) { if (!seen[e.hive.toLowerCase()]) { seen[e.hive.toLowerCase()] = 1; out.push(e.hive); } });
+    return out.sort(function (a, b) { return a.localeCompare(b, undefined, { numeric: true }); });
+  }
+
+  function renderHiveOptions() {
+    var names = hiveNames(), cur = filter.value;
+    $("hive-list").innerHTML = "";
+    filter.innerHTML = '<option value="">All hives</option>';
+    names.forEach(function (n) {
+      var o = document.createElement("option"); o.value = n; $("hive-list").appendChild(o);
+      var f = document.createElement("option"); f.value = n; f.textContent = "Hive " + n; filter.appendChild(f);
+    });
+    filter.value = names.indexOf(cur) >= 0 ? cur : "";
+  }
+
+  function render() {
+    renderHiveOptions();
+    $("storage-warn").hidden = storageOK;
+    list.innerHTML = "";
+    var f = filter.value;
+    var shown = entries.filter(function (e) { return !f || e.hive === f; })
+      .sort(function (a, b) { return a.when < b.when ? 1 : -1; });
+    $("count").textContent = entries.length ? "(" + shown.length + (f ? " of " + entries.length : "") + ")" : "";
+    $("export").disabled = !entries.length;
+    $("export").title = entries.length ? "" : "Nothing to export yet";
+
+    if (!shown.length) {
+      empty.hidden = false;
+      empty.innerHTML = entries.length
+        ? "<strong>No inspections for Hive " + esc(f) + " yet.</strong>Pick “All hives” to see the rest."
+        : "<strong>No inspections logged yet.</strong>Fill in the form after you open a hive and press “Save inspection”. It will show up here.";
+      return;
+    }
+    empty.hidden = true;
+
+    shown.forEach(function (e) {
+      var li = document.createElement("li"); li.className = "entry";
+      var tags = (e.obs || []).map(function (o) {
+        var warn = /mite|moth|disease|queen cells/i.test(o);
+        return '<li class="tag' + (warn ? " warn" : "") + '">' + esc(o) + "</li>";
+      }).join("");
+      var meta = [];
+      if (e.temper) meta.push("Temperament: " + esc(e.temper));
+      if (e.pop) meta.push("Strength: " + esc(e.pop));
+      if (e.frames !== "" && e.frames != null) meta.push("Brood frames: " + esc(String(e.frames)));
+      if (e.temp !== "" && e.temp != null) meta.push(esc(String(e.temp)) + "°F");
+      li.innerHTML =
+        '<div class="entry-head"><strong>Hive ' + esc(e.hive) + '</strong><span class="entry-date">' + esc(fmt(e.when)) + "</span></div>" +
+        (tags ? '<ul class="tags" aria-label="Observations">' + tags + "</ul>" : "") +
+        (meta.length ? '<div class="meta">' + meta.join(" · ") + "</div>" : "") +
+        (e.notes ? '<p class="notes">' + esc(e.notes) + "</p>" : "") +
+        '<button type="button" class="secondary small" data-id="' + e.id + '" aria-label="Delete inspection of Hive ' + esc(e.hive) + " on " + esc(fmt(e.when)) + '">Delete</button>';
+      list.appendChild(li);
+    });
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function validate() {
+    var first = null, ok = true;
+    function bad(id, eid, msg) { setErr(id, eid, msg); if (!first) first = $(id); ok = false; }
+
+    var hive = $("hive").value.trim();
+    hive ? setErr("hive", "hive-err") : bad("hive", "hive-err", "Enter which hive you opened, such as 7 or Old Oak.");
+
+    var w = $("when").value;
+    if (!w) bad("when", "when-err", "Pick the date and time of the inspection.");
+    else if (new Date(w) > new Date(Date.now() + 60000)) bad("when", "when-err", "That time is in the future. Pick when you actually opened the hive.");
+    else setErr("when", "when-err");
+
+    var fr = $("frames").value;
+    if (fr !== "" && (!/^\d+$/.test(fr) || +fr > 40)) bad("frames", "frames-err", "Use a whole number from 0 to 40, or leave it blank.");
+    else setErr("frames", "frames-err");
+
+    var t = $("temp").value;
+    if (t !== "" && (isNaN(+t) || +t < -40 || +t > 130)) bad("temp", "temp-err", "Use a temperature from -40 to 130 °F, or leave it blank.");
+    else setErr("temp", "temp-err");
+
+    if (first) first.focus();
+    return ok;
+  }
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    status("");
+    if (!validate()) { status("Fix the highlighted fields and save again.", "bad"); return; }
+    var btn = $("save"); btn.disabled = true; btn.textContent = "Saving…";
+    var entry = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      hive: $("hive").value.trim(),
+      when: $("when").value,
+      obs: Array.prototype.map.call(form.querySelectorAll('input[name="obs"]:checked'), function (c) { return c.value; }),
+      temper: $("temper").value,
+      pop: $("pop").value,
+      frames: $("frames").value,
+      temp: $("temp").value,
+      notes: $("notes").value.trim()
+    };
+    entries.push(entry);
+    var saved = persist();
+    btn.disabled = false; btn.textContent = "Save inspection";
+    render();
+    if (saved) status("Saved: Hive " + entry.hive + ".", "ok");
+    else status("Added to the list, but this browser couldn't store it. Use Export to keep a copy.", "bad");
+    // keep hive and time ready for the next frame-by-frame note; clear the rest
+    var keepHive = entry.hive;
+    form.reset();
+    $("hive").value = keepHive;
+    $("when").value = nowLocal();
+    ["hive","when","frames","temp"].forEach(function (id) { setErr(id, id + "-err"); });
+    $("notes").focus();
+  });
+
+  form.addEventListener("reset", function () {
+    setTimeout(function () {
+      $("when").value = nowLocal();
+      ["hive","when","frames","temp"].forEach(function (id) { setErr(id, id + "-err"); });
+      status("");
+    }, 0);
+  });
+
+  ["hive","when","frames","temp"].forEach(function (id) {
+    $(id).addEventListener("input", function () { if ($(id).getAttribute("aria-invalid")) setErr(id, id + "-err"); });
+  });
+
+  list.addEventListener("click", function (ev) {
+    var b = ev.target.closest("button[data-id]");
+    if (!b) return;
+    var idx = entries.findIndex(function (e) { return e.id === b.getAttribute("data-id"); });
+    if (idx < 0) return;
+    lastRemoved = { entry: entries[idx], idx: idx };
+    entries.splice(idx, 1);
+    persist(); render();
+    showToast("Deleted inspection of Hive " + lastRemoved.entry.hive + ".");
+    $("filter").focus();
+  });
+
+  function showToast(msg) {
+    $("toast-msg").textContent = msg;
+    $("toast").hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $("toast").hidden = true; lastRemoved = null; }, 8000);
+  }
+  $("undo").addEventListener("click", function () {
+    if (!lastRemoved) return;
+    entries.splice(Math.min(lastRemoved.idx, entries.length), 0, lastRemoved.entry);
+    lastRemoved = null; $("toast").hidden = true;
+    persist(); render();
+    status("Inspection restored.", "ok");
+  });
+
+  filter.addEventListener("change", render);
+
+  $("export").addEventListener("click", function () {
+    var blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "hive-inspections-" + nowLocal().slice(0, 10) + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  load();
+  $("when").value = nowLocal();
+  render();
+})();
+</script>
+</body>
+</html>

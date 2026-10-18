@@ -1,0 +1,1 @@
+Gut check: it's generic. "Work smarter, not harder" and "one powerful platform" could be any SaaS, and nothing says bookshops or stock counting. Try something specific, like "Count your shelves in an afternoon, not a weekend," with a subhead naming independent bookshops. "Get started" is fine, though "Start your first count" would be more concrete.

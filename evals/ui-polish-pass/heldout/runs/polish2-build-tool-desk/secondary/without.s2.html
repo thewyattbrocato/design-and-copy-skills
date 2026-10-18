@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tool Library · Front Desk</title>
+<style>
+:root {
+  --bg: #f5f4f0; --card: #ffffff; --ink: #1f2328; --muted: #5f6670; --line: #dcdad3;
+  --accent: #2f6f4e; --accent-ink: #ffffff; --field: #ffffff;
+  --ok-bg: #e6f4ec; --ok: #1d6b43;
+  --warn-bg: #fff1e0; --warn: #9a4d00;
+  --bad-bg: #fde8e6; --bad: #b42318;
+  --row-overdue: #fff6f5;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a; --card: #1e2125; --ink: #e8eaed; --muted: #9aa1aa; --line: #343a41;
+    --accent: #4fae7c; --accent-ink: #0d1f15; --field: #15171a;
+    --ok-bg: #173325; --ok: #7fd3a3;
+    --warn-bg: #3a2a12; --warn: #f0b36b;
+    --bad-bg: #3d1b18; --bad: #ff9a90;
+    --row-overdue: #2a1816;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+h1, h2 { margin: 0; line-height: 1.2; }
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.1rem; }
+.sub { margin: 4px 0 0; color: var(--muted); }
+.top {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
+  padding: 18px 28px; background: var(--card); border-bottom: 1px solid var(--line);
+}
+.stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.stat {
+  min-width: 96px; padding: 8px 14px; border: 1px solid var(--line); border-radius: var(--radius);
+  display: flex; flex-direction: column; align-items: center;
+}
+.stat span { font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat small { color: var(--muted); font-size: .8rem; }
+.stat.warn span { color: var(--bad); }
+main, section.wide { padding: 0 28px; }
+main { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; margin-top: 20px; }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px; margin: 20px 28px 0;
+}
+main .card { margin: 0; }
+.head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+form { display: flex; flex-direction: column; gap: 12px; }
+label { display: flex; flex-direction: column; gap: 4px; font-size: .9rem; color: var(--muted); }
+input, select, textarea, button { font: inherit; }
+input, select, textarea {
+  padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--field); color: var(--ink); width: 100%;
+}
+input:focus, select:focus, textarea:focus, button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 1px;
+}
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.quick { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; color: var(--muted); font-size: .9rem; }
+button {
+  padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--card); color: var(--ink); cursor: pointer;
+}
+button:hover { border-color: var(--muted); }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; padding: 10px 14px; }
+button.small, td button { padding: 4px 10px; font-size: .85rem; }
+.info {
+  padding: 10px 12px; border-radius: 8px; border: 1px dashed var(--line); color: var(--muted); font-size: .92rem;
+  display: flex; flex-direction: column; gap: 2px; min-height: 64px;
+}
+.info strong { color: var(--ink); }
+.late { color: var(--bad); }
+.muted { color: var(--muted); }
+.small { font-size: .82rem; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.right { text-align: right; }
+.empty { text-align: center; color: var(--muted); padding: 18px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+tr.row-overdue td { background: var(--row-overdue); }
+.badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .8rem; font-weight: 600; border: 1px solid transparent; }
+.badge.available { background: var(--ok-bg); color: var(--ok); }
+.badge.out { background: var(--card); border-color: var(--line); color: var(--ink); }
+.badge.overdue { background: var(--bad-bg); color: var(--bad); }
+.badge.maintenance { background: var(--warn-bg); color: var(--warn); }
+.flash { margin: 20px 28px 0; padding: 10px 14px; border-radius: var(--radius); display: none; font-weight: 500; }
+.flash:not(:empty) { display: block; }
+.flash.ok { background: var(--ok-bg); color: var(--ok); }
+.flash.warn { background: var(--warn-bg); color: var(--warn); }
+.flash.bad { background: var(--bad-bg); color: var(--bad); }
+.log { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.log time { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 6px; }
+footer { padding: 24px 28px; color: var(--muted); font-size: .85rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 720px) {
+  .top, main, .card, .flash, footer { padding-left: 14px; padding-right: 14px; }
+  .card, .flash { margin-left: 14px; margin-right: 14px; }
+  main { padding: 0 14px; }
+  .row { grid-template-columns: 1fr; }
+  table { font-size: .9rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Tool Library</h1>
+    <p class="sub">Front desk · <span id="today"></span></p>
+  </div>
+  <div class="stats" aria-label="Inventory summary">
+    <div class="stat"><span id="statAvail">0</span><small>Available</small></div>
+    <div class="stat"><span id="statOut">0</span><small>Checked out</small></div>
+    <div class="stat warn"><span id="statOverdue">0</span><small>Overdue</small></div>
+    <div class="stat"><span id="statMaint">0</span><small>In repair</small></div>
+  </div>
+</header>
+
+<div id="flash" class="flash" role="status" aria-live="polite"></div>
+
+<main>
+  <section class="card" aria-labelledby="lendTitle">
+    <div class="head"><h2 id="lendTitle">Lend a tool</h2></div>
+    <form id="lendForm" autocomplete="off">
+      <label>Find tool
+        <input type="search" id="lendSearch" placeholder="Name, category, or ID">
+      </label>
+      <label>Tool
+        <select id="lendTool" required></select>
+      </label>
+      <label>Borrower name
+        <input id="borrower" required maxlength="80" placeholder="First and last name">
+      </label>
+      <label>Member number
+        <input id="memberId" maxlength="20" placeholder="Optional">
+      </label>
+      <div class="row">
+        <label>Out date
+          <input type="date" id="outDate" required>
+        </label>
+        <label>Due date
+          <input type="date" id="dueDate" required>
+        </label>
+      </div>
+      <div class="quick">Quick due:
+        <button type="button" class="small" data-days="3">3 days</button>
+        <button type="button" class="small" data-days="7">1 week</button>
+        <button type="button" class="small" data-days="14">2 weeks</button>
+      </div>
+      <label>Notes
+        <textarea id="lendNotes" rows="2" maxlength="300" placeholder="Optional"></textarea>
+      </label>
+      <button class="primary" type="submit">Check out tool</button>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="returnTitle">
+    <div class="head"><h2 id="returnTitle">Return a tool</h2></div>
+    <form id="returnForm" autocomplete="off">
+      <label>Find tool
+        <input type="search" id="returnSearch" placeholder="Name or ID">
+      </label>
+      <label>Tool being returned
+        <select id="returnTool" required></select>
+      </label>
+      <div id="returnInfo" class="info" aria-live="polite">Select a tool to see who has it.</div>
+      <label>Condition
+        <select id="returnCondition">
+          <option value="Good">Good</option>
+          <option value="Needs cleaning">Needs cleaning</option>
+          <option value="Needs repair">Needs repair (sends to repair)</option>
+          <option value="Missing parts">Missing parts (sends to repair)</option>
+        </select>
+      </label>
+      <label>Return note
+        <input id="returnNote" maxlength="200" placeholder="Optional">
+      </label>
+      <button class="primary" type="submit">Check in tool</button>
+    </form>
+  </section>
+</main>
+
+<section class="card" aria-labelledby="outTitle">
+  <div class="head">
+    <h2 id="outTitle">Currently out</h2>
+    <span id="outCount" class="muted small"></span>
+  </div>
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Borrower</th><th>Out</th><th>Due</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody id="outBody"></tbody>
+  </table>
+</section>
+
+<section class="card" aria-labelledby="catalogTitle">
+  <div class="head">
+    <h2 id="catalogTitle">Catalog</h2>
+    <input type="search" id="catalogSearch" placeholder="Filter catalog" style="max-width:260px">
+  </div>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Tool</th><th>Category</th><th>Condition</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody id="catalogBody"></tbody>
+  </table>
+</section>
+
+<section class="card" aria-labelledby="logTitle">
+  <div class="head"><h2 id="logTitle">Recent activity</h2></div>
+  <ol id="activity" class="log"></ol>
+</section>
+
+<footer>
+  <span>Saved in this browser only.</span>
+  <button type="button" id="resetBtn">Reset to sample data</button>
+</footer>
+
+<script>
+const KEY = 'toolLibrary.frontDesk.v1';
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ymd = d => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const today = () => ymd(new Date());
+const addDays = (iso, n) => { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return ymd(d); };
+const daysBetween = (a, b) => Math.round((new Date(b + 'T12:00:00') - new Date(a + 'T12:00:00')) / 86400000);
+const fmt = iso => new Date(iso + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+const byId = id => state.tools.find(t => t.id === id);
+const byDue = (a, b) => a.loan.dueDate.localeCompare(b.loan.dueDate);
+const matches = (t, q) => !q || [t.id, t.name, t.category].join(' ').toLowerCase().includes(q.trim().toLowerCase());
+const LABEL = { available: 'Available', out: 'Out', overdue: 'Overdue', maintenance: 'In repair' };
+const badge = s => `<span class="badge ${s}">${LABEL[s]}</span>`;
+const statusOf = t => t.status === 'out'
+  ? (t.loan && t.loan.dueDate < today() ? 'overdue' : 'out')
+  : t.status;
+
+function seed() {
+  const t = today();
+  const make = (id, name, category) => ({ id, name, category, condition: 'Good', status: 'available', loan: null });
+  const tools = [
+    make('T-001', 'Cordless drill', 'Power'),
+    make('T-002', 'Circular saw', 'Power'),
+    make('T-003', 'Extension ladder (24 ft)', 'Access'),
+    make('T-004', 'Wheelbarrow', 'Garden'),
+    make('T-005', 'Hedge trimmer', 'Garden'),
+    make('T-006', 'Pressure washer', 'Cleaning'),
+    make('T-007', 'Tile cutter', 'Masonry'),
+    make('T-008', 'Post hole digger', 'Garden'),
+    make('T-009', 'Socket set', 'Hand'),
+    make('T-010', 'Stud finder', 'Hand')
+  ];
+  const lend = (id, borrower, memberId, outOffset, dueOffset) => {
+    const tool = tools.find(x => x.id === id);
+    tool.status = 'out';
+    tool.loan = { borrower, memberId, outDate: addDays(t, outOffset), dueDate: addDays(t, dueOffset), notes: '' };
+  };
+  lend('T-002', 'Dana Oyelaran', 'M-1042', -4, 3);
+  lend('T-006', 'Marcus Hill', 'M-0817', -9, -2);
+  lend('T-004', 'Priya Natarajan', 'M-1190', -1, 6);
+  const broken = tools.find(x => x.id === 'T-005');
+  broken.status = 'maintenance';
+  broken.condition = 'Needs repair';
+  return { tools, log: [] };
+}
+
+function load() {
+  try {
+    const s = JSON.parse(localStorage.getItem(KEY));
+    if (s && Array.isArray(s.tools)) return s;
+  } catch (e) {}
+  return seed();
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+}
+function log(text) {
+  state.log.unshift({ at: new Date().toISOString(), text });
+  state.log = state.log.slice(0, 50);
+}
+
+let state = load();
+let flashTimer;
+function flash(msg, kind = 'ok') {
+  const f = $('flash');
+  f.textContent = msg;
+  f.className = 'flash ' + kind;
+  clearTimeout(flashTimer);
+  flashTimer = setTimeout(() => { f.textContent = ''; f.className = 'flash'; }, 5000);
+}
+
+function renderStats() {
+  const c = { available: 0, out: 0, overdue: 0, maintenance: 0 };
+  state.tools.forEach(t => c[statusOf(t)]++);
+  $('statAvail').textContent = c.available;
+  $('statOut').textContent = c.out + c.overdue;
+  $('statOverdue').textContent = c.overdue;
+  $('statMaint').textContent = c.maintenance;
+}
+
+function renderLendOptions() {
+  const select = $('lendTool');
+  const prev = select.value;
+  const list = state.tools.filter(t => t.status === 'available' && matches(t, $('lendSearch').value));
+  select.innerHTML = list.length
+    ? list.map(t => `<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.name)}</option>`).join('')
+    : '<option value="">No available tools match</option>';
+  if (list.some(t => t.id === prev)) select.value = prev;
+}
+
+function renderReturnOptions() {
+  const select = $('returnTool');
+  const prev = select.value;
+  const list = state.tools.filter(t => t.status === 'out' && matches(t, $('returnSearch').value)).sort(byDue);
+  select.innerHTML = list.length
+    ? list.map(t => `<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.name)} (${esc(t.loan.borrower)})</option>`).join('')
+    : '<option value="">No checked-out tools match</option>';
+  if (list.some(t => t.id === prev)) select.value = prev;
+  renderReturnInfo();
+}
+
+function renderReturnInfo() {
+  const t = byId($('returnTool').value);
+  if (!t || !t.loan) {
+    $('returnInfo').textContent = 'Select a tool to see who has it.';
+    return;
+  }
+  const late = daysBetween(t.loan.dueDate, today());
+  const dueText = late > 0
+    ? `<strong class="late">${late} day${late > 1 ? 's' : ''} overdue</strong> (due ${fmt(t.loan.dueDate)})`
+    : `Due ${fmt(t.loan.dueDate)}`;
+  $('returnInfo').innerHTML =
+    `<strong>${esc(t.loan.borrower)}</strong>${t.loan.memberId ? ' · ' + esc(t.loan.memberId) : ''}` +
+    `<span>Out since ${fmt(t.loan.outDate)} · ${dueText}</span>` +
+    (t.loan.notes ? `<span class="muted">Notes: ${esc(t.loan.notes)}</span>` : '');
+}
+
+function renderOut() {
+  const outs = state.tools.filter(t => t.status === 'out').sort(byDue);
+  $('outCount').textContent = `${outs.length} tool${outs.length === 1 ? '' : 's'} out`;
+  $('outBody').innerHTML = outs.length
+    ? outs.map(t => `
+      <tr class="${statusOf(t) === 'overdue' ? 'row-overdue' : ''}">
+        <td>${esc(t.name)}<div class="muted small">${esc(t.id)}</div></td>
+        <td>${esc(t.loan.borrower)}<div class="muted small">${esc(t.loan.memberId)}</div></td>
+        <td>${fmt(t.loan.outDate)}</td>
+        <td>${fmt(t.loan.dueDate)}</td>
+        <td>${badge(statusOf(t))}</td>
+        <td class="right"><button type="button" data-return="${esc(t.id)}">Check in</button></td>
+      </tr>`).join('')
+    : '<tr><td colspan="6" class="empty">Nothing is checked out.</td></tr>';
+}
+
+function renderCatalog() {
+  const list = state.tools.filter(t => matches(t, $('catalogSearch').value));
+  $('catalogBody').innerHTML = list.length
+    ? list.map(t => `
+      <tr>
+        <td class="mono">${esc(t.id)}</td>
+        <td>${esc(t.name)}</td>
+        <td>${esc(t.category)}</td>
+        <td>${esc(t.condition)}</td>
+        <td>${badge(statusOf(t))}</td>
+        <td class="right">${t.status === 'maintenance' ? `<button type="button" data-repaired="${esc(t.id)}">Mark repaired</button>` : ''}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="6" class="empty">No tools match.</td></tr>';
+}
+
+function renderLog() {
+  $('activity').innerHTML = state.log.length
+    ? state.log.slice(0, 8).map(e => `<li><time>${new Date(e.at).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}</time>${esc(e.text)}</li>`).join('')
+    : '<li class="muted">No activity yet.</li>';
+}
+
+function renderAll() {
+  $('today').textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+  renderStats();
+  renderLendOptions();
+  renderReturnOptions();
+  renderOut();
+  renderCatalog();
+  renderLog();
+}
+
+function commit() {
+  save();
+  renderAll();
+}
+
+function setDue(days) {
+  $('dueDate').value = addDays($('outDate').value || today(), days);
+}
+
+function selectReturn(id) {
+  $('returnSearch').value = '';
+  renderReturnOptions();
+  $('returnTool').value = id;
+  renderReturnInfo();
+  $('returnForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  $('returnCondition').focus();
+}
+
+// Lend
+$('lendSearch').addEventListener('input', renderLendOptions);
+$('lendForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const tool = byId($('lendTool').value);
+  const borrower = $('borrower').value.trim();
+  const out = $('outDate').value;
+  const due = $('dueDate').value;
+  if (!tool || tool.status !== 'available') return flash('Pick an available tool first.', 'bad');
+  if (!borrower) return flash('Enter the borrower’s name.', 'bad');
+  if (!out || !due || due < out) return flash('Due date must be on or after the out date.', 'bad');
+
+  tool.status = 'out';
+  tool.loan = { borrower, memberId: $('memberId').value.trim(), outDate: out, dueDate: due, notes: $('lendNotes').value.trim() };
+  log(`Lent ${tool.name} (${tool.id}) to ${borrower}, due ${fmt(due)}`);
+
+  e.target.reset();
+  $('outDate').value = today();
+  setDue(7);
+  flash(`${tool.name} checked out to ${borrower}.`);
+  commit();
+});
+document.querySelectorAll('[data-days]').forEach(btn =>
+  btn.addEventListener('click', () => setDue(Number(btn.dataset.days))));
+
+// Return
+$('returnSearch').addEventListener('input', renderReturnOptions);
+$('returnTool').addEventListener('change', renderReturnInfo);
+$('returnForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const tool = byId($('returnTool').value);
+  if (!tool || !tool.loan) return flash('Pick a checked-out tool first.', 'bad');
+
+  const condition = $('returnCondition').value;
+  const note = $('returnNote').value.trim();
+  const who = tool.loan.borrower;
+  const lendable = condition === 'Good' || condition === 'Needs cleaning';
+
+  tool.status = lendable ? 'available' : 'maintenance';
+  tool.condition = condition;
+  tool.loan = null;
+  log(`${tool.name} (${tool.id}) returned by ${who}: ${condition}${note ? ' — ' + note : ''}`);
+
+  e.target.reset();
+  $('returnSearch').value = '';
+  flash(
+    lendable ? `${tool.name} checked in and available.` : `${tool.name} checked in and sent to repair.`,
+    lendable ? 'ok' : 'warn'
+  );
+  commit();
+});
+
+// Tables
+$('outBody').addEventListener('click', e => {
+  const btn = e.target.closest('[data-return]');
+  if (btn) selectReturn(btn.dataset.return);
+});
+$('catalogBody').addEventListener('click', e => {
+  const btn = e.target.closest('[data-repaired]');
+  if (!btn) return;
+  const tool = byId(btn.dataset.repaired);
+  if (!tool) return;
+  tool.status = 'available';
+  tool.condition = 'Good';
+  log(`${tool.name} (${tool.id}) marked repaired and available`);
+  flash(`${tool.name} is available again.`);
+  commit();
+});
+$('catalogSearch').addEventListener('input', renderCatalog);
+
+// Keep Enter in search boxes from submitting the forms
+document.querySelectorAll('input[type="search"]').forEach(input =>
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') e.preventDefault(); }));
+
+// Reset
+$('resetBtn').addEventListener('click', () => {
+  if (!confirm('Reset all tools and activity to the sample data? Current records will be lost.')) return;
+  state = seed();
+  flash('Sample data restored.', 'warn');
+  commit();
+});
+
+// Init
+$('outDate').value = today();
+setDue(7);
+renderAll();
+</script>
+</body>
+</html>

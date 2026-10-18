@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book kiln time</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f8f3ec;
+    --card: #fffdf9;
+    --ink: #2a211c;
+    --muted: #5e5249;
+    --line: #d9cdbf;
+    --edge: #7d7066;
+    --accent: #8a3b1e;
+    --accent-ink: #fff;
+    --accent-soft: #f5e4da;
+    --ok: #2f5d3a;
+    --ok-soft: #e3f0e5;
+    --err: #a3200f;
+    --err-soft: #fbe6e2;
+    --radius: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; font-size: 1rem; }
+  .wrap { max-width: 62rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-size: 1.9rem; margin: 0 0 .25rem; line-height: 1.2; }
+  h2 { font-size: 1.1rem; margin: 0 0 .75rem; }
+  .lede { color: var(--muted); margin: 0 0 1.5rem; max-width: 40rem; }
+  .layout { display: grid; gap: 1.5rem; grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); align-items: start; }
+  @media (max-width: 52rem) { .layout { grid-template-columns: minmax(0, 1fr); } }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.1rem 1.25rem; }
+  fieldset { border: 0; margin: 0 0 1.4rem; padding: 0; min-width: 0; }
+  legend { font-weight: 650; padding: 0; margin-bottom: .5rem; }
+  .hint { color: var(--muted); font-size: .9rem; margin: -.25rem 0 .6rem; }
+  .opts { display: grid; gap: .5rem; }
+  .kilns { grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+  .days { grid-template-columns: repeat(auto-fill, minmax(4.6rem, 1fr)); }
+  .slots { grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); }
+  .opt { position: relative; }
+  .opt input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .opt label {
+    display: block; height: 100%; padding: .6rem .75rem; border: 1.5px solid var(--edge); border-radius: 8px;
+    background: #fff; overflow-wrap: anywhere;
+  }
+  .opt label small { display: block; color: var(--muted); font-size: .85rem; }
+  .days .opt label { text-align: center; padding: .5rem .25rem; }
+  .days .opt label b { display: block; font-size: 1.15rem; }
+  .opt input:hover + label { border-color: var(--accent); }
+  .opt input:checked + label { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+  .opt input:checked + label::after { content: "Selected"; position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .opt input:focus-visible + label { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .opt input:disabled { cursor: not-allowed; }
+  .opt input:disabled + label { background: #efe8de; border-style: dashed; border-color: var(--line); color: var(--muted); }
+  .field { margin-bottom: 1rem; }
+  .field label { display: block; font-weight: 650; margin-bottom: .25rem; }
+  input[type=text], input[type=email], textarea {
+    width: 100%; font: inherit; color: inherit; padding: .55rem .7rem; border: 1.5px solid var(--edge); border-radius: 8px; background: #fff;
+  }
+  textarea { min-height: 4.5rem; resize: vertical; }
+  :is(input, textarea, button, a):focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  [aria-invalid=true] { border-color: var(--err) !important; }
+  .err { color: var(--err); font-size: .92rem; margin: .3rem 0 0; display: flex; gap: .35rem; }
+  .err::before { content: "⚠"; }
+  .err[hidden] { display: none; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 8px; padding: .65rem 1.1rem; min-height: 2.75rem;
+    border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-ink); font-weight: 650;
+  }
+  button.secondary { background: transparent; color: var(--accent); }
+  button.link { border: 0; background: none; color: var(--accent); text-decoration: underline; padding: .3rem .4rem; min-height: 2.25rem; font-weight: 600; }
+  button[aria-disabled=true] { opacity: .75; cursor: progress; }
+  .banner { border-radius: 8px; padding: .75rem .9rem; margin-bottom: 1rem; border: 1px solid; }
+  .banner[hidden] { display: none; }
+  .banner.bad { background: var(--err-soft); border-color: var(--err); color: #5c140a; }
+  .banner.good { background: var(--ok-soft); border-color: var(--ok); color: #1b3a23; }
+  .banner h3 { margin: 0 0 .15rem; font-size: 1rem; }
+  .banner p { margin: 0 0 .4rem; }
+  .banner ul { margin: .25rem 0 0; padding-left: 1.2rem; }
+  .banner a { color: inherit; font-weight: 600; }
+  .summary dl { margin: 0 0 1rem; display: grid; grid-template-columns: auto 1fr; gap: .3rem .8rem; }
+  .summary dt { color: var(--muted); }
+  .summary dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+  .summary dd.empty { color: var(--muted); font-weight: 400; }
+  .side { display: grid; gap: 1.5rem; }
+  ul.list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+  ul.list li { border: 1px solid var(--line); border-radius: 8px; padding: .6rem .7rem; background: #fff; display: flex; gap: .6rem; justify-content: space-between; align-items: flex-start; }
+  ul.list li div { min-width: 0; overflow-wrap: anywhere; }
+  ul.list small { color: var(--muted); display: block; }
+  .empty-state { color: var(--muted); margin: 0; }
+  .skel { height: 3rem; border-radius: 8px; background: linear-gradient(90deg, #eee5d9, #f7f1e8, #eee5d9); background-size: 200% 100%; animation: sh 1.2s linear infinite; margin-bottom: .5rem; }
+  @keyframes sh { to { background-position: -200% 0; } }
+  .toast {
+    position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); width: min(30rem, calc(100% - 2rem));
+    background: var(--ink); color: #fff; border-radius: 10px; padding: .6rem .9rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .toast[hidden] { display: none; }
+  .toast button { color: #ffd9c4; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Book kiln time</h1>
+  <p class="lede">Pick a kiln, a day and a load window. Your booking holds that window for your firing; you can cancel it any time from "Your bookings".</p>
+
+  <div class="layout">
+    <form class="panel" id="form" novalidate aria-describedby="status">
+      <div id="banner-err" class="banner bad" role="alert" hidden tabindex="-1"></div>
+      <div id="banner-ok" class="banner good" role="status" hidden tabindex="-1"></div>
+
+      <fieldset id="fs-kiln" aria-describedby="e-kiln">
+        <legend>1. Kiln</legend>
+        <div class="opts kilns" id="kilns"></div>
+        <p class="err" id="e-kiln" hidden></p>
+      </fieldset>
+
+      <fieldset id="fs-day" aria-describedby="e-day">
+        <legend>2. Day</legend>
+        <div class="opts days" id="days"></div>
+        <p class="err" id="e-day" hidden></p>
+      </fieldset>
+
+      <fieldset id="fs-slot" aria-describedby="e-slot slot-hint">
+        <legend>3. Load window</legend>
+        <p class="hint" id="slot-hint">Choose a kiln and day first to see which windows are free.</p>
+        <div class="opts slots" id="slots"></div>
+        <p class="err" id="e-slot" hidden></p>
+      </fieldset>
+
+      <div class="field">
+        <label for="name">Your name</label>
+        <input type="text" id="name" autocomplete="name" aria-describedby="e-name">
+        <p class="err" id="e-name" hidden></p>
+      </div>
+      <div class="field">
+        <label for="email">Email for confirmation</label>
+        <input type="email" id="email" autocomplete="email" aria-describedby="e-email">
+        <p class="err" id="e-email" hidden></p>
+      </div>
+      <div class="field">
+        <label for="notes">What's going in? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+        <textarea id="notes" maxlength="300" placeholder="e.g. 6 mugs and a large platter, glaze firing"></textarea>
+      </div>
+
+      <button type="submit" id="submit">Book this window</button>
+      <span id="status" class="sr" role="status"></span>
+    </form>
+
+    <aside class="side">
+      <section class="panel summary" aria-labelledby="sum-h">
+        <h2 id="sum-h">Your selection</h2>
+        <dl>
+          <dt>Kiln</dt><dd id="s-kiln" class="empty">Not chosen</dd>
+          <dt>Day</dt><dd id="s-day" class="empty">Not chosen</dd>
+          <dt>Window</dt><dd id="s-slot" class="empty">Not chosen</dd>
+        </dl>
+      </section>
+
+      <section class="panel" aria-labelledby="mine-h" aria-busy="true" id="mine-sec">
+        <h2 id="mine-h">Your bookings</h2>
+        <div id="mine"><div class="skel"></div><div class="skel"></div></div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" hidden>
+    <span id="toast-msg"></span>
+    <button type="button" class="link" id="undo">Undo</button>
+  </div>
+</main>
+
+<script>
+(function () {
+  var KILNS = [
+    { id: "elec-lg", name: "Large electric kiln", note: "Bisque and glaze firings" },
+    { id: "elec-sm", name: "Small electric kiln", note: "Small loads and test tiles" },
+    { id: "gas", name: "Gas kiln", note: "Reduction firings" }
+  ];
+  var SLOTS = [
+    { id: "am", name: "Morning load", time: "9:00 am – 12:00 pm", start: 9 },
+    { id: "pm", name: "Afternoon load", time: "12:00 – 5:00 pm", start: 12 },
+    { id: "eve", name: "Evening load", time: "5:00 – 9:00 pm", start: 17 }
+  ];
+  var DAYS = 14, KEY = "kiln-bookings-v1";
+  var $ = function (id) { return document.getElementById(id); };
+  var state = { kiln: "", day: "", slot: "" };
+  var bookings = [], pendingUndo = null, undoTimer = null, busy = false;
+
+  function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function parse(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function longDay(s) { return parse(s).toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" }); }
+  function kilnName(id) { return (KILNS.filter(function (k) { return k.id === id; })[0] || {}).name || id; }
+  function slotOf(id) { return SLOTS.filter(function (s) { return s.id === id; })[0]; }
+  function el(tag, props, kids) {
+    var e = document.createElement(tag);
+    Object.keys(props || {}).forEach(function (k) { if (k === "text") e.textContent = props[k]; else e.setAttribute(k, props[k]); });
+    (kids || []).forEach(function (c) { e.appendChild(c); });
+    return e;
+  }
+  function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
+
+  // Windows held by other members (sample data) plus the member's own bookings.
+  function takenBy(kiln, day, slot) {
+    var mine = bookings.some(function (b) { return b.kiln === kiln && b.day === day && b.slot === slot; });
+    if (mine) return "yours";
+    return hash(kiln + day + slot) % 5 === 0 ? "other" : "";
+  }
+  function pastWindow(day, slot) {
+    var now = new Date();
+    return day === iso(now) && now.getHours() >= slotOf(slot).start;
+  }
+
+  function load() {
+    try { bookings = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { bookings = []; }
+    var today = iso(new Date());
+    bookings = bookings.filter(function (b) { return b.day >= today; });
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(bookings)); } catch (e) {} }
+
+  function radio(group, value, labelNodes, checked, disabled) {
+    var id = group + "-" + value;
+    var wrap = el("div", { "class": "opt" });
+    var inp = el("input", { type: "radio", name: group, id: id, value: value });
+    if (checked) inp.checked = true;
+    if (disabled) inp.disabled = true;
+    var lab = el("label", { "for": id }, labelNodes);
+    wrap.appendChild(inp); wrap.appendChild(lab);
+    return wrap;
+  }
+
+  function renderKilns() {
+    var box = $("kilns"); box.textContent = "";
+    KILNS.forEach(function (k) {
+      box.appendChild(radio("kiln", k.id, [el("b", { text: k.name }), el("small", { text: k.note })], state.kiln === k.id));
+    });
+  }
+  function renderDays() {
+    var box = $("days"); box.textContent = ""; box.setAttribute("role", "group");
+    var d = new Date();
+    for (var i = 0; i < DAYS; i++) {
+      var s = iso(d);
+      var wd = d.toLocaleDateString(undefined, { weekday: "short" });
+      var mo = d.toLocaleDateString(undefined, { month: "short" });
+      var node = radio("day", s, [el("small", { text: wd }), el("b", { text: String(d.getDate()) }), el("small", { text: mo })], state.day === s);
+      node.querySelector("label").setAttribute("aria-label", longDay(s));
+      box.appendChild(node);
+      d.setDate(d.getDate() + 1);
+    }
+  }
+  function renderSlots() {
+    var box = $("slots"), hint = $("slot-hint"); box.textContent = "";
+    if (!state.kiln || !state.day) { hint.hidden = false; hint.textContent = "Choose a kiln and day first to see which windows are free."; return; }
+    var free = 0;
+    SLOTS.forEach(function (s) {
+      var t = takenBy(state.kiln, state.day, s.id);
+      var past = pastWindow(state.day, s.id);
+      var status = past ? "Already started" : t === "yours" ? "You've booked this" : t ? "Booked by another member" : "Free";
+      var off = !!(t || past);
+      if (!off) free++;
+      var node = radio("slot", s.id, [el("b", { text: s.name }), el("small", { text: s.time }), el("small", { text: status })], state.slot === s.id && !off, off);
+      box.appendChild(node);
+    });
+    if (state.slot && (takenBy(state.kiln, state.day, state.slot) || pastWindow(state.day, state.slot))) state.slot = "";
+    hint.hidden = false;
+    hint.textContent = free ? free + " of " + SLOTS.length + " windows free on " + longDay(state.day) + " for the " + kilnName(state.kiln).toLowerCase() + "."
+      : "Every window is taken on " + longDay(state.day) + " for the " + kilnName(state.kiln).toLowerCase() + ". Try another day or kiln.";
+  }
+  function renderSummary() {
+    function set(id, txt) { var e = $(id); e.textContent = txt || "Not chosen"; e.className = txt ? "" : "empty"; }
+    set("s-kiln", state.kiln && kilnName(state.kiln));
+    set("s-day", state.day && longDay(state.day));
+    var s = state.slot && slotOf(state.slot);
+    set("s-slot", s && (s.name + ", " + s.time));
+  }
+
+  function renderMine() {
+    var box = $("mine"); box.textContent = "";
+    $("mine-sec").setAttribute("aria-busy", "false");
+    if (!bookings.length) {
+      box.appendChild(el("p", { "class": "empty-state", text: "No firings booked yet. Pick a kiln, day and load window and your booking will show up here." }));
+      return;
+    }
+    var ul = el("ul", { "class": "list" });
+    bookings.slice().sort(function (a, b) { return (a.day + slotOf(a.slot).start).localeCompare(b.day + slotOf(b.slot).start, undefined, { numeric: true }); })
+      .forEach(function (b) {
+        var s = slotOf(b.slot);
+        var info = el("div", {}, [el("b", { text: kilnName(b.kiln) }), el("small", { text: longDay(b.day) + ", " + s.time })]);
+        if (b.notes) info.appendChild(el("small", { text: b.notes }));
+        var btn = el("button", { type: "button", "class": "link", "data-id": b.id, "aria-label": "Cancel booking: " + kilnName(b.kiln) + ", " + longDay(b.day) + ", " + s.name, text: "Cancel" });
+        ul.appendChild(el("li", {}, [info, btn]));
+      });
+    box.appendChild(ul);
+  }
+
+  function refresh() { renderSlots(); renderSummary(); }
+
+  // Errors
+  function clearErrors() {
+    document.querySelectorAll(".err").forEach(function (e) { e.hidden = true; e.textContent = ""; });
+    document.querySelectorAll("[aria-invalid]").forEach(function (e) { e.removeAttribute("aria-invalid"); });
+    $("banner-err").hidden = true;
+  }
+  function setErr(id, msg, field) {
+    var e = $(id); e.textContent = msg; e.hidden = false;
+    if (field) field.setAttribute("aria-invalid", "true");
+  }
+  function validate() {
+    clearErrors();
+    var problems = [];
+    function add(errId, msg, focusEl, field, label) { setErr(errId, msg, field); problems.push({ msg: label || msg, el: focusEl }); }
+    if (!state.kiln) add("e-kiln", "Choose which kiln you want.", document.querySelector("input[name=kiln]"), $("fs-kiln"), "Choose a kiln");
+    if (!state.day) add("e-day", "Choose a day for your firing.", document.querySelector("input[name=day]"), $("fs-day"), "Choose a day");
+    if (!state.slot) add("e-slot", state.kiln && state.day ? "Choose one of the free load windows." : "Choose a kiln and day, then a load window.",
+      document.querySelector("input[name=slot]:not(:disabled)") || document.querySelector("input[name=day]:checked") || document.querySelector("input[name=kiln]"), $("fs-slot"), "Choose a load window");
+    var name = $("name").value.trim(), email = $("email").value.trim();
+    if (!name) add("e-name", "Enter your name so the studio knows who the booking is for.", $("name"), $("name"), "Enter your name");
+    if (!email) add("e-email", "Enter your email so we can send a confirmation.", $("email"), $("email"), "Enter your email");
+    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) add("e-email", "That doesn't look like an email address. It should look like name@example.com.", $("email"), $("email"), "Fix your email address");
+    return problems;
+  }
+
+  function showBannerErr(title, body, retry, list) {
+    var b = $("banner-err"); b.textContent = "";
+    b.appendChild(el("h3", { text: title }));
+    if (body) b.appendChild(el("p", { text: body }));
+    if (list) { var ul = el("ul"); list.forEach(function (p) { var a = el("a", { href: "#" , text: p.msg }); a.addEventListener("click", function (ev) { ev.preventDefault(); p.el.focus(); }); ul.appendChild(el("li", {}, [a])); }); b.appendChild(ul); }
+    if (retry) { var r = el("button", { type: "button", "class": "secondary", text: "Try again" }); r.addEventListener("click", function () { $("form").requestSubmit(); }); b.appendChild(r); }
+    b.hidden = false;
+  }
+
+  function setBusy(on) {
+    busy = on;
+    var b = $("submit");
+    b.setAttribute("aria-disabled", on ? "true" : "false");
+    b.textContent = on ? "Booking…" : "Book this window";
+    $("status").textContent = on ? "Booking your window" : "";
+  }
+
+  // Simulated request. Replace with the studio's real booking endpoint.
+  function send(rec) {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        if (navigator.onLine === false) return reject(new Error("offline"));
+        if (takenBy(rec.kiln, rec.day, rec.slot) && takenBy(rec.kiln, rec.day, rec.slot) !== "yours") return reject(new Error("taken"));
+        resolve(rec);
+      }, 700);
+    });
+  }
+
+  $("form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (busy) return;
+    $("banner-ok").hidden = true;
+    var problems = validate();
+    if (problems.length) {
+      showBannerErr(problems.length === 1 ? "One thing to fix before booking" : problems.length + " things to fix before booking", "", false, problems);
+      $("banner-err").focus();
+      return;
+    }
+    var rec = { id: String(Date.now()), kiln: state.kiln, day: state.day, slot: state.slot, name: $("name").value.trim(), email: $("email").value.trim(), notes: $("notes").value.trim() };
+    if (takenBy(rec.kiln, rec.day, rec.slot) === "yours") {
+      showBannerErr("You already hold this window", "Pick a different day, window or kiln, or cancel the existing booking first.");
+      $("banner-err").focus(); return;
+    }
+    setBusy(true);
+    send(rec).then(function () {
+      bookings.push(rec); save();
+      setBusy(false);
+      var s = slotOf(rec.slot);
+      var ok = $("banner-ok"); ok.textContent = "";
+      ok.appendChild(el("h3", { text: "Booked" }));
+      ok.appendChild(el("p", { text: kilnName(rec.kiln) + ", " + longDay(rec.day) + ", " + s.name + " (" + s.time + "). A confirmation will go to " + rec.email + "." }));
+      ok.hidden = false;
+      state.slot = ""; $("notes").value = "";
+      renderSlots(); renderSummary(); renderMine();
+      ok.focus();
+    }).catch(function (e) {
+      setBusy(false);
+      if (e.message === "taken") {
+        showBannerErr("That window was just taken", "Someone else booked it first. Your name, email and notes are still here. Pick another window.");
+        state.slot = ""; refresh();
+      } else {
+        showBannerErr("Your booking didn't go through", "We couldn't reach the booking service, so nothing was reserved. Check your connection and try again; what you entered is still here.", true);
+      }
+      $("banner-err").focus();
+    });
+  });
+
+  // Selection changes
+  $("form").addEventListener("change", function (ev) {
+    var t = ev.target;
+    if (t.name === "kiln") state.kiln = t.value;
+    else if (t.name === "day") state.day = t.value;
+    else if (t.name === "slot") state.slot = t.value;
+    else return;
+    var map = { kiln: ["e-kiln", "fs-kiln"], day: ["e-day", "fs-day"], slot: ["e-slot", "fs-slot"] }[t.name];
+    $(map[0]).hidden = true; $(map[1]).removeAttribute("aria-invalid");
+    $("banner-ok").hidden = true;
+    refresh();
+  });
+  ["name", "email"].forEach(function (id) {
+    $(id).addEventListener("input", function () { $("e-" + id).hidden = true; $(id).removeAttribute("aria-invalid"); });
+  });
+
+  // Cancel with undo
+  function showToast(msg) {
+    $("toast-msg").textContent = msg; $("toast").hidden = false;
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(function () { $("toast").hidden = true; pendingUndo = null; }, 8000);
+  }
+  $("mine").addEventListener("click", function (ev) {
+    var btn = ev.target.closest("button[data-id]"); if (!btn) return;
+    var idx = bookings.findIndex(function (b) { return b.id === btn.getAttribute("data-id"); });
+    if (idx < 0) return;
+    pendingUndo = { rec: bookings[idx] };
+    bookings.splice(idx, 1); save(); renderMine(); refresh();
+    showToast("Cancelled: " + kilnName(pendingUndo.rec.kiln) + ", " + longDay(pendingUndo.rec.day) + ".");
+    var next = $("mine").querySelector("button[data-id]") || $("mine-h");
+    if (next === $("mine-h")) next.setAttribute("tabindex", "-1");
+    next.focus();
+  });
+  $("undo").addEventListener("click", function () {
+    if (!pendingUndo) return;
+    var r = pendingUndo.rec;
+    if (takenBy(r.kiln, r.day, r.slot) === "other") {
+      $("toast-msg").textContent = "That window is no longer free, so it can't be restored.";
+      $("undo").hidden = true; setTimeout(function () { $("undo").hidden = false; $("toast").hidden = true; }, 4000);
+    } else {
+      bookings.push(r); save(); renderMine(); refresh();
+      $("toast").hidden = true; clearTimeout(undoTimer);
+      $("mine").querySelector("button[data-id]").focus();
+    }
+    pendingUndo = null;
+  });
+
+  // Init: brief loading state for "Your bookings"
+  renderKilns(); renderDays(); refresh();
+  setTimeout(function () { load(); renderMine(); refresh(); }, 400);
+})();
+</script>
+</body>
+</html>

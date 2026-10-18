@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Kiln</title>
+<style>
+:root{
+  --bg:#f6f1ea;--card:#fffdf9;--ink:#2b2420;--muted:#6e625a;--line:#e0d6ca;
+  --accent:#b4501f;--accent-ink:#fff;--accent-soft:#f6e1d3;--ok:#2f6b4a;--bad:#a12a2a;--disabled:#efe8de;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#1b1715;--card:#26201d;--ink:#f1e9e1;--muted:#a99c92;--line:#3b322d;
+  --accent:#e0794a;--accent-ink:#1b1715;--accent-soft:#41281c;--ok:#7ccaa0;--bad:#f08a8a;--disabled:#2f2825}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
+.wrap{max-width:1040px;margin:0 auto;padding:32px 20px 64px}
+h1{font-size:1.9rem;margin:0 0 4px;letter-spacing:-.01em}
+.lede{color:var(--muted);margin:0 0 28px;max-width:60ch}
+.layout{display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+fieldset{border:0;padding:0;margin:0 0 28px;min-width:0}
+legend{font-weight:650;font-size:1.05rem;padding:0;margin-bottom:10px}
+legend span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:.8rem;margin-right:8px}
+.hint{color:var(--muted);font-size:.9rem;margin:-4px 0 10px}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt label{display:block;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;cursor:pointer;height:100%}
+.opt input:checked+label{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent)}
+.opt input:focus-visible+label{outline:3px solid var(--accent);outline-offset:2px}
+.opt input:disabled+label{background:var(--disabled);color:var(--muted);cursor:not-allowed}
+.opt label:hover{border-color:var(--accent)}
+.opt input:disabled+label:hover{border-color:var(--line)}
+.kilns{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.kilns strong{display:block}
+.kilns small,.slots small{color:var(--muted);display:block}
+.tag{display:inline-block;font-size:.75rem;border:1px solid var(--line);border-radius:99px;padding:0 8px;margin-top:6px;color:var(--muted)}
+.weekbar{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.weekbar .range{flex:1;text-align:center;font-weight:600}
+button{font:inherit;cursor:pointer}
+.ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:8px;padding:6px 12px}
+.ghost:disabled{opacity:.45;cursor:not-allowed}
+.ghost:hover:not(:disabled){border-color:var(--accent)}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.days label{text-align:center;padding:8px 2px}
+.days .dow{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;display:block}
+.days .num{font-size:1.2rem;font-weight:650;display:block}
+.days .mon{font-size:.7rem;color:var(--muted);display:block}
+.slots{display:grid;gap:8px}
+.slots label{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.free{font-size:.85rem;font-weight:600;color:var(--ok);white-space:nowrap}
+.opt input:disabled+label .free{color:var(--bad)}
+.empty{color:var(--muted);border:1.5px dashed var(--line);border-radius:10px;padding:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.field>label{font-weight:600;font-size:.92rem}
+input[type=text],input[type=email],select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;width:100%}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+input[aria-invalid=true]{border-color:var(--bad)}
+.err{color:var(--bad);font-size:.85rem;min-height:1.2em}
+aside{position:sticky;top:16px}
+@media(max-width:860px){aside{position:static}}
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}
+.panel h2{font-size:1.05rem;margin:0 0 12px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.95rem}
+dt{color:var(--muted)}dd{margin:0;text-align:right}
+dd.unset{color:var(--muted);font-style:italic}
+.total{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:14px;padding-top:12px;font-weight:700;font-size:1.15rem}
+.primary{width:100%;margin-top:14px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:12px;font-weight:700}
+.primary:hover{filter:brightness(1.07)}
+.note{font-size:.82rem;color:var(--muted);margin:10px 0 0}
+#status{margin:0 0 16px;padding:12px 14px;border-radius:10px;background:var(--accent-soft);border:1.5px solid var(--accent);display:none}
+#status.show{display:block}
+.bk{list-style:none;margin:0;padding:0}
+.bk li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:.92rem}
+.bk li:first-child{border-top:0}
+.bk small{color:var(--muted);display:block}
+.link{background:none;border:0;color:var(--bad);text-decoration:underline;padding:4px}
+.rules{font-size:.88rem;color:var(--muted);padding-left:18px;margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Book a kiln</h1>
+  <p class="lede">Reserve shelf space in a shared firing. Pick a kiln, a day and a loading window, then tell us how many shelves you need.</p>
+  <div id="status" role="status" aria-live="polite"></div>
+
+  <div class="layout">
+    <form id="form" novalidate>
+      <fieldset>
+        <legend><span>1</span>Choose a kiln</legend>
+        <div class="kilns" id="kilns"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span>2</span>Choose a day</legend>
+        <div class="weekbar">
+          <button type="button" class="ghost" id="prev" aria-label="Previous week">‹ Prev</button>
+          <div class="range" id="range" aria-live="polite"></div>
+          <button type="button" class="ghost" id="next" aria-label="Next week">Next ›</button>
+        </div>
+        <div class="days" id="days"></div>
+        <p class="hint" id="dayhint" style="margin-top:8px"></p>
+      </fieldset>
+
+      <fieldset>
+        <legend><span>3</span>Choose a loading window</legend>
+        <div class="slots" id="slots"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span>4</span>Your firing</legend>
+        <div class="grid2">
+          <div class="field">
+            <label for="firing">Firing type</label>
+            <select id="firing"></select>
+          </div>
+          <div class="field">
+            <label for="shelves">Shelves needed</label>
+            <select id="shelves"></select>
+          </div>
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" autocomplete="name" aria-describedby="name-err">
+            <div class="err" id="name-err"></div>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" autocomplete="email" aria-describedby="email-err">
+            <div class="err" id="email-err"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="notes">Notes for the studio manager <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <textarea id="notes" rows="3" placeholder="Tall pieces, test tiles, glaze concerns…"></textarea>
+        </div>
+      </fieldset>
+    </form>
+
+    <aside>
+      <div class="panel" aria-labelledby="sum-h">
+        <h2 id="sum-h">Your booking</h2>
+        <dl>
+          <dt>Kiln</dt><dd id="s-kiln"></dd>
+          <dt>Date</dt><dd id="s-date"></dd>
+          <dt>Window</dt><dd id="s-slot"></dd>
+          <dt>Firing</dt><dd id="s-firing"></dd>
+          <dt>Shelves</dt><dd id="s-shelves"></dd>
+        </dl>
+        <div class="total"><span>Estimate</span><span id="s-total">$0.00</span></div>
+        <button type="submit" form="form" class="primary" id="confirm">Confirm booking</button>
+        <p class="note">Billed to your studio account after the firing. Cancel free up to 24 hours before the window.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Your upcoming bookings</h2>
+        <ul class="bk" id="bk"></ul>
+      </div>
+
+      <div class="panel">
+        <h2>Kiln etiquette</h2>
+        <ul class="rules">
+          <li>Wax the foot of every glazed piece.</li>
+          <li>Keep 1/2" between pieces and shelf posts.</li>
+          <li>Label the underside with your initials.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KILNS=[
+    {id:"big",name:"Big Bertha",desc:"Front-loading electric, 7 cu ft",cone:"Cone 06 – 6",shelves:6,rate:9,days:[0,1,2,3,4,5,6],firings:["Bisque (cone 04)","Glaze (cone 6)","Low-fire glaze (cone 06)"]},
+    {id:"test",name:"Little Pip",desc:"Small electric, ideal for tests and small runs",cone:"Cone 06 – 6",shelves:3,rate:7,days:[0,1,2,3,4,5,6],firings:["Bisque (cone 04)","Glaze (cone 6)","Test tiles"]},
+    {id:"gas",name:"The Dragon",desc:"Gas reduction kiln, Fri–Sun only",cone:"Cone 10",shelves:5,rate:14,days:[5,6,0],firings:["Bisque (cone 04)","Reduction glaze (cone 10)"]},
+    {id:"raku",name:"Raku Barrel",desc:"Weekend raku sessions, attendance required",cone:"Cone 06",shelves:2,rate:11,days:[6,0],firings:["Raku firing"]}
+  ];
+  var SLOTS=[
+    {id:"am",label:"Morning load",time:"8:00 – 11:00 am",start:8},
+    {id:"pm",label:"Afternoon load",time:"12:00 – 3:00 pm",start:12},
+    {id:"eve",label:"Evening load",time:"5:00 – 8:00 pm",start:17}
+  ];
+  var DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var KEY="kiln-bookings-v1";
+
+  var $=function(id){return document.getElementById(id)};
+  var st={kiln:"big",date:null,slot:null,week:0};
+  var bookings=[];
+  try{bookings=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){}
+
+  var today=new Date();today.setHours(0,0,0,0);
+  function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+  function parse(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2])}
+  function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
+  function nice(s){var d=parse(s);return DOW[d.getDay()]+", "+MON[d.getMonth()]+" "+d.getDate()}
+  function money(n){return "$"+n.toFixed(2)}
+  function kiln(id){return KILNS.filter(function(k){return k.id===id})[0]}
+  function slot(id){return SLOTS.filter(function(s){return s.id===id})[0]}
+  function h(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+
+  // Deterministic stand-in for shelves already claimed by other members.
+  function seeded(k,date,s){
+    var str=k.id+date+s.id,n=0;
+    for(var i=0;i<str.length;i++)n=(n*31+str.charCodeAt(i))>>>0;
+    var r=n%10;
+    if(r<2)return k.shelves;
+    if(r<6)return Math.floor(k.shelves*((r-1)/7));
+    return 0;
+  }
+  function used(k,date,s){
+    var mine=bookings.filter(function(b){return b.kiln===k.id&&b.date===date&&b.slot===s.id})
+      .reduce(function(a,b){return a+b.shelves},0);
+    return Math.min(k.shelves,seeded(k,date,s)+mine);
+  }
+  function isPast(date,s){
+    var d=parse(date);
+    if(d<today)return true;
+    return d.getTime()===today.getTime()&&new Date().getHours()>=s.start;
+  }
+  function freeShelves(k,date,s){return isPast(date,s)?0:k.shelves-used(k,date,s)}
+
+  function renderKilns(){
+    $("kilns").innerHTML=KILNS.map(function(k){
+      return '<div class="opt"><input type="radio" name="kiln" id="k-'+k.id+'" value="'+k.id+'"'+(st.kiln===k.id?" checked":"")+'>'+
+        '<label for="k-'+k.id+'"><strong>'+h(k.name)+'</strong><small>'+h(k.desc)+'</small>'+
+        '<span class="tag">'+h(k.cone)+'</span> <span class="tag">'+money(k.rate)+' / shelf</span></label></div>';
+    }).join("");
+  }
+
+  function renderDays(){
+    var k=kiln(st.kiln),start=addDays(today,st.week*7),end=addDays(start,6);
+    $("range").textContent=MON[start.getMonth()]+" "+start.getDate()+" – "+MON[end.getMonth()]+" "+end.getDate();
+    $("prev").disabled=st.week===0;
+    $("next").disabled=st.week>=7;
+    var out="",anyClosed=false;
+    for(var i=0;i<7;i++){
+      var d=addDays(start,i),s=iso(d),open=k.days.indexOf(d.getDay())>-1;
+      if(!open)anyClosed=true;
+      out+='<div class="opt"><input type="radio" name="date" id="d-'+s+'" value="'+s+'"'+(open?"":" disabled")+(st.date===s?" checked":"")+'>'+
+        '<label for="d-'+s+'"><span class="dow">'+DOW[d.getDay()]+'</span><span class="num">'+d.getDate()+'</span><span class="mon">'+(open?MON[d.getMonth()]:"closed")+'</span></label></div>';
+    }
+    $("days").innerHTML=out;
+    $("dayhint").textContent=anyClosed?k.name+" is only fired on "+k.days.slice().sort().map(function(n){return DOW[n]}).join(", ")+".":"";
+  }
+
+  function renderSlots(){
+    var k=kiln(st.kiln);
+    if(!st.date){$("slots").innerHTML='<div class="empty">Pick a day to see open loading windows.</div>';return}
+    $("slots").innerHTML=SLOTS.map(function(s){
+      var f=freeShelves(k,st.date,s);
+      return '<div class="opt"><input type="radio" name="slot" id="s-'+s.id+'" value="'+s.id+'"'+(f?"":" disabled")+(st.slot===s.id&&f?" checked":"")+'>'+
+        '<label for="s-'+s.id+'"><span><strong>'+s.label+'</strong><small>'+s.time+'</small></span>'+
+        '<span class="free">'+(f?f+" of "+k.shelves+" shelves free":(isPast(st.date,s)?"Passed":"Full"))+'</span></label></div>';
+    }).join("");
+  }
+
+  function renderOptions(){
+    var k=kiln(st.kiln),prev=$("firing").value;
+    $("firing").innerHTML=k.firings.map(function(f){return "<option>"+h(f)+"</option>"}).join("");
+    if(k.firings.indexOf(prev)>-1)$("firing").value=prev;
+    renderShelves();
+  }
+  function renderShelves(){
+    var k=kiln(st.kiln),max=k.shelves,prev=+$("shelves").value||1;
+    if(st.date&&st.slot)max=freeShelves(k,st.date,slot(st.slot));
+    max=Math.max(1,max);
+    var o="";
+    for(var i=1;i<=max;i++)o+='<option value="'+i+'">'+i+(i===1?" shelf":" shelves")+"</option>";
+    $("shelves").innerHTML=o;
+    $("shelves").value=Math.min(prev,max);
+  }
+
+  function renderSummary(){
+    var k=kiln(st.kiln),n=+$("shelves").value||1;
+    function set(id,v){var e=$(id);e.textContent=v||"Not chosen";e.className=v?"":"unset"}
+    set("s-kiln",k.name);
+    set("s-date",st.date&&nice(st.date));
+    set("s-slot",st.slot&&slot(st.slot).time);
+    set("s-firing",$("firing").value);
+    set("s-shelves",String(n));
+    $("s-total").textContent=money(n*k.rate);
+  }
+
+  function renderBookings(){
+    var up=bookings.filter(function(b){return parse(b.date)>=today})
+      .sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});
+    $("bk").innerHTML=up.length?up.map(function(b){
+      return '<li><span><strong>'+h(kiln(b.kiln).name)+'</strong><small>'+nice(b.date)+' · '+slot(b.slot).time+'<br>'+b.shelves+(b.shelves===1?" shelf":" shelves")+' · '+h(b.firing)+'</small></span>'+
+        '<button type="button" class="link" data-cancel="'+b.id+'" aria-label="Cancel booking for '+h(kiln(b.kiln).name)+' on '+nice(b.date)+'">Cancel</button></li>';
+    }).join(""):'<li style="color:var(--muted)">Nothing booked yet.</li>';
+  }
+
+  function say(msg){var s=$("status");s.textContent=msg;s.className="show";s.scrollIntoView({block:"nearest",behavior:"smooth"})}
+  function fieldErr(id,msg){
+    $(id).setAttribute("aria-invalid",msg?"true":"false");
+    $(id+"-err").textContent=msg||"";
+  }
+
+  $("form").addEventListener("change",function(e){
+    var t=e.target;
+    if(t.name==="kiln"){
+      st.kiln=t.value;st.slot=null;
+      var k=kiln(st.kiln);
+      if(st.date&&k.days.indexOf(parse(st.date).getDay())<0)st.date=null;
+      renderDays();renderSlots();renderOptions();
+    }else if(t.name==="date"){st.date=t.value;st.slot=null;renderSlots();renderShelves()}
+    else if(t.name==="slot"){st.slot=t.value;renderShelves()}
+    renderSummary();
+  });
+  $("prev").onclick=function(){st.week--;renderDays()};
+  $("next").onclick=function(){st.week++;renderDays()};
+  $("bk").addEventListener("click",function(e){
+    var id=e.target.getAttribute("data-cancel");
+    if(!id)return;
+    bookings=bookings.filter(function(b){return b.id!==id});
+    save();renderBookings();renderSlots();renderShelves();renderSummary();
+    say("Booking cancelled.");
+  });
+
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(bookings))}catch(e){}}
+
+  $("form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var name=$("name").value.trim(),email=$("email").value.trim(),bad=false;
+    fieldErr("name",name?"":"Please enter your name.");
+    fieldErr("email",/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)?"":"Please enter a valid email address.");
+    if(!name||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))bad=true;
+    if(!st.date||!st.slot){
+      say("Choose a day and loading window first.");
+      (st.date?$("slots"):$("days")).scrollIntoView({block:"center",behavior:"smooth"});
+      return;
+    }
+    if(bad){(!name?$("name"):$("email")).focus();return}
+    var k=kiln(st.kiln),s=slot(st.slot),n=+$("shelves").value;
+    if(n>freeShelves(k,st.date,s)){say("Sorry, that window just filled up. Please pick another.");renderSlots();return}
+    bookings.push({id:String(Date.now()),kiln:k.id,date:st.date,slot:s.id,shelves:n,firing:$("firing").value,name:name,email:email,notes:$("notes").value.trim()});
+    save();
+    say("Booked: "+k.name+", "+nice(st.date)+", "+s.time+" ("+n+(n===1?" shelf":" shelves")+", "+money(n*k.rate)+"). A confirmation will go to "+email+".");
+    st.slot=null;
+    renderSlots();renderShelves();renderSummary();renderBookings();
+  });
+
+  renderKilns();renderDays();renderSlots();renderOptions();renderSummary();renderBookings();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Generic. Nothing says stock counting or independent bookshops, so a visitor can't tell what Tallyhouse does. "Work smarter, not harder" and "powerful platform" could describe any SaaS. Try naming the job and the buyer, like "Count your shelves in a day, not a weekend." with a subhead about stock counts for independent bookshops.

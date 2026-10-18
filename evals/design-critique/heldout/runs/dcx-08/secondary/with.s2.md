@@ -1,0 +1,1 @@
+Generic and interchangeable: "work smarter" and "one powerful platform" could describe any SaaS product. It doesn't say what Tallyhouse does or who it's for. Try something specific, like "Know what's on your shelves, without the closing-night spreadsheet," with a subhead naming stock counting for independent bookshops.

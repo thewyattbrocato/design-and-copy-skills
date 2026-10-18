@@ -1,0 +1,1 @@
+Too generic: "Work smarter, not harder" and "one powerful platform" could be any SaaS product, and a bookseller can't tell from this that Tallyhouse does stock counting. Lead with the job for bookshop owners, something like **"Know what's on your shelves, without closing for a full count."** with a subhead naming stock counting for independent bookshops.

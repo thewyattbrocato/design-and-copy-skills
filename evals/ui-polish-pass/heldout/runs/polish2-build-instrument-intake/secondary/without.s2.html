@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrument Drop-Off & Repair Request</title>
+<style>
+  :root {
+    --bg: #f6f4f0;
+    --card: #ffffff;
+    --text: #1f1d1a;
+    --muted: #6b655c;
+    --border: #d9d3c7;
+    --accent: #8a4b1f;
+    --accent-hover: #6e3b17;
+    --accent-soft: #f3e7dc;
+    --danger: #a12622;
+    --focus: #2b6cb0;
+    --radius: 10px;
+    color-scheme: light dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161411;
+      --card: #201d19;
+      --text: #f1ece4;
+      --muted: #a79f93;
+      --border: #3a342c;
+      --accent: #d08a52;
+      --accent-hover: #e39c66;
+      --accent-soft: #2e2620;
+      --danger: #ff8a80;
+      --focus: #7fb2ea;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 24px 16px 64px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  header h1 {
+    margin: 0 0 6px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  header p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .card h2 {
+    margin: 0 0 4px;
+    font-size: 1.1rem;
+    font-weight: 650;
+  }
+
+  .card > p.hint {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 560px) {
+    .grid.two { grid-template-columns: 1fr 1fr; }
+  }
+
+  label, .legend {
+    display: block;
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 6px;
+  }
+
+  .req { color: var(--danger); margin-left: 2px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    font: inherit;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+
+  textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  button:focus-visible,
+  .chip input:focus-visible + span {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .field { margin-bottom: 0; }
+
+  .error-msg {
+    display: none;
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  .invalid .error-msg { display: block; }
+  .invalid input,
+  .invalid select,
+  .invalid textarea { border-color: var(--danger); }
+
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    position: relative;
+  }
+
+  .chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .chip span {
+    display: inline-block;
+    padding: 7px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .chip span:hover { border-color: var(--accent); }
+
+  .chip input:checked + span {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .radios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+  }
+
+  .radios label {
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .checkbox-row input {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 11px 20px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: var(--accent-hover); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .btn-secondary:hover { border-color: var(--accent); }
+
+  .confirm {
+    display: none;
+    text-align: left;
+  }
+
+  .confirm dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 16px;
+    margin: 16px 0;
+  }
+
+  .confirm dt {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .confirm dd {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .ticket {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+
+  .notice {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+  }
+
+  @media print {
+    body { background: #fff; color: #000; padding: 0; }
+    .card { border: 0; box-shadow: none; }
+    form, .no-print { display: none !important; }
+    .confirm { display: block !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Instrument Drop-Off &amp; Repair Request</h1>
+    <p>Tell us what's going on with your guitar or violin, and we'll take it from there.</p>
+  </header>
+
+  <form id="intake" novalidate>
+
+    <section class="card">
+      <h2>Your details</h2>
+      <p class="hint">So we can reach you when your instrument is ready or if we have questions.</p>
+      <div class="grid two">
+        <div class="field" id="field-name">
+          <label for="name">Full name<span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+          <div class="error-msg">Please enter your name.</div>
+        </div>
+        <div class="field" id="field-phone">
+          <label for="phone">Phone<span class="req" aria-hidden="true">*</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+          <div class="error-msg">Please enter a phone number.</div>
+        </div>
+        <div class="field" id="field-email">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email">
+          <div class="error-msg">That email address doesn't look right.</div>
+        </div>
+        <div class="field">
+          <label for="preferred">Preferred contact</label>
+          <select id="preferred" name="preferred">
+            <option value="phone">Phone</option>
+            <option value="email">Email</option>
+            <option value="text">Text message</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>About the instrument</h2>
+      <p class="hint">Make and model are usually printed on the headstock (guitar) or inside the body (violin).</p>
+      <div class="grid two">
+        <div class="field" id="field-type">
+          <label for="type">Instrument<span class="req" aria-hidden="true">*</span></label>
+          <select id="type" name="type" required>
+            <option value="">Choose one…</option>
+            <option value="Acoustic guitar">Acoustic guitar</option>
+            <option value="Electric guitar">Electric guitar</option>
+            <option value="Bass guitar">Bass guitar</option>
+            <option value="Classical guitar">Classical guitar</option>
+            <option value="Ukulele / other fretted">Ukulele / other fretted</option>
+            <option value="Violin">Violin</option>
+            <option value="Viola">Viola</option>
+            <option value="Cello">Cello</option>
+            <option value="Double bass">Double bass</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="error-msg">Please choose an instrument type.</div>
+        </div>
+        <div class="field">
+          <label for="make">Make / brand</label>
+          <input type="text" id="make" name="make" placeholder="e.g. Martin, Yamaha, Gliga">
+        </div>
+        <div class="field">
+          <label for="model">Model</label>
+          <input type="text" id="model" name="model" placeholder="e.g. D-28, FG830">
+        </div>
+        <div class="field">
+          <label for="serial">Serial number</label>
+          <input type="text" id="serial" name="serial">
+        </div>
+        <div class="field">
+          <label for="strings">Strings / setup</label>
+          <input type="text" id="strings" name="strings" placeholder="e.g. 12-53 phosphor bronze">
+        </div>
+        <div class="field">
+          <label for="case">Case or bag included?</label>
+          <select id="case" name="case">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Bow included">Yes, with bow (violin family)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>What's wrong?</h2>
+      <p class="hint">Select everything that applies. You can describe the details below.</p>
+      <fieldset>
+        <legend class="legend">Common issues<span class="req" aria-hidden="true">*</span></legend>
+        <div class="chips" id="issues">
+          <label class="chip"><input type="checkbox" name="issues" value="Buzzing or rattling"><span>Buzzing or rattling</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Hard to play / high action"><span>Hard to play / high action</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Won't stay in tune"><span>Won't stay in tune</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Fret wear or buzz"><span>Fret wear or buzz</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Cracked or open seam"><span>Cracked or open seam</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Loose bridge or neck"><span>Loose bridge or neck</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Bridge lifting or sinking"><span>Bridge lifting or sinking</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Sound post or bass bar"><span>Sound post or bass bar</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Electronics or pickup"><span>Electronics or pickup</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Tuning machines or pegs"><span>Tuning machines or pegs</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Finish damage"><span>Finish damage</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Water or humidity damage"><span>Water or humidity damage</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Bow rehair or repair"><span>Bow rehair or repair</span></label>
+          <label class="chip"><input type="checkbox" name="issues" value="Not sure / general checkup"><span>Not sure / general checkup</span></label>
+        </div>
+        <div class="error-msg" id="issues-error">Please select at least one issue, or choose "Not sure / general checkup."</div>
+      </fieldset>
+
+      <div class="field" id="field-description" style="margin-top: 20px;">
+        <label for="description">Describe the problem<span class="req" aria-hidden="true">*</span></label>
+        <textarea id="description" name="description" placeholder="When did it start? Does it happen with every string or only some? Any recent drops, travel, or changes in climate?" required></textarea>
+        <div class="error-msg">Please describe the problem so we can prepare.</div>
+      </div>
+
+      <div class="field" style="margin-top: 16px;">
+        <label for="previous">Previous repairs or modifications</label>
+        <input type="text" id="previous" name="previous" placeholder="Anything done by another shop or yourself">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Timing &amp; options</h2>
+      <p class="hint">Let us know your timeline and whether you need a quote before any work starts.</p>
+      <div class="grid two">
+        <div class="field">
+          <label for="deadline">Needed by</label>
+          <input type="date" id="deadline" name="deadline">
+        </div>
+        <div class="field">
+          <label>Urgency</label>
+          <div class="radios" role="radiogroup" aria-label="Urgency">
+            <label><input type="radio" name="urgency" value="Standard" checked> Standard</label>
+            <label><input type="radio" name="urgency" value="Soon"> Soon</label>
+            <label><input type="radio" name="urgency" value="Urgent"> Urgent (performance or gig)</label>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 20px; display: grid; gap: 12px;">
+        <label class="checkbox-row">
+          <input type="checkbox" name="quoteFirst" checked>
+          <span>Please call me with an estimate before starting any work.</span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" name="loaner">
+          <span>I'd like to know about loaner options if the repair will take a while.</span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" name="terms" id="terms">
+          <span>I understand the shop is not responsible for pre-existing damage and I've noted it above.<span class="req" aria-hidden="true">*</span></span>
+        </label>
+        <div class="error-msg" id="field-terms" style="margin-top: -4px;">Please acknowledge this before submitting.</div>
+      </div>
+    </section>
+
+    <div class="actions no-print">
+      <button type="reset" class="btn-secondary" id="resetBtn">Clear form</button>
+      <button type="submit" class="btn-primary">Review &amp; submit</button>
+    </div>
+  </form>
+
+  <section class="card confirm" id="confirm" aria-live="polite">
+    <h2>Drop-off request ready</h2>
+    <p class="hint">Please bring this summary with your instrument, or show it on your phone.</p>
+    <dl id="summary"></dl>
+    <div class="notice">
+      Your request reference is <span class="ticket" id="ticketId"></span>. Please keep it for your records.
+    </div>
+    <div class="actions no-print">
+      <button type="button" class="btn-secondary" id="editBtn">Edit</button>
+      <button type="button" class="btn-secondary" id="printBtn">Print</button>
+      <button type="button" class="btn-primary" id="newBtn">New request</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('intake');
+    var confirmBox = document.getElementById('confirm');
+    var summaryEl = document.getElementById('summary');
+    var ticketEl = document.getElementById('ticketId');
+
+    function fieldWrap(el) {
+      return el.closest('.field') || el.closest('.checkbox-row') || el.parentElement;
+    }
+
+    function setInvalid(wrap, invalid) {
+      if (!wrap) return;
+      wrap.classList.toggle('invalid', invalid);
+    }
+
+    function validate() {
+      var ok = true;
+      var name = form.name.value.trim();
+      var phone = form.phone.value.trim();
+      var email = form.email.value.trim();
+      var type = form.type.value;
+      var description = form.description.value.trim();
+      var issues = form.querySelectorAll('input[name="issues"]:checked');
+      var terms = form.terms.checked;
+
+      setInvalid(document.getElementById('field-name'), !name);
+      setInvalid(document.getElementById('field-phone'), !phone || phone.replace(/\D/g, '').length < 7);
+      setInvalid(document.getElementById('field-email'), !!email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+      setInvalid(document.getElementById('field-type'), !type);
+      setInvalid(document.getElementById('field-description'), !description);
+      setInvalid(document.getElementById('issues-error').parentElement, issues.length === 0);
+      setInvalid(document.getElementById('field-terms').parentElement, !terms);
+
+      var invalids = form.querySelectorAll('.invalid');
+      if (invalids.length) {
+        ok = false;
+        var firstField = invalids[0].querySelector('input, select, textarea');
+        if (firstField) firstField.focus();
+        else invalids[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return ok;
+    }
+
+    function makeTicket() {
+      var d = new Date();
+      var stamp = d.getFullYear().toString() +
+        String(d.getMonth() + 1).padStart(2, '0') +
+        String(d.getDate()).padStart(2, '0');
+      var rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+      return 'REQ-' + stamp + '-' + rand;
+    }
+
+    function addRow(label, value) {
+      if (!value) return;
+      var dt = document.createElement('dt');
+      dt.textContent = label;
+      var dd = document.createElement('dd');
+      dd.textContent = value;
+      summaryEl.appendChild(dt);
+      summaryEl.appendChild(dd);
+    }
+
+    function buildSummary() {
+      summaryEl.innerHTML = '';
+      var data = new FormData(form);
+      var issues = data.getAll('issues');
+      var caseVal = data.get('case');
+
+      addRow('Name', data.get('name').trim());
+      addRow('Phone', data.get('phone').trim());
+      addRow('Email', (data.get('email') || '').trim());
+      addRow('Preferred contact', form.preferred.options[form.preferred.selectedIndex].text);
+      addRow('Instrument', data.get('type'));
+      addRow('Make / model', [data.get('make'), data.get('model')].filter(Boolean).join(' ').trim());
+      addRow('Serial number', (data.get('serial') || '').trim());
+      addRow('Strings / setup', (data.get('strings') || '').trim());
+      addRow('Case / bag', caseVal);
+      addRow('Issues', issues.join('\n'));
+      addRow('Description', data.get('description').trim());
+      addRow('Previous work', (data.get('previous') || '').trim());
+      addRow('Needed by', data.get('deadline'));
+      addRow('Urgency', data.get('urgency'));
+      addRow('Estimate first', data.get('quoteFirst') ? 'Yes, call before starting' : 'No');
+      addRow('Loaner inquiry', data.get('loaner') ? 'Yes' : 'No');
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validate()) return;
+
+      ticketEl.textContent = makeTicket();
+      buildSummary();
+
+      form.style.display = 'none';
+      confirmBox.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    form.addEventListener('input', function (e) {
+      var wrap = fieldWrap(e.target);
+      if (wrap && wrap.classList.contains('invalid')) {
+        setInvalid(wrap, false);
+      }
+    });
+
+    form.addEventListener('change', function (e) {
+      if (e.target.name === 'issues') {
+        setInvalid(document.getElementById('issues-error').parentElement, false);
+      }
+      if (e.target.name === 'terms') {
+        setInvalid(document.getElementById('field-terms').parentElement, false);
+      }
+    });
+
+    document.getElementById('editBtn').addEventListener('click', function () {
+      confirmBox.style.display = 'none';
+      form.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('printBtn').addEventListener('click', function () {
+      window.print();
+    });
+
+    document.getElementById('newBtn').addEventListener('click', function () {
+      form.reset();
+      form.querySelectorAll('.invalid').forEach(function (el) { el.classList.remove('invalid'); });
+      confirmBox.style.display = 'none';
+      form.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      setTimeout(function () {
+        form.querySelectorAll('.invalid').forEach(function (el) { el.classList.remove('invalid'); });
+      }, 0);
+    });
+  })();
+</script>
+</body>
+</html>

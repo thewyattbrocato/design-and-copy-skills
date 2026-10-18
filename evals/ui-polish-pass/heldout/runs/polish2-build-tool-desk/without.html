@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Front Desk · Maple Street Tool Library</title>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --panel: #fffdf9;
+    --ink: #24231f;
+    --muted: #6b675d;
+    --line: #ddd7c8;
+    --accent: #1f5f4a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e2efe9;
+    --late: #a3281d;
+    --late-soft: #fbe6e2;
+    --soon: #8a5a00;
+    --soon-soft: #fbefd2;
+    --radius: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.4; }
+  header {
+    display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: center; justify-content: space-between;
+    padding: 14px 24px; background: var(--ink); color: #f4f1ea;
+  }
+  header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+  header h1 span { font-weight: 400; opacity: .7; margin-left: 8px; }
+  .stats { display: flex; gap: 22px; margin: 0; padding: 0; list-style: none; }
+  .stats li { display: flex; flex-direction: column; font-size: 13px; opacity: .9; }
+  .stats b { font-size: 22px; line-height: 1.1; }
+  .stats .bad b { color: #ffb4a8; }
+  main { display: grid; grid-template-columns: minmax(340px, 5fr) 7fr; gap: 20px; padding: 20px 24px 32px; max-width: 1280px; margin: 0 auto; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; padding: 14px; } }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+  h2 { margin: 0 0 14px; font-size: 18px; }
+  h3 { margin: 18px 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 5px; }
+  input[type=search], input[type=text], select {
+    width: 100%; min-height: 46px; padding: 8px 12px; font: inherit; color: var(--ink);
+    background: #fff; border: 1.5px solid #b9b2a0; border-radius: 8px;
+  }
+  :focus-visible { outline: 3px solid #2b7fd1; outline-offset: 2px; }
+  button { font: inherit; cursor: pointer; min-height: 44px; border-radius: 8px; border: 1.5px solid #b9b2a0; background: #fff; color: var(--ink); padding: 6px 14px; font-weight: 600; }
+  button:hover { background: #f1ede2; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); width: 100%; min-height: 52px; font-size: 17px; margin-top: 16px; }
+  button.primary:hover { background: #174a39; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .results { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; max-height: 232px; overflow: auto; }
+  .pick { display: flex; justify-content: space-between; align-items: center; gap: 10px; text-align: left; font-weight: 500; width: 100%; }
+  .pick small { color: var(--muted); font-weight: 400; }
+  .empty { color: var(--muted); font-size: 14px; padding: 8px 2px; margin: 0; }
+  .chip { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; background: var(--accent-soft); border-radius: 8px; margin-top: 6px; }
+  .chip small { display: block; color: var(--muted); }
+  .chip button { min-height: 36px; font-size: 14px; }
+  .warn { margin: 8px 0 0; padding: 8px 12px; border-radius: 8px; background: var(--late-soft); color: var(--late); font-size: 14px; font-weight: 600; }
+  .cart { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  .cart li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 6px 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  .cart button { min-height: 36px; font-size: 14px; }
+  .tag { font-variant-numeric: tabular-nums; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); }
+  .rhead { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 4px; }
+  .rhead > div { flex: 1 1 200px; }
+  .rhead label { margin-top: 0; }
+  .loan { display: grid; grid-template-columns: 1fr auto auto; gap: 4px 14px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-left-width: 6px; border-radius: 8px; background: #fff; margin-bottom: 6px; }
+  .loan.late { border-left-color: var(--late); background: #fffafa; }
+  .loan.soon { border-left-color: #d89a1c; }
+  .loan.ok { border-left-color: var(--accent); }
+  .loan .name { font-weight: 700; }
+  .loan .who { color: var(--muted); font-size: 14px; }
+  .due { font-size: 14px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; background: var(--accent-soft); color: var(--accent); }
+  .late .due { background: var(--late-soft); color: var(--late); }
+  .soon .due { background: var(--soon-soft); color: var(--soon); }
+  @media (max-width: 520px) { .loan { grid-template-columns: 1fr auto; } .loan .due { grid-column: 1; justify-self: start; } .loan button { grid-column: 2; grid-row: 1 / span 2; } }
+  #toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 14px 10px 18px; border-radius: 10px; display: none; align-items: center; gap: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.25); max-width: calc(100% - 28px); z-index: 5; }
+  #toast.show { display: flex; }
+  #toast button { background: transparent; color: #fff; border-color: #aaa; min-height: 36px; }
+  #toast button:hover { background: #3b3a35; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Maple Street Tool Library <span>Front desk</span></h1>
+  <ul class="stats" aria-label="Today at a glance">
+    <li><b id="sOut">0</b>out now</li>
+    <li><b id="sDue">0</b>due today</li>
+    <li class="bad"><b id="sLate">0</b>overdue</li>
+    <li><b id="sIn">0</b>on the shelf</li>
+  </ul>
+</header>
+
+<main>
+  <section aria-labelledby="lendH">
+    <h2 id="lendH">Lend tools</h2>
+
+    <label for="mq">1. Who is borrowing?</label>
+    <input type="search" id="mq" placeholder="Name or phone number" autocomplete="off">
+    <div id="mres" class="results"></div>
+    <div id="msel"></div>
+
+    <label for="tq">2. Which tools?</label>
+    <input type="search" id="tq" placeholder="Tool name or tag (e.g. T-014). Enter adds the top match" autocomplete="off">
+    <div id="tres" class="results"></div>
+
+    <h3>To lend (<span id="cn">0</span>)</h3>
+    <ul id="cart" class="cart"></ul>
+
+    <label for="period">3. Loan length</label>
+    <select id="period">
+      <option value="3">3 days</option>
+      <option value="7" selected>1 week</option>
+      <option value="14">2 weeks</option>
+    </select>
+
+    <button class="primary" id="lend" disabled>Lend</button>
+  </section>
+
+  <section aria-labelledby="outH">
+    <h2 id="outH">Out on loan</h2>
+    <div class="rhead">
+      <div>
+        <label for="rq">Returning a tool? Enter its tag</label>
+        <input type="text" id="rq" placeholder="T-014, then Enter" autocomplete="off">
+      </div>
+      <div>
+        <label for="fq">Filter list</label>
+        <input type="search" id="fq" placeholder="Tool or borrower" autocomplete="off">
+      </div>
+    </div>
+    <div id="loans"></div>
+  </section>
+</main>
+
+<div id="toast" role="status" aria-live="polite"><span id="tmsg"></span><button id="undo" hidden>Undo</button></div>
+
+<script>
+(function () {
+  var DAY = 86400000;
+  function today() { var d = new Date(); d.setHours(0,0,0,0); return d.getTime(); }
+  var T0 = today();
+
+  var members = [
+    {id:1, name:"Dana Ortiz", phone:"555-0142"},
+    {id:2, name:"Marcus Bell", phone:"555-0177"},
+    {id:3, name:"Priya Raman", phone:"555-0120"},
+    {id:4, name:"Tom Okafor", phone:"555-0198"},
+    {id:5, name:"Helen Kowalski", phone:"555-0163"},
+    {id:6, name:"Sam Whitfield", phone:"555-0105"},
+    {id:7, name:"Lucia Fernandez", phone:"555-0186"},
+    {id:8, name:"Aiden Park", phone:"555-0134"}
+  ];
+  var names = ["Cordless drill","Circular saw","Orbital sander","Step ladder (6 ft)","Extension ladder","Wet/dry vacuum","Pressure washer","Tile cutter","Socket set","Stud finder","Hedge trimmer","Wheelbarrow","Post-hole digger","Pipe wrench","Jigsaw","Soldering iron","Level (4 ft)","Tarp & drop cloths","Hand truck","Lawn aerator"];
+  var tools = names.map(function (n, i) { return {id: "T-" + String(i + 1).padStart(3, "0"), name: n}; });
+
+  // [toolIndex, memberId, daysAgoLent, daysFromTodayDue]
+  var loans = [
+    [1,2,12,-5],[6,4,9,-2],[0,1,6,1],[8,3,7,0],[4,5,3,4],[10,6,2,5],[12,7,5,2],[14,8,1,6]
+  ].map(function (r) { return {toolId: tools[r[0]].id, memberId: r[1], out: T0 - r[2]*DAY, due: T0 + r[3]*DAY}; });
+
+  var member = null, cart = [], lastUndo = null, toastTimer;
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function fmt(t) { return new Date(t).toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric"}); }
+  function toolById(id) { return tools.filter(function (t) { return t.id === id; })[0]; }
+  function memberById(id) { return members.filter(function (m) { return m.id === id; })[0]; }
+  function loanOf(id) { return loans.filter(function (l) { return l.toolId === id; })[0]; }
+  function lateLoans(mid) { return loans.filter(function (l) { return l.memberId === mid && l.due < T0; }); }
+  function countOf(mid) { return loans.filter(function (l) { return l.memberId === mid; }).length; }
+
+  function toast(msg, undoFn) {
+    clearTimeout(toastTimer);
+    $("tmsg").textContent = msg;
+    var u = $("undo"); u.hidden = !undoFn; lastUndo = undoFn || null;
+    $("toast").classList.add("show");
+    toastTimer = setTimeout(function () { $("toast").classList.remove("show"); lastUndo = null; }, 8000);
+  }
+  $("undo").onclick = function () { if (lastUndo) lastUndo(); $("toast").classList.remove("show"); lastUndo = null; renderAll(); };
+
+  function renderStats() {
+    $("sOut").textContent = loans.length;
+    $("sDue").textContent = loans.filter(function (l) { return l.due === T0; }).length;
+    $("sLate").textContent = loans.filter(function (l) { return l.due < T0; }).length;
+    $("sIn").textContent = tools.length - loans.length;
+  }
+
+  function renderMembers() {
+    var q = $("mq").value.trim().toLowerCase(), box = $("mres");
+    if (member || !q) { box.innerHTML = ""; return; }
+    var hits = members.filter(function (m) { return (m.name + " " + m.phone).toLowerCase().indexOf(q) > -1; });
+    box.innerHTML = hits.length ? hits.map(function (m) {
+      return '<button class="pick" data-m="' + m.id + '"><span>' + esc(m.name) + '</span><small>' + esc(m.phone) + '</small></button>';
+    }).join("") : '<p class="empty">No member matches “' + esc($("mq").value) + '”.</p>';
+  }
+  function renderMember() {
+    var box = $("msel");
+    if (!member) { box.innerHTML = ""; return; }
+    var late = lateLoans(member.id).length;
+    box.innerHTML = '<div class="chip"><div><b>' + esc(member.name) + '</b><small>' + countOf(member.id) + ' tool(s) out · ' + esc(member.phone) + '</small></div><button id="chg">Change</button></div>' +
+      (late ? '<p class="warn">' + late + ' overdue tool' + (late > 1 ? 's' : '') + ' not yet returned. Ask about it before lending more.</p>' : '');
+    $("chg").onclick = function () { member = null; $("mq").value = ""; $("mq").focus(); renderAll(); };
+  }
+
+  function renderTools() {
+    var q = $("tq").value.trim().toLowerCase(), box = $("tres");
+    if (!q) { box.innerHTML = ""; return; }
+    var hits = tools.filter(function (t) {
+      return !loanOf(t.id) && cart.indexOf(t.id) < 0 && (t.name + " " + t.id).toLowerCase().indexOf(q) > -1;
+    });
+    if (hits.length) {
+      box.innerHTML = hits.map(function (t) {
+        return '<button class="pick" data-t="' + t.id + '"><span>' + esc(t.name) + '</span><small class="tag">' + t.id + '</small></button>';
+      }).join("");
+    } else {
+      var out = tools.filter(function (t) { return (t.name + " " + t.id).toLowerCase().indexOf(q) > -1 && loanOf(t.id); })[0];
+      box.innerHTML = '<p class="empty">' + (out ? esc(out.name) + ' is already out on loan.' : 'No available tool matches “' + esc($("tq").value) + '”.') + '</p>';
+    }
+  }
+  function renderCart() {
+    $("cn").textContent = cart.length;
+    $("cart").innerHTML = cart.length ? cart.map(function (id) {
+      return '<li><span>' + esc(toolById(id).name) + ' <span class="tag">' + id + '</span></span><button data-rm="' + id + '" aria-label="Remove ' + esc(toolById(id).name) + '">Remove</button></li>';
+    }).join("") : '<li class="empty" style="border:0;background:none">Nothing added yet.</li>';
+    var b = $("lend"), days = +$("period").value;
+    b.disabled = !(member && cart.length);
+    b.textContent = member && cart.length
+      ? "Lend " + cart.length + " tool" + (cart.length > 1 ? "s" : "") + " to " + member.name + " · due " + fmt(T0 + days*DAY)
+      : (member ? "Add a tool to lend" : "Choose a member to lend");
+  }
+
+  function renderLoans() {
+    var f = $("fq").value.trim().toLowerCase();
+    var rows = loans.filter(function (l) {
+      var t = toolById(l.toolId), m = memberById(l.memberId);
+      return !f || (t.name + " " + t.id + " " + m.name).toLowerCase().indexOf(f) > -1;
+    }).sort(function (a, b) { return a.due - b.due; });
+    $("loans").innerHTML = rows.length ? rows.map(function (l) {
+      var t = toolById(l.toolId), m = memberById(l.memberId), d = Math.round((l.due - T0) / DAY), cls, lbl;
+      if (d < 0) { cls = "late"; lbl = "Overdue " + (-d) + (d === -1 ? " day" : " days"); }
+      else if (d === 0) { cls = "soon"; lbl = "Due today"; }
+      else if (d === 1) { cls = "soon"; lbl = "Due tomorrow"; }
+      else { cls = "ok"; lbl = "Due " + fmt(l.due); }
+      return '<div class="loan ' + cls + '"><div><div class="name">' + esc(t.name) + ' <span class="tag">' + t.id + '</span></div><div class="who">' + esc(m.name) + ' · lent ' + fmt(l.out) + '</div></div>' +
+        '<span class="due">' + lbl + '</span><button data-ret="' + t.id + '" aria-label="Return ' + esc(t.name) + '">Return</button></div>';
+    }).join("") : '<p class="empty">' + (f ? "No loans match that filter." : "Everything is on the shelf.") + '</p>';
+  }
+
+  function renderAll() { renderStats(); renderMembers(); renderMember(); renderTools(); renderCart(); renderLoans(); }
+
+  function doReturn(id) {
+    var l = loanOf(id); if (!l) return false;
+    loans = loans.filter(function (x) { return x !== l; });
+    var late = l.due < T0;
+    toast(toolById(id).name + " returned from " + memberById(l.memberId).name + (late ? " (was overdue)" : "") + ".", function () { loans.push(l); });
+    renderAll(); return true;
+  }
+
+  $("mq").oninput = renderMembers;
+  $("mq").onkeydown = function (e) {
+    if (e.key === "Enter") { var b = $("mres").querySelector("[data-m]"); if (b) b.click(); }
+  };
+  $("mres").onclick = function (e) {
+    var b = e.target.closest("[data-m]"); if (!b) return;
+    member = memberById(+b.dataset.m); $("mq").value = member.name; renderAll(); $("tq").focus();
+  };
+  $("tq").oninput = renderTools;
+  $("tq").onkeydown = function (e) {
+    if (e.key !== "Enter") return;
+    var q = $("tq").value.trim().toLowerCase();
+    var exact = tools.filter(function (t) { return t.id.toLowerCase() === q; })[0];
+    if (exact && loanOf(exact.id)) { toast(exact.name + " is already out on loan.", null); return; }
+    var b = exact ? null : $("tres").querySelector("[data-t]");
+    var id = exact ? exact.id : (b && b.dataset.t);
+    if (id && cart.indexOf(id) < 0) { cart.push(id); $("tq").value = ""; renderAll(); }
+  };
+  $("tres").onclick = function (e) {
+    var b = e.target.closest("[data-t]"); if (!b) return;
+    cart.push(b.dataset.t); $("tq").value = ""; renderAll(); $("tq").focus();
+  };
+  $("cart").onclick = function (e) {
+    var b = e.target.closest("[data-rm]"); if (!b) return;
+    cart = cart.filter(function (id) { return id !== b.dataset.rm; }); renderAll();
+  };
+  $("period").onchange = renderCart;
+  $("lend").onclick = function () {
+    if (!member || !cart.length) return;
+    var due = T0 + (+$("period").value) * DAY, m = member, ids = cart.slice();
+    var added = ids.map(function (id) { return {toolId: id, memberId: m.id, out: T0, due: due}; });
+    added.forEach(function (l) { loans.push(l); });
+    toast(ids.length + " tool" + (ids.length > 1 ? "s" : "") + " lent to " + m.name + ", due " + fmt(due) + ".", function () {
+      loans = loans.filter(function (l) { return added.indexOf(l) < 0; });
+    });
+    member = null; cart = []; $("mq").value = ""; $("tq").value = ""; renderAll(); $("mq").focus();
+  };
+  $("rq").onkeydown = function (e) {
+    if (e.key !== "Enter") return;
+    var v = $("rq").value.trim().toUpperCase(); if (!v) return;
+    if (/^T?-?\d+$/.test(v)) v = "T-" + String(parseInt(v.replace(/\D/g, ""), 10)).padStart(3, "0");
+    if (doReturn(v)) $("rq").value = "";
+    else toast(toolById(v) ? toolById(v).name + " isn’t marked as out." : "No tool with tag “" + v + "”.", null);
+  };
+  $("fq").oninput = renderLoans;
+  $("loans").onclick = function (e) {
+    var b = e.target.closest("[data-ret]"); if (b) doReturn(b.dataset.ret);
+  };
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

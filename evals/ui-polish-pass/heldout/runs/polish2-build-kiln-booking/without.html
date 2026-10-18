@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Kiln</title>
+<style>
+  :root {
+    --bg: #f6f1ea; --card: #fffdf9; --ink: #2b2420; --muted: #6e625a;
+    --line: #ddd2c5; --accent: #b4532a; --accent-ink: #fff; --accent-soft: #f5e1d6;
+    --ok: #2f6b4a; --full: #a09389;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1815; --card: #26211d; --ink: #f1e9e0; --muted: #b0a396;
+      --line: #40372f; --accent: #e08457; --accent-ink: #1c1815; --accent-soft: #3b2a21;
+      --ok: #7cc79d; --full: #7d7268;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 1.75rem; margin: 0 0 4px; letter-spacing: -.01em; }
+  .lede { color: var(--muted); margin: 0 0 28px; }
+  .layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+  fieldset { border: 0; padding: 0; margin: 0 0 28px; min-width: 0; }
+  legend, .label { font-weight: 650; font-size: .95rem; padding: 0; margin-bottom: 10px; }
+  legend span.n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--ink); color: var(--bg); font-size: .75rem; margin-right: 8px; }
+  .opts { display: grid; gap: 10px; }
+  .opts.cols { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .opt { position: relative; }
+  .opt input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .opt .box { display: block; background: var(--card); border: 1.5px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; transition: border-color .12s, background .12s; }
+  .opt input:checked + .box { border-color: var(--accent); background: var(--accent-soft); }
+  .opt input:focus-visible + .box { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .opt input:disabled { cursor: not-allowed; }
+  .opt input:disabled + .box { opacity: .55; background: transparent; }
+  .opt .t { font-weight: 600; display: block; }
+  .opt .s { font-size: .85rem; color: var(--muted); display: block; }
+  .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .days .box { text-align: center; padding: 8px 2px; }
+  .days .dow { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); display: block; }
+  .days .num { font-size: 1.15rem; font-weight: 650; display: block; line-height: 1.2; }
+  .days .mon { font-size: .7rem; color: var(--muted); display: block; }
+  @media (max-width: 460px) { .days { grid-template-columns: repeat(4, 1fr); } }
+  .slot .box { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .avail { font-size: .85rem; color: var(--ok); font-weight: 600; white-space: nowrap; }
+  .avail.none { color: var(--full); }
+  .stepper { display: inline-flex; align-items: center; border: 1.5px solid var(--line); border-radius: 10px; background: var(--card); }
+  .stepper button { width: 44px; height: 44px; border: 0; background: none; color: var(--ink); font-size: 1.3rem; cursor: pointer; border-radius: 10px; }
+  .stepper button:focus-visible, input[type=text]:focus-visible, input[type=email]:focus-visible, textarea:focus-visible, .cta:focus-visible, .link:focus-visible {
+    outline: 3px solid var(--accent); outline-offset: 2px; }
+  .stepper output { min-width: 40px; text-align: center; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .hint { font-size: .85rem; color: var(--muted); margin: 8px 0 0; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: .9rem; font-weight: 600; margin-bottom: 4px; }
+  input[type=text], input[type=email], textarea { width: 100%; font: inherit; color: inherit; background: var(--card);
+    border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+  textarea { resize: vertical; min-height: 70px; }
+  .summary { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 20px; position: sticky; top: 16px; }
+  .summary h2 { font-size: 1.05rem; margin: 0 0 12px; }
+  .summary dl { margin: 0 0 16px; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: .92rem; }
+  .summary dt { color: var(--muted); }
+  .summary dd { margin: 0; text-align: right; font-weight: 600; }
+  .summary dd.empty { color: var(--full); font-weight: 400; }
+  .cta { width: 100%; border: 0; border-radius: 10px; padding: 13px; font: inherit; font-weight: 650;
+    background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  .cta:disabled { opacity: .45; cursor: not-allowed; }
+  .error { color: #b3261e; font-size: .88rem; min-height: 1.3em; margin: 8px 0 0; }
+  @media (prefers-color-scheme: dark) { .error { color: #ff9b92; } }
+  .confirm { background: var(--accent-soft); border: 1.5px solid var(--accent); border-radius: 12px; padding: 14px 16px; margin-bottom: 24px; }
+  .confirm[hidden] { display: none; }
+  .mine { margin-top: 40px; }
+  .mine h2 { font-size: 1.2rem; }
+  .mine ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .mine li { background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px;
+    display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .mine .meta { font-size: .85rem; color: var(--muted); }
+  .link { background: none; border: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; padding: 4px; }
+  .rules { margin-top: 32px; font-size: .88rem; color: var(--muted); }
+  .rules ul { padding-left: 18px; margin: 6px 0 0; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Book kiln time</h1>
+  <p class="lede">Reserve shelf space in a shared kiln. Pick a kiln, a day and a loading window.</p>
+
+  <div class="confirm" id="confirm" role="status" tabindex="-1" hidden></div>
+
+  <form id="form" class="layout" novalidate>
+    <div>
+      <fieldset>
+        <legend><span class="n">1</span>Kiln</legend>
+        <div class="opts cols" id="kilns"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="n">2</span>Firing type</legend>
+        <div class="opts cols" id="types"></div>
+        <p class="hint" id="typeHint"></p>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="n">3</span>Day</legend>
+        <div class="days" id="days"></div>
+        <p class="hint">The studio is closed on Mondays.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="n">4</span>Loading window</legend>
+        <div class="opts" id="slots"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="n">5</span>Shelves needed</legend>
+        <div class="stepper">
+          <button type="button" id="minus" aria-label="Fewer shelves">−</button>
+          <output id="shelfOut" aria-live="polite">1</output>
+          <button type="button" id="plus" aria-label="More shelves">+</button>
+        </div>
+        <p class="hint" id="shelfHint">Choose a window to see open shelves.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="n">6</span>Your details</legend>
+        <div class="field"><label for="name">Name</label><input type="text" id="name" autocomplete="name" required></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" autocomplete="email" required></div>
+        <div class="field"><label for="notes">Notes for the studio manager (optional)</label>
+          <textarea id="notes" placeholder="e.g. tall vase, needs top shelf"></textarea></div>
+      </fieldset>
+    </div>
+
+    <aside class="summary" aria-labelledby="sumH">
+      <h2 id="sumH">Your booking</h2>
+      <dl id="sum"></dl>
+      <button class="cta" type="submit" id="submit">Confirm booking</button>
+      <p class="error" id="err" role="alert"></p>
+    </aside>
+  </form>
+
+  <section class="mine" aria-labelledby="mineH">
+    <h2 id="mineH">Your upcoming bookings</h2>
+    <ul id="mineList"></ul>
+    <p class="hint" id="mineEmpty">Nothing booked yet.</p>
+  </section>
+
+  <section class="rules">
+    <strong>Studio kiln rules</strong>
+    <ul>
+      <li>Wares must be bone dry for bisque, and wiped clean on the bottom for glaze firings.</li>
+      <li>Fees are charged per shelf to your studio account after the firing.</li>
+      <li>Cancel at least 24 hours ahead so others can use the space.</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+(function () {
+  var KILNS = [
+    { id: 'skutt',  name: 'Skutt Electric',  desc: 'Cone 6 · 4 shelves',          shelves: 4, types: ['bisque', 'glaze'] },
+    { id: 'big',    name: 'Big Front-Loader', desc: 'Cone 6 · 6 shelves',          shelves: 6, types: ['bisque', 'glaze'] },
+    { id: 'gas',    name: 'Gas Reduction',    desc: 'Cone 10 · 5 shelves',         shelves: 5, types: ['glaze'] },
+    { id: 'raku',   name: 'Raku Kiln',        desc: 'Outdoor · 2 shelves',         shelves: 2, types: ['raku'] }
+  ];
+  var TYPES = {
+    bisque: { name: 'Bisque',   desc: 'Cone 04 · about 10 hr + cooling' },
+    glaze:  { name: 'Glaze',    desc: 'Cone 6 or 10 · about 12 hr + cooling' },
+    raku:   { name: 'Raku',     desc: 'About 1 hr, attended' }
+  };
+  var SLOTS = [
+    { id: 'am',  label: '8:00 – 10:00 am',  start: 8 },
+    { id: 'mid', label: '12:00 – 2:00 pm',  start: 12 },
+    { id: 'pm',  label: '4:00 – 6:00 pm',   start: 16 }
+  ];
+  var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var KEY = 'kilnBookings.v1';
+
+  var state = { kiln: 'skutt', type: 'bisque', day: null, slot: null, shelves: 1 };
+  var $ = function (id) { return document.getElementById(id); };
+
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return mem; } }
+  var mem = [];
+  function save(list) { mem = list; try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} }
+
+  function key(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function parseKey(k) { var p = k.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function nice(k) { var d = parseKey(k); return DOW[d.getDay()] + ', ' + MON[d.getMonth()] + ' ' + d.getDate(); }
+  function hash(s) { var h = 7; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
+  function kiln() { return KILNS.filter(function (k) { return k.id === state.kiln; })[0]; }
+
+  // Shelves already taken by other members (demo data) plus this browser's bookings.
+  function taken(kid, day, slot) {
+    var k = KILNS.filter(function (x) { return x.id === kid; })[0];
+    var base = hash(kid + day + slot) % (k.shelves + 1);
+    if (hash(day + slot + kid) % 3 === 0) base = Math.max(0, base - 2);
+    var mine = load().filter(function (b) { return b.kiln === kid && b.day === day && b.slot === slot; })
+                     .reduce(function (n, b) { return n + b.shelves; }, 0);
+    return Math.min(k.shelves, base + mine);
+  }
+  function open(kid, day, slot) {
+    var k = KILNS.filter(function (x) { return x.id === kid; })[0];
+    return k.shelves - taken(kid, day, slot);
+  }
+  function slotPassed(day, s) {
+    var now = new Date();
+    return day === key(now) && now.getHours() >= s.start;
+  }
+
+  function radio(name, id, value, checked, disabled, title, sub, extra, cls) {
+    return '<label class="opt ' + (cls || '') + '"><input type="radio" name="' + name + '" value="' + value + '"' +
+      (checked ? ' checked' : '') + (disabled ? ' disabled' : '') + '><span class="box">' + extra(title, sub) + '</span></label>';
+  }
+
+  function renderKilns() {
+    $('kilns').innerHTML = KILNS.map(function (k) {
+      return radio('kiln', k.id, k.id, state.kiln === k.id, false, k.name, k.desc, function (t, s) {
+        return '<span class="t">' + t + '</span><span class="s">' + s + '</span>';
+      });
+    }).join('');
+  }
+  function renderTypes() {
+    var k = kiln();
+    if (k.types.indexOf(state.type) < 0) state.type = k.types[0];
+    $('types').innerHTML = Object.keys(TYPES).map(function (t) {
+      var ok = k.types.indexOf(t) >= 0;
+      return radio('type', t, t, state.type === t, !ok, TYPES[t].name, TYPES[t].desc, function (a, b) {
+        return '<span class="t">' + a + '</span><span class="s">' + b + '</span>';
+      });
+    }).join('');
+    $('typeHint').textContent = k.name + ' supports ' + k.types.map(function (t) { return TYPES[t].name.toLowerCase(); }).join(' and ') + ' firings.';
+  }
+  function renderDays() {
+    var html = '', d = new Date(), n = 0;
+    d.setHours(0, 0, 0, 0);
+    var first = null;
+    for (var i = 0; i < 14; i++) {
+      var dd = new Date(d.getFullYear(), d.getMonth(), d.getDate() + i);
+      var k = key(dd), closed = dd.getDay() === 1;
+      var allPast = SLOTS.every(function (s) { return slotPassed(k, s); });
+      var dis = closed || allPast;
+      if (!dis && !first) first = k;
+      html += radio('day', k, k, state.day === k, dis, '', '', function () {
+        return '<span class="dow">' + DOW[dd.getDay()] + '</span><span class="num">' + dd.getDate() + '</span><span class="mon">' + MON[dd.getMonth()] + '</span>';
+      });
+    }
+    if (!state.day) state.day = first;
+    $('days').innerHTML = html;
+    var chk = $('days').querySelector('input[value="' + state.day + '"]');
+    if (chk) chk.checked = true;
+  }
+  function renderSlots() {
+    $('slots').innerHTML = SLOTS.map(function (s) {
+      var left = open(state.kiln, state.day, s.id);
+      var dis = left <= 0 || slotPassed(state.day, s);
+      return radio('slot', s.id, s.id, state.slot === s.id && !dis, dis, s.label, '', function (t) {
+        var msg = slotPassed(state.day, s) ? 'Passed' : left <= 0 ? 'Full' : left + (left === 1 ? ' shelf open' : ' shelves open');
+        return '<span class="t">' + t + '</span><span class="avail' + (dis ? ' none' : '') + '">' + msg + '</span>';
+      }, 'slot');
+    }).join('');
+    var cur = SLOTS.filter(function (s) { return s.id === state.slot; })[0];
+    if (cur && (open(state.kiln, state.day, cur.id) <= 0 || slotPassed(state.day, cur))) state.slot = null;
+  }
+  function renderShelves() {
+    var max = state.slot ? open(state.kiln, state.day, state.slot) : kiln().shelves;
+    if (state.shelves > max) state.shelves = Math.max(1, max);
+    $('shelfOut').textContent = state.shelves;
+    $('minus').disabled = state.shelves <= 1;
+    $('plus').disabled = state.shelves >= max;
+    $('shelfHint').textContent = state.slot
+      ? max + (max === 1 ? ' shelf is' : ' shelves are') + ' open in this window.'
+      : 'Choose a window to see open shelves.';
+  }
+  function renderSummary() {
+    var slot = SLOTS.filter(function (s) { return s.id === state.slot; })[0];
+    function row(l, v) { return '<dt>' + l + '</dt><dd' + (v ? '' : ' class="empty"') + '>' + (v || '—') + '</dd>'; }
+    $('sum').innerHTML =
+      row('Kiln', kiln().name) + row('Firing', TYPES[state.type].name) +
+      row('Day', state.day ? nice(state.day) : '') + row('Load-in', slot ? slot.label : '') +
+      row('Shelves', slot ? String(state.shelves) : '');
+  }
+  function renderMine() {
+    var today = key(new Date());
+    var list = load().filter(function (b) { return b.day >= today; })
+      .sort(function (a, b) { return (a.day + a.slot).localeCompare(b.day + b.slot); });
+    $('mineEmpty').hidden = list.length > 0;
+    $('mineList').innerHTML = list.map(function (b) {
+      var k = KILNS.filter(function (x) { return x.id === b.kiln; })[0];
+      var s = SLOTS.filter(function (x) { return x.id === b.slot; })[0];
+      return '<li><div><strong>' + k.name + ' · ' + TYPES[b.type].name + '</strong><div class="meta">' + nice(b.day) + ', ' + s.label +
+        ' · ' + b.shelves + (b.shelves === 1 ? ' shelf' : ' shelves') + '</div></div>' +
+        '<button type="button" class="link" data-cancel="' + b.id + '">Cancel</button></li>';
+    }).join('');
+  }
+  function renderAll() { renderKilns(); renderTypes(); renderDays(); renderSlots(); renderShelves(); renderSummary(); renderMine(); }
+
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.name === 'kiln') { state.kiln = t.value; state.slot = null; state.shelves = 1; renderTypes(); renderSlots(); }
+    else if (t.name === 'type') { state.type = t.value; }
+    else if (t.name === 'day') { state.day = t.value; state.slot = null; renderSlots(); }
+    else if (t.name === 'slot') { state.slot = t.value; }
+    else return;
+    renderShelves(); renderSummary(); $('err').textContent = '';
+  });
+  $('minus').onclick = function () { state.shelves--; renderShelves(); renderSummary(); };
+  $('plus').onclick = function () { state.shelves++; renderShelves(); renderSummary(); };
+
+  $('mineList').addEventListener('click', function (e) {
+    var id = e.target.getAttribute('data-cancel');
+    if (!id) return;
+    save(load().filter(function (b) { return String(b.id) !== id; }));
+    $('confirm').hidden = true;
+    renderSlots(); renderShelves(); renderMine();
+  });
+
+  $('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var err = $('err'), name = $('name').value.trim(), email = $('email').value.trim();
+    if (!state.day) { err.textContent = 'Pick a day.'; return; }
+    if (!state.slot) { err.textContent = 'Pick a loading window.'; return; }
+    if (!name) { err.textContent = 'Please enter your name.'; $('name').focus(); return; }
+    if (!/^\S+@\S+\.\S+$/.test(email)) { err.textContent = 'Please enter a valid email.'; $('email').focus(); return; }
+    if (state.shelves > open(state.kiln, state.day, state.slot)) { err.textContent = 'Not enough shelves left in that window.'; return; }
+    err.textContent = '';
+    var b = { id: Date.now(), kiln: state.kiln, type: state.type, day: state.day, slot: state.slot,
+              shelves: state.shelves, name: name, email: email, notes: $('notes').value.trim() };
+    save(load().concat([b]));
+    var s = SLOTS.filter(function (x) { return x.id === b.slot; })[0];
+    var c = $('confirm');
+    c.textContent = 'Booked: ' + kiln().name + ', ' + TYPES[b.type].name.toLowerCase() + ' firing, ' + nice(b.day) + ' at ' + s.label +
+      ' (' + b.shelves + (b.shelves === 1 ? ' shelf' : ' shelves') + '). A confirmation will be sent to ' + email + '.';
+    c.hidden = false;
+    state.slot = null; state.shelves = 1;
+    renderSlots(); renderShelves(); renderSummary(); renderMine();
+    c.focus(); c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

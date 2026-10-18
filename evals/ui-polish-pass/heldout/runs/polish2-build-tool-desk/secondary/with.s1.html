@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tool Library · Front Desk</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --surface-2: #eceae4;
+  --text: #1d1c1a;
+  --muted: #5f5b53;
+  --border: #d6d2c8;
+  --accent: #1f5d4a;
+  --accent-text: #ffffff;
+  --warn: #8a5300;
+  --warn-soft: #f7e7c6;
+  --danger: #a12622;
+  --danger-soft: #f8dcd9;
+  --focus: #1a6fd1;
+  --radius: 10px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614;
+    --surface: #1f1e1b;
+    --surface-2: #2a2824;
+    --text: #f1efe9;
+    --muted: #aaa499;
+    --border: #3a3832;
+    --accent: #7fc4a6;
+    --accent-text: #0f1f19;
+    --warn: #f0c26b;
+    --warn-soft: #3d3118;
+    --danger: #ff8a82;
+    --danger-soft: #3f1d1b;
+    --focus: #7ab8ff;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.45;
+  min-height: 100vh;
+}
+[hidden] { display: none !important; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 40px; }
+header.top {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  justify-content: space-between; align-items: flex-end;
+  margin-bottom: 20px;
+}
+h1 { font-size: 1.6rem; margin: 0; }
+h2 { font-size: 1.15rem; margin: 0 0 12px; }
+.sub { margin: 4px 0 0; color: var(--muted); }
+.stats { display: flex; gap: 10px; margin: 0; flex-wrap: wrap; }
+.stats div {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 8px 14px; min-width: 96px;
+}
+.stats dt { font-size: .8rem; color: var(--muted); }
+.stats dd { margin: 0; font-size: 1.3rem; font-weight: 650; font-variant-numeric: tabular-nums; }
+.layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 800px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.modes {
+  display: flex; gap: 6px; background: var(--surface-2);
+  border-radius: 999px; padding: 4px; margin-bottom: 18px;
+}
+.modes button {
+  flex: 1; border: 0; border-radius: 999px; background: transparent;
+  color: var(--muted); min-height: 40px; font: inherit; font-weight: 600;
+}
+.modes button[aria-pressed="true"] {
+  background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+}
+.field { margin: 0 0 16px; border: 0; padding: 0; min-width: 0; }
+label, legend { display: block; font-weight: 600; margin-bottom: 6px; font-size: .92rem; padding: 0; }
+input[type="text"], input[type="search"], input[type="date"] {
+  width: 100%; min-height: 44px; padding: 8px 12px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); color: var(--text); font: inherit;
+}
+input[aria-invalid="true"] { border-color: var(--danger); }
+input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.row { display: flex; gap: 8px; }
+.row input { flex: 1; }
+button { font: inherit; cursor: pointer; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.primary {
+  background: var(--accent); color: var(--accent-text); border: 0;
+  border-radius: 8px; min-height: 44px; padding: 0 18px; font-weight: 650;
+}
+.secondary, .ghost {
+  min-height: 44px; padding: 0 14px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); font-weight: 600;
+}
+.ghost { background: transparent; border-color: transparent; color: var(--muted); }
+.small { min-height: 36px; padding: 0 12px; }
+.actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+.hint { margin: 6px 0 0; font-size: .9rem; color: var(--muted); min-height: 1.2em; }
+.error { color: var(--danger); }
+.list { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
+.item {
+  display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg);
+}
+.item-main { min-width: 0; flex: 1; }
+.item-title { font-weight: 600; overflow-wrap: anywhere; }
+.muted { color: var(--muted); font-size: .9rem; }
+.code { font-family: var(--mono); font-size: .82rem; color: var(--muted); font-weight: 400; }
+.empty {
+  color: var(--muted); padding: 12px; border: 1px dashed var(--border);
+  border-radius: 10px; text-align: center; list-style: none;
+}
+.badge { font-size: .8rem; font-weight: 650; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.badge.danger { background: var(--danger-soft); color: var(--danger); }
+.badge.warn { background: var(--warn-soft); color: var(--warn); }
+.out-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; }
+.out-head input { width: 200px; max-width: 100%; }
+.card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: var(--bg); margin-top: 4px; }
+.card-title { font-weight: 650; font-size: 1.05rem; margin: 0 0 4px; }
+.card p { margin: 0 0 4px; }
+.radio { display: flex; gap: 8px; align-items: center; font-weight: 400; margin: 6px 0; min-height: 32px; }
+.radio input { width: 18px; height: 18px; margin: 0; }
+.section-title { margin: 22px 0 10px; font-size: .95rem; color: var(--muted); font-weight: 650; }
+.toast { margin: 16px 0 0; min-height: 1.4em; font-weight: 600; color: var(--accent); }
+.toast.error { color: var(--danger); }
+footer { margin-top: 18px; color: var(--muted); font-size: .85rem; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Tool Library</h1>
+      <p class="sub" id="today"></p>
+    </div>
+    <dl class="stats">
+      <div><dt>Available</dt><dd id="stat-avail">0</dd></div>
+      <div><dt>Out</dt><dd id="stat-out">0</dd></div>
+      <div><dt>Overdue</dt><dd id="stat-over">0</dd></div>
+      <div><dt>In repair</dt><dd id="stat-repair">0</dd></div>
+    </dl>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="modes" role="group" aria-label="Desk mode">
+        <button type="button" id="mode-lend" aria-pressed="true">Lend tools</button>
+        <button type="button" id="mode-return" aria-pressed="false">Return tools</button>
+      </div>
+
+      <div id="lend-view">
+        <h2>Check out</h2>
+        <div class="field">
+          <label for="member-input">Member</label>
+          <input id="member-input" type="text" autocomplete="off" placeholder="Member ID or name">
+          <p class="hint" id="member-status" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="tool-input">Add tool</label>
+          <div class="row">
+            <input id="tool-input" type="text" autocomplete="off" placeholder="Tool ID, e.g. T-101">
+            <button id="add-tool" type="button" class="secondary">Add</button>
+          </div>
+          <p class="hint error" id="tool-error" role="alert"></p>
+        </div>
+        <ul id="basket" class="list" aria-label="Tools in this checkout"></ul>
+        <div class="field">
+          <label for="due-input">Due back</label>
+          <input id="due-input" type="date">
+        </div>
+        <div class="actions">
+          <button id="checkout" type="button" class="primary" disabled>Check out</button>
+          <button id="clear-lend" type="button" class="ghost" disabled>Clear</button>
+        </div>
+      </div>
+
+      <div id="return-view" hidden>
+        <h2>Check in</h2>
+        <div class="field">
+          <label for="return-input">Tool ID</label>
+          <div class="row">
+            <input id="return-input" type="text" autocomplete="off" placeholder="Tool ID, e.g. T-102">
+            <button id="find-return" type="button" class="secondary">Find</button>
+          </div>
+          <p class="hint error" id="return-error" role="alert"></p>
+        </div>
+        <div id="return-card" class="card" hidden>
+          <p class="card-title" id="rc-name"></p>
+          <p class="muted" id="rc-member"></p>
+          <p class="muted" id="rc-due"></p>
+          <fieldset class="field" style="margin-top:14px">
+            <legend>Condition</legend>
+            <label class="radio"><input type="radio" name="cond" value="ok" checked> Good, back on the shelf</label>
+            <label class="radio"><input type="radio" name="cond" value="repair"> Needs repair, hold it</label>
+          </fieldset>
+          <div class="field">
+            <label for="return-note">Note (optional)</label>
+            <input id="return-note" type="text" autocomplete="off" placeholder="e.g. blade guard loose">
+          </div>
+          <div class="actions">
+            <button id="checkin" type="button" class="primary">Check in</button>
+            <button id="cancel-return" type="button" class="ghost">Cancel</button>
+          </div>
+        </div>
+
+        <p class="section-title">In repair</p>
+        <ul id="repair-list" class="list" aria-label="Tools in repair"></ul>
+      </div>
+
+      <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="out-title">
+      <div class="out-head">
+        <h2 id="out-title">Out right now</h2>
+        <input id="out-filter" type="search" placeholder="Filter by tool or member" aria-label="Filter checked-out tools">
+      </div>
+      <ul id="out-list" class="list"></ul>
+    </section>
+  </main>
+
+  <footer>Saved in this browser. Lending period is 7 days (up to 14). Tool IDs are on the tool's tag.</footer>
+</div>
+
+<script>
+(() => {
+  const KEY = 'toolDesk.v1';
+  const MAX_ITEMS = 6;
+  const LEND_DAYS = 7;
+  const MAX_DAYS = 14;
+
+  const $ = sel => document.querySelector(sel);
+
+  function h(tag, props = {}, ...kids) {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(props)) {
+      if (k === 'class') node.className = v;
+      else if (k.startsWith('on')) node.addEventListener(k.slice(2), v);
+      else if (v !== false && v != null) node.setAttribute(k, v === true ? '' : v);
+    }
+    for (const kid of kids.flat()) {
+      if (kid == null || kid === false) continue;
+      node.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+    }
+    return node;
+  }
+
+  // Dates: local calendar days stored as YYYY-MM-DD
+  const pad = n => String(n).padStart(2, '0');
+  const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const parseYmd = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+  const today = () => ymd(new Date());
+  const fmtDate = s => parseYmd(s).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+  const daysBetween = (a, b) => Math.round((parseYmd(b) - parseYmd(a)) / 86400000);
+  const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
+  function seedData() {
+    const t = new Date();
+    const ago = n => ymd(addDays(t, -n));
+    const ahead = n => ymd(addDays(t, n));
+    return {
+      tools: [
+        { id: 'T-101', name: 'Cordless drill', status: 'ok', note: '' },
+        { id: 'T-102', name: 'Circular saw', status: 'ok', note: '' },
+        { id: 'T-103', name: 'Orbital sander', status: 'ok', note: '' },
+        { id: 'T-110', name: 'Extension ladder, 24 ft', status: 'ok', note: '' },
+        { id: 'T-111', name: 'Step ladder, 6 ft', status: 'ok', note: '' },
+        { id: 'T-120', name: 'Pipe wrench', status: 'ok', note: '' },
+        { id: 'T-121', name: 'Drain auger, 25 ft', status: 'ok', note: '' },
+        { id: 'T-130', name: 'Wheelbarrow', status: 'ok', note: '' },
+        { id: 'T-131', name: 'Hedge trimmer', status: 'repair', note: 'Blade bolt stripped' },
+        { id: 'T-132', name: 'Lawn aerator', status: 'ok', note: '' },
+        { id: 'T-140', name: 'Tile cutter', status: 'ok', note: '' },
+        { id: 'T-141', name: 'Pressure washer', status: 'ok', note: '' }
+      ],
+      members: [
+        { id: 'M-1042', name: 'Dana Ruiz' },
+        { id: 'M-1077', name: 'Marcus Lee' },
+        { id: 'M-1103', name: 'Priya Natarajan' },
+        { id: 'M-1158', name: 'Tom Okafor' },
+        { id: 'M-1190', name: 'Helen Varga' }
+      ],
+      loans: [
+        { toolId: 'T-102', memberId: 'M-1077', out: ago(3), due: ahead(4) },
+        { toolId: 'T-121', memberId: 'M-1158', out: ago(12), due: ago(5) },
+        { toolId: 'T-130', memberId: 'M-1190', out: ago(1), due: ahead(6) }
+      ]
+    };
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) { /* storage unavailable: fall back to seed data */ }
+    return seedData();
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* not persisted */ }
+  }
+
+  const state = load();
+  const lend = { memberId: null, basket: [] };
+  const ret = { toolId: null };
+
+  const toolById = id => state.tools.find(t => t.id === id);
+  const memberById = id => state.members.find(m => m.id === id);
+  const loanFor = toolId => state.loans.find(l => l.toolId === toolId);
+  const overdueDays = loan => Math.max(0, daysBetween(loan.due, today()));
+  const overdueFor = memberId => state.loans.filter(l => l.memberId === memberId && overdueDays(l) > 0);
+
+  function findMember(q) {
+    const s = q.trim().toLowerCase();
+    if (!s) return null;
+    const byId = state.members.find(m => m.id.toLowerCase() === s);
+    if (byId) return byId;
+    const hits = state.members.filter(m => m.name.toLowerCase().includes(s));
+    return hits.length === 1 ? hits[0] : null;
+  }
+
+  function toast(msg, isError = false) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.toggle('error', isError);
+  }
+
+  function setMode(mode) {
+    const lendOn = mode === 'lend';
+    $('#mode-lend').setAttribute('aria-pressed', String(lendOn));
+    $('#mode-return').setAttribute('aria-pressed', String(!lendOn));
+    $('#lend-view').hidden = !lendOn;
+    $('#return-view').hidden = lendOn;
+    (lendOn ? $('#member-input') : $('#return-input')).focus();
+  }
+
+  // ---------- Lend ----------
+
+  function renderMember() {
+    const q = $('#member-input').value;
+    const status = $('#member-status');
+    const m = findMember(q);
+    lend.memberId = m ? m.id : null;
+    status.className = 'hint';
+    status.textContent = '';
+    if (q.trim() && !m) {
+      status.classList.add('error');
+      status.textContent = 'No single member matches. Try the member ID.';
+    } else if (m) {
+      const late = overdueFor(m.id);
+      if (late.length) {
+        status.classList.add('error');
+        status.textContent = `${m.name} has ${plural(late.length, 'overdue tool', 'overdue tools')}. Check those in before lending more.`;
+      } else {
+        const out = state.loans.filter(l => l.memberId === m.id).length;
+        status.textContent = `${m.name} · ${m.id} · Good standing · ${out} out`;
+      }
+    }
+    renderCheckout();
+  }
+
+  function renderBasket() {
+    const list = $('#basket');
+    list.replaceChildren();
+    if (!lend.basket.length) {
+      list.append(h('li', { class: 'empty' }, 'No tools added yet. Type or scan a tool ID.'));
+    }
+    for (const id of lend.basket) {
+      const tool = toolById(id);
+      list.append(h('li', { class: 'item' },
+        h('div', { class: 'item-main' },
+          h('div', { class: 'item-title' }, tool.name),
+          h('div', { class: 'code' }, id)
+        ),
+        h('button', {
+          type: 'button', class: 'ghost small',
+          'aria-label': `Remove ${tool.name}`,
+          onclick: () => { lend.basket = lend.basket.filter(x => x !== id); renderBasket(); $('#tool-input').focus(); }
+        }, 'Remove')
+      ));
+    }
+    renderCheckout();
+  }
+
+  function renderCheckout() {
+    const m = memberById(lend.memberId);
+    const blocked = m && overdueFor(m.id).length > 0;
+    const n = lend.basket.length;
+    const ready = m && !blocked && n > 0 && $('#due-input').value;
+    const btn = $('#checkout');
+    btn.disabled = !ready;
+    btn.textContent = n ? `Check out ${plural(n, 'tool', 'tools')}` : 'Check out';
+    $('#clear-lend').disabled = !(n || $('#member-input').value.trim());
+  }
+
+  function addTool() {
+    const input = $('#tool-input');
+    const id = input.value.trim().toUpperCase();
+    const tool = toolById(id);
+    const loan = loanFor(id);
+    let msg = '';
+    if (!id) msg = 'Enter a tool ID.';
+    else if (!tool) msg = `No tool ${id}. Check the tag on the tool.`;
+    else if (lend.basket.includes(id)) msg = `${tool.name} is already in this checkout.`;
+    else if (tool.status === 'repair') msg = `${tool.name} is in repair and can't be lent.`;
+    else if (loan) msg = `${tool.name} is out with ${memberById(loan.memberId)?.name ?? 'another member'}.`;
+    else if (lend.basket.length >= MAX_ITEMS) msg = `A checkout can hold up to ${MAX_ITEMS} tools.`;
+
+    $('#tool-error').textContent = msg;
+    input.setAttribute('aria-invalid', String(Boolean(msg)));
+    if (msg) { input.focus(); input.select(); return; }
+
+    lend.basket.push(id);
+    input.value = '';
+    input.removeAttribute('aria-invalid');
+    renderBasket();
+    input.focus();
+  }
+
+  function checkout() {
+    const m = memberById(lend.memberId);
+    const due = $('#due-input').value;
+    if (!m || !lend.basket.length || overdueFor(m.id).length) return;
+    if (!due || due < today() || due > ymd(addDays(new Date(), MAX_DAYS))) {
+      toast(`Pick a return date between today and ${MAX_DAYS} days out.`, true);
+      return;
+    }
+    const free = lend.basket.filter(id => !loanFor(id) && toolById(id).status === 'ok');
+    if (free.length !== lend.basket.length) {
+      lend.basket = free;
+      renderBasket();
+      toast('Some tools were just taken or sent to repair. Review the list and try again.', true);
+      return;
+    }
+    const out = today();
+    for (const id of lend.basket) state.loans.push({ toolId: id, memberId: m.id, out, due });
+    const n = lend.basket.length;
+    save();
+    toast(`Checked out ${plural(n, 'tool', 'tools')} to ${m.name}. Due ${fmtDate(due)}.`);
+    resetLend();
+  }
+
+  function resetLend() {
+    lend.basket = [];
+    lend.memberId = null;
+    $('#member-input').value = '';
+    $('#tool-input').value = '';
+    $('#tool-input').removeAttribute('aria-invalid');
+    $('#tool-error').textContent = '';
+    $('#due-input').value = ymd(addDays(new Date(), LEND_DAYS));
+    renderAll();
+    $('#member-input').focus();
+  }
+
+  function clearLend() {
+    if (lend.basket.length && !confirm('Clear this checkout?')) return;
+    resetLend();
+    toast('');
+  }
+
+  // ---------- Return ----------
+
+  function setReturnError(msg) {
+    const input = $('#return-input');
+    $('#return-error').textContent = msg;
+    input.setAttribute('aria-invalid', String(Boolean(msg)));
+  }
+
+  function findReturn() {
+    const id = $('#return-input').value.trim().toUpperCase();
+    const tool = toolById(id);
+    const loan = loanFor(id);
+    ret.toolId = null;
+    if (!id) setReturnError('');
+    else if (!tool) setReturnError(`No tool ${id}. Check the tag on the tool.`);
+    else if (!loan) setReturnError(`${tool.name} is not checked out.${tool.status === 'repair' ? ' It is in repair (see below).' : ''}`);
+    else { setReturnError(''); ret.toolId = id; }
+    renderReturnCard();
+    if (ret.toolId) $('#checkin').focus();
+  }
+
+  function renderReturnCard() {
+    const card = $('#return-card');
+    const loan = ret.toolId && loanFor(ret.toolId);
+    card.hidden = !loan;
+    if (!loan) return;
+    const tool = toolById(ret.toolId);
+    const member = memberById(loan.memberId);
+    const late = overdueDays(loan);
+    $('#rc-name').textContent = `${tool.name} · ${tool.id}`;
+    $('#rc-member').textContent = `Out with ${member ? member.name : loan.memberId} since ${fmtDate(loan.out)}`;
+    const dueEl = $('#rc-due');
+    dueEl.replaceChildren();
+    if (late > 0) {
+      dueEl.append(h('span', { class: 'badge danger' }, `${plural(late, 'day', 'days')} overdue`), ` · was due ${fmtDate(loan.due)}`);
+    } else {
+      dueEl.textContent = `Due ${fmtDate(loan.due)}`;
+    }
+  }
+
+  function startReturn(id) {
+    setMode('return');
+    $('#return-input').value = id;
+    document.querySelector('input[name="cond"][value="ok"]').checked = true;
+    $('#return-note').value = '';
+    findReturn();
+  }
+
+  function resetReturn() {
+    ret.toolId = null;
+    $('#return-input').value = '';
+    setReturnError('');
+    document.querySelector('input[name="cond"][value="ok"]').checked = true;
+    $('#return-note').value = '';
+    renderReturnCard();
+    $('#return-input').focus();
+  }
+
+  function checkIn() {
+    const loan = ret.toolId && loanFor(ret.toolId);
+    if (!loan) return;
+    const tool = toolById(ret.toolId);
+    const repair = document.querySelector('input[name="cond"]:checked').value === 'repair';
+    const note = $('#return-note').value.trim();
+    state.loans = state.loans.filter(l => l !== loan);
+    if (repair) {
+      tool.status = 'repair';
+      tool.note = note || 'Reported at return';
+    }
+    save();
+    toast(repair
+      ? `${tool.name} checked in and held for repair.`
+      : `${tool.name} checked in and back on the shelf.`);
+    resetReturn();
+    renderAll();
+  }
+
+  function renderRepair() {
+    const list = $('#repair-list');
+    list.replaceChildren();
+    const broken = state.tools.filter(t => t.status === 'repair');
+    if (!broken.length) list.append(h('li', { class: 'empty' }, 'Nothing is in repair.'));
+    for (const tool of broken) {
+      list.append(h('li', { class: 'item' },
+        h('div', { class: 'item-main' },
+          h('div', { class: 'item-title' }, tool.name, ' ', h('span', { class: 'code' }, tool.id)),
+          h('div', { class: 'muted' }, tool.note || 'No note')
+        ),
+        h('button', {
+          type: 'button', class: 'secondary small',
+          'aria-label': `Mark ${tool.name} back in service`,
+          onclick: () => {
+            tool.status = 'ok';
+            tool.note = '';
+            save();
+            toast(`${tool.name} is back in service.`);
+            renderAll();
+          }
+        }, 'Back in service')
+      ));
+    }
+  }
+
+  // ---------- Out list and stats ----------
+
+  function renderOut() {
+    const q = $('#out-filter').value.trim().toLowerCase();
+    const list = $('#out-list');
+    list.replaceChildren();
+    if (!state.loans.length) {
+      list.append(h('li', { class: 'empty' }, 'Nothing is checked out right now.'));
+      return;
+    }
+    const rows = state.loans
+      .map(loan => ({ loan, tool: toolById(loan.toolId), member: memberById(loan.memberId), late: overdueDays(loan) }))
+      .filter(r => !q || [r.tool?.name, r.tool?.id, r.member?.name].some(v => v && v.toLowerCase().includes(q)))
+      .sort((a, b) => b.late - a.late || a.loan.due.localeCompare(b.loan.due));
+    if (!rows.length) {
+      list.append(h('li', { class: 'empty' }, `No loans match “${q}”.`));
+      return;
+    }
+    for (const r of rows) {
+      const name = r.tool?.name ?? r.loan.toolId;
+      list.append(h('li', { class: 'item' },
+        h('div', { class: 'item-main' },
+          h('div', { class: 'item-title' }, name, ' ', h('span', { class: 'code' }, r.loan.toolId)),
+          h('div', { class: 'muted' }, `${r.member?.name ?? r.loan.memberId} · due ${fmtDate(r.loan.due)}`)
+        ),
+        r.late > 0 ? h('span', { class: 'badge danger' }, `${plural(r.late, 'day', 'days')} late`) : null,
+        h('button', {
+          type: 'button', class: 'secondary small',
+          'aria-label': `Return ${name}`,
+          onclick: () => startReturn(r.loan.toolId)
+        }, 'Return')
+      ));
+    }
+  }
+
+  function renderStats() {
+    const available = state.tools.filter(t => t.status === 'ok' && !loanFor(t.id)).length;
+    $('#stat-avail').textContent = available;
+    $('#stat-out').textContent = state.loans.length;
+    $('#stat-over').textContent = state.loans.filter(l => overdueDays(l) > 0).length;
+    $('#stat-repair').textContent = state.tools.filter(t => t.status === 'repair').length;
+  }
+
+  function renderAll() {
+    renderStats();
+    renderMember();
+    renderBasket();
+    renderOut();
+    renderRepair();
+    renderReturnCard();
+  }
+
+  // ---------- Wiring ----------
+
+  $('#today').textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+
+  const dueInput = $('#due-input');
+  dueInput.value = ymd(addDays(new Date(), LEND_DAYS));
+  dueInput.min = today();
+  dueInput.max = ymd(addDays(new Date(), MAX_DAYS));
+  dueInput.addEventListener('change', renderCheckout);
+
+  $('#mode-lend').addEventListener('click', () => setMode('lend'));
+  $('#mode-return').addEventListener('click', () => setMode('return'));
+
+  $('#member-input').addEventListener('input', () => { toast(''); renderMember(); });
+  $('#member-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); $('#tool-input').focus(); }
+  });
+
+  const toolInput = $('#tool-input');
+  toolInput.addEventListener('input', () => {
+    $('#tool-error').textContent = '';
+    toolInput.removeAttribute('aria-invalid');
+  });
+  toolInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); addTool(); }
+  });
+  $('#add-tool').addEventListener('click', addTool);
+  $('#checkout').addEventListener('click', checkout);
+  $('#clear-lend').addEventListener('click', clearLend);
+
+  const returnInput = $('#return-input');
+  returnInput.addEventListener('input', () => {
+    setReturnError('');
+    if (ret.toolId) { ret.toolId = null; renderReturnCard(); }
+  });
+  returnInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); findReturn(); }
+  });
+  $('#find-return').addEventListener('click', findReturn);
+  $('#checkin').addEventListener('click', checkIn);
+  $('#cancel-return').addEventListener('click', resetReturn);
+
+  $('#out-filter').addEventListener('input', renderOut);
+
+  renderAll();
+  $('#member-input').focus();
+})();
+</script>
+</body>
+</html>

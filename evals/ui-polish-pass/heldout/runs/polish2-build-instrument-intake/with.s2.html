@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instrument Repair Drop-off</title>
+<style>
+  :root{
+    --bg:#f6efe3; --card:#fffdf8; --ink:#2b2118; --muted:#5e5042; --line:#8a7a68;
+    --soft:#e6dac6; --accent:#7a3b12; --accent-ink:#fff; --err:#a3201a; --ok:#245c2e;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.5 var(--font)}
+  .wrap{max-width:42rem;margin:0 auto;padding:1.5rem 1rem 3rem}
+  header{padding:1rem 0 1.25rem}
+  h1{font:700 clamp(1.7rem,6vw,2.3rem)/1.15 var(--serif);margin:0 0 .5rem}
+  header p{margin:0;color:var(--muted);max-width:36rem}
+  .card{background:var(--card);border:1px solid var(--soft);border-radius:10px;padding:1.25rem;margin-bottom:1rem}
+  h2{font:700 1.15rem/1.3 var(--serif);margin:0 0 .25rem}
+  .hint{color:var(--muted);font-size:.9rem;margin:0 0 .9rem}
+  .field{margin:0 0 1rem}
+  label,legend{display:block;font-weight:600;margin-bottom:.3rem;padding:0}
+  .opt{font-weight:400;color:var(--muted)}
+  input[type=text],input[type=tel],input[type=email],input[type=date],select,textarea{
+    width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);
+    border-radius:6px;padding:.6rem .7rem;min-height:2.75rem}
+  textarea{min-height:8rem;resize:vertical}
+  .row{display:grid;gap:0 1rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))}
+  fieldset{border:0;margin:0 0 1rem;padding:0;min-width:0}
+  .choices{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))}
+  .choice{position:relative}
+  .choice input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+  .choice span{display:flex;align-items:center;gap:.6rem;min-height:2.75rem;padding:.5rem .75rem;
+    border:1.5px solid var(--line);border-radius:6px;background:#fff;font-weight:500}
+  .choice span::before{content:"";flex:none;width:1.1rem;height:1.1rem;border:2px solid var(--line);background:#fff}
+  .choice input[type=radio]+span::before{border-radius:50%}
+  .choice input[type=checkbox]+span::before{border-radius:3px}
+  .choice input:checked+span{border-color:var(--accent);background:#f7e9dc}
+  .choice input:checked+span::before{background:var(--accent);border-color:var(--accent);
+    box-shadow:inset 0 0 0 3px #fff}
+  .choice input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0}
+  .err{color:var(--err);font-size:.92rem;font-weight:600;margin:.35rem 0 0}
+  .err::before{content:"⚠ "}
+  [aria-invalid=true]{border-color:var(--err);border-width:2px}
+  .summary{border:2px solid var(--err);border-radius:8px;background:#fff3f1;padding:.9rem 1rem;margin-bottom:1rem}
+  .summary h2{color:var(--err);font-size:1rem}
+  .summary ul{margin:.4rem 0 0;padding-left:1.2rem}
+  .summary a{color:var(--err);font-weight:600}
+  .empty{color:var(--muted);font-style:italic;margin:0}
+  .count{font-size:.85rem;color:var(--muted);text-align:right;margin:.2rem 0 0}
+  button{font:inherit;font-weight:700;min-height:2.9rem;padding:.6rem 1.25rem;border-radius:6px;cursor:pointer}
+  .primary{background:var(--accent);color:var(--accent-ink);border:2px solid var(--accent)}
+  .primary:hover{background:#5f2d0c}
+  .secondary{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+  .actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+  .fine{color:var(--muted);font-size:.9rem;margin:.9rem 0 0}
+  .ticket{border:2px dashed var(--accent)}
+  .ticket h2{font-size:1.4rem}
+  .ticket .num{font:700 1.1rem ui-monospace,Menlo,Consolas,monospace;background:var(--soft);
+    display:inline-block;padding:.15rem .5rem;border-radius:4px}
+  dl{display:grid;grid-template-columns:minmax(7rem,max-content) 1fr;gap:.4rem 1rem;margin:1rem 0}
+  dt{font-weight:700} dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
+  .status{min-height:1.4rem;color:var(--ok);font-weight:600;margin:.6rem 0 0}
+  [hidden]{display:none!important}
+  @media (max-width:30rem){dl{grid-template-columns:1fr}dt{margin-top:.4rem}}
+  @media print{
+    body{background:#fff}.wrap>*:not(#done){display:none!important}
+    #done .actions,#done .status{display:none}.ticket{border:2px solid #000}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Instrument Repair Drop-off</h1>
+    <p>Guitars and violins. Tell me who you are and what's wrong, and I'll have it ready when you hand the instrument over. The more detail, the better the quote.</p>
+  </header>
+
+  <div id="done" hidden></div>
+
+  <form id="form" novalidate>
+    <div id="summary" class="summary" role="alert" tabindex="-1" hidden></div>
+
+    <section class="card" aria-labelledby="h-you">
+      <h2 id="h-you">1. How to reach you</h2>
+      <p class="hint">Phone or email, at least one, so I can send a quote and tell you when it's ready.</p>
+      <div class="field">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-e">
+        <p class="err" id="name-e" hidden></p>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="phone">Phone <span class="opt">(optional if you give email)</span></label>
+          <input id="phone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="phone-e">
+          <p class="err" id="phone-e" hidden></p>
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="opt">(optional if you give phone)</span></label>
+          <input id="email" type="email" autocomplete="email" aria-describedby="email-e">
+          <p class="err" id="email-e" hidden></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-inst">
+      <h2 id="h-inst">2. The instrument</h2>
+      <fieldset id="type-set" aria-describedby="type-e">
+        <legend>What are you dropping off?</legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="type" value="Guitar"><span>Guitar</span></label>
+          <label class="choice"><input type="radio" name="type" value="Violin"><span>Violin</span></label>
+          <label class="choice"><input type="radio" name="type" value="Other bowed or fretted instrument"><span>Something else</span></label>
+        </div>
+        <p class="err" id="type-e" hidden></p>
+      </fieldset>
+      <div class="row">
+        <div class="field">
+          <label for="kind">Kind <span class="opt">(optional)</span></label>
+          <select id="kind"><option value="">Not sure / skip</option></select>
+        </div>
+        <div class="field">
+          <label for="make">Brand or model <span class="opt">(optional)</span></label>
+          <input id="make" type="text" placeholder="e.g. Yamaha FG800, Stentor 2">
+        </div>
+      </div>
+      <div class="field">
+        <label for="case">Is it coming with a case or bow?</label>
+        <select id="case">
+          <option>Instrument only</option>
+          <option>Hard case</option>
+          <option>Soft case / gig bag</option>
+          <option>Bow included</option>
+          <option>Case and bow</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-prob">
+      <h2 id="h-prob">3. What's wrong with it</h2>
+      <fieldset id="problems">
+        <legend>Tick everything that applies <span class="opt">(optional)</span></legend>
+        <p class="empty" id="prob-empty">Choose an instrument above to see common problems.</p>
+        <div class="choices" id="prob-list" hidden></div>
+      </fieldset>
+      <div class="field">
+        <label for="desc">Describe the problem in your own words</label>
+        <textarea id="desc" maxlength="1500" aria-describedby="desc-h desc-e"
+          placeholder="What do you hear or see? When did it start? Did something happen, like a drop or a humid week?"></textarea>
+        <p class="count" id="desc-h">0 / 1500</p>
+        <p class="err" id="desc-e" hidden></p>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="when">Needed back by <span class="opt">(optional)</span></label>
+          <input id="when" type="date">
+        </div>
+        <div class="field">
+          <label for="budget">Budget limit <span class="opt">(optional)</span></label>
+          <input id="budget" type="text" inputmode="decimal" placeholder="e.g. 150">
+        </div>
+      </div>
+      <div class="field">
+        <label class="choice" style="font-weight:400">
+          <input type="checkbox" id="quote"><span>Call or email me with a quote before any work starts</span>
+        </label>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="primary" type="submit">Create drop-off ticket</button>
+      <button class="secondary" type="reset" id="reset">Clear form</button>
+    </div>
+    <p class="fine">This page doesn't send anything over the internet. It makes a ticket you can print, copy, or show at the counter with the instrument.</p>
+  </form>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){return document.getElementById(id)};
+  var form=$("form"), summary=$("summary"), done=$("done");
+
+  var kinds = {
+    "Guitar":["Acoustic","Classical / nylon string","Electric","Bass","12-string"],
+    "Violin":["Violin","Viola","Cello","Fiddle (set up for folk)"],
+    "Other bowed or fretted instrument":[]
+  };
+  var probs = {
+    "Guitar":["Buzzing or fret noise","High action (hard to play)","Won't stay in tune","Crack in the body","Loose or lifted bridge","Worn frets","Crackling pots or jack (electric)","No sound or cuts out (electric)","Neck bowed or twisted","Broken headstock","Needs a setup","Needs new strings"],
+    "Violin":["Open seam or buzzing","Crack in the top or back","Bridge broken or leaning","Soundpost fell or moved","Pegs slipping or sticking","Fine tuners not working","Wolf tone or dull sound","Fingerboard worn","Chinrest or tailpiece loose","Bow needs rehair","Needs a setup","Needs new strings"],
+    "Other bowed or fretted instrument":["Crack or open seam","Won't stay in tune","Hard to play","Buzzing","Broken part","Needs a general check"]
+  };
+
+  function chosenType(){var r=form.querySelector('input[name=type]:checked');return r?r.value:""}
+
+  function renderType(){
+    var t=chosenType(), k=$("kind"), list=$("prob-list");
+    k.innerHTML='<option value="">Not sure / skip</option>';
+    (kinds[t]||[]).forEach(function(x){var o=document.createElement("option");o.textContent=x;k.appendChild(o)});
+    list.innerHTML="";
+    (probs[t]||[]).forEach(function(p){
+      var l=document.createElement("label");l.className="choice";
+      var i=document.createElement("input");i.type="checkbox";i.name="prob";i.value=p;
+      var s=document.createElement("span");s.textContent=p;
+      l.appendChild(i);l.appendChild(s);list.appendChild(l);
+    });
+    list.hidden=!t; $("prob-empty").hidden=!!t;
+    if(t) clearErr("type");
+  }
+  form.querySelectorAll('input[name=type]').forEach(function(r){r.addEventListener("change",renderType)});
+
+  $("desc").addEventListener("input",function(){$("desc-h").textContent=this.value.length+" / 1500"});
+
+  function setErr(id,msg){
+    var e=$(id+"-e"), f=$(id);
+    e.textContent=msg; e.hidden=false;
+    if(f) f.setAttribute("aria-invalid","true");
+  }
+  function clearErr(id){
+    var e=$(id+"-e"), f=$(id);
+    if(e){e.hidden=true;e.textContent=""}
+    if(f) f.removeAttribute("aria-invalid");
+  }
+  ["name","phone","email"].forEach(function(id){
+    $(id).addEventListener("input",function(){clearErr(id);if(id!=="name"){clearErr("phone");clearErr("email")}})
+  });
+
+  function validate(){
+    var errs=[];
+    ["name","phone","email","type","desc"].forEach(clearErr);
+    var name=$("name").value.trim(), phone=$("phone").value.trim(), email=$("email").value.trim();
+    if(!name) errs.push(["name","Enter your name so I know whose instrument this is."]);
+    if(!phone && !email){
+      errs.push(["phone","Give a phone number or an email so I can reach you."]);
+    } else {
+      if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.push(["email","That email doesn't look complete. It should look like name@example.com."]);
+      if(phone && phone.replace(/\D/g,"").length<7) errs.push(["phone","That phone number looks too short. Include the area code."]);
+    }
+    if(!chosenType()) errs.push(["type","Choose guitar, violin, or something else."]);
+    var anyProb=form.querySelector('input[name=prob]:checked');
+    if(!anyProb && !$("desc").value.trim()) errs.push(["desc","Tick a problem above or describe what's wrong. I need at least one."]);
+    return errs;
+  }
+
+  function showErrors(errs){
+    summary.innerHTML="";
+    var h=document.createElement("h2");
+    h.textContent=errs.length===1?"1 thing to fix before I can make your ticket":errs.length+" things to fix before I can make your ticket";
+    var ul=document.createElement("ul");
+    errs.forEach(function(e){
+      setErr(e[0],e[1]);
+      var li=document.createElement("li"),a=document.createElement("a");
+      a.href="#"+(e[0]==="type"?"type-set":e[0]);a.textContent=e[1];
+      a.addEventListener("click",function(ev){ev.preventDefault();focusField(e[0])});
+      li.appendChild(a);ul.appendChild(li);
+    });
+    summary.appendChild(h);summary.appendChild(ul);summary.hidden=false;
+    summary.focus();
+    summary.scrollIntoView({block:"start"});
+  }
+  function focusField(id){
+    var el = id==="type" ? form.querySelector('input[name=type]') : $(id);
+    if(el){el.focus();el.scrollIntoView({block:"center"})}
+  }
+
+  function ticketNo(){
+    var d=new Date(), p=function(n){return String(n).padStart(2,"0")};
+    return "R"+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+"-"+Math.floor(1000+Math.random()*9000);
+  }
+
+  var lastText="";
+  form.addEventListener("submit",function(ev){
+    ev.preventDefault();
+    var errs=validate();
+    if(errs.length){showErrors(errs);return}
+    summary.hidden=true;
+    var probsPicked=[].map.call(form.querySelectorAll('input[name=prob]:checked'),function(i){return i.value});
+    var rows=[
+      ["Ticket",ticketNo()],
+      ["Dropped off",new Date().toLocaleString([], {dateStyle:"medium",timeStyle:"short"})],
+      ["Name",$("name").value.trim()],
+      ["Phone",$("phone").value.trim()||"—"],
+      ["Email",$("email").value.trim()||"—"],
+      ["Instrument",[chosenType(),$("kind").value].filter(Boolean).join(" · ")],
+      ["Brand / model",$("make").value.trim()||"—"],
+      ["Comes with",$("case").value],
+      ["Problems",probsPicked.length?probsPicked.join("\n"):"—"],
+      ["Details",$("desc").value.trim()||"—"],
+      ["Needed by",$("when").value||"No deadline"],
+      ["Budget limit",$("budget").value.trim()||"—"],
+      ["Quote first",$("quote").checked?"Yes, contact before starting":"No preference given"]
+    ];
+    lastText=rows.map(function(r){return r[0]+": "+r[1]}).join("\n");
+
+    done.innerHTML="";
+    var card=document.createElement("section");card.className="card ticket";card.setAttribute("aria-labelledby","t-h");
+    var h=document.createElement("h2");h.id="t-h";h.tabIndex=-1;h.textContent="Your drop-off ticket is ready";
+    var p=document.createElement("p");p.className="hint";
+    p.textContent="Print it, copy it, or show it at the counter with your instrument. Nothing has been sent anywhere.";
+    var dl=document.createElement("dl");
+    rows.forEach(function(r){
+      var dt=document.createElement("dt"),dd=document.createElement("dd");
+      dt.textContent=r[0];dd.textContent=r[1];
+      if(r[0]==="Ticket"){dd.innerHTML="";var s=document.createElement("span");s.className="num";s.textContent=r[1];dd.appendChild(s)}
+      dl.appendChild(dt);dl.appendChild(dd);
+    });
+    var act=document.createElement("div");act.className="actions";
+    var pr=document.createElement("button");pr.className="primary";pr.type="button";pr.textContent="Print ticket";
+    pr.onclick=function(){window.print()};
+    var cp=document.createElement("button");cp.className="secondary";cp.type="button";cp.textContent="Copy as text";
+    var ed=document.createElement("button");ed.className="secondary";ed.type="button";ed.textContent="Edit my answers";
+    var st=document.createElement("p");st.className="status";st.setAttribute("role","status");
+    cp.onclick=function(){
+      function ok(){st.style.color="";st.textContent="Copied to clipboard."}
+      function fail(){
+        st.style.color="var(--err)";
+        st.textContent="Couldn't copy automatically. Select the ticket text above and copy it by hand.";
+      }
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(ok,fail)}else fail();
+    };
+    ed.onclick=function(){done.hidden=true;form.hidden=false;$("name").focus();window.scrollTo(0,0)};
+    act.appendChild(pr);act.appendChild(cp);act.appendChild(ed);
+    card.appendChild(h);card.appendChild(p);card.appendChild(dl);card.appendChild(act);card.appendChild(st);
+    done.appendChild(card);
+    done.hidden=false;form.hidden=true;
+    h.focus();window.scrollTo(0,0);
+  });
+
+  form.addEventListener("reset",function(){
+    setTimeout(function(){
+      ["name","phone","email","type","desc"].forEach(clearErr);
+      summary.hidden=true;renderType();$("desc-h").textContent="0 / 1500";
+    },0);
+  });
+})();
+</script>
+</body>
+</html>

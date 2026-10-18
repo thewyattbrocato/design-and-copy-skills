@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hive Inspection Log</title>
+<style>
+  :root {
+    --bg: #faf6ec; --card: #fffdf7; --ink: #2b2417; --muted: #7a6d54;
+    --line: #e4d9bd; --accent: #c98a0b; --accent-ink: #fff; --danger: #a63a2b;
+    --chip: #f3ead0; --chip-on: #2b2417; --chip-on-ink: #fdf3d4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1810; --card: #26211543; --ink: #f1e8d0; --muted: #a89a7c;
+      --line: #3b3322; --accent: #e3a928; --accent-ink: #1c1810; --danger: #e5806f;
+      --chip: #332c1c; --chip-on: #f1e8d0; --chip-on-ink: #1c1810;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 18px; font-size: .92rem; }
+  form, .entry, .tools {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px;
+  }
+  .row { margin-bottom: 16px; }
+  .row:last-child { margin-bottom: 0; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .two { grid-template-columns: 1fr; } }
+  label.t, .legend { display: block; font-weight: 600; font-size: .85rem; margin-bottom: 6px; }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  select, input[type=datetime-local], input[type=text], textarea {
+    width: 100%; font: inherit; color: inherit; background: var(--bg);
+    border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips label { position: relative; }
+  .chips input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .chips span {
+    display: inline-block; padding: 6px 12px; border-radius: 999px; background: var(--chip);
+    border: 1px solid var(--line); font-size: .9rem; user-select: none;
+  }
+  .chips input:checked + span { background: var(--chip-on); color: var(--chip-on-ink); border-color: var(--chip-on); }
+  .chips input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 8px; padding: 10px 16px;
+    border: 1px solid var(--line); background: var(--chip); color: var(--ink);
+  }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; width: 100%; padding: 12px; }
+  button.small { padding: 4px 10px; font-size: .8rem; }
+  button.danger { color: var(--danger); }
+  h2 { font-size: 1.15rem; margin: 28px 0 10px; }
+  .tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; padding: 10px 12px; }
+  .tools select { width: auto; flex: 1 1 140px; }
+  .entry { margin-bottom: 10px; }
+  .entry header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .entry h3 { margin: 0; font-size: 1.05rem; }
+  .entry time { color: var(--muted); font-size: .85rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+  .tag { font-size: .78rem; padding: 2px 9px; border-radius: 999px; background: var(--chip); border: 1px solid var(--line); }
+  .tag.warn { border-color: var(--danger); color: var(--danger); }
+  .entry p { margin: 6px 0 0; white-space: pre-wrap; }
+  .entry .foot { margin-top: 10px; text-align: right; }
+  .empty { color: var(--muted); text-align: center; padding: 24px 0; }
+  .toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: var(--chip-on); color: var(--chip-on-ink); padding: 8px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐝 Hive Inspection Log</h1>
+  <p class="sub">Behind the barn. Jot down what you saw, then close it up.</p>
+
+  <form id="f" autocomplete="off">
+    <div class="two row">
+      <div>
+        <label class="t" for="hive">Hive</label>
+        <select id="hive"></select>
+      </div>
+      <div>
+        <label class="t" for="when">Date &amp; time</label>
+        <input type="datetime-local" id="when" required>
+      </div>
+    </div>
+
+    <div class="row">
+      <label class="t" for="weather">Weather</label>
+      <input type="text" id="weather" placeholder="e.g. sunny, 68°F, light breeze">
+    </div>
+
+    <fieldset class="row"><legend class="legend">Queen</legend>
+      <div class="chips" data-name="queen" data-type="radio" data-opts="Seen,Not seen,Marked,Missing?"></div>
+    </fieldset>
+    <fieldset class="row"><legend class="legend">Eggs / young larvae</legend>
+      <div class="chips" data-name="eggs" data-type="radio" data-opts="Yes,No,Unsure"></div>
+    </fieldset>
+    <fieldset class="row"><legend class="legend">Brood pattern</legend>
+      <div class="chips" data-name="brood" data-type="radio" data-opts="Solid,Spotty,Poor,No brood"></div>
+    </fieldset>
+    <fieldset class="row"><legend class="legend">Population</legend>
+      <div class="chips" data-name="pop" data-type="radio" data-opts="Weak,Moderate,Strong,Crowded"></div>
+    </fieldset>
+    <fieldset class="row"><legend class="legend">Temperament</legend>
+      <div class="chips" data-name="temper" data-type="radio" data-opts="Calm,Nervous,Defensive"></div>
+    </fieldset>
+    <fieldset class="row"><legend class="legend">Honey / pollen stores</legend>
+      <div class="chips" data-name="stores" data-type="radio" data-opts="Low,Adequate,Plenty,Backfilled"></div>
+    </fieldset>
+    <fieldset class="row"><legend class="legend">Pests &amp; disease noticed</legend>
+      <div class="chips" data-name="pests" data-type="checkbox" data-warn="1" data-opts="Varroa,Hive beetles,Wax moth,Ants,Wasps/robbing,Chalkbrood,Foulbrood signs,Deformed wing,Swarm cells,None"></div>
+    </fieldset>
+    <fieldset class="row"><legend class="legend">What I did</legend>
+      <div class="chips" data-name="actions" data-type="checkbox" data-opts="Added super,Removed super,Added box,Fed syrup,Treated mites,Requeened,Split,Removed swarm cells,Reduced entrance,Swapped frames,Just looked"></div>
+    </fieldset>
+
+    <div class="row">
+      <label class="t" for="notes">Notes</label>
+      <textarea id="notes" placeholder="Frames of brood, what to do next time, anything odd…"></textarea>
+    </div>
+    <button class="primary" type="submit">Save inspection</button>
+  </form>
+
+  <h2>Past inspections</h2>
+  <div class="tools">
+    <select id="filter" aria-label="Filter by hive"></select>
+    <button type="button" id="csv">Download CSV</button>
+    <button type="button" id="json">Download JSON</button>
+  </div>
+  <div id="list"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var KEY = 'hive-inspections-v1', NAMES_KEY = 'hive-count';
+  var HIVES = 12;
+  var $ = function (id) { return document.getElementById(id); };
+  var entries = [];
+  try { entries = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) {}
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(entries)); }
+    catch (e) { toast('Could not save (storage unavailable)'); }
+  }
+  function toast(m) {
+    var t = $('toast'); t.textContent = m; t.classList.add('show');
+    clearTimeout(toast.h); toast.h = setTimeout(function () { t.classList.remove('show'); }, 1800);
+  }
+
+  // hive selectors
+  var hive = $('hive'), filter = $('filter');
+  filter.appendChild(new Option('All hives', ''));
+  for (var i = 1; i <= HIVES; i++) {
+    hive.appendChild(new Option('Hive ' + i, i));
+    filter.appendChild(new Option('Hive ' + i, i));
+  }
+  try { var last = localStorage.getItem('hive-last'); if (last) hive.value = last; } catch (e) {}
+
+  // chips
+  document.querySelectorAll('.chips').forEach(function (box) {
+    var name = box.dataset.name, type = box.dataset.type;
+    box.dataset.opts.split(',').forEach(function (o) {
+      var l = document.createElement('label');
+      var inp = document.createElement('input');
+      inp.type = type; inp.name = name; inp.value = o;
+      if (type === 'radio') {
+        // allow un-selecting a radio by clicking it again
+        inp.addEventListener('click', function () {
+          if (inp.dataset.was === '1') { inp.checked = false; inp.dataset.was = ''; }
+          else {
+            box.querySelectorAll('input').forEach(function (x) { x.dataset.was = ''; });
+            inp.dataset.was = '1';
+          }
+        });
+      }
+      var s = document.createElement('span'); s.textContent = o;
+      l.appendChild(inp); l.appendChild(s); box.appendChild(l);
+    });
+  });
+
+  function nowLocal() {
+    var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 16);
+  }
+  $('when').value = nowLocal();
+
+  function vals(name) {
+    return Array.prototype.map.call(
+      document.querySelectorAll('input[name="' + name + '"]:checked'), function (x) { return x.value; });
+  }
+
+  $('f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var en = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      hive: hive.value, when: $('when').value, weather: $('weather').value.trim(),
+      queen: vals('queen')[0] || '', eggs: vals('eggs')[0] || '', brood: vals('brood')[0] || '',
+      pop: vals('pop')[0] || '', temper: vals('temper')[0] || '', stores: vals('stores')[0] || '',
+      pests: vals('pests'), actions: vals('actions'), notes: $('notes').value.trim()
+    };
+    entries.push(en); persist();
+    try { localStorage.setItem('hive-last', hive.value); } catch (x) {}
+    // reset everything except hive
+    $('f').reset(); hive.value = en.hive; $('when').value = nowLocal();
+    document.querySelectorAll('.chips input').forEach(function (x) { x.dataset.was = ''; });
+    render(); toast('Saved Hive ' + en.hive);
+  });
+
+  function fmt(s) {
+    var d = new Date(s);
+    return isNaN(d) ? s : d.toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function render() {
+    var list = $('list'); list.textContent = '';
+    var f = filter.value;
+    var shown = entries.filter(function (x) { return !f || x.hive === f; })
+      .sort(function (a, b) { return a.when < b.when ? 1 : -1; });
+    if (!shown.length) { list.appendChild(el('div', 'empty', 'No inspections logged yet.')); return; }
+    shown.forEach(function (x) {
+      var c = el('article', 'entry');
+      var h = el('header');
+      h.appendChild(el('h3', '', 'Hive ' + x.hive));
+      h.appendChild(el('time', '', fmt(x.when)));
+      c.appendChild(h);
+      var tags = el('div', 'tags');
+      [['Queen', x.queen], ['Eggs', x.eggs], ['Brood', x.brood], ['Pop.', x.pop], ['Temper', x.temper], ['Stores', x.stores]]
+        .forEach(function (p) { if (p[1]) tags.appendChild(el('span', 'tag', p[0] + ': ' + p[1])); });
+      if (x.weather) tags.appendChild(el('span', 'tag', x.weather));
+      x.pests.forEach(function (p) { tags.appendChild(el('span', p === 'None' ? 'tag' : 'tag warn', p)); });
+      if (tags.children.length) c.appendChild(tags);
+      if (x.actions.length) c.appendChild(el('p', '', 'Did: ' + x.actions.join(', ')));
+      if (x.notes) c.appendChild(el('p', '', x.notes));
+      var foot = el('div', 'foot');
+      var del = el('button', 'small danger', 'Delete');
+      del.type = 'button';
+      del.addEventListener('click', function () {
+        if (!confirm('Delete this inspection of Hive ' + x.hive + '?')) return;
+        entries = entries.filter(function (y) { return y.id !== x.id; });
+        persist(); render();
+      });
+      foot.appendChild(del); c.appendChild(foot);
+      list.appendChild(c);
+    });
+  }
+  filter.addEventListener('change', render);
+
+  function download(name, type, text) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: type }));
+    a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  }
+  $('json').addEventListener('click', function () {
+    download('hive-inspections.json', 'application/json', JSON.stringify(entries, null, 2));
+  });
+  $('csv').addEventListener('click', function () {
+    var cols = ['hive', 'when', 'weather', 'queen', 'eggs', 'brood', 'pop', 'temper', 'stores', 'pests', 'actions', 'notes'];
+    function q(v) {
+      v = Array.isArray(v) ? v.join('; ') : (v || '');
+      v = String(v);
+      if (/^[=+\-@]/.test(v)) v = "'" + v; // avoid spreadsheet formula injection
+      return '"' + v.replace(/"/g, '""') + '"';
+    }
+    var rows = [cols.join(',')].concat(entries.map(function (x) {
+      return cols.map(function (c) { return q(x[c]); }).join(',');
+    }));
+    download('hive-inspections.csv', 'text/csv', rows.join('\n'));
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

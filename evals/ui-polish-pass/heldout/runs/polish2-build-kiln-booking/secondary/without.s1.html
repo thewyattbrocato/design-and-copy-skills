@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln Booking</title>
+<style>
+:root{--bg:#faf7f2;--card:#fff;--ink:#2b2622;--muted:#7a6f66;--line:#e5ddd2;--accent:#b5562e;--accent-ink:#fff;--busy:#efe9e1;--sel:#f3d9c9;--ok:#2e6b3f;--err:#a3291f}
+@media (prefers-color-scheme: dark){:root{--bg:#1d1a17;--card:#27231f;--ink:#f1ebe3;--muted:#a79c90;--line:#3d3630;--accent:#e07a4f;--accent-ink:#1d1a17;--busy:#332e29;--sel:#5a3a2a;--ok:#7fc795;--err:#f08b80}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+main{max-width:960px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:1.6rem;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px}
+@media (max-width:720px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+h2{font-size:1.05rem;margin:0 0 12px}
+label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:12px}
+input,select,textarea{display:block;width:100%;margin-top:4px;padding:8px 10px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px}
+textarea{resize:vertical;min-height:64px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.slot{font:inherit;font-size:.9rem;padding:10px 8px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;text-align:left}
+.slot small{display:block;color:var(--muted);font-size:.75rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slot:disabled{background:var(--busy);cursor:not-allowed;color:var(--muted)}
+.slot.in-range{background:var(--sel);border-color:var(--accent)}
+.slot.start{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+button.primary{font:inherit;font-weight:600;background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:10px 16px;cursor:pointer;width:100%}
+button.link{font:inherit;background:none;border:0;color:var(--err);cursor:pointer;padding:0;font-size:.85rem}
+.msg{margin:12px 0 0;font-size:.9rem;min-height:1.2em}
+.msg.ok{color:var(--ok)}
+.msg.err{color:var(--err)}
+ul.list{list-style:none;padding:0;margin:0}
+ul.list li{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+ul.list li:first-child{border-top:0}
+.muted{color:var(--muted);font-size:.85rem}
+.legend{font-size:.8rem;color:var(--muted);margin:10px 0 0}
+footer{margin-top:24px;color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+<main>
+<h1>Kiln Booking</h1>
+<p class="sub">Reserve shared kiln time for your firing. Pick a kiln and day, choose a start time, then confirm.</p>
+
+<div class="grid">
+  <section class="card">
+    <h2>1. Choose kiln and day</h2>
+    <div class="row">
+      <label>Kiln<select id="kiln"></select></label>
+      <label>Date<input type="date" id="date"></label>
+    </div>
+    <h2 style="margin-top:8px">2. Pick a start time</h2>
+    <div class="slots" id="slots"></div>
+    <p class="legend">Grey slots are booked or already passed. Kiln hours are 7:00 AM to 9:00 PM.</p>
+  </section>
+
+  <section class="card">
+    <h2>3. Confirm booking</h2>
+    <form id="form" novalidate>
+      <label>Duration<select id="duration"></select></label>
+      <label>Your name<input id="name" required maxlength="60" autocomplete="name"></label>
+      <label>Email (optional)<input type="email" id="email" maxlength="120" autocomplete="email"></label>
+      <label>Firing type
+        <select id="firing">
+          <option>Bisque</option>
+          <option>Glaze</option>
+          <option>Test tile</option>
+          <option>Raku</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Notes<textarea id="notes" maxlength="300" placeholder="Cone, shelf count, anything the monitor should know"></textarea></label>
+      <button class="primary" type="submit">Book kiln</button>
+      <p class="msg" id="msg" role="status"></p>
+    </form>
+  </section>
+</div>
+
+<section class="card" style="margin-top:20px">
+  <h2 id="dayTitle"></h2>
+  <ul class="list" id="dayList"></ul>
+</section>
+
+<footer>Bookings are saved in this browser only. To share them across the studio, connect this page to your studio's booking backend.</footer>
+</main>
+
+<script>
+const KILNS = [
+  { id: 'large', name: 'Large electric (Skutt 1027)' },
+  { id: 'small', name: 'Small electric (L&L)' },
+  { id: 'raku', name: 'Raku kiln' }
+];
+const OPEN = 7, CLOSE = 21, MAX_HOURS = 12, STORE = 'kilnBookings';
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+const todayStr = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
+const fmtHour = h => `${h % 12 || 12}:00 ${h < 12 ? 'AM' : 'PM'}`;
+const kilnName = id => KILNS.find(k => k.id === id)?.name ?? id;
+
+let selectedStart = null;
+let bookings = load();
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORE)) || []; } catch { return []; }
+}
+function save() {
+  localStorage.setItem(STORE, JSON.stringify(bookings));
+}
+
+function dayBookings() {
+  return bookings.filter(b => b.kiln === $('kiln').value && b.date === $('date').value);
+}
+function bookingAt(h, list) {
+  return list.find(b => h >= b.start && h < b.start + b.hours);
+}
+function isPast(h) {
+  const [y, m, d] = $('date').value.split('-').map(Number);
+  return new Date(y, m - 1, d, h) <= new Date();
+}
+function rangeProblem(start, hours) {
+  if (start === null) return 'Pick a start time first.';
+  if (start + hours > CLOSE) return `That runs past closing (${fmtHour(CLOSE)}). Try a shorter duration or an earlier start.`;
+  const list = dayBookings();
+  for (let h = start; h < start + hours; h++) {
+    if (isPast(h)) return 'That range includes a time that has already passed.';
+    if (bookingAt(h, list)) return `${fmtHour(h)} is already booked.`;
+  }
+  return '';
+}
+
+function renderSlots() {
+  const list = dayBookings();
+  const dur = +$('duration').value;
+  const wrap = $('slots');
+  wrap.innerHTML = '';
+  for (let h = OPEN; h < CLOSE; h++) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'slot';
+    const label = document.createElement('span');
+    label.textContent = fmtHour(h);
+    btn.append(label);
+
+    const booked = bookingAt(h, list);
+    if (booked || isPast(h)) {
+      btn.disabled = true;
+      const note = document.createElement('small');
+      note.textContent = booked ? `Booked · ${booked.firing}` : 'Passed';
+      btn.append(note);
+    } else {
+      if (selectedStart !== null && h >= selectedStart && h < selectedStart + dur) btn.classList.add('in-range');
+      if (h === selectedStart) btn.classList.add('start');
+      btn.addEventListener('click', () => { selectedStart = h; render(); });
+    }
+    wrap.append(btn);
+  }
+}
+
+function renderList() {
+  const [y, m, d] = $('date').value.split('-').map(Number);
+  $('dayTitle').textContent = `${kilnName($('kiln').value)} · ${new Date(y, m - 1, d).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}`;
+
+  const ul = $('dayList');
+  ul.innerHTML = '';
+  const list = dayBookings().sort((a, b) => a.start - b.start);
+  if (!list.length) {
+    const li = document.createElement('li');
+    li.className = 'muted';
+    li.textContent = 'No bookings yet for this kiln on this day.';
+    ul.append(li);
+    return;
+  }
+  list.forEach(b => {
+    const li = document.createElement('li');
+    const info = document.createElement('div');
+    const title = document.createElement('strong');
+    title.textContent = `${fmtHour(b.start)} – ${fmtHour(b.start + b.hours)}`;
+    const detail = document.createElement('div');
+    detail.className = 'muted';
+    detail.textContent = [b.name, b.firing, b.notes].filter(Boolean).join(' · ');
+    info.append(title, detail);
+
+    const cancel = document.createElement('button');
+    cancel.type = 'button';
+    cancel.className = 'link';
+    cancel.textContent = 'Cancel';
+    cancel.addEventListener('click', () => {
+      if (!confirm(`Cancel the ${fmtHour(b.start)} booking for ${b.name}?`)) return;
+      bookings = bookings.filter(x => x.id !== b.id);
+      save();
+      render();
+    });
+    li.append(info, cancel);
+    ul.append(li);
+  });
+}
+
+function render() {
+  renderSlots();
+  renderList();
+}
+
+function show(text, isErr) {
+  const msg = $('msg');
+  msg.className = 'msg ' + (isErr ? 'err' : 'ok');
+  msg.textContent = text;
+}
+
+// Setup
+KILNS.forEach(k => $('kiln').append(new Option(k.name, k.id)));
+for (let h = 1; h <= MAX_HOURS; h++) $('duration').append(new Option(h === 1 ? '1 hour' : `${h} hours`, h));
+$('duration').value = 2;
+$('date').min = todayStr();
+$('date').value = todayStr();
+
+['kiln', 'date'].forEach(id => $(id).addEventListener('change', () => {
+  selectedStart = null;
+  $('msg').textContent = '';
+  render();
+}));
+$('duration').addEventListener('change', () => { $('msg').textContent = ''; render(); });
+
+$('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = $('name').value.trim();
+  const email = $('email').value.trim();
+  const hours = +$('duration').value;
+
+  if (!name) { show('Please enter your name.', true); $('name').focus(); return; }
+  if (email && !$('email').checkValidity()) { show('Check the email address, or leave it blank.', true); $('email').focus(); return; }
+  const problem = rangeProblem(selectedStart, hours);
+  if (problem) { show(problem, true); return; }
+
+  bookings.push({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+    kiln: $('kiln').value,
+    date: $('date').value,
+    start: selectedStart,
+    hours,
+    name,
+    email,
+    firing: $('firing').value,
+    notes: $('notes').value.trim()
+  });
+  save();
+  show(`Booked ${kilnName($('kiln').value)} on ${$('date').value} from ${fmtHour(selectedStart)} for ${hours} ${hours === 1 ? 'hour' : 'hours'}.`, false);
+  selectedStart = null;
+  $('notes').value = '';
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

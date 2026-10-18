@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Front desk · Tool library</title>
+<style>
+  :root{
+    --bg:#f6f2ea; --card:#fffdf9; --ink:#1f2933; --muted:#55606b; --line:#b9b2a5; --soft:#e5dfd3;
+    --green:#1d5c45; --green-bg:#dff1e8; --amber:#7a4a00; --amber-bg:#fdecc8; --red:#9b2c14; --red-bg:#fbe1da;
+    --grey-bg:#e8e5df; --focus:#1a56db;
+  }
+  *{box-sizing:border-box}
+  html{font-size:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
+  :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  button,input,textarea{font:inherit;color:inherit}
+  header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;padding:16px clamp(12px,3vw,32px);border-bottom:2px solid var(--ink);background:var(--card)}
+  h1{font-size:1.35rem;margin:0}
+  h1 small{display:block;font-size:.85rem;font-weight:400;color:var(--muted)}
+  .counts{display:flex;gap:8px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+  .counts li{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:.9rem}
+  .counts b{font-size:1.2rem;margin-right:4px}
+  main{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:20px;padding:20px clamp(12px,3vw,32px);max-width:1200px;margin:0 auto}
+  h2{font-size:1.05rem;margin:0 0 10px}
+  .tools-head{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+  .search{flex:1 1 220px}
+  label{display:block;font-weight:600;margin-bottom:4px}
+  input[type=text],input[type=search],input[type=date],textarea{width:100%;min-height:44px;padding:8px 12px;border:2px solid #6d675c;border-radius:8px;background:#fff}
+  textarea{min-height:76px;resize:vertical}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .chip{min-height:40px;padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--card);cursor:pointer}
+  .chip[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  ul.list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:12px 14px;background:var(--card);border:2px solid var(--soft);border-radius:10px}
+  .row[data-selected=true]{border-color:var(--ink)}
+  .name{font-weight:650;overflow-wrap:anywhere}
+  .meta{font-size:.88rem;color:var(--muted);overflow-wrap:anywhere}
+  .badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:.82rem;font-weight:650;margin-right:6px;white-space:nowrap}
+  .b-in{background:var(--green-bg);color:var(--green)}
+  .b-out{background:var(--amber-bg);color:var(--amber)}
+  .b-late{background:var(--red-bg);color:var(--red)}
+  .b-hold{background:var(--grey-bg);color:#3b4148}
+  .btn{min-height:44px;padding:8px 18px;border-radius:8px;border:2px solid var(--ink);background:var(--card);font-weight:650;cursor:pointer}
+  .btn.primary{background:var(--green);border-color:var(--green);color:#fff}
+  .btn.primary.return{background:var(--ink);border-color:var(--ink)}
+  .btn:hover{filter:brightness(.95)}
+  .btn[disabled]{opacity:.6;cursor:not-allowed}
+  .btn.link{border-color:transparent;background:none;text-decoration:underline;padding:8px 10px}
+  aside{align-self:start;position:sticky;top:12px}
+  .panel{background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:18px}
+  .panel h2{font-size:1.2rem;overflow-wrap:anywhere}
+  .panel h2:focus{outline:none}
+  .field{margin-bottom:14px}
+  .hint{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+  .err{color:var(--red);font-weight:600;font-size:.9rem;margin:6px 0 0}
+  input[aria-invalid=true]{border-color:var(--red)}
+  .check{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:0}
+  .check input{width:24px;height:24px;margin:0;flex:none}
+  .callout{padding:10px 12px;border-radius:8px;margin:0 0 14px;font-size:.95rem}
+  .callout.late{background:var(--red-bg);color:#6e1d0c}
+  .callout.info{background:var(--grey-bg)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .empty{padding:28px 16px;text-align:center;border:2px dashed var(--line);border-radius:10px;color:var(--muted)}
+  .empty b{display:block;color:var(--ink);margin-bottom:4px}
+  .log{margin-top:20px}
+  .log ol{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:.9rem}
+  .log li{padding:6px 0;border-bottom:1px solid var(--soft);overflow-wrap:anywhere}
+  .log time{color:var(--muted);margin-right:8px}
+  .toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:12px;align-items:center;max-width:calc(100vw - 24px);padding:10px 12px 10px 16px;background:var(--ink);color:#fff;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+  .toast[hidden]{display:none}
+  .toast .btn{background:#fff;min-height:40px;padding:4px 14px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @media (max-width:820px){
+    main{grid-template-columns:minmax(0,1fr)}
+    aside{position:static;order:-1}
+  }
+  @media (max-width:420px){ .row{grid-template-columns:minmax(0,1fr)} .row .btn{width:100%} }
+  @media (prefers-reduced-motion:no-preference){ .row{transition:border-color .15s} }
+</style>
+</head>
+<body>
+<header>
+  <h1>Tool library · Front desk<small id="today"></small></h1>
+  <ul class="counts" aria-label="Today's totals">
+    <li><b id="cIn">0</b>on the shelf</li>
+    <li><b id="cOut">0</b>lent out</li>
+    <li><b id="cLate">0</b>overdue</li>
+  </ul>
+</header>
+
+<main>
+  <section aria-labelledby="toolsH">
+    <h2 id="toolsH">Tools</h2>
+    <div class="tools-head">
+      <div class="search">
+        <label for="q">Find a tool or a borrower</label>
+        <input type="search" id="q" placeholder="e.g. drill, ladder, Maria" autocomplete="off">
+      </div>
+    </div>
+    <div class="chips" role="group" aria-label="Show">
+      <button class="chip" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" data-f="in" aria-pressed="false">On the shelf</button>
+      <button class="chip" data-f="out" aria-pressed="false">Lent out</button>
+      <button class="chip" data-f="late" aria-pressed="false">Overdue</button>
+      <button class="chip" data-f="hold" aria-pressed="false">Held back</button>
+    </div>
+    <p class="sr" id="resultCount" role="status"></p>
+    <ul class="list" id="list"></ul>
+    <div id="emptyMsg"></div>
+
+    <div class="log">
+      <h2>Recent activity</h2>
+      <ol id="log"></ol>
+      <p class="hint" id="logEmpty">Nothing yet this session. Lending and returns will show up here.</p>
+    </div>
+  </section>
+
+  <aside aria-label="Lend or take back">
+    <div class="panel" id="panel"></div>
+  </aside>
+</main>
+
+<div class="toast" id="toast" hidden role="status">
+  <span id="toastMsg"></span>
+  <button class="btn" id="undo" type="button">Undo</button>
+</div>
+
+<script>
+(function(){
+  var DAY=86400000;
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+  var now=new Date(), todayD=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  function offs(n){return iso(new Date(todayD.getTime()+n*DAY));}
+  function pretty(s){return parse(s).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});}
+  function daysLate(s){return Math.round((todayD-parse(s))/DAY);}
+
+  var tools=[
+    {id:'T-014',name:'Cordless drill (18V)',status:'in'},
+    {id:'T-021',name:'Extension ladder, 24 ft',status:'out',borrower:'Maria Gonzalez',due:offs(2)},
+    {id:'T-007',name:'Orbital sander',status:'out',borrower:'Dev Patel',due:offs(-3)},
+    {id:'T-033',name:'Wet/dry shop vacuum',status:'in'},
+    {id:'T-040',name:'Post-hole digger',status:'in'},
+    {id:'T-012',name:'Circular saw',status:'hold',note:'Blade guard sticks. Waiting for repair day.'},
+    {id:'T-052',name:'Tile cutter, manual',status:'out',borrower:'Sam O\u2019Brien',due:offs(0)},
+    {id:'T-018',name:'Pipe wrench set (3 pc)',status:'in'},
+    {id:'T-027',name:'Pressure washer',status:'out',borrower:'Priya Raman',due:offs(-1)},
+    {id:'T-061',name:'Garden tiller',status:'in'}
+  ];
+  var log=[], filter='all', query='', selected=null, undoSnap=null, toastTimer=null;
+
+  var $=function(id){return document.getElementById(id);};
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+  function isLate(t){return t.status==='out'&&t.due<iso(todayD);}
+  function kind(t){return t.status==='out'?(isLate(t)?'late':'out'):t.status;}
+
+  $('today').textContent=todayD.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  function visible(){
+    var q=query.trim().toLowerCase();
+    return tools.filter(function(t){
+      if(filter!=='all'&&kind(t)!==filter&&!(filter==='out'&&t.status==='out'))return false;
+      if(!q)return true;
+      return (t.name+' '+t.id+' '+(t.borrower||'')).toLowerCase().indexOf(q)>-1;
+    });
+  }
+
+  function renderList(){
+    var ul=$('list'); ul.textContent='';
+    var items=visible();
+    items.forEach(function(t){
+      var li=el('li','row'); li.dataset.selected=(selected===t.id);
+      var info=el('div');
+      info.appendChild(el('div','name',t.name));
+      var m=el('div','meta');
+      var k=kind(t), b=el('span','badge');
+      if(k==='in'){b.className+=' b-in';b.textContent='On the shelf';m.appendChild(b);m.appendChild(document.createTextNode(t.id));}
+      else if(k==='out'){b.className+=' b-out';b.textContent='Lent out';m.appendChild(b);m.appendChild(document.createTextNode(t.borrower+' · due '+pretty(t.due)));}
+      else if(k==='late'){b.className+=' b-late';var n=daysLate(t.due);b.textContent='Overdue '+n+(n===1?' day':' days');m.appendChild(b);m.appendChild(document.createTextNode(t.borrower+' · was due '+pretty(t.due)));}
+      else {b.className+=' b-hold';b.textContent='Held back';m.appendChild(b);m.appendChild(document.createTextNode(t.note||t.id));}
+      info.appendChild(m); li.appendChild(info);
+      var btn=el('button','btn'+(t.status==='in'?' primary':''),t.status==='in'?'Lend':t.status==='out'?'Take back':'Details');
+      btn.type='button';
+      btn.setAttribute('aria-label',btn.textContent+': '+t.name);
+      btn.addEventListener('click',function(){selected=t.id;renderAll();focusPanel();});
+      li.appendChild(btn); ul.appendChild(li);
+    });
+    $('resultCount').textContent=items.length+(items.length===1?' tool shown':' tools shown');
+    var em=$('emptyMsg'); em.textContent='';
+    if(!items.length){
+      var d=el('div','empty'); var what=query.trim()?'No tools match \u201C'+query.trim()+'\u201D':'Nothing in this view';
+      d.appendChild(el('b',null,what+(filter!=='all'?' under \u201C'+document.querySelector('.chip[data-f='+filter+']').textContent+'\u201D':'')+'.'));
+      d.appendChild(el('span',null,'Check the spelling, or show everything again.'));
+      d.appendChild(document.createElement('br'));
+      var c=el('button','btn','Clear search and filter'); c.type='button'; c.style.marginTop='12px';
+      c.addEventListener('click',function(){query='';filter='all';$('q').value='';syncChips();renderAll();$('q').focus();});
+      d.appendChild(c); em.appendChild(d);
+    }
+  }
+
+  function renderCounts(){
+    $('cIn').textContent=tools.filter(function(t){return t.status==='in';}).length;
+    $('cOut').textContent=tools.filter(function(t){return t.status==='out';}).length;
+    $('cLate').textContent=tools.filter(isLate).length;
+  }
+
+  function renderLog(){
+    var ol=$('log'); ol.textContent='';
+    log.slice(0,6).forEach(function(e){
+      var li=el('li'); li.appendChild(el('time',null,e.time)); li.appendChild(document.createTextNode(e.text)); ol.appendChild(li);
+    });
+    $('logEmpty').hidden=log.length>0;
+  }
+
+  function field(id,label,node,hint){
+    var f=el('div','field'); var l=el('label',null,label); l.setAttribute('for',id); f.appendChild(l); f.appendChild(node);
+    if(hint)f.appendChild(el('p','hint',hint));
+    var e=el('p','err'); e.id=id+'Err'; e.hidden=true; f.appendChild(e); return f;
+  }
+  function showErr(input,msg){
+    var e=$(input.id+'Err'); e.textContent=msg; e.hidden=false; input.setAttribute('aria-invalid','true'); input.setAttribute('aria-describedby',e.id);
+  }
+
+  function renderPanel(){
+    var p=$('panel'); p.textContent='';
+    var t=tools.filter(function(x){return x.id===selected;})[0];
+    if(!t){
+      var d=el('div','empty'); d.appendChild(el('b',null,'Pick a tool to get started'));
+      d.appendChild(document.createTextNode('Choose \u201CLend\u201D on a tool that\u2019s on the shelf, or \u201CTake back\u201D on one that\u2019s coming home.'));
+      p.appendChild(d); return;
+    }
+    var h=el('h2',null,(t.status==='in'?'Lend: ':t.status==='out'?'Take back: ':'Held back: ')+t.name); h.tabIndex=-1; h.id='panelH'; p.appendChild(h);
+    p.appendChild(el('p','meta',t.id));
+
+    if(t.status==='in'){
+      var form=el('form'); form.noValidate=true;
+      var bi=el('input'); bi.type='text'; bi.id='borrower'; bi.autocomplete='off';
+      form.appendChild(field('borrower','Borrower\u2019s name or member number',bi));
+      var di=el('input'); di.type='date'; di.id='due'; di.min=iso(todayD); di.value=offs(7);
+      form.appendChild(field('due','Due back',di,'Pre-filled one week out. Change it if this loan needs a different date.'));
+      var a=el('div','actions');
+      var go=el('button','btn primary','Lend '+t.name); go.type='submit'; a.appendChild(go);
+      var cx=el('button','btn link','Cancel'); cx.type='button'; cx.addEventListener('click',function(){selected=null;renderAll();});
+      a.appendChild(cx); form.appendChild(a);
+      form.addEventListener('submit',function(ev){
+        ev.preventDefault();
+        ['borrower','due'].forEach(function(i){$(i+'Err').hidden=true;$(i).removeAttribute('aria-invalid');});
+        var bad=null;
+        if(!bi.value.trim()){showErr(bi,'Enter who is borrowing this tool.');bad=bad||bi;}
+        if(!di.value){showErr(di,'Pick a due date.');bad=bad||di;}
+        else if(di.value<iso(todayD)){showErr(di,'The due date can\u2019t be before today.');bad=bad||di;}
+        if(bad){bad.focus();return;}
+        var snap=JSON.parse(JSON.stringify(t));
+        t.status='out'; t.borrower=bi.value.trim(); t.due=di.value;
+        done('Lent '+t.name+' to '+t.borrower+', due '+pretty(t.due)+'.',snap);
+      });
+      p.appendChild(form);
+    }
+    else if(t.status==='out'){
+      if(isLate(t)){var n=daysLate(t.due);p.appendChild(el('p','callout late','Overdue by '+n+(n===1?' day':' days')+'. It was due '+pretty(t.due)+'.'));}
+      var s=el('p',null,'Borrowed by '); s.appendChild(el('b',null,t.borrower)); s.appendChild(document.createTextNode(', due '+pretty(t.due)+'.')); p.appendChild(s);
+      var form2=el('form'); form2.noValidate=true;
+      var ck=el('div','field'); var cl=el('label','check'); var ci=el('input'); ci.type='checkbox'; ci.id='problem';
+      cl.appendChild(ci); cl.appendChild(document.createTextNode('It came back damaged or not working')); ck.appendChild(cl); form2.appendChild(ck);
+      var wrap=el('div'); wrap.hidden=true;
+      var ni=el('textarea'); ni.id='note';
+      wrap.appendChild(field('note','What\u2019s wrong?',ni,'The tool will be held back from lending until someone checks it.'));
+      form2.appendChild(wrap);
+      ci.addEventListener('change',function(){wrap.hidden=!ci.checked;if(ci.checked)ni.focus();});
+      var a2=el('div','actions');
+      var go2=el('button','btn primary return','Take back '+t.name); go2.type='submit'; a2.appendChild(go2);
+      var cx2=el('button','btn link','Cancel'); cx2.type='button'; cx2.addEventListener('click',function(){selected=null;renderAll();});
+      a2.appendChild(cx2); form2.appendChild(a2);
+      form2.addEventListener('submit',function(ev){
+        ev.preventDefault();
+        if(ci.checked&&!ni.value.trim()){showErr(ni,'Add a short note about the problem so the repair crew knows what to look for.');ni.focus();return;}
+        var snap=JSON.parse(JSON.stringify(t)), who=t.borrower;
+        if(ci.checked){t.status='hold';t.note=ni.value.trim();}else{t.status='in';}
+        delete t.borrower; delete t.due;
+        done(ci.checked?'Took back '+t.name+' from '+who+' and held it back for repair.':'Took back '+t.name+' from '+who+'. It\u2019s on the shelf again.',snap);
+      });
+      p.appendChild(form2);
+    }
+    else {
+      p.appendChild(el('p','callout info',t.note||'No note was left.'));
+      p.appendChild(el('p','hint','This tool can\u2019t be lent until it\u2019s checked.'));
+      var a3=el('div','actions');
+      var ok=el('button','btn','Checked and fixed: put back on shelf'); ok.type='button';
+      ok.addEventListener('click',function(){var snap=JSON.parse(JSON.stringify(t));t.status='in';delete t.note;done(t.name+' is back on the shelf.',snap);});
+      var cx3=el('button','btn link','Close'); cx3.type='button'; cx3.addEventListener('click',function(){selected=null;renderAll();});
+      a3.appendChild(ok); a3.appendChild(cx3); p.appendChild(a3);
+    }
+  }
+
+  function done(msg,snap){
+    var t=tools.filter(function(x){return x.id===snap.id;})[0];
+    log.unshift({text:msg,time:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})});
+    undoSnap={snap:snap};
+    selected=null; renderAll();
+    $('toastMsg').textContent=msg; $('toast').hidden=false;
+    clearTimeout(toastTimer); toastTimer=setTimeout(hideToast,10000);
+    $('q').focus();
+  }
+  function hideToast(){$('toast').hidden=true;undoSnap=null;}
+  $('undo').addEventListener('click',function(){
+    if(!undoSnap)return;
+    var s=undoSnap.snap, i=tools.findIndex(function(x){return x.id===s.id;});
+    tools[i]=s; log.shift();
+    log.unshift({text:'Undid the last change to '+s.name+'.',time:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})});
+    clearTimeout(toastTimer); hideToast(); renderAll(); $('q').focus();
+  });
+
+  function focusPanel(){
+    var h=$('panelH'); if(h){h.scrollIntoView({block:'nearest'});var f=document.querySelector('#panel input:not([type=checkbox]),#panel button.btn');(document.querySelector('#panel input')||h).focus();}
+  }
+  function syncChips(){document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',c.dataset.f===filter);});}
+  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){filter=c.dataset.f;syncChips();renderList();});});
+  $('q').addEventListener('input',function(){query=this.value;renderList();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('toast').hidden){hideToast();}});
+
+  function renderAll(){renderCounts();renderList();renderPanel();renderLog();}
+  renderAll();
+})();
+</script>
+</body>
+</html>

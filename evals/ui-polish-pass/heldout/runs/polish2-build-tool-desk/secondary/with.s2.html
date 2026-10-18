@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tool Library · Front Desk</title>
+<style>
+  :root {
+    --bg: #f4f3ef;
+    --surface: #ffffff;
+    --text: #1d2125;
+    --muted: #5a626b;
+    --line: #d9d7d0;
+    --accent: #2c6a4f;
+    --accent-hover: #245741;
+    --accent-ink: #ffffff;
+    --focus: #1a56db;
+    --warn-ink: #7a5000;
+    --warn-bg: #fff3d1;
+    --late-ink: #9b1c1c;
+    --late-bg: #fde6e4;
+    --ok-ink: #1d6b3a;
+    --ok-bg: #e2f3e8;
+    --info-ink: #1f4f8a;
+    --info-bg: #e4eefb;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161a1d;
+      --surface: #1f2427;
+      --text: #e8eaec;
+      --muted: #9aa3ad;
+      --line: #384047;
+      --accent: #4f9d7a;
+      --accent-hover: #5fb08b;
+      --accent-ink: #0f1613;
+      --focus: #7ca8ff;
+      --warn-ink: #ffd27a;
+      --warn-bg: #3d2f10;
+      --late-ink: #ff9b93;
+      --late-bg: #3f1d1b;
+      --ok-ink: #8fe0ad;
+      --ok-bg: #173423;
+      --info-ink: #9cc2ff;
+      --info-bg: #1a2c45;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 24px;
+  }
+
+  header h1 { margin: 0; font-size: 1.35rem; }
+  header p { margin: 0; color: var(--muted); }
+
+  .summary {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-weight: 600;
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  }
+
+  @media (max-width: 800px) {
+    main { grid-template-columns: 1fr; padding: 16px; }
+  }
+
+  section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    min-width: 0;
+  }
+
+  section.wide { grid-column: 1 / -1; }
+
+  h2 { margin: 0 0 4px; font-size: 1.1rem; }
+  .hint { margin: 0 0 16px; color: var(--muted); font-size: 0.92rem; }
+
+  form { display: grid; gap: 14px; }
+
+  label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
+
+  .help { font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+
+  input, select {
+    font: inherit;
+    font-weight: 400;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    min-height: 44px;
+    width: 100%;
+  }
+
+  input[aria-invalid="true"], select[aria-invalid="true"] {
+    border-color: var(--late-ink);
+  }
+
+  input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  button {
+    font: inherit;
+    font-weight: 600;
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  button:hover { background: var(--accent-hover); }
+
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line);
+  }
+
+  button.secondary:hover { background: var(--bg); }
+
+  button.small {
+    min-height: 36px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .field-error {
+    color: var(--late-ink);
+    font-size: 0.88rem;
+    font-weight: 600;
+    min-height: 1.2em;
+    margin: 0;
+  }
+
+  .status {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: none;
+  }
+
+  .status.show { display: block; }
+  .status.ok { background: var(--ok-bg); color: var(--ok-ink); }
+  .status.warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .status.error { background: var(--late-bg); color: var(--late-ink); }
+
+  .table-wrap { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+
+  th {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  td.num, th.num { white-space: nowrap; }
+
+  td.action { text-align: right; }
+
+  .tool-id { color: var(--muted); font-size: 0.85rem; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .badge.overdue { background: var(--late-bg); color: var(--late-ink); }
+  .badge.today { background: var(--warn-bg); color: var(--warn-ink); }
+  .badge.onloan { background: var(--info-bg); color: var(--info-ink); }
+
+  .empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 28px 12px;
+    margin: 0;
+  }
+
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .toolbar label { flex: 1 1 260px; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Tool Library · Front Desk</h1>
+    <p id="today-label"></p>
+  </div>
+  <div class="summary" aria-live="polite" id="counts"></div>
+</header>
+
+<main>
+
+  <section aria-labelledby="lend-heading">
+    <h2 id="lend-heading">Lend a tool</h2>
+    <p class="hint">Pick an available tool and record who is borrowing it.</p>
+
+    <form id="lend-form" novalidate>
+      <label>
+        Borrower name or member number
+        <input id="member" name="member" type="text" autocomplete="off" required aria-describedby="member-err">
+      </label>
+      <p id="member-err" class="field-error"></p>
+
+      <label>
+        Tool
+        <select id="tool" name="tool" required aria-describedby="tool-err"></select>
+      </label>
+      <p id="tool-err" class="field-error"></p>
+
+      <label>
+        Return by
+        <span class="help">Defaults to one week from today.</span>
+        <input id="due" name="due" type="date" required aria-describedby="due-err">
+      </label>
+      <p id="due-err" class="field-error"></p>
+
+      <div>
+        <button type="submit" id="lend-btn">Lend tool</button>
+      </div>
+    </form>
+  </section>
+
+  <section aria-labelledby="return-heading">
+    <h2 id="return-heading">Check in a return</h2>
+    <p class="hint">Search by tool name, ID, or borrower to find what is out.</p>
+
+    <div class="toolbar">
+      <label>
+        <span class="sr-only">Search tools on loan</span>
+        <input id="search" type="search" placeholder="Search tools on loan…" autocomplete="off">
+      </label>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Tool</th>
+            <th scope="col">Borrower</th>
+            <th scope="col" class="num">Due</th>
+            <th scope="col">Status</th>
+            <th scope="col"><span class="sr-only">Action</span></th>
+          </tr>
+        </thead>
+        <tbody id="out-body"></tbody>
+      </table>
+    </div>
+    <div id="out-empty"></div>
+  </section>
+
+</main>
+
+<div id="status" class="status" role="status" aria-live="polite"></div>
+
+<script>
+  const KEY = "toolLibraryDesk.v1";
+  const DAY_MS = 86400000;
+
+  const $ = (sel) => document.querySelector(sel);
+
+  function esc(value) {
+    return String(value).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+  // Local calendar date as YYYY-MM-DD
+  function dateStr(d = new Date()) {
+    const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0, 10);
+  }
+
+  function addDays(n) {
+    const d = new Date();
+    d.setDate(d.getDate() + n);
+    return dateStr(d);
+  }
+
+  // Whole days from b to a (both YYYY-MM-DD)
+  function daysBetween(a, b) {
+    return Math.round((Date.parse(a) - Date.parse(b)) / DAY_MS);
+  }
+
+  function formatDate(s) {
+    const [y, m, d] = s.split("-").map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function plural(n, word) {
+    return `${n} ${word}${n === 1 ? "" : "s"}`;
+  }
+
+  function seedData() {
+    return [
+      { id: "T-101", name: "Cordless drill", category: "Power tools", borrower: null },
+      { id: "T-102", name: "Circular saw", category: "Power tools", borrower: { name: "Dana Ruiz", lentOn: addDays(-5), due: addDays(-2) } },
+      { id: "T-103", name: "Extension ladder", category: "Ladders & access", borrower: null },
+      { id: "T-104", name: "Pressure washer", category: "Cleaning", borrower: { name: "M-0412 · Chen", lentOn: addDays(-1), due: addDays(0) } },
+      { id: "T-105", name: "Wheelbarrow", category: "Garden", borrower: null },
+      { id: "T-106", name: "Post-hole digger", category: "Garden", borrower: { name: "M-0088 · Okafor", lentOn: addDays(-3), due: addDays(4) } },
+      { id: "T-107", name: "Tile cutter", category: "Hand tools", borrower: null },
+      { id: "T-108", name: "Shop vac", category: "Cleaning", borrower: null }
+    ];
+  }
+
+  function load() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(KEY));
+      if (Array.isArray(saved)) return saved;
+    } catch (e) { /* ignore corrupt or unavailable storage */ }
+    return seedData();
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    } catch (e) { /* storage unavailable; keep working in memory */ }
+  }
+
+  let state = load();
+
+  const els = {
+    today: $("#today-label"),
+    counts: $("#counts"),
+    lendForm: $("#lend-form"),
+    member: $("#member"),
+    tool: $("#tool"),
+    due: $("#due"),
+    memberErr: $("#member-err"),
+    toolErr: $("#tool-err"),
+    dueErr: $("#due-err"),
+    search: $("#search"),
+    outBody: $("#out-body"),
+    outEmpty: $("#out-empty"),
+    status: $("#status")
+  };
+
+  let statusTimer = null;
+
+  function announce(message, kind = "ok") {
+    els.status.className = `status show ${kind}`;
+    els.status.textContent = message;
+    clearTimeout(statusTimer);
+    statusTimer = setTimeout(() => { els.status.className = "status"; }, 6000);
+  }
+
+  function setFieldError(input, errEl, message) {
+    errEl.textContent = message;
+    input.setAttribute("aria-invalid", message ? "true" : "false");
+  }
+
+  function statusFor(tool, today) {
+    const diff = daysBetween(tool.borrower.due, today);
+    if (diff < 0) return { cls: "overdue", label: `Overdue ${plural(-diff, "day")}` };
+    if (diff === 0) return { cls: "today", label: "Due today" };
+    return { cls: "onloan", label: `Due in ${plural(diff, "day")}` };
+  }
+
+  function render() {
+    const today = dateStr();
+    const byName = (a, b) => a.name.localeCompare(b.name);
+
+    const available = state.filter((t) => !t.borrower).sort(byName);
+    const onLoan = state.filter((t) => t.borrower);
+    const overdue = onLoan.filter((t) => daysBetween(today, t.borrower.due) > 0);
+
+    els.today.textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+    els.counts.innerHTML = `
+      <span>${available.length} available</span>
+      <span aria-hidden="true">·</span>
+      <span>${onLoan.length} out</span>
+      <span aria-hidden="true">·</span>
+      <span class="${overdue.length ? "" : ""}" style="${overdue.length ? "color: var(--late-ink)" : ""}">${overdue.length} overdue</span>`;
+
+    const selected = els.tool.value;
+    els.tool.innerHTML = available.length
+      ? `<option value="">Choose a tool…</option>` +
+        available.map((t) => `<option value="${esc(t.id)}">${esc(t.name)} (${esc(t.id)})</option>`).join("")
+      : `<option value="">No tools available right now</option>`;
+    els.tool.disabled = available.length === 0;
+    if (available.some((t) => t.id === selected)) els.tool.value = selected;
+    $("#lend-btn").disabled = available.length === 0;
+
+    const query = els.search.value.trim().toLowerCase();
+    const matches = onLoan
+      .filter((t) => {
+        if (!query) return true;
+        return [t.name, t.id, t.category, t.borrower.name].some((v) => v.toLowerCase().includes(query));
+      })
+      .sort((a, b) => a.borrower.due.localeCompare(b.borrower.due));
+
+    els.outBody.innerHTML = matches.map((t) => {
+      const s = statusFor(t, today);
+      return `
+        <tr>
+          <td>
+            <strong>${esc(t.name)}</strong><br>
+            <span class="tool-id">${esc(t.id)} · ${esc(t.category)}</span>
+          </td>
+          <td>${esc(t.borrower.name)}</td>
+          <td class="num">${esc(formatDate(t.borrower.due))}</td>
+          <td><span class="badge ${s.cls}">${esc(s.label)}</span></td>
+          <td class="action">
+            <button type="button" class="small secondary" data-return="${esc(t.id)}">
+              Check in<span class="sr-only"> ${esc(t.name)}</span>
+            </button>
+          </td>
+        </tr>`;
+    }).join("");
+
+    if (matches.length) {
+      els.outEmpty.innerHTML = "";
+    } else {
+      els.outEmpty.innerHTML = `<p class="empty">${
+        query ? "No tools on loan match that search." : "Nothing is out right now."
+      }</p>`;
+    }
+  }
+
+  function lend(event) {
+    event.preventDefault();
+
+    const member = els.member.value.trim();
+    const toolId = els.tool.value;
+    const due = els.due.value;
+    const today = dateStr();
+
+    setFieldError(els.member, els.memberErr, member ? "" : "Enter a borrower name or member number.");
+    setFieldError(els.tool, els.toolErr, toolId ? "" : "Choose a tool to lend.");
+    setFieldError(els.due, els.dueErr,
+      !due ? "Pick a return date." :
+      due < today ? "Return date can't be in the past." : "");
+
+    const firstInvalid = [[els.member, els.memberErr], [els.tool, els.toolErr], [els.due, els.dueErr]]
+      .find(([, err]) => err.textContent);
+    if (firstInvalid) {
+      firstInvalid[0].focus();
+      announce("Please fix the highlighted fields.", "error");
+      return;
+    }
+
+    const tool = state.find((t) => t.id === toolId);
+    if (!tool || tool.borrower) {
+      announce("That tool is no longer available. Please choose another.", "error");
+      render();
+      return;
+    }
+
+    tool.borrower = { name: member, lentOn: today, due };
+    save();
+    render();
+
+    announce(`${tool.name} lent to ${member}. Return by ${formatDate(due)}.`, "ok");
+
+    els.member.value = "";
+    els.tool.value = "";
+    els.due.value = addDays(7);
+    els.member.focus();
+  }
+
+  function checkIn(id) {
+    const tool = state.find((t) => t.id === id);
+    if (!tool || !tool.borrower) return;
+
+    const today = dateStr();
+    const late = daysBetween(today, tool.borrower.due);
+    const name = tool.borrower.name;
+
+    tool.borrower = null;
+    save();
+
+    const row = document.querySelector("#out-body");
+    render();
+
+    if (late > 0) {
+      announce(`${tool.name} checked in from ${name}, ${plural(late, "day")} late.`, "warn");
+    } else {
+      announce(`${tool.name} checked in from ${name}. Thank you!`, "ok");
+    }
+
+    els.search.focus();
+  }
+
+  function init() {
+    els.due.value = addDays(7);
+    els.due.min = dateStr();
+
+    els.lendForm.addEventListener("submit", lend);
+
+    els.search.addEventListener("input", render);
+
+    els.outBody.addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-return]");
+      if (btn) checkIn(btn.dataset.return);
+    });
+
+    [els.member, els.tool, els.due].forEach((input) => {
+      input.addEventListener("input", () => {
+        input.setAttribute("aria-invalid", "false");
+        const err = input.parentElement.parentElement.querySelector(".field-error") ||
+          document.getElementById(input.getAttribute("aria-describedby"));
+        if (err) err.textContent = "";
+      });
+    });
+
+    render();
+  }
+
+  init();
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hive Inspection Log</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #faf7f0; --card: #ffffff; --text: #2b2416; --muted: #7a6d55;
+  --accent: #c98a00; --accent-text: #ffffff; --border: #e3d9c3; --danger: #a33a2a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1a14; --card: #2a251c; --text: #f1e9d6; --muted: #a79a80;
+    --accent: #e0a526; --accent-text: #1d1a14; --border: #463d2c; --danger: #e07a68;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.4;
+}
+main { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { margin: 0 0 4px; font-size: 1.8rem; }
+h2 { font-size: 1.2rem; margin: 0 0 12px; }
+.sub { color: var(--muted); margin: 0 0 24px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 20px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: 4px; }
+input, select, textarea {
+  font: inherit; color: var(--text); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 6px; padding: 8px; width: 100%;
+}
+textarea { resize: vertical; min-height: 70px; }
+.wide { grid-column: 1 / -1; }
+.actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+button {
+  font: inherit; border: 0; border-radius: 6px; padding: 9px 16px; cursor: pointer;
+  background: var(--accent); color: var(--accent-text); font-weight: 600;
+}
+button.secondary { background: transparent; color: var(--text); border: 1px solid var(--border); font-weight: 400; }
+button.danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); font-weight: 400; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.toolbar-right { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.toolbar label { flex-direction: row; align-items: center; gap: 8px; }
+.toolbar select { width: auto; }
+.entry { border-top: 1px solid var(--border); padding: 14px 0; }
+.entry:first-child { border-top: 0; padding-top: 0; }
+.entry-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.entry-head strong { font-size: 1.05rem; }
+.meta { color: var(--muted); font-size: .9rem; }
+dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 6px 16px; margin: 10px 0 0; }
+dt { font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+dd { margin: 0; }
+.notes { margin: 10px 0 0; white-space: pre-wrap; }
+.empty { color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Hive Inspection Log</h1>
+  <p class="sub">Behind the barn · 12 hives</p>
+
+  <section class="card">
+    <h2>New inspection</h2>
+    <form id="form">
+      <div class="grid">
+        <label>Date <input type="date" name="date" required></label>
+        <label>Hive
+          <select name="hive" id="hiveSelect" required></select>
+        </label>
+        <label>Weather <input name="weather" placeholder="e.g. 68°F, sunny, light wind"></label>
+        <label>Queen
+          <select name="queen">
+            <option value="">—</option>
+            <option>Seen</option>
+            <option>Not seen</option>
+            <option>Queen cells present</option>
+            <option>Queenless suspected</option>
+          </select>
+        </label>
+        <label>Eggs
+          <select name="eggs">
+            <option value="">—</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
+        <label>Brood frames <input type="number" min="0" step="0.5" name="broodFrames"></label>
+        <label>Frames of bees <input type="number" min="0" step="0.5" name="beeFrames"></label>
+        <label>Honey stores
+          <select name="stores">
+            <option value="">—</option>
+            <option>Light</option>
+            <option>Adequate</option>
+            <option>Heavy</option>
+            <option>Low — feed</option>
+          </select>
+        </label>
+        <label>Temperament
+          <select name="temper">
+            <option value="">—</option>
+            <option>Calm</option>
+            <option>Nervous</option>
+            <option>Defensive</option>
+            <option>Aggressive</option>
+          </select>
+        </label>
+        <label>Varroa (mites / 24h or sugar roll) <input name="varroa" placeholder="e.g. 3 per 24h"></label>
+        <label class="wide">Issues seen <input name="issues" placeholder="disease, pests, damaged comb, robbing..."></label>
+        <label class="wide">Actions taken <input name="actions" placeholder="added super, treated, fed, requeened..."></label>
+        <label class="wide">Notes <textarea name="notes"></textarea></label>
+      </div>
+      <div class="actions">
+        <button type="submit">Save inspection</button>
+        <button type="button" class="secondary" id="clear">Clear</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="toolbar">
+      <h2 style="margin:0">Log</h2>
+      <div class="toolbar-right">
+        <label>Show <select id="filter"></select></label>
+        <button type="button" class="secondary" id="export">Export JSON</button>
+      </div>
+    </div>
+    <div id="list"></div>
+  </section>
+</main>
+
+<script>
+const KEY = 'hiveInspections.v1';
+const $ = s => document.querySelector(s);
+const form = $('#form');
+const list = $('#list');
+const filter = $('#filter');
+const hiveSelect = $('#hiveSelect');
+let entries = load();
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; }
+}
+function persist() {
+  localStorage.setItem(KEY, JSON.stringify(entries));
+}
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+function today() {
+  return new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local time
+}
+function field(label, value) {
+  return value ? `<div><dt>${label}</dt><dd>${esc(value)}</dd></div>` : '';
+}
+
+// Hive choices: 1–12
+hiveSelect.add(new Option('Choose…', ''));
+filter.add(new Option('All hives', 'all'));
+for (let i = 1; i <= 12; i++) {
+  hiveSelect.add(new Option('Hive ' + i, String(i)));
+  filter.add(new Option('Hive ' + i, String(i)));
+}
+
+form.date.value = today();
+
+function render() {
+  const f = filter.value;
+  const rows = entries
+    .filter(en => f === 'all' || String(en.hive) === f)
+    .sort((a, b) => b.date.localeCompare(a.date) || b.created - a.created);
+
+  if (!rows.length) {
+    list.innerHTML = '<p class="empty">No inspections logged yet.</p>';
+    return;
+  }
+
+  list.innerHTML = rows.map(en => `
+    <article class="entry">
+      <div class="entry-head">
+        <strong>Hive ${esc(en.hive)} — ${esc(en.date)}</strong>
+        <span class="meta">${esc(en.weather)}</span>
+      </div>
+      <dl>
+        ${field('Queen', en.queen)}
+        ${field('Eggs', en.eggs)}
+        ${field('Brood frames', en.broodFrames)}
+        ${field('Bee frames', en.beeFrames)}
+        ${field('Honey stores', en.stores)}
+        ${field('Temperament', en.temper)}
+        ${field('Varroa', en.varroa)}
+        ${field('Issues', en.issues)}
+        ${field('Actions', en.actions)}
+      </dl>
+      ${en.notes ? `<p class="notes">${esc(en.notes)}</p>` : ''}
+      <div style="margin-top:10px">
+        <button type="button" class="danger" data-id="${en.id}">Delete</button>
+      </div>
+    </article>
+  `).join('');
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(form));
+  entries.push({ id: Date.now(), created: Date.now(), ...d, hive: Number(d.hive) });
+  persist();
+  // Keep the date and hive for quick successive entries; clear the rest
+  form.reset();
+  form.date.value = d.date;
+  form.hive.value = d.hive;
+  render();
+});
+
+$('#clear').addEventListener('click', () => {
+  form.reset();
+  form.date.value = today();
+});
+
+filter.addEventListener('change', render);
+
+list.addEventListener('click', e => {
+  const btn = e.target.closest('button[data-id]');
+  if (!btn) return;
+  if (!confirm('Delete this inspection?')) return;
+  const id = Number(btn.dataset.id);
+  entries = entries.filter(x => x.id !== id);
+  persist();
+  render();
+});
+
+$('#export').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(entries, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'hive-inspections-' + today() + '.json';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instrument drop-off – repair intake</title>
+<style>
+  :root {
+    --paper: #fbf6ee;
+    --card: #fffdf9;
+    --ink: #2a1d14;
+    --muted: #5e4d40;
+    --line: #8a7767;
+    --soft: #e6dac8;
+    --accent: #7a2e12;
+    --accent-ink: #fff;
+    --err: #a0200f;
+    --errbg: #fdebe7;
+    --ok: #20573a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  header { border-bottom: 3px double var(--line); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+  .eyebrow { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  h1 { font: 700 clamp(1.7rem, 5vw, 2.4rem)/1.15 Georgia, "Times New Roman", serif; margin: .25rem 0 .5rem; }
+  header p { margin: 0; color: var(--muted); max-width: 36rem; }
+  h2 { font: 700 1.25rem/1.2 Georgia, "Times New Roman", serif; margin: 0 0 .75rem; }
+
+  form, .slip { background: var(--card); border: 1px solid var(--soft); border-radius: 6px; padding: 1.25rem; }
+  fieldset { border: 0; padding: 0; margin: 0 0 1.75rem; min-width: 0; }
+  legend { font: 700 1.15rem/1.3 Georgia, "Times New Roman", serif; padding: 0; margin-bottom: .6rem; }
+  .field { margin-bottom: 1rem; }
+  .grid { display: grid; gap: 0 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 34rem) { .grid { grid-template-columns: 1fr; } }
+
+  label, .lbl { display: block; font-weight: 600; margin-bottom: .25rem; }
+  .opt { font-weight: 400; color: var(--muted); }
+  .hint { color: var(--muted); font-size: .9rem; margin: 0 0 .35rem; }
+  input[type=text], input[type=tel], input[type=email], input[type=date], input[type=number], select, textarea {
+    width: 100%; font: inherit; color: var(--ink); background: #fff;
+    border: 1.5px solid var(--line); border-radius: 4px; padding: .6rem .7rem; min-height: 2.75rem;
+  }
+  textarea { min-height: 8rem; resize: vertical; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  [aria-invalid=true] { border-color: var(--err); border-width: 2px; background: var(--errbg); }
+
+  .choices { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); }
+  .choice { position: relative; margin: 0; font-weight: 400; }
+  .choice input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .choice span {
+    display: flex; align-items: center; gap: .6rem; min-height: 2.75rem; padding: .5rem .7rem;
+    border: 1.5px solid var(--line); border-radius: 4px; background: #fff; overflow-wrap: anywhere;
+  }
+  .choice span::before {
+    content: ""; flex: none; width: 1.1rem; height: 1.1rem; border: 2px solid var(--line); background: #fff;
+    border-radius: 50%;
+  }
+  .choice.sq span::before { border-radius: 3px; }
+  .choice input:checked + span { border-color: var(--accent); background: #f7ebe3; box-shadow: inset 0 0 0 1px var(--accent); }
+  .choice input:checked + span::before { background: var(--accent); border-color: var(--accent); box-shadow: inset 0 0 0 3px #fff; }
+  .choice.sq input:checked + span::before { box-shadow: none; background: var(--accent) ; }
+  .choice.sq input:checked + span::after { content: "✓"; position: absolute; left: 1rem; color: #fff; font-size: .8rem; line-height: 1; }
+  .choice input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .choice input[aria-invalid=true] + span { border-color: var(--err); background: var(--errbg); }
+
+  .err { color: var(--err); font-weight: 600; font-size: .92rem; margin: .3rem 0 0; }
+  .err::before { content: "Problem: "; }
+  .err[hidden] { display: none; }
+  #summaryErr { background: var(--errbg); border: 2px solid var(--err); border-radius: 4px; padding: .75rem 1rem; margin-bottom: 1.25rem; }
+  #summaryErr[hidden] { display: none; }
+  #summaryErr h2 { font-size: 1.05rem; color: var(--err); margin-bottom: .4rem; }
+  #summaryErr ul { margin: 0; padding-left: 1.2rem; }
+  #summaryErr a { color: var(--err); }
+
+  .sub { margin-top: .6rem; max-width: 14rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-top: 1rem; }
+  button {
+    font: inherit; font-weight: 700; min-height: 2.75rem; padding: .6rem 1.2rem; border-radius: 4px; cursor: pointer;
+    border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+  }
+  button.secondary { background: #fff; color: var(--accent); }
+  button:hover { filter: brightness(1.1); }
+  .fine { color: var(--muted); font-size: .9rem; }
+
+  .slip[hidden], form[hidden] { display: none; }
+  .slip h2 { font-size: 1.5rem; }
+  .slip .ok { color: var(--ok); font-weight: 700; margin: 0 0 .25rem; }
+  dl { margin: 1rem 0; display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: .5rem 1rem; }
+  dt { font-weight: 700; color: var(--muted); }
+  dd { margin: 0; overflow-wrap: anywhere; white-space: pre-line; }
+  @media (max-width: 34rem) { dl { grid-template-columns: 1fr; gap: 0; } dd { margin-bottom: .6rem; } }
+  #copyMsg { min-height: 1.5rem; margin: .5rem 0 0; font-weight: 600; }
+
+  @media print {
+    body { background: #fff; }
+    header p, .actions, #copyMsg, .noprint { display: none !important; }
+    .slip { border: 1px solid #000; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">[Shop name] · Guitar &amp; violin repair</p>
+    <h1>Dropping off an instrument?</h1>
+    <p>Tell me what’s wrong and how to reach you. When you finish, you’ll get a drop-off slip to print or copy and leave with your instrument.</p>
+  </header>
+
+  <form id="form" novalidate aria-labelledby="formTitle">
+    <h2 id="formTitle" class="noprint" style="position:absolute;left:-9999px">Repair drop-off form</h2>
+    <div id="summaryErr" role="alert" tabindex="-1" hidden>
+      <h2>Please fix these before continuing</h2>
+      <ul id="summaryList"></ul>
+    </div>
+
+    <fieldset>
+      <legend>1. Who you are</legend>
+      <div class="grid">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-err">
+          <p class="err" id="name-err" hidden></p>
+        </div>
+        <div class="field">
+          <label for="phone">Phone (for call or text)</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="phone-err">
+          <p class="err" id="phone-err" hidden></p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="email">Email <span class="opt">(optional)</span></label>
+        <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-err">
+        <p class="err" id="email-err" hidden></p>
+      </div>
+    </fieldset>
+
+    <fieldset id="typeSet" aria-describedby="type-err">
+      <legend>2. The instrument</legend>
+      <div class="choices" role="presentation">
+        <label class="choice"><input type="radio" name="type" value="Acoustic guitar"><span>Acoustic guitar</span></label>
+        <label class="choice"><input type="radio" name="type" value="Electric guitar"><span>Electric guitar</span></label>
+        <label class="choice"><input type="radio" name="type" value="Bass guitar"><span>Bass guitar</span></label>
+        <label class="choice"><input type="radio" name="type" value="Classical / nylon-string guitar"><span>Classical / nylon-string</span></label>
+        <label class="choice"><input type="radio" name="type" value="Violin"><span>Violin</span></label>
+        <label class="choice"><input type="radio" name="type" value="Viola or cello"><span>Viola or cello</span></label>
+        <label class="choice"><input type="radio" name="type" value="Other"><span>Something else</span></label>
+      </div>
+      <p class="err" id="type-err" hidden></p>
+      <div class="field" style="margin-top:1rem">
+        <label for="model">Make, model or anything that identifies it <span class="opt">(optional)</span></label>
+        <input id="model" name="model" type="text" placeholder="e.g. 1970s Yamaha FG-180, or a student violin from a rental">
+      </div>
+    </fieldset>
+
+    <fieldset id="issueSet">
+      <legend>3. What’s wrong with it</legend>
+      <p class="hint">Tick anything that applies, then describe it in your own words below.</p>
+      <div class="choices" role="presentation">
+        <label class="choice sq"><input type="checkbox" name="issue" value="Won’t stay in tune"><span>Won’t stay in tune</span></label>
+        <label class="choice sq"><input type="checkbox" name="issue" value="Buzzing or rattling"><span>Buzzing or rattling</span></label>
+        <label class="choice sq"><input type="checkbox" name="issue" value="Crack or open seam"><span>Crack or open seam</span></label>
+        <label class="choice sq"><input type="checkbox" name="issue" value="Strings too high or hard to play"><span>Hard to play / strings too high</span></label>
+        <label class="choice sq"><input type="checkbox" name="issue" value="Broken string, peg or tuner"><span>Broken string, peg or tuner</span></label>
+        <label class="choice sq"><input type="checkbox" name="issue" value="Bridge or soundpost"><span>Bridge or soundpost</span></label>
+        <label class="choice sq"><input type="checkbox" name="issue" value="Pickup, jack or electronics"><span>Pickup, jack or electronics</span></label>
+        <label class="choice sq"><input type="checkbox" name="issue" value="General setup or tune-up"><span>General setup / tune-up</span></label>
+      </div>
+      <div class="field" style="margin-top:1rem">
+        <label for="desc">Describe the problem</label>
+        <p class="hint" id="desc-hint">What do you hear or see? Which string or part? When did it start, or what happened?</p>
+        <textarea id="desc" name="desc" required aria-describedby="desc-hint desc-err"></textarea>
+        <p class="err" id="desc-err" hidden></p>
+      </div>
+      <div class="field">
+        <label for="damage">Existing damage to note at drop-off <span class="opt">(optional)</span></label>
+        <input id="damage" name="damage" type="text" placeholder="e.g. chip on lower bout, old crack near the end pin">
+      </div>
+    </fieldset>
+
+    <fieldset id="quoteSet" aria-describedby="quote-err">
+      <legend>4. Before any work starts</legend>
+      <div class="choices" role="presentation">
+        <label class="choice"><input type="radio" name="quote" value="quote"><span>Contact me with a quote first</span></label>
+        <label class="choice"><input type="radio" name="quote" value="limit"><span>Start work if it’s within a limit I set</span></label>
+      </div>
+      <div class="sub" id="limitWrap" hidden>
+        <label for="limit">Limit (amount)</label>
+        <input id="limit" name="limit" type="number" min="1" step="1" inputmode="numeric" aria-describedby="limit-err">
+        <p class="err" id="limit-err" hidden></p>
+      </div>
+      <p class="err" id="quote-err" hidden></p>
+      <div class="grid" style="margin-top:1rem">
+        <div class="field">
+          <label for="needby">Needed back by <span class="opt">(optional)</span></label>
+          <input id="needby" name="needby" type="date">
+        </div>
+        <div class="field">
+          <label for="contact">Best way to reach you</label>
+          <select id="contact" name="contact">
+            <option>Phone call</option>
+            <option>Text message</option>
+            <option>Email</option>
+          </select>
+        </div>
+      </div>
+      <p class="fine" style="margin:0">A date is a wish, not a promise. I’ll tell you what’s realistic when I’ve looked at it.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>5. Leaving with the instrument <span class="opt">(optional)</span></legend>
+      <div class="choices" role="presentation">
+        <label class="choice sq"><input type="checkbox" name="extras" value="Case"><span>Case</span></label>
+        <label class="choice sq"><input type="checkbox" name="extras" value="Bow"><span>Bow</span></label>
+        <label class="choice sq"><input type="checkbox" name="extras" value="Strap"><span>Strap</span></label>
+        <label class="choice sq"><input type="checkbox" name="extras" value="Capo or other accessories"><span>Capo / other</span></label>
+      </div>
+    </fieldset>
+
+    <div class="actions">
+      <button type="submit">Create my drop-off slip</button>
+      <span class="fine">Nothing is sent from this page. The slip is for you and me to keep.</span>
+    </div>
+  </form>
+
+  <section class="slip" id="slip" hidden aria-labelledby="slipTitle">
+    <p class="ok">Slip ready</p>
+    <h2 id="slipTitle" tabindex="-1">Repair drop-off slip</h2>
+    <p class="fine" id="slipDate" style="margin:0"></p>
+    <dl id="slipList"></dl>
+    <p class="fine">Print this or copy it and hand it over with the instrument. Please check it’s right before you leave.</p>
+    <div class="actions">
+      <button type="button" id="printBtn">Print slip</button>
+      <button type="button" id="copyBtn" class="secondary">Copy as text</button>
+      <button type="button" id="editBtn" class="secondary">Change something</button>
+    </div>
+    <p id="copyMsg" role="status"></p>
+  </section>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('form');
+  var slip = document.getElementById('slip');
+  var summary = document.getElementById('summaryErr');
+  var summaryList = document.getElementById('summaryList');
+  var limitWrap = document.getElementById('limitWrap');
+  var slipText = '';
+
+  var d = new Date();
+  document.getElementById('needby').min = d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+
+  function $(id) { return document.getElementById(id); }
+  function checked(name) {
+    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (i) { return i.value; });
+  }
+
+  form.addEventListener('change', function (e) {
+    if (e.target.name === 'quote') {
+      limitWrap.hidden = e.target.value !== 'limit';
+      if (limitWrap.hidden) clearErr('limit');
+    }
+    if (e.target.name === 'type') clearErr('type');
+    if (e.target.name === 'quote') clearErr('quote');
+  });
+  form.addEventListener('input', function (e) {
+    if (e.target.id && $(e.target.id + '-err')) clearErr(e.target.id);
+  });
+
+  function setErr(id, msg, focusEl, label) {
+    var p = $(id + '-err');
+    p.textContent = msg; p.hidden = false;
+    var fields = id === 'type' || id === 'quote'
+      ? form.querySelectorAll('input[name="' + id + '"]')
+      : [$(id)];
+    Array.prototype.forEach.call(fields, function (f) { f.setAttribute('aria-invalid', 'true'); });
+    return { id: id, msg: msg, label: label, el: focusEl || fields[0] };
+  }
+  function clearErr(id) {
+    var p = $(id + '-err'); if (!p) return;
+    p.hidden = true; p.textContent = '';
+    var fields = id === 'type' || id === 'quote'
+      ? form.querySelectorAll('input[name="' + id + '"]')
+      : [$(id)];
+    Array.prototype.forEach.call(fields, function (f) { f.removeAttribute('aria-invalid'); });
+  }
+
+  function validate() {
+    ['name', 'phone', 'email', 'type', 'desc', 'quote', 'limit'].forEach(clearErr);
+    var errs = [];
+    if (!$('name').value.trim()) errs.push(setErr('name', 'Enter your name so I know whose instrument this is.', null, 'Your name'));
+    var phone = $('phone').value.trim();
+    if (!phone) errs.push(setErr('phone', 'Enter a phone number I can call or text.', null, 'Phone'));
+    else if (phone.replace(/\D/g, '').length < 7) errs.push(setErr('phone', 'That looks too short. Include the area code.', null, 'Phone'));
+    var email = $('email').value.trim();
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.push(setErr('email', 'That email doesn’t look complete, for example name@example.com. Or leave it blank.', null, 'Email'));
+    if (!checked('type').length) errs.push(setErr('type', 'Choose the kind of instrument.', null, 'Instrument'));
+    if (!$('desc').value.trim()) errs.push(setErr('desc', 'Describe what’s wrong, even briefly. It helps me plan the repair.', null, 'Describe the problem'));
+    var q = checked('quote')[0];
+    if (!q) errs.push(setErr('quote', 'Choose how you’d like me to handle cost.', null, 'Before any work starts'));
+    else if (q === 'limit') {
+      var v = Number($('limit').value);
+      if (!$('limit').value || !(v >= 1)) errs.push(setErr('limit', 'Enter the most you’d like me to spend without asking, as a whole number.', null, 'Limit'));
+    }
+    return errs;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var errs = validate();
+    if (errs.length) {
+      summaryList.textContent = '';
+      errs.forEach(function (er) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#'; a.textContent = er.label + ': ' + er.msg;
+        a.addEventListener('click', function (ev) { ev.preventDefault(); er.el.focus(); });
+        li.appendChild(a); summaryList.appendChild(li);
+      });
+      summary.hidden = false;
+      summary.focus();
+      summary.scrollIntoView({ block: 'center' });
+      return;
+    }
+    summary.hidden = true;
+    buildSlip();
+  });
+
+  function buildSlip() {
+    var rows = [];
+    function add(k, v) { if (v) rows.push([k, v]); }
+    add('Name', $('name').value.trim());
+    add('Phone', $('phone').value.trim());
+    add('Email', $('email').value.trim());
+    add('Best contact', $('contact').value);
+    add('Instrument', checked('type')[0]);
+    add('Make / model', $('model').value.trim());
+    add('Issues ticked', checked('issue').join(', '));
+    add('Problem', $('desc').value.trim());
+    add('Existing damage', $('damage').value.trim());
+    add('Cost', checked('quote')[0] === 'quote'
+      ? 'Contact me with a quote before any work'
+      : 'Start work if within ' + $('limit').value + '; contact me if it would be more');
+    var nb = $('needby').value;
+    if (nb) {
+      var p = nb.split('-');
+      add('Needed back by', new Date(p[0], p[1] - 1, p[2]).toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }));
+    }
+    add('Left with it', checked('extras').join(', ') || 'Instrument only');
+
+    var dl = $('slipList'); dl.textContent = '';
+    rows.forEach(function (r) {
+      var dt = document.createElement('dt'); dt.textContent = r[0];
+      var dd = document.createElement('dd'); dd.textContent = r[1];
+      dl.appendChild(dt); dl.appendChild(dd);
+    });
+    var stamp = new Date().toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+    $('slipDate').textContent = 'Created ' + stamp;
+    slipText = 'REPAIR DROP-OFF SLIP – [Shop name]\nCreated ' + stamp + '\n\n' +
+      rows.map(function (r) { return r[0] + ': ' + r[1]; }).join('\n');
+
+    form.hidden = true; slip.hidden = false;
+    $('copyMsg').textContent = '';
+    $('slipTitle').focus();
+    window.scrollTo(0, 0);
+  }
+
+  $('printBtn').addEventListener('click', function () { window.print(); });
+  $('editBtn').addEventListener('click', function () {
+    slip.hidden = true; form.hidden = false;
+    $('name').focus();
+  });
+  $('copyBtn').addEventListener('click', function () {
+    var msg = $('copyMsg');
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = slipText; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (x) {}
+      document.body.removeChild(ta);
+      msg.textContent = ok ? 'Copied to clipboard.' : 'Couldn’t copy automatically. Use Print slip instead, or select the text above and copy it.';
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(slipText).then(function () { msg.textContent = 'Copied to clipboard.'; }, fallback);
+    } else fallback();
+  });
+})();
+</script>
+</body>
+</html>

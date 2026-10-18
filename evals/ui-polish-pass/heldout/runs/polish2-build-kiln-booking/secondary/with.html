@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln Booking</title>
+<style>
+  :root {
+    --bg: #f7f5f2;
+    --card: #ffffff;
+    --text: #2b2622;
+    --muted: #6b625a;
+    --line: #d9d1c7;
+    --accent: #9a4b2f;
+    --accent-ink: #ffffff;
+    --open: #2f6b4f;
+    --focus: #1f5fbf;
+    --danger: #a12c2c;
+    --radius: 10px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1815;
+      --card: #25211d;
+      --text: #f1ebe4;
+      --muted: #b3a89c;
+      --line: #413a33;
+      --accent: #d9825e;
+      --accent-ink: #1b1815;
+      --open: #7fc49f;
+      --focus: #8ab4ff;
+      --danger: #f08a8a;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 4px; }
+  h2 { font-size: 1.1rem; margin: 0 0 16px; }
+  .subtitle { color: var(--muted); margin: 0 0 24px; }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .rules {
+    margin: 0 0 20px;
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+  .field { margin-bottom: 16px; }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 480px) {
+    .row { grid-template-columns: 1fr; }
+  }
+  input, select, textarea {
+    font: inherit;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    width: 100%;
+  }
+  textarea { min-height: 80px; resize: vertical; }
+  .hint { color: var(--muted); font-size: 0.85rem; margin: 6px 0 0; }
+
+  .slot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .slot {
+    font: inherit;
+    text-align: left;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    min-height: 56px;
+    padding: 8px 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .slot small { color: var(--open); font-size: 0.8rem; }
+  .slot:hover:not(:disabled) { border-color: var(--accent); }
+  .slot[aria-pressed="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  .slot[aria-pressed="true"] small { color: var(--accent-ink); }
+  .slot:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .slot:disabled small { color: var(--muted); }
+
+  button.primary {
+    font: inherit;
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    min-height: 44px;
+    cursor: pointer;
+    width: 100%;
+  }
+  button.primary:hover { filter: brightness(1.08); }
+  button.link {
+    font: inherit;
+    font-size: 0.9rem;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--danger);
+    border-radius: 8px;
+    padding: 6px 12px;
+    min-height: 36px;
+    cursor: pointer;
+  }
+  button.link:hover { border-color: var(--danger); }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .error {
+    color: var(--danger);
+    font-size: 0.9rem;
+    min-height: 1.2em;
+    margin: 0 0 12px;
+  }
+  .status {
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--open);
+    color: var(--open);
+    min-height: 0;
+  }
+  .status:empty { display: none; }
+
+  .booking-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .booking {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .booking strong { display: block; }
+  .booking .meta { color: var(--muted); font-size: 0.9rem; }
+  .empty { color: var(--muted); margin: 0; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Kiln Booking</h1>
+  <p class="subtitle">Reserve a 2-hour block in a shared studio kiln.</p>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="new-heading">
+      <h2 id="new-heading">New booking</h2>
+      <ul class="rules">
+        <li>Blocks are 2 hours, 8:00 am to 10:00 pm.</li>
+        <li>You can book up to 14 days ahead.</li>
+        <li>Each member can hold up to 3 upcoming bookings.</li>
+        <li>Raku firings must be supervised by a member who has been trained on the raku kiln.</li>
+      </ul>
+
+      <form id="booking-form" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="kiln-select">Kiln</label>
+            <select id="kiln-select"></select>
+            <p class="hint" id="kiln-note"></p>
+          </div>
+          <div class="field">
+            <label for="date-input">Date</label>
+            <input type="date" id="date-input" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <span id="slot-label" style="display:block;font-weight:600;font-size:0.9rem;margin-bottom:6px;">Time block</span>
+          <div class="slot-grid" id="slot-grid" role="group" aria-labelledby="slot-label"></div>
+          <p class="hint" id="slot-help" aria-live="polite"></p>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="name-input">Your name</label>
+            <input type="text" id="name-input" autocomplete="name" maxlength="60" placeholder="First and last name">
+          </div>
+          <div class="field">
+            <label for="type-select">Firing type</label>
+            <select id="type-select">
+              <option value="Bisque">Bisque</option>
+              <option value="Glaze">Glaze</option>
+              <option value="Test tile">Test tile</option>
+              <option value="Raku">Raku (supervised)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="cone-select">Target cone</label>
+            <select id="cone-select">
+              <option value="Cone 04">Cone 04</option>
+              <option value="Cone 6" selected>Cone 6</option>
+              <option value="Cone 10">Cone 10</option>
+              <option value="Not sure">Not sure</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="notes-input">Notes for the kiln crew <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <textarea id="notes-input" maxlength="300" placeholder="Shelf count, special loads, anything unusual"></textarea>
+        </div>
+
+        <p class="error" id="form-error" role="alert"></p>
+        <button type="submit" class="primary">Book this block</button>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="mine-heading">
+      <h2 id="mine-heading">Your upcoming bookings</h2>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <ul class="booking-list" id="mine-list"></ul>
+      <p class="empty" id="mine-empty" hidden></p>
+    </section>
+  </div>
+</main>
+
+<script>
+(function () {
+  var STORE_KEY = 'kiln-bookings-v1';
+  var MEMBER_KEY = 'kiln-member-name';
+  var KILNS = [
+    { id: 'large', name: 'Large electric', note: 'Fits pieces up to 40 cm. Cones 6 and 10.' },
+    { id: 'small', name: 'Small electric', note: 'Good for test tiles and small batches. Cone 6.' },
+    { id: 'raku', name: 'Raku kiln', note: 'Outdoor kiln. Supervised firings only.' }
+  ];
+  var SLOT_HOURS = [8, 10, 12, 14, 16, 18, 20];
+  var SLOT_LEN = 2;
+  var MAX_ACTIVE = 3;
+  var WINDOW_DAYS = 14;
+
+  var kilnSelect = document.getElementById('kiln-select');
+  var kilnNote = document.getElementById('kiln-note');
+  var dateInput = document.getElementById('date-input');
+  var slotGrid = document.getElementById('slot-grid');
+  var slotHelp = document.getElementById('slot-help');
+  var form = document.getElementById('booking-form');
+  var nameInput = document.getElementById('name-input');
+  var typeSelect = document.getElementById('type-select');
+  var coneSelect = document.getElementById('cone-select');
+  var notesInput = document.getElementById('notes-input');
+  var formError = document.getElementById('form-error');
+  var status = document.getElementById('status');
+  var mineList = document.getElementById('mine-list');
+  var mineEmpty = document.getElementById('mine-empty');
+
+  var bookings = loadBookings();
+  var selectedStart = null;
+  var statusTimer = null;
+
+  function loadBookings() {
+    try {
+      var v = JSON.parse(localStorage.getItem(STORE_KEY));
+      return Array.isArray(v) ? v : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveBookings() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(bookings));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function el(tag, attrs, children) {
+    var n = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) {
+      var v = attrs[k];
+      if (typeof v === 'boolean') {
+        if (v) n.setAttribute(k, '');
+      } else {
+        n.setAttribute(k, v);
+      }
+    });
+    (children || []).forEach(function (c) { n.append(c); });
+    return n;
+  }
+
+  function ymd(d) {
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+
+  function startOf(dateStr, hour) {
+    var p = dateStr.split('-').map(Number);
+    return new Date(p[0], p[1] - 1, p[2], hour);
+  }
+
+  function fmtHour(h) {
+    var suffix = h < 12 ? 'am' : 'pm';
+    return (h % 12 || 12) + ':00 ' + suffix;
+  }
+
+  function slotLabel(h) {
+    return fmtHour(h) + ' to ' + fmtHour(h + SLOT_LEN);
+  }
+
+  function kilnName(id) {
+    var k = KILNS.find(function (x) { return x.id === id; });
+    return k ? k.name : id;
+  }
+
+  function fmtDate(dateStr) {
+    var p = dateStr.split('-').map(Number);
+    return new Date(p[0], p[1] - 1, p[2]).toLocaleDateString(undefined, {
+      weekday: 'short', month: 'short', day: 'numeric'
+    });
+  }
+
+  function showStatus(msg) {
+    status.textContent = msg;
+    clearTimeout(statusTimer);
+    statusTimer = setTimeout(function () { status.textContent = ''; }, 6000);
+  }
+
+  function fail(msg, target) {
+    formError.textContent = msg;
+    if (target && target.focus) target.focus();
+  }
+
+  function populateKilns() {
+    KILNS.forEach(function (k) {
+      kilnSelect.append(el('option', { value: k.id }, [k.name]));
+    });
+    updateKilnNote();
+  }
+
+  function updateKilnNote() {
+    var k = KILNS.find(function (x) { return x.id === kilnSelect.value; });
+    kilnNote.textContent = k ? k.note : '';
+  }
+
+  function renderSlots() {
+    slotGrid.replaceChildren();
+    var kiln = kilnSelect.value;
+    var date = dateInput.value;
+    var now = new Date();
+    var free = 0;
+
+    if (!date) {
+      slotHelp.textContent = 'Choose a date to see open blocks.';
+      return;
+    }
+
+    SLOT_HOURS.forEach(function (h) {
+      var taken = bookings.some(function (b) {
+        return b.kiln === kiln && b.date === date && b.start === h;
+      });
+      var past = startOf(date, h) <= now;
+      var unavailable = taken || past;
+      if (!unavailable) free++;
+
+      var stateText = past ? 'Passed' : taken ? 'Booked' : 'Open';
+      var btn = el('button', {
+        type: 'button',
+        class: 'slot',
+        'aria-pressed': String(selectedStart === h),
+        'aria-label': slotLabel(h) + ', ' + stateText.toLowerCase(),
+        disabled: unavailable
+      }, [
+        el('span', {}, [slotLabel(h)]),
+        el('small', {}, [stateText])
+      ]);
+
+      btn.addEventListener('click', function () {
+        selectedStart = h;
+        formError.textContent = '';
+        renderSlots();
+      });
+      slotGrid.append(btn);
+    });
+
+    slotHelp.textContent = free
+      ? free + ' open block' + (free === 1 ? '' : 's') + ' on this day.'
+      : 'No open blocks on this day. Try another date or kiln.';
+  }
+
+  function renderMine() {
+    mineList.replaceChildren();
+    var who = nameInput.value.trim().toLowerCase();
+    var now = new Date();
+
+    var mine = bookings.filter(function (b) {
+      return who && b.name.toLowerCase() === who &&
+        startOf(b.date, b.start + SLOT_LEN) > now;
+    }).sort(function (a, b) {
+      return a.date.localeCompare(b.date) || a.start - b.start;
+    });
+
+    if (!who) {
+      mineEmpty.textContent = 'Enter your name above to see your bookings.';
+      mineEmpty.hidden = false;
+      return;
+    }
+    if (mine.length === 0) {
+      mineEmpty.textContent = 'No upcoming bookings for ' + nameInput.value.trim() + '.';
+      mineEmpty.hidden = false;
+      return;
+    }
+    mineEmpty.hidden = true;
+
+    mine.forEach(function (b) {
+      var cancel = el('button', {
+        type: 'button',
+        class: 'link',
+        'aria-label': 'Cancel ' + kilnName(b.kiln) + ' on ' + fmtDate(b.date) + ' at ' + fmtHour(b.start)
+      }, ['Cancel']);
+      cancel.addEventListener('click', function () { cancelBooking(b.id); });
+
+      var details = [
+        el('strong', {}, [kilnName(b.kiln)]),
+        el('span', { class: 'meta' }, [fmtDate(b.date) + ', ' + slotLabel(b.start)]),
+        el('span', { class: 'meta', style: 'display:block' }, [b.type + ' · ' + b.cone])
+      ];
+      if (b.notes) {
+        details.push(el('span', { class: 'meta', style: 'display:block' }, [b.notes]));
+      }
+
+      mineList.append(el('li', { class: 'booking' }, [
+        el('div', {}, details),
+        cancel
+      ]));
+    });
+  }
+
+  function cancelBooking(id) {
+    var before = bookings.length;
+    bookings = bookings.filter(function (b) { return b.id !== id; });
+    if (bookings.length === before) return;
+    if (!saveBookings()) {
+      showStatus('Could not update bookings on this device.');
+    } else {
+      showStatus('Booking cancelled.');
+    }
+    selectedStart = null;
+    renderSlots();
+    renderMine();
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    formError.textContent = '';
+
+    var name = nameInput.value.trim();
+    var kiln = kilnSelect.value;
+    var date = dateInput.value;
+
+    if (!name) {
+      return fail('Enter your name so we know whose booking this is.', nameInput);
+    }
+    if (!date) {
+      return fail('Pick a date.', dateInput);
+    }
+    if (selectedStart === null) {
+      return fail('Pick an open time block.', slotGrid.querySelector('.slot:not(:disabled)'));
+    }
+
+    var taken = bookings.some(function (b) {
+      return b.kiln === kiln && b.date === date && b.start === selectedStart;
+    });
+    if (taken || startOf(date, selectedStart) <= new Date()) {
+      selectedStart = null;
+      renderSlots();
+      return fail('That block is no longer available. Pick another one.', slotGrid.querySelector('.slot:not(:disabled)'));
+    }
+
+    var who = name.toLowerCase();
+    var now = new Date();
+    var active = bookings.filter(function (b) {
+      return b.name.toLowerCase() === who && startOf(b.date, b.start + SLOT_LEN) > now;
+    }).length;
+    if (active >= MAX_ACTIVE) {
+      return fail('You can hold up to ' + MAX_ACTIVE + ' upcoming bookings. Cancel one to book another.', nameInput);
+    }
+
+    bookings.push({
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+      kiln: kiln,
+      date: date,
+      start: selectedStart,
+      name: name,
+      type: typeSelect.value,
+      cone: coneSelect.value,
+      notes: notesInput.value.trim(),
+      created: new Date().toISOString()
+    });
+
+    if (!saveBookings()) {
+      bookings.pop();
+      return fail('Could not save your booking on this device. Check that storage is enabled and try again.');
+    }
+
+    try { localStorage.setItem(MEMBER_KEY, name); } catch (err) { /* ignore */ }
+
+    showStatus('Booked ' + kilnName(kiln) + ' on ' + fmtDate(date) + ', ' + slotLabel(selectedStart) + '.');
+    selectedStart = null;
+    notesInput.value = '';
+    renderSlots();
+    renderMine();
+  });
+
+  kilnSelect.addEventListener('change', function () {
+    updateKilnNote();
+    selectedStart = null;
+    formError.textContent = '';
+    renderSlots();
+  });
+
+  dateInput.addEventListener('change', function () {
+    selectedStart = null;
+    formError.textContent = '';
+    renderSlots();
+  });
+
+  nameInput.addEventListener('input', renderMine);
+
+  function init() {
+    populateKilns();
+
+    var today = new Date();
+    var max = new Date();
+    max.setDate(today.getDate() + WINDOW_DAYS);
+    dateInput.min = ymd(today);
+    dateInput.max = ymd(max);
+    dateInput.value = ymd(today);
+
+    try {
+      var remembered = localStorage.getItem(MEMBER_KEY);
+      if (remembered) nameInput.value = remembered;
+    } catch (e) { /* ignore */ }
+
+    renderSlots();
+    renderMine();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

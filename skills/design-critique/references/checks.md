@@ -23,6 +23,8 @@ Short passes; use only those the design contains. Thresholds match the focused s
 - The first line carries the point; headlines say what and for whom.
 - Labels, buttons and messages are specific, short, in the user's words; one name for one thing across the product.
 - Empty states and errors say what to do next.
+- **Could this be any product?** Swap in another product's name and nouns. If the headline, labels, empty states, errors and sample data still read true, report the exact strings, who they fail (a newcomer cannot tell what is special or what to do) and a replacement built only from what the brief supplies. Generic content on the first screen or on a failure path outranks generic styling elsewhere. Standard controls behaving in the standard way are not a finding.
+- **Whole journey.** Walk the main task from start to result. Screens that are fine alone but disagree in naming, order or tone are one finding, with the screens listed and a count.
 
 ## Motion
 

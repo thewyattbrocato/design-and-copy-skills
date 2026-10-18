@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tool Library · Front Desk</title>
+<style>
+:root {
+  --bg: #f5f5f2; --panel: #ffffff; --ink: #1f2328; --muted: #5f6670; --line: #dcdfe4;
+  --accent: #2d6a4f; --accent-ink: #ffffff; --focus: #1d4ed8;
+  --ok: #166534; --ok-bg: #dcfce7;
+  --warn: #92400e; --warn-bg: #fef3c7;
+  --bad: #b91c1c; --bad-bg: #fee2e2;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16181c; --panel: #1f2226; --ink: #e8eaed; --muted: #9aa3ad; --line: #343a42;
+    --accent: #40916c; --focus: #60a5fa;
+    --ok: #86efac; --ok-bg: #153322;
+    --warn: #fbbf24; --warn-bg: #3a2e10;
+    --bad: #f87171; --bad-bg: #3b1717;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+header {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
+  padding: 20px 24px; background: var(--panel); border-bottom: 1px solid var(--line);
+}
+h1 { margin: 0; font-size: 22px; }
+h2 { margin: 0 0 14px; font-size: 17px; }
+.sub { margin: 2px 0 0; color: var(--muted); }
+.stats { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  padding: 6px 12px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line);
+  font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.chip.bad { color: var(--bad); border-color: var(--bad); }
+main {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px; padding: 24px;
+}
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+.wide { grid-column: 1 / -1; }
+label { display: block; font-weight: 600; font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+input, select {
+  display: block; width: 100%; margin-top: 6px; padding: 10px 12px; font: inherit;
+  color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+}
+input:focus, select:focus, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+button { font: inherit; cursor: pointer; border-radius: 8px; padding: 10px 16px; border: 1px solid transparent; }
+.primary { background: var(--accent); color: var(--accent-ink); font-weight: 600; font-size: 16px; width: 100%; padding: 12px; }
+.primary:hover { filter: brightness(1.08); }
+.ghost { background: transparent; border-color: var(--line); color: var(--ink); padding: 6px 10px; font-size: 13px; }
+.ghost:hover { background: var(--bg); }
+.msg { min-height: 1.4em; margin: 12px 0 0; font-weight: 600; }
+.msg.ok { color: var(--ok); }
+.msg.warn { color: var(--warn); }
+.msg.bad { color: var(--bad); }
+.preview { padding: 12px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); margin: 0 0 12px; font-size: 14px; }
+.toolbar { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+.toolbar input { max-width: 260px; margin: 0; }
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+tr.overdue td { background: var(--bad-bg); }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.badge.ok { background: var(--ok-bg); color: var(--ok); }
+.badge.warn { background: var(--warn-bg); color: var(--warn); }
+.badge.bad { background: var(--bad-bg); color: var(--bad); }
+.badge.muted { background: var(--bg); color: var(--muted); }
+.empty { color: var(--muted); margin: 0; }
+.log { list-style: none; margin: 0; padding: 0; }
+.log li { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.log time { color: var(--muted); white-space: nowrap; font-size: 13px; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Tool Library</h1>
+    <p class="sub">Front desk</p>
+  </div>
+  <div class="stats" id="stats" aria-live="polite"></div>
+</header>
+
+<main>
+  <section class="panel" aria-labelledby="lendH">
+    <h2 id="lendH">Lend a tool</h2>
+    <form id="lendForm" autocomplete="off">
+      <div class="row2">
+        <label>Member name <input id="mName" required></label>
+        <label>Member number <input id="mNo" required></label>
+      </div>
+      <label>Tool ID or name <input id="tQuery" required placeholder="e.g. T-001 or drill"></label>
+      <label>Return by <input type="date" id="dueDate" required></label>
+      <button class="primary" type="submit">Lend tool</button>
+      <p class="msg" id="lendMsg" role="status"></p>
+    </form>
+  </section>
+
+  <section class="panel" aria-labelledby="retH">
+    <h2 id="retH">Take a tool back</h2>
+    <form id="retForm" autocomplete="off">
+      <label>Tool ID or name <input id="rQuery" required placeholder="e.g. T-003 or pressure"></label>
+      <div id="preview" class="preview" hidden></div>
+      <div class="row2">
+        <label>Condition
+          <select id="rCond">
+            <option>Good</option>
+            <option>Needs cleaning</option>
+            <option>Needs repair</option>
+          </select>
+        </label>
+        <label>Notes <input id="rNotes" placeholder="Optional"></label>
+      </div>
+      <button class="primary" type="submit">Check in</button>
+      <p class="msg" id="retMsg" role="status"></p>
+    </form>
+  </section>
+
+  <section class="panel wide" aria-labelledby="outH">
+    <h2 id="outH">Currently out</h2>
+    <div id="outWrap"></div>
+  </section>
+
+  <section class="panel wide" aria-labelledby="invH">
+    <h2 id="invH">Inventory</h2>
+    <div class="toolbar">
+      <input type="search" id="invFilter" placeholder="Filter tools" aria-label="Filter inventory">
+    </div>
+    <div id="invWrap"></div>
+  </section>
+
+  <section class="panel wide" aria-labelledby="logH">
+    <h2 id="logH">Recent activity</h2>
+    <ul class="log" id="logList"></ul>
+  </section>
+</main>
+
+<script>
+const KEY = 'toolLibraryDesk.v1';
+const DAY = 86400000;
+const LOAN_DAYS = 7;
+
+const $ = sel => document.querySelector(sel);
+
+function el(tag, props = {}, ...kids) {
+  const node = Object.assign(document.createElement(tag), props);
+  node.append(...kids);
+  return node;
+}
+
+function badge(text, kind) {
+  return el('span', { className: `badge ${kind}`, textContent: text });
+}
+
+function flash(node, text, kind) {
+  node.textContent = text;
+  node.className = `msg ${kind}`;
+}
+
+// ---------- Dates (local, stored as YYYY-MM-DD) ----------
+function ymd(d) {
+  const p = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+function today() { return ymd(new Date()); }
+function addDays(s, n) {
+  const d = new Date(s + 'T00:00');
+  d.setDate(d.getDate() + n);
+  return ymd(d);
+}
+function daysBetween(a, b) {
+  return Math.round((new Date(b + 'T00:00') - new Date(a + 'T00:00')) / DAY);
+}
+function fmt(s) {
+  return new Date(s + 'T00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+}
+function uid() { return Math.random().toString(36).slice(2, 9) + Date.now().toString(36); }
+
+// ---------- State ----------
+// Sample data for first run. Clear localStorage key "toolLibraryDesk.v1" to reset.
+function seedState() {
+  return {
+    tools: [
+      { id: 'T-001', name: 'Cordless drill', category: 'Power tools', condition: 'Good' },
+      { id: 'T-002', name: 'Extension ladder (24 ft)', category: 'Access', condition: 'Good' },
+      { id: 'T-003', name: 'Pressure washer', category: 'Outdoor', condition: 'Good' },
+      { id: 'T-004', name: 'Tile saw', category: 'Power tools', condition: 'Good' },
+      { id: 'T-005', name: 'Hedge trimmer', category: 'Garden', condition: 'Good' },
+      { id: 'T-006', name: 'Wheelbarrow', category: 'Garden', condition: 'Good' },
+      { id: 'T-007', name: 'Socket set (metric)', category: 'Hand tools', condition: 'Good' },
+      { id: 'T-008', name: 'Post hole digger', category: 'Garden', condition: 'Needs cleaning' }
+    ],
+    loans: [
+      { id: uid(), toolId: 'T-003', member: 'Priya N.', memberNo: '0412', out: addDays(today(), -10), due: addDays(today(), -3) },
+      { id: uid(), toolId: 'T-001', member: 'Sam O.', memberNo: '0187', out: addDays(today(), -2), due: addDays(today(), 5) },
+      { id: uid(), toolId: 'T-006', member: 'Lena B.', memberNo: '0339', out: addDays(today(), -7), due: today() }
+    ],
+    log: []
+  };
+}
+
+function load() {
+  try {
+    const s = JSON.parse(localStorage.getItem(KEY));
+    if (s && Array.isArray(s.tools)) return s;
+  } catch (e) { /* fall through to seed */ }
+  return seedState();
+}
+
+let state = load();
+
+function commit() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable */ }
+  renderAll();
+}
+
+function toolById(id) { return state.tools.find(t => t.id === id); }
+function activeLoan(toolId) { return state.loans.find(l => l.toolId === toolId); }
+function lateDays(loan) { return daysBetween(loan.due, today()); }
+
+function logEvent(text) {
+  state.log.unshift({ at: new Date().toISOString(), text });
+  state.log = state.log.slice(0, 50);
+}
+
+function toolStatus(tool) {
+  if (activeLoan(tool.id)) return { label: 'Out', kind: 'muted' };
+  if (tool.condition === 'Needs repair') return { label: 'Out of service', kind: 'bad' };
+  if (tool.condition !== 'Good') return { label: `Available · ${tool.condition}`, kind: 'warn' };
+  return { label: 'Available', kind: 'ok' };
+}
+
+// Accepts an exact ID, or a unique name match.
+function resolveTool(query) {
+  const s = query.trim().toLowerCase();
+  if (!s) return { error: 'Enter a tool ID or name.' };
+  const exact = state.tools.find(t => t.id.toLowerCase() === s);
+  if (exact) return { tool: exact };
+  const hits = state.tools.filter(t => t.name.toLowerCase().includes(s));
+  if (hits.length === 1) return { tool: hits[0] };
+  if (hits.length > 1) return { error: `${hits.length} tools match. Use the ID.` };
+  return { error: 'No tool matches that ID or name.' };
+}
+
+// ---------- Actions ----------
+function lendTool(e) {
+  e.preventDefault();
+  const msg = $('#lendMsg');
+  const member = $('#mName').value.trim();
+  const memberNo = $('#mNo').value.trim();
+  const due = $('#dueDate').value;
+
+  const { tool, error } = resolveTool($('#tQuery').value);
+  if (error) return flash(msg, error, 'bad');
+  if (activeLoan(tool.id)) return flash(msg, `${tool.name} is already checked out.`, 'bad');
+  if (tool.condition === 'Needs repair') return flash(msg, `${tool.name} needs repair and can't be lent right now.`, 'bad');
+  if (due < today()) return flash(msg, 'The return date can\'t be in the past.', 'bad');
+
+  state.loans.push({ id: uid(), toolId: tool.id, member, memberNo, out: today(), due });
+  logEvent(`Lent ${tool.name} to ${member} (#${memberNo}), due ${fmt(due)}`);
+  commit();
+  flash(msg, `Lent ${tool.name} to ${member}. Due ${fmt(due)}.`, 'ok');
+  $('#tQuery').value = '';
+  $('#tQuery').focus();
+}
+
+function checkIn(e) {
+  e.preventDefault();
+  const msg = $('#retMsg');
+  const { tool, error } = resolveTool($('#rQuery').value);
+  if (error) return flash(msg, error, 'bad');
+
+  const loan = activeLoan(tool.id);
+  if (!loan) return flash(msg, `${tool.name} is not checked out.`, 'bad');
+
+  const cond = $('#rCond').value;
+  const notes = $('#rNotes').value.trim();
+  const late = lateDays(loan);
+
+  state.loans = state.loans.filter(l => l !== loan);
+  tool.condition = cond;
+  logEvent(
+    `Returned ${tool.name} from ${loan.member}` +
+    (late > 0 ? ` (${late} day${late === 1 ? '' : 's'} late)` : '') +
+    (cond !== 'Good' ? ` — ${cond}` : '') +
+    (notes ? `: ${notes}` : '')
+  );
+  commit();
+
+  let text = `${tool.name} checked in.`;
+  if (cond === 'Needs repair') text += ' Marked out of service.';
+  flash(msg, text, cond === 'Good' ? 'ok' : 'warn');
+
+  $('#rQuery').value = '';
+  $('#rNotes').value = '';
+  $('#rCond').value = 'Good';
+  previewReturn();
+  $('#rQuery').focus();
+}
+
+function previewReturn() {
+  const box = $('#preview');
+  box.replaceChildren();
+  box.hidden = true;
+
+  const q = $('#rQuery').value;
+  if (!q.trim()) return;
+
+  const { tool, error } = resolveTool(q);
+  if (error) return;
+
+  const loan = activeLoan(tool.id);
+  if (!loan) {
+    box.textContent = `${tool.name} is not checked out.`;
+    box.hidden = false;
+    return;
+  }
+
+  const late = lateDays(loan);
+  const kind = late > 0 ? 'bad' : late === 0 ? 'warn' : 'ok';
+  const label = late > 0 ? `${late}d overdue` : late === 0 ? 'Due today' : 'On time';
+  box.append(
+    el('strong', { textContent: tool.name }),
+    el('br'),
+    `Borrowed by ${loan.member} (#${loan.memberNo}) · due ${fmt(loan.due)} · `,
+    badge(label, kind)
+  );
+  box.hidden = false;
+}
+
+// ---------- Rendering ----------
+function renderStats() {
+  const avail = state.tools.filter(t => !activeLoan(t.id) && t.condition !== 'Needs repair').length;
+  const overdue = state.loans.filter(l => lateDays(l) > 0).length;
+  const attention = state.tools.filter(t => t.condition !== 'Good').length;
+
+  $('#stats').replaceChildren(
+    el('span', { className: 'chip', textContent: `${avail} available` }),
+    el('span', { className: 'chip', textContent: `${state.loans.length} out` }),
+    el('span', { className: overdue ? 'chip bad' : 'chip', textContent: `${overdue} overdue` }),
+    el('span', { className: 'chip', textContent: `${attention} need attention` })
+  );
+}
+
+function table(headers, rows) {
+  return el('div', { className: 'scroll' },
+    el('table', {},
+      el('thead', {}, el('tr', {}, ...headers.map(h => el('th', { textContent: h })))),
+      el('tbody', {}, ...rows)
+    )
+  );
+}
+
+function renderOut() {
+  const wrap = $('#outWrap');
+  if (!state.loans.length) {
+    wrap.replaceChildren(el('p', { className: 'empty', textContent: 'Nothing is checked out.' }));
+    return;
+  }
+
+  const loans = [...state.loans].sort((a, b) => a.due.localeCompare(b.due));
+  const rows = loans.map(l => {
+    const tool = toolById(l.toolId);
+    const late = lateDays(l);
+    const status = late > 0 ? badge(`${late}d overdue`, 'bad')
+      : late === 0 ? badge('Due today', 'warn')
+      : badge('On time', 'ok');
+
+    const btn = el('button', { className: 'ghost', type: 'button', textContent: 'Check in' });
+    btn.addEventListener('click', () => {
+      $('#rQuery').value = tool.id;
+      previewReturn();
+      $('#rCond').focus();
+      $('#retH').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    return el('tr', { className: late > 0 ? 'overdue' : '' },
+      el('td', { textContent: tool.name }),
+      el('td', { textContent: `${l.member} (#${l.memberNo})` }),
+      el('td', { textContent: fmt(l.out) }),
+      el('td', { textContent: fmt(l.due) }),
+      el('td', {}, status),
+      el('td', {}, btn)
+    );
+  });
+
+  wrap.replaceChildren(table(['Tool', 'Borrowed by', 'Out', 'Due', 'Status', ''], rows));
+}
+
+function renderInv() {
+  const q = $('#invFilter').value.trim().toLowerCase();
+  const tools = state.tools.filter(t =>
+    !q || t.name.toLowerCase().includes(q) || t.id.toLowerCase().includes(q) || t.category.toLowerCase().includes(q)
+  );
+
+  const rows = tools.map(t => {
+    const s = toolStatus(t);
+    const cells = [
+      el('td', { textContent: t.id }),
+      el('td', { textContent: t.name }),
+      el('td', { textContent: t.category }),
+      el('td', {}, badge(s.label, s.kind))
+    ];
+
+    if (t.condition !== 'Good') {
+      const btn = el('button', { className: 'ghost', type: 'button', textContent: 'Mark ready' });
+      btn.addEventListener('click', () => {
+        t.condition = 'Good';
+        logEvent(`${t.name} marked ready`);
+        commit();
+      });
+      cells.push(el('td', {}, btn));
+    } else {
+      cells.push(el('td'));
+    }
+    return el('tr', {}, ...cells);
+  });
+
+  const wrap = $('#invWrap');
+  if (!rows.length) {
+    wrap.replaceChildren(el('p', { className: 'empty', textContent: 'No tools match that filter.' }));
+    return;
+  }
+  wrap.replaceChildren(table(['ID', 'Tool', 'Category', 'Status', ''], rows));
+}
+
+function renderLog() {
+  const list = $('#logList');
+  if (!state.log.length) {
+    list.replaceChildren(el('li', { className: 'empty', textContent: 'No activity yet.' }));
+    return;
+  }
+  list.replaceChildren(...state.log.slice(0, 15).map(entry => {
+    const time = new Date(entry.at).toLocaleString(undefined, {
+      month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+    });
+    return el('li', {}, el('time', { textContent: time }), el('span', { textContent: entry.text }));
+  }));
+}
+
+function renderAll() {
+  renderStats();
+  renderOut();
+  renderInv();
+  renderLog();
+}
+
+// ---------- Wiring ----------
+$('#lendForm').addEventListener('submit', lendTool);
+$('#retForm').addEventListener('submit', checkIn);
+$('#rQuery').addEventListener('input', previewReturn);
+$('#invFilter').addEventListener('input', renderInv);
+
+$('#dueDate').min = today();
+$('#dueDate').value = addDays(today(), LOAN_DAYS);
+
+renderAll();
+</script>
+</body>
+</html>
