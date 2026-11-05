@@ -1,51 +1,49 @@
-**Short version:** this setup has too many roles, the body font is the wrong choice, and the loading method is slow. Both complaints come from the font setup.
+The setup is the problem, not any one font. It has five competing voices and a heavy, blocking load, and the text parents need to read is set in the hardest-to-read faces.
 
-## Why it feels chaotic
+## What's wrong
 
-- **There are six families and no system.** Lobster, Playfair Display, Montserrat, Raleway, Comic Neue and Courier New all appear. Each one is a different personality. The skill's rule is one family by default and two at most, each with a defined role.
-- **The body text is set in Lobster.** It's a bold display script, and here it runs at 13px with 1.2 line height. That is the worst problem on the page. Parents read hours, insurance and appointment info in it, and script faces get tiring and hard to read at small sizes.
-- **Several faces are too similar.** Montserrat, Raleway and Comic Neue are all rounded or geometric sans faces. Pairing near-identical faces looks like a mistake and not a deliberate choice.
-- **The weights are too thin.** The h2 is Montserrat 100 with 4px tracking and the nav is Raleway 200 at 12px. Hairline weights wash out at small sizes and on low-density screens, and nav links are the thing people need to hit.
-- **Courier New is used for prices and hours.** It's monospace for a "typewriter" feel, which doesn't fit a kids' dental practice. If you want aligned numbers, use a sans with tabular figures.
-- **The text is small and low-contrast.** Body is 13px in #666 gray. That is too small for text this decorative, and the gray is weak on white.
-- **The font ranges for h1 and Lobster look like different brands.** A 900-weight Playfair h1 above a Lobster body reads as two sites stitched together.
+**Chaos**
+- **Five families with no roles.** Lobster (script) is the body, Playfair Display (high-contrast serif) is h1, Montserrat is h2, Raleway is nav, and Comic Neue is buttons. Courier New for prices and hours makes six. Nothing connects them, so the page looks chaotic.
+- **A script face as body text at 13px with 1.2 leading.** Lobster is a display face. Set small and tight, it's tiring to read, and it's the main text on a page parents use to find hours and book visits.
+- **Hairline weights for text.** Raleway 200 at 12px for nav and Montserrat 100 in spaced-out caps for h2 will look thin and blurry on ordinary screens. Navigation is where parents need to click.
+- **Faces that mimic the subject.** Comic Neue buttons and the Lobster body are trying to read as "kid-friendly". That reads as a joke next to a 900-weight Playfair headline, not as warmth.
+- **Courier New for prices and hours.** Monospace is for code. Here it looks like a typewriter dropped into a medical site. It's also a thin system font, and it has no fallback.
 
-## Why it loads slowly
+**Slow load**
+- **`@import` inside the CSS.** The browser has to download the CSS, then discover the font CSS, then fetch the fonts. That's a serial chain before anything renders.
+- **About 14 weights requested across four families, and most go unused.** You load Montserrat 100–700 but use only 100. You load Raleway 100–300 but use only 200. You load Playfair 400/700/900 but use only 900.
+- **`display=block`.** Text stays invisible for up to about 3 seconds while those fonts load. That's probably a big part of "slow".
+- **No real fallbacks.** `'Montserrat'`, `'Raleway'`, `'Comic Neue'` and `'Courier New'` have no generic family after them. If a font fails, the browser uses its default serif.
 
-- **It uses a CSS `@import`.** The browser has to download the stylesheet before it finds the font request, which delays everything behind it. Use `<link rel="preconnect">` plus `<link>` in the HTML head, or self-host.
-- **It requests about 18 weights.** Montserrat 100–700 is 7 weights, Playfair is 3, Raleway is 3, and the rest are single weights. You actually use about 6 of them. Request only the ones you use.
-- **It uses `display=block`.** That hides all text for up to about 3 seconds while fonts load. Use `swap` or `optional`.
-- **The fallbacks are weak.** `cursive` and `serif` are bare generic names, and `'Montserrat'` and `'Raleway'` have no fallback at all. Text will visibly jump when the fonts arrive, and some visitors will see a default Times or a system cursive.
+**What works:** nothing here is worth keeping as-is. The idea of a display face for h1 is fine, but only one face should play that role.
 
 ## Fix
 
-One family for the interface and body, plus one friendly display face used only for the h1 and a few headings. I'm assuming the Latin script, a screen, and that web fonts can load.
+One family with real weight range, and no second family. Nunito is a variable font with rounded terminals, so it's friendly without being a novelty face. I haven't verified its license or script coverage, so confirm those before launch. If you want a distinct h1, add one display face for that line only.
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka:wght@600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400..800&display=swap">
 ```
 
 ```css
-body {
-  font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-size: 17px;
-  line-height: 1.55;
-  color: #333;
+:root {
+  --font: 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
-h1, h2 { font-family: 'Fredoka', 'Nunito', system-ui, sans-serif; font-weight: 600; }
-h1 { font-size: 44px; line-height: 1.1; }
-h2 { font-size: 28px; }              /* drop the uppercase and 4px tracking */
+body { font-family: var(--font); font-size: 17px; line-height: 1.55; color: #444; }
+h1   { font-weight: 800; font-size: 40px; line-height: 1.15; }
+h2   { font-weight: 700; font-size: 26px; line-height: 1.25; } /* drop uppercase and the 4px tracking */
 nav a { font-weight: 600; font-size: 16px; }
-.price, .hours { font-variant-numeric: tabular-nums; }
-.btn { font-weight: 700; }           /* same family as the body */
+.price, .hours { font-weight: 600; font-variant-numeric: tabular-nums; }
+.btn { font-weight: 700; font-size: 16px; }
 ```
 
-- **Nunito** is a rounded, friendly sans for reading and the interface. It has real weights and an italic.
-- **Fredoka** is a playful display face, used only for the big headings.
-- **The price, hours and button styles** now share the body family. Tabular figures replace the typewriter look.
+The starting sizes are my suggestions, so check them on a real phone. The stack now ends in real system fallbacks, and it no longer uses `@import`, hairline weights, monospace or `display=block`.
 
-That drops the page from six families to two and from about 18 weights to 4. Text shows immediately, and a matching system fallback keeps the layout steady while the fonts arrive.
+**Next steps**
+1. Test with the font blocked, to see the fallback.
+2. Check that 1/l/I and 0/O are distinct in prices and hours at 16px.
+3. Once it works, self-host two or three font files with a preload for the main one. That's faster still, but it's a second step.
 
-I picked these two for tone and haven't tested them on your real pages. Open the site on a phone, read a full paragraph of the hours and insurance text, and adjust from there. Both are Google Fonts. If you plan to self-host, check the license on the font's Google Fonts page.
+If the practice has a brand font or logo typeface, tell me and I'll build the stack around it.

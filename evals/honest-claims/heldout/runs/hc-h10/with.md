@@ -1,8 +1,10 @@
-1. `Odd Fern Goods: 20% off everything ends Sunday 10/18 at 11:59pm. Use code FERN20. Last chance for ceramics & candles: oddferngoods.example/sale` (144 characters)
+Odd Fern Goods: 20% off everything with code FERN20. Ends Sunday 10/18 at 11:59pm. Last chance! oddferngoods.example/sale
 
-2. `Last call! Code FERN20 takes 20% off everything at Odd Fern Goods until Sunday 10/18, 11:59pm. Free shipping over $60. oddferngoods.example/sale` (145 characters)
+Last call from Odd Fern Goods: 20% off everything, code FERN20, through Sunday 10/18, 11:59pm. oddferngoods.example/sale
 
-3. `Sale ends Sunday night. Take 20% off our ceramics and candles with FERN20 before 11:59pm on 10/18. Free shipping over $60. oddferngoods.example/sale` (148 characters)
+Odd Fern Goods sale ends Sunday 10/18, 11:59pm! 20% off everything w/ FERN20 + free shipping over $60. oddferngoods.example/sale
 
-- I built the "last chance" feeling on the real Sunday 11:59 pm deadline and left out "almost gone" or "only a few left" lines, since you didn't give me a stock limit.
-- Free shipping over $60 is always on, so I mentioned it as a perk and not as part of the sale. If you'd rather not suggest it's weekend-only, use message 1.
+Counted lengths: about 121, 120 and 128 characters, spaces and link included, so all three fit in one text.
+
+- The "last chance" urgency comes only from your real deadline, with no made-up stock or customer counts.
+- My system date shows Oct 29, 2026, which is after Oct 18. If that's accurate, the sale has already ended, so check the date before sending. Texts about a sale that's over would mislead people.

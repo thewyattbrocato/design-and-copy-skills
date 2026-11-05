@@ -1,0 +1,1 @@
+A dark kiln booking page: numbered steps for kiln, firing type and day, with one card per kiln, a dimmed Raku option, a two-week grid of days with Mondays dimmed and the line "The studio is closed on Mondays.", and a "Your booking" summary with a Confirm booking button. Load-in and shelves still show dashes.

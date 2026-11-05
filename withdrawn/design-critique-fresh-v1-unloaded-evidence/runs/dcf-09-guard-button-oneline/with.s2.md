@@ -1,0 +1,1 @@
+Mostly yes: white on #1d4ed8 is about 6.7:1 contrast (passes AA and AAA for text), but the focus outline is the same blue as the button, so it only shows against the white page, not against the button itself. Using a different color or a larger offset would make it clearer.

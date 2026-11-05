@@ -5,321 +5,435 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Front desk · Neighborhood Tool Library</title>
 <style>
-:root{
-  --bg:#f4f1ea; --card:#fff; --ink:#1f2421; --muted:#5a625d; --line:#cfc9bb;
-  --accent:#1f5a3a; --accent-ink:#fff; --accent-soft:#e3efe7;
-  --warn:#9a2a14; --warn-soft:#fbe9e4; --amber:#7a5200; --amber-soft:#fff1d0;
-  --radius:10px;
-}
-*{box-sizing:border-box}
-html{font-size:100%}
-body{margin:0;background:var(--bg);color:var(--ink);
-  font:1rem/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-button,input{font:inherit;color:inherit}
-:focus-visible{outline:3px solid #0a4fb3;outline-offset:2px}
-.wrap{max-width:1100px;margin:0 auto;padding:1rem 1rem 7rem}
-header{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:baseline;justify-content:space-between;padding:.5rem 0 1rem}
-h1{font-size:1.35rem;margin:0}
-header p{margin:0;color:var(--muted)}
-.tabs{display:flex;gap:.5rem;margin-bottom:1rem}
-.tab{flex:1;min-height:3.25rem;border:2px solid var(--line);background:var(--card);border-radius:var(--radius);
-  font-weight:650;font-size:1.1rem;cursor:pointer;padding:.5rem 1rem}
-.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.tab .n{font-weight:500;opacity:.9}
-.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:1rem}
-@media(max-width:760px){.grid{grid-template-columns:1fr}}
-section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1rem}
-h2{font-size:1.05rem;margin:0 0 .6rem;display:flex;align-items:center;gap:.5rem}
-h2 .step{background:var(--ink);color:#fff;border-radius:50%;min-width:1.6rem;height:1.6rem;display:inline-grid;place-items:center;font-size:.9rem}
-label.lbl{display:block;font-weight:600;margin-bottom:.25rem}
-input[type=search],input[type=date]{width:100%;min-height:2.75rem;border:1.5px solid #77716a;border-radius:8px;padding:.4rem .7rem;background:#fff}
-ul{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.4rem}
-.row{display:flex;gap:.75rem;align-items:center;justify-content:space-between;flex-wrap:wrap;
-  border:1.5px solid var(--line);border-radius:8px;padding:.55rem .75rem;background:#fff;min-width:0}
-.row .main{min-width:0;flex:1 1 12rem}
-.row .name{font-weight:600;overflow-wrap:anywhere}
-.row .sub{color:var(--muted);font-size:.9rem;overflow-wrap:anywhere}
-.row.sel{border-color:var(--accent);background:var(--accent-soft)}
-.row.over{border-color:var(--warn)}
-button.pick{all:unset;box-sizing:border-box;display:flex;width:100%;gap:.75rem;align-items:center;justify-content:space-between;cursor:pointer;min-height:2.5rem}
-button.pick:focus-visible,label.pick:focus-within{outline:3px solid #0a4fb3;outline-offset:4px;border-radius:4px}
-label.pick{display:flex;gap:.75rem;align-items:center;width:100%;cursor:pointer;min-height:2.5rem}
-label.pick input{width:1.4rem;height:1.4rem;accent-color:var(--accent);flex:none}
-.row.na{background:#f0eee8;border-style:dashed}
-.badge{display:inline-block;font-size:.8rem;font-weight:700;border-radius:99px;padding:.1rem .6rem;white-space:nowrap}
-.b-ok{background:var(--accent-soft);color:var(--accent)}
-.b-over{background:var(--warn-soft);color:var(--warn)}
-.b-out{background:#e8e6df;color:#3d423f}
-.b-fix{background:var(--amber-soft);color:var(--amber)}
-.btn{min-height:2.75rem;padding:.4rem 1.1rem;border-radius:8px;border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:650;cursor:pointer}
-.btn.ghost{background:#fff;color:var(--accent)}
-.btn:disabled{background:#e6e3da;border-color:#e6e3da;color:#5a5750;cursor:not-allowed}
-.notice{margin:.6rem 0 0;padding:.55rem .75rem;border-radius:8px;background:var(--amber-soft);color:#4d3500;border:1px solid #e2c36b}
-.empty{margin:.6rem 0 0;padding:1.1rem;border:2px dashed var(--line);border-radius:8px;color:var(--muted);text-align:center}
-.empty strong{display:block;color:var(--ink);margin-bottom:.2rem}
-.empty button{margin-top:.6rem}
-.chk{display:flex;gap:.4rem;align-items:center;font-size:.9rem;min-height:2.75rem;cursor:pointer}
-.chk input{width:1.2rem;height:1.2rem;accent-color:var(--amber)}
-.actions{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
-.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:2px solid var(--line);padding:.7rem 1rem;z-index:5}
-.bar .in{max-width:1100px;margin:0 auto;display:flex;gap:1rem;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.bar .why{color:var(--muted);flex:1 1 14rem;overflow-wrap:anywhere}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:5.5rem;max-width:min(36rem,calc(100% - 2rem));
-  background:var(--ink);color:#fff;border-radius:10px;padding:.6rem .6rem .6rem 1rem;display:flex;gap:.75rem;align-items:center;z-index:9}
-.toast[hidden]{display:none}
-.toast button{background:#fff;color:var(--ink);border:0;border-radius:6px;min-height:2.5rem;padding:0 .9rem;font-weight:700;cursor:pointer}
-.toast button.x{background:transparent;color:#fff;font-size:1.2rem;padding:0 .6rem}
-#status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-.hidden{display:none!important}
-@media(prefers-reduced-motion:no-preference){.row{transition:background .15s,border-color .15s}}
+  :root {
+    --bg: #f6f3ec;
+    --card: #fffefb;
+    --ink: #1f2a24;
+    --muted: #55625a;
+    --line: #c9c4b6;
+    --accent: #1f5a3d;
+    --accent-ink: #ffffff;
+    --accent-soft: #e2efe6;
+    --warn: #8a1f11;
+    --warn-soft: #fbe6e1;
+    --amber: #6b4a00;
+    --amber-soft: #fbefcf;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.45;
+    padding-bottom: 6rem;
+  }
+  .skip { position: absolute; left: -999px; top: 0; background: var(--ink); color: #fff; padding: .6rem 1rem; z-index: 10; }
+  .skip:focus { left: 0; }
+  :focus-visible { outline: 3px solid #0b57d0; outline-offset: 2px; }
+  header.top {
+    background: var(--accent); color: var(--accent-ink);
+    padding: .9rem 1.25rem; display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; align-items: baseline; justify-content: space-between;
+  }
+  header.top h1 { margin: 0; font-size: 1.25rem; }
+  header.top p { margin: 0; font-size: .95rem; opacity: .95; }
+  main { max-width: 1100px; margin: 0 auto; padding: 1rem 1.25rem; }
+
+  [role=tablist] { display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  [role=tab] {
+    font: inherit; font-weight: 600; font-size: 1.05rem;
+    min-height: 48px; padding: .5rem 1.25rem; border-radius: var(--radius);
+    border: 2px solid var(--accent); background: var(--card); color: var(--accent); cursor: pointer;
+  }
+  [role=tab][aria-selected=true] { background: var(--accent); color: var(--accent-ink); }
+  .count { font-weight: 700; }
+
+  .layout { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 880px) { .layout { grid-template-columns: 1.5fr 1fr; align-items: start; } .sticky { position: sticky; top: 1rem; } }
+
+  section.card, aside.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem; margin-bottom: 1rem; }
+  .layout > div > .card:last-child { margin-bottom: 0; }
+  h2 { font-size: 1.1rem; margin: 0 0 .6rem; }
+  h2 .step { display: inline-block; background: var(--accent); color: #fff; border-radius: 99px; min-width: 1.6em; text-align: center; margin-right: .4rem; padding: 0 .3em; }
+  label.lbl { display: block; font-weight: 600; margin-bottom: .25rem; }
+  input[type=search], input[type=date] {
+    font: inherit; width: 100%; min-height: 46px; padding: .5rem .7rem;
+    border: 2px solid #6d6a5f; border-radius: 8px; background: #fff; color: var(--ink);
+  }
+  .hint { color: var(--muted); font-size: .92rem; margin: .3rem 0 0; }
+
+  ul.list { list-style: none; margin: .75rem 0 0; padding: 0; display: grid; gap: .5rem; max-height: 22rem; overflow: auto; }
+  ul.list.tall { max-height: none; }
+  li.row {
+    display: flex; gap: .75rem; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    border: 1px solid var(--line); border-radius: 8px; padding: .6rem .75rem; background: #fff;
+  }
+  li.row.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .grow { flex: 1 1 14rem; min-width: 0; overflow-wrap: anywhere; }
+  .name { font-weight: 600; }
+  .meta { color: var(--muted); font-size: .92rem; }
+
+  button.btn {
+    font: inherit; font-weight: 600; min-height: 44px; padding: .45rem 1rem; border-radius: 8px; cursor: pointer;
+    border: 2px solid var(--accent); background: var(--card); color: var(--accent);
+  }
+  button.btn.primary { background: var(--accent); color: var(--accent-ink); }
+  button.btn.big { min-height: 52px; font-size: 1.05rem; width: 100%; }
+  button.btn:disabled { cursor: not-allowed; border-color: #8c8b82; background: #e7e4da; color: #4f4f48; }
+  button.btn.link { border: none; background: none; text-decoration: underline; padding: .45rem .5rem; }
+
+  .chip { display: inline-block; font-size: .85rem; font-weight: 700; padding: .1rem .55rem; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; }
+  .chip.overdue { color: var(--warn); background: var(--warn-soft); }
+  .chip.soon { color: var(--amber); background: var(--amber-soft); }
+  .chip.ok { color: var(--accent); background: var(--accent-soft); }
+  .chip.off { color: #4f4f48; background: #ece9df; }
+
+  .notice { border-left: 5px solid var(--amber); background: var(--amber-soft); color: #3d2b00; padding: .5rem .75rem; border-radius: 6px; margin-top: .6rem; font-size: .95rem; }
+
+  .empty { text-align: center; padding: 1.5rem 1rem; color: var(--muted); border: 2px dashed var(--line); border-radius: 8px; margin-top: .75rem; }
+  .empty strong { display: block; color: var(--ink); font-size: 1.05rem; margin-bottom: .2rem; }
+  .empty:focus { outline-offset: 2px; }
+
+  .summary dl { margin: 0 0 .8rem; }
+  .summary dt { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-top: .7rem; }
+  .summary dd { margin: .1rem 0 0; font-weight: 600; overflow-wrap: anywhere; }
+  .summary ul { margin: .1rem 0 0; padding-left: 1.1rem; font-weight: 600; }
+  .summary li { margin-bottom: .25rem; }
+  .why { margin: .5rem 0 0; font-size: .95rem; color: var(--warn); font-weight: 600; min-height: 1.4em; }
+  .rm { font-size: .9rem; min-height: 36px; padding: .15rem .5rem; margin-left: .3rem; }
+
+  .check { display: flex; align-items: center; gap: .45rem; font-size: .92rem; min-height: 44px; }
+  .check input { width: 22px; height: 22px; }
+
+  .toast-wrap { position: fixed; left: 0; right: 0; bottom: 0; padding: .75rem; display: flex; justify-content: center; pointer-events: none; }
+  .toast {
+    pointer-events: auto; background: #1b221e; color: #fff; border-radius: 10px; padding: .6rem .6rem .6rem 1rem;
+    display: flex; align-items: center; gap: .75rem; max-width: 40rem; box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  }
+  .toast button { font: inherit; font-weight: 700; min-height: 44px; padding: .3rem 1rem; border-radius: 8px; border: 2px solid #fff; background: transparent; color: #fff; cursor: pointer; }
+  .toast .x { border-color: transparent; }
+  .toast[hidden] { display: none; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 480px) { main { padding: .75rem; } li.row .btn { width: 100%; } }
+  @media (prefers-reduced-motion: no-preference) { .toast { animation: rise .18s ease-out; } @keyframes rise { from { transform: translateY(12px); opacity: 0; } } }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Tool Library · Front desk</h1>
-    <p id="today"></p>
-  </header>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="top">
+  <h1>Neighborhood Tool Library · Front desk</h1>
+  <p id="today"></p>
+</header>
 
-  <div class="tabs" role="tablist" aria-label="What are you doing?">
-    <button class="tab" role="tab" id="tab-lend" aria-controls="panel-lend" aria-selected="true">Lend tools</button>
-    <button class="tab" role="tab" id="tab-back" aria-controls="panel-back" aria-selected="false" tabindex="-1">Take tools back <span class="n" id="outCount"></span></button>
+<main id="main">
+  <div role="tablist" aria-label="Desk task">
+    <button role="tab" id="tab-lend" aria-controls="panel-lend" aria-selected="true">Lend tools</button>
+    <button role="tab" id="tab-return" aria-controls="panel-return" aria-selected="false" tabindex="-1">Take back <span class="count" id="out-count"></span></button>
   </div>
 
-  <div id="panel-lend" role="tabpanel" aria-labelledby="tab-lend" class="grid">
-    <section class="card" aria-labelledby="h-member">
-      <h2 id="h-member"><span class="step" aria-hidden="true">1</span>Who is borrowing?</h2>
-      <label class="lbl" for="memberQ">Member name or number</label>
-      <input type="search" id="memberQ" autocomplete="off" placeholder="e.g. Okafor or 1042">
-      <ul id="members"></ul>
-      <div id="memberNote" aria-live="polite"></div>
-    </section>
+  <!-- LEND -->
+  <div role="tabpanel" id="panel-lend" aria-labelledby="tab-lend" class="layout">
+    <div>
+      <section class="card" aria-labelledby="h-member">
+        <h2 id="h-member"><span class="step" aria-hidden="true">1</span>Who is borrowing?</h2>
+        <label class="lbl" for="member-q">Find a member by name or card number</label>
+        <input type="search" id="member-q" autocomplete="off" placeholder="e.g. Okonkwo or 1042">
+        <ul class="list" id="member-list" aria-label="Members"></ul>
+      </section>
 
-    <section class="card" aria-labelledby="h-tools">
-      <h2 id="h-tools"><span class="step" aria-hidden="true">2</span>Which tools?</h2>
-      <label class="lbl" for="toolQ">Tool name or tag number</label>
-      <input type="search" id="toolQ" autocomplete="off" placeholder="e.g. drill, ladder, T-014">
-      <ul id="tools"></ul>
-      <div style="margin-top:1rem;max-width:14rem">
-        <label class="lbl" for="due">Due back</label>
-        <input type="date" id="due">
-      </div>
-    </section>
+      <section class="card" aria-labelledby="h-tools">
+        <h2 id="h-tools"><span class="step" aria-hidden="true">2</span>Which tools are going out?</h2>
+        <label class="lbl" for="tool-q">Search tools</label>
+        <input type="search" id="tool-q" autocomplete="off" placeholder="e.g. drill, ladder, saw">
+        <ul class="list" id="tool-list" aria-label="Tools"></ul>
+      </section>
+    </div>
+
+    <aside class="card summary sticky" aria-labelledby="h-sum">
+      <h2 id="h-sum"><span class="step" aria-hidden="true">3</span>Check out</h2>
+      <dl>
+        <dt>Borrower</dt><dd id="s-member">Nobody chosen yet</dd>
+        <dt>Tools</dt><dd id="s-tools">None added yet</dd>
+      </dl>
+      <label class="lbl" for="due">Due back on</label>
+      <input type="date" id="due">
+      <p class="hint">Starts one week out. Change it if the member asks for more or less time.</p>
+      <p class="why" id="why" aria-live="polite"></p>
+      <button class="btn primary big" id="lend-btn" aria-describedby="why">Lend tools</button>
+    </aside>
   </div>
 
-  <div id="panel-back" role="tabpanel" aria-labelledby="tab-back" class="hidden">
-    <section class="card" aria-labelledby="h-out">
-      <h2 id="h-out">Tools currently out</h2>
-      <label class="lbl" for="backQ">Search by tool, tag number or member</label>
-      <input type="search" id="backQ" autocomplete="off" placeholder="e.g. tile saw or Maya">
-      <ul id="loans" tabindex="-1"></ul>
+  <!-- RETURN -->
+  <div role="tabpanel" id="panel-return" aria-labelledby="tab-return" class="layout" hidden style="display:none">
+    <section class="card" style="grid-column:1/-1" aria-labelledby="h-ret">
+      <h2 id="h-ret" tabindex="-1">Tools that are out</h2>
+      <label class="lbl" for="ret-q">Search by tool or borrower</label>
+      <input type="search" id="ret-q" autocomplete="off" placeholder="e.g. sander or Dana">
+      <p class="hint">Overdue tools are listed first. Tick “Needs a repair check” if the tool came back damaged. It stays off the shelf until you put it back in the lending list.</p>
+      <ul class="list tall" id="ret-list" aria-label="Tools currently lent out"></ul>
+      <div id="ret-empty" class="empty" tabindex="-1" hidden></div>
     </section>
+  </div>
+</main>
+
+<div class="toast-wrap">
+  <div class="toast" id="toast" hidden>
+    <span id="toast-msg" role="status"></span>
+    <button type="button" id="toast-undo">Undo</button>
+    <button type="button" class="x" id="toast-close" aria-label="Dismiss message">Dismiss</button>
   </div>
 </div>
-
-<div class="bar" id="lendBar">
-  <div class="in">
-    <div class="why" id="why"></div>
-    <button class="btn" id="lendBtn" aria-describedby="why">Lend</button>
-  </div>
-</div>
-
-<div class="toast" id="toast" hidden>
-  <span id="toastMsg"></span>
-  <button id="undoBtn">Undo</button>
-  <button class="x" id="toastX" aria-label="Dismiss message">×</button>
-</div>
-<div id="status" role="status" aria-live="polite"></div>
 
 <script>
-(function(){
-  var $=function(id){return document.getElementById(id)};
-  var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
-  var DAY=864e5;
-  function iso(d){var m=d.getMonth()+1,x=d.getDate();return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(x<10?'0':'')+x}
-  function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
-  var today=new Date();today.setHours(0,0,0,0);
-  function plus(n){return iso(new Date(today.getTime()+n*DAY))}
-  function fmt(s){return parse(s).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})}
-  function daysLate(s){return Math.round((today-parse(s))/DAY)}
+(function () {
+  var DAY = 86400000;
+  function sod(d) { var x = new Date(d); x.setHours(0,0,0,0); return x; }
+  var today = sod(new Date());
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return sod(x); }
+  function fmt(d) { return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }); }
+  function iso(d) { var m = ('0'+(d.getMonth()+1)).slice(-2), dd = ('0'+d.getDate()).slice(-2); return d.getFullYear()+'-'+m+'-'+dd; }
+  function parseIso(s) { var p = s.split('-'); return p.length === 3 ? new Date(+p[0], +p[1]-1, +p[2]) : null; }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function $(id) { return document.getElementById(id); }
 
-  var members=[
-    {id:1,name:'Maya Okafor',num:'1042'},{id:2,name:'Tomás Rivera',num:'1007'},
-    {id:3,name:'Dee Whitaker',num:'1113'},{id:4,name:'Priya Nair',num:'1088'},
-    {id:5,name:'Jonas Lindqvist-Abernathy',num:'1130'},{id:6,name:'Ruth Eastman',num:'0991'}
+  var members = [
+    { id: 'm1', name: 'Maria Okonkwo', card: '1042' },
+    { id: 'm2', name: 'Dana Whitfield-Alvarado', card: '1017' },
+    { id: 'm3', name: 'Tom Nguyen', card: '1088' },
+    { id: 'm4', name: 'Priya Raman', card: '1103' },
+    { id: 'm5', name: 'Sam Eriksen', card: '1121' },
+    { id: 'm6', name: 'Lucille Barnes', card: '1006' }
   ];
-  var tools=[
-    {id:1,name:'Cordless drill',tag:'T-001',st:'in'},{id:2,name:'Extension ladder, 24 ft',tag:'T-004',st:'out'},
-    {id:3,name:'Wet tile saw',tag:'T-009',st:'out'},{id:4,name:'Orbital sander',tag:'T-012',st:'in'},
-    {id:5,name:'Pressure washer',tag:'T-014',st:'repair'},{id:6,name:'Post-hole digger',tag:'T-017',st:'in'},
-    {id:7,name:'Hedge trimmer',tag:'T-021',st:'in'},{id:8,name:'Socket set, metric and SAE',tag:'T-025',st:'in'},
-    {id:9,name:'Wheelbarrow',tag:'T-030',st:'out'},{id:10,name:'Circular saw',tag:'T-033',st:'in'}
+  var tools = [
+    { id: 't1',  name: 'Cordless drill/driver (18V)', tag: 'T-001', status: 'in' },
+    { id: 't2',  name: 'Circular saw', tag: 'T-002', status: 'in' },
+    { id: 't3',  name: 'Orbital sander', tag: 'T-003', status: 'out' },
+    { id: 't4',  name: 'Claw hammer', tag: 'T-004', status: 'in' },
+    { id: 't5',  name: 'Post hole digger', tag: 'T-005', status: 'out' },
+    { id: 't6',  name: 'Extension ladder (24 ft)', tag: 'T-006', status: 'out' },
+    { id: 't7',  name: 'Pipe wrench set', tag: 'T-007', status: 'in' },
+    { id: 't8',  name: 'Wet tile saw with stand and diamond blade, 10-inch', tag: 'T-008', status: 'out' },
+    { id: 't9',  name: 'Hedge trimmer', tag: 'T-009', status: 'repair' },
+    { id: 't10', name: 'Stud finder', tag: 'T-010', status: 'in' },
+    { id: 't11', name: 'Wheelbarrow', tag: 'T-011', status: 'in' },
+    { id: 't12', name: 'Caulking gun', tag: 'T-012', status: 'in' }
   ];
-  var loans=[
-    {id:1,tool:2,member:3,due:plus(-3)},
-    {id:2,tool:3,member:1,due:plus(2)},
-    {id:3,tool:9,member:6,due:plus(5)}
+  var loans = [
+    { tool: 't3', member: 'm2', due: addDays(today, -3) },
+    { tool: 't6', member: 'm3', due: addDays(today, -1) },
+    { tool: 't5', member: 'm4', due: addDays(today, 0) },
+    { tool: 't8', member: 'm1', due: addDays(today, 5) }
   ];
-  var nextLoan=10;
 
-  var S={tab:'lend',member:null,picked:{},mq:'',tq:'',bq:'',repair:{}};
-  $('today').textContent=today.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
-  $('due').value=plus(7);$('due').min=plus(0);
+  function byId(list, id) { for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; }
+  function loanOf(toolId) { for (var i = 0; i < loans.length; i++) if (loans[i].tool === toolId) return loans[i]; }
+  function overdueCount(mid) { return loans.filter(function (l) { return l.member === mid && l.due < today; }).length; }
 
-  function tool(id){return tools.filter(function(t){return t.id===id})[0]}
-  function member(id){return members.filter(function(m){return m.id===id})[0]}
-  function loanOf(tid){return loans.filter(function(l){return l.tool===tid})[0]}
-  function overdueCount(mid){return loans.filter(function(l){return l.member===mid&&daysLate(l.due)>0}).length}
-  function pickedIds(){return Object.keys(S.picked).filter(function(k){return S.picked[k]}).map(Number)}
-  function say(msg){$('status').textContent='';setTimeout(function(){$('status').textContent=msg},30)}
-  function match(q,arr){q=q.trim().toLowerCase();if(!q)return true;return arr.join(' ').toLowerCase().indexOf(q)>-1}
+  var state = { member: null, cart: [] };
+  $('today').textContent = 'Today is ' + today.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+  $('due').value = iso(addDays(today, 7));
+  $('due').min = iso(today);
 
-  /* ---- Lend ---- */
-  function renderMembers(){
-    var list=members.filter(function(m){return match(S.mq,[m.name,m.num])});
-    var h='';
-    list.forEach(function(m){
-      var sel=S.member===m.id,od=overdueCount(m.id);
-      h+='<li><div class="row'+(sel?' sel':'')+'"><button class="pick" data-m="'+m.id+'" aria-pressed="'+sel+'">'
-        +'<span class="main"><span class="name">'+esc(m.name)+'</span><br><span class="sub">Member '+m.num+'</span></span>'
-        +(od?'<span class="badge b-over">'+od+' overdue</span>':'')
-        +(sel?'<span class="badge b-ok">Selected</span>':'')
-        +'</button></div></li>';
+  /* ---------- Tabs ---------- */
+  var tabs = [$('tab-lend'), $('tab-return')], panels = [$('panel-lend'), $('panel-return')];
+  function showTab(i, focus) {
+    tabs.forEach(function (t, j) {
+      t.setAttribute('aria-selected', j === i ? 'true' : 'false');
+      t.tabIndex = j === i ? 0 : -1;
+      panels[j].hidden = j !== i;
+      panels[j].style.display = j === i ? '' : 'none';
     });
-    if(!list.length)h='<li class="empty"><strong>No member matches “'+esc(S.mq.trim())+'”</strong>Check the spelling or try the number on their card.<br><button class="btn ghost" data-clear="mq">Clear search</button></li>';
-    $('members').innerHTML=h;
-    var n='';
-    if(S.member&&overdueCount(S.member))n='<p class="notice"><strong>'+esc(member(S.member).name)+'</strong> still has '+overdueCount(S.member)+' overdue tool'+(overdueCount(S.member)>1?'s':'')+'. You can still lend, but ask about the return first.</p>';
-    $('memberNote').innerHTML=n;
+    if (focus) tabs[i].focus();
+    if (i === 1) renderReturns();
   }
-  function renderTools(){
-    var list=tools.filter(function(t){return match(S.tq,[t.name,t.tag])});
-    var h='';
-    list.forEach(function(t){
-      var l=loanOf(t.id);
-      if(t.st==='in'){
-        var on=!!S.picked[t.id];
-        h+='<li><div class="row'+(on?' sel':'')+'"><label class="pick"><input type="checkbox" data-t="'+t.id+'"'+(on?' checked':'')+'>'
-          +'<span class="main"><span class="name">'+esc(t.name)+'</span><br><span class="sub">'+t.tag+'</span></span>'
-          +'<span class="badge b-ok">On the shelf</span></label></div></li>';
-      }else{
-        var why=t.st==='repair'?'In the repair queue':'Out until '+fmt(l.due)+(daysLate(l.due)>0?' (overdue)':'');
-        h+='<li><div class="row na"><span class="main"><span class="name">'+esc(t.name)+'</span><br><span class="sub">'+t.tag+' · '+why+'</span></span>'
-          +'<span class="badge '+(t.st==='repair'?'b-fix':'b-out')+'">'+(t.st==='repair'?'Needs repair':'Not available')+'</span></div></li>';
-      }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { showTab(i); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); showTab((i + 1) % 2, true); }
     });
-    if(!list.length)h='<li class="empty"><strong>No tool matches “'+esc(S.tq.trim())+'”</strong>Try part of the name, or the tag number on the handle.<br><button class="btn ghost" data-clear="tq">Clear search</button></li>';
-    $('tools').innerHTML=h;
+  });
+
+  /* ---------- Toast with undo ---------- */
+  var toastTimer = null, undoFn = null;
+  function toast(msg, undo) {
+    clearTimeout(toastTimer);
+    undoFn = undo || null;
+    $('toast-msg').textContent = msg;
+    $('toast-undo').hidden = !undo;
+    $('toast').hidden = false;
+    toastTimer = setTimeout(hideToast, undo ? 10000 : 5000);
   }
-  function renderBar(){
-    var ids=pickedIds(),m=S.member?member(S.member):null,btn=$('lendBtn'),why=$('why');
-    if(S.tab!=='lend'){$('lendBar').classList.add('hidden');return}
-    $('lendBar').classList.remove('hidden');
-    if(!m&&!ids.length){btn.disabled=true;btn.textContent='Lend';why.textContent='Pick a member and at least one tool.'}
-    else if(!m){btn.disabled=true;btn.textContent='Lend';why.textContent='Pick who is borrowing. '+ids.length+' tool'+(ids.length>1?'s':'')+' chosen.'}
-    else if(!ids.length){btn.disabled=true;btn.textContent='Lend';why.textContent='Pick at least one tool for '+m.name+'.'}
-    else if(!$('due').value){btn.disabled=true;btn.textContent='Lend';why.textContent='Choose a due date.'}
-    else{btn.disabled=false;btn.textContent='Lend '+ids.length+' tool'+(ids.length>1?'s':'')+' to '+m.name.split(' ')[0];
-      why.textContent=ids.map(function(i){return tool(i).name}).join(', ')+' · due '+fmt($('due').value)}
+  function hideToast() { $('toast').hidden = true; undoFn = null; }
+  $('toast-close').addEventListener('click', hideToast);
+  $('toast-undo').addEventListener('click', function () { var f = undoFn; hideToast(); if (f) f(); });
+
+  /* ---------- Lend ---------- */
+  function renderMembers() {
+    var q = $('member-q').value.trim().toLowerCase();
+    var res = members.filter(function (m) { return !q || m.name.toLowerCase().indexOf(q) > -1 || m.card.indexOf(q) > -1; });
+    var ul = $('member-list');
+    if (!res.length) {
+      ul.innerHTML = '<li class="empty"><strong>No member matches “' + esc($('member-q').value.trim()) + '”</strong>Check the spelling or try the card number. If they’re new, sign them up first.<br><button class="btn link" type="button" data-clear="member-q">Clear search</button></li>';
+      return;
+    }
+    ul.innerHTML = res.map(function (m) {
+      var sel = state.member === m.id, od = overdueCount(m.id);
+      return '<li class="row' + (sel ? ' selected' : '') + '"><div class="grow"><div class="name">' + esc(m.name) + '</div><div class="meta">Card ' + esc(m.card) + '</div>' +
+        (od ? '<div class="notice">' + od + (od > 1 ? ' tools are' : ' tool is') + ' overdue for this member. Ask about returning ' + (od > 1 ? 'them' : 'it') + '.</div>' : '') +
+        '</div><button class="btn' + (sel ? ' primary' : '') + '" type="button" data-member="' + m.id + '" aria-pressed="' + sel + '" aria-label="' + (sel ? 'Selected borrower: ' : 'Choose ') + esc(m.name) + '">' + (sel ? 'Selected' : 'Choose') + '</button></li>';
+    }).join('');
   }
 
-  /* ---- Take back ---- */
-  function renderLoans(){
-    $('outCount').textContent='('+loans.length+' out)';
-    var list=loans.filter(function(l){var t=tool(l.tool),m=member(l.member);return match(S.bq,[t.name,t.tag,m.name,m.num])});
-    list.sort(function(a,b){return parse(a.due)-parse(b.due)});
-    var h='';
-    list.forEach(function(l){
-      var t=tool(l.tool),m=member(l.member),late=daysLate(l.due),od=late>0;
-      h+='<li><div class="row'+(od?' over':'')+'"><div class="main"><div class="name">'+esc(t.name)+' <span class="sub">'+t.tag+'</span></div>'
-        +'<div class="sub">'+esc(m.name)+' · due '+fmt(l.due)+'</div></div>'
-        +(od?'<span class="badge b-over">Overdue '+late+' day'+(late>1?'s':'')+'</span>':'<span class="badge b-out">'+(late===0?'Due today':'On loan')+'</span>')
-        +'<label class="chk"><input type="checkbox" data-r="'+l.id+'"'+(S.repair[l.id]?' checked':'')+'> Needs repair</label>'
-        +'<button class="btn" data-back="'+l.id+'" aria-label="Take back '+esc(t.name)+' from '+esc(m.name)+'">Take back</button></div></li>';
-    });
-    if(!loans.length)h='<li class="empty"><strong>Every tool is back on the shelf</strong>Nothing is out right now.<br><button class="btn ghost" data-tab="lend">Lend a tool</button></li>';
-    else if(!list.length)h='<li class="empty"><strong>Nothing out matches “'+esc(S.bq.trim())+'”</strong>The tool may already be back, or try the member’s name.<br><button class="btn ghost" data-clear="bq">Clear search</button></li>';
-    $('loans').innerHTML=h;
+  function toolStatusHtml(t) {
+    if (t.status === 'out') {
+      var l = loanOf(t.id), m = l && byId(members, l.member);
+      var late = l && l.due < today;
+      return '<span class="chip ' + (late ? 'overdue' : 'off') + '">' + (late ? 'Overdue' : 'Out') + '</span> <span class="meta">' + (l ? 'Due ' + fmt(l.due) + (m ? ' · ' + esc(m.name) : '') : '') + '</span>';
+    }
+    if (t.status === 'repair') return '<span class="chip off">In repair</span> <span class="meta">Not available to lend</span>';
+    return '<span class="chip ok">On shelf</span>';
+  }
+  function renderTools() {
+    var q = $('tool-q').value.trim().toLowerCase();
+    var res = tools.filter(function (t) { return !q || t.name.toLowerCase().indexOf(q) > -1 || t.tag.toLowerCase().indexOf(q) > -1; });
+    var ul = $('tool-list');
+    if (!res.length) {
+      ul.innerHTML = '<li class="empty"><strong>No tool matches “' + esc($('tool-q').value.trim()) + '”</strong>Try a shorter word, or the tag number on the tool.<br><button class="btn link" type="button" data-clear="tool-q">Clear search</button></li>';
+      return;
+    }
+    ul.innerHTML = res.map(function (t) {
+      var inCart = state.cart.indexOf(t.id) > -1, avail = t.status === 'in';
+      var btn = avail
+        ? '<button class="btn' + (inCart ? ' primary' : '') + '" type="button" data-tool="' + t.id + '" aria-pressed="' + inCart + '" aria-label="' + (inCart ? 'Remove ' : 'Add ') + esc(t.name) + (inCart ? ' from checkout' : ' to checkout') + '">' + (inCart ? 'Added ✓' : 'Add') + '</button>'
+        : '';
+      return '<li class="row' + (inCart ? ' selected' : '') + '"><div class="grow"><div class="name">' + esc(t.name) + '</div><div class="meta">' + esc(t.tag) + '</div><div>' + toolStatusHtml(t) + '</div></div>' + btn + '</li>';
+    }).join('');
   }
 
-  function renderAll(){renderMembers();renderTools();renderLoans();renderBar()}
+  function lendProblem() {
+    var due = parseIso($('due').value);
+    var needM = !state.member, needT = !state.cart.length;
+    if (needM && needT) return 'Choose who is borrowing and add at least one tool.';
+    if (needM) return 'Choose who is borrowing.';
+    if (needT) return 'Add at least one tool.';
+    if (!due || due < today) return 'Pick a due date that is today or later.';
+    return '';
+  }
+  function renderSummary() {
+    var m = state.member && byId(members, state.member);
+    $('s-member').textContent = m ? m.name + ' (card ' + m.card + ')' : 'Nobody chosen yet';
+    var box = $('s-tools');
+    if (!state.cart.length) { box.textContent = 'None added yet'; }
+    else {
+      box.innerHTML = '<ul>' + state.cart.map(function (id) {
+        var t = byId(tools, id);
+        return '<li>' + esc(t.name) + ' <button type="button" class="btn link rm" data-rm="' + id + '" aria-label="Remove ' + esc(t.name) + ' from checkout">Remove</button></li>';
+      }).join('') + '</ul>';
+    }
+    var p = lendProblem(), b = $('lend-btn');
+    $('why').textContent = p;
+    b.disabled = !!p;
+    var n = state.cart.length;
+    b.textContent = n && m ? 'Lend ' + n + (n > 1 ? ' tools' : ' tool') + ' to ' + m.name.split(' ')[0] : 'Lend tools';
+  }
+  function renderLend() { renderMembers(); renderTools(); renderSummary(); }
 
-  /* ---- Undo toast ---- */
-  var undoFn=null,timer=null;
-  function toast(msg,undo){
-    clearTimeout(timer);undoFn=undo;
-    $('toastMsg').textContent=msg;$('undoBtn').hidden=!undo;$('toast').hidden=false;say(msg);
-    timer=setTimeout(hideToast,10000);
-  }
-  function hideToast(){$('toast').hidden=true;undoFn=null}
-  $('toastX').onclick=hideToast;
-  $('undoBtn').onclick=function(){var f=undoFn;hideToast();if(f)f()};
+  function refocus(sel) { var el = document.querySelector(sel); if (el) el.focus(); }
 
-  /* ---- Actions ---- */
-  function doLend(){
-    var ids=pickedIds(),m=member(S.member),due=$('due').value,made=[];
-    ids.forEach(function(i){var l={id:nextLoan++,tool:i,member:m.id,due:due};loans.push(l);tool(i).st='out';made.push(l.id)});
-    var names=ids.length+' tool'+(ids.length>1?'s':'');
-    S.picked={};S.tq='';$('toolQ').value='';
-    renderAll();
-    toast('Lent '+names+' to '+m.name+', due '+fmt(due)+'.',function(){
-      loans=loans.filter(function(l){return made.indexOf(l.id)<0});
-      ids.forEach(function(i){tool(i).st='in'});
-      renderAll();say('Loan undone. '+names+' back on the shelf.');
-    });
-    $('memberQ').focus();
-  }
-  function doBack(id){
-    var l=loans.filter(function(x){return x.id===id})[0];if(!l)return;
-    var t=tool(l.tool),m=member(l.member),fix=!!S.repair[id];
-    loans=loans.filter(function(x){return x.id!==id});
-    t.st=fix?'repair':'in';delete S.repair[id];
-    renderAll();
-    toast(t.name+' taken back from '+m.name+(fix?' and set aside for repair.':'.'),function(){
-      loans.push(l);t.st='out';if(fix)S.repair[id]=true;renderAll();say(t.name+' is on loan to '+m.name+' again.');
-      var b=document.querySelector('[data-back="'+id+'"]');if(b)b.focus();
-    });
-    var nb=document.querySelector('[data-back]');(nb||$('backQ')).focus();
-  }
+  $('member-q').addEventListener('input', renderMembers);
+  $('tool-q').addEventListener('input', renderTools);
+  $('due').addEventListener('input', renderSummary);
 
-  /* ---- Events ---- */
-  function setTab(t,focus){
-    S.tab=t;
-    ['lend','back'].forEach(function(k){
-      var on=k===t;$('tab-'+k).setAttribute('aria-selected',on);$('tab-'+k).tabIndex=on?0:-1;
-      $('panel-'+k).classList.toggle('hidden',!on);
-    });
-    renderBar();if(focus)$('tab-'+t).focus();
-  }
-  $('tab-lend').onclick=function(){setTab('lend')};
-  $('tab-back').onclick=function(){setTab('back')};
-  document.querySelector('.tabs').addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight'||e.key==='ArrowLeft'||e.key==='Home'||e.key==='End'){
-      e.preventDefault();setTab(e.key==='ArrowLeft'||e.key==='Home'?'lend':'back',true);
+  $('panel-lend').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.member) {
+      state.member = state.member === b.dataset.member ? null : b.dataset.member;
+      renderLend(); refocus('[data-member="' + b.dataset.member + '"]');
+    } else if (b.dataset.tool) {
+      var i = state.cart.indexOf(b.dataset.tool);
+      if (i > -1) state.cart.splice(i, 1); else state.cart.push(b.dataset.tool);
+      renderLend(); refocus('[data-tool="' + b.dataset.tool + '"]');
+    } else if (b.dataset.rm) {
+      state.cart.splice(state.cart.indexOf(b.dataset.rm), 1);
+      renderLend(); $('tool-q').focus();
+    } else if (b.dataset.clear) {
+      $(b.dataset.clear).value = ''; renderLend(); $(b.dataset.clear).focus();
     }
   });
-  $('memberQ').oninput=function(){S.mq=this.value;renderMembers()};
-  $('toolQ').oninput=function(){S.tq=this.value;renderTools()};
-  $('backQ').oninput=function(){S.bq=this.value;renderLoans()};
-  $('due').oninput=renderBar;
-  $('lendBtn').onclick=function(){if(!this.disabled)doLend()};
 
-  document.addEventListener('click',function(e){
-    var b=e.target.closest('button');if(!b)return;
-    if(b.dataset.m){var id=+b.dataset.m;S.member=S.member===id?null:id;renderMembers();renderBar();
-      var again=document.querySelector('[data-m="'+id+'"]');if(again)again.focus()}
-    else if(b.dataset.back)doBack(+b.dataset.back);
-    else if(b.dataset.clear){var k=b.dataset.clear,inp={mq:'memberQ',tq:'toolQ',bq:'backQ'}[k];S[k]='';$(inp).value='';renderAll();$(inp).focus()}
-    else if(b.dataset.tab)setTab(b.dataset.tab,true);
-  });
-  document.addEventListener('change',function(e){
-    var i=e.target;
-    if(i.dataset.t){S.picked[i.dataset.t]=i.checked;renderTools();renderBar();
-      var again=document.querySelector('[data-t="'+i.dataset.t+'"]');if(again)again.focus()}
-    else if(i.dataset.r)S.repair[i.dataset.r]=i.checked;
+  $('lend-btn').addEventListener('click', function () {
+    if (lendProblem()) return;
+    var m = byId(members, state.member), due = parseIso($('due').value), ids = state.cart.slice();
+    ids.forEach(function (id) { byId(tools, id).status = 'out'; loans.push({ tool: id, member: m.id, due: due }); });
+    state.member = null; state.cart = [];
+    $('due').value = iso(addDays(today, 7));
+    $('member-q').value = ''; $('tool-q').value = '';
+    renderLend(); updateCount();
+    toast('Lent ' + ids.length + (ids.length > 1 ? ' tools' : ' tool') + ' to ' + m.name + '. Due back ' + fmt(due) + '.', function () {
+      loans = loans.filter(function (l) { return !(ids.indexOf(l.tool) > -1 && l.member === m.id); });
+      ids.forEach(function (id) { byId(tools, id).status = 'in'; });
+      renderLend(); updateCount(); renderReturns();
+      toast('Checkout undone. The tools are back on the shelf.');
+    });
+    $('member-q').focus();
   });
 
-  renderAll();
+  /* ---------- Return ---------- */
+  function updateCount() { $('out-count').textContent = '(' + loans.length + ')'; }
+  function dueChip(l) {
+    var diff = Math.round((l.due - today) / DAY);
+    if (diff < 0) return '<span class="chip overdue">Overdue by ' + (-diff) + (diff === -1 ? ' day' : ' days') + '</span>';
+    if (diff === 0) return '<span class="chip soon">Due today</span>';
+    return '<span class="chip ok">Due ' + fmt(l.due) + '</span>';
+  }
+  function renderReturns() {
+    var q = $('ret-q').value.trim().toLowerCase();
+    var rows = loans.filter(function (l) {
+      var t = byId(tools, l.tool), m = byId(members, l.member);
+      return !q || t.name.toLowerCase().indexOf(q) > -1 || t.tag.toLowerCase().indexOf(q) > -1 || m.name.toLowerCase().indexOf(q) > -1;
+    }).sort(function (a, b) { return a.due - b.due; });
+    var ul = $('ret-list'), em = $('ret-empty');
+    if (!rows.length) {
+      ul.innerHTML = ''; em.hidden = false;
+      em.innerHTML = loans.length
+        ? '<strong>Nothing out matches “' + esc($('ret-q').value.trim()) + '”</strong>Try the borrower’s first name or part of the tool name.<br><button class="btn link" type="button" data-clear="ret-q">Clear search</button>'
+        : '<strong>Every tool is on the shelf</strong>Nothing is out right now. Lent tools will show up here.';
+      return;
+    }
+    em.hidden = true;
+    ul.innerHTML = rows.map(function (l) {
+      var t = byId(tools, l.tool), m = byId(members, l.member);
+      return '<li class="row"><div class="grow"><div class="name">' + esc(t.name) + ' <span class="meta">' + esc(t.tag) + '</span></div>' +
+        '<div class="meta">Borrowed by ' + esc(m.name) + ' (card ' + esc(m.card) + ')</div><div>' + dueChip(l) + '</div></div>' +
+        '<label class="check"><input type="checkbox" data-damaged="' + t.id + '"> Needs a repair check</label>' +
+        '<button class="btn primary" type="button" data-return="' + t.id + '" aria-label="Take back ' + esc(t.name) + ' from ' + esc(m.name) + '">Take back</button></li>';
+    }).join('');
+  }
+  $('ret-q').addEventListener('input', renderReturns);
+  $('panel-return').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.clear) { $('ret-q').value = ''; renderReturns(); $('ret-q').focus(); return; }
+    if (!b.dataset.return) return;
+    var id = b.dataset.return, t = byId(tools, id), l = loanOf(id), m = byId(members, l.member);
+    var cb = document.querySelector('[data-damaged="' + id + '"]'), dmg = cb && cb.checked;
+    var btns = Array.prototype.slice.call(document.querySelectorAll('[data-return]')), idx = btns.indexOf(b);
+    var late = l.due < today;
+    loans = loans.filter(function (x) { return x !== l; });
+    t.status = dmg ? 'repair' : 'in';
+    updateCount(); renderReturns(); renderLend();
+    var next = document.querySelectorAll('[data-return]');
+    if (next.length) next[Math.min(idx, next.length - 1)].focus(); else { var em = $('ret-empty'); em.focus(); }
+    toast(t.name + ' is back from ' + m.name + (dmg ? ' and set aside for a repair check.' : '.') + (late ? ' It was overdue.' : ''), function () {
+      t.status = 'out'; loans.push(l);
+      updateCount(); renderReturns(); renderLend();
+      toast('Return undone. ' + t.name + ' is out with ' + m.name + ' again.');
+    });
+  });
+
+  updateCount(); renderLend(); showTab(0);
 })();
 </script>
 </body>

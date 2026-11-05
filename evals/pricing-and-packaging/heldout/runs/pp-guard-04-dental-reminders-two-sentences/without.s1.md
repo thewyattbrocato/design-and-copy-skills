@@ -1,0 +1,1 @@
+No, $49/month is cheap for that volume. At 40 patients a day (~800+ appointments a month), it works out to about 6 cents per appointment, and preventing even one or two no-shows a month (each worth $100–$300+ in lost chair time) would pay for it. Just check that it includes two-way confirmations, practice-management integration, and that SMS volume isn't capped or billed extra.

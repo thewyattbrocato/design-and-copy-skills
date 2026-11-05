@@ -1,20 +1,18 @@
-**Ventana emergente (al terminar el pedido)**
+**Ventana emergente (tras confirmar el pedido)**
 
-**Título:** ¿Quieres recibir el pan del fin de semana?
+**Título:** ¿Quieres recibir el pan del fin de semana en tu correo?
 
 **Texto:**
-Cada semana te mandamos un correo con el pan del fin de semana y las promociones de Horno Cantarana. Solo eso, nada más. Puedes darte de baja cuando quieras desde cualquier correo.
+Cada semana te mandamos un correo con el pan del fin de semana y nuestras promociones. Solo eso. Puedes darte de baja cuando quieras desde un enlace en cualquier correo.
 
-**Campo:** Tu correo: [ ______________ ]
+**Campo:** Tu correo: [ __________ ]
 
 **Botones (mismo tamaño y peso visual):**
-[ Sí, quiero recibirlo ]  [ No, gracias ]
+[ Sí, apuntarme al boletín ]  [ No, gracias ]
 
-**Pie, en letra pequeña:** Usaremos tu correo solo para este boletín. [Enlace a la política de privacidad]
+**Letra pequeña:** Usaremos tu correo solo para enviarte este boletín semanal. [Enlace a la política de privacidad]
 
 ---
 
-Notas:
-- Si ya tienes el correo del cliente por el pedido, puedes rellenar el campo con él, pero la casilla o el botón de "Sí" debe pulsarlo la persona. No lo marques tú por defecto.
-- Para ver si el mensaje funciona, mira cuántos se dan de baja en las primeras semanas. Si es alto, la gente se apuntó sin tener claro qué recibía.
-- Las normas sobre consentimiento para correos comerciales varían según el país y cambian con el tiempo. Haz que te lo revisen, por ejemplo con la ley de protección de datos que te corresponda.
+- Si ya tienes el correo del cliente por el pedido, rellénalo en el campo, pero deja que la persona lo confirme con un clic. No la apuntes sin que pulse "Sí". La casilla o el botón de aceptar no deben venir marcados de antemano.
+- Las normas sobre consentimiento para correos comerciales (por ejemplo RGPD y LSSI en España) cambian según el lugar y la fecha. Haz que las revise alguien antes de publicar. Como indicador de que funciona bien, mira las bajas del boletín junto con las altas.

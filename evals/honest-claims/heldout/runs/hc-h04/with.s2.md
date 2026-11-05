@@ -1,28 +1,30 @@
-**Subject:** Fall wheel-throwing at Kiln & Kettle: half the seats are taken
+**Subject:** Half the seats are gone: beginner wheel-throwing starts Tuesday
 
-**Preview text:** 6 weeks, Tuesday evenings, starting Nov 3. Clay and firing included.
+**Preview text:** 6 weeks, Tuesday evenings, clay and firing included.
 
-Hi [First name],
+Hi [first name],
 
-Our beginner wheel-throwing class is back this fall, and it's already about half full.
+Our fall beginner wheel-throwing class starts **Tuesday, November 3**, and we're about half full.
 
-You'll spend six Tuesday evenings at the wheel, learning to center clay, pull up walls, and shape bowls and mugs you'll be proud to use. No experience needed.
+Classes are capped at 12 people so everyone gets real time at the wheel and hands-on help. With the start date less than a week away, the remaining spots won't last long.
 
 **The details**
-- **Starts:** Tuesday, November 3
-- **Schedule:** Tuesday evenings for 6 weeks
-- **Price:** $240, with clay and firing included
-- **Class size:** Up to 12 people, so everyone gets real time with the instructor
+- 6 weeks of Tuesday evenings, starting November 3 [class time]
+- Beginner-friendly. No experience needed.
+- $240, with clay and firing included
+- Maximum 12 students
 
-Class size is capped at 12, and we're about half full. Once those seats are gone, the next chance to join is a later session.
+By the end, you'll have thrown, trimmed, glazed, and fired your own pieces to take home.
 
-[Reserve your seat →]
+**[Reserve your spot →]([signup link])**
 
-Come make something with us.
+If you've been meaning to try the wheel, this is a good time to start. Come make a mess with us.
 
+See you at the studio,
 [Your name]
 Kiln & Kettle
 
-*Notes:*
-- I left out the price increase because it isn't real, and a made-up deadline can cost you trust and refunds. "Last 3 seats" would also be inaccurate. A 12-person cap that's about half full means roughly 6 open, so I used "half the seats are taken." If you can give me the exact count, I'll swap it in, for example "6 seats left."
-- If you want a real clock, try an actual early-bird price with a firm end date, or a registration deadline tied to ordering clay. I can rewrite the email around either one.
+---
+
+- I didn't use "Last 3 seats!" or the $290 price increase. At 12 max and about half full, there are roughly 6 seats left, and no price change is planned. A false deadline in an email to your own list can cost you trust and may draw complaints. The urgency in the draft is real: a firm Nov 3 start, a 12-person cap, and half the seats taken. If you'd like a real cutoff, such as "registration closes Sunday," tell me and I'll add it. Once you know the exact number of open seats, put it in the subject line, for example "6 seats left."
+- Fill in the class time, signup link, and your name. I wrote "thrown, trimmed, glazed, and fired" from what a typical beginner course covers, so adjust it to match your actual curriculum.

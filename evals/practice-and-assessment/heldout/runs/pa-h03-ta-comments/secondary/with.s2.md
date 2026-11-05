@@ -1,36 +1,35 @@
-## What's wrong with them
+## What's wrong with each comment
 
-1. **"Good job!"** is praise with no information. It doesn't say what worked, and it hides the one real improvement the student could make. The SELECT * and the 3x slowdown are the useful part of the feedback, and they're missing.
+**1. "Good job!"** gives the student no information. It doesn't say what was good, and it leaves out the two things they should change: `SELECT *` and the subquery that runs three times slower than the join. The student can't tell whether to fix anything, and the performance point, which is the most instructive part of the submission, is lost.
 
-2. **"Your query is wrong. See the solution."** says there's a problem but not what it is. The student can't tell whether the issue is the join, the filter, or the output. "See the solution" ends the learning: the student copies the answer and doesn't learn why INNER JOIN drops customers with no orders.
+**2. "Your query is wrong. See the solution."** doesn't say what is wrong. It sends the student to the answer, which skips the lesson, and the lesson is the point of this exercise: INNER JOIN drops customers with no matching orders. A useful comment names that mechanism and gives a hint that leads the student to the fix.
 
-3. **"Great effort. Needs improvement on joins. 6/10"** has three problems. "Great effort" is vague praise. "Needs improvement on joins" is wrong about this submission, since the joins return the correct result. The score has no stated basis, so the student can't tell what cost points. The actual issue, unreadable aliases and column names, is never named.
-
-Across all three, the comments describe the grade or the verdict but not the specific thing in the query, and they don't tell the student what to do next.
+**3. "Great effort. Needs improvement on joins. 6/10"** names the wrong problem. The join is correct. The real issues are the `a`/`b` aliases and the unclear output column names. "Great effort" is filler, and the score has no stated basis, so the student can't tell why they got a 6 for work that was correct. If the rubric does deduct for readability, the comment should say so.
 
 ## Rewrites
 
 **1.**
-> Your query returns the right rows, so the logic is sound. Two things to tighten:
+> Your query returns the right rows, and the logic is sound. Two things to work on:
 >
-> - `SELECT *` pulls every column. List only the ones you need so the next reader knows what the query produces.
-> - The subquery works, but a JOIN does the same job here and runs about 3x faster on the sample data. Rewrite it as a join against the same tables and compare the timings. Knowing why one approach is faster is worth building.
+> - `SELECT *` pulls every column, including ones you don't use. Name the columns you need. It makes the query easier to read and keeps it from breaking if the table changes.
+> - The subquery works, but on the sample data the join version ran about three times faster. Rewrite it as a join and time both. Then think about why the join might be faster here: a correlated subquery can end up doing work once per row.
 
 **2.**
-> This doesn't meet the requirement. The exercise asks for every customer, including those with no orders. An INNER JOIN keeps only rows that match on both sides, so customers with zero orders drop out of the result.
->
-> Look at what a LEFT JOIN does with unmatched rows, and at how `COUNT(*)` differs from `COUNT(o.order_id)` when the joined side is NULL. Then check your output: is the zero-order customer there, and what does their count show? If the join direction is still unclear after that, come to office hours and we'll work through it together.
+> Your query runs, but the result is missing customers who have never placed an order. Check your output for a customer you know has no orders. They won't appear. Think about why: INNER JOIN keeps only rows that match on both sides. Which join type keeps every row from the left table even when there's no match? Once you've changed that, look at what `COUNT` is counting for those customers. Ask me if you want to talk it through.
 
 **3.**
-> Your query returns the correct result and the structure is clean. The main thing to fix is readability:
+> Your query returns the correct rows, and the join conditions are right. The thing to improve is readability:
 >
-> - Aliases `a` and `b` make it hard to tell which table each column comes from. Use short names that mean something, like `c` for customers and `o` for orders.
-> - Give output columns names that describe them. A column called `count` or left unaliased tells the reader nothing; `order_count` does.
+> - Aliases like `a` and `b` make it hard to tell which table is which. Use short names that mean something, like `c` for customers and `o` for orders.
+> - Give your output columns clear names with `AS`, such as `order_count` instead of `cnt`, so the result makes sense without the query next to it.
 >
-> I deducted points for readability, so that's where to focus on the next pass. [If there's a rubric line for this, cite it here. If there isn't, don't include a score.]
+> Score: 6/10. The result is correct, so the deduction is for readability (aliases and column names). If the rubric doesn't include readability, the score should be revisited.
 
-The third one shows the pattern to keep. Only give a score if you can point to the criterion behind it. A number without a stated basis reads as arbitrary, and students will assume it is.
+## Principles these follow
 
-## The pattern
+- **Say what's right, what's wrong, and what to do next.** Praise should name the specific thing that was done well.
+- **Diagnose the actual issue.** A comment should point at the problem that matters most in the submission, not a general area.
+- **Give a hint, not the answer.** Name the concept (here, join types and how `COUNT` treats NULLs) and ask a question that leads to the fix.
+- **Tie scores to criteria.** A number with no stated reason is not useful feedback.
 
-Each good TA comment does four things: it says what the student did right, names the specific line or behavior that needs changing, explains why it matters (correctness, speed, or readability), and gives a next step that doesn't hand over the answer. If you want, I can draft a short checklist of these for the TAs or review a few more comments from this week.
+One caveat: I don't have your rubric, so the 6/10 in #3 may reflect criteria I can't see. If it doesn't, the score and the comment should be reconciled.

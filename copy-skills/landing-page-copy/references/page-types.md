@@ -46,4 +46,4 @@ The reader asks "can I trust these people with this?". Say what you do and for w
 
 ## Case study
 
-One customer, told as a story with their words. Order: who they are and what they needed, what they tried before, what changed, the result with how it was measured, what it took to get there, an ask aimed at readers in the same position. Use only details and quotes the user supplied; otherwise leave placeholders.
+One customer, told as a story with their words. Order: who they are and what they needed, what they tried before, what changed, the result with how it was measured, what it took to get there, an ask aimed at readers in the same position. Use only details and quotes the user supplied; otherwise leave placeholders. Hero, setback, shorter versions and thin notes: customer-stories.md.

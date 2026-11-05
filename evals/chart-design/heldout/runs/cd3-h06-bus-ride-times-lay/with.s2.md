@@ -1,39 +1,28 @@
-**Show one simple bar chart of ride times, with a plain-words headline. But first check that ride time answers the complaint.** Ride time isn't lateness. A 28-minute ride is only late if the schedule says 22. You need the scheduled ride time, or better, arrival time against the bell, before you can say whether the bus is "late." Until then, the honest claim is about how long rides take and how much they vary.
+**Show a simple bar chart of how long the trips took, with the "long" trips highlighted. Put the headline number in the caption.**
 
-**What to show**
+**One problem first.** Your data is ride time, not lateness. You can't show that the bus is "late" unless you compare it to the scheduled ride time or arrival time. Look up the scheduled ride time for Route 14. If you have actual on-time arrivals, use those instead, because they answer the parents' question directly. I've left a placeholder below instead of guessing.
 
-- **Bars:** vertical bars, one per ride-time range, starting at zero. Merge the last three ranges into "35+", which is 21 trips.
-- **Bar labels:** label each bar directly with its share of trips, not a count. Parents read "37%" faster than "140", and no y-axis is needed.
+**The chart**
+- One bar per 5-minute group, in order from shortest to longest: 10–14, 15–19, and so on up to "45+".
+- The bars start at zero. Use plain labels such as "20–24 min".
+- Put the share of trips on each bar, so parents don't need the axis. The shares are 5%, 24%, 37%, 19%, 10%, 3%, 1% and 1%. They add up to 100%.
+- Color the bars gray, except for the trips longer than the cutoff, which get one accent color. Set the cutoff at the scheduled ride time, or at 30 minutes if you don't have one. Label that group directly on the chart, for example "16% took 30+ min".
+- Draw the "45+" bar the same width as the others and label it "45 or more". Don't stretch it.
+- Leave out gridlines, a legend, a 3D effect and a pie chart. The y-axis can be dropped entirely, since the bars carry their own labels.
 
-| Ride time (min) | Share of trips |
-|---|---|
-| 10–14 | 5% |
-| 15–19 | 24% |
-| 20–24 | 37% |
-| 25–29 | 19% |
-| 30–34 | 10% |
-| 35+ | 6% |
+**What the numbers say**
+- The typical trip is 20–24 minutes. The middle trip, number 190 of 380, falls in that group.
+- 66% of trips (250 of 380) took under 25 minutes.
+- 16% (59 trips) took 30 minutes or more.
+- About 2% (9 trips) took 40 minutes or more.
 
-- **Color:** make all bars one muted gray-blue. Use a single accent color on the bars that carry your message, and don't use red and green.
-- **Scheduled time:** if you have it, add one vertical line labeled "Scheduled: [X] min". That line is what turns "ride time" into "late or not."
-- **Axis label:** label the horizontal axis "Minutes on the bus, one way" and skip gridlines.
+**Title (states the finding):** "Most Route 14 morning trips take 20–24 minutes. About 1 in 6 takes 30 or more."
 
-**Headline (states the finding)**
-"Most Route 14 morning rides take 15 to 30 minutes"
+**Caption draft:**
+> Ride time for all 380 Route 14 morning trips last term. Two in three trips took under 25 minutes; 59 trips (16%) took 30 minutes or longer. The scheduled ride time is [X minutes]. [Y]% of trips ran longer than that. Source: [district name] trip records, [term/dates].
 
-**Caption**
-"Ride time for all 380 morning Route 14 trips last term. The typical ride took 20–24 minutes, and about 8 in 10 trips took 15–29 minutes. About 1 in 6 trips took 30 minutes or longer, and about 1 in 18 took 35 or more. The scheduled ride time is [X] minutes."
+Fill in the bracketed parts only with real numbers. If most trips fall within the schedule, say so plainly. If many don't, the highlighted bars will show it without any extra wording.
 
-Those figures come straight from your counts:
-- 15–29 minutes: 303 of 380 trips, which is 80%.
-- 30 or more: 59 trips, which is 16%.
-- 35 or more: 21 trips, which is 6%.
-- The typical ride is the middle trip when all 380 are lined up by time. It falls in the 20–24 range.
+**Accessibility and layout:** Add a one-line text version of the takeaway. If space allows, add a small table of the eight counts for anyone who wants exact numbers. A wide, short chart works best in a newsletter column.
 
-**Wording cautions**
-
-- **Don't write "the bus is rarely late"** unless the schedule comparison supports it. The 1-in-6 long rides may be what parents are noticing. Stating that number openly will build more trust than glossing over it.
-- **Skip "average" and "statistically."** "Typical" and "8 in 10" are plain enough.
-- **Fill in the bracket before printing.** Once you have the scheduled time, add one sentence, such as "X% of trips ran longer than scheduled." That sentence answers the complaint directly, so make it the headline if the number supports it.
-
-If you send me the scheduled time (or arrival and bell times), I can recompute the headline figures and draft the chart as an image or SVG.
+I haven't built the chart. If you want it as an SVG or image, tell me the scheduled ride time or cutoff and I'll produce it.

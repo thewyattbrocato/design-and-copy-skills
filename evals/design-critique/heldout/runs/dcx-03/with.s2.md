@@ -1,45 +1,37 @@
-**Not yet.** The structure is fine, but the content is generic app-template filler. Nothing in it says "seed library", and "$0.00" contradicts how a lending library works. A developer would build a generic marketplace home. I judged this as a content and structure spec with no visuals, assuming the audience is neighbors who borrow and donate seeds.
+**Not ready to hand over.** The structure is fine, but the content reads as a generic app template, not Seedlend. A developer can't tell which strings are final and which are placeholders. I checked this as a content-and-structure wireframe, so I haven't judged visuals, contrast, or tap-target sizes.
 
-**Findings, in fix order**
+**Findings, most serious first**
 
-1. **Blocker: the content isn't about seeds.**
-   - "Welcome to Seedlend! Discover, connect and grow" and "Item Title / Short description" could belong to any app.
-   - A newcomer can't tell what Seedlend offers or what to do first.
-   - Fix: say the offer concretely, e.g. "Borrow seeds from the cupboard at [Hall name]. Bring some back after harvest." Name the real card fields too: seed variety, quantity available, and a "saved/grown by" note.
+1. **Blocker: the spec doesn't say what's a placeholder.** "Item Title", "Short description goes here.", "$0.00", "User Name" and "user@example.com" are dummy text. "Welcome to Seedlend!" and "Discover, connect and grow with our community." are real-looking copy but could belong to any app. Mark each string as final, placeholder, or dynamic, and say which field it binds to. Otherwise the developer may ship the dummy strings.
 
-2. **Blocker: "$0.00" on every card.**
-   - A price on a free, shared library reads as a store, or as a bug.
-   - Fix: replace it with availability, such as "12 packets left", "Low", or "Out". That's what a neighbor needs before walking to the hall.
+2. **Blocker: "$0.00" contradicts a shared seed library.** A neighbor-run lending cupboard has no prices. The card should show what a borrower needs: seed name, variety, quantity left, and whether it's available or borrowed. Replace the price slot with an availability line like "12 packets · In the cupboard". If some items are traded or donated, name that instead.
 
-3. **Major: the primary action is undefined.**
-   - "Explore" and "Get Started" are vague, and neither says where it goes.
-   - Both could do the same thing, and there are two competing calls to action in one viewport.
-   - Fix: state each destination in the spec. The Explore button should be e.g. "Browse seeds" → Search/catalog. The empty state should name the first real action, e.g. "Borrow your first packet" → Search, or "Donate seeds" → Add.
+3. **Major: nothing on the screen is specific to the cupboard.** The hero doesn't say what the app is for. Someone opening it can't tell it's about borrowing seeds from the community hall. The screen also doesn't say:
+   - what "Featured" means (new arrivals, seasonal, most borrowed?) or who picks it;
+   - what's currently out on loan;
+   - when the cupboard is open.
 
-4. **Major: the profile row is in the wrong place.**
-   - The Profile tab already exists, so the row duplicates it.
-   - A name and email block at the bottom of Home takes space and shows personal data to anyone glancing at the screen.
-   - Fix: remove it, or move it to the Profile tab. If you keep it, say what tapping it does.
+   Put the offer in the hero, for example "Borrow seeds from the community hall cupboard. Save some back at harvest." Add one line for hours or location.
 
-5. **Major: the empty state doesn't reflect the library.**
-   - "Nothing to see here yet" says nothing.
-   - The Activity section should say what will appear there: borrowed packets, return reminders, messages, donations.
-   - Fix: "Seeds you borrow or donate show up here." Also spec the non-empty state, which a developer needs, e.g. "Due back by Nov 3" or "Your tomatoes were requested".
+4. **Major: the buttons don't say where they go.** "Explore" and "Get Started" are two generic calls to action on one screen, with no destinations. "Get Started" with "Nothing to see here yet" doesn't say what it starts. Name each destination and use specific labels, such as "Browse seeds" for Explore and "Borrow your first packet" for Get Started. If both go to the same place, drop one.
 
-6. **Moderate: the "Add" tab is ambiguous.**
-   - It could mean donating seeds or logging a return, and the spec doesn't say which.
-   - There's no hours, location or "is the cupboard open?" information, which is probably the thing people most need from a cupboard-based library.
-   - Fix: label the tab for its job ("Donate" or "Return"). Consider a small status line on Home with the hall location and hours.
+5. **Major: the profile appears twice.** There's a profile row (avatar, name, email) and a Profile tab. The row also leaves it unclear whether it sits above or below the tab bar. Remove the row and put name and email inside the Profile screen. That also keeps an email address off the home screen, which is a privacy plus on a shared device.
 
-7. **Minor: missing details a developer will ask about.**
-   - The gear icon has no destination. Put "Settings" in the spec, since it needs an accessible label.
-   - The Featured cards don't say whether they're tappable, how they're chosen (newest, low stock, seasonal), or what happens with fewer than 3 items or while loading.
-   - The image placeholder needs a fallback for seeds with no photo.
-   - Add a "See all" link on the Featured section.
+6. **Moderate: "Your Activity" has an empty state but nothing else.** Specify what populated looks like: borrowed seeds with a return-by date, pending requests, and unread messages. Also specify who sees the empty state, since a returning user with no loans sees it too. "Nothing to see here yet" should say what will appear, for example "Seeds you borrow or share will show up here."
 
-**What to keep**
-- The short hierarchy: one hero, one browse section, one personal section. It's easy to build and to scan.
-- Putting personal activity on Home. It's the right place for return reminders.
-- Five tabs with plain labels. That's within the usual limit and easy to learn.
+7. **Moderate: the interactions around the screen aren't defined.**
+   - Where the gear icon goes.
+   - Whether the Featured cards are tappable and open an item detail.
+   - Whether Featured has a "See all" link.
+   - What the screen shows while loading, or if fewer than three items exist.
+   - What "Add" means: donating seeds or logging a return?
 
-**Not checked:** contrast, tap-target sizes and type, since there's no visual design yet. Real copy and the tab destinations would settle most of the above.
+8. **Minor: the title bar says "Home" and the Home tab says "Home".** This is taste. Using "Seedlend" or the library name in the title bar would give you branding for free.
+
+**What works and should stay**
+- **Screen order:** the order of hero, featured items, then personal activity moves from general to personal, which suits a returning user.
+- **Tab bar:** five tabs is within the usual limit, and Search, Add and Messages cover what a lending community needs.
+- **Empty state:** you've specified one at all, which is often forgotten.
+- **Three Featured cards:** a fixed count keeps the layout simple to build.
+
+**Fix order:** 1 and 2 first (a short string table and a corrected card schema), then 3 and 4 (real copy and destinations), then 5 through 7.

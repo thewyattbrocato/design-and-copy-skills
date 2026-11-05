@@ -1,32 +1,43 @@
-**Assumption:** the notice is read standing, from about 1–2 m, and zoomed in on a phone. I haven't checked any specific fonts against your files.
+**Assumptions:** the notice is A3 portrait and the fonts are open-licence. Check the licence for print and PDF embedding, and check that every glyph in your copy renders.
 
-**Fonts**
-- Use one matched pair from the Noto family: **Noto Sans** for English and **Noto Sans Devanagari** for Hindi. Both are open-licence, have real bold weights, and share stroke weight and proportions, so the two scripts look like one voice. **Mukta** and **Hind** are alternatives that were designed to carry both scripts. Check the licence terms for PDF embedding with the foundry.
-- Don't use a Latin display face for the English and a separate Hindi face beside it. Don't let a Latin font supply Devanagari glyphs either, because a mismatched substitute will appear.
-- **Embed and subset the fonts** in the PDF and keep the text as live text. That keeps it sharp, searchable and readable by screen readers.
+## Typefaces
 
-**What gets bigger**
-Route numbers, then the stop names and times. Everything else is context. Starting sizes at A3:
+- **Use one superfamily that covers both scripts.** Choose for Devanagari first, then match the Latin to it. Noto Sans plus Noto Sans Devanagari is designed as a matched set. Mukta is a single family with both scripts. Either gives you real weights and avoids a mismatched fallback.
+- **Use sturdy weights.** Regular, Medium or SemiBold, and Bold. Avoid Light, because thin Devanagari strokes and the headline bar (shirorekha) break up at small sizes and on phone screens.
+- **Don't add a second family.** The hierarchy comes from size and weight.
+- **Embed the fonts in the PDF.** Otherwise a phone may substitute a Devanagari font that doesn't match.
 
-| Role | English | Hindi |
-|---|---|---|
-| Route numbers (in a badge) | 150–250 pt bold | same, shared |
-| Headline ("Route change") | 60–72 pt | 66–80 pt |
-| Stop names and times | 30–36 pt | 34–40 pt |
-| Dates, notes | 22–26 pt | 25–29 pt |
-| Smallest text (contact, fine print) | 18 pt | 20 pt |
+## What gets bigger
 
-**The two scripts**
-- **Size Hindi up by about 10–15%.** At the same point size Devanagari looks smaller, so match them by eye.
-- **Give Hindi more line height.** Use about 1.5–1.6, against about 1.3 for English, so the tall marks above and below don't collide.
-- **Use bold for emphasis in both scripts.** Devanagari has no true italic or capitals, so never slant it or use all-caps. Faux italics are a common mistake.
-- **Use the same layout for both.** Put Hindi and English in matching blocks, side by side or stacked, with the same hierarchy. Don't mix scripts within a line, except for stop names that are already printed in both.
-- **Use Western digits (0–9) for route numbers and times.** Use tabular figures so the times line up in columns. Make the same choice for both languages and apply it everywhere.
-- **Don't squeeze Hindi into a narrow column.** It runs about 10–30% longer than English, so plan the space for it first.
+Rank by what a rider needs at a glance. These are starting sizes for A3, so test them on a print proof.
 
-**Print and phone**
-- A3 text is tiny on a phone. The page shrinks to about a quarter of its size, so 30 pt becomes roughly 7 pt. Scaling the poster down won't make it readable.
-- I'd make a **second layout for phones**: a single column in the same fonts, with the route number, stops and times large enough to read without zooming. Export it as its own PDF.
-- If you must ship one file, keep the table text at 30 pt or more and avoid multi-column layouts. Set the document language tags to `en` and `hi`.
+| Element | Starting size |
+|---|---|
+| Route numbers | Largest, about 120 pt or more, in a solid block |
+| Title ("Route change" in both languages) | 60–72 pt Bold |
+| Stop names | 28–36 pt, Medium |
+| New times | 28–36 pt, Bold, tabular figures so columns align |
+| Explanatory text and dates | 20–24 pt |
+| Fine print (helpline, website) | Not below 16–18 pt |
 
-Before you send it, print one page at A3 and view the PDF on an actual phone. Check that the Hindi is readable at both sizes and that no fallback font crept in.
+The route number is the same in both languages, so show it once.
+
+## Handling the two scripts
+
+- **Match apparent size, not point size.** Devanagari usually looks smaller than Latin at the same point size. Set it about 10–15% larger, and compare by eye.
+- **Give Hindi more line height.** Use about 1.5–1.6 for Hindi and about 1.3 for English. Matras above and below the line need the room. Clipped marks are the usual failure.
+- **Pair the languages line by line.** Put the Hindi and English stop name together, one above the other. Don't make two full columns that repeat the whole table. Print each time once.
+- **Pick one order.** Put the language most of your riders read first, and keep that order everywhere.
+- **Tell the scripts apart by script alone.** Use the same weight and colour for both.
+- **Don't italicise, track out or capitalise Hindi.** Devanagari has no italic or case tradition. Letter-spacing breaks the joined headline bar and the conjuncts. Use weight for emphasis.
+- **Choose one digit style.** Western digits (0–9) for route numbers and times is common on Indian transit signage. Use them throughout, and confirm against your agency's convention.
+- **Set the `lang` attribute** (`hi` and `en`) if the PDF is generated from HTML or tagged, so glyph variants and fallbacks are chosen correctly.
+
+## The phone PDF
+
+A3 shown on a phone is scaled to roughly a fifth of its size. A 16 pt note ends up about 3–4 pt, and even the 30 pt stop names are small. Two options:
+
+1. **Best:** make a separate phone layout. Use a single column at a narrower page size, with one card per route. Keep the type sizes and weights above.
+2. **If you must reuse the A3 file:** raise the minimum text size to about 24 pt. Keep the text live and selectable, not outlined or flattened to an image, so people can pinch-zoom and screen readers can use it.
+
+If you want, I can mock up the type specs as CSS or a print-ready HTML template once you share the copy.

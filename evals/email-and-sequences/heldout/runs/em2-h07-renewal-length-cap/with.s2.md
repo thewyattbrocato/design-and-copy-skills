@@ -1,20 +1,22 @@
-**Subject:** Renew your Orchard Row Friends membership
+**Subject** (39 characters)
+Renew your Friends membership by Nov 30
 
-**Preview:** Memberships expire November 30. Individual $35, household $55.
+**Preview text** (83 characters)
+Individual $35, household $55. Members get the book sale preview before the public.
 
-**Body:**
+**Body** (37 words, counting the link as one and including the sign-off)
 
-Hello,
+Your Orchard Row Library Friends membership expires November 30.
 
-Your Orchard Row Friends membership expires November 30. To keep it going, renew at https://orchardrowfriends.example/renew.
+Renew by then:
+- Individual: $35
+- Household: $55
 
-Individual membership is $35. Household membership is $55.
+Members get a preview morning before each quarterly book sale opens to the public.
 
-Members get the quarterly book sale preview the morning before it opens to the public.
+Renew here: https://orchardrowfriends.example/renew
 
 Marisol
 Orchard Row Friends
 
-**Counts:** The subject is 41 characters (limit 45). The preview is 62 characters (limit 90). The body is 42 words (limit 80), counting the sign-off and the URL as one word.
-
-I added a "Hello," greeting. Swap in a merge field for the member's name if your tool has one.
+I counted the characters and words by hand rather than with a tool, so run it through your email tool's counter before sending.

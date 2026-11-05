@@ -1,0 +1,1 @@
+Mostly yes: white on #1b4f8a is about 8.9:1 contrast, the text is 16px, the focus ring is strong, and it's a real `<button>`. The one gap is that the hover state is only a color shift, which is fine since it's not the sole indicator. I'd still check that the touch target meets 44px (it's about 44px tall with the 12px padding, so it's borderline).

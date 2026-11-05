@@ -1,44 +1,39 @@
-# Pocketlane first-run walkthrough
+# Pocketlane first-run walkthrough copy
 
-## Screen 1: Welcome
-**Headline:** Welcome to Pocketlane
-**Body:** Let's get your money into one clear view. This quick tour covers the basics and takes about a minute.
-**Buttons:** Next · Skip tour
+## Screens
 
-## Screen 2: Bring in your accounts
-**Headline:** Link your bank
-**Body:** Connect your bank and your transactions show up in Pocketlane on their own. No typing needed.
-**Buttons:** Next · Skip tour
+**Screen 1: Welcome**
+- **Headline:** Welcome to Pocketlane
+- **Body:** Let's get your money organized. This quick tour shows you the basics in about a minute.
+- **Buttons:** Show me around / Skip for now
+- **Small print:** You can find this tour again anytime in Settings.
 
-## Screen 3: Set your limits
-**Headline:** Give each category a budget
-**Body:** Pick a category, like groceries or eating out, and set a monthly amount. Your budgets reset on the 1st of every month, so you get a fresh start each time.
-**Buttons:** Next · Skip tour
+**Screen 2: Link your bank**
+- **Headline:** Bring in your transactions
+- **Body:** Link your bank account and Pocketlane can see your transactions. Linking takes one to two minutes. Access is read-only, so Pocketlane can't move money.
+- **Buttons:** Next / Skip
 
-## Screen 4: Fill in the gaps
-**Headline:** Add expenses by hand
-**Body:** Paid with cash? Split a bill? You can add any expense yourself. That's it, you're ready to go. If you want to see this tour again, you'll find it in Settings.
-**Buttons:** Get started
+**Screen 3: Set a budget**
+- **Headline:** Give each category a budget
+- **Body:** Pick a category, like groceries or eating out, and set a monthly amount. Your category budgets reset on the 1st of every month, so you get a fresh start each time.
+- **Buttons:** Next / Skip
 
----
+**Screen 4: Add expenses**
+- **Headline:** Cash? Add it by hand
+- **Body:** Not everything goes through your bank. Add any expense yourself with an amount and a category. A note is optional. If you ever want to replay this tour, it's in Settings.
+- **Buttons:** Get started
 
 ## Tooltips
 
 **Linking a bank account**
-> Linking takes about 1–2 minutes. Pocketlane gets read-only access, so it can see your transactions but can never move money.
+> Takes 1–2 minutes. Read-only access means Pocketlane can see your transactions but can't move money.
 
 **Setting a monthly budget for a category**
 > Set an amount for this category. It resets on the 1st of every month.
 
 **Adding an expense by hand**
-> Enter an amount and choose a category. Want to remember what it was for? Add a note, though that part is optional.
+> Enter an amount and pick a category. Want to add a note? You can, but you don't have to.
 
----
-
-## Skip-tour confirmation (optional)
-> No problem! You can find the tour anytime under **Settings**.
-
-**Notes**
-- Screen 4 carries the "find it later in Settings" line so everyone sees it, even if they never skip. The skip confirmation repeats it for people who do.
-- The examples (groceries, eating out, cash, split a bill) are my own illustrations. Swap them if they don't match your default categories.
-- I didn't mention encryption, bank counts, or sync speed because you didn't give me those facts. If you want to add reassurance to the bank screen, send me the details and I'll work them in.
+## Notes
+- Screens 1 and 4 both mention Settings. If that feels repetitive, drop it from Screen 4. Screen 1 is where people decide whether to skip, so I'd keep it there.
+- I didn't claim anything beyond what you told me. That includes encryption, automatic categorization, and editing or deleting expenses. If any of those are true and you want to reassure people about them, I can add them.

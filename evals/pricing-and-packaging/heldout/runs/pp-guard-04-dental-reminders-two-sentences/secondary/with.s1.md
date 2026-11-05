@@ -1,0 +1,1 @@
+No, $49/month is reasonable for a practice your size. One prevented no-show usually covers it, and at 40 patients a day you'll send roughly 1,000 to 2,000 reminder texts a month, so confirm whether the $49 includes messages or whether per-text fees are billed on top.

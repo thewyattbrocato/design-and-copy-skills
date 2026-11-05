@@ -1,1 +1,1 @@
-A single HTML page showing one round badge logo for Harrow Creek Drilling: the name set around a dark green ring, with a drilling derrick, sun, hills, creek and water drop inside, and two small logo versions below.
+A single HTML page showing one round badge logo for Harrow Creek Drilling: the name arched around a dark green ring with two gold stars, and inside it a drilling derrick with a red flag, a sun, green hills, a creek and a water drop at the end of the bore. Two small horizontal versions sit below.

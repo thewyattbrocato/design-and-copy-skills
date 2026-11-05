@@ -10,7 +10,7 @@ Content strategy settles four calls for a body of content: what to publish, what
 ## Do not produce
 
 - An editorial calendar or topic list with no reader, job, owner or capacity behind it.
-- A traffic, budget, headcount, cost, ROI, error-rate or "N% of pages are stale" figure the user did not give. Build the case from supplied numbers, or name the measurement that would produce one.
+- A traffic, subscriber, revenue, budget, headcount, cost, ROI, error-rate or "N% of pages are stale" figure the user did not give. Build the case from supplied numbers, or name the measurement that would produce one.
 - A process that needs people the team lacks, a committee of everyone, or an invented job title. Say "whoever does X today".
 - "Publish more" or "match the competitor" as strategy, or deleting pages by traffic alone.
 - A wireframe, heading outline or draft copy when a brief was asked for. A 60-page style guide.
@@ -35,7 +35,7 @@ Scale to the team. One person or a handful: one page (a sentence of direction, a
 3. **Who answers for each item?** One named person per item or group, with the right to say no. "Everyone", "whoever is asked" and "unknown" all mean nobody. See [owners-and-review.md](references/owners-and-review.md).
 4. **What makes it stale?** A trigger per kind of content (a price, a policy, a release), a last-and-next review date, and a rule for retiring. See [freshness-and-briefs.md](references/freshness-and-briefs.md).
 
-Before adding a blog, video series or forum, ask who writes, who edits, how often and for how long. Improving what exists usually beats adding. When wishes outrun hours, rank them and cut at the line the hours set.
+Before adding a blog, video series or forum, ask who writes, who edits, how often and for how long. Improving what exists usually beats adding; when a programme must start from nothing, use the programme reference. When wishes outrun hours, rank them and cut at the line the hours set.
 
 A small request skips calls: "brief one page" needs only the brief; "who should own this" needs only call 3.
 
@@ -66,3 +66,5 @@ Prefer a next step over a program: what to do this week, who does it, what it pr
 - [evidence-and-cuts.md](references/evidence-and-cuts.md): load for the evidence list, reading usage data, a report, scoring candidates against capacity, or retiring content.
 - [owners-and-review.md](references/owners-and-review.md): load for owner tables, review and approval delays, an emergency path, policy versus guideline, or a starter style guide.
 - [freshness-and-briefs.md](references/freshness-and-briefs.md): load for stale-content triggers, a review log, a page or type brief, or making the case for the work without numbers.
+- [starting-an-audience-programme.md](references/starting-an-audience-programme.md): load when a team is starting to publish for an audience: reader and mission, one format and channel, cadence, what to measure, a continue-or-cut date.
+- [documentation-upkeep.md](references/documentation-upkeep.md): load for a help centre, docs site or manual that must stay right as the product changes: running risky steps, ripple lists, versions, reader feedback, translation cost.

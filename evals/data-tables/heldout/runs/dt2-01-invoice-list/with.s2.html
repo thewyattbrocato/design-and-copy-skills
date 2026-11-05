@@ -6,93 +6,93 @@
 <title>Unpaid invoices – Tallow Lane Cycles</title>
 <style>
   :root {
-    --bg: #faf9f7;
-    --surface: #ffffff;
-    --text: #1d1d1b;
-    --muted: #5f5e59;
-    --rule: #e3e0d9;
-    --rule-strong: #1d1d1b;
-    --over-bg: #fbe9e5;
-    --over-fg: #9b2c1a;
-    --soon-bg: #fff2d6;
-    --soon-fg: #7a4e00;
-    --ok-bg: #edf0ea;
-    --ok-fg: #3d4a36;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #17171a;
-      --surface: #1f1f23;
-      --text: #f0eee9;
-      --muted: #a5a39b;
-      --rule: #33333a;
-      --rule-strong: #f0eee9;
-      --over-bg: #4a211b;
-      --over-fg: #ffb4a6;
-      --soon-bg: #46361a;
-      --soon-fg: #ffd98a;
-      --ok-bg: #2a2f27;
-      --ok-fg: #c3cdbb;
-    }
+    --ink: #1d2327;
+    --muted: #5b656d;
+    --line: #dde1e4;
+    --rule: #1d2327;
+    --bg: #f6f5f2;
+    --card: #ffffff;
+    --late: #a4231b;
+    --soon: #8a5300;
+    --ok: #38505f;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     padding: 24px 16px 48px;
     background: var(--bg);
-    color: var(--text);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.45;
+    color: var(--ink);
+    font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   main { max-width: 960px; margin: 0 auto; }
   h1 { font-size: 1.5rem; margin: 0 0 4px; }
-  .asof { margin: 0 0 20px; color: var(--muted); font-size: 0.9375rem; }
+  .asof { margin: 0 0 20px; color: var(--muted); }
+
   .summary {
-    display: flex; flex-wrap: wrap; gap: 12px 32px;
-    margin: 0 0 20px; padding: 16px 20px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin: 0 0 20px; padding: 0; list-style: none;
   }
-  .summary div { min-width: 140px; }
-  .summary dt { font-size: 0.875rem; color: var(--muted); }
-  .summary dd { margin: 0; font-size: 1.5rem; font-weight: 650; font-variant-numeric: tabular-nums; }
-  .summary dd small { font-size: 0.875rem; font-weight: 400; color: var(--muted); }
+  .summary li {
+    flex: 1 1 200px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 12px 16px;
+  }
+  .summary .label { display: block; color: var(--muted); font-size: .875rem; }
+  .summary .value {
+    display: block; font-size: 1.5rem; font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+  .summary .note { display: block; color: var(--muted); font-size: .875rem; }
+  .summary .late .value { color: var(--late); }
+
   .scroll {
     overflow-x: auto;
-    background: var(--surface);
-    border: 1px solid var(--rule);
-    border-radius: 8px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
   }
-  .scroll:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; min-width: 760px; }
+  table { width: 100%; border-collapse: collapse; min-width: 720px; }
   caption {
-    text-align: left; padding: 14px 16px; color: var(--muted);
-    caption-side: bottom; font-size: 0.875rem;
+    text-align: left; padding: 12px 16px; color: var(--muted); font-size: .875rem;
   }
-  th, td { padding: 12px 14px; text-align: left; vertical-align: top; white-space: nowrap; }
+  th, td { padding: 12px 16px; text-align: left; vertical-align: top; }
   thead th {
-    font-weight: 600; font-size: 0.875rem; color: var(--muted);
-    border-bottom: 2px solid var(--rule-strong);
-    vertical-align: bottom;
+    font-size: .875rem; font-weight: 600; color: var(--muted);
+    border-bottom: 2px solid var(--rule);
+    white-space: nowrap;
   }
   tbody th { font-weight: 600; }
-  tbody tr + tr > * { border-top: 1px solid var(--rule); }
-  .num { text-align: right; font-variant-numeric: tabular-nums lining-nums; }
-  td.cust { white-space: normal; min-width: 180px; }
-  .note { display: block; font-size: 0.875rem; color: var(--muted); }
-  .badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 2px 10px; border-radius: 999px;
-    font-size: 0.875rem; font-weight: 600;
+  tbody tr + tr > * { border-top: 1px solid var(--line); }
+  td.num, th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums lining-nums;
+    white-space: nowrap;
   }
-  .badge.over { background: var(--over-bg); color: var(--over-fg); }
-  .badge.soon { background: var(--soon-bg); color: var(--soon-fg); }
-  .badge.ok   { background: var(--ok-bg);   color: var(--ok-fg); }
-  tfoot th, tfoot td { border-top: 2px solid var(--rule-strong); font-weight: 700; }
-  td.bal { font-weight: 650; }
+  td.date, td.inv { white-space: nowrap; }
+  td.balance { font-weight: 700; }
+  .sub { display: block; color: var(--muted); font-size: .875rem; font-weight: 400; }
+  .dash { color: var(--muted); }
+
+  .status { font-weight: 600; white-space: nowrap; }
+  .status.late { color: var(--late); }
+  .status.soon { color: var(--soon); }
+  .status.ok { color: var(--ok); }
+  .status::before { display: inline-block; margin-right: 6px; font-size: .8em; }
+  .status.late::before { content: "▲"; }
+  .status.soon::before { content: "●"; }
+  .status.ok::before { content: "○"; }
+
+  tfoot th, tfoot td { border-top: 2px solid var(--rule); font-weight: 700; }
+  tfoot th { text-align: left; }
+
+  .foot { margin: 12px 0 0; color: var(--muted); font-size: .875rem; }
+
   @media print {
-    body { background: #fff; color: #000; padding: 0; }
+    body { background: #fff; padding: 0; }
     .scroll { border: 0; overflow: visible; }
+    table { min-width: 0; }
   }
 </style>
 </head>
@@ -101,20 +101,27 @@
   <h1>Unpaid invoices</h1>
   <p class="asof">Tallow Lane Cycles · as of Oct 14</p>
 
-  <dl class="summary">
-    <div>
-      <dt>Total still owed</dt>
-      <dd>$4,869.75 <small>· 6 invoices</small></dd>
-    </div>
-    <div>
-      <dt>Overdue</dt>
-      <dd>$2,248.75 <small>· 3 invoices</small></dd>
-    </div>
-  </dl>
+  <ul class="summary">
+    <li>
+      <span class="label">Total still owed</span>
+      <span class="value">$4,869.75</span>
+      <span class="note">6 invoices</span>
+    </li>
+    <li class="late">
+      <span class="label">Overdue</span>
+      <span class="value">$2,248.75</span>
+      <span class="note">3 invoices</span>
+    </li>
+    <li>
+      <span class="label">Not yet due</span>
+      <span class="value">$2,621.00</span>
+      <span class="note">3 invoices</span>
+    </li>
+  </ul>
 
-  <div class="scroll" role="region" aria-label="Unpaid invoices table, scrolls sideways on small screens" tabindex="0">
+  <div class="scroll" role="region" aria-label="Unpaid invoices table" tabindex="0">
     <table>
-      <caption>Invoices with a balance remaining, oldest due date first. Fully paid invoices (#1041, #1043, #1049) are not shown.</caption>
+      <caption>Invoices with a balance remaining, earliest due date first. Paid invoices are not shown.</caption>
       <thead>
         <tr>
           <th scope="col">Invoice</th>
@@ -122,69 +129,69 @@
           <th scope="col">Due</th>
           <th scope="col">Status</th>
           <th scope="col" class="num">Invoice total ($)</th>
-          <th scope="col" class="num">Paid ($)</th>
+          <th scope="col" class="num">Received ($)</th>
           <th scope="col" class="num">Balance due ($)</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th scope="row">#1045</th>
-          <td class="cust">Mbeki, Thandi</td>
-          <td>Oct 4</td>
-          <td><span class="badge over"><span aria-hidden="true">▲</span> Overdue 10 days</span></td>
+          <th scope="row" class="inv">#1045</th>
+          <td>Mbeki, Thandi</td>
+          <td class="date">Oct 4</td>
+          <td><span class="status late">10 days overdue</span></td>
           <td class="num">238.75</td>
-          <td class="num">0.00</td>
-          <td class="num bal">238.75</td>
+          <td class="num"><span class="dash" aria-label="none">—</span></td>
+          <td class="num balance">238.75</td>
         </tr>
         <tr>
-          <th scope="row">#1042</th>
-          <td class="cust">Brightwater Cafe<span class="note">Delivery bike service</span></td>
-          <td>Oct 5</td>
-          <td><span class="badge over"><span aria-hidden="true">▲</span> Overdue 9 days</span></td>
+          <th scope="row" class="inv">#1042</th>
+          <td>Brightwater Cafe <span class="sub">Delivery bike service</span></td>
+          <td class="date">Oct 5</td>
+          <td><span class="status late">9 days overdue</span></td>
           <td class="num">1,260.00</td>
-          <td class="num">0.00</td>
-          <td class="num bal">1,260.00</td>
+          <td class="num"><span class="dash" aria-label="none">—</span></td>
+          <td class="num balance">1,260.00</td>
         </tr>
         <tr>
-          <th scope="row">#1044</th>
-          <td class="cust">Hartley School Cycling Club<span class="note">Part paid</span></td>
-          <td>Oct 12</td>
-          <td><span class="badge over"><span aria-hidden="true">▲</span> Overdue 2 days</span></td>
+          <th scope="row" class="inv">#1044</th>
+          <td>Hartley School Cycling Club <span class="sub">Part paid</span></td>
+          <td class="date">Oct 12</td>
+          <td><span class="status late">2 days overdue</span></td>
           <td class="num">1,150.00</td>
           <td class="num">400.00</td>
-          <td class="num bal">750.00</td>
+          <td class="num balance">750.00</td>
         </tr>
         <tr>
-          <th scope="row">#1046</th>
-          <td class="cust">Cardoso, Rui</td>
-          <td>Oct 15</td>
-          <td><span class="badge soon"><span aria-hidden="true">●</span> Due tomorrow</span></td>
+          <th scope="row" class="inv">#1046</th>
+          <td>Cardoso, Rui</td>
+          <td class="date">Oct 15</td>
+          <td><span class="status soon">Due tomorrow</span></td>
           <td class="num">96.00</td>
-          <td class="num">0.00</td>
-          <td class="num bal">96.00</td>
+          <td class="num"><span class="dash" aria-label="none">—</span></td>
+          <td class="num balance">96.00</td>
         </tr>
         <tr>
-          <th scope="row">#1048</th>
-          <td class="cust">Pell, Joanne</td>
-          <td>Oct 21</td>
-          <td><span class="badge ok"><span aria-hidden="true">○</span> Due in 7 days</span></td>
+          <th scope="row" class="inv">#1048</th>
+          <td>Pell, Joanne</td>
+          <td class="date">Oct 21</td>
+          <td><span class="status ok">Due in 7 days</span></td>
           <td class="num">45.00</td>
-          <td class="num">0.00</td>
-          <td class="num bal">45.00</td>
+          <td class="num"><span class="dash" aria-label="none">—</span></td>
+          <td class="num balance">45.00</td>
         </tr>
         <tr>
-          <th scope="row">#1047</th>
-          <td class="cust">Harbour Courier Co.</td>
-          <td>Nov 2</td>
-          <td><span class="badge ok"><span aria-hidden="true">○</span> Due in 19 days</span></td>
+          <th scope="row" class="inv">#1047</th>
+          <td>Harbour Courier Co.</td>
+          <td class="date">Nov 2</td>
+          <td><span class="status ok">Due in 19 days</span></td>
           <td class="num">2,480.00</td>
-          <td class="num">0.00</td>
-          <td class="num bal">2,480.00</td>
+          <td class="num"><span class="dash" aria-label="none">—</span></td>
+          <td class="num balance">2,480.00</td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
-          <th scope="row" colspan="4">Total outstanding</th>
+          <th scope="row" colspan="4">Total (6 invoices)</th>
           <td class="num">5,269.75</td>
           <td class="num">400.00</td>
           <td class="num">4,869.75</td>
@@ -192,6 +199,8 @@
       </tfoot>
     </table>
   </div>
+
+  <p class="foot">— means nothing received yet. Balance due = invoice total minus amount received.</p>
 </main>
 </body>
 </html>

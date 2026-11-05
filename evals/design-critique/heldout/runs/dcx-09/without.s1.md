@@ -1,38 +1,26 @@
-**Fix these before it goes to print**
+The copy is warm and clear, but there are a few real problems. The first three could send someone to a closed hall.
 
-1. **Your headline promise conflicts with your opening hours.** You're open Saturday 10-1 and Wednesday 6-8. Nobody can return a tool "by Monday 5pm" because the shed is shut on Monday. The same problem affects the other loan periods:
-   - "Wet tile saw: 2 days, back by Monday" has the same conflict.
-   - Three days for the post hole digger from a Saturday pickup lands on Tuesday, when you're also closed.
-   - Only the 1-week sander lines up cleanly (back the next Saturday).
+**Fix before printing**
 
-   Either there's an unstated Monday drop-off arrangement, or the headline is wrong. Reword the loan periods around the days you're actually open, for example "Pick up Saturday, back Wednesday evening or next Saturday." This is the one I'd lose sleep over, because the first volunteer to be asked "so where do I return it Monday?" will wince.
-
-2. **"Join for $20" contradicts "pay what you can."** The button is the loudest thing on the page, and it tells someone who can't afford $20 that they can't join. Make the button just "Join", and put the "$20 or pay what you can" detail on the join page or next to the button.
-
-3. **There's no street address.** "Back of the Eastgate Methodist hall" only works if people already know where the hall is. Someone who scans the QR code on a lamppost needs an address or a map link, and a flyer reader will look for it first.
-
-4. **Joining is unclear.** The button goes to `/join`, but step 1 says to bring photo ID. Do I join online and then show ID in person, or do I have to show up first? Say which. It also doesn't say what happens if I turn up on a Saturday without having joined.
+1. **Your return deadline contradicts your opening hours.** The headline says "back by Monday 5pm," but you're only open Saturday 10-1 and Wednesday 6-8. Where does a tile saw go on Monday? If there's a drop box or someone on site, say so. If not, the headline promises something you can't do.
+2. **The loan lengths don't fit your hours either.** A pressure washer picked up Wednesday for 2 days is due Friday, when you're closed. A post hole digger picked up Saturday for 3 days is due Tuesday, also closed. Give return days ("back Wednesday") instead of durations, or explain how returns work.
+3. **There's no address.** "The back of the Eastgate Methodist hall" only works if you already know the hall. This is a QR page, so people will be on their phones, and they need a street address and a map link. Also say which door to use, since "the back of" a hall is hard to find.
+4. **"Join for $20" undercuts "pay what you can."** The paragraph offers a sliding scale, then the button names one price. Someone who can't afford $20 will read the button as the real answer. Make the button "Join" or "Join (pay what you can)," and make sure `/join` actually lets people pick an amount.
+5. **The HTML is a fragment.** If it's dropped into a template that already has these, ignore this. Otherwise there's no doctype, `<html lang>`, `<title>`, or `<meta name="viewport">`. Without the viewport tag, phones render the page as a tiny desktop layout. Since every visitor arrives by QR code, that's a serious problem. Also confirm `.btn` and `.btn-secondary` are styled, because unstyled they're two bare links.
 
 **Should fix**
 
-5. **The headline leads with a rule ("Return it clean...") instead of a benefit.** It also doesn't say what Loan Shed is until the paragraph below. Something like "Borrow tools instead of buying them. 400+ tools, $20 a year or pay what you can" would be warmer. The tile saw can stay as the example.
+6. **The photo ID requirement is buried.** It's in parentheses in step 1. Someone who joins online and turns up without ID wastes a trip. Put it near the top, and say whether joining happens online or in person.
+7. **You never say whether you can reserve a tool.** The headline sells "the weekend," but step 2 says "just ask a volunteer on the day." If the tile saw is out, they've made the trip for nothing. Say whether there's reserving, a waitlist, or first come, first served.
+8. **The headline leads with a rule.** "Return it clean by Monday 5pm" is the least inviting thing you could open with. Lead with the benefit and put the deadline in the body. For example: "Borrow a tile saw for the weekend. Free for members."
+9. **"Popular this month" will go stale.** It's hardcoded, and nothing shows when it was last updated. Rename it ("Often borrowed") or put someone in charge of it. Also label what the numbers mean, for example "Loan period: 2 days." As written, "2 days" is ambiguous.
+10. **There are no consequences for lateness or damage.** "If something breaks, tell us, it happens" is a good line. But what about late returns, a deposit, or training for something like the tile saw? A committee member will ask, so have an answer, even if it's one sentence.
 
-6. **"Popular this month" will go stale.** It's hardcoded, and nobody will update it in March. Either rename it ("Things people borrow a lot") or commit to updating it.
+**Nitpicks**
 
-7. **Safety and liability are missing.** You lend a tile saw and a pressure washer, and the page doesn't mention induction, a deposit, age limits, or what happens if someone is late or hurt. The committee will ask, and a one-liner would answer it.
+- Write "10am-1pm" and "6-8pm." "Open Saturdays 10-1" scans oddly. Do you close on holidays?
+- Make the email a `mailto:` link so it's tappable. Consider adding a phone number or a second contact, since "find Renata" stops working when Renata's away.
+- "Join" appears twice and "Pick tools" appears once, so the three-step list is really two steps plus a vague third. Make step 3 about returning, not "bring them back clean."
+- Test the QR code on a couple of different phones, printed at actual size, before you send it to the printer.
 
-8. **The contact details are thin.**
-   - `lend@loanshed.example` needs to be the real address, and it should be a `mailto:` link.
-   - "Find Renata at the Saturday desk" ties the page to one person, so it breaks when Renata is away or moves on. Say "the volunteer desk" instead.
-   - There's no phone number, which some of your audience will want.
-
-9. **The HTML will render badly on phones, and the QR code makes that the main use case.** There's no `<!doctype html>`, `lang`, `<title>`, or `<meta name="viewport" content="width=device-width, initial-scale=1">`. Without the viewport tag, mobile browsers show a tiny desktop-width page. If this snippet sits inside a template that already has those, ignore this point.
-
-**Before you print**
-
-- Scan the printed QR code with a couple of different phones at the actual print size and from a realistic distance.
-- Make sure it points at a short, stable URL that won't change. You can't reprint a thousand flyers.
-- Consider adding `?ref=flyer` so you can see whether the flyer is working.
-- Make sure `/join` and `/catalogue` work on mobile, since the page is only as good as where it sends people.
-
-The tone is good: "if something breaks, tell us, it happens" is exactly right. The copy is close, and the Monday/opening-hours problem is the one that has to be fixed first.
+If the Monday drop-off is real, items 1 and 2 are only a wording fix. If it isn't, you need to decide on a return process before the flyer goes out.

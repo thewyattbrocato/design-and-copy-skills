@@ -1,27 +1,39 @@
-**Show one bar chart of ride times, with bars grouped in 5-minute steps and the long rides colored differently. Put the finding in the headline and keep the caption to two sentences.**
+**Show one simple histogram with the bars split into two colors, and put the finding in the title.** You also need one fact I don't have, which I cover first.
 
-**One caution first.** Your data is ride time, not lateness. Lateness needs a comparison point, such as the scheduled trip length or the arrival time against the bell. Without one, the chart can't say "late" or "not late", and I wouldn't claim either. If you can get the scheduled arrival times, that is a better measure. If not, pick a ride length parents will recognize, like 30 minutes, and be explicit that it's a "long ride" and not a "late" one.
+## Ride time isn't the same as late
 
-**The numbers behind it** (they add up to 380):
-- 15–29 minutes: 303 trips, about 4 in 5 (80%).
-- Under 25 minutes: 250 trips, about 2 in 3 (66%).
-- 30 minutes or more: 59 trips, about 1 in 6 (15.5%).
-- 40 minutes or more: 9 trips, about 1 in 40 (2.4%).
-- The typical (median) trip falls in the 20–24 minute bar.
+Your data is how long the ride took. Parents complain about arriving after the bell or after the posted time. Before you publish, get one of these:
+- the scheduled ride time for Route 14, or
+- the share of trips that reached school by the bell.
 
-**The chart**
-- Vertical bars in time order, one per group, with a baseline at zero. Merge the last bar into "40+" (9 trips) so the tail isn't a row of tiny bars.
-- Label each bar directly with its share of trips (5%, 24%, 37%, 19%, 10%, 3%, 2%). Leave off the y-axis and gridlines. Label the x-axis "Minutes on the bus, one way".
-- Make the bars gray except for the 30+ minute bars, which get one accent color. That separates the long rides from the usual ones without anyone needing to read an axis.
-- Add a short note on the chart itself, for example "1 in 6 rides takes 30+ min", since many parents won't read the caption.
-- Use counts or shares, not a smoothed curve. Parents get "92 trips" faster than "density".
+A 28-minute ride is late if the schedule says 25 and on time if it says 30. Without that number, the chart can only say how long rides take and how much they vary.
 
-**Headline**
-> Most Route 14 morning rides take 15 to 29 minutes. About 1 in 6 takes 30 or more.
+## The chart
 
-**Caption**
-> Ride time on all 380 weekday morning trips last term. The most common ride was 20 to 24 minutes, and 2 in 3 trips took under 25. Fifty-nine trips (15%) ran 30 minutes or longer, and 9 ran 40 or more. [Add: the scheduled ride time is X minutes. / The district is reviewing the longest runs.]
+- **Form:** vertical bars, one per time range, in order. Merge the last two into "40 or more" (9 trips), because 4 and 5 are too small to read as separate bars.
+- **Axis:** bars start at zero.
+- **Labels:** put the trip count on top of each bar and delete the y-axis and gridlines. Label the x-axis "Minutes on the bus" so it needs no explanation.
+- **Color:** make the bars gray up to the scheduled time and one accent color (for example orange) beyond it. Add one label on the chart at the dividing line, such as "Posted time: [X] min". Parents who won't read a caption will read that.
+- **Title:** state the finding, not "Route 14 ride times."
 
-Two things to check before you print:
-- "Weekday morning trips" is my assumption, so confirm the scope and use the real wording.
-- Don't write "always on time" or "rarely late" unless you have arrival data. This chart supports "most rides are 15 to 29 minutes, and a minority run long". If the schedule says 25 minutes or less, tell me and I'll redo the numbers, though the 25–29 bar straddles that line, so you'd need the raw trip times.
+## Caption wording
+
+Fill in the bracketed parts once you have the schedule. Every other figure comes from your numbers:
+
+> **Most Route 14 morning trips take 15–25 minutes, but about 1 in 6 runs 30 minutes or longer**
+>
+> Ride time for all 380 morning trips last term. The most common ride was 20–24 minutes. About 84 of every 100 trips took under 30 minutes. About 16 of every 100 took 30 minutes or more, and 9 trips (about 2 in 100) took 40 minutes or more. The posted time is [X] minutes; [Y]% of trips ran longer than that. [One line on what the district is doing about the long trips.]
+
+The numbers behind those percentages:
+- 250 of 380 trips (66%) took under 25 minutes.
+- 321 of 380 (84.5%) took under 30 minutes.
+- 59 of 380 (15.5%) took 30 minutes or more.
+- 9 of 380 (2.4%) took 40 minutes or more.
+
+## Why this wording
+
+- "Out of every 100 trips" is easier for non-statisticians than percentages or averages. Avoid "median," "distribution," and "outliers."
+- The bars show that the bus is usually fine and sometimes quite slow. That is probably what behind "always late": a parent whose child hit a 35-minute ride remembers it. Saying so respects the complaint and doesn't dismiss it.
+- Don't use an average. The long tail pulls it up, and it hides both the typical ride and the slow ones.
+
+If you'd rather have no chart, the caption's second sentence plus the schedule comparison works as a short callout.

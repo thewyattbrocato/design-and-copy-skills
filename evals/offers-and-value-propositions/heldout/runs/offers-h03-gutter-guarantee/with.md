@@ -1,25 +1,16 @@
-## The Halyard Guarantee
+**Our Clean Gutter Guarantee**
 
-**If you're not happy with our work, we make it right.**
+If any gutter we cleaned isn't flowing clear when we leave, we'll fix it before we go. If you spot a problem within [number] days, tell us at [phone/email]. We'll come back within [number] days at no charge. If we can't put it right, we'll refund [the cleaning / the full job price].
 
-Tell us within **[number] days** of the job by calling **[phone]** or emailing **[email]**. We'll come back to **[re-clean / re-do the work]** at no charge. If we can't fix it, we'll **[refund the job / refund the affected part of the job]**.
+Small repairs get the same promise. If a repair we made fails within [number] days, we'll redo it free.
 
-**What it covers:** [e.g. gutters or downspouts we cleaned that are still clogged, or repairs we made that fail].
-**What it doesn't cover:** [e.g. new debris from storms after we leave, or damage that was already there].
+We're a two-person crew, and we work in Eastbrook. You'll deal with the people who did the work.
 
-### Short version for near the Book Now button
+**Short version for the booking button:**
+Not happy with the work? Tell us within [number] days and we'll come back and fix it free, or [refund].
 
-> Not happy? Tell us within [number] days and we'll [come back and fix it free / refund you]. [Link to full guarantee]
+**Before you publish:**
+- **Fill the brackets with terms you'll honor on your worst day.** I didn't invent a policy for you. A tight promise you always keep calms nervous homeowners more than a big one you resent. The strongest version is usually "we come back free, and if we can't fix it, you get your money back." That risks little, because most problems are fixable with a return visit.
+- **Add trust facts only if they're true.** If you're licensed or insured, say so next to the guarantee. If you have real reviews or past Eastbrook customers, add [a real customer quote]. Those reassure a stranger as much as the guarantee does. I left them out because you haven't told me about them.
 
-### Optional trust lines
-Add these only if they're true.
-- "Two-person crew, locally based in Eastbrook. You'll know who's at your door." This is the strongest point you have against "never heard of you".
-- [Insured: add insurer or coverage details if you have them]
-- [Photos before and after every job: only if you actually do this]
-- [Add a real customer quote and neighborhood]
-
-**Notes:**
-- I left the time window and remedy blank because I can't invent your policy. The strongest version you can honestly keep is the one that calms nervous homeowners. A "re-do it free, or refund you" promise with a generous window beats a bigger-sounding promise you'd dread honoring. Pick numbers you can afford to honor on your worst day.
-- Check your local rules on guarantee and refund wording, and whether you want a lawyer to look at the final terms.
-
-If you tell me what you're willing to do (re-do, refund, how many days), I'll write the final version.
+Two questions would let me finish this. How many days will you stand behind the work? Would you refund the job if a return visit doesn't fix the problem?

@@ -1,19 +1,18 @@
-I couldn't find your token files in this directory, so I used a common convention. If your names differ, swap in your own examples before posting.
+I couldn't find your token files in this directory, so I don't know your actual naming scheme. The draft below uses a common pattern (`color.surface.primary`, `space.4`). Swap in your real names before posting.
 
-```
-Team, we're getting one-off colors and spacing values, and it's making the UI hard to maintain. Please use tokens only, never raw hex or px values.
+---
 
-Naming: category-role-variant, lowercase, kebab-case.
-• color-text-primary, color-surface-raised, color-border-danger
-• space-1 through space-8 (4px steps)
+Hi team, we're cutting down on one-off colors and spacing values. Please use design tokens, not raw hex or px.
 
-Need something new?
-1. Search the tokens file first. The value may already exist.
-2. If not, post in #design-system with the use case and where it's needed.
-3. A maintainer approves it and adds it to the tokens file.
-4. Then use the token in your code.
+**Naming:** `category.role.variant`, e.g. `color.text.primary`, `color.surface.danger`, `space.4`. Name by purpose, not appearance. Don't use `color.blue200` in components.
 
-Don't add a value inline "just this once." That's how the mess started.
-```
+**Need a new value?** Check the token file first; a close match usually exists. If not:
+1. Open a PR that adds the token to `[tokens file path]`.
+2. Tag `[owner/channel]` in the PR.
+3. Say what the value is for and why an existing token doesn't fit.
 
-That's 103 words. I assumed a `category-role-variant` scheme, a 4px spacing scale, and a #design-system channel, so adjust those to match your setup.
+Ad-hoc values in a PR will be sent back.
+
+---
+
+Word count: about 105.

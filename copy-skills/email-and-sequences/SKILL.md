@@ -53,6 +53,7 @@ Name the trigger (a sign-up, an action, an inaction, a date) and the one job of 
 - Every series states its stop rule: a reply, a purchase, an unsubscribe or a clear no ends it.
 - Per-type jobs, spacing defaults and stop rules are in [sequence-patterns.md](references/sequence-patterns.md); load it for any series.
 - Link ranking with a skip list, subject sets, trial wording, reputation and testing: [inbox-decisions-and-sequence-logic.md](references/inbox-decisions-and-sequence-logic.md); load it for those.
+- Recap after a call, "send me more information", a quiet buyer in a live deal, a last check-in, a decline: [sales-follow-ups.md](references/sales-follow-ups.md); load it for those, not for cold first touches. Calls and voicemail: sales-conversations, if installed.
 
 ## Cold outreach
 

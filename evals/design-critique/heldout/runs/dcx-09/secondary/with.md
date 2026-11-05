@@ -1,36 +1,29 @@
-**Verdict: not ready to print.** The headline and offer are clear, but the page doesn't tell a phone visitor where to go, the email address is a placeholder, and the price and loan rules contradict each other.
+**Top problem: the page doesn't tell a flyer reader where to go or when they can actually do the thing the headline promises.** Fix these before printing.
 
 **Blockers**
 
-1. **The email address won't work.** `lend@loanshed.example` uses `.example`, a reserved domain that never resolves. Replace it with the real address before anything prints. Also make it a `mailto:` link so it's tappable on a phone.
-2. **There is no address.** "At the back of the Eastgate Methodist hall" doesn't tell someone where to walk. Add the street address, a "Get directions" link, and which door to use. Someone who scanned the flyer on the bus needs this more than anything else on the page.
+1. **No address.** The page says "at the back of the Eastgate Methodist hall" and nothing else. Someone who scans a flyer on the street has no street address, no map link, and no entrance hint. Add the full address and a map link.
+2. **Monday return with no Monday opening.** The H1 says "Return it clean by Monday 5pm," but the hours are Saturdays 10-1 and Wednesdays 6-8. The page never says how to return on a Monday. Either add a drop-off route (a key box, a volunteer's number, a return slot) or change the deadline to a day you're open.
+3. **Price conflict on the main button.** The button says "Join for $20," but the body says "or pay what you can." A reader who can't pay $20 may skip the button, and the one call to action on the page is wrong for them. Use "Join" with a price range, or "Join: $20 or pay what you can."
 
-**High**
+**Major**
 
-3. **The brand name is missing from the first screen.** The H1 is the loan promise, and "Loan Shed" first appears in the second paragraph. Someone holding a flyer should see the organisation's name immediately. Prefix the H1 or add a small line above it: "Loan Shed, Eastgate Methodist hall".
-4. **The price is contradictory.** "Membership is $20 a year, or pay what you can" conflicts with the button, "Join for $20", which signals the only option. Someone who can't afford $20 may leave. Either make the button "Join (from $20, or pay what you can)" or state the sliding-scale option right next to it, and say how to pay.
-5. **The membership requirement is buried.** "Bring photo ID the first time" is only in step 1 of the list, after the visitor has already decided. Move it under the button: "Bring photo ID to your first visit."
-6. **The loan rules don't match the headline.** The H1 promises "for the weekend, return by Monday 5pm", but the list gives 2 days, 3 days and 1 week, and only the saw says "back by Monday". A reader can't tell whether the period is per tool, whether the Monday deadline applies to all tools, or what the late fee is. Use one rule, or state the exception.
-7. **The QR code will be the only way in.** The URL isn't printed on the flyer, so anyone whose camera won't scan has no route to the page. Print the short URL under the QR code.
+4. **Costs are missing.** "Free for members" is the main promise, but there's no mention of deposits, late fees, or what happens if a tool is damaged and not reported. Someone deciding whether to borrow a $500 tool needs those answers. Add one line on each, even if the answer is "none."
+5. **Timing contradicts itself.** The Wet tile saw line says "2 days, back by Monday," which fits a Saturday pickup. The Post hole digger says "3 days," and the Orbital sander says "1 week." The reader can't tell whether loan periods are per tool or a standard. State the default loan period once, then list exceptions.
+6. **The "Popular this month" list goes nowhere.** The items aren't links, and there's no "as of" date, so the list will look stale by the next month. Link each tool to its catalogue entry, or drop the list and link the catalogue.
+7. **Joining online vs in person is unclear.** Step 1 says to bring photo ID "the first time," and the button sends people to /join. A QR reader on a Tuesday night won't know whether they can finish joining from their phone.
 
-**Medium**
+**Minor**
 
-8. **"How borrowing works" sits below the popular list.** A first-time visitor needs the process more than the examples. Move the three steps above "Popular this month".
-9. **The popular list isn't tappable.** Each item could link to its catalogue entry. Also, a printed "this month" list goes stale within weeks. Either date it, or remove it from the print version.
-10. **Opening hours have no contact cover.** Renata is at the Saturday desk, so the Wednesday visitor has only email. Add a phone number or say "Wednesday: ask at the desk, or email".
-11. **Equal-weight CTAs.** "Join" is correctly primary, but "See what we have" uses a different style that may read as less important. This is minor taste if the CSS already supports it.
+8. **Placeholder-looking email.** `lend@loanshed.example` uses the reserved `.example` domain. Confirm it's the real address before printing.
+9. **Single-person dependency.** "Find Renata at the Saturday desk" works until Renata isn't there. Add a role-based contact ("the Saturday desk" or a shared inbox) or a second name.
+10. **"Return it clean"** has no definition. A short line on what clean means (rinsed, dry, blades cleaned) prevents disputes.
 
-**Works, keep it**
+**What works and should stay**
 
-- The H1 is concrete and benefit-led. It tells a stranger what they can do.
-- Opening hours are short and scannable.
-- "If something breaks, tell us, it happens" is humane and lowers the stakes for a first borrow.
-- The page is short, with one primary action. A flyer visitor gets there quickly.
+- The H1 is a concrete offer with a deadline, and it's a good hook for someone scanning.
+- The three-step "How borrowing works" explains the whole loop in a few short lines.
+- "Just ask a volunteer on the day" lowers the barrier for people who don't want to read the catalogue first.
+- "If something breaks, tell us, it happens" sets a tone that makes returning damage less scary. Keep it, and pair it with the damage policy from item 4.
 
-**Before printing**
-
-- Fix the email domain, add the address, and fix the price wording.
-- Test the QR code on a real iPhone and Android phone, and check that the page renders at phone width.
-- Check that `/join` and `/catalogue` load.
-
-**Not checked:** rendering, CSS, colour contrast, touch-target sizes, the QR code itself, and whether `/join` and `/catalogue` exist. I judged only the markup you pasted.
+**Not checked:** the CSS (the `.btn` styles aren't in the snippet), rendering on a phone at flyer-scan distance, color contrast, tap target sizes, the QR's target URL, and how the page prints if the flyer links to a printed version. Send the stylesheet and a screenshot at phone width if you want those checked.

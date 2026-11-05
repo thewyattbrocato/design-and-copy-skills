@@ -1,15 +1,14 @@
-Mostly fine. The structure is sound: it's a single reading column, the measure is right, and the breaks have jobs. I'd change one thing and check a few edge cases.
+It's mostly sound. The single capped column, the subheads, and the hanging pull quotes with a clear job are all right for a long read. Here is what I'd change or check before shipping.
 
-**Change: the top bar doesn't share an edge with the content.**
-The logo sits at the far left and Subscribe at the far right, over a centered 66-character column. On a wide desktop, the logo ends up hundreds of pixels from the text it sits above, so the page has two unrelated left edges. Pick one:
-- Constrain the bar's inner container to the text column or the lead image width. This is the tidiest option.
-- Keep the full-width bar on purpose, as site chrome that frames the page. That's acceptable for an archive, but then it should be a deliberate choice and not a side effect.
+**Worth fixing**
+1. **Pull quote overflow.** A 66-character column at 18px is roughly 600 to 650px wide. On a 800 to 900px viewport, each margin is only about 80 to 125px. A quote hanging 80px into it will touch or clip at the screen edge. Only hang quotes when each side margin is at least 80px plus about 24px of breathing room. Below that width, keep them inside the column. Test at 768, 900, and 1024px.
+[...]
+3. **Top bar edge.** A logo pinned to the far left over a centered column gives you two unrelated vertical edges. Either align the bar's inner container with the lead image width (or the text column), or keep it full-width on purpose, as many sites do. Pick one deliberately. If the bar stays full-width, it's a minor issue.
+[...]
+**Leave as is**
+- 66 characters at 18px with generous leading.
+- Subheads about every 300 words.
+- A lead image wider than the text, since it is the one deliberate break.
+- The order after the article: more from this issue, then the subscribe box, then the footer. It stacks fine on a phone.
 
-**Check before shipping:**
-- **Pull quotes:** an 80px overhang needs at least 80px of margin on each side. At 66ch and 18px the column is roughly 600px, so tablet widths around 768–850px leave almost no room. Set the breakpoint for the overhang by actual margin, not by "desktop". On phones and tablets the quote should sit inside the column.
-- **Lead image:** a wider-than-column image is a named break, so that's fine. Make sure it's the only one, and that it caps at the viewport edge, or at 20px padding, on mobile. Archive issues may have no lead image or an odd aspect ratio. The template should look right without one, with the headline block carrying the top.
-- **Worst-case content:** try a three-line headline, a standfirst that wraps, a long author list, and a body image with a long caption. The spec doesn't mention captions. Decide where they go (under the image, text-column width, smaller type).
-- **Stacked order on phones:** headline, standfirst, byline, then image should read cleanly. Subscribe in the top bar should stay visible without crowding the logo at 320px.
-- **Archive navigation:** "More from this issue" is good. Archive readers often want previous and next issue links too, so consider adding them beside that list.
-
-Nothing else needs changing. The 66-character measure, 18px type, 300-word subhead rhythm, and 20px mobile padding are all sensible.
+None of this is a redesign. Fix the pull quote breakpoint and define the phone behavior, and it's ready to ship.

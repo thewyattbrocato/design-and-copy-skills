@@ -1,18 +1,18 @@
-**Use a 1px line between rows.** Make it a hairline in a quiet color, and inset it to align with the text edge, not full-bleed.
+**Use a 1px line between rows.** Make it a hairline in a quiet color, inset to align with the text edge, and omit it after the last row.
 
-**Why a line works best here**
-- **Density:** 30 rows is a long scan. The rows are all peers and tightly packed, and that's the case where space alone stops separating them. A hairline does it without costing rows per screen.
-- **Scanning:** Each row has the same date, merchant and amount layout. A thin rule gives the eye a clear horizontal track from the merchant on the left to the amount on the right.
-- **Cost:** The line takes almost no room. Extra space gets expensive over 30 rows, and a separate gap makes the list read as 30 separate cards.
+**Why it wins for 30 dense rows**
+- **Scanning:** Each row has three fields (date, merchant, amount). People scan across them and down the list. A rule gives the eye a clear horizontal track, so the amount stays matched to its merchant.
+- **Density:** Space between rows spends vertical room. With 30 rows, you'd scroll much further, and the rows would start to look like separate cards. A hairline costs about 1px.
+- **Pairing:** Add a little vertical padding inside each row, about 12 to 16px. The rule then has room on both sides, so it doesn't crowd the text.
 
 **Why not the others**
-- **Alternating backgrounds (zebra stripes):** These suit wide tables with many columns, where the eye has to travel far. A row with three fields doesn't need them. They also add visual noise and can clash with selected, pressed or pending states. They get worse in dark mode, where low-contrast tints are hard to tune.
-- **Extra space only:** This works for a short list. With 30 rows, the spacing has to be large enough to group by itself, and that costs scroll length. It also gets ambiguous when you add day headers.
+- **Alternating backgrounds (zebra stripes):** These work in wide tables with many columns, where the eye can lose its row. Three fields don't need that help. Stripes also add visual noise, and they fight with other states such as pending, selected, pressed, or a highlighted new transaction. In dark mode, subtle tints often vanish or look muddy.
+- **Extra space only:** This works when there are few items. At 30 rows, the gaps get large enough that rows start to look like separate objects. Using space alone also makes it harder to tell where one row ends and the next begins when the rows are tightly packed.
 
-**Details that matter**
-- **Row height and padding:** Keep rows around 56–64px tall, with equal padding above and below the text. This gives a comfortable touch target. The tap area is the whole row, so you don't need extra gap between rows.
-- **Line style:** Use one weight and a low-contrast color. Skip the line after the last row in a group so it doesn't double up with the group's edge.
-- **Group by date:** Put date section headers like "Today" or "Oct 12" above groups of rows. Give each header more space above than below, so it sits closer to its own rows. Then the date doesn't need to repeat on every row, and the rows can show just merchant and amount. This does more for readability than the choice of separator.
-- **Alignment:** Right-align the amounts, and use tabular (monospaced) digits so the decimals line up down the list.
+**Details**
+- **Date grouping:** Put a date header (for example "Today" or "Oct 27") above each day's rows. Use more space above the header than below it, and keep the date out of each row. The headers do the coarse grouping, and the hairlines separate rows within a day.
+- **Alignment:** Right-align amounts, ideally with tabular numerals, so the digits line up in a column.
+- **Touch targets:** If rows open a detail view, keep each row at least 44px tall. The padding above covers this.
+- **Rule color:** Keep it low contrast. If the line is as prominent as the text, it adds noise.
 
-If you add a selected or highlighted state, use a subtle background tint on that one row instead of persistent stripes.
+Use space only to group (between days), a rule to divide (between rows), and skip stripes unless you later add many more columns.

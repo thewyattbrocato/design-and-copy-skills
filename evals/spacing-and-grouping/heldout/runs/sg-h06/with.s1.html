@@ -6,20 +6,32 @@
 <title>Invoice summary</title>
 <style>
   :root {
-    --s1: 4px;
-    --s2: 8px;
-    --s3: 12px;
-    --s4: 16px;
-    --s5: 24px;
-    --s6: 32px;
-    --ink: #1c2330;
-    --muted: #667085;
-    --line: #e4e7ec;
-    --bg: #f4f5f7;
-    --surface: #ffffff;
-    --accent: #2f5bea;
-    --accent-dark: #2448c4;
-    --tint: #f7f8fa;
+    --bg: #eef0f3;
+    --panel: #ffffff;
+    --ink: #1b1f24;
+    --muted: #5d6671;
+    --rule: #e3e6ea;
+    --tint: #f5f6f8;
+    --accent: #2f5bd8;
+    --accent-ink: #ffffff;
+    --accent-hover: #2449b3;
+    --draft-bg: #fff4d6;
+    --draft-ink: #7a5600;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12141a;
+      --panel: #1b1e26;
+      --ink: #eceef2;
+      --muted: #9aa3af;
+      --rule: #2d323d;
+      --tint: #232731;
+      --accent: #6d8dff;
+      --accent-ink: #0e1220;
+      --accent-hover: #8aa3ff;
+      --draft-bg: #3a2f10;
+      --draft-ink: #f2cf72;
+    }
   }
   * { box-sizing: border-box; }
   body {
@@ -29,174 +41,140 @@
     justify-content: flex-end;
     background: var(--bg);
     color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
+    font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
-  aside {
+  .sidebar {
     width: 100%;
     max-width: 380px;
     min-height: 100vh;
-    background: var(--surface);
-    border-left: 1px solid var(--line);
     display: flex;
     flex-direction: column;
+    background: var(--panel);
+    border-left: 1px solid var(--rule);
   }
-  .body {
-    flex: 1;
-    padding: var(--s6) var(--s5) var(--s5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s6);
+  .body { flex: 1; padding: 28px 28px 8px; overflow-y: auto; }
+  section { padding: 22px 0; border-top: 1px solid var(--rule); }
+  section:first-child { padding-top: 0; border-top: 0; }
+
+  header .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .eyebrow { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  h1 { margin: 4px 0 0; font-size: 22px; line-height: 1.25; font-weight: 650; letter-spacing: -.01em; }
+  .badge {
+    font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+    background: var(--draft-bg); color: var(--draft-ink);
   }
-  header { display: flex; flex-direction: column; gap: var(--s1); }
-  .eyebrow {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  h1 { margin: 0; font-size: 22px; line-height: 1.25; }
-  .status {
-    align-self: flex-start;
-    margin-top: var(--s2);
-    padding: var(--s1) var(--s3);
-    border-radius: 999px;
-    background: #fff4e0;
-    color: #8a5300;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  section { display: flex; flex-direction: column; gap: var(--s2); }
-  h2 {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  address { font-style: normal; display: flex; flex-direction: column; }
-  address strong { font-size: 15px; }
-  address span { color: var(--muted); }
-  dl {
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--s1) var(--s4);
-  }
-  dt { color: var(--muted); }
-  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
-  ul { list-style: none; margin: 0; padding: 0; }
-  li {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--s4);
-    padding: var(--s3) 0;
-    border-top: 1px solid var(--line);
-  }
-  li:last-child { border-bottom: 1px solid var(--line); }
-  .item-name { display: block; font-weight: 500; }
-  .item-meta { display: block; font-size: 12px; color: var(--muted); }
-  .amount { font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .totals {
-    background: var(--tint);
-    border-radius: 8px;
-    padding: var(--s4);
-    gap: var(--s2);
-  }
-  .totals .row { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
-  .totals .row span:first-child { color: var(--muted); }
-  .totals .total {
-    margin-top: var(--s1);
-    padding-top: var(--s3);
-    border-top: 1px solid var(--line);
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .totals .total span:first-child { color: var(--ink); }
-  footer {
-    padding: var(--s4) var(--s5);
-    border-top: 1px solid var(--line);
-    background: var(--tint);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s2);
+
+  h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .client-name { font-weight: 600; font-size: 15px; margin: 0; }
+  address { font-style: normal; color: var(--muted); margin-top: 2px; }
+
+  dl.dates { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0; }
+  dl.dates div { min-width: 0; }
+  dt { font-size: 12px; color: var(--muted); }
+  dd { margin: 2px 0 0; font-weight: 550; }
+
+  ul.items { list-style: none; margin: 0; padding: 0; }
+  ul.items li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; }
+  ul.items li + li { border-top: 1px solid var(--rule); }
+  .item-name { font-weight: 550; }
+  .item-meta { display: block; font-size: 12.5px; color: var(--muted); }
+  .amt { font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+
+  .totals { margin: 0; background: var(--tint); border-radius: 10px; padding: 16px 18px; }
+  .totals div { display: flex; justify-content: space-between; gap: 16px; }
+  .totals div + div { margin-top: 6px; }
+  .totals dt { font-size: 14px; color: var(--muted); }
+  .totals dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .totals .total { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--rule); align-items: baseline; }
+  .totals .total dt { color: var(--ink); font-weight: 600; }
+  .totals .total dd { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+
+  .actions {
+    display: grid; gap: 10px; padding: 20px 28px 28px;
+    border-top: 1px solid var(--rule); background: var(--panel);
   }
   button {
-    font: inherit;
-    font-weight: 600;
-    min-height: 44px;
-    padding: var(--s3) var(--s5);
-    border-radius: 8px;
-    cursor: pointer;
+    font: inherit; font-weight: 600; height: 44px; border-radius: 10px; cursor: pointer;
+    border: 1px solid transparent; transition: background-color .15s, border-color .15s;
   }
-  .primary { background: var(--accent); border: 1px solid var(--accent); color: #fff; }
-  .primary:hover { background: var(--accent-dark); }
-  .secondary { background: var(--surface); border: 1px solid #c8cdd6; color: var(--ink); }
-  .secondary:hover { background: var(--bg); }
-  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .primary { background: var(--accent); color: var(--accent-ink); }
+  .primary:hover { background: var(--accent-hover); }
+  .secondary { background: transparent; color: var(--ink); border-color: var(--rule); }
+  .secondary:hover { background: var(--tint); }
+
+  @media (max-width: 480px) {
+    .sidebar { max-width: none; border-left: 0; }
+    .body { padding: 22px 20px 8px; }
+    .actions { padding: 16px 20px 22px; }
+  }
 </style>
 </head>
 <body>
-<aside aria-label="Invoice summary">
-  <div class="body">
-    <header>
-      <p class="eyebrow">Invoice</p>
-      <h1>INV-2026-042</h1>
-      <span class="status">Draft</span>
-    </header>
+  <aside class="sidebar" aria-label="Invoice summary">
+    <div class="body">
+      <section>
+        <header>
+          <div class="row">
+            <p class="eyebrow">Invoice</p>
+            <span class="badge">Draft</span>
+          </div>
+          <h1>INV-2026-042</h1>
+        </header>
+      </section>
 
-    <section aria-labelledby="bill-to">
-      <h2 id="bill-to">Bill to</h2>
-      <address>
-        <strong>Harbor &amp; Pine Studio</strong>
-        <span>Attn: Maya Delgado</span>
-        <span>418 Alder Street, Suite 3</span>
-        <span>Portland, OR 97209</span>
-      </address>
-    </section>
+      <section>
+        <h2>Bill to</h2>
+        <p class="client-name">Harbor &amp; Pine Studio</p>
+        <address>
+          Attn: Maya Okafor<br>
+          418 Alder Street, Suite 6<br>
+          Portland, OR 97209
+        </address>
+      </section>
 
-    <section aria-labelledby="dates">
-      <h2 id="dates">Details</h2>
-      <dl>
-        <dt>Invoice number</dt><dd>INV-2026-042</dd>
-        <dt>Issued</dt><dd>Oct 15, 2026</dd>
-        <dt>Due</dt><dd>Nov 14, 2026</dd>
-      </dl>
-    </section>
+      <section>
+        <h2>Dates</h2>
+        <dl class="dates">
+          <div><dt>Issued</dt><dd>Oct 28, 2026</dd></div>
+          <div><dt>Due</dt><dd>Nov 27, 2026</dd></div>
+          <div><dt>Terms</dt><dd>Net 30</dd></div>
+          <div><dt>Project</dt><dd>Brand refresh</dd></div>
+        </dl>
+      </section>
 
-    <section aria-labelledby="items">
-      <h2 id="items">Line items</h2>
-      <ul>
-        <li>
-          <span><span class="item-name">Brand identity design</span><span class="item-meta">24 hrs × $85</span></span>
-          <span class="amount">$2,040.00</span>
-        </li>
-        <li>
-          <span><span class="item-name">Website copywriting</span><span class="item-meta">8 pages × $120</span></span>
-          <span class="amount">$960.00</span>
-        </li>
-        <li>
-          <span><span class="item-name">Hosting setup</span><span class="item-meta">Flat fee</span></span>
-          <span class="amount">$250.00</span>
-        </li>
-      </ul>
-    </section>
+      <section>
+        <h2>Line items</h2>
+        <ul class="items">
+          <li>
+            <span><span class="item-name">Brand identity design</span><span class="item-meta">24 hrs × $75.00</span></span>
+            <span class="amt">$1,800.00</span>
+          </li>
+          <li>
+            <span><span class="item-name">Website wireframes</span><span class="item-meta">12 screens, fixed fee</span></span>
+            <span class="amt">$1,200.00</span>
+          </li>
+          <li>
+            <span><span class="item-name">Revision round &amp; handoff</span><span class="item-meta">6 hrs × $75.00</span></span>
+            <span class="amt">$450.00</span>
+          </li>
+        </ul>
+      </section>
 
-    <section class="totals" aria-label="Totals">
-      <div class="row"><span>Subtotal</span><span>$3,250.00</span></div>
-      <div class="row"><span>Tax (8%)</span><span>$260.00</span></div>
-      <div class="row total"><span>Total</span><span>$3,510.00</span></div>
-    </section>
-  </div>
+      <section>
+        <h2 id="totals-h">Totals</h2>
+        <dl class="totals" aria-labelledby="totals-h">
+          <div><dt>Subtotal</dt><dd>$3,450.00</dd></div>
+          <div><dt>Tax (8%)</dt><dd>$276.00</dd></div>
+          <div class="total"><dt>Total due</dt><dd>$3,726.00</dd></div>
+        </dl>
+      </section>
+    </div>
 
-  <footer>
-    <button type="button" class="primary">Send invoice</button>
-    <button type="button" class="secondary">Save draft</button>
-  </footer>
-</aside>
+    <div class="actions">
+      <button type="button" class="primary">Send invoice</button>
+      <button type="button" class="secondary">Save draft</button>
+    </div>
+  </aside>
 </body>
 </html>

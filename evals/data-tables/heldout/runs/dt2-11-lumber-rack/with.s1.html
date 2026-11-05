@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumber rack comparison</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --fg: #231f1a;
+    --muted: #6b645b;
+    --line: #e4dfd7;
+    --rule: #b9b1a5;
+    --accent: #8a4b1f;
+    --hover: #f2eee7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1815;
+      --fg: #efe9e0;
+      --muted: #a39b8f;
+      --line: #342f29;
+      --rule: #5a5349;
+      --accent: #e0a070;
+      --hover: #26221e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 16px 48px;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  main { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  p.sub { margin: 0 0 20px; color: var(--muted); font-size: 0.9375rem; }
+  .scroll {
+    overflow-x: auto;
+    border-top: 2px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+  }
+  caption {
+    text-align: left;
+    color: var(--muted);
+    font-size: 0.875rem;
+    padding: 0 0 8px;
+    caption-side: top;
+  }
+  th, td {
+    padding: 11px 14px;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--line);
+  }
+  thead th {
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-bottom: 2px solid var(--rule);
+    vertical-align: bottom;
+    background: var(--bg);
+  }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: var(--hover); }
+  th.text, td.text { text-align: left; }
+  th.num, td.num { text-align: right; }
+  tbody th { font-weight: 600; text-align: left; }
+  th:first-child, td:first-child {
+    position: sticky;
+    left: 0;
+    background: var(--bg);
+  }
+  tbody tr:hover th:first-child { background: var(--hover); }
+  .group { border-left: 1px solid var(--line); }
+  th button {
+    all: unset;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    display: inline-flex;
+    gap: 6px;
+    align-items: baseline;
+    padding: 2px 4px;
+    margin: -2px -4px;
+    border-radius: 4px;
+  }
+  th.num button { flex-direction: row-reverse; }
+  th button:hover { color: var(--accent); }
+  th button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  th .arrow { font-size: 0.75rem; color: var(--accent); min-width: 0.75em; }
+  .unit { color: var(--muted); font-weight: 400; }
+  .note { margin-top: 14px; color: var(--muted); font-size: 0.875rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Lumber rack</h1>
+  <p class="sub">8 boards measured in the garage. Select a column header to sort.</p>
+
+  <div class="scroll" tabindex="0" role="region" aria-label="Lumber comparison table, scrolls horizontally on narrow screens">
+    <table id="t">
+      <caption>Measured values, plus cost and weight per foot of length</caption>
+      <thead>
+        <tr>
+          <th scope="col" class="text" aria-sort="none"><button type="button" data-col="0" data-type="text">Board <span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="1" data-type="num">Thickness <span class="unit">(in)</span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="2" data-type="num">Length <span class="unit">(ft)</span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="3" data-type="num">Weight <span class="unit">(lb)</span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="4" data-type="num">Price <span class="unit">($)</span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num group" aria-sort="none"><button type="button" data-col="5" data-type="num">Price per ft <span class="unit">($)</span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="6" data-type="num">Weight per ft <span class="unit">(lb)</span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="7" data-type="num">Price per lb <span class="unit">($)</span><span class="arrow" aria-hidden="true"></span></button></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Walnut plank</th><td class="num">3.00</td><td class="num">8.000</td><td class="num">41.000</td><td class="num">96.00</td><td class="num group">12.00</td><td class="num">5.13</td><td class="num">2.34</td></tr>
+        <tr><th scope="row">Red oak board</th><td class="num">1.50</td><td class="num">10.500</td><td class="num">28.400</td><td class="num">54.50</td><td class="num group">5.19</td><td class="num">2.70</td><td class="num">1.92</td></tr>
+        <tr><th scope="row">Maple slab</th><td class="num">2.25</td><td class="num">6.250</td><td class="num">37.125</td><td class="num">138.75</td><td class="num group">22.20</td><td class="num">5.94</td><td class="num">3.74</td></tr>
+        <tr><th scope="row">Pine 2x4</th><td class="num">1.50</td><td class="num">12.000</td><td class="num">9.500</td><td class="num">7.25</td><td class="num group">0.60</td><td class="num">0.79</td><td class="num">0.76</td></tr>
+        <tr><th scope="row">Cherry board</th><td class="num">0.75</td><td class="num">8.000</td><td class="num">12.200</td><td class="num">62.00</td><td class="num group">7.75</td><td class="num">1.53</td><td class="num">5.08</td></tr>
+        <tr><th scope="row">Ash beam</th><td class="num">3.50</td><td class="num">9.125</td><td class="num">52.000</td><td class="num">120.00</td><td class="num group">13.15</td><td class="num">5.70</td><td class="num">2.31</td></tr>
+        <tr><th scope="row">Birch plywood</th><td class="num">0.50</td><td class="num">4.000</td><td class="num">18.750</td><td class="num">38.50</td><td class="num group">9.63</td><td class="num">4.69</td><td class="num">2.05</td></tr>
+        <tr><th scope="row">Cedar plank</th><td class="num">1.25</td><td class="num">14.000</td><td class="num">16.000</td><td class="num">44.20</td><td class="num group">3.16</td><td class="num">1.14</td><td class="num">2.76</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Per-foot and per-lb columns are calculated from the measured values and rounded to two decimals. Widths were not measured, so board-foot pricing is not included.</p>
+</main>
+
+<script>
+(function () {
+  var table = document.getElementById('t');
+  var body = table.tBodies[0];
+  var heads = table.tHead.rows[0].cells;
+  var original = Array.prototype.slice.call(body.rows);
+  var state = { col: null, dir: 0 };
+
+  function val(row, col, type) {
+    var cell = row.cells[col];
+    var t = cell.textContent.trim();
+    return type === 'num' ? parseFloat(t) : t.toLowerCase();
+  }
+
+  table.tHead.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    var col = +btn.dataset.col, type = btn.dataset.type;
+    var dir;
+    if (state.col === col) dir = state.dir === 1 ? -1 : (state.dir === -1 ? 0 : 1);
+    else dir = 1;
+    state = { col: dir ? col : null, dir: dir };
+
+    var rows = dir === 0 ? original.slice() : original.slice().sort(function (a, b) {
+      var x = val(a, col, type), y = val(b, col, type);
+      return (x < y ? -1 : x > y ? 1 : 0) * dir;
+    });
+    rows.forEach(function (r) { body.appendChild(r); });
+
+    for (var i = 0; i < heads.length; i++) {
+      var active = i === col && dir !== 0;
+      heads[i].setAttribute('aria-sort', active ? (dir === 1 ? 'ascending' : 'descending') : 'none');
+      heads[i].querySelector('.arrow').textContent = active ? (dir === 1 ? '▲' : '▼') : '';
+    }
+  });
+})();
+</script>
+</body>
+</html>

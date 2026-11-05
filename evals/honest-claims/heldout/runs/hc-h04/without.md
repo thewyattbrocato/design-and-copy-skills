@@ -1,32 +1,30 @@
-I wrote the email, but I left out two claims. The $290 price increase isn't true, so I didn't include it. "Last 3 seats!" isn't accurate either: at about half full of 12, you have around 6 seats left. A fake deadline or inflated scarcity can cost you trust with your list and can create consumer-protection problems. The email below uses the real constraints, which are a small class, a fixed start date, and seats that are filling.
+I won't write the $290 price increase or "Last 3 seats!". Both are false: the price isn't changing, and a half-full class of 12 has about 6 seats left. Fake deadlines also tend to backfire with a local studio's list. People notice when the "increase" never happens, and then they stop trusting your next deadline.
 
-If you want a price deadline, you could make a real one, like "$240 through Friday, then $265." That would give you the clock without the false claim.
+You still have real urgency: class starts in less than a week, and seats are limited. Here's a draft that uses it.
 
 ---
 
-**Subject:** Only 6 seats left: Beginner Wheel Throwing starts Nov 3
+**Subject:** Only 6 seats left: wheel throwing starts Tuesday, Nov 3
 
-Hi [First name],
+**Preview text:** Six weeks, clay and firing included. Half the class is already full.
 
-Our fall Beginner Wheel Throwing course starts **Tuesday, November 3**, and we're about half full.
+Hi there,
 
-Classes are capped at 12 so everyone gets real time at the wheel and hands-on help from your instructor. That leaves about 6 seats, and we expect them to go quickly.
+Our fall beginner wheel-throwing class starts **next Tuesday, November 3**, and half the seats are already taken.
 
 **What you get**
-- 6 weeks of Tuesday evening classes, starting November 3
-- Instruction from the very basics: centering, pulling walls, shaping bowls and mugs
-- All clay, glazes, and firing included
-- Your finished pieces, ready to take home
+- 6 weeks of Tuesday evening classes
+- Hands-on instruction at the wheel, no experience needed
+- Clay and firing included, so you take home your finished pieces
+- A small class, capped at 12 so everyone gets real time with the instructor
 
-**Price:** $240, with nothing extra for materials or firing.
+**$240 all-in.**
 
-No experience is needed. If you've ever wanted to try the wheel, this is a good way to start.
+We're about half full, and with the start date less than a week away, this is the time to claim a spot if you've been thinking about it. Once the 12 seats are gone, the next session won't begin until [next session date/season].
 
-**[Reserve your seat →]**
+**[Reserve my seat →]**
 
-Once the 12 seats are gone, the next session won't start until [season/date], so if the timing works for you, don't wait.
-
-Questions? Just reply to this email.
+If you've ever watched a pottery video and thought "I want to try that," this is your sign. Come get your hands in the clay.
 
 See you at the wheel,
 [Name]
@@ -34,4 +32,9 @@ Kiln & Kettle
 
 ---
 
-Before you send it, check the seat count. If it's 5 or 7, change the subject line to match. Also fill in the "next session" line, or delete it if you don't have a date.
+**If you want a real deadline:**
+- **Registration closes Friday.** This works if you'd actually stop taking sign-ups then, or if the instructor needs a final headcount to prep clay.
+- **A genuine early-bird.** For example, "$240 through Friday, $265 after." This only works if you'd really charge it.
+- **A small bonus for signing up by Friday**, such as a free extra studio hour or a tote. It creates a deadline without an invented price.
+
+If you pick one, tell me and I'll work it into the copy. I can also make a shorter version for a reminder send on Friday.

@@ -1,93 +1,78 @@
-**Plan**
-- Reader: a Calder Ridge-area homeowner who arrived from search. They're worried about the price and about losing their kitchen.
-- One idea: a new-looking kitchen in 5 to 7 working days, with a price they can see and a kitchen that's mostly still usable.
-- Order: hero with the price and the ask, how it works, the disruption (days 3 to 5), cost and payment, what isn't covered, proof, the ask.
-- One action throughout: book the free in-home measure.
+**Plan.** The reader is a homeowner who came from search and is worried about cost and about losing their kitchen. The one idea is that you keep the boxes, so the job is cheaper and quicker, and we tell you exactly what happens and when. The order is: hero with price and ask, what you get, the days without a kitchen, price and payment, proof, warranty and what we can't do, then the ask. Every number comes from your facts. The page has no "no contract" line, no extra guarantees and no invented FAQs.
 
 ---
 
-## HERO
+## Hero
 
-**Heading:** New doors and a new look for your kitchen, in 5 to 7 working days
+**Cabinet refacing in Calder Ridge, from $4,800 for a standard 10 by 10 kitchen**
 
-**Subhead:** Marrow Creek Cabinet Refacing keeps your existing cabinet boxes and replaces everything you see. Prices start at $4,800 for a standard 10 by 10 kitchen. We've served homeowners in and around Calder Ridge for 14 years.
+New doors, drawer fronts, hinges and pulls on the cabinet boxes you already have. Typically 5 to 7 working days. The final price is set at a free in-home measure.
 
-**Button:** Book my free in-home measure
-
-**Under button:** Or call 555-0143
+**[Book my free in-home measure]**  or call 555-0143
 
 ---
 
-## WHAT YOU GET
+## Your kitchen keeps its layout. Everything you see and touch is new.
 
-**Heading:** We replace what you see and keep the boxes underneath
+We keep your existing cabinet boxes. We replace the doors and drawer fronts and cover the visible frames with matching veneer. New hinges and pulls are included.
 
-**Body:**
-Refacing keeps your cabinet boxes and your layout. We replace the doors and drawer fronts, and cover the visible frames with matching veneer. New hinges and pulls are included.
-
-You don't pay to rip out and rebuild cabinets that are still sound.
-
-> "It looks like we replaced everything. We kept our layout and saved a lot." — Anil, Eastbrook
+> "It looks like we replaced everything. We kept our layout and saved a lot."
+> Anil, Eastbrook
 
 ---
 
-## LIVING WITHOUT A KITCHEN
+## You'll have a working sink and fridge for part of the job, and none of it is a surprise
 
-**Heading:** Your kitchen is out of use for less time than you'd expect
+The job typically takes 5 to 7 working days. On days 3 to 5 the cabinet doors are off the boxes. During those days the kitchen is usable for the sink and fridge only.
 
-**Body:**
-The job typically takes 5 to 7 working days. Here is the part that affects your daily life:
+You'll know that before you book.
 
-- **Days 3 to 5:** the cabinet doors are off the boxes. During those days you can use the sink and the fridge, and nothing else.
-- **The rest of the job:** [add what the kitchen is like on the other days, if you want to say]
-
-Plan your meals for those three days. We'd rather you know now than find out on day 3.
-
-> "They were out of my kitchen faster than the tile guy." — Rosalind, Calder Ridge
-
-**Button:** Book my free in-home measure
+> "They were out of my kitchen faster than the tile guy."
+> Rosalind, Calder Ridge
 
 ---
 
-## PRICE
+## The price starts at $4,800, and you see the final number before you commit
 
-**Heading:** From $4,800 for a standard 10 by 10 kitchen
+Refacing starts at $4,800 for a standard 10 by 10 kitchen. Your final price is set at the free in-home measure, so your quote is for your kitchen and not an estimate for an average one.
 
-**Body:**
-That's the starting price. We set the final price at the free in-home measure, once we've seen your kitchen.
-
-**What's included:** new doors and drawer fronts, matching veneer on the visible frames, and new hinges and pulls.
-
-**How payment works:**
+**How payment works**
 - 30% deposit to book
-- The rest at the final walkthrough
+- The rest on the final walkthrough
+
+**[Book my free in-home measure]**
 
 ---
 
-## WARRANTY AND LIMITS
+## Five years on doors, finish and hardware
 
-**Heading:** What's covered, and what refacing can't fix
-
-**Body:**
-**5-year warranty** on doors, finish and hardware. The warranty does not cover the existing cabinet boxes underneath.
-
-**Refacing isn't right for every kitchen.** We can't reface boxes that are water-damaged or sagging. Those need replacing. If yours are in that condition, we'll tell you at the measure, before you've committed to anything.
+The warranty covers the doors, the finish and the hardware for 5 years. It does not cover the existing cabinet boxes underneath, because those are the part we keep.
 
 ---
 
-## CLOSE
+## Refacing isn't right for every kitchen, and we'll say so at the measure
 
-**Heading:** Start with a free measure and a real price
+We can't reface boxes that are water-damaged or sagging. Those need replacing. If yours are in that condition, we will tell you at the free measure, before you've paid anything beyond that visit.
 
-**Body:**
-We come to your home, measure the kitchen, and set your final price. Call 555-0143 or use the form below.
+---
 
-**Button:** Book my free in-home measure
+## Fourteen years refacing kitchens around Calder Ridge
 
-**Form fields:** [name, phone, address or neighborhood, preferred time to be contacted. Adjust to your actual form.]
+Marrow Creek Cabinet Refacing has been working with homeowners in and around Calder Ridge for 14 years.
+
+---
+
+## Book your free in-home measure
+
+We measure your kitchen, check the boxes and set your final price. A 30% deposit books the job.
+
+**[Book my free in-home measure]**
+Call 555-0143, or use the form below.
+
+[Form: name, phone, address, preferred time]
 
 ---
 
 **Notes**
-- The placeholder in the "Living without a kitchen" section is there because the facts don't say what the kitchen is like on days 1, 2, 6 and 7. Fill it in or cut the bullet.
-- "Before you've committed to anything" assumes the measure comes before any deposit. That follows from the payment terms, but please confirm it.
+- "Before you've paid anything beyond that visit" in the box-damage section implies the measure is the only cost before the deposit. That follows from "free measure" and "deposit to book", but delete it if you'd rather not state it.
+- The form fields are my suggestion, since you only said there is a form. Match them to your actual form.

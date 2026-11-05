@@ -64,7 +64,7 @@ Write the objective before any activity: who does what, in what situation, to wh
 
 - Start from the claim ("can tell which readings need a recheck a week later, among mixed cases"), then build items that would produce that evidence. One same-day score cannot certify it. Complex work needs observed performance scored against a short rubric.
 - Name the metric the organization already tracks and the observable behavior behind it, and write the check before the training. Add closer signals (choices in later practice, error rates, tickets, which aids get used) and compare people who applied the skill with those who did not; ask both why.
-- A satisfaction survey flags unhappiness only. Pilot with three to five people thinking aloud, and let them struggle instead of stepping in.
+- A satisfaction survey flags unhappiness only. Show ratings beside performed results, and report small groups as "8 of 10", not percentages. Pilot with three to five people thinking aloud, and let them struggle instead of stepping in.
 
 ## Motivation and access
 
@@ -87,4 +87,8 @@ Do not stall. Ask once only if interactive and cheap (what should people do diff
 - Each wrong option is a real mistake and feedback names its consequence.
 - The cause was checked before a course was proposed.
 - Mastery needs a later day and a mixed set.
-- Success is measured by behavior or an existing metric, with no invented numbers.
+- Success is measured by behavior or an existing metric, with no invented numbers; survey items ask about one recent event each, scores state their base, and scoring was fixed beforehand.
+
+## References
+
+- [references/measuring-and-wording.md](references/measuring-and-wording.md): load to write a survey, rating scale or self-rating item, set pass criteria for observed practice, design a pre/post check, or report what a score can and cannot show.

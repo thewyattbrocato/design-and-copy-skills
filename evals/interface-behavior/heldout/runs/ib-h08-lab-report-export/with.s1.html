@@ -3,18 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Samples · Harbor Water Quality Lab</title>
+<title>Samples · Water Quality Lab Portal</title>
 <style>
   :root {
-    --bg: #f5f7f8; --panel: #fff; --text: #14232b; --muted: #5a6b74; --line: #dce3e7;
-    --accent: #0b6e8a; --accent-text: #fff; --ok: #19734a; --ok-bg: #e4f4ec;
-    --warn: #8a5a00; --warn-bg: #fdf0d5; --track: #dbe6eb; --focus: #0b6e8a;
+    --bg: #f5f7f9; --surface: #fff; --text: #17242d; --muted: #5b6b76;
+    --line: #dde3e8; --accent: #0b6e8f; --accent-text: #fff; --accent-soft: #e3f1f6;
+    --ok: #1d7a46; --ok-soft: #e4f4EA; --warn: #8a5a00; --warn-soft: #fbefd5;
+    --focus: #0b6e8f;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0f1a20; --panel: #172630; --text: #e6eef2; --muted: #9bb0ba; --line: #2a3d48;
-      --accent: #4fb8d6; --accent-text: #08202a; --ok: #6fd5a3; --ok-bg: #173a2b;
-      --warn: #f0c36a; --warn-bg: #3b2f12; --track: #263a45; --focus: #4fb8d6;
+      --bg: #11181d; --surface: #182128; --text: #e6edf1; --muted: #98a8b3;
+      --line: #2b3841; --accent: #4cb4d6; --accent-text: #08202a; --accent-soft: #19323d;
+      --ok: #5fcb8c; --ok-soft: #1a3326; --warn: #e8b84f; --warn-soft: #3a2f14;
+      --focus: #4cb4d6;
     }
   }
   * { box-sizing: border-box; }
@@ -22,242 +24,203 @@
     margin: 0; background: var(--bg); color: var(--text);
     font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
-  header { background: var(--panel); border-bottom: 1px solid var(--line); }
-  .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
-  header .wrap { display: flex; justify-content: space-between; align-items: center; height: 56px; }
-  .brand { font-weight: 650; }
-  .user { color: var(--muted); font-size: 13px; }
-  main { padding: 28px 0 48px; }
-  .title-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; }
-  h1 { font-size: 22px; margin: 0 0 2px; }
-  .sub { margin: 0; color: var(--muted); }
+  header.top {
+    background: var(--surface); border-bottom: 1px solid var(--line);
+    padding: 12px 24px; display: flex; gap: 24px; align-items: center;
+  }
+  header.top strong { font-size: 16px; }
+  header.top nav { display: flex; gap: 16px; color: var(--muted); font-size: 14px; }
+  header.top nav .on { color: var(--text); font-weight: 600; }
+  main { max-width: 880px; margin: 0 auto; padding: 28px 24px 56px; }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0; }
   button {
     font: inherit; cursor: pointer; border-radius: 6px; padding: 9px 16px;
     border: 1px solid var(--accent); background: var(--accent); color: var(--accent-text); font-weight: 600;
-    display: inline-flex; align-items: center; gap: 8px;
   }
   button.secondary { background: transparent; color: var(--accent); }
-  button:focus-visible, a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-  button[aria-disabled="true"] { opacity: .7; cursor: progress; }
-  .spinner {
-    width: 14px; height: 14px; border-radius: 50%; display: none;
-    border: 2px solid currentColor; border-right-color: transparent; animation: spin .8s linear infinite;
-  }
-  .busy .spinner { display: inline-block; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  button.link { border: 0; background: none; color: var(--accent); padding: 2px 4px; font-weight: 500; text-decoration: underline; }
+  button:disabled { cursor: progress; opacity: .75; }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
-  #export-panel {
-    margin-top: 18px; background: var(--panel); border: 1px solid var(--line);
-    border-radius: 8px; padding: 16px 18px; display: none;
+  #exportPanel { margin: 20px 0 0; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px;
   }
-  #export-panel.show { display: block; }
-  .panel-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
-  .panel-head strong { font-size: 15px; }
-  .elapsed { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
-  .bar { height: 8px; background: var(--track); border-radius: 4px; overflow: hidden; margin: 12px 0 10px; }
-  .bar > span { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 4px; transition: width .4s linear; }
-  .note { margin: 0; color: var(--muted); font-size: 13px; }
-  .actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
-  #export-panel.done { border-color: var(--ok); }
-  #export-panel.done .bar > span { background: var(--ok); }
-  #export-panel.cancelled .bar > span { background: var(--muted); }
-  .done-title { color: var(--ok); }
-  a.btn {
-    text-decoration: none; border-radius: 6px; padding: 9px 16px; font-weight: 600;
-    background: var(--accent); color: var(--accent-text); border: 1px solid var(--accent); display: inline-block;
+  .card.running { border-color: var(--accent); background: var(--accent-soft); }
+  .card.done { border-color: var(--ok); background: var(--ok-soft); }
+  .card.cancelled { background: var(--warn-soft); border-color: var(--warn); }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .title { font-weight: 600; }
+  .meta { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .bar { height: 8px; border-radius: 4px; background: var(--line); margin: 12px 0 8px; overflow: hidden; position: relative; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 4px; transition: width .3s linear; }
+  .bar.over > i { width: 35% !important; position: absolute; animation: slide 1.4s ease-in-out infinite alternate; transition: none; }
+  @keyframes slide { from { left: 0; } to { left: 65%; } }
+  .spin {
+    display: inline-block; width: 14px; height: 14px; margin-right: 8px; vertical-align: -2px;
+    border: 2px solid var(--accent); border-right-color: transparent; border-radius: 50%;
+    animation: rot .8s linear infinite;
   }
-
-  .card { margin-top: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  .card h2 { font-size: 15px; margin: 0; padding: 14px 18px; border-bottom: 1px solid var(--line); }
-  .scroll { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; padding: 10px 18px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-  tr:last-child td { border-bottom: 0; }
-  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
-  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-  .tag { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
-  .tag.ok { color: var(--ok); background: var(--ok-bg); }
-  .tag.warn { color: var(--warn); background: var(--warn-bg); }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @keyframes rot { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) {
-    .spinner { animation-duration: 2.4s; }
-    .bar > span { transition: none; }
+    .spin, .bar.over > i { animation: none; }
+    .bar.over > i { left: 0; width: 100% !important; opacity: .5; }
   }
+
+  h2 { font-size: 16px; margin: 32px 0 10px; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); font-size: 14px; }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; background: var(--bg); }
+  tr:last-child td { border-bottom: 0; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+  .tag.pass { background: var(--ok-soft); color: var(--ok); }
+  .tag.review { background: var(--warn-soft); color: var(--warn); }
+  .table-wrap { overflow-x: auto; }
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <span class="brand">Harbor Water Quality Lab</span>
-    <span class="user">Lab portal · signed in as analyst</span>
-  </div>
+<header class="top">
+  <strong>AquaLab Portal</strong>
+  <nav><span>Dashboard</span><span class="on">Samples</span><span>Sites</span><span>Reports</span></nav>
 </header>
 
-<main class="wrap">
-  <div class="title-row">
+<main>
+  <div class="head">
     <div>
       <h1>Samples</h1>
-      <p class="sub">2026 field season · 6 most recent results</p>
+      <p class="sub">2026 season · 6 most recent shown</p>
     </div>
-    <button type="button" id="export-btn" aria-describedby="export-hint">
-      <span class="spinner" aria-hidden="true"></span>
-      <span id="export-label">Export season report</span>
-    </button>
+    <button id="exportBtn" type="button">Export season report</button>
   </div>
-  <span id="export-hint" class="sr">Preparing the report takes about 25 seconds.</span>
 
-  <section id="export-panel" aria-labelledby="panel-title">
-    <div class="panel-head">
-      <strong id="panel-title">Preparing season report…</strong>
-      <span class="elapsed" id="elapsed" aria-hidden="true">0:00</span>
-    </div>
-    <div class="bar" role="progressbar" aria-labelledby="panel-title" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
-      <span id="bar-fill"></span>
-    </div>
-    <p class="note" id="note">This usually takes about 25 seconds. You can keep working in other tabs; keep this page open until it finishes.</p>
-    <div class="actions" id="actions">
-      <button type="button" class="secondary" id="cancel-btn">Cancel</button>
-    </div>
-    <div class="sr" role="status" aria-live="polite" id="live"></div>
-  </section>
+  <div id="exportPanel" aria-live="polite" hidden></div>
 
-  <section class="card">
-    <h2>Recent samples</h2>
-    <div class="scroll">
-      <table id="samples">
-        <thead>
-          <tr>
-            <th>Sample ID</th><th>Site</th><th>Collected</th>
-            <th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>WQ-26-0412</td><td>North Pier</td><td>2026-10-13</td><td class="num">7.8</td><td class="num">2.1</td><td><span class="tag ok">Passed</span></td></tr>
-          <tr><td>WQ-26-0411</td><td>Mill Creek outfall</td><td>2026-10-13</td><td class="num">6.9</td><td class="num">8.4</td><td><span class="tag warn">Review</span></td></tr>
-          <tr><td>WQ-26-0410</td><td>Cedar Reservoir</td><td>2026-10-12</td><td class="num">7.4</td><td class="num">1.3</td><td><span class="tag ok">Passed</span></td></tr>
-          <tr><td>WQ-26-0409</td><td>East Marsh</td><td>2026-10-12</td><td class="num">7.1</td><td class="num">3.9</td><td><span class="tag ok">Passed</span></td></tr>
-          <tr><td>WQ-26-0408</td><td>Quarry Pond</td><td>2026-10-10</td><td class="num">8.6</td><td class="num">5.7</td><td><span class="tag warn">Review</span></td></tr>
-          <tr><td>WQ-26-0407</td><td>North Pier</td><td>2026-10-09</td><td class="num">7.7</td><td class="num">2.4</td><td><span class="tag ok">Passed</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+  <h2>Recent samples</h2>
+  <div class="table-wrap">
+    <table id="samples">
+      <thead>
+        <tr><th>Sample ID</th><th>Site</th><th>Collected</th><th class="num">pH</th><th class="num">Turbidity (NTU)</th><th>Status</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 </main>
 
 <script>
 (function () {
-  var DURATION = 25000;            // simulated server time
-  var btn = document.getElementById('export-btn');
-  var label = document.getElementById('export-label');
-  var panel = document.getElementById('export-panel');
-  var title = document.getElementById('panel-title');
-  var elapsedEl = document.getElementById('elapsed');
-  var bar = document.getElementById('bar');
-  var fill = document.getElementById('bar-fill');
-  var note = document.getElementById('note');
-  var actions = document.getElementById('actions');
-  var live = document.getElementById('live');
+  var EXPECTED = 25;      // seconds, typical server time
+  var samples = [
+    ["WQ-26-0412", "Miller Creek upstream", "2026-10-26", 7.4, 1.8, "Pass"],
+    ["WQ-26-0411", "Miller Creek outfall", "2026-10-26", 6.9, 4.2, "Review"],
+    ["WQ-26-0410", "Harbor Reservoir", "2026-10-25", 7.8, 0.9, "Pass"],
+    ["WQ-26-0409", "North Well 3", "2026-10-24", 7.1, 0.4, "Pass"],
+    ["WQ-26-0408", "Cedar Pond inlet", "2026-10-23", 8.6, 6.7, "Review"],
+    ["WQ-26-0407", "Harbor Reservoir", "2026-10-22", 7.7, 1.1, "Pass"]
+  ];
 
-  var timer = null, startedAt = 0, running = false, lastUrl = null, announced = {};
+  var tbody = document.querySelector("#samples tbody");
+  samples.forEach(function (s) {
+    var tr = document.createElement("tr");
+    var cls = s[5] === "Pass" ? "pass" : "review";
+    tr.innerHTML = "<td>" + s[0] + "</td><td>" + s[1] + "</td><td>" + s[2] +
+      '</td><td class="num">' + s[3].toFixed(1) + '</td><td class="num">' + s[4].toFixed(1) +
+      '</td><td><span class="tag ' + cls + '">' + s[5] + "</span></td>";
+    tbody.appendChild(tr);
+  });
 
-  function fmt(ms) {
-    var s = Math.floor(ms / 1000);
-    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
-  }
+  var btn = document.getElementById("exportBtn");
+  var panel = document.getElementById("exportPanel");
+  var baseTitle = document.title;
+  var timer = null, startedAt = 0, announced = 0;
 
-  function say(msg) { live.textContent = ''; setTimeout(function () { live.textContent = msg; }, 50); }
-
-  function guard(e) { e.preventDefault(); e.returnValue = ''; }
-
-  function setBusy(on) {
-    running = on;
-    btn.classList.toggle('busy', on);
-    btn.setAttribute('aria-disabled', on ? 'true' : 'false');
-    label.textContent = on ? 'Preparing report…' : 'Export season report';
-    if (on) window.addEventListener('beforeunload', guard);
-    else window.removeEventListener('beforeunload', guard);
+  function fmt(sec) {
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return m + ":" + (s < 10 ? "0" : "") + s;
   }
 
   function csv() {
-    var rows = [].map.call(document.querySelectorAll('#samples tr'), function (tr) {
-      return [].map.call(tr.children, function (c) {
-        return '"' + c.textContent.trim().replace(/"/g, '""') + '"';
-      }).join(',');
+    var lines = [["Sample ID", "Site", "Collected", "pH", "Turbidity NTU", "Status"].join(",")];
+    samples.forEach(function (s) {
+      lines.push(['"' + s[0] + '"', '"' + s[1] + '"', s[2], s[3], s[4], s[5]].join(","));
     });
-    return rows.join('\n');
+    return lines.join("\n");
   }
 
   function start() {
-    if (running) return;                     // ignore repeat clicks
-    if (lastUrl) { URL.revokeObjectURL(lastUrl); lastUrl = null; }
-    announced = {};
-    setBusy(true);
-    panel.className = 'show';
-    title.className = '';
-    title.textContent = 'Preparing season report…';
-    note.textContent = 'This usually takes about 25 seconds. Keep this page open until it finishes.';
-    actions.innerHTML = '<button type="button" class="secondary" id="cancel-btn">Cancel</button>';
-    document.getElementById('cancel-btn').addEventListener('click', cancel);
-    elapsedEl.textContent = '0:00';
-    fill.style.width = '0%';
-    bar.setAttribute('aria-valuenow', '0');
-    say('Export started. This usually takes about 25 seconds.');
+    btn.disabled = true;
+    btn.textContent = "Exporting…";
     startedAt = Date.now();
+    announced = 0;
+    panel.hidden = false;
+    panel.innerHTML =
+      '<div class="card running">' +
+        '<div class="row"><div class="title"><span class="spin" aria-hidden="true"></span>Preparing your season report</div>' +
+        '<button type="button" class="link" id="cancelBtn">Cancel</button></div>' +
+        '<div class="bar" id="bar" role="progressbar" aria-label="Export progress estimate" aria-valuemin="0" aria-valuemax="100"><i id="fill"></i></div>' +
+        '<div class="meta"><span id="elapsed">0:00</span> elapsed · usually takes about ' + EXPECTED + ' seconds. You can keep using this page; the download will appear here.</div>' +
+        '<div class="meta" id="late" hidden>Taking a little longer than usual. It’s still working.</div>' +
+      "</div>";
+    document.getElementById("cancelBtn").addEventListener("click", cancel);
     timer = setInterval(tick, 250);
     tick();
+    window.addEventListener("beforeunload", warn);
   }
 
   function tick() {
-    var ms = Date.now() - startedAt;
-    elapsedEl.textContent = 'Elapsed ' + fmt(ms) + ' of about ' + fmt(DURATION);
-    // real server progress is unknown, so hold at 95% until it actually finishes
-    var pct = Math.min(95, Math.round(ms / DURATION * 95));
-    fill.style.width = pct + '%';
-    bar.setAttribute('aria-valuenow', pct);
-    if (ms > 10000 && !announced.a) { announced.a = 1; say('Still working. About 15 seconds left.'); }
-    if (ms > 20000 && !announced.b) { announced.b = 1; say('Almost done.'); }
-    if (ms >= DURATION) finish();
+    var secs = (Date.now() - startedAt) / 1000;
+    var bar = document.getElementById("bar");
+    var fill = document.getElementById("fill");
+    document.getElementById("elapsed").textContent = fmt(Math.floor(secs));
+    document.title = "Exporting… " + fmt(Math.floor(secs)) + " · " + baseTitle;
+    if (secs >= EXPECTED + 1) {
+      bar.classList.add("over");
+      bar.removeAttribute("aria-valuenow");
+      document.getElementById("late").hidden = false;
+    } else {
+      var pct = Math.min(95, secs / EXPECTED * 95);
+      fill.style.width = pct + "%";
+      bar.setAttribute("aria-valuenow", Math.round(pct));
+    }
+    if (secs >= EXPECTED) finish();
   }
 
+  function stop() {
+    clearInterval(timer); timer = null;
+    window.removeEventListener("beforeunload", warn);
+    document.title = baseTitle;
+    btn.disabled = false;
+  }
+
+  function warn(e) { e.preventDefault(); e.returnValue = ""; }
+
   function finish() {
-    clearInterval(timer);
-    setBusy(false);
-    var blob = new Blob([csv()], { type: 'text/csv' });
-    lastUrl = URL.createObjectURL(blob);
-    panel.className = 'show done';
-    title.className = 'done-title';
-    title.textContent = 'Season report is ready';
-    elapsedEl.textContent = 'Took ' + fmt(Date.now() - startedAt);
-    fill.style.width = '100%';
-    bar.setAttribute('aria-valuenow', '100');
-    note.textContent = 'season-report-2026.csv · ' + Math.max(1, Math.round(blob.size / 1024)) + ' KB';
-    actions.innerHTML = '<a class="btn" id="dl" download="season-report-2026.csv">Download report</a>' +
-                        '<button type="button" class="secondary" id="dismiss">Dismiss</button>';
-    var dl = document.getElementById('dl');
-    dl.href = lastUrl;
-    document.getElementById('dismiss').addEventListener('click', function () {
-      panel.className = '';
-      btn.focus();
-    });
-    say('Season report is ready. Use the Download report link.');
-    dl.focus();
+    stop();
+    var name = "season-report-2026.csv";
+    var url = URL.createObjectURL(new Blob([csv()], { type: "text/csv" }));
+    btn.textContent = "Export again";
+    panel.innerHTML =
+      '<div class="card done"><div class="row">' +
+        '<div><div class="title">✓ Season report ready</div>' +
+        '<div class="meta">' + name + " · took " + fmt(Math.round((Date.now() - startedAt) / 1000)) + "</div></div>" +
+        '<a id="dl" href="' + url + '" download="' + name + '" style="text-decoration:none"><button type="button">Download report</button></a>' +
+      "</div></div>";
+    document.querySelector("#dl button").focus();
   }
 
   function cancel() {
-    clearInterval(timer);
-    setBusy(false);
-    panel.className = 'show cancelled';
-    title.className = '';
-    title.textContent = 'Export cancelled';
-    elapsedEl.textContent = '';
-    fill.style.width = '0%';
-    note.textContent = 'Nothing was downloaded. You can start the export again at any time.';
-    actions.innerHTML = '';
-    say('Export cancelled.');
+    stop();
+    btn.textContent = "Export season report";
+    panel.innerHTML =
+      '<div class="card cancelled"><div class="row"><div class="title">Export cancelled</div>' +
+      '<button type="button" class="secondary" id="retry">Start again</button></div></div>';
+    document.getElementById("retry").addEventListener("click", start);
     btn.focus();
   }
 
-  btn.addEventListener('click', start);
+  btn.addEventListener("click", function () { if (!btn.disabled) start(); });
 })();
 </script>
 </body>

@@ -78,4 +78,5 @@ Deliver the copy deck first: labelled sections with heading, body and button tex
 ## References
 
 - [page-types.md](references/page-types.md): load when the page is pricing, about, case study, long-form sales or product, or when the user asks for a section plan.
+- [customer-stories.md](references/customer-stories.md): load when the copy tells one customer's change (case-study page, homepage card, pull quote, spoken version) or the notes about a customer are thin.
 - [anatomy-length-and-truth.md](references/anatomy-length-and-truth.md): load when the page must be cut or sized, the hero opens on a feature, a real limit must be stated, or navigation is in question.

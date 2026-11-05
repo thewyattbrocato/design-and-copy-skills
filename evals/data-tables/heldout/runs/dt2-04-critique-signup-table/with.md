@@ -1,37 +1,44 @@
-The table has a few separate problems. The first two probably cause most of the pain.
+Here's what's wrong with it, roughly from most to least damaging for your ops people.
 
 **1. Everything is centered.**
-- Centered numbers don't line up by place value, so you can't compare `$340` with `$12,050.5` at a glance.
-- Right-align the numeric columns (Revenue, Churn, Seats) and their headers. Left-align the text columns (Name, Plan, Signed up).
-- Add `font-variant-numeric: tabular-nums` so the digits stack.
+Centered numbers are the biggest problem. $340, $12,050.5 and $95.00 have different lengths, so the digits don't stack. Nobody can compare magnitudes by eye. Text is also harder to scan when centered, because the left edge is ragged.
+- Name, Plan and Signed up should be left-aligned.
+- Revenue, Churn and Seats should be right-aligned. Their headers should be right-aligned to match.
+- Add `font-variant-numeric: tabular-nums` so digits line up by place value.
 
-**2. The Revenue column mixes formats.**
-- It has `$1.2k`, `$340`, `$12,050.5` and `$95.00`. That's compact notation, no decimals, one decimal and two decimals in a single column.
-- `$1.2k` also hides the real value, since it could be anything from 1,150 to 1,249.
-- Use one format for the whole column, such as `1,200.00`, `340.00` and `12,050.50`. Put the currency once in the header, as "Revenue (USD)".
-- The header should also say the period (monthly or lifetime), because "Revenue" alone doesn't tell ops what they're reading.
+**2. Revenue is formatted three different ways.**
+`$1.2k`, `$340`, `$12,050.5` and `$95.00` appear in one column. They differ in compact versus full form and in decimal count, so you can't compare rows. Pick one format for the whole column. For an admin screen, whole dollars with separators works (1,200 / 340 / 12,051 / 95). Keep cents only if people reconcile against invoices. Put the unit in the header, "Revenue ($)", and drop the `$` from the cells. Also say what period it covers. "Revenue" alone could mean monthly, lifetime or MRR.
 
-**3. Signed-up dates use three formats.**
-- `3/9/24` could be 9 March or 3 September. `2024-03-14` is ISO, and `March 21` has no year.
-- Use ISO `2024-03-09` everywhere. Fix this in the data source rather than the display if you can.
+**3. Signed up has four date formats.**
+`3/9/24`, `2024-03-14`, `March 21` and `3/22/24` all appear. `March 21` has no year. `3/9/24` is ambiguous between March 9 and 9 March. Use one unambiguous format throughout, ideally ISO (`2024-03-09`) or `9 Mar 2024`. Left-align the column.
 
-**4. Churn is a raw decimal with unlabeled units.**
-- `0.04` reads as a count or a score. Show `4%` or put "(%)" in the header, and say what period it covers, such as "Monthly churn".
-- `n/a` is fine for Dune Roofing, but add a short note on what it means, for example "no billing history yet". Otherwise ops will guess.
+**4. Churn is an unlabeled decimal.**
+`0.04` reads as nothing in particular. Show it as a percentage (4%) with the same decimals in every row. Say in the header what it measures and over what window, for example "Monthly churn (%)". The `n/a` is reasonable for a missing value, but explain it in a caption or footnote. Does it mean "too new to measure" or "not tracked"? It matters to the reader.
 
-**5. There are too many row-separation devices.**
-- You have borders on every cell, zebra stripes and a dark header bar. Pick one.
-- I'd use light horizontal hairlines, or just row padding, plus one slightly heavier rule under the header. Drop the vertical borders and probably the stripes. Stripes only help on wide tables where the eye has to follow a row, and this one has 7 columns.
+**5. Too much furniture.**
+You have 1px black borders on every cell, a dark header and zebra stripes. That's three devices doing one job. Black gridlines are the heaviest option and make the data harder to read than the table's content does. Use one device instead:
+- Hairline light-gray rules under each row, with a slightly heavier rule under the header.
+- Drop the stripes, or keep the stripes and drop the borders. Don't use both.
+- A light header with bold text usually reads better than white on #333.
 
-**6. The column order and default sort don't match what ops does with it.**
-- The internal ID leads and the sort follows it, which is effectively signup order. Ops probably wants to find an account or spot at-risk ones.
-- Put Name first. Demote or drop ID, or make it a muted secondary column.
-- Group the related columns: Plan next to Seats, and Revenue next to Churn.
-- Sort by churn or revenue by default. Make those columns sortable, with a visible direction indicator and `aria-sort` on the active one.
+**6. Smaller issues.**
+- **ID column:** it's first, but ops people probably identify accounts by name. Put Name first. Keep the ID only if people look accounts up by it, and then make it a muted secondary column.
+- **Column order:** group related values. Plan, Seats and Revenue are about the account's size, and Churn is about risk. Signed up could go last, or first if you want a chronological reading.
+- **Sorting:** it's sorted by ID, which is essentially sorting by sign-up date and so isn't useful. Ops will likely want to sort by Revenue or Churn. Add sort buttons on those headers, with `aria-sort` on the active one. Don't put arrows on every column.
+- **Padding and text size:** with 1px borders the cells are probably tight. Aim for 14px or larger text and about 40px rows.
+- **Markup:** add a `<caption>` (including the as-of date and revenue period) and `scope="col"` on the `<th>` elements. Without these, screen readers get no context.
+- **Narrow screens:** `width:100%` with seven columns will squeeze numbers onto two lines on a phone. Wrap the table in a horizontal scroll container and keep the Name column frozen.
 
-**Smaller things to check in the real version**
-- Cell text should be 14px or larger.
-- Use real `<table>` markup with a `<caption>`, `<th scope="col">`, and a sticky header if the table gets long.
-- On narrow screens, use a horizontal scroll region with a frozen Name column, not a squeezed table.
+**Cleaned-up version of the data**
 
-I don't know what ops uses this for day to day. If it's "find accounts at risk", the biggest win is a churn-first sort with the percentage right-aligned. If it's lookup, the Name-first column order matters more. Want me to rewrite the markup and CSS with these changes?
+| Name | Plan | Seats | Revenue ($/mo) | Churn (%) | Signed up |
+|---|---|---:|---:|---:|---|
+| Alder & Pine Dental | Team | 12 | 1,200 | 4 | 2024-03-09 |
+| Beacon Yoga | Solo | 1 | 340 | 11 | 2024-03-14 |
+| Corvid Print Works | Studio | 48 | 12,051 | 2 | 2024-03-21 |
+| Dune Roofing | Team | 9 | 890 | n/a | 2024-03-22 |
+| Elm Street Bakery | Solo | 2 | 95 | 19 | 2024-03-30 |
+
+I assumed the revenue is monthly and the churn is a monthly percentage. Please confirm both, since I can't tell from the table. I also assumed `March 21` means 2024, because the neighboring rows do. Check that against the source data before you rely on it.
+
+If you want, I can write the HTML and CSS for this version, including the scroll wrapper and the sortable headers.

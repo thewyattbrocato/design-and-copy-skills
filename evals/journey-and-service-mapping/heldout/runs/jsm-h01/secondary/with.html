@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln & Co. · The Member Journey</title>
+<style>
+  :root {
+    --clay: #b5543a;
+    --clay-soft: #f6e7e0;
+    --glaze: #2f5d62;
+    --glaze-soft: #e0eeee;
+    --sand: #f7f2ea;
+    --ink: #2b2623;
+    --muted: #6e645c;
+    --line: #e2d8cc;
+    --warn: #c98a1b;
+    --warn-soft: #fbf0d9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--sand);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.45;
+  }
+  header {
+    padding: 48px 56px 32px;
+    border-bottom: 2px solid var(--line);
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 14px;
+    color: var(--clay);
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  h1 {
+    margin: 0 0 12px;
+    font-size: 48px;
+    line-height: 1.1;
+    font-weight: 800;
+  }
+  .sub {
+    margin: 0;
+    color: var(--muted);
+    max-width: 880px;
+  }
+  main { padding: 32px 56px 56px; }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .stat .big {
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat .big small {
+    font-size: 20px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .stat .label { color: var(--muted); font-size: 16px; }
+  .stat.warn .big { color: var(--warn); }
+  .stat.alert .big { color: var(--clay); }
+
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    align-items: stretch;
+  }
+  .phase {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 18px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .phase-head {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .phase-num {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--glaze);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .phase h2 {
+    margin: 4px 0 2px;
+    font-size: 24px;
+  }
+  .when { color: var(--muted); font-size: 15px; }
+
+  .block { margin-bottom: 16px; }
+  .block h3 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .block p, .block ul {
+    margin: 0;
+    font-size: 16px;
+  }
+  .block ul { padding-left: 18px; }
+  .block li { margin-bottom: 6px; }
+
+  .pain {
+    background: var(--clay-soft);
+    border-left: 4px solid var(--clay);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  .pain strong { color: var(--clay); }
+  .good {
+    background: var(--glaze-soft);
+    border-left: 4px solid var(--glaze);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  .good strong { color: var(--glaze); }
+  .watch {
+    background: var(--warn-soft);
+    border-left: 4px solid var(--warn);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  .watch strong { color: var(--warn); }
+
+  .fix {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .fix span {
+    display: block;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--glaze);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .takeaways {
+    margin-top: 40px;
+    background: var(--ink);
+    color: var(--sand);
+    border-radius: 12px;
+    padding: 28px 32px;
+  }
+  .takeaways h2 {
+    margin: 0 0 14px;
+    font-size: 26px;
+  }
+  .takeaways ol {
+    margin: 0;
+    padding-left: 22px;
+  }
+  .takeaways li {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  footer {
+    padding: 0 56px 40px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  @media (max-width: 1100px) {
+    .journey { grid-template-columns: repeat(2, 1fr); }
+    .numbers { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    header, main, footer { padding-left: 20px; padding-right: 20px; }
+    .journey, .numbers { grid-template-columns: 1fr; }
+    h1 { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Kiln &amp; Co. · Staff meeting</p>
+  <h1>Becoming a member, from first search to month three</h1>
+  <p class="sub">What six new members told us over the last month. Five stages, with what they did, how they felt, where it got stuck, and what we can change.</p>
+</header>
+
+<main>
+
+  <section class="numbers" aria-label="Key numbers">
+    <div class="stat alert">
+      <div class="big">4 <small>of 6</small></div>
+      <div class="label">confused by the membership options page</div>
+    </div>
+    <div class="stat alert">
+      <div class="big">4 <small>of 6</small></div>
+      <div class="label">went home to think; only 2 joined on the spot</div>
+    </div>
+    <div class="stat warn">
+      <div class="big">3 <small>of 6</small></div>
+      <div class="label">felt in the way of regulars in their first month</div>
+    </div>
+    <div class="stat warn">
+      <div class="big">3 <small>of 6</small></div>
+      <div class="label">were at risk of not renewing at month three</div>
+    </div>
+  </section>
+
+  <section class="journey" aria-label="Journey stages">
+
+    <article class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Stage 1</div>
+        <h2>Discover</h2>
+        <div class="when">First search or friend's post</div>
+      </div>
+      <div class="block">
+        <h3>What they do</h3>
+        <p>Find us through a friend's Instagram post or a local search.</p>
+      </div>
+      <div class="block">
+        <h3>What they feel</h3>
+        <p>Curious, but unsure whether the class fits their schedule.</p>
+      </div>
+      <div class="block">
+        <h3>Where it breaks</h3>
+        <div class="pain"><strong>2 of 6</strong> nearly didn't come: class times on the site were out of date.</div>
+      </div>
+      <div class="fix">
+        <span>Opportunity</span>
+        Make class times on the site a weekly check, not a yearly one.
+      </div>
+    </article>
+
+    <article class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Stage 2</div>
+        <h2>Trial</h2>
+        <div class="when">$35 trial class</div>
+      </div>
+      <div class="block">
+        <h3>What they do</h3>
+        <p>Book the trial and show up as beginners.</p>
+      </div>
+      <div class="block">
+        <h3>What they feel</h3>
+        <div class="good">Nearly everyone loved it. The teacher made them feel it was okay to be bad at it.</div>
+      </div>
+      <div class="block">
+        <h3>Where it breaks</h3>
+        <p>Nothing reported. This is our strongest stage.</p>
+      </div>
+      <div class="fix">
+        <span>Opportunity</span>
+        Protect what the teacher does here and make it the model for every class.
+      </div>
+    </article>
+
+    <article class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Stage 3</div>
+        <h2>Decide</h2>
+        <div class="when">Membership options page and front desk</div>
+      </div>
+      <div class="block">
+        <h3>What they do</h3>
+        <p>Compare plans on the website, then decide at the desk or at home.</p>
+      </div>
+      <div class="block">
+        <h3>What they feel</h3>
+        <p>Confused about what they're paying for.</p>
+      </div>
+      <div class="block">
+        <h3>Where it breaks</h3>
+        <div class="pain"><strong>4 of 6</strong> couldn't tell if the monthly plan includes glaze and firing.</div>
+        <div class="pain"><strong>4 of 6</strong> went home to think instead of joining on the spot.</div>
+        <div class="pain"><strong>1</strong> never got a follow-up email and joined only after a friend nudged her.</div>
+      </div>
+      <div class="fix">
+        <span>Opportunity</span>
+        State what each plan includes in plain words, and send a follow-up email to everyone who took a trial.
+      </div>
+    </article>
+
+    <article class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Stage 4</div>
+        <h2>First month</h2>
+        <div class="when">Open studio and shelves</div>
+      </div>
+      <div class="block">
+        <h3>What they do</h3>
+        <p>Use open studio hours, make work, and store unfinished pieces on shelves.</p>
+      </div>
+      <div class="block">
+        <h3>What they feel</h3>
+        <div class="good">They love the open studio hours.</div>
+      </div>
+      <div class="block">
+        <h3>Where it breaks</h3>
+        <div class="pain"><strong>3 of 6</strong> felt they were in the way of regulars.</div>
+        <div class="pain"><strong>2 of 6</strong> couldn't work out the shelf system for unfinished pieces.</div>
+      </div>
+      <div class="fix">
+        <span>Opportunity</span>
+        Add a short orientation for new members and label the shelves so the system is clear without asking.
+      </div>
+    </article>
+
+    <article class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Stage 5</div>
+        <h2>Month three</h2>
+        <div class="when">Renewal decision</div>
+      </div>
+      <div class="block">
+        <h3>What they do</h3>
+        <p>Decide whether to renew, based on time and progress.</p>
+      </div>
+      <div class="block">
+        <h3>What they feel</h3>
+        <p>Tired of the time commitment, or unsure they are improving.</p>
+      </div>
+      <div class="block">
+        <h3>Where it breaks</h3>
+        <div class="pain"><strong>2 of 6</strong> were thinking of not renewing because of time.</div>
+        <div class="pain"><strong>1 of 6</strong> felt she wasn't getting better.</div>
+        <div class="pain"><strong>2 of 6</strong> weren't told firing takes 2 to 3 weeks and thought their pieces were lost.</div>
+      </div>
+      <div class="fix">
+        <span>Opportunity</span>
+        Tell members about the firing timeline when they start, and check in on progress before month three.
+      </div>
+    </article>
+
+  </section>
+
+  <section class="takeaways">
+    <h2>What to take into Thursday</h2>
+    <ol>
+      <li>The trial works. The problems start after it, when people try to decide and then to settle in.</li>
+      <li>Three fixes cost little: accurate class times, plain plan details, and a follow-up email to every trial member.</li>
+      <li>Set expectations early: what the plan covers, how the shelves work, and that firing takes 2 to 3 weeks.</li>
+      <li>Month three is a progress and time question. Check in before the renewal date, not after it.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  Based on conversations with six new members over one month. A small sample, so treat the numbers as signals to test, not final measures.
+</footer>
+
+</body>
+</html>

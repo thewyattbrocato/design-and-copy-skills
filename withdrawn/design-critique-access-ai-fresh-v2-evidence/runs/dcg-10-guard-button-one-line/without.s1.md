@@ -1,0 +1,1 @@
+Mostly yes: white on #1b4f8a is about 8:1 contrast, the font size and target size are fine, and the focus ring is clear, though the lowercase "download receipt" label is vague for screen-reader users and a download icon would need an `aria-hidden` or text alternative if you add one.

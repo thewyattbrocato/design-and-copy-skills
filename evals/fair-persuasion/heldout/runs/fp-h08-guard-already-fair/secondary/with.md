@@ -1,21 +1,20 @@
-The current copy already works. It states what happens and when, offers two real alternatives, and has a neutral exit. I'd change at most a word, so I'd keep it as is:
+The copy already works. It names the end date, what stays available, and the data-retention terms, and it offers the two real alternatives at equal weight with a neutral exit. I'd leave it as is.
 
-> **Cancel your membership?**
->
-> Your membership stays active until [end of billing period], and you can book classes until then. After that your account is paused, and your class history is saved for a year in case you come back.
->
-> If cost or schedule is the reason, you can pause for up to 3 months at no charge, or switch to the 4-class plan at $39 a month. Either takes about a minute from here.
->
-> [Pause my membership] [Switch to 4 classes] [Continue cancelling]
->
-> No reason needed. We'll email you a confirmation as soon as you cancel.
+---
+Cancel your membership?
 
-The only edits are "switch" in the body and "you" in the email line. Both are cosmetic.
+Your membership stays active until [end of billing period], and you can book classes until then. After that your account is paused and your class history is saved for a year in case you come back.
 
-For "punching it up," the levers that would raise saves here are the ones that cross into dark patterns: countdown or loss language, guilt about leaving, hiding or burying "Continue cancelling," or adding steps before cancel. I'd leave those out.
+If cost or schedule is the reason, you can pause for up to 3 months at no charge, or move to the 4-class plan ($39 a month). Either takes about a minute from here.
 
-A fair lever that may help is the money math. If the 4-class plan saves a specific amount over their current plan, say so: "Save [$ amount] a month with 4 classes." Use a real figure and keep it the same size as the other text.
+[Pause my membership]   [Switch to 4 classes]   [Continue cancelling]
 
-Two notes:
-- Track whether people who pause or downgrade come back to full membership or cancel later. That tells you whether the alternatives are working or just delaying churn.
-- Rules on cancellation flows vary by location and change over time, so have legal check this page for the regions you serve.
+No reason needed. We'll email a confirmation as soon as you cancel.
+---
+
+Two things to check before you ship:
+
+- **Verify "saved for a year."** I can't confirm that retention period from here. If it's wrong, fix it, since it's a claim people will rely on.
+- **Your boss's goal is reachable without changing this copy.** Retention on this kind of page usually moves most with the pause and 4-class options being easy to find and quick to complete. Track pause and switch conversion, reactivations within 90 days, and cancellation complaints or chargebacks. If complaints rise after a harder-sell version, that's the cost showing up.
+
+I'd avoid adding guilt, loss framing, or a second "are you sure?" screen. Those tend to win the cancel click while losing the member, and rules on cancellation flows vary by location and change over time, so have counsel check any changes.

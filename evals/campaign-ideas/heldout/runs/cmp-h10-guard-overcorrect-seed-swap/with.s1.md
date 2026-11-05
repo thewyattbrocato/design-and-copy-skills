@@ -1,18 +1,17 @@
-The concept works. It comes from something you actually saw, the headline is short and rhythmic, and it frames the swap as trading rather than savings. Fix the date before printing.
+The concept works, but check the date before it goes to print.
 
-**Check the date first.** March 14 is a Saturday in 2026, but that date has already passed. If the swap is March 2027, March 14 falls on a **Sunday**, and March 13 is the Saturday. Confirm which day you mean, because a wrong weekday on a printed flyer is the kind of error people act on. Adding the year would also help.
+**Date problem:** March 14, 2026 was a Saturday, but that's already past. The next March 14 is in 2027, and it falls on a **Sunday**. Saturday is March 13, 2027. If the event is that Saturday, change the date to March 13. If it's Sunday the 14th, change the day. The flyer has no year, so a wrong weekday is easy for people to miss and hard to fix after printing.
 
 **What's working**
-- "Bring a pocketful. Leave with a garden." is warm and easy to remember. The "pocketful" image makes bringing a few seeds feel enough.
-- "No seeds to trade? Come anyway." is the best line for widening who shows up. Consider moving it up so it isn't buried at the end of a dense subline.
-- "Free" in the subline is fine. The concept is about the pleasure of trading, not hiding that it costs nothing.
+- The headline is strong. "Pocketful" is physical and small-scale, and it matches the envelope hand-offs you saw. "Leave with a garden" promises the result without mentioning money.
+- "No seeds to trade? Come anyway." is the best line on the flyer. It removes the main reason someone might stay home.
+- The subline gives the what, when and where in one pass.
 
-**Suggested tweaks**
-- **The subline is doing too much.** It has the event name, date, time, place, the ask, and the welcome. Split the logistics (date, time, place) onto their own line in larger type, and leave the invitation as a separate sentence.
-- **"Bring seeds you saved, leave with something new" repeats the headline.** Replace it with something concrete, like "Trade with neighbors, swap stories, and find something you've never grown."
-- **"Seed packets from last year welcome" is ambiguous.** It could mean last year's seeds or last year's empty packets. "Seeds saved from last year's garden are welcome" is clearer.
-- **Add a rain plan or a "rain or shine" line,** since it's outdoors in March.
-- **Add a contact or web link** in the footer for questions. The "Alder Park Neighbors Association" credit alone gives people nowhere to ask.
-- **Use the envelope image.** Your origin story is a strong visual. A hand passing a small envelope would carry the idea better than stock seed or vegetable art.
+**Smaller things to consider**
+- **"Seed packets from last year welcome"** is ambiguous. It could mean packets bought last year or seeds saved last year, and it partly repeats "seeds you saved." Something like "Leftover store-bought packets are welcome too, labeled if you can" would be clearer.
+- **"Free" in the subline** is accurate, but it sits next to a concept that's meant to be about trading, not saving. Moving it later ("A seed swap at Alder Park… free and open to all") keeps the tone about the trading.
+- **Rain plan or contact info:** a March outdoor event may need one. Add a line like "Rain or shine" or a URL or email for questions.
+- **Image:** if you have a photo or illustration, a hand passing an envelope to another hand would carry the idea better than a generic plant graphic.
+- **"By the pavilion"** is fine for regulars. If the park is large, check that a newcomer would know which pavilion.
 
-"Leave with a garden" is a little hyperbolic, but it's clearly playful, so I'd keep it.
+Once you've confirmed the date, I think it's ready to print.

@@ -45,3 +45,16 @@ class TempRoot:
 
 def skill_md(name="demo", description="Does a thing.", body="# Demo\n\n## When not to use\n\nNever.\n"):
     return f"---\nname: {name}\ndescription: {description}\n---\n\n{body}"
+
+
+def tiny_png():
+    """The bytes of a valid 1x1 white PNG, for tests that need a PNG file without rendering one."""
+    import struct
+    import zlib
+
+    def chunk(kind, body):
+        return struct.pack(">I", len(body)) + kind + body + struct.pack(">I", zlib.crc32(kind + body))
+
+    ihdr = struct.pack(">IIBBBBB", 1, 1, 8, 2, 0, 0, 0)
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr) + chunk(b"IDAT", zlib.compress(b"\x00\xff\xff\xff"))
+            + chunk(b"IEND", b""))

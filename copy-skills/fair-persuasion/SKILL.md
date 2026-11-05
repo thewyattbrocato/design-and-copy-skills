@@ -14,7 +14,7 @@ A business may steer a choice. It may not win by making the other option hard to
 - A box pre-selected if it spends money, passes data on or signs someone up for marketing, or consent bundled into terms, or boxes that mean yes and no on the same screen.
 - A retention "deal" equal to the normal price, or a discount shown only to people who try to leave.
 - Tiers built to make another tier look good, or a forced choice with no "neither" or "not now".
-- A timer, "N people are viewing", or a loss warning with no real cause the user gave.
+- A timer, "N people are viewing", a seller-made deadline ("price goes up Friday") or a loss warning with no real cause the user gave.
 - Dread, shame or a lost-streak warning used to force an action, or pressure aimed at someone in debt, ill, grieving, lonely or young.
 - A trial that converts to paid with no charge date and amount shown before the card, and no reminder before it.
 
@@ -37,6 +37,7 @@ Do the work. Never invent a pause plan, discount, grace period, data-retention r
 - **Leave.** Cancelling costs no more effort than joining did and works in the same place. One screen: a plain heading, what becomes of the person's data and bills and by what date, the cancel button, one optional alternative. The confirmation names the last day of access and the way back in. Ask for a reason if you like, but never as a condition.
 - **Share.** Optional consent is its own unticked box with the same polarity as the others, separate from required terms. Do not open a consent or permission screen with praise or a benefit rush; say what it enables and that it can change. A referral message is in the sender's voice, editable, never auto-sent, and both sides see the reward.
 - **Return.** Reminders tie to the user's own goal, are capped, adjustable and quiet at night. A streak or progress count may show; a penalty built to compel does not. Cost-driven price rises need the cost story shown; remove a discount rather than add a surcharge.
+- **Test.** A conversion test, optimizer or generated variant tracks refunds, cancellations and complaints beside conversion, bans the devices above and never sends pressure by inferred vulnerability. Asked to hit a target, say the fair version may lift less; do not promise the pushy figure.
 - **Emotion.** Reach for fear only when the danger is real, sized honestly, with something the reader can do about it. Status or exclusivity must be real and earned. Identity appeals fit only a self the reader would happily claim. Compare with someone close by, not a gap that feels impossible or a ranking that shames. Never present a bad habit as the norm.
 
 ## Keep these
@@ -58,9 +59,11 @@ Deliver the requested text or redesign first, nothing before it. For "is this a 
 - A neutral decline sits beside every accept, with equal weight.
 - A retention offer is real, shown once, and no other exit is blocked.
 - No fear without a remedy, and no shame at all.
-- If the person saw how this works, would they mind? Calm and informed, would they still pick it later?
+- True, consequence visible before the act, decline as easy as accept, reversible as easily as done; and if the person saw how it works, would they mind?
 - Nothing invented; counts and caps checked against the text.
 
 ## References
 
 - [patterns-and-fixes.md](references/patterns-and-fixes.md): load for an audit or redesign, to match a device to its fair form and to see when a variant is acceptable.
+- [pattern-field-guide.md](references/pattern-field-guide.md): load for an audit of money, consent or exit, a request to add a pressure device, a test, optimizer or agent that steers a choice, or the four-part test for acceptable influence.
+- [sales-conversation-pressure.md](references/sales-conversation-pressure.md): load for a call script, pitch, follow-up, trial or pilot plan, or a reply to a stalled buyer, and for any request to close harder or add urgency in a sales move.

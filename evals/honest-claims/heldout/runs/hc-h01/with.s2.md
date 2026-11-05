@@ -1,62 +1,65 @@
-# Copper Hollow Pepper Co.
+# Copper Hollow Pepper Co. Homepage Copy
 
 ## Hero
 
-**Small-batch hot sauce, fermented for three weeks.**
-Made in a commercial kitchen outside Duluth, from peppers grown by farmers we know.
+**Small-batch hot sauce, fermented three weeks and made outside Duluth.**
 
-**[Shop the sauces]**
+Four sauces. Two farms I know personally. One rented commercial kitchen, and no shortcuts on the clock.
 
----
-
-## Born at the Saturday market
-
-Copper Hollow started at a folding table at the Saturday farmers market. We handed out tasting spoons and talked peppers with anyone who stopped. People came back the next week for a bottle, and that's how we got here.
-
-Now the same sauces ship from our online store to kitchens anywhere in the US.
+**$9 a bottle. Ships anywhere in the US.**
+[Shop the Sauces]
 
 ---
 
-## Four sauces, one standard
+## The Sauces
 
-**Smoked Peach Habanero.** Sweet peach and smoke, with a habanero kick that arrives a beat later.
+**Smoked Peach Habanero**
+Sweet peach, smoke, and habanero heat in one bottle.
 
-**Green Ghost.** Jalapeño and tomatillo. Bright, tangy and green. Good on tacos, eggs and anything grilled.
+**Green Ghost**
+Jalapeño and tomatillo. Bright, green, and made for tacos, eggs, and anything that needs a lift.
 
-**Black Garlic Mild.** Deep, savory and rounded, with very little heat. Use it when you want flavor without the burn.
+**Black Garlic Mild**
+Deep, dark, and gentle on the heat. This is the one to hand someone who says they don't like hot sauce.
 
-**Copper Reaper.** Our hot one. Pour carefully.
+**Copper Reaper**
+The hot one. Treat it with respect and add it a drop at a time.
 
----
-
-## Why it tastes the way it does
-
-**Peppers from people we know.** We buy from two farms. One is in our own county, and we know both growers personally.
-
-**Three weeks of fermentation.** Every batch ferments for three weeks before it's bottled. The time builds depth and tang that you can't get by rushing.
-
-**Small batches.** We make each sauce in small runs, so we can taste and adjust as we go.
+[See all four →]
 
 ---
 
-## From our kitchen to your table
+## Three Weeks, On Purpose
 
-Every bottle is $9, and we ship anywhere in the US.
+Every batch ferments for three weeks before it goes into a bottle. It takes longer and it ties up the kitchen, but I won't skip it. Fermenting gives the peppers time to develop flavor that a quick cook can't match.
 
-You can start with the one that sounds like you. Or pick up all four and find your favorite.
-
-**[What people are saying: add a customer quote here]**
+I make everything in small batches in a rented commercial kitchen outside Duluth. I'm the one standing at the stove, and I taste every batch before it's bottled.
 
 ---
 
-## Come hungry
+## Peppers From People I Know
 
-Our online store just opened. These are the first bottles we've shipped beyond the market, and we'd love for you to try them.
-
-**[Shop Copper Hollow]**
+The peppers come from two farms. I know both farmers personally, and one of the farms is in my own county. When you know who grew the peppers, you care more about what happens to them next.
 
 ---
 
-**Notes**
-- I left one placeholder for a real customer quote. You said people love the sauces, so a line or two from a market regular would do more for the "established" feel than any claim I could write. If you'd like, I can draft a short message to send to customers asking for one.
-- I didn't add any customer counts, years in business, awards or "best" claims, since none were supplied. If you have real ones, such as years at the market or a count of bottles sold, tell me and I'll work them in with the date or basis.
+## From the Farmers Market
+
+Copper Hollow started at a folding table at the Saturday farmers market. People tasted, came back the next week, and brought friends. That's still how I want this to feel, even though the online store only opened this month.
+
+> [Customer quote: paste a real one here, with first name and town if they're okay with it]
+
+---
+
+## Ready to Taste It?
+
+Pick a bottle. Pick two. If you can't decide, start with Black Garlic Mild for the gentle one and Copper Reaper for the hot one, and see where you land.
+
+**$9 a bottle. Ships anywhere in the US.**
+[Shop Copper Hollow →]
+
+---
+
+*Notes:*
+- *I left out founding dates, customer counts, and awards because you didn't give me any. If you have real ones (a year you started, how many bottles you've sold, a market ribbon), they'd strengthen the "established" feel, and I can add them.*
+- *Paste in one or two real customer comments where the quote placeholder is. Real words from market regulars will do more for credibility than anything I could write. If you want to ask for them, I can draft a short message to send to customers.*

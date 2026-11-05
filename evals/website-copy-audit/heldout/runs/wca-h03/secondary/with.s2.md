@@ -1,32 +1,22 @@
-I won't put $3,500 on the page. You don't have data behind it, so it's a made-up statistic in an ad, and that's deceptive advertising regardless of whether anyone checks. Competitors' numbers are also often unverified, so matching theirs doesn't make the claim safe. Here's a rewrite that hits hard without a number you can't back up:
+I won't put $3,500 on the page. You don't have data behind it, and a savings figure you invented is a false advertising claim. Enforcement doesn't depend on anyone checking, and if a prospect asks where the number came from, you'll have no answer.
 
----
+Here's a rewrite using only what you've told me:
 
-**Headline:** Your books, done every month. You don't have to think about them.
+**Headline:** Your books finished every month, not just started.
 
-**Subhead:** Bookkeeping built for freelancers. Transactions categorized automatically, a clean report at every month-end, and taxes estimated before they're due.
+**Starter, $59/month**
+Monthly bookkeeping for one person. Bank feed categorization and a month-end report, so you always know where your money went.
 
-**Starter: $59/month**
-For solo freelancers who want their books handled without the weekend spreadsheet session.
-- Monthly bookkeeping for one person
-- Bank feed categorization, automatic
-- Month-end report, delivered to you
+**Plus, $119/month**
+Everything in Starter, plus quarterly tax estimates so tax time isn't a surprise, and a quarterly call with your bookkeeper.
 
-*Less than $60 a month. Less than a single hour with most bookkeepers.* (Check that second claim before publishing.)
+**Footer:** No lock-in. Cancel whenever you want.
 
-**Plus: $119/month**
-For freelancers who want tax planning built in, not bolted on.
-- Everything in Starter
-- Quarterly tax estimates, so April has no surprises
-- A quarterly call with your bookkeeper
+**Button:** Get my books done
 
-**Footer:** No contracts. No lock-in. Cancel anytime.
+Once you have real numbers, you can add a specific claim that holds up. Options:
 
-**Button:** Get started
+- **Survey your current customers** and ask how many hours a month they spend on bookkeeping now versus after switching. Report the result with the sample size, like "Across 80 customers, members report saving about 6 hours a month."
+- **Use a figure from your own data**, such as average categorized transactions per month or on-time tax estimate rate, if you track it.
 
----
-
-**On the savings claim:** If you can get a real number, use it. Options:
-- **Pull it from your customers.** Ask 10 to 20 current users what they paid for bookkeeping or tax help before switching. The average, with a footnote saying how you measured it, is a claim you can defend.
-- **Use a comparison you can prove.** "Starter costs $708 a year" is true from your own pricing, and you can put it next to what a traditional bookkeeper charges if you have a source for that.
-- **Publish it later.** Once you have a few months of data, add a stat then.
+Tell me what you find and I'll work it into the page.

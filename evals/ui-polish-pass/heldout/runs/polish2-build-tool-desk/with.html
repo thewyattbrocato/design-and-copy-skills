@@ -3,324 +3,336 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Front desk · Tool library</title>
+<title>Front desk · Neighborhood Tool Library</title>
 <style>
   :root{
-    --bg:#f6f2ea; --card:#fffdf9; --ink:#1f2933; --muted:#55606b; --line:#b9b2a5; --soft:#e5dfd3;
-    --green:#1d5c45; --green-bg:#dff1e8; --amber:#7a4a00; --amber-bg:#fdecc8; --red:#9b2c14; --red-bg:#fbe1da;
-    --grey-bg:#e8e5df; --focus:#1a56db;
+    --bg:#f5f2ea; --panel:#fffdf8; --ink:#231f1a; --muted:#5e564b; --line:#cfc6b4;
+    --accent:#1f5f4a; --accent-ink:#fff; --accent-soft:#e0efe8;
+    --warn:#8a3b00; --warn-soft:#fde9d4; --late:#9b1c1c; --late-soft:#fbe0e0;
+    --ok-soft:#e0efe8;
   }
   *{box-sizing:border-box}
   html{font-size:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
-  :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-  button,input,textarea{font:inherit;color:inherit}
-  header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;padding:16px clamp(12px,3vw,32px);border-bottom:2px solid var(--ink);background:var(--card)}
-  h1{font-size:1.35rem;margin:0}
-  h1 small{display:block;font-size:.85rem;font-weight:400;color:var(--muted)}
-  .counts{display:flex;gap:8px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
-  .counts li{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:.9rem}
-  .counts b{font-size:1.2rem;margin-right:4px}
-  main{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:20px;padding:20px clamp(12px,3vw,32px);max-width:1200px;margin:0 auto}
-  h2{font-size:1.05rem;margin:0 0 10px}
-  .tools-head{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
-  .search{flex:1 1 220px}
-  label{display:block;font-weight:600;margin-bottom:4px}
-  input[type=text],input[type=search],input[type=date],textarea{width:100%;min-height:44px;padding:8px 12px;border:2px solid #6d675c;border-radius:8px;background:#fff}
-  textarea{min-height:76px;resize:vertical}
-  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-  .chip{min-height:40px;padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--card);cursor:pointer}
-  .chip[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
-  ul.list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-  .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:12px 14px;background:var(--card);border:2px solid var(--soft);border-radius:10px}
-  .row[data-selected=true]{border-color:var(--ink)}
-  .name{font-weight:650;overflow-wrap:anywhere}
-  .meta{font-size:.88rem;color:var(--muted);overflow-wrap:anywhere}
-  .badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:.82rem;font-weight:650;margin-right:6px;white-space:nowrap}
-  .b-in{background:var(--green-bg);color:var(--green)}
-  .b-out{background:var(--amber-bg);color:var(--amber)}
-  .b-late{background:var(--red-bg);color:var(--red)}
-  .b-hold{background:var(--grey-bg);color:#3b4148}
-  .btn{min-height:44px;padding:8px 18px;border-radius:8px;border:2px solid var(--ink);background:var(--card);font-weight:650;cursor:pointer}
-  .btn.primary{background:var(--green);border-color:var(--green);color:#fff}
-  .btn.primary.return{background:var(--ink);border-color:var(--ink)}
-  .btn:hover{filter:brightness(.95)}
-  .btn[disabled]{opacity:.6;cursor:not-allowed}
-  .btn.link{border-color:transparent;background:none;text-decoration:underline;padding:8px 10px}
-  aside{align-self:start;position:sticky;top:12px}
-  .panel{background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:18px}
-  .panel h2{font-size:1.2rem;overflow-wrap:anywhere}
-  .panel h2:focus{outline:none}
-  .field{margin-bottom:14px}
-  .hint{font-size:.85rem;color:var(--muted);margin:4px 0 0}
-  .err{color:var(--red);font-weight:600;font-size:.9rem;margin:6px 0 0}
-  input[aria-invalid=true]{border-color:var(--red)}
-  .check{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:0}
-  .check input{width:24px;height:24px;margin:0;flex:none}
-  .callout{padding:10px 12px;border-radius:8px;margin:0 0 14px;font-size:.95rem}
-  .callout.late{background:var(--red-bg);color:#6e1d0c}
-  .callout.info{background:var(--grey-bg)}
-  .actions{display:flex;gap:8px;flex-wrap:wrap}
-  .empty{padding:28px 16px;text-align:center;border:2px dashed var(--line);border-radius:10px;color:var(--muted)}
-  .empty b{display:block;color:var(--ink);margin-bottom:4px}
-  .log{margin-top:20px}
-  .log ol{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:.9rem}
-  .log li{padding:6px 0;border-bottom:1px solid var(--soft);overflow-wrap:anywhere}
-  .log time{color:var(--muted);margin-right:8px}
-  .toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:12px;align-items:center;max-width:calc(100vw - 24px);padding:10px 12px 10px 16px;background:var(--ink);color:#fff;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
-  .toast[hidden]{display:none}
-  .toast .btn{background:#fff;min-height:40px;padding:4px 14px}
-  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  @media (max-width:820px){
-    main{grid-template-columns:minmax(0,1fr)}
-    aside{position:static;order:-1}
-  }
-  @media (max-width:420px){ .row{grid-template-columns:minmax(0,1fr)} .row .btn{width:100%} }
-  @media (prefers-reduced-motion:no-preference){ .row{transition:border-color .15s} }
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:1rem/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .skip{position:absolute;left:.5rem;top:-4rem;background:var(--ink);color:#fff;padding:.6rem 1rem;border-radius:6px;z-index:10}
+  .skip:focus{top:.5rem}
+  header{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:baseline;justify-content:space-between;
+    padding:1rem 1.5rem;background:var(--accent);color:var(--accent-ink)}
+  header h1{margin:0;font-size:1.35rem}
+  header p{margin:0;font-size:.95rem}
+  main{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:1.25rem;padding:1.25rem 1.5rem;max-width:1200px;margin:0 auto}
+  @media (max-width:820px){main{grid-template-columns:1fr;padding:1rem}}
+  section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.1rem}
+  h2{margin:0 0 .8rem;font-size:1.2rem}
+  label,.lbl{display:block;font-weight:600;margin:0 0 .3rem}
+  .field{margin-bottom:1rem}
+  input[type=text],input[type=search],input[type=date]{
+    width:100%;min-height:44px;padding:.5rem .7rem;font:inherit;color:var(--ink);
+    background:#fff;border:2px solid #7a705f;border-radius:6px}
+  button{font:inherit;min-height:44px;padding:.45rem 1rem;border-radius:6px;border:2px solid var(--accent);
+    background:#fff;color:var(--accent);font-weight:600;cursor:pointer}
+  button.primary{background:var(--accent);color:var(--accent-ink)}
+  button:disabled{background:#e6e0d3;border-color:#bdb4a2;color:#5e564b;cursor:not-allowed}
+  :focus-visible{outline:3px solid #0b57d0;outline-offset:2px}
+  .hint{color:var(--muted);font-size:.92rem;margin:.35rem 0 0}
+  .results{list-style:none;margin:.4rem 0 0;padding:0;border:1px solid var(--line);border-radius:6px;background:#fff;max-height:15rem;overflow:auto}
+  .results li+li{border-top:1px solid var(--line)}
+  .results button,.results .na{display:block;width:100%;text-align:left;border:0;border-radius:0;min-height:48px;padding:.5rem .75rem;color:var(--ink);background:transparent;font-weight:500}
+  .results button:hover{background:var(--accent-soft)}
+  .results .na{color:var(--muted)}
+  .sub{display:block;color:var(--muted);font-size:.9rem;font-weight:400}
+  .wrap{overflow-wrap:anywhere}
+  .chip{display:flex;gap:.5rem;align-items:center;justify-content:space-between;background:var(--accent-soft);border:1px solid #9cc3b3;border-radius:8px;padding:.5rem .5rem .5rem .8rem}
+  .chip button{min-height:44px;padding:.3rem .7rem;font-size:.92rem}
+  .cart{list-style:none;margin:.4rem 0 0;padding:0;display:grid;gap:.4rem}
+  .status{margin:.9rem 0 0;padding:.7rem .85rem;border-radius:8px;background:var(--ok-soft);border:1px solid #9cc3b3}
+  .status[hidden]{display:none}
+  .loans{list-style:none;margin:.8rem 0 0;padding:0;display:grid;gap:.6rem}
+  .loan{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem .8rem;align-items:center;
+    border:1px solid var(--line);border-radius:8px;padding:.7rem .8rem;background:#fff}
+  .loan strong{font-size:1.02rem}
+  .badge{display:inline-block;font-size:.85rem;font-weight:700;padding:.1rem .55rem;border-radius:99px;margin-top:.25rem;border:1px solid}
+  .badge.late{background:var(--late-soft);color:var(--late);border-color:#e0a3a3}
+  .badge.today{background:var(--warn-soft);color:var(--warn);border-color:#e6bb92}
+  .badge.ok{background:#eef2ee;color:#2d4a3c;border-color:#c3d2c8}
+  .empty{border:2px dashed var(--line);border-radius:8px;padding:1.2rem;color:var(--muted);margin-top:.8rem}
+  .empty strong{display:block;color:var(--ink);margin-bottom:.2rem}
+  .undo{position:sticky;bottom:0;margin:0;display:flex;gap:1rem;align-items:center;justify-content:space-between;
+    background:var(--ink);color:#fff;padding:.7rem 1rem;border-radius:8px;margin-top:1rem}
+  .undo[hidden]{display:none}
+  .undo button{background:#fff;color:var(--ink);border-color:#fff}
+  @media (max-width:420px){.loan{grid-template-columns:1fr}.loan button{width:100%}}
 </style>
 </head>
 <body>
+<a class="skip" href="#lend-h">Skip to lending</a>
 <header>
-  <h1>Tool library · Front desk<small id="today"></small></h1>
-  <ul class="counts" aria-label="Today's totals">
-    <li><b id="cIn">0</b>on the shelf</li>
-    <li><b id="cOut">0</b>lent out</li>
-    <li><b id="cLate">0</b>overdue</li>
-  </ul>
+  <h1>Tool Library · Front desk</h1>
+  <p><span id="today"></span> · <span id="counts"></span></p>
 </header>
 
 <main>
-  <section aria-labelledby="toolsH">
-    <h2 id="toolsH">Tools</h2>
-    <div class="tools-head">
-      <div class="search">
-        <label for="q">Find a tool or a borrower</label>
-        <input type="search" id="q" placeholder="e.g. drill, ladder, Maria" autocomplete="off">
-      </div>
-    </div>
-    <div class="chips" role="group" aria-label="Show">
-      <button class="chip" data-f="all" aria-pressed="true">All</button>
-      <button class="chip" data-f="in" aria-pressed="false">On the shelf</button>
-      <button class="chip" data-f="out" aria-pressed="false">Lent out</button>
-      <button class="chip" data-f="late" aria-pressed="false">Overdue</button>
-      <button class="chip" data-f="hold" aria-pressed="false">Held back</button>
-    </div>
-    <p class="sr" id="resultCount" role="status"></p>
-    <ul class="list" id="list"></ul>
-    <div id="emptyMsg"></div>
+  <section aria-labelledby="lend-h">
+    <h2 id="lend-h" tabindex="-1">Lend tools</h2>
 
-    <div class="log">
-      <h2>Recent activity</h2>
-      <ol id="log"></ol>
-      <p class="hint" id="logEmpty">Nothing yet this session. Lending and returns will show up here.</p>
+    <div class="field" id="member-field">
+      <label for="member-q">1. Who is borrowing?</label>
+      <div id="member-pick">
+        <input type="search" id="member-q" autocomplete="off" placeholder="Name or member number" aria-describedby="member-hint">
+        <p class="hint" id="member-hint">Try “Dev” or “M-0412”.</p>
+        <ul class="results" id="member-results" aria-label="Matching members" hidden></ul>
+      </div>
+      <div id="member-chosen" hidden></div>
     </div>
+
+    <div class="field">
+      <label for="tool-q">2. Which tools?</label>
+      <input type="search" id="tool-q" autocomplete="off" placeholder="Tool name or tag number" aria-describedby="tool-hint">
+      <p class="hint" id="tool-hint">Search by name (“drill”) or the tag on the tool (“T-014”).</p>
+      <ul class="results" id="tool-results" aria-label="Matching tools" hidden></ul>
+      <ul class="cart" id="cart" aria-label="Tools to lend"></ul>
+    </div>
+
+    <div class="field">
+      <label for="due">3. Due back</label>
+      <input type="date" id="due">
+    </div>
+
+    <button class="primary" id="lend-btn" type="button" aria-describedby="lend-why" style="width:100%">Lend</button>
+    <p class="hint" id="lend-why"></p>
+    <p class="status" id="lend-status" role="status" hidden></p>
   </section>
 
-  <aside aria-label="Lend or take back">
-    <div class="panel" id="panel"></div>
-  </aside>
+  <section aria-labelledby="out-h">
+    <h2 id="out-h" tabindex="-1">Out now</h2>
+    <label for="out-q" class="lbl">Find a loan</label>
+    <input type="search" id="out-q" autocomplete="off" placeholder="Borrower or tool">
+    <p class="status" id="return-status" role="status" hidden></p>
+    <ul class="loans" id="loans"></ul>
+    <div id="out-empty"></div>
+    <p class="undo" id="undo" hidden><span id="undo-msg"></span><button type="button" id="undo-btn">Undo</button></p>
+  </section>
 </main>
-
-<div class="toast" id="toast" hidden role="status">
-  <span id="toastMsg"></span>
-  <button class="btn" id="undo" type="button">Undo</button>
-</div>
 
 <script>
 (function(){
-  var DAY=86400000;
-  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-  function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
-  var now=new Date(), todayD=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  function offs(n){return iso(new Date(todayD.getTime()+n*DAY));}
-  function pretty(s){return parse(s).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});}
-  function daysLate(s){return Math.round((todayD-parse(s))/DAY);}
+  const $ = id => document.getElementById(id);
+  const DAY = 86400000;
+  const iso = d => { const z=new Date(d.getTime()-d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
+  const parse = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
+  const today = new Date(); today.setHours(0,0,0,0);
+  const plus = n => iso(new Date(today.getTime()+n*DAY));
+  const fmt = s => parse(s).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+  const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-  var tools=[
-    {id:'T-014',name:'Cordless drill (18V)',status:'in'},
-    {id:'T-021',name:'Extension ladder, 24 ft',status:'out',borrower:'Maria Gonzalez',due:offs(2)},
-    {id:'T-007',name:'Orbital sander',status:'out',borrower:'Dev Patel',due:offs(-3)},
-    {id:'T-033',name:'Wet/dry shop vacuum',status:'in'},
-    {id:'T-040',name:'Post-hole digger',status:'in'},
-    {id:'T-012',name:'Circular saw',status:'hold',note:'Blade guard sticks. Waiting for repair day.'},
-    {id:'T-052',name:'Tile cutter, manual',status:'out',borrower:'Sam O\u2019Brien',due:offs(0)},
-    {id:'T-018',name:'Pipe wrench set (3 pc)',status:'in'},
-    {id:'T-027',name:'Pressure washer',status:'out',borrower:'Priya Raman',due:offs(-1)},
-    {id:'T-061',name:'Garden tiller',status:'in'}
+  const members = [
+    {id:'M-0412',name:'Maria Okonkwo'},
+    {id:'M-0388',name:'Dev Patel'},
+    {id:'M-0507',name:'Anneliese Vandenberghe-Hutchinson-Rodriguez'},
+    {id:'M-0291',name:'Tom Reyes'},
+    {id:'M-0463',name:'Priya Raman'}
   ];
-  var log=[], filter='all', query='', selected=null, undoSnap=null, toastTimer=null;
+  const tools = [
+    {id:'T-005',name:'Wheelbarrow'},
+    {id:'T-008',name:'Hedge trimmer'},
+    {id:'T-014',name:'Cordless drill'},
+    {id:'T-017',name:'Pressure washer'},
+    {id:'T-021',name:'Extension ladder'},
+    {id:'T-029',name:'Orbital sander'},
+    {id:'T-033',name:'Wet/dry shop vac'},
+    {id:'T-040',name:'Tile saw'},
+    {id:'T-052',name:'Post-hole digger'},
+    {id:'T-061',name:'Socket set, metric and SAE, 94 pieces'}
+  ];
+  let loans = [
+    {tool:'T-014',member:'M-0388',due:plus(-2)},
+    {tool:'T-008',member:'M-0412',due:plus(3)},
+    {tool:'T-021',member:'M-0507',due:plus(0)},
+    {tool:'T-017',member:'M-0291',due:plus(5)},
+    {tool:'T-040',member:'M-0463',due:plus(-6)}
+  ];
+  const mById = id => members.find(m=>m.id===id);
+  const tById = id => tools.find(t=>t.id===id);
+  const loanOf = id => loans.find(l=>l.tool===id);
 
-  var $=function(id){return document.getElementById(id);};
-  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
-  function isLate(t){return t.status==='out'&&t.due<iso(todayD);}
-  function kind(t){return t.status==='out'?(isLate(t)?'late':'out'):t.status;}
+  let chosen = null, cart = [], undoFn = null, undoTimer = null;
 
-  $('today').textContent=todayD.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  $('today').textContent = today.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+  $('due').min = plus(0);
+  $('due').value = plus(7);
 
-  function visible(){
-    var q=query.trim().toLowerCase();
-    return tools.filter(function(t){
-      if(filter!=='all'&&kind(t)!==filter&&!(filter==='out'&&t.status==='out'))return false;
-      if(!q)return true;
-      return (t.name+' '+t.id+' '+(t.borrower||'')).toLowerCase().indexOf(q)>-1;
-    });
+  /* ---------- member pick ---------- */
+  function renderMemberResults(){
+    const q = $('member-q').value.trim().toLowerCase();
+    const ul = $('member-results');
+    if(!q){ ul.hidden = true; ul.innerHTML=''; return; }
+    const hits = members.filter(m => m.name.toLowerCase().includes(q) || m.id.toLowerCase().includes(q));
+    ul.hidden = false;
+    ul.innerHTML = hits.length
+      ? hits.map(m=>`<li><button type="button" data-member="${m.id}"><span class="wrap">${esc(m.name)}</span><span class="sub">${m.id}</span></button></li>`).join('')
+      : `<li><span class="na">No member matches “${esc($('member-q').value.trim())}”. Check the spelling or try the member number.</span></li>`;
   }
-
-  function renderList(){
-    var ul=$('list'); ul.textContent='';
-    var items=visible();
-    items.forEach(function(t){
-      var li=el('li','row'); li.dataset.selected=(selected===t.id);
-      var info=el('div');
-      info.appendChild(el('div','name',t.name));
-      var m=el('div','meta');
-      var k=kind(t), b=el('span','badge');
-      if(k==='in'){b.className+=' b-in';b.textContent='On the shelf';m.appendChild(b);m.appendChild(document.createTextNode(t.id));}
-      else if(k==='out'){b.className+=' b-out';b.textContent='Lent out';m.appendChild(b);m.appendChild(document.createTextNode(t.borrower+' · due '+pretty(t.due)));}
-      else if(k==='late'){b.className+=' b-late';var n=daysLate(t.due);b.textContent='Overdue '+n+(n===1?' day':' days');m.appendChild(b);m.appendChild(document.createTextNode(t.borrower+' · was due '+pretty(t.due)));}
-      else {b.className+=' b-hold';b.textContent='Held back';m.appendChild(b);m.appendChild(document.createTextNode(t.note||t.id));}
-      info.appendChild(m); li.appendChild(info);
-      var btn=el('button','btn'+(t.status==='in'?' primary':''),t.status==='in'?'Lend':t.status==='out'?'Take back':'Details');
-      btn.type='button';
-      btn.setAttribute('aria-label',btn.textContent+': '+t.name);
-      btn.addEventListener('click',function(){selected=t.id;renderAll();focusPanel();});
-      li.appendChild(btn); ul.appendChild(li);
-    });
-    $('resultCount').textContent=items.length+(items.length===1?' tool shown':' tools shown');
-    var em=$('emptyMsg'); em.textContent='';
-    if(!items.length){
-      var d=el('div','empty'); var what=query.trim()?'No tools match \u201C'+query.trim()+'\u201D':'Nothing in this view';
-      d.appendChild(el('b',null,what+(filter!=='all'?' under \u201C'+document.querySelector('.chip[data-f='+filter+']').textContent+'\u201D':'')+'.'));
-      d.appendChild(el('span',null,'Check the spelling, or show everything again.'));
-      d.appendChild(document.createElement('br'));
-      var c=el('button','btn','Clear search and filter'); c.type='button'; c.style.marginTop='12px';
-      c.addEventListener('click',function(){query='';filter='all';$('q').value='';syncChips();renderAll();$('q').focus();});
-      d.appendChild(c); em.appendChild(d);
+  function renderChosen(){
+    const box = $('member-chosen');
+    $('member-pick').hidden = !!chosen;
+    box.hidden = !chosen;
+    if(chosen){
+      const n = loans.filter(l=>l.member===chosen.id).length;
+      box.innerHTML = `<div class="chip"><div class="wrap"><strong>${esc(chosen.name)}</strong><span class="sub">${chosen.id} · ${n} ${n===1?'tool':'tools'} out now</span></div>
+        <button type="button" id="member-change" aria-label="Change borrower, currently ${esc(chosen.name)}">Change</button></div>`;
     }
   }
-
-  function renderCounts(){
-    $('cIn').textContent=tools.filter(function(t){return t.status==='in';}).length;
-    $('cOut').textContent=tools.filter(function(t){return t.status==='out';}).length;
-    $('cLate').textContent=tools.filter(isLate).length;
-  }
-
-  function renderLog(){
-    var ol=$('log'); ol.textContent='';
-    log.slice(0,6).forEach(function(e){
-      var li=el('li'); li.appendChild(el('time',null,e.time)); li.appendChild(document.createTextNode(e.text)); ol.appendChild(li);
-    });
-    $('logEmpty').hidden=log.length>0;
-  }
-
-  function field(id,label,node,hint){
-    var f=el('div','field'); var l=el('label',null,label); l.setAttribute('for',id); f.appendChild(l); f.appendChild(node);
-    if(hint)f.appendChild(el('p','hint',hint));
-    var e=el('p','err'); e.id=id+'Err'; e.hidden=true; f.appendChild(e); return f;
-  }
-  function showErr(input,msg){
-    var e=$(input.id+'Err'); e.textContent=msg; e.hidden=false; input.setAttribute('aria-invalid','true'); input.setAttribute('aria-describedby',e.id);
-  }
-
-  function renderPanel(){
-    var p=$('panel'); p.textContent='';
-    var t=tools.filter(function(x){return x.id===selected;})[0];
-    if(!t){
-      var d=el('div','empty'); d.appendChild(el('b',null,'Pick a tool to get started'));
-      d.appendChild(document.createTextNode('Choose \u201CLend\u201D on a tool that\u2019s on the shelf, or \u201CTake back\u201D on one that\u2019s coming home.'));
-      p.appendChild(d); return;
-    }
-    var h=el('h2',null,(t.status==='in'?'Lend: ':t.status==='out'?'Take back: ':'Held back: ')+t.name); h.tabIndex=-1; h.id='panelH'; p.appendChild(h);
-    p.appendChild(el('p','meta',t.id));
-
-    if(t.status==='in'){
-      var form=el('form'); form.noValidate=true;
-      var bi=el('input'); bi.type='text'; bi.id='borrower'; bi.autocomplete='off';
-      form.appendChild(field('borrower','Borrower\u2019s name or member number',bi));
-      var di=el('input'); di.type='date'; di.id='due'; di.min=iso(todayD); di.value=offs(7);
-      form.appendChild(field('due','Due back',di,'Pre-filled one week out. Change it if this loan needs a different date.'));
-      var a=el('div','actions');
-      var go=el('button','btn primary','Lend '+t.name); go.type='submit'; a.appendChild(go);
-      var cx=el('button','btn link','Cancel'); cx.type='button'; cx.addEventListener('click',function(){selected=null;renderAll();});
-      a.appendChild(cx); form.appendChild(a);
-      form.addEventListener('submit',function(ev){
-        ev.preventDefault();
-        ['borrower','due'].forEach(function(i){$(i+'Err').hidden=true;$(i).removeAttribute('aria-invalid');});
-        var bad=null;
-        if(!bi.value.trim()){showErr(bi,'Enter who is borrowing this tool.');bad=bad||bi;}
-        if(!di.value){showErr(di,'Pick a due date.');bad=bad||di;}
-        else if(di.value<iso(todayD)){showErr(di,'The due date can\u2019t be before today.');bad=bad||di;}
-        if(bad){bad.focus();return;}
-        var snap=JSON.parse(JSON.stringify(t));
-        t.status='out'; t.borrower=bi.value.trim(); t.due=di.value;
-        done('Lent '+t.name+' to '+t.borrower+', due '+pretty(t.due)+'.',snap);
-      });
-      p.appendChild(form);
-    }
-    else if(t.status==='out'){
-      if(isLate(t)){var n=daysLate(t.due);p.appendChild(el('p','callout late','Overdue by '+n+(n===1?' day':' days')+'. It was due '+pretty(t.due)+'.'));}
-      var s=el('p',null,'Borrowed by '); s.appendChild(el('b',null,t.borrower)); s.appendChild(document.createTextNode(', due '+pretty(t.due)+'.')); p.appendChild(s);
-      var form2=el('form'); form2.noValidate=true;
-      var ck=el('div','field'); var cl=el('label','check'); var ci=el('input'); ci.type='checkbox'; ci.id='problem';
-      cl.appendChild(ci); cl.appendChild(document.createTextNode('It came back damaged or not working')); ck.appendChild(cl); form2.appendChild(ck);
-      var wrap=el('div'); wrap.hidden=true;
-      var ni=el('textarea'); ni.id='note';
-      wrap.appendChild(field('note','What\u2019s wrong?',ni,'The tool will be held back from lending until someone checks it.'));
-      form2.appendChild(wrap);
-      ci.addEventListener('change',function(){wrap.hidden=!ci.checked;if(ci.checked)ni.focus();});
-      var a2=el('div','actions');
-      var go2=el('button','btn primary return','Take back '+t.name); go2.type='submit'; a2.appendChild(go2);
-      var cx2=el('button','btn link','Cancel'); cx2.type='button'; cx2.addEventListener('click',function(){selected=null;renderAll();});
-      a2.appendChild(cx2); form2.appendChild(a2);
-      form2.addEventListener('submit',function(ev){
-        ev.preventDefault();
-        if(ci.checked&&!ni.value.trim()){showErr(ni,'Add a short note about the problem so the repair crew knows what to look for.');ni.focus();return;}
-        var snap=JSON.parse(JSON.stringify(t)), who=t.borrower;
-        if(ci.checked){t.status='hold';t.note=ni.value.trim();}else{t.status='in';}
-        delete t.borrower; delete t.due;
-        done(ci.checked?'Took back '+t.name+' from '+who+' and held it back for repair.':'Took back '+t.name+' from '+who+'. It\u2019s on the shelf again.',snap);
-      });
-      p.appendChild(form2);
-    }
-    else {
-      p.appendChild(el('p','callout info',t.note||'No note was left.'));
-      p.appendChild(el('p','hint','This tool can\u2019t be lent until it\u2019s checked.'));
-      var a3=el('div','actions');
-      var ok=el('button','btn','Checked and fixed: put back on shelf'); ok.type='button';
-      ok.addEventListener('click',function(){var snap=JSON.parse(JSON.stringify(t));t.status='in';delete t.note;done(t.name+' is back on the shelf.',snap);});
-      var cx3=el('button','btn link','Close'); cx3.type='button'; cx3.addEventListener('click',function(){selected=null;renderAll();});
-      a3.appendChild(ok); a3.appendChild(cx3); p.appendChild(a3);
-    }
-  }
-
-  function done(msg,snap){
-    var t=tools.filter(function(x){return x.id===snap.id;})[0];
-    log.unshift({text:msg,time:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})});
-    undoSnap={snap:snap};
-    selected=null; renderAll();
-    $('toastMsg').textContent=msg; $('toast').hidden=false;
-    clearTimeout(toastTimer); toastTimer=setTimeout(hideToast,10000);
-    $('q').focus();
-  }
-  function hideToast(){$('toast').hidden=true;undoSnap=null;}
-  $('undo').addEventListener('click',function(){
-    if(!undoSnap)return;
-    var s=undoSnap.snap, i=tools.findIndex(function(x){return x.id===s.id;});
-    tools[i]=s; log.shift();
-    log.unshift({text:'Undid the last change to '+s.name+'.',time:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})});
-    clearTimeout(toastTimer); hideToast(); renderAll(); $('q').focus();
+  $('member-q').addEventListener('input', renderMemberResults);
+  $('member-q').addEventListener('keydown', e=>{
+    if(e.key==='Enter'){ e.preventDefault(); const b=$('member-results').querySelector('button'); if(b) b.click(); }
+    if(e.key==='ArrowDown'){ const b=$('member-results').querySelector('button'); if(b){ e.preventDefault(); b.focus(); } }
+  });
+  $('member-results').addEventListener('click', e=>{
+    const b = e.target.closest('button[data-member]'); if(!b) return;
+    chosen = mById(b.dataset.member);
+    $('member-q').value=''; renderMemberResults(); renderChosen(); renderLendState();
+    $('tool-q').focus();
+  });
+  $('member-chosen').addEventListener('click', e=>{
+    if(e.target.id==='member-change'){ chosen=null; renderChosen(); renderLendState(); $('member-q').focus(); }
   });
 
-  function focusPanel(){
-    var h=$('panelH'); if(h){h.scrollIntoView({block:'nearest'});var f=document.querySelector('#panel input:not([type=checkbox]),#panel button.btn');(document.querySelector('#panel input')||h).focus();}
+  /* ---------- tool pick ---------- */
+  function renderToolResults(){
+    const raw = $('tool-q').value.trim(), q = raw.toLowerCase();
+    const ul = $('tool-results');
+    if(!q){ ul.hidden = true; ul.innerHTML=''; return; }
+    const hits = tools.filter(t => t.name.toLowerCase().includes(q) || t.id.toLowerCase().includes(q));
+    ul.hidden = false;
+    if(!hits.length){ ul.innerHTML = `<li><span class="na">No tool matches “${esc(raw)}”. Try fewer letters or the tag number.</span></li>`; return; }
+    ul.innerHTML = hits.map(t=>{
+      const l = loanOf(t.id);
+      if(l){ const m=mById(l.member); return `<li><span class="na"><span class="wrap">${esc(t.name)}</span><span class="sub">${t.id} · Not available: out with ${esc(m.name)}, due ${fmt(l.due)}</span></span></li>`; }
+      if(cart.includes(t.id)) return `<li><span class="na"><span class="wrap">${esc(t.name)}</span><span class="sub">${t.id} · Already added</span></span></li>`;
+      return `<li><button type="button" data-tool="${t.id}"><span class="wrap">${esc(t.name)}</span><span class="sub">${t.id} · Available</span></button></li>`;
+    }).join('');
   }
-  function syncChips(){document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',c.dataset.f===filter);});}
-  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){filter=c.dataset.f;syncChips();renderList();});});
-  $('q').addEventListener('input',function(){query=this.value;renderList();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('toast').hidden){hideToast();}});
+  function renderCart(){
+    $('cart').innerHTML = cart.map(id=>{
+      const t=tById(id);
+      return `<li class="chip"><div class="wrap"><strong>${esc(t.name)}</strong><span class="sub">${t.id}</span></div>
+        <button type="button" data-remove="${id}" aria-label="Remove ${esc(t.name)} from this loan">Remove</button></li>`;
+    }).join('');
+  }
+  $('tool-q').addEventListener('input', renderToolResults);
+  $('tool-q').addEventListener('keydown', e=>{
+    if(e.key==='Enter'){ e.preventDefault(); const b=$('tool-results').querySelector('button'); if(b) b.click(); }
+    if(e.key==='ArrowDown'){ const b=$('tool-results').querySelector('button'); if(b){ e.preventDefault(); b.focus(); } }
+  });
+  $('tool-results').addEventListener('click', e=>{
+    const b=e.target.closest('button[data-tool]'); if(!b) return;
+    cart.push(b.dataset.tool);
+    $('tool-q').value=''; renderToolResults(); renderCart(); renderLendState();
+    $('tool-q').focus();
+  });
+  $('cart').addEventListener('click', e=>{
+    const b=e.target.closest('button[data-remove]'); if(!b) return;
+    const i = cart.indexOf(b.dataset.remove);
+    cart.splice(i,1); renderCart(); renderLendState();
+    const next = $('cart').querySelectorAll('button')[Math.min(i,cart.length-1)];
+    (next||$('tool-q')).focus();
+  });
 
-  function renderAll(){renderCounts();renderList();renderPanel();renderLog();}
-  renderAll();
+  /* ---------- lend ---------- */
+  function renderLendState(){
+    const due = $('due').value;
+    let why = '';
+    if(!chosen) why = 'Choose who is borrowing first.';
+    else if(!cart.length) why = 'Add at least one tool.';
+    else if(!due || due < plus(0)) why = 'Pick a due date that is today or later.';
+    const btn = $('lend-btn');
+    btn.disabled = !!why;
+    btn.textContent = (chosen && cart.length) ? `Lend ${cart.length} ${cart.length===1?'tool':'tools'} to ${chosen.name}` : 'Lend';
+    $('lend-why').textContent = why;
+  }
+  $('due').addEventListener('input', renderLendState);
+  $('lend-btn').addEventListener('click', ()=>{
+    if($('lend-btn').disabled) return;
+    const due = $('due').value, m = chosen, ids = cart.slice();
+    const added = ids.map(t=>({tool:t,member:m.id,due}));
+    loans = loans.concat(added);
+    const names = ids.map(id=>tById(id).name).join(', ');
+    chosen=null; cart=[]; $('member-q').value=''; $('tool-q').value='';
+    renderMemberResults(); renderToolResults(); renderChosen(); renderCart(); renderLendState(); renderOut();
+    const s=$('lend-status'); s.hidden=false;
+    s.textContent = `Lent to ${m.name}: ${names}. Due back ${fmt(due)}.`;
+    $('return-status').hidden = true;
+    showUndo(`Loan recorded for ${m.name}.`, ()=>{
+      loans = loans.filter(l=>!added.includes(l));
+      s.hidden=true; renderOut(); renderChosen();
+    });
+    $('member-q').focus();
+  });
+
+  /* ---------- out now ---------- */
+  function dueInfo(due){
+    const diff = Math.round((parse(due)-today)/DAY);
+    if(diff<0) return {cls:'late', text:`Overdue by ${-diff} ${diff===-1?'day':'days'} · was due ${fmt(due)}`};
+    if(diff===0) return {cls:'today', text:'Due back today'};
+    return {cls:'ok', text:`Due ${fmt(due)} · in ${diff} ${diff===1?'day':'days'}`};
+  }
+  function renderOut(focusIdx){
+    const q = $('out-q').value.trim().toLowerCase();
+    const sorted = loans.slice().sort((a,b)=>a.due.localeCompare(b.due));
+    const list = sorted.filter(l=>{
+      if(!q) return true;
+      return tById(l.tool).name.toLowerCase().includes(q) || l.tool.toLowerCase().includes(q) ||
+             mById(l.member).name.toLowerCase().includes(q) || l.member.toLowerCase().includes(q);
+    });
+    const late = loans.filter(l=>l.due<plus(0)).length;
+    $('counts').textContent = `${loans.length} out${late?`, ${late} overdue`:''}`;
+    $('loans').innerHTML = list.map(l=>{
+      const t=tById(l.tool), m=mById(l.member), d=dueInfo(l.due);
+      return `<li class="loan"><div style="min-width:0">
+        <strong class="wrap">${esc(t.name)}</strong> <span class="sub" style="display:inline">${t.id}</span>
+        <div class="wrap">${esc(m.name)} <span class="sub" style="display:inline">${m.id}</span></div>
+        <span class="badge ${d.cls}">${d.text}</span></div>
+        <button type="button" class="primary" data-return="${l.tool}" aria-label="Take back ${esc(t.name)} from ${esc(m.name)}">Take back</button></li>`;
+    }).join('');
+    const e = $('out-empty');
+    if(!loans.length){
+      e.innerHTML = `<div class="empty"><strong>Nothing is out right now.</strong>Every tool is on the shelf. Loans you record on the left will show up here.</div>`;
+    } else if(!list.length){
+      e.innerHTML = `<div class="empty"><strong>No loans match “${esc($('out-q').value.trim())}”.</strong>Check the spelling, or <button type="button" id="clear-q" style="min-height:44px">Show all ${loans.length} loans</button></div>`;
+    } else e.innerHTML='';
+    if(focusIdx!==undefined){
+      const bs=$('loans').querySelectorAll('button');
+      (bs[focusIdx]||bs[focusIdx-1]||$('out-q')).focus();
+    }
+  }
+  $('out-q').addEventListener('input', ()=>renderOut());
+  $('out-empty').addEventListener('click', e=>{ if(e.target.id==='clear-q'){ $('out-q').value=''; renderOut(); $('out-q').focus(); } });
+  $('loans').addEventListener('click', e=>{
+    const b=e.target.closest('button[data-return]'); if(!b) return;
+    const idx=[...$('loans').querySelectorAll('button')].indexOf(b);
+    const loan=loanOf(b.dataset.return), t=tById(loan.tool), m=mById(loan.member);
+    loans = loans.filter(l=>l!==loan);
+    renderOut(idx);
+    const s=$('return-status'); s.hidden=false;
+    s.textContent = `${t.name} is back from ${m.name} and ready to lend again.`;
+    $('lend-status').hidden = true;
+    showUndo(`Took back ${t.name}.`, ()=>{ loans.push(loan); s.hidden=true; renderOut(); renderChosen(); });
+  });
+
+  /* ---------- undo ---------- */
+  function showUndo(msg, fn){
+    clearTimeout(undoTimer);
+    undoFn = fn; $('undo-msg').textContent = msg; $('undo').hidden = false;
+    undoTimer = setTimeout(hideUndo, 10000);
+  }
+  function hideUndo(){ $('undo').hidden = true; undoFn = null; }
+  $('undo-btn').addEventListener('click', ()=>{
+    const fn=undoFn; hideUndo(); if(fn) fn();
+    $('out-q').focus();
+  });
+
+  renderChosen(); renderCart(); renderLendState(); renderOut();
 })();
 </script>
 </body>

@@ -1,50 +1,45 @@
-**Pick: Dev A's 4px base with a 1.2 type ratio, with the values below.** Tailwind's spacing is already a 4px scale, so Dev C agrees on spacing. Its type scale isn't a ratio and its defaults are too small for gloved tablet use, so take the mechanism from it, not the values.
+**Decision: 4px base spacing, 1.2 type ratio, with the type steps rounded to whole pixels.** Dev A's choice fits both screens. Dev B's 8px grid can't express the 4px gaps that dense desktop tables need. Dev C's "Tailwind" is a 4px spacing scale, so it agrees with A on spacing. On type, Tailwind's scale is hand-picked, not a ratio, and its smallest default (12px) is too small for a gloved tablet.
 
-**Why not 8px:** Dense desktop tables need 28px and 36px rows. An 8px grid forces 24, 32, or 40 and leaves no good middle step. 4px gives those values without custom tokens.
+## Spacing (4px base)
 
-**Why not 1.333:** From a 14px body, 1.333 gives 18.7, 24.9, 33.2. Dense UI needs closer steps between table text, labels, and values, and 1.333 also pushes the caption size too small. 1.2 keeps the steps tight.
+Every value is a multiple of 4. Multiples of 8 are a subset, so B's values remain valid.
 
-### Spacing (4px base)
+| Token | px | Token | px |
+|---|---|---|---|
+| `space-0` | 0 | `space-6` | 24 |
+| `space-1` | 4 | `space-8` | 32 |
+| `space-2` | 8 | `space-10` | 40 |
+| `space-3` | 12 | `space-12` | 48 |
+| `space-4` | 16 | `space-14` | 56 |
+| `space-5` | 20 | `space-16` | 64 |
 
-| Token | px | Typical use |
+## Type (base 16, ratio 1.2, snapped to whole px)
+
+| Token | Size / line height | Use |
 |---|---|---|
-| space-1 | 4 | Icon-to-label gap, cell padding (tight) |
-| space-2 | 8 | Cell padding (desktop), inline gaps |
-| space-3 | 12 | Control inner padding |
-| space-4 | 16 | Card and panel padding |
-| space-5 | 20 | Section gaps |
-| space-6 | 24 | Between sections |
-| space-8 | 32 | Page margins (desktop) |
-| space-10 | 40 | Page margins (tablet) |
-| space-12 | 48 | Large separators |
-| space-14 | 56 | Tablet touch targets |
+| `text-2xs` | 11 / 16 | Column captions only; never for input |
+| `text-sm` | 13 / 16 | Desktop table cells, dense metadata |
+| `text-base` | 16 / 24 | Body, form input, tablet table cells |
+| `text-lg` | 19 / 24 | Section headings |
+| `text-xl` | 23 / 28 | Page titles |
+| `text-2xl` | 28 / 32 | Dashboard numbers |
+| `text-3xl` | 33 / 40 | Hero figures (rare) |
 
-### Type (1.2 ratio, anchored at 14px)
+Why 1.2 over 1.333: from 16px, 1.333 gives 12, 16, 21, 28. There's no step between 12 and 16 for table text, and the jump from body to heading is too large for a data-dense UI. 1.2 gives the close steps UI needs.
 
-| Token | px | Use |
-|---|---|---|
-| text-caption | 12 | Metadata, column hints (desktop only) |
-| text-body-sm | 14 | Desktop body, table cells, labels |
-| text-body | 17 | Tablet body (gloved, arm's length) |
-| text-title | 20 | Section headings |
-| text-heading | 24 | Page titles |
-| text-display | 29 | Rare: totals, stock counts on tablet |
+## Density and touch targets
 
-Body is 14 on desktop and 17 on tablet. Use a surface token that maps `text-body` to whichever applies, so components don't branch on device.
+Density is a token layer over the same scale, not a second system:
 
-Line heights: 1.25 in tables and dense lists, 1.5 for forms and prose.
+- **Desktop (dense):** control height 32, table row 32, cell padding `space-2`/`space-3`, table text `text-sm`.
+- **Tablet (gloved):** minimum target 48, primary actions 56, table row 56, cell text `text-base`, at least `space-3` between adjacent targets.
 
-### Control sizes
+Tablet components should set their own minimums, not rely on text size. Gloved use needs big hit areas more than big type.
 
-- **Desktop dense table row:** 28px. Comfortable row: 36px.
-- **Desktop controls (buttons, inputs):** 32px.
-- **Tablet controls:** 56px minimum for anything tapped. Gloves need more than the 44–48px touch guidelines assume, so don't go below 56 on warehouse surfaces.
-- **Tablet table rows:** 56px.
+## Rules to write down
 
-### Rules to put in the repo
+- Components use tokens only. Raw px values in component code fail lint.
+- Spacing must be a multiple of 4. Anything else needs a reason in review.
+- Type sizes come only from the scale above, and each has a fixed line height.
 
-1. All spacing and sizes come from these tokens. No raw px in components.
-2. Surfaces (`tablet`, `desktop`) set density tokens. Components don't check device.
-3. Changing a token value requires a review of both surfaces.
-
-I haven't checked these against any existing Tallyard files, since the repo isn't a git repository and I didn't look for a token file. If you want, I can write these as a JSON or CSS token file.
+I picked these values myself, so the numbers are open to challenge. The one I'd defend hardest is the 1.2 ratio, since it's the choice that actually matters for dense tables.

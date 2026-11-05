@@ -27,45 +27,56 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Radius, border, elevation, motion */
+  /* Shape, border, elevation, motion */
   --radius-sm: 6px;
   --radius-md: 10px;
   --border-width: 1px;
-  --shadow-raised: 0 1px 4px rgba(16, 24, 40, .10);
-  --duration-fast: .18s;
-  --ease-standard: ease;
+  --shadow-raised: 0 1px 4px rgba(16, 24, 40, 0.10);
+  --duration-fast: 0.18s;
+  --easing-standard: ease;
+
+  /* Button inset (secondary subtracts its border so all variants stay the same size) */
+  --btn-pad-y: var(--space-2);
+  --btn-pad-x: var(--space-5);
 }
 
+/* Button */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  padding: var(--space-2) var(--space-5);
+  padding: var(--btn-pad-y) var(--btn-pad-x);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   border-radius: var(--radius-sm);
   background: var(--color-accent);
   color: var(--color-on-accent);
   border: 0;
-  transition: background var(--duration-fast) var(--ease-standard);
+  transition: background var(--duration-fast) var(--easing-standard);
 }
-.btn:hover { background: var(--color-accent-hover); }
+.btn:hover {
+  background: var(--color-accent-hover);
+}
 
-/* Padding is reduced by the border width so it stays the same size as .btn */
 .btn-secondary {
   background: transparent;
   color: var(--color-accent);
   border: var(--border-width) solid var(--color-accent);
-  padding: calc(var(--space-2) - var(--border-width)) calc(var(--space-5) - var(--border-width));
+  padding: calc(var(--btn-pad-y) - var(--border-width)) calc(var(--btn-pad-x) - var(--border-width));
 }
-.btn-secondary:hover { background: var(--color-accent-subtle); }
+.btn-secondary:hover {
+  background: var(--color-accent-subtle);
+}
 
 .btn-danger {
   background: var(--color-danger);
   color: var(--color-on-accent);
 }
-.btn-danger:hover { background: var(--color-danger-hover); }
+.btn-danger:hover {
+  background: var(--color-danger-hover);
+}
 
+/* Card */
 .card {
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border-subtle);
@@ -94,14 +105,11 @@
 }
 ```
 
-**Merge map (old value → token):**
-- Colors: `#0f766e` → `accent`, `#0d6b63` → `accent-hover`, `#e6f4f2` → `accent-subtle`, `#c0392b` → `danger`, `#a93226` → `danger-hover`, `#fff` → `on-accent` and `surface`, `#dde2e1` → `border-subtle`, `#14201f` → `text-primary`, `#5a6b69` → `text-secondary`.
-- Spacing: 6, 10, 12, 14, 18 and 20px → `space-1` to `space-6`.
-- The secondary button's `9px 17px` is now `calc(space - border-width)`. It renders the same, and it stays correct if either value changes.
-- Radius: 6px → `radius-sm`, 10px → `radius-md`.
-- Type: 13, 15 and 19px → `font-size-sm`, `-md` and `-lg`.
+**Merge map (old value → token):** every value resolves to its exact original, so the rendering is pixel-identical. `9px 17px` on the secondary button is now derived from the button padding minus the border, so it can't drift.
 
-**Notes:**
-- Every rendered value is identical, so nothing changes visually. I did not merge the close spacing steps (12/14 and 18/20), because that would shift layouts by 2px. Merging them is a later decision for you to make deliberately.
-- Components read only semantic roles, so a dark or second-brand theme only needs to remap the `:root` color tokens.
-- The CSS still has no focus, disabled or pressed states. Add them before more components copy these buttons.
+- **Colors:** `#0f766e` → `accent`, `#0d6b63` → `accent-hover`, `#e6f4f2` → `accent-subtle`, `#c0392b` → `danger`, `#a93226` → `danger-hover`, `#fff` → `on-accent` / `surface`, `#dde2e1` → `border-subtle`, `#14201f` → `text-primary`, `#5a6b69` → `text-secondary`.
+- **Spacing:** 6 → `space-1`, 10 → `space-2`, 12 → `space-3`, 14 → `space-4`, 18 → `space-5`, 20 → `space-6`.
+
+**Trade-off:** I kept 12/14 and 18/20 as separate steps, because merging them would shift things by 1–2px. They're close enough to confuse, so consider collapsing each pair later, with a visual check, to get a four-step scale.
+
+I assumed a single light theme. Components read only the semantic roles, so adding dark mode later means remapping the `:root` color values.

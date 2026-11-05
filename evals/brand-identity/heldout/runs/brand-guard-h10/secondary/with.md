@@ -1,1 +1,1 @@
-No. Cramming all three makes the logo illegible at small sizes and hard to reproduce on caps, cans, and taps. Use one primary mark (the bear is the strongest bet) with the wordmark as a separate lockup. Save the crest and hops for labels, packaging details, and secondary graphics.
+No. A logo that carries everything becomes unreadable at small sizes, on cans, and on caps. Pick one primary mark, probably the bear, and pair it with the wordmark as a lockup. Use the hops crest as a secondary element on labels, packaging, and merch, where there's room for it.

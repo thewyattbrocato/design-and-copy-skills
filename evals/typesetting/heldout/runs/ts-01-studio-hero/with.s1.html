@@ -3,153 +3,181 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fernwick Ceramics — Hand-thrown dinnerware & weekend glazing classes</title>
+<title>Fernwick Ceramics — Hand-thrown dinnerware &amp; weekend glazing classes</title>
 <style>
   :root {
-    --clay: #f3ebe0;
-    --ink: #2a2622;
-    --muted: #5e564d;
-    --fern: #3f5a43;
-    --fern-dark: #2f4533;
-    --terracotta: #b9593a;
+    --cream: #f5eee3;
+    --ink: #2a201b;
+    --muted: #5e4f45;
+    --clay: #9a4a2c;
+    --clay-dark: #7a3720;
+    --fern: #4f6450;
+    --line: #d9ccb9;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    background: var(--clay);
+    background: var(--cream);
     color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
   header {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 28px 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 28px clamp(24px, 6vw, 96px);
   }
-  .logo {
-    font-family: Georgia, "Times New Roman", serif;
+  .brand {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: 0.01em;
-    color: var(--fern-dark);
+    color: var(--ink);
     text-decoration: none;
   }
   nav { display: flex; gap: 32px; }
   nav a {
-    color: var(--ink);
+    color: var(--muted);
     text-decoration: none;
     font-size: 0.95rem;
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
   }
-  nav a:hover { color: var(--terracotta); }
+  nav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
   .hero {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 72px 48px 120px;
+    flex: 1;
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 64px;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+    padding: clamp(24px, 5vh, 64px) clamp(24px, 6vw, 96px) clamp(48px, 8vh, 96px);
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
   }
   .eyebrow {
-    font-size: 0.8rem;
+    margin: 0 0 24px;
+    font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--terracotta);
-    margin-bottom: 24px;
+    color: var(--fern);
   }
   h1 {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(3rem, 6.4vw, 5.6rem);
-    line-height: 1.02;
-    letter-spacing: -0.025em;
+    margin: 0;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     font-weight: 700;
-    max-width: 12ch;
-    margin-bottom: 28px;
+    font-size: clamp(2.9rem, 6.2vw, 5.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
-  h1 em { font-style: italic; color: var(--fern); }
+  h1 em {
+    font-style: italic;
+    font-weight: 600;
+    color: var(--clay);
+  }
   .lede {
-    font-size: 1.25rem;
+    margin: 28px 0 0;
+    max-width: 34em;
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
     line-height: 1.55;
     color: var(--muted);
-    max-width: 34em;
-    margin-bottom: 40px;
   }
-  .actions { display: flex; flex-wrap: wrap; gap: 16px; }
+  .actions {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
   .btn {
     display: inline-block;
     padding: 16px 28px;
     border-radius: 999px;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     text-decoration: none;
-    border: 2px solid var(--fern);
-    transition: background 0.15s, color 0.15s, transform 0.15s;
+    border: 2px solid var(--clay);
+    transition: background-color .15s, color .15s, border-color .15s;
   }
-  .btn-primary { background: var(--fern); color: #fff; }
-  .btn-primary:hover { background: var(--fern-dark); border-color: var(--fern-dark); }
-  .btn-secondary { background: transparent; color: var(--fern-dark); }
-  .btn-secondary:hover { background: var(--fern); color: #fff; }
-  .btn:active { transform: translateY(1px); }
-  .btn:focus-visible { outline: 3px solid var(--terracotta); outline-offset: 3px; }
+  .btn-primary { background: var(--clay); color: #fff; }
+  .btn-primary:hover { background: var(--clay-dark); border-color: var(--clay-dark); }
+  .btn-secondary { background: transparent; color: var(--clay-dark); }
+  .btn-secondary:hover { background: var(--clay); color: #fff; }
+  .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 
-  /* Decorative stack of bowls, pure CSS */
   .art {
-    aspect-ratio: 1;
-    position: relative;
-    max-width: 420px;
     justify-self: center;
     width: 100%;
-  }
-  .art .disc {
-    position: absolute;
+    max-width: 520px;
+    aspect-ratio: 1;
     border-radius: 50%;
+    background: #e8dcc8;
+    display: grid;
+    place-items: center;
   }
-  .d1 { inset: 0; background: var(--fern); }
-  .d2 { inset: 12%; background: var(--clay); }
-  .d3 { inset: 18%; background: var(--terracotta); }
-  .d4 { inset: 34%; background: #d98b68; }
-  .d5 { inset: 44%; background: var(--clay); }
+  .art svg { width: 86%; height: auto; display: block; }
 
   @media (max-width: 860px) {
-    header, .hero { padding-left: 24px; padding-right: 24px; }
-    .hero { grid-template-columns: 1fr; padding-top: 40px; padding-bottom: 72px; }
-    .art { max-width: 240px; justify-self: start; }
-    nav { gap: 18px; }
+    .hero { grid-template-columns: 1fr; }
+    .art { max-width: 360px; order: -1; }
+    nav { gap: 20px; }
+  }
+  @media (max-width: 520px) {
+    nav a:not(:last-child) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
   }
 </style>
 </head>
 <body>
+<div class="page">
   <header>
-    <a class="logo" href="#">Fernwick Ceramics</a>
+    <a class="brand" href="#">Fernwick Ceramics</a>
     <nav aria-label="Main">
       <a href="#">Shop</a>
       <a href="#">Classes</a>
-      <a href="#">About</a>
+      <a href="#">Our studio</a>
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Spring collection now open</p>
-        <h1>Made by hand, <em>meant for your table.</em></h1>
-        <p class="lede">Two potters, one small studio. We throw every plate and bowl on the wheel, and on weekends we open the doors so you can glaze your own.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="#">Shop the spring collection</a>
-          <a class="btn btn-secondary" href="#">Book a class</a>
-        </div>
+  <main class="hero">
+    <div>
+      <p class="eyebrow">Hand-thrown in a two-person studio</p>
+      <h1>Dinnerware with the <em>fingerprints</em> still on.</h1>
+      <p class="lede">Every plate, bowl, and mug is thrown and glazed by the two of us, then made to be used daily. Come to a weekend class and make a few of your own.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#">Shop the spring collection</a>
+        <a class="btn btn-secondary" href="#">Book a class</a>
       </div>
-      <div class="art" aria-hidden="true">
-        <div class="disc d1"></div>
-        <div class="disc d2"></div>
-        <div class="disc d3"></div>
-        <div class="disc d4"></div>
-        <div class="disc d5"></div>
-      </div>
-    </section>
+    </div>
+
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="200" cy="338" rx="150" ry="14" fill="#2a201b" opacity=".12"/>
+        <!-- tall vase -->
+        <path d="M150 330 C120 270 128 200 168 168 L168 120 L232 120 L232 168 C272 200 280 270 250 330 Z" fill="#4f6450"/>
+        <path d="M150 330 C120 270 128 200 168 168 L180 168 C150 210 148 280 172 330 Z" fill="#3e5140"/>
+        <ellipse cx="200" cy="120" rx="32" ry="8" fill="#2f3e31"/>
+        <path d="M134 262 C180 276 224 276 268 262" stroke="#f5eee3" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85"/>
+        <!-- stacked bowl -->
+        <path d="M262 330 L272 286 C300 280 340 280 368 286 L378 330 Z" fill="#9a4a2c" transform="translate(-20 0)"/>
+        <ellipse cx="302" cy="286" rx="46" ry="8" fill="#c06a45" transform="translate(-4 0)"/>
+        <!-- plate -->
+        <ellipse cx="92" cy="326" rx="70" ry="12" fill="#f5eee3"/>
+        <ellipse cx="92" cy="322" rx="70" ry="12" fill="#fbf7ef"/>
+        <ellipse cx="92" cy="322" rx="46" ry="6.5" fill="#e3d4bb"/>
+      </svg>
+    </div>
   </main>
+</div>
 </body>
 </html>

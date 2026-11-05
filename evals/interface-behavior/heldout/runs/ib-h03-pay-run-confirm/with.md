@@ -1,23 +1,25 @@
-Your designer is mostly right, but not about "Send payments."
+Your designer is mostly right, but not about all of them. Remove most of the popups. Keep one, and make it a better one.
 
-**Assumption:** a few admins use this on a desktop about once a month, and each payment run covers about 60 freelancers. Sending money is irreversible. I don't know how your payment provider handles cancellations, so check that.
+**Assumption:** a few staff use this on a desktop once a month. Each session is long, and the same people use it repeatedly. About 60 payments go out in each run.
 
-**Remove the popups, and make each action undoable instead**
-- **Archiving a freelancer:** archive right away and show a toast with Undo for about 8 seconds. Add an "Archived" filter so you can restore them later. Archiving can be reversed, so a popup only slows you down.
-- **Editing a rate:** edit it in place and save it quietly. Keep a small history of changes ("$40 → $45, Oct 15"). If the new rate changes the upcoming payment, show the change on the row itself.
-- **Attaching a receipt:** attach it right away and show a "Remove" link beside it. This is trivially reversible, so it never needed a popup.
+**Remove the popup and add Undo:**
+- **Archiving a freelancer:** archive right away and show a toast saying "Archived Sam R. · Undo" for about 8 seconds. Add an "Archived" filter where you can restore them at any time. Nothing is lost, so a question adds no safety.
+- **Editing a rate:** save the edit when the field is committed. Show the old rate beside the new one, and keep a change history (who, when, old and new). If the freelancer has a pending payment, show "This will change the pending payment from $X to $Y" next to the field. That tells people what the edit affects without making them click through a popup.
+- **Attaching a receipt:** attach it right away. Show the file name with Replace and Remove links. Removing it can also use an Undo toast.
 
-**Keep one confirmation, but make it specific**
-- **Send payments:** this moves money and can't be recalled, so it should be the only popup on the screen. Don't ask "Are you sure?" Show a summary of what's about to happen:
-  - "Send 58 payments totaling $X to 58 freelancers"
-  - Anything unusual flagged: a rate changed since last month, a payment much larger than usual, a missing receipt, or an archived freelancer who's still included
-  - A button that names the action ("Send $X to 58 freelancers") and a plain Cancel
-- This works because it's the only popup left. When nearly everything asks "Are you sure?", people click through all of them without reading, including the one that matters.
+People click through popups they see on every action. Once they do that, they also click through the one popup that matters. Fewer popups is what makes the remaining one work.
 
-**Two extras that help more than popups**
-- **Send delay:** if your payment provider allows it, hold the batch for a short window (assumed: 10 to 30 minutes) with a visible "Cancel send" button. That gives you a real way to undo a mistake.
-- **Show problems before the popup:** mark rows with a missing receipt or an unusual amount so you can fix them before you reach "Send." The popup then confirms a checked list instead of being the first time you see the problems.
+**Keep one confirmation: "Send payments."** Money has left your account and you can't call it back, so this is the one action nothing can undo. Where the designer is right is that a bare "Are you sure?" is lazy. Replace it with a review step that shows the facts:
+- The total and the number of payments ("Send $48,200 to 58 freelancers").
+- Anything unusual, called out in place. Examples are a rate changed since last month, a payment much larger than that person's usual amount, a missing receipt, or a freelancer with no payout details. Skip anyone who is archived or has a problem, and say you skipped them.
+- A button that repeats the action and amount ("Send $48,200"), not "OK" or "Yes".
 
-**Accessibility:** the toasts should be announced to screen readers and stay up long enough to read. The send dialog should trap keyboard focus and return it to the Send button when it closes.
+**Other behavior for the send:**
+- Let people send part of the batch. Anyone with a problem can be held back without blocking the other payments.
+- After you press send, show progress in the main view with a status for each person (sent, pending, failed). Don't show a "Success!" popup.
+- Failures should stay on screen and have a Retry button for each one.
+- If your payment provider supports it, add a short delay or a "Cancel batch" option for a few minutes. That would make even this step partly reversible.
 
-So your designer is right about three of the four popups, and "lazy" is fair for those. The popup on "Send payments" is the one that should stay, and it should show details instead of a generic question.
+**Check before you ship:** make sure archiving a freelancer really can be undone. If it deletes their payment history or breaks old records, then it needs a specific confirmation that says what will be lost. Also make sure the Undo toast can be reached by keyboard and is announced to screen readers.
+
+I haven't seen your screen. If you share it or the code, I can check these against what's actually there.

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Castwell</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{
+  --paper:#f3f0ea;--card:#fbfaf7;--ink:#1c2326;--ink2:#566065;--ink3:#7b858a;
+  --line:#ddd8cd;--line2:#e9e5db;
+  --teal:#0e5a5a;--teal-d:#0a4444;--teal-l:#d7e6e3;
+  --due:#b3361b;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--sans);background:var(--paper);color:var(--ink);display:flex;min-height:100vh;font-size:14px;line-height:1.4;font-variant-numeric:tabular-nums}
+aside{width:13.5rem;flex:none;background:var(--ink);color:#c9d1d3;padding:22px 14px;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.01em;color:#fff;margin:0 6px 30px}
+.logo i{width:24px;height:26px;background:#f1ece0;border-radius:46% 46% 38% 38%/38% 38% 62% 62%;position:relative;box-shadow:inset -3px -3px 0 #d6cdb9}
+.logo i:after{content:"";position:absolute;left:50%;bottom:-1px;width:9px;height:7px;transform:translateX(-50%);background:var(--ink);border-radius:5px 5px 0 0}
+aside a{display:block;padding:9px 12px;border-radius:4px;color:#aab4b7;text-decoration:none;margin-bottom:2px;border-left:3px solid transparent}
+aside a:hover{color:#fff;background:#273034}
+aside a.on{background:#273034;color:#fff;font-weight:600;border-left-color:#5fb3a8}
+aside a:focus-visible,.new:focus-visible,.search:focus-visible{outline:2px solid #5fb3a8;outline-offset:2px}
+aside a:last-child{margin-top:auto}
+main{flex:1;min-width:0;padding:28px 36px 36px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px;padding-bottom:18px;border-bottom:2px solid var(--ink)}
+h1{margin:0;font-family:var(--serif);font-size:28px;font-weight:700;letter-spacing:-.01em}
+.top p{margin:4px 0 0;color:var(--ink2)}
+.top>div:last-child{display:flex;gap:10px}
+.search{padding:9px 12px;border:1px solid #bfb9ab;border-radius:4px;width:16rem;background:#fff;font:inherit;color:var(--ink)}
+.search::placeholder{color:var(--ink3)}
+.new{padding:9px 16px;border:0;border-radius:4px;color:#fff;font:inherit;font-weight:600;background:var(--teal);cursor:pointer;box-shadow:0 2px 0 var(--teal-d)}
+.new:hover{background:var(--teal-d)}
+.new:active{transform:translateY(1px);box-shadow:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--line);border-radius:6px;margin-bottom:20px}
+.stat{padding:16px 20px;border-left:1px solid var(--line);display:flex;flex-direction:column-reverse;gap:2px;position:relative}
+.stat:first-child{border-left:0}
+.stat i{display:none}
+.stat div{display:flex;flex-direction:column-reverse}
+.stat span{color:var(--ink2);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
+.stat b{display:block;font-family:var(--serif);font-size:38px;line-height:1.1;font-weight:700}
+.stat:first-child{background:#f6e6df;border-radius:6px 0 0 6px}
+.stat:first-child b{color:var(--due)}
+.stat:first-child span{color:#7d2814}
+.row{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:0 20px 14px;min-width:0}
+.panel h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink2);margin:0 -20px 6px;padding:13px 20px;border-bottom:1px solid var(--line);background:#f1eee6;border-radius:6px 6px 0 0}
+table{width:100%;border-collapse:collapse}
+th{color:var(--ink3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.07em;text-align:left;padding:8px 8px;border-bottom:1px solid var(--line)}
+td{padding:11px 8px;border-top:1px solid var(--line2);vertical-align:middle;white-space:nowrap}
+tr:first-child th,tr:first-child td{border-top:0}
+tbody tr:hover td,tr:hover td{background:#f4f1e9}
+td:first-child{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--teal)}
+td:nth-child(2){white-space:normal;min-width:9rem}
+td:nth-child(3){font-weight:600}
+td:nth-child(4){font-family:var(--mono);font-size:13px}
+td:nth-child(4):before{content:"";display:inline-block;width:11px;height:14px;border-radius:40% 40% 30% 30%/30% 30% 70% 70%;margin-right:7px;vertical-align:-2px;background:#fff;border:1px solid #c9c2b0}
+td:nth-child(6){font-weight:600}
+tr:nth-child(-n+4) td:nth-child(6){color:var(--due)}
+tr:nth-child(n+5) td:nth-child(6){color:var(--ink2);font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:2px 9px 2px 8px;border-radius:3px;font-size:12px;font-weight:600;border:1px solid transparent}
+.pill:before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.p1{background:#dde9f1;color:#1d4e73;border-color:#c0d4e3}
+.p2{background:#f5e8c8;color:#7a4d06;border-color:#e5d2a0}
+.p3{background:#dcebd6;color:#2c5a22;border-color:#bfd8b6}
+.p4{background:#f2dfe0;color:#85303a;border-color:#e3c3c6}
+.av{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:4px;background:var(--ink);color:#f1ece0;font-size:11px;font-weight:700;letter-spacing:.04em}
+.av:empty{}
+.bar{margin:0;padding:11px 0;border-top:1px solid var(--line2);font-size:14px;font-weight:600;position:relative}
+.bar:first-of-type{border-top:0}
+.bar div{height:10px;border-radius:2px;background:#e8e4d9;margin-top:7px}
+.bar div i{display:block;height:10px;border-radius:2px;background:var(--teal)}
+.bar:nth-of-type(n) div i{background:var(--teal)}
+@media (max-width:1100px){.row{grid-template-columns:1fr}.panel:first-child{overflow-x:auto}}
+@media (max-width:760px){aside{display:none}main{padding:20px}.top{flex-direction:column;align-items:stretch}.search{width:100%;flex:1}.stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}.stat:first-child{border-radius:6px 0 0 0}}
+</style></head><body>
+<aside><div class="logo"><i></i>Castwell</div>
+<a class="on" href="#">Dashboard</a><a href="#">Cases</a><a href="#">Practices</a><a href="#">Technicians</a><a href="#">Shipping</a><a href="#">Settings</a></aside>
+<main>
+<div class="top"><div><h1>Welcome back, Dana!</h1><p>Here's what's happening in your lab today.</p></div><div><input class="search" placeholder="Search cases..."><button class="new">+ New case</button></div></div>
+<div class="stats">
+<div class="stat"><i></i><div><span>Due today</span><b>11</b></div></div>
+<div class="stat"><i></i><div><span>In production</span><b>46</b></div></div>
+<div class="stat"><i></i><div><span>Waiting on scans</span><b>5</b></div></div>
+<div class="stat"><i></i><div><span>Remakes this month</span><b>3</b></div></div>
+</div>
+<div class="row">
+<div class="panel"><h2>Recent cases</h2>
+<table><tr><th>Case</th><th>Practice</th><th>Restoration</th><th>Shade</th><th>Stage</th><th>Due</th><th>Tech</th></tr>
+<tr><td>C-4471</td><td>Brightwater Dental</td><td>Zirconia crown #14</td><td>A2</td><td><span class="pill p1">Milling</span></td><td>Today</td><td><span class="av">RK</span></td></tr>
+<tr><td>C-4468</td><td>Elm Row Family Dentistry</td><td>E.max veneers #7-10</td><td>BL2</td><td><span class="pill p2">Design</span></td><td>Today</td><td><span class="av">MS</span></td></tr>
+<tr><td>C-4465</td><td>Harbor Smiles</td><td>PFM bridge #3-5</td><td>A3.5</td><td><span class="pill p3">Glaze</span></td><td>Today</td><td><span class="av">JT</span></td></tr>
+<tr><td>C-4462</td><td>Dr. Okafor</td><td>Implant crown #19</td><td>A3</td><td><span class="pill p4">QC</span></td><td>Tomorrow</td><td><span class="av">RK</span></td></tr>
+<tr><td>C-4460</td><td>Brightwater Dental</td><td>Night guard</td><td>-</td><td><span class="pill p2">Waiting on scan</span></td><td>Tomorrow</td><td><span class="av">--</span></td></tr>
+<tr><td>C-4457</td><td>Northgate Dental Group</td><td>Upper denture</td><td>A2</td><td><span class="pill p1">Try-in</span></td><td>Fri</td><td><span class="av">LP</span></td></tr>
+</table></div>
+<div class="panel"><h2>Cases by stage</h2>
+<div class="bar">Model 6<div><i style="width:30%"></i></div></div>
+<div class="bar">Design 9<div><i style="width:45%"></i></div></div>
+<div class="bar">Milling 12<div><i style="width:60%"></i></div></div>
+<div class="bar">Sintering 8<div><i style="width:40%"></i></div></div>
+<div class="bar">Glaze 7<div><i style="width:35%"></i></div></div>
+<div class="bar">QC 4<div><i style="width:20%"></i></div></div>
+</div></div>
+</main></body></html>

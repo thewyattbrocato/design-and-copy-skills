@@ -6,24 +6,41 @@
 <title>Palabra – Profile settings</title>
 <style>
   :root {
-    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 40px; --s7: 64px;
-    --bg: #f6f4ef;
+    --s1: 4px;
+    --s2: 8px;
+    --s3: 12px;
+    --s4: 16px;
+    --s5: 24px;
+    --s6: 32px;
+    --s7: 48px;
+
+    --bg: #f6f3ee;
     --surface: #ffffff;
-    --ink: #1e2430;
-    --muted: #5d6676;
-    --line: #e2ded4;
-    --accent: #0f7a5c;
+    --ink: #1f2a2e;
+    --muted: #5d6b70;
+    --line: #e4dfd6;
+    --accent: #1f7a5c;
     --accent-ink: #ffffff;
+    --accent-soft: #e3f2ec;
     --danger: #b3261e;
-    --danger-bg: #fbeeed;
+    --danger-soft: #fbeceb;
+    --focus: #2b6cb0;
     --radius: 10px;
-    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #14171c; --surface: #1c2027; --ink: #eceef2; --muted: #a0a8b6;
-      --line: #2e343e; --accent: #3cc49b; --accent-ink: #08201a;
-      --danger: #ff8a80; --danger-bg: #2a1c1b;
+      --bg: #151b1d;
+      --surface: #1e2629;
+      --ink: #eef2f1;
+      --muted: #9fb0b4;
+      --line: #2e393c;
+      --accent: #46b58f;
+      --accent-ink: #0d1d17;
+      --accent-soft: #1d3a30;
+      --danger: #f2877f;
+      --danger-soft: #3a2220;
+      --focus: #7db4f0;
     }
   }
   * { box-sizing: border-box; }
@@ -31,7 +48,8 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font: 16px/1.5 var(--font);
+    font-size: 16px;
+    line-height: 1.5;
     padding: clamp(var(--s4), 5vw, var(--s7)) var(--s4);
   }
   .panel {
@@ -39,172 +57,216 @@
     margin: 0 auto;
     background: var(--surface);
     border-radius: 16px;
+    border: 1px solid var(--line);
     padding: clamp(var(--s5), 5vw, var(--s6));
-    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s6);
   }
-  header { margin-bottom: var(--s6); }
-  .brand { font-weight: 700; color: var(--accent); letter-spacing: .02em; font-size: 14px; text-transform: uppercase; }
-  h1 { font-size: 26px; line-height: 1.2; margin: var(--s2) 0 var(--s2); }
-  header p { margin: 0; color: var(--muted); }
+  header { display: flex; align-items: center; gap: var(--s4); }
+  .avatar {
+    flex: none;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 22px;
+  }
+  h1 { margin: 0; font-size: 22px; line-height: 1.25; }
+  header p { margin: var(--s1) 0 0; color: var(--muted); font-size: 14px; }
 
   form { display: flex; flex-direction: column; gap: var(--s6); }
-  section { display: flex; flex-direction: column; gap: var(--s5); }
-  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: var(--s4); }
+  legend {
+    padding: 0; margin-bottom: var(--s4);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted);
+  }
 
   .field { display: flex; flex-direction: column; gap: var(--s1); }
   label, .label { font-weight: 600; font-size: 15px; }
-  .hint { color: var(--muted); font-size: 14px; }
+  .hint { color: var(--muted); font-size: 13px; }
   input[type="text"], input[type="time"], select {
+    font: inherit; color: inherit;
     width: 100%;
     min-height: 44px;
     padding: var(--s2) var(--s3);
-    font: inherit;
-    color: var(--ink);
     background: var(--surface);
-    border: 1px solid var(--line);
+    border: 1px solid #b9b3a7;
     border-radius: 8px;
-    margin-top: var(--s1);
   }
-  input:focus-visible, select:focus-visible, button:focus-visible, .switch input:focus-visible + .track {
-    outline: 3px solid var(--accent);
-    outline-offset: 2px;
+  @media (prefers-color-scheme: dark) {
+    input[type="text"], input[type="time"], select { border-color: #4a585c; color-scheme: dark; }
   }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
-  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+  input[type="time"] { max-width: 180px; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
+  @media (max-width: 480px) { .row-2 { grid-template-columns: 1fr; } }
 
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  /* toggles */
   .toggles { display: flex; flex-direction: column; }
   .toggle {
     display: flex; align-items: center; justify-content: space-between; gap: var(--s4);
     padding: var(--s3) 0;
-    min-height: 56px;
+    cursor: pointer;
   }
   .toggle + .toggle { border-top: 1px solid var(--line); }
   .toggle .text { display: flex; flex-direction: column; gap: 2px; }
-  .switch { position: relative; flex: none; width: 48px; height: 28px; }
-  .switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; width: 100%; height: 100%; }
-  .track { position: absolute; inset: 0; background: #9aa1ad; border-radius: 14px; transition: background .15s; }
-  .track::after {
-    content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;
-    background: #fff; border-radius: 50%; transition: transform .15s;
+  .toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .switch {
+    flex: none; position: relative;
+    width: 48px; height: 28px;
+    background: #9aa5a8; border-radius: 999px;
+    transition: background .15s;
   }
-  .switch input:checked + .track { background: var(--accent); }
-  .switch input:checked + .track::after { transform: translateX(20px); }
-  @media (prefers-reduced-motion: reduce) { .track, .track::after { transition: none; } }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #fff; transition: transform .15s;
+    box-shadow: 0 1px 2px rgba(0,0,0,.3);
+  }
+  .toggle input:checked + .switch { background: var(--accent); }
+  .toggle input:checked + .switch::after { transform: translateX(20px); }
+  .toggle input:focus-visible + .switch { outline: 3px solid var(--focus); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .switch, .switch::after { transition: none; } }
 
-  .actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--s4); }
-  .status { color: var(--accent); font-size: 14px; margin-right: auto; }
+  /* actions */
+  .actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--s4); }
+  .status { color: var(--accent); font-size: 14px; font-weight: 600; margin-right: auto; }
   button {
     font: inherit; font-weight: 600; cursor: pointer;
     min-height: 44px; padding: var(--s2) var(--s5);
     border-radius: 8px; border: 1px solid transparent;
   }
   .save { background: var(--accent); color: var(--accent-ink); }
-  .save:hover { filter: brightness(1.08); }
+  .save:hover { filter: brightness(1.07); }
 
+  /* danger zone */
   .danger {
-    background: var(--danger-bg);
+    background: var(--danger-soft);
     border-radius: var(--radius);
-    padding: var(--s5);
-    display: flex; gap: var(--s4); align-items: center; justify-content: space-between;
+    padding: var(--s4) var(--s5);
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s4);
     flex-wrap: wrap;
   }
-  .danger h2 { color: var(--danger); }
-  .danger p { margin: var(--s2) 0 0; color: var(--ink); font-size: 14px; max-width: 34ch; }
-  .delete { background: transparent; color: var(--danger); border-color: var(--danger); }
+  .danger h2 { margin: 0; font-size: 16px; color: var(--danger); }
+  .danger p { margin: var(--s1) 0 0; font-size: 14px; color: var(--muted); max-width: 34ch; }
+  .delete {
+    background: transparent; color: var(--danger);
+    border-color: var(--danger);
+  }
   .delete:hover { background: var(--danger); color: var(--surface); }
 </style>
 </head>
 <body>
-  <main class="panel">
-    <header>
-      <div class="brand">Palabra</div>
+<main class="panel">
+  <header>
+    <div class="avatar" id="avatar" aria-hidden="true">M</div>
+    <div>
       <h1>Profile settings</h1>
-      <p>Manage how Palabra looks, sounds, and keeps you on track.</p>
-    </header>
+      <p>Palabra · Manage how you learn and how we nudge you</p>
+    </div>
+  </header>
 
-    <form id="settings" onsubmit="return false">
-      <section aria-labelledby="h-profile">
-        <h2 id="h-profile">Profile</h2>
-        <div class="field">
-          <label for="name">Display name</label>
-          <input type="text" id="name" value="Alex Rivera" autocomplete="nickname" maxlength="40">
-          <span class="hint">Shown on leaderboards and to study friends.</span>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label for="native">Native language</label>
-            <select id="native">
-              <option>English</option>
-              <option>Portuguese</option>
-              <option>French</option>
-              <option>German</option>
-              <option>Mandarin</option>
-              <option>Japanese</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="goal">Learning goal</label>
-            <select id="goal">
-              <option>Travel and conversation</option>
-              <option selected>Daily fluency</option>
-              <option>Work and business</option>
-              <option>School or exams</option>
-              <option>Connect with family</option>
-              <option>Just for fun</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="h-prefs">
-        <h2 id="h-prefs">Practice and notifications</h2>
-        <div class="field">
-          <label for="time">Daily reminder time</label>
-          <input type="time" id="time" value="19:30">
-          <span class="hint">We'll nudge you once a day at this time.</span>
-        </div>
-        <div class="toggles">
-          <div class="toggle">
-            <div class="text">
-              <span class="label" id="l-sound">Sound effects</span>
-              <span class="hint">Chimes for correct answers and level-ups.</span>
-            </div>
-            <span class="switch"><input type="checkbox" role="switch" aria-labelledby="l-sound" checked><span class="track"></span></span>
-          </div>
-          <div class="toggle">
-            <div class="text">
-              <span class="label" id="l-email">Streak emails</span>
-              <span class="hint">A heads-up when your streak is about to end.</span>
-            </div>
-            <span class="switch"><input type="checkbox" role="switch" aria-labelledby="l-email" checked><span class="track"></span></span>
-          </div>
-        </div>
-      </section>
-
-      <div class="actions">
-        <span class="status" id="status" role="status"></span>
-        <button type="submit" class="save" id="save">Save</button>
+  <form id="settings" novalidate>
+    <fieldset>
+      <legend>Profile</legend>
+      <div class="field">
+        <label for="name">Display name</label>
+        <input type="text" id="name" name="name" value="Marta" maxlength="40" autocomplete="nickname">
       </div>
-
-      <section class="danger" aria-labelledby="h-danger">
-        <div>
-          <h2 id="h-danger">Delete account</h2>
-          <p>Permanently remove your profile, progress, and streak. This can't be undone.</p>
+      <div class="row-2">
+        <div class="field">
+          <label for="native">Native language</label>
+          <select id="native" name="native">
+            <option>English</option>
+            <option>Español</option>
+            <option>Français</option>
+            <option>Deutsch</option>
+            <option>Português</option>
+            <option>Italiano</option>
+            <option>日本語</option>
+            <option>中文</option>
+          </select>
         </div>
-        <button type="button" class="delete" id="delete">Delete account</button>
-      </section>
-    </form>
-  </main>
+        <div class="field">
+          <label for="goal">Learning goal</label>
+          <select id="goal" name="goal">
+            <option>Travel and basics</option>
+            <option>Everyday conversation</option>
+            <option>Work and business</option>
+            <option>Study abroad</option>
+            <option>Connect with family</option>
+            <option>Just for fun</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Practice and notifications</legend>
+      <div class="field">
+        <label for="reminder">Daily reminder time</label>
+        <input type="time" id="reminder" name="reminder" value="19:00">
+        <span class="hint">We'll send one gentle nudge at this time, in your local timezone.</span>
+      </div>
+      <div class="toggles">
+        <label class="toggle">
+          <span class="text">
+            <span class="label">Sound effects</span>
+            <span class="hint">Chimes for right answers and level-ups</span>
+          </span>
+          <input type="checkbox" name="sound" checked>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+        <label class="toggle">
+          <span class="text">
+            <span class="label">Streak emails</span>
+            <span class="hint">A heads-up when your streak is about to end</span>
+          </span>
+          <input type="checkbox" name="streak" checked>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+      </div>
+    </fieldset>
+
+    <section class="danger" aria-labelledby="del-h">
+      <div>
+        <h2 id="del-h">Delete account</h2>
+        <p>Permanently remove your profile, progress and streak. This can't be undone.</p>
+      </div>
+      <button type="button" class="delete" id="delete">Delete account…</button>
+    </section>
+
+    <div class="actions">
+      <span class="status" id="status" role="status" aria-live="polite"></span>
+      <button type="submit" class="save">Save</button>
+    </div>
+  </form>
+</main>
 
 <script>
-  document.getElementById('save').addEventListener('click', function () {
-    var s = document.getElementById('status');
-    s.textContent = 'Settings saved';
-    setTimeout(function () { s.textContent = ''; }, 2500);
+  var form = document.getElementById('settings');
+  var name = document.getElementById('name');
+  var avatar = document.getElementById('avatar');
+  var status = document.getElementById('status');
+  function syncAvatar() {
+    avatar.textContent = (name.value.trim().charAt(0) || '?').toUpperCase();
+  }
+  name.addEventListener('input', syncAvatar);
+  syncAvatar();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    status.textContent = 'Saved ✓';
+    setTimeout(function () { status.textContent = ''; }, 2500);
   });
+  form.addEventListener('input', function () { status.textContent = ''; });
   document.getElementById('delete').addEventListener('click', function () {
     if (confirm('Delete your Palabra account? This cannot be undone.')) {
-      alert('Account deletion requested.');
+      status.textContent = 'Deletion requested.';
     }
   });
 </script>

@@ -1,19 +1,14 @@
-It's mostly good, and I'd roll it out Monday with a few small edits. Most briefs I see don't have "Retire this article if", "Not covering", or a named source with a date, and those are the hard ones.
+It's good, and I'd roll it out Monday as is. I'd only make two small edits.
 
-**Changes I'd make**
+**What works**
+- "Source of truth" with a date is the line most briefs leave out. It's what lets someone judge later whether the steps are still right.
+- One named owner, a re-check date and "Retire this article if" mean articles get a maintenance plan before they exist.
+- "Not covering" heads off scope creep.
+- "What they were trying to do when they got stuck" ties the article to a real problem instead of a feature.
 
-1. **Split the owner line.** "Owner (one name) and who will test the steps" asks for two people in one field. People will write one name and skip the tester. Make them two fields: *Owner* and *Tester (not the person who wrote the steps)*. Someone who wrote the steps will follow them from memory.
+**Edits worth making**
+1. **Split owner and tester.** "Owner (one name) and who will test the steps" lets the writer test their own steps, and that's the most common way wrong steps get published. Make it two lines: "Owner (one name)" and "Tester (someone other than the writer)".
+2. **Add an event trigger to the re-check date.** A date alone misses a release that changes the screens in month two. Something like "Re-check date (default 6 months out, or sooner if [named thing] changes)" would do it. Your "Retire if" line covers the article becoming wrong or unnecessary, but not the case where it just needs updating.
 
-2. **Add a trigger to the re-check date.** A six-month date is fine as a fallback. Articles usually go wrong because the product changed, not because time passed. Change the field to: *Re-check date (default 6 months) and what change should trigger an earlier check (e.g. a release touching this flow, a pricing or plan change)*. It also overlaps a little with "Retire if", so keep the two fields distinct. Re-check is for "might be wrong". Retire is for "gone or pointless".
-
-3. **Say what happens to replaced articles.** "Existing articles it replaces or links to" mixes two different things. For anything it replaces, the brief should say whether that article is deleted, redirected, or merged. Otherwise you end up with two articles that disagree.
-
-4. **Add one line on why now.** For example: *What prompted this (support tickets, search terms, a product change)*. Without it, you can't tell a needed article from a nice-to-have. It also gives you a way to check later whether the article worked. Keep it to one line so the brief stays one page.
-
-**Fine as is**
-- "Who it's for, and what they were trying to do when they got stuck". It frames the article around the reader's task instead of a feature.
-- "Source of truth" with a date.
-- "Product version or plan".
-- "Not covering".
-
-I'd leave the rest alone. After the first few briefs are filled in, check which fields people leave blank or answer vaguely, and tighten those.
+**Optional**
+If people tend to write articles nobody asked for, add "How we know people need this (tickets, search terms, who asked)". If that isn't a problem for you, skip it. The brief should stay short enough that people fill it in.

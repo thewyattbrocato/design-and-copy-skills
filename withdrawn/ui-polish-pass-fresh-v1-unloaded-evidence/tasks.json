@@ -1,0 +1,110 @@
+[
+  {
+    "id": "pfa-01",
+    "kind": "polish",
+    "prompt": "Our little ferry booking page for Harbourline Ferries is a single file that swaps between the sailings list, the basket and checkout without reloading. It works fine for me with a mouse, but a customer who only uses the keyboard says she keeps losing her place and can't tell what page she's on. We launch on Friday. Can you finish it off? Keep the look as it is.\n\n```html\n<header class='top'><a href='/'>Harbourline Ferries</a></header>\n<main id='app'>\n  <section id='browse'>\n    <h1>Sailings from Pell Quay</h1>\n    <img src='/img/fares.png' alt='' width='320'>  <!-- the image shows: Adult £14, Child £7 -->\n    <div class='row'>\n      <span>Adult day return</span>\n      <div class='qty'>\n        <div class='btn' onmousedown='step(\"adult\",-1)'>-</div>\n        <span id='q-adult'>0</span>\n        <div class='btn' onmousedown='step(\"adult\",1)'>+</div>\n      </div>\n    </div>\n    <div class='row'>\n      <span>Child day return</span>\n      <div class='qty'>\n        <div class='btn' onmousedown='step(\"child\",-1)'>-</div>\n        <span id='q-child'>0</span>\n        <div class='btn' onmousedown='step(\"child\",1)'>+</div>\n      </div>\n    </div>\n    <a href='#' onclick='show(\"checkout\")'>Go to checkout</a>\n  </section>\n  <section id='checkout' hidden>\n    <h1>Your details</h1>\n    <label for='nm'>Full name</label><input id='nm' autocomplete='name'>\n    <label for='em'>Email</label><input id='em' type='email' autocomplete='email'>\n    <button type='submit'>Pay now</button>\n  </section>\n</main>\n<div class='basket-bar' style='position:fixed;bottom:0;left:0;right:0'>Basket: <span id='total'>£0</span></div>\n<script>\nfunction show(id){\n  document.querySelectorAll('main section').forEach(s => s.hidden = s.id !== id);\n}\n</script>\n```",
+    "rubric": [
+      "Replaces the div steppers handled on mousedown with real buttons (or equivalent) that work from the keyboard, and gives each one a name that says what it changes, such as the ticket type, not just a minus or plus sign.",
+      "Deals with the lost-place problem when the view swaps: moves focus to the new view's heading or container and/or updates the page title, so a keyboard or screen-reader user knows the page changed.",
+      "Notices the fares exist only inside an image with empty alt text and puts the prices in real text or a proper text alternative, rather than leaving them invisible to screen readers.",
+      "Addresses the fixed bottom basket bar, for example by making sure it does not cover content or focused controls at the end of the page and that the total can be reached or announced; does not simply delete it.",
+      "Leaves what already works alone: keeps the properly labelled checkout fields, the visual styling and the overall structure, and does not rewrite the page or restyle it despite the request to keep the look."
+    ]
+  },
+  {
+    "id": "pfa-02",
+    "kind": "polish",
+    "prompt": "This is the upcoming-walks page for the Tarn Valley Ramblers. Could you get it ready for the live site? The committee is happy with how it looks so please don't redesign anything.\n\n```html\n<html>\n<head>\n  <title>Untitled</title>\n  <style>\n    a:focus, button:focus { outline: none; box-shadow: 0 0 4px #bcd; }\n    .actions { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 8px; }\n  </style>\n</head>\n<body>\n<header>\n  <a href='/'><img src='/logo.svg' alt='logo'></a>\n  <nav>\n    <a href='/about'>About</a><a href='/walks'>Walks</a><a href='/grades'>Grades</a>\n    <a href='/kit'>Kit list</a><a href='/safety'>Safety</a><a href='/news'>News</a>\n    <a href='/photos'>Photos</a><a href='/join'>Join</a><a href='/members'>Members</a>\n    <a href='/contact'>Contact</a><a href='/faq'>FAQ</a><a href='/links'>Links</a>\n  </nav>\n  <form role='search'><input type='text' placeholder='Search walks'></form>\n</header>\n<main>\n  <h1>Upcoming walks</h1>\n  <article class='card'>\n    <h4>Sunday 9 March: Hollin Crag circuit</h4>\n    <p>11 km, moderate, meet at the Lower Mill car park at 9:30.</p>\n    <div class='actions'>\n      <button type='button' aria-label='Reserve'>Book a place</button>\n      <button type='button'>Cancel booking</button>\n    </div>\n  </article>\n  <article class='card'>\n    <h4>Saturday 15 March: Beck Head to Ashby</h4>\n    <p>7 km, easy, meet at the Beck Head bus stop at 10:00.</p>\n    <div class='actions'>\n      <button type='button' aria-label='Reserve'>Book a place</button>\n      <button type='button'>Cancel booking</button>\n    </div>\n  </article>\n</main>\n</body>\n</html>\n```",
+    "rubric": [
+      "Replaces the 'Untitled' page title with a specific one that names the page and the club.",
+      "Handles the long run of header links and search before the content, for example with a skip link to the main content, without removing or reordering the navigation.",
+      "Fixes the heading structure so the cards follow the h1 with a sensible next level (h2) instead of jumping to h4, without changing how the headings look.",
+      "Fixes the 'Book a place' button whose accessible label is 'Reserve', so the spoken name contains the visible words (remove the aria-label or make it match), and fixes the reversed visual order so the source order of the two buttons matches what sighted users see.",
+      "Replaces the soft glow focus style with a clearly visible focus indicator (or restores a real outline), keeping the same colours and look where possible; does not restyle the page, change copy or rebuild the layout."
+    ]
+  },
+  {
+    "id": "pfa-03",
+    "kind": "explain",
+    "prompt": "Our developer put tabindex 1 to 6 on the fields of our newsletter and gift-aid sign-up form so people tab through them in the right order. Is that a good fix? Short answer please.\n\n```html\n<form class='signup' style='display:flex;flex-wrap:wrap'>\n  <div style='order:2'>\n    <label for='ln'>Last name</label>\n    <input id='ln' tabindex='2'>\n  </div>\n  <div style='order:1'>\n    <label for='fn'>First name</label>\n    <input id='fn' tabindex='1'>\n  </div>\n  <div style='order:3;width:100%'>\n    <label for='em'>Email</label>\n    <input id='em' type='email' tabindex='3'>\n  </div>\n  <div style='order:4'>\n    <input id='ga' type='checkbox' tabindex='5'>\n    <label for='ga'>I am a UK taxpayer (Gift Aid)</label>\n  </div>\n  <div style='order:5'>\n    <input id='nl' type='checkbox' tabindex='4'>\n    <label for='nl'>Send me the newsletter</label>\n  </div>\n  <button tabindex='6' style='order:6'>Sign up</button>\n</form>\n```",
+    "rubric": [
+      "Answers the question directly: no, positive tabindex values are not a good fix.",
+      "Gives the concrete reason: positive values jump ahead of everything else on the page (header, links, other forms) and every new field has to be numbered by hand, so it breaks easily; keyboard order should follow reading order.",
+      "Points at the real cause in this markup: CSS order (or visual reordering) differs from the source order, and recommends putting the fields in the right order in the HTML (or removing the reordering) and dropping the tabindex numbers.",
+      "Notes the existing tabindex values do not even match the visual order of the two checkboxes, or otherwise shows it read the code; stays short as requested.",
+      "Does not propose redesigning the form, adding fields or rewriting working parts such as the labels and input types."
+    ]
+  },
+  {
+    "id": "pfa-04",
+    "kind": "polish",
+    "prompt": "Patients say our appointment reminder page is hard to use on a phone and with a screen reader. Fix what you can in this file. We can't change the chat widget, that comes from the vendor.\n\n```html\n<body>\n<a class='skip' href='#main'>Skip to appointment</a>\n<main id='main'>\n  <div class='banner'>\n    <img src='/img/reminder-banner.png' alt='banner image' width='360'>\n    <!-- banner image contains the text: Thursday 12 June, 14:40, Redwater Family Clinic, 22 Mill Lane -->\n  </div>\n  <p>Your appointment is booked. If you need to change it, click <a href='/appointments/4471/change'>here</a>.</p>\n  <p>Need directions? Open the map <a href='/clinic/redwater/map'>here</a>.</p>\n  <p>Questions about preparing for your visit?\n     <a href='/clinic/redwater/prep'>Read the preparation guide</a>.</p>\n  <button id='cal' type='button' onclick='addToCalendar()'>Add to calendar</button>\n</main>\n<script src='https://chat.vendorcdn.example/widget.js' data-open-on-load='true'></script>\n<script>\n  function addToCalendar() { /* builds and downloads an .ics file */ }\n</script>\n</body>\n```",
+    "rubric": [
+      "Identifies that the date, time and clinic address exist only as text inside the banner image and moves them into real page text (the image can stay as decoration with empty alt or be dropped), so screen readers and phone users can read and copy them.",
+      "Rewrites the two links that read 'here' so each says where it goes, such as 'change your appointment' and 'open the map', without changing their destinations.",
+      "Handles the vendor chat widget that opens on load honestly: does not claim it can edit the vendor script, but flags the focus problem and offers what is in the file's control (for example not auto-opening it, or letting the user open it from a button) rather than silently ignoring it.",
+      "Addresses the phone problem with a small, specific change (for example a viewport meta tag, flexible image width or touch-sized targets) rather than a redesign.",
+      "Keeps the working parts untouched: the skip link, main landmark, the descriptive 'Read the preparation guide' link and the calendar button's behaviour are left as they are."
+    ]
+  },
+  {
+    "id": "pfa-guard-05",
+    "kind": "polish",
+    "prompt": "Can you give our account settings page a last accessibility check before we merge it? Here's the file.\n\n```html\n<!doctype html>\n<html lang='en'>\n<head>\n  <meta charset='utf-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\n  <title>Account settings - Larkspur Notes</title>\n  <style>\n    :focus-visible { outline: 3px solid #1a56db; outline-offset: 2px; }\n    body { font: 1rem/1.5 system-ui, sans-serif; max-width: 40rem; margin: 0 auto; padding: 1rem; }\n    .skip { position: absolute; left: -999px; }\n    .skip:focus { left: 1rem; top: 1rem; background: #fff; padding: .5rem; }\n  </style>\n</head>\n<body>\n  <a class='skip' href='#main'>Skip to settings</a>\n  <nav aria-label='Account'>\n    <a href='/notes'>Notes</a> <a href='/account' aria-current='page'>Account</a> <a href='/billing'>Billing</a>\n  </nav>\n  <main id='main'>\n    <h1>Account settings</h1>\n    <form action='/account' method='post'>\n      <h2>Profile</h2>\n      <label for='dn'>Display name</label>\n      <input id='dn' name='display_name' autocomplete='nickname' required>\n      <label for='em'>Email address</label>\n      <input id='em' name='email' type='email' autocomplete='email' required>\n      <h2>Notifications</h2>\n      <fieldset>\n        <legend>Email me about</legend>\n        <label><input type='checkbox' name='n_comments'> Comments on my notes</label>\n        <label><input type='checkbox' name='n_digest'> Weekly digest</label>\n      </fieldset>\n      <button type='submit'>Save changes</button>\n    </form>\n  </main>\n</body>\n</html>\n```",
+    "rubric": [
+      "Says plainly that the page is already in good shape for keyboard and screen-reader use, and names specific things that are right (for example labels tied to inputs, a fieldset and legend, visible focus outline, a skip link, a specific title, one h1 with ordered subheadings).",
+      "Makes no change, or at most one or two tiny optional suggestions clearly labelled as optional; does not rewrite markup that already works.",
+      "Does not invent problems, such as claiming the labels are missing, demanding ARIA attributes on native controls, or adding redundant role or aria-label attributes.",
+      "Does not make the page worse, for example by adding extra landmarks, tabindex values, live regions or hidden text that nothing calls for.",
+      "Gives the reviewer a short, usable verdict they can act on (safe to merge) instead of a long padded list."
+    ]
+  },
+  {
+    "id": "pfa-guard-06",
+    "kind": "polish",
+    "prompt": "Only change the footer link that says 'Proceed' so people know where it goes. Please don't touch anything else in this file, we're mid-sprint and other people own the rest.\n\n```html\n<body class='checkout'>\n  <header><img src='/logo.png' alt=''><h2>Orchard Box</h2></header>\n  <main>\n    <h1>Review your order</h1>\n    <ul class='lines'>\n      <li>Apple selection box x1 <span>£24.00</span></li>\n      <li>Delivery <span>£4.50</span></li>\n    </ul>\n    <p class='total'>Total <strong>£28.50</strong></p>\n    <div class='promo'>\n      <input type='text' placeholder='Promo code'>\n      <button>Apply</button>\n    </div>\n    <div class='terms' onclick='toggleTerms()'>Show delivery terms</div>\n  </main>\n  <footer>\n    <a href='/help'>Help</a>\n    <a href='/returns'>Returns</a>\n    <a href='/checkout/payment' class='cta'>Proceed</a>\n  </footer>\n</body>\n```",
+    "rubric": [
+      "Changes the 'Proceed' link text to something that says where it leads, for example 'Continue to payment', keeping the same href and class.",
+      "Leaves every other line of the file unchanged in the code it shows or describes, as the user instructed.",
+      "At most mentions the other issues it noticed (the placeholder-only promo field, the clickable div for the terms) in one short line as things for the owners, without fixing them or making the answer a long audit.",
+      "Does not rewrite the footer, restyle the link, or rename the other links.",
+      "Keeps the answer short and delivers the single edit clearly, either as the changed line or a minimal diff."
+    ]
+  },
+  {
+    "id": "pfa-07",
+    "kind": "critique",
+    "prompt": "People have told us the 'Remove from list' popup on our volunteer rota site feels broken but nobody can say how. It looks fine to us. What's wrong with it?\n\n```html\n<button class='icon-btn' onclick='openConfirm()'><svg viewBox='0 0 20 20'><path d='M4 6h12M8 6V4h4v2M6 6l1 10h6l1-10'/></svg></button>\n\n<div id='confirm' class='overlay' style='display:none'>\n  <div class='box'>\n    <div class='title'>Remove Dana Okafor from the Saturday rota?</div>\n    <p>She will be notified by email.</p>\n    <div class='row'>\n      <span class='link' onclick='closeConfirm()'>Keep her</span>\n      <span class='btn danger' onclick='doRemove()'>Remove</span>\n    </div>\n  </div>\n</div>\n\n<script>\n  function openConfirm() { document.getElementById('confirm').style.display = 'flex'; }\n  function closeConfirm() { document.getElementById('confirm').style.display = 'none'; }\n  function doRemove() { /* posts to the server */ closeConfirm(); }\n</script>\n```",
+    "rubric": [
+      "Points out the trigger is an icon-only button with no accessible name, so a screen reader announces just 'button' with no hint what it does.",
+      "Points out the popup is plain divs with no dialog role or name, so assistive tech is not told a dialog opened and the title is not announced as its name.",
+      "Identifies the focus problem: focus is not moved into the popup when it opens, is not kept inside, and is not returned to the trigger on close, so a keyboard user keeps tabbing through the page behind it.",
+      "Points out that 'Keep her' and 'Remove' are spans with click handlers, so they cannot be reached or activated from the keyboard, and that there is no Escape key to close; recommends real buttons.",
+      "Gives concrete fixes (for example a dialog element or role=dialog with aria-modal and a label, real buttons, move and restore focus) ordered by how badly they block people, without proposing a visual redesign of a popup that the team says looks fine."
+    ]
+  },
+  {
+    "id": "pfa-guard-08",
+    "kind": "polish",
+    "prompt": "Our automated checker flagged four things in this component and I've been told to clear all the warnings before the release. Can you fix them? Flags: (1) empty alt on the hero image, (2) outline set to none on the search button, (3) tabindex -1 on the results heading, (4) a link whose text is just an arrow.\n\n```html\n<section class='hero'>\n  <img src='/img/hills-wide.jpg' alt='' class='hero-bg'>\n  <h1>Find a cottage in the Cheviots</h1>\n  <form role='search' action='/search'>\n    <label for='q'>Place or postcode</label>\n    <input id='q' name='q'>\n    <button class='go'>Search</button>\n  </form>\n</section>\n<section>\n  <h2 id='results-title' tabindex='-1'>12 cottages found</h2>\n  <ul class='results'>\n    <li>\n      <a href='/cottage/hawthorn' class='next' aria-label='View Hawthorn Cottage, sleeps 4'>&rarr;</a>\n      <span>Hawthorn Cottage</span>\n    </li>\n  </ul>\n</section>\n<style>\n  .go { outline: none; background: #14532d; color: #fff; border: 0; padding: .6rem 1rem; }\n  .go:focus-visible { outline: 3px solid #fde047; outline-offset: 3px; }\n</style>\n<script>\n  document.querySelector('form').addEventListener('submit', () => {\n    // after results load:\n    document.getElementById('results-title').focus();\n  });\n</script>\n```",
+    "rubric": [
+      "Recognises that the empty alt on a purely decorative background image is correct and leaves it, explaining that adding descriptive alt would make screen readers read noise.",
+      "Recognises that outline none on the button is fine here because a visible focus style is supplied on focus-visible, and does not remove or weaken that replacement.",
+      "Recognises that tabindex -1 on the results heading is deliberate (it lets script move focus there after a search) and leaves it, rather than deleting it or making the heading a tab stop.",
+      "Notices the arrow link already has a descriptive aria-label, so its spoken name is fine; at most suggests a small optional tweak such as putting the visible words in text, and does not break the existing label.",
+      "Tells the user these flags are false alarms to suppress or annotate rather than blindly clearing every warning, and changes little or nothing in the code."
+    ]
+  },
+  {
+    "id": "pfa-09",
+    "kind": "polish",
+    "prompt": "Customers keep emailing that our booking request form 'does nothing' when they press the button. It does show errors, apparently, but people don't see them. Can you sort it out? Don't change how it looks apart from what's needed.\n\n```html\n<form id='req' novalidate>\n  <h2>Request a table at Fennel &amp; Rye</h2>\n  <label for='nm'>Name</label>\n  <input id='nm' name='name'>\n  <div class='err' id='e-nm'></div>\n  <label for='pp'>Party size</label>\n  <input id='pp' name='party' type='number' min='1' max='12'>\n  <div class='err' id='e-pp'></div>\n  <label for='dt'>Date</label>\n  <input id='dt' name='date' type='date'>\n  <div class='err' id='e-dt'></div>\n  <button type='submit'>Send request</button>\n  <div id='status'></div>\n</form>\n<style>\n  .err { color: #d33; font-size: .85rem; min-height: 1rem; }\n  input { border: 1px solid #aaa; padding: .4rem; }\n  input.bad { border-color: #d33; }\n</style>\n<script>\n  document.getElementById('req').addEventListener('submit', async (e) => {\n    e.preventDefault();\n    const f = e.target;\n    let ok = true;\n    if (!f.name.value) { e.target.querySelector('#e-nm').textContent = 'Required'; f.name.classList.add('bad'); ok = false; }\n    if (!f.party.value) { document.getElementById('e-pp').textContent = 'Required'; f.party.classList.add('bad'); ok = false; }\n    if (!f.date.value) { document.getElementById('e-dt').textContent = 'Required'; f.date.classList.add('bad'); ok = false; }\n    if (!ok) return;\n    await fetch('/request', { method: 'POST', body: new FormData(f) });\n    document.getElementById('status').textContent = 'Sent';\n  });\n</script>\n```",
+    "rubric": [
+      "Moves focus to the first invalid field (or to an error summary) on a failed submit so keyboard and screen-reader users are taken to the problem instead of left on the button.",
+      "Connects each error message to its field (for example aria-describedby plus aria-invalid) and makes errors announced, so the message is not only red text beside the input.",
+      "Makes the 'Sent' confirmation announced (a polite live region or equivalent) and says something more useful than a bare 'Sent', and does not rely on colour alone to show the error state.",
+      "Replaces the vague 'Required' with specific wording such as which field and what is needed, or at least keeps it clear and attached to the right field.",
+      "Preserves what works: keeps the existing labels, field types and layout, does not switch to placeholder-only labels or add new fields, and does not rewrite the form wholesale."
+    ]
+  }
+]

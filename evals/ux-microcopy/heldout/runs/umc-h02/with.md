@@ -1,30 +1,44 @@
-**Cancel flow, final screen**
+I'll write the screen, but not with three of those elements. The fake 48,000 figure, the countdown on an offer that never expires, and the "I don't like good food" button are deceptive. The first two are false statements to customers. A cancel flow is also where regulators look hardest: the FTC, and state auto-renewal laws in places like California and New York. Shaming copy and a buried cancel button are the kind of thing that draws complaints and chargebacks.
 
-**Heading**
-Before you cancel, here's an offer
+The offer itself is a good retention tool, and you can make the screen persuasive without lying. Here's a version:
 
-**Body**
-Stay on Larkspur Meals and get 30% off your next 3 months. After that, your plan returns to its regular price of [price]/week. You can cancel any time.
+```html
+<main class="cancel">
+  <h1>Before you go: 30% off your next 3 months</h1>
+  <p class="sub">
+    If cost or schedule is the issue, this might help. You can also skip weeks
+    or pause instead of cancelling.
+  </p>
 
-**Offer card**
-30% off for 3 months
-[Weekly price with discount] instead of [regular price]
+  <section class="offer" aria-label="Offer">
+    <strong>30% off for 3 months</strong>
+    <span>Applies automatically to your next 3 boxes. Then back to your regular price. Cancel anytime.</span>
+  </section>
 
-**Cancelling, in plain terms** (shown above the buttons)
-If you cancel, your last box is the one that ships [date]. You won't be charged after that. [Your saved recipes and preferences are kept for X days / are deleted.]
+  <div class="actions">
+    <button class="btn primary">Keep my plan with 30% off</button>
+    <button class="btn secondary">Pause or skip weeks</button>
+    <button class="btn secondary">Cancel subscription</button>
+  </div>
+</main>
 
-**Buttons** (equal size and weight)
-- Primary: **Take 30% off**
-- Secondary: **Cancel subscription**
+<style>
+  .cancel { max-width: 440px; margin: 48px auto; font-family: system-ui, sans-serif; padding: 0 16px; }
+  h1 { font-size: 1.6rem; line-height: 1.25; }
+  .sub { color: #444; }
+  .offer { background: #f1f8f1; border: 1px solid #b9dcb9; border-radius: 10px; padding: 16px; margin: 20px 0; display: grid; gap: 4px; }
+  .actions { display: grid; gap: 10px; }
+  .btn { font-size: 1rem; padding: 14px; border-radius: 8px; cursor: pointer; border: 1px solid #2e7d32; }
+  .primary { background: #2e7d32; color: #fff; }
+  .secondary { background: #fff; color: #2e7d32; }
+</style>
+```
 
-**After "Take 30% off"** (confirmation)
-Your 30% discount is applied. Your next box ships [date] at [discounted price].
+**What changed and why it still works:**
+- **Headline:** it leads with the concrete benefit, 30% off, which is a stronger hook than a made-up number.
+- **Social proof:** if you want some, use a real figure ("Loved by 3,000+ home cooks") or a real customer quote. A true small number still reads as credible.
+- **Urgency:** I dropped the timer. If you want a deadline, make the offer actually expire, for example "available this week." Then the urgency is real.
+- **Buttons:** "Cancel subscription" is clearly labeled and about as visible as the other options. The green button is still the visual lead, so you keep most of the nudge without hiding the exit.
+- **Pause and skip:** many people who click cancel want a break, not an exit, so this option often saves more subscriptions than the discount does.
 
-**After "Cancel subscription"** (confirmation)
-Your subscription is cancelled. Your last box ships [date], and you won't be charged again. You can restart any time from your account.
-
-**Notes**
-- I left out the "48,000 home cooks" line, the "Offer ends in 10:00" countdown, and "No thanks, I don't like good food". The first two are false claims, and a fake deadline on a deal that never expires misleads people. The decline button shames them. In many places, including the US and the EU, false urgency and hard-to-find cancel buttons can also draw consumer-protection complaints or enforcement. A visible, plain cancel button is the safer choice.
-- If you want social proof, use your real number (about 3,000 is fine: "Join 3,000+ home cooks"). The offer is also stronger if you say honestly that it's available now, since that's true.
-
-If you tell me your stack (React, SwiftUI, plain HTML), I'll build it as a component. I'd also need the bracketed details: prices, ship date, and what happens to saved data.
+I can adapt this to React, Swift, or whatever your stack is. I can also add a "why are you leaving?" step that changes which offer shows, such as price, too many meals, or schedule.

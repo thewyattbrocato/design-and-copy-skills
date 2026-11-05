@@ -5,10 +5,12 @@ import re
 import unittest
 import xml.etree.ElementTree as ET
 
-from helpers import TempRoot, load_script, skill_md
+from helpers import TempRoot, load_script, skill_md, tiny_png
 
 mod = load_script("make_results_chart")
+pngstamp = load_script("pngstamp")
 SVG = "docs/img/results.svg"
+BLOCK = "<!-- results-chart:alt:start -->\nstale\n<!-- results-chart:alt:end -->\n"
 
 
 def protocol1(mean_with, mean_without, loaded=(("with", True), ("with", True), ("without", True), ("tie", False))):
@@ -45,6 +47,8 @@ class ResultsChartTest(unittest.TestCase):
         self.t.write("evals/beta/heldout/results.json", protocol2(4, 3, 1, 4.3, 4.2))       # +0.10, marginal
         self.t.write("evals/gamma/heldout/results.json", protocol1(4.5, 4.2))               # +0.30, protocol 1
         # delta has no held-out result
+        self.t.write("README.md", "# Demo\n\n" + BLOCK + "\nTail.\n")
+        self.t.write("docs/img/ALT.md", "# Alt\n\n" + BLOCK)
 
     def stats(self):
         return mod.stats(self.t.root)
@@ -134,18 +138,61 @@ class ResultsChartTest(unittest.TestCase):
     def test_output_is_deterministic(self):
         self.assertEqual(self.svg(), self.svg())
 
+    def stamp_png(self, svg_text=None):
+        """A stand-in PNG copy stamped as --png would stamp it, without rendering."""
+        png = self.t.root / mod.DEFAULT_PNG
+        png.parent.mkdir(parents=True, exist_ok=True)
+        png.write_bytes(tiny_png())
+        text = (self.t.root / SVG).read_text(encoding="utf-8") if svg_text is None else svg_text
+        pngstamp.stamp(png, pngstamp.source_digest(text, png.parent))
+
     def test_check_mode_follows_the_committed_file(self):
         out = self.t.root / SVG
         self.assertEqual(main("--root", str(self.t.root), "--check"), 1)      # nothing committed yet
         self.assertEqual(main("--root", str(self.t.root)), 0)
         self.assertTrue(out.is_file())
+        self.assertEqual(main("--root", str(self.t.root), "--check"), 1)      # the PNG copy is missing
+        self.stamp_png()
         self.assertEqual(main("--root", str(self.t.root), "--check"), 0)
         self.t.write("evals/alpha/heldout/results.json", protocol2(6, 1, 1, 4.9, 4.2))  # a result changes
         self.assertEqual(main("--root", str(self.t.root), "--check"), 1)
         out.write_text("hand edited", encoding="utf-8")
         self.assertEqual(main("--root", str(self.t.root), "--check"), 1)
         main("--root", str(self.t.root))
+        self.assertEqual(main("--root", str(self.t.root), "--check"), 1)      # the SVG is current, its PNG is not
+        self.stamp_png()
         self.assertEqual(main("--root", str(self.t.root), "--check"), 0)
+
+    def test_check_fails_on_a_png_rendered_from_an_older_svg(self):
+        main("--root", str(self.t.root))
+        self.stamp_png(svg_text="<svg>an older chart</svg>")
+        self.assertEqual(main("--root", str(self.t.root), "--check"), 1)
+        self.stamp_png()
+        self.assertEqual(main("--root", str(self.t.root), "--check"), 0)
+
+    def test_alt_text_states_the_counts_and_the_skills_that_are_not_higher(self):
+        self.t.write("evals/beta/heldout/results.json", protocol2(4, 3, 1, 4.1, 4.2))  # -0.10, marginal
+        text = mod.alt_text(*self.stats())
+        self.assertIn("2 of the 3 skills scored higher with the skill than without, and one is not higher "
+                      '(beta at -0.10, drawn as a hollow loss bar tagged "marginal")', text)
+        self.assertIn("every skill won more tasks than it lost", text)
+        self.assertIn("The 2 marginal passes", text)
+        self.assertIn("No held-out result yet: delta.", text)
+
+    def test_main_writes_the_alt_blocks_and_check_follows_them(self):
+        main("--root", str(self.t.root))
+        self.stamp_png()
+        readme = (self.t.root / "README.md").read_text()
+        self.assertIn("![Horizontal bar chart of the held-out results", readme)
+        self.assertIn("](docs/img/results.svg)", readme)
+        self.assertIn("Tail.", readme)
+        self.assertIn("| `docs/img/results.svg` (2x copy: `docs/img/results.png`) |",
+                      (self.t.root / "docs/img/ALT.md").read_text())
+        self.assertEqual(main("--root", str(self.t.root), "--check"), 0)
+        self.t.write("docs/img/ALT.md", "# Alt\n\n" + BLOCK)
+        self.assertEqual(main("--root", str(self.t.root), "--check"), 1)
+        self.t.write("docs/img/ALT.md", "# Alt without markers\n")
+        self.assertEqual(main("--root", str(self.t.root), "--check"), 2)
 
     def test_check_mode_does_not_write(self):
         main("--root", str(self.t.root), "--check")

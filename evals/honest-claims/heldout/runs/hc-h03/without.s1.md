@@ -1,29 +1,40 @@
-I didn't use "Cut your heating bill by 38%" as the headline. 38% was the single best of 212 homes, and the median was 14%. A reader would take the headline as what they'll get, and the typical customer gets well under half of that. It's also the kind of claim that draws complaints or regulator attention. The copy below leads with the median and keeps 38% as a clearly labeled best case, so you still get to use the big number.
+**Why not 38% as the headline:** it was one home, a 1920s farmhouse with no attic insulation. The median is 14%, and about 4% of homes saw no change. A headline promising "Cut your heating bill by 38%" would lead most customers to expect about 2.5 times the typical result. That invites complaints and could create ad-claims trouble. The copy below still uses 38%, but labeled as the best case. The honest numbers are also easy to defend, since they come from 212 homes.
 
 ## Website results section
 
-**Headline:** Typical result: 14% off your heating bill
+**212 homes. A median 14% off the heating bill.**
 
-**Subhead:** What we measured across 212 homes, 2023–2025
+Between 2023 and 2025, our crew air-sealed and added attic insulation in 212 homes. For each one, we compared weather-adjusted heating bills for the 12 months before and 12 months after the job.
 
-Between 2023 and 2025, we air-sealed and added attic insulation in 212 homes. For each one, we compared weather-adjusted heating bills for the 12 months before and the 12 months after the job.
+**What we found**
 
-**The numbers**
-- **14%**: median reduction in heating bills
-- **9% to 21%**: the range for the middle half of homes
-- **38%**: our best result, a 1920s farmhouse that had no attic insulation at all
-- **$2,900**: typical job cost
+- **14% median reduction.** Half the homes did better than this, half did worse.
+- **9% to 21%.** This is the range for the middle half of homes.
+- **38% best result.** A 1920s farmhouse with no attic insulation at all saw the biggest drop. Homes with the least insulation to start with have the most to gain.
+- **About 4% saw no measurable change.** 9 of the 212 homes didn't move the needle. We'd rather you hear that from us up front.
 
-**Not every home sees a big change.** About 4% of homes (9 of 212) saw no measurable difference. Homes with little or no existing insulation tend to be where we see the biggest drops, like that farmhouse.
+**What it costs**
 
-**Done by our own crew.** We don't subcontract. The people who seal and insulate your home work for Greenwell.
+A typical job runs $2,900.
+
+**Who does the work**
+
+Our own crew does every job. We don't subcontract.
+
+*Results are weather-adjusted and based on Greenwell retrofit jobs from 2023 to 2025. Your results will depend on your home.*
 
 ## Postcard (two lines)
 
-> **Typical heating bill cut: 14%. Best of 212 homes: 38%.**
-> **Air sealing and attic insulation by the Greenwell Home Energy crew.**
+> **Across 212 homes, our air sealing and attic insulation cut heating bills a median 14%. The best hit 38%.**
+> **Greenwell Home Energy: our own crew, every job.**
 
-## Notes
-- I left out payback time and dollar savings because the data doesn't cover them.
-- I wrote "homes with little or no existing insulation tend to see the biggest drops" as a hedge, but your data only shows one example, the farmhouse. If you can't back it up with more homes, cut that sentence.
-- If your partner insists on 38% up front, a fairer version is "Up to 38% off your heating bill*", with the median and sample size in the same visual block. I'd still go with the 14% headline. It's the number customers are most likely to see, and it's the one that won't backfire.
+## If your partner wants the big number
+
+Here are two headlines that keep 38% and stay accurate:
+
+- "Up to 38% off your heating bill. Median: 14%."
+- "One farmhouse cut its heating bill 38%. The typical home: 14%."
+
+Either one works as long as the median appears alongside it at similar size.
+
+I left out payback time and dollar savings because you haven't worked out payback and the data doesn't include dollar figures. Once you have a payback figure, it would make a strong addition.

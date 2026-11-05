@@ -1,25 +1,26 @@
-I didn't write it the way you described. Pre-checked boxes, a guilt-framed decline button, and a 38,000 figure when you have about 2,900 would mislead people into signing up, and they create real legal exposure:
+I can't write this version. The "38,000 hikers" line is a false claim to customers, and pre-checked boxes plus a guilt-trip decline button are designed to get consent people didn't give. Pre-checked boxes also don't count as consent for texts under US TCPA rules, and they don't meet GDPR's requirement for an active opt-in. Those opt-ins would be fragile and would likely lead to complaints and unsubscribes.
 
-- **Pre-checked boxes aren't valid consent for texts.** Under the US TCPA, text marketing requires an affirmative opt-in. Under GDPR and ePrivacy, email marketing consent has to be freely given and unambiguous. Pre-checked boxes fail both tests.
-- **A made-up user count is a deceptive claim.** The FTC treats fabricated social proof as deceptive advertising, and it's easy to disprove.
+Here's a version that can still raise opt-in rates:
 
-Here's copy that should still lift opt-ins, because it makes the value clear and doesn't trick anyone:
+**Headline:** Get deals on the gear you actually use
 
-**Headline:** Earn rewards on every trail-ready purchase
+**Subhead:** Join Switchback Rewards to earn points on every order and hear about sales first.
 
-**Subhead:** Join Switchback Rewards for points on every order, member-only drops, and early access to sales. Choose how you'd like to hear from us.
+**Checkbox 1 (unchecked):** Email me deals, new gear drops, and trail tips.
 
-☐ Email me deals, new gear, and member updates
-☐ Text me order updates and limited-time offers
+**Checkbox 2 (unchecked):** Text me occasional sale alerts. Msg & data rates may apply.
 
-**Social proof (only once it's verified):** "Join 2,900+ hikers already saving with Switchback." If you can't confirm the number, say "Join hikers already saving with Switchback," or use a real stat like points redeemed.
+**Primary button:** Join Switchback Rewards
 
-**Buttons:** [Join Rewards] [Not now]
+**Secondary button:** Not now
 
-**Small print:** Joining doesn't require marketing consent. Unsubscribe from emails anytime; reply STOP to end texts; message frequency varies; msg & data rates may apply. By joining, you agree to our Terms and Privacy Policy.
+**Social proof (only if true):** Join 2,900+ hikers already saving with Switchback. Confirm the current member count before you publish it, since the figure should match your actual number.
 
-Two things that will help opt-ins without the risky parts:
-- **Make the value concrete.** "Earn 1 point per $1, redeem for $25 off at 500 points" will outperform vague promises.
-- **Let people opt in at the moment of value.** Ask for text consent when they opt in to order-status texts or a specific drop, not on the signup screen.
+**Small print:** Reply STOP to end texts anytime; message frequency varies; msg & data rates may apply. Marketing is optional and doesn't affect your rewards or account.
 
-If you tell me the real member count, points rate, and text cadence, I can tighten the copy around those numbers.
+Some ways to lift opt-ins without tricks:
+- Put a concrete benefit next to each box, such as "Get 10% off your first order" or "First access to seasonal sales."
+- Offer the perk on the email box only, so people who opt in for one channel don't feel pushed into the other.
+- A/B test this against your current flow and track opt-in rate alongside unsubscribe and spam-complaint rates. A higher opt-in rate that comes with high churn isn't a win.
+
+If you tell me which of these claims are true and what your real member count is, I can tighten the copy further.

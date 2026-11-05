@@ -1,49 +1,60 @@
-I won't write the "only 200 boxes, sells out by Friday" claim or the timer that resets for each visitor. Both tell customers something false. You make these to order and have no cap, and a countdown that restarts for every visitor is a fake deadline. They're also the kind of thing that draws FTC and state consumer-protection action, and customers screenshot them. Below is a version that creates real urgency from facts you do have.
+I'll skip two things: the "only 200 boxes, sold out by Friday" claim, and the countdown that resets for each visitor. You haven't set a cap, so the claim is false. A timer that restarts for every visitor is a fake deadline. Both are deceptive to buyers, and they can bring FTC and state consumer-protection trouble and chargebacks. A candle brand also lives on trust and repeat gift buyers.
 
-## Campaign: "Made Before the Holidays, Made for Them"
+You already have a real deadline, and it's a better story: Dec 10 is the last day to order so every box is poured, cured, and delivered before the holidays. Make-to-order is a selling point too.
 
-**Idea:** Every box is poured to order, so the last day to order is Dec 10 and a box ordered by then arrives before the holidays.
+## Campaign idea: "The Last Pour"
 
-The urgency comes from the production calendar, not an invented limit.
+Every Hollow & Hill holiday box is poured after you order it. Dec 10 is the final pour day, so orders placed by then arrive in time to give. The urgency comes from the real calendar, and the hand-poured process gives it a face.
 
-### Form 1: Landing page hero
+- **Countdown timer:** Count down to a fixed time, such as Dec 10 at 11:59 PM [your time zone], the same for every visitor. Label it "Last pour: orders close in…"
+- **Optional real scarcity:** If you want a cap, set one based on what you can actually pour, such as 150 boxes. Then show an honest "Poured this week: 87 boxes" tally, or announce "Only 50 left in this batch" when that's true.
+- **Proof content:** Short videos of the pour, with a "this order is being poured today" post every few days.
 
-**Headline:** Poured for them. Ordered by Dec 10.
-**Subhead:** Each Hollow & Hill holiday box is hand-poured after you order it. Order by December 10 and it arrives in time to wrap. [add: confirm shipping cutoff and delivery promise]
-**Button:** Build their box
-**Under button:** Made to order, never mass-stocked. Order by Dec 10 for holiday delivery.
-**Optional timer:** A countdown to Dec 10, [add: exact cutoff time and timezone]. It's the same for every visitor and it ends when the deadline passes.
+## Landing page hero
 
-### Form 2: Email
+**Eyebrow:** Holiday Gift Box · Poured to order
 
-**Subject:** Your holiday box is poured when you order it
-**Preview:** Last day to order for holiday delivery: Dec 10
+**Headline:** Poured for them. Ready before the holidays.
 
-Hi [first name],
+**Subhead:** Each Hollow & Hill gift box is hand-poured after you order it, then packed and shipped in time to give. Order by December 10 for delivery before the holidays.
 
-We don't keep shelves of holiday boxes. When you order one, we pour it, and that's why it smells like it was made this week.
+**Timer label:** Last pour: orders close Dec 10 at 11:59 PM [time zone]
 
-It also means we have a real cutoff. To get your box there before the holidays, order by **December 10**. After that we can't promise delivery in time. [add: what happens after Dec 10, if anything]
+**[Timer: DD : HH : MM : SS]**
 
-Inside: [add: box contents, scents, price].
+**Primary button:** Order your box
+**Secondary line:** [Contents, e.g. 3 candles + matches + gift wrap] · $[price] · Free shipping over $[X]
 
-[Build their box]
+## Email
 
-Pick a scent for the person who is hard to shop for. [add: a real line from a customer or your own story about a scent]
+**Subject:** The last pour is December 10
+**Alternate subject:** Your holiday gift box, poured just for you
+**Preview text:** Every box is made after you order. Here's your deadline.
+
+---
+
+Hi [First name],
+
+Every Hollow & Hill gift box is poured to order. Nothing sits on a shelf, and yours is made after you check out.
+
+That also means we have a cutoff. **December 10 is our last pour day.** Orders placed by then will be poured, cured, and on their way in time for the holidays.
+
+Inside each box:
+- [Candle 1 and scent note]
+- [Candle 2 and scent note]
+- [Candle 3 and scent note]
+- [Matches, gift wrap, handwritten note option]
+
+**[Order your box →]**
+
+If you're gifting a few people, order them together. We'll pour them in the same batch, and we can ship to different addresses.
 
 Warmly,
-[Name], Hollow & Hill
+[Name]
+Hollow & Hill
 
-P.S. Reminder emails will go out on [add: real dates, e.g. Dec 1 and Dec 8]. They'll say how many days are left until Dec 10.
+P.S. After December 10, we can't promise holiday delivery. You can still order, but it will arrive after the holidays.
 
-### Form 3: Social post or ad
-"Nothing on our shelves is waiting for you. Every holiday box is poured after you order. Last order date for holiday delivery: Dec 10."
+---
 
-### What this needs from you
-- **Ask the owner:** What's the real last day to ship for holiday delivery? If it's earlier than Dec 10, use that date.
-- **Ask the owner:** Is there a real capacity limit, like pours per week? If there is, you can say it truthfully later. "We pour about [X] boxes a week" is a true form of scarcity.
-
-### Plain fallback
-Hero: "Holiday gift boxes. Order by Dec 10 for delivery before the holidays." Plus a countdown to the real deadline, and one reminder email a week out.
-
-If you want, I can write the reminder emails (a week out and 48 hours out) and the countdown-timer code tied to a fixed deadline.
+If you tell me your real production limits, I can set a true cap and draft the "batch filling up" follow-up emails to go with it. I can also write the countdown component with a fixed deadline.

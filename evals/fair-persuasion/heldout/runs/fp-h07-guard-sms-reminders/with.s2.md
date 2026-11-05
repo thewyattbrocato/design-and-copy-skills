@@ -1,19 +1,17 @@
-Here are four reminders for the 2-day-out send:
+Here are 4 versions for the 2-day-out text. Character counts include the merge-field placeholders as written.
 
-**1. Simple and friendly** (136 characters)
+**1. Straightforward** (136)
 > Hi {first_name}, reminder: your Birchwood Dental visit is {date} at {time}. Reply C to confirm or R to reschedule. Questions? (555) 0100
 
-**2. Fee up front** (139)
-> Birchwood Dental: {first_name}, you're booked {date} at {time}. Reply C to confirm, R to reschedule. Changes within 24 hrs incur a $45 fee.
+**2. Fee mentioned** (132)
+> Birchwood Dental: {first_name}, you're booked {date} at {time}. Reply C to confirm, R to reschedule. Changes within 24 hrs: $45 fee.
 
-**3. Reschedule-focused, with phone** (138)
-> Hi {first_name}! Birchwood Dental appt: {date} at {time}. Reply C to confirm. Need to change it? Reply R or call (555) 0100 24+ hrs ahead.
+**3. Friendly** (134)
+> Hi {first_name}! Birchwood Dental can't wait to see you {date} at {time}. Reply C to confirm or R to reschedule. Questions? (555) 0100
 
-**4. Direct, with late-cancel rule** (134)
-> {first_name}, you're booked at Birchwood Dental {date}, {time}. Reply C to confirm or R to reschedule. Late cancel (<24 hrs): $45 fee.
+**4. Notice policy plus phone** (134)
+> {first_name}, Birchwood Dental is holding {date} at {time} for you. Reply C to confirm or R to reschedule (24+ hrs notice). (555) 0100
 
-**On the 160 limit:** the counts above include the merge fields as literal text, for example `{first_name}` is 12 characters. Real values change the length. I checked a worst case of a 15-character name, a date like "Wednesday, Oct 21" and a time like "10:30 AM". Every message stays at or under about 155 characters in that case.
+**Merge-field length:** the placeholders get replaced with real values, so the final text can run longer than what's above. In the worst case, a long name plus a date like "Wednesday, Oct 29" adds about 16 characters, which puts every version at 152 or under. If your date format is longer than that, check the length again.
 
-- **Date format:** if your tool fills `{date}` with something longer, like "Wednesday, October 21st", messages 2 and 3 could go over. Use a short date format if you can.
-- **Fee wording:** #1 doesn't mention the fee, and #3 only implies the 24-hour rule. #2 and #4 state the fee outright, so use one of those if you want it in every reminder.
-- **Testing:** I'd A/B test them against each other. You have no no-show baseline, so I'd start tracking no-show rates per variant now.
+**Fee wording:** only #2 states the $45 fee, and #4 only mentions the 24-hour notice. The fee is a factual policy, so it fits in a reminder. It's a good one to test against the friendlier versions. We have no no-show data, so I can't say which will cut no-shows more. If you track confirmations (C replies) and no-shows per version, you can compare them after a few weeks.

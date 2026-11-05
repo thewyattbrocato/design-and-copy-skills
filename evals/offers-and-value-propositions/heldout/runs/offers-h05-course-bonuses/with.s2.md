@@ -1,42 +1,41 @@
 ## Join Quiet Mornings
 
-**Eight weeks to a baby who sleeps, and a parent who can too.**
+**Eight weeks to a sleep routine your baby and your household can settle into. The cohort starts November 3.**
 
-Quiet Mornings is an 8-week sleep-routine program for parents of babies under one. You build a routine for your baby, one step a week, with the cohort beside you. You don't need to piece it together from forums at 3 a.m.
-
-**The next cohort starts November 3.**
+Quiet Mornings is a sleep-routine program for parents of babies under one year. Each week you work on one piece of the routine. By the end of week 8, you'll have a routine that is yours, not a generic one. [Add the first milestone parents reach, e.g. "by week 2, a bedtime sequence you can run on autopilot," only if true.]
 
 ### What you get
 
-- **8 weeks of guided routine-building.** [Describe the weekly format: lessons, worksheets, live calls.] Each week has one job, so you're never trying to change everything at once.
-- **A cohort of parents at the same stage.** [Describe how they connect: private group, live Q&A, etc.] You'll have people to ask on the nights you're second-guessing yourself.
-- **[Bonus 1 name]:** [What it does for the buyer, e.g. a ready-made wind-down checklist you can print and use from night one.]
-- **[Bonus 2 name]:** [What it does for the buyer, e.g. a one-page guide for handing the routine to a partner, grandparent or sitter.]
-- **[Bonus 3 name, optional]:** [What it does for the buyer.]
+- **The 8-week Quiet Mornings program.** [Describe the format in one line: weekly lessons, live calls, a community, etc.]
+- **Your place in the November 3 cohort.** You start the same day as the other parents, so you're not working through it alone. [Confirm that a cohort community or live element exists.]
+
+### Bonuses
+
+[Fill in only the bonuses you will actually deliver. These are drafts to replace.]
+
+- **[Bonus 1 name]**: [what it is and what it does for a tired parent, e.g. "a one-page nap and bedtime tracker you can fill in on your phone"].
+- **[Bonus 2 name]**: [e.g. "a night-by-night troubleshooting guide for regressions and travel"].
+- **[Bonus 3 name]**: [e.g. "a partner handoff guide so night duty is shared"].
 
 ### Price
 
-**$197**, [one payment / payment plan details]. [Add what's not included, if anything: coaching, 1:1 support, etc.]
+**$197, one payment.** [Confirm it's a single payment and not an installment plan.] The cohort begins **November 3**.
 
-### Why join now instead of later
+[Add your refund policy here in one plain sentence: what the parent does, by when, and where to claim. Don't publish a guarantee you haven't decided on.]
 
-The cohort starts **November 3**, and the routine is built week by week as a group. If you join after the start, you're catching up on weeks the others have already done. Joining before then means you start week 1 with everyone else and have your baby's routine in place by [week 8 date, 8 weeks after Nov 3].
+### Why join now
 
-[Optional, only if true: Enroll by **[date]** and also get **[fast-action bonus]**. This bonus is removed after that date.]
+The cohort starts November 3, and the eight weeks start with it. If you join this cohort, your first week begins in days. If you wait, your next chance to start is [next cohort date, or "we haven't scheduled another cohort"].
 
-Enrollment closes [date / when the cohort starts / when it reaches [number] parents]. [Choose the one that's true.]
+[Optional: if you will really close enrollment or end the bonuses at a set time, state it here: "Enrollment closes [date and time]." Only include a deadline you will actually enforce.]
 
-### If it doesn't work for you
-
-[Refund policy: what the parent has to do, by when, and where to claim. Example structure: "If you've done [the weekly steps] and aren't happy by [day], email [address] and we'll refund [amount]."]
+Every week you put it off is another week of the nights you're having now.
 
 **[Join Quiet Mornings, $197]**
-
-*Questions before you join? [Contact link]. Full terms: [link].*
+*One payment of $197. Cohort starts November 3. [Refund policy in one line.] [Link to full terms]*
 
 ---
 
-Two things to check before you publish:
-
-- **Bonuses and deadline:** You didn't give me any bonuses, so those are placeholders. I didn't invent them or put "$X value" figures on them. Only list bonuses you'll actually deliver. A dollar value is fine only if you've sold that item at that price. The Nov 3 start is your real reason to act now. A fast-action bonus or early-bird price would add more urgency, but only if it truly ends on the date you state.
-- **Refund policy:** I left that blank because you haven't stated one. A clear, conditional guarantee is probably the strongest way to turn slow sign-ups around, but it has to be one you'll honor.
+Notes:
+- You didn't give me bonuses, a refund policy, or the course format, so I left those as placeholders instead of inventing them. A sleep-program guarantee is also the single strongest thing you could add for hesitant parents. If you'll offer one, I can write it.
+- I kept the urgency to the real November 3 start date. I didn't invent a countdown, a "limited spots" claim, or a crossed-out higher price. If you set a real enrollment deadline or early-bird bonus, add it in the marked spot.

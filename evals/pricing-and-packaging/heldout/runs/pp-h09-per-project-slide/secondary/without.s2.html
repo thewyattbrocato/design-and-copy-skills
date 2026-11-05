@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proposal: price per active project</title>
+<style>
+  /* Palette: categorical slot 1 blue (#2a78d6) for the proposal; neutral muted gray for today. */
+  :root {
+    color-scheme: light;
+    --surface: #fcfcfb;
+    --page: #f9f9f7;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --today: #b9b7ae;
+    --proposed: #2a78d6;
+    --up: #b4431c;
+    --down: #006300;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { height: 100%; }
+
+  body {
+    background: var(--page);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+  }
+
+  /* 16:9 stage that scales to the viewport; all sizes are in container units */
+  .slide {
+    width: min(100vw, calc(100vh * 16 / 9));
+    aspect-ratio: 16 / 9;
+    container-type: inline-size;
+    background: var(--surface);
+    border: 1px solid rgba(11, 11, 11, 0.10);
+    padding: 4.2cqw 5cqw 3.6cqw;
+    display: flex;
+    flex-direction: column;
+    gap: 2.6cqw;
+    overflow: hidden;
+  }
+
+  header h1 {
+    font-size: 3.9cqw;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  header p {
+    margin-top: 0.9cqw;
+    font-size: 1.8cqw;
+    color: var(--ink-2);
+  }
+
+  .body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 4.5cqw;
+    min-height: 0;
+  }
+
+  /* Chart */
+  .chart {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .legend {
+    display: flex;
+    gap: 2.2cqw;
+    font-size: 1.5cqw;
+    color: var(--ink-2);
+    margin-bottom: 1.6cqw;
+  }
+
+  .legend span { display: inline-flex; align-items: center; gap: 0.6cqw; }
+
+  .swatch {
+    width: 1.3cqw;
+    height: 1.3cqw;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .plot {
+    position: relative;
+    height: 27cqw;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--baseline);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px);
+    background-size: 100% 25%;
+    background-position: 0 0;
+  }
+
+  .group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .pair {
+    display: flex;
+    align-items: flex-end;
+    gap: 1cqw;
+    height: 100%;
+  }
+
+  .bar {
+    width: 6.4cqw;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+  }
+
+  .bar.today { background: var(--today); }
+  .bar.proposed { background: var(--proposed); }
+
+  .val {
+    position: absolute;
+    top: -2.4cqw;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.7cqw;
+    font-weight: 700;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .name {
+    margin-top: 1.2cqw;
+    font-size: 1.6cqw;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .meta {
+    margin-top: 0.3cqw;
+    font-size: 1.3cqw;
+    color: var(--ink-2);
+    text-align: center;
+  }
+
+  /* Takeaways */
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6cqw;
+    min-height: 0;
+  }
+
+  .point {
+    border-left: 3px solid var(--baseline);
+    padding: 0.2cqw 0 0.2cqw 1.6cqw;
+  }
+
+  .point h3 {
+    font-size: 1.7cqw;
+    font-weight: 700;
+    margin-bottom: 0.4cqw;
+  }
+
+  .point p {
+    font-size: 1.5cqw;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+
+  .point .delta-down { color: var(--down); font-weight: 700; }
+  .point .delta-up { color: var(--up); font-weight: 700; }
+
+  .point.watch { border-left-color: var(--up); }
+
+  .ask {
+    margin-top: auto;
+    background: var(--proposed);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 1.8cqw 2cqw;
+  }
+
+  .ask .label {
+    font-size: 1.3cqw;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.9;
+  }
+
+  .ask p {
+    margin-top: 0.6cqw;
+    font-size: 1.7cqw;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+
+  footer {
+    font-size: 1.2cqw;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+  <main class="slide" role="img" aria-label="Bar chart comparing monthly cost today versus under the proposal for three customers">
+    <header>
+      <h1>Price per active project, not per seat</h1>
+      <p>Proposal: $15 per active project per month, replacing $20 per user per month</p>
+    </header>
+
+    <section class="body">
+      <div class="chart">
+        <div class="legend">
+          <span><i class="swatch" style="background: var(--today)"></i>Today: $20 per user</span>
+          <span><i class="swatch" style="background: var(--proposed)"></i>Proposed: $15 per active project</span>
+        </div>
+
+        <div class="plot">
+          <div class="group">
+            <div class="pair">
+              <div class="bar today" style="height: 4.3cqw"><span class="val">$80</span></div>
+              <div class="bar proposed" style="height: 2.4cqw"><span class="val">$45</span></div>
+            </div>
+            <div class="name">Birchline Design</div>
+            <div class="meta">4 users · 3 active projects</div>
+          </div>
+
+          <div class="group">
+            <div class="pair">
+              <div class="bar today" style="height: 23.4cqw"><span class="val">$440</span></div>
+              <div class="bar proposed" style="height: 4.8cqw"><span class="val">$90</span></div>
+            </div>
+            <div class="name">Tallgrass Civil</div>
+            <div class="meta">22 users · 6 active projects</div>
+          </div>
+
+          <div class="group">
+            <div class="pair">
+              <div class="bar today" style="height: 2.1cqw"><span class="val">$40</span></div>
+              <div class="bar proposed" style="height: 16cqw"><span class="val">$300</span></div>
+            </div>
+            <div class="name">Fennmark Studio</div>
+            <div class="meta">2 users · 20 active projects</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="point">
+          <h3>Two of three accounts pay less</h3>
+          <p>Birchline: <span class="delta-down">−$35/mo (−44%)</span>.<br>Tallgrass: <span class="delta-down">−$350/mo (−80%)</span>. Both have many users and modest project counts.</p>
+        </div>
+
+        <div class="point watch">
+          <h3>One account pays more</h3>
+          <p>Fennmark: <span class="delta-up">+$260/mo (+650%)</span>. Two seats running 20 projects is where per-user pricing undercharges. This is the account to plan a transition for.</p>
+        </div>
+
+        <div class="ask">
+          <div class="label">Decision requested</div>
+          <p>Approve per-active-project pricing at $15 per project per month, and a transition plan for accounts whose bill rises.</p>
+        </div>
+      </aside>
+    </section>
+
+    <footer>Monthly list price for three example accounts only, not a sample of the full customer base.</footer>
+  </main>
+</body>
+</html>

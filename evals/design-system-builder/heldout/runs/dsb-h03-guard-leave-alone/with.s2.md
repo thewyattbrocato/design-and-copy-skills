@@ -1,78 +1,63 @@
-The set is small and coherent. The spacing, radius and shadow scales are well-sized and the role names are good. I'd fix a few things before handing it over, because they're expensive to change once the other team has built on them.
+The tokens are a solid base. The values are coherent, the scales are short, and the names are by role. The gaps below are mostly missing tokens that the other team will otherwise invent on their own, so I'd close them before handoff.
 
-I haven't seen your components or screens, so this review covers only the token file. My contrast numbers are rough estimates, so run them through a checker before relying on them.
+I did the contrast math by hand, so treat the ratios as approximate. Text, muted text, action, danger, success and warning all pass 4.5:1 against their surfaces in both themes. `on-action` on action passes in both too.
 
-## Change before shipping
+## Fix before handoff
 
-1. **Input borders are too faint.** `--color-border` (#d9d5cc) on white is about 1.5:1. That's fine for dividers but fails the 3:1 that WCAG 1.4.11 asks for on input and control boundaries. Split the token:
-   - `--color-border` for dividers and card edges.
-   - `--color-border-strong` for inputs, checkboxes and anything interactive.
-   - Light value: about `#8a8474`. Dark value: about `#6b6757`. Verify both.
+1. **No `color-scheme`.** Without `color-scheme: light` on `:root` and `color-scheme: dark` on the dark theme, native inputs, scrollbars and select menus stay light in dark mode.
+2. **Dark mode only works via the attribute.** A user whose OS is set to dark gets light mode unless the app sets `data-theme`. Either document that the app owns this, or add a `prefers-color-scheme` fallback.
+3. **No input-grade border.** `--color-border` (#d9d5cc) is about 1.4:1 on white. That's fine for dividers, but form fields and checkboxes need about 3:1 or they fail WCAG 1.4.11. Add `--color-border-strong`.
+4. **No focus token.** Scanner-adjacent and keyboard-heavy screens need a visible focus ring. Add `--color-focus` plus a ring width and offset.
+5. **No surface elevation in dark mode.** Dark `--shadow-overlay` at .6 alpha is nearly invisible on #1f1d17. Dark surfaces should get lighter as they rise, so add `--color-surface-raised` (and overlay). In light mode it can equal surface.
+6. **Status colors are incomplete.** There's no `on-danger`, so a destructive button has no defined text color. There are also no subtle tints for banners and table-row states, and no info role. Tallyard will show low stock, out of stock and discrepancies constantly, so give these a defined pairing. Also state that status must never rely on color alone, so pair it with an icon or label.
+7. **Type has sizes but no family, weight or numeric style.** Add `--font-sans`, `--font-mono` and weights (regular, medium, bold). For an inventory tool, document `font-variant-numeric: tabular-nums` for quantities, SKUs and table columns, or the digits won't line up.
 
-2. **There are no status backgrounds or `on-` pairs.** Danger, success and warning exist only as text-weight colors. Banners, badges and table-row states need tinted fills, and a warehouse tool will show stock alerts everywhere. Add:
-   - `--color-danger-bg`, `--color-success-bg` and `--color-warning-bg`, in both themes.
-   - `--color-on-danger`, if you plan a solid danger button.
-   - `--color-danger-hover`, since action has a hover state and danger doesn't.
-   - Without these, each team will invent its own tints.
+## Should fix
 
-3. **There's no focus ring token.** Add `--color-focus` (it can point at the action color) plus a ring width and offset. This is the token teams most often skip, and then each component ends up with a different focus style.
+- **Naming collision.** `--text-sm` is a size and `--color-text` is a color, and both start with `text`. Rename sizes to `--font-size-sm` and so on, while it's still cheap.
+- **Spacing has no -5 or -7.** That's fine because the steps are well separated, but say so in the docs or people will add them. A 64px step for page-level layout is probably worth having.
+- **Touch target token.** If this runs on handheld scanners or tablets with gloves, add `--size-target-min: 44px` (or larger) so the other team doesn't guess.
+- **Motion.** Add a `prefers-reduced-motion` rule that zeroes the durations. Two durations and one easing is fine for v1.
+- **Hover but no pressed state.** Add `--color-action-active`, or document that pressed reuses hover.
+- **No raw tier.** Semantic-only is fine for one brand. Note that a second brand or a high-contrast theme would mean adding a raw ramp underneath.
 
-4. **Dark mode has no way to show elevation.** There's one `--color-surface`, and shadows are nearly invisible on dark grounds. In dark themes, raised things should get lighter. Add `--color-surface-raised` and `--color-surface-overlay` for popovers, menus and modals. Light can map all three to #fff or close to it.
+## Fine as is
 
-5. **Theme switching misses system preference and native controls.** Add:
-   - `color-scheme: light` on `:root` and `color-scheme: dark` on `[data-theme="dark"]`, so scrollbars and native inputs match.
-   - A `@media (prefers-color-scheme: dark)` block for `:root:not([data-theme="light"])`. Otherwise users who haven't picked a theme get light mode regardless of their OS setting.
-   - Put the dark values in one shared block, not two copies.
+- The spacing scale (4px base, 7 steps).
+- Two radii plus full, and two shadows.
+- The warm neutrals and the restrained palette.
+- The dark accents, which are re-tuned for the dark ground rather than inverted.
 
-6. **The type scale has no families or weights.** `--text-*` sizes alone leave the other team to guess. Add:
-   - `--font-sans`, `--font-mono`, and weights for regular, medium and bold.
-   - Pair each size with a line-height. `--leading-tight` and `--leading-body` are unattached right now, so say which sizes use which. For example, `xl` and `2xl` use tight, and the rest use body.
-   - For an inventory tool, document `font-variant-numeric: tabular-nums` as the default for quantities and table numbers, so columns align.
-
-## Should add (can ship as v1.1, but plan for it)
-
-- **Touch target and density.** I'm assuming warehouse use on tablets or handhelds, possibly with gloves. If so, add `--size-target-min: 44px`, and consider a compact-density variant for dense tables. Say in the docs which one is the default.
-- **Motion.** You have 2 durations and 1 easing. Add a `--motion-slow` (about 320ms) for overlays and an `--ease-in` for exits. Document a `prefers-reduced-motion` rule too: durations drop to about 0 or fall back to opacity-only.
-- **Spacing ends at 48px.** Page-level layout usually wants a 64px step (`--space-16`). The numbering follows a 4px multiplier, which is fine, but say so in a comment. Otherwise the gaps (no 5, 7, 9–11) look like omissions.
-- **Z-index and border width.** A short `--z-dropdown`, `--z-overlay`, `--z-toast` scale, plus `--border-width: 1px`, prevents `z-index: 9999` arms races.
-- **Namespace.** If the other team's CSS may collide with yours, consider a prefix such as `--ty-`. Changing this later breaks every consumer.
-
-## What I'd leave alone
-
-- The radius scale (4, 8, full) and the two shadow levels are the right size.
-- Role-based names (`--color-action`, `--color-on-action`, `--color-text-muted`) are good. Don't rename them to color names.
-- The dark action color is re-tuned, not inverted. That's correct.
-- By my estimate the text, action and status colors all clear 4.5:1 on their grounds in both themes. The only failing pair I found is the border above.
-
-## Starter patch
+## Suggested additions
 
 ```css
 :root {
   color-scheme: light;
-  --color-border-strong: #8a8474;
-  --color-focus: var(--color-action);
+  --color-border-strong: #8a8576;   /* ~3.5:1 on bg/surface */
+  --color-focus: #1b5e8a;
+  --focus-ring: 2px; --focus-offset: 2px;
   --color-surface-raised: #ffffff;
-  --color-surface-overlay: #ffffff;
-  --color-danger-hover: #8f1e18;
   --color-on-danger: #ffffff;
-  /* tinted fills: pick and contrast-check against --color-text */
-  --color-danger-bg: #fbeae8; --color-success-bg: #e6f3ea; --color-warning-bg: #fbf1dc;
+  --color-danger-subtle: #fbe9e7; --color-success-subtle: #e6f3ea; --color-warning-subtle: #fbf0d9;
   --font-sans: system-ui, sans-serif; --font-mono: ui-monospace, monospace;
   --weight-regular: 400; --weight-medium: 500; --weight-bold: 700;
   --size-target-min: 44px;
-  --motion-slow: 320ms; --ease-in: cubic-bezier(.4,0,1,1);
 }
 [data-theme="dark"] {
   color-scheme: dark;
-  --color-border-strong: #6b6757;
-  --color-surface-raised: #26241d;
-  --color-surface-overlay: #2d2b23;
-  --color-danger-hover: #f6a39d;
-  --color-on-danger: #2a0c0a;
-  --color-danger-bg: #3a1f1c; --color-success-bg: #1b2f23; --color-warning-bg: #35290f;
+  --color-border-strong: #7d7868;
+  --color-focus: #6fb1de;
+  --color-surface-raised: #27251e;
+  --color-on-danger: #1f0a08;
+  --color-danger-subtle: #3a1f1c; --color-success-subtle: #1b2e22; --color-warning-subtle: #33280f;
 }
+@media (prefers-reduced-motion: reduce) { :root { --motion-fast: 0ms; --motion-base: 0ms; } }
 ```
 
-All hex values in the patch are proposals. I haven't contrast-checked them.
+The subtle tints and `on-danger` values are proposals. I haven't checked them for contrast, so run the text-on-tint pairs before you ship.
 
-Before you hand over, decide who owns changes after v1 and how deprecations will be announced. Even a one-page changelog is enough.
+**Assumptions:**
+- I assumed a web product with one brand.
+- I haven't seen how the components use these tokens, so some of the gaps above may already be handled locally.
+
+Before handoff, also name an owner and a change process for the tokens (add, modify, deprecate). A one-page changelog is enough at v1.

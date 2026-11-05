@@ -1,0 +1,1 @@
+Mostly yes: white on #1b4f8a is about 8.5:1 contrast, the focus ring is clear, and it's a real `<button>` at a comfortable size. The one weakness is that the label "download receipt" is vague for screen-reader users who hear several of them on a page, so add context like `aria-label="Download receipt for order 1234"` if there are multiple.

@@ -1,13 +1,17 @@
 **Title options**
 
-1. Why Your Lower Back Hurts After a Long Flight or Drive, and What Helps
-2. Sore Back After Hours in a Seat? Here's What's Going On and How to Ease It
-3. The Long-Drive, Long-Flight Back Ache: Why It Happens and What to Do
+1. Why Your Lower Back Hurts After a Long Flight or Drive (and How to Ease It)
+2. Stiff After Hours in the Car or on a Plane? Here's What Your Lower Back Is Telling You
+3. Your Back Isn't Hurt From the Trip. It's Hurt From Staying Still
 
-**Opening (situation first)**
-You step out of the car or off the plane, and your lower back is stiff, tight, and slow to straighten. It isn't random. Hours in one position keep the same muscles and joints loaded without a break, and your back tells you about it the moment you finally move.
+**Opening (pairs with title 1 or 3)**
 
-**Opening (shorter, for desk workers and drivers)**
-If your lower back already complains after a day at your desk, a long flight or drive can make it worse. Here's why sitting that long hits your back so hard, and what you can do before, during, and after the trip.
+You step off the plane or climb out of the car, and your lower back is tight, achy, and slow to straighten up. Nothing happened to it. It was held in one position for hours, and a few simple moves before, during, and after the trip can keep that from happening.
 
-I'd pick title 1 with the first opening. It matches what people type into a search ("lower back hurts after flight/drive"), and the opening names the moment they'll recognize. The second opening works better if you want to speak directly to your desk-worker patients.
+**Alternate opening (pairs with title 2, more conversational)**
+
+If standing up after a long drive feels like unfolding yourself, you're not imagining it, and it doesn't mean something is wrong. Your lower back is reacting to hours without movement, and there are specific things you can do about it.
+
+**Notes**
+- I'd pick title 1 with the first opening. It matches what people type into search, and the opening promises the before, during, and after structure for the rest of the post.
+- I avoided statistics and mechanisms like disc pressure because you haven't given me sources. If you want a specific claim, such as how long sitting starts to cause stiffness, give me the source or add it from your own clinical experience.

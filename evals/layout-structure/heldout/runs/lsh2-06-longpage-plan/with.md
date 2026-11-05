@@ -1,64 +1,59 @@
 # Ledgerlark landing page plan
 
-**Intake**
-- **Reader:** a freelance electrician or plumber, probably on a phone between jobs, who currently uses a shoebox, a spreadsheet, or nothing. They read the page through, and they want to know quickly whether it's for them.
-- **Material:** bands of different content (pitch, features, proof, comparison, price). That means horizontal bands that share one content edge, each with its own inner shape.
-- **Worst case:** a phone, a one-handed skim, and a skeptical reader who has been burned by "easy" software. Check the stacked order, because the trial button has to stay near the top.
+Don't build this as five feature boxes plus three quote boxes. Your material is a mix: a demo, five features, proof, a comparison and a price. Each of those wants its own shape, so use horizontal bands that share one left edge, and let each band take a different form.
 
-## What the top has to do
+## What the top of the page must do
 
-The first screen answers three things in plain words, with no manifesto.
+The first screen answers four things without scrolling:
 
-1. **What it is:** bookkeeping for freelance electricians and plumbers. Say the trades by name in the headline or the line under it, so the reader knows it's for them.
-2. **What they get:** the receipt photo, the mileage, and the tax figure are the daily pains. One short line can cover them, for example "Snap receipts, track mileage, and always know your quarterly tax."
-3. **How to start:** one primary button, "Start 30-day free trial". Under it, put "$12/month after. Cancel anytime." in small type. The price is cheap enough to help the decision, so state it early. Only claim "no card needed" if that's true.
+- **What it is, and for whom.** Name the trades in the headline or the line under it, for example "Bookkeeping for freelance electricians and plumbers". Put the plain-language job under it: receipts, mileage, tax and invoices handled from your phone.
+- **What to do.** One primary button, "Start your 30-day free trial". Under it, a small line: "Then $12/month. Cancel anytime." Only add the cancel claim if it's true. Showing the price here removes the main worry before it forms.
+- **Proof it's a real product.** Show a phone with a receipt being snapped and categorised. Don't use an abstract illustration.
+- **Navigation that lines up.** The logo sits on the same left edge as the headline. Offer two or three links (Features, Pricing) and a trial button. Don't add a big menu.
 
-**Layout:** put left-aligned text on one side and a phone showing the receipt-snap result on the other. Don't use a centered stack. On a phone, the headline, the button, and then the image stack in that order, so the button stays above the fold.
+On a phone, the order is headline, button, price line, then the image. The button must not drop below the fold.
 
-**The demo video:** don't autoplay it as the hero background. Put it in the second band, or use a poster frame with a play button beside the hero text. A short video is stronger as "watch a receipt get filed in 20 seconds" than as decoration.
+The demo video isn't in the hero. Give it a small "Watch the 90-second demo" link there that scrolls to it. A video competing with the trial button splits the first decision.
 
-Navigation shares the left edge of the content column. Keep it minimal: logo, a few anchors, and the trial button.
+## Sequence, with its feel
 
-## Sequence
+Sequence follows the reader's questions: what is this, how does it work, is it real, how does it compare, what does it cost, what now.
 
-The order follows the reader's questions: what is this, how does it work, can I trust it, is it better than my spreadsheet, what does it cost, what do I do next.
+| # | Band | Shape | Feel |
+|---|---|---|---|
+| 1 | Hero | Headline and button left, phone image right | Open |
+| 2 | Demo video | One large video, one line of caption, nothing else | Open |
+| 3 | Snap a receipt | Text beside a large phone screen, image right | Woven |
+| 4 | Mileage from your phone | Same idea, flipped, image left | Woven |
+| 5 | Quote 1 | One big pull quote, name and trade | Open |
+| 6 | Invoices with card payment, and bank feed | Two side-by-side panels, each with a small screenshot | Full |
+| 7 | Quarterly tax estimate | **The loud band.** Full-width colour field, one big number from the app, a short sentence | Loud |
+| 8 | Ledgerlark vs a spreadsheet | Comparison table with shared row labels | Full |
+| 9 | Pricing, with quote 2 | One plan: "$12/month" in large type, a short list of what's included, trial button. Quote 2 sits beside it | Open |
+| 10 | Questions | 4–5 short questions and answers | Calm |
+| 11 | Closing | One line and the trial button, with quote 3 above or beside it if it's a strong closer | Open |
 
-| # | Section | Answers | Shape | Density |
-|---|---|---|---|---|
-| 1 | **Hero** | What is it and how do I start? | Text beside phone image | Open |
-| 2 | **Demo video** | Show me | One large video, wide, short caption | Open |
-| 3 | **The week's paperwork, handled** (receipts, mileage, bank feed) | What does it do day to day? | Three alternating feature rows: text/image, image/text, text/image | Woven |
-| 4 | **Quote #1 as a single statement** | Does it work for people like me? | One large pull quote, with name and trade | Open |
-| 5 | **Tax and invoices** | Will I get paid, and will tax time hurt? | Two features, shown as a pair at different sizes. The tax estimate is larger. | Woven |
-| 6 | **Spreadsheet vs Ledgerlark** | Why not what I have now? | Side-by-side comparison with shared row labels | Full |
-| 7 | **Quotes #2 and #3** | Is it real? | Two quotes side by side, in a quiet band | Open to woven |
-| 8 | **Price** | What does it cost? | One plan, not a table: "$12/month, 30 days free", with what's included | Open |
-| 9 | **Short FAQ** (optional) | What about my bank, my data, cancelling? | Question and answer list | Full |
-| 10 | **Closing action** | What now? | One line and one button | Open |
+## Why this stays out of "wall of boxes"
 
-## How to avoid the wall of boxes
+- **No two neighbouring bands share a template.** Bands 3 and 4 are mirror images, so they read as a pair. Band 5 breaks them with a lot of space.
+- **Quotes are scattered, not lined up.** Three quotes in a row make a testimonial grid. Spread across the page, each one answers a doubt at that point and breaks up a dense stretch.
+- **The features aren't five equal cards.**
+  - Receipts and mileage get the most room because they're the most visual.
+  - Invoices and bank feed are the quieter pair.
+  - The tax estimate is the payoff, so it gets the loud band.
+  - Order them by a tradesperson's week (job, receipt, trip, invoice, money in, what do I owe), not by your internal feature list.
+- **One loud section only.** Make the tax estimate the only strong colour field and the biggest type. Keep the rest on a calm background. If the comparison table also gets a dark field, the loud band stops registering.
+- **Use the right shape for the comparison.**
+  - Make it a table with the same rows on both sides: sorting receipts, logging trips, knowing what you owe, getting paid.
+  - Use only claims you can stand behind. Don't invent time-saved numbers.
+- **Pricing is calm and short.** You have one plan, so don't draw a three-column pricing grid. One price, one list, one button.
+- **One shared left edge.** Backgrounds can run edge to edge, but the content always starts at the same line. Cap body text at about 60–70 characters per line. Only the video and screenshots go wider.
 
-You have five features, but they aren't equal, so don't give them equal boxes.
+## Things to settle before design
 
-- **Group them by the job they do.** Receipts, mileage, and the bank feed are all about capturing what you spent. Invoices and the tax estimate are about money coming in and what you owe. That gives two sections instead of five tiles.
-- **Alternate the image side** in the capture rows so the rhythm moves left and right. Each row shows its own thing: a receipt turning into a categorised line, a mileage trip on a map, and the bank feed list.
-- **Give the tax estimate more room than the rest.** For many self-employed tradespeople, the quarterly tax estimate is the worry that makes software worth paying for. Treat it as the main benefit.
-- **Use cards only where items are truly parallel.** On this page that may be nowhere, and that's fine.
+- **Where the quarterly tax estimate applies.** The big-number band and the FAQ both depend on the country or tax system. If you cover one country, say so. If several, say which.
+- **What the bank feed connects to.** The FAQ will need this answer.
+- **What the three quotes say and who gave them.** Match each to the band where it helps most. A quote about the tax estimate belongs next to band 7. A quote about price or ease belongs by pricing.
+- **Video length and captions.** Many people watch on mute on a phone, so it needs captions.
 
-## Rhythm
-
-- **Loud section:** the spreadsheet comparison (6). It's your sharpest argument. Give it the strongest color field or the biggest type, and keep the others calmer so it registers. Alternatively, make the tax estimate the loud one, but pick one of them.
-- **Alternation:** open (hero, video), woven (features), open (quote), woven (tax and invoices), full (comparison), open (quotes), open (price), full (FAQ), open (close). There are never two full sections in a row, and not more than two open ones together.
-- **Quotes split up.** Don't put all three in a row. One big quote in the middle breaks up the features, and the other two sit later near the price, where doubt is highest.
-- **Shared edge.** Every band uses the same content edge and outer margin. Variation comes from image side, background field, and density. Background fields can run edge to edge.
-- **Measure:** cap body text at about 60–65 characters per line, even in wide bands.
-- **Named breaks:** the video runs wider than the text column because it's the thing to watch. The pull quote can hang into the margin because it marks the turn from features to money. Anything else stays on the structure.
-
-## Things to settle
-
-- **Comparison content:** list the rows from the reader's point of view, for example "Sorting a receipt", "Logging a trip", and "Knowing what you owe this quarter". Keep it honest. A spreadsheet is free and flexible, so the argument is time saved and fewer mistakes, not "spreadsheets are bad".
-- **Quote use:** put each customer's trade next to their name so the proof feels close to the reader. If the quotes mention specific things, such as mileage or the tax figure, place them near those features.
-- **Primary action:** the hero and the closing band each carry one action, the trial. The nav button is the same one, so there's no competing "contact sales".
-- **Phone check:** read the single-column order top to bottom. The pitch, the button, and then the video should all appear before the long feature section.
-
-If you tell me which of the three quotes is strongest and what the video shows, I can place them more precisely and draft the section headlines.
+The two decisions that matter most are making the tax estimate the loud band and spreading the quotes out. Do you want a wireframe sketch of this next?

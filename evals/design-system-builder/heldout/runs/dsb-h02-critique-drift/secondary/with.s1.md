@@ -1,33 +1,29 @@
-## What's going on
+**What's going on:** Nothing here is broken in isolation. The inconsistency comes from the stylesheet having no shared scale. Each component picks its own numbers, and the numbers drift apart:
 
-The stylesheet has no shared vocabulary. Each rule picked its own values by eye, so the app ends up with near-duplicates that look almost the same and differ just enough to feel off:
+- **Near-duplicate colors that aren't the same:** the primary blue appears as `#2f6fed` and `#2e6dea`. The muted greys `#8a8f98`, `#8d929b`, and `#858a93` are three values for one role. The success greens `#e6f6ea`/`#1f7a3a` and `#e4f5e8`/`#217c3d` are two more near-matches. Borders are `#e3e5e8` and `#e1e4e8`.
+- **Radii with no scale:** 4, 5, 6, 7, 9, 10, 12px. Buttons get 5 and 7, cards 9, panels 12, modals 10.
+- **Spacing with no grid:** paddings of 9, 11, 12, 13, 17, 18, 22, 26. Margins of 14, 19, 34. Nothing is on a 4px or 8px step, so things almost line up but never quite do.
+- **Type sizes that step irregularly:** 14, 17, 19, 23, 31. `.btn-big` and `h4` both use 17 by coincidence, not by design.
+- **Controls that don't line up:** `.input` is 38px tall and `.select` is 40px. Placed side by side in a form, they visibly mismatch. The 14px `.btn` is roughly 35px tall, so it doesn't match either field (exact heights depend on line-height, which isn't in the sheet).
+- **Variants as new magic numbers:** `.btn-big`, `.panel`, and `.card` are separate components with their own values, not modifiers on a base. Each one was probably written by copying a neighbor and tweaking it.
+- **Three shadows and two surfaces for one job:** `.card` and `.panel` are both bordered containers with near-identical shadows, so it's unclear which to use.
 
-- **Same color, two hex values.** `.btn` is `#2f6fed` and `.btn-big` is `#2e6dea`. Three near-identical muted greys (`#8a8f98`, `#8d929b`, `#858a93`), and two greens for the same success meaning (`#e6f6ea`/`#1f7a3a` and `#e4f5e8`/`#217c3d`).
-- **Borders and shadows that almost match.** `.card` and `.panel` both have a 1px light grey border, but `#e3e5e8` vs `#e1e4e8`. Their shadows differ too (`0 2px 7px .12` vs `0 3px 9px .10`). Two surfaces that should be the same thing look slightly different.
-- **Radii with no scale.** 4, 5, 6, 7, 9, 10, 12. Small buttons get 5px and big buttons 7px, so they look like different families.
-- **Spacing with no scale.** Padding and margins are 9, 11, 13, 14, 17, 18, 19, 22, 26, 34. There's no 4px or 8px grid, so nothing lines up.
-- **Type sizes that don't step.** Headings go 31, 23, 19, 17 (gaps of 8, 4, 2), and button text is 14 or 17. Nothing ties them to a ratio.
-- **Form controls that don't match.** `.input` is 38px tall with a 6px radius, and `.select` is 40px with a 4px radius. Placed in the same form row, they're visibly misaligned.
-- **Four shadow recipes** for what is really three elevation levels (card, panel, modal).
-- **Variants copy instead of extend.** `.btn-big` repeats the button properties rather than building on `.btn`, which is how the color drifted.
+Nobody can say why because each value is individually reasonable. The problem is that there are about 40 unique values where there should be 5 to 8 per category.
 
-Individually none of these is a bug. Side by side they read as "almost the same," and that's the inconsistency people feel without being able to name it.
+**What I'd do, in order:**
 
-## What I'd do, in order
+1. **Define tokens by snapping, not redesigning.** Pick a 4px spacing scale (4, 8, 12, 16, 24, 32), a radius scale (4, 8, 12), a type scale, one shadow per elevation level (card, modal), and named color roles (primary, text-muted, success). Map each existing value to its nearest token. Keep the change small so the app looks about the same. Doing this first gives every later step a target.
 
-1. **Make color tokens and collapse the near-duplicates.** Define `--color-brand`, `--color-text-muted`, `--color-success-bg`, `--color-success-text`, and so on. Map `#2e6dea` onto `#2f6fed`, the three greys onto one muted grey, and the two greens onto one pair. This is the cheapest change and the most visible improvement, and it's mostly find-and-replace.
+2. **Merge the duplicates.** Collapse the two blues, three greys, two greens, and two borders into one value each. This is low-risk and removes most of the "why does this look slightly off" effect, even before any layout changes.
 
-2. **Define a spacing scale and a radius scale.** For example, spacing at 4, 8, 12, 16, 24, 32, and radius at 4, 8, 12. Snap each existing value to the nearest step. Expect small visual shifts, and check the main screens after each batch.
+3. **Fix the form controls.** Give buttons and inputs one shared control height token (for example 40px) and use it in `.btn`, `.btn-big`, `.input`, and `.select`. This is the most visible fix for users, since it's where mismatches show up on screen.
 
-3. **Define elevation as three levels.** `--shadow-sm` for cards, `--shadow-md` for panels, `--shadow-lg` for modals. Use one border token for all surfaces. Merge `.card` and `.panel` into one surface component with size modifiers if they're really the same thing.
+4. **Rebuild the components on tokens.** Make `.btn` a base with size modifiers (`--sm`, `--md`, `--lg`) instead of a separate `.btn-big`. Merge `.card` and `.panel` into one surface component with a padding variant, and have `.modal` reuse the same surface and elevation tokens.
 
-4. **Restructure components on the tokens.** Make `.btn` the base and have `.btn-sm`/`.btn-lg` change only padding and font size. Give `.input` and `.select` the same height and radius so they align in forms. Apply the type scale to `h1`–`h4`, and check that the body and button sizes sit on it too.
+5. **Tie the type scale to heading tokens.** The `h1`–`h4` element selectors are global, so changing one changes everything. Move sizes into tokens and consider classes for headings, so a heading's look and its semantic level can differ.
 
-5. **Keep it from drifting back.** Add a stylelint rule that flags raw hex values and off-scale values outside the token file, or at minimum a review checklist item. Without this, the same drift will return in six months.
+6. **Add a guardrail.** Use a stylelint rule to block raw hex values and off-scale spacing or radii outside the tokens file, so drift doesn't come back.
 
-## Things to decide before step 2
+Before step 1, take screenshots of the main screens. Snapping values will shift things slightly, and you'll want to compare before and after. Also decide on the scale values with a designer or whoever owns the brand, since that's a judgment call.
 
-- **Which value wins when two are close.** Someone should own the canonical brand blue and the canonical muted grey. I'd pick one from the more-used value.
-- **Some differences may be intentional.** A modal shadow is supposed to be heavier than a card's. Confirm with whoever designed the screens before snapping them all to one value.
-
-If you want, I can draft the token file from this stylesheet, with the mapping from each old value to its new token, and run the design-system-builder skill for the broader token and component structure.
+If you want, I can do steps 1 and 2 in this file now. I can also draft the token file and the `.btn` size modifiers, using the design-system-builder workflow.

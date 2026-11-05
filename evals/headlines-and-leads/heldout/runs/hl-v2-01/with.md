@@ -1,14 +1,15 @@
-**Option 1: outcome, plain**
-Headline: Three new glazes to test each month, with cone 6 results already on the card
-Subhead: Kilnbox mails hobby potters 3 test-tile glazes every month, plus a card showing how each one fires at cone 6.
+**1. Outcome, plainly**
+**Headline:** Three new cone 6 glazes in your mailbox every month.
+**Subhead:** Each Kilnbox has three glazes in test-tile size, plus a card showing how each one fires at cone 6.
 
-**Option 2: the potter's problem**
-Headline: Test glazes without mixing a whole bucket first
-Subhead: Each month, Kilnbox sends 3 glazes on test tiles with a card showing how each fires at cone 6.
+**2. The potter's problem**
+**Headline:** Try a glaze without buying a full jar of it.
+**Subhead:** Every month Kilnbox sends three glazes in test-tile size, with a card showing how each fires at cone 6.
 
-**Option 3: the question a potter asks**
-Headline: What will this glaze look like at cone 6?
-Subhead: Kilnbox sends 3 test-tile glazes a month, each with a card showing how it fires.
+**3. Who it's for**
+**Headline:** The monthly glaze box for cone 6 potters.
+**Subhead:** Three test-size glazes arrive by mail, each with a card showing how it fires. You can test new ones without hunting for them.
 
-- I'd start with Option 1. It says what arrives, who it's for, and what they get, and it uses only facts you gave me. Option 2 assumes buying a full glaze is the pain, which you didn't say, so use it only if that's true.
-- Once you have real feedback from your first batch, add a line of proof, like a quote from one of the friends. I didn't invent one.
+I'd go with #1 as the default. It tells a cold visitor what they get, how often, and that it's cone 6, so the right people recognize themselves right away. Use #2 if most of your traffic will be potters who already know the cost of buying a glaze to test it.
+
+I didn't include a price, a count of past customers, or any claim about the glazes themselves, since I don't have those. If you want proof under the subhead, a line from one of your first-batch friends would suit it well.

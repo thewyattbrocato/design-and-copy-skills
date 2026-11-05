@@ -1,0 +1,120 @@
+[
+  {
+    "id": "dcg-01-booking-scan-clean",
+    "kind": "critique",
+    "prompt": "Our accessibility scan gives the table-booking step of our bistro site a perfect score, but a customer who uses a screen reader emailed to say she could not finish a booking. Here is the markup of the step and the scan report. What's going on, and what would you change?\n\n```html\n<section class=\"step\" id=\"step-time\">\n  <h2>choose a time</h2>\n  <span id=\"lbl-time\">pick your table time</span>\n  <div class=\"timepicker\" aria-labelledby=\"lbl-time\">\n    <div class=\"slot\" data-t=\"18:00\" onclick=\"pick(this)\">6:00 pm</div>\n    <div class=\"slot\" data-t=\"18:30\" onclick=\"pick(this)\">6:30 pm</div>\n    <div class=\"slot full\" data-t=\"19:00\">7:00 pm</div>\n    <div class=\"slot\" data-t=\"19:30\" onclick=\"pick(this)\">7:30 pm</div>\n  </div>\n  <label for=\"party\">party size</label>\n  <input id=\"party\" type=\"number\" min=\"1\" max=\"8\" aria-label=\"number of guests\">\n  <button class=\"go\" aria-label=\"confirm reservation\" onclick=\"book()\">book it</button>\n</section>\n<script>\n  function pick(el){ document.querySelectorAll('.slot').forEach(s=>s.classList.remove('on')); el.classList.add('on'); }\n  function book(){ /* sends the request */ document.getElementById('step-time').classList.add('done'); }\n</script>\n<style>\n  .slot{display:inline-block;padding:10px 14px;border:1px solid #888;cursor:pointer}\n  .slot.on{background:#1b4f8a;color:#fff}\n  .slot.full{color:#bbb;cursor:default}\n  .step.done{border:3px solid #2a9d3f}\n</style>\n```\n\nScan report: 0 errors, 0 warnings, score 100 of 100. Passed: images have alternative text, form elements have accessible names, colour contrast of text, page has a language, no duplicate ids, buttons have names, headings are in order.",
+    "rubric": [
+      "Explains why a perfect scan does not mean the flow works: the tool checks that attributes exist, not whether a person can complete the task by keyboard or screen reader.",
+      "Identifies the div-based time slots as the blocker: they cannot be reached or activated by keyboard and expose no role or selected state, and recommends native radio inputs or buttons (with the unavailable slot marked in text, not only greyed out).",
+      "Points out that the hidden names differ from the visible text (confirm reservation vs book it, number of guests vs party size), and says speech-control and screen-reader users are hurt by the mismatch; recommends matching the visible words.",
+      "Identifies that success is shown only by a green border, with no text, announcement or focus move, so a screen-reader user never learns the booking went through; recommends a written confirmation announced to assistive technology.",
+      "Orders the fixes (time picker first) and stays focused on this step rather than giving a general accessibility lecture."
+    ]
+  },
+  {
+    "id": "dcg-02-overlay-toolbar-choose",
+    "kind": "choose",
+    "prompt": "We sell bikes and parts on a hosted shop with about sixty product pages. A sales rep says that for $49 a month their accessibility toolbar, one script added to every page, will make us compliant and protect us from lawsuits. Their one-pager says it adds a small button that opens controls for text size, contrast and spacing, and that an automatic engine rewrites our pages so screen readers and keyboards work. Should we buy it?",
+    "rubric": [
+      "Gives a clear verdict up front (do not buy it as the fix, or buy it only as an extra), rather than a survey of both sides.",
+      "States that no tool can guarantee compliance or legal protection, and that the promise in the one-pager should not be relied on.",
+      "Explains that an automatic script cannot reliably repair the underlying problems in the shop pages (unlabelled controls, broken keyboard order, missing alternative text, checkout steps), so the real work remains.",
+      "Is fair about what the toolbar does offer (text size and contrast controls help some visitors) without treating it as a substitute for fixing the pages.",
+      "Recommends a practical alternative sized to sixty pages: check the few page templates (product page, cart, checkout) by keyboard and screen reader, fix them in the theme, and get legal advice for the legal exposure."
+    ]
+  },
+  {
+    "id": "dcg-03-signup-audit-two-days",
+    "kind": "critique",
+    "prompt": "Please audit our three sign-up screens for accessibility and tell us what to fix first. We have two days. Here is what each one contains.\n\nScreen one (account), markup:\n```html\n<form id=\"acct\">\n  <input type=\"email\" placeholder=\"email address\" style=\"color:#999\">\n  <input type=\"password\" placeholder=\"choose a password\" style=\"color:#999\">\n  <button type=\"submit\">continue</button>\n</form>\n```\nWhen a field is wrong, the script only sets `border:2px solid red` on it. No message appears.\n\nScreen two (human check): a picture of distorted letters with a text box under it, \"type the letters you see\". There is a small refresh link to get new letters. Nothing else is offered if someone cannot read the letters.\n\nScreen three (profile): name, address and a few preference fields, then a long form. There is a ten minute inactivity timeout that returns people to screen one with every field cleared. At the top is a large decorative illustration of a person on a laptop, coded as `<img src=\"hero.svg\" alt=\"an illustration showing a smiling person seated at a desk using a laptop computer with a plant on the left and a window behind them and a cup of tea\">`.",
+    "rubric": [
+      "Delivers a ranked list for a two-day window, putting the problems that stop people finishing (the timeout wiping the form, the letters check with no other route) ahead of cosmetic ones.",
+      "Identifies placeholders used as labels (and the pale grey text) and recommends persistent visible labels.",
+      "Identifies that errors are shown only as a red border and recommends a written message tied to the field.",
+      "Identifies the long description on the decorative image and recommends an empty alternative, and treats it as low priority.",
+      "States what can wait or be left alone, rather than padding the list with generic checks the markup gives no evidence for."
+    ]
+  },
+  {
+    "id": "dcg-04-meeting-notes-confidence",
+    "kind": "critique",
+    "prompt": "Can you critique this screen from our meeting-notes tool? Layout, top to bottom: a heading with the meeting title and date. A summary paragraph of four sentences written by the assistant. Then a list titled action items with five rows. Each row has a checkbox, the task text, an owner chip with a name already filled in, and a small grey figure on the right: 94 percent, 87 percent, 62 percent, 91 percent and 41 percent. At the bottom is one large blue button that sends the list to every attendee, and a link beside it named view transcript. The task text cannot be edited on this screen, and owners are changed by opening a separate page.",
+    "rubric": [
+      "Questions the percentage figures: unexplained, falsely precise, and the reader cannot tell what they measure or what to do with 62 versus 87.",
+      "Notes that nothing ties an item or the summary to the moment in the transcript it came from, so checking requires leaving the screen and searching.",
+      "Identifies that the main action sends model-written text and assigned owners to everyone with no review step, and that owners and wording cannot be corrected in place.",
+      "Gives a concrete better approach, such as marking only the uncertain items in plain words, linking each item to its source line, and letting the person edit before sending.",
+      "Says what works and should stay (the scannable list, owner next to task, checkboxes), rather than only listing faults."
+    ]
+  },
+  {
+    "id": "dcg-05-contract-inline-vs-panel",
+    "kind": "choose",
+    "prompt": "We are designing an assistant for a contract-drafting tool used by lawyers. Two layouts are on the table. One shows suggestions inline in the text, as proposed edits next to the clause. The other is a separate chat panel on the right where the lawyer types a request and copies the answer across. Which is better for lawyers, and why?",
+    "rubric": [
+      "Commits to a recommendation (inline for edits, with a conversational panel as a secondary route is fine) rather than saying it depends.",
+      "Reasons from how lawyers work: they judge a change in the context of the clause and need to see exactly what changed, accept or reject each one, and stay accountable for the final text.",
+      "Says proposed edits must never alter the document until the person accepts, and that model-written text stays distinguishable from lawyer-written text.",
+      "Names the weakness of the panel (copying across loses context and hides what changed) and a fair use for it, such as open questions that do not edit the text.",
+      "Stays proportionate: a focused answer without a long feature wishlist."
+    ]
+  },
+  {
+    "id": "dcg-06-guard-weather-settings",
+    "kind": "critique",
+    "prompt": "Here's the settings page for our weather app, plain screen, nothing fancy. Can you look it over and tell me what you think?\n\n```html\n<main>\n  <h1>settings</h1>\n  <section>\n    <h2>units</h2>\n    <fieldset>\n      <legend>temperature</legend>\n      <label><input type=\"radio\" name=\"t\" checked> celsius</label>\n      <label><input type=\"radio\" name=\"t\"> fahrenheit</label>\n    </fieldset>\n    <label for=\"wind\">wind speed</label>\n    <select id=\"wind\"><option>km/h</option><option>mph</option><option>m/s</option></select>\n  </section>\n  <section>\n    <h2>alerts</h2>\n    <label><input type=\"checkbox\" checked> severe weather alerts</label>\n    <label><input type=\"checkbox\"> daily summary</label>\n    <label for=\"when\">summary time</label>\n    <input id=\"when\" type=\"time\" value=\"07:30\">\n  </section>\n  <section>\n    <h2>location</h2>\n    <label><input type=\"checkbox\" checked> use my current location</label>\n  </section>\n  <div class=\"actions\">\n    <button class=\"btn\">save changes</button>\n    <button class=\"btn\">reset app and clear saved places</button>\n  </div>\n</main>\n```\nBoth buttons share the same style, sit side by side, and the page is a single narrow column.",
+    "rubric": [
+      "Gives an overall verdict that the page is sound and straightforward, rather than manufacturing a long list of problems.",
+      "Picks out the real issue: the destructive reset button looks identical to save and sits right next to it, with a suggestion to separate or restyle it and confirm or allow undo.",
+      "May add at most one or two minor points (such as how the summary time relates to the daily summary toggle) and labels them as minor.",
+      "Does not invent assistant or accessibility problems that the markup gives no evidence for, and does not turn the answer into an audit with checklists.",
+      "Is short and in proportion to a four-section settings page."
+    ]
+  },
+  {
+    "id": "dcg-07-guard-assistant-panel-good",
+    "kind": "critique",
+    "prompt": "Quick gut check in two lines, please. Our reply-drafting panel in a shared inbox works like this: it drafts a reply beside the customer's message. Any sentence it is unsure about is underlined with a dotted line, and hovering says what to check. Every factual sentence links to the exact passage in the help article it came from, opening side by side. Nothing goes into the reply box until the agent presses use draft, and the agent can edit first. A switch at the top of the panel turns suggestions off, and it stays off next session. Anything you would change before we ship?",
+    "rubric": [
+      "Answers in about two lines (roughly 60 words or fewer), as asked.",
+      "Gives a clear verdict that this is ready to ship or close to it.",
+      "Names the specific reasons it works (marked uncertain parts, source links, nothing inserted without consent, a persistent off switch) rather than generic praise.",
+      "Does not add new process or checks the design does not need, such as extra studies, calibration programmes, warnings, tours or more confirmation steps; at most one small optional note."
+    ]
+  },
+  {
+    "id": "dcg-08-support-bot-answer-card",
+    "kind": "critique",
+    "prompt": "Review our support bot's answer card. A customer asked whether they can get money back on an annual plan. The card shows one paragraph: \"Annual plans can be refunded in full within 30 days of purchase, and the money returns to your card in 5 to 7 working days. After 30 days, you can cancel at any time and keep access until the end of your term.\" Under it are three small links: billing basics, cancelling your plan, and our terms. Then a thumbs up and a thumbs down. At the very bottom, in pale grey small type, is a footer: answers may be inaccurate. Customers keep acting on wrong answers. What would you change?",
+    "rubric": [
+      "Observes that the generic pale footer does not help the customer judge this particular answer, and that the confident paragraph hides which parts are firm and which are guesses.",
+      "Identifies that the three links are not tied to specific claims, so the customer cannot check the refund window or timing against a source, and recommends linking each claim to its passage.",
+      "Notes that the thumbs give the customer nothing useful (no route to a person, no way to say what was wrong) and suggests a path to human help at the point of money decisions.",
+      "Offers concrete changes (for example putting the figures that matter with their source, marking what is not confirmed, a visible way to reach staff) rather than only criticism.",
+      "Prioritises the changes and does not pad the answer with unrelated visual styling advice."
+    ]
+  },
+  {
+    "id": "dcg-09-claims-review-queue",
+    "kind": "critique",
+    "prompt": "Audit the review queue where our staff approve or reject the model's suggested category on insurance claims. It is a table, one claim per row: claim number, first two lines of the claim text, and a dropdown of categories. The model's category is already selected in each dropdown. Enter approves the row and jumps to the next. A green approve all on this page button sits at the top right. A counter in the header reads claims reviewed today and a small bar compares it to the team target. Reviewers change the category on fewer than 3 percent of rows. Management thinks that means the model is very accurate. What's wrong with this design?",
+    "rubric": [
+      "Identifies that the pre-selected category and Enter-to-approve make acceptance the default, so a low change rate cannot be read as proof of accuracy.",
+      "Identifies the throughput counter and target bar as pressure toward speed over checking, and the approve all button as a bulk path that skips review.",
+      "Notes that reviewers see only two lines of claim text and no reason for the category, so they cannot verify the pick; suggests showing the passage that drove it.",
+      "Proposes concrete changes, such as presenting the suggestion as a suggestion that needs a deliberate choice for the risky categories, and checking reviewers with a few known-answer rows or sampling overrides.",
+      "Corrects the management reading in plain words without drifting into unrelated screen styling."
+    ]
+  },
+  {
+    "id": "dcg-10-guard-button-one-line",
+    "kind": "critique",
+    "prompt": "One line, please: does this button look accessible to you?\n\n```html\n<button type=\"button\" class=\"dl\">download receipt</button>\n<style>\n  .dl{background:#1b4f8a;color:#fff;font-size:16px;padding:12px 20px;border:0;border-radius:6px}\n  .dl:hover{background:#163f6f}\n  .dl:focus-visible{outline:3px solid #ffbf47;outline-offset:2px}\n</style>\n```",
+    "rubric": [
+      "Answers in a single short line or sentence, as asked.",
+      "Says yes, with a brief reason (native button, visible text, strong contrast, visible focus style).",
+      "Does not turn the answer into an audit, a list of checks or a request for more information.",
+      "At most one small optional note, clearly marked as optional."
+    ]
+  }
+]

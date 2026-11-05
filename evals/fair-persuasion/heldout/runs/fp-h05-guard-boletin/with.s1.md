@@ -1,21 +1,16 @@
-**Ventana emergente al terminar el pedido**
+**Ventana emergente (tras confirmar el pedido)**
 
-**Título:** ¿Quieres recibir el pan del fin de semana en tu correo?
+**Título:** ¿Quieres recibir el pan del fin de semana?
 
-**Texto:**
-Cada semana te mandamos un correo con el pan del fin de semana y las promociones de Horno Cantarana. Solo eso. Puedes darte de baja cuando quieras desde cualquier correo.
+**Texto:** Cada semana te mandamos un correo con el pan del fin de semana y las promociones de Horno Cantarana. Solo eso, un correo por semana. Puedes darte de baja cuando quieras desde cualquier correo.
 
-**Campo:** Tu correo: [ correo del pedido ]
+**Campo:** Tu correo: [ correo del pedido, editable ]
 
-**Botones (mismo tamaño y peso visual):**
-- **Sí, quiero recibirlo**
-- **No, gracias**
+**Botón principal:** Sí, apúntame al boletín
+**Botón secundario (mismo tamaño y peso visual):** No, gracias
 
-**Letra pequeña (debajo):**
-Usaremos tu correo solo para este boletín. Más información en nuestra [política de privacidad].
+**Pie, en letra pequeña:** Usaremos tu correo solo para este boletín. Más información en nuestra [política de privacidad].
 
----
-
-Notas:
-- El campo de correo no debe venir marcado ni rellenado como "ya suscrito". Solo se apunta a quien pulsa "Sí". Si "No, gracias" se recuerda, no vuelvas a mostrar la ventana en ese pedido ni en los siguientes.
-- Las normas sobre consentimiento para correos comerciales (RGPD, LSSI en España) varían según el lugar y cambian con el tiempo. Haz que las revise alguien antes de publicarlo. Para medir si la gente está contenta, mira cuántos se dan de baja en las primeras cuatro semanas.
+**Notas:**
+- Si el correo se rellena solo con el del pedido, no marques nada como "apuntado" de antemano: la suscripción solo debe empezar cuando la persona pulsa "Sí". Las normas sobre consentimiento para envíos comerciales varían según el país y cambian con el tiempo, así que conviene que alguien las revise.
+- Para saber si funciona de verdad, mira además de las altas cuántas personas se dan de baja o marcan los correos como spam en las primeras semanas.

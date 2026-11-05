@@ -1,41 +1,39 @@
 ## Join the November 3 cohort of Quiet Mornings
 
-**An 8-week sleep-routine program for parents of babies under one year.**
+**Eight weeks to a sleep routine your baby and your household can actually follow, starting November 3.**
 
-You'll build a sleep routine for your baby, one week at a time, with a cohort of other parents doing the same. By the end of week [X], you should have [first milestone, e.g. "a bedtime routine your baby recognizes"]. [Add what the first result looks like in a parent's own words.]
+Quiet Mornings is an 8-week sleep-routine program for parents of babies under one year. You work through it alongside the rest of the cohort, one week at a time, so you're never left to work out the next step alone at 3 a.m.
 
 ### What you get
 
-- **8 weeks of guided instruction.** [Describe the format: weekly lessons, live calls, or a mix. Give the length and how you deliver them.]
-- **[Community or support element]:** [what it is, where it happens, and how often you answer questions.]
-- **[Core materials, e.g. routine templates or sleep logs]:** [what each one helps the parent do.]
+- **The 8-week Quiet Mornings program.** [One line per week or module on what changes, e.g. "Week 1: set up the evening wind-down"]
+- **[Format: live calls / Q&A / community, as applicable].** [Say how often, where, and who answers.]
+- **[Access length].** [How long they keep the materials after the 8 weeks.]
 
-### Bonuses included with enrollment
+### Bonuses included when you join
 
-- **[Bonus 1 name]:** [what it does for the parent, in one sentence.]
-- **[Bonus 2 name]:** [what it does for the parent, in one sentence.]
-- **[Bonus 3 name]:** [what it does for the parent, in one sentence.]
+1. **[Bonus 1 name].** [What it is, in one sentence, and the problem it solves, e.g. a nap-schedule cheat sheet by age.]
+2. **[Bonus 2 name].** [What it is and when they get it.]
+3. **[Bonus 3 name, optional].** [What it is.]
 
 ### Price
 
-**$197, one payment, for all 8 weeks.** [Confirm: no further charges. Add payment-plan details if you offer one.]
+**$197, one payment, for all 8 weeks.** [Confirm that's a single payment, not installments.]
 
-### Why join now
+That works out to about $25 a week ($197 ÷ 8 = $24.63).
 
-The cohort starts **November 3**, and week 1 begins that day. If you enroll by [enrollment close date], you'll be in from the first lesson. [If true: after that date, the next cohort starts on [date].] [If a bonus really ends at enrollment close, say so here: "[Bonus name] is only included for people who enroll by [date]."]
+[**Refund policy:** state your real policy here, including what the parent has to do, by when, and where to claim. If you don't offer one, say so plainly.]
 
-The sooner you start, the sooner your mornings get quieter. Every week you wait is another week of the nights you're having now.
+### Why decide this week
 
-**[Enroll in Quiet Mornings: $197]**
+The cohort starts **Monday, November 3**, and the program runs week by week from that date. If you join now, you start in week 1 with everyone else, set up your evenings from day one, and have the full 8 weeks of support. [Confirm the enrollment close date: does registration close before November 3, or can people join after it starts?] If you wait, you start with the next cohort, [date, if one is planned].
 
-### If it doesn't work for you
+**[Join Quiet Mornings, $197]**
 
-[Refund policy. State what the parent has to do, by when, what you'll do in return, and where to claim. Example format: "If you complete [steps] and don't see [result] by [date], email [address] and we'll refund your $197."]
-
-[Link to full terms]
+*[One line near the button: price, start date, refund policy, and a link to full terms.]*
 
 ---
 
-**Notes:**
-- You didn't give me bonuses, a refund policy, or an enrollment deadline, so those are placeholders. I didn't invent any because made-up ones would be false claims. Add real bonuses and I'll fill in the copy. If you don't have a bonus yet, a small real one such as a printable sleep log or a Q&A call would help more than a vague one.
-- "Join now" works best on a real date. The Nov 3 start is real, and so is any bonus that ends at enrollment close. Avoid fake countdown timers or "only 10 spots" unless that's true. Discounting the price for early sign-ups is an option, but only if you'd honor it and don't plan to discount again later.
+**Notes**
+- You didn't give me bonuses, a refund policy or a cap on spots, so I left placeholders and invented none. If you're stuck on bonuses, good ones for this audience are things you can actually make quickly, like a nap-by-age cheat sheet or a one-page partner handoff. Only state a dollar value if you've sold that item at that price.
+- The only urgency here is the real Nov 3 start. If you want a stronger reason, add a real early-enrollment bonus with a deadline, or a real spot limit, but only if you'll hold to it. A fake countdown or a price rise you won't enforce will cost you trust with this audience.

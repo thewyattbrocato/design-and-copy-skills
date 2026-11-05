@@ -1,41 +1,54 @@
-**Check the date first.** 14 November 2026 is a Saturday, not a Friday. If it's Friday 14 November 2025 or a different date, fix it before anything goes to print. The weekday is the likeliest thing to get printed wrong.
+**Check the date first.** 14 November 2026 is a Saturday. Friday the 14th was 2025. Confirm which day is right before anything is printed.
 
-**Same in every version:** the title is the biggest element. Date and time come second, then venue, then "Free entry". Use the same typeface and weights, the same colours, and the same corner for the venue line. Only size and position change.
+**Shared across all four:** the concept is calm and low-key, so use shallow size steps and generous margins. Keep one typeface, left-aligned text, and the same reading order everywhere:
 
-## A3 portrait (297 × 420 mm, add 3 mm bleed)
-- **Margins:** about 20 mm all round. Keep text out of the bleed.
-- **Top third:** "Low Tide Readings" in very large type, stacked on two or three lines. It should read from across a room.
-- **Middle:** the date and time on one line, e.g. "Friday 14 November, 7:30pm". It is the second-largest text.
-- **Lower middle:** the four readers' names as a list, one per line, in a clearly smaller size. This is the one format with room for names, so use it.
-- **Foot:** "Harbor Street Boathouse", then "Free entry · open mic after the readings". Add the full address and any accessibility note here if you have them.
-- **Dropped:** nothing. This version carries the full detail.
+1. Title
+2. Date and time
+3. Venue
+4. Free entry, four readers, open mic after
 
-## Square Instagram (1080 × 1080)
-- **Margins:** about 80 px.
-- **Top left:** the title, large, on two lines.
-- **Middle:** date and time directly under it, as one group.
-- **Bottom:** venue on the left and "Free entry" on the right, on one line.
-- **Readers:** names only if they're short, in a single small line. Otherwise write "Four readers + open mic" and put the names in the caption.
-- **Dropped:** the full address, and the open mic as a separate line.
+Use one thin horizontal line, like a waterline, as the only device. It separates the title from the details. Don't use any other ornament.
 
-## 9:16 story (1080 × 1920)
-- **Safe zone:** keep the top ~250 px and bottom ~250 px empty of text. The app's interface covers them.
-- **Stack in the middle (~1400 px):**
-  1. Title, very large, broken into short lines ("Low / Tide / Readings").
-  2. Date and time.
-  3. Venue.
-  4. "Free entry".
-- **Readers:** one small line, "Four readers + open mic". Don't list names; they'd be tiny.
-- **Space:** let the extra height be empty space around the stack. Don't enlarge everything to fill it.
-- **Dropped:** names, address, and any small print. Add the link sticker in the lower safe area, not baked into the art.
+I don't have the reader names. If you want them on the poster and banner, list them as one line, and they stay secondary.
 
-## Wide banner (1600 × 400)
-- **Left half:** the title on one or two lines, filling most of the height.
-- **Right half:** date and time on top, venue below. Add "Free entry" as a short tag beside or under them.
-- **Cropping:** event pages often crop banners on phones. Keep the title and date in the central ~1000 px, and keep every edge element decorative.
-- **Dropped:** readers, open mic and address. The event page's text already covers them, so repeating them at this size makes the banner cramped.
+**A3 portrait (297 × 420 mm)**
+- Margins are about 20 mm, with 3 mm bleed on the background.
+- Title is biggest, in the upper third, set on two lines ("Low Tide / Readings").
+- Below the waterline, the date and time are the second-largest element, about a third the size of the title. The venue comes next at a similar or slightly smaller size.
+- The bottom band has "Free entry" and "Four readers, then open mic" in small type, plus the reader names if you have them. Put the street address at the very bottom.
+- Everything is readable from about 2 m, and nothing sits within the margin.
 
-## Check each one at thumbnail size
-Check the title and the date and time first. If either is hard to read at about 300 px wide, make it bigger or cut something else.
+**Square Instagram post (1080 × 1080)**
+- Margins are about 90 px.
+- Title is biggest, top left. Date and time sit directly under the waterline.
+- Venue is below that, and one small line at the bottom reads "Free entry · Four readers + open mic".
+- Drop the reader names and the street address. They go in the caption.
+- Test it at thumbnail size. The title and the date must both read.
 
-I don't have the readers' names or the full address. Send them if you want the poster list and caption wording drafted.
+**9:16 story (1080 × 1920)**
+- Keep the top and bottom ~250 px clear for platform chrome.
+- Stack everything in the central area, in one left-aligned column.
+- Title is biggest, in the upper-middle, split over two or three lines.
+- Date and time can be bigger here than on the poster, because the frame is tall and narrow.
+- Venue comes next. "Free entry" can be its own line.
+- "Four readers, then open mic" is a small line at the bottom of the safe area.
+- Drop the reader names and address. If you add a link sticker, place it in the lower safe zone, not over the text.
+
+**Banner (1600 × 400, 4:1)**
+- Switch from stacking to side by side. The title sits on the left at about 60% of the width, on one line or two short ones.
+- To its right, after a vertical rule instead of the horizontal one, put three short lines: date and time, venue, and "Free entry".
+- Drop "four readers", "open mic" and the address. The event page body carries them.
+- Keep about 40 px of margin, with nothing in the outer 5%. The page may overlay or crop edges.
+- Test it at about 800 px wide. If the date is hard to read, make the right block larger and shorten the title block.
+
+**Dropped or moved by format**
+
+| Item | A3 | Square | Story | Banner |
+|---|---|---|---|---|
+| Title | biggest | biggest | biggest | biggest |
+| Date and time | second | second | second, enlarged | right block |
+| Venue | yes | yes | yes | right block |
+| Free entry | small, bottom | one small line | own line | right block |
+| Four readers and open mic | small, bottom | small line | small line | dropped |
+| Reader names | optional | caption | dropped | dropped |
+| Address | bottom | caption | dropped | dropped |

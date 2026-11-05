@@ -1,69 +1,75 @@
-# Homepage copy audit: Kettlebridge
+# Homepage audit: Kettlebridge
 
-## Findings (ranked)
+**Stranger read:** From the hero alone, a newcomer would say this is some business software. They couldn't tell it's for plumbing or HVAC, or that it does scheduling, dispatch and invoicing. The page also never says who it's for. That is probably the main reason it isn't converting.
 
-**1. Blocker. Hero: a stranger can't tell what this is or who it's for.**
-- Quoted: "Unlock the power of seamless field operations" and "all-in-one, next-generation platform that empowers service businesses to streamline workflows, boost productivity and take their operations to the next level."
-- The page never says plumbing, HVAC, dispatch, scheduling or invoicing.
-- An owner who searched for software to run their techs can't confirm they're in the right place. The words are also ones no plumbing owner uses: "field operations," "workflows," "platform."
-- Any rival could sign this line.
-- **Fix:** name the customer and the jobs the product does.
-- **Headline:** "Scheduling, dispatch and invoicing for plumbing and HVAC companies"
-- **Subhead:** "Kettlebridge keeps your office, your techs in the field and your invoices in one place. Built for teams of 5 to 30 techs."
+## Findings, ranked
 
-**2. Blocker. "Why Kettlebridge?": superlatives with no basis.**
-- Quoted: "Best-in-class scheduling. Industry-leading reporting. Powerful integrations. Trusted by teams everywhere."
-- Each claim is stated as fact with no source, comparison or example.
-- "Trusted by teams everywhere" is the riskiest, because no team is named. A skeptical owner reads it as filler or as an overreach.
-- "Powerful integrations" doesn't say with what. An owner on QuickBooks or similar can't tell if theirs is covered.
-- **Fix:** cut the superlatives unless you have a source on file for each. Replace them with specifics you can back.
-- Name the integrations you actually support: `[integration names]`.
-- Add a real customer line and name: `[customer quote, name, company]`.
-- If you don't have a customer quote yet, ask two or three real customers for one. Don't write the section until then.
-- Alternatively, state what the reporting shows: `[the 2–3 numbers an owner sees]`.
+**1. Blocker. Hero doesn't say what Kettlebridge is or who it's for**
+> "Unlock the power of seamless field operations" / "all-in-one, next-generation platform that empowers service businesses to streamline workflows, boost productivity and take their operations to the next level."
 
-**3. Major. Features: each line names a feature and skips the outcome.**
-- Quoted: "Our intelligent engine optimizes your routes." / "Work from anywhere." / "Get paid faster."
-- These are the product's real selling points, but each stops one sentence short.
-- "Optimizes" doesn't say what changes for the owner: fewer miles, more jobs a day, or a dispatcher who stops juggling a whiteboard.
-- "Work from anywhere" is a remote-work phrase. It doesn't say what a tech does on the phone.
-- "Get paid faster" doesn't say how.
-- **Fix:** keep each short, but add the concrete mechanism or result.
-  - **Smart Dispatch:** "Assigns the right tech and the shortest route for each job. `[the result you can back, e.g. fewer miles or more jobs a day]`"
-  - **Mobile App:** "Techs see today's jobs, `[what they can do on site]`, and close the job from the truck."
-  - **Invoicing:** "Invoice from the job site. `[how customers pay]`"
-- Only keep any specific that is true. Delete the bracketed parts you can't back.
+- A plumbing owner who arrives from a search like "HVAC scheduling software" sees none of their words. They don't see "plumbing," "HVAC," "scheduling," "dispatch" or "invoicing."
+- "Field operations" is internal vocabulary, and "service businesses" is broader than your customer.
+- The subhead has five stock phrases ("all-in-one," "next-generation," "streamline workflows," "boost productivity," "next level") and no concrete noun. Any rival could sign it.
 
-**4. Major. The next step is unclear and inconsistent.**
-- Quoted: hero button "Get started" vs. footer "Ready to transform your business? Book a demo today."
-- A first-time visitor can't tell what "Get started" does: a trial, a sign-up, or a sales call? The footer then offers a different action.
-- The footer line also uses "transform your business," a generic claim that doesn't match what the product does.
-- **Fix:**
-  - Pick one primary action and use the same label in both places. If the demo is the only path, the hero button should say "Book a demo."
-  - If there's also a trial or a pricing page, name it.
-  - Footer: "Want to see it with your own jobs? Book a demo." Confirm the demo does that before using it.
+**Rewrite:**
+- Headline: *Scheduling, dispatch and invoicing for plumbing and HVAC companies*
+- Subhead: *Kettlebridge keeps your techs' schedules, routes and invoices in one place. Built for teams of 5 to 30.*
 
-**5. Major. The page never uses the words your buyers search.**
-- Visitors arrive from search, most likely for terms like "plumbing/HVAC dispatch software," "scheduling," and "invoicing." The current copy contains none of those, so the page can feel like the wrong result even when it's the right product.
-- This is a message problem rather than an SEO audit, but fixes 1 and 3 mostly solve it.
+**2. Blocker (needs a source on file). Proof strip makes claims with nothing behind them**
+> "Best-in-class scheduling. Industry-leading reporting. Powerful integrations. Trusted by teams everywhere."
 
-**6. Minor. Template voice throughout.**
-- Quoted: "Unlock," "seamless," "next-generation," "empowers," "take their operations to the next level."
-- These phrases are interchangeable with a thousand other product pages and add nothing to the sentence they sit in. Removing them as part of fixes 1 and 3 is enough.
+- "Best-in-class" and "industry-leading" have no basis, scope or source. "Trusted by teams everywhere" has no names, no count and no quote.
+- Readers skim past this kind of line. If a claim can't be backed, it also costs you credibility.
+- "Reporting" and "integrations" appear only here. Nothing else on the page supports them.
+
+**Fix:** Delete the superlatives. Replace the strip with real proof, using placeholders until you have it:
+- `[customer name, company, trade, # of techs]: "[quote]"`
+- `[named integrations, e.g. the accounting tool you actually connect to]`
+- `[real count of companies or techs on Kettlebridge]`
+
+If none of that exists yet, remove the section. An empty claim is worse than no section.
+
+**3. Major. The features are the only concrete content, and they say almost nothing**
+> "Our intelligent engine optimizes your routes." / "Work from anywhere." / "Get paid faster."
+
+- Each line gives a benefit with no mechanism, so the reader can't picture using it.
+- "Intelligent engine" is filler. "Work from anywhere" describes an office worker, not a tech in a truck.
+- "Get paid faster" is the right outcome for an owner, but the copy never says how.
+- The proof strip promises scheduling, reporting and integrations. The features show dispatch, mobile and invoicing. The page doesn't line up with itself.
+
+**Rewrites** (fill the brackets with what the product really does):
+- *Dispatch: Assign jobs and get optimized routes for every tech.*
+- *Mobile app: Techs see their day and job details from the truck. `[one thing they can do on site]`*
+- *Invoicing: `[how invoices get sent, e.g. from the job]`, so you get paid sooner.*
+
+**4. Major. Two different asks, and neither says what happens next**
+> Hero: "Get started" / Footer: "Ready to transform your business? Book a demo today."
+
+- "Get started" could mean a free trial, a sign-up or a sales call. A first-time visitor doesn't know the cost or commitment, so they hesitate.
+- The footer then asks for something else. If the real path is a demo, the hero button should say so.
+- "Ready to transform your business?" is hype. It doesn't tell the owner what the demo is.
+
+**Fix:** Use one ask on both buttons, worded as the thing that happens.
+- Button: *Book a demo*
+- Footer line: *See Kettlebridge on your own schedule. Book a demo.* Add `[length of demo, who runs it, whether it's free]` beside the button.
+
+If a self-serve trial exists, make it the secondary option and label it as one.
+
+**5. Minor. Voice is template copy throughout**
+"Unlock," "seamless," "empower," "next level," "transform." None of it sounds like a trades owner talking, and your buyers are practical people. Plain, specific lines like "Assign jobs and get optimized routes" will do more than the energetic ones.
 
 ## What works
-- "Smart Dispatch," "Mobile App" and "Invoicing" as feature labels. They are plain words an owner already uses.
-- The short, one-line shape of the feature entries. Keep them brief when you add the outcomes.
-- Your audience definition, 5 to 30 techs at plumbing and HVAC companies. It's specific and useful. It just isn't on the page yet.
+- "Get paid faster." It's the right outcome in an owner's terms. It needs the how, not a new line.
+- "Book a demo today." It's a concrete, honest ask.
+- The feature names "Dispatch" and "Invoicing" are the words your buyers search for.
 
 ## Fix order
-1. Rewrite the hero to name the customer and the three jobs the product does. *(small)*
-2. Remove or substantiate the "Why Kettlebridge?" claims: add real integrations and a real customer quote. *(medium)*
-3. Add a concrete outcome to each of the three features. *(small)*
-4. Unify the primary call to action and its label across hero and footer. *(small)*
-5. Strip the template phrases ("unlock," "seamless," "transform"). *(small)*
+1. **Rewrite the hero** so it names the trades and the three jobs the product does. *(small)*
+2. **Remove or replace the proof strip.** Cut the superlatives now; add real customer proof as it becomes available. *(small to cut, medium to replace)*
+3. **Make the CTA one consistent ask** and say what happens after the click. *(small)*
+4. **Rewrite the three features** with a mechanism or outcome each. *(medium, since it needs product input)*
+5. **Add one real customer example** from a plumbing or HVAC shop. *(large)*
 
 ## Notes
-- Only this copy was reviewed. I didn't see the demo page, pricing, the sign-up path or the visual layout.
-- There are no analytics here, so I can't say where visitors drop off. Check hero-to-button click rate and demo-form completion to confirm which fix matters most.
-- "Best-in-class," "industry-leading" and "trusted by teams everywhere" need a source on file before they stay on the page.
+- I only reviewed this one page. I haven't seen pricing, the demo or sign-up flow, or the search listings that bring people in, so check that those match whatever the hero now promises.
+- You have no analytics here, so I can't say where visitors drop off. Measure hero CTA clicks, scroll depth to the features, and demo bookings, before and after the hero rewrite.

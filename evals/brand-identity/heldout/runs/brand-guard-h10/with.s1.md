@@ -1,7 +1,5 @@
-No. Three ideas in one mark turn to mud at small sizes, like a can, tap handle, or favicon. Pick one hero for the logo. The bear is probably the most ownable and memorable.
+No, don't cram all three into one mark. A logo that shows everything turns to mud at small sizes, like a tap handle, a can edge, or a 16px favicon.
 
-Keep the others as system pieces:
-- The wordmark works as a separate lockup.
-- The hop crest can serve as a badge or a pattern.
+Pick one idea for the core mark. The bear is probably strongest, drawn bold and simple. Then build a lockup set: bear alone, wordmark alone, and a combined version. Keep the crest as a secondary badge for packaging.
 
-Test the bear solid black at 16–32px.
+Test each version in solid black and reversed on dark.

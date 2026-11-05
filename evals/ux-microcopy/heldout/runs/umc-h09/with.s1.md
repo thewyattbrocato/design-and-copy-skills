@@ -1,12 +1,12 @@
-**(a) Free-ride period ending (30 min)**
-1. `30 included minutes are almost up. Then per-minute billing.` (59)
-2. `Your included time ends soon. End your ride to avoid fees.` (58)
-3. `Included time almost used. Then it's billed per minute.` (55)
+**(a) Included ride time ending**
+1. Included ride time ends soon. Per-minute billing follows. (57)
+2. Day pass covers 30 minutes. Per-minute billing is next. (55)
+3. Included 30 minutes end now. Per-minute billing is next. (56)
 
-**(b) Reservation held 5 more minutes**
-1. `Your bike is held for 5 more minutes. Head over to ride.` (56)
-2. `Reservation: 5 minutes left. Then the bike is released.` (55)
-3. `Reservation ends in 5 minutes. Get to your bike to keep it.` (59)
+**(b) Reservation hold, 5 minutes left**
+1. Your reserved bike is held for 5 more minutes. (46)
+2. 5 minutes left to pick up your reserved bike. (47)
+3. Your bike hold ends in 5 minutes. Head over to unlock it. (57)
 
-- I left the price out. Adding a figure to any (a) option will probably push it past 60, so recount after you edit. Option 3 has the most room, with 5 characters spare.
-- I used "released" for what happens when the hold expires. I assumed the bike goes back to general availability, so change it if that's wrong.
+- I counted each string by hand, spaces included. They all fit under 60, but run them through your real push tool before you ship.
+- I left the price out. If you want it in (a), "Per-minute billing follows" can become "Then [price]/min." and still fit, as long as the price is short.

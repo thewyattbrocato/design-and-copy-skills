@@ -1,37 +1,41 @@
-## Welcome modal (shown once, can be skipped)
+## Welcome modal (replaces the wall of text)
 
 **Welcome to Stackwell**
-Stackwell helps your clinic keep track of supplies and order them from vendors. Four quick steps get you ready to place your first order. The rest can wait.
+Set up your clinic and send your first purchase order. It takes about [X] minutes. *(Fill in a real estimate.)*
 
-**[Start setup]**  ·  Skip for now
+You'll do three things:
+1. Set your currency and time zone
+2. Add the places you keep supplies (front desk, exam rooms, storage)
+3. Import your items from a spreadsheet
 
-## Setup checklist (stays on the home screen until finished)
+[Start setup] [Skip, I'll explore]
 
-**Get ready to order**
-1. **Set your currency and time zone.** This applies to every order and report.
-2. **Add your locations**, such as front desk, exam rooms and storage. Stackwell tracks stock in each one.
-3. **Import your items from a spreadsheet.** You can add or edit items later.
-4. **Add a vendor**, with payment terms.
+## Setup checklist (stays visible in the sidebar until finished)
 
-*Done with these? You can now create a purchase order.* **[Create purchase order]**
+**Get started**
+1. **Set currency and time zone.** Stackwell uses these for costs and order dates.
+2. **Add locations.** Example: Front desk, Exam room 1, Storage.
+3. **Import your items.** Upload a spreadsheet of your supplies. Include par levels (the amount you want on hand) as a column if you have them. A sample file is available to download.
+4. **Add a vendor.** Name and payment terms.
+5. **Create your first purchase order.** Pick that vendor and a few imported items. Afterwards, you can order supplies in Stackwell.
 
-**Set up when you're ready**
-- Set par levels for your items. Par levels are the amounts you want on hand, and they're how Stackwell knows when to suggest a reorder.
-- Set approval rules for purchase orders
+**When you're ready** (each is optional and can be done in any order)
 - Invite your team and assign roles
+- Set approval rules for purchase orders
+- Set or adjust par levels for individual items
 - Connect your accounting software
-- Schedule weekly cycle counts
+- Schedule weekly cycle counts (regular stock counts to check your records)
 
-Each item links straight to its screen. Help Center is always in the top menu: **[location of Help Center link]**.
+Each step ends with a confirmation of what now works and what comes next. For example: "200 items imported into 3 locations. Next: add a vendor." Skipping the checklist is always allowed, and **Setup** in the menu brings it back. Link to the Help Center from steps 3 and 5, where people tend to get stuck, instead of only at the end.
 
 ## What changed and why
 
-- **One goal.** The modal now leads to one outcome: a first purchase order. The 12-feature list is gone because it's a feature inventory that nobody remembers. Those features show up when they're needed.
-- **Four steps up front, five later.** Nine equal steps look like a chore, so I split them into essential and optional.
-- **Fixed the order.** Your original had par levels (step 3) before the item import (step 8), but you can't set par levels for items that don't exist yet. Par levels now come after the import.
-- **A checklist instead of a one-time modal.** Admins can't keep nine steps in their head once the modal closes, so the checklist stays visible while they work. Skip is obvious, and they can come back to it.
-- **Explained only the new term.** "Par levels" gets a plain definition. "Reorder points" and the other terms are left for the screens where they appear.
+- **One goal.** The original listed 9 steps and 12 feature names before the user did anything. Now the goal is a first real purchase order, and the five steps lead to it.
+- **Fewer ideas up front.** The feature list (lot tracking, audit logs, and so on) is gone. People learn those when they need them, and names they haven't met yet teach nothing.
+- **Optional steps moved out.** Roles, approvals, accounting and cycle counts don't block a first order, so they sit under "When you're ready."
+- **Checklist instead of a one-time modal.** The original instructions disappeared the moment the modal closed. The checklist stays on screen while people work.
+- **Par levels are no longer 200 manual entries.** They come in with the import, or get set per item later.
 
 ## Notes
-- I assumed "place a first purchase order" is the right outcome. If your real first win is something else (for example, a first stock count), swap it in.
-- I didn't invent UI details. The Help Center location is a placeholder, and button labels like "Start setup" and "Create purchase order" are suggestions. To check whether this works, look at how many new admins place an order unaided in their first week. Completing the checklist doesn't tell you that.
+- I assumed the import accepts a par-level column and that a sample file exists. Check both, or drop those lines.
+- To judge whether this works, look at how many new admins send a real purchase order within their first week, not at how many click Finish.

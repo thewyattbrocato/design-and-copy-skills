@@ -1,27 +1,23 @@
-The font files and CSS are the same, but the rasterizer, the pixel density and the hinting differ between your devices, so the same outlines get drawn differently.
+This is almost certainly screen rendering, not your CSS or font files. Each OS draws the same outlines differently, and your designer's screen is the most forgiving one.
 
-## Why it differs
+**Why they differ**
 
-- **Pixel density.** A MacBook Retina panel is about 220 ppi. Your office monitor is probably 90–110 ppi, and an old tablet is often low-density with a weak panel. At low density, a 1.5px stem has to land on whole pixels, so strokes look thin, uneven or stair-stepped.
-- **Different rasterizers.**
-  - macOS doesn't snap glyphs to the pixel grid. It smooths them and tends to render them slightly heavier, so they look even.
-  - Windows (DirectWrite/ClearType) fits outlines to the grid and anti-aliases mostly horizontally. Thin, high-contrast strokes can fade or break, and it relies on the font's hinting.
-  - Android uses FreeType, usually with light or no hinting and grayscale anti-aliasing. On an old low-resolution screen that gives jagged edges.
-- **Light or high-contrast cuts suffer most.** The Mac hides weak strokes, and the other two screens expose them.
+- **Pixel density.** A MacBook Retina display has about 220 pixels per inch (2× density). A typical office monitor and an old tablet have far fewer pixels, so a thin stroke that is 1.5 pixels wide on the Mac has to be rounded to 1 or 2 pixels on the others. That rounding causes the jagged edges and the uneven stroke weight.
+- **Rasterizer.** macOS doesn't snap glyphs to the pixel grid, and it renders text slightly heavier and smoother. Windows (DirectWrite/ClearType) fits glyphs to the pixel grid, which gives thinner, sharper, more uneven strokes. Old Android renders in plain grayscale with little or no hinting, so it is usually the roughest.
+- **Weight and contrast.** Light weights (300 or below) and high-contrast faces with hairline strokes are the most affected. They look elegant on Retina and break up on low-density screens.
+- **Hinting.** Hinting is the instructions inside a font that tell it how to fit the pixel grid. A TTF or WOFF2 file with poor or missing hinting looks fine on Mac, because the Mac ignores hinting, and rough on Windows.
 
-## What to do
+**What to do**
 
-1. **Check the weight you're shipping.** If body text is 300 or lighter, or the face has hairline strokes, move to a regular (400) cut with lower stroke contrast. This is the most likely cause. Keep delicate weights for large headings only.
-2. **Check the CSS for `-webkit-font-smoothing: antialiased`.** It only affects macOS, where it makes text thinner. If it's set, your designer may be seeing a lighter rendering than the default, so try removing it.
-3. **Check that hinting survived.** Many subsetting and conversion tools strip hinting, and Windows relies on it. Re-export with hinting kept, or autohint TTF sources (for example ttfautohint) before converting to WOFF2.
-4. **Check that every weight you use is actually loaded.** If `font-weight: 500` has no matching `@font-face`, the browser picks a neighbor or fakes bold. Confirm in DevTools (Rendered Fonts) on the Windows machine.
-5. **If the font is variable,** nudge the weight up on low-density screens only:
+1. **Confirm the font actually loads.** Open DevTools on the Windows machine and the tablet, go to Elements, then Computed, then Rendered Fonts. Old Android browsers sometimes fall back to a default font without any visible error. Skip this step if you've already confirmed the web font is what's rendering.
+2. **Check the body weight.** If body text is at 300 or lighter, move it to 400 or heavier. Change the font before the size: pick a cut with lower contrast, open letter shapes and a larger x-height, which is the height of the lowercase letters. A thin geometric or high-contrast face should only be used for large headings.
+3. **Add a weight bump for low-density screens if you use a variable font.** For example:
    ```css
    @media (max-resolution: 1.5dppx) { body { font-weight: 450; } }
    ```
-6. **Keep body text at 16px or larger,** and 12px or larger for the smallest labels.
-7. **Test on the real devices,** not only the Mac. Use a paragraph at your smallest size on the real background. If the Windows and Android renders are still weak, change the face or weight rather than adding CSS tricks.
+   Treat that as a starting point and tune it by eye.
+4. **Check the file format.** If you self-host, serve WOFF2 and make sure the files are hinted. Fonts from the foundry or Google Fonts are normally prepared for Windows already. I can't tell from here whether yours are, so check with the source.
+5. **Don't rely on `-webkit-font-smoothing`.** It only affects macOS. It won't fix Windows or Android, and on a Mac it makes text lighter, which may be why the designer sees it that way.
+6. **Review on the worst screens.** Have the designer check the same page on a low-density Windows monitor and the tablet before sign-off. Include a body paragraph at its smallest size.
 
-The Mac render isn't wrong, but the Windows and Android renders are what many of your visitors will see. Design for the weakest screen, because the Mac will still look fine.
-
-If you tell me the font and the weights you're using, I can suggest a specific change. Or point me at the project and I'll check the `@font-face` rules and CSS.
+If you share the font name, the weights in use and the body font size, I can say which of these is most likely the cause.

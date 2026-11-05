@@ -1,40 +1,29 @@
-The table has several problems. Most of them make it hard to scan and compare rows.
+Most of the trouble is that the table makes the reader do the formatting work. Here are the problems, roughly in order of how much they hurt.
 
-**Alignment**
-- Everything is centered, including the numbers. Digits don't line up by place value, so you can't compare $340 with $12,050.5 at a glance.
-- Names, plans and dates should be left-aligned. Revenue, churn and seats should be right-aligned, and each header should match its column.
-- Add `font-variant-numeric: tabular-nums` to the numeric columns so the digits stack.
-- `width:100%` spreads five short columns across the whole screen. That leaves big gaps, and the eye drifts off the row. Cap the width or let the columns size to their content.
+**Alignment and number formatting**
+- **Everything is centered, including the numbers.** Centered digits don't line up by place value, so you can't compare Revenue or Seats down a column. Numbers should be right-aligned, with `font-variant-numeric: tabular-nums`. Text columns (Name, Plan) and dates should be left-aligned. Each header should match its column's alignment.
+- **Revenue uses four formats:** `$1.2k`, `$340`, `$12,050.5` and `$95.00`. The compact form hides precision, the decimals vary, and `$` repeats in every cell. Pick one format for the whole column, such as whole dollars with thousands separators (1,200 / 340 / 12,051 / 95). Put the currency in the header, as in "Revenue (USD)". The header should also say what period this is (monthly, lifetime, or something else).
+- **Churn is shown as raw decimals** (`0.04`, `0.11`). Ops will read these as percentages anyway, so show `4%` and `11%`. Name the period in the header, such as "Churn (monthly)".
 
-**Inconsistent formats within columns**
-- **Revenue:**
-  - The column mixes `$1.2k`, `$340`, `$12,050.5` and `$95.00`.
-  - It mixes compact and full forms, and 0, 1 and 2 decimals.
-  - It repeats `$` in every cell.
-  - Pick one format, such as whole dollars with thousands separators, and put the currency in the header ("Revenue, USD").
-  - Say what period it covers (monthly? lifetime?).
-  - `$1.2k` hides precision the other rows show.
-- **Signed up:** The column has four formats: `3/9/24`, `2024-03-14`, `March 21` and `3/22/24`. `March 21` has no year. `3/9/24` is ambiguous between US and EU readers. Use one unambiguous format throughout, like `2024-03-09` or `Mar 9, 2024`.
-- **Churn:**
-  - `0.04` is a fraction, so readers have to convert it in their heads.
-  - Show it as `4%` with the header "Churn (%)" and the same decimals in every row.
-  - Say what period it covers.
-  - `n/a` for Dune Roofing is fine, but add a short note on why it's missing (too new? no data?).
+**Dates**
+- **There are four date formats in five rows:** `3/9/24`, `2024-03-14`, `March 21` (no year) and `3/22/24`. `3/9/24` is also ambiguous between March 9 and September 3. Use one format everywhere. ISO (`2024-03-09`) is the safest.
 
-**Too much furniture**
-- Black borders on every cell, plus zebra stripes, plus a dark header bar means three separators doing one job. The borders add noise around every number.
-- Pick one device. A light hairline under each row, or just row padding, works well. Use a slightly heavier rule under the header.
-- Make the header a light, bold label rather than a dark bar.
+**Missing values**
+- **`n/a` for Dune Roofing's churn is unexplained.** Is it too new to measure, or is the data missing? Use a dash or `n/a` consistently, and add a short note in a caption or footer saying what it means. If there are several reasons for a gap, use distinct marks.
 
-**Column order and usefulness**
-- The internal ID is the first column and the most prominent. Lead with Name, and keep ID as a quiet secondary column or drop it if ops don't use it.
-- Put the columns people compare next to each other (Plan, Seats, Revenue, Churn).
-- Being sorted by ID is effectively sorted by sign-up order, which probably isn't what ops need. Let them sort by Revenue, Churn and Signed up. Show the direction on the active column only, and set `aria-sort`.
+**Visual furniture**
+- **There's a border on every cell, plus zebra stripes, plus a dark header.** That's three separation devices fighting each other. Pick one. I'd use a light hairline under each row and a slightly heavier rule under a light header, and drop the grid and the stripes. With only 5 columns' worth of short values, you don't need stripes to follow a row.
+- **Rows need breathing room.** Use about 40–48px row height with cell text at 14px or larger.
 
-**Smaller things**
-- Make sure cell text is at least 14px, with roughly 40px rows.
-- Use real table markup: `<caption>`, `<thead>`, `<th scope="col">`, and `<th scope="row">` for the name.
-- Keep the header visible if the list gets long.
-- On a phone, use a scroll region with a frozen Name column rather than squeezing the table.
+**Column order and sort**
+- **ID is the first column and the sort key.** It's an internal value that nobody scans by. Put Name first, since that's what people recognize. Then group the related columns: Plan, Seats, Revenue, Churn, and Signed up last. ID can go to the end or be dropped if ops don't use it.
+- **The sort order doesn't serve the job.** Ask what ops open this to do. If it's finding accounts at risk, sort by Churn descending. If it's finding big accounts, sort by Revenue. ID order is only useful for looking up a specific record.
+- **There's no visible sort state.** Show an arrow on the active column only, make the headers real buttons, and set `aria-sort` on the sorted `<th>`.
 
-I can rewrite it with these fixes if you'd like. I'd need to know what period Revenue and Churn cover, and whether ops use the ID.
+**Emphasis**
+- **Nothing flags the at-risk rows.** Elm Street Bakery at 19% churn looks the same as everyone else. If churn is what ops care about, mark outliers with a word or a small label such as "High", not color alone.
+
+**Markup and context**
+- Use a real `<table>` with a `<caption>` (including an as-of date), `<th scope="col">` headers, and a sticky header once the list gets long. On narrow screens, use a scroll region with a frozen Name column rather than squeezing the table until numbers wrap.
+
+I can rewrite it as clean HTML/CSS with these fixes. If you tell me what ops use the table for (churn triage, revenue review, or something else), I'll pick the column order and default sort to match.

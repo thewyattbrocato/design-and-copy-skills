@@ -1,17 +1,19 @@
-Add this after your existing rules. Nothing changes above 600px, so desktop stays as it is.
+Replace the `h1` rule with this:
 
 ```css
-h1 { text-wrap: balance; }
-
-@media (max-width: 600px) {
-  h1 {
-    font-size: clamp(2.25rem, 10vw, 3rem); /* 36–48px */
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-  }
+h1 {
+  font-size: clamp(2.25rem, 10vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  margin: 0 0 20px;
+  text-wrap: balance;
 }
 ```
 
-**Why it was five lines:** 72px on a ~350px-wide screen leaves room for about 8 characters per line. At 36–48px the headline should fit in about three lines. The line height goes from 1.02 to 1.08 because multi-line display text with a heavy weight looks cramped at 1.02. The tracking is eased slightly because tight tracking at smaller sizes hurts legibility. `text-wrap: balance` evens out the line lengths so you don't get a one-word last line. It also applies on desktop, where it only changes the break points if the headline wraps there.
+- **Cause:** the 72px headline was fixed, so on a ~350px-wide phone column only two or three short words fit per line.
+- **Phones:** the size now scales with the viewport (`10vw`) and never drops below 36px (`2.25rem`). At 390px wide it's about 39px, so the headline should wrap to about three lines.
+- **Desktop:** it reaches the full 72px (`4.5rem`) at a viewport width of 720px and stays there. Your desktop look is unchanged.
+- **Line breaks:** `text-wrap: balance` evens out the line lengths, so you shouldn't get a last line with one orphaned word.
 
-I haven't checked this in a browser. If you want the headline bigger or smaller on phones, change the `10vw` value.
+I haven't tested it in a browser, so check it on your phone. If three lines still feels heavy, lower the 36px floor (for example to `2rem`).

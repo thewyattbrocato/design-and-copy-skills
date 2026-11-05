@@ -1,0 +1,4 @@
+Going only by your description, since I haven't looked at the code, the design is sound: nothing is written until the user presses Insert, the panel can be switched off, and every claim links to a source. Before launch I'd check two things:
+
+1. **Unflagged text looks verified.** Only unsure sentences get the dotted underline, so a confident but wrong sentence looks trustworthy. Make sure every claim actually has a working source link, and that links to passages the user has since edited or deleted fail visibly.
+2. **The dotted underline is a visual-only cue.** Give it a keyboard-reachable, screen-reader-readable version of the note ("only one source found"). Also check that the underline and its note survive Insert, or are deliberately dropped, so uncertain text doesn't land in the document looking certain.

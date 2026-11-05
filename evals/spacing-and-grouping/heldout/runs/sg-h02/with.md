@@ -1,35 +1,46 @@
-I'd drop the borders, make the space around group titles uneven, and give the items a bit more room.
+Here's what I'd change, based on the relationships in your sidebar. I haven't looked at your code, so the values are proposals on a 4px-based scale.
 
-**What's wrong now**
-- A group title sits 4px from its items and 4px from the previous group's last item. Because those gaps are equal, the title floats and nothing reads as a group.
-- A 1px border on every item and group makes the sidebar look boxed-in. It adds visual noise without adding any structure.
-- 4px padding makes the items cramped, and it's the same value inside items as between groups.
+**The main problem is that the spacing doesn't show grouping.**
+Group titles sit 4px above their items and 4px below the previous group's last item. Equal space on both sides means a title floats between groups, and Orders, Inventory and Reports blur into one list. Borders on every item and group then add visual noise without fixing that.
 
-**What I'd change** (4px scale)
+**Changes**
 
-| Thing | Now | Change to |
-|---|---|---|
-| Item padding | 4px | `8px 12px` (horizontal about 1.5× vertical, ~32–36px rows) |
-| Gap between items in a group | 0 or borders | 2px, set by the parent |
-| Group title to its first item | 4px | 8px |
-| Previous group's last item to the next title | 4px | 24px (about 3× the title-to-items gap) |
-| Item and group borders | 1px | none |
+1. **Group spacing: more above the title, less below.**
+   - Put about 20–24px between the previous group's last item and the next title.
+   - Put about 4–8px between a title and its first item.
+   - This is roughly 2:1 or more, so each title reads as belonging to the items under it.
+   - Within a group, keep items tight (0–2px gap). Space between groups should be at least twice the space between items.
 
-1. **Remove the item borders.** Show hover and selected states with a subtle background tint, plus an accent color or weight on the active item.
-2. **Remove the group borders.** Spacing now does the grouping. If you still need a visual break, use one quiet hairline between groups, with 12px or more of space on each side. Don't box each group.
-3. **Make the title relationships unequal.** A title should be much closer to its items than to the group above. Style the titles small, muted, and uppercase or semibold, so they act as labels and not as clickable items.
-4. **Let the parent own the spacing.** Use a flex column with `gap` on the nav, and the same on each group. Don't put `margin-bottom` on every child, which doubles the gap after the last item.
-5. **Use only scale values (4, 8, 12, 24).** That gives the same spacing for the same relationship everywhere.
+2. **Remove the borders on items and groups.**
+   - Space now does the grouping, so the borders are redundant.
+   - Show state with a tinted background on hover and on the active item, not an outline.
+   - If you want a visible separator, use one hairline in a quiet color between groups only, with space on both sides. Don't put a border on each item.
+
+3. **Raise item padding from 4px to about 8px vertical and 12px horizontal.**
+   - Horizontal padding should be about 1.5–2× vertical.
+   - That gives rows roughly 32–36px tall. This suits a dashboard used with a mouse, and it stays compact for expert use.
+   - If the sidebar needs to work on touch, aim for 44px rows.
+   - Keep the text on one inner left edge. Align group titles with the item text or the item icons, and use the same edge for both.
+
+4. **Differentiate the titles without extra boxes.**
+   - Make them smaller, uppercase or muted, with no border.
+   - They are labels for a group, so they shouldn't compete with the items.
+
+5. **Let the container own the gaps.**
+   - Use `gap` on the sidebar and each group, or a margin on the group that follows. Don't put `margin-bottom` on every child.
+   - That avoids doubled space after the last item and keeps the rhythm consistent.
+
+**Sketch**
 
 ```css
-.sidebar-nav { display: flex; flex-direction: column; gap: 24px; }
-.nav-group   { display: flex; flex-direction: column; gap: 2px; }
-.nav-group-title { padding: 0 12px; margin-bottom: 6px; /* 2px gap + 6 = 8 */ }
-.nav-item { padding: 8px 12px; border: 0; border-radius: 6px; }
-.nav-item:hover { background: var(--surface-hover); }
-.nav-item[aria-current="page"] { background: var(--surface-selected); font-weight: 600; }
+.sidebar        { display: flex; flex-direction: column; gap: 24px; padding: 16px 12px; }
+.group          { display: flex; flex-direction: column; gap: 2px; }
+.group-title    { padding: 0 12px 6px; font-size: 12px; text-transform: uppercase; color: var(--muted); }
+.item           { padding: 8px 12px; border-radius: 6px; border: 0; }
+.item:hover     { background: var(--hover); }
+.item[aria-current="page"] { background: var(--active); }
 ```
 
-This is an all-day expert tool, so compact is fine. If you want more rows on screen, drop the item padding to `6px 12px` and keep the 24px group gap. Shrink the small steps but keep the ratio between them, or the groups will merge again.
+The values to check against your own scale are 24 (between groups), 6 (title to items), 2 (between items), and 8/12 (item padding). If you already have spacing tokens, snap these to the nearest ones and keep the ratios.
 
-If you point me at the sidebar's CSS or component file, I can make these edits directly.
+If you point me at the sidebar's stylesheet or component, I can make the changes directly.

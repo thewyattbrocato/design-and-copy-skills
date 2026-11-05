@@ -1,84 +1,96 @@
-**1. Where's my order**
+**1. Where's my order? (late)**
 
-Subject: Your Bolt & Thimble order [order number]
+Subject: Re: Your order [order #]
 
 Hi [name],
 
-Orders usually ship 3 to 5 business days after you order, and yours [shipped on [date] / hasn't shipped yet]. [Tracking: [link]. / I'm checking on it today and will email you by [date].]
+Orders usually ship 3 to 5 business days after you order. Yours [shipped on [date]. Tracking: [link]. / hasn't shipped yet, and I'm sorry it's late. It will ship by [date].]
 
-If tracking hasn't moved in [number] days, reply and I'll look into it with the carrier.
+[If shipped: the tracker last updated on [date] with "[status]". If it hasn't moved by [date], reply to this email and [what you'll do, e.g. contact the carrier].]
 
-[Your name]
-Bolt & Thimble
+[Your name], Bolt & Thimble
 
 **2. Return after 28 days**
 
-Subject: Your return request, order [order number]
+Subject: Re: Your return request
 
 Hi [name],
 
-We accept returns within 28 days of delivery, and only for uncut fabric. Your order was delivered on [date], so I can't accept this return.
+We accept returns within 28 days of delivery, for uncut fabric. Your order was delivered on [date], so it's outside that window and I can't accept it as a return.
 
-[Optional, only if you want to offer it: Because [reason], I can offer [store credit / other option].]
+[Optional: I can offer [store credit / other option] instead.]
 
-If the fabric arrived faulty, reply with a photo and I'll look at it separately.
+If the fabric arrived damaged or isn't what you ordered, reply with your order number and a photo, and I'll look at it separately.
 
-[Your name]
+[Your name], Bolt & Thimble
 
 **3. Fabric arrived damaged**
 
-Subject: Your damaged fabric, order [order number]
+Subject: Re: Damaged fabric, order [order #]
 
 Hi [name],
 
-I'm sorry your fabric arrived damaged. Please reply with a photo of the damage and one of the packaging. Please don't cut the fabric until we've sorted this out.
+I'm sorry your fabric arrived damaged. To sort it out, please reply with:
 
-Once I have the photos, I'll [send a replacement / refund you / offer both options] within [timeframe].
+- Your order number
+- A photo of the damage
+- A photo of the packaging
 
-[Your name]
+Once I have those, I'll [replace it / refund it / let you choose]. [Say whether the customer needs to send the fabric back, and who pays postage.]
+
+[Your name], Bolt & Thimble
 
 **4. Colour doesn't match the photo**
 
-Subject: About the colour of your fabric, order [order number]
+Subject: Re: Colour of order [order #]
 
 Hi [name],
 
-Screens show colour differently, so the fabric can look different in person, even in a careful photo. I'm sorry it isn't what you expected.
+Thanks for telling me. Screens show colour differently, so a fabric can look different in person from how it looked in the photo.
 
-If the fabric is uncut and was delivered within the last 28 days, you can return it. Reply and I'll send the steps. [Return shipping: [who pays].]
+If the fabric is uncut and was delivered within the last 28 days, you can return it. Reply with your order number and I'll send the return steps. [Say who pays return postage.]
 
-If you'd like to compare before you decide, I can [send a swatch, if you offer them].
+If you've already cut it, [your policy, or "reply and tell me how much is left, and I'll see what I can do"].
 
-[Your name]
+[Optional: For next time, we offer swatches. [link]]
+
+[Your name], Bolt & Thimble
 
 **5. Wholesale**
 
-Subject: Wholesale at Bolt & Thimble
+Subject: Re: Wholesale enquiry
 
 Hi [name],
 
-[Yes, we offer wholesale. / Not at the moment, but ...]
+[Yes, we offer wholesale. / We don't offer wholesale at the moment.]
 
-[If yes: To get started, reply with your business name, what you're looking for, and roughly how much you'd buy. Our minimum order is [amount], and the discount is [percent or "quoted per order"]. I'll reply within [timeframe].]
+[If yes: To give you a quote, please reply with:
 
-[Your name]
+- Your business name
+- Which fabrics you want
+- Roughly how much of each, and how often
+
+I'll reply with [prices / terms] within [time].]
+
+[Your name], Bolt & Thimble
 
 **6. I can't log in**
 
-Subject: Logging in to Bolt & Thimble
+Subject: Re: Trouble logging in
 
 Hi [name],
 
-Try these in order:
+Try this first:
 
-1. Select **Forgot password** on the login page and enter the email you used to order. The reset link can take a few minutes, so check your spam folder.
-2. If no email arrives, you may have used a different address. Try any others you have.
-3. Still stuck? Reply with the email address on your account and I'll look into it. Please don't send your password.
+1. Go to [login page link] and select "[exact name of the reset link, e.g. Forgot password]".
+2. Enter the email address you used to create your account.
+3. Check your inbox and your spam folder for the reset email.
 
-[If you offer guest checkout: You can also order without an account.]
+If no email arrives, reply with the email address you think you used, and I'll check the account. Please don't send your password in an email. I'll never ask for it.
 
-[Your name]
+[Your name], Bolt & Thimble
 
-Notes:
-- Anything in [brackets] is a decision I couldn't make for you, such as what you do about damage, wholesale terms, and late-order timing. Fill each one in or delete the line. I didn't invent policies for them.
-- These come to about 480 words. You asked for about 600, but the extra would have been filler. The rest is the policy detail you haven't decided yet.
+---
+
+- Everything in square brackets is something you haven't decided yet or that changes per customer. I left those blank instead of guessing at a policy. The damaged-item remedy, postage costs, wholesale terms and the login steps matter most, so decide those before you send.
+- I used "log in" because that's your word. Make sure it matches the button on your site, and change the reply if your site says "sign in".

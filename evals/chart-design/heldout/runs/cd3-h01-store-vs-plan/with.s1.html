@@ -3,85 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>September sales vs plan</title>
+<title>September sales vs plan – Crumb &amp; Kettle</title>
 <style>
-  body { margin: 0; padding: 24px 12px; background: #f4f2ee; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: #222; }
-  .card { max-width: 680px; margin: 0 auto; background: #fff; padding: 24px 24px 18px; border-radius: 6px; }
-  h1 { font-size: 20px; line-height: 1.3; margin: 0 0 6px; font-weight: 700; }
-  .sub { font-size: 14px; color: #555; margin: 0 0 18px; line-height: 1.45; }
-  .head, .row { display: grid; grid-template-columns: 96px 1fr 104px; align-items: center; column-gap: 10px; }
-  .head { font-size: 12px; color: #666; margin-bottom: 4px; }
-  .head .axis { display: flex; justify-content: space-between; }
-  .head .axis span { flex: 1; }
-  .head .axis .l { text-align: left; color: #a85d12; }
-  .head .axis .r { text-align: right; color: #1b5e96; }
-  .head .axis .m { text-align: center; }
-  .head .d { text-align: right; }
-  .row { height: 34px; border-top: 1px solid #eee; font-size: 14px; }
-  .name { font-weight: 600; }
-  .plot { position: relative; height: 100%; }
-  .zero { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #444; }
-  .bar { position: absolute; top: 7px; bottom: 7px; }
-  .ahead { background: #1b6fb5; }
-  .behind { background: #e08a2e; }
-  .val { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; font-weight: 700; font-size: 13px; white-space: nowrap; }
-  .val.pos { color: #1b5e96; }
-  .val.neg { color: #a85d12; }
-  .val.zero-v { color: #555; }
-  .detail { text-align: right; font-size: 12.5px; color: #555; font-variant-numeric: tabular-nums; }
-  .total { margin-top: 4px; padding-top: 10px; border-top: 2px solid #444; font-size: 14px; display: flex; justify-content: space-between; gap: 12px; }
-  .note { font-size: 12px; color: #666; margin: 12px 0 0; line-height: 1.5; }
+  body { margin: 0; padding: 16px; background: #fff; color: #222;
+         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  .card { max-width: 680px; margin: 0 auto; }
+  h1 { font-size: 20px; line-height: 1.3; margin: 0 0 4px; }
+  p.sub { margin: 0 0 12px; font-size: 14px; color: #555; }
+  svg { width: 100%; height: auto; display: block; }
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  .name { font-size: 14px; font-weight: 600; fill: #222; }
+  .small { font-size: 11.5px; fill: #666; }
+  .val { font-size: 14px; font-weight: 700; }
+  .ahead { fill: #1f6fb2; }
+  .behind { fill: #c4521a; }
+  .hdr { font-size: 12px; font-weight: 600; }
+  p.note { margin: 8px 0 0; font-size: 12px; color: #666; }
+  .sr { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 </style>
 </head>
 <body>
 <div class="card">
-  <h1>Four shops beat September plan; Airport and Eastgate fell $13K short</h1>
-  <p class="sub">University, Old Town and Harbor drove the gain. Overall sales were $839K against a $833K plan (+$6K, +0.7%).</p>
+  <h1>Four shops beat September plan; Airport, Eastgate and Mill Street fell short</h1>
+  <p class="sub">All 8 shops combined: $839K vs $833K plan (+0.7%). Northfield landed exactly on plan.</p>
 
-  <div class="head">
-    <div>Shop</div>
-    <div class="axis"><span class="l">◄ Behind plan</span><span class="m">On plan</span><span class="r">Ahead of plan ►</span></div>
-    <div class="d">Actual / plan</div>
-  </div>
+  <svg viewBox="0 0 660 392" role="img" aria-labelledby="t d">
+    <title id="t">September sales variance to plan by shop</title>
+    <desc id="d">Percent difference from plan: University +11.4%, Old Town +10.2%, Harbor +7.3%, Lakeside +3.0%, Northfield 0.0%, Mill Street −7.8%, Eastgate −14.4%, Airport −17.3%.</desc>
 
-  <div role="img" aria-label="Diverging bar chart of September sales variance to plan in thousands of dollars. University plus 16, Old Town plus 13, Harbor plus 8, Lakeside plus 3, Northfield 0, Mill Street minus 8, Eastgate minus 13, Airport minus 13.">
+    <!-- column headers -->
+    <text class="hdr behind" x="324" y="34" text-anchor="end">← Behind plan</text>
+    <text class="hdr ahead" x="336" y="34">Ahead of plan →</text>
+    <text class="small" x="652" y="34" text-anchor="end">$ vs plan</text>
 
-    <div class="row"><div class="name">University</div><div class="plot"><div class="zero"></div>
-      <div class="bar ahead" style="left:50%;width:33.3%"></div><div class="val pos" style="left:84.3%">+$16K</div></div>
-      <div class="detail">$156K / $140K</div></div>
+    <!-- zero line -->
+    <line x1="330" y1="46" x2="330" y2="372" stroke="#888" stroke-width="1.5"/>
 
-    <div class="row"><div class="name">Old Town</div><div class="plot"><div class="zero"></div>
-      <div class="bar ahead" style="left:50%;width:27.1%"></div><div class="val pos" style="left:78.1%">+$13K</div></div>
-      <div class="detail">$141K / $128K</div></div>
+    <!-- University -->
+    <text class="name" x="0" y="66">University</text><text class="small" x="0" y="82">$156K vs $140K</text>
+    <rect class="ahead" x="330" y="58" width="102.6" height="24"/>
+    <text class="val ahead" x="440" y="75">+11.4%</text>
+    <text class="val ahead" x="652" y="75" text-anchor="end">+$16K</text>
 
-    <div class="row"><div class="name">Harbor</div><div class="plot"><div class="zero"></div>
-      <div class="bar ahead" style="left:50%;width:16.7%"></div><div class="val pos" style="left:67.7%">+$8K</div></div>
-      <div class="detail">$118K / $110K</div></div>
+    <!-- Old Town -->
+    <text class="name" x="0" y="106">Old Town</text><text class="small" x="0" y="122">$141K vs $128K</text>
+    <rect class="ahead" x="330" y="98" width="91.8" height="24"/>
+    <text class="val ahead" x="429" y="115">+10.2%</text>
+    <text class="val ahead" x="652" y="115" text-anchor="end">+$13K</text>
 
-    <div class="row"><div class="name">Lakeside</div><div class="plot"><div class="zero"></div>
-      <div class="bar ahead" style="left:50%;width:6.3%"></div><div class="val pos" style="left:57.3%">+$3K</div></div>
-      <div class="detail">$103K / $100K</div></div>
+    <!-- Harbor -->
+    <text class="name" x="0" y="146">Harbor</text><text class="small" x="0" y="162">$118K vs $110K</text>
+    <rect class="ahead" x="330" y="138" width="65.7" height="24"/>
+    <text class="val ahead" x="403" y="155">+7.3%</text>
+    <text class="val ahead" x="652" y="155" text-anchor="end">+$8K</text>
 
-    <div class="row"><div class="name">Northfield</div><div class="plot"><div class="zero"></div>
-      <div class="val zero-v" style="left:51.5%">$0 (on plan)</div></div>
-      <div class="detail">$88K / $88K</div></div>
+    <!-- Lakeside -->
+    <text class="name" x="0" y="186">Lakeside</text><text class="small" x="0" y="202">$103K vs $100K</text>
+    <rect class="ahead" x="330" y="178" width="27" height="24"/>
+    <text class="val ahead" x="365" y="195">+3.0%</text>
+    <text class="val ahead" x="652" y="195" text-anchor="end">+$3K</text>
 
-    <div class="row"><div class="name">Mill Street</div><div class="plot"><div class="zero"></div>
-      <div class="bar behind" style="right:50%;width:16.7%"></div><div class="val neg" style="right:67.7%">−$8K</div></div>
-      <div class="detail">$94K / $102K</div></div>
+    <!-- Northfield -->
+    <text class="name" x="0" y="226">Northfield</text><text class="small" x="0" y="242">$88K vs $88K</text>
+    <text class="val" fill="#555" x="338" y="235">0.0% (on plan)</text>
+    <text class="val" fill="#555" x="652" y="235" text-anchor="end">$0</text>
 
-    <div class="row"><div class="name">Eastgate</div><div class="plot"><div class="zero"></div>
-      <div class="bar behind" style="right:50%;width:27.1%"></div><div class="val neg" style="right:78.1%">−$13K</div></div>
-      <div class="detail">$77K / $90K</div></div>
+    <!-- Mill Street -->
+    <text class="name" x="0" y="266">Mill Street</text><text class="small" x="0" y="282">$94K vs $102K</text>
+    <rect class="behind" x="259.8" y="258" width="70.2" height="24"/>
+    <text class="val behind" x="252" y="275" text-anchor="end">−7.8%</text>
+    <text class="val behind" x="652" y="275" text-anchor="end">−$8K</text>
 
-    <div class="row"><div class="name">Airport</div><div class="plot"><div class="zero"></div>
-      <div class="bar behind" style="right:50%;width:27.1%"></div><div class="val neg" style="right:78.1%">−$13K</div></div>
-      <div class="detail">$62K / $75K</div></div>
-  </div>
+    <!-- Eastgate -->
+    <text class="name" x="0" y="306">Eastgate</text><text class="small" x="0" y="322">$77K vs $90K</text>
+    <rect class="behind" x="200.4" y="298" width="129.6" height="24"/>
+    <text class="val behind" x="193" y="315" text-anchor="end">−14.4%</text>
+    <text class="val behind" x="652" y="315" text-anchor="end">−$13K</text>
 
-  <div class="total"><span><strong>All 8 shops</strong></span><span>+$6K vs plan &nbsp;·&nbsp; $839K / $833K</span></div>
+    <!-- Airport -->
+    <text class="name" x="0" y="346">Airport</text><text class="small" x="0" y="362">$62K vs $75K</text>
+    <rect class="behind" x="174.3" y="338" width="155.7" height="24"/>
+    <text class="val behind" x="167" y="355" text-anchor="end">−17.3%</text>
+    <text class="val behind" x="652" y="355" text-anchor="end">−$13K</text>
+  </svg>
 
-  <p class="note">Bars show September actual minus plan, in $ thousands, on one shared scale. Shops are sorted from most ahead to most behind. Airport's miss is the largest relative to its plan (−17%, vs −14% for Eastgate and −8% for Mill Street).</p>
+  <p class="note">Bars show September actual sales as a % above or below each shop's plan, sorted best to worst. Dollar figures are in thousands. Percentages are rounded to one decimal.</p>
+
+  <table class="sr">
+    <caption>September sales vs plan, $ thousands</caption>
+    <tr><th>Shop</th><th>Actual</th><th>Plan</th><th>Variance $K</th><th>Variance %</th></tr>
+    <tr><td>University</td><td>156</td><td>140</td><td>+16</td><td>+11.4%</td></tr>
+    <tr><td>Old Town</td><td>141</td><td>128</td><td>+13</td><td>+10.2%</td></tr>
+    <tr><td>Harbor</td><td>118</td><td>110</td><td>+8</td><td>+7.3%</td></tr>
+    <tr><td>Lakeside</td><td>103</td><td>100</td><td>+3</td><td>+3.0%</td></tr>
+    <tr><td>Northfield</td><td>88</td><td>88</td><td>0</td><td>0.0%</td></tr>
+    <tr><td>Mill Street</td><td>94</td><td>102</td><td>−8</td><td>−7.8%</td></tr>
+    <tr><td>Eastgate</td><td>77</td><td>90</td><td>−13</td><td>−14.4%</td></tr>
+    <tr><td>Airport</td><td>62</td><td>75</td><td>−13</td><td>−17.3%</td></tr>
+  </table>
 </div>
 </body>
 </html>

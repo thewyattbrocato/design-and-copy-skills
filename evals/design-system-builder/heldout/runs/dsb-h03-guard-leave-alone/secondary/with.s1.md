@@ -1,37 +1,25 @@
-Mostly solid. The palette is restrained and the scales are clean. I'd fix the accessibility gaps and a few missing tokens before handing this off, because the other team will build against whatever ships in v1.
+Overall the structure is sound: the roles are semantic, every dark-theme override has a light counterpart, and the names are consistent. Before you hand this off, I'd fix the first two items, which are accessibility gaps the other team would otherwise have to rediscover.
 
-**Fix before handoff**
+## Fix before handoff
 
-1. **Border contrast fails in both themes.** `--color-border` (#d9d5cc) against white is about 1.5:1, and `--color-border` in dark (#3a372d) against `--color-bg` is about 1.5:1. WCAG 1.4.11 asks for 3:1 on UI boundaries such as input outlines, checkbox edges, and card edges when the border is the only cue. Either darken the light border (roughly #8a8576 or darker) and lighten the dark one, or split the token: keep `--color-border` decorative and add `--color-border-strong` (3:1) for inputs and controls.
+**1. `--color-border` fails non-text contrast.** WCAG 1.4.11 requires 3:1 for input boundaries and other UI components that carry meaning. By my hand calculation, `#d9d5cc` on `#fbfaf8` is about 1.4:1, and dark `#3a372d` on `#1f1d17` is about 1.4:1. Keep `--color-border` as a decorative divider, and add a control token such as `--color-border-control` at 3:1 or better in both themes. Check the exact values with a contrast tool, since I did these by hand.
 
-2. **No focus token.** Keyboard focus is a core requirement and nothing here defines it. Add something like `--color-focus` (per theme, at least 3:1 against both bg and surface) and `--focus-ring-width`, and say in the docs whether focus is an outline or a box-shadow.
+**2. No focus token.** A warehouse tool will have keyboard and scanner-heavy workflows, so focus visibility matters. Add `--color-focus` (3:1 against both `--color-bg` and `--color-surface`, in both themes) and `--focus-ring-width`, or a `--focus-ring` shorthand.
 
-3. **No on-color tokens for status colors.** `--color-on-action` exists, but `--color-danger`, `--color-success`, and `--color-warning` have no matching foreground. If anyone puts text on a filled danger or success button or badge, they'll pick ad hoc colors. Add `--color-on-danger`, `--color-on-success`, `--color-on-warning`, or decide now that those are text-only and document that.
+## Should fix
 
-4. **Missing `color-scheme`.** Dark mode needs `color-scheme: dark` on the `[data-theme="dark"]` selector (and `light` on `:root`). Without it, native form controls, scrollbars, and the default select menus stay light. Also decide whether `prefers-color-scheme` should set the theme when no attribute is present. Right now the default is light with no OS fallback.
+3. **Dark mode elevation is nearly invisible.** Black shadows on near-black backgrounds do almost nothing, and the surface-to-bg step is small. Either lift surfaces further or pair `--shadow-raised` with a border in dark mode. Also set `color-scheme: light` on `:root` and `color-scheme: dark` on `[data-theme="dark"]`, or native inputs, scrollbars, and date pickers will stay light.
+4. **Status colors need tints and an info role.** `danger`, `success`, and `warning` are text/icon colors only. Badges and banners need background tints (for example `--color-danger-subtle`) with matching text. Inventory states such as low stock, in transit, and on hold will likely need an `--color-info` role. Also state that status should never be color-only.
+5. **Missing roles:** a scrim/backdrop color for modals (`--shadow-overlay` doesn't cover it), a disabled text/background pair, and a selection color if you have selectable table rows.
+6. **Motion.** Document `prefers-reduced-motion` behavior, either by setting durations to 0 in a media query or by stating that the other team handles it. Also decide whether `--motion-slow` is needed for drawers and similar patterns.
+7. **Theme mechanism.** The file defines only `[data-theme="dark"]`. Tell the other team whether they should also honor `prefers-color-scheme` as a default, and what sets the attribute.
+8. **Typography gaps.** Add font families and weights, or document that they're owned elsewhere. Dense inventory tables often need a size below `--text-sm`, such as 12px, for captions and metadata. Each size also needs a paired line height, not just two global leading values.
 
-**Should add for v1**
+## Nice to know
 
-5. **Font family and weight tokens.** There are sizes and leading but no `--font-sans`, `--font-mono` (SKUs, bin codes, and quantities usually want tabular numerals), or `--font-weight-*`. Add `font-variant-numeric: tabular-nums` as a utility or token note for numeric columns.
+- **Spacing scale is non-linear** (1, 2, 3, 4, 6, 8, 12). That's fine, but the scale should be documented as intentional, including the missing 5, 7, 10, and 16. Otherwise someone will ask for `--space-5` and expect it to exist.
+- **Units are mixed:** spacing is in px and type in rem. That's defensible, but it means spacing won't scale with user font-size preferences. Say so in the docs.
+- **Hover direction flips between themes:** light hover darkens and dark hover lightens. That's the usual pattern, but make sure the other team doesn't assume a single direction.
+- **Versioning:** before v1, add a short contract listing which names are stable and how you'll handle renames and deprecations.
 
-6. **Reduced motion.** Add a `@media (prefers-reduced-motion: reduce)` block that sets the motion durations to 0ms, or document that the components must honor it.
-
-7. **Status tints.** Low-stock, overdue, and received badges usually need a background tint plus text. Right now status is only foreground color. Add `--color-danger-subtle`, `--color-success-subtle`, and `--color-warning-subtle`. Also make sure status is never color-only, since the other team will need icons or labels for it.
-
-8. **Touch and density sizes.** Tallyard is likely used on handhelds, tablets, and gloves. A `--size-target-min: 44px` (or 48px) and a dense row height for tables would prevent the other team from inventing these per component.
-
-**Smaller things to consider**
-
-9. **Mixed units.** Type uses `rem` and spacing uses `px`. If a user raises their browser font size, text grows and spacing doesn't. Switching spacing to `rem` (`0.25rem` base) is the common fix. If you keep `px`, say so explicitly.
-
-10. **Naming inconsistency.** `--ease-out` doesn't follow the `--motion-*` prefix. Rename it to `--motion-ease-out` or move it under a consistent group.
-
-11. **Type scale floor.** `--text-sm` at 14px is the smallest step. Dense tables and labels often want 12px, so consider `--text-xs`.
-
-12. **Dark shadows.** `rgba(0,0,0,.5)` barely shows on `#15140f`. Elevation in dark mode usually comes from a lighter surface step, so add a `--color-surface-raised` token or document that shadows are weak in dark.
-
-13. **Spacing gaps.** The scale jumps from 12 to 16 to 24 with no 20px step. That's fine if intentional, but the comment should say the scale is a multiplier of 4 and the gaps are deliberate.
-
-**Checked and fine:** text, muted text, action, on-action, danger, success, and warning all meet 4.5:1 on their light and dark backgrounds, and the light-mode `--color-warning` (about 5.9:1 on white) passes AA for normal text.
-
-I haven't edited any files since you didn't point me at one. If you want, I can write a revised `:root` and dark block with the additions above.
+If you want, I can write a revised version of the file with the border, focus, and status-tint tokens added and the dark-mode fixes applied, with contrast values verified in the file's comments.

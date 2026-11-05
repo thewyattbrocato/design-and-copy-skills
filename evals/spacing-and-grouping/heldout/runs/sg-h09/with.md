@@ -1,19 +1,25 @@
-**Use extra space and headings only.** Add a hairline rule only if testing shows the sections still blur together.
+**Use extra space and headings. Don't use cards or horizontal lines.**
 
-**Why**
-- Twelve fields in three sections is a small form with one level of grouping. A heading plus clear spacing is enough to show where each section starts and ends.
-- Cards are for discrete objects, meaning things you open, select, drag, or act on as a whole. These sections are just parts of one form. Boxing each one adds borders and padding that compete with the inputs, and the form looks heavier and more fragmented than it is.
-- Rules work when space can't do the job, such as dense lists or unlike items that have to sit close together. Here you have plenty of room, so space does the job without extra lines.
+Twelve controls in three sections is a small form with one level of grouping. Space and headings can show that grouping on their own.
 
-**How to make it work**
-- **Gaps:** Keep the gap within a section about half the gap between sections. For example, use 16 px between fields and 40 px between sections, with both values taken from your spacing scale.
-- **Headings:** Put more space above each heading than below it, roughly 2:1. A heading should sit visibly closer to its own fields than to the section above.
-- **Parent-owned spacing:** Set the gaps with `gap` on the container, not `margin-bottom` on every child. That avoids a doubled gap after the last item.
-- **Preferences section:** Three toggles can sit tighter than text inputs, since they're a simple list. Give each row at least a 44 px tap target on touch devices.
-- **Address fields:** If some of the five fields naturally pair up (city and state, or state and postal code), put them side by side. That shows the grouping inside the section without any extra devices.
+- **Cards:** Cards are for discrete objects that a user opens, selects, or compares. These sections are just parts of one form. Boxing each one adds borders and padding, and it can make the page feel like three separate forms.
+- **Horizontal lines:** Lines help when many rows are packed tightly, or when unlike things have to sit close together. Here you have room, so a rule would only repeat what the space already says.
+- **Space and headings:** A clear difference between the gaps does the grouping. Make the space within a section about half the space between sections.
 
-**When to change this**
-- If the form sits on a busy background or inside a page with other content, a single tinted or bordered surface around the whole form can help. Put it around the form, not around each section.
-- If the sections get long, or users need to scan back and forth between them, add a quiet hairline between sections. Keep the same spacing on both sides of it.
+**Suggested values** (on a 4px scale, so adjust to your own tokens):
+- Between a label and its field: 4–8px.
+- Between fields in a section: 16px.
+- Between sections: 32–40px.
+- Between a heading and its first field: 12–16px. A heading should sit visibly closer to its content than to the section above it, so put roughly twice as much space above it as below it.
+- Set the gaps on the container (`gap`) rather than as a bottom margin on each child. That avoids a doubled gap after the last item.
 
-**Quick check:** Blur or squint at the page. You should see three clear clusters. If you do, you don't need anything more than space and headings.
+**Two small additions:**
+- The Preferences toggles are a different kind of control. Give them a row layout with the label on the left and the switch on the right, with tighter spacing between toggles than between the text fields above.
+- If the Address fields (such as city, state, and zip) can share a row, pair them. That makes the section look shorter and more compact.
+
+**When to change this:**
+- If the sections become long, or users have to jump between them, add a hairline rule or a card per section.
+- If a section is a separate object, such as a saved address you can edit or delete as a unit, use a card for it.
+- If your design system already sets a pattern for form sections, follow that and apply the within-versus-between spacing ratio inside it.
+
+**Check:** Squint at the form. You should see exactly three clusters. If two of them blur together, increase the between-section gap rather than adding a border.

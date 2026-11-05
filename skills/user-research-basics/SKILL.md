@@ -1,6 +1,6 @@
 ---
 name: user-research-basics
-description: Use whenever someone needs to find out what people do, need or struggle with, in any words, length or language - "should we research this", "we need to understand our users", "write a screener or interview guide", "is this survey okay", "make sense of these notes or support tickets", "what do these test results mean", "create personas", "can we ship this test result", "talk to stakeholders before we start". Covers scoping, cheapest method, small-study plans, neutral questions, bias and consent, synthesis, finding priority, personas from evidence, experiment hygiene. Not for judging a design (design-critique), form fields (form-design) or page copy.
+description: Use whenever someone needs to find out what people do, need or struggle with, in any words, length or language - "should we research this", "we need to understand our users", "write a screener or interview guide", "why did people cancel or switch", "is this survey okay", "make sense of these notes or support tickets", "what do these test results mean", "create personas", "can we ship this test result", "talk to stakeholders before we start". Covers scoping, cheapest method, small-study plans, neutral questions, bias and consent, synthesis, finding priority, personas from evidence, experiment hygiene. Not for judging a design (design-critique), form fields (form-design) or page copy.
 ---
 
 # User research basics
@@ -33,7 +33,7 @@ Phrase the question so you can tell when it is answered: name the output (a list
 - A candidate design or flow: three to five people doing real tasks, one at a time, nobody helping. Section "Watching people" in design-critique's checks, if installed, is the quick version.
 - What happened, how much, where: analytics or existing records first, then people for why.
 - Which of two wins: a live comparison, only with enough traffic and one pre-stated metric.
-- Opinion polling and focus groups answer neither "what do they do" nor "will they buy".
+- How many, once the themes are known from conversations: a short survey of the right people. Opinion polling and focus groups answer neither "what do they do" nor "will they buy".
 
 Participant counts are rough guides, never statistics. Three to five for a quick check of one kind of user; five to eight per kind when there are several kinds or a fix-and-retest cycle. Stop when new sessions stop changing your conclusions; add a few when they still do. Details in [plan, screener and asking](references/plan-screener-asking.md).
 
@@ -66,7 +66,7 @@ Analytics says what and where, people say why. An experiment needs one metric ch
 ## When not to use
 
 - Judging a design someone shows you: design-critique if installed. Form field design: form-design if installed.
-- Surveys at scale, statistical modeling, market sizing: give a short recommendation and say a specialist should run it.
+- Statistical modeling, market sizing, population-scale panels: a short recommendation, and a specialist runs it. A survey of your own users or members stays in scope.
 - Children, patients, regulated or sensitive topics, or politically charged organizations: recommend a trained researcher and give a plan outline only.
 - The user's constraints, schedule and stated method win when they can work; flag the risk in one line.
 
@@ -86,4 +86,8 @@ Deliver the requested artifact first (plan, screener, guide, synthesis, ranked l
 
 - [references/plan-screener-asking.md](references/plan-screener-asking.md): load for a plan, screener, interview guide, leading-question rewrite, bias or consent text.
 - [references/synthesis-findings-evidence.md](references/synthesis-findings-evidence.md): load for notes or tickets to analyze, usability findings, personas, scenarios, or reviewing existing evidence.
+- [references/surveys-measures-inclusion.md](references/surveys-measures-inclusion.md): load to write or review a survey or questionnaire, plan a sample, report task success, time or ratings from a test, or recruit, pay and consent people.
+- [references/purchase-and-switch-interviews.md](references/purchase-and-switch-interviews.md): load to interview people who recently bought, switched, cancelled or walked away, or to code and count what they say.
+- [references/running-sessions.md](references/running-sessions.md): load to script or review how a moderator runs an interview or task test, or to fix sessions that went badly.
+- [references/testing-designs-and-prototypes.md](references/testing-designs-and-prototypes.md): load to plan a test of a design, prototype or pilot: what to show, task wording, value questions, how far a small round can be trusted.
 - [references/stakeholders-experiments.md](references/stakeholders-experiments.md): load for mapping stakeholders, a success-and-scope note, split tests or analytics interpretation.

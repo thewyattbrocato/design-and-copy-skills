@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Lettings · Repair triage</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --card: #ffffff; --ink: #1c2230; --ink2: #4a5366; --muted: #6b7385; --line: #e3e6ec;
+    --critical: #b42318; --serious: #b54708; --warning: #8a6a00; --good: #1e7a4a;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #13161c; --card: #1c2029; --ink: #e8ebf1; --ink2: #b4bcc9; --muted: #9aa3b2; --line: #2c323e;
+      --critical: #ff8a7a; --serious: #ffa94d; --warning: #e8c24a; --good: #5fd39a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 var(--font); }
+  header { padding: 20px 28px 8px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; }
+  h1 { font-size: 20px; margin: 0; }
+  h2 { font-size: 15px; margin: 0 0 12px; }
+  .sub { color: var(--muted); font-size: 13px; }
+  main { padding: 12px 28px 32px; display: grid; gap: 16px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .tile .label { color: var(--ink2); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  .tile .value { font-size: 28px; font-weight: 650; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+  .tile .hint { color: var(--muted); font-size: 12px; }
+  .tile.alert .value { color: var(--critical); }
+  .tile.warn .value { color: var(--serious); }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; overflow: hidden; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; font-size: 12px; color: var(--ink2); }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  svg { width: 100%; height: auto; display: block; }
+  .grid { stroke: var(--line); stroke-width: 1; }
+  .ax { fill: var(--muted); font-size: 11px; font-family: var(--font); }
+  .seg { stroke: var(--card); stroke-width: 2; }
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .filters label { font-size: 12px; color: var(--ink2); display: flex; flex-direction: column; gap: 3px; }
+  select, input { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; min-width: 150px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; color: var(--ink2); font-weight: 600; white-space: nowrap; }
+  td.small, .note { color: var(--muted); font-size: 12px; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; border: 1px solid currentColor; border-radius: 999px; padding: 1px 9px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .st { font-weight: 600; white-space: nowrap; }
+  .breach { color: var(--critical); font-weight: 600; }
+  .done { color: var(--good); }
+  .empty { color: var(--muted); padding: 20px 0; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Repair triage</h1>
+    <div class="sub">Kestrel Lettings · 300 flats across 6 buildings · Agent activity</div>
+  </div>
+  <div class="sub" id="updated"></div>
+</header>
+
+<main>
+  <section class="kpis" id="kpis" aria-label="Key figures"></section>
+
+  <section class="panel">
+    <h2>Requests received per day, by urgency (last 14 days)</h2>
+    <div id="chart"></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Requests</h2>
+    <div class="filters">
+      <label>Urgency
+        <select id="fUrg"><option value="">All</option><option value="emergency">Emergency</option><option value="urgent">Urgent</option><option value="routine">Routine</option><option value="cosmetic">Cosmetic</option></select>
+      </label>
+      <label>Status
+        <select id="fStatus"><option value="">All</option><option>Awaiting booking</option><option>Booked</option><option>In progress</option><option>Resolved</option></select>
+      </label>
+      <label>Flat
+        <input id="fFlat" type="search" placeholder="e.g. Harrow Road">
+      </label>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption class="sub" style="text-align:left;caption-side:top;padding-bottom:8px" id="count"></caption>
+        <thead>
+          <tr><th>Ref</th><th>Received</th><th>Flat</th><th>Issue</th><th>Urgency</th><th>Agent decision</th><th>Status</th><th>Age</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+(() => {
+  const NOW = new Date('2026-10-27T10:30:00');
+  const URG = {
+    emergency: { label: 'Emergency', icon: '⚠', sla: 4,   color: 'var(--critical)' },
+    urgent:    { label: 'Urgent',    icon: '▲', sla: 24,  color: 'var(--serious)' },
+    routine:   { label: 'Routine',   icon: '■', sla: 168, color: 'var(--warning)' },
+    cosmetic:  { label: 'Cosmetic',  icon: '○', sla: 720, color: 'var(--muted)' }
+  };
+  const ORDER = ['emergency', 'urgent', 'routine', 'cosmetic'];
+  const STREETS = ['Harrow Road', 'Alder Street', 'Millbank Terrace', 'Quayside Mews', 'Kestrel Court', 'Orchard Lane'];
+  const ISSUES = [
+    { issue: 'Gas smell in kitchen', urg: 'emergency', w: 1, vendor: 'Northgate Heating', note: 'Possible gas leak. Tenant told to leave and call the gas emergency line; engineer dispatched.' },
+    { issue: 'Socket sparking when used', urg: 'emergency', w: 1, vendor: 'Voss Electrical', note: 'Electrical hazard. Isolation advised; same-day attendance booked.' },
+    { issue: 'Burst pipe, water through ceiling', urg: 'emergency', w: 1, vendor: 'Bramley Plumbing', note: 'Active leak into flat below. Water isolated by tenant; emergency plumber booked.' },
+    { issue: 'No heating or hot water', urg: 'urgent', w: 2, vendor: 'Northgate Heating', note: 'Boiler fault code noted. Booked for next available slot.' },
+    { issue: 'Half the flat has no power', urg: 'urgent', w: 2, vendor: 'Voss Electrical', note: 'Likely tripped circuit. Checking consumer unit.' },
+    { issue: 'Leak under kitchen sink', urg: 'urgent', w: 2, vendor: 'Hale & Sons Plumbing', note: 'Slow leak. Isolation valve closed by tenant; booked within 24 hours.' },
+    { issue: 'Smoke alarm chirping', urg: 'urgent', w: 2, vendor: 'Quinn Electrical', note: 'Low battery or fault. Replacement alarm booked.' },
+    { issue: 'Boiler pressure dropping', urg: 'urgent', w: 1, vendor: 'Northgate Heating', note: 'Pressure falling repeatedly. Engineer to check for leak.' },
+    { issue: 'Toilet keeps running', urg: 'routine', w: 3, vendor: 'Hale & Sons Plumbing', note: 'Cistern fill valve likely worn.' },
+    { issue: 'Extractor fan not working', urg: 'routine', w: 3, vendor: 'Quinn Electrical', note: 'Fan unit dead; fuse check first.' },
+    { issue: 'Damp patch on bedroom wall', urg: 'routine', w: 3, vendor: 'Dryline Specialists', note: 'Surface damp, possible condensation. Survey booked.' },
+    { issue: 'Front door lock sticking', urg: 'routine', w: 2, vendor: 'Oakham Maintenance', note: 'Lock mechanism stiff. Adjust or replace barrel.' },
+    { issue: 'Oven element not heating', urg: 'routine', w: 2, vendor: 'Oakham Maintenance', note: 'Element failure suspected. Covered by landlord warranty.' },
+    { issue: 'Cracked bathroom tile', urg: 'cosmetic', w: 2, vendor: 'Oakham Maintenance', note: 'No water ingress. Schedule with next planned visit.' },
+    { issue: 'Paint chipping in hallway', urg: 'cosmetic', w: 2, vendor: 'Oakham Maintenance', note: 'Cosmetic only. Batch with next void decoration.' }
+  ];
+  const POOL = ISSUES.flatMap(i => Array(i.w).fill(i));
+
+  // Seeded PRNG so the sample data is stable between reloads
+  let seed = 20261027;
+  const rnd = () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
+
+  const rows = [];
+  for (let i = 0; i < 72; i++) {
+    const it = POOL[Math.floor(rnd() * POOL.length)];
+    const daysAgo = Math.floor(rnd() * 14);
+    const rec = new Date(NOW.getTime() - daysAgo * 864e5);
+    rec.setHours(7 + Math.floor(rnd() * 12), Math.floor(rnd() * 60), 0, 0);
+    if (rec > NOW) rec.setTime(NOW.getTime() - rnd() * 5 * 36e5);
+    const r = rnd();
+    let status;
+    if (daysAgo === 0) status = r < 0.4 ? 'Awaiting booking' : r < 0.7 ? 'Booked' : 'In progress';
+    else status = r < 0.7 ? 'Resolved' : r < 0.8 ? 'Booked' : r < 0.9 ? 'In progress' : 'Awaiting booking';
+    let bookedAt = null;
+    if (status !== 'Awaiting booking') {
+      const mins = it.urg === 'emergency' ? 15 + rnd() * 60 : it.urg === 'urgent' ? 60 + rnd() * 900 : 120 + rnd() * 1800;
+      bookedAt = new Date(Math.min(rec.getTime() + mins * 6e4, NOW.getTime()));
+    }
+    rows.push({
+      ref: 'KL-' + (48120 + i),
+      rec,
+      flat: `${1 + Math.floor(rnd() * 40)} ${STREETS[Math.floor(rnd() * STREETS.length)]}, Flat ${'ABCD'[Math.floor(rnd() * 4)]}${1 + Math.floor(rnd() * 3)}`,
+      ...it,
+      status,
+      bookedAt
+    });
+  }
+  rows.sort((a, b) => b.rec - a.rec);
+
+  const ageH = r => (NOW - r.rec) / 36e5;
+  const ageText = h => h < 1 ? Math.round(h * 60) + 'm' : h < 48 ? Math.round(h) + 'h' : Math.round(h / 24) + 'd';
+  const fmt = d => d.toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+  const sameDay = (a, b) => a.toDateString() === b.toDateString();
+  const badge = u => `<span class="badge" style="color:${URG[u].color}">${URG[u].icon} ${URG[u].label}</span>`;
+
+  // KPIs
+  const open = rows.filter(r => r.status !== 'Resolved');
+  const emergOpen = open.filter(r => r.urg === 'emergency');
+  const awaiting = rows.filter(r => r.status === 'Awaiting booking');
+  const breaches = awaiting.filter(r => ageH(r) > URG[r.urg].sla);
+  const bookMins = rows.filter(r => r.bookedAt).map(r => (r.bookedAt - r.rec) / 6e4).sort((a, b) => a - b);
+  const median = bookMins[Math.floor(bookMins.length / 2)];
+  const medianText = median < 60 ? Math.round(median) + ' min' : (median / 60).toFixed(1) + ' h';
+
+  document.getElementById('updated').textContent = 'Updated ' + fmt(NOW);
+  document.getElementById('kpis').innerHTML = [
+    { label: 'Open requests', value: open.length, hint: `${rows.length} received in 14 days`, cls: '' },
+    { label: 'Open emergencies', value: emergOpen.length, hint: 'Target: booked within 4 h', cls: emergOpen.length ? 'alert' : '' },
+    { label: 'Awaiting booking', value: awaiting.length, hint: 'Agent has not yet booked', cls: awaiting.length ? 'warn' : '' },
+    { label: 'SLA breaches', value: breaches.length, hint: 'Awaiting booking past target', cls: breaches.length ? 'alert' : '' },
+    { label: 'Median time to book', value: medianText, hint: 'All booked requests, 14 days', cls: '' }
+  ].map(t => `<div class="tile ${t.cls}"><div class="label">${t.label}</div><div class="value">${t.value}</div><div class="hint">${t.hint}</div></div>`).join('');
+
+  // Chart
+  const days = [];
+  for (let d = 13; d >= 0; d--) { const dt = new Date(NOW.getTime() - d * 864e5); dt.setHours(0, 0, 0, 0); days.push(dt); }
+  const counts = days.map(day => {
+    const c = { emergency: 0, urgent: 0, routine: 0, cosmetic: 0 };
+    rows.forEach(r => { if (sameDay(r.rec, day)) c[r.urg]++; });
+    return c;
+  });
+  const totals = counts.map(c => ORDER.reduce((s, u) => s + c[u], 0));
+  const top = Math.ceil(Math.max(5, ...totals) / 5) * 5;
+  const W = 720, H = 260, L = 36, B = 28, T = 10, pw = W - L - 8, ph = H - B - T;
+  const y = v => T + ph - (v / top) * ph;
+  const slot = pw / days.length, bw = slot * 0.6;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Repair requests per day by urgency, last 14 days">`;
+  for (let t = 0; t <= top; t += top / 5) {
+    svg += `<line x1="${L}" x2="${W - 8}" y1="${y(t)}" y2="${y(t)}" class="grid"/>`;
+    svg += `<text x="${L - 6}" y="${y(t) + 4}" class="ax" text-anchor="end">${t}</text>`;
+  }
+  days.forEach((day, i) => {
+    const x = L + i * slot + (slot - bw) / 2;
+    let base = 0;
+    ORDER.forEach(u => {
+      const v = counts[i][u];
+      if (!v) return;
+      const y0 = y(base), y1 = y(base + v);
+      svg += `<rect x="${x.toFixed(1)}" y="${y1.toFixed(1)}" width="${bw.toFixed(1)}" height="${(y0 - y1).toFixed(1)}" rx="2" class="seg" style="fill:${URG[u].color}"><title>${day.toDateString()}: ${v} ${URG[u].label.toLowerCase()}</title></rect>`;
+      base += v;
+    });
+    svg += `<text x="${(x + bw / 2).toFixed(1)}" y="${H - 8}" class="ax" text-anchor="middle">${day.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</text>`;
+  });
+  svg += '</svg>';
+  document.getElementById('chart').innerHTML = svg;
+  document.getElementById('legend').innerHTML = ORDER.map(u =>
+    `<span><span class="sw" style="background:${URG[u].color}"></span>${URG[u].icon} ${URG[u].label} (SLA ${URG[u].sla < 24 ? URG[u].sla + ' h' : Math.round(URG[u].sla / 24) + ' d'})</span>`
+  ).join('');
+
+  // Table
+  const fUrg = document.getElementById('fUrg');
+  const fStatus = document.getElementById('fStatus');
+  const fFlat = document.getElementById('fFlat');
+  function renderTable() {
+    const q = fFlat.value.trim().toLowerCase();
+    const list = rows.filter(r =>
+      (!fUrg.value || r.urg === fUrg.value) &&
+      (!fStatus.value || r.status === fStatus.value) &&
+      (!q || r.flat.toLowerCase().includes(q))
+    );
+    document.getElementById('count').textContent = `Showing ${list.length} of ${rows.length} requests`;
+    document.getElementById('rows').innerHTML = list.length ? list.map(r => {
+      const awaitingNow = r.status === 'Awaiting booking';
+      const breach = awaitingNow && ageH(r) > URG[r.urg].sla;
+      const decision = awaitingNow
+        ? `Suggested <strong>${r.vendor}</strong><div class="note">${r.note}</div>`
+        : `Booked <strong>${r.vendor}</strong> in ${Math.round((r.bookedAt - r.rec) / 6e4)} min<div class="note">${r.note}</div>`;
+      const statusCls = r.status === 'Resolved' ? 'done' : breach ? 'breach' : 'st';
+      const statusText = breach ? `${r.status} · SLA breach` : r.status;
+      return `<tr>
+        <td class="small">${r.ref}</td>
+        <td class="small">${fmt(r.rec)}</td>
+        <td>${r.flat}</td>
+        <td>${r.issue}<div class="note">${r.trade}</div></td>
+        <td>${badge(r.urg)}</td>
+        <td>${decision}</td>
+        <td><span class="${statusCls}">${statusText}</span></td>
+        <td class="small">${ageText(ageH(r))}</td>
+      </tr>`;
+    }).join('') : `<tr><td colspan="8" class="empty">No requests match these filters.</td></tr>`;
+  }
+  [fUrg, fStatus].forEach(el => el.addEventListener('change', renderTable));
+  fFlat.addEventListener('input', renderTable);
+  renderTable();
+})();
+</script>
+</body>
+</html>

@@ -25,12 +25,12 @@ Tabular figures give every digit the same width, so a column of prices does not 
 
 ## Decimal alignment
 
-When a column holds values with different numbers of decimals (3, 3.5, 3.25), pad every value to the same number of places so right alignment already lines up the points. Pad with `.00` rather than leaving ragged ends. When a column mixes units, scales or ranges (12 kg, 4.5 g), split it into separate columns or convert to one unit.
+When a column holds values with different numbers of decimals (3, 3.5, 3.25), pad every value to the same number of places so right alignment already lines up the points: money and invoice amounts pad to cents (`.00`), and one measure recorded at inconsistent precision gets one fixed number of decimals for the whole column, with tabular figures and the unit in the header. Only values genuinely measured to different precisions keep their own precision, with no added zeros; align them on the decimal with figure-space padding (U+2007) or split integer and fraction cells, since CSS has no working decimal alignment. When a column mixes units, scales or ranges (12 kg, 4.5 g), split it into separate columns or convert to one unit.
 
 ## Precision
 
 - Choose digits by the decision: a price comparison needs cents, a population comparison rarely needs units, a percentage change rarely needs more than one decimal.
-- Use the same precision down a column. Different columns can differ.
+- Use the same precision down a column, even when the values were recorded unevenly; only values truly measured to different precisions keep their own. Different columns can differ.
 - Do not show precision the data does not have. A sensor rounded to a tenth should not appear as 21.4000.
 - Round for display and keep full values in the data. Sorting and totals use the full values; if displayed rows do not sum to a displayed total because of rounding, say so in a note.
 - Compact forms (12.4K, 3.2M) fit a scanning table where order of magnitude matters. Tables used to check or reconcile figures should keep full numbers.

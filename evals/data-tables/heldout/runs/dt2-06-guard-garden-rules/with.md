@@ -1,23 +1,22 @@
-I'd skip the table. A table suits data with several attributes per item, like a price list or a schedule. Your rules are single instructions, so a table would have one real column, and the extra columns would be filler.
+I'd skip the table. A table suits data with the same attributes across rows, like plot sizes, fees, or opening hours. These are seven independent rules with no shared columns, so a table would just be a "Rule" column and a sentence. It also squeezes badly on phones, and people will probably read this on their phones at the garden.
 
-**Use a simple list instead.** A short list is easy to scan, reads well on a phone, and is easy to edit when a rule changes. With seven rules, a numbered list isn't necessary. Bullets work, unless you want to be able to say "see rule 4" at meetings.
+Use a short list with a bold lead-in on each rule, so people can scan it. Here's your text laid out that way:
 
-**Group the rules under a few short headings.** That gives you the organized look you were after:
+**Garden rules**
 
-**Plot and garden care**
-- Water before 9am or after 6pm, never midday.
-- Take only what's in your own plot, and ask before picking from the shared herb bed.
-- Compost goes in the green bin. Anything diseased goes in the black bin, never the green one.
-- Tools go back on the shed hooks, cleaned, before you leave.
+- **Watering:** Water before 9am or after 6pm, never midday.
+- **Picking:** Take only what's in your own plot. Ask before picking from the shared herb bed.
+- **Compost:** Compost goes in the green bin. Anything diseased goes in the black bin, never the green one.
+- **Tools:** Put tools back on the shed hooks, cleaned, before you leave.
+- **Children:** Children are welcome but must be with an adult.
+- **Dogs:** Keep dogs on a lead, and please pick up after them.
+- **Gate code:** The code changes on the 1st of every month. Check the noticeboard.
 
-**Visitors**
-- Children are welcome but must be with an adult.
-- Dogs on a lead, and please pick up after them.
+A few optional tweaks:
 
-**Access**
-- The gate code changes on the 1st of every month. Check the noticeboard.
+- **Use bullets, not numbers**, unless you want to refer to "rule 4". The order doesn't matter.
+- **Group them** if the list grows. For example, "Plots and produce", "Bins and tools", and "People and pets" would work, but seven items is fine as one list.
+- **Make the safety-critical bits stand out.** "Never the green one" for diseased material is the rule most worth bolding, since a mistake there has real consequences.
+- **Pair the gate code with a date.** If the noticeboard is the only place the code appears, say so plainly, so nobody emails you for it.
 
-**Some optional touches:**
-- Bold the key phrase in each rule (**never midday**, **black bin**, **on a lead**) so people skimming can still catch the main points.
-- If the gate code rule matters most to newcomers, put "Access" first.
-- If you later add details like which days the shed is open, who to contact, or fees, a table might start to make sense for that information. It wouldn't make sense for the rules themselves.
+I can also write this as HTML or Markdown if you tell me what the site uses.

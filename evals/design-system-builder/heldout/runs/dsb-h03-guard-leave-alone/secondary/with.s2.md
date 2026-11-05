@@ -1,32 +1,39 @@
-The core scale is solid. Before handing it off, I'd fix a few gaps: one contrast problem, a few missing roles, and the handoff contract.
+Mostly solid. The palette values hold up, but I'd fix three things before handing this off, and a few gaps will cause questions from the other team.
 
 **Fix before handoff**
 
-1. **Border fails non-text contrast in both themes.** `--color-border` is about 1.4:1 on the light background and about 1.5:1 on the dark one. WCAG 1.4.11 requires 3:1 for input outlines and other UI boundaries. If borders only decorate (dividers, cards), that's fine. If they outline inputs, checkboxes, or table cells that carry meaning, add something like `--color-border-strong` at 3:1 or better and keep `--color-border` for decoration.
+1. **Border contrast is too low for input edges.** `--color-border` is about 1.5:1 against white in light mode and about 1.5:1 against `--color-bg` in dark mode. WCAG 1.4.11 asks for 3:1 on UI boundaries such as inputs, checkboxes, and focus-adjacent edges. Keep the current value for dividers and decorative lines, and add a stronger token for control boundaries (e.g. `--color-border-strong`, roughly `#8a8577` light / `#6b6657` dark, which I'd verify with a checker).
 
-2. **No focus token.** There's no focus ring color or width. Add `--color-focus` (both themes) and probably `--focus-ring-width`. This is a common accessibility gap in v1 token sets.
+2. **No focus token.** Without `--color-focus` and a focus ring width/offset, every team will invent their own, and keyboard users get inconsistent focus. Add `--color-focus` (probably `--color-action`, with a dark-mode variant), plus `--focus-ring-width` and `--focus-ring-offset`.
 
-3. **No font family or weight tokens.** This is a big gap for a handoff. For an inventory tool, add `--font-sans`, `--font-mono` or `--font-numeric` (with `font-variant-numeric: tabular-nums` for SKUs and quantities), and weight tokens such as `--font-weight-medium` and `--font-weight-semibold`.
+3. **No tinted status backgrounds.** Warehouse UIs will need badges and banners for low stock, out of stock, received, and so on. Right now danger, success, and warning are foreground-only, so teams will hard-code tints. Add `--color-danger-subtle`, `--color-success-subtle`, and `--color-warning-subtle`, along with matching `--color-on-*` text colors if the status fills are ever solid.
 
-4. **No `color-scheme`.** Add `color-scheme: light` on `:root` and `color-scheme: dark` on `[data-theme="dark"]`. Otherwise native inputs, scrollbars, and selects stay light in dark mode.
+**Gaps worth closing in v1**
 
-5. **No status backgrounds.** Danger, success, and warning are foreground-only. Badges and alerts need tinted backgrounds like `--color-danger-bg`, plus text tokens that pass on them. Check each pair; text on a tint is often the weakest contrast.
+- **Font family and weight tokens** are missing: `--font-sans`, `--font-mono` (SKUs and bin codes will want mono), and weights such as `--weight-regular`, `--weight-medium`, and `--weight-semibold`.
+- **Type scale has no `--text-xs`**, and there is no `--leading-normal` between tight and body. Dense tables often need a smaller size than 14px.
+- **Spacing jumps.** Adding `--space-5` (20px) will matter for form layouts. Document the rule (4px base, what the gaps are) so the other team knows whether `--space-5`, `--space-7`, and so on are intentionally absent.
+- **Border widths, z-index, and opacity for disabled states** are unspecified. Small, but they are the first things people hard-code.
+- **Motion:** consider `--motion-slow` and a `prefers-reduced-motion` override that sets the durations to 0.
+- **Format and versioning:** ship a source of truth (JSON in the W3C DTCG format, or Style Dictionary) and generate the CSS from it, so non-web platforms can consume the same tokens. Add a version number and a changelog, since v1 will get changed.
 
-6. **No reduced-motion handling.** Either document that the motion tokens are overridden to `0ms` under `prefers-reduced-motion: reduce`, or define that override in the tokens file.
+**Things I'd decide on deliberately, not necessarily change**
 
-**Should fix or document**
+- **Dark shadows.** Black shadows at these opacities are barely visible on `#15140f`. Depth in dark mode will come mostly from surface lightness and borders, so make sure the team knows that.
+- **Theme selection.** The dark theme only applies via `[data-theme="dark"]`. If you want OS-level dark mode, add a `prefers-color-scheme` block or document that the app sets the attribute.
+- **Units.** Spacing and shadows are in px, type is in rem. Using rem for spacing scales it with the user's font-size setting. It's a reasonable choice either way, but pick one and document it.
+- **Status color alone.** Success green and danger red are both used as text and fill. Warehouse staff may be colorblind, so the components should pair color with an icon or label. This is a component rule, not a token change, but the docs should say it.
 
-- **Dark shadows barely register.** Black shadows at these opacities are nearly invisible on `#15140f`. Either rely on surface lightness and borders for elevation in dark mode, or document that shadows are subtle by design.
-- **Hover moves in opposite directions.** Light hover darkens and dark hover lightens. That's correct for contrast, but document it so nobody "fixes" one theme to match the other.
-- **Spacing has gaps at 20px and 40px.** That's fine if intentional, but add `--space-5` and `--space-10` if the other team will need them.
-- **Type scale has no `xs`.** If labels or dense table cells ever need 12px, adding it now is cheaper than retrofitting it later.
-- **Theme default is undefined.** `[data-theme="dark"]` won't follow `prefers-color-scheme`. Decide whether light is the default and whether the app should respect the OS setting.
-- **Naming is slightly mixed.** Spacing uses numeric indices, type uses t-shirt sizes, and leading uses `tight`/`body`. That's defensible, but list it in the naming rules so new tokens follow one pattern.
+**Checked and fine**
 
-**Handoff package**
+I computed these by hand, so run them through a checker to confirm:
+- Light text `#1d1b16` on bg: very high contrast.
+- Light muted text `#5c574b` on bg: about 6.9:1.
+- Light action `#1b5e8a` on white, and `--color-on-action` on action: about 7:1.
+- Dark muted text on dark bg: about 7.3:1.
+- Dark action on dark surface: about 7.3:1.
+- Dark on-action on dark action: about 7.6:1.
 
-Ship a short doc with the v1 token list, which tokens are public and which are internal, the theme contract, the contrast results for each text and UI pair, and a changelog policy. Without the contrast results, the other team will have to re-derive them.
+The danger, success, and warning colors look well above 4.5:1 on their backgrounds, but I didn't compute those exactly.
 
-I checked the contrast ratios by hand from the WCAG formula, so run them through a checker before you sign off. Text pairs I checked (muted text, action on white, danger, warning, and the dark-mode text pairs) all pass AA.
-
-I can draft the revised token block with these additions if you want it.
+If you want, I can draft the additional tokens (with light and dark values and a contrast check) as a v1.1 patch to this file.

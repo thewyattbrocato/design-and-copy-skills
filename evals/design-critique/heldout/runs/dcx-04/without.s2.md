@@ -1,51 +1,46 @@
-Your structure is sound: three tiers, a highlighted middle plan, and a trial line that removes the credit card worry. The problem is that nothing in the copy says this is for pottery studios. Swap in any other SaaS name and it would still read fine, and that's the main thing to fix.
+It's clean and structurally sound, but it's generic. Swap "Kilnbook" for any other SaaS and nothing would need to change. For a niche product, that's the main thing to fix.
 
-## Pricing
+## Biggest issues
 
-**1. "Items" means nothing to your buyer.**
-A studio manager doesn't think in items. They think in members, wheels, kilns, and bookings. If "item" is a technical term in your product, it won't carry over to a studio owner. Use whatever unit scales with their studio's size, such as "up to 25 members" or "up to 2 kilns".
+**1. "Items" is undefined, and it's your plan limit.**
+A studio manager can't tell whether "up to 100 items" means members, bookings, pieces, or kilns. The limit decides which plan they buy, so use the units they already think in, like members, wheels/kilns, or bookings per month. If you meant members, say "Up to 100 members."
 
-**2. The tiers don't say what the product does.**
-Nothing mentions booking wheel time, scheduling kiln firings, member management, or payments. "Advanced analytics" and "Priority support" are the only differentiators, and neither tells me why I'd pay $20 more. Pro should list concrete things, like "Recurring wheel reservations, kiln firing queue, member billing, utilization reports".
+**2. Nothing mentions pottery.**
+Your audience wants things like wheel and kiln scheduling, firing queues, member credits or class packs, waitlists, and glaze/firing fees. None of that appears. Even one line per tier naming a real feature would do more than the adjectives do.
 
-**3. "Everything in Basic, plus more."**
-"Plus more" is filler. Say what the "more" is.
+**3. The tier descriptions are filler.**
+- "Perfect for getting started" and "Everything in Basic, plus more" don't say anything.
+- "Advanced analytics" is vague. Say what it shows, such as kiln utilization, peak wheel hours, or revenue per member.
+- "Priority support" and "Email support" need a number, like a response time.
 
-**4. Enterprise probably doesn't fit your market.**
-Most pottery studios are small, with one to three locations. "Large organizations with advanced needs" and "Contact Sales" may scare off your actual customers, or suggest you're not for them. If you do have multi-location or school/university customers, say so: "Multi-location studios and ceramics programs". If not, consider cutting it for now.
+**4. The FAQ answers don't answer.**
+All four are non-answers: "Absolutely. We take security very seriously" is what every site says, and "Simply sign up…" explains nothing. Each answer should contain at least one fact.
+- **Cancel:** What happens to their data? Is there a refund? Does access last through the billing period?
+- **Security:** Who processes payments? Are there backups? Where is the data hosted?
+- **Support:** What hours? What channels? How fast?
+- **How does it work:** Replace this with something concrete, like "Can I import my members from a spreadsheet?"
 
-**5. Taglines and buttons.**
-- "Perfect for getting started" and "Choose the plan that's right for you" are placeholder copy. Replace them with who each plan is for, like "Solo studios and home potters", "Growing community studios", or "Multi-location studios".
-- "Select" is a weak button label, and it clashes with your own trial line. Use "Start free trial".
-- "Simple, transparent pricing" is a claim that every pricing page makes. You'd show it better by listing what's included clearly. It also sits awkwardly next to vague limits and a custom tier.
+**5. The FAQ is missing the questions buyers actually have:**
+- What happens when my trial ends?
+- Can I switch plans or exceed a limit?
+- Do you charge payment processing fees on member payments?
+- Do you offer annual billing or a discount?
+- Can I run multiple studio locations?
+- Do you have a discount for nonprofit or community studios?
 
-**6. Smaller things.**
-- Is there an annual discount? Studios tend to like it, and it's a cheap addition.
-- Say what happens at the end of the trial (auto-charge or downgrade?) since you lead with "no credit card".
-- If members pay the studio through Kilnbook, mention payment processing fees somewhere.
+## Smaller notes
 
-## FAQ
+- **"Simple, transparent pricing"** is a cliché, and "Custom" on Enterprise undercuts "transparent." Try a heading that says something about the product, like "Pricing for studios of every size."
+- **"Choose the plan that's right for you"** can be cut.
+- **[Select]** is a weak button label given you have a free trial. Use "Start free trial" on Basic and Pro.
+- **The trial line** ("14 days, no credit card") is your best objection-handler, but it sits below the fold of the pricing. Move it up near the heading.
+- **Enterprise** may not fit this market. Most pottery studios are small, so consider whether "multi-location" is a more honest framing than "large organizations with advanced needs."
+- **The $9 to $29 jump** is big. Make sure it's obvious what justifies it. Right now only "unlimited" and "analytics" do.
 
-All four answers say nothing. Each is a question a visitor asks to find out something specific, and the answer restates the question.
+## Example of the direction
 
-- **How does it work?** "Sign up, set up, start using" is not an answer. Describe the real flow: add your wheels and kilns, invite members, and they book time slots.
-- **Can I cancel anytime?** Add what happens to the data (can they export it?), whether there are refunds, and whether access lasts until the end of the billing period. That's what people worry about.
-- **Is my data secure?** "We take security very seriously" is the phrase people read as a red flag. Give specifics: who handles payments (e.g. Stripe, so you never store card numbers), encryption, backups, and data export.
-- **Do you offer support?** Give the channel, hours, and typical response time. "Friendly team" says nothing checkable.
+> **Basic, $9/mo.** For small studios getting organized. Up to 50 members. Wheel and kiln booking. Email support.
+>
+> **Q: Can I cancel anytime?** Yes. Cancel from your account settings and you keep access until the end of your billing period. You can export your member and booking data as a CSV at any time.
 
-**Questions your buyers will actually ask that are missing:**
-- Can I move over from my spreadsheet or current system?
-- Can members pay and book on their own, or does staff do it?
-- Can it handle kiln firing schedules and not just wheel time?
-- Is there a limit on members?
-- What happens when I hit a plan limit?
-
-## Suggested direction
-
-Here's a rewrite of one tier to show the shift:
-
-> **Studio**, $29/mo. *For community studios with a growing membership.*
-> Unlimited members · Wheel and kiln booking · Recurring reservations · Member billing · Utilization reports · Priority support
-> [Start free trial]
-
-I'd rework the whole thing along these lines. I can draft the full revision if you tell me what the plans really include. I'd need the actual limits, whether you do multi-location, and how payments work.
+If you tell me what the plans actually include, like the real limits, features, and support hours, I can draft a full rewrite with those details.

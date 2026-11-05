@@ -1,28 +1,28 @@
-Tallybee: Budgeting for Freelancers
+**Tallybee: Budgeting for Lumpy Income**
 
-**Know what's safe to spend, even when income is lumpy.**
+Some months you land three clients. Some months you land none. Tallybee is the budgeting app built for freelancers whose income never arrives on a schedule.
 
-Freelance money arrives in chunks, and taxes arrive later. Tallybee sets the tax money aside for you, so what's left is yours to spend.
+**Tax money, set aside automatically**
+Log a client payment or let it sync in. Tallybee sets aside your tax share from that payment right away, so the money is already put away when the bill comes.
 
-**TAX MONEY, SET ASIDE AUTOMATICALLY**
-Log a client payment or let it sync from your bank. Tallybee puts your tax share aside right away, so you aren't scrambling at quarter's end.
+**One number: safe to spend this week**
+Tallybee works out what's left after your tax set-aside and your upcoming bills. It shows you a single "safe to spend this week" number, so you don't have to guess whether you can afford something.
 
-**YOUR "SAFE TO SPEND THIS WEEK" NUMBER**
-One number shows what you can spend this week after taxes and bills. It's the answer without the spreadsheet.
+**Connects to your bank, read-only**
+Link your bank account so payments show up on their own. The connection is read-only. Tallybee can see transactions, but it can't move your money.
 
-**BUILT FOR UNEVEN INCOME**
-A big month and a slow month don't need two different budgets. Tallybee is designed around income that doesn't arrive on a schedule.
+**Built for how freelancers actually get paid**
+- Automatic tax set-aside on every client payment
+- A weekly safe-to-spend number that adjusts as income comes in
+- Log payments by hand or sync them from your bank
+- Made for irregular, uneven income
 
-**READ-ONLY BANK CONNECTION**
-Connect your bank to sync payments. The connection is read-only, so Tallybee can see your transactions but can't move your money.
-
-**PRICING**
+**Pricing**
 Try Tallybee free for two weeks. After that, it's $6 a month.
 
-Available on iPhone. Android isn't available yet.
-
-**Download Tallybee and see your safe-to-spend number today.**
+Tallybee is available on iPhone. Android isn't available yet.
 
 ---
-- I left out "Freelancers save an average of $412 a month." You haven't measured it, and an invented savings figure in an App Store listing can be flagged by Apple and by the FTC. If you want a number up top later, run a quick check on beta users and I'll drop in the real figure.
-- Confirm the exact wording for the free trial and renewal ("free for two weeks, then $6 a month, billed monthly") matches your App Store Connect subscription setup.
+I left out the "$412 a month" opener. It hasn't been measured, and an invented savings figure in an App Store listing risks a rejection or a complaint. Once you have real data, you can put it back in with its basis, for example "Beta users saved an average of $X a month (n=…, [dates])".
+
+Check the "Connects to your bank, read-only" section against how your bank integration actually works before you submit.

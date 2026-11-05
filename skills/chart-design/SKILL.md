@@ -17,7 +17,7 @@ A chart exists to let one reader see one thing quickly and correctly. This skill
 
 ## When not to use
 
-- Several charts, KPI tiles and filters arranged on one screen: multi-chart dashboard layout, outside this skill. This skill still applies to each chart inside it.
+- A whole dashboard (grid, KPI tiles, status walls, refresh): outside this skill, which still applies to each chart and to what charts on one screen must share.
 - Tables for exact lookup: use data-tables if installed.
 - Interface palettes, brand colors, theming: use color-palette if installed. Only data color is handled here.
 - Diagrams that explain how something works (flows, architectures, mechanisms): use teaching-interfaces if installed, or another diagramming approach.
@@ -107,6 +107,7 @@ Work through these in order. Skip steps that are already settled.
 - Is any partial period, estimate or adjusted value marked as such?
 - Does the title say what the reader should conclude, or honestly describe the view?
 - Is the takeaway in text, and are values reachable without hovering?
+- Is every combined rate recomputed from counts, every percent change given with its base, and do charts shown together share ranges, colors and order?
 - Would a sentence or a table have served this reader better?
 
 ## References
@@ -116,3 +117,4 @@ Work through these in order. Skip steps that are already settled.
 - [labels-and-color.md](references/labels-and-color.md): load when styling: direct labels, legends, annotation, gridlines, text sizes, and sequential, diverging or categorical color.
 - [relationship-recipes.md](references/relationship-recipes.md): load for over or under a target, a few items dominating, funnel, waterfall, donut, radar or stacked-area requests, irregular sample dates, one series against many, or averages and typical values.
 - [multiples-and-accessible-charts.md](references/multiples-and-accessible-charts.md): load for many series, tiny inline trend lines, or any chart that must be accessible or work without hover.
+- [maps-percentages-and-chart-sets.md](references/maps-percentages-and-chart-sets.md): load for a map, a percentage or rate that is combined or compared, several charts on one screen or slide, results from few people, or a projected chart.

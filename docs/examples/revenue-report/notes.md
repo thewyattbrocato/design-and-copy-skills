@@ -20,9 +20,9 @@ The harness appends one format instruction in both arms: *Return the result as a
 
 ## Sonnet (`claude-sonnet-5-5`)
 
-![without and with, side by side](sonnet/compare.png)
+![Featured pair for the Ember & Oak monthly revenue report, Sonnet. Left, without the skill: four figure tiles, a weekly revenue bar chart in orange with the last bar darker, and a top 6 products table. Right, with the skill: three figure tiles, a bar chart titled with the rise from $6.4k to $8.5k in 12 weeks, with a dashed 12-week average line and the last bar highlighted, and a top 6 products table with a share column.](sonnet/compare.png)
 
-![all six runs](sonnet/contact-sheet.png)
+![Contact sheet of all six Sonnet runs for the revenue report: three without the skill on the top row and three with it below, each labelled with its run number and rubric mean. The featured median run of each row is outlined and labelled featured (median).](sonnet/contact-sheet.png)
 
 | Run | Without skill: rubric mean | With skill: rubric mean | With skill: skill invoked | Pair verdict (blind, swap-checked) |
 | --- | --- | --- | --- | --- |
@@ -47,9 +47,9 @@ Rubric means are the judge's 1 to 5 scores averaged over the rubric items and bo
 
 ## Haiku (`claude-haiku-4-5-20251001`)
 
-![without and with, side by side](haiku/compare.png)
+![Featured pair for the Ember & Oak revenue report, Haiku. Left, without the skill: a brown weekly revenue bar chart that fills only the left half of its box, above a top 6 products table. Right, with the skill: a smaller orange bar chart beside a top 6 products table, both in one white card.](haiku/compare.png)
 
-![all six runs](haiku/contact-sheet.png)
+![Contact sheet of all six Haiku runs for the revenue report: three without the skill on the top row and three with it below, each labelled with its run number and rubric mean. The featured median run of each row is outlined and labelled featured (median).](haiku/contact-sheet.png)
 
 | Run | Without skill: rubric mean | With skill: rubric mean | With skill: skill invoked | Pair verdict (blind, swap-checked) |
 | --- | --- | --- | --- | --- |

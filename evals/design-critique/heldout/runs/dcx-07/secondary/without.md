@@ -1,14 +1,17 @@
-**Ship Version B, with its copy and a cleaned-up visual layer.**
+**Ship Version B.** Its copy does work that Version A's doesn't.
 
-Version A is generic. Its heading says nothing about what the user can do, "We can't wait to see where your journey takes you!" is filler, and "Get Started" sends a user who has no walks and no walkers into an onboarding flow with no context. Version B does the job an empty state should do: it names a specific walker, a specific time, and a specific place, and it gives one clear next action. It reads like a neighborhood app, which is the value Brindle is selling.
+Version A is a generic empty state. "Nothing here yet" and "We can't wait to see where your journey takes you" could sit on any app, and "Get Started" doesn't say what starting means for a dog owner. Version B tells the user what's available and offers a specific next step: book a named walker at a named time and place. It also makes the product's main promise concrete, a photo halfway through the walk, and the small "vetted and local" line answers the trust question a first-time owner has about strangers walking their dog.
 
-Changes I'd make to B before shipping:
+Changes I'd make before Friday:
 
-1. **Make the Marta line conditional.** Show it only when a real, bookable slot exists at render time. Otherwise fall back to something like "No walks yet. Walkers near [neighborhood] have openings this week." Hard-coding a name and time will break as soon as her calendar changes.
-2. **Split first-time and returning users.** "No walks booked this week" implies a history. A new user needs something like "Your first walk is one tap away," with the Marta suggestion as the first recommendation.
-3. **Restyle the buttons.** Use the product's primary button for "Book Marta for Tuesday" and a text or outline button for "See other walkers." Default web buttons are the biggest reason B looks unfinished, and the copy is what makes it work, so keep the copy.
-4. **Replace the emoji with a small icon or illustration** in A's style. Keep A's spacing and type scale. You get B's specificity with A's polish.
-5. **Move the trust line.** "They're all vetted and local" is useful, but it answers a question nobody asked on an empty screen. Put it on the walker profile or the booking confirmation, and keep the link only if people tap it.
-6. **Confirm the photo promise is real.** "She'll send you a photo halfway through" must be a shipped feature with a clear flow, not something the copy anticipates.
+1. **Fix the visuals, not the words.** The default web buttons and the emoji make it look unfinished. Use the app's real button components, keep one primary action and one secondary, and drop the emoji or swap in the paw icon from Version A. You can borrow A's spacing and type scale without its illustration.
 
-Before Friday, I'd show both versions to 5–8 dog owners and ask what they'd do next. If they can name the next step from B and can't from A, that settles it. I can only judge the copy and layout here, so I haven't seen the data or booking logic behind either one.
+2. **Confirm "Marta" is live data.** This is the biggest risk. If the Tuesday and Thursday slots and the Pell Park reference come from real availability, great. If they're hardcoded for the demo, the screen will break or mislead for everyone else. Build a fallback for when no walker has openings. Something like "No walkers are free this week near [neighborhood]. Get notified when someone opens up," which keeps the same structure.
+
+3. **Make the trust line a real explanation.** "Why only a few walkers?" sounds defensive. Try "How we vet walkers" and link it to the actual vetting details, such as background checks, insurance, and references.
+
+4. **Check the photo promise.** "She'll send you a photo halfway through" is the most persuasive line on the screen, so make sure it's a shipped feature and not a plan. If it isn't, cut it.
+
+5. **Test with a few owners.** Show both versions to three or four people who own dogs and ask what they'd do next. That's a quick check before the Friday decision, and the answer should be obvious.
+
+If the founder's copy can't be backed by live data by Friday, the fallback is to ship the Version A layout with Version B's headline and a single "See walkers near you" button. That keeps the clean visuals and still gives the owner something specific to do.

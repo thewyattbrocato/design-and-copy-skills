@@ -2,29 +2,29 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "7f47ae0ed34378fe",
+    "with": "64612ae3a0ce55f0",
     "without": "4316507132ce15a3"
   },
   "result": {
     "winner": "with",
-    "judge_notes": "pass 1 (A=with, B=without): Both answers prefill location, date, times, role and break from the given context, and both leave the employee blank for the same reason: a wrong guess gets saved by accident. A is tighter and handles past dates explicitly, although it never shows where a suggestion came from. B adds a subtle 'suggested' marker and a good no-override rule, but it assumes data the brief never mentions (break data with no caveat, employee availability) and drifts into extra features. | pass 2 (A=without, B=with): Both answers prefill location, date, times, role and break from the right sources, and both leave Employee and Notes blank on purpose with sound reasons. A is better at marking prefilled values as suggestions and at not overriding manual edits, but it adds pay and overtime fields the context doesn't mention, plus a broad 'smart behaviors' section. B is tighter, hedges on data the tool may not have (breaks), and explicitly blocks or warns on past dates, though it never shows where a suggestion came from.",
+    "judge_notes": "pass 1 (A=with, B=without): Both answers prefill the right fields from the given context and leave the employee blank for a good reason. A does better on telling managers where a suggestion came from, with hints like 'Usual for Downtown'. B's date default could land on a past day, since the next day after the last shift created may already be over, and its extra 'smart behaviors' section goes a little beyond what was asked. | pass 2 (A=without, B=with): Both answers prefill the same core fields, leave Employee blank for a good reason, and avoid past dates. B does better on transparency: it shows the source of each suggestion (\"Usual for Downtown\") and requires real editable values rather than placeholder text. B also adds practical safeguards: use the most common recent value rather than the latest, re-derive when the location changes, and leave fields blank when there is too little history. A's extra sections (chips, sticky values) are useful but stray slightly from the question.",
     "rubric_scores": {
-      "with": 4.5,
-      "without": 4.3
+      "with": 4.9,
+      "without": 4.4
     },
     "rubric_items": {
       "with": [
         5.0,
         5.0,
-        3.0,
-        4.5,
-        5.0
+        5.0,
+        5.0,
+        4.5
       ],
       "without": [
         5.0,
         5.0,
         4.0,
-        3.5,
+        4.0,
         4.0
       ]
     },
@@ -37,7 +37,7 @@
         ],
         "raw_verdict": "A",
         "winner": "with",
-        "notes": "Both answers prefill location, date, times, role and break from the given context, and both leave the employee blank for the same reason: a wrong guess gets saved by accident. A is tighter and handles past dates explicitly, although it never shows where a suggestion came from. B adds a subtle 'suggested' marker and a good no-override rule, but it assumes data the brief never mentions (break data with no caveat, employee availability) and drifts into extra features."
+        "notes": "Both answers prefill the right fields from the given context and leave the employee blank for a good reason. A does better on telling managers where a suggestion came from, with hints like 'Usual for Downtown'. B's date default could land on a past day, since the next day after the last shift created may already be over, and its extra 'smart behaviors' section goes a little beyond what was asked."
       },
       {
         "order": [
@@ -46,7 +46,7 @@
         ],
         "raw_verdict": "B",
         "winner": "with",
-        "notes": "Both answers prefill location, date, times, role and break from the right sources, and both leave Employee and Notes blank on purpose with sound reasons. A is better at marking prefilled values as suggestions and at not overriding manual edits, but it adds pay and overtime fields the context doesn't mention, plus a broad 'smart behaviors' section. B is tighter, hedges on data the tool may not have (breaks), and explicitly blocks or warns on past dates, though it never shows where a suggestion came from."
+        "notes": "Both answers prefill the same core fields, leave Employee blank for a good reason, and avoid past dates. B does better on transparency: it shows the source of each suggestion (\"Usual for Downtown\") and requires real editable values rather than placeholder text. B also adds practical safeguards: use the most common recent value rather than the latest, re-derive when the location changes, and leave fields blank when there is too little history. A's extra sections (chips, sticky values) are useful but stray slightly from the question."
       }
     ]
   }

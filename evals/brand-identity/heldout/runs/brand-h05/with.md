@@ -1,21 +1,23 @@
 **Refine it. Keep the dog.**
 
-The neighborhood recognizes the dog, and it's the one thing a new location can't buy. Customers will find the second and third clinics by sight, because the dog tells them it's the same place they already trust. A replacement logo would throw that away to get a "professional" look. A tired look is rarely a reason to start over.
+I'd redraw the dog and leave the idea alone. Twelve years of neighborhood recognition is an asset, and you're opening two more locations. New neighborhoods will take their cue from the first location's reputation. A dog people already know is a head start your partner's clean new logo would throw away.
 
-**What I'd do**
+**Why refine rather than replace:**
+- The dog still fits. It's a friendly dog at a vet clinic, so the meaning hasn't aged.
+- Replacing a known mark is only justified if it misleads, fails at needed sizes, or is confusable with another. "Wobbly" is a craft problem, and a redraw fixes it.
+- The one-ear-up pose is the memorable part. A new logo would likely drop it for a generic dog silhouette or paw print, which every other vet already uses.
 
-1. **Keep the idea.** The mark is a dog with one ear up. The wobbly hand-drawn quality and the single raised ear are what people remember, so they stay. I'd redraw the dog as a flat, solid, confident shape with the same pose, the same ear and the same slightly lopsided character. I wouldn't trace it into a stiff, symmetrical corporate dog.
-2. **Fix what actually fails.** A pencil sketch has hairlines and gray tones. Those disappear on a sign, a 16-pixel favicon, a stamped prescription bag and a one-color embroidered scrub top. The redraw needs one bold line weight. It has to read solid black on white and reversed on a dark background before we pick any color.
-3. **Tidy the lettering and keep it friendly.** I'd keep the rounded font, since it matches the dog's warmth. I'd space it by eye and change one letter or detail so it isn't plain stock type. I'd also give the dog and the name the same stroke weight so they look like one piece.
-4. **Build the set that three locations need.** That means a horizontal version, a stacked version, and a dog-only version for the favicon, social avatar and stamps. Each location gets its name as a separate line under the mark, not baked into the logo, so the dog stays constant and the neighborhood name can change.
-5. **Keep the old color if there is one.** If people associate a color with you, keep it.
+**What I'd actually do:**
+1. **Redraw the dog as a solid, flat shape.** Trace the sketch and keep the proportions, the head tilt and the ear. Tidy the line weight but keep a little of the hand-drawn character, so it reads as "the same dog, cleaned up" and not a different dog.
+2. **Make it work small and in one color.** A pencil sketch has hairlines, and those vanish at favicon or sign size. I'd draw a heavier, simpler version for small use. Then I'd check it in solid black, reversed on dark, and at 16–32 pixels.
+3. **Fix the wordmark.** The rounded font is probably the dated part. Keep the friendly, rounded temperament, but pick a better-spaced font and make one custom adjustment. Match its weight to the dog's.
+4. **Build a lockup set:** horizontal, stacked, and dog-only for avatars and favicons. Add clear-space and minimum-size rules, so all three locations use the mark the same way.
+5. **Keep any color people associate with you.** Change one thing at a time.
 
-**For your partner**
+**For your partner:** this gets them the clean, professional result they want. It also protects the thing you'd hate to lose. Frame it as "the same dog, professionally finished," not "keeping the old logo."
 
-Their goal is a clean, professional look, and a redraw gets there. The look comes from consistent weight, clean edges, good spacing and a proper file set. It doesn't require a new symbol. I'd show them the old sketch next to the redrawn dog on a sign, a website header and a scrub top. Most people drop the "replace it" idea once they see the dog cleaned up.
+**Next step:** before committing, ask 15–20 regulars, "What do you picture when you think of us?" If they mention the dog unprompted, that settles it with evidence. I don't have recognition data, so I'm relying on your account that people know the dog.
 
-**One check before you commit**
-
-Show about 10 clients the dog with the name covered and ask what it is. I'm not claiming a result, because nobody has measured it. If most of them name your clinic, the case for keeping the dog is settled. If hardly anyone does, then the equity is weaker than you think, and we should talk again. Based on what you've told me, I expect they'll recognize it.
-
-**Assumptions:** I haven't seen the actual drawing, so I'm going on your description. If you send the file, I can sketch the redrawn version. Also, ask your friend and their kid before you finalize. It's their drawing, and the story makes a good "about us" line.
+**Notes:**
+- I assumed the new locations will be in nearby areas where the existing brand carries over. If they're in a different city, recognition matters less, but the dog is still more distinctive than a stock icon.
+- A designer should do the redraw, and a trademark search should happen before you print the mark on three storefronts. I can't promise it's unique.

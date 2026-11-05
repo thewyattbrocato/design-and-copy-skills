@@ -1,24 +1,19 @@
-The copy could be for any software product sold to any industry. A plumbing owner who arrives from search can't tell within a few seconds that it's for them, what it does, or why it's better than what they already use. I only have the text, so I can't judge layout, speed, or traffic quality. The copy is still a likely cause.
+I've kept the founder's voice, which is plain and good. The edits fix a few specific problems, and there are some questions only the founder can answer before Friday.
 
+## What I'd change
+
+1. **The subhead does two jobs.** It describes the product, then lists platform availability and a limitation. Availability belongs next to the button, where someone deciding to download will look for it.
 [...]
-
-**1. The hero never names the customer or the product.**
-"Seamless field operations" and "all-in-one, next-generation platform" are phrases every competitor uses. The words "plumbing," "HVAC," "dispatch," and "field service software" appear nowhere in the hero. That hurts conversion, and it also hurts search. Someone who searched "HVAC scheduling software" should see those words on arrival.
-
+4. **The price line is ambiguous.** "Larger households are $2 a month" could mean $2 per household or $2 per person. It also doesn't say whether "4" counts people or devices.
 [...]
+## Revised copy
 
-**Hero**
-- Headline: *Scheduling, dispatch, and invoicing for plumbing and HVAC companies*
-- Subhead: *Kettlebridge helps shops with 5–30 techs fit in more jobs a day, cut drive time, and get paid before the truck leaves the driveway.*
-- Button: *Book a 20-minute demo* (secondary: *Take the tour*)
-
+**HERO**
+- Headline: One grocery list for the whole household *(unchanged, it's strong)*
+- Subhead: Everyone adds items, and the list updates for everyone as it happens. Tidewell is a shared list for people who live together.
+- Button: Download for iPhone or Android
 [...]
-
-**Features**
-
+**PRICE**
+Free for households of up to 4 people. Larger households pay $2 a month.
 [...]
-
-- **Mobile App:** *Techs see the job history, build the quote, and collect payment from their phone, even with bad signal.*
-- **Invoicing:** *Send the invoice on-site. Customers pay by card or text link, and you stop chasing checks.*
-
-[...]
+- Is the $2 per household or per person? Is it billed monthly only, or is there an annual option?

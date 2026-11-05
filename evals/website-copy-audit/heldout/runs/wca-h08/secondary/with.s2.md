@@ -1,22 +1,19 @@
-Here are the new tags. I counted each one by hand, since the shell tool isn't available in this session, so the counts are manual. Each one is under the limit with some room to spare.
+Here are the four rewrites. I counted each one character by character, spaces and punctuation included, so please run them through a counter before publishing. I have no tool here that can count for me.
 
 **Home**
-- Title (51/60): `Brightwater Family Dental | Family Dentist in Tulsa`
-- Description (122/155): `Quality dental care for the whole family in a friendly environment on Elm Road in Tulsa. Call us to book your visit today.`
+- Title (51/60): `Family Dentist in Tulsa | Brightwater Family Dental`
+- Description (130/155): `Friendly, quality dental care for the whole family at Brightwater Family Dental on Elm Road, Tulsa. Call today to book your visit.`
 
 **Teeth whitening**
 - Title (52/60): `Teeth Whitening in Tulsa | Brightwater Family Dental`
 - Description (122/155): `Brighten your smile with professional teeth whitening at Brightwater Family Dental on Elm Road, Tulsa. Call today to book.`
 
 **Emergency dentist**
-- Title (54/60): `Emergency Dentist in Tulsa | Brightwater Family Dental`
-- Description (118/155): `Same-day appointments for dental emergencies on weekdays at Brightwater Family Dental on Elm Road, Tulsa. Call us now.`
+- Title (50/60): `Emergency Dentist in Tulsa | Same-Day Appointments`
+- Description (124/155): `Dental emergency? We offer same-day appointments on weekdays at Brightwater Family Dental on Elm Road, Tulsa. Call us today.`
 
 **New patients**
 - Title (55/60): `New Patient Visits in Tulsa | Brightwater Family Dental`
-- Description (121/155): `Your first visit includes a full exam. Fill in your forms online before you arrive at Brightwater Family Dental in Tulsa.`
+- Description (140/155): `Your first visit at Brightwater Family Dental includes a full exam. Save time by completing our new patient forms online before you arrive.`
 
-Notes:
-- The home and teeth whitening descriptions were blank or generic before, so I wrote them from scratch. Check that "professional teeth whitening" and "Call today" match how you want to describe the practice.
-- Every title ends with the practice name, so the brand shows up on each page. Google may rewrite titles or descriptions anyway, so it's worth checking the results in Search Console after they've been crawled.
-- If you want me to save these into the site files, tell me where the pages' HTML lives. I haven't changed anything yet.
+I dropped "the best teeth whitening available" from the old whitening description. It's an unsupported superlative, and Google may not treat it kindly. The "Same-Day Appointments" title is limited to weekdays in the description, so check that matches what the practice actually offers. The home description and the emergency title are my wording and aren't from your notes.

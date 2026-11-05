@@ -1,27 +1,16 @@
 ```css
 :root {
-  /* Raw values */
-  --teal-700: #0f766e;
-  --teal-800: #0d6b63;
-  --teal-50:  #e6f4f2;
-  --red-700:  #c0392b;
-  --red-800:  #a93226;
-  --white:    #fff;
-  --slate-200: #dde2e1;
-  --slate-500: #5a6b69;
-  --slate-900: #14201f;
-
-  /* Semantic roles */
-  --color-surface:        var(--white);
-  --color-border-subtle:  var(--slate-200);
-  --color-text-primary:   var(--slate-900);
-  --color-text-secondary: var(--slate-500);
-  --color-text-on-accent: var(--white);
-  --color-accent:         var(--teal-700);
-  --color-accent-hover:   var(--teal-800);
-  --color-accent-subtle:  var(--teal-50);
-  --color-danger:         var(--red-700);
-  --color-danger-hover:   var(--red-800);
+  /* Color: raw values, used only through the roles below */
+  --color-accent: #0f766e;
+  --color-accent-hover: #0d6b63;
+  --color-accent-subtle: #e6f4f2;
+  --color-danger: #c0392b;
+  --color-danger-hover: #a93226;
+  --color-on-solid: #fff;
+  --color-surface: #fff;
+  --color-border-subtle: #dde2e1;
+  --color-text-primary: #14201f;
+  --color-text-secondary: #5a6b69;
 
   /* Spacing */
   --space-1: 6px;
@@ -32,18 +21,19 @@
   --space-6: 20px;
 
   /* Type */
-  --font-size-meta:  13px;
-  --font-size-body:  15px;
+  --font-size-meta: 13px;
+  --font-size-control: 15px;
   --font-size-title: 19px;
   --font-weight-semibold: 600;
-  --font-weight-bold:     700;
+  --font-weight-bold: 700;
 
-  /* Radius, elevation, motion */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --shadow-raised: 0 1px 4px rgba(16, 24, 40, .10);
-  --duration-fast: .18s;
-  --ease-standard: ease;
+  /* Shape, border, elevation, motion */
+  --radius-control: 6px;
+  --radius-container: 10px;
+  --border-width: 1px;
+  --shadow-raised: 0 1px 4px rgba(16, 24, 40, 0.1);
+  --duration-fast: 0.18s;
+  --easing-standard: ease;
 }
 
 /* Button */
@@ -52,36 +42,36 @@
   align-items: center;
   gap: var(--space-1);
   padding: var(--space-2) var(--space-5);
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-control);
   font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   background: var(--color-accent);
-  color: var(--color-text-on-accent);
+  color: var(--color-on-solid);
   border: 0;
-  transition: background var(--duration-fast) var(--ease-standard);
+  transition: background var(--duration-fast) var(--easing-standard);
 }
 .btn:hover { background: var(--color-accent-hover); }
 
+/* Border adds 1px per side, so padding shrinks by the same amount to keep the size identical */
 .btn-secondary {
   background: transparent;
   color: var(--color-accent);
-  border: 1px solid var(--color-accent);
-  /* 1px less than .btn so the border doesn't change the overall size */
-  padding: calc(var(--space-2) - 1px) calc(var(--space-5) - 1px);
+  border: var(--border-width) solid var(--color-accent);
+  padding: calc(var(--space-2) - var(--border-width)) calc(var(--space-5) - var(--border-width));
 }
 .btn-secondary:hover { background: var(--color-accent-subtle); }
 
 .btn-danger {
   background: var(--color-danger);
-  color: var(--color-text-on-accent);
+  color: var(--color-on-solid);
 }
 .btn-danger:hover { background: var(--color-danger-hover); }
 
 /* Card */
 .card {
   background: var(--color-surface);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-md);
+  border: var(--border-width) solid var(--color-border-subtle);
+  border-radius: var(--radius-container);
   padding: var(--space-6);
   box-shadow: var(--shadow-raised);
 }
@@ -99,7 +89,7 @@
 .card-footer {
   margin-top: var(--space-5);
   padding-top: var(--space-4);
-  border-top: 1px solid var(--color-border-subtle);
+  border-top: var(--border-width) solid var(--color-border-subtle);
   display: flex;
   gap: var(--space-3);
   justify-content: flex-end;
@@ -107,15 +97,11 @@
 ```
 
 **Merge map (old value → token):**
-- `#dde2e1` (card border and footer rule) → `--color-border-subtle`
-- `#fff` (button text, card background) → `--color-text-on-accent` / `--color-surface`, both pointing at `--white`
-- `#0f766e` (button background, secondary text and border) → `--color-accent`
-- `6px` (button gap and radius) → `--space-1` / `--radius-sm`
-- `10px` (button padding, title margin) → `--space-2`
-- `14px` (meta margin, footer padding) → `--space-4`
-- `18px` (button padding, footer margin) → `--space-5`
-- `9px 17px` → `calc(... - 1px)` on the same tokens. It renders identically and stays in sync if the button padding changes.
+- `#0f766e` → `--color-accent`. It was used for the button background, the secondary text and the secondary border.
+- `#dde2e1` → `--color-border-subtle`. It was used for both the card border and the footer rule.
+- `#fff` → `--color-on-solid` for text on filled buttons, and `--color-surface` for the card background. They are the same value today but now change independently, for example in dark mode.
+- The `9px 17px` secondary padding is now derived from the base padding minus the border width, so the two buttons can't drift apart.
 
 **Notes:**
-- Every rendered value is unchanged. Components read only the semantic roles, so a dark theme or second brand later means remapping the roles in the middle block, not editing components.
-- The spacing scale (6/10/12/14/18/20) has close neighbors, such as 12/14 and 18/20. I kept them to avoid any visible shift. If you accept a 1–2px nudge, collapsing it to something like 6/10/14/20 would give a cleaner scale.
+- Every value is unchanged, so nothing shifts visually. That leaves spacing at six steps, with 10, 12 and 14 close together. Merging them would be a small visible change, so I left it for you to decide.
+- Class names and the cascade are untouched. Component CSS reads only the role tokens, so a dark theme only needs to re-map the `--color-*` values.

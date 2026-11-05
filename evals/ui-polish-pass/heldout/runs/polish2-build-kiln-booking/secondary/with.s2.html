@@ -3,428 +3,469 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kiln Booking</title>
+<link rel="icon" href="data:,">
+<title>Kiln booking</title>
 <style>
   :root {
     color-scheme: light dark;
     --bg: #f7f5f2;
     --surface: #ffffff;
-    --text: #1f1b17;
-    --muted: #5f5750;
-    --border: #d9d2ca;
-    --accent: #9a4a2b;
-    --accent-hover: #7f3b21;
+    --text: #1f1d1a;
+    --muted: #5f5a53;
+    --border: #d9d3ca;
+    --accent: #8a4b2a;
     --accent-text: #ffffff;
-    --danger: #a12626;
-    --ok: #2e6b34;
+    --busy-bg: #f3e3d8;
+    --busy-text: #6b2f12;
+    --free-text: #1d5a2a;
+    --error: #a4161a;
+    --success-bg: #e4f0e6;
+    --error-bg: #f8e1e1;
     --focus: #1a5fb4;
-    --block: #e9d3c3;
-    --block-text: #4a2414;
-    --radius: 10px;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #171412;
-      --surface: #221e1b;
-      --text: #f2ece6;
-      --muted: #b9aea4;
-      --border: #3d3530;
-      --accent: #d9825c;
-      --accent-hover: #e89a78;
-      --accent-text: #1a0f0a;
-      --danger: #ff8a8a;
-      --ok: #8fd19a;
+      --bg: #1b1916;
+      --surface: #26231f;
+      --text: #f2eee8;
+      --muted: #b9b1a6;
+      --border: #4a443c;
+      --accent: #d9936a;
+      --accent-text: #1b1916;
+      --busy-bg: #4a2d1f;
+      --busy-text: #ffd7bf;
+      --free-text: #b8e6c1;
+      --error: #ff8a8a;
+      --success-bg: #1f3a25;
+      --error-bg: #4a1f1f;
       --focus: #7fb2ff;
-      --block: #5a3424;
-      --block-text: #f6e3d7;
     }
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.5; }
+  body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.5; font-size: 16px; }
+  main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+  header h1 { font-size: 1.75rem; margin: 0 0 4px; }
+  header p { margin: 0 0 24px; color: var(--muted); }
 
-  header, main { max-width: 1100px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
-  header { padding-top: 24px; }
-  h1 { font-size: 1.6rem; margin: 0; }
-  h2 { font-size: 1.1rem; margin: 0 0 4px; }
-  .sub, .hint { color: var(--muted); }
-  .sub { margin: 4px 0 0; }
-  .hint { font-size: .85rem; font-weight: 400; }
-
-  main {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: minmax(0, 1fr);
-    padding-top: 16px;
-    padding-bottom: 48px;
+  .layout { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 760px) {
+    .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; }
   }
-  @media (min-width: 860px) {
-    main { grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); align-items: start; }
-  }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .card h2 { font-size: 1.15rem; margin: 0 0 16px; }
+  .sub { font-size: 0.95rem; margin: 18px 0 8px; }
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-  }
-
-  .field { display: grid; gap: 6px; margin-bottom: 14px; }
-  label { font-weight: 600; font-size: .92rem; }
-  .row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
-  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .row { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 480px) { .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  label { font-weight: 600; font-size: 0.95rem; }
 
   input, select, textarea {
-    font: inherit;
-    color: inherit;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 9px 10px;
-    width: 100%;
-    min-height: 42px;
+    font: inherit; color: inherit; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 12px; min-height: 44px; width: 100%;
   }
   textarea { min-height: 80px; resize: vertical; }
-  input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--danger); }
-
-  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-
-  .error { color: var(--danger); font-size: .85rem; }
-
-  button {
-    font: inherit;
-    font-weight: 600;
-    min-height: 44px;
-    padding: 10px 18px;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: background-color .15s, border-color .15s;
+  input:focus-visible, select:focus-visible, textarea:focus-visible,
+  button:focus-visible, ol:focus-visible, [tabindex="-1"]:focus-visible {
+    outline: 3px solid var(--focus); outline-offset: 2px;
   }
-  .btn-primary { background: var(--accent); color: var(--accent-text); width: 100%; margin-top: 4px; }
-  .btn-primary:hover { background: var(--accent-hover); }
-  .btn-ghost {
-    background: transparent;
-    color: var(--danger);
-    border-color: var(--border);
-    min-height: 36px;
-    padding: 6px 12px;
-    font-size: .9rem;
-    flex-shrink: 0;
-  }
-  .btn-ghost:hover { border-color: var(--danger); }
+  input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--error); }
 
-  .status { min-height: 1.5em; margin: 12px 0 0; font-size: .92rem; }
-  .status.ok { color: var(--ok); }
-  .status.error { color: var(--danger); }
+  .hint { font-size: 0.85rem; color: var(--muted); font-weight: 400; }
+  .error-text { font-size: 0.85rem; color: var(--error); margin: 0; }
+  .error-text:empty { display: none; }
 
-  .timeline-wrap { display: grid; grid-template-columns: 56px 1fr; margin-top: 16px; }
-  .ticks { position: relative; height: 560px; }
-  .ticks span {
-    position: absolute;
-    right: 8px;
-    transform: translateY(-50%);
-    font-size: .75rem;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  .lane {
-    position: relative;
-    height: 560px;
-    border-left: 1px solid var(--border);
-    background: repeating-linear-gradient(to bottom, var(--border) 0 1px, transparent 1px 40px);
-  }
-  .block {
-    position: absolute;
-    left: 4px;
-    right: 4px;
-    background: var(--block);
-    color: var(--block-text);
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: .8rem;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+  button { font: inherit; min-height: 44px; padding: 10px 18px; border-radius: 6px; border: 1px solid transparent; cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-text); font-weight: 600; width: 100%; }
+  button.danger { background: transparent; color: var(--error); border-color: var(--error); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .bookings { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
-  .booking {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
-  }
-  .empty { color: var(--muted); padding: 12px 0; }
+  .status { margin: 0 0 14px; padding: 10px 12px; border-radius: 6px; }
+  .status:empty { display: none; }
+  .status.success { background: var(--success-bg); color: var(--text); }
+  .status.error { background: var(--error-bg); color: var(--error); }
+
+  .hours { list-style: none; padding: 0; margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .hours li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; border-top: 1px solid var(--border); font-size: 0.95rem; }
+  .hours li:first-child { border-top: 0; }
+  .hours li.busy { background: var(--busy-bg); color: var(--busy-text); }
+  .hours li:not(.busy) span:last-child { color: var(--free-text); }
+
+  .bookings { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .booking { border: 1px solid var(--border); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+  .booking .info { min-width: 0; flex: 1 1 200px; overflow-wrap: anywhere; }
+  .booking .meta { font-size: 0.9rem; color: var(--muted); }
+  .empty { color: var(--muted); margin: 0; }
+  .empty[hidden] { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    button { transition: none; }
+    * { transition: none !important; animation: none !important; }
   }
 </style>
 </head>
 <body>
-<header>
-  <h1>Kiln booking</h1>
-  <p class="sub">Reserve a shared kiln for your firing. The studio closes at 10:00 PM.</p>
-</header>
-
 <main>
-  <section class="card" aria-labelledby="book-heading">
-    <h2 id="book-heading">Book a firing</h2>
-    <form id="booking-form" novalidate>
-      <div class="field">
-        <label for="name">Your name</label>
-        <input id="name" name="name" autocomplete="name" aria-describedby="name-error">
-        <div class="error" id="name-error"></div>
-      </div>
+  <header>
+    <h1>Kiln booking</h1>
+    <p>Reserve a shared kiln for your firing. Bookings run on the hour from 8:00 am to 9:00 pm, up to 12 hours at a time.</p>
+  </header>
 
-      <div class="field">
-        <label for="kiln">Kiln</label>
-        <select id="kiln" name="kiln"></select>
-      </div>
+  <div class="layout">
+    <section class="card" aria-labelledby="book-heading">
+      <h2 id="book-heading">Book a firing</h2>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
 
-      <div class="row">
+      <form id="booking-form" novalidate>
         <div class="field">
-          <label for="date">Date</label>
-          <input id="date" name="date" type="date" aria-describedby="date-error">
-          <div class="error" id="date-error"></div>
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="name-error">
+          <p id="name-error" class="error-text"></p>
         </div>
+
         <div class="field">
-          <label for="start">Start time</label>
-          <select id="start" name="start" aria-describedby="start-error"></select>
-          <div class="error" id="start-error"></div>
+          <label for="kiln">Kiln</label>
+          <select id="kiln" name="kiln"></select>
         </div>
-      </div>
 
-      <div class="row">
+        <div class="row">
+          <div class="field">
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date" required aria-describedby="date-error">
+            <p id="date-error" class="error-text"></p>
+          </div>
+          <div class="field">
+            <label for="firing">Firing type</label>
+            <select id="firing" name="firing"></select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="start">Start time</label>
+            <select id="start" name="start" aria-describedby="start-error"></select>
+            <p id="start-error" class="error-text"></p>
+          </div>
+          <div class="field">
+            <label for="duration">Length</label>
+            <select id="duration" name="duration"></select>
+          </div>
+        </div>
+
         <div class="field">
-          <label for="duration">Length</label>
-          <select id="duration" name="duration" aria-describedby="duration-error"></select>
-          <div class="error" id="duration-error"></div>
+          <label for="notes">Notes <span class="hint">(optional)</span></label>
+          <textarea id="notes" name="notes" maxlength="300" aria-describedby="notes-hint"></textarea>
+          <span id="notes-hint" class="hint">Cone, temperature program, or anything the next user should know.</span>
         </div>
-        <div class="field">
-          <label for="firing">Firing type</label>
-          <select id="firing" name="firing"></select>
-        </div>
-      </div>
 
-      <div class="field">
-        <label for="notes">Notes <span class="hint">(optional)</span></label>
-        <textarea id="notes" name="notes" rows="3"></textarea>
-      </div>
+        <button type="submit" class="primary">Book kiln</button>
+      </form>
+    </section>
 
-      <button type="submit" class="btn-primary">Book kiln</button>
-    </form>
-    <p id="status" class="status" role="status" aria-live="polite"></p>
-  </section>
+    <section class="card" aria-labelledby="schedule-heading">
+      <h2 id="schedule-heading">Schedule</h2>
 
-  <section class="card" aria-labelledby="sched-heading">
-    <h2 id="sched-heading">Schedule</h2>
-    <p class="hint" id="sched-sub"></p>
+      <h3 class="sub">Hour by hour</h3>
+      <ol class="hours" id="hours" aria-label="Hour by hour availability"></ol>
 
-    <div class="timeline-wrap" aria-hidden="true">
-      <div class="ticks" id="ticks"></div>
-      <div class="lane" id="lane"></div>
-    </div>
-
-    <ul class="bookings" id="bookings"></ul>
-  </section>
+      <h3 class="sub">Bookings</h3>
+      <ul class="bookings" id="bookings"></ul>
+      <p class="empty" id="empty" hidden>No bookings for this kiln on this day yet.</p>
+    </section>
+  </div>
 </main>
 
 <script>
 (() => {
-  // Replace with your studio's kilns. Bookings are stored in localStorage;
-  // to share them across members, swap loadBookings/saveBookings for your backend.
-  const KILNS = [
-    { id: 'large', name: 'Large electric' },
-    { id: 'small', name: 'Small electric' },
-    { id: 'gas', name: 'Gas reduction' },
-  ];
-  const OPEN = 8 * 60;   // 8:00 AM, in minutes after midnight
-  const CLOSE = 22 * 60; // 10:00 PM
-  const HOUR_PX = 40;
-  const DURATIONS = [60, 90, 120, 180, 240, 300, 360, 480];
-  const FIRING_TYPES = ['Bisque', 'Glaze', 'Raku', 'Test', 'Other'];
-  const FIELDS = ['name', 'date', 'start', 'duration'];
-  const STORE_KEY = 'kiln-bookings-v1';
+  'use strict';
 
-  const $ = id => document.getElementById(id);
+  const STORAGE_KEY = 'kilnBookings.v1';
+  const OPEN_HOUR = 8;
+  const CLOSE_HOUR = 21;
+  const MAX_HOURS = 12;
+  const KILNS = [
+    { id: 'large', label: 'Large electric kiln' },
+    { id: 'small', label: 'Small electric kiln' },
+    { id: 'test', label: 'Test kiln' },
+  ];
+  const FIRING_TYPES = ['Bisque', 'Glaze', 'Test tile', 'Other'];
+
+  const $ = (id) => document.getElementById(id);
   const form = $('booking-form');
+  const nameIn = $('name');
   const kilnSel = $('kiln');
   const dateIn = $('date');
   const startSel = $('start');
   const durSel = $('duration');
   const firingSel = $('firing');
+  const notesIn = $('notes');
+  const statusEl = $('status');
+  const hoursEl = $('hours');
+  const bookingsEl = $('bookings');
+  const emptyEl = $('empty');
+  const scheduleHeading = $('schedule-heading');
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const inputs = { name: nameIn, date: dateIn, start: startSel };
+  const errorEls = { name: $('name-error'), date: $('date-error'), start: $('start-error') };
 
-  const pad = n => String(n).padStart(2, '0');
-  const todayStr = () => {
-    const d = new Date();
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-  };
-  const nowMin = () => {
-    const d = new Date();
-    return d.getHours() * 60 + d.getMinutes();
-  };
-  const clock = m => {
-    const h = Math.floor(m / 60);
-    return `${h % 12 || 12}:${pad(m % 60)} ${h < 12 ? 'AM' : 'PM'}`;
-  };
-  const durLabel = m => {
-    const h = Math.floor(m / 60), mm = m % 60;
-    return [h && `${h} hr`, mm && `${mm} min`].filter(Boolean).join(' ');
-  };
-  const dateLabel = s => {
-    const [y, mo, d] = s.split('-').map(Number);
-    return new Date(y, mo - 1, d).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
-  };
-  const kilnName = id => KILNS.find(k => k.id === id)?.name ?? id;
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  statusEl.tabIndex = -1;
+
+  // Placeholder persistence: bookings live in this browser until a shared backend is added.
+  let bookings = loadBookings();
 
   function loadBookings() {
     try {
-      return { ok: true, items: JSON.parse(localStorage.getItem(STORE_KEY) || '[]') };
-    } catch {
-      return { ok: false, items: [] };
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      return Array.isArray(data) ? data : [];
+    } catch (e) {
+      return [];
     }
   }
-  function saveBookings(items) {
-    localStorage.setItem(STORE_KEY, JSON.stringify(items));
+
+  function persist() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  function validate(b, all) {
-    const errors = {};
-    if (!b.name) errors.name = 'Please enter your name.';
-    if (!b.date) errors.date = 'Please choose a date.';
-    else if (b.date < todayStr()) errors.date = 'That date has already passed.';
-    if (b.date === todayStr() && b.start < nowMin()) errors.start = 'That start time has already passed.';
-    const end = b.start + b.duration;
-    if (end > CLOSE) errors.duration = `Ends after closing at ${clock(CLOSE)}. Choose an earlier start or a shorter length.`;
-    const clash = all.find(x => x.kiln === b.kiln && x.date === b.date && b.start < x.start + x.duration && x.start < end);
-    if (clash && !errors.start) errors.start = `Overlaps ${clash.name}’s booking, ${clock(clash.start)} – ${clock(clash.start + clash.duration)}.`;
-    return errors;
+  const pad = (n) => String(n).padStart(2, '0');
+  const dateKey = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const todayKey = () => dateKey(new Date());
+  const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+  function hourLabel(h) {
+    const hr = h % 12 === 0 ? 12 : h % 12;
+    return `${hr}:00 ${h < 12 ? 'am' : 'pm'}`;
   }
 
-  function showErrors(errors) {
-    FIELDS.forEach(f => {
-      const msg = errors[f] || '';
-      $(f).setAttribute('aria-invalid', msg ? 'true' : 'false');
-      $(f + '-error').textContent = msg;
-    });
+  function rangeLabel(b) {
+    return `${hourLabel(b.start)} to ${hourLabel(b.start + b.hours)}`;
   }
 
-  function setStatus(msg, type = '') {
-    const el = $('status');
-    el.textContent = msg;
-    el.className = 'status ' + type;
+  function kilnLabel(id) {
+    const k = KILNS.find((x) => x.id === id);
+    return k ? k.label : id;
+  }
+
+  function formatDate(key) {
+    const [y, m, d] = key.split('-').map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+  }
+
+  function overlaps(a, b) {
+    return a.kiln === b.kiln && a.date === b.date &&
+      a.start < b.start + b.hours && b.start < a.start + a.hours;
+  }
+
+  function bookingsFor(kiln, date) {
+    return bookings
+      .filter((b) => b.kiln === kiln && b.date === date)
+      .sort((a, b) => a.start - b.start);
+  }
+
+  function showStatus(msg, type) {
+    statusEl.textContent = msg;
+    statusEl.className = `status ${type}`;
+  }
+
+  function setError(field, msg) {
+    errorEls[field].textContent = msg || '';
+    inputs[field].setAttribute('aria-invalid', msg ? 'true' : 'false');
+  }
+
+  function populateStatic() {
+    KILNS.forEach((k) => kilnSel.add(new Option(k.label, k.id)));
+    FIRING_TYPES.forEach((t) => firingSel.add(new Option(t, t)));
+    dateIn.min = todayKey();
+    dateIn.value = todayKey();
+  }
+
+  function refreshStartOptions() {
+    const now = new Date();
+    const isToday = dateIn.value === todayKey();
+    const prev = Number(startSel.value);
+    const available = [];
+
+    startSel.innerHTML = '';
+    for (let h = OPEN_HOUR; h < CLOSE_HOUR; h++) {
+      if (isToday && h <= now.getHours()) continue;
+      available.push(h);
+      startSel.add(new Option(hourLabel(h), String(h)));
+    }
+    if (available.includes(prev)) startSel.value = String(prev);
+
+    submitBtn.disabled = available.length === 0;
+    if (available.length === 0) {
+      setError('start', 'No start times are left for this day. Choose another date.');
+    } else {
+      setError('start', '');
+    }
+    refreshDurationOptions();
+  }
+
+  function refreshDurationOptions() {
+    const max = startSel.value === '' ? 0 : Math.min(MAX_HOURS, CLOSE_HOUR - Number(startSel.value));
+    const prev = Number(durSel.value) || 2;
+    durSel.innerHTML = '';
+    for (let n = 1; n <= max; n++) {
+      durSel.add(new Option(n === 1 ? '1 hour' : `${n} hours`, String(n)));
+    }
+    durSel.value = String(Math.min(prev, max) || max);
   }
 
   function render() {
     const kiln = kilnSel.value;
     const date = dateIn.value;
-    const { ok, items } = loadBookings();
-    const day = ok && date
-      ? items.filter(b => b.kiln === kiln && b.date === date).sort((a, b) => a.start - b.start)
-      : [];
+    const dayBookings = bookingsFor(kiln, date);
 
-    $('sched-sub').textContent = date ? `${kilnName(kiln)} · ${dateLabel(date)}` : kilnName(kiln);
-    $('lane').innerHTML = day.map(b => {
-      const top = (b.start - OPEN) / 60 * HOUR_PX;
-      const height = b.duration / 60 * HOUR_PX;
-      return `<div class="block" style="top:${top}px;height:${height}px" title="${esc(b.name)}">${esc(b.name)} · ${esc(b.firing)}</div>`;
-    }).join('');
+    scheduleHeading.textContent = `Schedule: ${kilnLabel(kiln)}, ${formatDate(date)}`;
 
-    const list = $('bookings');
-    if (!ok) {
-      list.innerHTML = '<li class="empty">Bookings could not be loaded. Local storage may be turned off in this browser.</li>';
-    } else if (!date) {
-      list.innerHTML = '<li class="empty">Choose a date to see bookings.</li>';
-    } else if (!day.length) {
-      list.innerHTML = '<li class="empty">No bookings for this kiln on this day.</li>';
-    } else {
-      list.innerHTML = day.map(b => `
-        <li class="booking">
-          <div>
-            <strong>${esc(b.name)}</strong> <span class="hint">· ${esc(b.firing)}</span>
-            <div>${clock(b.start)} – ${clock(b.start + b.duration)}</div>
-            ${b.notes ? `<div class="hint">${esc(b.notes)}</div>` : ''}
-          </div>
-          <button type="button" class="btn-ghost" data-id="${esc(b.id)}" aria-label="Cancel ${esc(b.name)}’s booking at ${clock(b.start)}">Cancel</button>
-        </li>`).join('');
+    hoursEl.innerHTML = '';
+    for (let h = OPEN_HOUR; h < CLOSE_HOUR; h++) {
+      const covering = dayBookings.find((b) => h >= b.start && h < b.start + b.hours);
+      const li = document.createElement('li');
+      const time = document.createElement('span');
+      const state = document.createElement('span');
+      time.textContent = hourLabel(h);
+      if (covering) {
+        li.classList.add('busy');
+        state.textContent = `Booked by ${covering.name}`;
+      } else {
+        state.textContent = 'Free';
+      }
+      li.append(time, state);
+      hoursEl.append(li);
     }
+
+    bookingsEl.innerHTML = '';
+    emptyEl.hidden = dayBookings.length > 0;
+    dayBookings.forEach((b) => {
+      const li = document.createElement('li');
+      li.className = 'booking';
+
+      const info = document.createElement('div');
+      info.className = 'info';
+
+      const title = document.createElement('strong');
+      title.textContent = `${rangeLabel(b)} · ${b.name}`;
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = `${b.firing} · ${b.hours} hour${b.hours > 1 ? 's' : ''}`;
+
+      info.append(title, meta);
+      if (b.notes) {
+        const notes = document.createElement('div');
+        notes.className = 'meta';
+        notes.textContent = b.notes;
+        info.append(notes);
+      }
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'danger';
+      btn.textContent = 'Cancel';
+      btn.setAttribute('aria-label', `Cancel ${b.name}'s booking, ${rangeLabel(b)}`);
+      btn.addEventListener('click', () => cancelBooking(b.id));
+
+      li.append(info, btn);
+      bookingsEl.append(li);
+    });
   }
 
-  form.addEventListener('submit', e => {
+  function cancelBooking(id) {
+    const b = bookings.find((x) => x.id === id);
+    if (!b || !window.confirm(`Cancel ${b.name}'s booking for ${rangeLabel(b)}?`)) return;
+
+    const previous = bookings;
+    bookings = bookings.filter((x) => x.id !== id);
+    if (!persist()) {
+      bookings = previous;
+      showStatus('Could not save this change in your browser. Please try again.', 'error');
+      return;
+    }
+    render();
+    showStatus('Booking cancelled.', 'success');
+    statusEl.focus();
+  }
+
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const store = loadBookings();
-    if (!store.ok) {
-      setStatus('Could not read existing bookings, so nothing was saved.', 'error');
+
+    const name = nameIn.value.trim();
+    const date = dateIn.value;
+    const start = Number(startSel.value);
+    const hours = Number(durSel.value);
+    const now = new Date();
+    const errs = {};
+
+    if (!name) errs.name = 'Please enter your name.';
+    if (!date) errs.date = 'Please choose a date.';
+    else if (date < todayKey()) errs.date = 'Bookings cannot be made for a past date.';
+    if (!startSel.value) errs.start = 'Choose a start time.';
+    else if (date === todayKey() && start <= now.getHours()) errs.start = 'That start time has already passed.';
+
+    ['name', 'date', 'start'].forEach((f) => setError(f, errs[f]));
+
+    const firstInvalid = ['name', 'date', 'start'].find((f) => errs[f]);
+    if (firstInvalid) {
+      showStatus('Please fix the highlighted fields.', 'error');
+      inputs[firstInvalid].focus();
       return;
     }
 
-    const booking = {
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
-      name: $('name').value.trim(),
+    const candidate = {
+      id: newId(),
       kiln: kilnSel.value,
-      date: dateIn.value,
-      start: Number(startSel.value),
-      duration: Number(durSel.value),
+      date,
+      start,
+      hours,
+      name,
       firing: firingSel.value,
-      notes: $('notes').value.trim(),
+      notes: notesIn.value.trim(),
     };
 
-    const errors = validate(booking, store.items);
-    showErrors(errors);
-    const first = FIELDS.find(f => errors[f]);
-    if (first) {
-      $(first).focus();
-      setStatus('Please fix the highlighted fields.', 'error');
+    const clash = bookings.find((b) => overlaps(b, candidate));
+    if (clash) {
+      showStatus(`That time overlaps ${clash.name}'s booking (${rangeLabel(clash)}). Choose a different start time or length.`, 'error');
+      startSel.setAttribute('aria-invalid', 'true');
+      startSel.focus();
       return;
     }
 
-    try {
-      saveBookings([...store.items, booking]);
-    } catch {
-      setStatus('Could not save your booking. Local storage may be full or turned off.', 'error');
+    const previous = bookings.slice();
+    bookings.push(candidate);
+    if (!persist()) {
+      bookings = previous;
+      showStatus('Could not save your booking in this browser. Please try again.', 'error');
       return;
     }
 
-    const end = booking.start + booking.duration;
-    setStatus(`Booked ${kilnName(booking.kiln)} on ${dateLabel(booking.date)}, ${clock(booking.start)} – ${clock(end)}.`, 'ok');
-    $('notes').value = '';
+    notesIn.value = '';
+    startSel.setAttribute('aria-invalid', 'false');
+    kilnSel.value = candidate.kiln;
+    showStatus(`Booked ${kilnLabel(candidate.kiln)} on ${formatDate(date)}, ${rangeLabel(candidate)}.`, 'success');
     render();
   });
 
-  $('bookings').addEventListener('click', e => {
-    const btn = e.target.closest('button[data-id]');
-    if (!btn) return;
-    const { items } = loadBookings();
-    const target = items.find(b => b.id === btn.dataset.id);
-    if (!target || !confirm(`Cancel ${target.name}’s booking at ${clock(target.start)}?`)) return;
-    saveBookings(items.filter(b => b !== target));
-    setStatus('Booking cancelled.');
+  dateIn.addEventListener('change', () => {
+    refreshStartOptions();
     render();
   });
+  kilnSel.addEventListener('change', render);
+  startSel.addEventListener('change', () => {
+    startSel.setAttribute('aria-invalid', 'false');
+    setError('start', '');
+    refreshDurationOptions();
+  });
 
-  [kilnSel, dateIn].forEach(el => el.addEventListener('change', render));
-
-  // Setup
-  KILNS.forEach(k => kilnSel.add(new Option(k.name, k.id)));
-  for (let t = OPEN; t < CLOSE; t += 30) startSel.add(new Option(clock(t), t));
-  startSel.value = String(9 * 60);
-  DURATIONS.forEach(d => durSel.add(new Option(durLabel(d), d)));
-  durSel.value = '120';
-  FIRING_TYPES.forEach(f => firingSel.add(new Option(f, f)));
-  dateIn.min = todayStr();
-  dateIn.value = todayStr();
-  $('ticks').innerHTML = Array.from(
-    { length: (CLOSE - OPEN) / 60 },
-    (_, i) => `<span style="top:${i * HOUR_PX}px">${clock(OPEN + i * 60)}</span>`
-  ).join('');
-
+  populateStatic();
+  refreshStartOptions();
   render();
 })();
 </script>

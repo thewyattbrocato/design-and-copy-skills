@@ -1,31 +1,14 @@
-## Why it looks like every other bakery
+**Why it reads as every other bakery:** the mark is made of the category's stock parts. A wheat stalk, a script name, cream and pink, and gold are what most bakeries reach for, so the mark signals "bakery" but nothing about Crumb & Co. Five or six decorative elements also make it busy, and the name gets lost among them. The gold outline and the banner add effects without adding meaning. The tiny-caps tagline is a third problem: it's the first thing to disappear on a box, a sign, or an Instagram avatar.
 
-Every element is a bakery signal, and the mark stacks five of them: wheat, banner, script, gold outline, and a sentiment tagline. Each one is a common way to say "bakery," so together they say "bakery" without saying "Crumb & Co." Wheat stalk, script wordmark, and cream-and-pink palette are the category's default vocabulary. The gold outline and banner are decoration that adds no meaning. The tagline, "baked fresh with love since our first loaf," is generic sentiment that could sit under any bakery's name.
+**What I'd change:**
 
-The mark also doesn't have one idea. It has a picture, a shape, a frame, a sentence, and a color scheme competing with each other.
+1. **Pick one idea.** Say the mark in one sentence. If it's "wheat, and script, and a banner, and gold," keep the strongest one and drop the rest. The wheat stalk is the most generic, so I'd cut it first.
+2. **Make the name the mark.** Keep the script, but redraw one piece of it so it's yours. The ampersand is the natural candidate: a custom ampersand, a ligature, or a reshaped "C" would do more for distinctiveness than any illustration.
+3. **Drop the outline and banner.** Flat, solid shapes will hold up on a sign and at small sizes. The gold outline also makes the mark harder to reproduce in one color, which you'll need for stamps, tissue paper, and embossing.
+4. **Take the tagline out of the logo.** Use it as a separate line in a horizontal or stacked lockup, at sizes where it's legible. The mark itself should stand alone.
+5. **Choose one color with a reason.** Dark brown is fine as the base. Pick a single accent that isn't cream, pink, or gold, and use it on boxes and the sign so the color becomes part of your recognition.
+6. **Test it in order:** solid black on white first, then at avatar size (~32px), then reversed on the dark brown of the box or sign. If it fails any of those, simplify again.
 
-## What will fail in use
+**Next test:** show the revised mark to a few customers who haven't seen it before and ask what they think the bakery's name is after a few seconds. If they can say "Crumb & Co" or the shape you intended, it's working. I don't have your current recognition data, so this is the way to check rather than a number I can give you.
 
-- **Tiny-caps tagline:** unreadable on a shop sign from the street, and illegible in an Instagram thumbnail or a box corner.
-- **Gold outline:** a hairline effect that disappears at small sizes and against cream or pink backgrounds.
-- **Wheat stalk:** a fine-detail drawing that gets muddy at favicon or avatar size.
-
-## Verdict: refine, and cut hard
-
-The name and the dark brown script are worth keeping. The rest should go. Replacing the whole identity would throw away the only part that can carry recognition, which is the name written by hand. Recognition is still unmeasured, so treat this as a judgment, not a finding. The next test is below.
-
-**Recommended direction:**
-
-1. **Keep the script wordmark in dark brown.** Give it one custom adjustment, such as a reshaped "C" or a ligature joining "Crumb" and "&", so it is not a stock script.
-2. **Drop the wheat, banner, gold outline, and tiny-caps tagline** from the core mark.
-3. **Build one bakery-specific device** that comes from the name, not the trade. For example, a crumb texture or a single crumb shape used as a dot, or a simple "&" that is the only graphic element. Pick one, not both.
-4. **Test a solid one-color version** first, at 32 px, and reversed on dark. If it fails there, the mark is still too busy.
-5. **Move the tagline to an optional line** under the lockup, set in a readable size, and keep it off the sign and avatar versions.
-
-**Alternative, if you want a picture:** keep one bold, flat wheat or crumb glyph as the symbol and drop the script in the avatar and icon versions. Only choose this if the picture is more distinctive than the name.
-
-## Next test
-
-Show three real surfaces side by side: the box corner, the sign at street distance, and the Instagram avatar. Ask five regulars to name the business from memory after one day. That tells you more than my opinion about whether the redraw works.
-
-**Assumptions:** I haven't seen the actual artwork, so this is based on your description. I don't know what sets Crumb & Co apart (signature product, neighborhood, founder story), and that is the most useful thing to add. If you tell me one distinctive thing about the bakery, I can build the device around it.
+Assumption: I'm working from your description, not the actual files, so I haven't seen the exact letterforms or whether the script is a stock font.

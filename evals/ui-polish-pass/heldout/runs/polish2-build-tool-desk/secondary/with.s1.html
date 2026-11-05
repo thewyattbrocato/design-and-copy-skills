@@ -1,677 +1,621 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tool Library · Front Desk</title>
 <style>
-:root {
-  color-scheme: light dark;
-  --bg: #f5f4f0;
-  --surface: #ffffff;
-  --surface-2: #eceae4;
-  --text: #1d1c1a;
-  --muted: #5f5b53;
-  --border: #d6d2c8;
-  --accent: #1f5d4a;
-  --accent-text: #ffffff;
-  --warn: #8a5300;
-  --warn-soft: #f7e7c6;
-  --danger: #a12622;
-  --danger-soft: #f8dcd9;
-  --focus: #1a6fd1;
-  --radius: 10px;
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+:root{
+  --bg:#f5f4f0; --surface:#ffffff; --text:#1c1d1f; --muted:#5d6068; --border:#d4d2ca;
+  --accent:#1f5e4a; --accent-text:#ffffff; --accent-soft:#e2efe9;
+  --warn:#7a5000; --warn-soft:#fdf1d6;
+  --danger:#a1281f; --danger-soft:#fbe4e1;
+  --focus:#0b57d0;
+  --radius:10px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #161614;
-    --surface: #1f1e1b;
-    --surface-2: #2a2824;
-    --text: #f1efe9;
-    --muted: #aaa499;
-    --border: #3a3832;
-    --accent: #7fc4a6;
-    --accent-text: #0f1f19;
-    --warn: #f0c26b;
-    --warn-soft: #3d3118;
-    --danger: #ff8a82;
-    --danger-soft: #3f1d1b;
-    --focus: #7ab8ff;
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#16171a; --surface:#202226; --text:#eceae4; --muted:#a9acb4; --border:#3a3d44;
+    --accent:#6cc4a1; --accent-text:#0f1f19; --accent-soft:#1f3a31;
+    --warn:#f0c15a; --warn-soft:#3d3118;
+    --danger:#ff9d94; --danger-soft:#4a221f;
+    --focus:#8ab4ff;
   }
 }
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; }
-body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 16px;
-  line-height: 1.45;
-  min-height: 100vh;
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 var(--font)}
+.app{max-width:1080px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.6rem;margin:0;line-height:1.2}
+h2{font-size:1.1rem;margin:0 0 14px}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+.mono{font-family:var(--mono);font-size:.92em;white-space:nowrap}
+[hidden]{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+.top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.top .muted{margin-top:4px}
+.tabs{display:inline-flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:4px}
+.tab{appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:600;padding:8px 16px;min-height:40px;border-radius:999px;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--accent);color:var(--accent-text)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;display:flex;flex-direction:column}
+.stat-n{font-size:1.8rem;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat-l{color:var(--muted);font-size:.9rem}
+.stat-danger{border-color:var(--danger)}
+.stat-danger .stat-n{color:var(--danger)}
+
+.flash{border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;border:1px solid}
+.flash-ok{background:var(--accent-soft);border-color:var(--accent)}
+.flash-err{background:var(--danger-soft);border-color:var(--danger)}
+
+.desk{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.card.wide{grid-column:1 / -1}
+
+.field{margin-bottom:14px}
+label{display:block;font-weight:600;margin-bottom:6px}
+input,select,textarea{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-height:44px}
+textarea{min-height:0;resize:vertical}
+input[aria-invalid="true"],select[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--danger);box-shadow:0 0 0 1px var(--danger)}
+.error{color:var(--danger);font-size:.9rem;font-weight:600;margin-top:6px}
+
+.btn{appearance:none;font:inherit;font-weight:600;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);padding:10px 16px;min-height:44px;cursor:pointer}
+.btn.primary{width:100%;background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
+.btn.small{min-height:34px;padding:4px 10px;font-size:.9rem}
+
+.summary-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:14px}
+.summary-box dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.summary-box dt{color:var(--muted);font-size:.85rem}
+.summary-box dd{margin:0;font-weight:600}
+.notice{margin:0}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600}
+.right{text-align:right}
+.empty{color:var(--muted);text-align:center;padding:24px}
+
+.badge{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.badge-ok{background:var(--accent-soft);color:var(--accent)}
+.badge-warn{background:var(--warn-soft);color:var(--warn)}
+.badge-danger{background:var(--danger-soft);color:var(--danger)}
+
+.list{list-style:none;margin:0;padding:0}
+.list li{padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.list li:last-child{border-bottom:0}
+
+.tools-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;align-items:start}
+.search{margin-bottom:12px}
+.foot{color:var(--muted);font-size:.85rem;margin-top:18px}
+
+@media (max-width:800px){
+  .desk,.tools-grid{grid-template-columns:1fr}
+  .card.wide{grid-column:auto}
+  .stats{grid-template-columns:repeat(2,1fr)}
 }
-[hidden] { display: none !important; }
-.wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 40px; }
-header.top {
-  display: flex; flex-wrap: wrap; gap: 16px;
-  justify-content: space-between; align-items: flex-end;
-  margin-bottom: 20px;
-}
-h1 { font-size: 1.6rem; margin: 0; }
-h2 { font-size: 1.15rem; margin: 0 0 12px; }
-.sub { margin: 4px 0 0; color: var(--muted); }
-.stats { display: flex; gap: 10px; margin: 0; flex-wrap: wrap; }
-.stats div {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 8px 14px; min-width: 96px;
-}
-.stats dt { font-size: .8rem; color: var(--muted); }
-.stats dd { margin: 0; font-size: 1.3rem; font-weight: 650; font-variant-numeric: tabular-nums; }
-.layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
-@media (max-width: 800px) { .layout { grid-template-columns: minmax(0, 1fr); } }
-.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
-.modes {
-  display: flex; gap: 6px; background: var(--surface-2);
-  border-radius: 999px; padding: 4px; margin-bottom: 18px;
-}
-.modes button {
-  flex: 1; border: 0; border-radius: 999px; background: transparent;
-  color: var(--muted); min-height: 40px; font: inherit; font-weight: 600;
-}
-.modes button[aria-pressed="true"] {
-  background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
-}
-.field { margin: 0 0 16px; border: 0; padding: 0; min-width: 0; }
-label, legend { display: block; font-weight: 600; margin-bottom: 6px; font-size: .92rem; padding: 0; }
-input[type="text"], input[type="search"], input[type="date"] {
-  width: 100%; min-height: 44px; padding: 8px 12px;
-  border: 1px solid var(--border); border-radius: 8px;
-  background: var(--bg); color: var(--text); font: inherit;
-}
-input[aria-invalid="true"] { border-color: var(--danger); }
-input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.row { display: flex; gap: 8px; }
-.row input { flex: 1; }
-button { font: inherit; cursor: pointer; }
-button:disabled { opacity: .45; cursor: not-allowed; }
-.primary {
-  background: var(--accent); color: var(--accent-text); border: 0;
-  border-radius: 8px; min-height: 44px; padding: 0 18px; font-weight: 650;
-}
-.secondary, .ghost {
-  min-height: 44px; padding: 0 14px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--surface); color: var(--text); font-weight: 600;
-}
-.ghost { background: transparent; border-color: transparent; color: var(--muted); }
-.small { min-height: 36px; padding: 0 12px; }
-.actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
-.hint { margin: 6px 0 0; font-size: .9rem; color: var(--muted); min-height: 1.2em; }
-.error { color: var(--danger); }
-.list { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
-.item {
-  display: flex; gap: 12px; align-items: center; justify-content: space-between;
-  padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg);
-}
-.item-main { min-width: 0; flex: 1; }
-.item-title { font-weight: 600; overflow-wrap: anywhere; }
-.muted { color: var(--muted); font-size: .9rem; }
-.code { font-family: var(--mono); font-size: .82rem; color: var(--muted); font-weight: 400; }
-.empty {
-  color: var(--muted); padding: 12px; border: 1px dashed var(--border);
-  border-radius: 10px; text-align: center; list-style: none;
-}
-.badge { font-size: .8rem; font-weight: 650; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
-.badge.danger { background: var(--danger-soft); color: var(--danger); }
-.badge.warn { background: var(--warn-soft); color: var(--warn); }
-.out-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; }
-.out-head input { width: 200px; max-width: 100%; }
-.card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: var(--bg); margin-top: 4px; }
-.card-title { font-weight: 650; font-size: 1.05rem; margin: 0 0 4px; }
-.card p { margin: 0 0 4px; }
-.radio { display: flex; gap: 8px; align-items: center; font-weight: 400; margin: 6px 0; min-height: 32px; }
-.radio input { width: 18px; height: 18px; margin: 0; }
-.section-title { margin: 22px 0 10px; font-size: .95rem; color: var(--muted); font-weight: 650; }
-.toast { margin: 16px 0 0; min-height: 1.4em; font-weight: 600; color: var(--accent); }
-.toast.error { color: var(--danger); }
-footer { margin-top: 18px; color: var(--muted); font-size: .85rem; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="app">
+
   <header class="top">
     <div>
       <h1>Tool Library</h1>
-      <p class="sub" id="today"></p>
+      <p class="muted" id="today"></p>
     </div>
-    <dl class="stats">
-      <div><dt>Available</dt><dd id="stat-avail">0</dd></div>
-      <div><dt>Out</dt><dd id="stat-out">0</dd></div>
-      <div><dt>Overdue</dt><dd id="stat-over">0</dd></div>
-      <div><dt>In repair</dt><dd id="stat-repair">0</dd></div>
-    </dl>
+    <nav class="tabs" aria-label="Sections">
+      <button type="button" class="tab" data-view="desk" aria-pressed="true">Desk</button>
+      <button type="button" class="tab" data-view="loans" aria-pressed="false">On loan</button>
+      <button type="button" class="tab" data-view="tools" aria-pressed="false">Tools</button>
+    </nav>
   </header>
 
-  <main class="layout">
-    <section class="panel">
-      <div class="modes" role="group" aria-label="Desk mode">
-        <button type="button" id="mode-lend" aria-pressed="true">Lend tools</button>
-        <button type="button" id="mode-return" aria-pressed="false">Return tools</button>
-      </div>
+  <section class="stats" id="stats" aria-label="Library at a glance"></section>
 
-      <div id="lend-view">
-        <h2>Check out</h2>
-        <div class="field">
-          <label for="member-input">Member</label>
-          <input id="member-input" type="text" autocomplete="off" placeholder="Member ID or name">
-          <p class="hint" id="member-status" aria-live="polite"></p>
-        </div>
-        <div class="field">
-          <label for="tool-input">Add tool</label>
-          <div class="row">
-            <input id="tool-input" type="text" autocomplete="off" placeholder="Tool ID, e.g. T-101">
-            <button id="add-tool" type="button" class="secondary">Add</button>
-          </div>
-          <p class="hint error" id="tool-error" role="alert"></p>
-        </div>
-        <ul id="basket" class="list" aria-label="Tools in this checkout"></ul>
-        <div class="field">
-          <label for="due-input">Due back</label>
-          <input id="due-input" type="date">
-        </div>
-        <div class="actions">
-          <button id="checkout" type="button" class="primary" disabled>Check out</button>
-          <button id="clear-lend" type="button" class="ghost" disabled>Clear</button>
-        </div>
-      </div>
+  <div id="flash" class="flash" role="status" hidden></div>
 
-      <div id="return-view" hidden>
-        <h2>Check in</h2>
-        <div class="field">
-          <label for="return-input">Tool ID</label>
-          <div class="row">
-            <input id="return-input" type="text" autocomplete="off" placeholder="Tool ID, e.g. T-102">
-            <button id="find-return" type="button" class="secondary">Find</button>
-          </div>
-          <p class="hint error" id="return-error" role="alert"></p>
-        </div>
-        <div id="return-card" class="card" hidden>
-          <p class="card-title" id="rc-name"></p>
-          <p class="muted" id="rc-member"></p>
-          <p class="muted" id="rc-due"></p>
-          <fieldset class="field" style="margin-top:14px">
-            <legend>Condition</legend>
-            <label class="radio"><input type="radio" name="cond" value="ok" checked> Good, back on the shelf</label>
-            <label class="radio"><input type="radio" name="cond" value="repair"> Needs repair, hold it</label>
-          </fieldset>
+  <main>
+
+    <!-- DESK: lend and return -->
+    <section data-panel="desk" class="desk">
+      <div class="card">
+        <h2>Lend a tool</h2>
+        <form id="lend-form" novalidate>
           <div class="field">
-            <label for="return-note">Note (optional)</label>
-            <input id="return-note" type="text" autocomplete="off" placeholder="e.g. blade guard loose">
+            <label for="lend-member">Member card number</label>
+            <input id="lend-member" autocomplete="off" aria-required="true">
+            <p class="error" id="lend-member-err" hidden></p>
           </div>
-          <div class="actions">
-            <button id="checkin" type="button" class="primary">Check in</button>
-            <button id="cancel-return" type="button" class="ghost">Cancel</button>
+          <div class="field">
+            <label for="lend-name">Member name <span class="muted">(optional)</span></label>
+            <input id="lend-name" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="lend-tool">Tool ID</label>
+            <input id="lend-tool" list="tool-options" autocomplete="off" placeholder="Scan or type, e.g. T-001" aria-required="true">
+            <datalist id="tool-options"></datalist>
+            <p class="error" id="lend-tool-err" hidden></p>
+          </div>
+          <div class="field">
+            <label for="lend-due">Return by</label>
+            <input id="lend-due" type="date" aria-required="true">
+            <p class="error" id="lend-due-err" hidden></p>
+          </div>
+          <button class="btn primary" type="submit">Lend tool</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Return a tool</h2>
+        <form id="return-form" novalidate>
+          <div class="field">
+            <label for="ret-tool">Tool ID</label>
+            <input id="ret-tool" autocomplete="off" placeholder="Scan or type, e.g. T-001" aria-required="true">
+            <p class="error" id="ret-tool-err" hidden></p>
+          </div>
+          <div id="ret-summary" class="summary-box" aria-live="polite" hidden></div>
+          <div class="field">
+            <label for="ret-condition">Condition</label>
+            <select id="ret-condition">
+              <option value="ok">Good, ready to lend</option>
+              <option value="cleaning">Needs cleaning</option>
+              <option value="damaged">Damaged, needs repair</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ret-notes">Notes <span class="muted">(required if damaged)</span></label>
+            <textarea id="ret-notes" rows="2"></textarea>
+            <p class="error" id="ret-notes-err" hidden></p>
+          </div>
+          <button class="btn primary" type="submit">Check in tool</button>
+        </form>
+      </div>
+
+      <div class="card wide">
+        <h2>Recently checked in</h2>
+        <ul id="recent" class="list"></ul>
+      </div>
+    </section>
+
+    <!-- LOANS -->
+    <section data-panel="loans" hidden>
+      <div class="card">
+        <h2>Currently on loan</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Tool</th>
+                <th scope="col">Member</th>
+                <th scope="col">Out since</th>
+                <th scope="col">Return by</th>
+                <th scope="col"><span class="sr-only">Action</span></th>
+              </tr>
+            </thead>
+            <tbody id="loans-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section data-panel="tools" hidden>
+      <div class="tools-grid">
+        <div class="card">
+          <h2>All tools</h2>
+          <div class="field search">
+            <label for="tool-filter" class="sr-only">Search tools</label>
+            <input id="tool-filter" type="search" placeholder="Search by ID, name or category" autocomplete="off">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Tool</th>
+                  <th scope="col">Status</th>
+                  <th scope="col"><span class="sr-only">Action</span></th>
+                </tr>
+              </thead>
+              <tbody id="tools-body"></tbody>
+            </table>
           </div>
         </div>
 
-        <p class="section-title">In repair</p>
-        <ul id="repair-list" class="list" aria-label="Tools in repair"></ul>
+        <div class="card">
+          <h2>Add a tool</h2>
+          <form id="add-form" novalidate>
+            <div class="field">
+              <label for="add-id">Tag ID</label>
+              <input id="add-id" autocomplete="off">
+              <p class="error" id="add-id-err" hidden></p>
+            </div>
+            <div class="field">
+              <label for="add-name">Name</label>
+              <input id="add-name" autocomplete="off">
+              <p class="error" id="add-name-err" hidden></p>
+            </div>
+            <div class="field">
+              <label for="add-category">Category <span class="muted">(optional)</span></label>
+              <input id="add-category" autocomplete="off">
+            </div>
+            <button class="btn primary" type="submit">Add tool</button>
+          </form>
+        </div>
       </div>
-
-      <p id="toast" class="toast" role="status" aria-live="polite"></p>
     </section>
 
-    <section class="panel" aria-labelledby="out-title">
-      <div class="out-head">
-        <h2 id="out-title">Out right now</h2>
-        <input id="out-filter" type="search" placeholder="Filter by tool or member" aria-label="Filter checked-out tools">
-      </div>
-      <ul id="out-list" class="list"></ul>
-    </section>
   </main>
 
-  <footer>Saved in this browser. Lending period is 7 days (up to 14). Tool IDs are on the tool's tag.</footer>
+  <p class="foot">Data is saved in this browser only.</p>
 </div>
 
 <script>
-(() => {
-  const KEY = 'toolDesk.v1';
-  const MAX_ITEMS = 6;
-  const LEND_DAYS = 7;
-  const MAX_DAYS = 14;
+const KEY = "tool-library-desk-v1";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad = n => String(n).padStart(2, "0");
+const fmt = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today = () => fmt(new Date());
+const parse = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); };
+const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate() + n); return fmt(d); };
+const dayDiff = (a, b) => Math.round((parse(a) - parse(b)) / 86400000); // a minus b, in days
+const pretty = s => parse(s).toLocaleDateString(undefined, {month:"short", day:"numeric", year:"numeric"});
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const conditionLabel = c => ({ok:"Good", cleaning:"Needs cleaning", damaged:"Damaged"})[c] || "Good";
 
-  const $ = sel => document.querySelector(sel);
+function seedState(){
+  const tools = [
+    ["T-001","Cordless drill","Power tools"],
+    ["T-002","Circular saw","Power tools"],
+    ["T-003","Orbital sander","Power tools"],
+    ["T-004","Stepladder, 6 ft","Access"],
+    ["T-005","Wheelbarrow","Garden"],
+    ["T-006","Hedge trimmer","Garden"],
+    ["T-007","Post-hole digger","Garden"],
+    ["T-008","Pressure washer","Cleaning"],
+    ["T-009","Socket set","Hand tools"],
+    ["T-010","Tile cutter","Hand tools"],
+    ["T-011","Garden tiller","Garden"],
+    ["T-012","Stud finder","Hand tools"]
+  ].map(([id, name, category]) => ({id, name, category, status:"available", condition:"ok", note:""}));
+  return {tools, loans:[], history:[]};
+}
 
-  function h(tag, props = {}, ...kids) {
-    const node = document.createElement(tag);
-    for (const [k, v] of Object.entries(props)) {
-      if (k === 'class') node.className = v;
-      else if (k.startsWith('on')) node.addEventListener(k.slice(2), v);
-      else if (v !== false && v != null) node.setAttribute(k, v === true ? '' : v);
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){
+      const s = JSON.parse(raw);
+      if(s && Array.isArray(s.tools) && Array.isArray(s.loans)) return {history:[], ...s};
     }
-    for (const kid of kids.flat()) {
-      if (kid == null || kid === false) continue;
-      node.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
-    }
-    return node;
+  }catch(e){}
+  return seedState();
+}
+let state = loadState();
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+const findTool = id => state.tools.find(t => t.id.toLowerCase() === String(id).trim().toLowerCase());
+const activeLoan = toolId => state.loans.find(l => l.toolId === toolId);
+const statusOf = t => activeLoan(t.id) ? "out" : t.status; // "available" | "maintenance" | "out"
+const nextId = () => {
+  const n = Math.max(0, ...state.tools.map(t => parseInt(t.id.replace(/\D/g, ""), 10) || 0));
+  return "T-" + String(n + 1).padStart(3, "0");
+};
+
+function dueLabel(due){
+  const diff = dayDiff(due, today());
+  if(diff < 0) return {text:`Overdue ${-diff} day${-diff === 1 ? "" : "s"}`, cls:"badge-danger"};
+  if(diff === 0) return {text:"Due today", cls:"badge-warn"};
+  return {text:"On time", cls:"badge-ok"};
+}
+
+function announce(msg, type = "ok"){
+  const f = $("#flash");
+  f.textContent = msg;
+  f.className = "flash flash-" + type;
+  f.hidden = false;
+}
+
+function setErr(inputId, errId, msg){
+  const input = $("#" + inputId), err = $("#" + errId);
+  err.textContent = msg || "";
+  err.hidden = !msg;
+  input.setAttribute("aria-invalid", msg ? "true" : "false");
+  if(msg) input.setAttribute("aria-describedby", errId);
+  else input.removeAttribute("aria-describedby");
+}
+
+/* ---------- Rendering ---------- */
+
+function renderStats(){
+  const counts = {available:0, out:0, maintenance:0};
+  state.tools.forEach(t => counts[statusOf(t)]++);
+  const overdue = state.loans.filter(l => l.due < today()).length;
+  const tiles = [
+    ["Available", counts.available, ""],
+    ["On loan", counts.out, ""],
+    ["Overdue", overdue, overdue ? "stat-danger" : ""],
+    ["In maintenance", counts.maintenance, ""]
+  ];
+  $("#stats").innerHTML = tiles.map(([label, n, cls]) =>
+    `<div class="stat ${cls}"><span class="stat-n">${n}</span><span class="stat-l">${label}</span></div>`
+  ).join("");
+}
+
+function renderDatalist(){
+  $("#tool-options").innerHTML = state.tools
+    .filter(t => statusOf(t) === "available")
+    .map(t => `<option value="${esc(t.id)}">${esc(t.name)}</option>`).join("");
+}
+
+function renderLoans(){
+  const rows = [...state.loans].sort((a, b) => a.due.localeCompare(b.due));
+  $("#loans-body").innerHTML = rows.length ? rows.map(l => {
+    const tool = findTool(l.toolId);
+    const d = dueLabel(l.due);
+    return `<tr>
+      <td><span class="mono">${esc(l.toolId)}</span><br>${esc(tool ? tool.name : "")}</td>
+      <td>Member ${esc(l.member)}${l.name ? `<br><span class="muted small">${esc(l.name)}</span>` : ""}</td>
+      <td>${pretty(l.out)}</td>
+      <td>${pretty(l.due)}<br><span class="badge ${d.cls}">${d.text}</span></td>
+      <td class="right"><button class="btn small" type="button" data-return="${esc(l.toolId)}">Check in</button></td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="5" class="empty">Nothing is checked out right now.</td></tr>`;
+}
+
+function statusCell(t){
+  const s = statusOf(t);
+  if(s === "out"){
+    const l = activeLoan(t.id);
+    return `<span class="badge badge-ok">On loan · member ${esc(l.member)}</span>`;
+  }
+  if(s === "maintenance") return `<span class="badge badge-danger">Maintenance</span>`;
+  return t.condition === "cleaning"
+    ? `<span class="badge badge-warn">Available · needs cleaning</span>`
+    : `<span class="badge badge-ok">Available</span>`;
+}
+
+let toolFilter = "";
+function renderTools(){
+  const q = toolFilter.trim().toLowerCase();
+  const rows = state.tools.filter(t =>
+    !q || [t.id, t.name, t.category].some(v => v.toLowerCase().includes(q)));
+  $("#tools-body").innerHTML = rows.length ? rows.map(t => {
+    const s = statusOf(t);
+    const needsReady = s !== "out" && (t.status === "maintenance" || t.condition === "cleaning");
+    return `<tr>
+      <td><span class="mono">${esc(t.id)}</span></td>
+      <td><strong>${esc(t.name)}</strong><div class="muted small">${esc(t.category)}</div></td>
+      <td>${statusCell(t)}${t.note ? `<div class="muted small">${esc(t.note)}</div>` : ""}</td>
+      <td class="right">${needsReady ? `<button class="btn small" type="button" data-ready="${esc(t.id)}">Mark ready</button>` : ""}</td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="4" class="empty">${state.tools.length ? "No tools match that search." : "No tools yet. Add one on the right."}</td></tr>`;
+}
+
+function renderRecent(){
+  $("#recent").innerHTML = state.history.length ? state.history.slice(0, 5).map(h => `
+    <li>
+      <span><strong>${esc(h.toolName)}</strong> <span class="mono">${esc(h.toolId)}</span>
+        <span class="muted">· member ${esc(h.member)}</span>
+        ${h.notes ? `<div class="muted small">${esc(h.notes)}</div>` : ""}</span>
+      <span class="muted small">${conditionLabel(h.condition)} · ${pretty(h.returned)}</span>
+    </li>`).join("") : `<li class="muted">Check-ins will show up here.</li>`;
+}
+
+function renderReturnLookup(){
+  const raw = $("#ret-tool").value.trim();
+  const box = $("#ret-summary");
+  if(!raw){ box.hidden = true; box.innerHTML = ""; return; }
+  const tool = findTool(raw);
+  box.hidden = false;
+  if(!tool){
+    box.innerHTML = `<p class="notice error">No tool with ID “${esc(raw)}”.</p>`;
+    return;
+  }
+  const l = activeLoan(tool.id);
+  if(!l){
+    box.innerHTML = `<p class="notice muted">${esc(tool.name)} isn’t checked out right now.${tool.status === "maintenance" ? " It’s in maintenance." : ""}</p>`;
+    return;
+  }
+  const d = dueLabel(l.due);
+  box.innerHTML = `<dl>
+      <div><dt>Tool</dt><dd>${esc(tool.name)} <span class="mono">${esc(tool.id)}</span></dd></div>
+      <div><dt>Borrowed by</dt><dd>Member ${esc(l.member)}${l.name ? ` · ${esc(l.name)}` : ""}</dd></div>
+      <div><dt>Out since</dt><dd>${pretty(l.out)}</dd></div>
+      <div><dt>Return by</dt><dd>${pretty(l.due)} <span class="badge ${d.cls}">${d.text}</span></dd></div>
+    </dl>`;
+}
+
+function render(){
+  $("#today").textContent = pretty(today());
+  renderStats();
+  renderDatalist();
+  renderLoans();
+  renderTools();
+  renderRecent();
+  renderReturnLookup();
+}
+
+function showView(name){
+  document.querySelectorAll("[data-panel]").forEach(p => p.hidden = p.dataset.panel !== name);
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.view === name)));
+}
+
+/* ---------- Lend ---------- */
+
+$("#lend-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const form = e.target;
+  const memberNo = $("#lend-member").value.trim();
+  const name = $("#lend-name").value.trim();
+  const toolInput = $("#lend-tool").value.trim();
+  const due = $("#lend-due").value;
+
+  setErr("lend-member", "lend-member-err", memberNo ? "" : "Enter the member’s card number.");
+
+  const tool = findTool(toolInput);
+  let toolMsg = "";
+  if(!toolInput) toolMsg = "Scan or type the tool’s ID.";
+  else if(!tool) toolMsg = `No tool with ID “${toolInput}”. Check the tag on the tool.`;
+  else if(statusOf(tool) === "out"){
+    const l = activeLoan(tool.id);
+    toolMsg = `${tool.id} is already on loan (return by ${pretty(l.due)}).`;
+  }
+  else if(statusOf(tool) === "maintenance") toolMsg = `${tool.id} is out for maintenance.`;
+  setErr("lend-tool", "lend-tool-err", toolMsg);
+
+  let dueMsg = "";
+  if(!due) dueMsg = "Choose a return date.";
+  else if(dayDiff(due, today()) < 0) dueMsg = "The return date can’t be in the past.";
+  setErr("lend-due", "lend-due-err", dueMsg);
+
+  const firstBad = form.querySelector('[aria-invalid="true"]');
+  if(!memberNo || toolMsg || dueMsg){
+    if(firstBad) firstBad.focus();
+    announce("Please fix the highlighted fields.", "err");
+    return;
   }
 
-  // Dates: local calendar days stored as YYYY-MM-DD
-  const pad = n => String(n).padStart(2, '0');
-  const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-  const parseYmd = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
-  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
-  const today = () => ymd(new Date());
-  const fmtDate = s => parseYmd(s).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
-  const daysBetween = (a, b) => Math.round((parseYmd(b) - parseYmd(a)) / 86400000);
-  const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+  state.loans.push({id: uid(), toolId: tool.id, member: memberNo, name, out: today(), due});
+  save();
+  form.reset();
+  $("#lend-due").value = addDays(today(), 7);
+  render();
+  announce(`Lent ${tool.name} (${tool.id}) to member ${memberNo}. Return by ${pretty(due)}.`);
+  $("#lend-member").focus();
+});
 
-  function seedData() {
-    const t = new Date();
-    const ago = n => ymd(addDays(t, -n));
-    const ahead = n => ymd(addDays(t, n));
-    return {
-      tools: [
-        { id: 'T-101', name: 'Cordless drill', status: 'ok', note: '' },
-        { id: 'T-102', name: 'Circular saw', status: 'ok', note: '' },
-        { id: 'T-103', name: 'Orbital sander', status: 'ok', note: '' },
-        { id: 'T-110', name: 'Extension ladder, 24 ft', status: 'ok', note: '' },
-        { id: 'T-111', name: 'Step ladder, 6 ft', status: 'ok', note: '' },
-        { id: 'T-120', name: 'Pipe wrench', status: 'ok', note: '' },
-        { id: 'T-121', name: 'Drain auger, 25 ft', status: 'ok', note: '' },
-        { id: 'T-130', name: 'Wheelbarrow', status: 'ok', note: '' },
-        { id: 'T-131', name: 'Hedge trimmer', status: 'repair', note: 'Blade bolt stripped' },
-        { id: 'T-132', name: 'Lawn aerator', status: 'ok', note: '' },
-        { id: 'T-140', name: 'Tile cutter', status: 'ok', note: '' },
-        { id: 'T-141', name: 'Pressure washer', status: 'ok', note: '' }
-      ],
-      members: [
-        { id: 'M-1042', name: 'Dana Ruiz' },
-        { id: 'M-1077', name: 'Marcus Lee' },
-        { id: 'M-1103', name: 'Priya Natarajan' },
-        { id: 'M-1158', name: 'Tom Okafor' },
-        { id: 'M-1190', name: 'Helen Varga' }
-      ],
-      loans: [
-        { toolId: 'T-102', memberId: 'M-1077', out: ago(3), due: ahead(4) },
-        { toolId: 'T-121', memberId: 'M-1158', out: ago(12), due: ago(5) },
-        { toolId: 'T-130', memberId: 'M-1190', out: ago(1), due: ahead(6) }
-      ]
-    };
+/* ---------- Return ---------- */
+
+$("#ret-tool").addEventListener("input", renderReturnLookup);
+
+$("#return-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const raw = $("#ret-tool").value.trim();
+  const tool = findTool(raw);
+  const loan = tool ? activeLoan(tool.id) : null;
+  const cond = $("#ret-condition").value;
+  const notes = $("#ret-notes").value.trim();
+
+  let toolMsg = "";
+  if(!raw) toolMsg = "Scan or type the tool’s ID.";
+  else if(!tool) toolMsg = `No tool with ID “${raw}”.`;
+  else if(!loan) toolMsg = `${tool.id} isn’t checked out, so there’s nothing to return.`;
+  setErr("ret-tool", "ret-tool-err", toolMsg);
+
+  const notesMsg = !toolMsg && cond === "damaged" && !notes
+    ? "Describe the damage so whoever repairs it knows what to look at." : "";
+  setErr("ret-notes", "ret-notes-err", notesMsg);
+
+  if(toolMsg || notesMsg){
+    ($("#ret-tool").getAttribute("aria-invalid") === "true" ? $("#ret-tool") : $("#ret-notes")).focus();
+    announce(toolMsg || notesMsg, "err");
+    return;
   }
 
-  function load() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (e) { /* storage unavailable: fall back to seed data */ }
-    return seedData();
-  }
-  function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* not persisted */ }
-  }
-
-  const state = load();
-  const lend = { memberId: null, basket: [] };
-  const ret = { toolId: null };
-
-  const toolById = id => state.tools.find(t => t.id === id);
-  const memberById = id => state.members.find(m => m.id === id);
-  const loanFor = toolId => state.loans.find(l => l.toolId === toolId);
-  const overdueDays = loan => Math.max(0, daysBetween(loan.due, today()));
-  const overdueFor = memberId => state.loans.filter(l => l.memberId === memberId && overdueDays(l) > 0);
-
-  function findMember(q) {
-    const s = q.trim().toLowerCase();
-    if (!s) return null;
-    const byId = state.members.find(m => m.id.toLowerCase() === s);
-    if (byId) return byId;
-    const hits = state.members.filter(m => m.name.toLowerCase().includes(s));
-    return hits.length === 1 ? hits[0] : null;
-  }
-
-  function toast(msg, isError = false) {
-    const t = $('#toast');
-    t.textContent = msg;
-    t.classList.toggle('error', isError);
-  }
-
-  function setMode(mode) {
-    const lendOn = mode === 'lend';
-    $('#mode-lend').setAttribute('aria-pressed', String(lendOn));
-    $('#mode-return').setAttribute('aria-pressed', String(!lendOn));
-    $('#lend-view').hidden = !lendOn;
-    $('#return-view').hidden = lendOn;
-    (lendOn ? $('#member-input') : $('#return-input')).focus();
-  }
-
-  // ---------- Lend ----------
-
-  function renderMember() {
-    const q = $('#member-input').value;
-    const status = $('#member-status');
-    const m = findMember(q);
-    lend.memberId = m ? m.id : null;
-    status.className = 'hint';
-    status.textContent = '';
-    if (q.trim() && !m) {
-      status.classList.add('error');
-      status.textContent = 'No single member matches. Try the member ID.';
-    } else if (m) {
-      const late = overdueFor(m.id);
-      if (late.length) {
-        status.classList.add('error');
-        status.textContent = `${m.name} has ${plural(late.length, 'overdue tool', 'overdue tools')}. Check those in before lending more.`;
-      } else {
-        const out = state.loans.filter(l => l.memberId === m.id).length;
-        status.textContent = `${m.name} · ${m.id} · Good standing · ${out} out`;
-      }
-    }
-    renderCheckout();
-  }
-
-  function renderBasket() {
-    const list = $('#basket');
-    list.replaceChildren();
-    if (!lend.basket.length) {
-      list.append(h('li', { class: 'empty' }, 'No tools added yet. Type or scan a tool ID.'));
-    }
-    for (const id of lend.basket) {
-      const tool = toolById(id);
-      list.append(h('li', { class: 'item' },
-        h('div', { class: 'item-main' },
-          h('div', { class: 'item-title' }, tool.name),
-          h('div', { class: 'code' }, id)
-        ),
-        h('button', {
-          type: 'button', class: 'ghost small',
-          'aria-label': `Remove ${tool.name}`,
-          onclick: () => { lend.basket = lend.basket.filter(x => x !== id); renderBasket(); $('#tool-input').focus(); }
-        }, 'Remove')
-      ));
-    }
-    renderCheckout();
-  }
-
-  function renderCheckout() {
-    const m = memberById(lend.memberId);
-    const blocked = m && overdueFor(m.id).length > 0;
-    const n = lend.basket.length;
-    const ready = m && !blocked && n > 0 && $('#due-input').value;
-    const btn = $('#checkout');
-    btn.disabled = !ready;
-    btn.textContent = n ? `Check out ${plural(n, 'tool', 'tools')}` : 'Check out';
-    $('#clear-lend').disabled = !(n || $('#member-input').value.trim());
-  }
-
-  function addTool() {
-    const input = $('#tool-input');
-    const id = input.value.trim().toUpperCase();
-    const tool = toolById(id);
-    const loan = loanFor(id);
-    let msg = '';
-    if (!id) msg = 'Enter a tool ID.';
-    else if (!tool) msg = `No tool ${id}. Check the tag on the tool.`;
-    else if (lend.basket.includes(id)) msg = `${tool.name} is already in this checkout.`;
-    else if (tool.status === 'repair') msg = `${tool.name} is in repair and can't be lent.`;
-    else if (loan) msg = `${tool.name} is out with ${memberById(loan.memberId)?.name ?? 'another member'}.`;
-    else if (lend.basket.length >= MAX_ITEMS) msg = `A checkout can hold up to ${MAX_ITEMS} tools.`;
-
-    $('#tool-error').textContent = msg;
-    input.setAttribute('aria-invalid', String(Boolean(msg)));
-    if (msg) { input.focus(); input.select(); return; }
-
-    lend.basket.push(id);
-    input.value = '';
-    input.removeAttribute('aria-invalid');
-    renderBasket();
-    input.focus();
-  }
-
-  function checkout() {
-    const m = memberById(lend.memberId);
-    const due = $('#due-input').value;
-    if (!m || !lend.basket.length || overdueFor(m.id).length) return;
-    if (!due || due < today() || due > ymd(addDays(new Date(), MAX_DAYS))) {
-      toast(`Pick a return date between today and ${MAX_DAYS} days out.`, true);
-      return;
-    }
-    const free = lend.basket.filter(id => !loanFor(id) && toolById(id).status === 'ok');
-    if (free.length !== lend.basket.length) {
-      lend.basket = free;
-      renderBasket();
-      toast('Some tools were just taken or sent to repair. Review the list and try again.', true);
-      return;
-    }
-    const out = today();
-    for (const id of lend.basket) state.loans.push({ toolId: id, memberId: m.id, out, due });
-    const n = lend.basket.length;
-    save();
-    toast(`Checked out ${plural(n, 'tool', 'tools')} to ${m.name}. Due ${fmtDate(due)}.`);
-    resetLend();
-  }
-
-  function resetLend() {
-    lend.basket = [];
-    lend.memberId = null;
-    $('#member-input').value = '';
-    $('#tool-input').value = '';
-    $('#tool-input').removeAttribute('aria-invalid');
-    $('#tool-error').textContent = '';
-    $('#due-input').value = ymd(addDays(new Date(), LEND_DAYS));
-    renderAll();
-    $('#member-input').focus();
-  }
-
-  function clearLend() {
-    if (lend.basket.length && !confirm('Clear this checkout?')) return;
-    resetLend();
-    toast('');
-  }
-
-  // ---------- Return ----------
-
-  function setReturnError(msg) {
-    const input = $('#return-input');
-    $('#return-error').textContent = msg;
-    input.setAttribute('aria-invalid', String(Boolean(msg)));
-  }
-
-  function findReturn() {
-    const id = $('#return-input').value.trim().toUpperCase();
-    const tool = toolById(id);
-    const loan = loanFor(id);
-    ret.toolId = null;
-    if (!id) setReturnError('');
-    else if (!tool) setReturnError(`No tool ${id}. Check the tag on the tool.`);
-    else if (!loan) setReturnError(`${tool.name} is not checked out.${tool.status === 'repair' ? ' It is in repair (see below).' : ''}`);
-    else { setReturnError(''); ret.toolId = id; }
-    renderReturnCard();
-    if (ret.toolId) $('#checkin').focus();
-  }
-
-  function renderReturnCard() {
-    const card = $('#return-card');
-    const loan = ret.toolId && loanFor(ret.toolId);
-    card.hidden = !loan;
-    if (!loan) return;
-    const tool = toolById(ret.toolId);
-    const member = memberById(loan.memberId);
-    const late = overdueDays(loan);
-    $('#rc-name').textContent = `${tool.name} · ${tool.id}`;
-    $('#rc-member').textContent = `Out with ${member ? member.name : loan.memberId} since ${fmtDate(loan.out)}`;
-    const dueEl = $('#rc-due');
-    dueEl.replaceChildren();
-    if (late > 0) {
-      dueEl.append(h('span', { class: 'badge danger' }, `${plural(late, 'day', 'days')} overdue`), ` · was due ${fmtDate(loan.due)}`);
-    } else {
-      dueEl.textContent = `Due ${fmtDate(loan.due)}`;
-    }
-  }
-
-  function startReturn(id) {
-    setMode('return');
-    $('#return-input').value = id;
-    document.querySelector('input[name="cond"][value="ok"]').checked = true;
-    $('#return-note').value = '';
-    findReturn();
-  }
-
-  function resetReturn() {
-    ret.toolId = null;
-    $('#return-input').value = '';
-    setReturnError('');
-    document.querySelector('input[name="cond"][value="ok"]').checked = true;
-    $('#return-note').value = '';
-    renderReturnCard();
-    $('#return-input').focus();
-  }
-
-  function checkIn() {
-    const loan = ret.toolId && loanFor(ret.toolId);
-    if (!loan) return;
-    const tool = toolById(ret.toolId);
-    const repair = document.querySelector('input[name="cond"]:checked').value === 'repair';
-    const note = $('#return-note').value.trim();
-    state.loans = state.loans.filter(l => l !== loan);
-    if (repair) {
-      tool.status = 'repair';
-      tool.note = note || 'Reported at return';
-    }
-    save();
-    toast(repair
-      ? `${tool.name} checked in and held for repair.`
-      : `${tool.name} checked in and back on the shelf.`);
-    resetReturn();
-    renderAll();
-  }
-
-  function renderRepair() {
-    const list = $('#repair-list');
-    list.replaceChildren();
-    const broken = state.tools.filter(t => t.status === 'repair');
-    if (!broken.length) list.append(h('li', { class: 'empty' }, 'Nothing is in repair.'));
-    for (const tool of broken) {
-      list.append(h('li', { class: 'item' },
-        h('div', { class: 'item-main' },
-          h('div', { class: 'item-title' }, tool.name, ' ', h('span', { class: 'code' }, tool.id)),
-          h('div', { class: 'muted' }, tool.note || 'No note')
-        ),
-        h('button', {
-          type: 'button', class: 'secondary small',
-          'aria-label': `Mark ${tool.name} back in service`,
-          onclick: () => {
-            tool.status = 'ok';
-            tool.note = '';
-            save();
-            toast(`${tool.name} is back in service.`);
-            renderAll();
-          }
-        }, 'Back in service')
-      ));
-    }
-  }
-
-  // ---------- Out list and stats ----------
-
-  function renderOut() {
-    const q = $('#out-filter').value.trim().toLowerCase();
-    const list = $('#out-list');
-    list.replaceChildren();
-    if (!state.loans.length) {
-      list.append(h('li', { class: 'empty' }, 'Nothing is checked out right now.'));
-      return;
-    }
-    const rows = state.loans
-      .map(loan => ({ loan, tool: toolById(loan.toolId), member: memberById(loan.memberId), late: overdueDays(loan) }))
-      .filter(r => !q || [r.tool?.name, r.tool?.id, r.member?.name].some(v => v && v.toLowerCase().includes(q)))
-      .sort((a, b) => b.late - a.late || a.loan.due.localeCompare(b.loan.due));
-    if (!rows.length) {
-      list.append(h('li', { class: 'empty' }, `No loans match “${q}”.`));
-      return;
-    }
-    for (const r of rows) {
-      const name = r.tool?.name ?? r.loan.toolId;
-      list.append(h('li', { class: 'item' },
-        h('div', { class: 'item-main' },
-          h('div', { class: 'item-title' }, name, ' ', h('span', { class: 'code' }, r.loan.toolId)),
-          h('div', { class: 'muted' }, `${r.member?.name ?? r.loan.memberId} · due ${fmtDate(r.loan.due)}`)
-        ),
-        r.late > 0 ? h('span', { class: 'badge danger' }, `${plural(r.late, 'day', 'days')} late`) : null,
-        h('button', {
-          type: 'button', class: 'secondary small',
-          'aria-label': `Return ${name}`,
-          onclick: () => startReturn(r.loan.toolId)
-        }, 'Return')
-      ));
-    }
-  }
-
-  function renderStats() {
-    const available = state.tools.filter(t => t.status === 'ok' && !loanFor(t.id)).length;
-    $('#stat-avail').textContent = available;
-    $('#stat-out').textContent = state.loans.length;
-    $('#stat-over').textContent = state.loans.filter(l => overdueDays(l) > 0).length;
-    $('#stat-repair').textContent = state.tools.filter(t => t.status === 'repair').length;
-  }
-
-  function renderAll() {
-    renderStats();
-    renderMember();
-    renderBasket();
-    renderOut();
-    renderRepair();
-    renderReturnCard();
-  }
-
-  // ---------- Wiring ----------
-
-  $('#today').textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
-
-  const dueInput = $('#due-input');
-  dueInput.value = ymd(addDays(new Date(), LEND_DAYS));
-  dueInput.min = today();
-  dueInput.max = ymd(addDays(new Date(), MAX_DAYS));
-  dueInput.addEventListener('change', renderCheckout);
-
-  $('#mode-lend').addEventListener('click', () => setMode('lend'));
-  $('#mode-return').addEventListener('click', () => setMode('return'));
-
-  $('#member-input').addEventListener('input', () => { toast(''); renderMember(); });
-  $('#member-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); $('#tool-input').focus(); }
+  const lateDays = dayDiff(today(), loan.due);
+  state.loans = state.loans.filter(x => x !== loan);
+  state.history.unshift({
+    id: uid(), toolId: tool.id, toolName: tool.name, member: loan.member,
+    returned: today(), condition: cond, notes
   });
+  state.history = state.history.slice(0, 20);
 
-  const toolInput = $('#tool-input');
-  toolInput.addEventListener('input', () => {
-    $('#tool-error').textContent = '';
-    toolInput.removeAttribute('aria-invalid');
-  });
-  toolInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); addTool(); }
-  });
-  $('#add-tool').addEventListener('click', addTool);
-  $('#checkout').addEventListener('click', checkout);
-  $('#clear-lend').addEventListener('click', clearLend);
+  tool.condition = cond;
+  tool.status = cond === "damaged" ? "maintenance" : "available";
+  tool.note = cond === "ok" ? "" : notes;
 
-  const returnInput = $('#return-input');
-  returnInput.addEventListener('input', () => {
-    setReturnError('');
-    if (ret.toolId) { ret.toolId = null; renderReturnCard(); }
-  });
-  returnInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); findReturn(); }
-  });
-  $('#find-return').addEventListener('click', findReturn);
-  $('#checkin').addEventListener('click', checkIn);
-  $('#cancel-return').addEventListener('click', resetReturn);
+  save();
+  e.target.reset();
+  render();
 
-  $('#out-filter').addEventListener('input', renderOut);
+  let msg = `Checked in ${tool.name} (${tool.id}).`;
+  if(lateDays > 0) msg += ` It was ${lateDays} day${lateDays === 1 ? "" : "s"} late.`;
+  if(cond === "damaged") msg += " Moved to maintenance.";
+  else if(cond === "cleaning") msg += " Flagged as needing cleaning.";
+  announce(msg);
+  $("#ret-tool").focus();
+});
 
-  renderAll();
-  $('#member-input').focus();
-})();
+/* ---------- Tools ---------- */
+
+$("#tool-filter").addEventListener("input", e => { toolFilter = e.target.value; renderTools(); });
+
+$("#add-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const form = e.target;
+  const id = $("#add-id").value.trim().toUpperCase();
+  const name = $("#add-name").value.trim();
+  const category = $("#add-category").value.trim() || "Uncategorized";
+
+  let idMsg = "";
+  if(!id) idMsg = "Enter the ID printed on the tool tag.";
+  else if(findTool(id)) idMsg = `${id} is already in the library.`;
+  setErr("add-id", "add-id-err", idMsg);
+  setErr("add-name", "add-name-err", name ? "" : "Enter the tool’s name.");
+
+  const nameMsg = name ? "" : "Enter the tool’s name.";
+  if(idMsg || nameMsg){
+    const firstBad = form.querySelector('[aria-invalid="true"]');
+    if(firstBad) firstBad.focus();
+    announce("Please fix the highlighted fields.", "err");
+    return;
+  }
+
+  state.tools.push({id, name, category, status:"available", condition:"ok", note:""});
+  state.tools.sort((a, b) => a.id.localeCompare(b.id, undefined, {numeric:true}));
+  save();
+  form.reset();
+  $("#add-id").placeholder = nextId();
+  render();
+  announce(`Added ${name} (${id}).`);
+  $("#add-id").focus();
+});
+
+/* ---------- Navigation and row actions ---------- */
+
+document.addEventListener("click", e => {
+  const view = e.target.closest("[data-view]");
+  if(view){ showView(view.dataset.view); return; }
+
+  const ret = e.target.closest("[data-return]");
+  if(ret){
+    showView("desk");
+    $("#ret-tool").value = ret.dataset.return;
+    render();
+    $("#ret-condition").focus();
+    return;
+  }
+
+  const ready = e.target.closest("[data-ready]");
+  if(ready){
+    const tool = findTool(ready.dataset.ready);
+    if(tool){
+      tool.status = "available";
+      tool.condition = "ok";
+      tool.note = "";
+      save();
+      render();
+      announce(`${tool.id} marked ready to lend.`);
+    }
+  }
+});
+
+/* ---------- Init ---------- */
+
+$("#lend-due").value = addDays(today(), 7);
+$("#add-id").placeholder = nextId();
+render();
+showView("desk");
+$("#lend-member").focus();
 </script>
 </body>
 </html>

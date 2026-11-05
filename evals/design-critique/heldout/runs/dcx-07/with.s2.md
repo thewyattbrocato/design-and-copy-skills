@@ -1,20 +1,37 @@
-**Ship B, with a visual pass from the design team.** B's content is right and A's isn't. Polish is easy to add on Friday, but A's copy can't be fixed with polish.
+**Ship Version B, with its visual styling fixed.** I'm fairly confident. The two versions differ mostly in content, and B's content is much stronger. Its look is the part that needs work.
 
-**Why B wins (high confidence on content, since I haven't seen either rendered)**
-- **Next step.** A's "Get Started" doesn't say what starts. A user who has never booked a walk can't tell whether it means onboarding, booking, or setting up a profile. B's "Book Marta for Tuesday" names the action, the person, and the day. That's one tap to the goal.
-- **Reason to act.** A offers "journey" copy and no reason to book. B gives a person, a time window, a place (Pell Park), and a concrete payoff (a photo halfway through).
-- **Trust.** B's vetted-and-local link answers the main worry a dog owner has before handing over their dog. A has nothing on this.
-- **Wording.** "Nothing here yet" fits any app. "No walks booked this week" says what the tab shows and why it's empty.
+**Why B wins**
+- **It gives a next action tied to the user's goal.** "Book Marta for Tuesday" books a specific walker on a specific day. A's "Get Started" doesn't say what starts. A first-time user has to guess whether it opens booking, onboarding or a profile.
+- **It answers the trust question.** A dog owner is deciding whether to hand over their dog. B names a person, a place, a time window and a photo halfway through the walk. A has none of that.
+- **A's copy is filler.** "Nothing here yet" says nothing about what the tab is for. "Your journey" is generic, and the exclamation adds nothing. It could belong to any app.
 
-**What to keep from A:** the spacing, the type scale, and the full-width tap target. They make the screen feel finished.
+**What I'd change in B (ranked)**
+1. **Major: the screen assumes the user has booked before.**
+   - "No walks booked this week" and "Marta's usually free" imply a past relationship. A brand-new user has never met Marta.
+   - If this state can show for new users, give them a variant such as "No walks yet. Meet walkers near Pell Park." The Marta line can stay as the example.
+   - If Marta is a personalized suggestion, show her name and a small photo so it reads as a recommendation.
+   - I can't tell from what you sent whether this state is also the first-run state. Check that before Friday.
+2. **Major: two equal-weight buttons.**
+   - "Book Marta for Tuesday" and "See other walkers" are both default-styled buttons, so nothing marks the primary one.
+   - Make the Marta button filled and the other a text or outline button.
+3. **Moderate: default browser buttons and an emoji as the only visual.**
+   - These look unfinished and don't match the rest of the app. This is the one place A's polish is worth borrowing.
+   - Use Brindle's own button component, and swap the emoji for a small version of the design team's illustration, or Marta's photo.
+   - Keep the left alignment and the tight, human layout, and skip A's large centered hero.
+4. **Moderate: the vetting link is easy to miss.**
+   - "Why only a few walkers?" asks the user a question they probably haven't thought of yet, and the small link is easy to miss.
+   - Rewrite it as reassurance: "All Brindle walkers are vetted and local." Keep a "Learn more" link only if there's a page behind it.
+5. **Minor: "this week" is ambiguous.**
+   - Does "Tuesday" mean the coming one? Add the date, e.g. "Tue, Nov 11". Today is Wednesday, Nov 4, so the next Tuesday is Nov 10. Confirm against your calendar logic.
 
-**Changes to B, in priority order**
-1. **Blocker risk: the copy assumes Marta exists.** Marta is a real, available walker only if that holds for this user. For someone with no walker nearby, or with Marta unavailable, "Book Marta for Tuesday" is wrong or broken. Add a fallback empty state, such as "See walkers near you", for when no match or slot exists. Never show a stale slot.
-2. **Major: the two buttons look equal.** With two default-style buttons, the primary action doesn't stand out. Make "Book Marta for Tuesday" a filled primary, and make "See other walkers" a secondary or text button. Use A's button styling, but keep the button width to the label rather than full width unless the app uses full width elsewhere.
-3. **Major: the "vetted" link is too small and unclear.** The question "Why only a few walkers?" implies a limitation. Reword it to lead with the benefit, for example "All Brindle walkers are vetted and local," and link it to the vetting details. Put it where the user decides, near the buttons.
-4. **Minor: the emoji and default styling.** The small dog emoji and plain left-aligned text look unfinished next to the rest of the app. Use a proper illustration or Marta's photo. A photo of the actual walker would make the screen warmer than A's paw print, but only if you have consent and an image for every walker you could show.
-5. **Minor: "this week" can go stale.** If the tab has walks booked earlier or later, the heading doesn't cover them. Check that this state only appears when there are no upcoming walks at all, or reword to "No walks booked yet."
+**What to keep from B**
+- Heading, body and button copy, as written.
+- Left alignment.
+- The specific photo promise.
 
-**Cheapest check before Friday:** show B to three or four dog owners who aren't on the team. Ask each what they'd tap and what they expect to happen. If they hesitate over "See other walkers" or the vetting link, fix those two first.
+**Worth borrowing from A**
+- Proper spacing and tap-target sizing. A full-width primary button is good on mobile, so consider it for the Marta button.
 
-**Assumptions and gaps:** I assumed this state is for users with no upcoming walks, with Marta's slot pulled from live availability. I didn't check contrast, tap-target sizes, or dark mode, because I only had your descriptions.
+**Not checked:** contrast, type sizes, tap-target dimensions and real rendering, since I only had descriptions. I also don't know what happens when Marta has no open slots. The copy hardcodes her availability, so that state needs a fallback.
+
+If you want a cheap test before Friday, show B to 3–5 people who've never used Brindle and ask what they'd tap first and why.

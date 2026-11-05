@@ -1,39 +1,29 @@
-**Don't print this yet.** The biggest problems are factual gaps a visitor will hit immediately.
+Don't print it yet. Two of these are factual problems, and the page will generate questions the committee can't answer.
 
-## Blockers
+**Fix before print**
 
-1. **The return deadline can't be met.** You say "return by Monday 5pm," but you're open only Saturdays 10-1 and Wednesdays 6-8. Nobody can return a tool on Monday in person. Either state a drop-off method for Monday, or change the deadline to something you're open for, like Saturday 1pm or Wednesday 8pm.
+1. **The return deadline has no return slot.** The headline says "Return it clean by Monday 5pm," but you're only open Saturdays 10-1 and Wednesdays 6-8. Nobody can return anything Monday at 5pm. Also, the durations ("2 days," "3 days," "1 week") don't say when the clock starts. A Saturday 10am pickup with a 3-day loan is due Tuesday, when you're closed. Pick one rule, state the return slot, and make the headline match it.
 
-2. **There's no address.** The page says "at the back of the Eastgate Methodist hall" and nothing else. Someone who scans a flyer on the street needs a street address, and ideally a map link and a note on where to find the shed in the hall.
+2. **`lend@loanshed.example` won't work.** `.example` is a reserved placeholder domain and won't receive mail. Confirm the real address before it goes to print.
 
-3. **The contact email is a placeholder.** `loanshed.example` is a reserved domain that doesn't resolve. Replace it with a real address before printing, and test that it receives mail.
+3. **There's no location.** A QR flyer gets scanned by people who've never been to the hall. The page needs a street address and which door to use ("back of the hall" isn't enough). A map link would help.
 
-4. **Loan periods contradict each other.** The headline implies a weekend loan. The list says the tile saw is "2 days, back by Monday," the digger is "3 days," and the sander is "1 week," with no start date for any of them. Someone who picks up a saw Saturday at 1pm and reads "2 days" will expect Monday 1pm, but the page says Monday 5pm. Give one rule per tool, or a single policy with exceptions, and say when the clock starts.
+4. **The membership price contradicts itself.** The page says "free for members," then "$20 a year, or pay what you can," then the button says "Join for $20." Pay-what-you-can is hidden behind the button, and it's unclear whether it's a membership option or a borrowing fee. Decide the actual terms and state them once.
 
-5. **The page never says what happens when things go wrong.** "Bring them back clean" doesn't define clean. "If something breaks, tell us, it happens" doesn't say whether there's a deposit, a repair fee, or a late fee. The committee will get asked about this on day one, so state the policy, even if it's "no late fees, damage charged at cost."
+5. **The join flow is unclear.** The button sends people to `/join`, but step 1 says to bring photo ID, which implies joining happens in person. If it's online, say "Join online, then bring photo ID to your first visit." If it's in person only, the button should say so.
 
-## Fix before print
+**Weak copy and gaps**
 
-6. **The join button hides the sliding scale.** The body says "$20 a year, or pay what you can," but the button says "Join for $20." Make the button "Join from $20" or "Become a member."
+6. **The H1 doesn't say what Loan Shed is.** A cold scan gets a return-deadline promise before learning the organisation's name. Lead with something like "Loan Shed: borrow tools from the Eastgate Methodist hall," then the weekend promise.
 
-7. **Non-members aren't addressed.** It says "free for members," but doesn't say whether non-members can borrow, can't borrow, or must join first. Step 1 implies you must join before borrowing, so say that directly.
+7. **"Popular this month" will be wrong within weeks.** A printed flyer lives longer than a month, and the list gives no availability. Cut it, or make it "Popular tools" with no time reference.
 
-8. **"Find Renata" will break.** A named volunteer on a flyer becomes wrong the first time they take a week off. Use "ask a volunteer at the Saturday desk."
+8. **The policy questions are unanswered.** Is there a deposit? A late fee? What happens if something is damaged? What does "clean" mean? Each of these will come up at the desk. At minimum, add one line on each or link a policy page.
 
-9. **The brand name is missing from the heading.** "Loan Shed" appears only in the body. For a QR landing page, the name should be in the `<h1>`, with the headline as a subhead or tagline. Add a `<title>` tag too, since it appears in the browser tab and in search results.
+9. **Renata is a single point of failure.** A named volunteer on a printed page goes stale when she's away or stops volunteering. Use "any volunteer at the Saturday desk," or the role instead of the name.
 
-10. **"Popular this month" is stale on arrival.** It's static and undated, with no availability and no links to the catalogue. Either link each item or cut the section. A dated "Popular in October" will go stale on its own, so it's better to cut it.
+10. **It's a fragment, not a page.** There's no `<!doctype>`, `<title>`, `lang`, or `<meta name="viewport">`. Without the viewport tag, it'll render tiny on phones, and that's how most people will scan it. Check that your template supplies these.
 
-11. **The hours have no context.** "Open Saturdays 10-1" lacks a timezone, a location, and a note on whether it's the same hall entrance. Add the address near the hours and say whether Saturday desk and shed are the same place.
+11. **Style nits.** Use "10am–1pm" to match "5pm." Use a dash instead of a comma splice in "tell us, it happens."
 
-12. **No accessibility info.** For a shed behind a church hall, people will ask whether there's step-free access, parking, and whether the shed is accessible during the day. One line helps.
-
-## Technical
-
-13. **The QR code must encode the absolute URL,** not a relative path. The `/join` and `/catalogue` links work on the site, but test the printed code on an actual phone from outside your Wi-Fi.
-
-14. **The styles aren't in this file.** `.btn` and `.btn-secondary` assume a stylesheet. Confirm the page renders correctly on its live URL, not just in a local preview.
-
-15. **The page needs `lang`, a viewport meta tag, and a `<title>`.** Without a viewport tag, the page can render at desktop width on phones, which is most of your visitors.
-
-**The fix list, in order:** pick a return rule that matches your open hours, add the address, replace the example email, define the loan periods, and state the damage and late-fee policy. Those five fixes will matter more than any cosmetic change. If you give me the address, a real contact email, and your actual loan rules, I'll rewrite the page.
+If you send me the real address, the return rule, the email, and the membership terms, I'll rewrite the page with those fixed.

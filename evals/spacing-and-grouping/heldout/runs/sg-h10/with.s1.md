@@ -1,4 +1,4 @@
-I couldn't save the file because the Write tool is disabled in this session. Here is the full page, so you can save it as `dashboard.html`. I haven't opened it in a browser.
+I couldn't create the file because the Write tool is disabled in this session, so I haven't saved or opened anything. Here is the full file to save as `dashboard.html`. I haven't viewed it in a browser.
 
 ```html
 <!DOCTYPE html>
@@ -10,57 +10,67 @@ I couldn't save the file because the Write tool is disabled in this session. Her
 <style>
   :root {
     --space-2: 8px;
-    --space-6: 24px;
+    --space-3: 12px;
+    --space-5: 24px;
+    --ink: #1f2430;
+    --muted: #6b7280;
+    --line: #e3e6ec;
+    --surface: #fff;
+    --page: #f6f7f9;
   }
+
   body {
     margin: 0;
-    padding: var(--space-6);
-    font: 14px/1.5 system-ui, sans-serif;
-    color: #1f2933;
-    background: #f5f6f8;
+    padding: var(--space-5);
+    background: var(--page);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, sans-serif;
   }
+
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-5);
   }
+
   .panel {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
-    min-height: 140px;
-    padding: var(--space-6);
-    background: #fff;
-    border: 1px solid #e3e6ea;
+    gap: var(--space-3);
+    min-height: 160px;
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: 8px;
   }
-  .panel h4 { margin: 0; font-size: 14px; font-weight: 600; }
+
+  .panel h4 { margin: 0; font-size: 15px; font-weight: 600; }
   .panel p  { margin: 0; }
 
-  /* Empty state: centered in the leftover space, quieter than real content */
-  .panel p:only-of-type {
+  /* Empty state: centered in the space under the heading, quieter than real content */
+  .panel.empty p {
     flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #7b8794;
-    text-align: center;
+    display: grid;
+    place-items: center;
+    padding-bottom: var(--space-2);
+    color: var(--muted);
+    font-size: 14px;
   }
 </style>
 </head>
 <body>
   <div class="grid">
-    <div class="panel"><h4>Revenue</h4><p>$12,480</p></div>
-    <div class="panel"><h4>Active users</h4><p>1,342</p></div>
-    <div class="panel"><h4>Open tickets</h4><p>27</p></div>
-    <div class="panel"><h4>Recent activity</h4><p>No activity yet.</p></div>
+    <div class="panel"><h4>Overview</h4><p>Panel content goes here.</p></div>
+    <div class="panel"><h4>Tasks</h4><p>Panel content goes here.</p></div>
+    <div class="panel empty"><h4>Recent activity</h4><p>No activity yet.</p></div>
   </div>
 </body>
 </html>
 ```
 
-- **Same surface for every panel:** each one has the same padding (24px), border, radius and minimum height, so the empty cell matches the other three.
-- **Spacing:** the gap between panels equals the panel padding, so the cards don't blur together. The heading sits closer to its content (8px) than the panels are to each other.
-- **Empty state:** the "No activity yet." text is muted and centered in the space under the heading. It looks intentionally empty without extra decoration.
-- **Placeholder panels:** I made up the other three panels (Revenue, Active users, Open tickets). Swap in your real ones.
-- **Empty-state selector:** `p:only-of-type` applies the empty-state look to any panel whose body is a single `<p>`, including the three placeholders. If your real panels use a single `<p>` for their content, give the empty one a class (for example `.panel--empty`) and use that selector instead.
+- **Same surface as the other panels:** all three share one white card with a hairline border and no shadow. The empty cell now looks like a panel with nothing in it, not a gap in the grid.
+- **Consistent padding:** padding is 24px and the heading-to-content gap is 12px. The grid gap is also 24px, so it is never smaller than the padding.
+- **Even height:** `min-height: 160px` and the stretching grid row keep the empty panel as tall as its neighbours.
+- **Muted empty message:** the "No activity yet." text is centered in the space under the heading. It is grey and slightly smaller, so it reads as a placeholder.
+- **Markup change:** the only change to your markup is an `empty` class on the panel, which scopes the centered styling so it doesn't affect panels that have content.
+- **Placeholder panels:** I made up the "Overview" and "Tasks" panels as stand-ins for your other two. Swap in your real ones.

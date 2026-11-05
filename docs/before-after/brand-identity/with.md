@@ -1,1 +1,1 @@
-A single HTML page showing a logo built from a dark disc with a borehole cut down through it to a blue pocket of water, next to a stacked "HARROW CREEK" wordmark with "DRILLING" under a rule, followed by a grid of solid black, reversed, stacked and small versions.
+A single HTML page showing a logo built from a dark green disc with a drill pipe cut down through it into a water drop, beside a "HARROW CREEK" wordmark with "DRILLING" spaced out underneath. The page repeats it reversed on dark green, then stacked in solid black with the mark at 64, 32 and 16 pixels.

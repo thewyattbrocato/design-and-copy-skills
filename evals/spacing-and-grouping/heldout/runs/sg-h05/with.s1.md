@@ -1,21 +1,26 @@
-**Use a 1px hairline between rows.** Pair it with modest, consistent vertical padding inside each row. Don't use alternating backgrounds, and don't rely on extra space alone.
+**Use a 1px line (hairline) between rows.** Add comfortable vertical padding inside each row. Make the line a quiet, low-contrast color.
 
-**Why a hairline fits this list**
-- **Dense, uniform rows:** Thirty rows of date, merchant and amount are all the same kind of item. Space alone makes them blur into one mass, or it costs you rows per screen.
-- **Scanning:** Users scan across a row to match a merchant with its amount. A thin rule guides the eye along the row without adding visual weight.
-- **Rules need room on both sides:** Give each row about 12–16px of vertical padding above and below the text. That also keeps each row a comfortable touch target of 44px or more.
+**Why a line works for this list**
+- Thirty tightly packed rows with three columns (date, merchant, amount) is the case where space alone stops working. Rows have to be close enough to scan, and the line shows where one transaction ends and the next begins.
+- The eye tracks horizontally across each row from merchant to amount. A line gives it a guide for that.
+- Pure spacing needs gaps big enough to read as separation. That cuts the number of rows per screen. If the gap is small, it blurs into the row's own internal padding.
 
-**Why not the others**
+**Why not the other two**
 - **Alternating backgrounds (zebra stripes):**
-  - They suit wide tables with many columns, where the eye can lose its row. A three-field row doesn't have that problem.
-  - They add visual noise and can look like a selected or highlighted state.
-  - They break in dark mode and with accessibility settings, and they fight with any real selected, pending or highlighted row states.
-- **Extra space only:** This works with few items, or when rows are grouped. With 30 rows it cuts how many fit on screen, and the rows can still read as loose lines of text instead of a list.
+  - They suit wide tables with many columns, where the eye can drift to the wrong row. With only three fields, they add visual noise.
+  - They fight with other background states, such as pressed, selected, or pending rows, and with dark mode.
+  - Contrast is a problem. Stripes need enough contrast to show, and that makes the screen busier.
+  - If you ever group by date, the stripes work against the grouping.
+- **Extra space between rows:**
+  - This works for a short list. With 30 rows it means more scrolling.
+  - It also weakens grouping. If the gap between rows is close to the gap between date groups or sections, the groups stop reading as groups.
 
-**Details**
-- Use one quiet color for the rule, such as a low-contrast gray, and keep the weight the same everywhere.
-- Inset the rule to align with the text's left edge, as iOS does. This looks lighter than a full-bleed line.
-- Skip the rule after the last row.
-- Put the date in a smaller, secondary color. Right-align the amount, and use tabular figures so the digits line up.
-- Group by day with a section header (like "Oct 14"), with more space above the header than below it. The date then doesn't have to repeat on every row, and the header does the grouping that space would otherwise do.
-- Use space, not rules, to separate day groups. Rules inside groups and space between groups gives you two clearly different levels.
+**Details that make the line version work**
+- Give each row about 12–16px of vertical padding, so the line has room on both sides. On mobile, keep the row height at 44px or more if the whole row is tappable.
+- Use one rule weight in a low-contrast neutral. Don't use a full-strength border color.
+- Inset the line to align with the text's left edge, or run it full-width. Pick one and use it throughout.
+- Skip the line after the last row. Let the container own the separators rather than putting a border on every row.
+- Align amounts to the right edge, with tabular figures so the digits line up.
+- If the list spans many days, group rows under date headers. Put more space above each header than below it. Then you can drop the date column from the rows and use lines only within each day.
+
+**One exception:** if the list is a dense, wide table with many columns (running balance, category, status, and so on), light zebra striping alongside or instead of lines can help. Three fields don't need it.

@@ -1,29 +1,31 @@
-I'd steer away from "Cut your heating bill by 38%". It's the best of 212 results, from a home with no attic insulation at all. The typical home saw 14%, and the middle half saw 9–21%. A customer who expects 38% and gets 12% will feel misled, and the headline could also invite complaints about misleading advertising. The honest numbers are still good, and you can use the 38% as a labeled example instead of the headline.
+# Website results section
 
-## Website results section
+**Headline:** Typical heating bill cut: 14%. Best result: 38%.
 
-**Headline:** Typical result: a 14% cut in heating bills
+**Subhead:** What we saw across 212 homes, measured on real bills.
 
-**Subhead:** We measured 212 homes. Here's what happened.
+Between 2023 and 2025, our crew air-sealed and added attic insulation in 212 homes. For each one, we compared weather-adjusted heating bills for the 12 months before and after the job.
 
-Between 2023 and 2025, Greenwell Home Energy air-sealed and added attic insulation in 212 homes. For each one, we compared weather-adjusted heating bills for the 12 months before and after the job.
+- **Median reduction: 14%.**
+- **Most homes: 9% to 21%.** The middle half of homes landed in this range.
+- **Best result: 38%.** This was a 1920s farmhouse with no attic insulation at all.
+- **About 4% saw no measurable change.** That was 9 of the 212 homes.
 
-- **14% median reduction.** Half of homes did better than this, half did less.
-- **9–21% for the middle half.** Most homes landed in this range.
-- **38% in the best case.** A 1920s farmhouse with no attic insulation at all saw the biggest drop. Older, uninsulated homes have the most to gain.
-- **About 4% saw no measurable change.** 9 of the 212 homes didn't improve in a way we could detect. We'd rather you hear that from us up front.
+A typical job costs $2,900. Our own crew does all the work, with no subcontractors.
 
-A typical job costs $2,900, and our own crew does all of the work.
+Results depend on the house. Homes with little insulation and a lot of air leakage have the most to gain.
 
-*Want to know what to expect in your home? Ask us for an estimate.*
+**Call to action:** Want to know where your home would land? Book a home assessment.
 
-## Postcard (two lines)
+# Postcard (two lines)
 
-**We measured 212 homes: the typical heating bill dropped 14%,**
-**and most fell 9–21%. Greenwell Home Energy.**
+> **Typical heating bill cut: 14%. Up to 38% in the right house.**
+> 212 homes sealed and insulated by our own crew. Greenwell Home Energy.
 
-## If your partner still wants the 38%
+# Why I didn't use "Cut your heating bill by 38%"
 
-A compromise that stays accurate is to keep the 38% as a named example, as in the section above. For the postcard, you could use "Up to 38% off heating bills*" with the footnote "*Best of 212 homes; typical result 14%." I'd still prefer the median as the headline, since it's the number most customers can expect.
+38% is the single best result out of 212 homes, and it came from an unusual house. The median is 14%, and about 1 in 25 homes saw no change. A headline promising 38% would mislead most readers, since a typical customer would get well under half of that. It could also create complaint or false-advertising risk, and it would undercut your credibility once customers see their own bills.
 
-I left out payback time and dollar savings because you haven't calculated them. Once you have, they'd make a strong addition.
+The copy above still uses the 38%. It sits next to the median and is explained by the farmhouse's lack of insulation, so it works as a credible upper end. If your partner wants the big number more prominent, the postcard's "Up to 38% in the right house" is the strongest version I'd stand behind.
+
+I left out payback time and dollar savings because you haven't calculated them and I was to use only your data. Once you have payback figures, they'd make a strong addition.

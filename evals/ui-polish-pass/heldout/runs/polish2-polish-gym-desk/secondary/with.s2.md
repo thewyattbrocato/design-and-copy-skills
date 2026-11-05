@@ -1,75 +1,129 @@
-The screen is small, so I'm returning the whole file. The changes cover focus, labels, live regions, the empty and error states, narrow screens, and the desk's own wording.
+Here is the finished screen. It's one file, so I've returned the whole thing. Layout, colors, and type are unchanged. The gym's own nouns replace the placeholders, and the missing states, form handling, and access fixes are added.
 
 ```html
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Front desk · Dashboard</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Front desk</title>
 <style>
 body{font-family:system-ui,sans-serif;margin:0;background:#f5f5f5;color:#222}
-nav{background:#1f2937;padding:12px 24px;display:flex;flex-wrap:wrap;gap:4px 20px}
-nav a{color:#fff;text-decoration:none}
-nav a:hover,nav a[aria-current="page"]{text-decoration:underline}
-nav a:focus-visible{outline:3px solid #fff;outline-offset:3px}
-main{padding:24px}
-.cards{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px}
-.card{background:#fff;padding:16px;border-radius:8px;flex:1 1 200px}
-.card b{display:block;font-size:28px}
-.table-wrap{overflow-x:auto}
-table{width:100%;background:#fff;border-collapse:collapse}
-th,td{padding:10px;text-align:left;border-bottom:1px solid #eee;overflow-wrap:anywhere}
-th{font-weight:600}
-#empty{color:#4b5563}
-#err{color:#991b1b;background:#fef2f2;border:1px solid #fca5a5;padding:12px 16px;border-radius:6px}
-#err button{margin-left:8px}
-[hidden]{display:none!important}
-form{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
-.field{display:flex;flex-direction:column;gap:4px;font-size:14px}
-input{padding:8px;border:1px solid #6b7280;border-radius:4px;font:inherit;background:#fff;color:#222}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}
+.skip{position:absolute;left:8px;top:-48px;background:#fff;padding:8px 12px;border-radius:4px;z-index:10}.skip:focus{top:8px}
+nav{background:#1f2937;padding:12px 24px}nav a{color:#fff;margin-right:20px;text-decoration:none}nav a[aria-current]{text-decoration:underline}
+main{padding:24px;max-width:1100px}
+.cards{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.card{background:#fff;padding:16px;border-radius:8px;flex:1 1 200px}.card b{display:block;font-size:28px}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:8px}
+table{width:100%;border-collapse:collapse}th,td{padding:10px;text-align:left;border-bottom:1px solid #eee;overflow-wrap:anywhere}
 button{padding:8px 16px;background:#2563eb;color:#fff;border:0;border-radius:4px;font:inherit;cursor:pointer}
-button:hover{background:#1d4ed8}
-button:focus-visible,input:focus-visible{outline:3px solid #1d4ed8;outline-offset:2px}
+button:disabled{opacity:.6;cursor:progress}
+input{padding:8px;border:1px solid #6b7280;border-radius:4px;font:inherit}
+.form{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;background:#fff;padding:16px;border-radius:8px}
+.field{display:flex;flex-direction:column;gap:4px;min-width:220px;flex:1}
+.msg{color:#b91c1c;font-size:14px;min-height:1em}
+.notice{padding:12px 16px;border-radius:6px;margin:0 0 16px}
+.notice.err{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
+.notice.ok{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+[hidden]{display:none!important}
+@media (max-width:600px){main{padding:16px}nav{padding:12px 16px}nav a{display:inline-block;margin:4px 16px 4px 0}}
 </style></head><body>
-<nav>
-<a href="#" aria-current="page">Dashboard</a>
-<a href="#">Check-in</a>
-<a href="#">Day passes</a>
-<a href="#">Shoe rentals</a>
-<a href="#">Settings</a>
-</nav>
-<main>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main"><a href="#" aria-current="page">Dashboard</a><a href="#">Check-in</a><a href="#">Day passes</a><a href="#">Shoe rental</a><a href="#">Settings</a></nav>
+<main id="main">
 <h1>Front desk</h1>
 <div class="cards">
-<div class="card">Total Users<b>1,234</b></div>
+<div class="card">Members<b>1,234</b></div>
 <div class="card">Revenue<b>$12,345</b></div>
-<div class="card">Active Items<b>56</b></div>
+<div class="card">Shoes out<b>56</b></div>
 </div>
-<h2 id="recent-h">Recent Activity</h2>
-<p id="empty" role="status" hidden>No activity yet. Check-ins, day passes and shoe rentals will show up here.</p>
-<p id="err" role="alert" hidden>Couldn't load recent activity. Check the connection, then <button type="button" onclick="location.reload()">Try again</button></p>
+
+<h2>Recent activity</h2>
+<p id="err" class="notice err" role="alert" hidden>Couldn't load recent activity. <button type="button" onclick="location.reload()">Try again</button></p>
 <div class="table-wrap">
-<table aria-labelledby="recent-h">
-<thead><tr><th scope="col">Name</th><th scope="col">Item</th><th scope="col">Status</th><th scope="col">Date</th></tr></thead>
+<table>
+<caption class="sr-only" style="position:absolute;left:-9999px">Recent check-ins, passes and rentals</caption>
+<thead><tr><th scope="col">Name</th><th scope="col">Pass or rental</th><th scope="col">Status</th><th scope="col">Date</th></tr></thead>
 <tbody>
-<tr><td>John Doe</td><td>Item 1</td><td>Active</td><td>01/01/2024</td></tr>
-<tr><td>Jane Smith</td><td>Item 2</td><td>Pending</td><td>01/02/2024</td></tr>
+<tr><td>John Doe</td><td>Day pass</td><td>Active</td><td>01/01/2024</td></tr>
+<tr><td>Jane Smith</td><td>Shoe rental</td><td>Pending</td><td>01/02/2024</td></tr>
 </tbody>
 </table>
 </div>
-<h2>Add New</h2>
-<form id="add-new">
-<label class="field">Name<input name="name" required autocomplete="off"></label>
-<label class="field">Value<input name="value" required autocomplete="off"></label>
-<button type="submit">Add</button>
+<p id="empty" hidden>No check-ins, passes or rentals yet today.</p>
+
+<h2 id="add-h">Add entry</h2>
+<form id="add" class="form" novalidate aria-labelledby="add-h">
+<div class="field">
+<label for="name">Name</label>
+<input id="name" name="name" autocomplete="off" placeholder="Member or guest name" aria-describedby="name-err">
+<span class="msg" id="name-err"></span>
+</div>
+<div class="field">
+<label for="value">Pass or rental</label>
+<input id="value" name="value" autocomplete="off" placeholder="e.g. Day pass, Shoe rental">
+<span class="msg" id="value-err"></span>
+</div>
+<button type="submit" id="submit">Save</button>
 </form>
-</main></body></html>
+<p id="result" class="notice" role="status" hidden></p>
+</main>
+
+<script>
+const form = document.getElementById('add');
+const nameIn = document.getElementById('name');
+const valueIn = document.getElementById('value');
+const nameErr = document.getElementById('name-err');
+const submit = document.getElementById('submit');
+const result = document.getElementById('result');
+
+// Replace the body with the desk system call. It must throw on failure.
+async function saveEntry(entry) {
+  throw new Error('the desk system is not connected yet');
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  nameErr.textContent = '';
+  nameIn.removeAttribute('aria-invalid');
+  if (!nameIn.value.trim()) {
+    nameErr.textContent = 'Enter a name to check in or sell.';
+    nameIn.setAttribute('aria-invalid', 'true');
+    nameIn.focus();
+    return;
+  }
+  const entry = { name: nameIn.value.trim(), value: valueIn.value.trim() };
+  submit.disabled = true;
+  submit.textContent = 'Saving…';
+  form.setAttribute('aria-busy', 'true');
+  result.hidden = true;
+  try {
+    await saveEntry(entry);
+    result.className = 'notice ok';
+    result.textContent = 'Saved ' + entry.name + '.';
+    form.reset();
+    nameIn.focus();
+  } catch (err) {
+    // Keep what was typed so the desk can retry.
+    result.className = 'notice err';
+    result.textContent = 'Not saved: ' + err.message + '. Your entry is still here.';
+  } finally {
+    result.hidden = false;
+    submit.disabled = false;
+    submit.textContent = 'Save';
+    form.removeAttribute('aria-busy');
+  }
+});
+</script>
+</body></html>
 ```
 
 **What changed**
-- **Access:** Inputs now have real labels instead of placeholders. Table headers are scoped, and the table is named by its heading. The current page is marked in the nav with `aria-current` and underlined, so it isn't shown by color alone. Focus rings are visible on every control. The nav ring is white because blue disappears on the dark nav.
-- **States:** The empty message says what the list is for. The error says what failed and offers "Try again", and it sits in a persistent alert region. Status and error are announced to assistive tech.
-- **Layout:** Cards wrap instead of squeezing at narrow widths. The table scrolls sideways in its own box so the page doesn't overflow at 320px.
-- **Copy:** Nav now uses the desk's own nouns: Check-in, Day passes, Shoe rentals. "Welcome" became "Front desk". The button is "Add" to match the "Add New" heading.
+- **Labels and wording:** the nav, cards, table headers, and sample rows now use the desk's nouns (check-in, day passes, shoe rental). The old "Users", "Items", and "Submit" are gone.
+- **Form:** the inputs now have real labels and a required-name check. An error appears beside the field, and focus moves to it. The Save button shows "Saving…" and is disabled while it runs. A failure keeps the typed values and says why. Success says who was saved.
+- **Empty and error states:** a message for an empty table and an alert with Try again for a failed load. Both are hidden until something wires them up.
+- **Access:** a skip link, `aria-current` on the active nav item, table captions and column headers, visible focus rings, and labelled inputs.
+- **Small screens:** the table scrolls sideways instead of breaking the layout, the cards wrap, and the nav stacks.
 
-**Not done, and why**
-- The file has no script, so nothing submits yet. The Add form needs a handler that disables the button while it saves, shows the result in words, and keeps the typed values if saving fails. I didn't invent that behavior.
-- The card numbers and table rows are still static sample data, and the card labels ("Total Users", "Active Items") are unchanged. The real data and the item/rental wording need your confirmation.
-- Not tested with a screen reader, on a real device, or at 200% zoom. I checked the contrast ratios and the layout by reading the code only.
+**Needs you before Monday**
+- `saveEntry()` is a stub that always fails, so Save will show "Not saved" until you connect it to the desk system. The failure message is shown as it would be in real use.
+- The numbers (1,234 members, $12,345, 56 shoes) and the table rows are still sample values. I didn't change them because I don't have the real figures.
+
+**Not checked:** I only read the code. I did not test it with a screen reader, on a real device, at 200% text size, or in a browser.

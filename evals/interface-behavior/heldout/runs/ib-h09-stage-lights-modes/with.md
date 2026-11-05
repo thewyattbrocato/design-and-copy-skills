@@ -1,26 +1,34 @@
-**Recommendation: three explicit modes (Select, Paint, Record), with a few guardrails. Don't use the gesture-overloaded single mode.**
+**Go with explicit modes, but trim them to two plus a button.** The always-on gesture model is the riskier choice for show-time use.
 
-**Assumptions:** The operator is trained and uses the app on a tablet, touch only. They work in a dark booth, often during a live show, with little attention to spare. I haven't been given any usage data, so none is cited here.
+**Assumptions:** one operator on a tablet, in a dark booth, under time pressure, using touch with possibly gloves or shaky hands. I'm also assuming painting changes what's on stage, or could if you're live. If you only paint blind, the stakes drop but the answer stays the same.
 
-**Why not the one-mode design**
-- The one-mode design makes the same touch mean different things depending on duration and movement. A long-press is "paint" and a drag is "select". A slightly slow drag or a hesitant press will do the wrong thing, and the operator can't tell until the lights change. That is a silent double meaning, and it fails most where mistakes cost the most.
-- Hands are imprecise in a dark booth and at speed, and gesture timing thresholds are hard to hit reliably under pressure.
-- Paint changes live output. Select is harmless. Putting them on near-identical gestures puts a harmful action next to a harmless one.
-- Neither long-press nor drag-to-select has a keyboard or non-gesture route, so accessibility gets worse.
+**Why not long-press = paint, drag = select**
+- One gesture means two things depending on a timing threshold the operator can't see. A drag that starts a beat late paints over lights instead of selecting them. In a dark booth with a rushed hand, that's the exact mistake you said is costly.
+- Nothing on screen says which one you're about to do, and there's no keyboard or switch route for it.
+- It also gives you no safe place to rest. The operator can never touch the grid without risking a change.
 
-**Why modes are acceptable here**
-Modes are normally something to avoid. They are fine when each one has a visible indicator and an obvious exit, and these three do. They also match how the work actually goes: look, then change, then commit.
+**What to build**
 
-**Rules for the three-mode design**
-1. **Mode bar:** Keep a large, labeled, always-visible three-way switch (Select | Paint | Record) in a fixed spot. Use big touch targets, a text label, and a distinct shape or icon for each mode, so color is not the only cue. The operator is already looking at the grid, so also tint the grid frame or header per mode.
-2. **Default to Select:** Start in Select, and return to it after Record and after a long idle period. Select is the safe state, because a stray touch only highlights lights.
-3. **Paint is the only mode that changes live output.** Show the active color or level as a swatch in the mode bar. Paint strokes should be undoable as one unit per drag, with a prominent Undo button, because undo is cheaper than confirmation mid-show.
-4. **Record needs a confirmation, because it can't be undone.** If recording overwrites an existing cue, show a specific confirmation that names the cue and says what gets replaced. If cues are versioned, skip the confirmation and offer Undo instead. Make that the only confirmation in the app, so people still read it.
-5. **Keep Record separate from the grid.** Make it a deliberate button in its own area, not a grid gesture. That way a touch on the grid can never record a cue.
-6. **Selection persists across modes.** The operator can select lights, switch to Paint, and apply to that selection. Paint can then offer both "drag to paint" and "apply to selection", which makes the common case a tap instead of a gesture.
-7. **Exit:** Tapping the active mode again, or a dedicated Done button, returns to Select. Support external keyboard shortcuts if the tablet will have one.
-8. **Accessibility:** Every drag action should have a tap alternative, such as tap-to-toggle in Select and tap-to-apply in Paint. Announce mode changes to screen readers.
+1. **Select is the resting state, and it's read-only.**
+   - A tap or drag selects lights and shows their settings. It can't change anything.
+   - This is the default so that a stray touch is harmless.
 
-**Cost to accept:** Operators will sometimes forget which mode they are in. The big indicator, the tinted grid, the safe default and the single-unit undo are there to cover that. A quick test with an operator under time pressure should show whether the indicator is noticeable enough.
+2. **Paint is a deliberate mode.**
+   - Enter it by tapping a Paint tool, or by holding a thumb-reachable Paint key. Hold-to-paint is the safest version, because the mode ends when the finger lifts.
+   - While it's active, tint the whole grid border, show the color or level being applied, and keep a large Done button in the same spot. Don't rely on color alone. Add a text label and an icon.
+   - Make every paint stroke one undo step, with an Undo button that's always visible. Painting is reversible, so don't add "are you sure" prompts.
 
-**What to tell the other camp:** Their concern is real. Switching modes costs time. Selection persisting across modes and tap-to-apply cut the number of switches, which gets you most of the speed of an always-on design without the ambiguous gesture.
+3. **Record is not a mode or a gesture. It's a button.**
+   - It always shows the target cue, for example "Record → Cue 12".
+   - It does nothing to the grid, so it can't collide with select or paint.
+   - If the target cue already exists, name it and what you're overwriting, for example "Overwrite Cue 12 (last saved 7:42)?". That's the one place a specific confirmation earns its keep, because a silent overwrite of a cue is what hurts mid-show.
+   - If the cue is new, record immediately, show a quiet confirmation in place, and offer Undo. Keep a version history of cues so even an accepted overwrite can be recovered.
+
+4. **Safeguards for show time**
+   - Offer a lock or "show mode" that disables Paint and Record, so only Select works while cues are running.
+   - Switching modes never clears the selection.
+   - Every action has a touch target big enough for a gloved or hurried hand, and a keyboard or hardware-button route.
+
+**Why this beats three equal modes:** Record isn't really a mode, so making it one adds a switch the operator has to remember. Two states (Select and Paint) plus a clearly labeled button covers all three jobs, and the most frequent one, looking, is always safe.
+
+**Open question for your team:** does painting affect live output, or only a preview? If it's live, I'd make Paint require show mode to be off, or show an explicit "LIVE" indicator while painting. I'd test either choice with a real operator in booth lighting before settling it.

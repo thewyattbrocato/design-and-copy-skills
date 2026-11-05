@@ -1,61 +1,84 @@
-**The idea: "Reading the Chart."** Your books are your practice's chart, and most practices only open it once a year, when something hurts. Each of the six parts is one "finding" you'd look for in a practice's numbers. Each is written the way a dentist reads a chart: what you see, what it usually means, what you'd do next. Tax is one finding, not the whole series.
+**The idea:** *Line by Line.* Each part takes one line from a dental practice's financials and says what it means, what it hides, and what a dentist should ask about it.
 
-**Why this works for you:** Dentists are trained to catch slow changes before they get expensive. You're borrowing a habit they already respect and applying it to the part of the practice nobody trained them on. It also needs no client stories. Every part is a pattern in the numbers, not an anecdote.
+Anyone can repeat it: "She explains one line of your P&L at a time." It needs no client stories, because the material is the structure of dental financials, which you know from eight years of reading them. It also doesn't read like tax tips, since it teaches dentists to read their own numbers.
 
-## The six parts
+**The series**
 
-1. **The chart nobody opens.** The books are a chart, and a yearly look isn't a checkup.
-2. **Production vs. collections.** The number on the schedule isn't the number in the bank.
-3. **Overhead, line by line.** What to compare each line against (your own past months first, not industry averages).
-4. **What the owner actually takes home.** Salary, distributions, and why the answer is rarely the number the owner assumes.
-5. **The big equipment decision.** Reading cash flow before the deduction pitch, with the tax angle last.
-6. **The chart a buyer would read.** What your books say if you sold in three to five years.
+1. **Net income** is not what you took home. Profit versus cash.
+2. **Production** is not collections. What the software says versus what the bank says.
+3. **The adjustments line.** PPO write-offs and what they do to the "production" you're proud of.
+4. **Lab fees and supplies.** What belongs in them, and why "percent of collections" comparisons are shakier than they look.
+5. **The associate line.** How compensation structures (percent of production vs. collections, lab fee splits) change what an associate costs you.
+6. **Owner pay.** Salary, draws and distributions, and why your paycheck and your profit are different questions.
 
-## Part 1
+Parts 2 to 6 will each need a quick check against how your clients' entity types (sole prop, S-corp, partnership) change the answer. I've kept them general here.
+
+**Three forms, each of which works alone**
+- **LinkedIn post:** about 250 words, one line, one misunderstanding, one question to ask.
+- **Monthly email:** the same line, longer, with a worked example in clearly labeled made-up round numbers.
+- **"Ask your books" card:** a one-page PDF with three questions for that line. A dentist can forward it to their own bookkeeper, which gets your name around without a case study.
+
+**Ask the owner:** Do you want a call to action at the end, such as replying to the email or booking a call? I used a soft one. Also, which entity types do most of your clients use? That decides how much of Part 6 is about S-corps.
+
+**Plain fallback:** "Six questions every dentist should ask their bookkeeper," one question per part, same forms, no named series.
+
+---
+
+## Part 1 draft
 
 **LinkedIn post**
 
-> A patient who only comes in when a tooth hurts gets a different kind of care than one who comes in every six months.
+> Your P&L says the practice made $400,000. Your bank account says otherwise. Both are right.
 >
-> Most practices treat their books the first way.
+> This is the most common confusion I see in dental practices, and it's not anyone's fault. The P&L measures profit. Your bank account measures cash. They're different things, and in a dental practice they drift apart fast.
 >
-> They get opened in March, because the tax return needs them. Or in a scramble, when the bank balance doesn't match how busy the schedule looked.
+> Here's where the gap usually lives:
 >
-> You wouldn't practice that way. You read the chart before you touch anything. You compare it to the last visit. You look for what's changed slowly, because slow changes are the expensive ones.
+> **Money out that isn't an expense.** Loan principal payments (equipment, buildout, a practice purchase) come out of your cash but never show up on the P&L. Only the interest does.
 >
-> Your books are the practice's chart. Almost nobody taught you to read it.
+> **Expenses that aren't money out.** Depreciation reduces your profit without costing you a dollar this month.
 >
-> I've done bookkeeping and tax prep for dental practices for eight years. Over the next six posts, I'll go through what I look for, one finding at a time, the way you'd go through a chart.
+> **Your own pay.** For many owners, draws and distributions aren't an expense. They're you taking profit out. So profit can look healthy while the account runs lean.
 >
-> No tax tips. Just how to tell what your numbers are saying before it hurts.
+> **Taxes on profit you already spent.** On a pass-through, you can owe tax on income that went to a loan payment.
 >
-> Next up: why a full schedule and a full bank account aren't the same thing.
+> None of this means your books are wrong. It means the P&L answers "did the practice make money?" and a different report answers "where did the cash go?" You need both.
+>
+> One question to ask your bookkeeper this month: *"Can you walk me from net income to the change in my bank balance?"*
+>
+> If the answer is a shrug, that's worth knowing.
+>
+> This is Part 1 of *Line by Line*, where I take one line of a dental practice's financials at a time. Next: why production isn't collections.
 
-**Monthly email, issue 1**
-
-*Subject: Your practice has a chart. When did you last read it?*
+**Monthly email** (subject: *Why your P&L and your bank account disagree*)
 
 > Hi [first name],
 >
-> You'd never treat a patient without looking at their chart first. Most practice owners, though, only look at their own numbers once a year, when the tax return needs them.
+> Welcome to the first *Line by Line*. Once a month I'll take one line from a dental practice's financials and explain what it says, what it hides, and what to ask about it.
 >
-> I've done the books for dental practices for eight years, and this email series is about reading them the way you'd read a chart: look for slow changes, compare to the last visit, act before it hurts.
+> I'm starting with the one that causes the most confusion: **net income is not the cash you took home.**
 >
-> **This month's 15-minute checkup.** Pull your last three monthly reports and look at three things:
+> Here's a made-up practice with round numbers, for illustration only:
 >
-> 1. **Collections, month over month.** Up, down, or flat? Don't worry about "good" yet. Just notice the direction.
-> 2. **Payroll as a share of collections.** Divide total payroll by total collections for each month. You're looking for drift, not a target.
-> 3. **Cash on hand vs. one month of expenses.** Could you cover next month if collections stalled?
+> - Net income on the P&L: **$300,000**
+> - Equipment loan principal paid: **–$50,000** (not on the P&L)
+> - Depreciation: **+$40,000** (on the P&L, but no cash left)
+> - Owner draws: **–$220,000** (not an expense for most owners)
 >
-> Write the three numbers down. Next month we'll add one more and start asking what they mean.
+> Cash in the bank went up or down by roughly $70,000, and nothing in that list is an error. The P&L and the bank are measuring different things.
 >
-> If you can't pull those reports easily, that's a finding too. Reply and tell me what's in the way. [add: your reply address or booking link]
+> The report that bridges the two is a cash flow statement. Most small practices never see one, because it isn't something most bookkeeping setups produce by default. [Add: whether you provide this, and how.]
+>
+> **Ask your bookkeeper:** "Can you walk me from net income to the change in my bank balance?" A good answer takes ten minutes and usually teaches you something.
+>
+> Next month: why the production number your software reports isn't the number that hits your account.
 >
 > [Your name]
+> [One line on what you do. Reply to this email with any line you'd like me to cover.]
 
-**Ask the owner:**
-- The line "almost nobody taught you to read it" assumes dentists weren't trained in this. That's an assumption, so confirm it matches what you see with your clients.
-- If you can truthfully say how often owners only look at their books at tax time, add it. A real observation from your eight years would be the strongest line in the post. I left it out rather than guess.
-- Keep every future part pattern-based, never "a client of mine." If you ever want a story, make it a clearly labeled composite, or get written permission.
+**Ask-your-books card (Part 1):**
+1. Can you walk me from net income to my bank balance change?
+2. How much principal did I pay on loans this year, and where does it appear?
+3. How much of my profit was taxed that I've already spent?
 
-**Plain fallback:** Skip the chart framing and run a "3 numbers to check this month" series with no theme. It's easier to write but looks like every other accountant's feed.
+Two notes. The "taxes on profit you already spent" point holds for pass-through entities, but for a C-corp it doesn't, so cut or soften it if that's your mix. I also used made-up numbers only in the email and labeled them. Keep that label if you reuse them, since the series rules out invented client results.

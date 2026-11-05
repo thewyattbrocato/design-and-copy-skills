@@ -14,5 +14,6 @@
 - Button: Save password
 - Success toast: Password updated. You're signed in.
 
-- The copy already works, so I changed only one thing. "Send it again" became "Send the link again" so the link still makes sense out of context, for example when a screen reader lists links.
-- Before you ship, check whether the "email not found" error is intentional. It tells anyone who types an address whether that address has a Tallow account. Many teams show the Screen 2 message for every address instead, and Screen 2's body would then need "If an account exists for {email}, we sent a link."
+Notes:
+- The only change is the Screen 2 link. "Send it again" doesn't make sense when a screen reader lists links on their own, so it now names the thing it sends. Everything else was already clear, specific and consistent, so I left it alone.
+- Screen 1's error tells anyone who types an email whether that address has a Tallow account. If that matters to you, use a neutral message instead and show Screen 2 for every address: "If an account exists for {email}, we've sent a link."

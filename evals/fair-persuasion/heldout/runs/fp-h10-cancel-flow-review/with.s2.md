@@ -1,29 +1,30 @@
-**Yes, it's a dark pattern.** The phone-call requirement is the worst part. Several other steps also steer unfairly.
+**Yes, this is a dark pattern.** The flow isn't a single bad screen. Its main problem is that it's much harder to leave than to join: sign-up takes two taps online, and cancelling takes a buried link, four screens, and a phone call during office hours.
 
 **What's fine**
-- **Step 3, the pause offer.** It's one real alternative, it's free, and it has a neutral "No thanks". Keep it, but show it only once.
-- **A retention message in general.** Making one case for staying is legitimate.
-- **Asking why they're leaving.** This is fine as long as it's optional.
+- **One pause offer (step 3).** Pause is a real answer to many reasons for leaving. Offering it once, with a neutral "No thanks," is legitimate. Keep it.
+- **Asking why they're leaving (step 4).** This is fine if it's optional.
+- **A retention message in principle (step 2).** A single honest nudge is fine. The execution is the problem (see below).
 
-**What isn't**
-1. **Step 5 (and the call in step 4) is the main problem.** Sign-up takes two taps online, but cancelling needs a phone call during office hours. Leaving takes more effort, and a different channel, than joining did. Withholding the confirmation email until after the call also leaves people unsure whether they're still being billed. Rules on this vary by place and change over time, and some regions require online cancellation, so have it checked.
-2. **Step 1, the hidden entry.** The cancel link is the last item, small and grey, under "Billing FAQs". It's built to go unnoticed.
-3. **Step 2, mismatched buttons.** A big green "Keep" sits next to a small grey "Continue", so the two choices aren't equal in weight. The "3x more likely to hit goals" line is also a guilt nudge, and you'll want to confirm it's true.
-4. **Step 4, the required dropdown.** A survey shouldn't be a condition of leaving.
-5. **Too many screens.** Three screens (retention, pause, survey) stand between the user and the exit.
+**What isn't fine**
+1. **Cancelling needs a phone call (steps 4 and 5).** This is the worst part. It switches channel from online to phone and limits it to Mon–Fri, 9–5. The confirmation email is also withheld until after the call, so the user has no proof of cancellation and may keep being billed. Rules on this vary by place and change over time (for example, "click to cancel" requirements), so have it checked by someone who knows your markets.
+2. **The entry point is hidden (step 1).** "Cancel membership" is a small grey link, last in the list, under "Billing FAQs".
+3. **Unequal buttons (step 2).** A big green "Keep" sits next to a small grey "Continue" link. The decline isn't as easy to see or tap as the accept.
+4. **Two retention screens in a row (steps 2 and 3).** Stay is allowed at most one alternative, offered once.
+5. **The "3x more likely to hit their goals" claim (step 2).** Use it only if you can back it with real data. It also reads as a guilt appeal at the moment someone has decided to leave, and "members who stay" is a correlation, not a result of staying.
+6. **A required dropdown (step 4).** Making the reason a condition of finishing is friction. Ask, but make it skippable.
 
 **What to change**
-- **Entry:** Put "Cancel membership" in Settings > Membership as a normal-weight button, not a buried link.
-- **One screen, not three.** It should contain:
-  - A plain heading, such as "Cancel your membership".
-  - What happens next: "You'll keep access until [end date]. You won't be billed again. [What happens to booking history/data]."
-  - A primary **[Cancel membership]** button.
-  - A secondary **[Pause for up to 2 months, free]** button, shown once, with equal visual weight.
-  - An optional "Why are you leaving?" dropdown labeled as optional, which doesn't block cancelling.
-- **Complete it in the app.** Cancellation takes effect immediately when the user taps the button, with no phone call. You can still offer a phone number for people who prefer to call.
-- **Confirmation:** Send the email right away. It should name the last day of access and how to rejoin.
-- **Retention copy:** Either drop the "3x" stat or keep it only if it's accurate, and show it as neutral text rather than a pressure point. Don't use it to shame.
+1. **Entry:** Put "Cancel membership" in Settings > Membership as a normal-weight item, not a grey link below the FAQs.
+2. **Cancel in-app, on one screen.** It needs:
+   - a plain heading
+   - what happens to their bookings, data and billing, and when: "Your access ends on [end date]. You won't be charged again."
+   - a clear **[Cancel membership]** button
+   - one optional alternative, the pause: "Pause instead? Freeze for up to 2 months, free. [Pause] [No thanks]"
+   - an optional "Why are you leaving?" with a skip
+3. **Equal weight:** Give "Keep my membership" and "Cancel" matching size and style if both appear.
+4. **Confirm immediately:** Send the email and show an on-screen confirmation right away. It should name the last day of access and how to rejoin. A phone line can stay as an extra option, not the required route.
+5. **Drop the "3x" line**, or replace it with a verified, neutral statement.
 
-**Notes**
-- `[end date]` and the data-retention wording are placeholders. I don't know your billing cycle or retention rules.
-- To measure whether this hurts you, track the pause take-up rate and rejoin rate. Those are healthier retention signals than people being unable to leave.
+Make cancelling take about two taps and one confirmation, so it matches sign-up. You'll still get the pause save and the exit data you want.
+
+Note: the access-end date and any billing-after-cancel rules are placeholders. I don't know your terms, so fill in `[end date]` with the real one.

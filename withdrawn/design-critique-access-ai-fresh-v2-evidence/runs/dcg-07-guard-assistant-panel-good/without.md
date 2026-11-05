@@ -1,0 +1,3 @@
+**Change:** Don't let "no underline" read as "verified." Model uncertainty is poorly calibrated, so an unmarked sentence will get less scrutiny than it deserves. Either make the source link the real trust signal (show "no source found" on any sentence that lacks one) or tell agents plainly that unmarked doesn't mean checked. Also treat commitments like refunds, dates and promises as factual sentences that need a source link, or flag them.
+
+**Keep:** Nothing is inserted until the agent presses use draft, the draft is editable, the side-by-side source passages are there, and the off switch persists. Before shipping, check that each link's passage actually supports its sentence, and decide whether the switch is per agent or per inbox.

@@ -1,22 +1,18 @@
-This type setup is sound, so I'd change only one thing.
+Your type setup is sound, so I'd change just one thing.
 
 **What works**
-- The system stack is a good fit for a volunteer-run portal. It loads instantly, needs no licensing, and looks native on each device.
+- A system font stack suits a volunteer-run portal. It loads instantly, needs no licensing, and looks native on each device.
+- Both stacks end in real generic fallbacks.
 - 17px body text with 1.55 line height is comfortable to read.
-- Headings use tight leading and slight negative tracking, which suits bold text.
-- `tabular-nums` with right alignment keeps number columns lined up.
-- Monospace is used only for `code`, and `0.92em` stops it looking oversized next to the body text.
+- Tight headings with slightly negative tracking look right.
+- `tabular-nums` with right-alignment keeps number columns lined up.
+- Monospace is used only for `code`.
 
-**What to change: the heading weight**
-
-`650` only works on variable system fonts like San Francisco. Roboto, Segoe UI and Arial are mostly static files, so the browser rounds 650 to 600 or 700. Your headings will then look a little different on each device. Use a weight every font in the stack has:
+**The one change: heading weight**
+`650` only renders as written on variable system fonts like San Francisco. Roboto and Segoe UI ship fixed weights, so the browser snaps `650` to a different real weight depending on the device. Headings would then look a little different from one member to the next. A named weight gives the same result everywhere:
 
 ```css
-h1, h2, h3 { font-family: var(--font-body); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+h1, h2, h3 { font-family: var(--font-body); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
 ```
 
-I'd pick 700 because it exists in every font in your stack. 600 also looks good on Apple devices, but it often falls back to bold anyway on Windows and Android.
-
-**Optional:** if members ever see the portal on Linux, add `"DejaVu Sans Mono"` before the final `monospace` in `--font-mono`. This is not needed for most members.
-
-I made these notes from the CSS alone and haven't checked how it renders on any device.
+I assumed screen use, an English-language audience, and no web fonts. If you ever want a more distinctive look, add one heading font and keep this stack for everything else. I wouldn't do that unless you want it, because the current setup is reliable.

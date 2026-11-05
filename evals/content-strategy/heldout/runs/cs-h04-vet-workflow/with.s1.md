@@ -1,49 +1,49 @@
-# Content plan for four clinics
-
-**The problem:** nobody owns each kind of content, and anyone can change anything. The fix is a named owner per kind, a short check for the risky content, and fewer people with edit rights.
+**Direction:** Everyone can still draft, but only two people can publish. Anything a pet owner might act on (hours, phone, appointments, medical advice) gets a second pair of eyes. The holiday-hours failure is fixed with a date-driven check, not with more approvals.
 
 ## Who does what
 
-| Content | Owner (decides) | Facts come from | Checks before it goes live | Publishes |
+| Content | Owner (decides) | Facts come from | Checks | Publishes |
 |---|---|---|---|---|
-| Clinic pages (hours, phone, address, staff, holiday hours) | You | Whoever runs each clinic day to day (`[name per clinic]`) | That clinic's contact confirms the facts in writing | You |
-| Appointment info (how to book, what to bring, fees, cancellation) | You | Clinic contacts | Vet reads anything about care or fees | You |
-| Pet care blog | The vet | The vet | You check tone, links and clinic details | You |
+| Clinic pages (hours, address, phone, staff) | Practice manager | One named person per clinic: `[clinic contact ×4]` | That clinic contact confirms the change in writing (email or message is fine) | Practice manager |
+| Holiday and special hours | Practice manager | Same clinic contacts | Same | Practice manager |
+| Appointment info (how to book, what to bring, fees if listed) | Practice manager | Clinic contacts | Vet reviewer if it touches anything clinical, otherwise the clinic contact | Practice manager |
+| Pet care blog | Vet reviewer | Whoever writes it | Vet reviewer reads every post before it goes live | Practice manager |
 
-- **Everyone else:** they can suggest changes to the owner. Only you (and the vet, for the blog) can publish. If your CMS has a "draft, needs approval" role, give everyone else that. If it doesn't, reduce the number of full-edit logins to two. `[CMS and its roles]` decides which of these you can do.
-- **Why this prevents last month's problem:** each clinic's hours now have one person who confirms them and one person who publishes them. The check is one message from the clinic contact, not a meeting.
+If both of you are away, nothing new goes live, except the emergency path below. Silence never counts as approval for medical content.
 
-## Review rules
+## Rules
 
-- **Clinic and appointment pages:** the clinic contact replies "correct" to the exact text before you publish. If they haven't replied in 2 working days, don't publish. For hours, silence means no.
-- **Blog posts:** the vet checks medical accuracy, then you publish. The vet decides the wording of any medical claim, so it isn't argued twice. Aim for one post a month at most. Keep the rest of the time for the pages above.
-- **Emergency path** (closures, a wrong phone number, wrong hours right now): you or the clinic contact can fix the page immediately. Tell the other person straight after, and the vet looks it over within a day.
-- **Policy** (mandatory): hours, fees and phone numbers are never published without the clinic's confirmation, except via the emergency path. **Guideline** (can bend for a good reason): tone and blog length.
+1. **Permissions.** Publishing rights go to the practice manager and the vet reviewer only. Everyone else with a login can draft or suggest but can't publish. This is the main fix. The exact setting depends on your website platform (see note 1).
+2. **Policy (mandatory):**
+   - Hours, phone numbers, addresses, and anything about emergencies or out-of-hours care are confirmed by the clinic contact before publishing.
+   - Medical advice is read by the vet before publishing.
+3. **Guideline (can bend):** tone, post length, and photos. The practice manager decides.
+4. **Holiday hours are date-driven.**
+   - Four weeks before each holiday, the practice manager asks each clinic contact to confirm their hours.
+   - Hours go on one shared list, with a "revert on" date for each.
+   - The practice manager publishes them and puts a reminder in their calendar to switch back.
+   - Once the new hours are live, the vet reviewer or a clinic contact checks the public page against the list. A week passed last time because nobody did this check.
+5. **Emergency path.**
+   - If anyone spots wrong hours, closures or phone numbers, they message the practice manager.
+   - The practice manager fixes it right away, with no other approval first.
+   - The vet reviewer or the clinic contact checks the fix within a day.
 
-## What makes content stale
+## Keeping it right
 
-| Trigger | Action | Who watches |
-|---|---|---|
-| Public holiday, closure or staffing change | Clinic contacts send you next period's hours **4 weeks ahead**. You update and confirm. | You |
-| Fee or booking change | Update appointment info the same day | You |
-| Every 6 months, per page | Clinic contact re-reads their page | Clinic contacts |
-| Blog post older than 2 years, or advice that has changed | Vet updates or retires it | Vet |
+- **Review log:** one shared sheet with a line per page: last checked, by whom, next check, and what would bring the check forward.
+- **Triggers:** a holiday, a change of staff, a new phone number, a change to how appointments work, or a client telling you something on the site is wrong.
+- **Monthly look:** the practice manager spends about 20 minutes on the log. Each clinic page is checked against reality at least once, by someone at that clinic, not by the practice manager.
+- **Blog:** publish only as often as the vet reviewer has time to check, at a rate you pick: `[posts per month]`. If the vet's time runs out, pause the blog and keep the clinic pages current. Don't let unreviewed posts through.
 
-Keep a log of one line per page: last checked, by whom, next check. A spreadsheet is enough.
+## Do this week
 
-## What to pause or cut
+1. Pick the four clinic contacts and tell them they now confirm changes to their clinic's page.
+2. Remove publish rights from everyone except you and the vet.
+3. Start the shared holiday-hours list for the next holiday. The four-week window may already be open.
+4. Make the review log, with a first pass over all four clinic pages and the appointment info.
 
-- **Pause new blog posts** until the review log has a first full pass. Fixing what's live beats adding more.
-- **Retire** old blog posts the vet doesn't want to stand behind. Don't decide by traffic alone.
+**Note 1:** I assumed your website platform can separate "can draft" from "can publish". Most can. Tell me which platform you use and I'll give exact steps.
 
-## This week
+**Note 2:** I assumed the vet reviewer has time to read every blog post. If that's not true, tell me how much time they have and I'll set the blog rate to match.
 
-1. **You:** list every page, with its owner and a "last checked" column. This is your review log. Output: one spreadsheet.
-2. **You:** name one contact per clinic and tell them what you'll ask of them.
-3. **You:** reduce edit rights to the roles above.
-4. **Vet:** skim the blog titles and mark each keep, update or retire.
-5. **Monthly, 30 minutes:** you and the vet look at the log, check the next 4 weeks of holidays, and fix whatever is overdue.
-
-Two assumptions to correct if they're wrong:
-- Each clinic has someone who can confirm hours. If not, name one person per clinic, even a receptionist.
-- The vet is willing to do the blog checks plus the monthly look. If that's too much, the blog is the first thing to drop.
+I can also save this as a one-page document for the team.

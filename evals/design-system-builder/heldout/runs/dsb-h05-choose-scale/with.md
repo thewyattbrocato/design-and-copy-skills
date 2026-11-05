@@ -1,55 +1,56 @@
-**Pick: a 4px spacing base, a 1.125–1.2 type scale, and a fixed set of named steps. Don't follow the 1.333 ratio or raw Tailwind.**
+**Pick: a 4px base for spacing, with a hand-picked type scale of about 1.2. Don't use a strict ratio, and don't copy Tailwind wholesale.**
 
-Tallyard needs two things that pull in opposite directions. Dense desktop tables need fine control at the small end. Gloved tablet use needs big targets and no cramped rows. A 4px base handles both: 8px steps are too coarse for 28–36px table rows, and you can still reach 48px+ targets with it. A 1.333 ratio grows too fast. Going from 14px to 19px to 25px leaves you with no usable sizes between body and heading, and tables can't use any of them. Tailwind's defaults are a reasonable raw material, but they are 4px-based with irregular type steps. So Dev C's answer is close to Dev A's, and you should still own the token names and the short list of steps.
+Dev A is closest. Here is why each option wins or loses for Tallyard:
 
-**Spacing (px, 4px base, 9 steps)**
+- **8px base (Dev B):** Too coarse for dense desktop tables. Row padding of 4, 12 and 20px falls between the steps, so people end up inventing off-grid values. 8px is a good *touch target* unit, but you can get that from a 4px base by using the larger steps.
+- **1.333 ratio (Dev B):** It grows too fast. Going from 14px body text to 18.7px, then 24.9px, leaves no useful sizes for table cells, labels and captions. You'd skip over the sizes dense UI needs most.
+- **Tailwind defaults (Dev C):** Tailwind's spacing is a 4px base, so Dev C and Dev A agree on spacing. Its type scale is a hand-picked list from 12 to 96px, built for marketing pages, so most of it goes unused here. Take the spacing and skip the type scale.
 
-| Token | Value | Typical use |
+## Spacing (4px base, 9 steps)
+
+| Token | px |
+|---|---|
+| `space-1` | 4 |
+| `space-2` | 8 |
+| `space-3` | 12 |
+| `space-4` | 16 |
+| `space-5` | 24 |
+| `space-6` | 32 |
+| `space-7` | 48 |
+| `space-8` | 64 |
+| `space-9` | 96 |
+
+Steps below 16px are 4px apart. Above that they widen, so no two neighbors can be mistaken for each other. Don't add 20px or 28px. Use the nearest step.
+
+## Type (about 1.2 ratio, 6 roles, rounded to whole pixels)
+
+| Role | Size / line height | Use |
 |---|---|---|
-| `space.1` | 4 | icon-to-label gap, cell inner gap |
-| `space.2` | 8 | dense cell padding, inline gaps |
-| `space.3` | 12 | control padding, compact stack |
-| `space.4` | 16 | default inset, form field gap |
-| `space.5` | 24 | card padding, section gap |
-| `space.6` | 32 | touch-mode gaps, group separation |
-| `space.7` | 48 | page margins, large gaps |
-| `space.8` | 64 | layout regions |
-| `space.9` | 96 | rare page-level separation |
+| `text-caption` | 12 / 16 | Metadata, badges |
+| `text-body-sm` | 14 / 20 | **Dense table cells (desktop default)** |
+| `text-body` | 16 / 24 | **Body and form inputs (tablet default)** |
+| `text-title-sm` | 19 / 28 | Section headings |
+| `text-title` | 23 / 32 | Page titles |
+| `text-display` | 28 / 36 | Totals and counts shown at a glance |
 
-I left out 20 and 40 on purpose. They sit too close to their neighbors to be distinct choices.
+Every line height lands on the 4px grid. Keep 16px as the minimum for inputs on tablets, because smaller text is hard to read and tap with gloves.
 
-**Type (base 14px desktop, 16px tablet, ratio about 1.2, 6 roles)**
+## Density: one system, two modes
 
-| Role | Desktop | Tablet | Line height |
-|---|---|---|---|
-| `text.caption` | 12 | 14 | 16 / 20 |
-| `text.body-dense` (tables) | 13 | 16 | 20 / 24 |
-| `text.body` | 14 | 16 | 20 / 24 |
-| `text.label-lg` / `text.title-sm` | 17 | 20 | 24 / 28 |
-| `text.title` | 20 | 24 | 28 / 32 |
-| `text.display` | 24 | 29 | 32 / 36 |
+Use the same tokens and let a density setting choose which ones apply. Keep it to two modes, set by context, with a user override.
 
-Two notes on the table:
-- Desktop `body-dense` and `body` are only 1px apart. If that's too close for you, merge them and use `space.2` padding to get density instead.
-- Use tabular numerals (`font-variant-numeric: tabular-nums`) in every quantity column.
-
-**Density modes**
-
-The platforms differ in density, not in the scale. Switch a `density` theme (`compact` for desktop, `touch` for tablet) that remaps the role tokens. Components read those roles and never the raw steps.
-
-| Role | Compact | Touch |
+| | Compact (desktop) | Comfortable (tablet) |
 |---|---|---|
-| `control.height` | 32 | 48 |
-| `table.row-height` | 32 | 56 |
-| `target.min` | 32 | 48 |
-| `cell.padding-x` | `space.2` | `space.4` |
+| Control and row height | 32 | 48 |
+| Table cell text | `body-sm` (14) | `body` (16) |
+| Table cell padding (vertical / horizontal) | `space-1` / `space-3` (4 / 12) | `space-3` / `space-4` (12 / 16) |
+| Gap between tappable targets | `space-1` (4) | `space-2` (8) |
+| Minimum touch target | n/a | 48 × 48 |
 
-Choose touch mode by device, with a manual override. Don't use viewport width, because a 10-inch tablet and a small laptop window can overlap.
+Glove use is the reason for the 48px floor, and it's above the usual 44 to 48px guidance for touch. For the warehouse, I'd use 56px for primary actions such as Confirm count and Receive.
 
-**Two caveats**
-- 48px is a sensible minimum for gloved use, but check it with real gloves. Warehouse gloves may need 56px for primary actions such as Confirm count.
-- I assumed a web product with one brand, so check that against your setup.
+## Assumptions and trade-offs
 
-**Settle the disagreement**
-
-Dev A's base wins. Dev B's "cleaner" 8px grid still exists as a subset: `space.2, 4, 6, 7, 8, 9` are all multiples of 8. Dev C's Tailwind point is covered by exporting these tokens into the Tailwind config as the only allowed values. Disable Tailwind's default spacing and font-size keys so nobody reaches for `p-5` or `text-lg` by accident.
+- I assumed a web product with one brand and a small team. Tell me if the tablets run a native app, because that changes the type sizes.
+- A hand-rounded scale gives up the mathematical purity Dev B likes. In exchange you get sizes that sit on the line-height grid and suit tables.
+- I haven't tested any of this on real hardware. Before you lock the values, try the comfortable mode with gloves on a real warehouse tablet. I'd expect the touch targets to need the most adjustment.

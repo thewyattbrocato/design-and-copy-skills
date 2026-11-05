@@ -1,60 +1,64 @@
-I haven't seen the actual 24, so this works from the categories you named. Send the list if you want an exact keep/cut/default call on each.
+**Assumption:** a household of 2–6 people, mostly on phones, opening the app briefly a few times a day. Nobody wants to administer it. I only have your category names, not the full list of 24, so map your actual options onto the buckets below. All numbers are starting values to adjust, not data.
 
-**Assumption:** a household of 2–6 people, mostly on phones, glancing at the app daily. One person sets it up and everyone else just uses it. The numbers below are starting values to test, not measured.
+## The core fix
+"Everything is off or blank until someone sets it up" means the app does nothing on day one, and most households will never configure it. Ship defaults that work immediately, so the settings screen is only for changing things.
 
-## Core rule
-Nothing should be blank. A new household should get a working rotation, reminders and points from the first three taps. Settings are for overriding a good guess, not for making the app work.
+## What should just happen (no setting)
+- **Rotation:** when someone is added or removed, rebuild the rotation automatically. Use round-robin, skip anyone marked away, and carry over a chore that was missed.
+- **Reminders:** send one reminder on the due day. Stop it once the chore is done or swapped. Don't nag people who've already finished.
+- **Points:** award them on completion. Compute them from a chore's size (small/medium/large), not a free number.
+- **Swaps:** one tap to offer, one tap to accept or decline. If nobody responds, the offer expires and the chore stays with the original person. Put Undo on the swap, since it's reversible.
+- **Theme:** follow the system setting.
+- **Time zone and week start:** take them from the device and household locale.
+- **Quiet hours:** apply the phone's own Do Not Disturb. Add a default of roughly 9pm–8am for reminders, but don't ask during setup.
+- **Sync, history and completion state:** save automatically and show nothing on success.
 
-## Keep as settings (about 6)
+## Defaults to ship (visible and resettable)
+| Area | Default |
+|---|---|
+| Reminder time | One household default, such as 9am on the due day. A per-person override is optional (see below). |
+| Chore size to points | Small = 1, medium = 2, large = 3 (placeholders). Starter chores come pre-sized. |
+| Rotation | Weekly, round-robin, and the chore stays with its assignee until done. |
+| Who can edit | Everyone can mark done, swap, and add chores. Only the household creator, or anyone they promote, can remove members or change rotation rules. |
+| Notifications | Own chores, swap requests, and "someone completed your swapped chore." Everything else is off. |
+| Overdue | One gentle follow-up the next day, then stop. |
 
-| Setting | Default | Scope |
-|---|---|---|
-| Reminder time | One daily time, 8:00 am, for chores due that day. An overdue nudge goes out the next morning. | Household default, with a per-person override |
-| Quiet hours | On, 10 pm–7 am, in the person's local time | Per person |
-| Rotation per chore | Rotate among everyone. Alternatives are "always this person" and "whoever's free". | Per chore, set where you edit the chore |
-| Points per chore | Size-based: small = 1, medium = 2, large = 3. Editable inline on the chore. | Per chore |
-| Who can edit | Everyone can edit everything. A single toggle, "Only organizers edit chores and members", is off by default. | Household |
-| Notifications on/off | On, and asked for in context | Per person, per device |
+Preload a starter chore list (dishes, trash, laundry, and so on) so the first screen isn't empty. Show a one-line summary like "Reminders at 9am, rotating weekly" next to the control that changes it.
 
-For "who can edit", cut the per-feature permission matrix. Two roles are enough: organizer and member.
+## What should actually be a setting
+Keep roughly 6–8, grouped by how often people touch them:
 
-## Just happen, with no setting
-- **Theme, time zone, week start, language:** follow the device. Don't build a theme picker.
-- **Rotation advances** when a chore is completed, or when its due date passes. A new member joins at the end of the rotation.
-- **Credit goes to whoever did the chore,** even if it wasn't their turn. Points follow the person, not the assignment.
-- **Overdue chores stay with their owner.** They don't auto-reassign. The reminder escalates once, then stops. No repeat-count setting.
-- **No repeated nags.** One reminder per chore per day, and chores due the same day are batched into one notification.
-- **Swaps:** anyone can request one, and the other person accepts or declines in the notification. Unanswered requests expire after about 24 hours (a placeholder to tune), and the chore stays with the original owner. The only user-facing control is the Swap button.
-- **Completion is undoable** with a toast. Points are recalculated on undo.
-- **Absence:** an "I'm away until…" action on the person, not a setting. The rotation skips them and resumes automatically.
-- **Points reset:** weekly totals roll over automatically, and all-time totals are kept.
+1. **My reminder time** (per person, account-level). It's the one thing that really differs between people.
+2. **My quiet hours** (per person), with the default above.
+3. **Away or on vacation** (per person). This is a toggle or date range, and the rotation skips them.
+4. **Rotation frequency** (household): daily, weekly, or custom per chore.
+5. **Chore size or points** (per chore), edited inline on the chore, not on a settings page.
+6. **Who can edit** (household), reduced to two roles: member and admin.
+7. **Notification types** (per person), with three or four toggles.
+8. **Theme** (per device), only if you want an override. Otherwise cut it.
 
-## Cut or defer
-Cut these for week one:
-- Per-person point values
-- Rotation direction or ordering rules
-- Per-chore reminder times
-- Snooze duration (fix it at one value)
-- Reminder repeat count
-- Any separate "points visibility" options
+Everything else is either automatic or goes below.
 
-If real households ask for one of these later, add it then.
+## Cut or hold back
+- **Per-chore reminder times and per-person-per-chore anything.** This combinatorial setting is where 24 options come from. Use one household default plus one personal override.
+- **Free-form point values.** Use sizes. Allow custom numbers later if people ask.
+- **Granular permission matrices** ("who can edit points," "who can edit reminders," and so on). Use member and admin.
+- **Advanced rotation rules** (weighted, skip rules, fairness balancing). Hold these back behind an "Advanced" link, or ship them after launch. Don't delete the code if it's built.
+- Anything you can't explain in one sentence to a housemate.
 
-## First run (keep it to three steps)
-1. Name the household and invite people by link. A person can be added without an account at first.
-2. Check off chores from a starter list (dishes, trash, laundry, etc.), already sized S/M/L. Rotation and points are auto-assigned.
-3. Done. Ask for notification permission right after the first assignment ("Get a reminder when it's your turn?"), not at launch.
+## Behavior rules
+- **Reversible settings apply immediately** with an Undo toast. Only changes that affect others need confirmation. For example, changing the rotation could show "This reassigns 6 chores for everyone," with a specific Apply button.
+- **Run versus configure:** the "Done" button uses remembered options. Settings are a separate link.
+- **Label scope:** mark each setting "just you," "this device," or "whole household."
+- **Add a "Reset to defaults"** per group.
+- **Setup is one screen:** the household name and who's in it. Everything else is inferred, and the starter list is editable in place.
+- **Only ask about a conflict:** if two people's reminders or quiet hours conflict with a due time, show it where the chore is, not in a dialog.
 
-Show what was assumed in context, for example "Reminders at 8:00 am · Quiet 10 pm–7 am · Change", rather than hiding it in a settings page.
+## A week
+- **Day 1:** sort the 24 options into automatic, default, setting, or cut. Be strict.
+- **Days 2–3:** implement defaults, the starter chores, and the one-screen setup. This delivers most of the value.
+- **Day 4:** build the settings screen with 6–8 options and scope labels.
+- **Day 5:** swap flow with expiry and Undo, and the away toggle.
+- **Days 6–7:** test with one real household for a few days. Watch which defaults get changed. Those are your real settings, and the rest can stay hidden.
 
-## Settings screen
-- Group it as **You** (reminder time, quiet hours, notifications), **Household** (default reminder time, edit permissions), and **Chores**. Chore settings live on each chore, not here.
-- Changes apply immediately. Add a "Reset to defaults" link, and label each setting as per-person or household.
-- At 6–8 items, search isn't needed.
-
-## One-week plan
-- **Days 1–2:** the defaults and the "just happens" logic. This is the biggest win.
-- **Day 3:** first-run flow with starter chores.
-- **Day 4:** the reduced settings screen and in-context permission asks.
-- **Day 5:** swap flow, away mode and undo.
-- **Days 6–7:** test with one real household. Watch which defaults they change, and promote or cut settings based on that.
+If you paste the actual 24, I'll sort them one by one.

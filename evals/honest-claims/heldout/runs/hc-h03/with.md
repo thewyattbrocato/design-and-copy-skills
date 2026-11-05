@@ -1,22 +1,23 @@
-**Website results section**
+## Website: Results
 
-## What 212 Greenwell homes saw after air sealing and attic insulation
+**Homes we've retrofitted cut their heating bills by a median of 14%**
 
-Between 2023 and 2025, our own crew air-sealed and added attic insulation in 212 homes. For each one, we compared weather-adjusted heating bills for the 12 months before and after the job.
+Between 2023 and 2025, Greenwell Home Energy air-sealed and added attic insulation in 212 homes. We compared each home's weather-adjusted heating bills for the 12 months before and after the job.
 
-- **Median reduction: 14%.** Half of the homes landed between 9% and 21%.
-- **Best result: 38%.** That was a 1920s farmhouse with no attic insulation at all. It's our high-water mark, not the typical result.
-- **Not every home changes.** 9 of the 212 (about 4%) saw no measurable change in their heating bills.
+- **Median reduction: 14%.**
+- **Middle half of homes: between 9% and 21% lower.**
+- **Best result: 38%.** That was a 1920s farmhouse with no attic insulation at all.
+- **No measurable change in 9 of the 212 homes** (about 4%).
 
-A typical job costs $2,900. We haven't worked out payback times, so we won't guess at them.
+A typical job costs $2,900. Our own crew does all the work.
 
-Want to know where your home might fall? Ask us for a free assessment. [confirm you offer this, or swap in your actual call to action]
+Want to know what a retrofit might do for your house? [Book a home assessment]
 
-**Postcard (two lines)**
+## Postcard (two lines)
 
-Across 212 Greenwell retrofits, the median home cut its heating bill 14%.
-Typical job: $2,900. Done by our own crew.
+Our air-sealing and attic insulation jobs cut heating bills by a median of 14% across 212 homes.
+Best result: 38%. Call Greenwell Home Energy.
 
-**Notes**
-- I didn't use "Cut your heating bill by 38%". It was one farmhouse with no attic insulation, so it would read as a typical result and it isn't. If your partner wants the big number, the website section shows it with context. The postcard line "median home cut its heating bill 14%" is the strongest claim the data supports.
-- The call to action is a placeholder, since you didn't mention assessments or a contact method. Also, the data shows bills fell after the work, not that the work caused it. I kept the wording to what you measured.
+---
+- I didn't use 38% as the headline. It was one farmhouse with no insulation, so it would mislead most readers. Led with the median, the 38% still appears, labeled as the best case.
+- I left out payback time since you haven't worked it out. Fill in the button text and the postcard's phone or URL. The "Book a home assessment" offer is a placeholder, so change it to whatever you actually offer.

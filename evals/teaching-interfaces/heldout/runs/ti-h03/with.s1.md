@@ -1,31 +1,31 @@
-**Build (c), the interactive setup with a live preview of today's conditions.**
+**Build (c), the interactive setup with a live preview.**
 
-**Why**
+**Why, given no data:**
 
-- **It's the only option where users do the task.** People learn a setup by doing it. (a) and (b) ask them to remember four settings and apply them later, when they're at the real form. (c) has them make their first alert and get feedback as they go.
-- **The live preview shows what each setting does.** Height range, wind direction limit and time window are abstract until you see them applied. "Wind limit: offshore only" is hard to picture. "Today at [beach], this alert would fire from 6–9am and not after, because wind turns onshore" is clear. The preview explains each setting using the user's own beach.
-- **The video and carousel come before the product and teach by exposure.** The 90-second video is also the worst fit. It can't be skimmed, many people will skip it or watch it with the sound off, and it can't be fixed once it ships. The carousel is cheaper, but it is still a benefits-style tour that people swipe through to get to the app.
-- **It's the safest pick when you have no data.** (a) and (b) only pay off if users watch or read, then remember, then apply it correctly. (c) has the fewest of those assumptions. If it underperforms, the user still ends up with a working first alert, which is the outcome you want.
+1. **It teaches by doing.** The task is to build one alert. Option (c) is that task with guidance. (a) and (b) teach before the person acts, so they have to remember four settings when they reach the form. In (c) each setting is on screen while they choose it, and their earlier choices stay visible.
 
-**Design notes**
+2. **The preview explains the settings.** Swell range and wind limit are abstract until you see them against real conditions. For example, "this alert would fire today" or "this alert wouldn't fire, because wind is 18 kt offshore and your limit is 12." A video or card can only describe the thresholds. The preview shows what each one does, and it updates the user's mental model in their own terms.
 
-- Define the goal as "afterwards they can set an alert for their own break that fires when conditions are actually good." Keep everything in service of that sentence.
-- Take one setting per step: beach, swell height, wind, then time window. That is four things, but only one at a time, with earlier choices staying visible on screen.
-- Make the preview update as each control moves. It should say plainly what the alert would have done today, for example "This would fire at [time window] today" or "This would not fire today because [reason]."
-- Offer a sensible default for each setting, such as a typical range for the chosen beach, so no one starts from a blank form. If you show example values, label them as examples and make them easy to replace.
-- Add a visible Skip for experienced surfers, and a way to rerun the setup or reach short help later from the alert form.
-- Skip the confetti and "You're all set!" screen. End with a line saying what now works, for example "You'll get an alert when [conditions]," and point to the next step.
+3. **It's the safest bet without data.** The video is the weakest option. It's passive, people skip it, and nobody can replay it at the moment they're stuck. The carousel is the typical "benefits before the product opens" pattern, and it's usually swiped through without being read. (c) is the only option where a user ends up with a working alert, so you get the outcome you care about whether or not they absorb any explanation.
 
-**Main risk**
+**Shape it so it stays small:**
 
-(c) costs the most to build, and the preview depends on forecast data being fast and reliable at first launch. If it's slow or fails, the step feels broken. Decide a fallback in advance, for example a static explanation of that setting.
+- **One sentence of goal:** "Afterwards, they can set an alert that fires on days they'd want to surf."
+- **Order:** beach, then swell height, then wind direction limit, then time window. Add one line of context per step, shown beside the control.
+- **Defaults:** prefill sensible values, such as a swell range and wind limit typical for the chosen beach. Users adjust them instead of starting from a blank form. Label them as suggested.
+- **Preview:** show today's conditions for that beach, with a plain verdict on whether the alert would trigger now and why. Consider showing the next few days too, if the data is already available.
+- **Control:** allow Back and an obvious Skip. Experienced users shouldn't be forced through it.
+- **Confirmation:** end with a statement of what now works ("You'll be notified when swell is X–Y and wind isn't Z"), not confetti.
+- **Later:** reuse the same live preview in the edit-alert screen, so the help is there whenever someone changes a setting.
 
-**How to check it**
+**Trade-offs and assumptions:**
 
-Since you have no data, measure it instead of guessing. Don't judge it by completion of the setup. Track these:
+- (c) costs the most engineering, mainly the preview logic, which needs forecast data wired into the setup flow. If that's too heavy for one sprint, a cut-down version still beats (a) and (b): the step-by-step flow with one-line hints and a static verdict line. Add the live preview after.
+- I'm assuming you already have today's conditions data in the app. If you don't, the cost changes the calculation.
 
-1. Whether new users create a first alert.
-2. Whether that alert is still active, and not edited or deleted within about a week.
-3. Whether they create a second alert without the guided setup.
+**How to check it:** you have no data, so build in the measurement. Track these three things:
+- Share of new users who finish a first alert.
+- Share who edit or delete it within a week, which suggests they set it wrong.
+- Share who create a second alert unaided a few days later.
 
-If you can, run it against the current flow for a couple of weeks. Even a handful of 5-minute sessions with new users watching them set up an alert will show which settings still confuse them.
+The last one is the real test of whether they learned it. Completion alone only shows they got through the flow.

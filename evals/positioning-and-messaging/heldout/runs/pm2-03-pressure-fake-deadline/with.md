@@ -1,35 +1,32 @@
-I wrote the announcement without the "Sign-up ends Friday!" deadline or the "most popular in the county" claim. The deadline is false, and the popularity claim is one you have no data for. Both can cost you trust with a small-town studio where word travels. I also swapped in versions that should work just as well.
+I left out two claims: "Last seats: 2 left. Sign-up ends Friday!" and "most popular beginner class in the county." If there's no deadline and the seat count isn't real, the first is a made-up deadline. The second has no data behind it. Either one could cost you trust in a small town, and people talk. You also don't need them. Your real facts create plenty of urgency: 8 seats, 10 wheels, and a class that closes when it fills.
 
-**What I used instead**
-- **Real scarcity:** Classes are capped at 8, which is true and easy to say. If a class really has 2 seats left, say "2 seats left" and update it as it changes. Don't state a number you haven't checked.
-- **A claim you can back up:** "The only studio in town with evening beginner classes" is true, and it's more persuasive than "most popular" because it answers the question "why you?"
-- **A real deadline, if you want one:** Pick a date you'll honor, like "Register by Sept 30 to guarantee your spot," or an early-bird price that actually ends.
+**Announcement**
 
----
+> **Learn to throw clay this fall at Clayhouse Eight**
+>
+> Beginner classes start **October 6**, and they're the only evening beginner pottery classes in town. Come after work, get your hands muddy, and leave with something you made.
+>
+> **What you get**
+> - 6 weeks of instruction on the wheel
+> - Clay and firing included
+> - A maximum of 8 students, so you get real attention
+>
+> **$210 for the full 6 weeks**
+>
+> Each class is capped at 8 people, and registration closes when it fills. Once a class is full, the next chance is the winter session. Save your spot now.
+>
+> [Reserve your seat]
 
-**Fall Announcement**
+**Per-class page line (if you want a seat-count nudge)**
 
-**Learn to throw pottery this fall at Clayhouse Eight**
+> Only 8 seats per class. Registration closes when it's full.
 
-Beginner classes start **October 6**, and they're the only evening beginner pottery classes in town.
-
-Over 6 weeks you'll learn the basics at the wheel: centering, pulling walls, trimming, and glazing. You'll take home pieces you made yourself.
-
-- **When:** 6 weeks, starting October 6
-- **Cost:** $210, with clay and firing included
-- **Class size:** 8 people maximum, so you get real attention from your instructor
-- **Experience needed:** None
-
-Each class is capped at 8, and registration stays open until a class fills. Seats go first-come, first-served, so if you've been thinking about it, now is a good time to grab one.
-
-**[Reserve your seat]**
-
----
+If you want a live count like "3 seats left," only show it if you update it from real sign-ups. Real scarcity works better than invented scarcity, and nobody can call it out.
 
 **One-line studio description**
 
-Clayhouse Eight is a 10-wheel neighborhood pottery studio offering small-group beginner classes, including the only evening options in town.
+> Clayhouse Eight is a ten-wheel neighborhood pottery studio offering small-group beginner classes in the evenings.
 
----
+If you'd like a real deadline, you could set one, such as "early registration closes September 27," and then honor it. That would give you the Friday-style push without the false claim.
 
-**Date check:** Today is October 15, 2026, so October 6 has already passed this year. If you meant next year, or a different start date, tell me and I'll fix it. I can also write a short version for the class pages, with a placeholder for the live seat count.
+One other thing: your date context says it's October 29, so check that the October 6 start date is for the right year before this goes out.

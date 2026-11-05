@@ -1,14 +1,18 @@
-Here are the four titles and descriptions. I counted each one character by character, including spaces and punctuation. All are within the limits.
+Here are the four titles and descriptions. I counted each one character by character, including spaces and punctuation.
 
-| Page | Title (chars) | Description (chars) |
-|---|---|---|
-| **Home** | Brightwater Family Dental \| Family Dentist in Tulsa, OK (55) | Friendly, quality dental care for the whole family at Brightwater Family Dental on Elm Road in Tulsa, OK. Call us to book your visit. (134) |
-| **Teeth whitening** | Teeth Whitening in Tulsa \| Brightwater Family Dental (52) | Brighten your smile with professional teeth whitening in Tulsa at Brightwater Family Dental. Call today to book your visit. (123) |
-| **Emergency dentist** | Emergency Dentist in Tulsa \| Brightwater Family Dental (54) | Dental emergency? We hold same-day appointments on weekdays at Brightwater Family Dental on Elm Road in Tulsa. Call us now. (124) |
-| **New patients** | New Patient Visits in Tulsa \| Brightwater Family Dental (55) | New to Brightwater? Your first visit includes an exam, and you can fill in our forms online before you arrive. Book today. (122) |
+| Page | Title | Chars | Description | Chars |
+|---|---|---|---|---|
+| Home | Brightwater Family Dental \| Tulsa Family Dentist | 48 | Gentle, friendly family dental care in Tulsa on Elm Road. Cleanings, fillings, whitening, and new patients welcome. Call us today. | 131 |
+| Teeth whitening | Teeth Whitening in Tulsa \| Brightwater Family Dental | 52 | Professional teeth whitening at Brightwater Family Dental on Elm Road in Tulsa. Book your whitening visit with us today. | 120 |
+| Emergency dentist | Emergency Dentist in Tulsa \| Same-Day Appointments | 50 | Dental emergency? Brightwater holds same-day appointments on weekdays. Elm Road, Tulsa. Call us today. | 102 |
+| New patients | New Patients \| Brightwater Family Dental Tulsa | 46 | Your first visit includes an exam. Fill in your new patient forms online before you arrive at our Tulsa office. | 112 |
 
-Notes:
-- I dropped "the best teeth whitening available" because it's an unverifiable superlative, and Google and dental advertising rules can flag those.
-- The home description was blank, so that one is new.
-- I counted by hand because I don't have a tool here that runs code. If you paste these into a character counter to double-check, the numbers should match.
-- Google actually truncates by pixel width, so a title can get cut off below 60 characters if it has many wide letters. Keeping titles near 55 leaves some margin.
+All titles are under 60 characters and all descriptions are under 155.
+
+Some changes to check before you publish:
+- **Home description:** I assumed you offer cleanings and fillings. Swap in your actual services.
+- **Teeth whitening description:** I dropped "the best teeth whitening available." Google doesn't reward superlatives, and you may not be able to back that claim up. The "Professional" wording is a light stand-in, so adjust it if you prefer.
+- **Emergency dentist description:** I wrote "on weekdays" as you described it. If you also take emergencies on some weekends, say so, since that's a stronger hook.
+- **New patients description:** I kept "an exam" and didn't add "full," since you didn't say what the exam includes.
+
+I haven't edited any files in the repo because I didn't find any site files in the working directory. If the copy lives in a file, point me to it and I'll update it there.

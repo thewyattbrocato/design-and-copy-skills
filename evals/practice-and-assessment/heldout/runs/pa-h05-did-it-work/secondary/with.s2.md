@@ -1,18 +1,26 @@
-**No, those numbers aren't enough to show the program worked.** They show the course ran, people liked it, and they could answer questions on the last day. None of them shows that agents handle tickets differently or better on the job.
+**No, those numbers don't show the program worked.** They show that people showed up, liked it, and remembered what they were taught that day. None of them measures whether agents handle tickets better on the job.
 
-- **12 of 12 completed:** This measures attendance and finishing, not learning.
-- **4.6/5 survey:** This flags dissatisfaction, and a high score doesn't mean the skills transferred.
-- **91% final quiz:** This is a same-day check, so it measures short-term recall. It doesn't show agents can apply the skills later, in mixed cases, under real ticket pressure.
+**What each number can and can't support**
 
-**What to tell your director:** Report what the data does show, and be clear about what it doesn't. For example:
+- **12 of 12 finished:** Attendance, not learning. It would look the same if the course were useless.
+- **4.6/5 survey:** Shows the agents were satisfied. It can flag unhappiness but can't show benefit.
+- **91% final quiz:** Shows people can answer questions about the material at the end of the course. Quizzes given right after teaching mostly measure short-term recall. Unless you also know whether the quiz was open-book or used realistic cases, it doesn't show they can apply the material to a live ticket. It also has no pass standard and no comparison.
 
-> "All 12 agents completed the two-week onboarding. They rated it 4.6/5 and averaged 91% on the final quiz. These show the program was well received and that agents learned the material at the end of the course. They don't yet show it changed how agents work. I'm measuring [primary metric, e.g., first-contact resolution / QA score / escalation rate] at 30 and 60 days and comparing it with [baseline: the previous cohort or agents who started before the program]. I'll report back by [date]."
+**What's missing**
 
-**What would show it worked:**
+1. **A job metric the program is meant to move**, such as [QA score], [first-contact resolution], [escalation rate], [reopen rate], or [handle time]. Pick one or two and name them before you look.
+2. **A baseline.** How did agents in the same role perform before this program, or in the first weeks of the previous cohort?
+3. **A comparison.** Ideally, agents who did not take the program, or who started later. At minimum, compare against the baseline above.
+4. **A later check.** Measure on-the-job performance at roughly 30 and 60 days, when the skill has had time to matter.
 
-1. **One job metric the organization already tracks**, such as QA score, first-contact resolution, escalation rate, or handle time. Pull the baseline from before the program, and check it at 30 and 60 days.
-2. **A comparison group.** The previous cohort, or agents who started before the program, works if you don't have a control. Without one, you can't tell whether a change came from the program or from something else.
-3. **Behavior spot checks.** Have a team lead score a sample of each agent's tickets against a short rubric covering the decisions the course taught. This is more informative than the quiz.
-4. **Ask why.** Talk to a few agents and their leads about where they still get stuck, and check whether the tools, policies, or queue load are part of the problem. If a tool is broken or the process is unclear, more training won't fix it.
+**What to tell your director**
 
-**Placeholders to fill in:** I don't have your baseline numbers, your team's metrics, or the program's target outcomes, so I've left them in brackets. Fill those in before the director sees the message.
+Something like:
+
+> "The first cohort finished, the agents rated the course well, and they scored 91% on the final quiz. That tells us the program is running and the material landed. It doesn't yet tell us whether agents are handling tickets better. We're measuring [primary metric] against [baseline] for this cohort at 30 and 60 days, and comparing it to [comparison group]. We'll know whether the program is working by [date]."
+
+Avoid saying the program "worked" or "is proven." Report small groups as counts, like "10 of 12 agents at or above [standard]," rather than percentages.
+
+**One check before you invest more in training:** if the support problem you're solving is caused by tools, unclear processes, or incentives rather than agent skill, more training won't fix it. Confirm with a few ticket reviews whether agents are missing knowledge or stuck on something the system makes hard.
+
+If you tell me the metric your team already tracks and what the onboarding is supposed to change, I can draft the 30/60-day check and the director note with the placeholders filled in.

@@ -1,33 +1,31 @@
-**Goal:** after reading, a homeowner can say what the unit does with electricity, where its heat comes from, and why it needs air around it. (I assumed this goal. Tell me if the page should aim at something else, such as choosing a unit.)
+**Layout for the Tidewater heat pump water heater page**
 
-## Page layout, top to bottom
+**Takeaway, stated before anything else:** "A heat pump water heater pulls heat out of the air and moves it into your water, so it uses about a third of the electricity of a standard electric tank." (Confirm the efficiency figure with Tidewater's data before publishing. I haven't verified it.) Afterwards, the reader should be able to say: "It takes heat from the air and puts it in the water."
 
-**1. Headline and one-sentence takeaway**
-Lead with the core idea: *A heat pump water heater moves heat from the surrounding air into your water. It does not make the heat from scratch.* Nothing else competes with this line.
+**Page structure, top to bottom**
 
-**2. Name the parts (before the process)**
-Show the diagram once with each part labeled directly on it: tank, fan, evaporator coil, compressor, condenser coil. Use the words on the drawing, not a legend. Keep the cold-water inlet and hot-water outlet labels too. Limit the new terms to these parts. If you need "refrigerant," introduce it in one plain line: "the fluid that carries heat around the loop."
+1. **Hero:** the takeaway sentence, a one-line subhead, and no other CTA yet.
+2. **"Where the heat comes from"** (about 100 words): the room air and the fan. Start here, since readers already understand air and a fan.
+3. **Diagram, with labels on the parts.** Keep the heading as the question: "Where does the heat go?" It should work with the heading and labels alone.
+4. **"How the heat gets lifted"** (about 120 words): the compressor, explained as the part that raises the heat's temperature so it can be moved.
+5. **"How it reaches the water"** (about 120 words): the condenser coil wrapped around the tank. Explain it as the heat leaving the refrigerant and entering the water.
+6. **"What comes out"** (about 100 words): hot water at the top, cool air out, cold water in at the bottom.
+7. **"Where it works best"** (about 100 words): room size, air temperature, and the noise and space details Tidewater knows from installs. Use `[placeholder]` for anything you don't have a fact for.
+8. **Closing action:** one CTA, such as "Ask us whether a heat pump fits your home." Put it after the explanation, not in the middle of it.
 
-**3. The cycle as four steps**
-Show the same drawing four times, one step at a time. Each step has one sentence above its picture and highlights only the part that changes. Earlier parts stay visible but dimmed, so nothing has to be remembered.
+**Diagram specifics**
 
-- **Step 1: Air in.** The fan pulls room air across the evaporator coil.
-- **Step 2: Heat absorbed.** The refrigerant picks up heat from that air.
-- **Step 3: Compressed.** The compressor squeezes the refrigerant, which raises its temperature.
-- **Step 4: Heat to water.** The condenser coil wrapped around the tank gives heat to the water. The cooled refrigerant returns, and the loop repeats.
+- **Too many parts for a first explanation.** The brief names about eight. Group the fan and evaporator into one "air side" block and keep the compressor and condenser as separate labelled parts. That gives you four or five labels, close to the two-to-four default.
+- **Labels on the parts, not in a legend.** Use "Fan," "Evaporator coil," "Compressor," "Condenser coil (heat into water)," "Tank," "Cold water in," "Hot water out." Don't use letters.
+- **Arrows carry words, not just color.** "Room air in," "Cooler air out," "Heat into water." Use a solid line for air and a different line style for heat, so the diagram still reads in grayscale.
+- **Text alternative:** two sentences that name the parts in order. Point to the list of steps beside the figure for the full detail.
+- **Contrast:** check both light and dark themes, and keep label text near body size on phones.
 
-Put the "cool air out" and "heat moving into water" arrows in steps 1 and 4 respectively, so each arrow appears with the sentence that explains it.
+**Length:** the 600 words fit as five short sections, each answering one question. No section should need the others to make sense.
 
-**4. "Why this matters at home"**
-Keep this short, around three items. Homeowners often ask about the cool air, so explain it here: it is a side effect of pulling heat out of the air. Other items could cover where the unit must sit and keeping the air intake clear. Use only the facts your technicians confirm. I did not add specific numbers, efficiency claims, or clearance distances.
+**Things to avoid:** a tour, a "Get started!" gate, a glossary of terms in a sidebar, or an illustration that dominates the page.
 
-**5. One next step**
-End with a single action: "Questions about your unit? Call Tidewater Plumbing at [phone]." No newsletter sign-up, no second offer.
+**Two notes**
 
-## Writing and media notes
-
-- **Word budget:** Spread the 600 words across the sections. Most should sit beside the steps, and the intro and closing should be short.
-- **Motion:** If you animate the steps, keep each one short and pausable. Give reduced-motion visitors the four still images. Add captions and a transcript if there is narration, with no background music.
-- **Optional expert detail:** If you want more depth for curious readers, put it in a collapsed "How the refrigerant loop works" section after the steps, so the main path stays short.
-
-Two notes: I assumed the goal above and the four-step split, since the diagram has four distinct phases. Before publishing, have a technician check the wording of step 2 and the "why this matters" items.
+- I assumed a US homeowner audience and that Tidewater installs these units. If the audience or service area differs, the "Where it works best" section and the efficiency claim need to change.
+- Splitting the diagram into two (one for the air loop, one for the water path) would be clearer but doubles the reading. I kept one diagram and marked the sections so a reader can skip the parts they don't need.

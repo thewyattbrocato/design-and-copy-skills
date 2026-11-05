@@ -1,19 +1,32 @@
-Here are three captions for "The Last Good Hour":
+**1. The announcement**
 
-**1.**
-The Last Good Hour starts now. 🌙
-We're staying open until 9 pm, Thursday through Saturday. We used to close at 4, so this is new for us.
-Come in after work, grab a window table, and stay a while.
-Marlowe Street Coffee, next to the bike shop.
+The Last Good Hour now lasts a little longer. 🌙
 
-**2.**
-New hours, and a new reason to come at night: a cardamom brown butter tart, $5, served in the evening only.
-It's the best thing we bake, and you can't get it before dinner.
-Thursday to Saturday, until 9. That's The Last Good Hour. 🥧
+Starting this week, Marlowe Street Coffee is open until 9 pm, Thursday through Saturday. We used to close at 4, so the evening is new for us too.
 
-**3.**
-We have about 20 seats and a couple of window tables. Those tables are best at the end of the day.
-Thursday, Friday and Saturday, we're open until 9 pm. Bring a friend, or bring a book.
-The Last Good Hour at Marlowe Street Coffee. Find us next to the bike shop.
+Come by after dinner, after work, or after the bike shop next door.
 
-I wrote "best thing we bake" in caption 2 as a claim of my own. If you'd rather not say that, swap in "our new favorite."
+📍 Marlowe Street, next to the bike shop
+🕘 Thu–Sat, until 9 pm
+
+**2. The tart**
+
+Some things only show up when the sun goes down.
+
+Meet the cardamom brown butter tart: warm, nutty, a little spiced, and only served in the evening. $5.
+
+Find it during The Last Good Hour, Thursday to Saturday until 9 pm. ✨
+
+📍 Marlowe Street Coffee, next to the bike shop
+
+**3. The room**
+
+The Last Good Hour is when the day finally slows down.
+
+We've got seats for about 20 and a couple of window tables. Grab one, order a tart, and stay a while.
+
+Open until 9 pm, Thursday to Saturday.
+
+📍 Marlowe Street, next to the bike shop
+
+**Hashtags (optional):** #MarloweStreetCoffee #TheLastGoodHour #EveningCoffee #CardamomTart #NewHours

@@ -1,125 +1,118 @@
-Here's the finished screen. I changed the placeholder labels to the three categories you named, added the missing states (error linked to its field, busy save, a status message), and made it work at narrow widths and under keyboard, forced-colors and reduced-motion settings.
+I couldn't write the files: the Write tool is disabled in this session, and I have no shell to save them. The finished HTML and CSS are below so you can paste them into `notification-settings.html` and `notification-settings.css`.
 
-**index.html**
+Three choices to check:
+- **Toggle labels:** I mapped the three toggles to the topics you named: Option 1 → Photo updates, Option 2 → Pickup reminders, Enable feature → Incident notes.
+- **Placeholder copy:** "Contact" (field label), "Preference" (dropdown label) and the Choice A/B options are placeholders. Replace them with the real labels and options.
+- **Dark theme:** not included, since you didn't ask for one and the project doesn't have one.
+
+**notification-settings.html**
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Settings</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Notification settings</title>
+  <link rel="stylesheet" href="notification-settings.css">
 </head>
 <body>
-  <main class="settings">
+  <main class="page">
     <h1>Settings</h1>
-    <p class="intro">Choose how you hear about your dog's day.</p>
 
-    <form id="settings-form" novalidate>
+    <form id="settings-form" class="card" novalidate>
       <fieldset class="group">
-        <legend>Updates</legend>
+        <legend>How you hear about your dog's day</legend>
 
-        <label class="row">
-          <span class="row-text">
-            <span class="row-title">Photo updates</span>
-            <span class="row-hint">Photos from your dog's day</span>
-          </span>
-          <span class="switch">
-            <input type="checkbox" name="photo_updates" role="switch" checked>
-            <span class="track" aria-hidden="true"></span>
-          </span>
+        <label class="toggle">
+          <span class="toggle-label">Photo updates</span>
+          <input type="checkbox" role="switch" name="photo_updates">
+          <span class="track" aria-hidden="true"></span>
         </label>
 
-        <label class="row">
-          <span class="row-text">
-            <span class="row-title">Pickup reminders</span>
-            <span class="row-hint">A reminder before pickup time</span>
-          </span>
-          <span class="switch">
-            <input type="checkbox" name="pickup_reminders" role="switch">
-            <span class="track" aria-hidden="true"></span>
-          </span>
+        <label class="toggle">
+          <span class="toggle-label">Pickup reminders</span>
+          <input type="checkbox" role="switch" name="pickup_reminders">
+          <span class="track" aria-hidden="true"></span>
         </label>
 
-        <label class="row">
-          <span class="row-text">
-            <span class="row-title">Incident notes</span>
-            <span class="row-hint">Notes about anything that happened during the day</span>
-          </span>
-          <span class="switch">
-            <input type="checkbox" name="incident_notes" role="switch" checked>
-            <span class="track" aria-hidden="true"></span>
-          </span>
+        <label class="toggle">
+          <span class="toggle-label">Incident notes</span>
+          <input type="checkbox" role="switch" name="incident_notes">
+          <span class="track" aria-hidden="true"></span>
         </label>
       </fieldset>
 
-      <div class="field">
-        <label for="custom-value">[Field label]</label>
-        <input
-          id="custom-value"
-          name="custom_value"
-          type="text"
-          placeholder="Enter value"
-          aria-describedby="custom-value-error"
-          autocomplete="off"
-        >
-        <p id="custom-value-error" class="error" hidden>
-          <span aria-hidden="true">!</span> Invalid input
-        </p>
+      <div class="field" id="contact-field">
+        <label for="contact">Contact</label>
+        <input id="contact" name="contact" type="text" placeholder="Enter value"
+               aria-describedby="contact-error">
+        <p id="contact-error" class="error" role="alert" hidden>Invalid input</p>
       </div>
 
       <div class="field">
-        <label for="custom-choice">[Dropdown label]</label>
-        <select id="custom-choice" name="custom_choice">
-          <option value="">Select...</option>
+        <label for="preference">Preference</label>
+        <select id="preference" name="preference">
+          <option value="" selected disabled>Select...</option>
           <option value="a">Choice A</option>
           <option value="b">Choice B</option>
         </select>
       </div>
 
       <div class="actions">
-        <button type="submit" class="primary">Save</button>
-        <p id="save-status" class="status" role="status" aria-live="polite"></p>
+        <button type="submit" class="btn" id="save-btn">Save</button>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
       </div>
     </form>
   </main>
 
   <script>
     const form = document.getElementById('settings-form');
-    const input = document.getElementById('custom-value');
-    const error = document.getElementById('custom-value-error');
-    const status = document.getElementById('save-status');
-    const saveButton = form.querySelector('button[type="submit"]');
+    const contact = document.getElementById('contact');
+    const contactField = document.getElementById('contact-field');
+    const contactError = document.getElementById('contact-error');
+    const saveBtn = document.getElementById('save-btn');
+    const status = document.getElementById('status');
+
+    // Replace with the real request to your backend.
+    async function saveSettings(data) {
+      return Promise.resolve(data);
+    }
+
+    function showContactError(show) {
+      contactField.classList.toggle('is-invalid', show);
+      contact.setAttribute('aria-invalid', String(show));
+      contactError.hidden = !show;
+    }
+
+    contact.addEventListener('input', () => {
+      if (contact.value.trim() !== '') showContactError(false);
+    });
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (saveButton.disabled) return;
-
-      if (!input.value.trim()) {
-        input.setAttribute('aria-invalid', 'true');
-        error.hidden = false;
-        status.textContent = '';
-        input.focus();
-        return;
-      }
-
-      input.removeAttribute('aria-invalid');
-      error.hidden = true;
-
-      saveButton.disabled = true;
-      saveButton.textContent = 'Saving…';
       status.textContent = '';
 
+      if (contact.value.trim() === '') {
+        showContactError(true);
+        contact.focus();
+        return;
+      }
+      showContactError(false);
+
+      const data = Object.fromEntries(new FormData(form));
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving…';
+      status.textContent = 'Saving…';
+
       try {
-        // Replace with the real request, e.g. await fetch('/api/notification-settings', {...})
-        await new Promise((resolve) => setTimeout(resolve, 600));
+        await saveSettings(data);
         status.textContent = 'Settings saved.';
       } catch (err) {
-        status.textContent = "Your settings weren't saved. Check your connection and try again.";
+        status.textContent = "Couldn't save your settings. Your changes are still here. Try again.";
       } finally {
-        saveButton.disabled = false;
-        saveButton.textContent = 'Save';
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save';
       }
     });
   </script>
@@ -127,242 +120,125 @@ Here's the finished screen. I changed the placeholder labels to the three catego
 </html>
 ```
 
-**styles.css**
+**notification-settings.css**
 
 ```css
 :root {
-  --text: #1d1d1f;
-  --muted: #55595f;
+  --bg: #f6f7f9;
   --surface: #ffffff;
-  --line: #d0d4da;
-  --field-border: #767676;
-  --accent: #1f5f4a;
+  --text: #1d2330;
+  --muted: #4a5365;
+  --border: #8a93a3;
+  --accent: #1f5fbf;
   --accent-text: #ffffff;
+  --track-off: #6b7485;
   --error: #b42318;
-  --focus: #1a56db;
-  --radius: 0.5rem;
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --focus: #1f5fbf;
+  --radius: 10px;
+  --space: 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font: 1rem/1.5 var(--font);
-  color: var(--text);
-  background: var(--surface);
+  min-height: 100vh;
 }
 
-.settings {
-  max-width: 32rem;
+.page {
+  max-width: 480px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 2rem;
+  padding: 32px 16px;
 }
 
 h1 {
-  margin: 0 0 0.25rem;
   font-size: 1.75rem;
   line-height: 1.2;
+  margin: 0 0 var(--space);
 }
 
-.intro {
-  margin: 0 0 1.5rem;
-  color: var(--muted);
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: grid;
+  gap: 24px;
 }
 
 /* Groups */
-fieldset {
-  margin: 0 0 1.5rem;
-  padding: 0;
+.group {
   border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
 }
 
 legend {
-  padding: 0;
-  margin-bottom: 0.5rem;
   font-weight: 600;
+  padding: 0;
+  margin-bottom: 8px;
 }
 
-.group {
-  border-top: 1px solid var(--line);
-}
-
-/* Toggle rows */
-.row {
+/* Toggles: the whole row is the hit target (min 44px tall) */
+.toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  min-height: 3.25rem;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--line);
+  gap: 16px;
+  min-height: 44px;
   cursor: pointer;
-}
-
-.row-text {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.row-title {
-  font-weight: 500;
-}
-
-.row-hint {
-  font-size: 0.875rem;
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-
-/* Switch: native checkbox stays focusable and announced; the track is the visual */
-.switch {
   position: relative;
-  flex: none;
-  width: 2.75rem;
-  height: 1.5rem;
 }
 
-.switch input {
+.toggle input {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
   opacity: 0;
-  cursor: pointer;
+  width: 1px;
+  height: 1px;
+  margin: 0;
 }
 
 .track {
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--field-border);
+  flex: 0 0 auto;
+  width: 48px;
+  height: 28px;
   border-radius: 999px;
-  background: #e9ecef;
+  background: var(--track-off);
+  position: relative;
   transition: background-color 150ms ease;
-  pointer-events: none;
 }
 
 .track::after {
   content: "";
   position: absolute;
-  top: 50%;
-  left: 0.2rem;
-  width: 1rem;
-  height: 1rem;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #ffffff;
-  border: 1px solid var(--field-border);
-  transform: translateY(-50%);
   transition: transform 150ms ease;
 }
 
-.switch input:checked + .track {
+.toggle input:checked + .track {
   background: var(--accent);
-  border-color: var(--accent);
 }
 
-.switch input:checked + .track::after {
-  transform: translate(1.25rem, -50%);
-  border-color: var(--accent);
+.toggle input:checked + .track::after {
+  transform: translateX(20px);
 }
 
-.switch input:focus-visible + .track {
+/* Focus shows on the visual track, since the real input is hidden */
+.toggle input:focus-visible + .track {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
-}
-
-/* Fields */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  margin-bottom: 1.25rem;
-}
-
-.field label {
-  font-weight: 500;
-}
-
-input[type="text"],
-select {
-  width: 100%;
-  min-height: 2.75rem;
-  padding: 0.5rem 0.75rem;
-  font: inherit;
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--field-border);
-  border-radius: var(--radius);
-}
-
-input[type="text"]::placeholder {
-  color: var(--muted);
-}
-
-input[aria-invalid="true"] {
-  border: 2px solid var(--error);
-  padding: calc(0.5rem - 1px) calc(0.75rem - 1px);
-}
-
-input:focus-visible,
-select:focus-visible,
-button:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
-
-.error {
-  margin: 0;
-  font-size: 0.875rem;
-  color: var(--error);
-  font-weight: 500;
-}
-
-/* Actions */
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1rem;
-}
-
-button {
-  min-height: 2.75rem;
-  padding: 0.5rem 1.25rem;
-  font: inherit;
-  font-weight: 600;
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
-.primary {
-  color: var(--accent-text);
-  background: var(--accent);
-  border: 1px solid var(--accent);
-}
-
-.primary:hover {
-  background: #184c3b;
-}
-
-.primary:disabled {
-  cursor: progress;
-  opacity: 0.7;
-}
-
-.status {
-  margin: 0;
-  color: var(--muted);
-}
-
-/* Narrow screens: full-width save button */
-@media (max-width: 26rem) {
-  .actions button {
-    flex: 1 1 100%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -372,27 +248,101 @@ button {
   }
 }
 
-@media (forced-colors: active) {
-  .track,
-  .track::after,
-  input[type="text"],
-  select,
-  button {
-    border: 1px solid ButtonText;
-  }
+/* Fields */
+.field {
+  display: grid;
+  gap: 6px;
+}
 
-  .switch input:checked + .track {
-    background: Highlight;
-    border-color: Highlight;
-  }
+.field label {
+  font-weight: 600;
+}
 
-  .error {
-    color: CanvasText;
+input[type="text"],
+select {
+  font: inherit;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+input[type="text"]::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+input[type="text"]:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.field.is-invalid input {
+  border: 2px solid var(--error);
+}
+
+.error {
+  margin: 0;
+  color: var(--error);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Actions */
+.actions {
+  display: grid;
+  gap: 8px;
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  min-height: 44px;
+  padding: 10px 20px;
+  color: var(--accent-text);
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  justify-self: start;
+}
+
+.btn:hover {
+  filter: brightness(0.92);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.status {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  min-height: 1.5em;
+}
+
+/* Narrow screens: tighter card padding so rows still fit at 320px */
+@media (max-width: 360px) {
+  .card {
+    padding: 16px;
   }
 }
 ```
 
-**Notes**
+**What the states do**
+- **Error:** the contact field is required here, which I chose as the only rule because you gave none. Empty input shows "Invalid input" under the field, marks the field invalid, moves focus to it, and clears when the person types.
+- **Save:** the button disables and reads "Saving…" while the request runs. Success says "Settings saved." On failure the message says the changes are still there and to try again, with no retry count.
+- **Toggles:** each is a real switch with a visible focus ring and a 44px tap row. Reduced motion removes the slide.
 
-- **Placeholder copy:** I mapped "Option 1", "Option 2" and "Enable feature" to Photo updates, Pickup reminders and Incident notes, based on your description. The text field and dropdown have no stated purpose, so their labels are `[Field label]` and `[Dropdown label]`. Replace them before shipping.
-- **Not checked:** I haven't rendered this in a browser, run it with a screen reader or tested it at 200% zoom. The save call is a 600 ms stub that always succeeds, so the failure path only shows if you swap in a real request. I also assumed "Invalid input" means the field is empty; if your rule is different, change the check in the script.
+**Not checked:** I did not run this in a browser or with a screen reader, and I did not test at 200% text size or 320px width beyond reading the CSS. The save call is a stub (`saveSettings`), so the real backend request and its failure path still need wiring up.

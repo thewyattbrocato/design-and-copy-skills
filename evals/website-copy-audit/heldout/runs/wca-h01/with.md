@@ -1,69 +1,65 @@
-# Homepage audit: Kettlebridge
-
-**Stranger read:** A newcomer would say "some business software for operations." The page never names plumbing, HVAC, techs, jobs or dispatch. An owner who arrived from a search like "HVAC scheduling software" can't tell from the first screen that this is for them. I'm assuming the page has no price, logos, quotes or screenshots beyond what you pasted.
-
 ## Findings, ranked
 
-**1. Blocker: "Why Kettlebridge?" is unsupported claims stated as fact**
+**1. Hero: a stranger can't tell what this is or who it's for. (Blocker)**
+> "Unlock the power of seamless field operations" / "all-in-one, next-generation platform that empowers service businesses to streamline workflows..."
+
+The page never says plumbing, HVAC, dispatch, scheduling or invoicing. A shop owner who arrives from a search for dispatch software sees nothing that confirms they're in the right place. The same sentence could sit on any rival's site, and "field operations" is a category label, not the owner's words.
+
+Rewrite (uses only facts you gave, with the outcome left as a placeholder):
+> **Headline:** Dispatch, schedule and invoice your plumbing and HVAC crews in one place.
+> **Subhead:** Kettlebridge is built for shops with 5 to 30 techs. [One concrete result, e.g. what changes for the owner in the first month.]
+
+**2. "Why Kettlebridge?": unsupported superlatives with no proof. (Blocker until sourced)**
 > "Best-in-class scheduling. Industry-leading reporting. Powerful integrations. Trusted by teams everywhere."
 
-- Nothing backs "best-in-class" or "industry-leading": no comparison, source or customer.
-- "Trusted by teams everywhere" reads as invented proof. A skeptical owner will discount the whole section.
-- Needs a source on file, or cut. It's also the page's only proof section, so right now you effectively have none.
-- **Fix:** Replace the section with specifics you can back: named integrations, a real customer line, or a true number.
-- **Rewrite shape:** "Works with [QuickBooks / the tools you actually integrate with]." and "[customer quote, name, company, trade]."
+"Best-in-class" and "industry-leading" have no basis, scope or source. "Trusted by teams everywhere" implies customers but names none. Readers skim past all four lines, and the vague "trusted" line can make them doubt the rest. If you have no source on file for the superlatives, cut them.
 
-**2. Blocker: the hero doesn't say what this is or who it's for**
-> "Unlock the power of seamless field operations"
+Fix: replace the block with specifics you can back.
+> Trusted by [number] plumbing and HVAC shops, including [customer name]. / [Integration names you actually support.] / [One reporting fact: what an owner can see that they couldn't before.]
 
-- It could be signed by any rival, and "field operations" isn't the word an owner with 12 techs uses or searches for.
-- The subhead stacks "all-in-one, next-generation platform… streamline workflows, boost productivity… next level" and still names no product category, trade or outcome.
-- **Fix:** Name the customer and the job. Use the category words they type into search.
-- **Rewrite:** "Scheduling, dispatch and invoicing for plumbing and HVAC companies." Subhead: "Kettlebridge puts your techs, routes and invoices in one place, built for teams of 5 to 30." That adds no fact beyond what you told me.
+**3. Features: each one names a feature but no outcome or mechanism. (Major)**
+> "Our intelligent engine optimizes your routes." / "Work from anywhere." / "Get paid faster."
 
-**3. Major: the features are labels with no outcome**
-> "Smart Dispatch: Our intelligent engine optimizes your routes." / "Mobile App: Work from anywhere." / "Invoicing: Get paid faster."
+- "Optimizes your routes" doesn't say what the owner gets (fewer miles, more jobs per day?).
+- "Work from anywhere" is true of any app, and it doesn't say what a tech does on the phone.
+- "Get paid faster" is the right promise, but it doesn't say how.
 
-- "Intelligent engine" and "optimizes" are template words. "Work from anywhere" is a laptop-worker phrase, not a tech's truck.
-- "Get paid faster" has no how and no how much.
-- **Fix:** For each, say what the owner sees happen. Examples to fill with true detail:
-  - "Dispatch: see every tech and job on one board and reassign in a click. [confirm]"
-  - "Mobile app: techs see the day's jobs, [what they can do on site]."
-  - "Invoicing: [how a tech sends the invoice, and from where]."
-- If you have a real figure, such as days-to-paid from customers, use it with its basis. Otherwise leave the number out.
+Fix: one line for what happens, one for what it saves, with real numbers only if you have them.
+> **Smart Dispatch:** Assign the nearest tech and get the day's route in order. [Result, e.g. "X fewer miles per tech"]
+> **Mobile App:** Techs see the job, update status and [capture signatures/photos, if true] from the truck.
+> **Invoicing:** Send the invoice from the job site, [take payment on the spot, if true].
 
-**4. Major: the two calls to action don't match, and neither says what happens next**
+**4. The ask is inconsistent and unexplained. (Major)**
 > Hero: "Get started" / Footer: "Book a demo today."
 
-- "Get started" could mean a free trial, a signup or a sales call. A visitor can't tell, and a cautious owner won't click blind.
-- Then the footer offers a demo. The page makes two different asks.
-- **Fix:** Pick the real next step and name it on the button, for example "Book a demo" or "Start free trial", whichever is true. Add one line under it about what happens and how long it takes: "[30-minute call / no card needed]".
+A visitor can't tell if "Get started" means a free trial, a sign-up, a demo or a purchase. The two buttons suggest different commitments. Pricing, trial and cost are absent, so the visitor has nothing to weigh before clicking.
 
-**5. Major: no price, no terms, no sense of fit**
-- Nothing on the page tells a 5-tech shop whether this is affordable or sized for them.
-- **Fix:** If pricing is public, link it near the button. If it isn't, say how it's priced, such as "per tech, per month", or what the demo covers. Only state what's true.
+Fix: use one primary action with the same name in both places, and say what happens next. If it's a demo: **"Book a 20-minute demo"** (only if the length is true), plus a line like "We'll show you dispatch using your own jobs." If there's a trial or a price, put it next to the button.
 
-**6. Minor: the footer banner is generic**
-> "Ready to transform your business?"
+**5. Footer banner is generic and arrives late. (Major)**
+> "Ready to transform your business? Book a demo today."
 
-- Everyone's banner says this, and "transform" overpromises for scheduling software.
-- **Fix:** "See Kettlebridge run a day of [plumbing/HVAC] jobs. Book a demo." Match the verb to finding 4.
+"Transform your business" promises something grand and gives no reason to act now. "Today" has no deadline behind it, so it reads as pressure with no basis. Don't add urgency you can't back.
 
-**Also noticed:** The page has no screenshot or product visual mentioned. If it has none, the words have nothing to anchor to. I only had this copy, so layout and other pages weren't reviewed.
+Rewrite: "See Kettlebridge run a day of plumbing and HVAC jobs. **Book a demo.**"
+
+**6. Template voice throughout. (Minor-to-Major, since it feeds finding 1)**
+Quoted: "Unlock the power of," "seamless," "all-in-one, next-generation," "empowers," "streamline workflows, boost productivity," "take their operations to the next level." These are interchangeable phrases that tell a busy owner nothing. Replace them with what a tech or dispatcher does differently. Fixing findings 1 and 3 removes most of them.
+
+**Also noticed:** no pricing signal anywhere; no customer voice or named integration; the page has no mention of the search terms owners likely use, such as "dispatch," "scheduling," "HVAC software."
 
 ## What works
-- "Get paid faster." Short, plain and outcome-led. It just needs a how.
-- "Book a demo today." A clear action. Keep the verb, then make it consistent with the hero.
-- Your audience focus: 5 to 30 techs, found through search. That is a strong positioning you haven't put on the page yet.
-
-## Message brief (the systemic problem)
-The page is written for "service businesses" in general. Write it for a plumbing or HVAC owner who searched for software. Use their words (techs, jobs, dispatch, invoices, callbacks), lead with the daily problem you solve, and prove it with one real customer line. Then verify the page contains the search terms people actually use.
+- "**Smart Dispatch**": "dispatch" is the word your buyers use. Keep the label.
+- "**Invoicing: Get paid faster**": plain and owner-focused. It needs a mechanism, not a new promise.
+- "**Book a demo**": a concrete action. Make it the single call to action.
 
 ## Fix order
-1. Rewrite hero headline and subhead to name trade, category and outcome. **Small**
-2. Remove or substantiate the "Why Kettlebridge?" claims. **Small** to cut, **medium** to replace with real proof
-3. Make the CTA consistent and describe what happens after the click. **Small**
-4. Rewrite the three features as outcomes with true specifics. **Medium**
-5. Add a real customer quote or named integrations, plus a pricing or fit line. **Medium**
+1. Rewrite the hero to name the trade, the job and the size of shop. *(small)*
+2. Remove or source the "best-in-class / industry-leading / trusted by" claims. *(small, plus finding any real proof)*
+3. Unify the call to action and say what happens after the click, with pricing or trial info nearby. *(small to medium)*
+4. Rewrite the three features around outcomes and mechanism. *(medium)*
+5. Add real proof (customer name or quote, customer count, integration list) near the claims. *(medium to large, depends on what you have)*
 
-**Note:** No analytics were available, so I can't say which fix moves conversion most. Measure click-through on the CTA and scroll depth past the hero before and after step 1.
+## Notes
+- I reviewed only this one page of text. I didn't see the pricing page, demo form, analytics or the search snippets that bring people in, so the diagnosis is from the copy alone. Check where visitors drop off (hero, button click, demo form) to confirm.
+- Any "trusted by" number or customer name should come from records you hold. I used placeholders rather than invent them.

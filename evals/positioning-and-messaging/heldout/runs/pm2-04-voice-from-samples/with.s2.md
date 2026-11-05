@@ -1,63 +1,54 @@
 # Wrenfield Plants voice guide
 
-*Inferred from four of your pieces. Where I say "you", I mean the writing, so the freelancer can write as you.*
+*Inferred from four things the owner wrote: a newsletter intro, a newsletter item, a customer reply and a shop sign. When you're unsure, go back to those four.*
 
-## The voice in one line
-A nursery owner telling you what's on the bench, what went wrong, and what to do about it. Plain and a little dry. She's never selling.
+**The voice in one line:** a nursery owner telling you what's on the bench, what state it's in and what to do about it. They're a bit dry and never selling.
 
-## Five habits
+## Habits
 
-**1. Count things and name them.** Give the number, the day and the plant. Don't use adjectives where a fact will do.
-- We say: "Forty-two of them, and they're fine." "The ferns came in Tuesday."
-- We don't say: "A wide selection of beautiful plants has arrived."
-- Boundary: don't pad with detail that doesn't help the reader decide anything.
+**1. Count it and name it.** Give the real number, the day, the plant. Spell numbers out in prose. Don't use "a selection of" or "a range of" when you can say how many. Don't invent a number you haven't been given.
+- We say: "Eleven are perfect, six are fine after a day with the window open."
+- We don't say: "Most arrived in great condition."
 
-**2. Say the bad part first-hand and don't dress it up.** If something got squashed, died or is sold out, say so in the first person.
-- We say: "I killed a fiddle-leaf fig in March." "A bit squashed (the courier stacked them)."
-- We don't say: "We experienced a minor logistics challenge."
-- Boundary: it's honesty, not self-punishment. One plain admission, then move on. Never jokey about the customer's dead plant.
+**2. Say what went wrong.** If something died, got squashed or can't be saved, say so in the first breath. The owner's honesty is why people believe the rest. Don't dramatize it or apologize at length.
+- We say: "I killed a fiddle-leaf fig in March, so I'm not going to pretend any of this is easy."
+- We don't say: "Plant care can be tricky, but we're here to help!"
 
-**3. Give one instruction and say it flat.** Tell people what to do, and repeat it if people tend to get it wrong.
-- We say: "Water them on Saturdays. Not Sundays, Saturdays." "Don't fuss with it."
-- We don't say: "We recommend considering a regular watering schedule."
-- Boundary: one or two instructions per piece, not a care manual.
+**3. Answer first, then instruct.** Lead with the short answer, even when it's "no." Then give the steps as short imperatives, one per sentence. If something matters, repeat it flatly instead of adding emphasis.
+- We say: "Short answer: no, you can't save it. Long answer: cut off the brown stems at the base…"
+- We say: "Water them on Saturdays. Not Sundays, Saturdays."
+- We don't say: "We recommend considering a weekly watering routine."
 
-**4. Answer first, then explain, then offer to look.** The verdict comes in the first few words. The next step is something she'll actually do.
-- We say: "Short answer: no, you can't save it. Long answer: …bring it in and I'll look."
-- We don't say: "We're so sorry to hear about your plant! There are a few things you might try."
-- Boundary: blunt about the plant, never about the person.
+**4. One dry aside, then stop.** Use at most one per piece. It's usually a parenthesis or a tail on a sentence, and it's aimed at the owner or the situation, never at the customer.
+- We say: "(the courier stacked them)", "unless it's raining sideways."
+- We don't say: puns, exclamation marks, "Plant parents, rejoice!"
 
-**5. Dry asides, small and true.** Humor comes from a specific detail, usually in brackets or a trailing clause. It's never a joke or a pun.
-- We say: "Boston fern, if you want the common name, which I always do." "Unless it's raining sideways."
-- We don't say: "Get ready to fall in love with our fern-tastic friends! 🌿"
-- Boundary: at most one aside per piece. Skip it entirely when the news is bad or the reader is upset.
+**5. Make the next step physical.** Tell people where to go and what to bring. Use "I" in the newsletter and in replies, and drop the pronoun entirely on signs.
+- We say: "bring it in and I'll look."
+- We don't say: "Visit us to browse our full range."
 
 ## Tone by surface
-- **Newsletter:** the most relaxed. First person ("I"), one aside allowed, 60–120 words per item.
-- **Signs:** the shortest. Fact, then a dry clause if there's room. No "we".
-- **Customer replies:** plainest and warmest. Answer first, no asides if they're upset.
-- **Bad news (closures, recalls, sold-out, a dead plant):** drop the aside and state it plainly.
+
+- **Signs:** the shortest version. Hours, the one rule, maybe the one joke.
+- **Newsletter:** a person talking, with a count of what's in and a line on how it's doing.
+- **Customer replies:** bad news goes first and plainly. Then comes the fix, then an offer to look at it in person. Cut the jokes if the customer is upset.
 
 ## Mechanics
-- Contractions always. Short sentences, with fragments allowed ("Not Sundays, Saturdays.").
-- Numbers are spelled out in running text (forty-two, eleven, three weeks). Hours are "nine to five".
-- Give the common name when you use the Latin one, and vice versa.
-- No exclamation marks, no emoji, and no "we're excited to announce".
-- **Banned words:** *premium, perfect for any home, low maintenance, beautiful, stunning, curated, browse our full range, journey.*
-- When a plant isn't easy, say so. Don't use "low maintenance" as a selling point.
 
-## Before sending, check
-1. Is there a real number, day or plant name in it?
-2. Does the first sentence say the thing?
-3. Is there at most one instruction, and is it specific?
-4. Would the owner say it out loud? Cut anything that sounds like an ad.
+- Use the common name, then say "if you want the common name" only when you mean it. Don't copy that joke every time.
+- Write hours as "nine to five," and name the closed day.
+- Care advice is concrete ("keep it out of direct sun and don't fuss with it"). "Low maintenance" tells the reader nothing.
+
+## Never write
+
+"We are excited to announce," "premium," "beautiful," "perfect for any home," "low maintenance," "browse our full range," "available now," or any sentence that would fit on another nursery's site.
 
 ---
 
-# Rewrite
+## The rewrite
 
-> Succulents are in: thirty jade plants and twenty-five aloe. Both want bright light and very little water, so when in doubt, don't. We're open Tuesday to Sunday, nine to five. Closed Mondays.
+> Succulents came in [day]: thirty jade plants and twenty-five aloe, all on the front bench. [One line on condition, e.g. "Nothing squashed this time."] Give them bright light and don't water until the soil's dry. We're open nine to five, Tuesday through Sunday. Closed Mondays.
 
-**Notes**
-- I added the care line ("bright light, very little water, when in doubt, don't") from general plant knowledge, not from anything you gave me. Check that it matches how you'd tell a customer to care for them, or cut it.
-- I didn't add an admission or an aside, because nothing in the original gave me a true one. If the shipment arrived squashed, late or oddly good, that's the detail to add, e.g. "Arrived Thursday, none of them squashed, which is a first."
+**Two things to check before it goes out:**
+- Fill in the brackets. I don't know the arrival day or how the plants came through, and the owner's pieces nearly always report that.
+- I added the care line (bright light, water only when dry) from general succulent advice, not from anything you wrote. Change it to how you'd actually tell a customer.

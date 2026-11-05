@@ -1,55 +1,63 @@
-**Hero**
+# Copper Hollow Pepper Co.
 
-# Small-batch hot sauce, fermented three weeks and bottled by hand.
+## Hero
 
-Four sauces from a commercial kitchen outside Duluth, made with peppers from farms we know by name. $9 a bottle, shipped anywhere in the US.
+**Small-batch hot sauce, fermented for three weeks.**
+Made in a commercial kitchen outside Duluth, from peppers grown by farmers we know by name.
 
-**[Shop the sauces]**
+**[Shop the Sauces]**  $9 a bottle. Ships anywhere in the US.
 
 ---
 
-## Made slowly, on purpose
+## Slow on purpose
 
-Every batch ferments for three weeks before it goes into a bottle. We don't rush it, because time is what builds the depth in these sauces. We make them in small batches, so each one gets our attention from the first pepper to the last label.
+Every batch of Copper Hollow ferments for three weeks before it goes into a bottle. Nobody can rush that part, and we wouldn't want to. Three weeks gives the peppers time to mellow, deepen, and pick up the tang you can't get from a quick cook.
+
+We make everything in small batches, so each bottle comes from a kitchen where we know what went into the pot.
 
 ## Peppers from people we know
 
-Our peppers come from two farms. We know both farmers personally, and one of the farms is in my own county. When you know who grew the pepper, you can taste the difference, and you know exactly where it came from.
+We buy our peppers from two farms. We know both farmers personally, and one of the farms is in our own home county. When something goes wrong with a crop, or goes especially right, we hear about it directly.
 
-## The lineup
+## The Lineup
 
-**Smoked Peach Habanero.** Sweet peach and smoke, with habanero heat behind them.
+**Smoked Peach Habanero.** Sweet fruit, smoke, and a habanero kick that arrives a moment later. It's good on pork, chicken, and anything off the grill.
 
-**Green Ghost.** Jalapeño and tomatillo. Bright, green and tangy, and easy to put on almost anything.
+**Green Ghost.** Jalapeño and tomatillo. It's bright, tangy, and green, and it works on tacos, eggs, and grilled vegetables.
 
-**Black Garlic Mild.** Deep, savory and rich, with no burn to brace for. It's the one to hand to anyone who says they don't like hot sauce.
+**Black Garlic Mild.** Deep, savory, and gentle on the heat. Pick this one if you want flavor first and fire second, or if you're feeding people who say they don't like hot sauce.
 
-**Copper Reaper.** Our hot one. If you came for heat, start here.
+**Copper Reaper.** Our hot one. Reach for it when you want real heat, and start with a drop.
 
-## From a farmers market table to your kitchen
+## Where we started
 
-Copper Hollow started at a Saturday farmers market, with a table, a few bottles and people willing to taste. Those Saturdays are where the recipes got tested, argued over and improved. Customers kept coming back, and many of them asked if we could ship. This month, we can.
+Copper Hollow started at the Saturday farmers market. People tried a taste, came back the next week, and brought friends. That's how this grew, one bottle and one conversation at a time.
 
-> [customer quote, in their own words]
+> [Customer quote, with first name and town if they'll allow it]
 
-## What you get
-
-- Four sauces, each fermented three weeks
-- Small batches made in our kitchen outside Duluth
-- Peppers from two farms we know personally
-- $9 a bottle
-- Shipping to any address in the US
+This month we opened the online store, so you no longer have to live near the market to get a bottle.
 
 ## Pick your bottle
 
-Not sure where to begin? If you like heat, try Copper Reaper. If you like it sweet and smoky, try Smoked Peach Habanero. If you want something fresh and bright, go for Green Ghost. If you'd rather skip the burn, Black Garlic Mild is for you. Or take one of each and work out your favorite at the table.
+Not sure where to start?
 
-**[Shop all four sauces — $9 a bottle]**
+- **You like heat but want flavor:** Smoked Peach Habanero
+- **You want something fresh and tangy:** Green Ghost
+- **You'd rather keep it gentle:** Black Garlic Mild
+- **You want the burn:** Copper Reaper
 
-*Copper Hollow Pepper Co. Small-batch hot sauce, made outside Duluth.*
+Every bottle is $9. We ship anywhere in the US.
+
+## Come get some
+
+Four sauces, two farms, three weeks of fermenting, and one small kitchen. That's the whole operation, and we're proud of it.
+
+Pick a bottle, or all four, and tell us which one you finish first.
+
+**[Shop Copper Hollow]**
 
 ---
 
-Two notes:
-- I left out founding year, review counts, awards and press, since you didn't give me any. Fill in the quote placeholder with a real customer line, trimmed only. If you want help asking customers for one, I can draft a short message.
-- Add your shipping cost and timing near the button if you can. It's the first thing a new online buyer looks for.
+*Notes:*
+- *Fill the quote placeholder with a real customer line, trimmed but not reworded. Without one, delete that block. I didn't write a testimonial or a customer count, since I don't have either.*
+- *I left out shipping cost, ingredients beyond what you gave me, and any founding year. Add them if you want them on the page. The flavor descriptions and serving suggestions are my wording, so adjust any that don't match how the sauces taste.*

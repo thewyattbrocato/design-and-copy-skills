@@ -2,15 +2,15 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "66ea4434b02b6093",
+    "with": "fff680a527644e00",
     "without": "75e363029898ce04"
   },
   "result": {
-    "winner": "tie",
-    "judge_notes": "pass 1 (A=without, B=with): Both answers name the concrete problem behaviours and propose good fixes for defaults, grouping and saving. B goes further on recoverability: it adds undo toasts, a settings snapshot before reset, in-place sync-failure status and a per-hive reset, and it is more careful in its claims ('can't confirm without the review text'). A has stronger post-release instrumentation but overclaims that the setting order is 'almost certainly the main cause', so B edges it overall. | pass 2 (A=with, B=without): Both answers name all four problem behaviours, propose sensible default-on alerts with copy-from-hive, switch to save-as-you-go, drop the unit confirmation and move the reset, and group the 38 settings without removing any. A is stronger on recoverability: it adds undo toasts and a settings snapshot so the reset can be undone, and it is careful about thresholds converting correctly when the unit changes. B is stronger on what to watch after release, with instrumentation, a tally of reviews and tickets, and a staged rollout, but it overstates when it calls the ordering 'almost certainly' the main cause.",
+    "winner": "with",
+    "judge_notes": "pass 1 (A=without, B=with): Both answers address every concrete problem and propose similar fixes. B has the stronger save model: settings apply immediately with an Undo toast, failures show next to the setting, and Undo also follows a settings-only reset. B also frames its advice as assumptions rather than measured results, while A claims the engineering ordering is 'almost certainly the main cause', though A's ideas to tally the reviews and add instrumentation are good. | pass 2 (A=with, B=without): Both answers name the same concrete problems and propose similar fixes: default alerts on (or copied from another hive), changes that apply immediately, removing the unit-change popup, grouping the settings, and moving Reset away from Save. A is slightly stronger on how changes are saved and reset, with an Undo toast, failures shown next to the setting, and Undo after a settings-only reset. B gives more ideas for checking after release, but it claims the engineering-order layout is 'almost certainly the main cause' of the reviews, which overstates what it can know without testing.",
     "rubric_scores": {
-      "with": 4.8,
-      "without": 4.7
+      "with": 4.9,
+      "without": 4.6
     },
     "rubric_items": {
       "with": [
@@ -18,17 +18,17 @@
         5.0,
         5.0,
         5.0,
-        4.0
+        4.5
       ],
       "without": [
         5.0,
         5.0,
         4.0,
         5.0,
-        4.5
+        4.0
       ]
     },
-    "position_consistent": false,
+    "position_consistent": true,
     "passes": [
       {
         "order": [
@@ -37,16 +37,16 @@
         ],
         "raw_verdict": "B",
         "winner": "with",
-        "notes": "Both answers name the concrete problem behaviours and propose good fixes for defaults, grouping and saving. B goes further on recoverability: it adds undo toasts, a settings snapshot before reset, in-place sync-failure status and a per-hive reset, and it is more careful in its claims ('can't confirm without the review text'). A has stronger post-release instrumentation but overclaims that the setting order is 'almost certainly the main cause', so B edges it overall."
+        "notes": "Both answers address every concrete problem and propose similar fixes. B has the stronger save model: settings apply immediately with an Undo toast, failures show next to the setting, and Undo also follows a settings-only reset. B also frames its advice as assumptions rather than measured results, while A claims the engineering ordering is 'almost certainly the main cause', though A's ideas to tally the reviews and add instrumentation are good."
       },
       {
         "order": [
           "with",
           "without"
         ],
-        "raw_verdict": "tie",
-        "winner": "tie",
-        "notes": "Both answers name all four problem behaviours, propose sensible default-on alerts with copy-from-hive, switch to save-as-you-go, drop the unit confirmation and move the reset, and group the 38 settings without removing any. A is stronger on recoverability: it adds undo toasts and a settings snapshot so the reset can be undone, and it is careful about thresholds converting correctly when the unit changes. B is stronger on what to watch after release, with instrumentation, a tally of reviews and tickets, and a staged rollout, but it overstates when it calls the ordering 'almost certainly' the main cause."
+        "raw_verdict": "A",
+        "winner": "with",
+        "notes": "Both answers name the same concrete problems and propose similar fixes: default alerts on (or copied from another hive), changes that apply immediately, removing the unit-change popup, grouping the settings, and moving Reset away from Save. A is slightly stronger on how changes are saved and reset, with an Undo toast, failures shown next to the setting, and Undo after a settings-only reset. B gives more ideas for checking after release, but it claims the engineering-order layout is 'almost certainly the main cause' of the reviews, which overstates what it can know without testing."
       }
     ]
   }

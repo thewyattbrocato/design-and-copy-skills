@@ -1,21 +1,22 @@
-**Partly fine, so do it, with a few changes.** Pre-selecting annual is a normal default. Annual is a plan a well-informed person could sensibly choose, and the choice is still easy to reverse. The part that steers unfairly is the small grey monthly price. It makes the alternative hard to read, and that's the one thing I'd change.
+**Yes, do it.** Pre-selecting annual is a normal default. It isn't a dark pattern, as long as the choice stays easy to see and easy to change.
 
 **What I'd ship**
 
-- **Annual pre-selected**, with a short reason for the default, such as "Best value".
-- **Both options at equal weight.** The monthly option gets the same font size and contrast as annual, and it's one tap to switch. Keep the monthly price readable, not small grey text.
-- **The real math, in money next to any percentage.**
-  - Annual: **$89.99/year** (about $7.50/month), and "Save about $65.89 a year vs. monthly".
-  - Monthly: **$12.99/month**, billed monthly, cancel anytime.
-  - Check: 12 × $12.99 = $155.88, minus $89.99 = $65.89, which is about 42% off.
-- **Renewal terms shown before the card field.** State the amount, that it renews yearly, the renewal date, and how to cancel. If there's a trial, show the first charge date and amount at the same size as "free", and send a reminder before it.
-- **Cancel as easily as sign-up**, from the same place, with the last day of access named in the confirmation.
+- **Annual pre-selected, monthly just as easy to pick.** The toggle should be a real, clearly labelled control. Monthly shouldn't be hidden or styled to look disabled.
+- **Annual shows the real math:** "$89.99 billed once a year ($7.50/month). Save $65.89 vs. monthly." That's $12.99 × 12 = $155.88 minus $89.99. Put the dollar saving next to any percentage (about 42%).
+- **Show the renewal terms near the button,** for example "Renews at $89.99 on [date] unless you cancel. Cancel anytime in Settings." Add a reminder email before the first annual charge. Annual surprises are the biggest source of refund requests.
 
-**Why this and not the grey text**
+**Where I'd push back on the growth guy's version**
 
-Annual wins on its merits here, since the saving is real and large. Hiding the monthly price adds little but the risk of people who feel they were steered. Those people become refund requests, chargebacks and annual churn at renewal, which costs more than the conversion gain. Rules on pricing display and auto-renewal disclosure vary by place and change over time, so have a lawyer check the renewal wording.
+- **The monthly price in small grey text is the weak spot.** If it's low-contrast enough that people can't read it, they're comparing prices they can't see. A smaller size is fine, but keep it legible. Give it normal text color and readable contrast. A rough test: could someone choosing monthly find the price in two seconds?
+- **If the monthly option is a bare toggle with no price on it,** put "$12.99/month" on the monthly side of the toggle itself. Then the choice doesn't depend on the grey text.
 
-**Notes**
+**What to avoid adding later**
 
-- To test it, run annual-default with equal-weight prices against your growth guy's version. Track refund requests and 30-day cancellations, not just annual take-rate. If the grey-text version wins on take-rate but loses on refunds, you'll see it.
-- I assumed the $89.99 and $12.99 prices are final and there's no trial. If there is one, the first-charge disclosure above applies.
+- Countdown timers or "price goes up Friday" copy that isn't real.
+- "No thanks, I don't want to save money" style wording on the monthly option.
+- Making cancellation harder than signup for annual subscribers.
+
+**Track more than conversion.** An annual default will almost certainly lift annual uptake. Measure refund requests, cancellations in the first 30 days, and support tickets about billing, next to conversion. If those rise, the default is catching people who didn't mean to commit a year. Then the fix is clearer terms, not a different default.
+
+Rules on auto-renewal disclosure vary by place and change over time, so have the renewal wording checked by someone who knows your markets.

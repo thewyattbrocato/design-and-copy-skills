@@ -1,1 +1,1 @@
-Sort by score, highest first, since a science fair is a ranking, and break ties alphabetically by student name. Put the columns in the order rank, title, student, grade, score, with score right-aligned.
+Sort the rows by score, highest first, so the table reads as a ranking. Break ties alphabetically by title, and put the title column first, then student, grade and score.

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Castwell</title>
+<style>
+:root{
+  --paper:#f2eee5;--card:#faf8f2;--rule:#ddd6c6;--rule-soft:#e9e3d5;
+  --ink:#201e1a;--muted:#6a6458;--faint:#8a8374;
+  --side:#24221e;--side-ink:#e9e3d3;--side-mute:#a9a291;
+  --go:#1d5a4d;--go-dark:#154238;--late:#a8431f;
+  --s-model:#7a7364;--s-design:#b27a14;--s-mill:#2f5f8f;--s-sinter:#7b5aa0;--s-glaze:#2e7d4f;--s-qc:#a8431f;--s-try:#2f5f8f;
+  --r:4px;--sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:24px;--sp6:32px;
+  --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);display:flex;min-height:100vh;font-size:14px;line-height:1.4}
+:focus-visible{outline:2px solid var(--go);outline-offset:2px}
+
+aside{width:15rem;flex:none;background:var(--side);color:var(--side-ink);padding:var(--sp5) 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.01em;padding:0 var(--sp5);margin-bottom:var(--sp6)}
+.logo svg{width:26px;height:26px;flex:none}
+aside nav{display:block}
+aside a{display:block;padding:10px var(--sp5);color:var(--side-mute);text-decoration:none;border-left:3px solid transparent}
+aside a:hover{color:var(--side-ink);background:rgb(255 255 255 / .04)}
+aside a.on{color:#fff;font-weight:600;border-left-color:#d9b45f;background:rgb(255 255 255 / .07)}
+aside a:focus-visible{outline-color:#d9b45f;outline-offset:-2px}
+
+main{flex:1;min-width:0;padding:var(--sp6) 40px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--sp4);flex-wrap:wrap;margin-bottom:var(--sp5);padding-bottom:var(--sp4);border-bottom:2px solid var(--ink)}
+h1{margin:0;font-family:var(--serif);font-size:28px;font-weight:700;letter-spacing:-.01em}
+.top p{margin:4px 0 0;color:var(--muted)}
+.tools{display:flex;gap:var(--sp3);flex-wrap:wrap}
+.search{padding:10px 14px;border:1px solid var(--faint);border-radius:var(--r);width:16rem;background:var(--card);color:var(--ink);font:inherit}
+.search::placeholder{color:var(--muted)}
+.new{padding:10px 18px;border:0;border-radius:var(--r);color:#fff;font:inherit;font-weight:600;background:var(--go);cursor:pointer}
+.new:hover{background:var(--go-dark)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp4);margin-bottom:var(--sp5)}
+.stat{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:var(--sp4) var(--sp5)}
+.stat span{color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.stat b{display:block;font-family:var(--serif);font-size:34px;line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
+.stat.lead{background:var(--ink);border-color:var(--ink)}
+.stat.lead span{color:#d6cfbd}
+.stat.lead b{color:#fff;font-size:44px;line-height:1}
+
+.row{display:grid;grid-template-columns:2fr 1fr;gap:var(--sp4);align-items:start}
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:var(--sp5)}
+.panel h2{font-family:var(--serif);font-size:18px;margin:0 0 var(--sp3)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:42rem}
+th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;text-align:left;padding:8px 8px;border-bottom:1px solid var(--ink);white-space:nowrap}
+td{padding:11px 8px;border-bottom:1px solid var(--rule-soft);vertical-align:middle}
+tbody tr:hover{background:#f2eddf}
+.id{font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap}
+.rx{font-weight:500}
+.sh{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:13px}
+.sh i{width:14px;height:14px;border-radius:50% 50% 45% 45%;border:1px solid rgb(0 0 0 / .25);background:var(--c)}
+.sh i.none{border:1px dashed var(--faint);background:none}
+.stage{display:inline-flex;align-items:center;gap:7px;font-weight:600;white-space:nowrap}
+.stage::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--c);flex:none}
+.stage.wait::before{background:none;border:2px solid var(--c)}
+.p1{--c:var(--s-mill)}.p2{--c:var(--s-design)}.p3{--c:var(--s-glaze)}.p4{--c:var(--s-qc)}
+.due{white-space:nowrap}
+.due.today{color:var(--late);font-weight:700}
+.due.later{color:var(--muted)}
+.av{display:inline-grid;place-items:center;min-width:30px;height:24px;padding:0 4px;border-radius:3px;background:#e4dcc7;color:var(--ink);font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.03em}
+.av.none{background:none;border:1px dashed var(--faint);color:var(--muted)}
+
+.bar{margin-bottom:var(--sp4)}
+.bar:last-child{margin-bottom:0}
+.bar p{display:flex;justify-content:space-between;margin:0 0 6px;font-weight:500}
+.bar p b{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar div{height:8px;border-radius:2px;background:#e6dfcd}
+.bar div i{display:block;height:8px;border-radius:2px;background:var(--go)}
+
+@media (max-width:900px){
+  body{flex-direction:column}
+  aside{width:auto;padding:var(--sp3) 0 0}
+  .logo{margin-bottom:var(--sp3)}
+  aside nav{display:flex;overflow-x:auto}
+  aside a{white-space:nowrap;border-left:0;border-bottom:3px solid transparent;padding:10px var(--sp4)}
+  aside a.on{border-bottom-color:#d9b45f}
+  main{padding:var(--sp5) var(--sp4)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .row{grid-template-columns:1fr}
+  .search{width:100%;flex:1}
+}
+</style></head><body>
+<aside>
+<div class="logo"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M4 8c0-3 2.5-4.5 5-4.5 1.6 0 2.6.6 4 .6s2.400-.6 4-.6c2.500 0 5 1.500 5 4.500 0 3-1.500 4.500-2 7-.4 2.200-.6 6-2.500 6-1.800 0-1.500-4-3-4h-3c-1.500 0-1.200 4-3 4-1.900 0-2.100-3.800-2.500-6-.5-2.500-2-4-2-7z" fill="none" stroke="#d9b45f" stroke-width="1.800" stroke-linejoin="round"/></svg>Castwell</div>
+<nav><a class="on" href="#">Dashboard</a><a href="#">Cases</a><a href="#">Practices</a><a href="#">Technicians</a><a href="#">Shipping</a><a href="#">Settings</a></nav></aside>
+<main>
+<div class="top"><div><h1>Welcome back, Dana</h1><p>What's due, and where every case is.</p></div><div class="tools"><input class="search" placeholder="Search cases..." aria-label="Search cases"><button class="new">+ New case</button></div></div>
+<div class="stats">
+<div class="stat lead"><span>Due today</span><b>11</b></div>
+<div class="stat"><span>In production</span><b>46</b></div>
+<div class="stat"><span>Waiting on scans</span><b>5</b></div>
+<div class="stat"><span>Remakes this month</span><b>3</b></div>
+</div>
+<div class="row">
+<div class="panel"><h2>Recent cases</h2><div class="scroll">
+<table><thead><tr><th>Case</th><th>Practice</th><th>Restoration</th><th>Shade</th><th>Stage</th><th>Due</th><th>Tech</th></tr></thead><tbody>
+<tr><td class="id">C-4471</td><td>Brightwater Dental</td><td class="rx">Zirconia crown #14</td><td><span class="sh" style="--c:#e3cf9f"><i></i>A2</span></td><td><span class="stage p1">Milling</span></td><td class="due today">Today</td><td><span class="av">RK</span></td></tr>
+<tr><td class="id">C-4468</td><td>Elm Row Family Dentistry</td><td class="rx">E.max veneers #7-10</td><td><span class="sh" style="--c:#f1ece0"><i></i>BL2</span></td><td><span class="stage p2">Design</span></td><td class="due today">Today</td><td><span class="av">MS</span></td></tr>
+<tr><td class="id">C-4465</td><td>Harbor Smiles</td><td class="rx">PFM bridge #3-5</td><td><span class="sh" style="--c:#d3b27e"><i></i>A3.5</span></td><td><span class="stage p3">Glaze</span></td><td class="due today">Today</td><td><span class="av">JT</span></td></tr>
+<tr><td class="id">C-4462</td><td>Dr. Okafor</td><td class="rx">Implant crown #19</td><td><span class="sh" style="--c:#dcc08f"><i></i>A3</span></td><td><span class="stage p4">QC</span></td><td class="due">Tomorrow</td><td><span class="av">RK</span></td></tr>
+<tr><td class="id">C-4460</td><td>Brightwater Dental</td><td class="rx">Night guard</td><td><span class="sh"><i class="none"></i>-</span></td><td><span class="stage wait p2">Waiting on scan</span></td><td class="due">Tomorrow</td><td><span class="av none">--</span></td></tr>
+<tr><td class="id">C-4457</td><td>Northgate Dental Group</td><td class="rx">Upper denture</td><td><span class="sh" style="--c:#e3cf9f"><i></i>A2</span></td><td><span class="stage p1">Try-in</span></td><td class="due later">Fri</td><td><span class="av">LP</span></td></tr>
+</tbody></table></div></div>
+<div class="panel"><h2>Cases by stage</h2>
+<div class="bar"><p>Model <b>6</b></p><div><i style="width:30%"></i></div></div>
+<div class="bar"><p>Design <b>9</b></p><div><i style="width:45%"></i></div></div>
+<div class="bar"><p>Milling <b>12</b></p><div><i style="width:60%"></i></div></div>
+<div class="bar"><p>Sintering <b>8</b></p><div><i style="width:40%"></i></div></div>
+<div class="bar"><p>Glaze <b>7</b></p><div><i style="width:35%"></i></div></div>
+<div class="bar"><p>QC <b>4</b></p><div><i style="width:20%"></i></div></div>
+</div></div>
+</main></body></html>

@@ -1,23 +1,26 @@
-**Coordinator, before any shifts are posted**
+**1. Coordinator, before any shifts are posted**
+
 Title: No shifts yet
-Body: Post your first shift and parents can sign up for it. Once they do, you'll see their names here.
+Body: Post your first shift and parents can sign up for it.
 Button: Post a shift
 
-**Parent, no open shifts**
+**2. Parent, no open shifts**
+
 Title: No open shifts right now
-Body: All shifts are taken, or none have been posted yet. Check back later. If you turn on reminders, we'll let you know when a new shift is posted.
-Button: Turn on reminders
+Body: All the shifts are taken, or none have been posted yet. Check back later.
 
-**Push notification permission (before the browser's own prompt)**
+**3. Push notification prompt (shown before the browser's own dialog)**
+
 Title: Get shift reminders?
-Body: Shiftbook can send reminders to this device, like a message just before a shift you signed up for. You can turn them off anytime in your browser settings.
-Buttons: Turn on reminders / Not now
+Body: Turn on browser notifications and Shiftbook can remind you about shifts you've signed up for. You can change this any time in your browser settings.
+Buttons: Turn on / Not now
 
-**Shift just taken by someone else**
-Title: That shift was just taken
-Body: Someone else signed up a moment ago. You're not signed up for it. Here are the shifts still open.
+**4. Shift just taken by someone else**
+
+Title: This shift was just taken
+Body: Someone else signed up a moment before you. You haven't been signed up for it.
 Button: See open shifts
 
 Notes:
-- The parent empty state promises a "new shift posted" alert. You've only built reminders for shifts people have signed up for, so I wrote the body as if that alert exists. If it doesn't, cut that sentence and the button. Use "Check back later" and no action.
-- Browsers often make the "turn off" step hard to find. If you add an in-app reminders switch, change "in your browser settings" to point to it.
+- The reminder prompt says "browser notifications" instead of "email" because that's what they are. People who expect email may miss them otherwise.
+- I left out when reminders arrive (for example, "the day before") because I don't know your timing. If you want it in the prompt, add it after "reminders", for example "[timing]".

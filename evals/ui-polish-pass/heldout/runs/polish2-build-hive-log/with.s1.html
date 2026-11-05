@@ -6,442 +6,567 @@
 <title>Hive Inspection Log</title>
 <style>
   :root {
-    --bg: #faf6ea;
-    --card: #fffdf6;
-    --ink: #2b2415;
-    --muted: #6b5f45;
-    --line: #cdbf98;
-    --honey: #e0a21b;
-    --honey-dark: #7a5200;
-    --accent: #5a3d00;
+    --bg: #fbf7ee;
+    --card: #ffffff;
+    --ink: #2b2416;
+    --muted: #5e5440;
+    --line: #d9cfb6;
+    --field: #857450;
+    --honey: #f2b705;
+    --honey-dark: #7a5600;
+    --honey-soft: #fdf1c9;
+    --danger: #a3261a;
+    --danger-soft: #fdeceb;
     --ok: #2f6b2f;
-    --bad: #a3261a;
+    --ok-soft: #e9f4e6;
+    --radius: 10px;
   }
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
-  header {
+  .skip {
+    position: absolute; left: 8px; top: -60px;
+    background: var(--ink); color: #fff; padding: 8px 12px; border-radius: 6px; z-index: 10;
+  }
+  .skip:focus { top: 8px; }
+  header.top {
     background: var(--honey);
-    border-bottom: 4px solid var(--accent);
+    border-bottom: 4px solid var(--ink);
     padding: 18px 16px;
   }
-  header h1 { margin: 0; font-size: 1.5rem; color: #2b1a00; }
-  header p { margin: 2px 0 0; color: #3d2b00; font-size: .95rem; }
-  main {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 16px;
-    display: grid;
-    gap: 24px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 820px) { main { grid-template-columns: 1fr 1fr; align-items: start; } }
-  section {
+  header.top > div, main { max-width: 760px; margin: 0 auto; }
+  h1 { margin: 0; font-size: 1.6rem; line-height: 1.2; }
+  header.top p { margin: 4px 0 0; color: #3a2e0a; }
+  main { padding: 20px 16px 80px; }
+  h2 { font-size: 1.2rem; margin: 0 0 12px; }
+  section { margin-bottom: 36px; }
+
+  :focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+
+  .card {
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: var(--radius);
     padding: 16px;
-    min-width: 0;
   }
-  h2 { margin: 0 0 12px; font-size: 1.15rem; }
-  .row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
-  @media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
-  .field { margin-bottom: 14px; }
-  label, legend { display: block; font-weight: 600; margin-bottom: 4px; padding: 0; }
-  .hint { color: var(--muted); font-size: .85rem; font-weight: 400; }
-  input, select, textarea {
-    width: 100%;
-    font: inherit;
-    color: inherit;
-    background: #fff;
-    border: 1.5px solid #8a7a50;
-    border-radius: 6px;
-    padding: 9px 10px;
-    min-height: 44px;
+  .banner {
+    border-radius: 8px; padding: 10px 12px; margin-bottom: 16px;
+    border: 1px solid var(--honey-dark); background: var(--honey-soft);
   }
-  textarea { min-height: 96px; resize: vertical; }
-  fieldset { border: 0; padding: 0; margin: 0 0 14px; }
-  .checks { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 12px; }
-  .checks label {
-    display: flex; align-items: center; gap: 8px;
-    font-weight: 400; margin: 0; min-height: 40px;
-  }
-  .checks input { width: 22px; height: 22px; min-height: 0; flex: none; accent-color: var(--accent); }
-  :focus-visible { outline: 3px solid #1a4fb5; outline-offset: 2px; }
-  button {
-    font: inherit; font-weight: 600;
-    min-height: 44px; padding: 0 18px;
-    border-radius: 6px; border: 1.5px solid var(--accent);
-    background: var(--accent); color: #fff; cursor: pointer;
-  }
-  button.secondary { background: transparent; color: var(--accent); }
-  button.small { min-height: 36px; padding: 0 12px; font-size: .9rem; }
-  button[disabled] { opacity: .6; cursor: not-allowed; }
-  .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-  .error { color: var(--bad); font-size: .9rem; margin-top: 4px; }
-  .error::before { content: "Problem: "; font-weight: 700; }
-  input[aria-invalid="true"] { border-color: var(--bad); }
-  .status { min-height: 1.5em; margin-top: 10px; font-weight: 600; }
-  .status.ok { color: var(--ok); }
-  .status.bad { color: var(--bad); }
-  .tools { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .tools select { width: auto; flex: 1 1 140px; }
-  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-  li.entry { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fff; }
-  .entry-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
-  .entry-head strong { overflow-wrap: anywhere; }
-  .entry-date { color: var(--muted); font-size: .85rem; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; padding: 0; }
-  .tag { background: #f3e7bd; border: 1px solid var(--line); border-radius: 99px; padding: 1px 10px; font-size: .82rem; }
-  .tag.warn { background: #fbd9d3; border-color: #d98f84; color: #6e1409; }
-  .tag.warn::before { content: "⚠ "; }
-  .notes { margin: 4px 0 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
-  .meta { color: var(--muted); font-size: .88rem; }
-  .empty {
-    border: 2px dashed var(--line); border-radius: 8px;
-    padding: 20px 14px; text-align: center; color: var(--muted);
-  }
-  .empty strong { display: block; color: var(--ink); margin-bottom: 4px; }
-  .toast {
-    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
-    background: #2b2415; color: #fff; border-radius: 8px;
-    padding: 8px 8px 8px 16px; display: flex; gap: 12px; align-items: center;
-    max-width: calc(100% - 24px); z-index: 10;
-  }
-  .toast[hidden] { display: none; }
-  .toast button { background: transparent; border-color: #fff; min-height: 36px; }
-  .banner { background: #fbe9c0; border: 1px solid var(--honey-dark); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; font-size: .9rem; }
   .banner[hidden] { display: none; }
+
+  /* hive grid */
+  .glance {
+    display: grid; gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+    list-style: none; padding: 0; margin: 0;
+  }
+  .glance button {
+    width: 100%; text-align: left; cursor: pointer;
+    background: var(--card); color: var(--ink);
+    border: 1px solid var(--field); border-radius: 8px;
+    padding: 8px 10px; font: inherit; min-height: 56px;
+  }
+  .glance button:hover { background: var(--honey-soft); }
+  .glance strong { display: block; }
+  .glance span { font-size: .85rem; color: var(--muted); }
+  .glance .stale span { color: var(--danger); font-weight: 600; }
+
+  /* form */
+  form { display: grid; gap: 18px; }
+  .row { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+  label, legend { font-weight: 600; display: block; margin-bottom: 4px; }
+  .hint { font-weight: 400; color: var(--muted); font-size: .88rem; }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  input[type=text], input[type=number], input[type=datetime-local], select, textarea {
+    width: 100%; font: inherit; color: var(--ink); background: #fff;
+    border: 1.5px solid var(--field); border-radius: 8px;
+    padding: 9px 10px; min-height: 44px;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  [aria-invalid="true"] { border-color: var(--danger); border-width: 2px; }
+  .err { color: var(--danger); font-size: .92rem; margin: 4px 0 0; font-weight: 600; }
+  .err[hidden] { display: none; }
+
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; }
+  .choices label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 400; margin: 0; cursor: pointer;
+    border: 1.5px solid var(--field); border-radius: 8px;
+    padding: 8px 12px; min-height: 44px; background: #fff;
+  }
+  .choices label:has(input:checked) { background: var(--honey-soft); border-color: var(--honey-dark); font-weight: 600; }
+  .choices label:has(input:focus-visible) { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+  .choices input { width: 18px; height: 18px; accent-color: var(--honey-dark); margin: 0; }
+
+  .btn {
+    font: inherit; font-weight: 700; cursor: pointer;
+    border-radius: 8px; border: 2px solid var(--ink);
+    padding: 10px 18px; min-height: 44px;
+    background: var(--honey); color: var(--ink);
+  }
+  .btn:hover { background: #ffc928; }
+  .btn.secondary { background: #fff; font-weight: 600; }
+  .btn.secondary:hover { background: var(--honey-soft); }
+  .btn.small { padding: 6px 12px; min-height: 40px; font-size: .92rem; }
+  .btn.danger { color: var(--danger); border-color: var(--danger); background: #fff; }
+  .btn.danger:hover { background: var(--danger-soft); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+  .summary {
+    border: 2px solid var(--danger); background: var(--danger-soft);
+    border-radius: 8px; padding: 10px 14px;
+  }
+  .summary[hidden] { display: none; }
+  .summary h3 { margin: 0 0 4px; font-size: 1rem; color: var(--danger); }
+  .summary ul { margin: 0; padding-left: 20px; }
+  .summary a { color: var(--danger); font-weight: 600; }
+  .status { min-height: 1.5em; font-weight: 600; color: var(--ok); }
+
+  /* history */
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; justify-content: space-between; margin-bottom: 12px; }
+  .toolbar .f { min-width: 180px; }
+  .entries { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .entry h3 { margin: 0; font-size: 1.1rem; overflow-wrap: anywhere; }
+  .entry time { color: var(--muted); font-size: .92rem; }
+  .entry-head { display: flex; flex-wrap: wrap; gap: 4px 12px; justify-content: space-between; align-items: baseline; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+  .tags li {
+    background: #f3ecd8; border: 1px solid var(--line); border-radius: 999px;
+    padding: 2px 10px; font-size: .88rem;
+  }
+  .tags li.concern { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); font-weight: 600; }
+  .tags li.did { background: var(--ok-soft); border-color: var(--ok); color: #1f4a1f; }
+  .notes { margin: 10px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .entry .del { margin-top: 12px; }
+
+  .empty { text-align: center; padding: 28px 16px; border: 2px dashed var(--line); border-radius: var(--radius); background: #fff; }
+  .empty p { margin: 0 0 12px; }
+
+  .undo {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
+    background: var(--ink); color: #fff; border-radius: 10px;
+    padding: 10px 14px; display: flex; gap: 14px; align-items: center;
+    width: min(92vw, 460px); z-index: 20; box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  }
+  .undo[hidden] { display: none; }
+  .undo span { flex: 1; overflow-wrap: anywhere; }
+  .undo button {
+    font: inherit; font-weight: 700; background: var(--honey); color: var(--ink);
+    border: 0; border-radius: 6px; padding: 8px 14px; min-height: 40px; cursor: pointer;
+  }
+  .undo button:focus-visible { outline-color: #fff; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .btn, .glance button { transition: background-color .15s; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>Hive Inspection Log</h1>
-  <p>Behind the barn. Write down what you saw each time you open a hive.</p>
+<a class="skip" href="#log-form">Skip to the inspection form</a>
+
+<header class="top">
+  <div>
+    <h1>Hive Inspection Log</h1>
+    <p>Behind the barn · 12 hives · saved on this device</p>
+  </div>
 </header>
 
 <main>
+  <div id="storage-warning" class="banner" role="alert" hidden>
+    This browser isn't letting the page save. Entries will be lost when you close or reload it. Use "Download CSV" to keep a copy.
+  </div>
+
+  <section aria-labelledby="glance-h">
+    <h2 id="glance-h">Hives at a glance</h2>
+    <ul class="glance" id="glance"></ul>
+  </section>
+
   <section aria-labelledby="form-h">
-    <h2 id="form-h">New inspection</h2>
-    <form id="form" novalidate>
+    <h2 id="form-h">Log an inspection</h2>
+    <form id="log-form" class="card" novalidate>
+      <div id="summary" class="summary" role="alert" tabindex="-1" hidden>
+        <h3>Fix these to save:</h3>
+        <ul id="summary-list"></ul>
+      </div>
+
       <div class="row">
-        <div class="field">
-          <label for="hive">Hive <span class="hint">(number or name)</span></label>
-          <input id="hive" name="hive" list="hive-list" autocomplete="off" required aria-describedby="hive-err" placeholder="e.g. 7 or Old Oak">
-          <datalist id="hive-list"></datalist>
-          <div id="hive-err" class="error" hidden></div>
+        <div>
+          <label for="hive">Hive</label>
+          <select id="hive" required aria-describedby="hive-err">
+            <option value="">Choose a hive…</option>
+          </select>
+          <p class="err" id="hive-err" hidden></p>
         </div>
-        <div class="field">
+        <div>
           <label for="when">Date and time</label>
-          <input id="when" type="datetime-local" required aria-describedby="when-err">
-          <div id="when-err" class="error" hidden></div>
+          <input type="datetime-local" id="when" required aria-describedby="when-err">
+          <p class="err" id="when-err" hidden></p>
         </div>
       </div>
 
       <fieldset>
-        <legend>What you saw</legend>
-        <div class="checks">
-          <label><input type="checkbox" name="obs" value="Queen seen"> Queen seen</label>
-          <label><input type="checkbox" name="obs" value="Eggs"> Eggs</label>
-          <label><input type="checkbox" name="obs" value="Young larvae"> Young larvae</label>
-          <label><input type="checkbox" name="obs" value="Capped brood"> Capped brood</label>
-          <label><input type="checkbox" name="obs" value="Stores of honey"> Stores of honey</label>
-          <label><input type="checkbox" name="obs" value="Pollen"> Pollen</label>
-          <label><input type="checkbox" name="obs" value="Queen cells" data-warn> Queen cells</label>
-          <label><input type="checkbox" name="obs" value="Varroa mites" data-warn> Varroa mites</label>
-          <label><input type="checkbox" name="obs" value="Wax moth / beetles" data-warn> Wax moth / beetles</label>
-          <label><input type="checkbox" name="obs" value="Signs of disease" data-warn> Signs of disease</label>
-          <label><input type="checkbox" name="obs" value="Fed syrup"> Fed syrup</label>
-          <label><input type="checkbox" name="obs" value="Added a super"> Added a super</label>
+        <legend>Queen</legend>
+        <div class="choices" role="radiogroup">
+          <label><input type="radio" name="queen" value="Queen seen"> Queen seen</label>
+          <label><input type="radio" name="queen" value="Eggs or young larvae, queen not seen"> Eggs, no queen seen</label>
+          <label><input type="radio" name="queen" value="No sign of queen"> No sign of queen</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Temperament</legend>
+        <div class="choices">
+          <label><input type="radio" name="temper" value="Calm"> Calm</label>
+          <label><input type="radio" name="temper" value="Nervous"> Nervous</label>
+          <label><input type="radio" name="temper" value="Defensive"> Defensive</label>
         </div>
       </fieldset>
 
       <div class="row">
-        <div class="field">
-          <label for="temper">Temperament</label>
-          <select id="temper">
-            <option value="">Not noted</option>
-            <option>Calm</option>
-            <option>Nervous</option>
-            <option>Defensive</option>
-            <option>Aggressive</option>
-          </select>
+        <div>
+          <label for="bees">Frames covered with bees <span class="hint">(optional)</span></label>
+          <input type="number" id="bees" min="0" max="40" inputmode="numeric" aria-describedby="bees-err">
+          <p class="err" id="bees-err" hidden></p>
         </div>
-        <div class="field">
-          <label for="pop">Colony strength</label>
-          <select id="pop">
-            <option value="">Not noted</option>
-            <option>Weak</option>
-            <option>Fair</option>
-            <option>Strong</option>
-            <option>Very strong</option>
-          </select>
+        <div>
+          <label for="brood">Frames with brood <span class="hint">(optional)</span></label>
+          <input type="number" id="brood" min="0" max="40" inputmode="numeric" aria-describedby="brood-err">
+          <p class="err" id="brood-err" hidden></p>
         </div>
       </div>
 
-      <div class="row">
-        <div class="field">
-          <label for="frames">Frames of brood <span class="hint">(optional)</span></label>
-          <input id="frames" type="number" min="0" max="40" inputmode="numeric" aria-describedby="frames-err">
-          <div id="frames-err" class="error" hidden></div>
+      <fieldset>
+        <legend>Honey and pollen stores</legend>
+        <div class="choices">
+          <label><input type="radio" name="stores" value="Stores low"> Low</label>
+          <label><input type="radio" name="stores" value="Stores OK"> OK</label>
+          <label><input type="radio" name="stores" value="Stores plentiful"> Plentiful</label>
         </div>
-        <div class="field">
-          <label for="temp">Air temp, °F <span class="hint">(optional)</span></label>
-          <input id="temp" type="number" min="-40" max="130" inputmode="numeric" aria-describedby="temp-err">
-          <div id="temp-err" class="error" hidden></div>
-        </div>
-      </div>
+      </fieldset>
 
-      <div class="field">
+      <fieldset>
+        <legend>Problems seen <span class="hint">(tick any)</span></legend>
+        <div class="choices" id="concerns"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>What I did <span class="hint">(tick any)</span></legend>
+        <div class="choices" id="did"></div>
+      </fieldset>
+
+      <div>
         <label for="notes">Notes</label>
-        <textarea id="notes" placeholder="Anything else: what you did, what to do next visit…"></textarea>
+        <textarea id="notes" placeholder="Anything else you saw, smelled or want to check next time"></textarea>
       </div>
 
       <div class="actions">
-        <button type="submit" id="save">Save inspection</button>
-        <button type="reset" class="secondary" id="reset">Clear form</button>
+        <button type="submit" class="btn">Save inspection</button>
+        <button type="reset" class="btn secondary" id="reset">Clear form</button>
+        <span class="status" id="status" role="status" aria-live="polite"></span>
       </div>
-      <div id="status" class="status" role="status" aria-live="polite"></div>
     </form>
   </section>
 
-  <section aria-labelledby="log-h">
-    <h2 id="log-h">Past inspections <span class="hint" id="count"></span></h2>
-    <div id="storage-warn" class="banner" role="alert" hidden>
-      Saving to this browser isn't working here, so entries will be lost when you close the page. Use "Export" to keep a copy.
+  <section aria-labelledby="hist-h">
+    <h2 id="hist-h">Past inspections</h2>
+    <div class="toolbar">
+      <div class="f">
+        <label for="filter">Show</label>
+        <select id="filter"><option value="">All hives</option></select>
+      </div>
+      <button type="button" class="btn secondary small" id="export">Download CSV</button>
     </div>
-    <div class="tools">
-      <label for="filter" class="hint" style="margin:0;align-self:center">Show:</label>
-      <select id="filter" aria-label="Filter by hive"><option value="">All hives</option></select>
-      <button type="button" class="secondary small" id="export">Export</button>
-    </div>
-    <ul id="list" aria-live="off"></ul>
-    <div id="empty" class="empty" hidden></div>
+    <div id="history"></div>
   </section>
 </main>
 
-<div class="toast" id="toast" role="status" hidden>
-  <span id="toast-msg"></span>
-  <button type="button" id="undo">Undo</button>
+<div class="undo" id="undo" role="status" hidden>
+  <span id="undo-msg"></span>
+  <button type="button" id="undo-btn">Undo</button>
 </div>
 
 <script>
 (function () {
-  var KEY = "hive-inspections-v1";
-  var entries = [];
-  var storageOK = true;
-  var lastRemoved = null, toastTimer = null;
+  var KEY = 'hive-inspections-v1';
+  var HIVES = 12;
+  var CONCERNS = ['Varroa mites', 'Small hive beetle', 'Wax moth', 'Chalkbrood', 'Foulbrood suspected', 'Swarm cells', 'Robbing', 'Ants', 'Crowded, needs space'];
+  var DID = ['Added a super', 'Removed a super', 'Fed syrup', 'Treated for mites', 'Split the hive', 'Requeened', 'Reversed boxes', 'Only looked, no changes'];
 
   var $ = function (id) { return document.getElementById(id); };
-  var form = $("form"), list = $("list"), empty = $("empty"), filter = $("filter");
+  var storageOk = true;
+  var entries = load();
+  var undoTimer = null, lastRemoved = null;
 
   function load() {
     try {
       var raw = localStorage.getItem(KEY);
-      entries = raw ? JSON.parse(raw) : [];
-      if (!Array.isArray(entries)) entries = [];
-    } catch (e) { storageOK = false; entries = []; }
+      var arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) { storageOk = false; return []; }
   }
-  function persist() {
-    try { localStorage.setItem(KEY, JSON.stringify(entries)); storageOK = true; return true; }
-    catch (e) { storageOK = false; return false; }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(entries)); }
+    catch (e) { storageOk = false; }
+    $('storage-warning').hidden = storageOk;
   }
+
+  /* build static controls */
+  function hiveName(n) { return 'Hive ' + n; }
+  for (var i = 1; i <= HIVES; i++) {
+    ['hive', 'filter'].forEach(function (id) {
+      var o = document.createElement('option');
+      o.value = String(i); o.textContent = hiveName(i);
+      $(id).appendChild(o);
+    });
+  }
+  function checks(list, host, name) {
+    list.forEach(function (t) {
+      var l = document.createElement('label');
+      var c = document.createElement('input');
+      c.type = 'checkbox'; c.name = name; c.value = t;
+      l.appendChild(c); l.appendChild(document.createTextNode(' ' + t));
+      $(host).appendChild(l);
+    });
+  }
+  checks(CONCERNS, 'concerns', 'concern');
+  checks(DID, 'did', 'did');
 
   function nowLocal() {
     var d = new Date();
     d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
     return d.toISOString().slice(0, 16);
   }
+  $('when').value = nowLocal();
+
   function fmt(iso) {
     var d = new Date(iso);
     if (isNaN(d)) return iso;
-    return d.toLocaleString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+    return d.toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+  }
+  function daysAgo(iso) {
+    var a = new Date(iso), b = new Date();
+    a.setHours(0, 0, 0, 0); b.setHours(0, 0, 0, 0);
+    return Math.round((b - a) / 86400000);
+  }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
   }
 
-  function setErr(inputId, errId, msg) {
-    var i = $(inputId), e = $(errId);
-    if (msg) { e.textContent = msg; e.hidden = false; i.setAttribute("aria-invalid", "true"); }
-    else { e.hidden = true; e.textContent = ""; i.removeAttribute("aria-invalid"); }
+  /* glance */
+  function renderGlance() {
+    var host = $('glance'); host.textContent = '';
+    for (var n = 1; n <= HIVES; n++) {
+      var last = null;
+      entries.forEach(function (e) { if (+e.hive === n && (!last || e.when > last.when)) last = e; });
+      var li = el('li');
+      var b = el('button'); b.type = 'button'; b.dataset.hive = n;
+      var label, stale = false;
+      if (!last) label = 'No entries yet';
+      else {
+        var d = daysAgo(last.when);
+        label = d <= 0 ? 'Today' : d === 1 ? 'Yesterday' : d + ' days ago';
+        stale = d > 14;
+        if (stale) label += ' (overdue?)';
+      }
+      b.appendChild(el('strong', null, hiveName(n)));
+      b.appendChild(el('span', null, label));
+      b.setAttribute('aria-label', 'Log inspection for ' + hiveName(n) + '. Last inspected: ' + label.replace(' (overdue?)', '') );
+      if (stale) b.className = 'stale';
+      li.appendChild(b); host.appendChild(li);
+    }
   }
-  function status(msg, cls) {
-    var s = $("status"); s.textContent = msg; s.className = "status " + (cls || "");
-  }
+  $('glance').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    $('hive').value = b.dataset.hive;
+    clearErr('hive');
+    $('log-form').scrollIntoView({ behavior: 'auto', block: 'start' });
+    $('hive').focus();
+  });
 
-  function hiveNames() {
-    var seen = {}, out = [];
-    entries.forEach(function (e) { if (!seen[e.hive.toLowerCase()]) { seen[e.hive.toLowerCase()] = 1; out.push(e.hive); } });
-    return out.sort(function (a, b) { return a.localeCompare(b, undefined, { numeric: true }); });
-  }
-
-  function renderHiveOptions() {
-    var names = hiveNames(), cur = filter.value;
-    $("hive-list").innerHTML = "";
-    filter.innerHTML = '<option value="">All hives</option>';
-    names.forEach(function (n) {
-      var o = document.createElement("option"); o.value = n; $("hive-list").appendChild(o);
-      var f = document.createElement("option"); f.value = n; f.textContent = "Hive " + n; filter.appendChild(f);
-    });
-    filter.value = names.indexOf(cur) >= 0 ? cur : "";
-  }
-
-  function render() {
-    renderHiveOptions();
-    $("storage-warn").hidden = storageOK;
-    list.innerHTML = "";
-    var f = filter.value;
-    var shown = entries.filter(function (e) { return !f || e.hive === f; })
+  /* history */
+  function renderHistory() {
+    var host = $('history'); host.textContent = '';
+    var f = $('filter').value;
+    var list = entries.filter(function (e) { return !f || String(e.hive) === f; })
       .sort(function (a, b) { return a.when < b.when ? 1 : -1; });
-    $("count").textContent = entries.length ? "(" + shown.length + (f ? " of " + entries.length : "") + ")" : "";
-    $("export").disabled = !entries.length;
-    $("export").title = entries.length ? "" : "Nothing to export yet";
 
-    if (!shown.length) {
-      empty.hidden = false;
-      empty.innerHTML = entries.length
-        ? "<strong>No inspections for Hive " + esc(f) + " yet.</strong>Pick “All hives” to see the rest."
-        : "<strong>No inspections logged yet.</strong>Fill in the form after you open a hive and press “Save inspection”. It will show up here.";
+    if (!entries.length) {
+      var em = el('div', 'empty');
+      em.appendChild(el('p', null, 'No inspections logged yet. Open a hive, then fill in the form above to record your first one.'));
+      host.appendChild(em); return;
+    }
+    if (!list.length) {
+      var em2 = el('div', 'empty');
+      em2.appendChild(el('p', null, 'Nothing logged for ' + hiveName(f) + ' yet.'));
+      var sb = el('button', 'btn secondary small', 'Show all hives'); sb.type = 'button';
+      sb.addEventListener('click', function () { $('filter').value = ''; renderHistory(); $('filter').focus(); });
+      em2.appendChild(sb); host.appendChild(em2); return;
+    }
+
+    var ul = el('ul', 'entries');
+    list.forEach(function (e) {
+      var li = el('li', 'card entry');
+      var head = el('div', 'entry-head');
+      head.appendChild(el('h3', null, hiveName(e.hive)));
+      var t = el('time', null, fmt(e.when)); t.setAttribute('datetime', e.when);
+      head.appendChild(t); li.appendChild(head);
+
+      var tags = el('ul', 'tags');
+      function tag(text, cls) { tags.appendChild(el('li', cls || '', text)); }
+      if (e.queen) tag(e.queen);
+      if (e.temper) tag('Temperament: ' + e.temper);
+      if (e.bees !== '' && e.bees != null) tag(e.bees + ' frames of bees');
+      if (e.brood !== '' && e.brood != null) tag(e.brood + ' frames of brood');
+      if (e.stores) tag(e.stores);
+      (e.concerns || []).forEach(function (c) { tag('Problem: ' + c, 'concern'); });
+      (e.did || []).forEach(function (c) { tag('Did: ' + c, 'did'); });
+      if (tags.children.length) li.appendChild(tags);
+      if (e.notes) li.appendChild(el('p', 'notes', e.notes));
+
+      var del = el('button', 'btn danger small del', 'Delete'); del.type = 'button';
+      del.setAttribute('aria-label', 'Delete ' + hiveName(e.hive) + ' inspection from ' + fmt(e.when));
+      del.dataset.id = e.id;
+      li.appendChild(del); ul.appendChild(li);
+    });
+    host.appendChild(ul);
+  }
+  $('filter').addEventListener('change', renderHistory);
+
+  /* delete with undo */
+  $('history').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.del'); if (!b) return;
+    var idx = entries.findIndex(function (x) { return x.id === b.dataset.id; });
+    if (idx < 0) return;
+    lastRemoved = entries.splice(idx, 1)[0];
+    save(); renderAll();
+    $('undo-msg').textContent = hiveName(lastRemoved.hive) + ' inspection deleted.';
+    $('undo').hidden = false;
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(hideUndo, 8000);
+    $('filter').focus();
+  });
+  $('undo-btn').addEventListener('click', function () {
+    if (!lastRemoved) return;
+    entries.push(lastRemoved);
+    var back = lastRemoved; lastRemoved = null;
+    save(); hideUndo(); renderAll();
+    $('status').textContent = hiveName(back.hive) + ' inspection restored.';
+    $('filter').focus();
+  });
+  function hideUndo() { $('undo').hidden = true; lastRemoved = null; clearTimeout(undoTimer); }
+
+  /* validation */
+  function setErr(id, msg) {
+    var e = $(id + '-err'), f = $(id);
+    e.textContent = msg; e.hidden = false; f.setAttribute('aria-invalid', 'true');
+  }
+  function clearErr(id) {
+    var e = $(id + '-err'), f = $(id);
+    if (e) { e.hidden = true; e.textContent = ''; }
+    f.removeAttribute('aria-invalid');
+  }
+  ['hive', 'when', 'bees', 'brood'].forEach(function (id) {
+    $(id).addEventListener('input', function () { clearErr(id); });
+    $(id).addEventListener('change', function () { clearErr(id); });
+  });
+
+  function checkedVals(name) {
+    return Array.prototype.map.call(document.querySelectorAll('input[name="' + name + '"]:checked'), function (c) { return c.value; });
+  }
+  function radio(name) { var v = checkedVals(name); return v[0] || ''; }
+
+  $('log-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    $('status').textContent = '';
+    var problems = [];
+    ['hive', 'when', 'bees', 'brood'].forEach(clearErr);
+
+    if (!$('hive').value) problems.push(['hive', 'Choose which hive you inspected.']);
+    if (!$('when').value) problems.push(['when', 'Enter the date and time of the inspection.']);
+    ['bees', 'brood'].forEach(function (id) {
+      var v = $(id).value;
+      if (v !== '' && (isNaN(+v) || +v < 0 || +v > 40 || Math.floor(+v) !== +v))
+        problems.push([id, 'Enter a whole number from 0 to 40, or leave it blank.']);
+    });
+
+    var sum = $('summary'), list = $('summary-list');
+    list.textContent = '';
+    if (problems.length) {
+      problems.forEach(function (p) {
+        setErr(p[0], p[1]);
+        var li = el('li'), a = el('a', null, p[1]);
+        a.href = '#' + p[0];
+        a.addEventListener('click', function (e) { e.preventDefault(); $(p[0]).focus(); });
+        li.appendChild(a); list.appendChild(li);
+      });
+      sum.hidden = false; sum.focus();
       return;
     }
-    empty.hidden = true;
+    sum.hidden = true;
 
-    shown.forEach(function (e) {
-      var li = document.createElement("li"); li.className = "entry";
-      var tags = (e.obs || []).map(function (o) {
-        var warn = /mite|moth|disease|queen cells/i.test(o);
-        return '<li class="tag' + (warn ? " warn" : "") + '">' + esc(o) + "</li>";
-      }).join("");
-      var meta = [];
-      if (e.temper) meta.push("Temperament: " + esc(e.temper));
-      if (e.pop) meta.push("Strength: " + esc(e.pop));
-      if (e.frames !== "" && e.frames != null) meta.push("Brood frames: " + esc(String(e.frames)));
-      if (e.temp !== "" && e.temp != null) meta.push(esc(String(e.temp)) + "°F");
-      li.innerHTML =
-        '<div class="entry-head"><strong>Hive ' + esc(e.hive) + '</strong><span class="entry-date">' + esc(fmt(e.when)) + "</span></div>" +
-        (tags ? '<ul class="tags" aria-label="Observations">' + tags + "</ul>" : "") +
-        (meta.length ? '<div class="meta">' + meta.join(" · ") + "</div>" : "") +
-        (e.notes ? '<p class="notes">' + esc(e.notes) + "</p>" : "") +
-        '<button type="button" class="secondary small" data-id="' + e.id + '" aria-label="Delete inspection of Hive ' + esc(e.hive) + " on " + esc(fmt(e.when)) + '">Delete</button>';
-      list.appendChild(li);
-    });
-  }
-
-  function esc(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-    });
-  }
-
-  function validate() {
-    var first = null, ok = true;
-    function bad(id, eid, msg) { setErr(id, eid, msg); if (!first) first = $(id); ok = false; }
-
-    var hive = $("hive").value.trim();
-    hive ? setErr("hive", "hive-err") : bad("hive", "hive-err", "Enter which hive you opened, such as 7 or Old Oak.");
-
-    var w = $("when").value;
-    if (!w) bad("when", "when-err", "Pick the date and time of the inspection.");
-    else if (new Date(w) > new Date(Date.now() + 60000)) bad("when", "when-err", "That time is in the future. Pick when you actually opened the hive.");
-    else setErr("when", "when-err");
-
-    var fr = $("frames").value;
-    if (fr !== "" && (!/^\d+$/.test(fr) || +fr > 40)) bad("frames", "frames-err", "Use a whole number from 0 to 40, or leave it blank.");
-    else setErr("frames", "frames-err");
-
-    var t = $("temp").value;
-    if (t !== "" && (isNaN(+t) || +t < -40 || +t > 130)) bad("temp", "temp-err", "Use a temperature from -40 to 130 °F, or leave it blank.");
-    else setErr("temp", "temp-err");
-
-    if (first) first.focus();
-    return ok;
-  }
-
-  form.addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    status("");
-    if (!validate()) { status("Fix the highlighted fields and save again.", "bad"); return; }
-    var btn = $("save"); btn.disabled = true; btn.textContent = "Saving…";
     var entry = {
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      hive: $("hive").value.trim(),
-      when: $("when").value,
-      obs: Array.prototype.map.call(form.querySelectorAll('input[name="obs"]:checked'), function (c) { return c.value; }),
-      temper: $("temper").value,
-      pop: $("pop").value,
-      frames: $("frames").value,
-      temp: $("temp").value,
-      notes: $("notes").value.trim()
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+      hive: +$('hive').value,
+      when: $('when').value,
+      queen: radio('queen'),
+      temper: radio('temper'),
+      bees: $('bees').value,
+      brood: $('brood').value,
+      stores: radio('stores'),
+      concerns: checkedVals('concern'),
+      did: checkedVals('did'),
+      notes: $('notes').value.trim()
     };
     entries.push(entry);
-    var saved = persist();
-    btn.disabled = false; btn.textContent = "Save inspection";
-    render();
-    if (saved) status("Saved: Hive " + entry.hive + ".", "ok");
-    else status("Added to the list, but this browser couldn't store it. Use Export to keep a copy.", "bad");
-    // keep hive and time ready for the next frame-by-frame note; clear the rest
-    var keepHive = entry.hive;
-    form.reset();
-    $("hive").value = keepHive;
-    $("when").value = nowLocal();
-    ["hive","when","frames","temp"].forEach(function (id) { setErr(id, id + "-err"); });
-    $("notes").focus();
+    save();
+    $('log-form').reset();
+    $('when').value = nowLocal();
+    renderAll();
+    $('status').textContent = storageOk
+      ? hiveName(entry.hive) + ' inspection saved.'
+      : hiveName(entry.hive) + ' added, but could not be saved to this browser.';
   });
 
-  form.addEventListener("reset", function () {
-    setTimeout(function () {
-      $("when").value = nowLocal();
-      ["hive","when","frames","temp"].forEach(function (id) { setErr(id, id + "-err"); });
-      status("");
-    }, 0);
+  $('reset').addEventListener('click', function () {
+    ['hive', 'when', 'bees', 'brood'].forEach(clearErr);
+    $('summary').hidden = true;
+    $('status').textContent = '';
+    setTimeout(function () { $('when').value = nowLocal(); }, 0);
   });
 
-  ["hive","when","frames","temp"].forEach(function (id) {
-    $(id).addEventListener("input", function () { if ($(id).getAttribute("aria-invalid")) setErr(id, id + "-err"); });
-  });
-
-  list.addEventListener("click", function (ev) {
-    var b = ev.target.closest("button[data-id]");
-    if (!b) return;
-    var idx = entries.findIndex(function (e) { return e.id === b.getAttribute("data-id"); });
-    if (idx < 0) return;
-    lastRemoved = { entry: entries[idx], idx: idx };
-    entries.splice(idx, 1);
-    persist(); render();
-    showToast("Deleted inspection of Hive " + lastRemoved.entry.hive + ".");
-    $("filter").focus();
-  });
-
-  function showToast(msg) {
-    $("toast-msg").textContent = msg;
-    $("toast").hidden = false;
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { $("toast").hidden = true; lastRemoved = null; }, 8000);
-  }
-  $("undo").addEventListener("click", function () {
-    if (!lastRemoved) return;
-    entries.splice(Math.min(lastRemoved.idx, entries.length), 0, lastRemoved.entry);
-    lastRemoved = null; $("toast").hidden = true;
-    persist(); render();
-    status("Inspection restored.", "ok");
-  });
-
-  filter.addEventListener("change", render);
-
-  $("export").addEventListener("click", function () {
-    var blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "hive-inspections-" + nowLocal().slice(0, 10) + ".json";
+  /* CSV export */
+  $('export').addEventListener('click', function () {
+    if (!entries.length) { $('status').textContent = 'Nothing to download yet.'; return; }
+    function q(v) {
+      v = String(v == null ? '' : v);
+      if (/^[=+\-@]/.test(v)) v = "'" + v;
+      return '"' + v.replace(/"/g, '""') + '"';
+    }
+    var rows = [['Hive', 'When', 'Queen', 'Temperament', 'Frames of bees', 'Frames of brood', 'Stores', 'Problems', 'Actions', 'Notes']];
+    entries.slice().sort(function (a, b) { return a.when < b.when ? -1 : 1; }).forEach(function (e) {
+      rows.push([hiveName(e.hive), e.when, e.queen, e.temper, e.bees, e.brood, e.stores, (e.concerns || []).join('; '), (e.did || []).join('; '), e.notes]);
+    });
+    var csv = rows.map(function (r) { return r.map(q).join(','); }).join('\r\n');
+    var url = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' }));
+    var a = document.createElement('a');
+    a.href = url; a.download = 'hive-inspections.csv';
     document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
   });
 
-  load();
-  $("when").value = nowLocal();
-  render();
+  function renderAll() { renderGlance(); renderHistory(); }
+  $('storage-warning').hidden = storageOk;
+  renderAll();
 })();
 </script>
 </body>

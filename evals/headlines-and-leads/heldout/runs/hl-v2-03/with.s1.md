@@ -1,17 +1,15 @@
-**Title options**
+**Option 1: plain outcome**
+**Title:** Why Your Lower Back Hurts After a Long Flight or Drive (and How to Loosen It Up)
+**Opening:** You step out of the car or off the plane and your lower back won't straighten up. Hours in one position are the cause, and a few simple changes before, during, and after the trip can ease it.
 
-1. **Why Your Lower Back Aches After a Long Flight or Drive (and How to Fix It)**
-2. **Stiff Back After Hours in a Seat? Here's What's Going On**
-3. **Why Sitting for Hours Hurts Your Lower Back More Than a Full Day at Your Desk**
+**Option 2: the reader's own words**
+**Title:** Why Your Back Is Stiff and Sore After Sitting for Hours
+**Opening:** If the first few steps after a long drive or flight feel stiff and sore, you're far from alone. Your lower back has been held in one position for hours, and it needs the right kind of movement to settle back down.
 
-I'd go with #1. It uses the words people type into search, and it promises both the cause and the fix. Option 3 makes a comparison I haven't verified, so only use it if you're comfortable standing behind that claim.
+**Option 3: the question they'd type into search**
+**Title:** Why Does My Lower Back Hurt After Flying or Driving?
+**Opening:** Because it's been stuck in one position for hours, and it complains when you finally move. Here's what's going on in your back and what you can do about it, whether you're about to travel or already feeling it.
 
-**Opening (for #1)**
+I'd pick Option 3 if you want people to find the post through search, since the title matches how they'd phrase the question. I'd pick Option 1 if you mainly want it to read well when shared with existing patients.
 
-You step off a flight or climb out of the car, and your lower back is tight, achy, and slow to straighten up. It's not your imagination, and it's not a sign something is wrong with your spine. Hours in one position load your back in a way it isn't built to handle, and a few simple habits before, during, and after the trip can ease it.
-
-**Alternate opening (more direct)**
-
-If your lower back feels worse after a long flight or drive than after a full day at your desk, you're in good company. It usually comes down to staying in one position with no chance to move, and you can do something about it.
-
-The alternate repeats the desk comparison from option 3, so use it only if you're comfortable with that claim. I kept the openings free of statistics and medical claims. If you want to add a figure, put in your own source.
+I kept the explanation general. Once you write the body, add anything specific, like how long is too long to sit or your clinic's go-to stretches, so the opening matches what you actually recommend.

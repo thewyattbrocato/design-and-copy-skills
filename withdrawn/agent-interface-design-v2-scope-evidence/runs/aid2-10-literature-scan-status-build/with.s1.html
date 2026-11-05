@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quarry – Run status</title>
+<style>
+  :root{
+    --bg:#f6f5f1; --card:#ffffff; --ink:#1d2320; --muted:#5c6660; --line:#dcdad2;
+    --accent:#1f5f4a; --accent-ink:#ffffff; --attn-bg:#fff4dc; --attn-line:#d9a21b; --attn-ink:#5a3d00;
+    --done:#1f5f4a; --track:#e6e4dc;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#141816; --card:#1d2220; --ink:#e9ece9; --muted:#9aa49e; --line:#333b37;
+      --accent:#5fc4a0; --accent-ink:#0d1a15; --attn-bg:#2d2512; --attn-line:#c9992a; --attn-ink:#f1d99a;
+      --done:#5fc4a0; --track:#2c3330;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  main{max-width:760px;margin:0 auto;padding:28px 20px 56px}
+  .brand{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+  h1{font-size:22px;line-height:1.3;margin:0 0 14px;font-weight:600}
+  .status{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;color:var(--muted);font-size:15px}
+  .status strong{color:var(--ink);font-weight:600}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:7px;
+    animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  @media (prefers-reduced-motion:reduce){.dot{animation:none}}
+
+  .decision{margin:24px 0;background:var(--attn-bg);border:1px solid var(--attn-line);border-left-width:6px;
+    border-radius:8px;padding:18px 20px;color:var(--attn-ink)}
+  .decision h2{margin:0 0 4px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+  .decision .q{font-size:18px;font-weight:600;margin:0 0 8px;line-height:1.35}
+  .decision p{margin:0 0 10px}
+  .opts{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  button{font:inherit;font-weight:600;padding:10px 16px;border-radius:6px;cursor:pointer;
+    border:1.5px solid var(--attn-ink);background:transparent;color:var(--attn-ink);min-height:44px}
+  button:hover{background:rgba(0,0,0,.06)}
+  button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .hint{font-size:14px;margin-top:12px;opacity:.9}
+  .answered{display:none}
+  .decision.done{background:var(--card);border-color:var(--line);border-left-color:var(--accent);color:var(--ink)}
+  .decision.done .ask{display:none}
+  .decision.done .answered{display:block}
+  .linkbtn{border:none;background:none;text-decoration:underline;padding:0;min-height:0;font-weight:500;color:var(--muted)}
+
+  section{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin-bottom:16px}
+  h3{margin:0 0 12px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+  .time{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-bottom:10px}
+  .time b{font-size:20px;font-weight:600}
+  .bar{height:10px;background:var(--track);border-radius:5px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:5px}
+  .small{font-size:14px;color:var(--muted)}
+
+  ol.steps{list-style:none;margin:0;padding:0}
+  ol.steps li{display:grid;grid-template-columns:28px 1fr;gap:0 10px;padding:10px 0;border-top:1px solid var(--line)}
+  ol.steps li:first-child{border-top:none}
+  .mark{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;
+    font-size:13px;font-weight:700;margin-top:1px}
+  .s-done .mark{background:var(--done);border-color:var(--done);color:var(--accent-ink)}
+  .s-now .mark{border-color:var(--accent);color:var(--accent)}
+  .s-next{color:var(--muted)}
+  .name{font-weight:600}
+  .detail{font-size:14px;color:var(--muted)}
+  .s-now .name::after{content:"In progress";margin-left:10px;font-size:12px;font-weight:600;
+    color:var(--accent);border:1px solid var(--accent);border-radius:10px;padding:1px 8px;vertical-align:1px}
+  .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .nums div{padding:2px 0}
+  .nums b{display:block;font-size:28px;line-height:1.1;font-weight:600}
+  .nums span{font-size:14px;color:var(--muted)}
+  @media (max-width:520px){.nums{grid-template-columns:1fr 1fr 1fr}.nums b{font-size:24px}}
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">Quarry · Literature scan</p>
+  <h1>GLP-1 agonists and kidney outcomes in type 2 diabetes, trials since 2018</h1>
+  <div class="status">
+    <span><span class="dot" aria-hidden="true"></span><strong>Running</strong>: reading full papers</span>
+    <span>Started <span id="started">1 hour 40 minutes</span> ago</span>
+  </div>
+
+  <div class="decision" id="decision" role="region" aria-label="Decision needed">
+    <div class="ask">
+      <h2>Needs your decision</h2>
+      <p class="q">Include two trials that have only published conference abstracts?</p>
+      <p>Quarry found two relevant trials with no full paper yet. Abstracts give limited methods and results, and they usually haven't been peer reviewed. Quarry keeps reading papers while it waits, but it needs your answer before it drafts the summary table.</p>
+      <div class="opts">
+        <button class="primary" data-choice="Include both, marked “abstract only” in the table">Include both, marked “abstract only”</button>
+        <button data-choice="Exclude both from the table">Exclude both</button>
+      </div>
+      <p class="hint">You can change this until the table is drafted.</p>
+    </div>
+    <div class="answered" aria-live="polite">
+      <h2>Decision recorded</h2>
+      <p class="q" id="choice"></p>
+      <p class="small">Quarry will apply this when it drafts the table. <button class="linkbtn" id="change">Change answer</button></p>
+    </div>
+  </div>
+
+  <section aria-labelledby="t">
+    <h3 id="t">Time</h3>
+    <div class="time">
+      <span><b id="elapsed">1 h 40 min</b> <span class="small">elapsed</span></span>
+      <span class="small">Typical run about 3 hours · roughly 1 h 20 min left</span>
+    </div>
+    <div class="bar" role="progressbar" aria-label="Time elapsed against a typical 3 hour run" aria-valuemin="0" aria-valuemax="180" aria-valuenow="100"><i id="tbar" style="width:55.5%"></i></div>
+    <p class="small" style="margin:8px 0 0">Time is an estimate. Reading time varies with paper length.</p>
+  </section>
+
+  <section aria-labelledby="p">
+    <h3 id="p">So far</h3>
+    <div class="nums">
+      <div><b>412</b><span>abstracts screened</span></div>
+      <div><b>38</b><span>kept</span></div>
+      <div><b>14 of 38</b><span>full papers read</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="s">
+    <h3 id="s">Steps</h3>
+    <ol class="steps">
+      <li class="s-done"><span class="mark" aria-hidden="true">✓</span><div><div class="name">Search databases <span class="visually"></span></div><div class="detail">Done</div></div></li>
+      <li class="s-done"><span class="mark" aria-hidden="true">✓</span><div><div class="name">Screen abstracts</div><div class="detail">Done: 412 screened, 38 kept</div></div></li>
+      <li class="s-now" aria-current="step"><span class="mark" aria-hidden="true">3</span><div><div class="name">Read full papers</div><div class="detail">14 of 38 read, 24 to go</div></div></li>
+      <li class="s-next"><span class="mark" aria-hidden="true">4</span><div><div class="name">Draft summary table</div><div class="detail">Starts after reading. Needs your decision above.</div></div></li>
+    </ol>
+  </section>
+</main>
+<script>
+  var d=document.getElementById('decision');
+  document.querySelectorAll('[data-choice]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.getElementById('choice').textContent=b.getAttribute('data-choice');
+      d.classList.add('done');
+      document.getElementById('change').focus();
+    });
+  });
+  document.getElementById('change').addEventListener('click',function(){
+    d.classList.remove('done');
+    d.querySelector('button').focus();
+  });
+  var start=Date.now()-100*60000;
+  function tick(){
+    var m=Math.floor((Date.now()-start)/60000),h=Math.floor(m/60);
+    document.getElementById('elapsed').textContent=(h?h+' h ':'')+(m%60)+' min';
+    document.getElementById('started').textContent=(h?h+(h>1?' hours ':' hour '):'')+(m%60)+' minutes';
+    var pct=Math.min(100,m/180*100);
+    document.getElementById('tbar').style.width=pct+'%';
+    document.querySelector('.bar').setAttribute('aria-valuenow',Math.min(m,180));
+  }
+  setInterval(tick,30000);
+</script>
+</body>
+</html>

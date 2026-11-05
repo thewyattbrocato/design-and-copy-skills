@@ -64,3 +64,4 @@ Deliver the requested copy first, with nothing before it. When a count or set is
 
 - [terms-and-tiers.md](references/terms-and-tiers.md): load for a full pricing section or any trial, renewal or guarantee wording, for short before-and-after pairs.
 - [free-items-trials-reasons.md](references/free-items-trials-reasons.md): load for a free guide or lead magnet, a token price, a referral or other offer asking effort, a reason to act now, or a comparison with a rival.
+- [proposals-and-decision-support.md](references/proposals-and-decision-support.md): load for a recommendation among options, a proposal or pilot offer, a reply to "that costs more than we expected", or a safety net such as a plan-change window.

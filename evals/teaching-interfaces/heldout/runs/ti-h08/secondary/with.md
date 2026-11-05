@@ -1,19 +1,17 @@
-**Your instinct is right.** Forty shortcuts in a day-one walkthrough is an inventory of controls. Nobody retains forty new key combos from one sitting, and the ones they don't use in the first week will be forgotten. Lawyers already know how to work. What they lack is the habit of reaching for a key instead of the mouse, and that comes from repeated real use, not a tour.
+Your instinct is right. A 40-step tour on day one teaches almost nothing, because people forget most of it before they need it. Shortcuts stick when they're learned at the moment someone wants the thing they do.
 
-**What to build instead:**
+I'd push for this instead:
 
-1. **Teach one idea: the command palette.** Make it the single thing new users learn: "Press [key] to find any action. Every result shows its shortcut." One idea covers all forty shortcuts, because the palette surfaces them when people need them. Start the first-run flow with a real task, such as creating a note on a matter, and mention the palette only once they've finished it.
+1. **Teach a few on day one, tied to their work.** Ask what they do most (litigation, transactional, paralegal intake) and enable or highlight the three to five shortcuts for those tasks. Use the same flow for everyone, but make the choice visible in the first session.
 
-2. **Show the shortcut where the action lives.** Put the key next to every menu item and button that has one. This is a job aid at the moment of action, and it costs nothing to learn.
+2. **Put a command palette up front.** A Cmd+K (or your equivalent) palette that lists every action with its shortcut next to it is the single best discovery tool. Users can find anything without memorizing it, and they see the shortcut as they go. Make it the first thing you teach.
 
-3. **Nudge in context, not in a tour.** When someone does a task with the mouse that has a shortcut (say, split view), show the key once, in a small dismissable hint on the control they just used. Cap it per shortcut, and don't repeat it after they've used the key. No streaks, no counters that imply they're behind.
+3. **Show the shortcut at the moment of use.** When someone does something by mouse or menu that has a shortcut, show a small inline hint ("Split view: ⌘\ next time"). Show each hint only a few times, and stop once the user takes the shortcut. This is the core of the approach.
 
-4. **Offer a short, skippable pick during setup.** Ask "What do you do most?" with a few checkboxes drawn from the matter, citation and note workflows. Surface the shortcuts for what they pick. Experts can skip it entirely and find everything in the palette.
+4. **Keep a reference reachable, not forced.** A `?` overlay or a cheat sheet in the help menu covers the "I forgot" case without interrupting anyone.
 
-5. **Keep a reference, separate from teaching.** A searchable shortcut sheet behind `?` or the Help menu, grouped by task (Matters, Split view, Citations), for lookup when someone wants it. It isn't a tutorial and it isn't mandatory.
+5. **Let them rebind.** Lawyers already have muscle memory from Word, Westlaw, Lexis, and their DMS. Conflicts with those are a common reason people abandon shortcuts. Rebinding, or at least checking your defaults against common legal-tool shortcuts, will matter more than any tutorial.
 
-**Check before you ship:**
-- **Key collisions.** Law firms bring Word, Outlook, Westlaw and Clio habits with them. Test every combo against common OS and browser shortcuts, and make keys rebindable. Rebinding matters more here than in most products because the muscle memory is already set.
-- **Measure the right thing.** Don't measure onboarding completion. Measure whether people use the shortcut for a task unaided at day 14 and day 30. That's the outcome the PM actually wants.
+6. **Measure the right thing.** Track how often each shortcut is used versus its mouse equivalent, and which hints get dismissed. If a shortcut's mouse path is used 500 times a week and the shortcut almost never, the hint or the binding is the problem.
 
-**Assumptions:** I don't know your usage data or which shortcuts are most frequent. If you have it, use it to choose the ones that get surfaced in the hints and the setup pick. The one-idea approach still holds without it.
+To put it to the PM: the goal is that people use the shortcuts, not that they've seen them. A short onboarding that covers three role-relevant shortcuts, the palette, and the `?` reference will get more adoption than a tour that people click through and forget. You can also offer to run a quick test with two or three heavy users from the target group. Ask them to do their real tasks while you watch for where they'd want a shortcut, and use that to pick the first set.

@@ -1,21 +1,15 @@
-The flow is mostly sound, so I changed only two things. It teaches by doing: one sentence per screen, the real form and map, a pre-placed circle as a starting point, and a Skip on every screen. I'd keep it. The ticket drop is encouraging, but it doesn't show people can still add a walk days later without help. That's the check to watch after launch.
+**The one thing to teach:** "A heat pump water heater doesn't make heat. It pulls heat out of the air around it and moves it into your water."
 
+Everything on the page should serve that sentence. Here is how I'd lay it out.
 [...]
+**2. The diagram, built in three steps**
 
-The old text says "Draw a circle", but the circle is already drawn, so the instruction doesn't match the screen.
-
-> Move the circle over where you walk. We'll only offer you walks inside it.
-
+Don't show the whole machine and then explain it. A reader sees all the parts at once and doesn't know where to start. Use three still frames, or one diagram that reveals in stages with a visible "Next" button. Each frame has the sentence directly beside or above the part it explains.
 [...]
-
-The old text says "Your first walk is on the calendar", which is false if someone skipped screen 1 or left the form empty. Use two variants:
-
-- Walk added: "Your first walk is on the calendar. Tap it any time to change or cancel." Button: Go to calendar.
-- No walk added: "Add a walk from the calendar whenever you're ready." Button: Go to calendar.
-
-I'd also drop Skip from screen 3, since the only thing left is the final button.
-
-**Check before shipping (I can't see the product):**
-- **Does Next on screen 1 save the walk?** If it does, "Add walk" would be a more honest label. If it doesn't, screen 3 shouldn't claim the walk exists.
-
+**3. Labeling rules for your diagram**
+- Put each label on or touching its part ("Fan + evaporator coil," "Compressor," "Condenser coil," "Cold water in," "Hot water out"). Don't use a lettered legend or a key.
+- Introduce the part names in frame 1 or 2, before the process uses them.
+- Color the heat path warm and the cooled air cool. Add a second cue as well, such as a solid line for heat flow and a dashed line for air, so it still reads in grayscale.
+- Keep label text at body size or larger on phones. If it won't fit, stack the frames vertically instead of shrinking the type.
 [...]
+**How to check it works:** show it to a few homeowners who haven't seen it. Ask them to explain, in their own words, where the heat comes from. Do this a day or two later if you can. If they say "it heats the water with electricity," frame 1 isn't landing.

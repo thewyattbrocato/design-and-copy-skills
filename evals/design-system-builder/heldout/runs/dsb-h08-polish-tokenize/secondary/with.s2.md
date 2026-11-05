@@ -3,10 +3,10 @@
   /* Color */
   --color-brand: #0f766e;
   --color-brand-hover: #0d6b63;
-  --color-brand-tint: #e6f4f2;
+  --color-brand-subtle: #e6f4f2;
+  --color-on-brand: #fff;
   --color-danger: #c0392b;
   --color-danger-hover: #a93226;
-  --color-on-brand: #fff;
   --color-surface: #fff;
   --color-border: #dde2e1;
   --color-text: #14201f;
@@ -15,98 +15,80 @@
   /* Shape, elevation, motion */
   --radius-sm: 6px;
   --radius-md: 10px;
-  --border-width: 1px;
-  --shadow-card: 0 1px 4px rgba(16, 24, 40, 0.1);
-  --duration-fast: 0.18s;
-
-  /* Button */
-  --btn-gap: 6px;
-  --btn-padding-y: 10px;
-  --btn-padding-x: 18px;
-  --btn-font-size: 15px;
-  --btn-font-weight: 600;
-  --btn-radius: var(--radius-sm);
+  --shadow-sm: 0 1px 4px rgba(16, 24, 40, 0.1);
+  --transition-hover: background 0.18s ease;
 }
 
+/* Button */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--btn-gap);
-  padding: var(--btn-padding-y) var(--btn-padding-x);
-  font-size: var(--btn-font-size);
-  font-weight: var(--btn-font-weight);
-  border-radius: var(--btn-radius);
+  gap: 6px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 0;
+  border-radius: var(--radius-sm);
   background: var(--color-brand);
   color: var(--color-on-brand);
-  border: 0;
-  transition: background var(--duration-fast) ease;
+  transition: var(--transition-hover);
 }
-
 .btn:hover {
   background: var(--color-brand-hover);
 }
 
-/* Padding is reduced by the border width so the button's outer size matches .btn */
+/* Secondary: the 1px border is subtracted from padding so the box matches .btn */
 .btn-secondary {
+  padding: calc(10px - 1px) calc(18px - 1px);
+  border: 1px solid var(--color-brand);
   background: transparent;
   color: var(--color-brand);
-  border: var(--border-width) solid var(--color-brand);
-  padding:
-    calc(var(--btn-padding-y) - var(--border-width))
-    calc(var(--btn-padding-x) - var(--border-width));
 }
-
 .btn-secondary:hover {
-  background: var(--color-brand-tint);
+  background: var(--color-brand-subtle);
 }
 
 .btn-danger {
   background: var(--color-danger);
   color: var(--color-on-brand);
 }
-
 .btn-danger:hover {
   background: var(--color-danger-hover);
 }
 
+/* Card */
 .card {
-  background: var(--color-surface);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-md);
   padding: 20px;
-  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
 }
-
 .card-title {
+  margin: 0 0 10px;
   font-size: 19px;
   font-weight: 700;
-  margin: 0 0 10px;
   color: var(--color-text);
 }
-
 .card-meta {
+  margin: 0 0 14px;
   font-size: 13px;
   color: var(--color-text-muted);
-  margin: 0 0 14px;
 }
-
 .card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
   margin-top: 18px;
   padding-top: 14px;
-  border-top: var(--border-width) solid var(--color-border);
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
+  border-top: 1px solid var(--color-border);
 }
 ```
 
-**What changed**
-- Repeated hex values, radii, the shadow, and the button metrics now live in `:root` custom properties. Building a new component means reusing those names.
-- `.btn-secondary` padding is now `calc(token - border)`. It produces the same 9px 17px as before, but it stays correct if the button tokens change.
-- Selectors, class names, property names, and rule order are unchanged. The overrides depend on order and on equal specificity, so the order has to stay as it is.
-- One-off values (`19px`, `13px`, `20px`, `12px`) stay literal. Tokenize them only when you start reusing them.
+Notes:
 
-**Things to check**
-- I checked each value by reading the CSS, not in a browser. Before merging, compare a few buttons and cards on a page against the old build, including hover states.
-- These `:root` names are global. If the app already defines `--color-brand` or similar with different values, the names will collide.
-- This directory isn't a git repo, so I couldn't produce a diff. Running a visual regression check would confirm the no-visible-change requirement.
+- **Visual output should be unchanged.** I checked each declaration against the original, including the cascade order and the `.btn-secondary` padding that offsets its 1px border.
+- **Class names are unchanged.**
+- **Possible collision:** the `:root` variable names are generic. If the app already defines `--color-brand` or similar, rename the new ones or scope them.
+- **Not added:** the button has no `:focus-visible` style. Adding one would be a visible change, so I left it out, but it's worth a follow-up for keyboard accessibility.
+- **Not rendered:** I verified this by reading the declarations, not by loading the page.

@@ -40,7 +40,7 @@
 
 Respond according to the reason:
 - **Filters caused it:** "No results with *Audiobook* + *Available now*. Remove *Available now* (24 results)." One tap relaxes the filter. Offer the most restrictive filter first.
-- **Spelling:** "Showing results for *Hunger Games*. Search instead for *Hunger Gams*."
+- **Spelling:** "Showing results for *Harvest Gales*. Search instead for *Harvest Gaels*."
 - **Genuinely not in the catalog:** Say so plainly, then offer next steps in order: related titles or authors, "Search all county branches/ebooks" if the search was scoped, **Request this title** (purchase suggestion) or **Interlibrary loan** if the library offers them (placeholder: confirm which services exist), and "Ask a librarian" with the branch phone or chat.
 - **Event or branch searches that return nothing:** offer to widen the date range ("Nothing this week. Show next month") or list all branches.
 - Keep the user's query in the box, editable, so a small fix is quick. Never show a bare "No results found."

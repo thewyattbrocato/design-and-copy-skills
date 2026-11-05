@@ -1,38 +1,34 @@
-**Not yet.** The structure is a generic marketplace template, and the content doesn't match Seedlend. A developer would build something that looks like a shop, not a neighborhood seed library.
+**It doesn't hold up yet.** The structure is a generic app template, not Seedlend. Almost every content line would fit any marketplace app, and a few contradict what Seedlend is. This is a wireframe, so I've judged purpose, structure and content and skipped visual polish.
 
-Assuming a wireframe-level spec for existing neighbors, with no visual design, I only checked content, structure and task fit.
+*Assumption: a first-time or returning neighbor who wants to find seeds, share seeds, or check on a swap.*
 
-**Findings, most serious first**
+**Findings, ranked**
 
-1. **Blocker: "$0.00" on every Featured card.** A seed library lends and swaps seeds, so a price tag says the opposite of what the app is. Replace it with information that helps someone decide: availability ("In the cupboard", "Checked out"), quantity ("~20 packets"), or the lender's name. If the developer builds the price field, it will end up in the data model too.
+1. **Blocker: "$0.00" on every card.** A seed library is a share-and-return system. A price tag says "store" and makes people ask if they're being charged. Replace it with something real to the library: availability ("In the cupboard" / "3 packets left"), who donated it, or the borrow/return status. Ask whoever owns the data model what a seed item actually has.
 
-2. **Blocker: the placeholder copy would ship as written.** "Item Title", "Short description goes here", "User Name" and "user@example.com" are fine as fill, but the spec doesn't say which strings are fixed and which come from data. Mark each one as either static copy or a data field, with its source. For example, Featured items could come from the library catalog, and the profile row from the account. Give example content that is real for this app, such as "Cherokee Purple tomato, saved 2025, 12 packets".
+2. **Blocker: the hero says nothing about seeds.** "Discover, connect and grow with our community" and "Explore" could be a fitness or travel app. A newcomer can't tell what Seedlend offers or what to do first. Name the thing, for example "Seeds from your neighbors' cupboard at [Hall name]". Make the button say what it does ("Browse seeds"). It also duplicates the Search tab, so decide whether it has a distinct job. Once someone is a member, the hero is probably dead weight above the content they came for.
 
-3. **Major: the hero's promise and buttons are vague.**
-   - "Discover, connect and grow with our community" could describe any app.
-   - "Explore" and "Get Started" don't say where they go. The spec has no destinations, so the developer will have to guess.
-   - Say what Seedlend does ("Borrow seeds from the hall cupboard, return seeds from your harvest") and make the buttons name the action ("Browse seeds", "Add your first seed").
-   - Check whether a returning neighbor needs a hero card at all. It takes the top of the screen on every visit. Consider showing it only to new users.
+3. **Major: the "Your Activity" empty state is a dead end.** "Nothing to see here yet" followed by "Get Started" doesn't say what the user would start. Pick the one action this section is for, such as "Add your first seeds to the cupboard" or "Borrow something to grow". Then write what *would* appear there (requests, borrowed packets due back, messages). The developer also needs the non-empty state, which is missing entirely.
 
-4. **Major: the screen leaves out the cupboard.** The physical hall cupboard is the point of the app, but nothing on Home reflects it. Open hours, what's new in the cupboard, and what's due back would be more useful than a welcome banner. Decide the one thing a neighbor most needs on opening the app, and put it first.
+4. **Major: the profile row is in the wrong place and duplicates the Profile tab.** Name and email at the bottom of Home sit directly above a tab that leads to the same information. It adds clutter and exposes the email on a screen people might show others. Cut it, or move it to the Profile screen.
 
-5. **Major: the profile row and Profile tab duplicate each other.** The row at the bottom of Home repeats the Profile tab, and an email address in a visible row is unnecessary. The profile row also sits below the tab bar's content area, so its position is ambiguous (inside the scroll, or pinned?). I'd cut it from Home, or make it a small avatar in the title bar next to the gear.
+5. **Major: the spec skips states and behavior.** The developer will have to guess these:
+   - What does tapping a Featured card do?
+   - Who chooses what's featured (newest, most available, volunteer-picked)?
+   - What if there are fewer than 3 items, or none?
+   - What does the gear icon open?
+   - Is the page loading or offline?
+   - Is there a "See all" link for Featured?
 
-6. **Minor: the "Your Activity" empty state is the only state specified.**
-   - "Nothing to see here yet" tells the user nothing. Say what would appear there ("Seeds you've borrowed and when they're due back") and give the button an action that fits ("Borrow your first seed").
-   - Missing states: Featured with zero, one or two items (the spec assumes exactly three), loading, offline, and Activity with content.
+6. **Minor: tab labels and the "Add" tab.** "Add" is ambiguous (add what?). The spec doesn't say whether it's a tab or a raised action. Consider "Share seeds" or "Donate". If the app is small, five tabs may be more than it needs. Messages might be enough as an icon in the title bar, but test that before changing it.
 
-7. **Minor: navigation gaps.**
-   - Search and Add are plain tabs. Decide whether "Add" means "donate a seed" or "log a loan". The label is ambiguous.
-   - The gear icon has no destination or accessible label.
-   - Tapping a Featured card has no specified target.
-   - The tab bar doesn't say which tab is active. Home should be.
+7. **Minor: placeholder text.** "Item Title", "Short description goes here" and "User Name" are fine as placeholders. Label them as such for the developer, and add real sample content (e.g., "Cherokee Purple tomato — heirloom, saved 2025") so the layout gets tested against realistic lengths.
 
-**What works and should stay**
-- **Short, linear order.** One welcome, one browse section, one personal section is easy to build and easy to scan.
-- **Five tabs with Messages included.** Neighbor-to-neighbor arrangement is probably central, so a tab for it fits.
-- **An explicit empty state.** Most first specs forget it, and you included one.
+**What to keep**
+- **The order is right.** Orientation, then browsing, then personal status is a sensible home-screen flow.
+- **Three Featured cards is a good cap.** It keeps the screen scannable and gives the developer a clear limit.
+- **Giving the activity section an empty state at all.** Many specs forget this, and it's the first thing a new member will see.
 
-**Before handing over:** add a tap target and data source for every element, plus the missing states from finding 6. Replace the placeholders with real example content.
+**Fix order:** 1 → 2 → 3 (content that defines the product), then 5 (so the developer can build), then 4 and 6.
 
-Not checked: contrast, tap-target sizes and type, since there's no visual design yet.
+*Not checked: accessibility, because there's no visual design yet. Also not checked: whether the five tabs match your other screens, since I only saw Screen 3.*

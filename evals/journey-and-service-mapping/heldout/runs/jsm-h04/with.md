@@ -1,0 +1,1 @@
+Returns cost us twice: the refund, and often the customer's next purchase. Two weeks mapping every step, from what the customer sees to the work behind it, will show where cost, delay and handoff failures pile up, so we fix the expensive ones first instead of guessing. It isn't a design exercise. It's a cost audit that ends in a ranked list of fixes with estimated savings.

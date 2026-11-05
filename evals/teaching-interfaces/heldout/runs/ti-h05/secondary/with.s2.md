@@ -1,25 +1,21 @@
-The copy is mostly clear and already teaches the task. I'd change a few words and fix two real mismatches.
+**Screen 1, Add your first walk:** keep as is.
+> Pick a dog, a day and a time. That's all a walk needs.
 
-**Screen 1: Add your first walk**
-> Choose a dog, a day and a time. That's all a walk needs.
+**Screen 2, Add your walking area:**
+> Drag the circle over the area where you walk. We'll only offer you walks inside it.
 
-Only "Pick" → "Choose". The Dog highlight does the teaching.
+The circle is already placed, so "draw" sends people looking for a tool they don't need.
 
-**Screen 2: Add your walking area**
-> Drag the circle over the area you walk. We'll only offer you walks inside it.
+**Screen 3, You're ready:** use one of two versions, depending on whether they added a walk on screen 1.
 
-- **"Draw" → "Drag".** The circle is already placed, so people move it rather than draw it. "Draw" would send them looking for a drawing tool.
-- **"Where you walk" → "the area you walk".** This pairs with the title and avoids "where" reading as a question.
+- If they added a walk:
+  > Your first walk is on the calendar. Tap it to change or cancel.
+- If they tapped Skip on screen 1:
+  > Add your first walk from the calendar whenever you're ready.
 
-**Screen 3: You're ready**
-> Your first walk is on the calendar. Tap it any time to change or cancel.
+Button stays "Go to calendar". The Skip link stays the same on every screen.
 
-No change to the copy. Check the logic, though (see below).
+Two things to check before shipping:
 
-**Things to check before shipping**
-
-1. **Screen 3 claims a walk exists.** If someone taps Skip on screen 1, there is no walk on the calendar, and "Your first walk is on the calendar" is false. Either make screen 3's copy conditional on a walk being created, or route a skipped setup to an empty calendar with its own message.
-2. **"Skip" on screen 3 is probably unnecessary.** Nothing is left to skip once the walk exists. Removing it there avoids a confusing choice on the last screen.
-3. **Is the circle resizable?** Your copy only covers moving it. If people can't resize it and the default size is wrong for them, that's worth a look. If they can resize it, add "and resize it" to screen 2.
-
-Assumption: the walk from screen 1 is saved before screen 2 is shown. If it isn't, screen 3's line about the calendar needs changing.
+- **Skip on screen 1 makes the current screen 3 false.** The app needs to pass whether a walk exists so the right version shows. I assumed adding a walk from the calendar is how it works; confirm that.
+- **Skip on screen 2 needs a check.** "We'll only offer you walks inside it" implies no walks are offered without an area. If the app offers all walks when no area is set, that line is wrong on the skip path.

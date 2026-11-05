@@ -1,15 +1,24 @@
-The math checks out: $24.00 + $1.92 tax = $25.92, and 8% of $24 is $1.92. The problem is that each page is correct alone, but the flow loses information between steps. The cancellation policy is the biggest issue, and it's probably what's bothering the manager.
+The pages look correct one at a time, but the flow loses track of the booking between page 1 and the end. The customer never gets a clear summary of what they're paying for, and the confirmation doesn't restate it. The math checks out ($24.00 + 8% tax = $1.92, total $25.92, and Sat 14 Nov 2026 is a Saturday), so the problems are in what the flow shows and when.
 
-**1. The cancellation policy appears only after the customer has committed.** It's small print under "Complete purchase" on page 3. It's not on the search page, the details page, or the summary box, and there's no checkbox or acknowledgment. The confirmation page doesn't repeat it. A customer who books and then cancels can lose $25.92 under a rule they saw only as fine print at the moment of payment. That's the kind of thing that generates complaints and chargebacks, and it fits a "something feels off" reaction.
+**Most likely to bother the manager:**
 
-**2. No self-service cancellation.** Page 4 has only "Back to home." The 24-hour rule is enforced with no visible way to cancel, so the customer's only path is to call or email. Anyone who wants to cancel will have to ask staff, which is probably where the friction shows up.
+1. **The sport disappears after page 1.** The customer picks Tennis or Pickleball, but the result says only "Court 3, 18:00-19:00, $24." The payment summary and the confirmation never mention a sport. If Court 3 can be booked for either sport, or the filter doesn't carry through, nothing on the page tells the customer what they actually booked.
 
-**3. The price shown first excludes tax.** Page 1 says "$24." The $1.92 tax first appears on page 3. That's drip pricing: the advertised price is lower than what the customer pays.
+2. **The cancellation policy shows up too late and too quietly.** The 24-hour rule and the no-refund rule appear only in small print under "Complete purchase," with no checkbox or acknowledgment. The customer first sees them while paying. The deadline for this slot (Fri 13 Nov, 6:00 PM) is never stated, and the confirmation page doesn't mention the policy or how to cancel. Depending on where the club operates, a disclosure this easy to miss may not hold up.
 
-**4. The sport is never confirmed downstream.** Page 1 has a Tennis | Pickleball filter, but the result reads only "Court 3." Page 3's summary and page 4's confirmation don't name the sport. A customer could book the wrong court type and not notice until they arrive.
+3. **The confirmation is thin.** It gives a reservation number and says the receipt is "on its way to your inbox," but it doesn't show the court, date, time, name, guest count, or the email address it was sent to. If the customer mistyped their email on page 2, they won't find out until the receipt never arrives.
 
-**5. Guests are collected and then disappear.** Page 2 asks for 0–3 guests, but the price, summary, and confirmation don't mention guests. Maybe guests are free, but nothing in the flow says so, and if there's a per-guest fee or a court limit, the customer never sees it.
+**Other gaps:**
 
-**6. The confirmation is thin.** Page 4 gives a reservation number and says the email is "on its way," but it doesn't restate the court, date, time, or amount. It also doesn't say when the cancellation cutoff is. For a 6:00 PM slot, the cutoff is 6:00 PM the day before, which the customer has to work out themselves.
+4. **Guests are collected but go nowhere.** The guest count (0–3) has no price effect shown, and it doesn't appear in the summary or the confirmation. Either guests are free and nothing says so, or the count isn't stored.
 
-**What I'd check first:** Whether the cancellation terms appear anywhere before payment, whether the price on page 1 includes tax, and whether a cancel path exists outside this flow. Those three answers will tell you whether the issue is compliance, customer trust, or just clarity. Since I only have the pasted text, I can't see layout or whether the cancellation text is visually hidden, so verify it in the live flow. I can draft copy or a short spec for any of these fixes if that's useful.
+5. **The slot may not be held during checkout.** "Select" on page 1 doesn't mention a hold, and nothing is taken until page 3. If the slot isn't held, two people can be charged for the same court, or a customer who abandons checkout leaves the slot open. The text can't show whether a hold exists.
+
+6. **Minor:** times are written two ways ("18:00-19:00" on page 1, "6:00 PM to 7:00 PM" on page 3).
+
+**What I'd change:**
+- Add a review step before payment showing sport, court, date and time, guests, name, email, total, and the cancellation deadline, with a checkbox for the cancellation terms.
+- Have the confirmation repeat those details, state the email address the receipt went to, and say how to cancel.
+- Hold the slot from "Select" through payment, and release it if checkout is abandoned.
+
+I only had the text, so I couldn't check the layout, the backend, or the actual email. To settle items 1, 4, and 5, check whether the sport is stored with the booking, whether guests are charged, and whether the slot is locked during checkout.

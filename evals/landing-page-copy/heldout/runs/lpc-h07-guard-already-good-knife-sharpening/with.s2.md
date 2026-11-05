@@ -1,42 +1,36 @@
-The copy mostly works. The headline, the hand-on-water-stones detail, the price up front and the rice-grain line are all good, so I kept them. These are the real problems:
+**Plan:** Your draft already works. The hero says what it is and what to do, the price is up front, and the "can't do" section is honest. I kept the hero line, the three steps, the grain-of-rice line and the "tell you honestly" line. The changes are to fix a timing claim, pull pricing together, and add the ask at the end.
 
-1. **"Back at your door in about a week" is probably wrong.** Step 3 says 5 business days from when you receive the knives. Add the 2 to 3 days for the box and transit both ways, and the customer waits well over a week. Someone who expects a week and gets three will be annoyed. I changed the hero to the promise you can keep.
-2. **It doesn't say what the box costs.** The button says "Get a shipping box" and the price line doesn't mention it. Readers will wonder if it's free. I left a placeholder.
-3. **The serrated price is buried under "What we can't do".** It's a price, not a limit, so I moved it into a cost section. I also added a six-knife example using your numbers.
-4. **A few things are missing.** The copy doesn't say what happens if a knife is lost or damaged in transit, or what happens if someone sends more than six. Both are in placeholders.
+---
 
-## Copy deck
+**Mail us your knives. We mail them back sharp.**
 
-**Hero**
-# Mail us your knives. We mail them back sharp.
-Send up to six kitchen knives in the box we ship you. We sharpen each one by hand on water stones and ship them back within 5 business days of receiving them. $9 a knife, $12 flat for return shipping. No subscription.
-**[Get a shipping box]** [confirm: box is free / $X]
+Send up to six kitchen knives in the box we ship you. We sharpen each one by hand on water stones. $9 a knife, plus $12 flat for return shipping. No subscription.
+
+[Get a shipping box]
 
 **How it works**
 1. **Order a box.** It arrives in 2 to 3 days with a prepaid label inside.
 2. **Pack your knives** and drop the box at any carrier location.
-3. **We sharpen, wrap and ship back.** Turnaround is 5 business days from when we receive them.
-
-[Add total door-to-door estimate, e.g. "Most customers have their knives back in X weeks."]
+3. **We sharpen, wrap and ship back** within 5 business days of receiving them.
 
 **What it costs**
-- $9 per knife
-- $14 per serrated bread knife
-- $12 flat return shipping, however many knives you send
-- Example: six knives is $54 + $12 = $66.
+- Kitchen knives: $9 each
+- Serrated bread knives: $14 each
+- Return shipping: $12 flat, however many knives you send
 
-**What we can't fix**
-We don't repair chipped tips bigger than a grain of rice. If yours is chipped, email us a photo first and we'll tell you honestly whether it's worth it.
+Three knives is $39. Six is $66.
 
-[Add: what happens if a package is lost or damaged, and what to do with more than six knives.]
+**What we can't do**
+We don't repair chips bigger than a grain of rice. If yours is chipped, email us a photo first and we'll tell you honestly whether it's worth it.
 
 **What customers say**
-[Add two real customer quotes before launch]
+[add two real quotes before launch]
 
-**Ready?**
-**[Get a shipping box]**
+[Get a shipping box]
+
 Questions? hello@sharpmail.example
 
-Two notes for the handoff:
-- Tell the designer which placeholders are still open (box price, door-to-door time, transit damage, quotes). If the quotes aren't ready, drop that section rather than ship the bracket.
-- If "about a week" is what you tell customers today, check it against real orders before you decide which timeline to publish.
+---
+
+- **Timing:** Your draft says "back at your door in about a week", but the steps add up to more. That's 2 to 3 days for the box, then your transit time, then 5 business days of sharpening, then return transit. I dropped the "about a week" line, since a customer who counts the steps will catch it. If you want a headline timeline, count it from the day you receive their knives.
+- **Open questions I didn't fill in:** Is the box free, or is that part of the $12? If it costs anything, say so beside the button. Also, is there a guarantee if a knife comes back not sharp? If so, add it under pricing. If not, leave it out.

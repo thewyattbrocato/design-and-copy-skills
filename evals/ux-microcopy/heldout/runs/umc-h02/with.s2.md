@@ -1,23 +1,29 @@
-**Cancel screen: final step**
-
 **Heading**
-Cancel your Larkspur Meals subscription?
+Before you cancel, a offer to stay
 
-**Body**
-If you cancel, your last box ships [date], and you won't be charged after [date]. Your saved recipes and preferences stay in your account if you come back.
+**Subheading**
+Take 30% off your next 3 months, then your regular price returns.
 
 **Offer card**
-Stay and pay 30% less for 3 months
-Your weekly box stays the same. The discount applies automatically to your next 3 boxes, and the regular price returns after that.
+30% off for 3 months
+Applies to your next 3 weekly boxes' billing cycles. After that, you pay [regular price] per week. You can still skip, pause, or cancel anytime.
 
-**Buttons** (same size and weight, side by side)
-- Keep my plan with 30% off
-- Cancel subscription
+**Primary button**
+Get 30% off
 
-**After "Cancel subscription"** (confirmation screen)
-Your subscription is canceled.
-Your last box ships [date]. You won't be charged again. To restart, go to Account > Restart subscription.
+**Secondary button** (same size and weight as the primary)
+Cancel subscription
 
-**Notes**
-- I left out the "48,000 happy home cooks" line, the "Offer ends in 10:00" countdown, and the "I don't like good food" button. The first two are false claims. Fake scarcity and inflated numbers in a cancel flow are the kind of thing the FTC and state auto-renewal laws go after, and they also tend to backfire when someone notices. The shaming button is also manipulative. If you want social proof, "Join 3,000 home cooks" is true and still reads fine, but I didn't add it without your say-so.
-- If you want urgency, make a real deadline: for example, the offer is only valid for 7 days after someone starts canceling. Then show the actual date, such as "30% off if you stay by [date]".
+**Under the buttons**
+If you cancel, your last box is the one arriving [date]. You won't be charged after [date]. Your saved recipes and preferences stay in your account.
+
+**Optional: pause alternative** (show only if pausing exists, and only once)
+Need a break instead? Pause deliveries for up to [pause limit].
+
+**After clicking "Cancel subscription"** (confirmation toast or page)
+Your subscription is canceled. Your last box arrives [date], and you won't be charged again.
+
+I left out three things:
+- **"Join 48,000 happy home cooks."** The real number is about 3,000, so this would be a false claim to customers. If you want social proof, use a figure you can verify, like "[X] boxes delivered" or a real customer quote.
+- **The "Offer ends in 10:00" countdown.** The deal doesn't expire, so the timer would be fake urgency. It also puts you at risk under FTC rules on deceptive cancellation flows and click-to-cancel requirements. The offer works fine without it.
+- **"No thanks, I don't like good food" as a small grey button.** The shaming text and the buried, low-contrast cancel button make leaving harder. People who cancel through a flow like that tend to dispute charges and leave angry reviews. Equal-weight buttons keep the offer fair.

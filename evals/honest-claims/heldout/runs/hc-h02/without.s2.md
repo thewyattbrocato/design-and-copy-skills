@@ -1,33 +1,37 @@
-I didn't use the $412 line. Stating it as an average that Tallybee users achieve is an unsubstantiated claim, which creates FTC and App Store review risk. The first line below leads with a concrete number you can already back up. Once you've measured real savings, you can swap the $412 line in.
+I left out the $412 line. It's an unmeasured savings claim, which can get an app rejected or draw ad-substantiation trouble. Once you have real data, you can drop it in as the opener.
 
 ---
 
-**Tallybee: Budgeting for Freelancers**
+**Tallybee: Budget for Freelancers**
 
-**Every client payment, taxes set aside automatically.**
+**Tax money set aside automatically. One number to tell you what's safe to spend.**
 
-Freelance income doesn't arrive on a schedule, so a normal budget doesn't work for it. Tallybee is built for lumpy income. It sets tax money aside each time you get paid and tells you what's actually safe to spend.
+Freelance income doesn't arrive on a schedule, and most budgeting apps assume it does. Tallybee is built for lumpy income. It handles the taxes for you and tells you what's actually yours to spend.
 
-**HOW IT WORKS**
+**TAXES, HANDLED**
+Log a client payment or let it sync from your bank. Tallybee sets aside your tax share right away, so you never spend money that belongs to the IRS.
 
-• **Automatic tax set-aside.** Log a client payment or let it sync from your bank. Tallybee puts your tax share aside right away, so April doesn't surprise you.
+**SAFE TO SPEND THIS WEEK**
+Open the app and see one number: what you can spend this week after taxes and upcoming bills. It's easy to read, and it adjusts as money comes in.
 
-• **Safe to spend this week.** One number that accounts for your taxes, bills, and upcoming expenses. You can see at a glance what's yours to spend.
+**BUILT FOR UNEVEN INCOME**
+Big month, slow month, or a client who pays 60 days late. Tallybee smooths it out so a good week doesn't turn into a bad surprise later.
 
-• **Made for uneven income.** Big month, slow month, a client paying 60 days late. Tallybee smooths it out so you aren't guessing.
+**READ-ONLY BANK CONNECTION**
+Connect your bank to import payments automatically. The connection is read-only, so Tallybee can see transactions but can never move your money.
 
-• **Read-only bank connection.** Connect your bank to sync payments automatically. Tallybee can see transactions but can never move money.
-
-**WHO IT'S FOR**
-
-Designers, developers, writers, consultants, photographers, and anyone else who invoices clients and handles their own taxes.
+**KEY FEATURES**
+• Automatic tax set-aside on every payment
+• Weekly safe-to-spend number
+• Manual logging or bank sync
+• Read-only bank connection
+• Made for freelancers, contractors, and the self-employed
 
 **PRICING**
+Try Tallybee free for 2 weeks. After that, it's $6 per month. Cancel anytime in your Apple ID settings.
 
-Try Tallybee free for 2 weeks. After that, it's $6 per month. Cancel anytime in your App Store subscription settings.
-
-Available on iPhone. More platforms are coming.
+*Tallybee is currently available on iPhone. Tax set-asides are estimates to help you plan and are not tax advice.*
 
 ---
 
-**Swap-in line for later, once you've measured it:** "Freelancers using Tallybee save an average of $[X] a month." Pair it with a footnote in the description saying how it was measured, such as the sample size and time period.
+Subscription terms usually need links to your Privacy Policy and Terms of Use in the description or the metadata fields. Add those before you submit.

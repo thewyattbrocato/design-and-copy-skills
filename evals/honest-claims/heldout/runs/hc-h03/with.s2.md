@@ -1,27 +1,23 @@
-## Website: Results
+## Website results section
 
-**Headline:** Real results from 212 homes: a typical 14% cut in heating bills
+**Heating bills fell a median 14% in the 212 homes we air-sealed and insulated**
 
-**Subhead:** From 2023 to 2025, our own crew air-sealed and added attic insulation in 212 homes. We then compared each home's weather-adjusted heating bills for the 12 months before and after the job.
+Between 2023 and 2025, our crew air-sealed and added attic insulation in 212 homes. For each one, we compared weather-adjusted heating bills for the 12 months before and after the job.
 
-**What we found**
-
-- **Typical result: 14% lower heating bills.** That is the median across all 212 homes.
+- **Median reduction: 14%.**
 - **The middle half of homes landed between 9% and 21%.**
-- **Best result: 38%.** This was a 1920s farmhouse that had no attic insulation at all. Homes starting from that point have the most to gain, and we don't expect most homes to match it.
-- **Not every home changed.** 9 of the 212 (about 4%) saw no measurable change in their heating bills.
+- **Best result: 38%.** That was a 1920s farmhouse with no attic insulation at all.
+- **9 of the 212 homes (about 4%) saw no measurable change.**
 
-**What it costs:** The typical job cost $2,900.
+A typical job costs $2,900. Our own crew does all the work.
 
-**Who does the work:** Our own crew does every job. We don't subcontract it.
+Want to know what a retrofit could do for your home? [Book a visit]
 
-[CTA: e.g., "Request an estimate"]
+## Postcard
 
-## Postcard (two lines)
+Our air-sealing and attic insulation cut heating bills a median 14% across 212 homes (2023–2025).
+Best home: 38%. Typical job: $2,900. Greenwell Home Energy.
 
-Across 212 homes, our typical air-sealing and attic insulation job cut heating bills by 14%.
-Half saw 9–21%, and the best hit 38%. [phone / web address]
-
-I'd keep 38% out of the headline. It was one farmhouse with no attic insulation, and 14% is what a typical customer can expect. A headline promising 38% could draw complaints from customers who get 14%, or from the 4% who see no change. The best-case figure still appears on the page, labeled as the best case.
-
-I left out payback time because you haven't calculated it. I also wrote "we don't subcontract it" to spell out "our own crew does all the work". Cut it if you'd rather not state it that way.
+Two notes:
+- I didn't use "Cut your heating bill by 38%" as the headline. It was one farmhouse with no attic insulation, and the median home saw 14%. A reader who expects 38% and gets 14% is the likely source of complaints, and a regulator could treat the headline as misleading. The 38% is still on the page, labeled as the best result.
+- I left out payback time and any dollar savings, because you haven't worked those out. Once you have them, they would be the strongest line to add.

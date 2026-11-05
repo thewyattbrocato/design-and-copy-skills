@@ -1,20 +1,18 @@
-Here's the copy.
-
 ## Hero
 
 **Headline:** Make something with your hands.
+**Subhead:** A 4-week beginner pottery course at Kilnside Studio on Alder Street. No experience needed.
+**CTA button:** Reserve your spot
+**Small line under the button:** Next classes start 4 and 6 November. Max 6 students per class.
 
-**Subhead:** A four-week beginner pottery course at Kilnside Studio on Alder Street. No experience needed. Next classes start 4 and 6 November.
+## Intro (3 bullets)
 
-**Button:** Reserve your spot
+- **Start from zero.** No experience needed. Come one evening a week for four weeks, Tuesdays or Thursdays, 6:30 to 9:00pm.
+- **Everything's included.** $180 covers your clay, glazing and firing fees, so there are no extras to buy.
+- **Take your pieces home.** With a maximum of 6 students, you get room to work. After the last week, your finished pieces go home with you.
 
-## Intro bullets
+## Things to check
 
-- **Four evenings, start to finish.** One class a week for four weeks, Tuesdays or Thursdays, 6:30 to 9:00pm.
-- **$180, everything included.** Clay, glazing, and firing fees are all covered.
-- **Small classes, pieces you keep.** There are never more than 6 students, and you take your finished work home after the last week.
-
-## Check before publishing
-
-- **Dates and weekdays:** In 2026, 4 November is a Wednesday and 6 November is a Friday, but the course runs Tuesdays and Thursdays. Check whether the start dates should be 3 and 5 November, or whether the class days are different.
-- **Button link:** I don't know how people sign up (form, email, booking tool), so "Reserve your spot" needs a destination. If sign-up isn't online yet, change it to something like "Email us to book".
+- **Dates:** In 2026, 4 November is a Wednesday and 6 November is a Friday, which doesn't match "Tuesdays or Thursdays." (In 2025 they were a Tuesday and a Thursday.) I left weekdays off the dates. Please confirm the dates or the days before this goes live.
+- **CTA:** I don't have a booking link or contact method. "Reserve your spot" assumes there's one, so swap the wording if people need to email or call instead.
+- **Headline:** It's a placeholder in a warm, plain tone. If you'd rather lead with the offer, "Learn pottery in four weeks" works too.

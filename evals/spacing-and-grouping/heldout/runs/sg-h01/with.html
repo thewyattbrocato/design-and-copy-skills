@@ -3,40 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Palabra · Profile settings</title>
+<title>Palabra – Profile settings</title>
 <style>
   :root {
-    --s1: 4px;
-    --s2: 8px;
-    --s3: 12px;
-    --s4: 16px;
-    --s5: 24px;
-    --s6: 32px;
-    --s7: 48px;
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
     --bg: #f6f4ef;
     --surface: #ffffff;
-    --ink: #1f2a2e;
-    --muted: #5d6a6f;
-    --line: #e3e0d8;
-    --accent: #0f6b5c;
+    --ink: #1f2430;
+    --muted: #626a79;
+    --line: #e4e1d9;
+    --accent: #c2410c;
     --accent-ink: #ffffff;
+    --accent-soft: #fdeee6;
     --danger: #b42318;
-    --danger-bg: #fdf1ef;
-    --focus: #1d5fd1;
+    --danger-soft: #fdf1f0;
+    --focus: #1d4ed8;
     --radius: 10px;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #141a1c;
-      --surface: #1c2427;
-      --ink: #eef2f2;
-      --muted: #9aa8ad;
-      --line: #2c373b;
-      --accent: #3fb59f;
-      --accent-ink: #0b1a17;
-      --danger: #ff8a7a;
-      --danger-bg: #2a1a18;
-      --focus: #7fb0ff;
+      --bg: #15171c; --surface: #1d2027; --ink: #eef0f4; --muted: #a0a7b5;
+      --line: #2e323c; --accent: #f08a5d; --accent-ink: #1a1208;
+      --accent-soft: #3a261b; --danger: #ff8a80; --danger-soft: #2f1c1b; --focus: #8ab4ff;
     }
   }
   * { box-sizing: border-box; }
@@ -47,105 +35,70 @@
     font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     padding: clamp(var(--s4), 5vw, var(--s7)) var(--s4);
   }
-  .panel {
-    max-width: 560px;
-    margin: 0 auto;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: clamp(var(--s5), 5vw, var(--s6));
-  }
+  main { max-width: 560px; margin: 0 auto; }
   header { margin-bottom: var(--s6); }
-  .brand {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 var(--s1);
-  }
-  h1 { font-size: 26px; line-height: 1.2; margin: 0 0 var(--s2); }
+  .brand { font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 var(--s1); }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 var(--s1); }
   header p { margin: 0; color: var(--muted); }
 
   form { display: flex; flex-direction: column; gap: var(--s7); }
   section { display: flex; flex-direction: column; gap: var(--s5); }
-  h2 { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
-  .fields { display: flex; flex-direction: column; gap: var(--s5); }
+  h2 { font-size: 18px; line-height: 1.3; margin: 0; padding-bottom: var(--s3); border-bottom: 1px solid var(--line); }
 
   .field { display: flex; flex-direction: column; gap: var(--s2); }
   label, .label { font-weight: 600; font-size: 15px; }
   .hint { color: var(--muted); font-size: 14px; margin: 0; }
-
-  input[type="text"], input[type="time"], select {
-    width: 100%;
-    min-height: 44px;
-    padding: var(--s2) var(--s3);
-    font: inherit;
-    color: var(--ink);
+  input[type=text], input[type=time], select {
+    font: inherit; color: var(--ink);
+    width: 100%; min-height: 44px;
+    padding: var(--s2) var(--s4);
     background: var(--surface);
-    border: 1px solid #aab4b7;
-    border-radius: 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
   }
-  select { appearance: none; padding-right: 40px;
+  input:hover, select:hover { border-color: var(--muted); }
+  select { appearance: none; padding-right: var(--s7);
     background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
-    background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+    background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%;
     background-size: 6px 6px; background-repeat: no-repeat; }
-  input:focus-visible, select:focus-visible, button:focus-visible, .switch input:focus-visible + .track {
-    outline: 3px solid var(--focus);
-    outline-offset: 2px;
-  }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
-  @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+  input[type=time] { max-width: 180px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
-  .toggles { display: flex; flex-direction: column; }
-  .toggle {
-    display: flex; align-items: center; justify-content: space-between; gap: var(--s4);
-    padding: var(--s4) 0;
-    border-top: 1px solid var(--line);
-  }
-  .toggle:last-child { border-bottom: 1px solid var(--line); }
-  .toggle .text { display: flex; flex-direction: column; gap: var(--s1); }
-  .toggle .text span:first-child { font-weight: 600; font-size: 15px; }
-  .toggle .text span:last-child { color: var(--muted); font-size: 14px; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s5); }
+  .row + .row { padding-top: var(--s5); border-top: 1px solid var(--line); }
+  .toggles { display: flex; flex-direction: column; gap: var(--s5); }
+  .row .text { display: flex; flex-direction: column; gap: var(--s1); }
+  .row .text .label { cursor: pointer; }
+
   .switch { position: relative; flex: none; width: 52px; height: 32px; }
   .switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
-  .track { position: absolute; inset: 0; background: #98a4a8; border-radius: 16px; transition: background .15s; }
-  .track::after {
-    content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px;
-    background: #fff; border-radius: 50%; transition: transform .15s;
-    box-shadow: 0 1px 2px rgba(0,0,0,.3);
-  }
+  .track { position: absolute; inset: 0; border-radius: 16px; background: var(--line); transition: background .15s; }
+  .track::after { content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: transform .15s; }
   .switch input:checked + .track { background: var(--accent); }
   .switch input:checked + .track::after { transform: translateX(20px); }
-  @media (prefers-reduced-motion: reduce) { .track, .track::after { transition: none; } }
+  .switch input:focus-visible + .track { outline: 3px solid var(--focus); outline-offset: 2px; }
 
   .actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--s4); }
-  .status { color: var(--accent); font-size: 14px; font-weight: 600; margin-right: auto; }
-  button {
-    font: inherit; font-weight: 600; min-height: 44px;
-    padding: var(--s3) var(--s6);
-    border-radius: 8px; border: 1px solid transparent; cursor: pointer;
-  }
-  .save { background: var(--accent); color: var(--accent-ink); }
-  .save:hover { filter: brightness(1.08); }
+  .status { color: var(--muted); font-size: 14px; margin-right: auto; }
+  button { font: inherit; font-weight: 600; min-height: 44px; padding: var(--s2) var(--s5); border-radius: var(--radius); cursor: pointer; }
+  .primary { background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); }
+  .primary:hover { filter: brightness(.94); }
 
-  .danger {
-    background: var(--danger-bg);
-    border-radius: var(--radius);
-    padding: var(--s5);
-    display: flex; flex-direction: column; gap: var(--s4);
+  .danger { background: var(--danger-soft); border-radius: var(--radius); padding: var(--s5); display: flex; flex-direction: column; gap: var(--s4); }
+  .danger h2 { color: var(--danger); border: 0; padding: 0; }
+  .danger p { margin: 0; color: var(--muted); }
+  .danger-btn { align-self: flex-start; background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+  .danger-btn:hover { background: var(--danger); color: var(--surface); }
+
+  @media (max-width: 480px) {
+    .row { align-items: flex-start; }
+    .actions { flex-direction: column-reverse; align-items: stretch; }
+    .status { margin: 0; text-align: center; }
   }
-  .danger h2 { color: var(--danger); }
-  .danger p { margin: 0; font-size: 14px; color: var(--ink); }
-  .delete {
-    align-self: flex-start;
-    background: transparent; color: var(--danger); border-color: var(--danger);
-  }
-  .delete:hover { background: var(--danger); color: var(--surface); }
 </style>
 </head>
 <body>
-<main class="panel">
+<main>
   <header>
     <p class="brand">Palabra</p>
     <h1>Profile settings</h1>
@@ -155,87 +108,76 @@
   <form id="settings" novalidate>
     <section aria-labelledby="h-profile">
       <h2 id="h-profile">Profile</h2>
-      <div class="fields">
-        <div class="field">
-          <label for="name">Display name</label>
-          <input id="name" type="text" value="Alex Rivera" maxlength="40" autocomplete="nickname">
-          <p class="hint">Shown on leaderboards and to friends.</p>
+      <div class="field">
+        <label for="name">Display name</label>
+        <input type="text" id="name" name="name" value="Alex Rivera" maxlength="40" autocomplete="nickname">
+      </div>
+      <div class="field">
+        <label for="native">Native language</label>
+        <input type="text" id="native" name="native" value="English" autocomplete="off">
+        <p class="hint">We use this to explain new words and grammar.</p>
+      </div>
+      <div class="field">
+        <label for="goal">Learning goal</label>
+        <select id="goal" name="goal">
+          <option>Travel and conversation</option>
+          <option>Work and business</option>
+          <option selected>Connect with family and friends</option>
+          <option>Study or exams</option>
+          <option>Just for fun</option>
+        </select>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-notify">
+      <h2 id="h-notify">Reminders and sounds</h2>
+      <div class="field">
+        <label for="time">Daily reminder time</label>
+        <input type="time" id="time" name="time" value="19:30">
+        <p class="hint">A gentle nudge to practice once a day.</p>
+      </div>
+      <div class="toggles">
+        <div class="row">
+          <div class="text">
+            <label class="label" for="sfx">Sound effects</label>
+            <p class="hint">Play chimes for correct and incorrect answers.</p>
+          </div>
+          <span class="switch"><input type="checkbox" id="sfx" role="switch" checked><span class="track" aria-hidden="true"></span></span>
         </div>
-        <div class="row2">
-          <div class="field">
-            <label for="native">Native language</label>
-            <select id="native">
-              <option>English</option>
-              <option>Spanish</option>
-              <option>French</option>
-              <option>German</option>
-              <option>Portuguese</option>
-              <option>Mandarin</option>
-              <option>Japanese</option>
-            </select>
+        <div class="row">
+          <div class="text">
+            <label class="label" for="emails">Streak emails</label>
+            <p class="hint">Get an email when your streak is about to break.</p>
           </div>
-          <div class="field">
-            <label for="goal">Learning goal</label>
-            <select id="goal">
-              <option>Travel and conversation</option>
-              <option selected>Connect with family</option>
-              <option>Career and work</option>
-              <option>School or exam prep</option>
-              <option>Just for fun</option>
-            </select>
-          </div>
+          <span class="switch"><input type="checkbox" id="emails" role="switch"><span class="track" aria-hidden="true"></span></span>
         </div>
       </div>
     </section>
 
-    <section aria-labelledby="h-prefs">
-      <h2 id="h-prefs">Practice and notifications</h2>
-      <div class="field">
-        <label for="time">Daily reminder time</label>
-        <input id="time" type="time" value="19:30" style="max-width:200px">
-      </div>
-      <div class="toggles">
-        <div class="toggle">
-          <div class="text">
-            <span id="t-sound">Sound effects</span>
-            <span>Play chimes for correct answers and lesson completion.</span>
-          </div>
-          <div class="switch"><input type="checkbox" aria-labelledby="t-sound" checked><span class="track"></span></div>
-        </div>
-        <div class="toggle">
-          <div class="text">
-            <span id="t-mail">Streak emails</span>
-            <span>Get a note when your streak is about to end.</span>
-          </div>
-          <div class="switch"><input type="checkbox" aria-labelledby="t-mail" checked><span class="track"></span></div>
-        </div>
-      </div>
+    <section class="danger" aria-labelledby="h-delete">
+      <h2 id="h-delete">Delete account</h2>
+      <p>Permanently remove your account, progress, and streak. This can't be undone.</p>
+      <button type="button" class="danger-btn" id="delete">Delete account…</button>
     </section>
 
     <div class="actions">
-      <span class="status" id="status" role="status"></span>
-      <button type="submit" class="save">Save</button>
+      <span class="status" id="status" role="status" aria-live="polite"></span>
+      <button type="submit" class="primary">Save</button>
     </div>
-
-    <section class="danger" aria-labelledby="h-danger">
-      <h2 id="h-danger">Delete account</h2>
-      <p>This permanently removes your profile, progress, and streak. It can't be undone.</p>
-      <button type="button" class="delete" id="delete">Delete account</button>
-    </section>
   </form>
 </main>
-
 <script>
   document.getElementById('settings').addEventListener('submit', function (e) {
     e.preventDefault();
-    var s = document.getElementById('status');
-    s.textContent = 'Settings saved';
-    setTimeout(function () { s.textContent = ''; }, 3000);
+    document.getElementById('status').textContent = 'Settings saved.';
   });
   document.getElementById('delete').addEventListener('click', function () {
     if (confirm('Delete your Palabra account? This cannot be undone.')) {
-      alert('Account deletion requested.');
+      document.getElementById('status').textContent = 'Account deletion requested.';
     }
+  });
+  document.getElementById('settings').addEventListener('input', function () {
+    document.getElementById('status').textContent = '';
   });
 </script>
 </body>

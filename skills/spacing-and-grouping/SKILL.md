@@ -29,7 +29,7 @@ Space is how a layout says what belongs together. Left to defaults, models pad e
 
 Scale this to the task. A single component gets steps 1, 2, 4 and 8; a full page gets all of them.
 
-1. **Map relationships before picking numbers.** List which items form a unit, which units are siblings, and which must be pushed apart. A caption belongs to its photo, a photo to its story, a story to the page. Write the map down, even as a few lines, then choose values.
+1. **Map relationships before picking numbers.** List which items form a unit, which units are siblings, and which must be pushed apart. A caption belongs to its photo, a photo to its story, a story to the page. Write the map down as a tree of nesting levels, then give each level one scale step and reuse a few fixed rules (see the level-map reference).
 2. **Make within clearly smaller than between.** Space inside a group is about half of the space between groups, or less. More space above a heading than below it, about two to one; never equal.
 3. **Use a small scale.** Five to eight steps cover most products. Build them from a base unit or from the body line height (see the scale reference). Every gap and padding comes from the scale; no 13s, 22s, or 37s.
 4. **Step outward.** Space grows with the size of what it separates: letters, words, lines, paragraphs, groups, sections, page margins. A gap between columns stays smaller than the outer margin around them.
@@ -65,6 +65,7 @@ Scale this to the task. A single component gets steps 1, 2, 4 and 8; a full page
 - Field far from its label, list items spaced like sections → tighten within, widen between.
 - Gaps between cards smaller than the card padding, so cards blur into one mass → gap at least as large as the padding, or separate with a surface.
 - Rows of tappable items with no gap → add space between the targets.
+- A status pill or tag styled like the button beside it, so people press it → restyle the static item (rounded or borderless, tinted, status color); spacing will not fix it.
 - Compact mode made by shrinking everything equally, so groups merge → shrink steps, keep the ratio.
 - A written answer that runs past a length limit the user gave → keep to it; cut material before the limit.
 
@@ -84,4 +85,5 @@ Scale this to the task. A single component gets steps 1, 2, 4 and 8; a full page
 - [references/spacing-scale.md](references/spacing-scale.md): load when choosing or auditing values, building a scale from a base unit or the line height, naming steps, or writing custom properties.
 - [references/grouping-devices.md](references/grouping-devices.md): load when deciding between space, rules, tints, and cards, handling nested surfaces, or dividing lists.
 - [references/component-spacing.md](references/component-spacing.md): load when padding buttons, inputs, lists, tables, cards, bars, and dialogs, or setting touch spacing.
+- [references/level-map-and-lookalikes.md](references/level-map-and-lookalikes.md): load when assigning gaps across nested groups, when every gap is the same and the page looks squashed, when boxes are to be removed, or when a static tag sits beside a control.
 - [references/density.md](references/density.md): load for dense tools, compact and comfortable modes, or any request to fit more rows on screen.

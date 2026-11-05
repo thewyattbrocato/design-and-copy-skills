@@ -1,24 +1,29 @@
-Not as written. I'd change three things.
+**Not as planned.** The offer and the Saturday send are fine. The list and the test are the problems.
 
-**1. Don't send to all 6,400 equally.**
-- **Newsletter (2,100):** These people asked for your emails, so they're the right audience. Send to them first.
-- **2022 giveaway (3,900):** This is the risky group. They entered a giveaway and never chose marketing email, and it has been about four years. Expect bounces, dead addresses and spam complaints. Complaints and spam-trap hits hurt delivery for your good subscribers too. Whether you can legally email them depends on where you and they are, so check that before sending.
-  - Safer approach: send a short "still want hot sauce news from us?" email to a small slice, say 500. Watch bounces and complaints.
-  - Give the offer to people who click or reply. Don't send the offer to everyone in the group at once.
-- **Wholesale (400):** Leave them out of this send. A 25%-off-everything retail blast could undercut your wholesale pricing and annoy accounts that resell your sauce. Send them their own note if you want to.
+**1. Don't blast the 3,900 giveaway emails.**
+- They entered a contest in 2022. They never asked for marketing, and the addresses are four years old.
+- Expect lots of bounces, dead addresses and spam complaints. That's 60% of your list, so it can hurt inbox placement for the people who do want your emails.
+- Consent rules for contest entries vary by place, so check yours.
+- Instead, send them one plain re-permission email: "You entered our 2022 giveaway. Want hot sauce news and deals? Click to stay on." Only keep the people who click. If you do send them the sale, send a small batch first and watch bounces and complaints before sending more.
 
-**2. Six subject lines is too many.** Even if all 2,100 newsletter subscribers received the test, each line would reach only about 350 people. Differences of a few points would be noise.
-- Test two subject lines, about 1,050 each, and change only one thing between them (for example, the discount stated versus a product-led line).
-- Judge them on clicks and orders, not opens. Apple's mail privacy features inflate open rates.
-- Keep subjects around 40 characters so they survive phone inboxes. For example: "25% off all hot sauce, through [date]". Put the details in the preview text and don't repeat the subject there.
+**2. Pull the 400 wholesale customers out.**
+- 25% off everything may undercut their wholesale pricing, or make them feel they overpaid.
+- Send them a separate note, or nothing.
 
-**3. Make the deadline real.** 25% off everything is a clear offer. State the actual end date in the email, and don't say "last chance" unless it truly is. Also check that the margin works on your lowest-margin items.
+**3. Don't test six subject lines.**
+- The list that should get this is your 2,100 subscribers, plus any wholesale or giveaway people who opt in. Six variants on 2,100 is about 350 per variant, which is too few to tell a real winner from noise.
+- Open rates are also unreliable now because of mail-app privacy features. Judge variants on clicks and orders.
+- Test two subject lines, with one difference between them (for example "25% off everything" against "25% off, this weekend only", but only if the end date is real). Use the winner as your template for future sends.
+- Keep the preview text different from the subject. It should carry the end date or the code.
 
-**Saturday morning is fine.** Compare it against open and click times from your past sends if you have them.
+**4. Check the timing and the discount.**
+- Saturday, Oct 31 is Halloween. A hot-sauce angle might work, but plenty of people will be busy.
+- If you plan a Black Friday sale, a 25% sale a few weeks earlier teaches subscribers to wait for discounts. Decide which one is your big sale.
+- Give the sale a real end date, and don't use "last chance" unless the end is real.
 
-**Suggested sequence**
-1. **Saturday:** Send the offer to the 2,100 newsletter subscribers with a two-way subject test.
-2. **Same weekend:** Send the re-permission email to a 500-person slice of the giveaway group and check bounces and complaints.
-3. **Next week:** Send the offer to the giveaway contacts who engaged. If the slice looked healthy, widen it gradually.
+**Suggested sequence:**
+1. Send to the 2,100 subscribers with a two-way subject test.
+2. Send the giveaway re-permission email separately.
+3. Send the sale to the giveaway people who opt in.
 
-If you'd like, I can draft the offer email, the two subject lines with preview text, or the re-permission note.
+One more thing: make sure the unsubscribe link works, because it's the cheapest protection for your sender reputation.

@@ -1,33 +1,32 @@
-**Subject:** 212 families were turned away last January. The match ends December 31.
+**Subject:** Your gift is doubled until midnight, December 31. Only $18,600 of the match is left.
 
-Friends,
+Dear Friend,
 
-Last January, our shelves ran empty, and we had to turn 212 families away at our door. Parents came in hoping to feed their kids. Grandparents had already skipped their own meals so the children in their homes could eat. We had to tell them, "Not today."
+Last January, we had to turn 212 families away from our doors. Their shelves were empty, and so were ours. We had no food to give them. Some of those families came back hungry the next week. Some never came back, and we still wonder where they went.
 
-I haven't stopped thinking about those families, and I don't expect you have either.
+That should not happen again. This year, it doesn't have to.
 
-Right now, a local foundation is matching every donation to Eastgate Pantry Network dollar for dollar, up to $25,000. Every gift you make this year can be doubled. But the match closes at **11:59 pm on December 31**, and it will not wait for us.
+Right now, a local foundation is matching every donation dollar for dollar, up to $25,000. Until December 31 at 11:59 pm, every dollar you give is doubled. So far, $6,400 of that match has been claimed. **$18,600 is still waiting.** Once it's gone, it's gone, and the families who need us most will be the ones who pay for it.
 
-So far, **$6,400** of that $25,000 has been claimed. That leaves **$18,600** in matching funds still available. Once the deadline passes, that money is gone, and it will not reach the families who need it.
+Here is what your gift does. Every $1 buys about 4 meals at our purchasing prices. A $50 gift becomes $100 with the match, which means about 400 meals on the shelves of families who have nothing else. A $100 gift becomes $200 and about 800 meals.
 
-Here is what your gift does. At our purchasing prices, every $1 buys about 4 meals. With the match, **a $50 gift becomes $100, which is roughly 400 meals** for families who were turned away last year.
+Think about who is on the other side of that math: a parent who skipped dinner so the kids could eat, a grandmother stretching a fixed income until the end of the month, a family that has never asked for help before and is scared to ask now. They are not statistics. They are our neighbors, and they are counting on us.
 
-[Optional: insert a short, consented story from a family you served.]
-
-Please give now. Don't wait for the holidays, for a bonus, or for someone else to fill the gap. Last January, we ran out. This January, we don't want to be in that position again.
+We can't close the gap alone, and we don't have to. The match is in place. The only question left is whether we fill it before the deadline.
 
 **[DONATE LINK]**
 
-With gratitude, and with urgency,
+Give now, while your gift counts twice. Please don't wait until the last night. Make your gift today, and let the people who need it know someone is still showing up for them.
+
+With gratitude and urgency,
 
 Marguerite Holt
-Executive Director, Eastgate Pantry Network
-
-P.S. The match closes at 11:59 pm on December 31. Give before then, and your gift counts twice.
+Executive Director
+Eastgate Pantry Network
 
 ---
 
-**Before you send:**
-- **The meal math is derived, not from your data.** I multiplied your figures: $1 × 2 (match) × 4 meals = 8 meals per dollar, so $50 → $100 → 400 meals. Confirm the foundation matches the donor's gift one-to-one and that the 4-meals figure holds at the time of sending.
-- **Update the $6,400 figure** on the day you send. It's the number that creates urgency, so it should be current.
-- **The story placeholder is intentionally empty.** A real, consented account from a family you served will do more than any sentence I can write. I didn't invent one.
+**Notes for you:**
+- **Match math:** I read the $6,400 as match dollars already claimed, so $18,600 remains. If the $6,400 means something else (for example, donations rather than match used), change the "$18,600" line and the example figures. Worth confirming with the foundation before sending.
+- **The 212 families and the "came back" / "never came back" lines:** these are emotional extrapolations, not reported facts. If you have a real account from January, swap it in. It will land harder than anything I can invent, and I'd avoid publishing details you haven't confirmed with the families involved.
+- **Deadline:** today is October 28, so the email says "until December 31" rather than implying hours are left. If you send it closer to the deadline, add a countdown line.

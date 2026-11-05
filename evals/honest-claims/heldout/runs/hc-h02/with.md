@@ -1,25 +1,28 @@
-Tallybee: Know what's safe to spend, even when income isn't steady.
+**Tallybee: Know what's safe to spend, even when income is lumpy.**
 
-Freelance income arrives in lumps, and so do the tax bills. Tallybee sets tax money aside from every client payment, then shows what's left that you can spend this week.
+Freelance money doesn't arrive on a schedule, and some of every payment belongs to the tax office. Tallybee sets that part aside for you, so you can see what's actually yours.
 
 **TAX MONEY, SET ASIDE AUTOMATICALLY**
-Log a client payment or sync it from your bank, and Tallybee puts your tax share aside right away. When the quarterly bill comes, the money is already there.
+Log a client payment or sync it from your bank. Tallybee puts your tax share aside right away, so April doesn't ambush you.
 
 **A "SAFE TO SPEND THIS WEEK" NUMBER**
-One number answers whether you can afford something right now. It accounts for your tax set-aside and your upcoming bills, so a big payment last Tuesday doesn't trick you into overspending.
+One number that accounts for your tax set-aside, your bills, and the uneven way your income shows up. Check it before you buy the thing, not after.
 
 **BUILT FOR LUMPY INCOME**
-Tallybee doesn't assume a steady monthly paycheck. It's made for months with three invoices, and for months with none.
+Big invoice in March, nothing in April? Tallybee is made for that rhythm, not for a steady paycheck.
 
-**CONNECTS TO YOUR BANK, READ-ONLY**
-Link your bank account to bring in payments automatically. Tallybee can see your transactions, but it can't move your money.
+**READ-ONLY BANK CONNECTION**
+Connect your bank to sync payments automatically. The connection is read-only, so Tallybee can see your transactions but can't move your money.
+
+**HOW IT WORKS**
+1. Log or sync a client payment.
+2. Tallybee sets aside your tax share.
+3. You see what's safe to spend this week.
 
 **PRICING**
 Free for your first two weeks, then $6 a month.
 
-Tallybee is available on iPhone. Android isn't available yet.
+**AVAILABILITY**
+Tallybee is for iPhone (iOS) only for now.
 
----
-Two notes:
-- I left out the "$412 a month" line. You haven't measured it, and an invented savings figure in an App Store listing could draw a complaint or a rejection. Once you have real data, add it back with its basis, for example "Beta users saved an average of $X a month (n=…, [date])".
-- The "upcoming bills" detail in the safe-to-spend section is my assumption. Cut it if the number only reflects tax set-aside and income.
+Note: I left out the "$412 a month" line because it's an unmeasured estimate, and an App Store listing would present it as a fact about real users. Once you have real user data, you can put the measured figure in the first line, with its basis (for example, "among beta users over 3 months").

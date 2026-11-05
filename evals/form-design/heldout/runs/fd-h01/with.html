@@ -6,453 +6,405 @@
 <title>Book a kayak – Saltmarsh Paddle Co.</title>
 <style>
   :root {
-    --ink: #1c2b2d;
-    --muted: #4d6064;
-    --bg: #f3f6f4;
-    --card: #ffffff;
-    --line: #9fb1b3;
-    --brand: #14606b;
-    --brand-dark: #0d4650;
-    --err: #a4261b;
-    --err-bg: #fdf0ee;
-    --ok-bg: #e8f3ee;
+    --bg: #f3f6f4; --card: #ffffff; --ink: #14272b; --muted: #4d6266;
+    --line: #9db0b3; --brand: #0d5c63; --brand-ink: #ffffff; --brand-dark: #08444a;
+    --err: #a4161a; --err-bg: #fdecec; --ok-bg: #e6f3ee; --focus: #1a6fd1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1a1c; --card: #16272a; --ink: #e8f1f0; --muted: #a6bcbe;
+      --line: #5d7679; --brand: #5cc2c9; --brand-ink: #06262a; --brand-dark: #8fdce1;
+      --err: #ff9b9b; --err-bg: #3a1c1e; --ok-bg: #173529; --focus: #8bbcff;
+    }
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   main { max-width: 36rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
-  .brand { font-size: .95rem; color: var(--muted); margin: 0 0 .25rem; letter-spacing: .02em; }
-  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .5rem; }
-  .intro { margin: 0 0 1.5rem; color: var(--muted); }
-  form, .panel {
-    background: var(--card);
-    border-radius: 12px;
-    padding: 1.25rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,.12);
-  }
-  fieldset { border: 0; margin: 0 0 1.75rem; padding: 0; min-width: 0; }
-  legend, label.lbl { display: block; font-weight: 600; margin: 0 0 .25rem; padding: 0; }
-  .hint { display: block; color: var(--muted); font-size: .95rem; margin: 0 0 .4rem; }
+  header p { margin: 0; color: var(--muted); }
+  h1 { font-size: 1.75rem; line-height: 1.2; margin: 0.25rem 0 0.5rem; }
+  .brand { font-weight: 700; color: var(--brand); letter-spacing: .02em; font-size: .95rem; text-transform: uppercase; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem; margin-top: 1.25rem; }
+  .prices { display: flex; gap: .5rem 1.5rem; flex-wrap: wrap; margin: .75rem 0 0; padding: 0; list-style: none; font-weight: 600; }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  legend { padding: 0; font-weight: 700; font-size: 1.1rem; margin-bottom: .75rem; }
+  .field { margin-top: 1.25rem; }
+  fieldset > .field:first-of-type { margin-top: 0; }
+  .group { margin-top: 2rem; }
+  label, .label { display: block; font-weight: 600; margin-bottom: .25rem; }
   .opt { font-weight: 400; color: var(--muted); }
-  .field { margin-bottom: 1.75rem; }
-  input[type=text], input[type=email], input[type=tel], input[type=date], select {
-    font: inherit;
-    font-size: 16px;
-    width: 100%;
-    min-height: 46px;
-    padding: .5rem .7rem;
-    border: 1.5px solid var(--line);
-    border-radius: 8px;
-    background: #fff;
-    color: var(--ink);
+  .hint { margin: 0 0 .4rem; color: var(--muted); font-size: .95rem; }
+  input, select {
+    font: inherit; font-size: 1rem; color: var(--ink); background: var(--card);
+    border: 2px solid var(--line); border-radius: 8px; min-height: 48px; padding: .5rem .75rem; width: 100%;
   }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .row .field { margin-bottom: 0; }
-  .row-wrap { margin-bottom: 1.75rem; }
-  @media (max-width: 30rem) { .row { grid-template-columns: 1fr; } .row .field + .field { margin-top: 1.25rem; } }
-  .short { max-width: 14rem; }
-  :focus-visible { outline: 3px solid #e0a100; outline-offset: 2px; }
-  .invalid input, .invalid select, .invalid .stepper { border-color: var(--err); border-width: 2px; }
-  .msg { display: none; color: var(--err); font-weight: 600; font-size: .95rem; margin-top: .4rem; }
-  .invalid .msg { display: block; }
-  .msg::before { content: "\26A0\FE0E  "; }
-
+  @media (max-width: 30rem) { .row { grid-template-columns: 1fr; } }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  [aria-invalid="true"] { border-color: var(--err); }
+  .error { display: none; margin: .4rem 0 0; color: var(--err); font-weight: 600; font-size: .95rem; }
+  .error::before { content: "⚠ Error: "; }
+  .has-error .error { display: block; }
+  .summary { display: none; background: var(--err-bg); border: 2px solid var(--err); border-radius: 10px; padding: 1rem 1.25rem; margin-top: 1.25rem; }
+  .summary.show { display: block; }
+  .summary h2 { margin: 0 0 .5rem; font-size: 1.1rem; color: var(--err); }
+  .summary ul { margin: 0; padding-left: 1.25rem; }
+  .summary a { color: var(--err); font-weight: 600; }
   .kayak {
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    padding: .75rem 0; border-top: 1px solid #dbe3e2;
+    border: 1px solid var(--line); border-radius: 10px; padding: .75rem 1rem; margin-top: .75rem;
   }
-  .kayak:last-of-type { border-bottom: 1px solid #dbe3e2; }
+  .kayak:first-of-type { margin-top: 0; }
   .kayak .name { font-weight: 600; }
   .kayak .sub { color: var(--muted); font-size: .95rem; }
-  .stepper { display: flex; align-items: center; border: 1.5px solid var(--line); border-radius: 8px; }
+  .stepper { display: flex; align-items: center; gap: .25rem; flex: none; }
   .stepper button {
-    font: inherit; font-size: 1.4rem; line-height: 1;
-    width: 46px; height: 46px; border: 0; background: transparent; color: var(--brand-dark);
-    cursor: pointer; border-radius: 6px;
+    width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--brand); background: var(--card);
+    color: var(--brand-dark); font: inherit; font-size: 1.5rem; line-height: 1; cursor: pointer;
   }
-  .stepper button:disabled { color: #9aa8aa; cursor: not-allowed; }
-  .stepper output { min-width: 2.2rem; text-align: center; font-weight: 700; font-size: 1.1rem; }
-  .capacity { margin: .6rem 0 0; font-size: .95rem; color: var(--muted); }
-
+  .stepper button:disabled { border-color: var(--line); color: var(--muted); cursor: not-allowed; opacity: .6; }
+  .stepper output { min-width: 2.25rem; text-align: center; font-size: 1.25rem; font-weight: 700; }
+  .capacity { margin: .75rem 0 0; font-size: .95rem; color: var(--muted); }
   .total {
-    background: var(--ok-bg); border-radius: 8px; padding: .8rem 1rem; margin-bottom: 1.25rem;
-    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+    margin-top: 2rem; padding: 1rem 1.25rem; background: var(--ok-bg); border-radius: 10px;
   }
-  .total strong { font-size: 1.4rem; }
+  .total .amount { font-size: 1.6rem; font-weight: 800; }
+  .total p { margin: 0; }
   .total .detail { color: var(--muted); font-size: .95rem; }
-
   button.primary {
-    font: inherit; font-weight: 700; font-size: 1.1rem;
-    width: 100%; min-height: 52px; border: 0; border-radius: 8px;
-    background: var(--brand); color: #fff; cursor: pointer;
+    margin-top: 1.25rem; width: 100%; min-height: 52px; font: inherit; font-size: 1.1rem; font-weight: 700;
+    background: var(--brand); color: var(--brand-ink); border: 0; border-radius: 10px; cursor: pointer;
   }
-  button.primary:hover { background: var(--brand-dark); }
-  button.primary[aria-disabled=true] { opacity: .7; cursor: progress; }
-
-  .summary {
-    border: 2px solid var(--err); background: var(--err-bg); border-radius: 8px;
-    padding: .9rem 1rem; margin-bottom: 1.5rem;
-  }
-  .summary[hidden] { display: none; }
-  .summary h2 { font-size: 1.05rem; margin: 0 0 .4rem; color: var(--err); }
-  .summary ul { margin: 0; padding-left: 1.2rem; }
-  .summary a { color: var(--err); font-weight: 600; }
-
-  .panel h2 { margin-top: 0; font-size: 1.5rem; }
-  .panel dl { margin: 1rem 0; display: grid; grid-template-columns: auto 1fr; gap: .35rem 1rem; }
-  .panel dt { color: var(--muted); }
-  .panel dd { margin: 0; font-weight: 600; }
-  .panel[hidden], form[hidden] { display: none; }
-  .small { color: var(--muted); font-size: .95rem; }
+  button.primary:hover { filter: brightness(.93); }
+  button.primary[aria-busy="true"] { opacity: .7; cursor: progress; }
+  .fine { color: var(--muted); font-size: .95rem; margin: .75rem 0 0; }
+  #done { display: none; }
+  #done h2 { margin-top: 0; }
+  #done dl { display: grid; grid-template-columns: max-content 1fr; gap: .25rem 1rem; margin: 1rem 0; }
+  #done dt { color: var(--muted); }
+  #done dd { margin: 0; font-weight: 600; }
+  .secondary { font: inherit; background: none; border: 0; color: var(--brand-dark); text-decoration: underline; cursor: pointer; padding: .75rem 0; min-height: 44px; }
+  .server-error { display: none; }
 </style>
 </head>
 <body>
 <main>
-  <p class="brand">Saltmarsh Paddle Co.</p>
-  <h1 id="page-heading">Book a kayak</h1>
-  <p class="intro">Singles are $35 an hour and tandems are $55 an hour. Trips leave between 9:00 AM and 4:00 PM. All fields are required unless marked optional.</p>
+  <header>
+    <p class="brand">Saltmarsh Paddle Co.</p>
+    <h1>Book a kayak</h1>
+    <p>Pick a day and time, choose your boats, and we'll take it from there.</p>
+    <ul class="prices">
+      <li>Single kayak: $35/hour</li>
+      <li>Tandem kayak: $55/hour</li>
+    </ul>
+  </header>
 
-  <form id="booking" novalidate>
-    <div id="summary" class="summary" role="alert" tabindex="-1" hidden>
-      <h2 id="summary-title"></h2>
-      <ul id="summary-list"></ul>
+  <div id="formView">
+    <div id="summary" class="summary" tabindex="-1" role="alert">
+      <h2 id="summaryTitle"></h2>
+      <ul id="summaryList"></ul>
+    </div>
+    <div id="serverError" class="summary server-error" tabindex="-1" role="alert">
+      <h2>We couldn't send your booking</h2>
+      <p style="margin:0">Nothing you entered has been lost. Check your connection and press the button again, or call us instead.</p>
     </div>
 
-    <div class="row-wrap">
-      <div class="row">
-        <div class="field" id="f-date">
-          <label class="lbl" for="date">Date</label>
-          <input type="date" id="date" name="date" aria-describedby="e-date">
-          <div class="msg" id="e-date"></div>
+    <form id="form" class="card" novalidate>
+      <fieldset>
+        <legend>When</legend>
+        <div class="row">
+          <div class="field" id="f-date">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" autocomplete="off" aria-describedby="e-date">
+            <p class="error" id="e-date"></p>
+          </div>
+          <div class="field" id="f-time">
+            <label for="time">Departure time</label>
+            <select id="time" name="time" aria-describedby="h-time e-time"></select>
+            <p class="error" id="e-time"></p>
+          </div>
         </div>
-        <div class="field" id="f-time">
-          <label class="lbl" for="time">Trip leaves at</label>
-          <select id="time" name="time" aria-describedby="e-time">
-            <option value="">Choose a time</option>
+        <p class="hint" id="h-time" style="margin-top:.5rem">Trips leave between 9:00 AM and 4:00 PM.</p>
+        <div class="field" id="f-hours">
+          <label for="hours">Length of rental</label>
+          <select id="hours" name="hours">
+            <option value="1">1 hour</option>
+            <option value="2" selected>2 hours</option>
+            <option value="3">3 hours</option>
+            <option value="4">4 hours</option>
           </select>
-          <div class="msg" id="e-time"></div>
         </div>
-      </div>
-    </div>
+      </fieldset>
 
-    <div class="field" id="f-hours">
-      <label class="lbl" for="hours">How long</label>
-      <select id="hours" name="hours" class="short" aria-describedby="e-hours">
-        <option value="1">1 hour</option>
-        <option value="2">2 hours</option>
-        <option value="3">3 hours</option>
-        <option value="4">4 hours</option>
-      </select>
-      <div class="msg" id="e-hours"></div>
-    </div>
-
-    <fieldset id="f-kayaks" aria-describedby="e-kayaks capacity">
-      <legend>Kayaks</legend>
-      <span class="hint">Up to 6 people per booking. A single seats 1, a tandem seats 2.</span>
-      <div class="kayak" role="group" aria-labelledby="n-single">
-        <div><div class="name" id="n-single">Single</div><div class="sub">$35 an hour · 1 person</div></div>
-        <div class="stepper">
-          <button type="button" data-kind="single" data-d="-1" aria-label="Remove a single kayak">&minus;</button>
-          <output id="v-single" aria-live="polite">0</output>
-          <button type="button" data-kind="single" data-d="1" aria-label="Add a single kayak">+</button>
+      <fieldset class="group" id="f-kayaks">
+        <legend>Kayaks</legend>
+        <p class="hint" id="h-kayaks">Up to 6 people per booking. A single seats 1, a tandem seats 2.</p>
+        <div class="kayak">
+          <div><div class="name" id="n-single">Singles</div><div class="sub">1 person each · $35/hour</div></div>
+          <div class="stepper" role="group" aria-labelledby="n-single">
+            <button type="button" id="single-minus" aria-label="Fewer singles">−</button>
+            <output id="single-count" aria-live="polite">0</output>
+            <button type="button" id="single-plus" aria-label="More singles">+</button>
+          </div>
         </div>
-      </div>
-      <div class="kayak" role="group" aria-labelledby="n-tandem">
-        <div><div class="name" id="n-tandem">Tandem</div><div class="sub">$55 an hour · 2 people</div></div>
-        <div class="stepper">
-          <button type="button" data-kind="tandem" data-d="-1" aria-label="Remove a tandem kayak">&minus;</button>
-          <output id="v-tandem" aria-live="polite">0</output>
-          <button type="button" data-kind="tandem" data-d="1" aria-label="Add a tandem kayak">+</button>
+        <div class="kayak">
+          <div><div class="name" id="n-tandem">Tandems</div><div class="sub">2 people each · $55/hour</div></div>
+          <div class="stepper" role="group" aria-labelledby="n-tandem">
+            <button type="button" id="tandem-minus" aria-label="Fewer tandems">−</button>
+            <output id="tandem-count" aria-live="polite">0</output>
+            <button type="button" id="tandem-plus" aria-label="More tandems">+</button>
+          </div>
         </div>
+        <p class="capacity" id="capacity" aria-live="polite"></p>
+        <div id="f-kayaks-err"><p class="error" id="e-kayaks"></p></div>
+      </fieldset>
+
+      <div class="total" aria-live="polite">
+        <p class="amount" id="total">$0</p>
+        <p class="detail" id="totalDetail">Choose at least one kayak to see your price.</p>
       </div>
-      <p class="capacity" id="capacity" aria-live="polite"></p>
-      <div class="msg" id="e-kayaks"></div>
-    </fieldset>
 
-    <div class="field" id="f-name">
-      <label class="lbl" for="name">Your name</label>
-      <input type="text" id="name" name="name" autocomplete="name" aria-describedby="e-name">
-      <div class="msg" id="e-name"></div>
-    </div>
+      <fieldset class="group">
+        <legend>Your details</legend>
+        <div class="field" id="f-name">
+          <label for="name">Full name</label>
+          <input type="text" id="name" name="name" autocomplete="name" aria-describedby="e-name">
+          <p class="error" id="e-name"></p>
+        </div>
+        <div class="field" id="f-email">
+          <label for="email">Email</label>
+          <p class="hint" id="h-email">We'll send your booking confirmation here.</p>
+          <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" aria-describedby="h-email e-email">
+          <p class="error" id="e-email"></p>
+        </div>
+        <div class="field" id="f-phone">
+          <label for="phone">Mobile number <span class="opt">(optional)</span></label>
+          <p class="hint" id="h-phone">Only used to text you if weather or tides change your trip.</p>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="h-phone e-phone" style="max-width:16rem">
+          <p class="error" id="e-phone"></p>
+        </div>
+      </fieldset>
 
-    <div class="field" id="f-phone">
-      <label class="lbl" for="phone">Mobile number</label>
-      <span class="hint" id="h-phone">We'll text you to confirm, or if the tide or weather changes your trip.</span>
-      <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" class="short" aria-describedby="h-phone e-phone">
-      <div class="msg" id="e-phone"></div>
-    </div>
+      <button type="submit" class="primary" id="submit">Request this booking</button>
+      <p class="fine">You won't be charged online. You pay when you arrive.</p>
+    </form>
+  </div>
 
-    <div class="field" id="f-email">
-      <label class="lbl" for="email">Email <span class="opt">(optional)</span></label>
-      <span class="hint" id="h-email">Only if you'd like a written copy of your booking.</span>
-      <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" aria-describedby="h-email e-email">
-      <div class="msg" id="e-email"></div>
-    </div>
-
-    <div class="total" aria-live="polite">
-      <div><div class="detail">Estimated total</div><div class="detail" id="breakdown">Choose your kayaks to see the price</div></div>
-      <strong id="total">$0</strong>
-    </div>
-
-    <button type="submit" class="primary" id="submit">Request this booking</button>
-  </form>
-
-  <section class="panel" id="done" hidden aria-labelledby="done-h">
-    <h2 id="done-h" tabindex="-1">Request received</h2>
-    <dl id="done-details"></dl>
-    <p>We'll text <strong id="done-phone"></strong> to confirm your trip. If you haven't heard from us, call us and we'll sort it out.</p>
-    <p class="small">The total shown is an estimate based on the hourly rates.</p>
+  <section id="done" class="card" tabindex="-1" aria-live="polite">
+    <h2>Booking request sent</h2>
+    <p id="doneMsg"></p>
+    <dl id="doneList"></dl>
+    <p>If you don't get an email within a few minutes, check your spam folder or give us a call.</p>
+    <button type="button" class="secondary" id="again">Make another booking</button>
   </section>
 </main>
 
 <script>
 (function () {
-  // Where booking requests are sent (POST, JSON). Set this to your own
-  // endpoint (form service, serverless function, etc.). Until it is set,
-  // the form tells visitors online booking isn't available rather than
-  // silently dropping their request.
+  // Where bookings are sent. Set this to your booking endpoint (a form service or your own server).
+  // The endpoint receives JSON: date, time, hours, singles, tandems, people, total, name, email, phone.
+  // While empty, the page shows the confirmation without sending anything (demo mode).
   var ENDPOINT = "";
 
-  var PRICE = { single: 35, tandem: 55 };
-  var SEATS = { single: 1, tandem: 2 };
-  var MAX_PEOPLE = 6;
+  var PRICE = { single: 35, tandem: 55 }, MAX_PEOPLE = 6;
   var counts = { single: 0, tandem: 0 };
-  var baseTitle = document.title;
-
-  var $ = function (id) { return document.getElementById(id); };
-  var form = $("booking");
   var attempted = false;
+  var baseTitle = document.title;
+  var $ = function (id) { return document.getElementById(id); };
 
-  // Date: today onward, local time
-  var d = new Date();
-  var pad = function (n) { return (n < 10 ? "0" : "") + n; };
-  $("date").min = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
-
-  // Times: 9:00 AM to 4:00 PM, every 30 minutes
+  // Departure times, 9:00 AM to 4:00 PM every 30 minutes
+  var timeSel = $("time");
+  timeSel.appendChild(new Option("Choose a time", ""));
   for (var m = 9 * 60; m <= 16 * 60; m += 30) {
     var h = Math.floor(m / 60), mm = m % 60;
-    var label = (h > 12 ? h - 12 : h) + ":" + pad(mm) + (h >= 12 ? " PM" : " AM");
-    var o = document.createElement("option");
-    o.value = label; o.textContent = label;
-    $("time").appendChild(o);
+    var label = ((h + 11) % 12 + 1) + ":" + (mm ? "30" : "00") + (h < 12 ? " AM" : " PM");
+    timeSel.appendChild(new Option(label, label));
   }
 
-  function people() { return counts.single * SEATS.single + counts.tandem * SEATS.tandem; }
+  // Date can't be in the past
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  var now = new Date();
+  var today = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
+  $("date").min = today;
 
-  function money(n) { return "$" + n; }
+  function people() { return counts.single + counts.tandem * 2; }
+  function money(n) { return "$" + n.toLocaleString("en-US"); }
+  function plural(n, w) { return n + " " + w + (n === 1 ? "" : "s"); }
 
-  function renderKayaks() {
-    ["single", "tandem"].forEach(function (k) {
-      $("v-" + k).textContent = counts[k];
-      var btns = form.querySelectorAll('button[data-kind="' + k + '"]');
-      btns[0].disabled = counts[k] === 0;
-      btns[1].disabled = people() + SEATS[k] > MAX_PEOPLE;
-    });
-    var p = people();
-    var left = MAX_PEOPLE - p;
-    $("capacity").textContent = p === 0
-      ? "Room for up to 6 people."
-      : p + (p === 1 ? " person" : " people") + " booked. " +
-        (left === 0 ? "That's the maximum of 6 per booking. For a bigger group, please call us." :
-         left === 1 ? "Room for 1 more (a single)." : "Room for " + left + " more.");
-    var hrs = parseInt($("hours").value, 10);
+  function render() {
+    var p = people(), hrs = +$("hours").value;
+    $("single-count").textContent = counts.single;
+    $("tandem-count").textContent = counts.tandem;
+    $("single-minus").disabled = counts.single === 0;
+    $("tandem-minus").disabled = counts.tandem === 0;
+    $("single-plus").disabled = p + 1 > MAX_PEOPLE;
+    $("tandem-plus").disabled = p + 2 > MAX_PEOPLE;
+    var cap = plural(p, "person") .replace(/^0 person$/, "0 people") + " of " + MAX_PEOPLE;
+    if (p === 0) cap = "0 of " + MAX_PEOPLE + " people";
+    else cap = p + " of " + MAX_PEOPLE + " " + (p === 1 ? "person" : "people");
+    if (p >= MAX_PEOPLE) cap += " — this booking is full. For a bigger group, make a second booking or call us.";
+    else if (p === MAX_PEOPLE - 1) cap += " — only a single fits now.";
+    $("capacity").textContent = cap;
+
     var total = (counts.single * PRICE.single + counts.tandem * PRICE.tandem) * hrs;
-    var parts = [];
-    if (counts.single) parts.push(counts.single + " single" + (counts.single > 1 ? "s" : ""));
-    if (counts.tandem) parts.push(counts.tandem + " tandem" + (counts.tandem > 1 ? "s" : ""));
-    $("breakdown").textContent = parts.length ? parts.join(" + ") + " × " + hrs + (hrs > 1 ? " hours" : " hour") : "Choose your kayaks to see the price";
     $("total").textContent = money(total);
+    var parts = [];
+    if (counts.single) parts.push(plural(counts.single, "single"));
+    if (counts.tandem) parts.push(plural(counts.tandem, "tandem"));
+    $("totalDetail").textContent = parts.length
+      ? parts.join(" + ") + " for " + plural(hrs, "hour") + ". Pay when you arrive."
+      : "Choose at least one kayak to see your price.";
   }
 
-  form.addEventListener("click", function (e) {
-    var b = e.target.closest("button[data-kind]");
-    if (!b || b.disabled) return;
-    var k = b.getAttribute("data-kind"), delta = parseInt(b.getAttribute("data-d"), 10);
-    counts[k] = Math.max(0, counts[k] + delta);
-    renderKayaks();
-    if (attempted) validate(false);
-  });
-  $("hours").addEventListener("change", renderKayaks);
+  function bump(type, d) {
+    var next = counts[type] + d;
+    if (next < 0 || people() + d * (type === "tandem" ? 2 : 1) > MAX_PEOPLE) return;
+    counts[type] = next;
+    render();
+    if (attempted) check();
+  }
+  $("single-minus").onclick = function () { bump("single", -1); };
+  $("single-plus").onclick = function () { bump("single", 1); };
+  $("tandem-minus").onclick = function () { bump("tandem", -1); };
+  $("tandem-plus").onclick = function () { bump("tandem", 1); };
+  $("hours").addEventListener("change", render);
 
-  var checks = [
-    { id: "date", box: "f-date", err: "e-date", test: function () {
-        var v = $("date").value;
-        if (!v) return "Choose the date you'd like to paddle.";
-        if (v < $("date").min) return "Choose today or a later date.";
-        return ""; } },
-    { id: "time", box: "f-time", err: "e-time", test: function () {
-        return $("time").value ? "" : "Choose a time between 9:00 AM and 4:00 PM."; } },
-    { id: "f-kayaks", box: "f-kayaks", err: "e-kayaks", focus: "v-single", test: function () {
-        return people() > 0 ? "" : "Add at least one single or tandem kayak."; } },
-    { id: "name", box: "f-name", err: "e-name", test: function () {
-        return $("name").value.trim() ? "" : "Enter your name so we know who to look for."; } },
-    { id: "phone", box: "f-phone", err: "e-phone", test: function () {
-        var v = $("phone").value.trim();
-        if (!v) return "Enter a mobile number we can text.";
-        var digits = v.replace(/\D/g, "");
-        if (digits.length === 11 && digits.charAt(0) === "1") digits = digits.slice(1);
-        if (digits.length !== 10 || /[^\d\s().+\-]/.test(v)) return "Enter a 10-digit number, like 555 123 4567.";
-        return ""; } },
-    { id: "email", box: "f-email", err: "e-email", test: function () {
-        var v = $("email").value.trim();
-        if (!v) return "";
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "" : "Enter an email address with an @, like name@example.com."; } }
+  // Validation
+  var rules = [
+    { id: "date", field: "f-date", test: function (v) {
+        if (!v) return "Choose a date for your trip.";
+        if (v < today) return "Choose today or a later date.";
+      } },
+    { id: "time", field: "f-time", test: function (v) { if (!v) return "Choose a departure time between 9:00 AM and 4:00 PM."; } },
+    { id: "single-plus", field: "f-kayaks-err", err: "e-kayaks", test: function () {
+        if (people() === 0) return "Add at least one single or tandem kayak.";
+      } },
+    { id: "name", field: "f-name", test: function (v) { if (!v.trim()) return "Enter your name so we know who to look for."; } },
+    { id: "email", field: "f-email", test: function (v) {
+        v = v.trim();
+        if (!v) return "Enter your email address so we can send your confirmation.";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return "Enter an email address with an @ and a domain, like name@example.com.";
+      } },
+    { id: "phone", field: "f-phone", test: function (v) {
+        v = v.trim();
+        if (v && v.replace(/\D/g, "").length < 10) return "Enter a phone number with area code, like 555 123 4567, or leave it blank.";
+      } }
   ];
 
-  function fieldLabel(c) {
-    return { date: "Date", time: "Trip leaves at", "f-kayaks": "Kayaks", name: "Your name", phone: "Mobile number", email: "Email" }[c.id];
-  }
-
-  function validate(moveFocus) {
+  function check() {
     var problems = [];
-    checks.forEach(function (c) {
-      var msg = c.test();
-      var box = $(c.box);
-      if (c.id === "f-kayaks") {
-        $(c.err).textContent = msg;
-        box.classList.toggle("invalid", !!msg);
-        box.querySelectorAll(".stepper").forEach(function (s) { s.parentNode.parentNode.classList.toggle("invalid", !!msg); });
+    rules.forEach(function (r) {
+      var el = $(r.id), msg = r.test(el.value || "");
+      var wrap = $(r.field), errEl = $(r.err || "e-" + r.id);
+      if (msg) {
+        wrap.classList.add("has-error");
+        errEl.textContent = msg;
+        if (r.id !== "single-plus") el.setAttribute("aria-invalid", "true");
+        problems.push({ id: r.id, msg: msg });
       } else {
-        $(c.err).textContent = msg;
-        box.classList.toggle("invalid", !!msg);
-        $(c.id).setAttribute("aria-invalid", msg ? "true" : "false");
+        wrap.classList.remove("has-error");
+        errEl.textContent = "";
+        el.removeAttribute("aria-invalid");
       }
-      if (msg) problems.push({ c: c, msg: msg });
     });
-
-    var s = $("summary");
-    if (problems.length > 1 || (problems.length === 1 && s.dataset.server)) {
-      $("summary-title").textContent = "Fix these " + problems.length + " things to send your booking:";
-      var ul = $("summary-list");
-      ul.innerHTML = "";
+    var box = $("summary");
+    if (problems.length > 1) {
+      $("summaryTitle").textContent = "There are " + problems.length + " things to fix";
+      var ul = $("summaryList"); ul.innerHTML = "";
       problems.forEach(function (p) {
         var li = document.createElement("li"), a = document.createElement("a");
-        a.href = "#" + (p.c.focus || p.c.id);
-        a.textContent = fieldLabel(p.c) + ": " + p.msg;
-        a.addEventListener("click", function (ev) {
-          ev.preventDefault();
-          var t = $(p.c.focus || p.c.id);
-          if (t.tagName === "OUTPUT") t = t.parentNode.querySelector("button:not(:disabled)");
-          if (t) t.focus();
-        });
+        a.href = "#" + p.id; a.textContent = p.msg;
+        a.onclick = function (e) { e.preventDefault(); $(p.id).focus(); };
         li.appendChild(a); ul.appendChild(li);
       });
-      s.hidden = false;
-      document.title = problems.length + " problems – " + baseTitle;
+      box.classList.add("show");
+      document.title = problems.length + " errors – " + baseTitle;
     } else {
-      if (!s.dataset.server) s.hidden = true;
-      document.title = problems.length === 1 ? "1 problem – " + baseTitle : baseTitle;
+      box.classList.remove("show");
+      document.title = problems.length ? "1 error – " + baseTitle : baseTitle;
     }
-
-    if (moveFocus && problems.length) {
-      if (problems.length > 1) { s.focus(); }
-      else {
-        var t = $(problems[0].c.focus || problems[0].c.id);
-        if (t.tagName === "OUTPUT") t = t.parentNode.querySelector("button:not(:disabled)");
-        if (t) t.focus();
-      }
-    }
-    return problems.length === 0;
+    return problems;
   }
 
-  // After a first failed submit, re-check as people fix things
-  form.addEventListener("input", function () { if (attempted) validate(false); });
-  form.addEventListener("change", function () { if (attempted) validate(false); });
+  // After the first submit attempt, re-check as people edit
+  ["date", "time", "name", "email", "phone"].forEach(function (id) {
+    $(id).addEventListener("input", function () { if (attempted) check(); });
+    $(id).addEventListener("change", function () { if (attempted) check(); });
+  });
 
-  function showServerError(text) {
-    var s = $("summary");
-    s.dataset.server = "1";
-    $("summary-title").textContent = text;
-    $("summary-list").innerHTML = "";
-    s.hidden = false;
-    s.focus();
-  }
-
-  function showDone(data) {
-    var hrs = parseInt(data.hours, 10);
-    var rows = [
-      ["Date", data.dateText],
-      ["Leaves", data.time],
-      ["Length", hrs + (hrs > 1 ? " hours" : " hour")],
-      ["Kayaks", data.kayaks],
-      ["Estimated total", money(data.total)]
-    ];
-    var dl = $("done-details");
-    dl.innerHTML = "";
-    rows.forEach(function (r) {
-      var dt = document.createElement("dt"), dd = document.createElement("dd");
-      dt.textContent = r[0]; dd.textContent = r[1];
-      dl.appendChild(dt); dl.appendChild(dd);
+  $("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if ($("submit").getAttribute("aria-busy") === "true") return;
+    attempted = true;
+    $("serverError").classList.remove("show");
+    $("serverError").style.display = "";
+    var problems = check();
+    if (problems.length) {
+      if (problems.length > 1) $("summary").focus();
+      else $(problems[0].id).focus();
+      return;
+    }
+    var hrs = +$("hours").value;
+    var data = {
+      date: $("date").value, time: $("time").value, hours: hrs,
+      singles: counts.single, tandems: counts.tandem, people: people(),
+      total: (counts.single * PRICE.single + counts.tandem * PRICE.tandem) * hrs,
+      name: $("name").value.trim(), email: $("email").value.trim(), phone: $("phone").value.trim()
+    };
+    var btn = $("submit");
+    btn.setAttribute("aria-busy", "true");
+    btn.textContent = "Sending…";
+    var send = ENDPOINT
+      ? fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+          .then(function (r) { if (!r.ok) throw new Error("bad status"); })
+      : Promise.resolve();
+    send.then(function () { finish(data); }, function () {
+      btn.removeAttribute("aria-busy");
+      btn.textContent = "Request this booking";
+      var se = $("serverError");
+      se.style.display = "block";
+      se.focus();
     });
-    $("done-phone").textContent = data.phone;
-    form.hidden = true;
-    $("done").hidden = false;
-    document.title = "Request received – " + baseTitle;
-    $("page-heading").textContent = "Thanks, " + data.name.split(" ")[0];
-    $("done-h").focus();
+  });
+
+  function finish(data) {
+    var parts = [];
+    if (data.singles) parts.push(plural(data.singles, "single"));
+    if (data.tandems) parts.push(plural(data.tandems, "tandem"));
+    var dp = data.date.split("-");
+    var dateText = new Date(+dp[0], +dp[1] - 1, +dp[2]).toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+    $("doneMsg").textContent = "Thanks, " + data.name.split(" ")[0] + ". We'll email a confirmation to " + data.email + ".";
+    var dl = $("doneList"); dl.innerHTML = "";
+    [["Date", dateText], ["Departs", data.time], ["Length", plural(data.hours, "hour")],
+     ["Kayaks", parts.join(" + ") + " (" + data.people + " " + (data.people === 1 ? "person" : "people") + ")"],
+     ["Total", money(data.total) + ", paid on arrival"]].forEach(function (r) {
+      var dt = document.createElement("dt"), dd = document.createElement("dd");
+      dt.textContent = r[0]; dd.textContent = r[1]; dl.appendChild(dt); dl.appendChild(dd);
+    });
+    $("formView").style.display = "none";
+    $("done").style.display = "block";
+    document.title = "Booking sent – " + baseTitle;
+    $("done").focus();
     window.scrollTo(0, 0);
   }
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var s = $("summary");
-    delete s.dataset.server;
-    attempted = true;
-    if (!validate(true)) return;
+  $("again").onclick = function () {
+    $("form").reset();
+    counts.single = counts.tandem = 0;
+    attempted = false;
+    check();
+    $("submit").removeAttribute("aria-busy");
+    $("submit").textContent = "Request this booking";
+    document.title = baseTitle;
+    $("done").style.display = "none";
+    $("formView").style.display = "block";
+    render();
+    $("date").focus();
+  };
 
-    var btn = $("submit");
-    if (btn.getAttribute("aria-disabled") === "true") return;
-
-    var hrs = parseInt($("hours").value, 10);
-    var parts = [];
-    if (counts.single) parts.push(counts.single + " single" + (counts.single > 1 ? "s" : ""));
-    if (counts.tandem) parts.push(counts.tandem + " tandem" + (counts.tandem > 1 ? "s" : ""));
-    var dp = $("date").value.split("-");
-    var dateText = new Date(+dp[0], +dp[1] - 1, +dp[2]).toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
-    var payload = {
-      name: $("name").value.trim(),
-      phone: $("phone").value.trim(),
-      email: $("email").value.trim(),
-      date: $("date").value,
-      time: $("time").value,
-      hours: hrs,
-      singles: counts.single,
-      tandems: counts.tandem,
-      estimatedTotal: (counts.single * PRICE.single + counts.tandem * PRICE.tandem) * hrs
-    };
-    var summary = {
-      name: payload.name, phone: payload.phone, dateText: dateText, time: payload.time,
-      hours: hrs, kayaks: parts.join(" + ") + " (" + people() + (people() === 1 ? " person)" : " people)"),
-      total: payload.estimatedTotal
-    };
-
-    if (!ENDPOINT) {
-      showServerError("Online booking isn't switched on yet, so your request was not sent. Your details are still here. Please call us to book.");
-      return;
-    }
-
-    btn.setAttribute("aria-disabled", "true");
-    btn.textContent = "Sending…";
-    fetch(ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    }).then(function (r) {
-      if (!r.ok) throw new Error("bad status");
-      showDone(summary);
-    }).catch(function () {
-      showServerError("We couldn't send your booking. Your details are still here. Try again, or call us to book.");
-    }).then(function () {
-      btn.removeAttribute("aria-disabled");
-      btn.textContent = "Request this booking";
-    });
-  });
-
-  renderKayaks();
+  render();
 })();
 </script>
 </body>

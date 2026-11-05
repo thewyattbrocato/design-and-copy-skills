@@ -1,26 +1,31 @@
-Prefill anything the tool can predict reliably and a manager would otherwise retype. Leave blank anything where a wrong guess would be saved without anyone noticing.
+I'm assuming the usual shift fields. Swap in your own names if they differ.
 
-## Prefill these
+## Prefill
 
 | Field | Prefill from | Notes |
 |---|---|---|
-| **Location** | The location open right now. If none is open, use the location of their most recent shift. | If they have only one location, don't show the field. |
-| **Date** | The calendar cell they clicked, if they came from one. Otherwise today. | Managers often schedule ahead, so if most of their last 20 shifts were created for future dates, use the date of the latest one instead. Check this against your data. |
-| **Start and end time** | The most common start and end times among their recent shifts at that location. | Use the same role when you know it. If there's no clear pattern, use the last shift's times. |
-| **Role** | The chosen employee's usual role. | This depends on the employee, so it fills after the employee is picked. Keep it editable, because people cover other roles. |
-| **Break length** | The most common value in their recent shifts at that location. | Only do this if you store breaks. |
+| **Location** | The location open right now. | If the manager has only one location, don't show a picker, just print the name. |
+| **Date** | Today's date. | Better: if their recent shifts cluster on a pattern, such as always scheduling next week, default to the next date they're likely to schedule. Start with today and add this only if the data supports it. |
+| **Start and end time** | The most common start and end among their last 20 shifts at this location. | Match on location, since a breakfast spot and a bar differ. Use the mode, not the last shift. |
+| **Role** | The role of their most recent shift at this location. | This is the fallback when no employee is chosen. |
+| **Role, once an employee is chosen** | That employee's usual role. | It overwrites the default role only if the manager hasn't touched the role field. |
+| **Break length** | The most common value in recent shifts. | Leave it blank if recent shifts vary widely. |
+| **Repeat** | "Does not repeat". | Never default to repeating. |
 
-## Leave these blank on purpose
+Show every prefilled value in the field itself as a real, editable value, not placeholder text. That way the manager can see it and change it. When a value came from history, add a quiet hint such as "Usual for Downtown". Don't make the manager hunt for what was filled.
 
-- **Employee.** It's the main decision on the screen. A wrong guess means someone gets scheduled by accident. Offer an explicit "Open shift (unassigned)" option so blank doesn't read as forgotten.
-- **Repeat or recurrence.** Default to "Does not repeat". A wrong guess here creates many bad shifts at once.
-- **Notes.** They're specific to each shift.
-- **Notify the employee.** Follow the manager's existing notification setting. Don't infer it from past shifts.
+## Leave blank on purpose
 
-## Behavior rules
+- **Employee.** A wrong guess here puts the wrong person on the schedule, and the manager may not notice. Make it a fast autocomplete. You can sort recently scheduled people to the top, but don't preselect anyone.
+- **Notes.** Prefilled notes from old shifts would go stale and leak into new shifts.
+- **Anything that notifies or commits someone**, such as "notify employee" or "publish". Default to the safer, reversible state, and state it in the label.
+- **Pay rate or overrides**, if you have them. A copied exception is a silent payroll error.
 
-- Put prefilled values in the fields as real values, not as grey placeholder text. The manager can see them and overwrite them.
-- If the manager changes location, refresh the time and break suggestions. Only refresh fields they haven't edited yet.
-- Block past dates in the date picker, or warn on them if backfilling is a real use case. Don't show an error.
-- Add a "Copy a recent shift" shortcut for cases where the last 20 shifts show several distinct patterns, such as opening and closing shifts. Without it, one set of prefilled times would be wrong half the time.
-- Keep the Employee field first in the focus order after the prefilled fields, so the usual flow is: open the screen, pick a person, check the details, save.
+## Rules that keep prefill safe
+
+1. **Don't prefill across locations.** If the manager switches location, re-derive times, role and break from that location's history. Don't overwrite fields they've already edited.
+2. **Use the mode, not the latest.** A single odd shift shouldn't set the defaults.
+3. **Fall back to blank.** With fewer than about 3 relevant shifts at a location, leave times blank rather than guessing from noise.
+4. **Consider "Duplicate shift" as a separate entry point.** It covers the case where they want to copy a specific shift exactly. It's cheaper than trying to predict everything on the blank form.
+
+Test this with managers: if they usually change the prefilled time, your rule for choosing it is wrong, and blank would serve them better.

@@ -1,44 +1,42 @@
-**Verdict: the copy is good, but the page contradicts itself on logistics. Fix the Monday problem before it goes to print.**
+**Verdict: not ready to print.** The copy is warm and specific, but the page contradicts itself on the one thing a first-time borrower needs, which is when and where they can get and return a tool. Fix the top three below before the committee sees it.
 
-**1. Blocker: the page promises a Monday return, but you're only open Saturday and Wednesday.**
-- The h1 says "back by Monday 5pm". The wet tile saw and pressure washer are both "2 days, back by Monday".
-- The hours paragraph lists only Sat 10-1 and Wed 6-8.
-- A first-timer will ask where they return the saw on Monday. Either there's a drop-off arrangement the page doesn't mention, or the headline is wrong.
-- **Fix:** state the Monday return method in one line near the hours. If there isn't one, change the headline and the "back by Monday" items to match the real schedule.
+**Findings, worst first**
 
-**2. Major: "Join for $20" undercuts "pay what you can".**
-- The copy says "$20 a year, or pay what you can". The only join button says "Join for $20".
-- Someone who can't afford $20 reads the button as the real price and leaves, and they're the person your pay-what-you-can line is for.
-- **Fix:** make the button say "Join" or "Join (pay what you can)", and put the $20 on the page next to it. I haven't seen `/join`, so check that it actually lets people pay less.
+1. **Blocker: the return deadline doesn't match your opening hours.**
+   - The headline promises "Return it clean by Monday 5pm", and the wet tile saw says "back by Monday".
+   - You're open Saturday 10-1 and Wednesday 6-8, so nobody can hand anything back on Monday.
+   - The post hole digger has the same problem. Three days from Saturday is Tuesday, and you're closed.
+   - If there's a drop box or a Monday volunteer, say so. If not, the headline is wrong. Either way, someone who reads it literally will turn up to a locked hall.
 
-**3. Major: there's no street address or map.**
-- You only give "the back of the Eastgate Methodist hall". Someone scanning the flyer on their phone can't tap through to directions.
-- With 3 hours on Saturday and 2 on Wednesday, a failed first visit is costly.
-- **Fix:** add the street address as a map link. Also say how to find the entrance at the back, and ideally show the next open session.
+2. **Major: nobody can find the place.**
+   - The only location is "the back of the Eastgate Methodist hall".
+   - There's no street address, map link, entrance or parking note.
+   - This is a flyer QR page, so people will scan it and then walk or drive there. Add the address and which door to use. Make the address a map link.
 
-**4. Major: photo ID is buried in step 1 of a list below the Join button.**
-- Someone who clicks Join and pays $20 may not learn they need ID until later, and there's no explanation of how online joining connects to showing up in person.
-- **Fix:** put "bring photo ID the first time" next to the button, and say whether joining happens online, in person, or both.
+3. **Major: "pay what you can" is undercut by the button.**
+   - The paragraph says "$20 a year, or pay what you can". The primary button says "Join for $20".
+   - Someone who can't spare $20 sees only the $20 button and may leave.
+   - Either change the button to "Join" (the $20 and the sliding scale are already in the copy), or add a line near it saying how to pay less.
 
-**5. Minor: the hours are underweighted.**
-- Hours are your tightest constraint, but they sit as a plain paragraph above the buttons. Move them directly above or below the buttons, or bold them.
+4. **Moderate: the join flow is unclear.**
+   - "Bring photo ID the first time" only appears in step 1 of the list, after the Join button.
+   - A visitor can't tell if `/join` finishes everything online or if they still have to come in with ID. Say which one, next to the button.
 
-**6. Minor: the email isn't tappable.**
-- `lend@loanshed.example` is plain text. Every visitor arrives on a phone from a QR code, so wrap it in a `mailto:` link.
+5. **Moderate: the opening hours are buried.**
+   - They sit in a one-line paragraph between the intro and the buttons. For a physical place, they're the second most important fact on the page.
+   - The two times also use different formats: "10-1" has no am/pm, while "evenings 6-8" is spelled out differently. Give the hours their own prominent line with "10am-1pm" and "6-8pm".
 
-**7. Minor: "Popular this month" will go stale.**
-- Volunteers have to remember to update it, and the flyer will outlive the month. Either drop "this month" or make it "Popular right now" and commit to updating it.
-- The four items use inconsistent formats ("2 days, back by Monday" vs "3 days"). Link each tool to its catalogue entry.
+6. **Minor: the email isn't tappable.** `lend@loanshed.example` is plain text. People scanning from a phone can't tap it, so wrap it in a `mailto:` link.
 
-**Unanswered questions I'd want settled before the committee sees it** (they're content, not design):
-- What happens if a tool is returned late?
-- Does anything like the tile saw need a safety induction?
-- What does "clean" mean in practice?
+7. **Minor: the "Popular this month" list is hard to read and will go stale.**
+   - "2 days" and "1 week" don't say what they measure. I read them as loan lengths, but it's a guess. "Loan: 2 days" would remove the doubt.
+   - Only the tile saw says "back by Monday", so the list is inconsistent.
+   - The list needs someone to update it each month. If nobody will, cut it or make it static, for example "Most borrowed".
 
-**Keep:**
-- **The h1.** It names a specific tool and a specific deadline, so a reader knows immediately what this is.
-- **Price and "free for members" up front.** The visitor doesn't have to hunt for the cost.
-- **"If something breaks, tell us, it happens."** It lowers the fear of borrowing and sounds like real volunteers.
-- **One primary button and one secondary button.** The page asks for one decision.
+**Keep**
+- **The headline names a real tool and a real deadline.** It's far better than "Welcome to Loan Shed". Just fix finding 1.
+- **The primary and secondary buttons are clearly ranked.** Joining is the action and browsing is the fallback.
+- **The three-step "How borrowing works" is short.** "If something breaks, tell us, it happens" removes the fear of damage fees.
+- **Naming Renata at the Saturday desk** gives newcomers a person to look for.
 
-**Not checked:** the markup has no CSS, `<title>`, viewport meta or `lang`, so I couldn't judge contrast, tap-target size or mobile layout. Before printing, scan the QR on a real phone and confirm the two buttons are at least about 44px tall and that the page doesn't need pinch-zoom.
+**Not checked:** the CSS, so button contrast, tap-target size and mobile layout are untested. Your snippet also has no doctype, `<title>` or viewport meta. If the real page lacks them, add them, because every visitor will be on a phone. I judged this as a first-time visitor who scans the QR code on a phone and decides whether to join.

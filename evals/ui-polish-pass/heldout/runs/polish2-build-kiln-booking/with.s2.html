@@ -3,430 +3,405 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book kiln time</title>
+<title>Book kiln time – Pottery studio</title>
 <style>
-  :root {
-    --bg: #f6f1ea;
-    --card: #fffdf9;
-    --ink: #2b2420;
-    --muted: #6a5d54;
-    --line: #8f8176;
-    --soft: #e4dacd;
-    --accent: #9a4a26;
-    --accent-ink: #fff;
-    --accent-soft: #f4e3d8;
-    --ok: #2f6b3f;
-    --ok-soft: #e3f0e5;
-    --bad: #a3261d;
-    --bad-soft: #fbe7e4;
-    --radius: 10px;
+  :root{
+    --bg:#f6f1ea; --card:#fffdf9; --ink:#2b2420; --muted:#665a51; --line:#a89b8e; --soft:#e4dbd0;
+    --accent:#9a3f1f; --accent-ink:#fff; --accent-soft:#f6e3d9;
+    --ok:#1f5c3a; --ok-bg:#e4f2e8; --err:#a11d1d; --err-bg:#fbe9e7;
+    --r:10px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5;font-size:1rem}
+  .skip{position:absolute;left:.5rem;top:-4rem;background:var(--ink);color:#fff;padding:.6rem 1rem;border-radius:6px;z-index:10}
+  .skip:focus{top:.5rem}
+  main{max-width:60rem;margin:0 auto;padding:1.5rem 1rem 6rem}
+  h1{font-size:1.75rem;line-height:1.2;margin:0 0 .25rem}
+  h2{font-size:1.2rem;margin:0 0 .75rem}
+  .lede{color:var(--muted);margin:0 0 1.5rem;max-width:42rem}
+  .layout{display:grid;gap:1.5rem;grid-template-columns:minmax(0,1fr)}
+  @media(min-width:52rem){.layout{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:start}}
+  .card{background:var(--card);border:1px solid var(--soft);border-radius:var(--r);padding:1.25rem}
+  fieldset{border:0;margin:0 0 1.5rem;padding:0;min-width:0}
+  legend,.label{font-weight:650;padding:0;margin-bottom:.5rem;display:block}
+  .hint{color:var(--muted);font-size:.9rem;margin:.15rem 0 .5rem}
+  .opt{font-weight:400;color:var(--muted)}
+  input[type=date],select,textarea{
+    font:inherit;color:inherit;background:#fff;border:1.5px solid var(--line);border-radius:8px;
+    padding:.6rem .75rem;min-height:2.75rem;width:100%;max-width:100%
   }
-  main { max-width: 760px; margin: 0 auto; padding: 28px 16px 64px; }
-  h1 { font-size: 1.75rem; margin: 0 0 4px; line-height: 1.2; }
-  h2 { font-size: 1.1rem; margin: 0 0 12px; }
-  .lede { color: var(--muted); margin: 0 0 24px; }
-  section.card {
-    background: var(--card);
-    border: 1px solid var(--soft);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  fieldset { border: 0; padding: 0; margin: 0 0 22px; min-width: 0; }
-  legend, label.lbl { font-weight: 600; display: block; padding: 0; margin-bottom: 8px; }
-  .hint { color: var(--muted); font-size: .9rem; font-weight: 400; }
-  .kilns { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-  .opt { position: relative; }
-  .opt input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
-  .opt .face {
-    display: block; height: 100%;
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-    background: #fff;
-    overflow-wrap: anywhere;
-  }
-  .opt .face b { display: block; }
-  .opt .face span { color: var(--muted); font-size: .88rem; }
-  .opt input:checked + .face { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
-  .opt input:focus-visible + .face, button:focus-visible, a:focus-visible {
-    outline: 3px solid #1d4ed8; outline-offset: 2px;
-  }
-  input[type=text], input[type=email], input[type=date], select, textarea {
-    width: 100%; font: inherit; color: inherit;
-    padding: 10px 12px; min-height: 44px;
-    border: 1.5px solid var(--line); border-radius: 8px; background: #fff;
-  }
-  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 1px; }
-  [aria-invalid="true"] { border-color: var(--bad) !important; }
-  .row { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
-  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
-  .field { margin-bottom: 22px; }
-  .err { color: var(--bad); font-size: .9rem; margin: 6px 0 0; display: none; }
-  .err.show { display: block; }
-  .err::before { content: "Problem: "; font-weight: 700; }
-  .slots { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
-  .slot { position: relative; }
-  .slot input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
-  .slot input:disabled { cursor: not-allowed; }
-  .slot .face {
-    display: block; border: 1.5px solid var(--line); border-radius: var(--radius);
-    padding: 10px 14px; background: #fff;
-  }
-  .slot .face b { display: block; }
-  .slot .face span { font-size: .88rem; color: var(--muted); }
-  .slot input:checked + .face { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
-  .slot input:focus-visible + .face { outline: 3px solid #1d4ed8; outline-offset: 2px; }
-  .slot input:disabled + .face { background: #efe9e1; border-style: dashed; color: #6a5d54; }
-  .slot input:disabled + .face b { text-decoration: line-through; }
-  .stepper { display: inline-flex; align-items: center; gap: 0; border: 1.5px solid var(--line); border-radius: 8px; background: #fff; }
-  .stepper button { border: 0; background: transparent; font: inherit; font-size: 1.25rem; width: 44px; height: 44px; cursor: pointer; border-radius: 8px; }
-  .stepper output { min-width: 3ch; text-align: center; font-weight: 600; }
-  .btn {
-    font: inherit; font-weight: 600; cursor: pointer;
-    min-height: 44px; padding: 0 20px; border-radius: 8px;
-    border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-ink);
-  }
-  .btn.ghost { background: transparent; color: var(--accent); }
-  .btn[aria-busy="true"] { opacity: .75; cursor: progress; }
-  .summary-live { margin: 12px 0 0; }
-  .banner { border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; border: 1.5px solid; }
-  .banner.bad { background: var(--bad-soft); border-color: var(--bad); color: #6e1812; }
-  .banner.ok { background: var(--ok-soft); border-color: var(--ok); color: #1c4527; }
-  .banner[hidden] { display: none; }
-  .banner ul { margin: 6px 0 0; padding-left: 20px; }
-  .banner a { color: inherit; font-weight: 600; }
-  .empty { text-align: center; padding: 18px 8px; color: var(--muted); }
-  .empty b { display: block; color: var(--ink); margin-bottom: 4px; }
-  ul.list { list-style: none; margin: 0; padding: 0; }
-  ul.list li {
-    display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;
-    padding: 12px 0; border-top: 1px solid var(--soft);
-  }
-  ul.list li:first-child { border-top: 0; }
-  ul.list .what { min-width: 0; overflow-wrap: anywhere; flex: 1 1 220px; }
-  ul.list .what span { display: block; color: var(--muted); font-size: .9rem; }
-  .toast {
-    position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
-    background: #2b2420; color: #fff; border-radius: 10px; padding: 10px 14px;
-    display: flex; gap: 14px; align-items: center; max-width: calc(100% - 32px);
-    box-shadow: 0 6px 20px rgba(0,0,0,.25);
-  }
-  .toast[hidden] { display: none; }
-  .toast button { background: transparent; color: #ffd9c4; border: 0; font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; min-height: 36px; padding: 0 6px; }
-  .toast button:focus-visible { outline-color: #fff; }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  @media (prefers-reduced-motion: no-preference) {
-    .opt .face, .slot .face { transition: background-color .12s, border-color .12s; }
-  }
+  textarea{resize:vertical;min-height:4.5rem}
+  select:disabled{background:var(--soft);color:var(--muted)}
+  :focus-visible{outline:3px solid #1a5fb4;outline-offset:2px}
+  [aria-invalid=true]{border-color:var(--err);border-width:2px}
+  .err-msg{color:var(--err);font-size:.92rem;margin:.35rem 0 0;display:flex;gap:.4rem}
+  .err-msg::before{content:"Problem:";font-weight:700}
+  /* choice cards */
+  .choices{display:grid;gap:.6rem}
+  .choice{position:relative}
+  .choice input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+  .choice label{display:block;border:1.5px solid var(--line);border-radius:8px;background:#fff;padding:.7rem .85rem;min-height:2.75rem;overflow-wrap:anywhere}
+  .choice input:checked + label{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+  .choice input:focus-visible + label{outline:3px solid #1a5fb4;outline-offset:2px}
+  .choice input:disabled{cursor:not-allowed}
+  .choice input:disabled + label{background:var(--soft);color:var(--muted);border-style:dashed}
+  .choice .t{font-weight:600;display:block}
+  .choice .s{font-size:.9rem;color:var(--muted);display:block}
+  .choice input:checked + label .s{color:var(--ink)}
+  .slots{grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))}
+  .types{grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))}
+  .placeholder{border:1.5px dashed var(--line);border-radius:8px;padding:1rem;color:var(--muted);background:#fff}
+  .placeholder strong{color:var(--ink);display:block}
+  /* buttons */
+  button{font:inherit;cursor:pointer}
+  .btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:.75rem 1.25rem;min-height:2.9rem;font-weight:650;width:100%}
+  .btn:hover{background:#7f3118}
+  .btn[aria-disabled=true]{opacity:.75;cursor:progress}
+  .btn-quiet{background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:8px;padding:.4rem .8rem;min-height:2.5rem}
+  .btn-quiet:hover{background:var(--soft)}
+  .btn-link{background:none;border:0;color:inherit;text-decoration:underline;font-weight:650;padding:.4rem .6rem;min-height:2.5rem}
+  /* messages */
+  .banner{border-radius:8px;padding:.85rem 1rem;margin-bottom:1.25rem;border:1.5px solid}
+  .banner.err{background:var(--err-bg);border-color:var(--err);color:#5e0f0f}
+  .banner.ok{background:var(--ok-bg);border-color:var(--ok);color:#12391f}
+  .banner h2{font-size:1rem;margin:0 0 .25rem}
+  .banner ul{margin:.25rem 0 0;padding-left:1.2rem}
+  .banner a{color:inherit;font-weight:600}
+  .banner p{margin:.25rem 0 0}
+  [hidden]{display:none!important}
+  /* summary & list */
+  dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.35rem .9rem}
+  dt{color:var(--muted)} dd{margin:0;overflow-wrap:anywhere}
+  .sum{margin-bottom:1.5rem}
+  .bk{list-style:none;margin:0;padding:0;display:grid;gap:.75rem}
+  .bk li{border:1px solid var(--soft);border-radius:8px;background:#fff;padding:.8rem;display:flex;gap:.75rem;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+  .bk .what{min-width:0;flex:1 1 11rem;overflow-wrap:anywhere}
+  .bk .what b{display:block}
+  .bk .what span{color:var(--muted);font-size:.92rem}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:1rem;width:calc(100% - 2rem);max-width:28rem;background:var(--ink);color:#fff;border-radius:10px;padding:.4rem .5rem .4rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;z-index:5;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+  .toast button{color:#fff;text-decoration:underline;background:none;border:0;font-weight:700;padding:.5rem .75rem;min-height:2.75rem}
+  .toast button:focus-visible{outline-color:#fff}
+  .spin{display:inline-block;width:1em;height:1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;vertical-align:-.15em;margin-right:.5rem;animation:sp .8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media(prefers-reduced-motion:reduce){.spin{animation:none;border-right-color:currentColor;border-style:dotted}}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </head>
 <body>
+<a class="skip" href="#kiln-form">Skip to booking form</a>
 <main>
   <h1>Book kiln time</h1>
-  <p class="lede">Reserve a firing slot in the shared kilns. Pick a kiln, a day and a time, and tell us how much you’re loading.</p>
+  <p class="lede">Reserve shelf space in a shared kiln. Choose a kiln, a day and a loading window, and say how many shelves your work needs.</p>
 
-  <section class="card" aria-labelledby="book-h">
-    <h2 id="book-h">New booking</h2>
+  <div class="layout">
+    <section class="card" aria-labelledby="form-h">
+      <h2 id="form-h">New booking</h2>
 
-    <div id="errbox" class="banner bad" role="alert" tabindex="-1" hidden></div>
-    <div id="okbox" class="banner ok" role="status" tabindex="-1" hidden></div>
+      <div id="result" tabindex="-1" hidden></div>
+      <div id="errsum" class="banner err" role="alert" tabindex="-1" hidden></div>
 
-    <form id="form" novalidate>
-      <fieldset id="f-kiln" aria-describedby="e-kiln">
-        <legend>1. Kiln</legend>
-        <div class="kilns" id="kilns"></div>
-        <p class="err" id="e-kiln">Choose a kiln.</p>
-      </fieldset>
+      <form id="kiln-form" novalidate>
+        <fieldset>
+          <legend>Kiln</legend>
+          <div class="choices" id="kilns"></div>
+        </fieldset>
 
-      <div class="field">
-        <label class="lbl" for="date">2. Day</label>
-        <input type="date" id="date" aria-describedby="e-date">
-        <p class="err" id="e-date"></p>
-      </div>
-
-      <fieldset id="f-slot" aria-describedby="slot-note e-slot">
-        <legend>3. Time</legend>
-        <p class="hint" id="slot-note" style="margin:-4px 0 10px">Choose a kiln and a day to see open times.</p>
-        <div class="slots" id="slots"></div>
-        <p class="err" id="e-slot">Choose an open time.</p>
-      </fieldset>
-
-      <div class="field">
-        <span class="lbl" id="shelves-l">4. Shelves in your load <span class="hint">(how much kiln space you need)</span></span>
-        <div class="stepper" role="group" aria-labelledby="shelves-l">
-          <button type="button" id="minus" aria-label="Fewer shelves">−</button>
-          <output id="shelves" aria-live="polite">1</output>
-          <button type="button" id="plus" aria-label="More shelves">+</button>
+        <div style="margin-bottom:1.5rem">
+          <label class="label" for="date">Date</label>
+          <p class="hint" id="date-hint">Bookings open up to 60 days ahead.</p>
+          <input type="date" id="date" name="date" aria-describedby="date-hint date-err" autocomplete="off">
+          <p class="err-msg" id="date-err" hidden></p>
         </div>
-        <span class="hint" id="shelves-max" style="margin-left:10px"></span>
-      </div>
 
-      <div class="row">
-        <div class="field">
-          <label class="lbl" for="name">Your name</label>
-          <input type="text" id="name" autocomplete="name" aria-describedby="e-name">
-          <p class="err" id="e-name">Enter your name so the studio knows whose firing this is.</p>
+        <fieldset id="slot-set" aria-describedby="slot-err">
+          <legend>Loading window</legend>
+          <div id="slots" aria-live="polite"></div>
+          <p class="err-msg" id="slot-err" hidden></p>
+        </fieldset>
+
+        <div style="margin-bottom:1.5rem">
+          <label class="label" for="shelves">Shelves needed</label>
+          <p class="hint" id="shelves-hint">Choose a loading window first to see how many shelves are free.</p>
+          <select id="shelves" aria-describedby="shelves-hint shelves-err" disabled></select>
+          <p class="err-msg" id="shelves-err" hidden></p>
         </div>
-        <div class="field">
-          <label class="lbl" for="email">Email <span class="hint">(for the confirmation)</span></label>
-          <input type="email" id="email" autocomplete="email" aria-describedby="e-email">
-          <p class="err" id="e-email"></p>
+
+        <fieldset>
+          <legend>Firing</legend>
+          <div class="choices types">
+            <div class="choice"><input type="radio" name="type" id="t-bisque" value="Bisque" checked><label for="t-bisque"><span class="t">Bisque</span><span class="s">First firing</span></label></div>
+            <div class="choice"><input type="radio" name="type" id="t-glaze" value="Glaze"><label for="t-glaze"><span class="t">Glaze</span><span class="s">Final firing</span></label></div>
+          </div>
+        </fieldset>
+
+        <div style="margin-bottom:1.5rem">
+          <label class="label" for="note">Note for the kiln monitor <span class="opt">(optional)</span></label>
+          <textarea id="note" maxlength="300" placeholder="e.g. one tall vase, needs a bottom shelf"></textarea>
         </div>
-      </div>
 
-      <div class="field">
-        <label class="lbl" for="notes">Notes for the studio <span class="hint">(optional: glazes, tall pieces, anything unusual)</span></label>
-        <textarea id="notes" rows="3" maxlength="400"></textarea>
-      </div>
+        <button class="btn" type="submit" id="submit">Book this time</button>
+      </form>
+    </section>
 
-      <button class="btn" type="submit" id="submit">Book this slot</button>
-      <p class="summary-live hint" id="pick-summary" aria-live="polite"></p>
-    </form>
-  </section>
+    <div>
+      <section class="card sum" aria-labelledby="sum-h">
+        <h2 id="sum-h">Your selection</h2>
+        <dl id="summary"></dl>
+      </section>
 
-  <section class="card" aria-labelledby="mine-h">
-    <h2 id="mine-h">Your bookings</h2>
-    <div id="mine"></div>
-  </section>
+      <section class="card" aria-labelledby="mine-h">
+        <h2 id="mine-h" tabindex="-1">Your upcoming bookings</h2>
+        <div id="mine"></div>
+      </section>
+    </div>
+  </div>
 </main>
 
 <div class="toast" id="toast" role="status" hidden>
   <span id="toast-msg"></span>
   <button type="button" id="undo">Undo</button>
 </div>
+<div class="vh" id="live" role="status" aria-live="polite"></div>
 
 <script>
-(function () {
-  var KILNS = [
-    { id: "elec-a", name: "Electric kiln A", desc: "Cone 6 glaze firings", max: 4 },
-    { id: "elec-b", name: "Electric kiln B", desc: "Cone 04 bisque firings", max: 5 },
-    { id: "gas",    name: "Gas kiln",        desc: "Cone 10 reduction",     max: 3 }
+(function(){
+  // Sample setup: edit kilns, capacities and windows to match the studio.
+  var KILNS=[
+    {id:"large",name:"Large electric kiln",desc:"Up to cone 6",cap:6},
+    {id:"small",name:"Small electric kiln",desc:"Good for test tiles and small loads",cap:3},
+    {id:"gas",name:"Gas kiln",desc:"Reduction firings",cap:8}
   ];
-  var SLOTS = [
-    { id: "am",  label: "Morning load",   time: "9:00 am – 12:00 pm" },
-    { id: "pm",  label: "Afternoon load", time: "12:00 pm – 5:00 pm" },
-    { id: "eve", label: "Evening load",   time: "5:00 pm – 9:00 pm" }
+  var SLOTS=[
+    {id:"am",name:"Morning",time:"9:00–12:00",end:12},
+    {id:"pm",name:"Afternoon",time:"12:00–16:00",end:16},
+    {id:"eve",name:"Evening",time:"16:00–20:00",end:20}
   ];
-  var STORE = "kiln-bookings-v1";
-  var $ = function (id) { return document.getElementById(id); };
-  var state = { kiln: "", slot: "", shelves: 1 };
-  var bookings = load();
-  var undoTimer = null, lastRemoved = null, busy = false;
+  var MAXDAYS=60, KEY="kiln-bookings-v1";
 
-  function load() {
-    try { return JSON.parse(localStorage.getItem(STORE)) || []; } catch (e) { return []; }
+  var $=function(i){return document.getElementById(i)};
+  var form=$("kiln-form"), dateEl=$("date"), shel=$("shelves"), slotsEl=$("slots");
+  var bookings=[], pendingUndo=null, undoTimer=null, busy=false;
+
+  try{bookings=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){bookings=[]}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(bookings))}catch(e){}}
+
+  function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+  function parse(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2])}
+  function fmt(s){return parse(s).toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",year:"numeric"})}
+  function kilnOf(id){return KILNS.filter(function(k){return k.id===id})[0]}
+  function slotOf(id){return SLOTS.filter(function(s){return s.id===id})[0]}
+  function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h}
+  function plural(n,w){return n+" "+w+(n===1?"":"s")}
+
+  var today=new Date(), max=new Date(today.getFullYear(),today.getMonth(),today.getDate()+MAXDAYS);
+  dateEl.min=iso(today); dateEl.max=iso(max);
+
+  // Stand-in for what other members have already booked.
+  function free(kilnId,date,slotId){
+    var k=kilnOf(kilnId), used=hash(kilnId+date+slotId)%(k.cap+3);
+    if(used>k.cap)used=k.cap;
+    bookings.forEach(function(b){if(b.kiln===kilnId&&b.date===date&&b.slot===slotId)used+=b.shelves});
+    return Math.max(0,k.cap-used);
   }
-  function save() {
-    try { localStorage.setItem(STORE, JSON.stringify(bookings)); return true; } catch (e) { return false; }
-  }
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
-  function kilnById(id) { return KILNS.filter(function (k) { return k.id === id; })[0]; }
-  function slotById(id) { return SLOTS.filter(function (s) { return s.id === id; })[0]; }
-  function niceDate(iso) {
-    var p = iso.split("-");
-    return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
-  }
-  function todayISO() {
-    var d = new Date();
-    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-  }
-  // Sample availability: stands in for the studio's real calendar.
-  function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
-  function takenByOthers(k, d, s) { return hash(k + d + s) % 3 === 0; }
-  function takenByMe(k, d, s) {
-    return bookings.some(function (b) { return b.kiln === k && b.date === d && b.slot === s; });
+  function passed(date,s){
+    var n=new Date();
+    return date===iso(n)&&n.getHours()>=s.end;
   }
 
-  // Kiln options
-  $("kilns").innerHTML = KILNS.map(function (k) {
-    return '<label class="opt"><input type="radio" name="kiln" value="' + k.id + '"><span class="face"><b>' + k.name + '</b><span>' + k.desc + '</span></span></label>';
+  // Kiln choices
+  $("kilns").innerHTML=KILNS.map(function(k,i){
+    return '<div class="choice"><input type="radio" name="kiln" id="k-'+k.id+'" value="'+k.id+'"'+(i===0?" checked":"")+'><label for="k-'+k.id+'"><span class="t">'+k.name+'</span><span class="s">'+k.desc+" · "+plural(k.cap,"shelf").replace("shelf","shelf").replace("shelfs","shelves")+'</span></label></div>';
   }).join("");
 
-  var dateEl = $("date");
-  dateEl.min = todayISO();
+  function kilnVal(){return form.kiln.value}
+  function slotVal(){var c=form.querySelector('input[name=slot]:checked');return c?c.value:""}
+  function typeVal(){return form.type.value}
 
-  function renderSlots() {
-    var wrap = $("slots"), note = $("slot-note"), d = dateEl.value;
-    state.slot = state.slot;
-    if (!state.kiln || !d) {
-      wrap.innerHTML = "";
-      state.slot = "";
-      note.textContent = "Choose a kiln and a day to see open times.";
-      return updateSummary();
+  function renderSlots(keepSlot){
+    var d=dateEl.value, k=kilnVal(), prev=keepSlot?slotVal():"";
+    clearErr("slot");
+    if(!d){
+      slotsEl.innerHTML='<div class="placeholder"><strong>Pick a date to see open windows.</strong>Free shelves are shown for the kiln you chose.</div>';
+      setShelves(); return;
     }
-    if (d < todayISO()) {
-      wrap.innerHTML = ""; state.slot = "";
-      note.textContent = "That day has passed. Pick today or a later day.";
-      return updateSummary();
+    var any=false, html='<div class="choices slots">';
+    SLOTS.forEach(function(s){
+      var f=free(k,d,s.id), gone=passed(d,s), off=gone||f===0;
+      if(!off)any=true;
+      var note=gone?"Already over today":f===0?"Full":plural(f,"shelf").replace("shelfs","shelves")+" free";
+      html+='<div class="choice"><input type="radio" name="slot" id="s-'+s.id+'" value="'+s.id+'"'+(off?" disabled":"")+(prev===s.id&&!off?" checked":"")+'><label for="s-'+s.id+'"><span class="t">'+s.name+' '+s.time+'</span><span class="s">'+note+'</span></label></div>';
+    });
+    html+='</div>';
+    if(!any)html+='<p class="hint" style="margin-top:.75rem"><strong>No open windows</strong> for the '+kilnOf(k).name.toLowerCase()+' on '+fmt(d)+'. Try another date or choose a different kiln.</p>';
+    slotsEl.innerHTML=html;
+    setShelves();
+  }
+
+  function setShelves(){
+    var d=dateEl.value, s=slotVal(), k=kilnVal(), prev=+shel.value;
+    if(!d||!s){
+      shel.innerHTML=""; shel.disabled=true;
+      $("shelves-hint").textContent=d?"Choose a loading window first to see how many shelves are free.":"Pick a date and loading window first.";
+      renderSummary(); return;
     }
-    var openCount = 0;
-    wrap.innerHTML = SLOTS.map(function (s) {
-      var mine = takenByMe(state.kiln, d, s.id);
-      var other = takenByOthers(state.kiln, d, s.id);
-      var off = mine || other;
-      if (!off) openCount++;
-      if (off && state.slot === s.id) state.slot = "";
-      return '<label class="slot"><input type="radio" name="slot" value="' + s.id + '"' + (off ? " disabled" : "") + (state.slot === s.id ? " checked" : "") + '><span class="face"><b>' + s.label + '</b><span>' + s.time + ' · ' + (mine ? "Booked by you" : other ? "Already booked" : "Open") + '</span></span></label>';
-    }).join("");
-    note.textContent = openCount
-      ? kilnById(state.kiln).name + " on " + niceDate(d) + ": " + openCount + " of " + SLOTS.length + " times open."
-      : "Nothing open on " + niceDate(d) + " in " + kilnById(state.kiln).name + ". Try another day or a different kiln.";
-    updateSummary();
+    var f=free(k,d,s), o="";
+    for(var i=1;i<=f;i++)o+='<option value="'+i+'">'+plural(i,"shelf").replace("shelfs","shelves")+'</option>';
+    shel.innerHTML=o; shel.disabled=false;
+    if(prev&&prev<=f)shel.value=prev;
+    $("shelves-hint").textContent=plural(f,"shelf").replace("shelfs","shelves")+" free in this window.";
+    renderSummary();
   }
 
-  function renderShelves() {
-    var k = state.kiln ? kilnById(state.kiln) : null;
-    var max = k ? k.max : 5;
-    if (state.shelves > max) state.shelves = max;
-    $("shelves").textContent = state.shelves;
-    $("shelves-max").textContent = k ? "Up to " + k.max + " in " + k.name + "." : "";
-    $("minus").disabled = state.shelves <= 1;
-    $("plus").disabled = state.shelves >= max;
+  function renderSummary(){
+    var d=dateEl.value, s=slotVal(), k=kilnOf(kilnVal());
+    var rows=[["Kiln",k.name],["Date",d?fmt(d):"Not chosen yet"],["Window",s?slotOf(s).name+" "+slotOf(s).time:"Not chosen yet"],
+      ["Shelves",shel.value&&!shel.disabled?shel.value:"Not chosen yet"],["Firing",typeVal()]];
+    $("summary").innerHTML=rows.map(function(r){return "<dt>"+r[0]+"</dt><dd>"+r[1]+"</dd>"}).join("");
   }
 
-  function updateSummary() {
-    var s = $("pick-summary");
-    if (state.kiln && dateEl.value && state.slot) {
-      s.textContent = "You’re booking " + kilnById(state.kiln).name + ", " + niceDate(dateEl.value) + ", " + slotById(state.slot).label.toLowerCase() + ", " + state.shelves + (state.shelves === 1 ? " shelf." : " shelves.");
-    } else s.textContent = "";
-  }
-
-  function renderMine() {
-    var box = $("mine");
-    var upcoming = bookings.slice().sort(function (a, b) { return (a.date + a.slot) < (b.date + b.slot) ? -1 : 1; });
-    if (!upcoming.length) {
-      box.innerHTML = '<div class="empty"><b>No kiln time booked yet</b>When you book a firing above, it will show up here, where you can cancel it if plans change.</div>';
+  function renderMine(focusId){
+    var list=bookings.slice().sort(function(a,b){return (a.date+a.slot)<(b.date+b.slot)?-1:1});
+    var box=$("mine");
+    if(!list.length){
+      box.innerHTML='<div class="placeholder"><strong>Nothing booked yet.</strong>When you book kiln time it will be listed here, and you can cancel it from this list.</div>';
       return;
     }
-    box.innerHTML = '<ul class="list">' + upcoming.map(function (b) {
-      var k = kilnById(b.kiln), s = slotById(b.slot);
-      return '<li><div class="what"><b>' + esc(k.name) + '</b> · ' + esc(niceDate(b.date)) +
-        '<span>' + esc(s.label) + ', ' + esc(s.time) + ' · ' + b.shelves + (b.shelves === 1 ? ' shelf' : ' shelves') + '</span>' +
-        (b.notes ? '<span>Note: ' + esc(b.notes) + '</span>' : '') + '</div>' +
-        '<button type="button" class="btn ghost" data-cancel="' + b.id + '" aria-label="Cancel booking: ' + esc(k.name) + ', ' + esc(niceDate(b.date)) + ', ' + esc(s.label) + '">Cancel booking</button></li>';
-    }).join("") + '</ul>';
+    box.innerHTML='<ul class="bk">'+list.map(function(b){
+      var k=kilnOf(b.kiln), s=slotOf(b.slot);
+      var label=k.name+", "+fmt(b.date)+", "+s.name;
+      return '<li><div class="what"><b>'+fmt(b.date)+' · '+s.name+' '+s.time+'</b><span>'+k.name+' · '+b.type+' · '+plural(b.shelves,"shelf").replace("shelfs","shelves")+(b.note?'<br>Note: '+esc(b.note):'')+'</span></div>'+
+        '<button type="button" class="btn-quiet" data-cancel="'+b.id+'" aria-label="Cancel booking: '+label+'">Cancel booking</button></li>';
+    }).join("")+'</ul>';
+    if(focusId){var el=box.querySelector('[data-cancel="'+focusId+'"]');if(el)el.focus()}
   }
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 
   // Errors
-  function setErr(id, fieldId, msg) {
-    var e = $(id), f = fieldId && $(fieldId);
-    if (msg) { e.textContent = msg; e.classList.add("show"); if (f) f.setAttribute("aria-invalid", "true"); }
-    else { e.classList.remove("show"); if (f) f.removeAttribute("aria-invalid"); }
+  var errs={};
+  function setErr(field,msg,ctl){
+    errs[field]={msg:msg,ctl:ctl};
+    var p=$(field+"-err"); p.textContent=msg; p.hidden=false;
+    if(ctl&&ctl.tagName!=="FIELDSET")ctl.setAttribute("aria-invalid","true");
   }
-  function clearErrors() {
-    ["e-kiln","e-date","e-slot","e-name","e-email"].forEach(function (id) { $(id).classList.remove("show"); });
-    ["date","name","email"].forEach(function (id) { $(id).removeAttribute("aria-invalid"); });
-    $("errbox").hidden = true;
+  function clearErr(field){
+    delete errs[field];
+    var p=$(field+"-err"); p.hidden=true; p.textContent="";
+    var c={date:dateEl,shelves:shel}[field]; if(c)c.removeAttribute("aria-invalid");
   }
+  function showSummary(){
+    var keys=Object.keys(errs), box=$("errsum");
+    if(!keys.length){box.hidden=true;box.innerHTML="";return}
+    box.innerHTML='<h2>'+(keys.length===1?"One thing needs fixing":keys.length+" things need fixing")+'</h2><ul>'+keys.map(function(k){return '<li><a href="#" data-goto="'+k+'">'+esc(errs[k].msg)+'</a></li>'}).join("")+'</ul>';
+    box.hidden=false;
+  }
+  function focusField(k){
+    var t=k==="slot"?(form.querySelector('input[name=slot]:not(:disabled)')||dateEl):k==="date"?dateEl:shel;
+    t.focus();
+  }
+  $("errsum").addEventListener("click",function(e){
+    var a=e.target.closest("[data-goto]"); if(!a)return;
+    e.preventDefault(); focusField(a.dataset.goto);
+  });
 
-  function validate() {
-    var problems = [];
-    clearErrors();
-    if (!state.kiln) { setErr("e-kiln", null, "Choose a kiln."); problems.push({ msg: "Choose a kiln.", focus: function () { document.querySelector('input[name=kiln]').focus(); } }); }
-    var d = dateEl.value;
-    if (!d) { setErr("e-date", "date", "Pick the day you want to fire."); problems.push({ msg: "Pick a day.", focus: function () { dateEl.focus(); } }); }
-    else if (d < todayISO()) { setErr("e-date", "date", "That day has passed. Pick today or later."); problems.push({ msg: "Pick today or a later day.", focus: function () { dateEl.focus(); } }); }
-    if (!state.slot) {
-      var msg = (state.kiln && d) ? "Choose one of the open times, or try another day." : "Choose a kiln and day first, then an open time.";
-      setErr("e-slot", null, msg);
-      problems.push({ msg: "Choose an open time.", focus: function () { var r = document.querySelector('input[name=slot]:not(:disabled)'); (r || dateEl).focus(); } });
-    }
-    if (!$("name").value.trim()) { setErr("e-name", "name", "Enter your name so the studio knows whose firing this is."); problems.push({ msg: "Enter your name.", focus: function () { $("name").focus(); } }); }
-    var em = $("email").value.trim();
-    if (!em) { setErr("e-email", "email", "Enter your email so we can send the confirmation."); problems.push({ msg: "Enter your email.", focus: function () { $("email").focus(); } }); }
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { setErr("e-email", "email", "That doesn’t look like an email address. Check for a missing @ or domain."); problems.push({ msg: "Fix your email address.", focus: function () { $("email").focus(); } }); }
-    return problems;
+  function validate(){
+    ["date","slot","shelves"].forEach(clearErr);
+    var d=dateEl.value;
+    if(!d)setErr("date","Choose a date for your firing.",dateEl);
+    else if(d<dateEl.min)setErr("date","That date has already passed. Choose today or a later date.",dateEl);
+    else if(d>dateEl.max)setErr("date","Bookings open "+MAXDAYS+" days ahead. Choose a date on or before "+fmt(dateEl.max)+".",dateEl);
+    if(!slotVal())setErr("slot",d&&!errs.date?"Choose a loading window.":"Choose a loading window once you have a date.",$("slot-set"));
+    if(!errs.slot&&!errs.date&&(shel.disabled||!shel.value))setErr("shelves","Choose how many shelves you need.",shel);
+    showSummary();
+    return !Object.keys(errs).length;
   }
 
   // Events
-  $("kilns").addEventListener("change", function (e) {
-    state.kiln = e.target.value; state.slot = "";
-    $("e-kiln").classList.remove("show");
-    renderShelves(); renderSlots();
+  form.addEventListener("change",function(e){
+    var n=e.target.name||e.target.id;
+    if(n==="kiln"||n==="date"){ if(n==="date")clearErr("date"); renderSlots(true); }
+    else if(n==="slot"){clearErr("slot");setShelves()}
+    else if(n==="shelves"){clearErr("shelves");renderSummary()}
+    else renderSummary();
+    if(Object.keys(errs).length)showSummary(); else $("errsum").hidden=true;
+    $("result").hidden=true;
   });
-  dateEl.addEventListener("change", function () { state.slot = ""; setErr("e-date", "date", ""); renderSlots(); });
-  $("slots").addEventListener("change", function (e) {
-    state.slot = e.target.value; $("e-slot").classList.remove("show"); updateSummary();
-  });
-  $("minus").addEventListener("click", function () { state.shelves--; renderShelves(); updateSummary(); });
-  $("plus").addEventListener("click", function () { state.shelves++; renderShelves(); updateSummary(); });
 
-  $("form").addEventListener("submit", function (e) {
+  form.addEventListener("submit",function(e){
     e.preventDefault();
-    if (busy) return;
-    $("okbox").hidden = true;
-    var problems = validate();
-    if (problems.length) {
-      var box = $("errbox");
-      box.innerHTML = "<b>" + problems.length + (problems.length === 1 ? " thing needs" : " things need") + " fixing before you can book:</b><ul>" +
-        problems.map(function (p) { return "<li>" + p.msg + "</li>"; }).join("") + "</ul>";
-      box.hidden = false;
-      problems[0].focus();
+    if(busy)return;
+    if(!validate()){
+      var first=Object.keys(errs)[0];
+      $("errsum").focus();
       return;
     }
-    // Re-check availability right before booking.
-    if (takenByOthers(state.kiln, dateEl.value, state.slot) || takenByMe(state.kiln, dateEl.value, state.slot)) {
-      renderSlots();
-      var b = $("errbox");
-      b.innerHTML = "That time was just taken. Pick another open time; your name and notes are still here.";
-      b.hidden = false; b.focus();
+    if(navigator.onLine===false){
+      showFail("You appear to be offline","Your choices are still in the form. Reconnect, then press Book this time again.");
       return;
     }
-    busy = true;
-    var btn = $("submit");
-    btn.setAttribute("aria-busy", "true"); btn.textContent = "Booking…";
-    setTimeout(function () {
-      var rec = {
-        id: String(Date.now()), kiln: state.kiln, date: dateEl.value, slot: state.slot,
-        shelves: state.shelves, name: $("name").value.trim(), email: $("email").value.trim(), notes: $("notes").value.trim()
-      };
-      bookings.push(rec);
-      var saved = save();
-      busy = false; btn.removeAttribute("aria-busy"); btn.textContent = "Book this slot";
-      var ok = $("okbox");
-      ok.innerHTML = "<b>Booked.</b> " + esc(kilnById(rec.kiln).name) + ", " + esc(niceDate(rec.date)) + ", " + esc(slotById(rec.slot).time) + ". A confirmation will go to " + esc(rec.email) + "." +
-        (saved ? "" : " This browser couldn’t save it for later, so it will disappear if you close the page; note the details down.");
-      ok.hidden = false; ok.focus();
-      state.slot = ""; state.shelves = 1; $("notes").value = "";
-      renderShelves(); renderSlots(); renderMine();
-    }, 600);
+    busy=true;
+    var btn=$("submit");
+    btn.setAttribute("aria-disabled","true");
+    btn.innerHTML='<span class="spin" aria-hidden="true"></span>Booking…';
+    $("live").textContent="Booking your kiln time";
+    var b={id:"b"+Date.now(),kiln:kilnVal(),date:dateEl.value,slot:slotVal(),shelves:+shel.value,type:typeVal(),note:$("note").value.trim()};
+    // Stand-in for a server call. Replace with the studio's booking endpoint.
+    setTimeout(function(){
+      busy=false;
+      btn.removeAttribute("aria-disabled"); btn.textContent="Book this time";
+      if(free(b.kiln,b.date,b.slot)<b.shelves){
+        showFail("Those shelves were just taken","Someone booked the same window while you were choosing. Pick another window or fewer shelves; your other choices are kept.");
+        renderSlots(false); return;
+      }
+      var dup=bookings.some(function(x){return x.kiln===b.kiln&&x.date===b.date&&x.slot===b.slot});
+      if(dup){
+        showFail("You already have this window","You have a booking for the "+kilnOf(b.kiln).name.toLowerCase()+" in this window. Cancel it from your list first if you want to change it.");
+        return;
+      }
+      bookings.push(b); save();
+      var r=$("result");
+      r.className="banner ok"; r.hidden=false;
+      r.innerHTML='<h2>Booked</h2><p>'+kilnOf(b.kiln).name+', '+fmt(b.date)+', '+slotOf(b.slot).name.toLowerCase()+' window ('+slotOf(b.slot).time+'). '+plural(b.shelves,"shelf").replace("shelfs","shelves")+' reserved for a '+b.type.toLowerCase()+' firing.</p>';
+      $("errsum").hidden=true; errs={};
+      $("note").value="";
+      renderSlots(false); renderMine();
+      r.focus(); r.scrollIntoView({block:"nearest"});
+    },900);
   });
+
+  function showFail(title,msg){
+    var box=$("errsum");
+    box.innerHTML='<h2>'+title+'</h2><p>'+msg+'</p>';
+    box.hidden=false; box.focus();
+  }
 
   // Cancel with undo
-  $("mine").addEventListener("click", function (e) {
-    var id = e.target.getAttribute && e.target.getAttribute("data-cancel");
-    if (!id) return;
-    var idx = bookings.findIndex(function (b) { return b.id === id; });
-    if (idx < 0) return;
-    var removed = bookings.splice(idx, 1)[0];
-    lastRemoved = removed; save();
-    renderMine(); renderSlots();
-    var k = kilnById(removed.kiln);
-    $("toast-msg").textContent = "Cancelled " + k.name + ", " + niceDate(removed.date) + ".";
-    $("toast").hidden = false;
-    clearTimeout(undoTimer);
-    undoTimer = setTimeout(function () { $("toast").hidden = true; lastRemoved = null; }, 8000);
-    var first = $("mine").querySelector("button") || $("submit");
-    first.focus();
+  $("mine").addEventListener("click",function(e){
+    var btn=e.target.closest("[data-cancel]"); if(!btn)return;
+    finishUndo();
+    var id=btn.dataset.cancel, i=bookings.findIndex(function(b){return b.id===id});
+    if(i<0)return;
+    var b=bookings.splice(i,1)[0]; save();
+    pendingUndo=b;
+    renderMine(); renderSlots(true);
+    var left=$("mine").querySelector("[data-cancel]");
+    (left||$("mine-h")).focus();
+    $("toast-msg").textContent="Cancelled "+fmt(b.date)+", "+slotOf(b.slot).name.toLowerCase()+", "+kilnOf(b.kiln).name+".";
+    $("toast").hidden=false;
+    undoTimer=setTimeout(finishUndo,8000);
   });
-  $("undo").addEventListener("click", function () {
-    if (!lastRemoved) return;
-    if (takenByMe(lastRemoved.kiln, lastRemoved.date, lastRemoved.slot)) { $("toast").hidden = true; return; }
-    bookings.push(lastRemoved); lastRemoved = null; save();
-    clearTimeout(undoTimer); $("toast").hidden = true;
-    renderMine(); renderSlots();
-    var b = $("mine").querySelector("button"); if (b) b.focus();
+  $("undo").addEventListener("click",function(){
+    if(!pendingUndo)return;
+    var b=pendingUndo; pendingUndo=null; clearTimeout(undoTimer);
+    bookings.push(b); save();
+    $("toast").hidden=true;
+    renderMine(b.id); renderSlots(true);
+    $("live").textContent="Booking restored";
   });
+  function finishUndo(){clearTimeout(undoTimer);pendingUndo=null;$("toast").hidden=true}
 
-  renderShelves(); renderSlots(); renderMine();
+  renderSlots(false); renderMine(); renderSummary();
 })();
 </script>
 </body>

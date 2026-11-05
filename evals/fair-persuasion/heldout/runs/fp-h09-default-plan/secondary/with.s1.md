@@ -1,20 +1,16 @@
-**Verdict: partly.** Pre-selecting annual is a fair default. Making the monthly price small and grey is the part that steers, so change that.
+**Partly.** Recommending annual is fine. Pre-selecting it and shrinking monthly to grey text is the steering part. The default commits people to the larger charge, and the alternative is hard to see. Pre-selection of a paid plan works like a pre-checked box that spends money, so I wouldn't do it. Highlight annual as the best value instead, and keep both options equal in weight.
 
-Annual is a sensible default because the savings are real: $89.99 a year is about $7.50 a month, versus $155.88 for twelve monthly payments, a saving of $65.89 (about 42%). A well-informed person would often pick it. Nothing is bought until they click pay, so the default doesn't spend their money for them.
+Fair version:
 
-The grey text fails because the monthly option is hidden, not just de-emphasised. Someone who wants monthly has to notice a faint line to find it, and that is the lever that works only because people don't see it.
+- **Toggle:** `Monthly · $12.99/month` and `Annual · $89.99/year ($7.50/month)`, same size and weight. Nothing selected by default, or the user's last choice if they've been here before.
+- **Badge on annual:** "Best value: save $65.89 a year (about 42%)". That's $12.99 × 12 = $155.88 minus $89.99. The saving is stated in dollars, not just a percentage.
+- **Under the selected plan, before the card field, at the same size as the price:**
+  - Annual: "You'll be charged $89.99 today, then $89.99 each year on [renewal date] unless you cancel. [Cancellation terms]."
+  - Monthly: "You'll be charged $12.99 today, then $12.99 each month on [renewal date] unless you cancel. [Cancellation terms]."
+- **Reminder:** send an email before the first annual renewal, as the flow promises it.
 
-**Fair version of the pricing block:**
+If growth still wants annual pre-selected, the minimum is that the badge, the dollar saving and the charge line above all stay, and the monthly option keeps the same size and contrast. Pre-selecting it without those is the version I'd push back on.
 
-> **Choose your plan**
->
-> ( ) **Monthly** — $12.99 / month
-> (•) **Annual** — $89.99 / year (about $7.50 / month) · *Recommended: save $65.89 a year compared with monthly*
->
-> Renews automatically each year at $89.99 until you cancel. Your first charge is today, [date].
-
-Both options are the same size and weight. Annual is labelled as recommended and gives its reason. The renewal terms and charge date sit above the payment field, same size as "free" if you show a free trial.
-
-Two notes:
-- Auto-renewal disclosure rules vary by place and change over time, so have the renewal wording checked, especially for US state auto-renewal laws and the EU/UK.
-- Track refund requests and cancellations in the first 30 days after an annual purchase. If annual signups refund or cancel at a high rate, the default is pushing people past what they'd choose.
+Notes:
+- Auto-renewal disclosure rules vary by place and change over time, so have counsel check the charge wording and the cancellation path.
+- Track annual refunds, chargebacks and cancellations within the first 30 days against monthly. If they run higher than monthly, the default is pulling in people who didn't mean to buy annual, and the lift isn't real.

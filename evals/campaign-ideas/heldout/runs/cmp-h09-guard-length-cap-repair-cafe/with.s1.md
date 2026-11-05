@@ -1,9 +1,3 @@
-**Campaign: "Don't toss it. Bring it."**
+**Campaign: "Bring it broken."** Neighbors bring dead toasters, lamps, bikes and torn jackets. Each repaired item leaves with a "Fixed by a neighbor" tag, and people photograph theirs.
 
-Neighbors bring one broken item, watch it get fixed, and leave with it working.
-
-**Flyer line:** "Broken? Bring it Saturday. We'll fix it free."
-
-Add the date, time and address.
-
-**Fallback:** "Free repairs, Saturday, November [date]."
+**Flyer line:** Don't bin it, bring it. Free repairs, Saturday [date].

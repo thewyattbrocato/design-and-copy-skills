@@ -1,36 +1,42 @@
-Here's the tidied form:
+Here's the revised form:
 
 ```html
 <form>
   <h2>Sign in to your library account</h2>
 
-  <label>Library card number
-    <input name="card" autocomplete="username" autocapitalize="off" spellcheck="false">
-  </label>
+  <div>
+    <label for="card">Library card number</label>
+    <input id="card" name="card" type="text" inputmode="numeric"
+           autocomplete="username" autocapitalize="off" spellcheck="false">
+  </div>
 
-  <label>PIN
-    <input name="pin" type="password" autocomplete="current-password">
-  </label>
+  <div>
+    <label for="pin">PIN</label>
+    <input id="pin" name="pin" type="password" autocomplete="current-password">
+  </div>
 
-  <label>
-    <input type="checkbox" name="remember">
-    Keep me signed in on this browser for about a month
-  </label>
-  <p class="small">Only tick this on your own device. On a shared computer, leave it unticked and sign out when you're done. We'll still ask for your PIN before anything to do with fines or payments.</p>
+  <div>
+    <label>
+      <input type="checkbox" name="remember">
+      Keep me signed in on this computer for about a month
+    </label>
+    <p class="small">Leave this unticked on shared computers, including the library's.</p>
+  </div>
 
-  <button>Sign in</button>
+  <button type="submit">Sign in</button>
+
+  <p class="small">We'll ask for your PIN again before anything involving fines or payments.</p>
 </form>
 ```
 
-What changed and why:
+**Changes:**
+- **"Remember me" is now unticked by default.** Many of your members use shared computers, and a pre-ticked box would leave their accounts open to the next person for a month. The label says what it does, and the hint under it speaks to shared computers.
+- **The old line "you stay connected for as long as you need" is gone.** It wasn't accurate, because sign-in lasts about a month if the box is ticked. The new line says that PINs are still required for fines and payments.
+- **Smaller wording changes:**
+  - "Welcome back!!" became a plain "Sign in" heading.
+  - "LOGIN" became "Sign in", so the heading and button use the same words.
+  - The labels are now tied to their inputs, so clicking a label focuses its field.
 
-- **"Remember me" is now unticked by default.** It was pre-ticked, so on shared library computers the next person could open a previous member's account for a month. The label now says what it does, and the note beside it says when not to use it. I also dropped "stay connected for as long as you need", because it didn't match the real one-month behavior.
-- **Smaller copy fixes:**
-  - "Welcome back!!" is now a plain heading that says what the page is for.
-  - "LOGIN" is now "Sign in", so the button matches the heading.
-  - The two fields have autofill and no-autocapitalize attributes so browsers and phones handle them correctly.
+I added `inputmode="numeric"` to the card field, which assumes card numbers are all digits. Remove it if yours include letters. I left the PIN field as plain text entry in case PINs can be non-numeric.
 
-Two things to check on your side:
-
-- **Card number hint:** if card numbers are digits only, add `inputmode="numeric"`. I left it off because I don't know the format.
-- **Error messages:** I haven't written any. If you send me the current ones, I can tidy those too.
+If the portal has a "Sign out" link, consider adding "Remember to sign out when you're done" near the button for shared computers. I held off because I don't know your layout.

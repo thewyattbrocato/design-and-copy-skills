@@ -1,39 +1,39 @@
+Most of this is worth fixing, but not all of it. "Members" stays as is.
+
 ## Term table
 
-| Concept | Today | Pick | Why |
+| What it is | Today | Pick | Why |
 |---|---|---|---|
-| The scheduled thing | Appointments / Bookings / Visits / Session | **Appointment**, everywhere | It's already the nav label. Four names look like four different things. |
-| Starting | Sign in | **Sign in** | Keep. |
-| Ending | Log off / Exit | **Sign out** | It's the true opposite of "Sign in". "Log off" and "Exit" break the pair. |
-| Undo a future appointment | Cancel | **Cancel appointment** | Name the object. A bare "Cancel" also means "close this dialog". |
-| Remove a note | Remove | **Delete note** | "Remove" is unclear about whether the note is gone for good. |
-| Remove a patient record | Delete | **Delete member** | See the Members decision below. |
-| Throw away unsaved work | Discard | **Discard draft** | Keep. It's a different act from deleting something saved. |
-| Staff | Practitioner / Your therapist | **Practitioner**, in both apps | Staff already see it, and it covers every discipline a clinic might have. |
-| Patients | Patient / Members | **Member**, in both apps | The founder's decision. |
+| A scheduled slot with a Member | Appointments, Bookings, Visits, Session | **Appointment** | It's the word clinics and Members already use. "Booking" is the act of making one. "Session" and "Visit" suggest different things, so people will assume there are different objects. |
+| Ending your login | Log off, Exit, Sign in | **Sign in / Sign out** | They're true opposites. "Exit" doesn't say what it ends. |
+| Removing an appointment | Cancel | **Cancel appointment** | The appointment stays on record as cancelled, so this is a different action from deleting. |
+| Removing a note | Remove | **Delete note** | "Remove" is vague about whether the note is gone for good. |
+| Removing a record | Delete | **Delete record** | Keep it, and name the object. |
+| Removing unsaved work | Discard | **Discard draft** | Keep it. Nothing was saved, so this word is accurate. |
+| The clinician | Practitioner (staff), Your therapist (patient app) | **Practitioner** in both | The audiences differ, but it's the same person. Check it's consistent wherever staff preview or send Member-facing text. |
+| The person being treated | Patient / Members | **Member**, everywhere | See the second note below. |
 
-The removal verbs can stay different, because the acts are different: cancelling something scheduled, deleting something saved, discarding something unsaved. Each verb should mean one thing every time it appears.
+## Strings
 
-## Rewritten strings
+**Navigation and titles**
+- Main nav: `Appointments`
+- Page title: `Appointments`
+- Calendar tooltip: `Appointment` followed by the details, for example `Appointment · [Member name] · [time]`
+- Email: replace "session" with "appointment" everywhere it appears.
 
-| Where | Now | Change to |
+**Signing out**
+- Menu item: `Sign out` (replaces "Log off")
+- Settings button: `Sign out` (replaces "Exit"). If that button only leaves the settings page, call it `Back to calendar` instead. Please check which it is.
+
+**Removing things**
+Each action keeps its own verb. The decline button names what you'd be keeping, so it doesn't clash with "Cancel".
+
+| Where | Heading | Buttons |
 |---|---|---|
-| Main nav | Appointments | Appointments (no change) |
-| Page title | Bookings | Appointments |
-| Calendar tooltip | Visits | Appointment (for example "Appointment · 10:30, [practitioner]") |
-| Patient email | "Session" | "Your appointment" |
-| Sign-out menu item | Log off | Sign out |
-| Settings page button | Exit | See note 1 |
-| Login screen | Sign in | Sign in (no change) |
-| Appointment action | Cancel | Cancel appointment, with the decline **Keep appointment** |
-| Note action | Remove | Delete note, with the decline **Keep note** |
-| Member record action | Delete | Delete member, with the decline **Keep member** |
-| Draft action | Discard | Discard draft, with the decline **Keep editing** |
-| Patient app | Your therapist | Your practitioner |
+| Appointment | `Cancel this appointment?` Body: `[Member name]'s appointment on [date, time] will be marked as cancelled. [Say whether the Member is notified.]` | `Cancel appointment` / `Keep appointment` |
+| Note | `Delete this note?` Body: `It will be deleted from [Member name]'s record. [Say whether this can be undone.]` | `Delete note` / `Keep note` |
+| Member record | `Delete [Member name]'s record?` Body: `[Say what is deleted, who is affected, and whether it can be undone.]` | `Delete record` / `Keep record` |
+| Draft | `Discard this draft?` Body: `Unsaved changes will be lost.` | `Discard draft` / `Keep editing` |
 
-Each confirmation should name the object and say what happens, and the decline should be neutral and equal in weight. For example: "Delete this note? It will be removed from [member name]'s record. [can/can't be undone]". Fill in the undo part from how the app actually behaves.
-
-## Notes
-
-1. **"Exit" on settings:** I don't know what it does, so I can't pick a word. If it signs the person out, use "Sign out". If it only leaves the page, use "Back to [previous screen]" or "Close settings". Don't keep "Exit".
-2. **Members and "clients":** I've taken the founder's decision as final. If clinics keep asking for "clients", treat that as a separate product question. It isn't a naming inconsistency. Use "member" on the staff side too, so staff and patient screens match.
+- **Placeholders:** I've left brackets where I don't know your behaviour (notifications, undo, retention). Fill those in with the real consequences. Deleting a Member's record deserves the most careful wording, since it's the most serious action.
+- **"Members":** I'd treat the founder's decision as covering every string, not only the Member-facing app. That includes "patient record", "patient app" and "patient email", which are the phrases you used in your message. Staff at clinics that say "clients" will see "Member" in the interface, so make sure your help pages and support replies use it too.

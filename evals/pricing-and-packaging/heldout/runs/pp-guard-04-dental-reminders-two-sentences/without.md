@@ -1,0 +1,1 @@
+No, $49 a month isn't too much. At about 880 appointments a month, it comes to roughly 5½ cents each, and preventing one or two no-shows a month would cover it. Before you sign, check that it doesn't charge per message on top, that it integrates with your practice management software, and that it supports two-way confirmations.

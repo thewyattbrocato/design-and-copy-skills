@@ -1,50 +1,61 @@
-**Don't print yet. The headline promises something your opening hours seem to make impossible, and a passer-by can't tell where the shed is.**
+**Verdict: the copy is good, but the page leaves out the things someone holding the flyer needs most: where it is, when you can return a tool, and whether $20 is a hard price. Fix those before printing.**
 
-## Fix before printing
+## Findings, worst first
 
-**1. "Back by Monday 5pm" doesn't fit "Open Saturdays 10-1 and Wednesday evenings 6-8." (Blocker, unless there's a drop box.)**
-- The shed isn't open on Monday. A borrower who takes the saw at Saturday 1pm and returns it Monday would have to leave it somewhere unattended.
-- The other loan periods have the same problem. Post hole digger for 3 days from Saturday is Tuesday, and the next opening is Wednesday. Pressure washer for 2 days lands on Monday.
-- If there's an after-hours drop-off, say so in one line. If there isn't, the headline's deadline is wrong. Either way, the first sentence a stranger reads must match the rest of the page.
+**1. Blocker: the Monday 5pm return doesn't fit your opening hours.**
+- The H1 and the tile saw line say "back by Monday 5pm."
+- You're only open Saturday 10-1 and Wednesday 6-8.
+- Nothing says where a tool goes on Monday at 5pm. Is there a drop box, or does someone staff the hall?
+- Someone will turn up at 5pm Monday to a locked door, or keep the saw until Wednesday.
+- Fix: say how Monday returns work, or change the deadline to a time you're actually open.
 
-**2. There's no address, and the hours are buried. (Major.)**
-- "The back of the Eastgate Methodist hall" gives no street, suburb or map link. This is a scan-from-the-street flyer, and "where" and "when" are what decide whether someone turns up.
-- Hours sit in a one-line paragraph under a dense intro. Put address, map link and hours together in a visible block above the buttons.
-- "10-1" has no am/pm. Add "next open: Sat 17 Oct" if you can automate it.
+**2. Major: there's no address, and the hours are buried.**
+- "Back of the Eastgate Methodist hall" is the only location, with no street address and no map link.
+- The hours are a plain paragraph between the pitch and the buttons, with no emphasis. Someone deciding whether to come this weekend has to find them.
+- Fix: put "Where / When" in its own block with a street address and a tappable map link. Do this before the buttons or right after them.
 
-**3. The $20 button contradicts "pay what you can." (Major.)**
-- Someone for whom $20 is the barrier reads "Join for $20" as "not for me" and never sees the alternative.
-- Relabel to "Join – $20, or pay what you can" or just "Join". Then say what happens after the click: does /join finish the sign-up online?
-- "Free for members" next to "$20 a year" also reads as a mild contradiction. "No charge to borrow once you're a member" is clearer.
+**3. Major: "Join for $20" contradicts "pay what you can."**
+- Someone who can't spare $20 sees the button and assumes the page doesn't apply to them. That's the person your sliding-scale offer is for.
+- Fix: label the button "Join" and put "$20 or pay what you can" next to it. First check that `/join` actually offers pay-what-you-can.
 
-**4. The photo ID requirement comes too late. (Major.)**
-- It appears only as step 1 of the third section, after the Join button has asked for commitment. Someone who finds out at the desk that they needed ID will leave annoyed.
-- Say what ID counts, and whether it's checked online or in person. Put it next to the button, not below the fold.
+**4. Major: joining is unclear.**
+- Step 1 says "bring photo ID the first time." That suggests joining happens in person, but the button goes to `/join`.
+- A visitor can't tell whether they can join on their phone now or have to come to the hall first. That's the main action on the page.
+- Fix: state which one it is. For example, "Join online, then bring photo ID on your first visit."
 
-## Should fix
+**5. Moderate: nothing says what happens if you break something.**
+- "Tell us, it happens" is a warm line. But if there's a fee, deposit or late charge, people will wonder about it before borrowing a tile saw.
+- If there really is nothing, say so ("no fees, no deposit"). That's a selling point.
+- I can't tell which is true from what you sent.
 
-**5. The headline leads with the rule, not the benefit. (Moderate.)**
-- "Return it clean by Monday 5pm" is the least inviting thing you could say first. The visitor should learn they can borrow a tile saw without buying one, free.
-- Try: "Borrow a tile saw for the weekend. Free for members." Keep the return rule in "How borrowing works".
+**6. Moderate: the H1 reads as a rule.**
+- "Return it clean by Monday 5pm" is the page's loudest line, and it's a condition rather than a reason to come.
+- "Loan Shed" doesn't appear until the paragraph. I can't see your header or logo, so this may already be covered.
+- Fix (taste): lead with the offer, e.g. "Borrow a tile saw for the weekend," and move the return rule into the borrowing steps.
 
-**6. "Popular this month" is a rule list, not a pitch. (Moderate.)**
-- It will go stale, and it repeats the tile saw from the headline. It says how long you can keep each tool but not what the tools are for.
-- Swap it for a short "What you can borrow" with categories (tiling, garden, painting), or show "400+ tools" prominently with the catalogue link.
+**7. Moderate: "Popular this month" will go stale, and it's inconsistent.**
+- The formats differ: "2 days, back by Monday," "3 days," "1 week."
+- None of the items link to the catalogue.
+- It repeats the tile saw from the H1, so it adds little.
+- Printed-flyer traffic will hit this page for months. Either someone updates the list monthly or it should go.
+- Fix: rename it "Most borrowed" and make the format consistent, or cut it.
 
-**7. The contact line only works for people who already know the shed. (Moderate.)**
-- "Find Renata at the Saturday desk" means nothing to a stranger, and Renata may not always be there. Say "Ask for Renata" or drop the name.
-- Make the email a `mailto:` link. Consider a phone or text number, since the audience is on a phone.
+**8. Moderate: the contact details are weak on a phone.**
+- The email is plain text. Wrap it in a `mailto:` link.
+- "Find Renata at the Saturday desk" doesn't help Wednesday-night visitors. It also breaks when Renata is away or moves on. Consider "the desk volunteer."
 
-**8. The primary button asks for a $20 commitment before the visitor knows what they'd get. (Minor, partly taste.)**
-- A cold flyer reader may want "See what we have" first. Consider making that the primary button, or at least equal weight. You know your conversion goals better than I do.
+**9. Check before printing: the page may not work properly on a phone.**
+- Your snippet has no `<!doctype>`, `<meta name="viewport">`, `lang` or `<title>`. If the real page lacks the viewport tag, phones will show it as a tiny desktop page.
+- Every visitor from the flyer will be on a phone, so check this first.
 
 ## Keep
-
-- **The headline names a specific, desirable tool.** "Tile saw" tells people what this is for much better than "tool library" would.
-- **The tone.** "If something breaks, tell us, it happens" and "pay what you can" are warm and reduce fear of borrowing. Don't tighten them into corporate copy.
-- **The three-step "How borrowing works".** It's short, ordered and scannable.
-- **The page is short.** One scroll on a phone is right for a flyer QR.
+- **The voice.** "400-odd tools," "tell us, it happens" and "pay what you can" make it sound like a friendly neighbourhood place rather than an institution.
+- **The three-step borrowing list.** It's short and in order, and it answers "how hard is this?"
+- **Primary and secondary buttons.** Join and "See what we have" are clearly ranked, and there are only two.
+- **The tile saw example.** It's concrete, which is far better than "tools for every project."
 
 ## Not checked
+- CSS, colour contrast, button tap size and font sizes, since none were supplied.
+- Whether `/join` and `/catalogue` work, and the QR code itself. Scan the printed proof on a real phone, on mobile data.
 
-You supplied only the HTML, so I haven't judged colour contrast, tap-target size, type sizes or the spacing between the two adjacent links. I also haven't judged the `<head>`: a missing viewport meta tag or `lang` attribute would break mobile rendering. Test on a real phone, with the QR code, outdoors, before you print.
+I assumed the audience is people scanning the flyer on a phone who have never been to the shed.

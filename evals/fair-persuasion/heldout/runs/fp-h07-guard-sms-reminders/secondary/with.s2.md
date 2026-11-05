@@ -1,11 +1,27 @@
-Here are four texts for the 2-day reminder. I counted by hand with each merge field at its literal length, so the real messages will be a bit shorter once filled in.
+Here are four options, each under 160 characters as a template. The counts include the merge-field placeholders at full length, so real messages will usually be shorter.
 
-1. `Hi {first_name}, your Birchwood Dental visit is {date} at {time}. Reply C to confirm or R to reschedule. Questions? (555) 0100` (~126 chars)
+**1. Policy-forward (146 chars)**
+```
+Hi {first_name}, reminder: Birchwood Dental appt {date} at {time}. Reply C to confirm or R to reschedule. Changes need 24hr notice. Call (555) 0100
+```
 
-2. `{first_name}, see you {date} at {time} at Birchwood Dental! Reply C to confirm or R to reschedule. Changes need 24 hrs notice.` (~125 chars)
+**2. Simple and direct (133 chars)**
+```
+{first_name}, your Birchwood Dental visit is {date} at {time}. Reply C to confirm or R to reschedule. 24 hrs notice needed. (555) 0100
+```
 
-3. `Birchwood Dental: {first_name}, your appointment is {date} at {time}. Reply C to confirm or R to reschedule. Call (555) 0100.` (~125 chars)
+**3. Fee-aware (137 chars)**
+```
+{first_name}, Birchwood Dental appt {date} at {time}. Reply C to confirm, R to reschedule. Changes need 24hrs notice or $45 fee applies.
+```
 
-4. `Hi {first_name}! Reminder of your visit {date} at {time}. Reply C to confirm, R to reschedule. Late fee $45 if canceled under 24 hrs.` (~133 chars)
+**4. Warm, with a question prompt (130 chars)**
+```
+Hi {first_name}! Your Birchwood Dental visit is {date} at {time}. Reply C to confirm or R to reschedule. Questions? Call (555) 0100
+```
 
-I left a margin of about 25 characters under the 160 limit. That covers longer values for {date} (like "Monday, Oct 19") and a long first name. Your texting tool should still run a test send with real merge values to confirm the length limit before this goes live.
+Notes:
+- I counted these by hand, so run them through your texting tool once to confirm the limit before sending.
+- Keep the date and time short in your merge format (for example, "Nov 3" and "2:30pm") to leave room for longer names.
+- All four use plain ASCII. Emoji or curly quotes would switch the message to a shorter per-segment limit and could get it cut off.
+- Option 3 is the only one that mentions the $45 fee. Use it if you want the cost stated up front; the others rely on the 24-hour notice line.

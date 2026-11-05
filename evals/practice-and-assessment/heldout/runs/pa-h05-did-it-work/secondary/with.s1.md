@@ -1,19 +1,22 @@
-**No, those three numbers don't show the program worked.** They show that the course ran smoothly and the people liked it, which is useful but not the same claim.
+No, that's not enough to show the program worked. All three numbers measure something other than job performance:
 
-- **Completion (12/12)** shows people showed up. It says nothing about whether they can do the job.
-- **Survey (4.6/5)** shows they were satisfied. It flags unhappiness but can't show that anything improved.
-- **Quiz (91%)** was likely taken the same day, right after the material. That measures short-term recall, not whether agents handle real tickets better weeks later.
+- **12 of 12 finished** shows the course was completed. It says nothing about whether agents handle tickets better.
+- **4.6/5 satisfaction** shows the agents liked it. Satisfaction flags unhappiness but doesn't show learning.
+- **91% on the final quiz** was taken at the end of the course, so it mostly shows short-term recall. It doesn't show the agents can apply the material to a live customer a few weeks later, and there's no before-and-after comparison.
 
-**What to tell your director:** Something like this:
+**What to tell your director:**
 
-> "The 12 agents completed the two-week onboarding, rated it highly, and scored 91% on the final quiz. That tells us the course is working as designed. It doesn't yet tell us whether agents are handling tickets better. To show that, we'll compare [metric, e.g., first-contact resolution / QA score / escalation rate] for the cohort against [baseline period or comparison group] at [30 and 60 days]."
+> The cohort of 12 completed the two-week onboarding. Participants rated it 4.6/5 and averaged 91% on the final quiz. Those results show the course was well received and the material was absorbed at the end. They don't yet show that agents perform better on the job.
+>
+> To answer that, we'll compare the cohort against the metrics support already tracks:
+> - [Primary metric, e.g., first-contact resolution or QA score], measured before the cohort started ([baseline value]) and at day 30 and day 60 after.
+> - [Second metric, e.g., escalation rate or time to independent handling], compared with agents who haven't taken the course yet over the same period.
+> - A short observed-ticket review, scored against a rubric, for a sample of each agent's tickets.
+>
+> I'll report results as "[X] of 12 agents met [standard]" rather than percentages, given the small group. I'll also ask agents what got in their way, so we know whether any gaps come from training or from tools and process.
 
-**Before you present anything, settle these:**
+**Before you present it:**
 
-1. **What problem was the onboarding meant to fix?** If the director's concern is, say, high escalations or slow resolution, that's the metric to check. If you can't name a problem, the program's value is hard to prove.
-2. **Is training the right fix for that problem?** If the cause is a tool, unclear process, or staffing pressure, a better course won't move the number. Check this first.
-3. **What's the baseline?** You need the metric before onboarding (or for a comparable group that didn't take it) to see any change. Fill in [current value] now.
-4. **When will you measure?** A check a few weeks after the course, on mixed real cases, is much stronger evidence than the end quiz.
-5. **What's the sample size?** Twelve agents is enough to see a clear change but not enough to be confident about small differences. Say so.
-
-**If the metric hasn't moved yet,** that's still useful. Report it plainly, along with which agents used the job aids and which skills still look weak, so you can target the next round.
+- Confirm which metric your team already tracks and pull the baseline now. If the baseline isn't available, say so; a later comparison is still better than none.
+- If the metrics don't move, the cause may be tooling, incentives, or unclear process rather than the course. Check that before proposing changes to the training.
+- Don't present the 91% or 4.6 as evidence of impact. Present them as context.

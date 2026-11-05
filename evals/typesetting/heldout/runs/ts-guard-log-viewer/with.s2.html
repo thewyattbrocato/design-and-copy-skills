@@ -3,217 +3,153 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deploy pipeline logs · release-2026.10.14-3</title>
+<title>Deploy log · checkout-api #4812</title>
 <style>
   :root {
-    color-scheme: dark;
-    --bg: #0f1216;
-    --panel: #151a20;
-    --line: #232a33;
-    --text: #d9dee5;
-    --muted: #8b95a3;
-    --info: #6cb6ff;
-    --warn: #f0b84a;
-    --err: #ff7b72;
-    --warn-bg: rgba(240, 184, 74, 0.07);
-    --err-bg: rgba(255, 123, 114, 0.10);
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bg: #0e1217;
+    --panel: #141a21;
+    --line: #232b35;
+    --text: #dbe2ea;
+    --muted: #8f9bab;
+    --info: #7cb7ff;
+    --warn: #f2b83d;
+    --err: #ff7f76;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.5;
+    font: 15px/1.5 var(--sans);
   }
-  header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px 32px;
-    padding: 20px 32px;
-    border-bottom: 1px solid var(--line);
-    background: var(--panel);
-  }
-  h1 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.01em; }
-  .meta { display: flex; flex-wrap: wrap; gap: 4px 24px; color: var(--muted); font-size: 14px; }
-  .meta b { color: var(--text); font-weight: 500; font-family: var(--mono); font-size: 13.5px; }
-  .filters { margin-left: auto; display: flex; gap: 8px; }
-  .filters button {
-    font: inherit; font-size: 13px; font-weight: 600;
-    font-family: var(--mono);
-    color: var(--text);
-    background: transparent;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 5px 12px;
-    cursor: pointer;
-  }
-  .filters button:hover { background: #1d242c; }
-  .filters button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
-  .filters button[aria-pressed="false"] { color: var(--muted); text-decoration: line-through; opacity: 0.7; }
-  .filters .c { color: var(--muted); font-weight: 400; margin-left: 6px; }
+  .wrap { max-width: 2000px; margin: 0 auto; padding: 24px 32px 48px; }
 
-  main { padding: 16px 32px 48px; }
-  .head, .row {
+  header {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: 8px 24px; margin-bottom: 16px;
+  }
+  h1 { margin: 0; font-size: 20px; font-weight: 650; letter-spacing: .01em; }
+  .meta { color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+  .meta b { color: var(--text); font-weight: 500; font-family: var(--mono); font-size: 13px; }
+  .status {
+    margin-left: auto; font-size: 13px; font-weight: 600;
+    color: var(--err); border: 1px solid var(--err); border-radius: 4px; padding: 2px 10px;
+  }
+
+  .toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .toolbar button {
+    font: 600 13px/1 var(--sans); color: var(--text); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; cursor: pointer;
+    display: inline-flex; gap: 8px; align-items: center;
+  }
+  .toolbar button[aria-pressed="false"] { opacity: .5; }
+  .toolbar button:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  .toolbar .n { font-family: var(--mono); color: var(--muted); font-weight: 500; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .log {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    font: 13.5px/1.55 var(--mono); overflow: hidden;
+  }
+  .cols, .row {
     display: grid;
-    grid-template-columns: 10.5ch 7ch 17ch minmax(0, 130ch);
-    column-gap: 24px;
-    align-items: baseline;
-  }
-  .head {
-    padding: 8px 16px;
-    color: var(--muted);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    border-bottom: 1px solid var(--line);
-  }
-  .row {
-    font-family: var(--mono);
-    font-size: 14px;
-    line-height: 1.55;
-    padding: 6px 16px;
-    border-bottom: 1px solid var(--line);
+    grid-template-columns: 13ch 7ch 17ch minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 6px 16px 6px 13px;
     border-left: 3px solid transparent;
   }
-  .row:hover { background: #181e25; }
-  .row.warn { background: var(--warn-bg); border-left-color: var(--warn); }
-  .row.error { background: var(--err-bg); border-left-color: var(--err); }
-  .ts { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .lvl { font-weight: 700; letter-spacing: 0.04em; }
-  .lvl.info { color: var(--info); }
-  .lvl.warn { color: var(--warn); }
-  .lvl.error { color: var(--err); }
-  .svc { color: #b9c2cf; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .msg { overflow-wrap: anywhere; }
-  .msg .k { color: var(--muted); }
-  .msg a { color: var(--info); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(108,182,255,.4); }
-  .hidden { display: none; }
+  .cols {
+    font: 600 12px/1.4 var(--sans); text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); border-bottom: 1px solid var(--line); padding-top: 10px; padding-bottom: 10px;
+  }
+  .row { border-bottom: 1px solid var(--line); }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: #19212a; }
+  .row[hidden] { display: none; }
+  .row.warn { border-left-color: var(--warn); }
+  .row.error { border-left-color: var(--err); background: rgba(255,127,118,.07); }
+  .row.error:hover { background: rgba(255,127,118,.12); }
 
-  @media (max-width: 900px) {
-    header, main { padding-left: 16px; padding-right: 16px; }
-    .filters { margin-left: 0; }
-    .head { display: none; }
-    .row { grid-template-columns: auto auto minmax(0, 1fr); row-gap: 2px; }
+  .ts { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .lvl { font-weight: 700; letter-spacing: .03em; }
+  .info .lvl { color: var(--info); }
+  .warn .lvl { color: var(--warn); }
+  .error .lvl { color: var(--err); }
+  .svc { color: #b6c2d1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg { overflow-wrap: anywhere; white-space: normal; }
+  .msg .u { color: #9fc9ff; }
+  .msg .k { color: var(--muted); }
+
+  @media (max-width: 800px) {
+    .wrap { padding: 16px; }
+    .cols { display: none; }
+    .row { grid-template-columns: auto auto 1fr; column-gap: 12px; }
     .msg { grid-column: 1 / -1; }
   }
 </style>
 </head>
 <body>
-<header>
-  <h1>Deploy pipeline</h1>
-  <div class="meta">
-    <span>Release <b>2026.10.14-3</b></span>
-    <span>Env <b>production</b></span>
-    <span>Date <b>2026-10-14 (UTC)</b></span>
+<div class="wrap">
+  <header>
+    <h1>Deploy pipeline · checkout-api #4812</h1>
+    <div class="meta">
+      <span>Env <b>production-eu-west-1</b></span>
+      <span>Commit <b>4f9c2ab</b></span>
+      <span>Date <b>2026-10-29 UTC</b></span>
+    </div>
+    <span class="status">FAILED · rolled back</span>
+  </header>
+
+  <div class="toolbar" role="group" aria-label="Filter by level">
+    <button type="button" data-lvl="info" aria-pressed="true"><span class="dot" style="background:var(--info)"></span>INFO <span class="n" id="c-info"></span></button>
+    <button type="button" data-lvl="warn" aria-pressed="true"><span class="dot" style="background:var(--warn)"></span>WARN <span class="n" id="c-warn"></span></button>
+    <button type="button" data-lvl="error" aria-pressed="true"><span class="dot" style="background:var(--err)"></span>ERROR <span class="n" id="c-error"></span></button>
   </div>
-  <div class="filters" role="group" aria-label="Filter by level">
-    <button type="button" data-level="info" aria-pressed="true">INFO<span class="c" id="c-info"></span></button>
-    <button type="button" data-level="warn" aria-pressed="true">WARN<span class="c" id="c-warn"></span></button>
-    <button type="button" data-level="error" aria-pressed="true">ERROR<span class="c" id="c-error"></span></button>
+
+  <div class="log" role="table" aria-label="Deploy log">
+    <div class="cols" role="row">
+      <span role="columnheader">Time (UTC)</span>
+      <span role="columnheader">Level</span>
+      <span role="columnheader">Service</span>
+      <span role="columnheader">Message</span>
+    </div>
+
+    <div class="row info" role="row"><span class="ts">14:02:11.482</span><span class="lvl">INFO</span><span class="svc">git-fetch</span><span class="msg">Checked out <span class="k">main</span> at 4f9c2ab (“Raise cart item limit to 200”) — 3 files changed, 41 insertions(+), 7 deletions(-)</span></div>
+    <div class="row info" role="row"><span class="ts">14:02:14.907</span><span class="lvl">INFO</span><span class="svc">build-runner</span><span class="msg">Starting build stage 1/3: compile, lint, unit tests (runner ci-eu-17, 8 vCPU)</span></div>
+    <div class="row warn" role="row"><span class="ts">14:03:02.115</span><span class="lvl">WARN</span><span class="svc">build-runner</span><span class="msg">Deprecated API: OrderService.legacyTotals() will be removed in 5.0; called from src/cart/summary.ts:212, src/cart/export.ts:88, src/reports/daily.ts:35 — migrate to totals.compute()</span></div>
+    <div class="row info" role="row"><span class="ts">14:04:37.640</span><span class="lvl">INFO</span><span class="svc">build-runner</span><span class="msg">Unit tests passed: 1,284 tests, 0 failed, 6 skipped in 91.3s</span></div>
+    <div class="row info" role="row"><span class="ts">14:05:09.226</span><span class="lvl">INFO</span><span class="svc">registry</span><span class="msg">Pushed registry.internal.acme.io/platform/checkout-api:2026.10.29-4f9c2ab (sha256:9b1e47c0d2aa68f3e1b5c7710de94a3f) — manifest at https://registry.internal.acme.io/v2/platform/checkout-api/manifests/2026.10.29-4f9c2ab</span></div>
+    <div class="row info" role="row"><span class="ts">14:05:12.003</span><span class="lvl">INFO</span><span class="svc">scanner</span><span class="msg">Image scan complete: 0 critical, 0 high, 2 medium findings</span></div>
+    <div class="row warn" role="row"><span class="ts">14:05:13.771</span><span class="lvl">WARN</span><span class="svc">scanner</span><span class="msg">2 medium CVEs in base image debian:12-slim (CVE-2026-31877, CVE-2026-33102); fix available in debian:12.8-slim — see https://security.internal.acme.io/findings?image=checkout-api&amp;run=4812</span></div>
+    <div class="row info" role="row"><span class="ts">14:06:01.350</span><span class="lvl">INFO</span><span class="svc">migrator</span><span class="msg">Applying 1 pending migration to orders_db (V214__add_order_index.sql)</span></div>
+    <div class="row error" role="row"><span class="ts">14:06:02.918</span><span class="lvl">ERROR</span><span class="svc">migrator</span><span class="msg">java.lang.IllegalStateException: Flyway checksum mismatch for V214__add_order_index.sql (expected 1830442019, found -774120331) at com.acme.migrate.Runner.validate(Runner.java:118) at com.acme.migrate.Main.main(Main.java:42)</span></div>
+    <div class="row warn" role="row"><span class="ts">14:06:03.044</span><span class="lvl">WARN</span><span class="svc">migrator</span><span class="msg">Migration failed; continuing with schema v213 (migration is marked non-blocking for this environment)</span></div>
+    <div class="row info" role="row"><span class="ts">14:06:20.512</span><span class="lvl">INFO</span><span class="svc">k8s-deployer</span><span class="msg">Rolling update started: deployment/checkout-api, 12 replicas, maxSurge=25%, maxUnavailable=0</span></div>
+    <div class="row error" role="row"><span class="ts">14:08:47.689</span><span class="lvl">ERROR</span><span class="svc">healthcheck</span><span class="msg">Readiness probe failed for pod checkout-api-7d9f8c6b5-x2k4q: Get "http://10.42.3.17:8080/healthz": context deadline exceeded (Client.Timeout exceeded while awaiting headers) — logs: https://grafana.internal.acme.io/d/k8s-pods/pods?var-pod=checkout-api-7d9f8c6b5-x2k4q</span></div>
+    <div class="row error" role="row"><span class="ts">14:09:15.230</span><span class="lvl">ERROR</span><span class="svc">k8s-deployer</span><span class="msg">Rollout exceeded progress deadline (180s): 3/12 replicas ready. Initiating automatic rollback to revision 87</span></div>
+    <div class="row info" role="row"><span class="ts">14:10:04.861</span><span class="lvl">INFO</span><span class="svc">notifier</span><span class="msg">Posted failure summary to #deploys and paged on-call (platform-oncall) for run 4812</span></div>
   </div>
-</header>
-
-<main>
-  <div class="head" aria-hidden="true"><span>Time</span><span>Level</span><span>Service</span><span>Message</span></div>
-  <div id="log" role="log" aria-label="Deploy pipeline log lines">
-
-    <div class="row info" data-level="info">
-      <span class="ts">14:02:11.384</span><span class="lvl info">INFO</span><span class="svc">pipeline-core</span>
-      <span class="msg">Deploy started for release 2026.10.14-3 (commit 9f3c1ab) triggered by merge to main.</span>
-    </div>
-
-    <div class="row info" data-level="info">
-      <span class="ts">14:02:13.920</span><span class="lvl info">INFO</span><span class="svc">build-runner</span>
-      <span class="msg">Pulled base image registry.internal.example.com/platform/node-runtime:20.18-slim in 2.4s (cache hit on 6 of 7 layers).</span>
-    </div>
-
-    <div class="row info" data-level="info">
-      <span class="ts">14:02:48.057</span><span class="lvl info">INFO</span><span class="svc">build-runner</span>
-      <span class="msg">Build finished: 3 artifacts, 184.2 MB total, digest sha256:4e1b9d07a2c8f35e6b7d90a1c4f2e8836b5d1a09c7e4f3b2a18d6c05e9f7b341.</span>
-    </div>
-
-    <div class="row info" data-level="info">
-      <span class="ts">14:03:02.611</span><span class="lvl info">INFO</span><span class="svc">test-suite</span>
-      <span class="msg">Integration tests passed: 412 passed, 0 failed, 3 skipped (41.8s).</span>
-    </div>
-
-    <div class="row warn" data-level="warn">
-      <span class="ts">14:03:19.275</span><span class="lvl warn">WARN</span><span class="svc">config-sync</span>
-      <span class="msg">Deprecated key <span class="k">feature_flags.legacy_checkout</span> found in config/production.yaml line 88; it will be removed in v3. Migrate to <a href="https://docs.internal.example.com/platform/config/migrating-feature-flags#legacy-checkout">https://docs.internal.example.com/platform/config/migrating-feature-flags#legacy-checkout</a> before 2026-11-01.</span>
-    </div>
-
-    <div class="row info" data-level="info">
-      <span class="ts">14:03:34.002</span><span class="lvl info">INFO</span><span class="svc">k8s-deployer</span>
-      <span class="msg">Rolling update started for deployment/checkout-api in namespace prod-east (replicas 12, maxSurge 25%, maxUnavailable 0).</span>
-    </div>
-
-    <div class="row info" data-level="info">
-      <span class="ts">14:03:58.740</span><span class="lvl info">INFO</span><span class="svc">k8s-deployer</span>
-      <span class="msg">6 of 12 pods ready for checkout-api.</span>
-    </div>
-
-    <div class="row warn" data-level="warn">
-      <span class="ts">14:04:21.318</span><span class="lvl warn">WARN</span><span class="svc">health-check</span>
-      <span class="msg">Readiness probe slow for pod checkout-api-7d9f8b6c54-xk2vq: GET /healthz took 2871ms (threshold 1500ms). Retrying, attempt 2 of 5.</span>
-    </div>
-
-    <div class="row error" data-level="error">
-      <span class="ts">14:04:36.809</span><span class="lvl error">ERROR</span><span class="svc">k8s-deployer</span>
-      <span class="msg">Pod checkout-api-7d9f8b6c54-xk2vq failed readiness after 5 attempts; container exited with code 1 (CrashLoopBackOff). Last log line: "TypeError: Cannot read properties of undefined (reading 'endpoint') at loadPaymentConfig (/app/dist/config/payments.js:57:31) at bootstrap (/app/dist/server.js:112:9)".</span>
-    </div>
-
-    <div class="row error" data-level="error">
-      <span class="ts">14:04:37.145</span><span class="lvl error">ERROR</span><span class="svc">secrets-manager</span>
-      <span class="msg">Secret payments/gateway-endpoint not found in vault path secret/data/prod/checkout (HTTP 404). Verify the mount and policy at https://vault.internal.example.com/ui/vault/secrets/secret/show/prod/checkout/payments?version=14 and check token TTL.</span>
-    </div>
-
-    <div class="row warn" data-level="warn">
-      <span class="ts">14:04:41.226</span><span class="lvl warn">WARN</span><span class="svc">pipeline-core</span>
-      <span class="msg">Error budget for checkout-api is at 38% for the 30-day window. Automatic rollback will trigger if the failure rate stays above 5% for 120s.</span>
-    </div>
-
-    <div class="row info" data-level="info">
-      <span class="ts">14:04:55.533</span><span class="lvl info">INFO</span><span class="svc">k8s-deployer</span>
-      <span class="msg">Rollback initiated: restoring deployment/checkout-api to revision 41 (release 2026.10.14-2).</span>
-    </div>
-
-    <div class="row info" data-level="info">
-      <span class="ts">14:05:30.871</span><span class="lvl info">INFO</span><span class="svc">k8s-deployer</span>
-      <span class="msg">Rollback complete: 12 of 12 pods ready on revision 41; traffic fully restored to the previous release.</span>
-    </div>
-
-    <div class="row error" data-level="error">
-      <span class="ts">14:05:32.104</span><span class="lvl error">ERROR</span><span class="svc">pipeline-core</span>
-      <span class="msg">Deploy 2026.10.14-3 marked FAILED at stage "rollout". Full trace and pod logs: https://ci.internal.example.com/pipelines/platform/checkout-api/runs/18422/stages/rollout/logs?pod=checkout-api-7d9f8b6c54-xk2vq&amp;tail=500</span>
-    </div>
-
-  </div>
-</main>
+</div>
 
 <script>
-  (function () {
-    var rows = document.querySelectorAll('#log .row');
-    var buttons = document.querySelectorAll('.filters button');
-    var counts = { info: 0, warn: 0, error: 0 };
-    rows.forEach(function (r) { counts[r.dataset.level]++; });
-    Object.keys(counts).forEach(function (k) {
-      document.getElementById('c-' + k).textContent = counts[k];
-    });
-    buttons.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var on = b.getAttribute('aria-pressed') !== 'true';
-        b.setAttribute('aria-pressed', on);
-        rows.forEach(function (r) {
-          if (r.dataset.level === b.dataset.level) r.classList.toggle('hidden', !on);
-        });
+  const rows = [...document.querySelectorAll('.row')];
+  const state = { info: true, warn: true, error: true };
+  for (const l of Object.keys(state)) {
+    document.getElementById('c-' + l).textContent = rows.filter(r => r.classList.contains(l)).length;
+  }
+  document.querySelectorAll('.toolbar button').forEach(b => {
+    b.addEventListener('click', () => {
+      const l = b.dataset.lvl;
+      state[l] = !state[l];
+      b.setAttribute('aria-pressed', state[l]);
+      rows.forEach(r => {
+        const k = ['info', 'warn', 'error'].find(x => r.classList.contains(x));
+        r.hidden = !state[k];
       });
     });
-  })();
+  });
 </script>
 </body>
 </html>

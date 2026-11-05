@@ -3,8 +3,8 @@
 
 The steps are read from .github/workflows/checks.yml (every step with a `run:`), so this script cannot drift from
 the workflow without a test failing. Before them it checks that the branch is rebased on origin/main and that the
-README tables, results chart and before-and-after gallery are current. Run it before every push; a pull request that fails CI on a check this script runs was
-pushed without it. Standard library only.
+README tables, results chart, before-and-after gallery, share images and film (with their PNG copies) are current.
+Run it before every push; a pull request that fails CI on a check this script runs was pushed without it. Standard library only.
 """
 import argparse
 import shlex
@@ -115,9 +115,16 @@ def freshness(root, fetch=True, runner=run_shell):
     if runner(shell_command("python scripts/results_table.py --check"), root) != 0:
         return "the README tables are out of date; run `python3 scripts/results_table.py` and commit the result"
     if runner(shell_command("python scripts/make_results_chart.py --check"), root) != 0:
-        return "the results chart is out of date; run `python3 scripts/make_results_chart.py` and commit the result"
+        return ("the results chart or its PNG copy is out of date; run "
+                "`python3 scripts/make_results_chart.py --png docs/img/results.png` and commit the result")
     if runner(shell_command("python scripts/before_after_gallery.py --check"), root) != 0:
         return "the before-and-after gallery is out of date; run `python3 scripts/before_after_gallery.py` and commit the result"
+    if runner(shell_command("python scripts/make_share_images.py --check"), root) != 0:
+        return ("the share images, library map or family cards, or their PNG copies, are out of date; run "
+                "`python3 scripts/make_share_images.py --png` and commit the result")
+    if runner(shell_command("python scripts/make_film.py --check"), root) != 0:
+        return ("the film, its poster, still or transcript is out of date; run `python3 scripts/make_film.py` "
+                "(needs Chrome and ffmpeg) and commit the result")
     return None
 
 
@@ -143,7 +150,7 @@ def main(argv=None, runner=run_shell):
     except (OSError, WorkflowError) as e:
         print(f"ci_local: cannot read the workflow: {e}", file=sys.stderr)
         return 2
-    print("== freshness: rebased on origin/main, README tables, results chart and gallery current")
+    print("== freshness: rebased on origin/main, README tables, results chart, gallery, share images and film current")
     problem = freshness(root, fetch=not args.no_fetch, runner=runner)
     if problem:
         print(f"\nFAILED freshness: {problem}", file=sys.stderr)

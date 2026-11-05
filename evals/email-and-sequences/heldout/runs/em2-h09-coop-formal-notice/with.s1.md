@@ -1,38 +1,32 @@
 **From:** Dunmore Housing Co-op Board
-**To:** All Members, Dunmore Housing Co-op
 **Subject:** Notice of change to 2027 monthly charges
 
 Dear Members,
 
-This notice informs you of a change to the monthly charge payable by each member of the Dunmore Housing Co-op.
-
-**Change to the monthly charge**
-
-Effective January 1, 2027, the monthly charge will increase from $412 to $438. This is an increase of $26 per month.
+The Board of Dunmore Housing Co-op is writing to notify you that the monthly charge will increase from $412 to $438, effective January 1, 2027. This is an increase of $26 per month.
 
 **Reasons for the change**
 
-The Board has made this change for two reasons:
+Two factors account for the increase:
 
 1. The premium for the building insurance has increased.
-2. The Board is adding to the roof replacement reserve.
+2. The Board is making an additional contribution to the roof replacement reserve.
 
 **Members' meeting**
 
-The Board will hold a members' meeting to explain the change and answer questions. The details are as follows:
-
-- Date: November 19
-- Time: 7:00 pm
-- Location: The community room
+A members' meeting will be held on November 19 at 7:00 pm in the community room. At the meeting, the Board will explain the change and answer members' questions.
 
 **Questions and further information**
 
-Members may also write to the treasurer at treasurer@dunmorecoop.example. The full budget is available from the treasurer on request.
+Members who wish to raise a question before the meeting, or who cannot attend, may write to the treasurer at treasurer@dunmorecoop.example. The full budget is available from the treasurer on request.
 
 Sincerely,
 
-Dunmore Housing Co-op Board
+The Board of Directors
+Dunmore Housing Co-op
 
 ---
 
-I included the $26 difference because it follows directly from your two figures. I left out any insurance premium amounts or a percentage, since you didn't give those. If your lawyer wants the year on the meeting date (November 19, 2026), it's a one-word addition.
+Notes:
+- The $26 difference is my arithmetic from your two figures; delete it if the Board prefers not to state it.
+- The email has no unsubscribe link, since it is a notice to members. Your lawyer should confirm that is appropriate.

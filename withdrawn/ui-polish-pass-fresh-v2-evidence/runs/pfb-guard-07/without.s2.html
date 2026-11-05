@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Village Hall Tea Rota</title>
+<style>
+  :root {
+    --bg: #f6f1e7; --card: #fffdf8; --ink: #2b2620; --muted: #6f665a;
+    --line: #e4dccb; --accent: #a4472b; --accent-ink: #fff; --soft: #f3e3d6; --ok: #2f6b3f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1d1a16; --card: #272320; --ink: #f1ebe0; --muted: #a79d8e;
+      --line: #3a342d; --accent: #e08a68; --accent-ink: #1d1a16; --soft: #3a2c25; --ok: #8fd19e; }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex; align-items: center; justify-content: center; padding: 16px;
+  }
+  main { width: 100%; max-width: 480px; }
+  header { margin-bottom: 12px; }
+  h1 { margin: 0; font-size: 1.5rem; letter-spacing: -.01em; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: .95rem; }
+  ul { list-style: none; margin: 0; padding: 0; background: var(--card);
+       border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  li:last-child { border-bottom: 0; }
+  .date { width: 52px; text-align: center; flex: none; line-height: 1.1; }
+  .date b { display: block; font-size: 1.4rem; }
+  .date span { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .who { flex: 1; min-width: 0; }
+  .who strong { display: block; font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .who small { color: var(--muted); font-size: .8rem; }
+  li.next { background: var(--soft); }
+  li.past { opacity: .55; }
+  li.source { outline: 2px solid var(--accent); outline-offset: -2px; }
+  button {
+    font: inherit; font-size: .9rem; padding: 8px 14px; min-height: 40px; border-radius: 999px;
+    border: 1.5px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; font-weight: 600;
+  }
+  button:hover:not(:disabled) { background: var(--accent); color: var(--accent-ink); }
+  button.primary { background: var(--accent); color: var(--accent-ink); }
+  button:disabled { visibility: hidden; }
+  button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+         margin-top: 12px; min-height: 44px; }
+  #msg { font-size: .92rem; color: var(--muted); margin: 0; }
+  #msg.ok { color: var(--ok); }
+  .bar button { border-color: var(--line); color: var(--muted); padding: 6px 12px; min-height: 36px; font-weight: 500; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>☕ Tea Rota</h1>
+    <p id="sub">Who's bringing the cake</p>
+  </header>
+  <ul id="list"></ul>
+  <div class="bar">
+    <p id="msg" role="status" aria-live="polite">Tap “Swap” on your Sunday to trade with someone.</p>
+    <button id="undo" type="button" hidden>Undo</button>
+  </div>
+</main>
+<script>
+(function () {
+  var NAMES = ["Margaret", "Dev", "Hilary", "Tom", "Aisha"];
+  var now = new Date(), y = now.getFullYear(), m = now.getMonth();
+  var key = "teaRota-" + y + "-" + (m + 1);
+  var today = new Date(y, m, now.getDate());
+
+  var sundays = [];
+  for (var d = new Date(y, m, 1); d.getMonth() === m; d.setDate(d.getDate() + 1))
+    if (d.getDay() === 0) sundays.push(new Date(d));
+
+  var names = sundays.map(function (_, i) { return NAMES[i % NAMES.length]; });
+  try {
+    var saved = JSON.parse(localStorage.getItem(key));
+    if (saved && saved.length === names.length) names = saved;
+  } catch (e) {}
+
+  var picking = null, last = null;
+  var list = document.getElementById("list"), msg = document.getElementById("msg"),
+      undo = document.getElementById("undo");
+  document.getElementById("sub").textContent =
+    "Who's bringing the cake · " + now.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+
+  function save() { try { localStorage.setItem(key, JSON.stringify(names)); } catch (e) {} }
+  function say(t, ok) { msg.textContent = t; msg.className = ok ? "ok" : ""; }
+  function fmt(d) { return d.toLocaleDateString(undefined, { day: "numeric", month: "long" }); }
+
+  var nextIdx = sundays.findIndex(function (d) { return d >= today; });
+
+  function render() {
+    list.innerHTML = "";
+    sundays.forEach(function (d, i) {
+      var past = d < today;
+      var li = document.createElement("li");
+      if (past) li.className = "past";
+      else if (i === nextIdx) li.className = "next";
+      if (picking === i) li.classList.add("source");
+
+      var dt = document.createElement("div"); dt.className = "date";
+      dt.innerHTML = "<b></b><span></span>";
+      dt.firstChild.textContent = d.getDate();
+      dt.lastChild.textContent = d.toLocaleDateString(undefined, { month: "short" });
+
+      var who = document.createElement("div"); who.className = "who";
+      var s = document.createElement("strong"); s.textContent = names[i];
+      var sm = document.createElement("small");
+      sm.textContent = past ? "Done" : i === nextIdx ? "This coming Sunday" : "Cake";
+      who.appendChild(s); who.appendChild(sm);
+
+      var b = document.createElement("button"); b.type = "button";
+      if (past) { b.disabled = true; b.textContent = "Swap"; }
+      else if (picking === null) { b.textContent = "Swap"; b.setAttribute("aria-label", "Swap " + names[i] + " on " + fmt(d)); b.onclick = function () { picking = i; say("Swapping " + names[i] + " (" + fmt(d) + "). Pick who to swap with, or tap Cancel.");  render(); }; }
+      else if (picking === i) { b.textContent = "Cancel"; b.onclick = function () { picking = null; say("Swap cancelled."); render(); }; }
+      else if (names[i] === names[picking]) { b.disabled = true; b.textContent = "Swap"; }
+      else { b.textContent = "Swap here"; b.className = "primary"; b.setAttribute("aria-label", "Swap with " + names[i] + " on " + fmt(d)); b.onclick = function () { doSwap(picking, i); }; }
+
+      li.appendChild(dt); li.appendChild(who); li.appendChild(b);
+      list.appendChild(li);
+    });
+    undo.hidden = !last || picking !== null;
+  }
+
+  function doSwap(a, b) {
+    var na = names[a], nb = names[b];
+    names[a] = nb; names[b] = na;
+    last = [a, b];
+    picking = null;
+    save();
+    say(na + " now brings cake on " + fmt(sundays[b]) + ", " + nb + " on " + fmt(sundays[a]) + ".", true);
+    render();
+  }
+
+  undo.onclick = function () {
+    if (!last) return;
+    var a = last[0], b = last[1], t = names[a];
+    names[a] = names[b]; names[b] = t;
+    last = null; save(); say("Swap undone."); render();
+  };
+
+  if (!sundays.length) say("No Sundays this month.");
+  render();
+})();
+</script>
+</body>
+</html>

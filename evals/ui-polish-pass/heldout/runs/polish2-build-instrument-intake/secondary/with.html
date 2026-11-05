@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Instrument Repair Intake</title>
+<title>Instrument Drop-Off Form</title>
 <style>
   :root {
     --bg: #f6f4f1;
     --surface: #ffffff;
     --text: #1f1d1a;
-    --muted: #5f5a53;
-    --border: #d6d0c8;
+    --muted: #5d5850;
+    --border: #cfc8be;
     --accent: #7a3e1d;
     --accent-hover: #5e2e14;
-    --accent-text: #ffffff;
-    --focus: #2563eb;
-    --error: #b42318;
-    --error-bg: #fdf1f0;
-    --success: #1d6b3a;
-    --success-bg: #eef8f1;
+    --focus: #1a5fb4;
+    --error: #a4262c;
+    --success-bg: #e6f4ea;
+    --success-text: #1e5b2b;
     --radius: 8px;
-    color-scheme: light dark;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #1a1816;
-      --surface: #252220;
-      --text: #f2eee9;
-      --muted: #b3ada5;
-      --border: #4a443d;
-      --accent: #d08a57;
-      --accent-hover: #e0a170;
-      --accent-text: #1a1816;
-      --focus: #7aa7ff;
-      --error: #ff8a80;
-      --error-bg: #3a2222;
-      --success: #7ee0a0;
-      --success-bg: #1d3327;
+      --bg: #1b1916;
+      --surface: #262320;
+      --text: #f2eee8;
+      --muted: #b8b0a5;
+      --border: #4a443c;
+      --accent: #d08a5c;
+      --accent-hover: #e3a478;
+      --focus: #8ab4f8;
+      --error: #f2877d;
+      --success-bg: #1d3324;
+      --success-text: #a8dfb6;
     }
   }
 
@@ -48,20 +44,19 @@
     padding: 24px 16px;
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font);
     font-size: 16px;
     line-height: 1.5;
   }
 
   .wrap {
-    max-width: 680px;
+    max-width: 720px;
     margin: 0 auto;
   }
 
   header h1 {
-    margin: 0 0 4px;
     font-size: 1.75rem;
-    line-height: 1.2;
+    margin: 0 0 4px;
   }
 
   header p {
@@ -69,7 +64,7 @@
     color: var(--muted);
   }
 
-  form, .done {
+  form {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -78,14 +73,13 @@
 
   fieldset {
     border: 0;
-    margin: 0 0 24px;
+    margin: 0 0 28px;
     padding: 0;
-    min-width: 0;
   }
 
   legend {
+    font-size: 1.1rem;
     font-weight: 600;
-    font-size: 1.05rem;
     padding: 0;
     margin-bottom: 12px;
   }
@@ -93,26 +87,26 @@
   .grid {
     display: grid;
     gap: 16px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
+  @media (min-width: 560px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .grid .full { grid-column: 1 / -1; }
   }
 
-  .grid .field { margin-bottom: 0; }
-
-  label, .label {
-    font-weight: 500;
-    font-size: 0.95rem;
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
   }
 
   .hint {
-    font-size: 0.85rem;
+    display: block;
+    font-weight: 400;
+    font-size: 0.875rem;
     color: var(--muted);
+    margin-top: 2px;
   }
 
   input[type="text"],
@@ -122,16 +116,16 @@
   select,
   textarea {
     width: 100%;
+    padding: 10px 12px;
     font: inherit;
     color: var(--text);
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 10px 12px;
   }
 
   textarea {
-    min-height: 120px;
+    min-height: 130px;
     resize: vertical;
   }
 
@@ -151,176 +145,168 @@
     border-color: var(--error);
   }
 
+  .error {
+    display: none;
+    color: var(--error);
+    font-size: 0.875rem;
+    margin-top: 4px;
+  }
+
+  .error.show { display: block; }
+
   .checks {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px 16px;
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 560px) {
+    .checks { grid-template-columns: 1fr 1fr; }
   }
 
   .check {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.95rem;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
     cursor: pointer;
   }
 
   .check input {
+    margin-top: 4px;
     width: 18px;
     height: 18px;
-    margin: 0;
     accent-color: var(--accent);
+    flex-shrink: 0;
   }
 
   .radios {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 20px;
+    gap: 12px;
   }
 
-  .error {
-    color: var(--error);
-    font-size: 0.85rem;
-    min-height: 0;
-  }
-
-  .error:empty { display: none; }
-
-  .banner {
-    background: var(--error-bg);
-    color: var(--error);
-    border: 1px solid var(--error);
+  .radios label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 400;
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 12px 14px;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
+    cursor: pointer;
   }
 
-  .banner:empty { display: none; }
+  .consent {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-weight: 400;
+  }
+
+  .consent input {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+  }
 
   .actions {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     align-items: center;
-    justify-content: space-between;
     margin-top: 8px;
   }
 
   button {
     font: inherit;
     font-weight: 600;
+    padding: 12px 24px;
     border-radius: 6px;
-    padding: 11px 20px;
+    border: 1px solid transparent;
     cursor: pointer;
-    border: 1px solid var(--accent);
   }
 
-  .primary {
+  button[type="submit"] {
     background: var(--accent);
-    color: var(--accent-text);
+    color: #ffffff;
   }
 
-  .primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+  button[type="submit"]:hover { background: var(--accent-hover); }
 
-  .secondary {
+  button[type="reset"] {
     background: transparent;
     color: var(--text);
     border-color: var(--border);
   }
 
-  .secondary:hover { border-color: var(--muted); }
+  button[type="reset"]:hover { background: var(--bg); }
 
-  .done h2 {
-    margin: 0 0 8px;
-    color: var(--success);
-    font-size: 1.4rem;
-  }
-
-  .ref {
-    display: inline-block;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  .status {
+    display: none;
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 6px;
     background: var(--success-bg);
-    color: var(--success);
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-weight: 600;
+    color: var(--success-text);
   }
 
-  dl.summary {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 8px 16px;
-    margin: 20px 0;
-    font-size: 0.95rem;
+  .status.show { display: block; }
+
+  .status h2 {
+    font-size: 1.1rem;
+    margin: 0 0 6px;
   }
 
-  dl.summary dt {
-    color: var(--muted);
-  }
-
-  dl.summary dd {
-    margin: 0;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
-  }
+  .status p { margin: 0; }
 
   .sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
+    padding: 0;
+    margin: -1px;
     overflow: hidden;
-    clip: rect(0 0 0 0);
+    clip: rect(0, 0, 0, 0);
     white-space: nowrap;
+    border: 0;
   }
 
-  .hidden { display: none !important; }
-
-  @media (max-width: 560px) {
-    .grid { grid-template-columns: 1fr; }
-    .checks { grid-template-columns: 1fr; }
-    form, .done { padding: 18px; }
-    .actions { flex-direction: column-reverse; align-items: stretch; }
-    .actions button { width: 100%; }
-  }
-
-  @media print {
-    body { background: #fff; color: #000; padding: 0; }
-    .actions, header p, form { display: none !important; }
-    .done { border: 0; padding: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    button { transition: background-color 0.15s ease; }
   }
 </style>
 </head>
 <body>
-<main class="wrap">
+<div class="wrap">
   <header>
-    <h1>Instrument Repair Intake</h1>
-    <p>Tell us what's going on with your guitar or violin family instrument, and we'll get back to you with an estimate.</p>
+    <h1>Instrument Drop-Off &amp; Repair Request</h1>
+    <p>Tell us about your guitar or violin and what needs attention. We'll confirm the estimate before any work begins.</p>
   </header>
 
-  <form id="intake" novalidate>
-    <div id="banner" class="banner" role="alert" tabindex="-1"></div>
-
+  <form id="dropoff" novalidate>
     <fieldset>
-      <legend>About you</legend>
+      <legend>Your details</legend>
       <div class="grid">
-        <div class="field">
+        <div>
           <label for="name">Full name <span aria-hidden="true">*</span></label>
           <input type="text" id="name" name="name" autocomplete="name" required aria-describedby="name-err">
-          <div id="name-err" class="error"></div>
+          <div class="error" id="name-err">Please enter your name.</div>
         </div>
-        <div class="field">
-          <label for="phone">Phone</label>
-          <input type="tel" id="phone" name="phone" autocomplete="tel" aria-describedby="contact-hint phone-err">
-          <div id="phone-err" class="error"></div>
+        <div>
+          <label for="phone">Phone <span aria-hidden="true">*</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" required aria-describedby="phone-err">
+          <div class="error" id="phone-err">Please enter a phone number.</div>
         </div>
-        <div class="field">
+        <div class="full">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" autocomplete="email" aria-describedby="contact-hint email-err">
-          <div id="email-err" class="error"></div>
-        </div>
-        <div class="field">
-          <span class="hint" id="contact-hint">Provide a phone number or email (or both) so we can reach you.</span>
+          <input type="email" id="email" name="email" autocomplete="email" aria-describedby="email-err">
+          <div class="error" id="email-err">Please enter a valid email address.</div>
         </div>
       </div>
     </fieldset>
@@ -328,34 +314,36 @@
     <fieldset>
       <legend>About the instrument</legend>
       <div class="grid">
-        <div class="field">
-          <label for="type">Instrument type <span aria-hidden="true">*</span></label>
-          <select id="type" name="type" aria-describedby="type-err">
-            <option value="">Choose one</option>
+        <div>
+          <label for="type">Instrument <span aria-hidden="true">*</span></label>
+          <select id="type" name="type" required aria-describedby="type-err">
+            <option value="">Choose one…</option>
             <option>Acoustic guitar</option>
             <option>Electric guitar</option>
             <option>Bass guitar</option>
             <option>Classical guitar</option>
-            <option>Ukulele or other fretted</option>
             <option>Violin</option>
             <option>Viola</option>
             <option>Cello</option>
-            <option>Double bass</option>
             <option>Other</option>
           </select>
-          <div id="type-err" class="error"></div>
+          <div class="error" id="type-err">Please choose an instrument type.</div>
         </div>
-        <div class="field">
-          <label for="make">Make and model</label>
-          <input type="text" id="make" name="make" placeholder="e.g. Martin D-28, Yamaha FG800">
+        <div>
+          <label for="size">Size (violin/viola/cello)</label>
+          <input type="text" id="size" name="size" placeholder="e.g. 4/4, 16 inch">
         </div>
-        <div class="field">
-          <label for="serial">Serial number <span class="hint">(optional)</span></label>
+        <div>
+          <label for="make">Make / maker</label>
+          <input type="text" id="make" name="make" placeholder="e.g. Taylor, unknown Chinese">
+        </div>
+        <div>
+          <label for="model">Model</label>
+          <input type="text" id="model" name="model">
+        </div>
+        <div class="full">
+          <label for="serial">Serial number <span class="hint">Usually on the headstock, back of the body, or inside the sound hole.</span></label>
           <input type="text" id="serial" name="serial">
-        </div>
-        <div class="field">
-          <label for="ready">Needed by <span class="hint">(optional)</span></label>
-          <input type="date" id="ready" name="ready">
         </div>
       </div>
     </fieldset>
@@ -363,203 +351,153 @@
     <fieldset>
       <legend>What's wrong?</legend>
       <div class="checks">
-        <label class="check"><input type="checkbox" name="issues" value="Buzzing or rattling"> Buzzing or rattling</label>
-        <label class="check"><input type="checkbox" name="issues" value="Tuning instability"> Won't stay in tune</label>
-        <label class="check"><input type="checkbox" name="issues" value="Intonation"> Intonation (out of tune up the neck)</label>
-        <label class="check"><input type="checkbox" name="issues" value="High action"> High action or hard to play</label>
-        <label class="check"><input type="checkbox" name="issues" value="Fret wear or dead spots"> Fret wear or dead spots</label>
-        <label class="check"><input type="checkbox" name="issues" value="Neck or truss rod"> Neck bow or truss rod</label>
-        <label class="check"><input type="checkbox" name="issues" value="Bridge or saddle"> Bridge or saddle lifting</label>
-        <label class="check"><input type="checkbox" name="issues" value="Crack or structural damage"> Crack or structural damage</label>
-        <label class="check"><input type="checkbox" name="issues" value="Finish damage"> Finish damage</label>
-        <label class="check"><input type="checkbox" name="issues" value="Tuning machines"> Tuning machines or pegs</label>
-        <label class="check"><input type="checkbox" name="issues" value="Electronics"> Electronics or pickups</label>
-        <label class="check"><input type="checkbox" name="issues" value="Sound post or soundboard"> Sound post or soundboard</label>
-        <label class="check"><input type="checkbox" name="issues" value="Bow"> Bow (rehair or repair)</label>
-        <label class="check"><input type="checkbox" name="issues" value="General setup"> General setup or cleaning</label>
+        <label class="check"><input type="checkbox" name="issues" value="Buzzing or rattling"> <span>Buzzing or rattling</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="Intonation off"> <span>Intonation off</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="High action"> <span>High action (strings too high)</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="Fret wear or dead spots"> <span>Fret wear or dead spots</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="Crack or open seam"> <span>Crack or open seam</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="Loose neck or bridge"> <span>Loose neck or bridge</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="Electronics not working"> <span>Electronics / pickups not working</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="Tuning machines or pegs"> <span>Tuning machines or pegs</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="Finish damage"> <span>Finish damage</span></label>
+        <label class="check"><input type="checkbox" name="issues" value="Setup needed"> <span>General setup / adjustment</span></label>
       </div>
-      <div id="issues-err" class="error" style="margin-top:8px"></div>
     </fieldset>
 
     <fieldset>
       <legend>Describe the problem</legend>
-      <div class="field">
-        <label for="details">Details <span aria-hidden="true">*</span></label>
-        <textarea id="details" name="details" placeholder="When did it start? What were you doing? Anything you've already tried?" aria-describedby="details-hint details-err"></textarea>
-        <span class="hint" id="details-hint">Required if you did not select a problem above.</span>
-        <div id="details-err" class="error"></div>
+      <div>
+        <label for="details">Details <span aria-hidden="true">*</span> <span class="hint">When did it start? Does it get worse with humidity, playing hard, or a particular string?</span></label>
+        <textarea id="details" name="details" required aria-describedby="details-err"></textarea>
+        <div class="error" id="details-err">Please describe the problem so we can prepare.</div>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>Drop-off</legend>
-      <div class="radios" role="radiogroup" aria-label="How will you bring it in?">
-        <label class="check"><input type="radio" name="dropoff" value="In person" checked> In person</label>
-        <label class="check"><input type="radio" name="dropoff" value="Ship it to us"> Shipping it</label>
-        <label class="check"><input type="radio" name="dropoff" value="Pickup requested"> Request pickup</label>
+      <legend>Timing</legend>
+      <div class="grid">
+        <div>
+          <label for="needed">Needed by</label>
+          <input type="date" id="needed" name="needed">
+        </div>
+        <div>
+          <span class="hint" style="font-weight:600;color:var(--text);margin-bottom:6px;">Priority</span>
+          <div class="radios" role="radiogroup" aria-label="Priority">
+            <label><input type="radio" name="priority" value="Standard" checked> Standard</label>
+            <label><input type="radio" name="priority" value="Urgent"> Urgent</label>
+          </div>
+        </div>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>Before you submit</legend>
-      <label class="check">
-        <input type="checkbox" id="consent" name="consent">
-        I understand that an estimate is required before any work begins, and that I'll be contacted before any extra charges.
+      <legend>Confirmation</legend>
+      <label class="consent">
+        <input type="checkbox" id="consent" name="consent" required aria-describedby="consent-err">
+        <span>I understand that an estimate will be provided before any repair work begins, and that I can decline the work.</span>
       </label>
-      <div id="consent-err" class="error" style="margin-top:8px"></div>
+      <div class="error" id="consent-err">Please confirm to continue.</div>
     </fieldset>
 
     <div class="actions">
-      <button type="reset" class="secondary">Clear form</button>
-      <button type="submit" class="primary">Submit intake</button>
+      <button type="submit">Submit drop-off request</button>
+      <button type="reset">Clear form</button>
+    </div>
+
+    <div class="status" id="status" role="status" aria-live="polite" tabindex="-1">
+      <h2>Thanks, your request is noted.</h2>
+      <p id="status-text"></p>
     </div>
   </form>
-
-  <section id="done" class="done hidden" aria-live="polite" tabindex="-1">
-    <h2>Thanks, your instrument intake is in.</h2>
-    <p>Keep this reference number so you can mention it when you call or drop off the instrument:</p>
-    <p><span class="ref" id="ref"></span></p>
-    <dl class="summary" id="summary"></dl>
-    <p class="hint">We'll be in touch to confirm the estimate. Please don't leave the instrument with extra valuables or accessories you don't want in the case.</p>
-    <div class="actions">
-      <button type="button" class="secondary" id="print">Print or save as PDF</button>
-      <button type="button" class="primary" id="again">Submit another instrument</button>
-    </div>
-  </section>
-</main>
+</div>
 
 <script>
 (function () {
-  var form = document.getElementById('intake');
-  var done = document.getElementById('done');
-  var banner = document.getElementById('banner');
+  var form = document.getElementById('dropoff');
+  var status = document.getElementById('status');
+  var statusText = document.getElementById('status-text');
 
-  function setError(input, id, message) {
-    var box = document.getElementById(id);
-    box.textContent = message || '';
-    if (input) {
-      if (message) input.setAttribute('aria-invalid', 'true');
-      else input.removeAttribute('aria-invalid');
-    }
-  }
+  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  function val(name) {
-    return form.elements[name].value.trim();
-  }
-
-  function checkedIssues() {
-    var boxes = form.querySelectorAll('input[name="issues"]:checked');
-    return Array.prototype.map.call(boxes, function (b) { return b.value; });
+  function setError(input, errEl, message) {
+    var invalid = !!message;
+    input.setAttribute('aria-invalid', invalid ? 'true' : 'false');
+    errEl.classList.toggle('show', invalid);
+    return !invalid;
   }
 
   function validate() {
     var ok = true;
-    var firstBad = null;
+    var first = null;
 
-    function fail(el) { ok = false; if (!firstBad) firstBad = el; }
-
-    var name = val('name');
-    setError(form.name, 'name-err', name ? '' : 'Please enter your name.');
-    if (!name) fail(form.name);
-
-    var phone = val('phone');
-    var email = val('email');
-    var contactMsg = (!phone && !email) ? 'Enter a phone number or an email address.' : '';
-    setError(form.phone, 'phone-err', contactMsg);
-    setError(form.email, 'email-err', '');
-    if (contactMsg) { fail(form.phone); }
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError(form.email, 'email-err', 'That email address doesn\'t look right.');
-      fail(form.email);
+    function check(id, errId, failed) {
+      var input = document.getElementById(id);
+      var errEl = document.getElementById(errId);
+      var valid = !failed;
+      setError(input, errEl, valid ? '' : errEl.textContent);
+      if (!valid) {
+        ok = false;
+        if (!first) first = input;
+      }
     }
 
-    var type = val('type');
-    setError(form.type, 'type-err', type ? '' : 'Please choose an instrument type.');
-    if (!type) fail(form.type);
+    check('name', 'name-err', !form.name.value.trim());
+    check('phone', 'phone-err', !form.phone.value.trim());
+    check('email', 'email-err', form.email.value.trim() !== '' && !emailPattern.test(form.email.value.trim()));
+    check('type', 'type-err', !form.type.value);
+    check('details', 'details-err', !form.details.value.trim());
+    check('consent', 'consent-err', !form.consent.checked);
 
-    var issues = checkedIssues();
-    var details = val('details');
-    var needDetails = issues.length === 0 && !details;
-    setError(form.details, 'details-err', needDetails ? 'Pick at least one problem above or describe it here.' : '');
-    if (needDetails) fail(form.details);
-    document.getElementById('issues-err').textContent = '';
-
-    var consent = form.consent.checked;
-    setError(null, 'consent-err', consent ? '' : 'Please confirm the estimate policy to continue.');
-    if (!consent) fail(form.consent);
-
-    if (!ok) {
-      banner.textContent = 'Please fix the highlighted fields and try again.';
-      banner.focus();
-      if (firstBad) firstBad.focus();
-    } else {
-      banner.textContent = '';
-    }
+    if (first) first.focus();
     return ok;
   }
 
-  function makeRef() {
-    var d = new Date();
-    var stamp = d.getFullYear().toString() +
-      String(d.getMonth() + 1).padStart(2, '0') +
-      String(d.getDate()).padStart(2, '0');
-    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    var rand = '';
-    for (var i = 0; i < 4; i++) rand += chars[Math.floor(Math.random() * chars.length)];
-    return 'INT-' + stamp + '-' + rand;
-  }
-
-  function addRow(dl, label, value) {
-    if (!value) return;
-    var dt = document.createElement('dt');
-    dt.textContent = label;
-    var dd = document.createElement('dd');
-    dd.textContent = value;
-    dl.appendChild(dt);
-    dl.appendChild(dd);
-  }
+  // Clear errors as the user fixes them
+  ['name', 'phone', 'email', 'type', 'details'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+      if (this.getAttribute('aria-invalid') === 'true') validate();
+    });
+  });
+  document.getElementById('consent').addEventListener('change', function () {
+    if (this.getAttribute('aria-invalid') === 'true') validate();
+  });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    status.classList.remove('show');
+
     if (!validate()) return;
 
-    var dl = document.getElementById('summary');
-    dl.innerHTML = '';
-    var issues = checkedIssues();
-    var dropoff = form.querySelector('input[name="dropoff"]:checked');
+    var issues = Array.prototype.slice.call(form.querySelectorAll('input[name="issues"]:checked'))
+      .map(function (c) { return c.value; });
 
-    addRow(dl, 'Name', val('name'));
-    addRow(dl, 'Phone', val('phone'));
-    addRow(dl, 'Email', val('email'));
-    addRow(dl, 'Instrument', val('type'));
-    addRow(dl, 'Make and model', val('make'));
-    addRow(dl, 'Serial number', val('serial'));
-    addRow(dl, 'Needed by', val('ready'));
-    addRow(dl, 'Problems', issues.join(', '));
-    addRow(dl, 'Details', val('details'));
-    addRow(dl, 'Drop-off', dropoff ? dropoff.value : '');
+    var parts = [];
+    parts.push('Thanks, ' + form.name.value.trim() + '. We have your ' +
+      form.type.value.toLowerCase() + ' on file.');
+    if (issues.length) parts.push('Reported issues: ' + issues.join(', ') + '.');
+    if (form.priority.value === 'Urgent') {
+      parts.push('Marked urgent. We will be in touch as soon as possible.');
+    } else {
+      parts.push('We will contact you at ' + form.phone.value.trim() + ' to confirm the estimate.');
+    }
+    parts.push('Please leave the instrument in its case with your name on a tag.');
 
-    document.getElementById('ref').textContent = makeRef();
-
-    form.hidden = true;
-    done.classList.remove('hidden');
-    done.focus();
-  });
-
-  document.getElementById('again').addEventListener('click', function () {
+    statusText.textContent = parts.join(' ');
+    status.classList.add('show');
+    status.focus();
     form.reset();
-    form.hidden = false;
-    done.classList.add('hidden');
-    banner.textContent = '';
-    ['name-err', 'phone-err', 'email-err', 'type-err', 'details-err', 'consent-err', 'issues-err'].forEach(function (id) {
-      document.getElementById(id).textContent = '';
-    });
-    form.querySelectorAll('[aria-invalid]').forEach(function (el) { el.removeAttribute('aria-invalid'); });
-    form.name.focus();
   });
 
-  document.getElementById('print').addEventListener('click', function () {
-    window.print();
+  form.addEventListener('reset', function () {
+    setTimeout(function () {
+      form.querySelectorAll('[aria-invalid]').forEach(function (el) {
+        el.setAttribute('aria-invalid', 'false');
+      });
+      form.querySelectorAll('.error').forEach(function (el) {
+        el.classList.remove('show');
+      });
+      status.classList.remove('show');
+    }, 0);
   });
 })();
 </script>

@@ -1,34 +1,59 @@
-# Pharmacy Tech Exam Plan: 9 Weeks
+Here's a 9-week plan, ready to copy onto a page. It assumes the exam falls right after week 9, so shift it if your date is different.
 
-I'm assuming your exam is about Thu 17 Dec. Tell me the real date and I'll shift the weeks. Total time is about 4 hours a week: Mon–Fri 30 min, Sat 90 min, Sun off.
+## How the plan works
+- **Weeks 1–4:** learn the three new units, one at a time. Each weekday is 20 minutes on the new unit and 10 minutes of recall on an old unit.
+- **Weeks 5–8:** go back over everything with a closed-notes focus unit each week and mixed questions.
+- **Week 9:** taper off and rest.
+- **Method:** don't re-read. Answer questions or write from memory with notes closed, then check.
+- **Miss list:** write every miss on one page. Redo those items 2 days later and again on the next Saturday.
 
-## Every session
-- **Weekdays (30 min):** 5 min writing what you remember from yesterday on blank paper, then 25 min on the day's topic.
-- **Saturdays (90 min):** 30 min of recall on an older unit, 45 min of the week's hard material, and 15 min updating your **error log**.
-- **Error log:** one line per miss, in the form "what I picked → why it was wrong → what I'll do next time." Each Saturday starts from the log, not from your notes.
-- **Practice questions:** answer from memory first, then check. Don't re-read as your main study method. Source: [your course's question bank].
+## Weeks 1–4: new material
+| Day | Time | Do this |
+|---|---|---|
+| Mon | 30 | 20 new unit + 10 calculation problems |
+| Tue | 30 | 20 new unit + 10 drug-class recall (blank page, then check) |
+| Wed | 30 | 20 new unit + 10 law and ethics recall |
+| Thu | 30 | 20 new unit + 10 calculation problems |
+| Fri | 30 | Quiz yourself on this week's new material from a blank page, then fix the misses |
+| Sat | 90 | 40 finish the unit, 20 mixed recall of old units, 30 closed-notes questions on the unit |
+| Sun | off | |
 
-## The schedule
+| Week | New unit |
+|---|---|
+| 1 | Sterile compounding, part 1 (the basics and aseptic technique) |
+| 2 | Sterile compounding, part 2 (the harder material and the calculations that go with it) |
+| 3 | Inventory and ordering |
+| 4 | Safety and error prevention |
 
-| Week | Mon | Tue | Wed | Thu | Fri | Sat (90) |
-|---|---|---|---|---|---|---|
-| **Start** (Thu 15 Oct) | | | | Sterile: aseptic technique, hoods, cleanrooms | Sterile: garbing, handwashing, cleaning | Sterile: supplies, labeling, beyond-use dating. Then 30 min of calculations recall |
-| **1** (19 Oct) | Sterile: IV admixture | Sterile: sterile calculations (dilutions, flow rates) | Sterile: sterile calculations, more | Sterile: documentation and quality checks | Recall all of Sterile on blank paper | 30 min Calculations recall, 45 min Sterile practice questions, 15 min log |
-| **2** (26 Oct) | Inventory: ordering and par levels | Inventory: receiving and storage | Inventory: recalls, returns, expired stock | Inventory: controlled-substance ordering | Recall all of Inventory | 30 min Law recall, 30 min Sterile recall, 15 min Inventory practice questions, 15 min log |
-| **3** (2 Nov) | Safety: types of errors | Safety: look-alike/sound-alike drugs | Safety: prescription verification steps | Safety: reporting and prevention systems | Recall all of Safety | 30 min Drug classes recall, 30 min Inventory + Sterile mixed recall, 15 min Safety practice questions, 15 min log |
-| **4** (9 Nov) | Drug classes, second pass | Drug classes: weakest half | Drug classes: brand/generic and indications | Drug classes: side effects and interactions | Recall of drug classes | Mixed quiz on the three new units (60 min), then work through the log (30 min) |
-| **5** (16 Nov) | Calculations | Law and ethics | Calculations | Law + Safety (the two that overlap) | Mixed recall, all six units | Mixed practice set, all six units, 90 min |
-| **6** (23 Nov) | Weakest unit per log | Second-weakest unit | Calculations | Weakest unit | Mixed recall | **Practice test 1** (as long as fits in 90 min, or [your exam's length]), then log |
-| **7** (30 Nov) | Weak topics from test 1 | Weak topics | Calculations | Weak topics | Mixed recall | **Practice test 2** (new questions), then log |
-| **8** (7 Dec) | Weak topics from test 2 | Weak topics | Calculations | Weak topics | Mixed recall | **Practice test 3** (new questions) |
-| **Exam week** (14 Dec) | Log review | Calculations only | Log review | Light skim, **stop early** | Rest | Exam [date and time] |
+**Sat of week 4:** do a practice test (as many questions as fit in 90 minutes) as a baseline. Sort your misses by unit. That sort decides how you use weeks 5–8.
 
-## What "ready" means
-Scoring [your target score] or higher on practice test 3 would be a good sign. It's a later day, a mixed set, and questions you haven't seen. Pick the target yourself, for example the passing score for your exam plus a margin. A good score on a quiz taken the same day you studied doesn't count.
+## Weeks 5–8: second pass
+| Day | Time | Do this |
+|---|---|---|
+| Mon–Thu | 30 | Closed-notes questions on the week's focus unit |
+| Fri | 30 | Mixed questions from the three newest units (sterile, inventory, safety) |
+| Sat | 90 | 30 focus unit, 30 mixed questions from all six units, 30 redo the miss list |
+| Sun | off | |
 
-## Rules for slipping
-- If you miss a day, skip it. Don't double up the next one.
-- If a unit isn't sticking by its Friday recall, give it one extra weekday slot next week and drop the 5-minute recall for a topic you already know.
-- If practice test 1 shows a unit well below the others, spend weeks 6–8 weekdays mostly on it.
+| Week | Focus unit |
+|---|---|
+| 5 | Calculations (daily problems; this is a skill, so do many) |
+| 6 | Drug classes (**Sat: practice test #2**) |
+| 7 | Law and ethics, then safety and error prevention (do them together, since they overlap) |
+| 8 | Your weakest units from practice test #2, plus sterile compounding and inventory (**Sat: practice test #3**) |
 
-I can also make this as a printable one-page file if you want, or move it to your actual exam date.
+## Week 9: taper
+| Day | Time | Do this |
+|---|---|---|
+| Mon–Wed | 30 | Mixed questions plus the miss list only |
+| Thu | 30 | Skim your miss list and any formulas |
+| Fri | 15 | Light skim, or nothing |
+| Sat | 45 | Light skim, then stop. No new material. |
+| Sun | off | |
+
+## Unit checkoff
+Mark a unit done only when you hit your target score on mixed questions on a later day than you first studied it. Set the target before practice test #1. [your target score]
+
+If a practice test shows a unit well below the others, move 10 minutes a day from your strongest unit to it. Don't add days.
+
+I can also make this as a one-page printable PDF or HTML with checkboxes if you'd like.

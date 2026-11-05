@@ -2,30 +2,30 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "9080b12b359de36d",
+    "with": "f2e297c84bf7a69b",
     "without": "d962d318e35ca69e"
   },
   "result": {
     "winner": "without",
-    "judge_notes": "pass 1 (A=without, B=with): Answer A recommends checking a field once the person leaves it, then re-checking it live after an error appears, and it gives each field a concrete behavior, which covers the rubric well. Answer B has strong extras (accessibility, autocomplete, keeping the submit button active) and handles the username and password well. However, it explicitly rejects checking on leaving the field and leaves email to be checked only on submit. That goes against rubric item 2 and partly recreates the pile of errors at the end. | pass 2 (A=with, B=without): B explains both failure modes: false errors while someone is still typing, and a pile of problems discovered at submit. It recommends checking on blur, re-checking live once an error shows, a debounced username check that cancels stale requests, and showing the password rule up front. A does well on live re-checking and the per-field exceptions, but it explicitly rejects checking when someone leaves a field. It also leans on submit-only checking and barely mentions the problem of finding everything wrong at the end.",
+    "judge_notes": "pass 1 (A=without, B=with): Answer A covers both failure modes: errors that appear mid-typing, and a pile of problems that only shows up at submit. It recommends checking on blur and re-checking live once a field has shown an error, and it gives each field its own behavior. Answer B gives excellent per-field detail and useful extras, such as keeping the submit button enabled and showing an error summary. But it leans toward checking only on submit and never recommends checking when the person leaves a field. It also doesn't really name the end-of-form pile-up as a problem. | pass 2 (A=with, B=without): B rejects both extremes for the reasons the rubric names: mid-typing errors are false alarms, and checking only at submit leaves a pile of problems at the end. It recommends checking a field when the person leaves it, then re-checking live once an error shows, with sensible handling of the username and password. A says the designer is closer and checks the email only on submit. It also treats checking when someone tabs away as a downside, so it misses the leave-the-field approach, although its per-field table is very concrete.",
     "rubric_scores": {
-      "with": 3.7,
-      "without": 4.8
+      "with": 4.0,
+      "without": 4.7
     },
     "rubric_items": {
       "with": [
-        3.5,
-        1.0,
+        3.0,
+        2.0,
         5.0,
         5.0,
-        4.0
+        5.0
       ],
       "without": [
         5.0,
         4.0,
         5.0,
         5.0,
-        5.0
+        4.5
       ]
     },
     "position_consistent": true,
@@ -37,7 +37,7 @@
         ],
         "raw_verdict": "A",
         "winner": "without",
-        "notes": "Answer A recommends checking a field once the person leaves it, then re-checking it live after an error appears, and it gives each field a concrete behavior, which covers the rubric well. Answer B has strong extras (accessibility, autocomplete, keeping the submit button active) and handles the username and password well. However, it explicitly rejects checking on leaving the field and leaves email to be checked only on submit. That goes against rubric item 2 and partly recreates the pile of errors at the end."
+        "notes": "Answer A covers both failure modes: errors that appear mid-typing, and a pile of problems that only shows up at submit. It recommends checking on blur and re-checking live once a field has shown an error, and it gives each field its own behavior. Answer B gives excellent per-field detail and useful extras, such as keeping the submit button enabled and showing an error summary. But it leans toward checking only on submit and never recommends checking when the person leaves a field. It also doesn't really name the end-of-form pile-up as a problem."
       },
       {
         "order": [
@@ -46,7 +46,7 @@
         ],
         "raw_verdict": "B",
         "winner": "without",
-        "notes": "B explains both failure modes: false errors while someone is still typing, and a pile of problems discovered at submit. It recommends checking on blur, re-checking live once an error shows, a debounced username check that cancels stale requests, and showing the password rule up front. A does well on live re-checking and the per-field exceptions, but it explicitly rejects checking when someone leaves a field. It also leans on submit-only checking and barely mentions the problem of finding everything wrong at the end."
+        "notes": "B rejects both extremes for the reasons the rubric names: mid-typing errors are false alarms, and checking only at submit leaves a pile of problems at the end. It recommends checking a field when the person leaves it, then re-checking live once an error shows, with sensible handling of the username and password. A says the designer is closer and checks the email only on submit. It also treats checking when someone tabs away as a downside, so it misses the leave-the-field approach, although its per-field table is very concrete."
       }
     ]
   }

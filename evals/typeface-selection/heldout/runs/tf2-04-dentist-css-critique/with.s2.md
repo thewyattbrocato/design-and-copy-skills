@@ -1,51 +1,50 @@
-The setup is chaotic because it has six typefaces and no roles for them. It's slow because of how they're loaded.
+**Short version:** the body text is set in a script face, and there are six families where one or two would do. Both problems match what parents describe.
 
 ## What's wrong
 
-**Why it feels chaotic**
-- **Six families, none with a job.** Lobster, Playfair Display, Montserrat, Raleway, Comic Neue and Courier New each take a different role. A page with this many voices reads as noise, and parents pick up on that.
-- **Lobster is the body font.** It's a script display face, and here it sets every paragraph at 13px with 1.2 line height in mid-gray. That's the most damaging choice. Script is hard to read at length, 13px is too small, and 1.2 leading is too tight for body text. Lobster also has only one weight and no italic, so any `<strong>` or `<em>` is faux-bolded or faux-slanted by the browser.
-- **Hairline weights.** The `h2` uses Montserrat 100, uppercase, with 4px tracking. The nav uses Raleway 200 at 12px. Those strokes get thin or blurry on ordinary screens, especially phones. Nav links are what a worried parent is hunting for.
-- **Courier New for `.price` and `.hours`.** This is the information parents most need, and it's set in a typewriter face. Monospace is for code. Use a sturdy face with tabular figures for prices and hours.
-- **Comic Neue on buttons.** It's a novelty face matched to the subject ("kids!"). It makes the main call to action look unserious next to a Playfair 900 headline. Kid-friendly should come from warmth and color, not a joke font.
-- **Two display-weight faces collide.** Playfair 900 and Lobster are both loud, and nothing calm sits between them.
+**Chaos (design):**
+- **Six families:** Lobster, Playfair Display, Montserrat, Raleway, Comic Neue and Courier New. Each element gets its own voice, so nothing looks like it belongs to the same practice.
+- **Montserrat and Raleway are near-twins.** They're both geometric sans faces, and the difference reads as a mistake, not a choice.
+- **Body copy is in Lobster at 13px with `line-height: 1.2`.** Script faces are for a few big words. Used for paragraphs, with tight leading and small size, they're tiring to read. Parents are trying to find hours, insurance and what to expect, and this is where they'll struggle most.
+- **Weight 100 and 200 text** is used for `h2` (uppercase, 4px tracking) and 12px nav links. Hairline strokes at small sizes turn thin and washed out, especially on low-density screens. The nav is the thing people need to be able to read.
+- **Comic Neue on buttons** adds a sixth personality. The playful feel is fine for a kids' practice, but Lobster, Playfair and Comic Neue all compete for it.
+- **Courier New for prices and hours** makes the most practical information look like a typewriter receipt. Monospace is for code and aligned columns, and it doesn't suit a children's dentist.
+- **Faux bold:** Lobster only ships a regular weight. Any `<strong>`, `<b>` or `<th>` in the body gets a browser-synthesized bold, which looks smeared.
 
-**Why it's slow**
-- **`@import` inside CSS** makes the browser download the stylesheet, then discover and fetch the Google CSS, then fetch the font files. That chain blocks rendering. A `<link>` with `preconnect`, or self-hosting, avoids it.
-- **You request far more than you use.** That's 3 Playfair weights (only 900 is used), 7 Montserrat weights (only 100 is used on `h2`), 3 Raleway weights (only 200 is used) and several others. Each unused weight is a wasted download.
-- **`display=block` hides all text for up to about 3 seconds** on slow connections. On a phone in a waiting room, that's a blank page. Use `swap` or `optional`.
-- **Bad fallbacks.** `Montserrat`, `Raleway` and `Comic Neue` have no fallback at all, and `Courier New` has no `monospace`. If a font fails to load, you get the browser default serif. Lobster's `cursive` fallback varies wildly by device, and on some it's Comic Sans.
+**Slow (loading):**
+- **`@import` inside CSS** makes the browser download the stylesheet, then find the import, then fetch Google's CSS, then fetch the font files. That's a serial chain, and it blocks rendering.
+- **`display=block`** hides all text until the fonts arrive, for up to about 3 seconds. On a slow phone connection, parents see a blank page.
+- **Too many weights:** Montserrat loads 7 weights and Playfair loads 3. You use one of each (100 and 900). Across five web families, that's well over a dozen font files. Only the weights you actually use should load.
+- **No fallbacks.** `'Montserrat'`, `'Raleway'`, `'Comic Neue'` and `'Courier New'` have no generic family after them. If the web font is slow or blocked, the browser picks whatever it likes.
 
-## Fix
+## What I'd do
 
-Use one family with real range, plus at most one display face for the `h1`. I'd use Nunito. It's rounded and friendly without being a gimmick, and it works for body text, UI and numbers. It's a variable font, so one file covers every weight. I believe it's open-licensed, but confirm that before you ship it.
+Assumptions: the audience is parents on phones, Latin script only, and you want friendly rather than clinical. One rounded family with real weight range covers everything. Nunito is my suggestion. It's on Google Fonts under an open license, but confirm the license terms yourself. Any sturdy, friendly sans with 400 to 800 would work too.
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400..800;1,400..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap">
 ```
 
 ```css
 :root {
   --font: 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
-body {
-  font-family: var(--font);
-  font-size: 17px;          /* 16–18px for body */
-  line-height: 1.55;
-  color: #3a3a3a;           /* darker than #666 */
-}
-h1 { font-weight: 800; font-size: 44px; line-height: 1.1; }
-h2 { font-weight: 700; font-size: 28px; }   /* drop the uppercase hairline */
-nav a { font-weight: 600; font-size: 16px; }
-.price, .hours { font-variant-numeric: tabular-nums; font-weight: 600; }
-.btn { font-weight: 700; font-size: 17px; }
+body { font-family: var(--font); font-size: 16px; line-height: 1.6; color: #444; }
+h1   { font-weight: 800; font-size: 40px; line-height: 1.15; }
+h2   { font-weight: 800; font-size: 24px; }            /* no all-caps, no hairline */
+nav a { font-weight: 600; font-size: 15px; }
+.price, .hours { font-weight: 600; font-variant-numeric: tabular-nums; }
+.btn { font-weight: 800; }
 ```
 
-Better still, self-host the file as WOFF2, subset to Latin, and preload it. That removes the third-party round trip entirely.
+- **One family, three weights.** Hierarchy comes from weight and size, so the page reads as one voice and loads three files instead of a dozen.
+- **`<link>` instead of `@import`**, with `preconnect` and `display=swap`. Text shows right away in the system font and swaps when Nunito arrives.
+- **Body is 16px with 1.6 leading**, and the nav is 15px at weight 600.
+- **Prices and hours are in the same family.** Tabular figures keep the numbers aligned.
+- **A real fallback stack** means the page still looks intentional if the font never loads.
 
-If the brand wants more personality, keep Lobster for the logo or one short tagline. Don't use it for text.
+If you want one expressive moment, such as the logo or the `h1`, keep Lobster for that line only. Load just that text with `&text=` or a subset, and don't use it anywhere else. I'd skip that on the first pass and see how the calmer version feels.
 
-**Assumptions:** this is a Latin-script, screen-only site, and no brand font is mandated. If a designer has locked in Lobster or Playfair as brand fonts, tell me. I'd keep them for the logo and `h1` only, and use the sturdy sans for everything else.
+Next, I'd self-host the Nunito files (subset to Latin, `woff2`) with a preload for the regular weight. That removes the Google round trip entirely. It's the next biggest speed win after the changes above.

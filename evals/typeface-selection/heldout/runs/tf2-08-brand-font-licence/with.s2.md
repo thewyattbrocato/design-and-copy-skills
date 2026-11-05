@@ -1,13 +1,14 @@
-**Not yet.** Having the font installed on the laptops doesn't mean you can put it on the website.
+**Not yet. Check the license first.**
 
-**Licensing**
-- Desktop licenses usually cover installing the font on a set number of computers. Web embedding via `@font-face` is often a separate license, sometimes priced by pageviews. Many foundries also forbid putting the raw `.otf` files on a public server, because anyone can download them.
-- I can't tell what the license for "Marlowe Grotesk" allows. Ask your designer for the license or receipt, or check with the foundry. You want to know whether it includes web use, whether you can self-host or must use their hosted service, and whether you can convert the files to WOFF2.
-- If web use isn't covered, buying the add-on is usually the fix. It's often cheap compared with the risk of a violation claim.
+Having the .otf files installed on your laptops doesn't mean you can put them on a website. Most foundries sell desktop and web licenses separately. Web licenses are often priced by traffic, and some forbid self-hosting, converting formats, or both. Publishing the files also lets anyone download them. Ask your designer, or the foundry or the license receipt, these questions:
 
-**Once you have the rights**
-- Don't ship the `.otf` files. Convert them to WOFF2, subset them to the characters you need, and use only the weights and styles the site actually uses (probably 2–4 files).
-- Load them like this:
+1. Does the license cover web embedding and self-hosting?
+2. May you convert the files to WOFF2? Browsers want WOFF2, and a raw .otf is larger than it needs to be. Some licenses require you to use the foundry's own web files.
+3. Are there page-view limits?
+
+I can't tell you what Marlowe Grotesk's terms are, so I'm not guessing. If the license only covers desktop use, buy the web license or use the foundry's hosted service. The logo files are a separate matter, because a logo is artwork and doesn't depend on the font license.
+
+**Once you're cleared**, use the WOFF2 files, not the .otf:
 
 ```css
 @font-face {
@@ -17,21 +18,17 @@
   font-style: normal;
   font-display: swap;
 }
-/* repeat for medium/semibold/bold, and italic only if the family has a true italic */
+/* repeat for the medium/bold and italic files you actually own */
 ```
 
-Add a `<link rel="preload" as="font" type="font/woff2" crossorigin>` for the regular weight. Declare each weight as its own `@font-face`. Otherwise the browser fakes bold and italic, which looks bad.
+Only declare weights and styles you have files for. Otherwise the browser fakes bold and italic, and it looks wrong. Preload the one file used above the fold, such as the regular weight.
 
-**Fallback for now**
-I'm assuming a Latin-script audience and a screen-only site. Since this is a grotesque, use a neutral system sans:
+**Fallback until then.** A grotesque pairs best with a neutral system sans, so use this stack:
 
 ```css
 font-family: "Marlowe Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 ```
 
-Until the license is sorted, drop `"Marlowe Grotesk"` from the front, because a name that isn't loaded does nothing. Visitors without it installed will just get the system sans. When the font is licensed and loaded, put it back first.
+Until the web files are licensed and loaded, drop the first name so the page doesn't depend on it. Your team's laptops will have the font installed and see it, and everyone else will see the system sans. That means your own checks of the site won't match what visitors see. Test in a browser or profile without the font installed.
 
-You can reduce the layout jump when the web font swaps in by adding a `size-adjust` fallback `@font-face` built on Arial. Tune it once the real files are in.
-
-**The logo**
-Logo files are separate from the typeface license. Logos are normally supplied as SVG or PNG with the lettering already drawn, so they don't need the font.
+When the real font loads, the text will shift slightly because the metrics differ. If that bothers you, add a size-adjusted fallback with `size-adjust` and `ascent-override` in an `@font-face` that points at `local("Arial")`.

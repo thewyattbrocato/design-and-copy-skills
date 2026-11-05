@@ -1,0 +1,1 @@
+Returns touch the storefront, warehouse, and support teams, and right now we can't say how long one takes, where it stalls, or what it costs us. Two weeks mapping every step, from the customer's first click to the refund landing, gives us a baseline to measure fixes against. It's an audit of how things work today, not a design exercise.

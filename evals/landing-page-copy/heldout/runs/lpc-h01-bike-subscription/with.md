@@ -1,87 +1,96 @@
-**Plan:** The reader is a Dunmore resident who rides to work and needs the bike working every day. The one idea is that the shop's upkeep comes to you for a flat monthly price. Section order is hero, what you get, price and catch, who it's for, why this shop, FAQ, then the form. The ask is "Join for $19 a month," repeated in the same words.
+**Plan:** The reader commutes by bike and wants it to work without losing a day to the shop. The one idea is that the plan keeps the bike ready and takes the trip to the shop off their plate. The order is hero, what you get, what it costs and the catch, who it's for, why us, sign-up, and a few questions. The ask is "Join for $19 a month" throughout.
 
 ---
 
 ## HERO
 
-**Headline:** Keep your commuter bike ready to ride for $19 a month
+**Your commute bike, kept safe and running for $19 a month**
 
-**Subhead:** A bike care plan from Tallow Lane Cycles in Dunmore. A safety check and tune-up every 3 months, free brake and gear adjustments any time, and we collect and return your bike if you live within 3 miles of the shop.
+A safety check and tune-up every 3 months. Brake and gear adjustments whenever you need them, at no charge. If you live within 3 miles of our Dunmore shop, we pick up your bike and bring it back.
 
-**Button:** Join for $19 a month
-
----
-
-## If you ride to work, a skipping gear or soft brake can't wait
-
-When the bike is how you get to work, a small fault matters on Monday morning. Getting it fixed usually means finding a day without your bike. This plan keeps the checking and adjusting on a schedule, and the pickup service means the shop doesn't cost you a commute.
+**[Join for $19 a month]**
 
 ---
 
-## What you get for $19 a month
+## WHAT YOU GET
 
-**A bike that's been checked, four times a year**
-Every 3 months you get a safety check and tune-up. We go over the bike and tune it, so wear gets caught before it becomes a problem on your route.
+**Fewer surprises on the way to work**
 
-**Small problems fixed at no charge**
-Brake and gear adjustments are free, any time. If the brakes feel soft or the gears start to skip, bring it in. You won't be charged for the adjustment.
+**A safety check and tune-up every 3 months.** We go over the whole bike, so worn brakes, a stretched chain or a loose part get caught before they strand you.
 
-**No trip to the shop**
-Live within 3 miles of the shop and we pick the bike up from your home and bring it back. You don't have to carry it in or work out how to get home without it.
+**Brake and gear adjustments any time, no charge.** If your shifting starts skipping or your brakes feel soft, bring it in. You pay nothing for the adjustment, however often you need one.
 
-**Button:** Join for $19 a month
+**Pickup and return within 3 miles.** If you live within 3 miles of the shop, we collect your bike and bring it back, so you don't have to commute without a bike to get it fixed.
 
 ---
 
-## The price, and what it doesn't cover
+## PRICE AND THE CATCH
 
-The plan is $19 a month. That covers the quarterly safety check and tune-up, brake and gear adjustments, and pickup and return within 3 miles.
+**$19 a month. Parts are extra.**
 
-Parts aren't included. If something needs replacing, such as a tire, a chain or brake pads, you pay for the part at our normal shop prices. Members don't get a special rate on parts, and the prices aren't marked up.
+The plan covers our labor for the checks, tune-ups and adjustments. If your bike needs a new part, such as a chain, brake pads or a tire, you pay for the part at our normal shop prices. Members don't get a different rate, and we won't add a markup because you're on the plan.
 
-Beyond 3 miles from the shop, pickup and return isn't part of the plan.
+Pickup and return is for homes within 3 miles of the shop. Past that distance, you can still join, but you'd bring the bike in yourself.
 
----
+[Add: how billing works, how to cancel, and whether a month can be skipped. Riders will ask before they sign up.]
 
-## Best for people who ride most days
-
-The plan is built for commuters and anyone else who depends on a bike through the week. If you only ride now and then, it may not be worth $19 a month to you.
+**[Join for $19 a month]**
 
 ---
 
-## Run by the shop you'd bring the bike to
+## WHO IT'S FOR
 
-Tallow Lane Cycles has been repairing bikes in Dunmore for six years. The plan itself is new, and nobody has joined yet, so you'd be one of the first members. [add a line on how you'll use early members' feedback, if you want one]
+**Made for people who ride to work**
 
----
+If your bike is how you get to work, a bad brake or a skipping gear costs you a morning. This plan is for you. It's built around regular checks and quick fixes, so the bike stays dependable.
 
-## Questions
-
-**How does pickup work?**
-[add how a member requests a pickup and how long the bike is usually away]
-
-**What if I live more than 3 miles away?**
-[add whether you can join without pickup]
-
-**How do I cancel?**
-[add your cancellation and billing terms]
+It's probably not for you if you ride a few times a summer. A single tune-up at our regular price will likely cost less.
 
 ---
 
-## Join
+## WHY US
 
-**Heading:** Join for $19 a month
+**A Dunmore shop for six years**
 
-Name
-Email
-Home address *(we use this to confirm you're within 3 miles for pickup, and as the address we collect from)*
+Tallow Lane Cycles has been repairing bikes in Dunmore for six years. The plan is new, and nobody is on it yet. The people doing the work are the same ones who have been fixing the neighborhood's bikes all along.
 
-$19 a month. Parts extra, at normal shop prices.
-
-**Button:** Join for $19 a month
+[Add a real customer quote about the shop's repair work, if you have one.]
 
 ---
 
-- Fill the three placeholders in the FAQ and the optional line in "Run by the shop." Cancellation terms in particular should be on the page before anyone pays.
-- I haven't said whether repair labor beyond the tune-up and adjustments (fitting a new tire, for example) is charged. If it is, add a sentence to the price section.
-- I also left out any line about payment, since I don't know how the form takes it. Add one near the button if it's a separate step.
+## SIGN UP
+
+**Join Tallow Lane Cycles' bike plan**
+
+$19 a month. Safety check and tune-up every 3 months. Free brake and gear adjustments. Pickup and return within 3 miles. Parts extra at shop prices.
+
+- Name
+- Email
+- Home address
+
+**[Join for $19 a month]**
+
+[Add: what happens right after they submit, such as how payment is taken, how we contact them, and how they book the first check.]
+
+---
+
+## QUESTIONS
+
+**How do I know if I'm within 3 miles?**
+Enter your home address in the form. [Add: whether you confirm distance before charging, and what happens if someone is just outside.]
+
+**What counts as a brake or gear adjustment?**
+[Add a plain line on what's included, such as cable tension, derailleur indexing and brake alignment, and what counts as a repair that needs parts.]
+
+**What if my bike needs a part?**
+We tell you what it needs and what it costs at our normal shop prices before we fit it. [Confirm this matches how you work.]
+
+**Can I bring in any bike?**
+[Add any limits, such as bike types, e-bikes, or condition.]
+
+---
+
+**Notes**
+- The bracketed gaps are facts I didn't have. Billing and cancellation matter most, since a paid plan needs them stated before sign-up.
+- I added no member counts, reviews or "cancel anytime" language. The "not for you if" line is my judgment, so cut it if you'd rather not say it.
+- The body runs about 560 words, not counting the bracketed placeholders.

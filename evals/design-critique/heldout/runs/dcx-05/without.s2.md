@@ -1,31 +1,23 @@
-Reviewing the five together turns up a few problems that per-screen review would miss.
+Each screen reads fine alone, but the flow has a few problems that only show up when you read the screens together.
 
-**Must fix before launch**
+**Fix before launch**
 
-1. **The progress counter is inconsistent.** Screen 1 says "Step 1 of 4". Screens 2–4 say "of 5". Pick one. Screen 5 has no bar, so the flow is probably 4 counted steps plus a finish screen, or 5 if you count the welcome. Either way, the "of N" has to match on every screen.
+1. **The step count changes.** Screen 1 says "Step 1 of 4" and screens 2-4 say "of 5". Pick one number. Screen 5 has no progress bar, so the real count is probably 4 steps plus a finish screen. In that case, screen 1 is right and screens 2-4 need to change to "of 4".
+2. **"Skip" leads to a screen that isn't true.** Screen 4 lets people skip adding a plant. Its footer says reminders can't start without one. Then screen 5 says "Your sanctuary is ready." A person who skipped has no plants and will get no reminders, even though screen 3 promised a daily nudge. Choose one of these:
+   - Remove "Skip".
+   - Keep "Skip" and give skippers a different final screen, such as "You're in. Add a plant whenever you're ready and reminders will start."
+3. **"Plot" is a stray word.** The footer says "at least one plot", but everywhere else the thing is a plant. People may wonder whether a plot is something different. Change it to "plant". The footer also reads like a warning, so it could be friendlier, for example: "Reminders start once you've added a plant."
 
-2. **"Plot" on Screen 4 is a stray term.** The footer says "you'll need at least one plot before reminders can start." Everywhere else the word is "plant". Users will wonder if a plot is something different, like a garden bed or a room. It should read "at least one plant".
+**Smaller polish**
 
-3. **Screen 4 contradicts itself.** It offers a "Skip" link, and the footer then says you need a plant before reminders work. That tells users that skipping breaks the thing they came for. Decide what skipping actually does, then say so plainly. For example: "You can skip this, but reminders won't start until you add a plant." Better still, make the footer shorter and less like a warning. The "Heads up:" prefix is also a bit alarming for an optional step.
+4. **The name for the user's collection keeps changing.** Screen 1 says "garden", screen 2 says "rooms" then "spaces", and screen 5 says "sanctuary". Pick one word, probably "garden", and use it on screens 1 and 5. Also, "Balcony" isn't a room, so "spaces" is the better word on screen 2.
+5. **Button labels don't match.** Screen 1 says "Continue" and screens 2-3 say "Next". Use one.
+6. **Screen 1 overpromises.** "We can take care of the rest" suggests Fernway cares for the plants. It actually reminds people to. Something like "so we can remind you what each plant needs" is more accurate.
+7. **Screen 4 mentions only watering.** The app also covers feeding and repotting. "Fernway will work out how thirsty it is" could become "Fernway will work out what it needs."
 
-**Worth tightening**
+**Possibly missing**
 
-4. **Screen 1 promises "we can take care of the rest."** Fernway sends reminders, and the user still does the watering. "Take care of the rest" could be read as the app caring for the plants. Something like "so we can remind you what each plant needs" is more accurate.
+- Nothing asks for notification permission. The whole product depends on notifications, and screen 3 is the natural place to ask, right after the person picks a time.
+- I can't tell what screen 2 does if no chips are selected, so check that case.
 
-5. **"Garden" and "sanctuary" don't match "houseplants".** Screen 1 says "garden" and Screen 5 says "sanctuary". The app is for houseplants, and Screen 2 talks about rooms. Using one plain word throughout (e.g. "your plants") would feel more consistent. "Sanctuary" is the odd one out in a flow that is otherwise plain-spoken.
-
-6. **Screen 5 says "ready" even if the user skipped adding a plant.** If they skipped on Screen 4, "You're all set!" isn't true, because no reminders will fire. You could show a variant for that case, such as "Add a plant whenever you're ready and we'll start reminding you."
-
-7. **Button labels switch between "Continue" and "Next".** It's minor, but Screen 1 uses "Continue" and Screens 2 and 3 use "Next". Choose one. "Get started" would also suit Screen 1.
-
-8. **Screen 3 has a small copy issue.** "Choose a time that suits you" adds nothing, since the picker already implies it. You could drop it. Also confirm that 8:00 AM is a pre-selected default and that the user can change it.
-
-9. **Screen 4 says "Fernway will work out how thirsty it is."** That's friendly, but the app also handles feeding and repotting. Mentioning only watering undersells it, and it makes the promise narrower than the product.
-
-**Smaller questions**
-
-- Screen 2: is at least one room required? If the user can proceed with none selected, consider saying so ("Pick the rooms that have plants, or skip for now").
-- Screen 2's chips don't include "Other" or a way to add a custom room. "You can add more spaces later" covers it, but "spaces" and "rooms" are used interchangeably here. Balcony also isn't a room, so "rooms" may not be the right word.
-- The emoji on Screen 5 is the only one in the flow. Fine if intentional, but it's worth checking it fits the brand voice.
-
-Items 1–3 are real defects, and 4–6 are consistency or accuracy issues I'd also want fixed. The rest is polish. The main lesson is that the screens read well on their own, but the step count, the vocabulary (plant, plot, garden, sanctuary) and the skip logic only show up as problems when you read them in sequence.
+The first three are the ones I'd block launch on. Number 2 is the most serious, because a person can finish setup, be told everything is ready, and never get a reminder.

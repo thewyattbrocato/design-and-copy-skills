@@ -1,65 +1,62 @@
-## Homepage copy vs. Quillbean and Northpour
-*Based on the copy you pasted, 7 Oct 2026. I haven't seen the full pages, pricing or sign-up flow.*
+# Homepage copy vs Quillbean and Northpour
 
-### Findings, ranked
+*Based on the hero, sub, button and one section you pasted for each. Competitor copy is as supplied on 28 Oct 2026. I haven't seen pricing, plan or sign-up pages for any of the three.*
 
-**1. Major · Our headline: "Great coffee, delivered"**
-Any roaster, supermarket or delivery app could use this line. Quillbean's "Office coffee without the faff" names the buyer and has a point of view. Ours leaves "office" and "subscription" to the sub-line. Fix: put the audience and your specific cadence in the headline (rewrite below).
+**Overall:** Quillbean is our real competitor. We're not losing on facts. We're losing because our best facts sit below the fold and our hero could be signed by anyone.
 
-**2. Major · Our best differentiator is buried: "We roast on Tuesdays and ship on Wednesdays…"**
-It sits in a lower section, while the hero says only "on your schedule". Quillbean puts its equivalent in the sub: "We roast to order in Manchester and post it the next morning." A visitor who reads only the first screen never sees our freshness point or that we're in Leeds. Fix: move the Tuesday/Wednesday rhythm into the hero.
+## Findings, ranked
 
-**3. Major · Button: "Start a subscription"**
-It asks for a commitment before the visitor has seen a plan or price. Quillbean's "See plans and prices" lowers the risk of clicking, and Northpour's "Learn more" is worse. I can't see whether you show prices anywhere. If you do, this button should lead there. If you don't, that is the bigger gap. Fix: use a button that says what happens next (rewrite below).
+**1. Major · Headline.** "Great coffee, delivered." Every coffee seller says this, and it doesn't mention offices. A stranger sees a consumer coffee site. Quillbean's "Office coffee without the faff" names the buyer and the benefit in five words. Northpour at least says "workplace".
 
-**4. Major · Sub-line: "Choose your beans, choose your frequency, and we take care of the rest."**
-"The rest" doesn't say what the rest is, and the sentence is a stock one. Quillbean's version gives specifics (bag size, delivery day, a grinder loan). Ours could describe any subscription service. Fix: say what you actually handle: roasting, packing, shipping.
+**2. Major · Sub vs section.** Our strongest differentiator, "We roast on Tuesdays and ship on Wednesdays, so what you get was roasted that week," sits in a section below the hero. The sub spends its words on "Choose your beans, choose your frequency, and we take care of the rest", which is generic. Quillbean puts "roast to order in Manchester and post it the next morning" in its sub. Readers who stop at the first screen never learn our promise.
 
-**5. Minor · Footer: "Questions? Email hello@emberandrye.example"**
-It's honest, but it's the only route for someone who is unsure. Fix: tell them what to ask about (rewrite below).
+**3. Major · Button.** "Start a subscription" asks for commitment before the page shows what it costs or how it works. Quillbean's "See plans and prices" lowers the stakes. I assume our next screen shows plans and prices. If it doesn't, that's a bigger problem than the button.
 
-### Where each rival stands
+**4. Major · Terms.** "Ship on Wednesdays" leaves open when to order, how to change or pause, and how to cancel. Office managers buying for others will look for these. I don't have the answers, so they need to come from you.
 
-| | Ember & Rye | Quillbean | Northpour |
-|---|---|---|---|
-| For whom | Offices, but only in the sub-line | Offices, in the headline | "Discerning office", abstract |
-| Promise | Fresh, flexible | No hassle, next-morning post | Premium experience |
-| Proof | Weekly roast, small Leeds team (below the fold) | Roast to order, grinder loan | None given |
-| Price visible | Unknown | Signalled by button | No |
-| Tone | Warm but generic | Plain, confident | Corporate |
+**5. Minor · Proof.** You have no reviews or customer numbers, and the page shouldn't pretend otherwise. You do have real proof: "a small team in Leeds" and "every order is packed by one of us". It's buried in the last sentence of the section and nameless.
 
-**What Quillbean does better:** it has a clear headline, specific logistics in the hero, a concrete offer (the grinder loan), and a button that points to prices.
+**6. Minor · Footer.** "Questions? Email hello@emberandrye.example" is fine, but it's the only contact route. It could sit next to the button, where the doubts come up.
 
-**What Northpour does:** "Elevate your workplace coffee experience" and "premium… expertly roasted" are stock phrases, and "ethically sourced" has no basis given. It's the weakest of the three, and you don't need to copy it. Don't borrow its adjectives.
+## What the rivals do
 
-**Where we're clearer or more specific:** only in the below-the-fold section. Naming the days and the packer is more concrete than anything Northpour says. Be careful with "fresher" claims against Quillbean, though. "Roast to order, post next morning" is at least as strong as "roasted that week", so claim the rhythm, not superiority.
+- **Quillbean:** specific on process, place and timing. It shows price visibility in the button and has a concrete perk ("Free grinder loan with any plan over 3kg a month"). Its weakness is that "faff" is a British-casual word that may not suit every buyer.
+- **Northpour:** "Elevate your workplace coffee experience" and "the discerning office" are stacked adjectives with no mechanism. "Learn more" says nothing about what happens next. It's the easiest to beat. Don't copy it.
 
-### What works (leave alone)
-- "We roast on Tuesdays and ship on Wednesdays"
-- "every order is packed by one of us"
-- "We're a small team in Leeds"
-- "Choose your beans, choose your frequency" (the content is fine, it just needs company)
+## What works (leave alone)
 
-### Rewrites (flagged lines only)
+- "We roast on Tuesdays and ship on Wednesdays, so what you get was roasted that week." It's specific and checkable, and Northpour has nothing like it.
+- "every order is packed by one of us." It's human and credible without needing reviews.
+- "Fresh-roasted beans for your office, on your schedule." The office framing is right. It just needs to move into the headline.
 
-**Headline:** Office coffee, roasted Tuesday and shipped Wednesday
+## Rewrites
 
-**Sub:** Coffee subscriptions for offices, from a small team in Leeds. Choose your beans and how often they arrive. We roast, pack and send every order ourselves.
+These use only facts you gave me.
 
-**Button:** `See plans and prices` if prices are on the page. If not, use `Start a subscription` and add one line under it saying what the visitor will be asked for next.
+**Headline**
+> Office coffee, roasted every Tuesday in Leeds
 
-**Footer:** Not sure which beans or how often? Email hello@emberandrye.example and we'll help you choose.
+**Sub**
+> Roasted Tuesday, shipped Wednesday, so every bag was roasted that week. Choose your beans and how often they arrive. Packed by one of us.
 
-Keep the below-the-fold section, trimmed so it doesn't repeat the hero.
+**Button:** keep "Start a subscription" only if plans and prices are visible next. If they're not, add a secondary link, "See plans and prices", and show the prices on the homepage.
 
-### On proof
-You have no reviews or customer numbers, so don't fake or hint at any. Your proof today is specificity: the days, the town, and the people packing orders. Ask your first customers for a short quote and add it as `[customer quote]` when you have one.
+**Proof line (replace the end of the section)**
+> We're a small team in Leeds. [Name] packs your order, and you can email us at hello@emberandrye.example.
 
-### Fix order
-1. Rewrite the headline and sub with the audience and the Tuesday/Wednesday rhythm. *Small*
-2. Make sure a visitor can see plans and prices, and match the button to that. *Medium (small if the page exists)*
-3. Trim the lower section so it no longer repeats the hero. *Small*
-4. Rewrite the footer line. *Small*
-5. Collect two or three real customer quotes. *Medium, ongoing*
+Use a real name there. Don't add any quote, count or rating you can't back.
 
-**Notes:** I couldn't review pricing, the sign-up flow or later pages. Make sure any "ethically sourced"-style claim you add can be backed up.
+**Terms line (needs your facts)**
+> Order by [day] to get this week's roast. Pause or cancel [how].
+
+## Fix order
+
+1. **Rewrite the headline and sub** to put "office", "Tuesday roast" and "Wednesday ship" in the hero. *Small.*
+2. **Show prices or plans** before or beside the button, or rename the button. *Medium.*
+3. **State ordering cut-off, pausing and cancelling** near the button. *Small, once you decide the answers.*
+4. **Name the person who packs orders** and move the "small team in Leeds" line up. *Small.*
+5. **Decide whether you have a real perk** like Quillbean's grinder loan. Don't invent one. If you don't have one, skip it. *Medium.*
+
+**The gap to close:** the specificity of the hero. **The distinction to keep:** the weekly roast-and-ship rhythm, which is more concrete than either rival's claim.
+
+*One claim to confirm:* "roasted that week" should be true for every order, including late ones. Check this against your actual schedule before you put it in the headline.

@@ -1,67 +1,65 @@
 ## What's going on
 
-Nobody made a wrong decision here. The stylesheet has no shared decisions at all. Every rule was written with its own value, so the same decision (a gray, a radius, a card) got made again each time and came out slightly different. Counting the values in your chunk:
+Nobody made an inconsistent choice. There are no shared choices, so every rule picked its own value, and the values are close enough that the differences look like mistakes. In your chunk:
 
-| Property | Values in use | What it should be |
+| Property | Distinct values | Examples |
 |---|---|---|
-| Primary blue | `#2f6fed`, `#2e6dea` | 1 |
-| Muted text gray | `#8a8f98`, `#8d929b`, `#858a93` | 1 |
-| Border gray | `#e3e5e8`, `#e1e4e8` | 1 |
-| Success green | 2 backgrounds, 2 text colors | 1 each |
-| Radius | 4, 5, 6, 7, 9, 10, 12 (7 values) | 2 or 3 |
-| Shadow | 3, two of them near-identical | 2 |
-| Control height | input 38, select 40 | 1 |
-| Control radius | input 6, select 4, button 5 | 1 |
-| Spacing | 9, 11, 12, 13, 14, 17, 18, 19, 22, 26, 34 | 7 or 8 steps |
-| Type | 17 is used twice (`h4`, `.btn-big`), and 17 and 19 sit next to each other | 4 sizes |
+| Radii | 7 | 4, 5, 6, 7, 9, 10, 12 |
+| Muted text grays | 3 | `#8a8f98`, `#8d929b`, `#858a93` |
+| Brand blue | 2 | `#2f6fed`, `#2e6dea` |
+| Card/panel border | 2 | `#e3e5e8`, `#e1e4e8` |
+| Success green background | 2 | `#e6f6ea`, `#e4f5e8` |
+| Success green text | 2 | `#1f7a3a`, `#217c3d` |
+| Container padding | 3 | 18, 22, 26 |
+| Vertical margins | 3 | 14, 19, 34 |
+| Control heights | 2 | input 38, select 40 |
+| Control horizontal padding | 2 | input 11, select 12 |
+| Card/panel shadows | 2 near-twins | `0 2 7 .12` and `0 3 9 .10` |
 
-- **Near-duplicates are the main cause.** Most of these differ by a few units, so people can feel the difference without being able to name it. That is why nobody can say why it feels off.
-- **Components that are the same thing have drifted.** `.card` and `.panel` are one concept with different padding, radius, border and shadow. An input and a select sit side by side at different heights and radii.
-- **Some of this may be accidental.** The two blues and the three grays look like eyedropper values from different mockups, not intentional choices.
-- **Accessibility is a likely problem.** By my estimate `#8a8f98` on white is about 3.3:1, below the 4.5:1 AA minimum for small text. White on `#2f6fed` is about 4.5:1, which is borderline. Check both with a contrast tool.
+Four things are going wrong:
+
+1. **Near-duplicates.** These are the real culprits. A 38px input next to a 40px select, or a 4px radius next to a 6px one, is too small a difference to look intentional, so it reads as sloppiness. Three grays within a few hex steps of each other do the same.
+2. **Parallel components.** `.card` and `.panel` are the same idea with slightly different numbers. `.btn` and `.btn-big` differ in every property, not just size. `.muted`, `.hint` and `.caption` are one color under three names, and `.alert-ok` and `.badge-ok` are one success color under two.
+3. **Off-grid numbers.** Values like 9, 13, 17, 19 and 34 don't come from any scale. They look like values copied from mockups or eyeballed in the browser.
+4. **Heading sizes collide with other sizes.** `h4` and `.btn-big` are both 17px, which looks accidental. Meanwhile 31, 23 and 19 aren't on a consistent ratio.
+
+All of this comes from only 6 lines of heading, color and spacing rules, so I expect the full stylesheet to be worse. I haven't seen the rest, so the counts above cover this chunk only.
 
 ## What I'd do, in order
 
-**1. Pick the values (about a day, mostly decisions).**
-Choose one value per row below. I'd round to the nearest value, not average.
+**1. Inventory the whole stylesheet** (an hour or so). Count every distinct color, font size, spacing, radius and shadow `[count from your repo]`, grouped by purpose. This tells you how big the problem is and gives you the list you'll merge from.
 
-| Old | New token |
-|---|---|
-| `#2f6fed`, `#2e6dea` | `color.accent` = `#2f6fed` |
-| `#8a8f98`, `#8d929b`, `#858a93` | `color.text.secondary` (proposal: darken to about `#6b7078`, then check contrast) |
-| `#e3e5e8`, `#e1e4e8` | `color.border.subtle` = `#e3e5e8` |
-| Green backgrounds and text | `color.success.bg` and `color.success.text` (keep the darker text, `#1f7a3a`) |
-| Radius 4, 5, 6, 7 | `radius.control` = 6 |
-| Radius 9, 10, 12 | `radius.surface` = 12 |
-| Shadow on card and panel | `shadow.raised` = `0 2px 8px rgba(0,0,0,.12)` |
-| Shadow on modal | `shadow.overlay` (keep as is) |
-| Spacing 9–14 | 8, 12, 16 |
-| Spacing 17–22 | 16, 24 |
-| Spacing 26–34 | 24, 32 |
-| Type 14, 17/19, 23, 31 | 14, 18, 24, 32 |
-| Input and select height | 40 |
+**2. Pick short scales and merge into them.** Don't add new values. Here is a starting proposal for your chunk:
 
-Spacing steps are `4, 8, 12, 16, 24, 32, 48`. The rounding above is my proposal, so adjust it to your design.
+| Scale | Proposed values | Merge map |
+|---|---|---|
+| Radius | 4 / 8 / 12 | 4,5,6 → 4 (controls); 7,9,10 → 8 (cards, modals); 12 stays |
+| Spacing | 4, 8, 12, 16, 24, 32, 48 | 9→8, 11,12,13,14→12, 17,18,19→16, 22,26→24, 34→32 |
+| Control height | one value (40) | 38 and 40 → 40 |
+| Elevation | 3 levels: raised, overlay, modal | card and panel shadows → raised; modal stays |
+| Type | 5 or 6 roles on a fixed ratio | Decide after the inventory, since your 14/17/19/23/31 is only a partial view |
+| Muted text | 1 | The three grays → one |
+| Blue, border, success green | 1 each | Each pair → one |
 
-**2. Add the tokens without changing anything visually.**
-Put them in as CSS custom properties on `:root`. Components should use role names like `--color-text-secondary`, not raw ramp names like `--gray-500`.
+I haven't contrast-checked any of these. Before settling the muted text and success colors, check them against their backgrounds. `#8a8f98` on white is about 3.2:1 by my estimate, which would fail AA for body text.
 
-**3. Migrate by visibility, not by file.**
-- Do colors first, because they're the easiest to spot.
-- Then controls: buttons, input and select at one height and radius.
-- Then `.card` and `.panel` merged into one surface component, with an optional padding modifier if you really need two sizes.
-- Spacing goes last, because it touches the most lines.
-- Take a before and after screenshot of key screens for each step, so reviewers see small intentional shifts and not surprises.
+**3. Add semantic tokens, and have components read only those.** Use role names such as `text-secondary`, `surface-raised`, `border-subtle`, `accent`, `success-bg` and `success-text`. Don't use `gray-500` or `blue-2`. This is where `.muted`, `.hint` and `.caption` collapse into one role, and where `.alert-ok` and `.badge-ok` share one success pair.
 
-**4. Stop the drift from coming back.**
-Add a stylelint rule (for example `declaration-property-value-allowed-list`, or a plugin that flags raw hex values) so a raw `#2e6dea` or `13px` fails CI. Allow exceptions only with a comment. Without this, the mess returns within a quarter.
+**4. Consolidate components, one at a time.** Start with the most-used ones:
+- **Button:** one component with a size variant (`.btn` and `.btn-big` currently differ in every property).
+- **Input and select:** shared height, padding and radius.
+- **Card and panel:** merge them into one surface with a padding variant, unless they behave differently in ways this chunk doesn't show.
 
-**5. Fill in component states.**
-Your `.btn` has no hover, focus, disabled or loading styles in this chunk. Specify those once the tokens exist, since each state is then just a token swap.
+Migrate each component fully, then delete the old rules. Don't leave both versions in place.
 
-**6. Governance, kept light.**
-Name one owner for the token file. A new value has to replace or merge with an existing one, not add to the list. Design files should read the same token file, so Figma and code can't diverge.
+**5. Lock it in.**
+- Keep a single token file, as CSS custom properties, that both design and code use.
+- Add a stylelint rule that flags raw hex colors and off-scale px values.
+- Name an owner who can reject a new value.
+- Write a one-page guide showing what each token is for.
 
-I assumed one brand, one theme and a small team. If you need dark mode, build it by remapping the semantic roles (`text.secondary`, `surface`), never by inverting raw values. Do step 2 first, so the dark theme has roles to remap.
+Do this before the first migrations land, or the stylesheet will drift again within a quarter.
 
-I only saw this chunk. Run the same inventory over the whole repo before fixing the final numbers, because other files will have more variants (`[count from your repo]`).
+**Why this order:** the inventory and scales (steps 1 and 2) are cheap and make every later decision mechanical. The migration (step 4) is the expensive part, and it only stays done if the lint rule and owner (step 5) exist.
+
+Two assumptions: this is a single-brand web app with a small team, and the scales above are proposals to adjust after the inventory. If you can share the full stylesheet, I can turn this into an actual token file and a complete merge map.

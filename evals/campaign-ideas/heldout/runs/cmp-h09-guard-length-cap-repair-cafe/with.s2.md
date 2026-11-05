@@ -1,7 +1,10 @@
-**Campaign: "Bring it broken."** Everyone's told to replace things. Come watch neighbors fix them instead.
+**Idea:** Bring the broken thing you almost threw out. Fixing it beats replacing it.
 
-**Flyer line:** Bring it broken. Take it home working. Free.
+**Flyer line:** "Don't toss it. Bring it Saturday, and we'll fix it free."
 
-**Forms:** a flyer, a table sign reading "Broken things welcome," and a doorstep note.
+**Forms (each works alone):**
+- Flyer: that line, plus the date, time and address [add].
+- Doorstep tag: "Still good? Bring it." on a tag hung on bins.
+- Table sign: "Fixed today" with a bell.
 
-**Add:** Saturday's date, time and address.
+**Fallback:** "Free repairs, Saturday, November [add date]."

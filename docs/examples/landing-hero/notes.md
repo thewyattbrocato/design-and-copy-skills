@@ -20,9 +20,9 @@ The harness appends one format instruction in both arms: *Return the result as a
 
 ## Sonnet (`claude-sonnet-5-5`)
 
-![without and with, side by side](sonnet/compare.png)
+![Featured pair for the Fernwick invoice-reminder hero, Sonnet. Left, without the skill: a green-tinted hero whose second headline line is green, a Start free trial button and a crowded invoice dashboard mockup with overlapping cards. Right, with the skill: a plainer light hero with a three-line black headline, one dark button and a single invoice list card showing the reminders sent.](sonnet/compare.png)
 
-![all six runs](sonnet/contact-sheet.png)
+![Contact sheet of all six Sonnet runs for the landing page hero: three without the skill on the top row and three with it below, each labelled with its run number and rubric mean. The featured median run of each row is outlined and labelled featured (median).](sonnet/contact-sheet.png)
 
 | Run | Without skill: rubric mean | With skill: rubric mean | With skill: skill invoked | Pair verdict (blind, swap-checked) |
 | --- | --- | --- | --- | --- |
@@ -48,9 +48,9 @@ Rubric means are the judge's 1 to 5 scores averaged over the rubric items and bo
 
 ## Haiku (`claude-haiku-4-5-20251001`)
 
-![without and with, side by side](haiku/compare.png)
+![Featured pair for the Fernwick invoice-reminder hero, Haiku. Left, without the skill: a left-aligned headline, Get paid on time, with on time in blue, two buttons and an overdue invoice card for $2,850. Right, with the skill: a centred headline, Stop chasing unpaid invoices, two buttons and a small paid invoice card for $2,400 below them.](haiku/compare.png)
 
-![all six runs](haiku/contact-sheet.png)
+![Contact sheet of all six Haiku runs for the landing page hero: three without the skill on the top row and three with it below, each labelled with its run number and rubric mean. The featured median run of each row is outlined and labelled featured (median).](haiku/contact-sheet.png)
 
 | Run | Without skill: rubric mean | With skill: rubric mean | With skill: skill invoked | Pair verdict (blind, swap-checked) |
 | --- | --- | --- | --- | --- |

@@ -1,45 +1,48 @@
-**What's going on:** there are no shared decisions. Each rule was written with a hand-picked value, so near-identical values pile up. No one value looks wrong, but the whole thing never lines up. From your snippet:
+**What's going on:** there's no shared set of decisions. Each rule was written by eye, so every value is close to its neighbors but not equal to them. No single difference is visible, but together they make everything look slightly off. I've counted only this snippet. Run the same count on the whole stylesheet (`[count from your repo]`), because the real numbers will be worse.
 
-| Property | What's in use | Problem |
+**Evidence in the snippet**
+
+| Property | Values in use | Problem |
 |---|---|---|
-| Blue | `#2f6fed`, `#2e6dea` | Same color, one step apart. `.btn-big` is a copy-paste drift. |
-| Muted grays | `#8a8f98`, `#8d929b`, `#858a93` | Three names for one role. |
-| Success green | `#e6f6ea`/`#1f7a3a` and `#e4f5e8`/`#217c3d` | Alert and badge are the same role with different values. |
-| Borders | `#e3e5e8`, `#e1e4e8` | Same role, two values. |
-| Radii | 4, 5, 6, 7, 9, 10, 12 | Seven values, with no scale. Inputs and selects, which sit side by side in forms, differ (6 vs 4). |
-| Spacing | 9, 11, 13, 14, 17, 18, 19, 22, 26, 34 | 1–2px steps that nobody can perceive as intentional. |
-| Control heights | input 38, select 40 | Adjacent controls that don't align. |
-| Shadows | `.12`/2/7, `.10`/3/9, `.28`/12/40 | Card and panel are nearly the same elevation but not identical. |
-| Type | 31, 23, 19, 17 (h4 = btn-big) | An unsystematic scale with no rationale. |
+| Primary blue | `#2f6fed`, `#2e6dea` | Same intent, different values. `.btn-big` doesn't even set `color`. |
+| Muted text | `#8a8f98`, `#8d929b`, `#858a93` | Three class names for one role. All sit around 3:1 on white, so they probably fail AA for body text. Check this. |
+| Success | `#e6f6ea`/`#1f7a3a` and `#e4f5e8`/`#217c3d` | One role, two pairs. |
+| Border | `#e3e5e8`, `#e1e4e8` | Near-duplicates. |
+| Radius | 4, 5, 6, 7, 9, 10, 12 | Seven values in 1–2px steps. Nobody can see the difference, but the sum looks unsettled. |
+| Control height | input 38, select 40 | Placed side by side in a form, they misalign. |
+| Control padding and radius | input `0 11px` / 6px, select `0 12px` / 4px | Same kind of control, different shape. |
+| Card vs panel | 18/22 padding, 9/12 radius, 2 near-identical shadows | One component under two names, drifted apart. |
+| Heading sizes | 31, 23, 19, 17 | `.btn-big` at 17px duplicates h4. There's no stated type scale. |
+| Spacing | 14, 19, 34 margins, plus 9, 11, 13, 17, 18, 22, 26 padding | No rhythm. Each value was eyeballed. |
 
-Card and panel also look like one component with two names, and `.muted`/`.hint`/`.caption` look like one role.
+**What I'd do, in order**
 
-Roughly 40 distinct values are doing the work of about 12 decisions. The inconsistency comes from the drift, not from any single bad choice. That's why nobody can point at it.
+1. **Finish the inventory.** Count every distinct color, font size, spacing, radius, shadow and control height across the whole codebase, grouped by purpose. This tells you how big the cleanup is and which values are used most. Those become the winners in the merge map.
 
-**What I'd do, in order:**
+2. **Fix the scales on paper.** Use short scales. These are proposals to adjust against your inventory:
+   - Spacing: 4, 8, 12, 16, 24, 32, 48.
+   - Radius: 4, 8, 12.
+   - Elevation: 2 or 3 levels, such as raised and overlay.
+   - Type: 5 or 6 roles (caption, body, body-large, h3, h2, h1).
+   - Control height: 40 for all form controls.
 
-1. **Inventory from the real repo.** Grep every color, radius, spacing, font-size and shadow, with counts (`[count from your repo]`). Your snippet already shows the pattern, but the counts tell you which value in each cluster wins.
+3. **Define the tokens as CSS custom properties, in two tiers.** Raw values feed semantic roles. Components use only the roles, never raw values.
+   - Names like `--color-accent`, `--color-text-secondary`, `--color-border-subtle`, `--color-success-surface`, `--radius-md` and `--space-4`.
+   - Don't name tokens by color or page.
+   - Pick a muted-text color that passes AA, and verify the contrast ratio.
 
-2. **Fix the scales on paper.** Pick short scales and a merge map (old → new). A starting proposal:
-   - Spacing: 4, 8, 12, 16, 24, 32, 48
-   - Radius: 4, 8, 12 (control, container, overlay)
-   - Elevation: 2 levels (raised, overlay)
-   - Type: 5 roles, such as caption 12, body 14, lead 17, heading 23, display 31
-   - Colors: one value per role. Pick the most-used one from the inventory, not an average.
-   - Control height: one value, so inputs, selects and buttons align.
+4. **Migrate in order of least visible change first.**
+   1. Colors. Merging the blues, grays, greens and borders is nearly invisible. Collapse `.muted`, `.hint` and `.caption` into one role.
+   2. Radius, border and shadow.
+   3. Spacing and type. These shift layouts, so go screen by screen.
+   4. Merge `.card` and `.panel` into one component, and align `.input` and `.select` to one control spec. `.btn` and `.btn-big` become one button with a size variant.
 
-3. **Add semantic CSS custom properties.** Name them by role: `--color-accent`, `--color-text-muted`, `--color-border-subtle`, `--color-success-surface`, `--space-3`, `--radius-control`. Define them once in `:root`. Don't add component-level tokens yet.
+   Write the merge map (old value → token) before you touch anything, so each change is mechanical and reviewable.
 
-4. **Migrate in blast-radius order.**
-   1. Colors, which are mechanical and nearly invisible.
-   2. Radius and control heights, where you'll see small, visible alignment changes.
-   3. Spacing, which shifts layouts, so do it screen by screen with visual diffs.
-   4. Type and shadows last.
+5. **Lock it in.** Add a stylelint rule that rejects raw hex colors and off-scale px values outside the token file. Without this, the drift comes back within a few sprints. Mark any one-off value as a labeled exception.
 
-   Merge `.card`/`.panel` and `.muted`/`.hint`/`.caption` as you go.
+6. **Add light governance.** Name one owner for the token file. Tokens change only through add, modify or deprecate, with a changelog. A pattern joins the system when a second screen needs it. A one-squad team needs a single page for this, not a committee.
 
-5. **Add a guard so drift can't come back.** Use a stylelint rule that bans raw hex and off-scale px values outside the token file. Add a short guide page, with an owner who can say no to new values. Without this step, the mess returns within a quarter.
+Later, if you want dark mode or a second brand, it will be a remap of the semantic roles. That's only possible after step 3.
 
-Don't start with a redesign or a component library. The bulk of the problem is value drift, and steps 1–3 remove most of it without changing the intended look.
-
-Assumptions: a web product with one brand and a small team, no existing design system, and no dark mode yet. The proposed scales are starting points, not checked against your screens. Contrast on the grays (about `#8a8f98` on white is roughly 3:1) needs checking before you pick the winner, since body-size muted text likely fails AA.
+**Assumptions:** a single-brand web app with a small team, and no existing design system or token file. If you already have one, I'd extend it instead of building this.

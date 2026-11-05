@@ -1,7 +1,7 @@
-1. **The only action is gated, and the homepage doesn't explain what happens next.** "Request access" is the sole CTA, and pricing is "on request" buried in the footer. A manager who wants to evaluate quickly has no way to see cost, a demo, or what the access process involves.
+1. **The hero could describe any scheduling tool.** "A smarter way to manage your team" is empty, and the rest of the paragraph is a list of generic functions. Nothing says what makes Orchard Rota different or why a restaurant manager should care now.
 
-2. **Geographic availability is hidden in the footer.** "Available in the UK and Ireland" is the single fact that decides whether a visitor can use the product at all, and it appears after they've read everything else. Visitors outside the region will spend time on the page before learning they're excluded.
+2. **The conversion path asks for commitment without giving the info needed to make it.** "Request access" comes with no pricing, and the footer says "Pricing on request." The UK and Ireland restriction is also only in the footer, so visitors elsewhere will find out after investing time.
 
-3. **The feature claims have no proof.** "Build next week's rota in minutes," "schedules your staff will actually follow," and "approve it with one tap" are all assertions with no screenshot, number, customer, or example to back them up. Restaurant managers are skeptical of scheduling tools, so unsupported claims carry little weight.
+3. **Nothing on the page proves the claims.** "In minutes," "schedules your staff will actually follow," and "without the chaos" are all asserted. There are no customers, restaurant names, numbers, or screenshots, which is a trust gap for a new B2B product.
 
-4. **Section 3 is the weakest section.** "Know your numbers" doesn't say whose numbers or what decision they inform, and "projected labor cost before you publish" is the only concrete detail. It's the section most likely to be skimmed past, even though cost control is probably the strongest reason a restaurant owner would buy.
+4. **The Section 1 headline promises something the body doesn't deliver.** The headline is about staff adherence, but the body describes how fast the manager builds and publishes a rota. A reader who wants proof that staff will follow the schedule doesn't get it.

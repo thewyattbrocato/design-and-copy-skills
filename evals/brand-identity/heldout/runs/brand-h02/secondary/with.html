@@ -1,168 +1,331 @@
 <!DOCTYPE html>
+<!--
+  Larkspur Payroll: identity exploration
+  Assumptions: enterprise payroll for 500+ employee organizations; known for reliability, precision and calm. Rivals' marks were not reviewed.
+  "Established 1998" is not included because the company was founded about three years ago, and that date would mislead prospects. If you have a true founding or heritage fact, add it in the .est line.
+  The email signature uses inline SVG, which many mail clients strip. Export the mark as PNG for production signatures.
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Larkspur Payroll: Identity Refresh</title>
-<!--
-  Notes for the team:
-  - "Established 1998" is not included. Larkspur Payroll is about three years old, and a founding date that
-    is not true would mislead enterprise buyers who check company history during procurement. If the company
-    has a real, documented history earlier than its current entity, add that year here and confirm it first.
-  - Direction: keep the name, drop the purple-to-teal gradient swoosh, and use one flat navy mark with a
-    custom-cut L. Navy and a serif wordmark read as steady and established; the gradient reads as startup.
-  - Assumed domain and contact details are placeholders. Replace them before use.
-  - Email clients often strip inline SVG. Export the signature mark as a PNG hosted on your own domain for production.
--->
+<title>Larkspur Payroll: Identity</title>
 <style>
   :root {
-    --navy: #1b2a41;
-    --paper: #f4f3ef;
-    --rule: #e2e0da;
-    --muted: #5c6878;
+    --ink: #14213D;      /* primary: solid, flat */
+    --paper: #FBF9F4;    /* warm white ground */
+    --accent: #8A6A3B;   /* muted bronze, used sparingly */
+    --mute: #5C6578;
+    --rule: #D9D4C7;
+    --serif: Georgia, "Times New Roman", "Iowan Old Style", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    padding: 48px;
+    padding: 48px 24px;
     background: var(--paper);
-    color: var(--navy);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-family: var(--sans);
   }
-  section { margin-bottom: 56px; }
-  h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 34px; margin: 0 0 8px; }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: 32px; margin: 0 0 8px; }
   h2 {
-    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--muted); font-weight: 600; margin: 0 0 16px;
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--mute);
+    font-weight: 600;
+    margin: 56px 0 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
   }
-  p.lede { color: var(--muted); max-width: 640px; line-height: 1.5; margin: 0 0 32px; }
-  .panel {
-    background: #fff; border: 1px solid var(--rule); border-radius: 6px;
-    padding: 40px; display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+  p.lede { color: var(--mute); max-width: 620px; line-height: 1.55; margin: 0; }
+
+  /* Logo lockups */
+  .panel { display: flex; flex-wrap: wrap; gap: 24px; }
+  .tile {
+    flex: 1 1 280px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    border: 1px solid var(--rule);
+    background: #fff;
   }
-  .panel.dark { background: var(--navy); border-color: var(--navy); color: var(--paper); }
-  .mini { width: 16px; height: 16px; }
-  .small-row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+  .tile.dark { background: var(--ink); border-color: var(--ink); }
+  .tile.dark .wm, .tile.dark .desc { color: var(--paper); }
+  .tile.dark .desc { color: #C9CDD8; }
+  .cap { font-size: 12px; color: var(--mute); margin-top: 10px; }
+
+  .lockup-h { display: flex; align-items: center; gap: 14px; }
+  .lockup-h .wm { font-family: var(--serif); font-size: 34px; letter-spacing: -.01em; color: var(--ink); line-height: 1; }
+  .lockup-h .desc {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 6px;
+  }
+  .lockup-s { text-align: center; }
+  .lockup-s .wm { font-family: var(--serif); font-size: 30px; color: var(--ink); line-height: 1; margin-top: 10px; }
+  .lockup-s .desc {
+    font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--accent); margin-top: 8px;
+  }
+  .lockup-s .est { display: none; }
 
   /* Business card: 3.5 x 2 in ratio */
-  .cards { display: flex; gap: 32px; flex-wrap: wrap; }
   .card {
-    width: 350px; height: 200px; background: #fff; border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(27,42,65,.18); padding: 24px;
-    display: flex; flex-direction: column; justify-content: space-between;
+    width: 350px;
+    height: 200px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    box-shadow: 0 1px 2px rgba(20,33,61,.08);
+    padding: 22px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-  .card.back { background: var(--navy); color: var(--paper); }
-  .card .name { font-family: Georgia, "Times New Roman", serif; font-size: 20px; margin: 0; }
-  .card .role { font-size: 12px; color: var(--muted); margin: 2px 0 0; }
-  .card .contact { font-size: 12px; line-height: 1.6; color: var(--navy); }
-  .card.back .contact { color: var(--paper); }
-  .card.back .foot { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+  .card .top { display: flex; align-items: center; gap: 10px; }
+  .card .top .wm { font-family: var(--serif); font-size: 20px; color: var(--ink); line-height: 1; }
+  .card .name { font-family: var(--serif); font-size: 17px; color: var(--ink); margin: 0; }
+  .card .role { font-size: 11px; color: var(--mute); margin-top: 2px; letter-spacing: .04em; }
+  .card .info { font-size: 11px; color: var(--mute); line-height: 1.6; }
+  .card-back {
+    width: 350px;
+    height: 200px;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .card-back .wm { font-family: var(--serif); font-size: 24px; color: var(--paper); margin-top: 12px; line-height: 1; }
+  .card-back .desc { font-size: 9px; letter-spacing: .24em; text-transform: uppercase; color: #C9CDD8; margin-top: 8px; }
+  .cards { display: flex; flex-wrap: wrap; gap: 28px; }
 
   /* Email signature */
-  .sig-wrap { background: #fff; border: 1px solid var(--rule); border-radius: 6px; padding: 32px; max-width: 560px; }
-  .sig-meta { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #333; margin: 0 0 20px; }
-  .sig { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #333; border-collapse: collapse; }
-  .sig td { padding: 0; vertical-align: top; }
-  .sig .sig-name { font-family: Georgia, "Times New Roman", serif; font-size: 16px; color: var(--navy); margin: 0; }
-  .sig .sig-role { color: var(--muted); margin: 2px 0 8px; }
-  .sig .sig-line { margin: 0; line-height: 1.5; }
-  .sig a { color: var(--navy); text-decoration: none; }
-  .sig .divider { border-left: 2px solid var(--navy); padding-left: 16px; }
-  .sig .tag { font-size: 11px; color: var(--muted); margin-top: 10px; letter-spacing: .04em; }
+  .sig {
+    font-family: var(--sans);
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 24px 28px;
+    max-width: 520px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .sig .divider { width: 1px; background: var(--rule); align-self: stretch; }
+  .sig .name { font-family: var(--serif); font-size: 16px; color: var(--ink); margin: 0; }
+  .sig .role { font-size: 12px; color: var(--mute); margin: 2px 0 10px; }
+  .sig .contact { font-size: 12px; color: var(--mute); line-height: 1.6; }
+  .sig .contact a { color: var(--ink); text-decoration: none; }
+  .sig .co { font-family: var(--serif); font-size: 14px; color: var(--ink); margin-top: 10px; }
+  .sig .co span {
+    display: block; font-family: var(--sans); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-top: 3px;
+  }
+
+  /* Small sizes */
+  .sizes { display: flex; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+  .sizes .s { text-align: center; font-size: 11px; color: var(--mute); }
+  .sizes .fav { background: #fff; border: 1px solid var(--rule); padding: 8px; display: inline-block; }
+  .sizes .app { background: var(--ink); padding: 14px; border-radius: 22%; display: inline-block; }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<!-- Shared mark: a navy square with a cut L. Colors come from CSS variables so the same symbol works reversed. -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <symbol id="lp-mark" viewBox="0 0 64 64">
-      <rect x="0" y="0" width="64" height="64" rx="4" fill="var(--mk-bg, #1b2a41)"/>
-      <path d="M17 12 H28 V40 H47 V52 H17 Z" fill="var(--mk-fg, #f4f3ef)"/>
-    </symbol>
-  </defs>
-</svg>
+  <h1>Larkspur Payroll</h1>
+  <p class="lede">A mark built on one idea: a larkspur spike, its blossoms stacked in order from the top down. Solid, flat and legible in one color, with a custom-cut serif wordmark for a settled, enterprise tone.</p>
 
-<h1>Larkspur Payroll</h1>
-<p class="lede">
-  A steadier identity for enterprise buyers. The flat navy mark and the serif name read as established,
-  and the single custom-cut L keeps the symbol recognizable at small sizes. The gradient swoosh is removed.
-</p>
-
-<section>
-  <h2>Primary lockup</h2>
+  <!-- ===== MARK ===== -->
+  <h2>Symbol</h2>
   <div class="panel">
-    <svg width="260" height="84" viewBox="0 0 260 84" role="img" aria-label="Larkspur Payroll">
-      <use href="#lp-mark" x="0" y="8" width="68" height="68"/>
-      <text x="84" y="46" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#1b2a41">Larkspur</text>
-      <text x="86" y="68" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="3.6" fill="#5c6878">PAYROLL</text>
-    </svg>
+    <div class="tile">
+      <svg width="120" height="120" viewBox="0 0 48 48" role="img" aria-label="Larkspur symbol">
+        <!-- stem -->
+        <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#14213D"/>
+        <!-- blossoms, stacked by size, widest near the base -->
+        <circle cx="24" cy="6.5" r="3" fill="#14213D"/>
+        <circle cx="18.4" cy="14" r="3.4" fill="#14213D"/>
+        <circle cx="29.6" cy="14" r="3.4" fill="#14213D"/>
+        <circle cx="16.6" cy="23" r="3.8" fill="#14213D"/>
+        <circle cx="31.4" cy="23" r="3.8" fill="#14213D"/>
+        <circle cx="24" cy="32" r="4.2" fill="#14213D"/>
+      </svg>
+    </div>
+    <div class="tile dark">
+      <svg width="120" height="120" viewBox="0 0 48 48" role="img" aria-label="Larkspur symbol, reversed">
+        <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#FBF9F4"/>
+        <circle cx="24" cy="6.5" r="3" fill="#FBF9F4"/>
+        <circle cx="18.4" cy="14" r="3.4" fill="#FBF9F4"/>
+        <circle cx="29.6" cy="14" r="3.4" fill="#FBF9F4"/>
+        <circle cx="16.6" cy="23" r="3.8" fill="#FBF9F4"/>
+        <circle cx="31.4" cy="23" r="3.8" fill="#FBF9F4"/>
+        <circle cx="24" cy="32" r="4.2" fill="#FBF9F4"/>
+      </svg>
+    </div>
   </div>
-</section>
 
-<section>
-  <h2>Symbol and reversed versions</h2>
-  <div class="small-row">
-    <div class="panel" style="padding:32px">
-      <svg width="96" height="96" role="img" aria-label="Larkspur mark"><use href="#lp-mark" width="96" height="96"/></svg>
+  <!-- ===== LOCKUPS ===== -->
+  <h2>Lockups</h2>
+  <div class="panel">
+    <div class="tile" style="flex-basis:100%">
+      <div>
+        <div class="lockup-h">
+          <svg width="56" height="56" viewBox="0 0 48 48" aria-hidden="true">
+            <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#14213D"/>
+            <circle cx="24" cy="6.5" r="3" fill="#14213D"/>
+            <circle cx="18.4" cy="14" r="3.4" fill="#14213D"/>
+            <circle cx="29.6" cy="14" r="3.4" fill="#14213D"/>
+            <circle cx="16.6" cy="23" r="3.8" fill="#14213D"/>
+            <circle cx="31.4" cy="23" r="3.8" fill="#14213D"/>
+            <circle cx="24" cy="32" r="4.2" fill="#14213D"/>
+          </svg>
+          <div>
+            <div class="wm">Larkspur</div>
+            <div class="desc">Payroll</div>
+          </div>
+        </div>
+        <div class="cap">Primary horizontal. Clear space equal to the blossom diameter on all sides.</div>
+      </div>
     </div>
-    <div class="panel dark" style="padding:32px">
-      <svg width="96" height="96" role="img" aria-label="Larkspur mark, reversed" style="--mk-bg:#f4f3ef;--mk-fg:#1b2a41"><use href="#lp-mark" width="96" height="96"/></svg>
+
+    <div class="tile">
+      <div class="lockup-s">
+        <svg width="64" height="64" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#14213D"/>
+          <circle cx="24" cy="6.5" r="3" fill="#14213D"/>
+          <circle cx="18.4" cy="14" r="3.4" fill="#14213D"/>
+          <circle cx="29.6" cy="14" r="3.4" fill="#14213D"/>
+          <circle cx="16.6" cy="23" r="3.8" fill="#14213D"/>
+          <circle cx="31.4" cy="23" r="3.8" fill="#14213D"/>
+          <circle cx="24" cy="32" r="4.2" fill="#14213D"/>
+        </svg>
+        <div class="wm">Larkspur</div>
+        <div class="desc">Payroll</div>
+      </div>
     </div>
-    <div class="panel" style="padding:32px">
-      <svg width="16" height="16" role="img" aria-label="Larkspur mark at 16 pixels"><use href="#lp-mark" width="16" height="16"/></svg>
-      <svg width="32" height="32" role="img" aria-label="Larkspur mark at 32 pixels"><use href="#lp-mark" width="32" height="32"/></svg>
+
+    <div class="tile dark">
+      <div class="lockup-h">
+        <svg width="40" height="40" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#FBF9F4"/>
+          <circle cx="24" cy="6.5" r="3" fill="#FBF9F4"/>
+          <circle cx="18.4" cy="14" r="3.4" fill="#FBF9F4"/>
+          <circle cx="29.6" cy="14" r="3.4" fill="#FBF9F4"/>
+          <circle cx="16.6" cy="23" r="3.8" fill="#FBF9F4"/>
+          <circle cx="31.4" cy="23" r="3.8" fill="#FBF9F4"/>
+          <circle cx="24" cy="32" r="4.2" fill="#FBF9F4"/>
+        </svg>
+        <div>
+          <div class="wm" style="font-size:24px">Larkspur</div>
+          <div class="desc" style="font-size:9px">Payroll</div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<section>
+  <!-- ===== SMALL SIZES ===== -->
+  <h2>Small sizes</h2>
+  <div class="sizes">
+    <div class="s">
+      <div class="fav">
+        <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="22" y="10" width="4" height="34" rx="2" fill="#14213D"/>
+          <circle cx="24" cy="6" r="4.5" fill="#14213D"/>
+          <circle cx="17" cy="15" r="5" fill="#14213D"/>
+          <circle cx="31" cy="15" r="5" fill="#14213D"/>
+          <circle cx="24" cy="31" r="6" fill="#14213D"/>
+        </svg>
+      </div>
+      <div>16 px favicon</div>
+    </div>
+    <div class="s">
+      <div class="app">
+        <svg width="72" height="72" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#FBF9F4"/>
+          <circle cx="24" cy="6.5" r="3" fill="#FBF9F4"/>
+          <circle cx="18.4" cy="14" r="3.4" fill="#FBF9F4"/>
+          <circle cx="29.6" cy="14" r="3.4" fill="#FBF9F4"/>
+          <circle cx="16.6" cy="23" r="3.8" fill="#FBF9F4"/>
+          <circle cx="31.4" cy="23" r="3.8" fill="#FBF9F4"/>
+          <circle cx="24" cy="32" r="4.2" fill="#FBF9F4"/>
+        </svg>
+      </div>
+      <div>App icon</div>
+    </div>
+  </div>
+
+  <!-- ===== BUSINESS CARD ===== -->
   <h2>Business card</h2>
   <div class="cards">
     <div class="card">
-      <svg width="44" height="44" role="img" aria-label="Larkspur mark"><use href="#lp-mark" width="44" height="44"/></svg>
+      <div class="top">
+        <svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#14213D"/>
+          <circle cx="24" cy="6.5" r="3" fill="#14213D"/>
+          <circle cx="18.4" cy="14" r="3.4" fill="#14213D"/>
+          <circle cx="29.6" cy="14" r="3.4" fill="#14213D"/>
+          <circle cx="16.6" cy="23" r="3.8" fill="#14213D"/>
+          <circle cx="31.4" cy="23" r="3.8" fill="#14213D"/>
+          <circle cx="24" cy="32" r="4.2" fill="#14213D"/>
+        </svg>
+        <div class="wm">Larkspur</div>
+      </div>
       <div>
-        <p class="name">Jordan Avery</p>
-        <p class="role">Director of Client Success</p>
+        <p class="name">Eleanor Whitfield</p>
+        <div class="role">Director of Client Services</div>
       </div>
-      <div class="contact">
-        +1 (555) 010-2040<br>
-        jordan.avery@larkspurpayroll.com<br>
-        larkspurpayroll.com
+      <div class="info">
+        +1 (555) 014-2290<br>
+        eleanor.whitfield@larkspurpayroll.com<br>
+        100 Market Street, Suite 1400, Chicago, IL 60606
       </div>
     </div>
-    <div class="card back">
-      <svg width="44" height="44" role="img" aria-label="Larkspur mark, reversed" style="--mk-bg:#f4f3ef;--mk-fg:#1b2a41"><use href="#lp-mark" width="44" height="44"/></svg>
-      <div class="contact">
-        100 Example Street, Suite 400<br>
-        Anytown, ST 00000
-      </div>
-      <div class="foot">Larkspur Payroll</div>
+
+    <div class="card-back">
+      <svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+        <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#FBF9F4"/>
+        <circle cx="24" cy="6.5" r="3" fill="#FBF9F4"/>
+        <circle cx="18.4" cy="14" r="3.4" fill="#FBF9F4"/>
+        <circle cx="29.6" cy="14" r="3.4" fill="#FBF9F4"/>
+        <circle cx="16.6" cy="23" r="3.8" fill="#FBF9F4"/>
+        <circle cx="31.4" cy="23" r="3.8" fill="#FBF9F4"/>
+        <circle cx="24" cy="32" r="4.2" fill="#FBF9F4"/>
+      </svg>
+      <div class="wm">Larkspur</div>
+      <div class="desc">Payroll</div>
     </div>
   </div>
-</section>
 
-<section>
+  <!-- ===== EMAIL SIGNATURE ===== -->
   <h2>Email signature</h2>
-  <div class="sig-wrap">
-    <p class="sig-meta">Preview of the signature block as it would appear in a message.</p>
-    <table class="sig" role="presentation" cellpadding="0" cellspacing="0">
-      <tr>
-        <td style="padding-right:16px">
-          <svg width="56" height="56" role="img" aria-label="Larkspur Payroll"><use href="#lp-mark" width="56" height="56"/></svg>
-        </td>
-        <td class="divider">
-          <p class="sig-name">Jordan Avery</p>
-          <p class="sig-role">Director of Client Success, Larkspur Payroll</p>
-          <p class="sig-line">T: +1 (555) 010-2040</p>
-          <p class="sig-line"><a href="mailto:jordan.avery@larkspurpayroll.com">jordan.avery@larkspurpayroll.com</a></p>
-          <p class="sig-line"><a href="https://larkspurpayroll.com">larkspurpayroll.com</a></p>
-          <p class="tag">Payroll for enterprise organizations</p>
-        </td>
-      </tr>
-    </table>
+  <div class="sig">
+    <svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true" style="flex:none">
+      <rect x="22.9" y="10" width="2.2" height="34" rx="1.1" fill="#14213D"/>
+      <circle cx="24" cy="6.5" r="3" fill="#14213D"/>
+      <circle cx="18.4" cy="14" r="3.4" fill="#14213D"/>
+      <circle cx="29.6" cy="14" r="3.4" fill="#14213D"/>
+      <circle cx="16.6" cy="23" r="3.8" fill="#14213D"/>
+      <circle cx="31.4" cy="23" r="3.8" fill="#14213D"/>
+      <circle cx="24" cy="32" r="4.2" fill="#14213D"/>
+    </svg>
+    <div class="divider"></div>
+    <div>
+      <p class="name">Eleanor Whitfield</p>
+      <div class="role">Director of Client Services</div>
+      <div class="contact">
+        T +1 (555) 014-2290 &nbsp;·&nbsp; <a href="#">eleanor.whitfield@larkspurpayroll.com</a><br>
+        <a href="#">larkspurpayroll.com</a>
+      </div>
+      <div class="co">Larkspur Payroll<span>Payroll for enterprise teams</span></div>
+    </div>
   </div>
-</section>
 
+</div>
 </body>
 </html>

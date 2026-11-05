@@ -1,39 +1,45 @@
-Here's a draft. I put a short, plain disclosure near the top instead of burying it or making it a big production. The FTC expects a disclosure of free products and affiliate links to be clear and close to the recommendation, and readers tend to shrug at a casual one-liner anyway. It stays low-key, and it also makes the praise more believable.
+Here's a draft. I put the disclosure in a short, plain note near the top. The FTC requires a clear disclosure for both free product and affiliate commissions, and a note near the top keeps you covered. It's also easy to say in your normal voice, so it doesn't have to be a big deal.
 
 ---
 
 **Subject: Three weeks on the Pinewake mattress**
 
-Quick note before we start: Pinewake sent me the queen for free, and if you buy through my link I earn 8%. Everything below is what I actually thought, including the parts they probably won't put on a billboard.
+*Full disclosure: Pinewake sent me the queen for free, and I earn 8% if you buy through my link. Everything below is my honest take.*
 
-I don't usually review mattresses. It's a big purchase, and most mattress reviews read like they were written by someone who slept on it for one afternoon. So I gave this one three weeks, which is long enough to get past the honeymoon phase and find out what's annoying about it.
+I've been sleeping on the Pinewake for three weeks. I'm a side sleeper, about 170 lb, so I'm the kind of person who has opinions about shoulder pressure at 3 a.m. Here's how it went.
 
-**The basics.** It's a medium-firm queen, $1,150. I'm a side sleeper at about 170 lb, so I'm the person who usually finds out whether a "medium-firm" is secretly a plank.
+**The short version:** it's a medium-firm mattress that does a few things very well and has a few annoyances. It's $1,150 for the queen.
 
-**What I liked.** The edges are the surprise. They're really supportive. I sat on the side to put on socks, which is the most glamorous test I have, and it didn't collapse under me. I also slept right near the edge a few nights without that slow-slide feeling. If you and a partner each end up with less than half the bed, as most of us do, this matters more than you'd think.
+**What I liked**
 
-The other win is temperature. I tested it through the summer weeks, and it didn't sleep hot. I'm not claiming it's a cooling miracle. I just never woke up damp and annoyed, and I'm a person who notices that kind of thing.
+The edges are the surprise. Most mattresses collapse the moment you sit on the side to put on socks, or you feel like you're about to slide off if you sleep near the edge. The Pinewake stays put. I've used the full width of the bed for the first time in a while, which is a strange thing to be pleased about, but here we are.
 
-For my shoulder and hip, medium-firm turned out to be a good middle ground. I got enough give to feel cushioned and enough push-back that my spine didn't feel like a hammock.
+It also didn't sleep hot. Three weeks of summer-ish nights is a decent test, and I never woke up feeling like a baked potato. I didn't have to kick the covers off or flip the pillow to the cool side. For me that's one of the most important things in a mattress, and it passed.
 
-**What I didn't love.** It weighs 52 lb. That's fine until you need to rotate it, move it, or wrestle a fitted sheet on while holding a corner up. Plan on a second person for setup, and don't count on moving it solo later.
+As a side sleeper, I found the medium-firm feel supportive without being punishing. My hips and shoulders felt fine in the mornings. At my weight, it felt like the right level of firm.
 
-There was also a smell for the first two days. It faded, and I didn't think about it after that, but I'd air the room out and not plan to sleep on it the first night.
+**What I didn't love**
 
-The biggest note is that my partner found it a bit firm. I was happy with it, they were more "fine, I guess." If one of you likes a softer, sinkier feel, take that seriously. Firmness is the thing you can't judge from a product page.
+It weighs 52 lb. That's not outrageous, but it's awkward and floppy to move, and rotating it or getting it up the stairs is a two-person job. If you move often, factor that in.
 
-**The trial.** Their site says there's a 100-night trial. For a bed, that's the part that matters. Three weeks told me a lot, but a full adjustment period can take longer. Before you order, read the return terms yourself, including whether there are fees or condition requirements, since I haven't tested that part.
+There was a smell for the first two days. It wasn't terrible, just that new-mattress odor. I opened a window and it was gone by day three. If you're sensitive to smells, plan to let it air out before you sleep on it.
 
-**Who it's for.** Side sleepers and combination sleepers who like a supportive feel. Hot sleepers who want something that doesn't trap heat. Couples who both lean firm, or who use the whole bed, edges included.
+And my partner found it a bit firm. I'd call that a real caveat, not a nitpick. If one of you likes a plush bed, this may be a negotiation. They didn't hate it, but they didn't love it either, and I'm not going to pretend otherwise.
 
-**Who should skip it.** Anyone who wants a soft, cloud-like bed. Anyone who'll be moving it around a lot. And anyone whose partner has already said "a bit firm" about the one in the showroom.
+**Who it's for**
 
-**Bottom line.** I liked it, and I'm still sleeping on it, which is probably the most honest endorsement I've got. It's not perfect, and for $1,150 you should expect to think hard about firmness. But the edges and the temperature are better than I expected.
+Side sleepers, or anyone who likes a medium-firm bed. It's also good for people who sleep hot, and for anyone who wants usable edges. If you or your partner like a soft, sink-in feel, I'd think twice, or at least test it carefully.
 
-If you want to try it, my link is below. If you've got a mattress you love, hit reply and tell me about it. I'm collecting opinions.
+**The trial**
 
-[Pinewake link]
+Pinewake's site says there's a 100-night trial. I didn't use it, so I can't tell you how returns go. Read the terms before you buy, especially anything about the return process, since a heavy mattress is a hassle to send back.
+
+**Bottom line**
+
+I'd keep sleeping on it. It's a good, supportive, cool-sleeping mattress with a few practical drawbacks. If you want to check it out, my link is below. If not, no hard feelings, and I'll be back Saturday with something much less expensive.
+
+*[Link]*
 
 ---
 
-If you tell me your partner's actual reaction in more detail, or add a few details of your own (what you slept on before, say), I can make it more specific. That would also make it sound less like a generic review.
+I kept the "Saturday" sign-off generic, so change it to fit your schedule. If you tell me more about your usual voice, like a recurring joke or sign-off, I can work it in.

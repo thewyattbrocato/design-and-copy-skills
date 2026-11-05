@@ -1,143 +1,119 @@
-**Send plan**
-
-| Send | Job | Subject |
-|---|---|---|
-| Day 0 | Confirm the trial and get the first swap going | Your Parlay Hours trial has started |
-| Day 2 | Import the staff list | Import your staff from a spreadsheet |
-| Day 5 | Cover staff who don't want the app | Staff who skip the app can use texts |
-| Day 9 | Run one real swap start to finish | Run one real shift swap this week |
-| Day 13 | State what happens next and ask them to subscribe | Trial ends tomorrow: what happens next |
+**Series: 5 emails.** Sender name: Dana Okafor. Reply-to: Dana's inbox.
 
 ---
 
-## Email 1: Day 0
+## Email 1: Day 0 (right after signup)
 
-**From:** Dana Okafor
 **Subject:** Your Parlay Hours trial has started
-**Preview:** 14 days, no card needed. Here's where to begin.
+**Preview:** Start by importing your staff list from a spreadsheet.
 
 Hi,
 
-Your 14-day free trial of Parlay Hours is running. We didn't ask for a card, so nothing will be charged.
+Your 14-day trial of Parlay Hours is on. No card needed.
 
-Parlay Hours is for swapping shifts at small restaurants. Someone posts a shift they can't work, a coworker claims it, and you approve it with one tap.
+The first step is to get your people in. If your staff list is in a spreadsheet, you can import it as it is: name, phone and role.
 
-To see it work, start by getting your staff in. You can import your staff list from a spreadsheet with name, phone and role, so you won't be typing people in one by one.
+[Import your staff list](https://parlayhours.example/start)
 
-[Get started](https://parlayhours.example/start)
+Here's how it works. A staff member posts a shift they can't work. A coworker claims it. You approve with one tap.
 
-I'm Dana, the founder. I'll send four more emails over the trial, on days 2, 5, 9 and 13. If you have a question at any point, reply to this email. It goes to my inbox.
+Over the trial I'll send four more emails, on days 2, 5, 9 and 13. Each one covers one thing. If you'd like them to land in your inbox, reply to this email and add me to your contacts.
+
+Replies go straight to my inbox. If something is unclear or doesn't work the way you expected, tell me.
 
 Dana Okafor
 Founder, Parlay Hours
-
-[Unsubscribe]
 
 ---
 
 ## Email 2: Day 2
 
-**From:** Dana Okafor
-**Subject:** Import your staff from a spreadsheet
-**Preview:** Name, phone, role. That's all it needs.
+**Subject:** Try one real shift swap
+**Preview:** Post, claim, approve. That's the whole loop.
 
 Hi,
 
-If your team's schedule lives in a spreadsheet, you can bring the people over in one go.
+The quickest way to see if Parlay Hours fits your restaurant is to run one real swap through it.
 
-The import needs three columns: name, phone and role. Upload the file and your staff list is in place, ready for people to start posting and claiming shifts.
+1. Someone posts a shift they can't work.
+2. A coworker claims it.
+3. You get the request and approve it with one tap.
 
-[Import your staff](https://parlayhours.example/start)
+If a swap is already coming up, use that one. If not, post a test shift yourself and claim it from another person's account. That shows you what your team will see and what you'll see.
 
-If the import doesn't do what you expect, reply and tell me what happened. I'll read it.
+If you haven't added your staff yet, the import takes a spreadsheet with name, phone and role.
+
+[Open Parlay Hours](https://parlayhours.example/start)
 
 Dana
-
-[Unsubscribe]
 
 ---
 
 ## Email 3: Day 5
 
-**From:** Dana Okafor
-**Subject:** Staff who skip the app can use texts
-**Preview:** They can claim and post shifts by text message.
+**Subject:** Staff can swap shifts by text
+**Preview:** No app needed to claim or post a shift.
 
 Hi,
 
-Not everyone on a restaurant team wants another app on their phone. They don't have to install one.
+You may have someone on your team who won't want another app. That's fine with Parlay Hours.
 
-Staff who'd rather not use the app can claim shifts and post shifts by text message. That's why the phone number is in the staff import. The swap still reaches you, and you still approve it with one tap.
+Staff who don't want the app can claim and post shifts by text message. They don't have to download or log in to anything. Their phone number comes from the staff list you import, so that's the one thing to check: make sure the numbers in your spreadsheet are right.
 
-So you don't have to choose between the people who like apps and the people who don't. Everyone can use the same swap process.
+You still approve every swap with one tap, whether it came from the app or a text.
+
+If you want to see how it looks for a staff member, post a shift and have one person on your team try claiming it by text.
 
 [Open Parlay Hours](https://parlayhours.example/start)
 
 Dana
-
-[Unsubscribe]
 
 ---
 
 ## Email 4: Day 9
 
-**From:** Dana Okafor
-**Subject:** Run one real shift swap this week
-**Preview:** Post, claim, approve with one tap.
+**Subject:** What happens after your trial
+**Preview:** $39/month per location, or nothing at all.
 
 Hi,
 
-The best way to judge Parlay Hours is to run a real swap through it, so try one this week.
+Your trial has a few days left. Here's what happens at the end, so nothing surprises you.
 
-1. Someone on your team posts a shift they can't work. They can do it in the app or by text.
-2. A coworker claims it.
-3. You get the request and approve it with one tap.
+- **If you subscribe:** it's $39 a month per location.
+- **If you do nothing:** your account goes read-only. Nothing is charged, because you never gave us a card.
 
-The next time someone asks to get out of a shift, send them here instead of handling it yourself.
+There's no right answer here. Parlay Hours is new (we launched four months ago), and I'd rather you decide based on how it worked for your restaurant.
 
-[Open Parlay Hours](https://parlayhours.example/start)
-
-If a swap gets stuck anywhere, reply and tell me where. I'd like to know.
+So I have one question. Is anything stopping you from using it with your team? It could be a missing feature, a confusing step, or something about how your restaurant runs. Reply and tell me. I'll write back myself.
 
 Dana
-
-[Unsubscribe]
 
 ---
 
 ## Email 5: Day 13
 
-**From:** Dana Okafor
-**Subject:** Trial ends tomorrow: what happens next
-**Preview:** Do nothing and nothing is charged. Or subscribe for $39/month.
+**Subject:** Your trial ends tomorrow
+**Preview:** Subscribe for $39/month, or do nothing and nothing is charged.
 
 Hi,
 
-Your 14-day trial ends tomorrow. Here is exactly what happens next.
+Your Parlay Hours trial ends tomorrow.
 
-**If you subscribe:** it's $39 a month per location. You can subscribe on the billing page, and your account carries on as it is.
-
-**If you do nothing:** your account goes read-only. Nothing is charged, because we never took a card.
-
-If Parlay Hours has made shift swaps easier at your restaurant, subscribing is how you keep it going.
+If you want to keep using it, you can subscribe on the billing page. It's $39 a month per location.
 
 [Subscribe on the billing page](https://parlayhours.example/billing)
 
-If you have a question before you decide, reply to this email and I'll answer it myself.
+If you don't, you don't need to do anything. Your account will go read-only and you won't be charged.
+
+If you have a question before you decide, reply to this email and it will reach me.
 
 Thanks for trying it.
 
 Dana Okafor
 Founder, Parlay Hours
 
-[Unsubscribe]
-
 ---
 
-**Stop rule:** Stop the series when the person subscribes or unsubscribes. Also pause it if they reply, so you can answer them personally before anything else goes out.
-
-**Check before sending:**
-- You only gave me one product link (`/start`), so I used it in emails 1–4. If there's a login or dashboard URL, use that in emails 2–4.
-- Email 5 says "tomorrow", which is correct if the trial ends on day 14. If your trial clock differs, adjust it.
-- I didn't say whether data is kept when an account goes read-only, because you didn't tell me. Add that to email 5 if it's true.
-- Fill in your tool's unsubscribe tag where `[Unsubscribe]` appears.
+**Notes for you:**
+- **Stop rule and footer:** Stop the series when someone subscribes or unsubscribes. Add your tool's unsubscribe link to every footer, and check that it works right away. I'd also pause the series if someone replies, so a reply from a customer doesn't get an automated email after it.
+- **Dana's sign-off:** Dana should read and approve these before they go out, since they're signed as personal notes from her. The emails say "I'll write back myself", so her inbox needs to be monitored.

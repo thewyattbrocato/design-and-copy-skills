@@ -1,0 +1,120 @@
+[
+  {
+    "id": "aid2-01-overnight-research-run-critique",
+    "kind": "critique",
+    "prompt": "We sell an overnight competitor-research service called Deepfield. A client types a question like 'what are our top three rivals doing on pricing in Europe', clicks Start, and an agent spends about five hours reading websites, filings and press coverage, then emails a 30-page PDF. While it runs, the web app shows a spinner and a percentage. Clients keep telling us the report went down the wrong road early (wrong rivals, wrong region, wrong year) and five hours were wasted. Some also say they can't tell which parts of the report the agent actually verified. Please critique the experience from clicking Start to reading the report and tell me what to change.",
+    "rubric": [
+      "Identifies that the client has no chance to catch a wrong interpretation early and proposes showing the agent's plan or reading of the question (which rivals, region, period) near the start so the client can correct it before hours are spent.",
+      "Says the spinner and percentage tell the client nothing useful and proposes progress in terms of what has been covered and found so far, readable by someone checking in briefly.",
+      "Proposes a way to redirect or narrow the run mid-way without throwing everything away, or states plainly what a restart costs.",
+      "Recommends the report open with the answer and clearly separate what was verified from what was inferred or could not be found, rather than a uniform 30 pages.",
+      "Does not invent client statistics, satisfaction figures or accuracy numbers about Deepfield."
+    ]
+  },
+  {
+    "id": "aid2-02-records-migration-run-explain",
+    "kind": "explain",
+    "prompt": "I'm designing the interface for a one-off data migration our platform team will run next month: an agent moves about 1.2 million customer records from our old billing database to the new one. It will take roughly six hours, mostly overnight, and the engineer who kicks it off will not be watching the whole time. Steps are: copy records in batches, validate each batch, switch the app to read from the new database (cutover), then delete the old tables a week later. Some records will fail validation. What should the engineer see and be able to do before, during and after the run?",
+    "rubric": [
+      "Separates the reversible steps (copying, validating) from the ones that are hard to undo (cutover, deleting old tables) and puts an explicit human approval before those, rather than letting the run proceed through them automatically.",
+      "Says what pause and stop mean mid-run (for example finishing or rolling back the current batch so the data is left in a consistent, resumable state).",
+      "Shows counts of migrated, failed and skipped records with a way to see the failed records and why they failed, rather than only an overall progress bar.",
+      "Describes notifying the away engineer only for things that need them (a blocking error, a failure rate over a set limit, the cutover approval), not every batch.",
+      "Ends with a summary of what changed and how to roll back, and does not invent specific failure rates or timings beyond those given."
+    ]
+  },
+  {
+    "id": "aid2-03-claims-fleet-supervisor-layout",
+    "kind": "layout",
+    "prompt": "At Harborline Insurance we're about to run 35 agents in parallel, each working through home-insurance claims: reading the photos and documents, checking the policy, and preparing a recommendation for an adjuster. One supervisor oversees all 35 during a shift. Our first mockup is a grid of 35 equal tiles, each with the agent's name, a status dot and its current claim number. Agents get stuck when a document is unreadable, when a policy rule is ambiguous, or when a claim is over $25,000 and needs sign-off. What should be on the supervisor's screen instead, and how should they step in when five or six agents are stuck at the same time?",
+    "rubric": [
+      "Replaces the equal-tile grid with a view ordered by what needs the supervisor, with stuck or waiting agents first and healthy ones collapsed into a summary.",
+      "For each stuck agent, shows why it is stuck and the specific decision or input it needs, so the supervisor can act without opening the full claim history.",
+      "Suggests grouping stuck agents that share a cause (for example several waiting on the same ambiguous rule) so the supervisor can resolve them together.",
+      "Describes how the supervisor takes over or answers one agent and hands it back without pausing the other agents, and includes a way to pause the whole fleet if something is systematically wrong.",
+      "Treats the over-$25,000 sign-off as a separate approval at the point of commitment rather than as a generic error state."
+    ]
+  },
+  {
+    "id": "aid2-04-duplicate-invoice-eagerness-choose",
+    "kind": "choose",
+    "prompt": "Our accounts-payable agent at a regional hardware distributor checks every incoming invoice for possible duplicates before payment. Paying a duplicate costs us the invoice amount until we chase it back, which takes weeks; a false flag costs a clerk about three minutes to clear. We have two clerks who can review about 40 flags a day between them, and the agent currently flags about 120 a day, so most go unread and the clerks have started clearing them in bulk. Options on the table: (A) raise the threshold so it flags only about 40 a day, (B) keep flagging 120 but sort them by how likely they are to be duplicates, (C) automatically hold payment on the most likely duplicates and only flag the rest. Which should we do, and how should the setting be shown to the AP manager?",
+    "rubric": [
+      "Reasons from the asymmetry between the two error costs and the clerks' review capacity, rather than treating fewer flags as better in itself.",
+      "Points out that holding a payment is reversible and cheap compared with paying a duplicate, and that a hold is different from rejecting the invoice.",
+      "Recommends a combination (such as holding the most likely cases and ranking the rest within the clerks' capacity) or clearly justifies a single option, and explains what happens to flags below the line.",
+      "Says the threshold should be visible and adjustable by the AP manager, showing how many flags or holds a given setting will produce.",
+      "Suggests checking misses, for example by sampling unflagged paid invoices, and does not invent accuracy or detection-rate figures."
+    ]
+  },
+  {
+    "id": "aid2-05-infra-agent-scoped-permissions-explain",
+    "kind": "explain",
+    "prompt": "Our infrastructure team uses an internal agent, Tidewater, that runs commands against our Kubernetes clusters to fix routine issues (restarting stuck pods, scaling deployments, reading logs). Right now every single command pops an approval dialog in Slack. Engineers get 60 or more a day and now tap Approve without reading. Last week someone approved a command that deleted a namespace in staging. Redesign how Tidewater asks for permission so it is at least as safe as today but people actually read the prompts that matter.",
+    "rubric": [
+      "Names approval fatigue as the actual safety failure: when everything asks, nothing gets read, so the current setup is not truly safe.",
+      "Sorts actions by how reversible they are and how much they can affect (read-only, routine and reversible, destructive or production-wide) and lets the low-risk ones run without a prompt while keeping prompts for the high-risk ones.",
+      "Proposes scoped grants limited to a task, namespace or environment and a time window that expire, instead of a blanket always-allow.",
+      "Says the remaining approval prompts should state the exact effect (the command, the target cluster and namespace, and what cannot be undone) so the dangerous ones stand out.",
+      "Includes a log of actions taken without a prompt, with a way to review or reverse them, and does not invent incident statistics."
+    ]
+  },
+  {
+    "id": "aid2-06-travel-booking-approval-write",
+    "kind": "write",
+    "prompt": "We're building a travel assistant that rebooks flights for business travellers while they're busy. Situation: Priya's 6:40pm flight from Denver to Boston was cancelled. The agent found a seat on a 9:15pm United flight tonight, same airports, arriving 2:55am. The fare is $640 and nonrefundable, which is over her company's $500 auto-approve limit, so it needs her OK. The seat is held for 30 minutes. Write the push notification and the short approval screen it opens to. She'll be reading on her phone between meetings.",
+    "rubric": [
+      "Puts the decision and its key facts (the flight, departure and arrival time, $640, nonrefundable) at the start, readable at a glance on a phone.",
+      "Says why it needs her approval (over the $500 limit) in a few words without long explanation.",
+      "Offers one clear approve action and a clear way to decline or ask for other options.",
+      "States what happens if she does not answer within the 30-minute hold, with the safe default (not booking without her) made explicit.",
+      "Does not invent details not given, such as a seat number, a refund policy, other flight options or a loyalty status."
+    ],
+    "fact_sheet": true
+  },
+  {
+    "id": "aid2-07-pause-nightly-agent-guard",
+    "kind": "explain",
+    "prompt": "In under 80 words: what should the Pause button do for an agent that reconciles our bank feeds against the ledger every night?",
+    "rubric": [
+      "The answer is under 80 words.",
+      "Says pause stops the agent from starting new work and either finishes or safely halts the item in progress so nothing is left half-reconciled.",
+      "Says it resumes from where it stopped rather than starting the night's run over, and that the paused state (and since when) is visible so nobody assumes it ran.",
+      "Stays on the question: no headings, no list of extra features, no unrequested redesign of the agent."
+    ]
+  },
+  {
+    "id": "aid2-08-categorizer-spec-already-good-guard",
+    "kind": "critique",
+    "prompt": "Quick review before we start building. Spec for Ledgerly's overnight categorizer: (1) Every night it assigns a category to each new bank transaction for small-business users. (2) It can only set categories; it cannot move money, edit amounts or delete anything. (3) Anything it is unsure about it leaves uncategorized and marks 'needs you'. (4) Each morning the user sees a short list of what it changed, and each change can be undone with one click; there is also 'undo all from last night'. (5) A status line on the dashboard shows when it last ran and whether it finished. (6) Users can turn it off in settings, and it learns from their corrections. Anything to change before we build it?",
+    "rubric": [
+      "Says clearly that the spec is sound and names why (narrow permissions, unsure items left for the user, per-change and bulk undo, visible status).",
+      "Offers at most one or two small, specific suggestions rather than a long list of new requirements.",
+      "Does not add per-transaction approvals, a heavy review workflow or a new dashboard that would undo the point of running it unattended.",
+      "Does not invent problems that the spec already handles, and keeps the answer short."
+    ]
+  },
+  {
+    "id": "aid2-09-stop-all-button-fix-guard",
+    "kind": "polish",
+    "prompt": "Small thing. Our ops dashboard monitors 12 document-processing agents. Top right of the toolbar there are two identical grey text buttons side by side: 'Refresh' and 'Stop all agents'. Yesterday someone meant to hit Refresh and stopped everything, and it took 40 minutes to notice. The rest of the dashboard is fine and the team likes it. What's the one change I should make?",
+    "rubric": [
+      "Gives a focused fix for the Stop all control: separating it from Refresh and making it look and read as a consequential action, with either a confirmation or an obvious resume.",
+      "Addresses the 40 minutes nobody noticed, for example a persistent, visible 'all agents stopped' state.",
+      "Does not redesign the rest of the dashboard or add unrelated features.",
+      "Is short, matching a small request."
+    ]
+  },
+  {
+    "id": "aid2-10-literature-scan-status-build",
+    "kind": "build",
+    "prompt": "Build the status page for Quarry, our research agent that runs a literature scan for pharma analysts. A typical run takes about three hours: it searches databases, screens abstracts, reads full papers and drafts a summary table. The analyst starts it, goes to meetings, and comes back to this page in the middle of the run. Use this example run: question 'GLP-1 agonists and kidney outcomes in type 2 diabetes, trials since 2018'; started 1 hour 40 minutes ago; 412 abstracts screened, 38 kept, 14 full papers read so far; it is currently reading papers; it needs the analyst to decide whether to include two trials that only published conference abstracts. Make it a single self-contained HTML page.",
+    "rubric": [
+      "The decision the agent needs from the analyst (whether to include the two conference-abstract-only trials) is prominent near the top, with clear choices.",
+      "The page shows the current stage and what has been done so far using the given figures (412 screened, 38 kept, 14 read), in plain terms rather than only a percentage bar.",
+      "The question and scope the run is working to are visible, with a way to adjust or redirect them.",
+      "There are pause and stop controls that say what is kept if used, and the remaining time is shown as an honest estimate or range, not a precise countdown.",
+      "The page does not invent findings, paper titles or results beyond the figures given, or clearly marks any sample rows as placeholders."
+    ]
+  }
+]

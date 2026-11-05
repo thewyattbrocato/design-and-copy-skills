@@ -1,0 +1,1 @@
+Mostly yes: white on #1b4f8a is about 8.5:1 contrast (passes AAA), it has a visible focus ring, a native `<button>`, and a 16px font with a roomy target, though you could add a `:active` state and a `prefers-reduced-motion`-safe transition if you ever animate it.

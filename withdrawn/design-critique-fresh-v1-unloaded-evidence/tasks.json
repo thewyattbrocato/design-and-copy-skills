@@ -1,0 +1,122 @@
+[
+  {
+    "id": "dcf-01-booking-scan-gap",
+    "kind": "critique",
+    "prompt": "Our accessibility scan gives the table-booking flow a perfect score, but a customer who uses a screen reader emailed to say she could not finish a booking. Here is the markup of the booking step and the scan report. What's going on?\n\nScan report: 0 errors, 0 contrast failures, 0 missing alt text, 3 notices marked 'review manually' (not reviewed).\n\n```html\n<form id='slot-step'>\n  <label for='party'>Party size</label>\n  <select id='party'><option>2</option><option>4</option><option>6</option></select>\n\n  <div id='time-picker' class='picker'>\n    <div class='slot' onclick=\"pick('18:00')\">6:00 pm</div>\n    <div class='slot' onclick=\"pick('18:30')\">6:30 pm</div>\n    <div class='slot taken'>7:00 pm</div>\n    <div class='slot' onclick=\"pick('19:30')\">7:30 pm</div>\n  </div>\n\n  <button type='submit' aria-label='Reserve'>Confirm table</button>\n</form>\n```\n\nBehaviour notes from our developer: .slot.selected has a thicker border; .taken is light grey. After submit the script adds class 'ok' to #time-picker (border turns green) when the booking is saved, or class 'fail' (border turns red) when the slot was just taken. No text is added either way.",
+    "rubric": [
+      "Explains why a clean scan does not mean the flow works: automated scans catch only a subset of problems and cannot judge whether a custom control can be operated, which is exactly what the unreviewed 'review manually' notices hint at.",
+      "Identifies the time picker built from divs with click handlers as the likely blocker: no keyboard focus, no role or selected state, so a screen reader or keyboard user cannot choose a time; recommends native radio buttons or equivalent semantics.",
+      "Identifies the outcome (saved or slot taken) conveyed only by a green or red border, with no text or announced message, so she would not know whether the booking happened; recommends a text message announced to assistive technology.",
+      "Identifies that the button's accessible name ('Reserve') differs from its visible text ('Confirm table'), and explains the problem for voice-control and screen-reader users, with the simple fix of matching them.",
+      "Gives a fix order that starts with the time picker and the missing outcome message, and notes at least one thing that is fine and should be kept (for example the real label on party size or the native select).",
+      "Points at specific lines or classes from the markup as evidence rather than giving generic accessibility advice."
+    ]
+  },
+  {
+    "id": "dcf-02-toolbar-vendor",
+    "kind": "choose",
+    "prompt": "We sell bikes and parts on a hosted shop with about sixty product pages. A sales rep says that for $49 a month their accessibility toolbar will make us compliant and protect us from lawsuits. Their email says: 'One line of code, fixes your site automatically, trusted by thousands of stores, legal protection included.' Should we buy it? We have no developer, just me and a part-time freelancer.",
+    "rubric": [
+      "Gives a clear recommendation (do not buy it as the answer to compliance or legal risk) rather than a balanced shrug.",
+      "Says that an add-on toolbar cannot automatically fix the underlying problems (missing alt text, unlabeled fields, keyboard traps, checkout steps) and that a promise of 'compliant' or legal protection is not something a tool can guarantee.",
+      "Challenges the vendor's specific claims ('automatically', 'legal protection included') and says what to ask for instead, such as what exactly is covered, in writing, and whether it was tested with people who use assistive technology.",
+      "Offers a realistic cheaper path for a shop this size: check the few page templates that make up the sixty pages, test checkout by keyboard, fix alt text and form labels, and use the freelancer for that.",
+      "Stays within its competence on the legal side: says it is not legal advice or suggests asking a lawyer about actual exposure, without padding the answer with disclaimers."
+    ]
+  },
+  {
+    "id": "dcf-03-signup-two-days",
+    "kind": "critique",
+    "prompt": "Please audit our three sign-up screens for accessibility and tell us what to fix first. We have two days and one developer.\n\nScreen 1 (account):\n```html\n<input type='email' placeholder='Email address' style='color:#aaa'>\n<input type='password' placeholder='Password'>\n<img src='hero.svg' alt='A smiling woman in a yellow jumper sits at a wooden desk with a laptop, a cup of coffee and a small plant, looking out of a window at a hillside with three trees' >\n```\nOn a validation error the input gets a red border and nothing else changes.\n\nScreen 2 (human check): a picture of distorted letters and a text box. There is no other way to pass; the audio button was removed last year.\n\nScreen 3 (profile): about 14 fields. A script ends the session after 10 minutes of inactivity, and when it does, the page reloads to the sign-in screen and the profile form is empty on return.",
+    "rubric": [
+      "Gives each finding a severity or priority, with evidence taken from the screens given (for example the placeholder-only labels, the red border only, the missing alternative to the distorted letters, the timeout that clears the form).",
+      "Ranks the distorted-letters check with no alternative and the timeout that wipes a long form as the top blockers, because they stop some people from completing sign-up at all.",
+      "Treats placeholder-as-label (light grey, disappears on typing) and red-border-only errors as the next tier and gives concrete fixes: persistent visible labels and an error message in text next to the field.",
+      "Treats the very long alternative text on the decorative illustration as a low-severity quick win (empty alt text) and does not rank it above the blockers.",
+      "Fits the plan to two days and one developer: an ordered list of what to do in the first day, what to leave for later, and a note that it cannot be called fully checked without testing with a keyboard and a screen reader.",
+      "Does not pad the answer with generic checklist items that have no evidence in the screens given."
+    ]
+  },
+  {
+    "id": "dcf-04-conformance-rows",
+    "kind": "explain",
+    "prompt": "A vendor sent a conformance report for the staff portal we might buy. The summary line says 'the product fully supports the standard'. But these three rows say 'partially supports' with remarks. What should we ask them before we sign?\n\nRow 1, error identification: partially supports. Remark: 'Some forms use generic messages.'\nRow 2, reflow: partially supports. Remark: 'Certain data views may need horizontal scrolling at high zoom.'\nRow 3, keyboard: partially supports. Remark: 'Legacy modules are being updated.'\n\nOur staff mostly use the leave-request form, the rota view and the expenses screen. Two of our staff use a screen reader and one uses a screen magnifier.",
+    "rubric": [
+      "Notices the summary line contradicts the three rows and says the headline should not be taken at face value.",
+      "Turns each vague remark into a specific question: which forms, which data views, which legacy modules; and whether they include the leave-request form, the rota view or the expenses screen.",
+      "Asks for the evidence behind the report: who tested, when, which product version, and with which assistive technology, rather than accepting a self-assessment.",
+      "Asks for a dated, written commitment for fixing the partial rows, and a contractual remedy or exit if it is not met.",
+      "Suggests a short trial with the staff who use a screen reader and a magnifier on their real tasks, and keeps the list of questions short and ordered rather than a long generic questionnaire."
+    ]
+  },
+  {
+    "id": "dcf-05-meeting-notes-confidence",
+    "kind": "critique",
+    "prompt": "Critique this screen from our meeting-notes tool. It is shown right after a one-hour team call ends.\n\nTop: a 5-line summary paragraph written by the model, no sources. Below it, a list titled 'Action items', 6 rows. Each row has: a checkbox (already ticked), the task text, an owner name chosen by the model from who spoke nearest the topic, and a small grey pill such as '87% sure' or '54% sure'. At the bottom of the screen one large blue button: 'Send to everyone on the call'. A small link, 'Edit', sits at the right end of each row. There is no way to hear or read the part of the call an item came from.\n\nAbout 1 in 5 items has had the wrong owner in our testing. Be honest, what would you change and in what order?",
+    "rubric": [
+      "Names the main risk with evidence from the screen: items are pre-ticked and one big button sends them to everyone, so a wrong owner or invented task goes straight to colleagues with little chance to check.",
+      "Criticises the percentage pill: it is unexplained, does not say what the model is unsure about (task, owner, or both) and gives no action; proposes marking only the items that need a check, or showing a plain reason.",
+      "Recommends a way to check each item against its source, such as a link to the moment in the transcript, and uses the 1 in 5 wrong-owner figure as the reason owners need a visible check.",
+      "Recommends changing the send step (unticked by default or a review step that is quick to scan, owner shown as a suggestion), without proposing to remove the model's help altogether.",
+      "Gives a fix order, and names something to keep (for example the compact list with owner and task side by side, or the Edit link on each row)."
+    ]
+  },
+  {
+    "id": "dcf-06-claims-preselected",
+    "kind": "critique",
+    "prompt": "Audit the review queue where our staff approve or reject the model's suggested category on insurance claims. Facts: the model's category is pre-selected in a dropdown on each claim, and the main button reads 'Next claim' and saves whatever is selected. Reviewers handle about 4,000 claims a week. Last quarter's audit found the model's pick was wrong on 9 percent of claims, and the logs show reviewers changed the category on 2 percent. The screen shows the claim text on the left and the dropdown on the right; there is no indication of why the model chose its category. Is there a problem, and how bad is it? What would you do?",
+    "rubric": [
+      "Reads the two numbers together: 9 percent wrong against 2 percent changed means most model errors are passing through review, so the review is mostly rubber-stamping.",
+      "Names pre-selection plus a 'Next claim' button that saves the default as the mechanism that makes agreeing the path of least effort, and says why this matters given the cost of a wrong category on a claim.",
+      "Proposes concrete changes with a rationale, such as showing the passage of the claim that drove the suggestion, requiring an explicit confirm on the lower-certainty claims, or seeding known-wrong examples to measure whether reviewers catch them.",
+      "Weighs the cost of slowing 4,000 claims a week: does not call for a full manual process on every claim, and suggests measuring the override rate and error rate after the change.",
+      "Gives severity and an order of fixes, and says what to keep (for example the side-by-side claim text and category)."
+    ]
+  },
+  {
+    "id": "dcf-07-guard-weather-settings",
+    "kind": "critique",
+    "prompt": "Critique this plain settings page for a weather app. It is a single column on a phone.\n\nRows from top to bottom: 'Temperature' with a two-option switch between C and F; 'Wind speed' with a three-option choice (mph, km/h, m/s); 'Rain alerts' with an on/off switch and, under it, a time picker for quiet hours that only appears when alerts are on; 'Home location' showing the current city name with a chevron that opens a search screen; 'Theme' with light, dark and match phone. At the bottom a full-width 'Save' button. The switches and choices are all tappable at a comfortable size and the labels are clear. Tapping the C/F switch updates the current-conditions screen behind it immediately, even before Save is pressed, but the rain alert switch only takes effect after Save.\n\nWhat would you change?",
+    "rubric": [
+      "Gives a clear overall verdict that the page is mostly sound and ordinary, and keeps the answer short in proportion to the page.",
+      "Finds the one real inconsistency from the description: some controls apply at once while others need Save, and recommends one model (apply immediately for all, or make every control wait for Save).",
+      "Does not invent accessibility, AI or compliance problems that nothing in the description supports, and does not add a process or audit structure.",
+      "Names what works and should stay (clear labels, the conditional quiet-hours row, the match-phone theme option).",
+      "Does not pad with a long list of minor or speculative issues; at most one or two further low-severity notes, marked as optional."
+    ]
+  },
+  {
+    "id": "dcf-08-guard-assistant-works",
+    "kind": "critique",
+    "prompt": "Here is the assistant panel in our research notebook. The model's draft answers appear in the panel. Any sentence the model is unsure about is underlined with a dotted line and has a short note ('only one source found'). Every claim links to the exact passage in the user's own notes that it came from. Nothing is inserted into the user's document until they press 'Insert', and the whole panel can be switched off in settings. Quick gut check in two lines, please: anything we must change before launch?",
+    "rubric": [
+      "Answers in about two lines, as asked, with no headings, table or numbered findings list.",
+      "Gives a clear verdict that nothing must change before launch, because the panel already marks uncertainty, links claims to sources, requires an explicit insert and can be turned off.",
+      "Does not invent problems or pile on extra checks, user research or review steps that the description does not call for.",
+      "If it adds a caveat, it is a single optional item, such as watching in use whether the dotted underline is noticed, clearly separated from the verdict."
+    ]
+  },
+  {
+    "id": "dcf-09-guard-button-oneline",
+    "kind": "critique",
+    "prompt": "One line, please: does this button look accessible to you?\n\n```html\n<button type='submit' class='btn'>Save changes</button>\n```\n```css\n.btn { background:#1d4ed8; color:#ffffff; padding:12px 20px; border:0; border-radius:6px; font-size:16px; }\n.btn:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }\n```\nThe page background is white.",
+    "rubric": [
+      "Answers in one line or one sentence.",
+      "Says yes: a native button with visible text, white on dark blue has strong contrast, and a visible focus outline offset from the button.",
+      "Does not produce a checklist, headings, or a process, and does not invent issues.",
+      "Does not overclaim about the whole page; at most a brief note that this covers the button alone."
+    ]
+  },
+  {
+    "id": "dcf-10-inline-or-panel",
+    "kind": "choose",
+    "prompt": "We are adding an AI helper to our contract-drafting tool for in-house lawyers. Two designs are on the table. Design one: suggestions appear inline in the text, shown as tracked changes the lawyer can accept or reject one by one. Design two: a separate chat panel on the right where the lawyer asks for a clause and copies the answer into the document. Which is better for lawyers, and why? Lawyers here are careful and slow to trust new tools, and every change has to be traceable to a person's decision.",
+    "rubric": [
+      "Picks one design as the primary approach (inline suggestions as tracked changes) rather than sitting on the fence.",
+      "Justifies it using the stated context: tracked changes show exactly what differs from the text, put accept or reject on each change, and leave a record that a person decided, which is what traceability needs.",
+      "Names the real weakness of the chat-panel design for this audience: copying and pasting hides what changed and breaks the link between the answer and the decision.",
+      "Acknowledges what the other design is good for (open questions, exploring wording) and says how to keep it without making it the main path, for example as a secondary panel that can only propose changes.",
+      "Names one risk of the chosen design, such as accepting all with one click, or suggestion noise in the text, and a mitigation."
+    ]
+  }
+]

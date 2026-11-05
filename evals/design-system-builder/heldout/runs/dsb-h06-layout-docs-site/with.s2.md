@@ -1,137 +1,147 @@
-I've assumed one brand and a small team, and I couldn't check this against your current CSS. If your existing widths and breakpoints differ, merge them into these values instead of adding new ones.
+# Quillmark layout rules
+
+I assumed one brand, a plain-CSS site, and a docs page with a sidebar on the left and a table of contents on the right. I haven't run this in a browser.
 
 ## The numbers
 
-| Token | Value | Why |
-|---|---|---|
-| `--w-prose` | `38rem` (608px) | At 17px body text this gives about 70 characters per line. It is the only reading measure, used for articles and marketing copy. |
-| `--w-wide` | `64rem` (1024px) | Code blocks, tables, screenshots and feature rows. It is a maximum and shrinks to fit the space. |
-| `--w-page` | `80rem` (1280px) | Outer limit for everything. On bigger monitors the content stays centered and the page doesn't stretch. |
-| `--margin` | `clamp(1rem, 5vw, 2.5rem)` | Side padding. About 19px on a phone, 40px from 800px up. |
-| `--gap` | `clamp(1rem, 2.5vw, 1.5rem)` | Gutter between grid columns and cards. |
-| `--space-section` | `clamp(3rem, 8vw, 6rem)` | Vertical space between marketing sections. |
-| Breakpoints | `40em` (640), `64em` (1024), `80em` (1280) | Media queries can't read variables, so these are literals. They are the only three allowed. |
-| Docs shell | sidebar `15rem` at ≥64em, TOC `13rem` at ≥80em | Both fit inside `--w-page`. |
-| Body text | `1.0625rem` / 1.65 | The prose measure depends on this. If you change the body size, re-derive `--w-prose`. |
+| Rule | Value |
+|---|---|
+| Breakpoints | 40em (640px), 60em (960px), 90em (1440px) |
+| Columns | 4 below 40em, 8 from 40em, 12 from 60em |
+| Page margin | `clamp(1rem, 4vw, 3rem)` (16–48px) |
+| Gutter | 16px, then 24px from 40em, then 32px from 60em |
+| Reading measure | 68ch target. It can shrink to about 45ch on a phone. It never goes above 75ch. |
+| Article body | 17px, line-height 1.65. Code is 14px. |
+| Wide width | 72rem (1152px). Code, tables and marketing sections use it. |
+| Shell width | 90rem (1440px). This is the docs frame: sidebar, article and table of contents. |
+| Docs sidebar | 15rem, from 60em |
+| Docs table of contents | 14rem, from 90em |
+| Beyond 1440px | Nothing grows. The page stays centered with empty margins. |
 
-The widths are 38, 64 and 80rem. Each is at least 25% larger than the one before, so none are close enough to confuse.
+I used `em` for the breakpoints so they respond to user font-size settings. Media queries can't read CSS variables, so those three values are written out in each query.
 
-## How the pages share rules
-
-Every page uses one grid with named column lines. Children default to the prose column, and a child can opt into `wide`, `page` or `full` with a single class. Docs articles and the marketing page use the same grid and differ only in which column each block picks.
-
-- **Phone:** the wide and page tracks collapse to zero, so everything is prose width minus the margin. Code and tables scroll sideways inside their own box.
-- **Big monitor:** content stops at 80rem and stays centered.
+- **Why the table of contents starts at 90em.** At 1280px, the sidebar, table of contents and margins leave the article about 656px. That's under the 68ch target. At 1440px it gets about 816px, which holds the full measure.
+- **Why prices stack until 60em.** With 3 plans, a 2-column layout leaves one card alone on a row. Below 60em the cards stack at a capped width instead.
 
 ## CSS
 
 ```css
+/* ---------- tokens ---------- */
 :root {
-  --w-prose: 38rem;
-  --w-wide: 64rem;
-  --w-page: 80rem;
-  --margin: clamp(1rem, 5vw, 2.5rem);
-  --gap: clamp(1rem, 2.5vw, 1.5rem);
-  --space-section: clamp(3rem, 8vw, 6rem);
+  --layout-margin: clamp(1rem, 4vw, 3rem);
+  --layout-gutter: 1rem;
+  --layout-cols: 4;
+
+  --measure-prose: 68ch;
+  --width-wide: 72rem;
+  --width-shell: 90rem;
+  --size-sidebar: 15rem;
+  --size-toc: 14rem;
+
+  --space-section: 4rem;
+}
+@media (min-width: 40em) {
+  :root { --layout-gutter: 1.5rem; --layout-cols: 8; }
+}
+@media (min-width: 60em) {
+  :root { --layout-gutter: 2rem; --layout-cols: 12; --space-section: 6rem; }
 }
 
-body { font-size: 1.0625rem; line-height: 1.65; }
-
-/* One grid for every page. Children default to the prose column. */
-.l-grid {
-  display: grid;
-  grid-template-columns:
-    [full-start] minmax(var(--margin), 1fr)
-    [page-start] minmax(0, calc((var(--w-page) - var(--w-wide)) / 2))
-    [wide-start] minmax(0, calc((var(--w-wide) - var(--w-prose)) / 2))
-    [prose-start] min(100% - 2 * var(--margin), var(--w-prose))
-    [prose-end] minmax(0, calc((var(--w-wide) - var(--w-prose)) / 2))
-    [wide-end] minmax(0, calc((var(--w-page) - var(--w-wide)) / 2))
-    [page-end] minmax(var(--margin), 1fr)
-    [full-end];
+/* ---------- page containers ---------- */
+.container {                       /* marketing sections, header, footer */
+  width: min(100% - 2 * var(--layout-margin), var(--width-wide));
+  margin-inline: auto;
 }
-.l-grid > *       { grid-column: prose; }
-.l-grid > .wide   { grid-column: wide; }
-.l-grid > .page   { grid-column: page; }
-.l-grid > .full   { grid-column: full; }
-
-/* Long-form content */
-.prose > * + * { margin-block-start: 1.25em; }
-.prose :is(h1, h2, h3) { text-wrap: balance; line-height: 1.2; }
-.prose :is(h2, h3) { margin-block-start: 2em; scroll-margin-block-start: 5rem; }
-
-/* Code and wide tables: wide column, scroll inside the box, never the page */
-.prose pre,
-.table-wrap {
-  grid-column: wide;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  max-width: 100%;
+.container--shell {                /* docs frame */
+  width: min(100% - 2 * var(--layout-margin), var(--width-shell));
 }
-.prose pre { font-size: 0.875rem; line-height: 1.55; padding: 1rem 1.25rem; tab-size: 2; }
-.table-wrap table { min-width: 100%; border-collapse: collapse; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
-.table-wrap :is(th, td) { padding: 0.5rem 0.75rem; text-align: start; white-space: nowrap; }
-.table-wrap td.wrap { white-space: normal; min-width: 16rem; }
-
-/* 12-column grid inside the page column, for feature rows and similar */
-.cols {
-  grid-column: page;
-  display: grid;
-  gap: var(--gap);
-  grid-template-columns: 1fr;
-  padding-inline: 0;
-}
-@media (min-width: 64em) {
-  .cols { grid-template-columns: repeat(12, 1fr); align-items: center; }
-  .feature > .text  { grid-column: span 5; }
-  .feature > .media { grid-column: span 7; }
-  .feature:nth-of-type(even) > .text  { order: 2; }
-}
-
-/* Marketing sections */
 .section { padding-block: var(--space-section); }
 
-/* Pricing: 1 column, then 2, then 3. 4+ tiers wrap at the same steps. */
-.pricing {
-  grid-column: page;
+/* ---------- docs shell ---------- */
+.docs-shell {
   display: grid;
-  gap: var(--gap);
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);        /* phone: article only, nav is a drawer */
+  gap: var(--layout-gutter);
 }
-@media (min-width: 40em) { .pricing { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 64em) { .pricing { grid-template-columns: repeat(3, 1fr); } }
-.pricing > * { min-width: 0; }
+.docs-shell > * { min-width: 0; }               /* stops code/tables stretching the grid */
+@media (min-width: 60em) {
+  .docs-shell { grid-template-columns: var(--size-sidebar) minmax(0, 1fr); }
+}
+@media (min-width: 90em) {
+  .docs-shell {
+    grid-template-columns: var(--size-sidebar) minmax(0, 1fr) var(--size-toc);
+  }
+}
 
-/* Docs shell */
-.docs-shell { max-width: var(--w-page); margin-inline: auto; }
-.docs-shell > nav, .docs-shell > aside { display: none; }
-@media (min-width: 64em) {
-  .docs-shell { display: grid; grid-template-columns: 15rem minmax(0, 1fr); column-gap: 2rem; }
-  .docs-shell > nav { display: block; position: sticky; top: 0; height: 100dvh; overflow-y: auto; }
+/* ---------- article: prose / wide breakout grid ---------- */
+.article {
+  --breakout: calc((var(--width-wide) - var(--measure-prose)) / 2);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(0, 1fr)
+    [wide-start] minmax(0, var(--breakout))
+    [content-start] min(var(--measure-prose), 100%)
+    [content-end] minmax(0, var(--breakout))
+    [wide-end] minmax(0, 1fr)
+    [full-end];
 }
-@media (min-width: 80em) {
-  .docs-shell { grid-template-columns: 15rem minmax(0, 1fr) 13rem; }
-  .docs-shell > aside { display: block; position: sticky; top: 0; height: 100dvh; overflow-y: auto; }
+.article > * { grid-column: content; min-width: 0; }
+.article > .wide,
+.article > pre,
+.article > .table-scroll { grid-column: full; }  /* phone: edge to edge */
+@media (min-width: 40em) {
+  .article > .wide,
+  .article > pre,
+  .article > .table-scroll { grid-column: wide; }
+}
+
+/* code and tables scroll inside themselves, never the page */
+.article pre {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  tab-size: 2;
+  padding: 1rem var(--layout-margin);
+}
+.table-scroll { overflow-x: auto; }              /* <div class="table-scroll" tabindex="0" role="region" aria-label="…"> */
+.table-scroll table { min-width: 100%; width: max-content; }
+
+/* ---------- marketing: feature rows ---------- */
+.feature {
+  display: grid;
+  gap: var(--layout-gutter);
+  align-items: center;
+}
+@media (min-width: 60em) {
+  .feature { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .feature__text  { grid-column: 1 / span 5; }
+  .feature__media { grid-column: 6 / span 7; }
+  .feature--flip .feature__text  { grid-column: 8 / span 5; grid-row: 1; }
+  .feature--flip .feature__media { grid-column: 1 / span 7; grid-row: 1; }
+}
+.feature + .feature { margin-top: var(--space-section); }
+
+/* ---------- marketing: pricing grid ---------- */
+.pricing {
+  --plans: 3;                                    /* set to 2–4 per page */
+  display: grid;
+  gap: var(--layout-gutter);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (max-width: 59.999em) {
+  .pricing { max-width: 30rem; margin-inline: auto; }
+}
+@media (min-width: 60em) {
+  .pricing { grid-template-columns: repeat(var(--plans), minmax(0, 1fr)); }
 }
 ```
 
-## Usage
+## How to use it
 
-```html
-<main class="l-grid prose">          <!-- article -->
-  <h1>…</h1><p>…</p>
-  <pre>…</pre>                       <!-- wide column -->
-  <div class="table-wrap"><table>…</table></div>
-</main>
+- **Docs page.** Wrap it in `.container.container--shell > .docs-shell`, with the sidebar, then `<article class="article">`, then the table of contents. Anything in the article that should be wider than the text, like an image or diagram, gets class `wide`.
+- **Front page.** Put each section in `.section > .container`. Feature rows use `.feature`, and the pricing cards sit inside `.pricing`.
+- **Prose width.** The 68ch measure is in the `.article` font size, so it follows the 17px body text automatically.
 
-<div class="l-grid">                 <!-- marketing -->
-  <section class="section"><h1>…</h1><p>…</p></section>   <!-- prose width -->
-  <section class="cols feature">…</section>
-  <section class="pricing">…</section>
-</div>
-```
-
-## Trade-offs
-
-- With the sidebar and TOC both showing (≥80em), the article area is about 48rem. The wide column then barely exceeds prose width. Between 64em and 80em, with only the sidebar, code gets more room. I accepted this because the sidebar and TOC matter more than extra code width.
-- I used `rem` for the measure instead of `ch`. That makes it predictable, but it won't follow a later change in body font size. Adjust `--w-prose` whenever the body size changes.
+Two limits to know about. On pages with the sidebar, the article column is usually too narrow for `wide` to add anything, so wide tables scroll inside their wrapper there. The `.table-scroll` wrapper has to be added in the markup. A Markdown pipeline will need a small plugin to insert it.

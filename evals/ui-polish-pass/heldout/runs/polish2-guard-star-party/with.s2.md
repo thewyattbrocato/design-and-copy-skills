@@ -1,42 +1,37 @@
-The page is clean. It has labels, a visible focus ring, a dark theme, an announced status message, and an error for the head count. But I wouldn't send it yet, because the form doesn't save anything.
+The form works as a page, and the basics are in place: labels, focus rings, a dark theme, reduced motion, and a count error that is tied to its field. Fix the first two items below before you send it.
 
-**Fix before sending**
+**1. Nothing is saved (most serious).**
+- The submit handler only prints "You are on the list" in the browser. It sends nothing anywhere, so the club would get no sign-ups while members think they're registered.
+- I don't know where you collect responses, so I haven't invented an endpoint. Point the form at a real backend, such as a form service, a sheet, or an email handler.
+- Show the success message only after that request succeeds.
+- If the request fails, show an error that keeps what they typed and offers a retry.
+- While it's sending, disable the button and label it "Saving…" to prevent double sign-ups.
 
-1. **Sign-ups go nowhere.** The submit handler only prints "You are on the list". Nothing is stored or sent, so every member would be told they're registered when you've received nothing. Connect it to wherever you collect responses, such as a form service, a spreadsheet endpoint or an email. Once it sends data, add a "Saving…" state with the button disabled so people can't double-submit. Also add an error that keeps what they typed and offers a retry. I haven't invented an endpoint. Tell me where responses should go and I'll wire it up.
-2. **An empty name is accepted.** `novalidate` turns off the browser's `required` check and the script never replaces it. Someone can submit and see "You are on the list: , party of 2."
-3. **Fractions pass the head count.** "2.5" satisfies `v>=1&&v<=8`.
-4. **The page doesn't say when or where.** Members will ask for the date, start time, location and what happens if clouds roll in. Add a line under the lead, for example `Saturday [date], from [time] at [place]. If it's cloudy: [cancellation plan].` I left placeholders because I don't know the details.
+**2. The event details are missing.** The page says only "Saturday". Members will want the date, start time, meeting place, and what happens if it's cloudy. Add a line under the lead with those once you've decided them, for example: `<p>[Date], [time] at [place]. [Cloud / call-off plan].</p>`.
 
-**Smaller**
+**3. A blank name is accepted.** The field is `required`, but `novalidate` turns the browser check off, so someone can submit and see "You are on the list: , party of 2". Add an error like the count field has:
 
-5. **The field borders are faint.** `--line` is about 1.6:1 against the background in light mode and similar in dark, so the inputs are hard to see. Use a separate, darker border color for fields.
-6. **There's no way to change a sign-up.** Add something like "Need to change or cancel? [contact]" to the confirmation message.
-
-**Code for items 2, 3 and 5**
-
-CSS: add the field colors to both `:root` rules and use them on the inputs.
-```css
-:root{…;--field:#6b7280}
-@media (prefers-color-scheme:dark){:root{…;--field:#8b93a3}}
-input,select{…;border:1px solid var(--field)}
-input[aria-invalid=true]{border-color:var(--bad)}
-```
-
-HTML: add this after the name input, and change that input to `aria-describedby="name-err"`.
 ```html
-<p class="err" id="name-err" hidden>Enter your name so we know who to expect.</p>
+<input id="name" name="name" autocomplete="name" required aria-describedby="name-err">
+<p class="err" id="name-err" hidden>Enter your name so we know who to look for.</p>
 ```
 
-JS: replace the submit handler.
+**4. A count like 2.5 passes.** The check only tests the range 1 to 8, so decimals get through. The script below handles both this and the blank name:
+
 ```js
-const f=document.getElementById('f'),nm=document.getElementById('name'),ne=document.getElementById('name-err'),n=document.getElementById('n'),e=document.getElementById('n-err'),s=document.getElementById('status');
+const nm=document.getElementById('name'),ne=document.getElementById('name-err');
 f.addEventListener('submit',ev=>{ev.preventDefault();
-const v=+n.value,badN=!(Number.isInteger(v)&&v>=1&&v<=8),badName=!nm.value.trim();
+const name=nm.value.trim(),v=+n.value,badName=!name,bad=!Number.isInteger(v)||v<1||v>8;
 ne.hidden=!badName;nm.setAttribute('aria-invalid',badName);
-e.hidden=!badN;n.setAttribute('aria-invalid',badN);s.textContent='';
+e.hidden=!bad;n.setAttribute('aria-invalid',bad);s.textContent='';
 if(badName){nm.focus();return}
-if(badN){n.focus();return}
-s.textContent='You are on the list: '+nm.value.trim()+', party of '+v+'. See you under the stars.'});
+if(bad){n.focus();return}
+// send to your backend here; show the line below only on success
+s.textContent='You are on the list: '+name+', party of '+v+'. See you under the stars.'});
 ```
 
-I only read the code. I didn't run it in a browser or test it with a screen reader. The contrast figures are my estimates from the hex values.
+**5. Smaller gaps.**
+- The telescope choice isn't repeated in the confirmation.
+- There's no way to change or cancel a sign-up. A line such as "Need to change your spot? [contact]" would cover it.
+
+I only read the code. I haven't run it in a browser or tested it with a screen reader.

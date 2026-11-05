@@ -42,7 +42,7 @@ Small tasks (polish one line, choose between options) can start at step 3.
 
 ## Judgment calls
 
-- **Clear or clever:** default clear and specific. Wordplay is fine when the brand voice is playful and the line still reads alone, or the subhead supplies the meaning.
+- **Clear or clever:** default clear and specific. Wordplay is fine when the brand voice is playful and the line still reads alone; a line that only makes sense with its subhead gets another draft.
 - **Outcome or curiosity:** default outcome. Curiosity only when the next line on the same page pays it off.
 - **Product name first:** default the reader first. Lead with the product when the reader already knows it (pricing, renewal, brand search) or the name says the category.
 - **Problem-first:** for readers who feel the problem; blame the situation or the old tool, never the reader. Outcome-first for readers already comparing.

@@ -1,14 +1,15 @@
-It's good, and I'd roll it out Monday with only small edits. It already has the fields that usually go missing: a dated source of truth, one named owner, a retire condition and a "not covering" list.
+It's a good brief. Most of these forms skip the source of truth, the retire condition and the "not covering" line, and yours has all three. I'd change five things.
 
-**Worth changing**
+1. **Add a "why now" field.** Something like "Evidence this is needed: ticket count, search terms, or who asked." Without it, anyone can fill in the brief for an article nobody needs. It also gives you a way to measure the article later.
 
-1. **Split the owner and tester field.** "Owner (one name) and who will test the steps" asks for two people in one line. People often put the owner's name in both, and then nobody has checked the steps. Make it two fields: `Owner (one name)` and `Tester (someone other than the writer)`.
-2. **Make the re-check date work on events too.** A six-month default catches slow drift. It misses a release or plan change that breaks the article next week. Reword it to: `Re-check by: (date, default 6 months) or sooner if: (the change that would break it, e.g. UI redesign, pricing change)`. This also gives "Retire this article if" a partner, since one covers wrong and the other covers needs checking.
-3. **Add a "why now" line.** Something like `What prompted this: (ticket tags, search terms with no results, a person's request)`. Without it, the brief can't tell a needed article from one someone just felt like writing. It's also the first thing you'd check when you decide whether to retire it. If you can fit it in, ask for the customer's own words for the problem. Those make better titles and search terms than internal names.
+2. **Split "Owner" and "who will test."** In one line, people will write one name and skip the tester. Make them two fields. The tester should not be the author, because authors don't notice steps they skip.
 
-**Optional**
+3. **Split "replaces" from "links to."** Replacing an article means someone has to retire it and set up a redirect. Linking to one doesn't. Put them on separate lines so the replace step isn't forgotten.
 
-- Put `Existing articles it replaces or links to` first or second. If an old article can be updated, nobody should write a new one, and that is easier to see before the audience and goal sections.
-- Add a "Done when" checkbox, such as "tester followed the steps and the source of truth confirmed the final draft". Skip this if you'd rather keep the brief to one page.
+4. **Make "source of truth" a doc or link, not just a person.** People leave or forget, and a link can be re-checked. Keep the person's name and the date as well. Something like "Confirmed by [name] on [date], per [link/doc]" works.
 
-The rest I'd leave alone, including the "who it's for" and "what they should be able to do" fields.
+5. **Add a second re-check trigger.** Six months is a fine default, but add "or the next release that touches [feature]." A time-only schedule misses the cases where an article goes wrong fastest.
+
+A small wording fix: the second line asks for the audience and what they were trying to do. Those are two answers, so people tend to write only one. Splitting it into "Who" and "What were they trying to do" gets you both.
+
+If you want to keep it to one page, I'd skip adding a publish location or approver field. That belongs in your workflow, not the brief. The five changes above only add or split a few lines, so it still fits.

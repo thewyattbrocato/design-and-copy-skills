@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Outfitters returns flow: case study</title>
+<!--
+PLACEHOLDERS TO FILL BEFORE PUBLISHING
+1. [your email]: contact link in the footer.
+2. [portfolio index link]: the "All work" link at the top (currently href="#").
+3. [credits: engineers' names]: the two engineers' names. Daria's surname is optional.
+4. [before-period window]: how long the 37% baseline covers (supplied: 37% before, 68% in the six weeks after launch).
+5. Optional: real screenshots or a recording. The figures here are schematic redraws, not the shipped UI.
+-->
+<style>
+  :root{
+    --bg:#fbfaf7; --ink:#1d2420; --mute:#5b655f; --line:#dcd9d0;
+    --card:#ffffff; --accent:#1f5f46; --accent-soft:#e4efe9;
+    --bad:#9a3b2a; --bad-soft:#f6e6e1; --sand:#f1eee6;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+  a{color:var(--accent)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .top{padding:20px 0;font-size:14px}
+  .top a{color:var(--mute);text-decoration:none}
+  .top a:hover{text-decoration:underline}
+
+  /* first screen */
+  .hero{padding:12px 0 48px}
+  .kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 10px}
+  h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.08;margin:0 0 16px;letter-spacing:-.02em;max-width:18ch}
+  .lede{font-size:1.2rem;max-width:44rem;margin:0 0 20px}
+  .facts{display:flex;flex-wrap:wrap;gap:8px 10px;list-style:none;padding:0;margin:0 0 32px}
+  .facts li{background:var(--sand);border-radius:999px;padding:4px 14px;font-size:14px}
+
+  /* layout with side nav */
+  .layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;align-items:start}
+  nav.toc{position:sticky;top:24px;font-size:14px}
+  nav.toc strong{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+  nav.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+  nav.toc li a{display:block;padding:5px 0 5px 14px;color:var(--mute);text-decoration:none}
+  nav.toc li a:hover{color:var(--accent)}
+  main{min-width:0}
+  main > section{margin-bottom:72px;scroll-margin-top:24px}
+  .text{max-width:40rem}
+  h2{font-size:1.65rem;line-height:1.2;margin:0 0 12px;letter-spacing:-.01em}
+  .num{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:6px}
+  p{margin:0 0 16px}
+
+  /* figures */
+  figure{margin:24px 0 44px;padding:0}
+  figcaption{font-size:14px;color:var(--mute);margin-top:12px;max-width:40rem}
+  .frame{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .side-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px}
+  .side-label.old{color:var(--bad)} .side-label.new{color:var(--accent)}
+
+  /* schematic UI pieces */
+  .ui{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:13px;line-height:1.4;position:relative}
+  .ui h4{margin:0 0 10px;font-size:13px}
+  .bar{height:9px;border-radius:5px;background:#e6e3da;margin:6px 0}
+  .bar.s{width:55%} .bar.m{width:75%}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:8px}
+  .thumb{width:30px;height:30px;border-radius:6px;background:#d8d4c8;flex:none}
+  .grow{flex:1;min-width:0}
+  .btn{display:inline-block;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;background:var(--accent);color:#fff;white-space:nowrap}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  .tag{font-size:11px;font-weight:600;border-radius:999px;padding:2px 8px;white-space:nowrap}
+  .tag.ok{background:var(--accent-soft);color:var(--accent)}
+  .tag.no{background:var(--bad-soft);color:var(--bad)}
+  .footer-mock{margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);font-size:11px;color:var(--mute);display:flex;gap:12px}
+  .footer-mock .hl{color:var(--bad);font-weight:700;outline:2px solid var(--bad);outline-offset:2px;border-radius:3px;padding:0 3px}
+  .pin{position:absolute;font-size:11px;font-weight:600;color:var(--bad);background:var(--bad-soft);border-radius:6px;padding:2px 8px;white-space:nowrap}
+  .pin.g{color:var(--accent);background:var(--accent-soft)}
+  .select{border:1px solid #bdb9ad;border-radius:6px;padding:7px 10px;display:flex;justify-content:space-between;color:var(--mute)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .chip{border:1px solid #bdb9ad;border-radius:999px;padding:5px 12px;font-size:12px}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .note{border:1px dashed #bdb9ad;border-radius:6px;padding:8px 10px;color:var(--mute);font-size:12px}
+  .label{border:1px solid var(--ink);border-radius:6px;padding:10px;display:flex;gap:10px;align-items:center;margin-bottom:10px}
+  .barcode{flex:none;width:54px;height:36px;background:repeating-linear-gradient(90deg,#222 0 2px,#fff 2px 4px,#222 4px 5px,#fff 5px 8px)}
+  .map{height:110px;border-radius:8px;background:
+      linear-gradient(90deg,transparent 48%,#fff 48% 52%,transparent 52%),
+      linear-gradient(0deg,transparent 60%,#fff 60% 64%,transparent 64%),
+      #dfe8dc;position:relative;border:1px solid var(--line)}
+  .map i{position:absolute;width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--accent);border:2px solid #fff}
+  .map i:nth-child(1){left:22%;top:25%} .map i:nth-child(2){left:68%;top:50%} .map i:nth-child(3){left:40%;top:72%}
+
+  /* hero flow */
+  .flow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .step-label{font-size:12px;font-weight:700;color:var(--mute);margin:0 0 8px}
+
+  /* chart */
+  .chart{display:grid;gap:14px}
+  .brow{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;font-size:14px}
+  .track{background:var(--sand);border-radius:6px;height:38px;position:relative;overflow:hidden}
+  .fill{height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-weight:700;color:#fff;border-radius:6px}
+  .fill.a{background:#7c847f} .fill.b{background:var(--accent)}
+  .big{font-size:3rem;font-weight:700;letter-spacing:-.03em;line-height:1;margin:0 0 6px}
+  .big span{color:var(--mute);font-weight:500;font-size:1.4rem;margin:0 .15em}
+
+  .limits{background:var(--sand);border-radius:12px;padding:20px 24px;max-width:40rem}
+  .limits ul{margin:0;padding-left:20px}
+  .limits li{margin-bottom:6px}
+  footer{border-top:1px solid var(--line);padding:32px 0 56px;font-size:15px}
+  .ph{background:#fff3c4;border-radius:4px;padding:0 4px}
+
+  @media (max-width:860px){
+    .layout{grid-template-columns:1fr;gap:0}
+    nav.toc{position:static;margin-bottom:36px}
+    nav.toc ol{display:flex;flex-wrap:wrap;gap:4px 16px;border-left:0}
+    nav.toc li a{padding:2px 0}
+    .flow,.pair{grid-template-columns:1fr}
+    .brow{grid-template-columns:90px 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="#">← All work</a></div>
+
+  <header class="hero">
+    <p class="kicker">Case study · Product design · 2025</p>
+    <h1>Returns that start in the account page</h1>
+    <p class="lede">I redesigned how Kestrel Outfitters customers start a return, replacing an emailed support request with a three-step flow built into each order.</p>
+    <ul class="facts">
+      <li>Online camping gear shop, mid-size</li>
+      <li>~10 weeks, 2025</li>
+      <li>Sole designer, with 1 PM and 2 engineers</li>
+      <li>Form completion 37% → 68%</li>
+    </ul>
+
+    <figure style="margin-bottom:20px">
+      <div class="frame">
+        <div class="flow" role="img" aria-label="Schematic of the new flow in three screens: the order list with a Return an item button and eligibility per item, a one-tap reason with an optional note, and a confirmation with a prepaid label and drop-off map.">
+          <div>
+            <p class="step-label">1 · Pick the item</p>
+            <div class="ui">
+              <h4>Order</h4>
+              <div class="row"><span class="thumb"></span><div class="grow"><div class="bar m"></div><span class="tag ok">Eligible</span></div><span class="btn">Return an item</span></div>
+              <div class="row"><span class="thumb"></span><div class="grow"><div class="bar s"></div><span class="tag no">Not eligible</span></div></div>
+            </div>
+          </div>
+          <div>
+            <p class="step-label">2 · Say why, in one tap</p>
+            <div class="ui">
+              <h4>Reason for return</h4>
+              <div class="chips"><span class="chip">Reason</span><span class="chip on">Reason</span><span class="chip">Reason</span><span class="chip">Reason</span></div>
+              <div class="note">Optional note</div>
+              <p style="margin:12px 0 0"><span class="btn">Submit</span></p>
+            </div>
+          </div>
+          <div>
+            <p class="step-label">3 · Leave with the label</p>
+            <div class="ui">
+              <h4>Return confirmed</h4>
+              <div class="label"><span class="barcode"></span><div class="grow"><div class="bar m"></div><div class="bar s"></div></div></div>
+              <div class="map"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption>Schematic of the shipped flow, redrawn for this page. It shows the structure, not the final visual design.</figcaption>
+    </figure>
+
+    <p class="text">Before this, a customer who wanted to return something had to find a “Contact us” form in the footer and wait for support to reply. Reading support tickets, I found the most common complaint wasn’t the wait itself but not knowing whether an item was eligible at all. The three decisions below follow from that.</p>
+  </header>
+
+  <div class="layout">
+    <nav class="toc" aria-label="On this page">
+      <strong>On this page</strong>
+      <ol>
+        <li><a href="#d1">1. Eligibility up front</a></li>
+        <li><a href="#d2">2. One tap for the reason</a></li>
+        <li><a href="#d3">3. Label on the confirmation</a></li>
+        <li><a href="#result">Result</a></li>
+        <li><a href="#limits">Limits and credits</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <section id="d1">
+        <span class="num">Decision 1</span>
+        <h2>Return from the order, and check eligibility per item first</h2>
+        <div class="text">
+          <p>The old path started in the footer, so customers began a request without knowing whether it could succeed. I put “Return an item” on each order in the account page and moved the eligibility check to the start, per item, instead of the end.</p>
+        </div>
+        <figure>
+          <div class="pair">
+            <div class="frame">
+              <p class="side-label old">Before</p>
+              <div class="ui" style="padding-bottom:40px">
+                <h4>Contact us</h4>
+                <div class="bar m"></div><div class="bar"></div><div class="bar s"></div>
+                <div class="footer-mock"><span>Shipping</span><span>FAQ</span><span class="hl">Contact us</span></div>
+                <span class="pin" style="right:12px;bottom:10px">Buried in the footer</span>
+              </div>
+              <p style="font-size:14px;color:var(--mute);margin:12px 0 0">No sign of what can be returned.</p>
+            </div>
+            <div class="frame">
+              <p class="side-label new">After</p>
+              <div class="ui" style="padding-bottom:40px">
+                <h4>Order</h4>
+                <div class="row"><span class="thumb"></span><div class="grow"><div class="bar m"></div><span class="tag ok">Eligible</span></div><span class="btn">Return an item</span></div>
+                <div class="row"><span class="thumb"></span><div class="grow"><div class="bar s"></div><span class="tag no">Not eligible</span></div></div>
+                <span class="pin g" style="right:12px;bottom:10px">Answer shown per item</span>
+              </div>
+              <p style="font-size:14px;color:var(--mute);margin:12px 0 0">The answer arrives before any form.</p>
+            </div>
+          </div>
+          <figcaption>Both versions at the same width: the old entry point was a footer link, and the new one sits on the item it applies to.</figcaption>
+        </figure>
+      </section>
+
+      <section id="d2">
+        <span class="num">Decision 2</span>
+        <h2>One tap for the reason, with an optional note</h2>
+        <div class="text">
+          <p>The old form asked for a reason from a nine-option dropdown, and most people picked “Other.” A field that mostly returns one answer isn’t collecting information, so I replaced it with a single tap and left room for a short note.</p>
+        </div>
+        <figure>
+          <div class="pair">
+            <div class="frame">
+              <p class="side-label old">Before</p>
+              <div class="ui">
+                <h4>Reason for return</h4>
+                <div class="select"><span>Choose one of 9 options</span><span>▾</span></div>
+                <p style="margin:12px 0 0;color:var(--bad);font-weight:600">Mostly “Other.”</p>
+              </div>
+            </div>
+            <div class="frame">
+              <p class="side-label new">After</p>
+              <div class="ui">
+                <h4>Reason for return</h4>
+                <div class="chips"><span class="chip">Reason</span><span class="chip on">Reason</span><span class="chip">Reason</span><span class="chip">Reason</span></div>
+                <div class="note">Optional note</div>
+              </div>
+            </div>
+          </div>
+          <figcaption>The chip labels here are placeholders. The point is the shape: one selection, then an optional free-text note.</figcaption>
+        </figure>
+      </section>
+
+      <section id="d3">
+        <span class="num">Decision 3</span>
+        <h2>Prepaid label and drop-off map on the confirmation screen</h2>
+        <div class="text">
+          <p>Previously the label arrived by email after the request, which left a gap between asking and being able to act. Now the confirmation screen is the finish line: the label and a map of drop-off points appear as soon as the request is submitted.</p>
+        </div>
+        <figure>
+          <div class="frame" style="max-width:420px">
+            <div class="ui" role="img" aria-label="Schematic confirmation screen with a prepaid label and a map showing drop-off pins.">
+              <h4>Return confirmed</h4>
+              <div class="label"><span class="barcode"></span><div class="grow"><div class="bar m"></div><div class="bar s"></div></div></div>
+              <div class="map"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <figcaption>Everything needed to complete the return is on one screen, with no email in between.</figcaption>
+        </figure>
+      </section>
+
+      <section id="result">
+        <span class="num">Result</span>
+        <h2>Form completion rose from 37% to 68%</h2>
+        <div class="text">
+          <p>In the six weeks after launch, completion of the return-request form went from 37% to 68%. I can’t separate the three decisions from each other, so I treat this as the result of the flow as a whole.</p>
+        </div>
+        <figure>
+          <div class="frame">
+            <p class="big">37%<span>→</span>68%</p>
+            <div class="chart" role="img" aria-label="Bar chart: return-request form completion was 37 percent before and 68 percent in the six weeks after launch.">
+              <div class="brow"><span>Before</span><div class="track"><div class="fill a" style="width:37%">37%</div></div></div>
+              <div class="brow"><span>6 weeks after</span><div class="track"><div class="fill b" style="width:68%">68%</div></div></div>
+            </div>
+          </div>
+          <figcaption>Return-request form completion rate, from the PM’s dashboard. The before period covers <span class="ph">[before-period window]</span>.</figcaption>
+        </figure>
+      </section>
+
+      <section id="limits">
+        <span class="num">Limits and credits</span>
+        <h2>What this doesn’t tell you</h2>
+        <div class="limits">
+          <ul>
+            <li>Completion rate is the only number I have. I don’t have return volume, support-ticket counts or customer quotes.</li>
+            <li>The figure comes from the PM’s dashboard, not a controlled test, so other changes in those weeks could have contributed.</li>
+            <li>The screens on this page are schematic redraws, not screenshots of the shipped product.</li>
+          </ul>
+        </div>
+        <p class="text" style="margin-top:24px">I was the only designer on this project. I worked with Daria, the PM, and <span class="ph">[credits: the two engineers’ names]</span>, who built it.</p>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <strong>Working on a flow that needs the same clarity?</strong>
+    Get in touch at <a href="mailto:[your email]"><span class="ph">[your email]</span></a>.
+  </footer>
+</div>
+</body>
+</html>

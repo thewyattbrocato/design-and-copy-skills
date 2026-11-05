@@ -1,21 +1,30 @@
-Not as written. I'd change three things.
+Not as planned. The offer is fine, but the list and the test both need changes.
 
-**1. Don't blast the 3,900 giveaway emails.**
-- They gave their address to enter a giveaway in 2022, not to get marketing. Four years on, many will have bounced, gone dormant, or forgotten you.
-- Sending to them is the biggest risk to the plan. Spam complaints, bounces, and old addresses that have become spam traps hurt your sender reputation. That can push your next emails to the 2,100 real subscribers into spam too.
-- Consent rules vary by place, so check yours. Separately from the legal side, it's the riskier send.
-- **Better:** send the sale to the 2,100 subscribers. Send the giveaway group one plain email, such as "Still want hot sauce news from us? Click here to stay on the list," and keep only those who click. If you do send them the sale, do it in small batches first and watch bounces and complaints.
+**1. Don't send this to the 3,900 giveaway entrants.**
+- They gave their email to enter a giveaway in 2022, not to get marketing. They haven't heard from you in years, if ever, so many won't remember you.
+- A cold segment that size tends to bring spam complaints, bounces and dead addresses. That can hurt delivery to your 2,100 real subscribers too, since the complaints count against your sending reputation.
+- Consent rules vary by place and change, so check yours. Whatever the law says, this is the riskiest part of the list.
+- Instead, send them one plain email: "You entered our giveaway in 2022. Want hot sauce news and deals from us?" with one button to stay on. Leave off anyone who doesn't click, and send the 25% code only to those who do.
+- If you must mail them, send a small batch first and watch complaints and unsubscribes before sending more.
 
-**2. Pull the 400 wholesale customers out.**
-- A 25%-off-everything blast to retail customers can undercut their wholesale pricing or confuse them. Send them a separate note, or nothing.
+**2. Handle the 400 wholesale customers separately.**
+- 25% off everything may undercut their wholesale pricing or annoy accounts you want to keep. Either leave them out or send them something written for them.
 
-**3. Don't test six subject lines on this list.**
-- Your engaged list is about 2,100. Six variants is roughly 350 people each, which is too few to tell real differences from noise.
-- Opens are also an unreliable measure now, because mail apps pre-load tracking pixels. Judge by clicks and purchases.
-- **Better:** test two subject lines, one change at a time, split 50/50 across the 2,100. Or skip testing this time and send one clear subject. For example: "25% off everything, through [end date]." The preview text can carry the detail.
+**3. Send the sale to the 2,100 newsletter subscribers.**
+- They asked for your emails, so this is the right audience. Put a real end date on the offer. Don't use "last chance" or a countdown unless the deadline is real.
 
-**Smaller things**
-- Give a real end date. Don't use "last chance" unless there's an actual cutoff.
-- Make sure 25% off everything still leaves you margin on your lowest-margin items.
-- Saturday morning is a fine time to send. If you want to know whether it's the best time, test that in a later send.
-- Use one button in the email, labeled with what it does, such as "Shop the sale."
+**4. Don't test six subject lines at once.**
+- At about 350 people per version, the differences will mostly be noise.
+- Open rates are also unreliable now, because some mail apps pre-load emails and count that as an open.
+- Test two subject lines against each other, one change between them, such as a plain "25% off all hot sauce through [date]" versus one that leads with a specific sauce.
+- Judge them on clicks and orders, not opens. Even then, with 2,100 people, treat the result as a hint rather than proof.
+
+**5. Saturday morning is a reasonable guess.**
+- I can't tell you it's the best time for your customers. If you want to know, run it as a later test, one variable at a time.
+
+**Suggested plan:**
+- Saturday: send the sale to the 2,100 subscribers, with the two-subject test.
+- Same weekend: send the re-permission email to the giveaway group.
+- Later: send the discount only to those who say yes.
+
+I can draft the two subject lines and the re-permission email if you want.

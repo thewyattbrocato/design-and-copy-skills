@@ -1,23 +1,21 @@
-**Subject** (39 characters)
-Renew your Friends membership by Nov 30
+**Subject** (41 characters)
+Renew your Orchard Row Friends membership
 
-**Preview text** (83 characters)
-Individual $35, household $55. Members get the book sale preview before the public.
+**Preview text** (77 characters)
+Memberships expire November 30. Renew to keep your book sale preview morning.
 
-**Body** (38 words)
+**Body** (44 words, counting the link and sign-off)
 
-Hello,
+Your Orchard Row Friends membership expires November 30.
 
-Your Orchard Row Library Friends membership expires November 30.
+Renew to keep supporting the branch library:
+- Individual: $35
+- Household: $55
 
-Individual: $35
-Household: $55
-
-Members get a preview of the quarterly book sale the morning before it opens to the public.
+Members get to preview our quarterly book sale the morning before it opens to the public.
 
 Renew here: https://orchardrowfriends.example/renew
 
+Thank you,
 Marisol
 Orchard Row Friends
-
-I counted the characters and words by hand, not with a tool. The body counts the URL as one word. The limits were 45, 90 and 80.

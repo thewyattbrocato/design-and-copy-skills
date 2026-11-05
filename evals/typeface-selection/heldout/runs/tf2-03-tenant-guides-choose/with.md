@@ -1,32 +1,37 @@
-**Use one family, Source Sans 3, for everything: body, headings and labels.** It's free (open SIL license, but confirm on the download page) and installs on your design computer for print. It has a true italic and a full weight range, so regular, semibold and bold give you the hierarchy without a second typeface. The letters are open and sturdy, so it stays readable on small, low-resolution screens and on photocopied handouts. Its figures also line up, which helps with rent amounts, dates and deadlines.
+**Use one free family, Source Sans 3, for everything, and self-host it.**
 
-I'm assuming English plus possibly Spanish. Source Sans covers Latin-extended, Vietnamese, Greek and Cyrillic, but check it against any other languages you translate into.
+I'm assuming English plus possibly Spanish, a mix of phones and locked-down library PCs where readers can't install fonts, and print made from the same files as the web pages.
 
-**Web CSS**
+**Why one family:** It's open-licensed (SIL OFL), so it costs nothing and you can use it on the web and in print. It has regular, semibold, bold and a true italic, so you can build headings, callouts and emphasis from weight and size alone. Two families would add work and loading time without much benefit for plain guides. Confirm the license on the Google Fonts or Adobe page before you rely on it.
 
+**Roles:**
+- **Body:** Regular 400, with true italic for emphasis.
+- **Headings and key deadlines:** Semibold 600 or Bold 700, in the same family.
+- **Callouts such as "You have 5 days to respond":** Semibold at body size, in a boxed or tinted block. Don't use all caps or color alone.
+- **Code or monospace:** Not needed.
+
+**CSS:**
 ```css
-body {
-  font-family: "Source Sans 3", "Segoe UI", Roboto, Arial, sans-serif;
-  font-size: 1.125rem;   /* 18px; don't go below 16px */
-  line-height: 1.55;
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("/fonts/SourceSans3-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
 }
-h1, h2, h3 { font-weight: 700; }
-.amount, td { font-variant-numeric: tabular-nums; }
+/* repeat for Italic, Semibold (600), Bold (700) */
+
+body {
+  font-family: "Source Sans 3", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 ```
+The fallbacks are real fonts on your readers' devices. Roboto is the default on Android, and Segoe UI and Arial are on Windows library machines. If the web font fails to load, the page stays readable and looks reasonable. `font-display: swap` means text never goes invisible. Self-host four woff2 files, subset to Latin (add Latin-Extended if you need Spanish accents). Don't load from a third-party CDN, since library networks sometimes block them and it adds a privacy question for tenants.
 
-- **Self-host the font.** Put WOFF2 files on your own site and don't rely on Google Fonts. Library computers are often locked down or filtered, and self-hosting also avoids sending readers' data to a third party.
-- **Keep it to about four files:** regular, italic, semibold and bold. Use `font-display: swap` so text never goes invisible.
-- **Check the fallback.** If the font doesn't load, readers get Segoe UI on library Windows PCs and Roboto on Android. Both are fine, so the guide stays readable and nothing falls back to Times.
+**Print:** Install the same four fonts on the staff machines that make the handouts and embed them when you export to PDF. That keeps print and web matching and avoids a substituted font on a copier-room computer.
 
-**Print**
-- Use the same family at 11–12 pt for body text. Use bold or semibold for headings, not all caps, and keep italics short.
-- Install the same font files in whatever you lay out in, and embed the fonts when you export the PDF.
+**Starting sizes:**
+- **Web body:** 17–18px.
+- **Print body:** 11–12pt.
+- **Small print or footnotes:** Never below 10pt or 14px. Many of your readers are stressed, reading on small screens, or working in a second language.
 
-**Things to avoid**
-- Don't use thin or light weights for body text. They wash out on old screens and photocopies.
-- Don't use script or decorative faces, or a second sans that's nearly the same.
-- Don't fake bold or italic. Use the real styles in the family.
+**Before you commit:** Put one real paragraph from your eviction guide in it and view it on the oldest Android phone you can borrow, and on a library computer. Check that numbers, dates and dollar amounts are easy to tell apart (1/l/I, 0/O).
 
-**Alternative:** If many of your readers have low vision, Atkinson Hyperlegible is a free option. The Braille Institute designed it so that look-alike characters like I, l, 1, O and 0 are easy to tell apart. It's slightly less refined at 15–30 page lengths, but it's a defensible choice for your audience.
-
-To test either one before committing, print a page of a real guide on your office printer and photocopy it. Also load it on the oldest Android phone you can borrow.
+**Alternative:** If the guides feel too cold and you want a book-like serif for long reading, **Literata** (free, OFL) is a good body face. Keep Source Sans 3 for headings and callouts. That's the most I'd add, and it makes two families to maintain, so I'd start with one.

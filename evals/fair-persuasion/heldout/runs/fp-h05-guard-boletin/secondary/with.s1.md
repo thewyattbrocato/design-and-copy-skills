@@ -1,16 +1,22 @@
-**Ventana emergente (tras confirmar el pedido):**
+## Texto de la ventana emergente
 
-**¿Quieres recibir el pan del fin de semana en tu correo?**
+**Título:** ¿Quieres recibir nuestro boletín?
 
-Una vez a la semana te escribimos con lo que sale del horno el fin de semana y nuestras promociones. Solo eso.
+**Texto:** Te enviamos un correo cada semana con el pan del fin de semana y nuestras promociones, y nada más. Puedes darte de baja cuando quieras desde cualquier correo. Lo enviaríamos a *[email del pedido]*.
 
-Tu pedido ya está confirmado; esta elección no le afecta.
+*Tu pedido ya está confirmado. Esta elección no afecta a tu compra.*
 
-[Sí, apuntarme] [No, gracias]
+**Botones:**
+- **Sí, quiero recibirlo**
+- **No, gracias**
 
-*Tus datos se usarán solo para enviarte el boletín. Puedes darte de baja en cualquier momento desde el propio correo. [Política de privacidad]*
+## Notas de diseño
 
----
+- **Ambos botones con el mismo tamaño y estilo.** Si "No, gracias" queda como un enlace discreto, la ventana se convierte en un truco para conseguir suscripciones.
+- **La casilla no viene marcada por defecto.** Solo se suscribe quien pulse "Sí".
+- **Sin culpa ni presión.** Evita frases como "¡No te pierdas nuestras ofertas exclusivas!" o "Únete a los que ya ahorran". Dice qué recibirá la persona y con qué frecuencia.
+- **Muestra la ventana una vez por cliente.** Si alguien dice que no, no vuelvas a preguntarle en cada pedido.
 
-- **Diseño:** los dos botones deben tener el mismo tamaño y peso visual, y ninguna casilla debe venir marcada. Si "No, gracias" cierra la ventana y no vuelve a salir en esa misma sesión, la elección queda clara.
-- **Legal:** en España y la UE, el envío de promociones por correo exige un consentimiento explícito y la opción de darse de baja. Las normas varían y cambian, así que conviene que un asesor revise el texto y el enlace de privacidad antes de publicarlo.
+## Antes de publicarlo
+
+En España, el RGPD y la LSSI exigen un consentimiento expreso y separado de la compra, un enlace a tu política de privacidad y una baja sencilla en cada correo. Si tu herramienta de correo (Mailchimp, Brevo, etc.) ofrece confirmación doble, actívala: así el correo solo llega a quien confirma su dirección. Te recomiendo revisar el texto final con tu gestoría o con un abogado especializado en protección de datos.

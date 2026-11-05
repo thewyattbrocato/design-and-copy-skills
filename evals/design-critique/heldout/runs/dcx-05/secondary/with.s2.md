@@ -1,26 +1,30 @@
-**Verdict: not ready to ship.** The flow contradicts itself on the path most users will take. Screen 4's Skip leads to "You're all set!" on Screen 5, but the footer says reminders can't start without a plot. The step counter also changes denominator partway through.
+**Verdict: not ready to ship.** The flow has one logic blocker, and the problems come from the screens being reviewed separately. Each screen reads fine alone, but the sequence breaks in three places.
 
-**Findings, ranked**
+**Blocker**
 
-1. **Blocker: Skip leads to a false success.** Screen 4 lets users skip adding a plant. The footer says reminders won't start without a plot. Screen 5 then says "You're all set!" and "Your sanctuary is ready." Users who skip will believe setup worked and get no reminders. Fix the logic, not just the copy. Either require a plot before Screen 2 can continue, or make Screen 5 honest for the skip path, e.g. "Almost there. Add a plant to start your reminders."
+1. **Skipping the first plant leads to a dead end that the copy calls a success.** Screen 4 says reminders can't start without a plot, and "Skip" is the only other option. Screen 5 then says "You're all set!" and "Your sanctuary is ready." A user who skips gets no reminders and is told they're done. Also, no screen creates a plot, and the word "plot" appears nowhere else. Fix: decide whether plot creation is part of onboarding. If it is, add it as a step. If it isn't, remove Skip or make it explain what's missing. Then make Screen 5 match the path the user actually took.
 
-2. **Blocker: the rule is in the wrong place.** The requirement is stated on Screen 4, after the user has passed the screen where they choose rooms. Screen 2 has a Next button and no stated requirement. Move the rule to Screen 2: disable Next until at least one room is chosen, with the helper text "Pick at least one room to get reminders going." That makes the Screen 4 footer unnecessary.
+**Major**
 
-3. **High: "plot" is an undefined term.** The app uses four nouns for the same thing: garden (Screen 1), rooms and spaces (Screen 2), plot (Screen 4), and sanctuary (Screen 5). A user cannot tell whether a plot is a room, a bed, or a pot group. Pick one term, probably "room" if that's what a plot is, and use it everywhere. If a plot is a different object, define it on Screen 2.
+2. **Progress count is wrong on Screen 1.** It says "Step 1 of 4"; Screens 2–4 say "of 5." Fix: "Step 1 of 5", or drop the count from the welcome screen if it isn't a step.
+3. **Four nouns for the same thing.** Screen 1 says "garden," Screen 2 says "rooms" and "spaces," Screen 4 says "plot," and Screen 5 says "sanctuary." A user can't tell whether a room, a space, and a plot are the same. Fix: choose one term for the place a plant lives, use it on every screen, and keep it in the Screen 4 footer.
 
-4. **High: the step counter changes denominator.** Screen 1 says "Step 1 of 4." Screens 2 to 4 say "of 5." Users will see the total jump from 4 to 5 and wonder whether they missed something. Correct it to "Step 2 of 4," "Step 3 of 4," and "Step 4 of 4." If the welcome screen should not count as a step, drop its progress bar instead.
+**Moderate**
 
-5. **Medium: the welcome screen doesn't say what the app does.** "Let's set up your garden so we can take care of the rest" is warm but vague. A newcomer can't name the offer. Consider: "Fernway reminds you when to water, feed and repot your plants. Let's set it up." This is the one screen where the value proposition belongs.
+4. **Button labels are inconsistent.** Screen 1 uses "Continue," Screens 2–3 use "Next," and Screen 5 uses "Done." Fix: use "Continue" for the forward steps and keep "Done" for the final action.
+5. **The most important constraint is in the smallest text.** The footer on Screen 4 says reminders need a plot, and it sits below the Skip link. Fix: move that requirement into the body, or show it next to the buttons before the user chooses Skip.
 
-6. **Medium: Screen 4 overpromises and is vague.** "Fernway will work out how thirsty it is" implies automatic detection. Confirm what the feature actually does before shipping this line. If it looks up care needs by species, say so. Also, "Snap a photo" doesn't say what the photo is used for. Check whether the photo path identifies the plant.
+**Minor**
 
-7. **Low: button labels are inconsistent.** Screen 1 uses "Continue," Screens 2 and 3 use "Next," and Screen 5 uses "Done." This is minor, but a single forward label is easier to scan. Taste, not a blocker.
+6. **Screen 2 doesn't say whether it's required.** Nothing says whether "Next" works with no chips selected. Not checked: the empty-selection behavior, since no states were supplied.
+7. **Tone shift on Screen 5 (taste).** "Sanctuary" and the emoji are warmer and more playful than the rest of the flow. That may be intended, but it should be a deliberate choice once the terminology is fixed.
 
 **What works and should stay**
 
-- **Screen 3's copy.** "We'll send one nudge per day with everything that needs attention" sets the expectation for notification frequency before the user commits. Keep it.
-- **One question per screen.** Each screen asks one thing, which suits a first run.
-- **The search-by-name option on Screen 4.** Users without a camera or a plant in front of them still have a path.
-- **Dropping the progress bar on the completion screen.** Done means done.
+- **Screen 3 sets expectations.** "One nudge per day with everything that needs attention" tells the user what they're agreeing to before they pick a time.
+- **Screen 4 gives two clear paths with a reason.** "Snap a photo or search by name" plus "Fernway will work out how thirsty it is" explains the value of adding a plant.
+- **Screen 1 is short and has one action.**
 
-**Not checked:** I only had the copy. I did not see the visuals, the chip selected and unselected states, the time picker behavior, the photo or search flows, error states, or accessibility labels. I also have no data on whether users would understand "plot" without the fix above. The rule-and-term fixes in items 2 and 3 should be checked against the real product behavior, which I can't see from here.
+**Fix order:** resolve the plot and Skip logic first (item 1), since it decides what Screen 5 should say. Then fix the step count and terminology together, because the terminology change touches every screen. Button labels and the footer placement come last.
+
+**Not checked:** I only had the copy. I didn't see screenshots, error or permission states (camera denied, search returns nothing), or how the flow performs on a real device. Those need a run-through before launch.

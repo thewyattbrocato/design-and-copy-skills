@@ -2,261 +2,286 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tidewater Coffee · Milk Steaming Check</title>
 <style>
-:root {
-  --bg: #f6f1ea;
-  --card: #fffdf9;
-  --ink: #2b211a;
-  --muted: #7a6a5d;
-  --accent: #6b4a2f;
-  --ok: #2e7d4f;
-  --bad: #b03a2e;
-  --line: #e2d7c9;
-}
-@media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1f1914;
-    --card: #2a221b;
-    --ink: #f3ebe1;
-    --muted: #b5a596;
-    --accent: #d4a574;
-    --ok: #6fbf8a;
-    --bad: #e07a6e;
-    --line: #3d3229;
+    --bg: #f7f3ee;
+    --card: #ffffff;
+    --ink: #2b2118;
+    --muted: #6e6257;
+    --line: #d9cfc4;
+    --accent: #6b4226;
+    --good: #2e6b3a;
+    --good-bg: #e6f2e8;
+    --bad: #9b2c2c;
+    --bad-bg: #f8e5e5;
   }
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  display: flex;
-  justify-content: center;
-  padding: 24px 16px;
-}
-.wrap { width: 100%; max-width: 640px; }
-header h1 { font-size: 1.4rem; margin: 0 0 4px; }
-header p { margin: 0; color: var(--muted); }
-.progress { height: 8px; background: var(--line); border-radius: 4px; margin: 20px 0; overflow: hidden; }
-.progress div { height: 100%; width: 0; background: var(--accent); transition: width 0.3s; }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
-.count { color: var(--muted); font-size: 0.9rem; margin: 0 0 8px; }
-h2 { font-size: 1.25rem; line-height: 1.35; margin: 0 0 16px; }
-.options { display: grid; gap: 10px; }
-button { font: inherit; cursor: pointer; }
-.opt {
-  text-align: left;
-  padding: 16px;
-  border: 2px solid var(--line);
-  border-radius: 12px;
-  background: var(--bg);
-  color: var(--ink);
-  font-size: 1.05rem;
-  min-height: 56px;
-}
-.opt:hover:not(:disabled) { border-color: var(--accent); }
-.opt:disabled { cursor: default; }
-.opt.correct { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 15%, var(--card)); }
-.opt.wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 15%, var(--card)); }
-.feedback { margin-top: 16px; padding: 14px; border-radius: 12px; background: var(--bg); display: none; }
-.feedback.show { display: block; }
-.feedback strong { display: block; margin-bottom: 4px; }
-.btn {
-  margin-top: 18px;
-  padding: 14px 22px;
-  border: none;
-  border-radius: 12px;
-  background: var(--accent);
-  color: var(--card);
-  font-size: 1.05rem;
-  font-weight: 600;
-  min-height: 52px;
-  display: none;
-}
-.btn.show { display: inline-block; }
-.result { text-align: center; }
-.score { font-size: 3rem; font-weight: 700; color: var(--accent); margin: 8px 0; }
-.result p { color: var(--muted); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  header { background: var(--accent); color: #fff; padding: 18px 24px; }
+  header h1 { margin: 0; font-size: 1.25rem; font-weight: 700; }
+  header p { margin: 4px 0 0; font-size: 0.95rem; opacity: 0.85; }
+  main { max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; }
+  .progress { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .progress-bar { height: 100%; width: 0; background: var(--accent); transition: width 0.3s; }
+  .count { color: var(--muted); font-size: 0.9rem; margin: 0 0 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+  .question { font-size: 1.2rem; font-weight: 600; margin: 0 0 20px; }
+  .options { display: grid; gap: 10px; }
+  .option {
+    width: 100%;
+    min-height: 56px;
+    padding: 14px 18px;
+    text-align: left;
+    font: inherit;
+    font-size: 1.05rem;
+    color: var(--ink);
+    background: #fff;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .option:hover:not(:disabled) { border-color: var(--accent); }
+  .option:focus-visible, .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .option:disabled { cursor: default; }
+  .option.correct { border-color: var(--good); background: var(--good-bg); }
+  .option.wrong { border-color: var(--bad); background: var(--bad-bg); }
+  .feedback { margin-top: 18px; padding: 14px 16px; border-radius: 10px; }
+  .feedback.good { background: var(--good-bg); color: var(--good); }
+  .feedback.bad { background: var(--bad-bg); color: var(--bad); }
+  .actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+  .btn {
+    min-height: 52px;
+    padding: 14px 24px;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .btn:hover { filter: brightness(1.1); }
+  .score { font-size: 2.5rem; font-weight: 700; margin: 0; color: var(--accent); }
+  .score-label { color: var(--muted); margin: 0 0 20px; }
+  .review-title { font-size: 1.1rem; margin: 24px 0 12px; }
+  .review { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .review li { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; }
+  .review strong { display: block; margin-bottom: 6px; }
+  .muted { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Milk Steaming Check</h1>
-    <p>Tidewater Coffee · Half-day review</p>
-  </header>
-
-  <div class="progress"><div id="progress"></div></div>
-
-  <main id="quiz" class="card">
-    <p class="count" id="count"></p>
-    <h2 id="question"></h2>
-    <div class="options" id="options"></div>
-    <div class="feedback" id="feedback"></div>
-    <button class="btn" id="next">Next</button>
-  </main>
-
-  <section id="result" class="card result" hidden>
-    <h2>Your score</h2>
-    <div class="score" id="score"></div>
-    <p>Go over any questions you missed with your trainer before your first shift at the bar.</p>
-    <button class="btn show" id="restart">Take it again</button>
-  </section>
-</div>
-
+<header>
+  <h1>Tidewater Coffee · Milk Steaming Check</h1>
+  <p>Answer each question, then read the note before moving on.</p>
+</header>
+<main>
+  <div id="app"></div>
+</main>
 <script>
-const QUESTIONS = [
-  {
-    q: "What is the target milk temperature when steaming?",
-    options: ["40 to 50 °C", "55 to 65 °C", "70 to 80 °C", "85 to 95 °C"],
-    answer: 1,
-    explain: "Aim for 55 to 65 °C. Past 70 °C the milk scalds and loses its sweetness."
-  },
-  {
-    q: "The milk goes over 70 °C. What happens?",
-    options: [
-      "It gets sweeter and the foam gets denser",
-      "It scalds and loses its sweetness",
-      "Nothing, anything under 80 °C is fine",
-      "It separates, but the taste is unchanged"
-    ],
-    answer: 1,
-    explain: "Anything over 70 °C scalds the milk and kills the sweetness. Keep the milk in the 55 to 65 °C range."
-  },
-  {
-    q: "When do you add air to the milk?",
-    options: [
-      "Only after the milk reaches 65 °C",
-      "Early, while the milk is still cold",
-      "Once the milk is fully heated, at the end",
-      "Whenever the foam looks thin"
-    ],
-    answer: 1,
-    explain: "Add air early while the milk is still cold. Then lower the tip and let it roll."
-  },
-  {
-    q: "Once you have added enough air, what do you do with the wand?",
-    options: [
-      "Keep it at the surface until the milk is hot",
-      "Lower the tip so the milk rolls",
-      "Pull the wand out completely and stop",
-      "Raise it above the milk and keep steaming"
-    ],
-    answer: 1,
-    explain: "Lower the tip so the milk rolls. The rolling motion folds the foam in while the milk heats."
-  },
-  {
-    q: "What do you do to the steam wand right after steaming?",
-    options: [
-      "Leave it; it will cool on its own",
-      "Wipe it right away",
-      "Wipe it only at the end of the shift",
-      "Dip it in the cold milk to cool it"
-    ],
-    answer: 1,
-    explain: "Wipe the wand right after every steam so milk does not dry on it."
-  },
-  {
-    q: "When should you purge the wand?",
-    options: [
-      "Only before steaming",
-      "Only after steaming",
-      "Before and after steaming",
-      "Never; purging wastes steam"
-    ],
-    answer: 2,
-    explain: "Purge the wand before and after every steam."
-  },
-  {
-    q: "How does oat milk compare with dairy?",
-    options: [
-      "It heats slower and holds foam longer",
-      "It heats faster and its foam falls apart sooner",
-      "It heats at the same rate and foams the same",
-      "It heats faster and holds foam longer"
-    ],
-    answer: 1,
-    explain: "Oat milk heats faster than dairy, and its foam falls apart sooner. Watch the temperature closely."
+  const QUESTIONS = [
+    {
+      q: "What is the target temperature range for steamed milk?",
+      options: ["40 to 50 C", "55 to 65 C", "70 to 80 C", "85 to 95 C"],
+      answer: 1,
+      why: "The target is 55 to 65 C. Anything over 70 C scalds the milk and kills the sweetness."
+    },
+    {
+      q: "The milk has gone over 70 C. What has happened?",
+      options: [
+        "It is sweeter and ready to serve",
+        "It has scalded and lost its sweetness",
+        "The foam has thickened",
+        "Nothing, 70 C is still in range"
+      ],
+      answer: 1,
+      why: "Over 70 C the milk scalds and the sweetness is gone."
+    },
+    {
+      q: "When do you add air (stretch the milk)?",
+      options: [
+        "Once the milk is already hot",
+        "Early, while the milk is still cold",
+        "Only at the very end",
+        "Throughout, with the tip deep in the milk"
+      ],
+      answer: 1,
+      why: "Add air early while the milk is still cold. Then lower the tip and let the milk roll."
+    },
+    {
+      q: "The air is in. What comes next?",
+      options: [
+        "Keep the tip at the surface",
+        "Lower the tip and let the milk roll",
+        "Pull the pitcher off the wand right away",
+        "Turn the steam up to full"
+      ],
+      answer: 1,
+      why: "Lower the tip and let the milk roll as it heats."
+    },
+    {
+      q: "When do you wipe the steam wand?",
+      options: [
+        "Before you start steaming",
+        "Right after steaming",
+        "Only at the end of the shift",
+        "Never, the wand cleans itself"
+      ],
+      answer: 1,
+      why: "Wipe the wand right after every steaming."
+    },
+    {
+      q: "When do you purge the steam wand?",
+      options: [
+        "Only before steaming",
+        "Only after steaming",
+        "Before and after steaming",
+        "Neither, purging is optional"
+      ],
+      answer: 2,
+      why: "Purge the wand both before and after steaming."
+    },
+    {
+      q: "How does oat milk compare with dairy when steaming?",
+      options: [
+        "Oat milk heats slower than dairy",
+        "Oat milk heats faster and its foam falls apart sooner",
+        "Oat milk holds its foam longer than dairy",
+        "Oat milk and dairy behave the same"
+      ],
+      answer: 1,
+      why: "Oat milk heats faster than dairy, and its foam falls apart sooner."
+    }
+  ];
+
+  const app = document.getElementById("app");
+  let current = 0;
+  let answers = [];
+
+  function el(tag, cls, text) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text !== undefined) node.textContent = text;
+    return node;
   }
-];
 
-let current = 0;
-let score = 0;
+  function choose(i) {
+    answers[current] = i;
+    render();
+  }
 
-const $ = id => document.getElementById(id);
+  function renderQuestion() {
+    const item = QUESTIONS[current];
+    const answered = answers[current] !== undefined;
 
-function render() {
-  const total = QUESTIONS.length;
-  $('progress').style.width = (current / total * 100) + '%';
+    const bar = el("div", "progress");
+    const fill = el("div", "progress-bar");
+    fill.style.width = (current / QUESTIONS.length * 100) + "%";
+    bar.appendChild(fill);
 
-  const item = QUESTIONS[current];
-  $('count').textContent = `Question ${current + 1} of ${total}`;
-  $('question').textContent = item.q;
+    const card = el("section", "card");
+    card.appendChild(el("h2", "question", item.q));
 
-  const options = $('options');
-  options.textContent = '';
-  item.options.forEach((text, i) => {
-    const b = document.createElement('button');
-    b.className = 'opt';
-    b.textContent = text;
-    b.addEventListener('click', () => choose(i));
-    options.appendChild(b);
-  });
+    const list = el("div", "options");
+    item.options.forEach((text, i) => {
+      const btn = el("button", "option", text);
+      btn.type = "button";
+      if (answered) {
+        btn.disabled = true;
+        if (i === item.answer) btn.classList.add("correct");
+        else if (i === answers[current]) btn.classList.add("wrong");
+      } else {
+        btn.addEventListener("click", () => choose(i));
+      }
+      list.appendChild(btn);
+    });
+    card.appendChild(list);
 
-  $('feedback').className = 'feedback';
-  $('next').className = 'btn';
-  $('next').textContent = current === total - 1 ? 'See my score' : 'Next';
-}
+    if (answered) {
+      const ok = answers[current] === item.answer;
+      const fb = el("div", "feedback " + (ok ? "good" : "bad"));
+      fb.appendChild(el("strong", "", ok ? "Correct." : "Not quite."));
+      fb.appendChild(document.createTextNode(" " + item.why));
+      card.appendChild(fb);
 
-function choose(i) {
-  const item = QUESTIONS[current];
-  const correct = i === item.answer;
-  if (correct) score++;
+      const actions = el("div", "actions");
+      const isLast = current + 1 === QUESTIONS.length;
+      const next = el("button", "btn", isLast ? "See results" : "Next");
+      next.type = "button";
+      next.addEventListener("click", () => {
+        current++;
+        render();
+      });
+      actions.appendChild(next);
+      card.appendChild(actions);
+    }
 
-  Array.from($('options').children).forEach((b, j) => {
-    b.disabled = true;
-    if (j === item.answer) b.classList.add('correct');
-    else if (j === i) b.classList.add('wrong');
-  });
+    app.appendChild(bar);
+    app.appendChild(el("p", "count", "Question " + (current + 1) + " of " + QUESTIONS.length));
+    app.appendChild(card);
+  }
 
-  const fb = $('feedback');
-  fb.textContent = '';
-  const label = document.createElement('strong');
-  label.textContent = correct ? 'Correct.' : 'Not quite.';
-  fb.appendChild(label);
-  fb.appendChild(document.createTextNode(item.explain));
-  fb.className = 'feedback show';
+  function renderResults() {
+    const total = QUESTIONS.length;
+    const correct = QUESTIONS.filter((item, i) => answers[i] === item.answer).length;
 
-  $('next').className = 'btn show';
-}
+    const bar = el("div", "progress");
+    const fill = el("div", "progress-bar");
+    fill.style.width = "100%";
+    bar.appendChild(fill);
 
-function showResult() {
-  $('quiz').hidden = true;
-  $('result').hidden = false;
-  $('progress').style.width = '100%';
-  $('score').textContent = `${score} / ${QUESTIONS.length}`;
-}
+    const card = el("section", "card");
+    card.appendChild(el("p", "score", correct + " of " + total));
+    card.appendChild(el("p", "score-label", "correct"));
 
-function restart() {
-  current = 0;
-  score = 0;
-  $('result').hidden = true;
-  $('quiz').hidden = false;
+    const missed = QUESTIONS.filter((item, i) => answers[i] !== item.answer);
+    if (missed.length === 0) {
+      card.appendChild(el("p", "", "Every answer was correct."));
+    } else {
+      card.appendChild(el("h2", "review-title", "Review these"));
+      const ul = el("ul", "review");
+      missed.forEach(item => {
+        const li = el("li");
+        li.appendChild(el("strong", "", item.q));
+        li.appendChild(el("div", "", "Answer: " + item.options[item.answer]));
+        li.appendChild(el("div", "muted", item.why));
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+    }
+
+    const actions = el("div", "actions");
+    const restart = el("button", "btn", "Start over");
+    restart.type = "button";
+    restart.addEventListener("click", () => {
+      current = 0;
+      answers = [];
+      render();
+    });
+    actions.appendChild(restart);
+    card.appendChild(actions);
+
+    app.appendChild(bar);
+    app.appendChild(card);
+  }
+
+  function render() {
+    app.replaceChildren();
+    if (current < QUESTIONS.length) renderQuestion();
+    else renderResults();
+  }
+
   render();
-}
-
-$('next').addEventListener('click', () => {
-  current++;
-  if (current >= QUESTIONS.length) showResult();
-  else render();
-});
-$('restart').addEventListener('click', restart);
-
-render();
 </script>
 </body>
 </html>

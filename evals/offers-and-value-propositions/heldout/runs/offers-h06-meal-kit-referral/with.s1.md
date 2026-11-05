@@ -1,43 +1,44 @@
-**Recommendation**
+## The offer
 
-- **Friend:** $20 off their first box, so $48 instead of $68. This equals the roughly $20 we keep per box, so the first box breaks even and costs nothing extra if they cancel after one.
-- **Referrer:** a $25 account credit, earned when the friend has received their third box. Many customers cancel after one or two boxes, so this pays only for friends who get past that point. Those friends are worth at least $40 in margin after the discount, against $25 paid.
-- **Worst case:** the total reward is $45, under the $55 we pay for an ad-acquired customer. Most of it is paid only on friends who stay.
-- **Why credit, not cash:** credit keeps the referrer ordering.
+- **Friend:** $15 off their first box, which makes it $53 instead of $68.
+- **Referrer:** a $25 account credit, earned once the friend's third box has been delivered.
+- **Limits:** new customers only, up to 5 friends per customer, credit expires 12 months after it's added, and it has no cash value.
 
-**In-app card**
+**Why these numbers**
+- **Cost per referral:** at most $40 ($15 + $25), against the $55 you pay in ads for a customer.
+- **Why the third box:** you only pay the $25 for friends who stick, and plenty cancel after one or two boxes. By the third box you've kept about $45 in margin: $5 on the discounted first box plus $20 on each of the next two. That's $20 left after the reward, before any later boxes.
+- **Friends who cancel early:** they cost you only the $15 discount, and you still keep $5 or $25 of margin on their boxes.
+- **Size of the friend discount:** $15 leaves a little margin on the first box. A bigger discount would make it a loss.
 
-> **Give $20, get $25**
-> Friends get $20 off their first box ($48 instead of $68). You get a $25 credit once they've received their third box.
-> **[Share my link]**
-> New customers only. Up to 5 friends. Credit applies to your boxes, not paid as cash. [Full terms]
+## In-app card
 
-**Email to existing customers**
+**Give $15, get $25**
+Your friend gets $15 off their first box. Once they've received their third box, you get a $25 credit.
 
-> **Subject:** Give a friend $20 off. Get $25 for yourself.
->
-> Hi [first name],
->
-> Know someone who'd like dinner sorted for the week? Share your personal link from the Refer a friend card in the Fernway app, or use the one below.
->
-> - **Your friend** gets $20 off their first box: $48 instead of $68.
-> - **You** get a $25 credit once they've received their third box.
->
-> **The terms**
-> - Your friend must be new to Fernway and sign up through your link.
-> - Credit comes off your upcoming boxes automatically. It isn't paid as cash.
-> - Your account must be active when the credit is earned.
-> - You can earn credit for up to 5 friends.
-> - [Credit expiry]
->
-> Full terms: [link]
->
-> [Your personal link]
->
-> The Fernway team
+**[Share my link]**
 
-(About 130 words.)
+*New customers only. Up to 5 friends per customer. Credit expires 12 months after it's added. [Full terms]*
 
-**Notes**
-- The cap of 5 friends and the active-account condition are my proposals, not facts you gave me. Confirm or change them. Fill in [credit expiry] with your actual policy.
-- Check the local rules where you sell on referral incentives and credit terms.
+## Email to existing customers
+
+**Subject:** Give a friend $15 off. Get $25 yourself.
+
+Hi [first name],
+
+Know someone who'd like dinner sorted? Share Fernway with them.
+
+Your friend gets $15 off their first box. Once they've received their third box, you get a $25 credit toward your next one.
+
+- Find your link in the app under Refer a friend.
+- Your friend must be new to Fernway and sign up with your link.
+- Your credit is added after their third box is delivered and applies automatically to your next order.
+- Up to 5 friends per customer. Credit has no cash value and expires 12 months after it's added.
+- The $15 applies to your friend's first box only.
+
+**[Share my link]**
+
+The Fernway team
+
+*(About 110 words, excluding the subject line.)*
+
+**Before launch:** the $15, $25, 5-friend cap and 12-month expiry are my proposals. Check the third-box timing against how many new customers actually reach box three. If few do, the reward costs you less but also motivates fewer people.

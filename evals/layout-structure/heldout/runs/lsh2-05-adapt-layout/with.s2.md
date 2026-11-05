@@ -1,50 +1,41 @@
-Here's the layout for each format. In all four, keep one order of importance and one position logic: **title, then date/time/place, then free entry, then the lineup and open mic.** The type family, colours, and the corner where the boathouse name sits stay the same. Sizes and positions change.
+**Check the date first.** Friday 14 November is 2025. In 2026 the 14th falls on a Saturday, and today is 27 October 2026. Confirm which one you mean before anything is printed.
 
-**Check the date first:** 14 November 2026 is a Saturday. Friday 14 November falls in 2025. Fix whichever is wrong before anything is printed.
+**Shared across all four (so they read as one set)**
+- **Mood:** calm and unhurried, with shallow size steps, generous space and a flush-left edge.
+- **Type:** one family, and the same three-level order everywhere.
+  1. **Title:** "Low Tide Readings", biggest by a clear margin.
+  2. **When and where:** date, then time and venue. This is the second tier, at about a third to a half of the title's size.
+  3. **Small print:** "Free entry" and "Four readers, then open mic". Both stay legible but small.
+- **Date and time:** write them as "Fri 14 Nov, 7:30pm" (with whichever weekday is correct). Don't split the date into a separate numeral block.
+- **Free entry:** a small tag or line on its own, never buried in a sentence. It's the main reason someone comes along.
+- **Reader names:** you didn't give any. If you have them, they fit on the poster only, as a quiet list at the foot.
+- **Art:** one restrained horizontal element, such as a waterline or sand ripple. It should never sit behind or above the date.
 
-## A3 portrait (297 × 420 mm, add 3 mm bleed)
-- **Margins:** about 20 mm all round, with the foot slightly deeper. Keep all text inside them.
-- **Top half:** "Low Tide Readings" is the biggest thing on the sheet. Set it flush left and stack it over 2–3 lines so it can be large.
-- **Middle band:** Friday 14 November, 7:30pm, set at about a third of the title's size. Harbor Street Boathouse goes directly under it. Date, time, and place form one block.
-- **Lower third, smaller:** "Four readers, then open mic." If you have the four names, list them in a single column here. This is the only format with room for them.
-- **Bottom edge:** "Free entry" as a clear second-level mark, either a strip or a large label. Put it on the same left edge as everything else.
-- **Dropped:** nothing. This is the master version.
+**A3 portrait (297 × 420 mm, plus 3 mm bleed)**
+- **Margins:** about 20 mm on all sides, with the bottom slightly deeper. Everything flush left.
+- **Top third:** the title in two stacked lines ("Low Tide / Readings"), as large as the width allows. It should read from across a room.
+- **Middle:** open space and the art element. This is the only place the poster can breathe.
+- **Lower third:** date, then time, then "Harbor Street Boathouse", as one tight group.
+- **Foot:** "Free entry" and "Four readers + open mic" in small type. Reader names go here if you have them.
+- **Drops:** nothing. This format has room for the full message.
 
-## Square Instagram (1:1, 1080 × 1080)
-- **Margins:** about 80 px all round.
-- **Title:** top-left, 2 lines, filling roughly the upper 45%.
-- **Below it:** date and time on one line, then the venue.
-- **Bottom row:** "Free entry" on the left and "4 readers + open mic" on the right. Both stay small.
-- **Dropped or moved:** the reader names. The post should read in about two seconds in a feed, so put the names in the caption.
-- **Check:** the title and date must still read at thumbnail size (about 300 px).
+**Square Instagram (1080 × 1080)**
+- **Margins:** about 80 px, flush left.
+- **Top half:** title on two lines, still the largest element.
+- **Bottom half:** date and time, then venue, then a single small line: "Free entry · Four readers + open mic".
+- **Moves:** the art shrinks to a thin line between the title and the details. Reader names drop, and so does any descriptive copy.
+- **Check:** the title must stay readable at feed-thumbnail size.
 
-## 9:16 story (1080 × 1920)
-- **Safe zone:** keep all text out of the top and bottom 250 px or so, where the interface sits. Your working area is roughly 1080 × 1400.
-- **Stack vertically:**
-  1. Title, large and left-aligned, starting around 300 px down.
-  2. A clear gap.
-  3. Date and time as the second-biggest element, since a story is read at a glance.
-  4. Venue.
-  5. "Free entry" as a pill or label.
-  6. "Four readers + open mic" last.
-- **Dropped or moved:** the reader names, as in the square.
-- **Don't** stretch the square version into this frame. The tall format has room for big, widely spaced lines, so use it.
+**9:16 story (1080 × 1920)**
+- **Safe area:** keep the top and bottom of the frame clear (about 250 px each), because the interface covers them. All text goes in the middle band.
+- **Stack, top to bottom:** title, then a gap, then date and time, then venue, then "Free entry".
+- **Moves:** this is a recomposition, not a crop of the square. Use the extra height for space between title and details, and put the art in the lower third above the clear zone.
+- **Drops:** "Four readers + open mic" shrinks to one short line, or goes in the caption or a sticker.
+- **Check:** the date must not sit near the bottom, where the reply bar will cover it.
 
-## Event-page banner (1600 × 400, 4:1)
-- **Layout:** side by side, because there is no vertical room.
-- **Left, about 60% of the width:** the title on one or two lines, filling the banner's height.
-- **Right, about 40%:** date and time, then venue, in a small block. Put "Free entry" at the end of that block.
-- **Dropped:** "four readers + open mic" and the names. The event page body is the place for them.
-- **Safe area:** keep everything away from the edges, with about 100 px at left and right. Pages often crop banners differently on mobile, so keep the title within the central 70% or so, and check that a crop of the left or right edge doesn't lose the date.
-- **Check:** if the event page already shows a text title above or over the banner, repeat only the date and venue in the banner rather than the full title.
-
-## What changes across formats
-
-| | Title | Date/time/place | Free entry | Readers/open mic |
-|---|---|---|---|---|
-| A3 | biggest | second tier | label | names listed |
-| Square | biggest | second tier | small | small line |
-| Story | biggest | strong second | pill | small line |
-| Banner | biggest | right block | in the block | dropped |
-
-If you send me the four reader names and any logo or boathouse artwork, I can place them precisely on the A3 version.
+**Event-page banner (1600 × 400)**
+- **Split:** two zones side by side, because the height is too short to stack. The title takes the left 55–60%, on one line or two tight lines, vertically centred.
+- **Right zone:** a narrow column with date and time over venue, with "Free entry" as a small tag beneath.
+- **Moves:** the art becomes a thin waterline running along the bottom edge.
+- **Drops:** "Four readers + open mic" and any names. The page text below the banner carries them.
+- **Check:** keep all text inside the central ~1200 px. Event pages and phones often crop the sides, so don't place the date at the far right edge.

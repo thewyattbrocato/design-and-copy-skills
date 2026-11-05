@@ -1,17 +1,15 @@
-## The Halyard Promise
+**The Halyard Promise**
 
-**If we miss something, we come back and fix it. If we can't make it right, you get your money back.**
+If the gutters aren't clean when we leave, tell us [within X days] by [phone/email]. We'll come back and fix it at no charge. If we can't put it right, we'll refund [the full cost of that visit].
 
-1. After we finish, look over the work. Tell us within **[number] days** if a gutter still overflows, a downspout is still clogged, or a repair isn't right. You can call [phone] or email [email].
-2. We'll return within **[number] days** of hearing from you and redo the work at no charge.
-3. If we can't fix it, we'll refund **[the full job / the part of the job in question]**.
+For small repairs, if the repair fails because of our work [within X days/months], we'll redo it at no charge or refund [the repair cost].
 
-You don't pay until **[when payment is due]**.
+Before you pay, you'll get a price in writing for the job. [Add payment timing, e.g. "You pay when the work is done and you're satisfied."]
 
-You'll know who is coming. Every job is done by one of the two people who own Halyard Gutter Care, and we live and work in Eastbrook. [Add a real customer quote.]
+We're a two-person crew based in Eastbrook. You'll get [Name] and [Name], not a rotating cast of subcontractors. [Add a real customer quote or neighbor reference.]
 
-**Short version for the booking button:**
-Not right? Tell us within [number] days and we'll fix it free or refund [what]. [Link to full terms]
+**Notes**
+- I left the bracketed terms open because you didn't give me a policy, and I can't make one up for you. Only fill in what you will honor every time. A redo-then-refund promise is easy for a small crew to keep, and it feels strong because it's specific.
+- Add "licensed," "insured," or "years in Eastbrook" only if they're true. For nervous homeowners, proof of insurance often reassures more than a stronger guarantee does.
 
-- I left the days, the remedy and the payment timing as placeholders because you didn't give me a policy. The most reassuring promise is the one you can afford to keep. A free redo plus a refund if you can't fix it is strong, and a two-person crew can honor it. Fill the blanks with terms you'll stick to.
-- Add a licensed or insured line only if it's true, such as "[Licensed/insured: details]". Check any claims about licensing and insurance against local rules.
+If you tell me your real terms (redo window, refund amount, when you collect payment), I'll tighten this into final copy, plus a one-line version for next to your booking button.

@@ -1,39 +1,38 @@
 **Subject line options**
 
-1. Harbor Fog is here: three new inks, $24
-2. Meet Harbor Fog, our new three-ink set
-3. New from Quillfeather: the Harbor Fog set
+1. Harbor Fog is here: a new three-ink set
+2. Meet Harbor Fog, 3 inks for $24
+3. New from Quillfeather: Harbor Fog
 4. Three new inks, one set: Harbor Fog
-5. Harbor Fog just landed in Duluth
+5. Harbor Fog lands [launch day]
 
-**Preview text (pairs with any of them):**
-A three-ink set for $24, shipped from our shop in Duluth.
+**Preview text** (pairs with any of the above)
+Three inks, $24 for the set, shipped from our shop in Duluth.
 
 ---
 
-**Email**
+**Subject: Harbor Fog is here: a new three-ink set**
 
-**Subject:** Harbor Fog is here: three new inks, $24
+Harbor Fog is ready, and we're excited to share it.
 
-Hello,
+It's a set of three new inks, made for the days when the lake and the sky blur together. Three inks, one set, $24.
 
-Harbor Fog is ready. It's our new set of three fountain pen inks, made for those gray mornings when the lake and the sky blur together.
+We're a tiny shop, and every set ships from right here in Duluth. When you order Harbor Fog, it's packed and sent by us, not a warehouse a thousand miles away.
 
-The set is $24 and ships from our little shop in Duluth.
+We're still working on photos, so for now we'll let the name do the talking. Swatches and pictures are coming soon, and we'll share them as soon as we have them.
 
-We're still getting the photos together, so we'd rather not show you anything half-done. We'll share swatches and pen-and-paper pictures as soon as we have them. If you'd like to be among the first to get a set, you don't need to wait for that.
+**[Get Harbor Fog, $24 →]** [link to product page]
 
-[Get the Harbor Fog set]
-
-Thank you for being part of Quillfeather Ink. We're excited to get these into your hands.
+Thank you for being part of Quillfeather Ink. It means a lot to a shop this small.
 
 Happy writing,
 The Quillfeather Ink team
+Duluth
 
-You're receiving this because you signed up for Quillfeather Ink updates. [Unsubscribe]
+*You're getting this because you signed up for Quillfeather Ink updates. [Unsubscribe]*
 
 ---
 
 Notes:
-- I haven't named the three inks or their colors because you didn't give them. Adding the names in the second paragraph would help a lot. Also fill in the button link and your launch date if you want one in the email.
-- "Gray mornings when the lake and sky blur together" is my guess at the mood from the name. Change or cut it if it doesn't match the inks.
+- I didn't name the three colors or describe how they look or behave, since you didn't give me those. If you'd like to add the color names, drop them in after the second paragraph.
+- Fill in the launch date if you want it in subject 5, and check that the product link is live before you send.

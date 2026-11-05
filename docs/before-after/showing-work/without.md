@@ -1,0 +1,1 @@
+A design system page for the Time Slot Picker: a top bar with section links, a breadcrumb, the title, a two-line summary, "Stable · v2.1" and "Replaces Dropdown Time Select" tags, then a "Live demo" heading with an introduction above the working component, which starts below the middle of the first screen.

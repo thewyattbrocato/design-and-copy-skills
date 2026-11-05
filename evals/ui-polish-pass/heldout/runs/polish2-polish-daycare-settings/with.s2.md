@@ -1,5 +1,3 @@
-I couldn't save this as a file because the Write tool is disabled in this session. The full screen is below as one file. I haven't run it in a browser or tested it with a screen reader.
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -9,208 +7,169 @@ I couldn't save this as a file because the Write tool is disabled in this sessio
 <title>Notification settings</title>
 <style>
   :root {
-    --bg: #f6f7f9; --card: #fff; --text: #1d2433; --muted: #5b6475;
-    --border: #7a8396; --line: #e3e6ec; --accent: #1f5fd1; --accent-text: #fff;
-    --error: #b3261e; --ok: #1b6e3c; --focus: #1f5fd1;
+    --bg: #faf7f2; --card: #fff; --ink: #2b2623; --muted: #5f5750;
+    --line: #8a8178; --hair: #e6e0d8; --accent: #2f6b4f; --accent-ink: #fff;
+    --error: #b3261e; --error-bg: #fdecea; --ok-bg: #e8f3ed;
   }
   * { box-sizing: border-box; }
-  body {
-    margin: 0; padding: 24px 16px; background: var(--bg); color: var(--text);
-    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
-  main {
-    max-width: 480px; margin: 0 auto; background: var(--card);
-    border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.12);
-  }
-  h1 { margin: 0 0 4px; font-size: 1.5rem; }
-  .intro { margin: 0 0 20px; color: var(--muted); }
-  fieldset { border: 0; margin: 0 0 20px; padding: 0; }
-  legend { padding: 0; font-weight: 600; margin-bottom: 4px; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 34rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+  .lede { margin: 0 0 1.5rem; color: var(--muted); }
+  form { background: var(--card); border: 1px solid var(--hair); border-radius: 12px; padding: 1.25rem; }
+  fieldset { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
+  legend { font-weight: 600; padding: 0; margin-bottom: .5rem; }
 
-  .toggle {
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    min-height: 56px; padding: 8px 0; border-bottom: 1px solid var(--line); cursor: pointer;
-  }
-  .toggle-text { min-width: 0; overflow-wrap: anywhere; }
-  .toggle-title { display: block; font-weight: 500; }
-  .toggle-hint { display: block; font-size: .875rem; color: var(--muted); }
-  .toggle input {
-    appearance: none; flex: none; position: relative; width: 48px; height: 28px; margin: 0;
-    border-radius: 14px; background: #fff; border: 2px solid var(--border); cursor: pointer;
-    transition: background .15s, border-color .15s;
-  }
-  .toggle input::after {
-    content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;
-    border-radius: 50%; background: var(--border); transition: transform .15s, background .15s;
-  }
-  .toggle input:checked { background: var(--accent); border-color: var(--accent); }
-  .toggle input:checked::after { transform: translateX(20px); background: #fff; }
+  .toggle { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+            padding: .75rem 0; border-top: 1px solid var(--hair); }
+  .toggle:first-of-type { border-top: 0; }
+  .toggle label { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .toggle .name { display: block; font-weight: 500; }
+  .toggle .hint { display: block; color: var(--muted); font-size: .875rem; }
+  .switch { appearance: none; flex: none; width: 3rem; height: 1.75rem; margin: 0;
+            border-radius: 999px; background: var(--line); position: relative; cursor: pointer;
+            transition: background .15s; }
+  .switch::after { content: ""; position: absolute; top: .2rem; left: .2rem; width: 1.35rem; height: 1.35rem;
+                   border-radius: 50%; background: #fff; transition: transform .15s; }
+  .switch:checked { background: var(--accent); }
+  .switch:checked::after { transform: translateX(1.25rem); }
+  .switch:disabled { opacity: .5; cursor: not-allowed; }
+  .switch:focus-visible, input[type=text]:focus-visible, select:focus-visible, button:focus-visible {
+    outline: 3px solid #1a5fd0; outline-offset: 2px; }
+  .toggle:has(.switch:disabled) label { color: var(--muted); }
+  .note { margin: .25rem 0 0; font-size: .875rem; color: var(--muted); }
 
-  .field { margin-bottom: 20px; }
-  label.lbl { display: block; font-weight: 600; margin-bottom: 6px; }
-  .help { margin: 4px 0 0; font-size: .875rem; color: var(--muted); }
-  select, input[type="text"] {
-    width: 100%; min-height: 44px; padding: 8px 12px; font: inherit; color: var(--text);
-    background: #fff; border: 1px solid var(--border); border-radius: 8px;
-  }
-  input[aria-invalid="true"] { border: 2px solid var(--error); }
-  .error { margin: 6px 0 0; font-size: .875rem; color: var(--error); }
-  .error[hidden] { display: none; }
+  .field { margin-bottom: 1.25rem; }
+  .field > label { display: block; font-weight: 600; margin-bottom: .25rem; }
+  input[type=text], select { width: 100%; min-height: 2.75rem; padding: .5rem .75rem; font: inherit; color: inherit;
+         background: #fff; border: 1.5px solid var(--line); border-radius: 8px; }
+  input[aria-invalid=true] { border-color: var(--error); }
+  .error { display: none; margin: .375rem 0 0; color: var(--error); font-size: .9375rem; }
+  .error::before { content: "⚠ "; }
+  input[aria-invalid=true] ~ .error { display: block; }
 
-  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  button { min-height: 2.75rem; padding: .5rem 1.5rem; font: inherit; font-weight: 600; border: 0;
+           border-radius: 8px; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  button[aria-busy=true] { opacity: .7; cursor: progress; }
+  .status { margin: 0; padding: .5rem .75rem; border-radius: 8px; flex: 1 1 14rem; }
+  .status:empty { display: none; }
+  .status.ok { background: var(--ok-bg); }
+  .status.fail { background: var(--error-bg); color: var(--error); }
 
-  button {
-    min-height: 44px; padding: 8px 24px; font: inherit; font-weight: 600;
-    color: var(--accent-text); background: var(--accent); border: 0; border-radius: 8px; cursor: pointer;
-  }
-  button:hover { filter: brightness(.92); }
-  button[aria-disabled="true"] { opacity: .7; cursor: progress; }
-  .status { margin: 16px 0 0; min-height: 1.5em; }
-  .status.ok { color: var(--ok); }
-  .status.fail { color: var(--error); }
-  .status button {
-    min-height: 44px; padding: 4px 8px; margin-left: 4px;
-    background: none; color: var(--accent); text-decoration: underline;
-  }
-
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-  @media (forced-colors: active) {
-    .toggle input::after { background: ButtonText; }
-    .toggle input:checked::after { background: HighlightText; }
-  }
+  @media (max-width: 360px) { form { padding: 1rem; } button { width: 100%; } }
+  @media (prefers-reduced-motion: reduce) { .switch, .switch::after { transition: none; } }
 </style>
 </head>
 <body>
 <main>
-  <h1>Settings</h1>
-  <p class="intro">Choose how you hear about your dog’s day.</p>
+  <h1>Notification settings</h1>
+  <p class="lede">Choose how you hear about your dog's day.</p>
 
   <form id="form" novalidate>
     <fieldset>
-      <legend>What to send me</legend>
-      <label class="toggle">
-        <span class="toggle-text">
-          <span class="toggle-title">Photo updates</span>
-          <span class="toggle-hint">Pictures from your dog’s day</span>
-        </span>
-        <input type="checkbox" role="switch" name="photos">
-      </label>
-      <label class="toggle">
-        <span class="toggle-text">
-          <span class="toggle-title">Pickup reminders</span>
-          <span class="toggle-hint">A heads-up before it’s time to collect your dog</span>
-        </span>
-        <input type="checkbox" role="switch" name="pickup">
-      </label>
-      <label class="toggle">
-        <span class="toggle-text">
-          <span class="toggle-title">Incident notes</span>
-          <span class="toggle-hint">Notes from staff if something happens during the day</span>
-        </span>
-        <input type="checkbox" role="switch" name="incidents">
-      </label>
+      <legend>What to send</legend>
+
+      <div class="toggle">
+        <label for="all"><span class="name">Send me notifications</span>
+          <span class="hint">Turn off to pause everything below.</span></label>
+        <input class="switch" type="checkbox" role="switch" id="all" checked>
+      </div>
+      <div class="toggle">
+        <label for="photos"><span class="name">Photo updates</span>
+          <span class="hint">Pictures from your dog's day.</span></label>
+        <input class="switch topic" type="checkbox" role="switch" id="photos">
+      </div>
+      <div class="toggle">
+        <label for="pickup"><span class="name">Pickup reminders</span>
+          <span class="hint">A heads-up before it's time to collect your dog.</span></label>
+        <input class="switch topic" type="checkbox" role="switch" id="pickup">
+      </div>
+      <div class="toggle">
+        <label for="incidents"><span class="name">Incident notes</span>
+          <span class="hint">Anything staff need you to know about, like a scrape or a skipped meal.</span></label>
+        <input class="switch topic" type="checkbox" role="switch" id="incidents">
+      </div>
+      <p class="note" id="paused" hidden>Notifications are paused. Turn on “Send me notifications” to choose what you get.</p>
     </fieldset>
 
     <div class="field">
-      <label class="lbl" for="method">Send notifications by</label>
-      <select id="method" name="method">
-        <option value="" selected disabled>Select…</option>
+      <label for="method">How should we reach you?</label>
+      <select id="method">
+        <option value="" selected disabled>Select a method</option>
+        <option value="text">Text message</option>
         <option value="email">Email</option>
-        <option value="sms">Text message</option>
       </select>
     </div>
 
-    <div class="field">
-      <label class="lbl" for="contact">Email address or mobile number</label>
-      <input type="text" id="contact" name="contact" placeholder="Enter value"
-             autocomplete="off" aria-describedby="contact-help contact-error">
-      <p class="help" id="contact-help">We’ll only use this for the notifications you turn on.</p>
-      <p class="error" id="contact-error" hidden></p>
+    <div class="field" id="phone-field">
+      <label for="phone">Mobile number for texts</label>
+      <input type="text" id="phone" inputmode="tel" autocomplete="tel" placeholder="Mobile number"
+             aria-describedby="phone-error">
+      <p class="error" id="phone-error">Enter a mobile number with area code, for example 555 123 4567.</p>
     </div>
 
-    <button type="submit" id="save">Save</button>
-    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <div class="actions">
+      <button type="submit" id="save">Save</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </div>
   </form>
 </main>
 
 <script>
-  const form = document.getElementById('form');
-  const method = document.getElementById('method');
-  const contact = document.getElementById('contact');
-  const err = document.getElementById('contact-error');
-  const status = document.getElementById('status');
-  const save = document.getElementById('save');
-  let busy = false;
+  const $ = id => document.getElementById(id);
+  const all = $('all'), topics = document.querySelectorAll('.topic'),
+        method = $('method'), phone = $('phone'), status = $('status'), save = $('save');
 
-  function setError(msg) {
-    err.hidden = !msg;
-    err.textContent = msg ? 'Invalid input: ' + msg : '';
-    if (msg) contact.setAttribute('aria-invalid', 'true');
-    else contact.removeAttribute('aria-invalid');
+  function syncPause() {
+    topics.forEach(t => t.disabled = !all.checked);
+    $('paused').hidden = all.checked;
   }
-
-  function validate() {
-    const v = contact.value.trim();
-    if (!method.value) return { el: method, msg: 'Choose how you’d like to be notified.' };
-    if (!v) return { el: contact, msg: 'enter an email address or mobile number.' };
-    if (method.value === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v))
-      return { el: contact, msg: 'that doesn’t look like an email address, e.g. name@example.com.' };
-    if (method.value === 'sms' && v.replace(/\D/g, '').length < 10)
-      return { el: contact, msg: 'a mobile number needs at least 10 digits.' };
-    return null;
+  function syncMethod() {
+    $('phone-field').hidden = method.value === 'email';
+    if (method.value === 'email') phone.removeAttribute('aria-invalid');
   }
+  all.addEventListener('change', syncPause);
+  method.addEventListener('change', syncMethod);
+  phone.addEventListener('input', () => phone.removeAttribute('aria-invalid'));
+  syncPause(); syncMethod();
 
-  // TODO: replace with the real endpoint; it must reject on failure.
-  async function saveSettings(data) {
-    if (!navigator.onLine) throw new Error('offline');
-    return data;
-  }
+  function say(text, cls) { status.textContent = text; status.className = 'status ' + (cls || ''); }
 
-  async function submit() {
-    if (busy) return;
-    setError('');
-    status.className = 'status';
-    status.textContent = '';
-    const problem = validate();
-    if (problem) {
-      if (problem.el === contact) setError(problem.msg);
-      else { status.className = 'status fail'; status.textContent = problem.msg; }
-      problem.el.focus();
-      return;
+  $('form').addEventListener('submit', async e => {
+    e.preventDefault();
+    say('');
+    if (!method.value) { say('Choose how we should reach you.', 'fail'); method.focus(); return; }
+    if (method.value === 'text' && phone.value.replace(/\D/g, '').length < 10) {
+      phone.setAttribute('aria-invalid', 'true'); phone.focus(); return;
     }
-    busy = true;
-    save.setAttribute('aria-disabled', 'true');
-    save.textContent = 'Saving…';
+    save.setAttribute('aria-busy', 'true'); save.textContent = 'Saving…';
     try {
-      await saveSettings(Object.fromEntries(new FormData(form)));
-      status.className = 'status ok';
-      status.textContent = 'Saved. Your notification settings are updated.';
-    } catch (e) {
-      status.className = 'status fail';
-      status.innerHTML = 'Couldn’t save your settings. Your choices are still here. <button type="button" id="retry">Try again</button>';
-      document.getElementById('retry').addEventListener('click', submit);
+      await saveSettings();   // replace with your real request
+      say('Saved. Your notification choices are updated.', 'ok');
+    } catch {
+      say('We couldn’t save your changes. Your choices are still here. Press Save to try again.', 'fail');
     } finally {
-      busy = false;
-      save.removeAttribute('aria-disabled');
-      save.textContent = 'Save';
+      save.removeAttribute('aria-busy'); save.textContent = 'Save';
     }
-  }
+  });
 
-  form.addEventListener('submit', e => { e.preventDefault(); submit(); });
-  contact.addEventListener('input', () => setError(''));
+  function saveSettings() { return new Promise(r => setTimeout(r, 600)); }  // placeholder
 </script>
 </body>
 </html>
 ```
 
-**What changed**
-- **Copy:** "Option 1", "Option 2" and "Enable feature" are now Photo updates, Pickup reminders and Incident notes, each with a one-line hint. The heading is still "Settings", with a short intro line added.
-- **Dropdown and text field:** I couldn't tell what these controlled, so I assumed a delivery method (Email or Text message) and a matching contact field. Change the labels and options if that's wrong.
-- **Error message:** "Invalid input" now leads the message and says what's wrong, for example "Invalid input: that doesn't look like an email address". It shows under the field, is linked to the field for screen readers, and focus moves to the first problem.
-- **Save:** The button shows "Saving…" and ignores repeat presses. Success is confirmed in words. On failure, the form keeps what was entered and offers "Try again".
-- **Access:** Toggles are real switches you can reach by keyboard, with visible focus. Targets are at least 44px, and the layout holds down to 320px. Transitions are turned off for reduced-motion users.
+**What changed and why**
+- **Placeholder copy replaced.** "Option 1", "Option 2", "Enable feature", "Choice A/B" and "Invalid input" are now your three topics (photo updates, pickup reminders, incident notes). The master toggle is "Send me notifications". The dropdown is Text message or Email. The error now says what to fix.
+- **Master toggle.** When it's off, the three topic toggles are disabled and a line explains why.
+- **Save button.** It shows a busy state, then a success or failure message in words. A failure keeps what the parent entered and tells them to press Save again.
+- **Error handling.** The error shows under the phone field with a ⚠ icon and the message, so it doesn't rely on color alone. Focus moves to the field, and screen readers get the message through `aria-describedby`.
+- **Accessibility and layout.** Controls are real switches and inputs with labels, and focus rings are visible. The layout holds at 320px, and reduced-motion is respected.
+- **Defaults.** All three topics start off, so nobody is opted in without choosing.
 
-**Still open**
-- `saveSettings` is a stub that only fails when offline. Connect it to your real endpoint.
-- All three toggles start off, so no one is opted in by default. Decide whether Incident notes should start on.
-- **Not checked:** I didn't run it in a browser or with a screen reader.
+**Open items**
+- `saveSettings()` is a stand-in that always succeeds. Wire it to your API.
+- I assumed 10-digit phone numbers and didn't add a policy on whether incident notes can be turned off. Both need your call.
+- I haven't run this in a browser or with a screen reader.

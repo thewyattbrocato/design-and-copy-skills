@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tea Rota – November</title>
+<style>
+  :root {
+    --bg: #f6f1e7; --card: #fffdf8; --ink: #2b2620; --muted: #6b6257;
+    --line: #e2d9c8; --accent: #9a3b2e; --accent-ink: #fff; --soft: #f3e3dc;
+    --ok: #2f6b3f; --focus: #1f5fbf;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1916; --card: #26221e; --ink: #f1ebe0; --muted: #b0a698;
+      --line: #3b352e; --accent: #e08a77; --accent-ink: #1c1916; --soft: #3a2824;
+      --ok: #8cc59a; --focus: #7db0ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding: 16px;
+  }
+  main { width: 100%; max-width: 560px; }
+  header { margin-bottom: 12px; }
+  h1 { font: 700 1.6rem/1.15 Georgia, "Times New Roman", serif; margin: 0; }
+  .sub { color: var(--muted); margin: 4px 0 0; font-size: .95rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  li {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 12px; display: grid; grid-template-columns: 64px 1fr auto;
+    align-items: center; gap: 12px; min-height: 56px;
+  }
+  li.next { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); }
+  li.past { opacity: .6; }
+  li.target { background: var(--soft); border-color: var(--accent); }
+  li.source { border-style: dashed; border-color: var(--accent); }
+  .date { text-align: center; line-height: 1.1; }
+  .date b { display: block; font: 700 1.5rem Georgia, serif; }
+  .date span { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .who { font-weight: 600; overflow-wrap: anywhere; }
+  .tag { display: block; font-weight: 400; font-size: .8rem; color: var(--muted); }
+  button {
+    font: inherit; font-size: .9rem; min-height: 40px; padding: 6px 14px;
+    border-radius: 8px; border: 1px solid var(--accent); background: transparent;
+    color: var(--accent); cursor: pointer; font-weight: 600;
+  }
+  button.primary { background: var(--accent); color: var(--accent-ink); }
+  button:hover:not(:disabled) { background: var(--soft); }
+  button.primary:hover:not(:disabled) { filter: brightness(1.08); background: var(--accent); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  button.quiet { border-color: var(--line); color: var(--muted); }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .bar {
+    margin-top: 12px; min-height: 48px; display: flex; align-items: center;
+    justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    font-size: .95rem; color: var(--muted);
+  }
+  .bar .msg.ok { color: var(--ok); font-weight: 600; }
+  .actions { display: flex; gap: 8px; }
+  @media (max-width: 380px) {
+    li { grid-template-columns: 52px 1fr; }
+    li button { grid-column: 1 / -1; width: 100%; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    li { transition: background .2s, border-color .2s; }
+    li.flash { animation: flash 1s; }
+    @keyframes flash { from { background: var(--soft); } to { background: var(--card); } }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Tea Rota: Cake Duty</h1>
+    <p class="sub">Village Hall · Sundays in November 2026</p>
+  </header>
+
+  <ul id="list" aria-label="Cake rota"></ul>
+
+  <div class="bar">
+    <span class="msg" id="msg" role="status" aria-live="polite">Tap “Swap” next to your name to trade with someone.</span>
+    <span class="actions">
+      <button type="button" class="quiet" id="undo" hidden>Undo</button>
+      <button type="button" class="quiet" id="cancel" hidden>Cancel</button>
+    </span>
+  </div>
+</main>
+
+<script>
+(function () {
+  var YEAR = 2026, MONTH = 10; // November
+  var DEFAULT_NAMES = ["Margaret", "Dev", "Priya & Tom", "Alan", "Joyce"]; // edit to match your volunteers
+  var KEY = "teaRota-2026-11";
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  var sundays = [];
+  for (var d = new Date(YEAR, MONTH, 1); d.getMonth() === MONTH; d.setDate(d.getDate() + 1)) {
+    if (d.getDay() === 0) sundays.push(d.getDate());
+  }
+
+  var names = DEFAULT_NAMES.slice(0, sundays.length);
+  while (names.length < sundays.length) names.push("");
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY));
+    if (Array.isArray(saved) && saved.length === sundays.length) names = saved;
+  } catch (e) {}
+
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  function isPast(i) { return new Date(YEAR, MONTH, sundays[i]) < today; }
+  var nextIdx = -1;
+  for (var i = 0; i < sundays.length; i++) { if (!isPast(i)) { nextIdx = i; break; } }
+
+  var list = document.getElementById("list");
+  var msg = document.getElementById("msg");
+  var undoBtn = document.getElementById("undo");
+  var cancelBtn = document.getElementById("cancel");
+  var source = null, last = null, flashed = [];
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(names)); } catch (e) {} }
+  function say(t, ok) { msg.textContent = t; msg.className = "msg" + (ok ? " ok" : ""); }
+  function label(i) { return "Sunday " + sundays[i] + " " + months[MONTH]; }
+
+  function render(focusIdx) {
+    list.innerHTML = "";
+    sundays.forEach(function (day, i) {
+      var li = document.createElement("li");
+      var past = isPast(i);
+      if (past) li.className = "past";
+      if (i === nextIdx) li.className += " next";
+      if (source === i) li.className += " source";
+      if (source !== null && source !== i && !past) li.className += " target";
+      if (flashed.indexOf(i) > -1) li.className += " flash";
+
+      var date = document.createElement("div");
+      date.className = "date";
+      date.innerHTML = "<span>Sun</span><b>" + day + "</b>";
+
+      var who = document.createElement("div");
+      who.className = "who";
+      who.textContent = names[i] || "Nobody yet";
+      var tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = past ? "Done" : (i === nextIdx ? "This week’s cake" : "");
+      if (tag.textContent) who.appendChild(tag);
+
+      li.appendChild(date); li.appendChild(who);
+
+      var b = document.createElement("button");
+      b.type = "button";
+      if (past) {
+        b.textContent = "Swap"; b.disabled = true;
+        b.setAttribute("aria-label", "Swap unavailable, " + label(i) + " has passed");
+      } else if (source === null) {
+        b.textContent = "Swap";
+        b.setAttribute("aria-label", "Swap " + (names[i] || "empty slot") + " on " + label(i));
+        b.onclick = function () { source = i; say("Swapping " + (names[i] || "empty slot") + " (" + label(i) + "). Choose who to swap with."); render(i); };
+      } else if (source === i) {
+        b.textContent = "Selected"; b.disabled = true;
+      } else {
+        b.textContent = "Swap here"; b.className = "primary";
+        b.setAttribute("aria-label", "Swap with " + (names[i] || "empty slot") + " on " + label(i));
+        b.onclick = function () { doSwap(source, i); };
+      }
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+    undoBtn.hidden = !last || source !== null;
+    cancelBtn.hidden = source === null;
+    if (typeof focusIdx === "number") {
+      var btns = list.querySelectorAll("button:not(:disabled)");
+      var target = list.children[focusIdx] && list.children[focusIdx].querySelector("button:not(:disabled)");
+      (target || btns[0] || cancelBtn).focus();
+    } else if (source !== null) {
+      cancelBtn.focus();
+    }
+  }
+
+  function doSwap(a, b) {
+    var na = names[a], nb = names[b];
+    names[a] = nb; names[b] = na;
+    last = [a, b];
+    flashed = [a, b];
+    source = null;
+    save();
+    say((nb || "Empty slot") + " now on " + label(a) + "; " + (na || "empty slot") + " now on " + label(b) + ".", true);
+    render(b);
+    setTimeout(function () { flashed = []; }, 1100);
+  }
+
+  undoBtn.onclick = function () {
+    if (!last) return;
+    var a = last[0], b = last[1], t = names[a];
+    names[a] = names[b]; names[b] = t;
+    last = null; save();
+    say("Swap undone.");
+    render(a);
+  };
+  cancelBtn.onclick = function () {
+    var i = source; source = null;
+    say("Swap cancelled.");
+    render(i);
+  };
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && source !== null) cancelBtn.click();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

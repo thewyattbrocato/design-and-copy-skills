@@ -1,73 +1,63 @@
-I'm assuming a web product with one brand and a small team. The brand is so flat that these three scales come out much shorter than the usual 2–4 steps.
+Shape, depth and motion each come down to a handful of tokens. The brand is so flat that most of the usual scale disappears.
 
-## Radius
+I assumed a web product, one brand, light theme only and a small team.
 
-| Token | Value | Use |
-|---|---|---|
-| `radius.none` | `0` | Everything: buttons, inputs, cards, images, tags, modals |
-| `radius.round` | `50%` | Only where the shape is semantically round: radio buttons and avatars, if you have them |
-
-Don't add `sm/md/lg`. A mid-size radius would break the brand, and one missing step isn't worth a scale. If nobody has radios or avatars yet, ship only `radius.none`.
-
-## Elevation (depth by rule, not shadow)
-
-Depth comes from border weight and a scrim, with no blur anywhere. First define the rule weights:
-
-| Token | Value | Use |
-|---|---|---|
-| `border.width.rule` | `2px` | Default outline for inputs, cards and dividers |
-| `border.width.heavy` | `4px` | Section breaks, overlays, emphasis |
-
-Then the elevation roles, which components read:
-
-| Token | Treatment | Use |
-|---|---|---|
-| `elevation.flat` | No border, no shadow | Content on the page |
-| `elevation.raised` | `rule` width, `color.border.strong` (black) | Cards, inputs, menus |
-| `elevation.overlay` | `heavy` width, black, plus `color.scrim` behind | Modals, drawers, popovers |
-
-Three levels is enough. Tomato never carries depth. It stays an accent (`color.accent`) and is not an elevation color.
-
-## Motion
-
-| Token | Value | Use |
-|---|---|---|
-| `motion.duration.none` | `0ms` | Default. Layout, reveals, page changes: no animation |
-| `motion.duration.fast` | `100ms` | Hover and pressed color or fill changes only |
-| `motion.easing.standard` | `linear` | The only easing |
-
-I used two durations and one easing instead of the usual 3–4 and 3, because the brand is "basically no animation". There is no entrance, slide, fade or scale token on purpose. Anyone who needs one has to argue for it as a new addition.
-
-Under `prefers-reduced-motion: reduce`, remap `fast` to `0ms`. Themes and preferences change what a role points to, not the component.
-
-## CSS
+## Radius: one token
 
 ```css
-:root {
-  /* shape */
-  --radius-none: 0;
-  --radius-round: 50%;
+--radius-none: 0;
+```
 
-  /* depth */
-  --border-width-rule: 2px;
-  --border-width-heavy: 4px;
-  --elevation-flat: none;
-  --elevation-raised: var(--border-width-rule) solid var(--color-border-strong);
-  --elevation-overlay: var(--border-width-heavy) solid var(--color-border-strong);
+- Every component reads `radius-none`, so nothing is hardcoded to `0`. If the brand ever softens, you change one value.
+- I wouldn't define `radius-full` yet. Add it only when a second real use appears, such as a round avatar. Checkboxes and radios can stay square.
 
-  /* motion */
-  --motion-duration-none: 0ms;
-  --motion-duration-fast: 100ms;
-  --motion-easing-standard: linear;
-}
+## Elevation: borders, with one optional offset shadow
+
+Depth comes from rule weight, not blur. That means two token groups.
+
+**Rule weights**
+```css
+--border-width-thin: 1px;   /* table rows, dividers inside a block */
+--border-width-base: 2px;   /* inputs, cards, buttons */
+--border-width-heavy: 4px;  /* section breaks, the masthead rule, focus ring */
+--border-color-strong: var(--color-ink);  /* semantic: the black rule */
+```
+
+**Elevation levels (semantic, three)**
+```css
+--elevation-flat:    none;                                   /* on the page */
+--elevation-raised:  none;                                   /* same shadow; component adds a base border */
+--elevation-overlay: 4px 4px 0 0 var(--color-ink);           /* menus, dialogs, popovers */
+```
+
+- `flat` and `raised` don't differ in shadow. `raised` means "has a `border-width-base` rule around it". You can drop `raised` and just use the border token if you'd rather keep the set to two levels.
+- `overlay` is my proposal, not something you asked for. A menu floating over content needs something to separate it from what's underneath, and a hard offset with no blur matches the brand. If you'd rather have no shadows at all, use a `border-width-heavy` rule on overlays instead.
+- There are no blur shadows and no opacity-based depth. Surfaces are paper or white, never tinted.
+
+## Motion: nearly nothing
+
+```css
+--duration-instant: 0ms;     /* default: hover, press, focus, toggle all snap */
+--duration-quick:   120ms;   /* only where a sudden jump would confuse: overlay appear, disclosure open */
+--easing-standard:  cubic-bezier(0, 0, 0.2, 1);
 
 @media (prefers-reduced-motion: reduce) {
-  :root { --motion-duration-fast: 0ms; }
+  :root { --duration-quick: 0ms; }
 }
 ```
 
-Elevation is a border shorthand, so use it as `border: var(--elevation-raised)`. Don't mix it with `box-shadow`, and lint for `box-shadow` and `border-radius` values other than these tokens.
+- Hover and press states change by inverting colors (black fill, paper text, or the tomato accent), and they do it instantly. That is `duration-instant`, so components still read a token.
+- Anything over 150ms, any bounce and any slide-in is out of the system. A single easing is enough at these durations.
+- No page transitions, scroll effects or skeleton shimmer. For loading, use a static text state such as "Loading…" in the condensed headline face.
 
-**Notes**
-- These tokens depend on `color.border.strong` (black), `color.scrim` and `color.accent` (tomato) existing in your color roles. I haven't defined or contrast-checked those here.
-- Thick rules add layout size. Decide whether components use `box-sizing: border-box` so a 4px overlay border doesn't shift spacing.
+## Tiers and exceptions
+- **Raw:** `0`, `1/2/4px`, `0/120ms`, the one cubic-bezier, and the black and tomato colors from your color tokens.
+- **Semantic:** the names above, which components consume.
+- **Component-level:** none. Add one only if a component needs its own knob.
+- Anything outside these values, such as a one-off print-style hero rule, stays local and is marked as an exception.
+
+## Open decisions
+1. Whether to keep the `overlay` offset shadow or use a heavy border instead.
+2. Whether any element needs a round shape, which would justify `radius-full`.
+
+I haven't contrast-checked anything here. These tokens reference your ink and tomato colors but don't set them.

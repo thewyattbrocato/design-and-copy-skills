@@ -1,3 +1,3 @@
-Refunding now could return money for a valid charge. Check the payments dashboard for a duplicate posting first. Refund only if you confirm a duplicate or a manager approves.
+**Feedback (29 words):**
 
-(29 words)
+Refunding now skips the check that shows if the charge is wrong. First, check the payments dashboard for a duplicate posting. Refund only if confirmed, or a manager approves.

@@ -1,4 +1,4 @@
-I haven't invented patient quotes or outcome numbers. You're five weeks in, and fabricated testimonials would be a legal risk and a trust risk, since health advertising rules generally prohibit them. The "Results" section below shows how you measure progress and has slots for real feedback as it comes in.
+I haven't invented any patient quotes or outcome numbers. You've been open five weeks, and made-up testimonials would be a trust risk for a clinic. In many places they also break health-advertising rules. So the "Results" section below is honest about how you measure progress, with clearly marked slots for real feedback as it comes in.
 
 ---
 
@@ -6,40 +6,46 @@ I haven't invented patient quotes or outcome numbers. You're five weeks in, and 
 
 **How we measure progress**
 
-Every plan starts with a full assessment at your first visit. We test your range of motion, strength, and function, and we agree on a goal that matters to you, whether that's climbing stairs without pain, getting back to the court, or reaching a high shelf. We re-test at set points so you can see your progress as numbers, not just a feeling.
+Rehab shouldn't be a guessing game. At your first visit we do a full assessment and agree on specific goals with you: climbing stairs without pain, lifting a child overhead, getting back to your Saturday run. We measure where you're starting, such as range of motion, strength, and how the joint moves under load. Then we re-check at regular points so you can see for yourself whether you're improving.
 
-**What we focus on**
+If something isn't working, we'll tell you and change the plan.
 
-Knee and shoulder rehab is all we do. That covers post-surgical recovery, sprains and strains, tendon problems, and the persistent aches that don't clear up on their own.
+**What you can expect**
 
-**What to expect**
-
-- A 45-minute one-on-one session with your physiotherapist, not a shared treatment floor
-- A clear explanation of what's wrong, what we're doing about it, and how long it's likely to take
-- A home exercise plan matched to where you are now
-- Honest advice. If you need imaging or a surgical opinion, we'll tell you.
+- A full assessment at your first visit, not a rushed look and a handout
+- 45 minutes of one-on-one time with a physiotherapist each session
+- A clear explanation of what's going on in your knee or shoulder, and why
+- A plan built around your goals, with exercises you can do at home
 
 **What patients say**
 
-*We opened recently and are collecting feedback now. Here is what our first patients tell us:*
+We're a new clinic, and we'd rather show you real feedback than pad this page. Here's where it will go:
 
-> "[Real quote from a patient, used with their written permission]"
-> — [First name, injury, e.g. "Sam, knee rehab"]
+> *[Patient quote #1: add after written permission]*
+> *[First name, general injury, e.g. "Sam, knee rehab"]*
 
-> "[Second quote]"
-> — [First name, injury]
+> *[Patient quote #2]*
+
+> *[Patient quote #3]*
+
+Until then, the best way to judge us is to book an assessment and see how we work.
+
+**[Book your first visit]**
 
 ---
 
 ## About Northgate Physio
 
-Northgate Physio is a two-physiotherapist clinic on the east side, set in a converted bakery. We focus on knee and shoulder rehabilitation, so we can give each injury the time and attention it needs. Sessions are 45 minutes, one-on-one, and your first visit includes a full assessment. Sessions are $95. Our aim is simple: understand your injury, explain it plainly, and help you get back to what you love doing.
+Northgate Physio is a two-physiotherapist clinic focused on knee and shoulder rehab. We work out of a converted bakery on the east side, a warm, unhurried space that doesn't feel like a hospital corridor.
+
+Every session is 45 minutes and $95. Your first visit includes a full assessment, so you leave knowing what's wrong, what we'll do about it, and what to expect along the way. We keep our focus narrow so we can do it well.
 
 ---
 
 **Before you publish**
 
-1. **Testimonials:** Ask your first patients for a short quote and get written permission to use it. Use only what they say. Your local regulator (and the ad rules in your region) may restrict how testimonials and outcome claims can be presented.
-2. **Placeholders:** Delete the two quote blocks and the "collecting feedback now" line if you have nothing real by launch. The section works without them.
-3. **Credentials:** Adding each physio's name, qualifications, and a line on their background to the About blurb would build trust fast. Send me those and I'll work them in.
-4. **The bakery:** If you like, I can write a warmer version that leans into the converted-bakery story.
+- **Testimonials:** Get written consent, and check your regulator's advertising rules. Some regulators restrict testimonials for health practitioners.
+- **Add real details:** Credentials, years of experience, and each physio's name would strengthen the About blurb. I left them out because I don't have them.
+- **Replace the quote placeholders:** Fill them as feedback comes in, or delete that subsection for launch if you'd rather not have empty slots live.
+
+If you send me each physio's background, I can write a short bio for each.

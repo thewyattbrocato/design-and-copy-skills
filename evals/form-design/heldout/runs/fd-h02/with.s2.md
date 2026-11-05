@@ -1,23 +1,31 @@
-The form has four problems. I've ranked them by how likely each is to be costing you sales.
+**What's wrong**
 
-**1. The form wipes everything after a decline (fix first).**
-A declined card is the most common failure at payment, and it's the moment a customer is most likely to give up. If they have to retype the card, expiry, CVV and zip, many won't. The fix is to keep every value the customer entered after a decline. Show the reason at the top in plain words, for example "Your bank declined this card. Try another card or contact your bank." Don't reload the page. Clearing the card number and CVV is the only reasonable exception, and even then, keep the rest.
+Every problem QA described is a known cause of checkout abandonment, and they compound. Here they are in the order I'd fix them:
 
-**2. The Pay button is grey and doesn't say why.**
-Customers who are ready to pay hit a dead button and can't tell what's missing. On some devices the button can't be reached by keyboard at all. Keep the button active at all times. If they press it with problems, show a message next to each problem field saying what to fix, such as "Enter the 16 digits on the front of your card." If several fields have problems, add a summary at the top. Only disable the button while the payment is actually being processed, so nobody double-charges themselves.
+1. **The form wipes everything after a declined card.** This is the worst one. Someone who has just typed a card number, expiry, CVV, zip and country gets a decline, which is often not their fault, and must start over from scratch. Many won't. Declines are common, so this probably costs you a lot of completed orders.
 
-**3. The red "Invalid input" appears after the first digit.**
-The form tells customers they're wrong while they are still typing correctly. It looks like an error on their side and erodes trust at the worst moment. Check fields when they press Pay. After a field has shown an error, re-check it as they edit, so the message disappears the moment it's fixed. Replace "Invalid input" with a message that says how to fix it.
+2. **The Pay button is grey, with no explanation.** A person who can't tell what's missing will just leave. A disabled button also gives keyboard and screen-reader users no way to find out. This is likely the second biggest cause.
 
-**4. Smaller issues that add friction:**
-- **Placeholders are the only labels.** "Card number" disappears when the customer starts typing. Add visible labels above each field.
-- **The card, expiry, CVV and zip fields are plain text inputs.** That means phones show the full letter keyboard. Set them to show the number pad and turn on autofill, so saved cards fill in one tap. This is likely a big factor on mobile.
-- **The country list has 195 entries starting at Afghanistan.** Preselect the customer's country, or let them type to search.
-- **Spaces in the card number.** Accept spaces and dashes (customers type "4242 4242...") and clean them up in code rather than rejecting them.
-- **The button says "Pay now".** Better to show the amount, for example "Pay $24.00".
+3. **"Invalid input" appears after the first digit.** The form tells people they've made a mistake while they're still typing correctly. It's alarming, it says nothing about how to fix it, and it adds friction on the very first field. It does this on every field, so every customer sees red errors on the way to a valid card.
 
-**How to confirm the cause:** if your analytics can track field-level drop-off, check where people leave. I'd expect spikes at the card field (problem 3), on the Pay button (problem 2), and right after a decline (problem 1). Comparing mobile against desktop would also show whether the keyboard issue matters.
+4. **Smaller problems in the markup:**
+   - There are no real labels, only placeholders. The label disappears once someone types, so they can't check what they entered.
+   - All four fields are plain text inputs. On phones that likely brings up the wrong keyboard, and browser autofill for cards probably won't work. Card, expiry and CVV should be numeric-keyboard fields with the standard autofill tags.
+   - The country list is 195 entries starting at Afghanistan. It should default to the customer's country, or be type-to-search.
+   - The card field probably rejects spaces or dashes ("4242 4242…") instead of accepting them.
 
-I'd hand your engineer items 1–3 as one ticket, since they're the same area of code. The label, keyboard and country list changes are small and can follow in the same release.
+**What I'd fix first**
 
-If you'd like, I can write the ticket text or a corrected version of the form for your engineer.
+1. **Keep what people typed after a decline.** Show a clear message at the top, such as "Your card was declined. Check the details or try another card," and leave every field filled in. For security, the card number and CVV are usually re-entered or handled by your payment provider's fields. Your engineers will know which applies, but everything else (expiry, zip, country) should persist.
+2. **Make the Pay button always clickable, and label it with the amount, like "Pay $39.00".** When someone presses it with problems, show a message next to each problem field, in words ("Enter the 16-digit number on the front of your card"), plus a short list at the top. While the payment is processing, disable it to prevent double charges.
+3. **Check fields on submit, not while typing.** After a field has shown an error, re-check it as the person edits so the error clears the moment it's fixed.
+4. **Add visible labels above each field, fix the input types and autofill, and default the country.**
+
+**How to confirm this is the cause**
+
+These are strong suspects, but I can't see your data. Check these before or alongside the fixes:
+- Your funnel data: where do people drop off, and what share leave right after a decline?
+- Whether the drop is worse on mobile.
+- Session recordings of the payment step, if you have them.
+
+If you share the actual page code, I can write the fixes. For an engineer, the ticket for #1 and #2 is small and shouldn't take long.

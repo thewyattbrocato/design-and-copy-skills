@@ -1,18 +1,21 @@
-Here's the message:
+Here's the message (about 110 words):
 
 ---
+
 **Design tokens: naming and changes**
 
-**Naming:** by role, not by value or location. Components use semantic tokens only, like `color.text.secondary`, `color.surface.raised` and `space.inset.md`. Never raw values (`gray-600`, `#3a3a3a`, `16px`) or page-based names (`homepage-hero-blue`).
+**Naming:** by role, not value or place. `color.text.secondary`, `space.inset.md`, `radius.sm`. Never `gray-600` in components or `homepage-hero-blue`. Components use semantic tokens only.
 
-**Need something new?**
-1. Check the existing scale. The nearest token is usually right.
-2. Still a gap? Post in #[channel] with where it's used, the closest existing token, and why that one won't work.
-3. We add it once a second screen or team needs it. Until then, keep it local and comment it as an exception.
-4. To modify or remove one, open a PR to [tokens file] with a changelog note.
+**Before adding anything:** pick the nearest existing token. No one-off colors or spacing.
 
-Please, no new one-off values in PRs.
+**To propose a change:**
+1. Post in [channel/link] with: where it's needed, which token you tried, why it falls short.
+2. Needed by a second screen or team? It's a candidate. Otherwise keep it local and label it an exception.
+3. [Owner] approves, or merges it into an existing token.
+4. Approved changes land in the shared token file, so design and code update together.
+
+Removals are announced first, with a migration.
 
 ---
 
-It's about 105 words. I filled the bracketed spots with placeholders, because I don't know your channel or tokens file. I also assumed a web product, and the examples are illustrative, so swap in your real token names. I made up the "second screen or team" rule for adding tokens, so change it if your threshold differs.
+Fill in the two bracketed placeholders: the channel or form for requests, and who approves. I used example token names, so swap in your real ones if they differ.

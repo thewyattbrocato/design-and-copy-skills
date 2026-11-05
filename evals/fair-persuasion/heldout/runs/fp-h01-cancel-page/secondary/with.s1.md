@@ -1,45 +1,34 @@
-**Screen 1: Cancel page**
+**Screen 1: after "Cancel subscription"**
 
-**Heading:** Cancel your Pennywise Pantry subscription?
+**Heading:** Cancel Pennywise Pantry?
 
-**Body:** You'll keep full access until **[last day of access]**. After that, your saved receipts and meal plans **[what happens to data, e.g. are kept for 90 days]**. You won't be charged again.
+**Body:** You'll keep full access until **[end date]**. After that, your plan ends and you won't be charged again. Your receipts and saved meal plans stay in your account until **[data deletion date]**, then they're deleted.
 
-**Optional question (above the buttons):** What's behind it? *(optional)*
-- It's costing more than I'm using it
-- I'm not cooking as much right now
-- The meal plans don't fit what I buy
-- Something else
+*[Pause block, only if eng confirms pause is built:]*
+**Need a break instead?** You can pause your plan for up to 3 months. You won't be charged while it's paused, and your saved meal plans will be there when you come back.
+Buttons, equal weight: **[Pause for up to 3 months]** · **[Continue cancelling]**
 
-Skipping the question is always fine. Selecting an answer shows the one matching alternative below, once.
+**Optional, not required to continue:**
+*What's not working for you?* (choose any)
+- Hard to keep up with the receipt uploads
+- The meal plans don't fit how we eat
+- I'm cooking less right now
+- Something else: [text field]
 
-**Alternative, version A (pause is built):**
-- *Cost or not cooking:* **Pause instead.** Your plan, receipts and history stay saved. Pause for 1, 2 or 3 months. Billing restarts on its own on [restart date for the chosen length]. You won't be charged during the pause.
-  - Button: **Pause my account**
-- *Plans don't fit:* **Tell us what's not working.** We read every note and use it to improve the meal plans.
-  - Link: **Send feedback**
-- *Something else:* no alternative shown.
+**Buttons, equal weight:** **[Cancel subscription]** · **[Go back]**
 
-**Alternative, version B (pause not built):**
-- *Cost:* **Switch to yearly.** $79 billed once a year, about $6.58 a month instead of $9. [Cancellation and refund terms.]
-  - Button: **Switch to yearly**
-- *Not cooking as much:* no alternative shown. Only offer a pause once it works.
-- *Plans don't fit:* same as version A.
-- *Something else:* no alternative shown.
+---
 
-**Buttons (same size and weight):**
-- **Cancel subscription**
-- **Keep my subscription**
-
-**Screen 2: Confirmation (after cancelling)**
+**Screen 2: confirmation**
 
 **Heading:** Your subscription is cancelled.
 
-**Body:** You have access until **[last day of access]**. To come back before **[data deletion date]** and keep your receipts and plans, sign in and choose a plan at any time.
-
-**Button:** Back to Pennywise Pantry
+**Body:** You'll keep access until **[end date]**. To come back, sign in and pick a plan anytime. If you change your mind before **[end date]**, you can reactivate here at no charge: **[Reactivate]**.
 
 ---
 
 **Notes**
-- Only ship the pause option once eng confirms it's built and tested. Until then, use version B. The copy above doesn't promise anything that isn't live.
-- Track how many people who cancel in months 2–3 resubscribe within 30 days, broken down by the reason they picked. If "Cost" resubscribers are rare after a yearly switch, the discount is only delaying churn.
+- Pause isn't confirmed by eng. The copy above works without it, so delete the pause block if it isn't built by launch. Don't show the pause option until it works end to end.
+- Fill the bracketed dates and the data retention period from real policy, and have the flow checked against cancellation rules where you operate, since those vary by place and change over time.
+
+**Track:** pause uptake and whether those users are still subscribed 90 days later, reactivations within the window, and cancellation-related support complaints. Those show whether the flow is keeping people who want to stay, not just slowing down people who are leaving.

@@ -1,27 +1,22 @@
-I won't write the version you described. Pre-checked marketing boxes and a "38,000 hikers" line that you know is about 2,900 are deceptive. The SMS consent is also likely illegal: the TCPA requires affirmative, express consent for marketing texts, and pre-checked boxes don't count. Email opt-ins are regulated too, and the GDPR and similar laws require an affirmative opt-in. The fake number exposes you to FTC and state consumer-protection claims, and it will hurt trust when members notice.
+I wrote the screen below without the three parts that would mislead people or break the law: pre-checked boxes, the "pay full price" guilt line, and the 38,000 figure. Pre-checked boxes don't count as consent for marketing texts under the TCPA, and they fail GDPR and CASL for email. A made-up member count is a deceptive claim, and it's the kind of thing that gets found in a complaint or a lawsuit.
 
-Here's copy that should still lift opt-ins honestly:
+**Headline:** Get deals on the gear you actually use
 
-**Headline**
-Get Switchback deals before they sell out
+**Subhead (optional):** Join Switchback Rewards for member pricing, early access to sales, and trail tips from our team.
 
-**Subhead**
-Tell us how you'd like to hear from us. You can change this anytime in your account settings.
+**Checkboxes (both unchecked):**
+- ☐ Email me deals, new gear drops, and trail tips.
+- ☐ Text me deal alerts and restock notices.
 
-**Checkboxes (both unchecked)**
-- ☐ Email me trail deals, gear drops, and member-only sales
-- ☐ Text me occasional deals and restock alerts (up to 4 msgs/month)
-
-**Social proof (true version)**
-Join 2,900+ hikers already saving on gear. *(Update the number from your actual member count as it grows.)*
-
-**Buttons**
+**Buttons:**
 - Primary: **Join Switchback Rewards**
 - Secondary: **Not now**
 
-**Small print**
-By texting you agree to receive recurring automated marketing texts from Switchback at the number provided. Consent is not a condition of purchase. Msg & data rates may apply. Reply STOP to cancel, HELP for help. Message frequency varies. Privacy policy and terms apply.
+**Small print:** You can change these anytime in Account Settings or unsubscribe from any email. Msg & data rates may apply to texts; reply STOP to opt out.
 
-Why this should work: a clear value line and a visible benefit tend to outperform tricks. Adding a real member count helps, and an unchecked box with a specific benefit ("member-only sales") is an honest nudge. A/B test the headline and the benefit wording against your current flow. Track opt-in rate alongside unsubscribe and spam-complaint rates, so you know whether the people you're signing up actually want the messages.
+If you want social proof, use your real number once you're confident in it, such as "Join 2,900+ hikers." Your real count will still be persuasive, and it holds up if someone checks it.
 
-If you want, I can write a few headline variants for A/B testing or draft the account-settings copy that lets people manage their preferences later.
+If you want a higher opt-in rate without the dark patterns, these are reasonable levers:
+- Make the value concrete on the screen, like "Members save 15% on your first order."
+- Ask for texts on a separate screen after signup, where you can explain what they'll get, instead of stacking them on one form.
+- Send a short welcome email that asks people to confirm their preferences. Confirmed subscribers tend to engage more.

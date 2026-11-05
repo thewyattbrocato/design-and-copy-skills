@@ -1,52 +1,64 @@
-I won't give you wording or a script to change every "last updated" date. On legal pages, that date tells a reader that someone checked the page against current law as of that day. People use these pages to decide whether to answer an eviction notice or whether they qualify for a benefit. If the date is false and a page is wrong, the harm lands on them and on your organization's credibility. Google also says not to fake dates. Search engines compare dates against real content changes, so it wouldn't reliably help rankings. A better route to the same goal is below. Pages that get a real review earn a real fresh date.
+I'd leave out the bulk date change, and I won't write the wording or script for it. A "last updated" date on a legal page tells people the information was checked as of that day. Someone deciding whether to withhold rent, or which court deadline applies, may rely on it. If the page is wrong and the date says it's current, that harms the people you serve and your credibility, and it's a liability for the lawyer whose name sits behind the content. It also doesn't help with Google. Search engines mostly detect real content changes, and a date that changes without any edit is a known spam pattern that can backfire. The plan below gets you honest freshness signals instead.
 
-## Plan: keep the pages current with 3 people
+## The decision: which pages to trust, fix, or retire
 
-**The decision that's stuck:** nobody owns each page, and nobody knows which pages are risky. You have to fix that before you can fix the content.
+**Assumptions:** about 200 pages, three people, and the lawyer's time is the bottleneck. Pages that need a lawyer's judgment must be a small share of the total.
 
-**1. This week (you): build the inventory**
-One spreadsheet with a row per page and these columns:
-- ID
-- URL
-- Title
-- Topic
-- Last edited, from the CMS
-- Page views, if you have them
-- Owner
-- Last reviewed
-- Next review due
-- Tier (see step 2)
+### Step 1: Inventory (this week, you)
+Make one spreadsheet with a row per page and a stable ID. Columns:
+- ID, URL, title, topic (housing, benefits, court forms, other)
+- Real last-edited date (from your CMS, not the displayed date)
+- Page views and search impressions, if you can pull them
+- Time-sensitive content on the page: statute citations, dollar amounts, deadlines, form numbers, court addresses, phone numbers
+- Owner (blank for now)
+- Status (not yet checked, OK, needs fix, retire)
+- Last reviewed by, and date
 
-I haven't seen your site. If you can export the page list from your CMS, I can write a script that builds this sheet.
+### Step 2: Triage (weeks 1–2, you and the paralegals)
+Sort pages into three tiers by what goes wrong if the page is wrong:
+- **Tier 1, high harm:** pages with deadlines, eviction or court procedure, benefit eligibility thresholds, and form instructions. Review these first.
+- **Tier 2, moderate:** general explainers where the law is stable.
+- **Tier 3, low:** background or evergreen pages.
 
-**2. Triage into tiers (you and the lawyer, about an hour)**
-- **Tier A: high stakes or deadline-driven.** Eviction timelines, benefit amounts and eligibility, court forms and fees. These get reviewed first and most often.
-- **Tier B: stable how-it-works pages.** These get reviewed on a slower cycle.
-- **Tier C: retire or merge.** Duplicates, pages about programs that no longer exist, and pages nobody can commit to maintaining. Redirect them to a better page. Set the total page count to what three people can actually review, not to what exists today.
+Within each tier, review the most-visited pages first. Merge duplicates and retire pages nobody can vouch for. A page that's unreviewed and unowned is better removed or marked than left up looking authoritative. The retire list is part of the plan.
 
-Low traffic alone isn't a reason to cut. A page may just be hard to find.
+### Step 3: Ownership
+Give every page one paralegal as owner. Split by topic, for example one on housing and one on benefits and court forms. Owners do the first-pass check against current statutes, agency sites and court forms, and mark what changed. The lawyer is the reviewer of record and doesn't own pages.
 
-**3. Owners and review**
-- Assign each topic group to one paralegal: renting to one, benefits and court forms to the other. Whoever does that work day to day should own it.
-- The paralegal checks the page against the primary source, such as the statute, the court site or the agency page. They then write a short change note.
-- The lawyer reviews only Tier A changes, and only the change note plus the edited passages, not the whole page. Batch these into one scheduled block, for example an hour a month. That fits her spare-time constraint better than "review when you can."
-- If a page needs a fix urgently, such as a law change or a form change, the paralegal edits it immediately and the lawyer signs off after. Agree this rule in advance.
+**Lawyer's spare time:** she only sees pages where an owner found a substantive change, or any Tier 1 page before it's marked reviewed. Batch these into one short monthly session, with a list prepared so she spends her time on decisions. Minor fixes like a changed phone number or a broken link don't need her.
 
-**4. Make dates honest**
-- Show **"Last reviewed: [date]"** on each page. It changes only when a person has checked the page against its source, even if no text changed. This also helps readers more than "last updated" does.
-- Until a page is reviewed, show a plain notice: *"We haven't reviewed this page since [date]. Please check [official source] or contact us before relying on it."* The notice comes off when the review is done.
-- Reviewing Tier A pages first gives you real fresh dates on your most-read pages within weeks.
+### Step 4: Review cadence
+- **Tier 1:** every 6 months, or immediately on a trigger.
+- **Tier 2:** every 12 months.
+- **Tier 3:** every 24 months.
 
-**5. What triggers a review, besides the calendar**
-- The legislative session ending
-- Annual benefit amount changes
-- Court form or fee revisions
-- A monthly automated check for broken links to court and agency sites. Broken links are often the first sign a source has changed. I can write this script.
-- Default review cycle: Tier A every `[months]`, Tier B every `[months]`. Set these to what the hours allow once you've counted the pages.
+Starting from the oldest, a paralegal can work through a fixed number of pages each week. Pick that number after one trial week so it reflects their real pace. `[pages per week]`
 
-**6. Ongoing: a 30-minute monthly check-in**
-The three of you look at what's overdue, what was triggered, and what to retire. Skip the sign-off layers, because the lawyer's batched hour already covers that.
+### Step 5: Triggers that force an early review
+- New legislation or a regulation change in a topic you cover. Assign someone to watch the legislature's session end and the state agency announcements.
+- Annual benefit updates, such as cost-of-living adjustments and income limits, on their published dates.
+- Court form or local rule changes. Check the court's forms page on a schedule.
+- A staff member or client reports an error. Anyone can report one, and the owner reviews it within a set time.
 
-**Two things to measure first:** how many pages fall into each tier, and how many review hours per month the paralegals and the lawyer can really give. Those two numbers set the review cycles and how many pages you can keep.
+### Step 6: Honest freshness on the page
+Show two things:
+- **"Last reviewed: [date] by [attorney name or legal aid staff]"**, changed only when someone actually checked the page.
+- **"Last changed: [date]"**, driven from the CMS edit date.
 
-Want me to build the inventory or link-check script next? If so, tell me what CMS you use or send an export.
+Add a short note on pages that haven't been reviewed yet: *"We're updating this page. Laws change; check with [contact] to confirm this applies to you."* An honest note beats a false date, and it can come down page by page as reviews finish. Also add the jurisdiction and a "this is legal information, not legal advice" line if they're not already there.
+
+### What improves search and trust legitimately
+- Real updates, with the dates changed to match.
+- Fewer, better pages after merging duplicates and retiring dead ones.
+- Fixing the pages people actually find first.
+- Redirecting retired URLs to the closest current page.
+
+### First four weeks
+1. **Week 1:** you build the inventory and pull the traffic data.
+2. **Week 2:** the paralegals tier the pages, and the group picks the retire list.
+3. **Weeks 3–4:** the paralegals start Tier 1 reviews on the most-visited pages. The lawyer gets her first batch at the end of week 4.
+4. At the end of the month, check how many pages got reviewed. That number sets the realistic pace for the rest.
+
+**Two notes:**
+- If the lawyer can't commit even a monthly session, say so now. Then the Tier 1 pages should carry the "being updated" note until she can review them.
+- I can write a script that reads a CMS export or a crawl and builds the inventory spreadsheet, with real edit dates and flags for dollar amounts, statute citations and form numbers. Tell me what your site runs on and I'll start there.

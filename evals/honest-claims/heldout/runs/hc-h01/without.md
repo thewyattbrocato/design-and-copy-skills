@@ -2,74 +2,68 @@
 
 ## Hero
 
-**Small-batch hot sauce, fermented for three weeks.**
-Made outside Duluth with peppers from farms we know by name.
+**Small-batch hot sauce, fermented three weeks and bottled near Duluth.**
 
-[Shop the Sauces]
+Four sauces. Peppers from farms we know. Nothing rushed.
+
+**[Shop the Sauces]**  ·  $9 a bottle, shipped anywhere in the US
 
 ---
 
-## Four Sauces, One Kitchen
+## Started at the Saturday Market
+
+Copper Hollow began at a folding table at the Saturday farmers market. People tasted, came back the next week, and brought friends. We still show up on Saturdays. Now you can also order from home.
+
+Every bottle is still made the same way: in small batches, in a commercial kitchen outside Duluth, by the person whose name is on the business.
+
+---
+
+## The Lineup
 
 **Smoked Peach Habanero**
-Sweet peach and smoke up front, with habanero heat building behind it.
+Sweet peach, smoke, and habanero heat that builds as you eat. Good on pork, chicken, and anything off the grill.
 
 **Green Ghost**
-Jalapeño and tomatillo. Bright, tangy, and made for tacos, eggs, and anything that needs waking up.
+Jalapeño and tomatillo. Bright, tangy, and green. Put it on tacos, eggs, or whatever needs waking up.
 
 **Black Garlic Mild**
-Deep, savory, and gentle on the heat. It's the bottle for people who want flavor first.
+Deep, savory, and gently warm. This is the one for people who want flavor first, and it's easy to put on everything.
 
 **Copper Reaper**
-Our hot one. It's built for people who ask, "Is that all you've got?"
-
-**$9 a bottle**
+The hot one. It's for people who ask for hot and mean it. Start with a drop.
 
 ---
 
-## Three Weeks, Start to Bottle
+## Why It Tastes Different
 
-Every batch ferments for three full weeks before it's bottled. We don't rush it. That time gives the sauce its depth and tang, and you can taste the difference.
+**Fermented for three weeks.** Every batch sits and develops before it's bottled. That time gives the sauce depth you can't get from a quick cook.
 
-We make everything in small batches in a commercial kitchen outside Duluth. Each run is small enough that we can taste, adjust, and stand behind every bottle.
+**Peppers from people we know.** We buy from two farms we know personally. One of them is in our own county. We know who grew the peppers.
 
----
-
-## Peppers From People We Know
-
-Our peppers come from two farms we know personally. One is right here in our own county. We know who grew them and how, and that's the kind of relationship you can't get from a distributor.
+**Small batches.** We make a little at a time so we can taste every batch and keep what's good.
 
 ---
 
-## It Started at the Saturday Market
+## Simple Ordering
 
-Copper Hollow began at a folding table at the Saturday farmers market. People tried a sample, came back the next week, and brought friends. That's still how we measure ourselves: does someone who tastes it want another bottle?
-
-The online store just opened this month, so now you don't have to wait for Saturday.
-
----
-
-## Pick Your Heat
-
-**Just getting started?** Try Black Garlic Mild or Green Ghost.
-**Want something in the middle?** Smoked Peach Habanero.
-**Ready for it?** Copper Reaper.
+$9 a bottle. Shipping to any address in the US. Pick one or try all four.
 
 ---
 
 ## Closer
 
-**Find your bottle.**
-Four sauces, fermented slowly and made by hand. $9 each, shipped anywhere in the US.
+**Find your heat.**
 
-[Shop All Sauces]
+Start with the sauce that sounds like you, or order all four and see which one disappears first.
+
+**[Order Copper Hollow Sauces]**
 
 ---
 
-## Notes for you
+## Notes
 
-- **I kept "established" to what's true.** Your market roots, the three-week ferment, and the farm relationships carry that feeling without help. I left out claims like "since 20XX," award badges, or "thousands sold," because they'd be easy to get wrong. If you have real ones, add them. Customer quotes from the market would be the best addition.
-- **Flavor descriptions are my inference** from the sauce names. Please adjust them to match what's actually in the bottle, especially the heat levels.
-- **Things you could name for more credibility:** the farms, if they're okay with it, and the market. Specifics like these make a brand feel real.
-- **I didn't include claims** like "all natural," "no preservatives," or "gluten-free." Add them only if you can back them up.
-- **The word count** is about 400 on the page. I can expand any section, such as a longer founder story or a shipping and FAQ blurb, to reach 600.
+- **I didn't invent history or proof.** There's no "since 20XX," no awards, no press mentions, and no customer quotes. You're a month into the online store, so those claims could be checked and could hurt trust. The brand feels established through specifics instead: the market table, the farms, the three-week ferment.
+- **Testimonials are the best upgrade.** You said people love the sauces. Add two or three real quotes from market customers, with their permission, under "The Lineup" or above the closer. They'll do more than any copy I write.
+- **Check my flavor descriptions.** I wrote them from the names and ingredients you gave me. Adjust anything that doesn't match how the sauces taste, especially the heat levels and serving suggestions.
+- **Name the farms** if they're happy to be named. That would be your strongest "real brand" detail.
+- **Trim to taste.** This runs about 450 words of body copy plus headings. I can expand any section if you want it closer to 600.

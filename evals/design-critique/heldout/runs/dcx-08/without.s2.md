@@ -1,3 +1,3 @@
-It's generic. "Work smarter, not harder," "whole team," and "one powerful platform" could be the homepage of any software product, and nothing says what Tallyhouse does or who it's for.
+Gut check: it's generic. "Work smarter, not harder" and "one powerful platform" could be any SaaS, and nothing says bookshops or stock counting.
 
-Lead with the specific thing, for example: **"Stock counts your whole shop can finish in an afternoon."** Follow with a line like "Tallyhouse helps independent bookshops count, reconcile, and reorder without the spreadsheet." Change the button to something concrete like "Start your first count."
+Try something specific, like **"Know what's on your shelves."** with a subhead such as "Tallyhouse makes stock counts quick and accurate for independent bookshops, so your whole team can count together." Also consider changing the button to something concrete like "Start your first count."

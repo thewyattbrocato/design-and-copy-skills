@@ -1,31 +1,26 @@
-Here's a rewrite built only from the facts you gave me. I've said "in Portland" throughout, so tell me if you serve anywhere else.
+Here's a rewrite that uses only the facts you gave me:
 
-**HERO**
-- **Headline:** Pet sitters in Portland, booked by the night.
-- **Subhead:** Hollowpaw connects Portland pet owners with background-checked sitters who host your pet in their home or come to yours. Message a sitter before you book.
-- **Button:** Find a sitter
+**HERO:** Trusted pet sitters in Portland, booked by the night.
+Hollowpaw connects Portland pet owners with background-checked sitters who set their own rates. Message a sitter before you book, then choose whether your pet stays at the sitter's home or the sitter comes to yours.
 
-**Small line under the hero (optional):** Launched in Portland in March 2026.
+**BUTTON:** Browse sitters
 
-**HOW IT WORKS** (replaces "Find. Connect. Relax.")
-- **Heading:** How Hollowpaw works
-1. **Find a sitter.** Browse sitters in Portland and compare their nightly rates. Sitters set their own prices.
-2. **Message before you book.** Ask questions and see if a sitter is a good fit for your pet.
-3. **Book by the night.** Choose the nights you need, and pick where your pet stays: the sitter's home, or the sitter comes to yours.
+**SECTION "How it works":**
+1. **Browse.** See sitters in Portland, their profiles, and their nightly rates.
+2. **Message.** Ask questions before you book.
+3. **Book by the night.** Your pet stays at the sitter's home, or the sitter comes to yours.
 
-**OUR SITTERS** (replaces "best in the business")
-- **Heading:** Every sitter is background checked
-- **Body:** We use a third-party screening company to run background checks on our sitters. You can message any sitter before you book to ask questions and get comfortable with them.
+**SECTION "Our sitters":** Every sitter is background checked
+Each sitter completes a background check through a third-party screening company. Sitters set their own nightly prices, so you can pick the sitter and rate that work for you.
 
-**FOOTER** (replaces "Join the Hollowpaw family today!")
-- **Heading:** Ready to book a sitter in Portland?
-- **Button:** Find a sitter
-- **Optional sitter line:** Want to sit? Set your own nightly rate and host or visit pets in Portland.
+**FOOTER:** Hollowpaw has been connecting Portland pet owners and sitters since March 2026.
+**Footer button:** Browse sitters in Portland
 
-**What changed and why**
-- The hero now says what the business is: pet sitting, Portland, nightly booking. Before, a visitor couldn't tell what Hollowpaw sold.
-- I removed "best in the business," "community built on trust," and "family." Visitors can't check those claims, and they don't tell anyone what you do.
-- "Background checked" is stated as a fact with the screening process named. That's the most concrete trust signal you have.
-- "Find a sitter" replaces "Learn more," since it tells the visitor what the button does.
+**What changed and why:**
+- **"Best in the business" is gone.** Nobody can verify it, and skeptical pet owners discount it. The background check is a more specific reason to trust a sitter.
+- **"Family" is gone.** It sounds warm but doesn't tell a visitor anything. The hero now says what the service is and where it operates.
+- **"Find. Connect. Relax." is replaced** with the actual steps. Visitors can see what happens after they click.
+- **"Portland" appears early and often,** so people searching for local pet sitters know this is for them.
+- **"Join the Hollowpaw family today!" is replaced** because it's unclear whether it means sign up as an owner or a sitter. If you want to recruit sitters, I can add a separate "Become a sitter" link.
 
-**Missing details that would help:** If you have a sitter count, review ratings, a price range, or a page explaining how the background check works, adding them would make the copy more persuasive. I left them out because I don't have those facts.
+Two things to decide: whether you want the March 2026 launch date in the footer (it signals credibility, but it also signals newness), and whether sitter recruitment should have its own call to action. If you send me the actual files or page templates, I can apply these changes directly.

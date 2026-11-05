@@ -26,7 +26,7 @@ A system is a small set of decisions made once and reused: values, names, compon
 3. **Three tiers, no more by default.** Raw values (ramps, scales) feed semantic roles (`text-secondary`, `surface-raised`, `border-subtle`, `accent`, `danger`, `space-inset-md`); components read semantic roles. Add a component-level token only when that component needs an independent knob; one-off values stay local and marked as exceptions. Mechanics in [token architecture](references/token-architecture.md).
 4. **Name by role and structure.** `color.text.secondary`, not `gray-600` in components and never `homepage-hero-blue`. Components are named for what they are (`media-card`), not where they live or what they show. Two things that look alike but behave differently (a navigation disclosure and a command menu) are two components; two that behave alike share one.
 5. **Themes remap semantics.** Light, dark, high contrast and brands swap what each role points to; raw values are never inverted. Dark surfaces get lighter as they rise, accents are re-tuned for the ground, and every text and component pair is checked in every theme. Honor the system color-scheme setting, allow an override, and test forced-colors.
-6. **Promote on second real use.** A pattern enters the system when a second team or screen needs it; generalize its interface by structure, document it, and check it is not a copy of an existing component's behavior. No speculative components because "systems have a carousel".
+6. **Promote on second real use.** A pattern enters the system when a second team or screen needs it; generalize its interface by structure, document it, and check it is not a copy of an existing component's behavior. No speculative components because "systems have a carousel". Admission to a shared catalog, merging copies, contribution and measures: [extraction, naming and adoption](references/extraction-naming-and-adoption.md).
 7. **Components are built from tokens and finished.** Variants follow behavior. Design every state that can occur (default, hover, focus, pressed, selected, disabled, loading, error, empty), plus names, keyboard, focus, target size, and edge content (long labels, translation, empty values). A spec with only a default state is half a spec. Template in [components and governance](references/components-and-governance.md).
 8. **Expressive outside, calm inside.** A brand's personality lives in neutrals, type and a few accents; transactional screens keep conventional, predictable patterns. Separate content from design the same way for charts: palette, text sizes and grid weight are tokens, the data mapping is not.
 9. **One source.** Tokens and components are defined once and consumed by design files and code (a token file exported to both). Any divergence is a defect with an owner, not a note.
@@ -58,8 +58,10 @@ Deliver the requested artifact first: the token set, the naming table, the spec,
 - Each theme remaps roles; text pairs pass in each.
 - Each component lists its states and edge content.
 - One source, an owner, and a way to deprecate are named.
+- Copies or forks of system parts are listed with a way to reconnect them, and a part invented for a screen stays a named local component.
 
 ## References
 
 - [references/token-architecture.md](references/token-architecture.md): load when writing or cleaning a token set; tiers, naming grammar, CSS and JSON formats, theme mechanics, a cleanup method.
 - [references/components-and-governance.md](references/components-and-governance.md): load when specifying a component, writing the guide, or setting up change rules and rollout.
+- [references/extraction-naming-and-adoption.md](references/extraction-naming-and-adoption.md): load when growing a system from existing screens, merging copies of a part, naming tokens or parts, deciding admission or who contributes, or choosing measures and how to present it.

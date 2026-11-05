@@ -1,35 +1,55 @@
-**Short version: this screen reads as a generic SaaS admin template, not a food-safety tool.** A food bank volunteer would not know within five seconds whether their fridges are safe, and that's the question this app exists to answer. I'd fix the top issues before any demo.
+The screen reads like a generic SaaS admin template. Its metrics and placeholder data don't match what Coldshelf is for, so I'd fix that before showing it to a food bank.
 
-## Must fix before the demo
+## The big problem
 
-1. **The stat cards are the wrong metrics.** Total Users, Revenue, Active Sessions, and Conversion Rate are SaaS vanity numbers. Most food banks are nonprofits with no revenue or conversion funnel, and 1,234 users is probably far more than any one food bank has. If "Revenue" is a template leftover, a food bank director will notice. Replace them with things like units in range, units out of range, logs overdue, and last reading time.
+The first thing a food bank manager needs to know is whether every fridge and freezer is in its safe range right now. This screen doesn't answer that anywhere. There are no units, no temperatures, no alerts, and no missed logs. Users, Revenue, Active Sessions, and Conversion Rate are the wrong headline metrics for a nonprofit that logs cold-chain temperatures.
 
-2. **The temperature data, the core of the product, is missing.** There are no current temperatures, no units (°F or °C), no target range, and no alarm state. The "Overview" line chart has no y-axis labels, so the line has no meaning. Show each unit's current temp and its range, and make the chart temperature over time per unit with a shaded safe-range band and a labeled axis.
+## Element by element
 
-3. **The data contradicts the page.** The subtitle says "here's what's happening today," but today is October 16, 2026, and the activity dates are January 1–3, 2026. The chart runs Jan–Dec, so Oct–Dec are empty or fake. Showing stale placeholder data in a demo makes the product look unfinished, and a food bank will assume the alerts are unreliable.
+**Stat cards**
+- Replace all four with product metrics, for example: Units in range, Units out of range, Units not logged today, Last reading (time and who logged it).
+- "Revenue" and "Conversion Rate" will confuse a food bank and may read as misplaced.
+- "Active Sessions" down 3% shows a red arrow, which suggests bad news for something that may not matter.
+- Don't rely on color alone for in-range or out-of-range. Use a text label and an icon too. Color-blind volunteers and anyone on a glare-heavy screen need the label.
 
-4. **Recent Activity is placeholder content.** "Item 1/2/3," "Active/Pending/Inactive," and identical "View" actions on every row tell the user nothing. Each row should be a real event: unit, temperature, who logged it, and when. An out-of-range reading should be visually distinct and say whether it's been acknowledged.
+**Overview chart**
+- The y-axis has no labels, so nobody can read a value. For temperature this is the core chart, and it needs the real scale (°F or °C) with a shaded safe band, for example 0–40°F for fridges and below 0°F for freezers.
+- Jan to Dec is the wrong time range. Staff care about the last 24 hours or 7 days per unit, with gaps shown where logs were missed.
+- As described, it's unclear what the line plots. Label it.
 
-5. **The error toast is dangerous for this product.** "Something went wrong. Please try again." doesn't say whether a temperature reading was saved. If a volunteer logs a reading and the save fails, they need to know that and need to retry. The toast should persist until dismissed and say what didn't save. Walk-in fridges often have spotty Wi-Fi, so offline queuing is worth asking about.
+**Recent Activity table**
+- The columns don't fit. Use Unit, Reading (temp), Status (In range / Out of range / Missed), Logged by, and Time.
+- "Item 1 / Active / Pending / Inactive" is placeholder data. Don't demo with it.
+- Dates like 01/01/2026 are ambiguous (US vs. day-first locales). Use an unambiguous format, or the locale's format consistently.
+- "View" on every row is weak. Make the whole row or the status a tap target, and keep an audit trail of who logged what and when. Health inspectors will ask for that.
 
-## Smaller issues
+**Sidebar**
+- Add Units (fridges and freezers) and Logs or Alerts. These are the core objects of the product.
+- "Users" should probably be "Volunteers" or "Staff," matching how food banks talk about their people.
+- "Analytics" and "Reports" overlap. Decide what each is for.
 
-- **Sidebar:** Units/Locations and Logs/Alerts are probably the most important destinations and are absent. "Analytics," "Reports," and "Users" are generic and may overlap.
-- **Deltas:** "+0.5% from last month" on a conversion rate is percentage points, which is ambiguous. The red down arrow on Active Sessions is arbitrary color logic. Deltas that matter here, like temperature trends, need clear time windows.
-- **Reports empty state:** "Add your first item!" should say what to add, such as "Log your first temperature reading," and what reports will show once there's data.
-- **Missing first-run state:** A new food bank's first view is the dashboard with no units. That's the screen that matters most for onboarding, and it's not shown.
-- **Dates:** "01/01/2026" is ambiguous across regions. Use "Jan 1, 2026" or relative times like "12 min ago."
-- **Search and bell:** Search needs a scope (units, logs, people?). The bell has no unread count.
-- **Accessibility:** Check contrast on status colors and make sure status isn't carried by color alone. Many volunteers are older or use shared tablets, so text sizes and tap targets matter.
+**Bell icon**
+- Make sure it's for temperature alerts and missed logs. A generic notification bell is a missed opportunity.
 
-## What I'd put on the screen instead
+**Reports empty state**
+- "Add your first item!" is vague. Say something specific, such as "Add your first fridge or freezer to start logging temperatures," and show what the report will contain.
+- Reports for food banks probably need a date range and an export or print option for auditors. Confirm that's in scope.
 
-1. A banner at the top when any unit is out of range or a log is overdue, with a link to the unit.
-2. A card per unit: name, current temp, status, last reading time, and 24-hour min/max.
-3. A 24-hour or 7-day temperature chart with the safe-range band.
-4. A "Needs attention" list: overdue logs and out-of-range events, each with an acknowledge action.
-5. Recent logs with who logged what and when.
+**Error toast**
+- "Something went wrong. Please try again." is the most dangerous message on the screen. If a temperature reading didn't save, the volunteer needs to know that, with "Reading not saved. Try again" and a retry action.
+- Toasts that vanish too quickly are a problem for failed saves. Keep errors visible until dismissed.
 
-**Caveat:** I reviewed your text description only. I can't see spacing, color, or real data, and the screen may have more than you described. If you can share a screenshot or export later, I can review the visual side too.
+## Things the mockup doesn't show that matter here
 
-Do you want me to write a short spec for this layout, or build a clickable mockup in code with realistic sample data?
+- **Offline logging.** Walk-in fridges are often in basements or back rooms with weak signal. If logging needs a connection, that's the most likely real-world failure. Confirm it works offline and syncs later.
+- **Mobile and tablet.** Volunteers will probably log on a phone or a shared tablet at the fridge. I can't see responsive layouts from this description.
+- **Contrast and text size.** I can't verify these from text, so check them against WCAG AA in the real design.
+
+## What I'd do before the demo
+
+1. Rebuild the top of the dashboard around unit status, alerts, and missed logs.
+2. Replace the placeholder table and chart with realistic temperature data.
+3. Fix the error-state copy and make failed saves persistent.
+4. Check offline behavior on a real device in a cold room or with signal off.
+
+I haven't seen the actual design, only your description, so treat this as a review of the content and structure rather than the visuals. If you can tell me which units and alert thresholds Coldshelf uses, what food banks in your pilot already track, and whether logging works offline now, I can draft a revised layout and copy for the dashboard.

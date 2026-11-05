@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Garage lumber rack comparison</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --fg: #231f1a;
+    --muted: #6b645b;
+    --line: #e4e0d9;
+    --rule: #231f1a;
+    --accent: #8a4b14;
+    --hover: #f1ede6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1916;
+      --fg: #ece7df;
+      --muted: #a39b8f;
+      --line: #35312b;
+      --rule: #ece7df;
+      --accent: #e0a066;
+      --hover: #25221e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 20px 48px;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  main { max-width: 980px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .sub { margin: 0 0 20px; color: var(--muted); font-size: 0.9375rem; }
+  .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 0.9375rem; color: var(--muted); }
+  .toolbar button {
+    font: inherit; color: var(--accent); background: none; border: 1px solid var(--line);
+    border-radius: 6px; padding: 4px 10px; cursor: pointer;
+  }
+  .toolbar button:hover { background: var(--hover); }
+  .scroll {
+    overflow-x: auto;
+    border-bottom: 1px solid var(--line);
+  }
+  .scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 760px; font-size: 0.9375rem; }
+  caption { text-align: left; color: var(--muted); padding: 0 0 8px; font-size: 0.875rem; caption-side: bottom; padding-top: 10px; }
+  th, td { padding: 11px 14px; white-space: nowrap; border-bottom: 1px solid var(--line); background: var(--bg); }
+  thead th {
+    position: sticky; top: 0; z-index: 2;
+    border-bottom: 2px solid var(--rule);
+    font-weight: 600; vertical-align: bottom; padding-top: 8px; padding-bottom: 8px;
+  }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover th, tbody tr:hover td { background: var(--hover); }
+  th:first-child, td:first-child { position: sticky; left: 0; z-index: 1; text-align: left; }
+  thead th:first-child { z-index: 3; }
+  tbody th { font-weight: 600; text-align: left; }
+  .num { text-align: right; font-variant-numeric: tabular-nums lining-nums; }
+  th.num { text-align: right; }
+  .group-derived { border-left: 1px solid var(--line); }
+  thead th button {
+    font: inherit; font-weight: inherit; color: inherit; background: none; border: 0; padding: 2px 0;
+    cursor: pointer; display: inline-flex; gap: 6px; align-items: baseline; text-align: inherit;
+  }
+  thead th.num button { flex-direction: row-reverse; }
+  thead th button:hover { color: var(--accent); }
+  thead th button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+  .unit { color: var(--muted); font-weight: 400; font-size: 0.8125rem; }
+  .arrow { display: inline-block; width: 1em; color: var(--accent); }
+  .notes { margin: 16px 0 0; color: var(--muted); font-size: 0.875rem; }
+  .notes p { margin: 0 0 4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Garage lumber rack</h1>
+  <p class="sub">Eight boards as measured, with price and weight per foot worked out so they compare directly.</p>
+
+  <div class="toolbar">
+    <span id="status" role="status" aria-live="polite">Shown in rack order.</span>
+    <button type="button" id="reset">Back to rack order</button>
+  </div>
+
+  <div class="scroll" tabindex="0" role="region" aria-label="Lumber comparison table, scrolls sideways on narrow screens">
+    <table id="t">
+      <caption>Measured values are in the first four columns; the last three are calculated from them.</caption>
+      <thead>
+        <tr>
+          <th scope="col" aria-sort="none"><button type="button" data-col="0" data-type="text">Board <span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="1" data-type="num"><span>Thickness <span class="unit">in</span></span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="2" data-type="num"><span>Length <span class="unit">ft</span></span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="3" data-type="num"><span>Weight <span class="unit">lb</span></span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="4" data-type="num"><span>Price <span class="unit">$</span></span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num group-derived" aria-sort="none"><button type="button" data-col="5" data-type="num"><span>Price per ft <span class="unit">$/ft</span></span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="6" data-type="num"><span>Weight per ft <span class="unit">lb/ft</span></span><span class="arrow" aria-hidden="true"></span></button></th>
+          <th scope="col" class="num" aria-sort="none"><button type="button" data-col="7" data-type="num"><span>Price per lb <span class="unit">$/lb</span></span><span class="arrow" aria-hidden="true"></span></button></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Walnut plank</th>
+          <td class="num" data-v="3">3.00</td>
+          <td class="num" data-v="8">8.000</td>
+          <td class="num" data-v="41">41.000</td>
+          <td class="num" data-v="96">96.00</td>
+          <td class="num group-derived" data-v="12">12.00</td>
+          <td class="num" data-v="5.125">5.13</td>
+          <td class="num" data-v="2.3415">2.34</td>
+        </tr>
+        <tr>
+          <th scope="row">Red oak board</th>
+          <td class="num" data-v="1.5">1.50</td>
+          <td class="num" data-v="10.5">10.500</td>
+          <td class="num" data-v="28.4">28.400</td>
+          <td class="num" data-v="54.5">54.50</td>
+          <td class="num group-derived" data-v="5.1905">5.19</td>
+          <td class="num" data-v="2.7048">2.70</td>
+          <td class="num" data-v="1.919">1.92</td>
+        </tr>
+        <tr>
+          <th scope="row">Maple slab</th>
+          <td class="num" data-v="2.25">2.25</td>
+          <td class="num" data-v="6.25">6.250</td>
+          <td class="num" data-v="37.125">37.125</td>
+          <td class="num" data-v="138.75">138.75</td>
+          <td class="num group-derived" data-v="22.2">22.20</td>
+          <td class="num" data-v="5.94">5.94</td>
+          <td class="num" data-v="3.7374">3.74</td>
+        </tr>
+        <tr>
+          <th scope="row">Pine 2x4</th>
+          <td class="num" data-v="1.5">1.50</td>
+          <td class="num" data-v="12">12.000</td>
+          <td class="num" data-v="9.5">9.500</td>
+          <td class="num" data-v="7.25">7.25</td>
+          <td class="num group-derived" data-v="0.6042">0.60</td>
+          <td class="num" data-v="0.7917">0.79</td>
+          <td class="num" data-v="0.7632">0.76</td>
+        </tr>
+        <tr>
+          <th scope="row">Cherry board</th>
+          <td class="num" data-v="0.75">0.75</td>
+          <td class="num" data-v="8">8.000</td>
+          <td class="num" data-v="12.2">12.200</td>
+          <td class="num" data-v="62">62.00</td>
+          <td class="num group-derived" data-v="7.75">7.75</td>
+          <td class="num" data-v="1.525">1.53</td>
+          <td class="num" data-v="5.082">5.08</td>
+        </tr>
+        <tr>
+          <th scope="row">Ash beam</th>
+          <td class="num" data-v="3.5">3.50</td>
+          <td class="num" data-v="9.125">9.125</td>
+          <td class="num" data-v="52">52.000</td>
+          <td class="num" data-v="120">120.00</td>
+          <td class="num group-derived" data-v="13.1507">13.15</td>
+          <td class="num" data-v="5.6986">5.70</td>
+          <td class="num" data-v="2.3077">2.31</td>
+        </tr>
+        <tr>
+          <th scope="row">Birch plywood</th>
+          <td class="num" data-v="0.5">0.50</td>
+          <td class="num" data-v="4">4.000</td>
+          <td class="num" data-v="18.75">18.750</td>
+          <td class="num" data-v="38.5">38.50</td>
+          <td class="num group-derived" data-v="9.625">9.63</td>
+          <td class="num" data-v="4.6875">4.69</td>
+          <td class="num" data-v="2.0533">2.05</td>
+        </tr>
+        <tr>
+          <th scope="row">Cedar plank</th>
+          <td class="num" data-v="1.25">1.25</td>
+          <td class="num" data-v="14">14.000</td>
+          <td class="num" data-v="16">16.000</td>
+          <td class="num" data-v="44.2">44.20</td>
+          <td class="num group-derived" data-v="3.1571">3.16</td>
+          <td class="num" data-v="1.1429">1.14</td>
+          <td class="num" data-v="2.7625">2.76</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="notes">
+    <p>Widths weren't measured, so per-foot figures are per linear foot of board, not per board foot.</p>
+    <p>Calculated columns are rounded to the cent or hundredth. Sorting uses the unrounded values.</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  var table = document.getElementById('t');
+  var body = table.tBodies[0];
+  var rows = Array.prototype.slice.call(body.rows);
+  var heads = table.querySelectorAll('thead th');
+  var status = document.getElementById('status');
+
+  function clearArrows() {
+    heads.forEach(function (th) {
+      th.setAttribute('aria-sort', 'none');
+      th.querySelector('.arrow').textContent = '';
+    });
+  }
+
+  function value(row, col, type) {
+    if (col === 0) return row.cells[0].textContent.trim().toLowerCase();
+    return parseFloat(row.cells[col].getAttribute('data-v'));
+  }
+
+  function sortBy(col, dir, label) {
+    var sorted = rows.slice().sort(function (a, b) {
+      var x = value(a, col), y = value(b, col);
+      var r = typeof x === 'string' ? x.localeCompare(y) : x - y;
+      return dir === 'ascending' ? r : -r;
+    });
+    sorted.forEach(function (r) { body.appendChild(r); });
+    clearArrows();
+    heads[col].setAttribute('aria-sort', dir);
+    heads[col].querySelector('.arrow').textContent = dir === 'ascending' ? '\u2191' : '\u2193';
+    status.textContent = 'Sorted by ' + label + ', ' + (dir === 'ascending' ? 'lowest first.' : 'highest first.');
+    if (col === 0) status.textContent = 'Sorted by board name, ' + (dir === 'ascending' ? 'A to Z.' : 'Z to A.');
+  }
+
+  table.querySelectorAll('thead button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var col = parseInt(btn.getAttribute('data-col'), 10);
+      var th = heads[col];
+      var dir = th.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+      var label = btn.firstChild.textContent ? btn.firstChild.textContent.trim() : btn.textContent.trim();
+      var unit = btn.querySelector('.unit');
+      if (unit) label = label.replace(unit.textContent, '').trim();
+      sortBy(col, dir, label.toLowerCase());
+    });
+  });
+
+  document.getElementById('reset').addEventListener('click', function () {
+    rows.forEach(function (r) { body.appendChild(r); });
+    clearArrows();
+    status.textContent = 'Shown in rack order.';
+  });
+})();
+</script>
+</body>
+</html>

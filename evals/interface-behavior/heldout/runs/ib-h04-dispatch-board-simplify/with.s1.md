@@ -1,34 +1,34 @@
-**Short version:** the plan is aimed at a first-time user, and your users are six people who are past expert level. It would make the product worse for them. Only one part of the instinct is worth keeping.
+**Short version:** the plan is aimed at a problem this product doesn't have. Three of the four items would make the board worse for six people who use it eight hours a day. One has a narrow version worth keeping.
 
-**Assumption:** six coordinators, desktop and keyboard, eight hours a day, every day. I've treated that as a given. Dense, keyboard-driven, remembered state is the right design for it.
+**Assumption:** the users are six trained coordinators on desktops with a keyboard, in long daily sessions. They are well past their first week, so this is expert-tool territory, not first-run design.
 
-**1. Morning setup wizard: drop it.**
-- The board already remembers each coordinator's filters and sort. A wizard asks something the product already knows, six people times every morning, for no benefit.
-- If a coordinator's filters are wrong on a given day, they change them in two keystrokes. A wizard turns a rare correction into a daily obligation.
-- If the PM's worry is "people forget to set the right filters", show the active filters in the header, with a one-key reset. That surfaces state without gating the board.
+**1. Daily setup wizard: drop it.**
+- The board already remembers filters and sort, so the wizard would ask coordinators to re-enter what the product already knows. That's the "wizard for something it could remember" anti-pattern.
+- It adds a mandatory step to every shift. Six people times roughly 250 days a year is a lot of wasted clicks, and the cost is paid every day.
+- If the aim is easier day-to-day changes, add a visible "filters: remembered, reset" indicator and one-key presets such as "my doors" or "inbound only".
 
-**2. First-login tour with tooltips: drop it, or replace it with something small.**
-- With six users, a tour is a one-time cost that mostly lands on people who already know the tool. New hires are the only audience.
-- If onboarding matters, add a shortcut cheat-sheet on `?` and a link to it in the header. It's cheap, it's always available, and it helps experts who want to speed up.
-- Make sure every tooltip-worthy control has a visible label, so nothing needs explaining.
+**2. Welcome tour with tooltips: mostly skip.**
+- Everyone using this has probably used it for a while, and a new hire is a handful of people at most. A tour built for mass onboarding is overkill.
+- Tours are dismissed and forgotten. What a new coordinator actually needs is a discoverable shortcut sheet, opened with `?` or from a visible button.
+- If you want to help new hires, give them a short, skippable checklist or a shortcut cheat sheet. Don't block the screen on first login.
 
-**3. Bigger rows and a card per truck: this does the most damage.**
-- Density is the feature. Coordinators scan many trucks and doors at once. Larger padding and cards would cut how many rows fit on screen, probably by half or more, which means more scrolling and more lost context. I haven't measured this, so check it against your real screens.
-- If the real complaint is "it looks intimidating", offer a **density toggle** that is remembered per user, with dense as the default. Or fix the real readability issues: contrast, row striping, a clearer status color plus a text or icon cue so color isn't the only signal.
-- Ask the PM what prompted this. If it came from a new person's first impression, that's an onboarding problem, not a daily-use problem.
+**3. Bigger rows and a card per truck: this is the most harmful item.**
+- Density is the feature. A dense grid lets a coordinator see the whole yard at once. Cards with more padding might show a third as many trucks per screen, which means more scrolling and more lost context during a busy hour.
+- Scanning a grid by column ("what's at doors 4 to 9?") is much faster than scanning cards.
+- If there's a real complaint behind this, such as hard-to-read rows, fix it with targeted changes: clearer status color plus a text or icon cue, better contrast, a slightly taller row, and a user-selectable density setting. Don't replace the layout.
+- Ask the PM what prompted this. If it came from a demo or from people who don't use the board, that tells you whose preferences it reflects.
 
-**4. Confirmation after every door-change drag: replace it with undo.**
-- A confirmation on a frequent, reversible action trains people to click through without reading. After a week they'll confirm blindly, including the one time it matters.
-- Moving a truck to another door is reversible, so give it an **Undo** (toast or `Ctrl+Z`, roughly 6–10 seconds) instead. Mistakes become cheap to fix and the flow stays fast.
-- Make the result visible in place: briefly highlight the moved truck and show "Truck 42: Door 7 → Door 9".
-- Check one thing: does a move trigger something external, like a driver notification or a carrier message? If so, that part can't be undone, and it's the one place a specific confirmation makes sense. Use a single named prompt, such as "This will notify the driver", and only for moves that trigger it.
-- Confirm that dragging has a keyboard route too (select a truck, pick a door), since the board is keyboard-driven.
+**4. Confirm after every door-change drag: replace it with undo.**
+- Moving a truck to another door is reversible and happens constantly. Asking "are you sure?" every time trains people to click through it within a day, so it stops protecting anything and slows every move.
+- Make the move instant and show a brief "Moved Truck 123 to Door 7. Undo" toast, with `Ctrl/Cmd+Z` as the shortcut.
+- If the real fear is accidental drops, have the board flag a conflict inline (door occupied, wrong dock type). Keep a confirmation only for moves that can't be undone, for example ones that notify a carrier. Even then, make it specific and rare.
+- Separately, check whether a move can be done by keyboard. If drag is the only route, that's a gap worth fixing.
 
-**What to keep from "friendlier":**
-- Visible active-filter state with a reset.
-- Undo on moves.
-- A `?` shortcut sheet.
-- An optional, remembered density setting.
-- Clearer error and conflict messages, for example when a door is double-booked. That's where "friendly" pays off for people in a hurry.
+**What I'd do instead:**
+- Keep the grid and the remembered state.
+- Add undo for moves, plus conflict warnings in place.
+- Add a shortcut cheat sheet.
+- Offer an optional comfortable-density toggle if people ask for one.
+- Show the current filters and sort on screen, with a one-click reset.
 
-**How to put it to the PM:** the plan optimizes for the first five minutes, and the product is used for thousands of hours. Suggest shadowing a coordinator for a shift and listing what slows them down. I'd bet it isn't any of these four items. If they still want to test one, A/B the density toggle with two or three coordinators for a week. It's the least risky of the four.
+**How to put it to the PM:** the goal of friendlier is fine, but for these users friendly means fewer steps and nothing between them and the next truck. Before changing anything, sit with two or three coordinators for an hour and watch where they actually hesitate or make mistakes. That will give you real friction points to fix, and it's a stronger argument than my opinion.

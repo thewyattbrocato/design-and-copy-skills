@@ -1,23 +1,32 @@
-I think the problem is less in any single page and more in what carries from one page to the next, and what the user sees before paying. I'm working from the text only, so I can't see layout, font size, or whether the policy is a link or a checkbox.
+The thing the manager is sensing is probably this: **the cancellation policy shows up only after the customer has entered card details, and nothing in the flow lets them act on it.** Each page can pass QA on its own, but the problems show up across the sequence.
 
-**Most likely culprits, in rough order of concern:**
+**1. The cancellation policy is disclosed too late, and only in small print.**
+The only mention of the 24-hour rule is under the "Complete purchase" button on Page 3. Customers see the court price and the total before that, and nothing before payment says the booking is non-refundable inside 24 hours. Clicking "Complete purchase" is the only acceptance step, with no checkbox or explicit agreement.
 
-1. **The cancellation policy appears only after the payment fields, in small print, and the flow has no way to cancel.** The 24-hour rule and "late cancellations are not refunded" show up under the Complete purchase button, so the user agrees to it by paying. Page 4 offers only "Back to home," with no link to manage or cancel the booking. Someone who wants to cancel has no visible path, and the rule could be hard to enforce or to defend if disputed. This is worth a check with the club's policy owner, and possibly a lawyer, about whether the disclosure is clear and placed before the purchase commitment.
+**2. The flow has no way to cancel.**
+The policy tells customers to cancel at least 24 hours ahead, but Page 4 offers only "Back to home." There's no link to view or cancel the booking, and the confirmation doesn't mention the policy. A customer who wants to cancel has to guess how, or call the club.
 
-2. **The sport disappears after page 1.** The user picks Tennis or Pickleball, but the result reads only "Court 3," and the payment summary doesn't name a sport either. Someone could easily pay for a court that isn't the sport they meant, and nothing before payment would catch it.
+**3. A booking made within 24 hours is non-refundable the moment it's made.**
+Nothing says this. A customer booking tomorrow at 6 PM can't cancel in time, and the page doesn't tell them so.
 
-3. **There's no real review step.** Page 2 collects name, email, and guest count, but page 3 summarizes only court, date, and time. The user pays without seeing who the booking is under, which email the confirmation goes to, or how many guests are coming. A mistyped email would send the confirmation to the wrong person, and the flow gives no chance to catch it.
+**4. "Late cancellation" is undefined.**
+"At least 24 hours before your slot" leaves open which time zone applies, whether the cutoff is the slot start, and whether a no-show or partial cancellation counts as "late."
 
-4. **Guests are collected but go nowhere.** The guest count doesn't change the price, doesn't appear in the summary, and doesn't appear on the confirmation. If guests carry a fee or a club policy, the price is wrong. If they don't, the field does nothing downstream. Either way, someone should confirm what it's for.
+**5. The price shown before payment isn't the price charged.**
+Page 1 shows $24. Page 3 charges $25.92 after $1.92 tax. The tax is revealed only at the last step, which is classic drip pricing and a common source of complaints. The tax may be correct; the problem is when the customer sees it.
 
-5. **The confirmation is thin and depends on email.** Page 4 shows a reservation number and says the details are "on its way to your inbox," but it doesn't restate the court, date, time, or amount. If the email is delayed or misaddressed, the user has nothing on screen to check. The copy also mixes "purchase," "order," and "reservation," which may confuse people about what they bought.
+**6. The confirmation doesn't confirm the booking.**
+Page 4 says nothing about the court, date, time, sport, or guest count. It says the reservation is "on its way to your inbox," so the customer has nothing to check on screen if the email is slow or lands in spam. It also says "purchase" and "order," which is odd for a court slot.
 
-**Ruled out:** The math checks out. $24.00 plus 8% tax is $1.92, for a total of $25.92. Sat 14 November 2026 is a Saturday, which is correct for today's date.
+**7. Sport and guests disappear after Page 2.**
+- The sport filter on Page 1 isn't clearly marked as selected, and the result "Court 3" doesn't name a sport. Page 3's summary doesn't show the sport either, so a customer who wanted pickleball could pay for a tennis court without noticing.
+- Guests are collected (0–3) but never appear again. I can't tell from the text whether guests cost extra, need to be registered, or are recorded at all. If the club charges per guest or limits guests, that's a gap.
 
-**To settle it, I'd want to know:**
-- Is there a guest fee or guest policy?
-- Is a court tied to one sport, or can Court 3 be either?
-- Does the policy show as a link or checkbox on a real screen, or only as plain text?
-- Can staff cancel bookings, and if so, how does a member ask?
+**What I'd change, in order of importance:**
+1. Show the cancellation terms before payment, with a required checkbox, and repeat them on the confirmation.
+2. Add a cancel/manage-booking link to the confirmation and to the confirmation email, and make the cutoff explicit (for example, "cancel by 6:00 PM Friday for a Saturday 6:00 PM slot, America/New_York").
+3. Show the total with tax on the court results page, or label the $24 as "plus tax."
+4. Put the booking details on the confirmation page: sport, court, date, time, guest count, and reservation number.
+5. Change "purchase/order" to "booking/reservation," and label the selected sport on every page.
 
-If you can share the code or a screenshot of page 3, I can check the policy placement and the sport and guest handling against the actual implementation.
+I worked only from the text you pasted, so I haven't checked the live app, and I'm inferring the guest-fee and time-zone questions from what's missing. The club should confirm those with whoever owns the pricing and policy.

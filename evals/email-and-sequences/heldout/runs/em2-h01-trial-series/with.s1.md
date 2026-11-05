@@ -1,138 +1,124 @@
-# Parlay Hours trial series
+**Series: Parlay Hours 14-day trial**
+Sender name: Dana Okafor (reply-to: Dana's inbox)
 
-**Sender name:** Dana Okafor
-**Reply-to:** Dana's inbox
-**Stop rule:** Anyone who subscribes stops receiving the series, so skip days 9 and 13 for them. A reply that says no, or an unsubscribe, ends it too.
+| Send | Job | Subject |
+|---|---|---|
+| Day 0 | Welcome, add your staff | Your Parlay Hours trial has started |
+| Day 2 | Post the first shift | Post your first shift swap |
+| Day 5 | Staff who don't want the app | Staff who'd rather just text |
+| Day 9 | Say what happens when the trial ends | What happens when your trial ends |
+| Day 13 | Subscribe | Keep Parlay Hours: $39/month |
 
 ---
 
-## Email 1 · Day 0 (right after signup)
+**EMAIL 1: Day 0**
 
-**Subject:** Welcome to Parlay Hours: start here
-**Preview:** Step one is importing your staff list from a spreadsheet.
+**Subject:** Your Parlay Hours trial has started
+**Preview:** 14 days, no card needed. First step: add your team.
 
-Hi,
+Hi {{first_name|there}},
 
-Your 14-day trial of Parlay Hours has started. No card was needed.
+Your 14-day trial of Parlay Hours is running. You didn't enter a card, and you won't be charged.
 
-Here's how it works. When someone can't work a shift, they post it. A coworker claims it. You approve the swap with one tap.
+Parlay Hours works like this: a staff member posts a shift they can't work, a coworker claims it, and you approve it with one tap.
 
-The first step is getting your people in. You can import your staff list from a spreadsheet with name, phone and role columns.
+The first step is getting your team in. You can import your staff list from a spreadsheet with three columns: name, phone and role.
 
-**[Import your staff list](https://parlayhours.example/start)**
+[Add your staff](https://parlayhours.example/start)
 
-I'll email you on days 2, 5, 9 and 13 of the trial, each one about a single thing. If you'd like to add me to your contacts, these won't land in spam.
-
-I'm Dana, the founder, and this goes to my real inbox. If something's confusing, reply and I'll read it.
+I'll send you four more emails over the next two weeks, on days 2, 5, 9 and 13. If you have a question at any point, reply to this email. It comes straight to my inbox.
 
 Dana Okafor
 Founder, Parlay Hours
 
-*Unsubscribe*
+P.S. If you add me to your contacts, these won't land in spam.
 
 ---
 
-## Email 2 · Day 2
+**EMAIL 2: Day 2**
 
-**Subject:** Staff who won't download an app
-**Preview:** They can post and claim shifts by text message.
+**Subject:** Post your first shift swap
+**Preview:** Post one, have a coworker claim it, approve it.
 
-Hi,
+Hi {{first_name|there}},
 
-Some of your staff won't want another app on their phone. That's fine, because they don't need one.
+The fastest way to see whether Parlay Hours fits your restaurant is to run one real swap through it.
 
-Anyone on your team can post a shift they can't work, or claim one a coworker posted, by text message. Your phone numbers are already in from the import, so it works with the list you have.
-
-That means you don't have to get everyone to install something before the first swap can happen. Staff who like the app can use it, and staff who'd rather text can text.
-
-If you haven't imported your staff list yet, that's the one step left before anyone can use either.
-
-**[Open Parlay Hours](https://parlayhours.example/start)**
-
-Dana
-
-*Unsubscribe*
-
----
-
-## Email 3 · Day 5
-
-**Subject:** Try one real shift swap this week
-**Preview:** Post it, let a coworker claim it, approve with one tap.
-
-Hi,
-
-The easiest way to see whether Parlay Hours fits your restaurant is to run one real swap through it.
-
-Next time someone says they can't make a shift, ask them to post it instead of working it out in a group chat. Then:
-
-1. They post the shift.
-2. A coworker claims it, in the app or by text.
+1. Have someone post a shift they can't work.
+2. A coworker claims it.
 3. You get the request and approve it with one tap.
 
-That's the whole loop. Once you've seen it with your own staff and your own schedule, you'll know whether it's worth keeping.
+If you haven't added your team yet, start with the spreadsheet import (name, phone, role).
 
-If something doesn't work the way you expected, reply and tell me. I'd rather hear it now than have you quietly give up.
-
-**[Open Parlay Hours](https://parlayhours.example/start)**
+[Open Parlay Hours](https://parlayhours.example/start)
 
 Dana
 
-*Unsubscribe*
-
 ---
 
-## Email 4 · Day 9
+**EMAIL 3: Day 5**
 
-**Subject:** What Parlay Hours costs after day 14
-**Preview:** $39/month per location. Do nothing and nothing is charged.
+**Subject:** Staff who'd rather just text
+**Preview:** They can claim and post shifts by text message.
 
-Hi,
+Hi {{first_name|there}},
 
-You're most of the way through your trial, so here is the price, stated plainly.
+Some of your staff won't want another app on their phone. They don't need one.
 
-- **After the trial:** $39 a month per location.
-- **If you do nothing:** your account goes read-only. Nothing is charged, and we never asked for a card.
-- **If you subscribe:** you keep using it as you do now.
+In Parlay Hours, staff can claim and post shifts by text message. They can swap shifts without installing or logging into anything, and you still approve each swap with one tap.
 
-You don't have to decide today. If you want to keep going when the trial ends, you can subscribe any time from the billing page.
+So you can roll it out to the whole team, not only the people who like apps.
 
-**[Go to billing](https://parlayhours.example/billing)**
-
-If you have a question about pricing, or about how Parlay Hours would work for your setup, reply to this email.
+[Try a swap by text](https://parlayhours.example/start)
 
 Dana
 
-*Unsubscribe*
+---
+
+**EMAIL 4: Day 9**
+
+**Subject:** What happens when your trial ends
+**Preview:** Short version: nothing is charged unless you subscribe.
+
+Hi {{first_name|there}},
+
+Here's what happens at the end of your trial, so it isn't a surprise.
+
+- You didn't give us a card, so we have nothing to charge.
+- If you do nothing, your account goes read-only. Nothing is charged.
+- If you want to keep going, Parlay Hours is $39 a month per location.
+
+You don't need to decide today. If something isn't working or you can't tell whether it fits your place, reply and tell me. I read every reply myself.
+
+[Back to Parlay Hours](https://parlayhours.example/start)
+
+Dana
 
 ---
 
-## Email 5 · Day 13
+**EMAIL 5: Day 13**
 
-**Subject:** Your trial ends tomorrow
-**Preview:** Subscribe to keep going, or do nothing: read-only, no charge.
+**Subject:** Keep Parlay Hours: $39/month
+**Preview:** Your trial ends tomorrow. Do nothing and it goes read-only.
 
-Hi,
+Hi {{first_name|there}},
 
-Your 14-day trial ends tomorrow.
+Your trial ends tomorrow.
 
-If Parlay Hours has been useful, subscribe to keep it going. It's $39 a month per location.
+To keep using Parlay Hours, subscribe on the billing page. It's $39 a month per location.
 
-**[Subscribe on the billing page](https://parlayhours.example/billing)**
+[Subscribe on the billing page](https://parlayhours.example/billing)
 
-If you don't, nothing is charged. Your account goes read-only.
+If you do nothing, your account goes read-only and nothing is charged. If you'd like to keep going but something is holding you back, reply and tell me. It goes to my inbox.
 
-If it wasn't right for you, I'd like to know why. A one-line reply helps me more than you'd think.
-
-Thanks for trying it.
-
+Thanks for trying it,
 Dana Okafor
 Founder, Parlay Hours
 
-*Unsubscribe*
-
 ---
 
-**Before you paste:**
-- There was no login or dashboard link in what you gave me, so the "Open" and "Import" buttons use the sign-up link. Swap in your app's login link if you have one.
-- I wrote "ends tomorrow" on day 13 because a trial that starts on day 0 and runs 14 days ends on day 14. If your tool counts the trial differently, adjust that email's subject and first line.
+**Notes for your email tool**
+- **Stop rule:** Remove anyone from the series when they subscribe or unsubscribe. A reply asking to stop should also end it, so someone needs to watch Dana's inbox for those.
+- **Merge tag:** `{{first_name|there}}` is placeholder syntax, so change it to your tool's fallback format. Include an unsubscribe link in the footer.
+- **Day-13 timing:** "Ends tomorrow" assumes the 14 days count from signup day. If your trial actually ends on a different day, change that line.
+- **Usage data:** I had no usage data, so the emails go by day of trial. Each email still reads fine whether or not they've done the step.

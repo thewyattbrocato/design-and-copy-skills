@@ -1,30 +1,27 @@
-The jaggedness comes from the data, not the alignment. Right-alignment lines up the *end* of each string, but the values have different numbers of decimals (0, 1, 2 and 3) and each one is followed by " km". The decimal points land in a different place on every row, and so do the digits of the same place value. For example, the 4 in 1,204.5 doesn't sit above anything meaningful in the next row.
+**Cause:** right-alignment only lines up the right edge of each string. Your rows have 1, 0, 2, 3 and 1 decimal places, and the " km" is attached to each one. So the decimal points land in different places and the digits don't stack by place value. The values are correct, but the eye can't compare them.
 
-**The fix has three parts:**
+**Fix:** three changes.
 
-1. **Use the same number of decimals in every row.** Pick the fewest digits that support the comparison. For distances, 1 or 2 is probably plenty:
+1. **Use the same number of decimals in every row of the column.** This is the main fix. Once every value has the same decimals, right-aligning also aligns the decimal points.
+2. **Move the unit into the header**, "Distance (km)", and leave the cells as bare numbers. Otherwise " km" sits after the number and is part of what you're trying to align.
+3. **Turn on tabular figures** so every digit has the same width:
 
-   ```
-    1,204.50
-       98.00
-   12,030.25
-        7.13
-      640.00
-   ```
-   Use 3 decimals only if 7.125 has to stay exact. Format with something like `toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})` so the formatter, not the data, controls the digits.
+```css
+td.num, th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+```
 
-2. **Move the unit into the header and drop it from the cells.** Use "Distance (km)" as the header. A repeated "km" adds a trailing suffix that has to line up too. It's also the clutter that makes the column hard to scan.
+Put the `num` class on the header cell too, so the header lines up with its data.
 
-3. **Turn on tabular figures** so every digit has the same width and digits stack by place value:
+Don't blame the font stack. Trebuchet MS and Verdana normally have fixed-width digits already. The `tabular-nums` rule is cheap insurance, and it guarantees the behavior if the stack falls through to `sans-serif`.
 
-   ```css
-   td.num, th.num {
-     text-align: right;
-     font-variant-numeric: tabular-nums;
-   }
-   ```
-   Put the `num` class on the header cell as well, so the header's alignment matches its data. Verdana and Trebuchet MS both generally have fixed-width digits, so this is mostly a safeguard. If the digits still look uneven in your rendering, set that column in a face with real tabular figures.
+**Choosing the decimals:**
 
-If the units really do differ by row (some km, some m), keep the unit in the cell. In that case, align on the number, for example with the unit in a separate narrow column or a fixed-width span.
+| Option | When to use | Result |
+|---|---|---|
+| 1 decimal | Distance only needs to be comparable. | 1,204.5 / 98.0 / 12,030.3 / 7.1 / 640.0 |
+| 3 decimals | You must keep every value exact. | 1,204.500 / 98.000 / 12,030.250 / 7.125 / 640.000 |
 
-I haven't seen your markup, so I haven't checked whether another style, such as `text-align: center` on a wrapper or `white-space` rules, is overriding the right-alignment. If it's still jagged after these changes, send me the table's HTML and CSS.
+The 1-decimal option rounds 12,030.25 and 7.125, so it changes what's displayed. If anyone needs to reconcile these against source data, use 3 decimals. Format with `toFixed(n)`, or with `Intl.NumberFormat` and `minimumFractionDigits` set equal to `maximumFractionDigits`. That keeps the thousands separators and forces the same decimals in every row.

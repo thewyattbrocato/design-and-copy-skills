@@ -55,6 +55,20 @@ Report with place, who is affected, harm (money, privacy, time, trust) and an ho
 - Invented reviews, counts or endorsements.
 - A common convention is not a defense; ask whether the person could decide freely with what is shown.
 
+## AI and automated features
+
+Use only when a model writes, suggests, summarizes or classifies something on screen, or software acts for the person. A screen with no such part gets none of this. Each question below is a finding when it fails; keep the pass to the questions the screen raises.
+
+- **Output or record.** Which parts are generated and which are fixed facts (a price, a dose, an account number)? A fact with one right answer is shown with its record, not generated.
+- **Doubt.** What does the screen show when the model is unsure, wrong or has nothing? Look for a plain "I don't know" state and doubtful parts marked where they sit. A percentage badge or a footer disclaimer as the whole plan is a finding; hiding doubt on a consequential output is major.
+- **Ignoring is free.** Declining or typing past a suggestion changes nothing, accepting takes a deliberate step, and nothing sends, books or pays on one tap. Acting on ignore is major, a blocker when the harm is real.
+- **Read-back.** Can the person see how the request was read before anything acts on it?
+- **Unnoticed errors.** Where would a wrong output that nobody notices hurt someone, and what makes the person check? Harmless output needs no added steps.
+- **Sources.** Does each source link point to a passage that was actually used? A link to nothing is major.
+- **Claims.** Does the name, voice or avatar claim more than the feature does?
+- **People not at the screen.** Who is affected without being present: the person a summary is about, people near an always-listening device.
+- **One sample.** Output varies by run. Judge across several outputs when supplied; with one, say "not checked: one sample".
+
 ## Watching people
 
 Use when a finding hinges on comprehension, a team argues over opinion, or someone asks whether to test.

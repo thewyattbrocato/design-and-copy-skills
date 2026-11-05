@@ -1,124 +1,130 @@
-Here's one system. Everything aligns to a single page container, text is capped by a measure, and wide things scroll inside themselves instead of stretching the page. I didn't have your site's source, so the class names are placeholders.
+Here's one set of rules. Every page uses the same outer container, gutter, and grid. Prose is narrower than code, tables, and figures, and both are centered on the same axis.
 
 ## The numbers
 
-| Token | Value | Why |
+| Token | Value | Where it lands |
 |---|---|---|
-| Body size | `clamp(1rem, 0.95rem + 0.25vw, 1.125rem)` (16 → 18px) | Grows slightly on big screens, never past 18px |
-| Measure (`--measure`) | `68ch` | Roughly 65–75 characters per line, the readable range |
-| Gutter | `clamp(1rem, 4vw, 2.5rem)` (16 → 40px) | Phone margin is 16px; the margin grows with the screen |
-| Grid gap | `clamp(1rem, 2.5vw, 2rem)` (16 → 32px) | Matches the gutter's proportions |
-| Page max (`--page-max`) | `1200px` | Marketing grid and pricing never widen past this |
-| Article max (`--article-max`) | `1040px` | Code blocks and tables get this width; prose still stays at the measure |
-| Breakpoints | `640px` (sm), `960px` (md) | Two breakpoints are enough for 1, 2, or 3 columns |
+| Container max | 1280px | Outer edge stops growing above this |
+| Gutter | 16px → 32px, fluid (`clamp(1rem, 4vw, 2rem)`) | Side padding |
+| Grid gap | 16 / 24 / 32px | Phone / ≥640 / ≥1024 |
+| Section padding | 48px → 120px, fluid | Vertical rhythm |
+| Prose measure | 68ch | About 65–75 characters per line |
+| Wide blocks | 1056px | Code, tables, figures, wide images |
+| Prose size | 16px → 18px, fluid | Body text |
+| Prose line-height | 1.65 | Body text |
 
-Custom properties can't be used inside `@media` conditions, so the breakpoints are literal values. Keep them in one comment block so they stay in sync.
+Breakpoints are 40rem (640), 48rem (768), 64rem (1024), and 80rem (1280). Use only these. Media queries can't read CSS variables, so the values are repeated in the queries.
 
-## The CSS
+## CSS
 
 ```css
+/* layout.css: one set of rules for every page */
+
 :root {
-  /* Type */
-  --body-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --measure: 68ch;
+  --container: 80rem;                                   /* 1280px outer max */
+  --gutter: clamp(1rem, 4vw, 2rem);                     /* 16px → 32px */
+  --gap: 1rem;                                          /* 16px phone */
+  --section-y: clamp(3rem, 2rem + 6vw, 7.5rem);         /* 48px → 120px */
 
-  /* Space */
-  --gutter: clamp(1rem, 4vw, 2.5rem);
-  --gap: clamp(1rem, 2.5vw, 2rem);
+  --measure: 68ch;                                      /* prose column */
+  --wide: 66rem;                                        /* 1056px: code, tables, figures */
 
-  /* Widths */
-  --page-max: 1200px;     /* marketing + pricing */
-  --article-max: 1040px;  /* docs: code, tables, figures */
+  --prose-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16px → 18px */
+  --prose-leading: 1.65;
 }
 
-/* Breakpoints (literal values, keep in sync with the tokens above):
-   sm: 640px   md: 960px   */
+@media (min-width: 40rem) { :root { --gap: 1.5rem; } }  /* 640px */
+@media (min-width: 64rem) { :root { --gap: 2rem; } }    /* 1024px */
 
-body {
-  font-size: var(--body-size);
-}
+*, *::before, *::after { box-sizing: border-box; }
 
-/* Page container: every section aligns to this edge */
+/* Outer container: shared by front page and articles */
 .container {
-  width: min(100% - 2 * var(--gutter), var(--page-max));
+  max-width: var(--container);
   margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-/* Article container: same gutter, wider cap */
-.article {
-  width: min(100% - 2 * var(--gutter), var(--article-max));
-  margin-inline: auto;
-}
+/* Full-bleed backgrounds go on <section>, content goes inside .container */
+.section { padding-block: var(--section-y); }
 
-/* Prose is capped at the measure and centered in the article */
-.article > * {
-  max-width: var(--measure);
-  margin-inline: auto;
-}
-
-/* Wide blocks use the full article width */
-.article > pre,
-.article > .table-wrap,
-.article > figure {
-  max-width: var(--article-max);
-}
-
-/* Code scrolls inside its own box; it never widens the page */
-pre {
-  overflow-x: auto;
-}
-
-/* Tables scroll inside a wrapper instead of squashing */
-.table-wrap {
-  overflow-x: auto;
-}
-.table-wrap table {
-  width: max-content;
-  min-width: 100%;
-  border-collapse: collapse;
-}
-
-/* Grid: feature rows and pricing share one rule.
-   minmax(0, 1fr) stops a wide child (code, table) from forcing a column wider. */
+/* Grids. minmax(0, 1fr) stops wide children from forcing a track wider */
 .grid {
   display: grid;
   gap: var(--gap);
   grid-template-columns: minmax(0, 1fr);
 }
-@media (min-width: 640px) {
-  .grid--features {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (min-width: 960px) {
-  .grid--features,
-  .grid--pricing {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-/* Pricing stays one column below 960px. Two columns with three tiers leaves an orphan. */
 
-/* Split sections (text + visual) */
-.split {
-  display: grid;
-  gap: var(--gap);
-  grid-template-columns: minmax(0, 1fr);
+/* Feature rows: 1 → 2 → 3 columns */
+@media (min-width: 48rem) {
+  .grid--feature { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (min-width: 960px) {
-  .split {
-    grid-template-columns: 5fr 7fr;
-  }
+@media (min-width: 64rem) {
+  .grid--feature { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Pricing, 3 tiers: 1 → 3 columns (never 2, which orphans a card) */
+@media (min-width: 64rem) {
+  .grid--pricing-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Pricing, 4 tiers: 1 → 2 → 4 columns */
+@media (min-width: 48rem) {
+  .grid--pricing-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 80rem) {
+  .grid--pricing-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Prose: text is capped at the measure; wide blocks get the wider column */
+.prose {
+  font-size: var(--prose-size);
+  line-height: var(--prose-leading);
+}
+.prose > * {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+.prose > :is(pre, figure, .table-scroll, .wide) {
+  max-width: var(--wide);
+}
+
+/* Code never wraps; it scrolls inside its own box */
+.prose pre {
+  overflow-x: auto;
+  white-space: pre;
+  font-size: 0.875em;
+  line-height: 1.5;
+  padding: 1rem;
+}
+
+/* Tables scroll inside a wrapper instead of squeezing columns */
+.table-scroll { overflow-x: auto; }
+.table-scroll table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
 }
 ```
 
-## Rules to follow
+Wrap every article table in `<div class="table-scroll">`. If your markdown renderer produces the tables, have it add the wrapper.
 
-1. **Only the container sets page width.** Sections, grids, and images use `.container` or `.article`. Nothing else sets its own max width.
-2. **Text is capped at `--measure`, never by the container.** On a phone the measure doesn't bind, because the gutter is narrower than 68ch. On a monitor it binds, and the text stays readable.
-3. **Wide content scrolls inside its own box.** Code and tables use `overflow-x: auto`. The page never gets a horizontal scrollbar.
-4. **Full-bleed is for hero backgrounds only.** Backgrounds can run edge to edge, but their content still uses `.container`.
-5. **Grid columns use `minmax(0, 1fr)`.** Plain `1fr` lets a wide code block push the column past its share.
+## Rules
 
-## Check at these widths
+1. **One container.** Front page and articles both use `.container`. Only the inner content changes.
+2. **Prose never exceeds 68ch.** Paragraphs, lists, and headings are capped at the measure.
+3. **Code, tables, and figures can reach 1056px.** They're centered on the same axis as the text, so the column edges stay aligned.
+4. **Code doesn't wrap.** Long lines scroll inside the block.
+5. **Tables scroll below their min-width** (36rem) rather than crushing columns.
+6. **Grid tracks are `minmax(0, 1fr)`.** Any child can then shrink without breaking the layout.
+7. **Column counts are fixed per breakpoint.** Feature rows go 1 → 2 → 3. Pricing goes 1 → 3 for three tiers, or 1 → 2 → 4 for four. Don't use auto-fit for pricing, because it produces uneven counts.
+8. **Nothing widens past 1280px.** On large monitors the extra width becomes margin, and text stays at the same measure.
 
-360, 390, 768, 1024, 1440, and 2560. At 360 and 390, nothing should scroll sideways except code and table wrappers. At 1440 and 2560, prose stays at about 680px and the page doesn't grow past 1200px for marketing or 1040px for docs.
+## Check before you ship
+
+- Load an article and the front page at 320, 768, 1024, 1440, and 2560px.
+- At each width, confirm `document.documentElement.scrollWidth` equals `window.innerWidth`. If it doesn't, a wide element is escaping its container.
+- Confirm a long code line scrolls inside its box and doesn't widen the page.
+- Measure a paragraph's characters per line in the browser. If the average is well above 75 or below 60, adjust `--measure`.
+
+I didn't look at your existing stylesheet, so the variable names may need to map onto your current tokens.

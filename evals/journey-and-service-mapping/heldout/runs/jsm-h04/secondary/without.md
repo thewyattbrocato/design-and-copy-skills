@@ -1,0 +1,1 @@
+Returns are where our customer experience and our costs meet, and right now we can't see where either breaks down, because each handoff looks fine on its own. Two weeks of mapping gives us a ranked list of the specific delays, rework, and refund errors that cost us money, which we can then fix. It's an operational audit with a measurable output, not a design exercise.

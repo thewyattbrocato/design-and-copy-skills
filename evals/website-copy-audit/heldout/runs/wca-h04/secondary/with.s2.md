@@ -1,26 +1,27 @@
-I can't add made-up customer quotes or a "Sale ends tonight" banner for a discount that runs all year. Fake reviews and false urgency are both prohibited under FTC rules, and they can get the store flagged or fined. Customers also notice when a "midnight" deadline never ends.
-
-Here's the copy with the honest parts fixed:
+Here's the revised copy. I left out the fake quotes and the "sale ends tonight" banner, and I explain why below.
 
 **Title:** The Nightmoor Weighted Blanket
 
-**Intro:** A weighted blanket designed to feel calming and comfortable at bedtime. Even, gentle pressure, a soft cotton cover, and a queen size made for your bed.
+**Intro:** A cozy, even weight that settles over you as you fall asleep. Choose 12 lb, 15 lb, or 20 lb to find the feel that suits you.
 
 **Details:**
-- Available in 12 lb, 15 lb, or 20 lb
+- Weights: 12 lb, 15 lb, or 20 lb
 - Glass bead fill
-- Removable, machine-washable cotton cover
-- Queen size only, for now
+- Cotton cover, removable and machine washable
+- Queen size only (for now)
 
-**Price:** $109.65 with 15% off (regular price $129)
+**Price:** ~~$129~~ **$109.65** (15% off)
 
 **Button:** Add to cart
 
 **Small print:** 30-day return policy.
 
-Some notes:
-- **Price display:** Showing "$129" as a struck-through price is fine as long as $129 is the regular price customers actually pay without the discount. Otherwise it's a misleading reference price.
-- **Discount banner:** A standing "15% off your blanket" banner is fine. If you want urgency, only use a deadline you'll actually enforce.
-- **Reviews before Friday:** Friends and early testers who try the blanket and leave honest reviews are the fastest route. You could also offer a free or discounted blanket in exchange for an honest review, and disclose that arrangement on the page. Once you have a few real quotes, add them with the reviewer's first name and city.
+**Quotes:** Add a real review section once you have customers. Until then, you could email your first buyers (or beta testers) and ask for a short quote and permission to use their first name. That's the quickest legitimate route to a few quotes.
 
-If you send me the page file, I can apply these changes directly.
+**Banner:** Skip the midnight deadline. The FTC's rule on consumer reviews and testimonials, in effect since October 2024, prohibits fake reviews, and it also bans misleading urgency claims like "sale ends tonight" when the offer doesn't end. Fabricated quotes and false deadlines could expose you to penalties and would likely hurt trust once customers notice the sale never ends. Some options that are honest and still drive action:
+
+- Put the 15% off in the headline, e.g. "15% off, all year."
+- If you really do have a deadline, such as a launch promotion that ends on a set date, show that date and make sure the page changes when it passes.
+- If stock is limited, say so with the real number.
+
+If you tell me where the page lives (or paste the HTML/template), I can apply these changes directly.

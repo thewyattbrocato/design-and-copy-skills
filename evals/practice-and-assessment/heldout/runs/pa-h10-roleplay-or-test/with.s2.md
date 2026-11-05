@@ -1,14 +1,20 @@
-**Do B, but cut the team lead's load. Don't pick A.**
+**Go with B, but change it so it doesn't eat the team lead's week.**
 
-**Why not A:** The job is handling an objection out loud, live, with a person who pushes back. A 40-question multiple-choice test measures whether reps can recognize a good answer, and it can't show whether they can give one. It also produces a score and a results page, not evidence that anyone can do the job. A same-day pass doesn't show the skill will last either.
+**Why not A.** Objection handling is a spoken skill: hearing "it's too expensive" or "I need to talk to my spouse" and responding in the moment. A multiple-choice test measures whether a rep can recognize a good answer. It can't show whether they can produce one with a live customer. It also gives a same-day score that says nothing about retention. It scales, but what it scales is a number that doesn't predict performance on calls.
 
-**The cost of B:** By your numbers, 15 reps × 3 × 20 minutes is 15 hours of live team-lead time, plus feedback. That's heavy but not impossible. These changes shrink it:
+**The cost problem with B.** As written, B is 3 × 20 minutes × 15 reps = 15 hours of team lead time, plus feedback. That's the real constraint, so reduce it:
 
-1. **Run the role-plays in trios.** One rep handles the objection, one plays the customer from a short brief, and one scores against a 4–5 line rubric. They rotate, so each rep does all three roles. The lead floats between trios, sits in on the second or third round, and gives the quick feedback. That takes the lead from about 15 hours to about 5–6. Both numbers are my estimates, so adjust for your room and schedule.
-2. **Use the prep hour for scenario practice, not a test.** Give each rep a one-page objection guide beside 6–8 short scenarios, such as "Customer says: *my neighbor's panels never paid off*. What do you say next?" Feedback is shown right after each answer, and it's auto-scored, so you keep some of what your VP likes about A. Don't make it a 40-question pass/fail.
-3. **Write the rubric before the training.** For example: acknowledges the concern, asks one question to find the real objection, answers with a [Halvorsen-specific fact], and asks for the next step. Anyone could score it from watching.
-4. **Add a short check a week or two later.** Run one 10-minute role-play with a *different* objection than the ones practiced. One session on day one can't show the skill stuck.
+- **Pair the reps for the first two role-plays.** Rep A plays the homeowner and rep B handles the objection, then they swap. Give them a one-page rubric and a short list of realistic objections. The lead circulates and doesn't run each session.
+- **Keep the team lead for the third role-play.** Use it as the observed check: 15 reps × 20 minutes is about 5 hours. Make it a mixed set, with objections the reps haven't rehearsed and changed surface details.
+- **Use a short rubric.** Score 3–4 observable behaviors, such as acknowledging the concern before answering, asking a clarifying question, and tying the answer to the customer's own situation. Peers can score these too.
+- **Add a small job aid.** A one-page objection reference sheet lets the prep time go to practicing delivery instead of memorizing.
 
-**For your VP:** The metric is [current close rate or call-to-appointment rate] for new reps against previous cohorts. A test score doesn't show that. Ask the lead which objections new reps lose deals on, and build the scenarios and customer briefs around those.
+That brings the lead's time to about 5 hours of live observation, and you can split it across a few days.
 
-I can draft the rubric, the customer briefs, or the 6–8 scenarios with feedback if you give me the top objections you hear.
+**A way to give your VP some of what they like about A.** Use a short, scenario-based quiz (about 8–10 items, each a named customer in a situation and a "what do you say next" decision) as pre-work or as a day-2 follow-up. It's auto-scored and scales, and it surfaces which objections people confuse. It supplements the role-plays and doesn't replace them. Don't use it as the pass/fail certification.
+
+**For the VP conversation.** Frame it around the metric the team already tracks, such as [current objection-to-appointment rate] or [close rate on first calls]. Agree before the training starts what you'll compare: reps' call behavior and results in their first [4–6] weeks against that baseline. Neither test score nor satisfaction will show that the training worked.
+
+**One question that could change this.** If the real problem is that reps don't know the answers (pricing, incentives, financing terms), fix that with a reference sheet first. If they know the answers but freeze or ramble, role-play is the right tool.
+
+I can draft the rubric, the objection list for the role-plays, or the 8–10 scenario items if you want them.

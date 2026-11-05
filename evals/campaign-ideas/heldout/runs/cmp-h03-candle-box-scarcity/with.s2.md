@@ -1,47 +1,56 @@
-I won't write the "only 200 exist, sells out by Friday" claim or the timer that resets for each visitor. Both tell customers something false to pressure them. That can break FTC rules and state consumer-protection laws, and it costs you trust once people notice. A timer that restarts on every visit is easy to spot, and gift buyers talk.
+**I won't write the "only 200 boxes, sells out by Friday" claim or the per-visitor resetting timer.** You make these to order with no cap, so both would be false statements to customers. They also tend to backfire: a timer that resets is easy to spot, and screenshots of it spread. The honest version below still gives people a reason to buy before Dec 10.
 
-You don't need the fake version, because you have real urgency: **Dec 10 is a real order-by date**, and you make everything to order. Here's a campaign built on that.
+## The idea
 
-## Campaign idea: "Poured to Order"
+**"Poured for them."** Every box is made to order, so each gift is poured, labeled and packed for one specific person. The real deadline is the last order date that lets it arrive in time.
 
-Every Hollow & Hill holiday box is hand-poured after you order it, so nothing sits on a shelf. The order-by date is the story: *pour day* is real, and the last orders go into the last batch. The message is that your gift is made for you, and here's when we stop pouring.
+**Three forms**
 
-- **Real deadline:** Order by Dec 10 for delivery before the holidays. Use a countdown to that date, the same for every visitor.
-- **Optional real scarcity:** If you want a cap, set an actual number, such as "the first 200 boxes get the limited wax-seal tin." Then the claim is true, and you can show a live count. Only do this if you'll honor it.
-- **Content:** Short videos of pour day, with the batch date on screen. Add a "last batch pours Dec 10" reminder in the final week.
+1. **Landing page:** The buyer picks a scent and writes a name or note for the label. A timer counts down to your real order cutoff. It is the same for every visitor and doesn't reset.
+2. **Product moment:** The box includes a card that reads "Poured for [name], [date]." This is the shareable part.
+3. **Email:** A "last day to order for delivery by [date]" send, plus a smaller reminder 48 hours before the cutoff.
+
+**Needs from you:**
+- Ask the owner: what is the real last order date for delivery before the holidays? Is it Dec 10, or earlier? Production time and shipping carrier cutoffs decide this.
+- Ask the owner: do you want a real cap? If you'd like scarcity, set a number you will actually honor, such as "we pour 150 boxes this season," and say it only if it's true.
+
+**Plain fallback:** "Order by Dec [X] for delivery before the holidays," with no personalization angle.
 
 ## Landing page hero
 
-**Headline:** Made for them. Poured after you order.
+**Headline:** Poured for them. Made after you order.
 
-**Subhead:** Our holiday gift box is hand-poured in small batches, so every candle is fresh when it ships. Order by **December 10** and it arrives before the holidays.
+**Subhead:** The Hollow & Hill holiday gift box is hand-poured for one person, with their name on the label. Order by **December [add: real cutoff]** and it arrives before the holidays.
 
-**CTA button:** Build their gift box
+**Button:** Build their box
 
-**Under the button:** Hand-poured to order · Ships in 3–5 days *(adjust to your real timing)* · Order by Dec 10
+**Under the button:** Made to order in [add: location]. Ships by [add: date]. [add: real review or guarantee, if any]
 
-**Countdown bar:** *Last pour day: December 10.* [timer counting to Dec 10, same for everyone]
+**Timer label (the same for all visitors):** Order by Dec [cutoff] for holiday delivery. [countdown to that fixed date and time]
 
 ## Email
 
-**Subject:** Your gift box gets poured after you order it
-**Preview:** Last day to order for the holidays is Dec 10.
+**Subject:** Order by Dec [cutoff] and it's there for the holidays
+**Preview:** Every box is poured after you order.
 
-Hi [First name],
+Hi [first name],
 
-Nothing in the Hollow & Hill holiday box has been sitting in a warehouse. We pour each one by hand after your order comes in, so the scent is fresh and the box is made for the person you're giving it to.
+We don't keep holiday boxes on a shelf. Each one is poured after you order, with the scent you pick and a name on the label.
 
-**Inside:** [candle 1], [candle 2], [candle 3], wrapped and ready to give.
+That also sets our deadline. To get your box there before the holidays, we need your order by **December [add: real cutoff]**.
 
-Our last pour day is **December 10**. Order by then and your box arrives in time for the holidays. After that, we can't promise delivery before the 25th.
+Here's what's in the box:
+- [add: candle count, sizes and scents]
+- [add: packaging details]
+- A card that says "Poured for [name]"
 
-[Order your gift box]
+[**Build their box →**]
+
+If you're sending it somewhere else, you can add a gift note at checkout. After Dec [cutoff], we can't promise delivery before the holidays. Orders will still go out, just later.
 
 Warmly,
-[Name], Hollow & Hill
-
-P.S. Sending to more than one person? Add a note at checkout and we'll include a handwritten card with each box.
+[name], Hollow & Hill
 
 ---
 
-If you tell me your real shipping cutoffs, batch size, and price, I can tighten the dates and add a few more email touches: a mid-campaign reminder, a "last week" send, and a "final pour" send. If you decide to set a real cap, I'll write the copy for that too.
+Dates marked [add: …] are placeholders for facts only you have. If you give me the cutoff and box contents, I can finalize the copy. I can also write the 48-hour reminder email.

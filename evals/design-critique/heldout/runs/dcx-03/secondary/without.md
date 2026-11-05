@@ -1,33 +1,29 @@
-It's a reasonable skeleton, but I wouldn't hand it over yet. It reads like a generic marketplace template with the seed-library details missing. The biggest problems:
+Mostly no. The structure is a reasonable start, but the content looks like it was borrowed from a generic marketplace template, and several parts don't fit a seed library. Fix these before handoff:
 
-**1. The item cards don't fit a seed library.** `$0.00` on every card implies a price, but this sounds like a free lending or swapping library. Items probably need availability instead (Available / On loan / Requested), plus seed-specific details like variety, quantity, and where to pick it up at the hall. "Featured" also needs a definition: who features an item, and how many show.
+**1. The item card is built for selling, not lending.**
+- `$0.00` on every card suggests a price. A seed library is probably free to borrow or swap. Remove the price, or say what it means if there's a deposit or donation.
+- "Item Title / Short description" doesn't tell the developer what a seed listing contains. Define the fields: seed name, variety, quantity left, days to maturity or season, where it's stored, and status (available / checked out / low stock).
 
-**2. Several actions have no destination.** The spec never says what happens when someone taps:
-- "Explore"
-- "Get Started"
-- a Featured card
-- the gear icon
-- the profile row
+**2. "Featured" is undefined.**
+Who decides what's featured: a librarian, the newest additions, or the most requested? Without a rule, the developer will guess, and the section may be empty for a new library.
 
-A developer will have to guess at each of these.
+**3. The hero card is marketing copy on a daily-use screen.**
+- "Discover, connect and grow with our community" is generic, and "Explore" doesn't say where it goes. Most neighbors who open the app want to find a seed or check something out. Consider a "Browse seeds" or "Find a seed" button.
+- "Welcome to Seedlend!" should show only on first run, not every time someone opens the tab.
 
-**3. The bottom tabs are unclear.**
-- "Add" is ambiguous. Does it list seeds, request one, or post a surplus harvest? It's probably the main action for this app, so it should be named precisely.
-- "Messages" needs a purpose. Is it for arranging pickups?
-- The profile row on Home duplicates the Profile tab. It also shows the user's email on a screen that could be seen by anyone standing nearby. I'd show the name and avatar only, or drop the row.
+**4. "Your Activity" is vague.**
+Define what counts as activity: requests, checkouts, returns, due dates, seed-saving reminders? "Get Started" also needs a target. The empty state should say what to do, e.g. "You haven't borrowed any seeds yet. Browse the library to get started."
 
-**4. The "Your Activity" empty state is a dead end.** "Nothing to see here yet" tells a new member nothing. Something like "Seeds you borrow or share will show up here" with one clear action would work better. The section should also say what activity means, such as items on loan and items owed back, since that's the most useful thing for a member to see on Home.
+**5. The profile row duplicates the Profile tab.**
+Showing the email address on the home screen also exposes it to anyone looking over a shoulder. Show the display name and avatar, and keep the email on the Profile screen.
 
-**5. The hero card doesn't earn its space.** A "Welcome!" banner is only useful on first launch. For returning members it pushes the useful content down. I'd show it once, or replace it with something actionable like "3 seeds available near you."
+**6. "Add" is ambiguous.**
+In a shared library, Add could mean donating seeds, listing a surplus, or requesting one. Label it for the action it performs, and confirm whether any neighbor can add items or only coordinators.
 
-**6. Missing states.** The spec covers only the happy path with placeholder content. It needs:
-- loading
-- no featured items yet
-- error or offline (this matters for a cupboard-based app, where connectivity may be poor)
-- a signed-out or first-run user
+**7. The spec is missing states and roles.**
+- Loading, offline, and error states. A cupboard at a community hall may have patchy connectivity.
+- Whether the user is a regular neighbor or a librarian/coordinator, since they likely see different things.
+- Tap behavior for each card and button.
+- Alt text for the image placeholders.
 
-**7. Minor items:**
-- Image placeholders need a spec for the fallback when a photo is missing. Seed packets often lack good photos, so a text or icon fallback should be defined.
-- The title bar "Home" repeats the active tab label. That's common, but worth a deliberate decision.
-
-If you want, I can rewrite the spec with these addressed. The main decisions for you are whether items are lent or given away, and what "Add" should do. Those answers would change most of the rest.
+**Suggested next step:** Replace the placeholder copy with real seed data. Pick 3 or 4 real seeds, write out their card fields, and run the spec against them. The gaps will show up quickly.

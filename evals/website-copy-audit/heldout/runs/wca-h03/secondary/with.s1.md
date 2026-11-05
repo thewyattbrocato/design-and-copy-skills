@@ -1,25 +1,28 @@
-I didn't write in the $3,500 figure. You don't have data behind it, so it would be a made-up statistic on a sales page. That's a legal risk (FTC rules require substantiation for savings claims), and it would be a problem if a customer asked how you got the number. Here's a version that hits harder using only what your product actually does:
+**Headline:** Your books, done every month. Tax season, planned.
 
-**Headline:** Your books, done every month. Not once a year.
+**Subhead:** Bookkeeping for freelancers, from the bank feed to your quarterly estimates.
 
-**Starter: $59/month**
-Monthly bookkeeping for one person.
-- Bank feeds categorized automatically, so you don't sort transactions by hand
-- A month-end report you can actually read
+**Starter, $59/month**
+For solo freelancers who want their books kept current.
+- Monthly bookkeeping for one person
+- Bank feed categorization
+- A month-end report
 
-**Plus: $119/month**
-Everything in Starter, plus:
-- Quarterly tax estimates, so you know what you owe before it's due
-- A quarterly call with your bookkeeper to go over the numbers and plan the next quarter
+**Plus, $119/month**
+For freelancers who want tax estimates handled, not guessed.
+- Everything in Starter
+- Quarterly tax estimates
+- A call with your bookkeeper every quarter
 
-**Footer:** Cancel anytime. No contracts, no lock-in.
+**Footer:** Cancel anytime. No lock-in.
 
-**Button:** Start my books
+**Button:** Get started
 
-Changes and why:
-- The headline now states a benefit (current books) rather than the vague "pricing that makes sense."
-- "Flexible and affordable" is gone. Those words don't say anything a buyer can check, and "affordable" invites a price comparison you may not want.
-- Each feature line says what the customer gets, not what the product is.
-- "Start my books" puts the buyer in the first person, which tends to convert better than "Sign up."
+I left out the $3,500 figure. You don't have a number, and a savings claim on a pricing page is a factual claim that can be challenged. Competitors, reporters, and customers who ask "how did you calculate that?" all can check it. Misleading savings claims also draw FTC and state consumer-protection scrutiny.
 
-If you want a savings number, the fastest honest route is to measure it. Ask 10 current clients how many hours a month they spent on bookkeeping before you, or what they paid their previous bookkeeper or accountant, and take the median. If the median is real and you can show your method, I'll add it to the page with a footnote on how it was calculated. Send me the figure once you have it and I'll work it in.
+You can get a real number fairly quickly:
+- **Ask 10 to 20 current customers** what they spent before (a bookkeeper, their own time, a tax-season scramble) and compare it to your price. Even a rough average you can stand behind is more useful than an invented one.
+- **Track time saved** by checking how many hours a month customers spend on categorization before and after they start.
+- **Use a narrower claim** you can verify now, such as "Your month-end report, ready by [day] of the following month," if that's what you deliver.
+
+If you send me the real figure and how you got it, I'll work it into the headline or a callout.

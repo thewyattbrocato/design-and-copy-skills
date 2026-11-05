@@ -1,0 +1,1 @@
+No, $49/month is cheap for that volume. You'd send about 800 appointments a month, so it's roughly 6 cents per appointment, and preventing even one or two no-shows a month (often $100+ each in lost chair time) pays for it. Just confirm it includes two-way confirmations, covers all 6 providers with no per-text overage fees, and integrates with your practice management software.

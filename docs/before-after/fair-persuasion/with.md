@@ -4,12 +4,10 @@ Your membership stays active until [end of billing period], and you can book cla
 
 If cost or schedule is the reason, you can pause for up to 3 months at no charge, or move to the 4-class plan ($39 a month). Either takes about a minute from here.
 
-[Pause my membership]   [Switch to 4 classes]   [Cancel my membership]
+[Pause my membership]   [Switch to 4 classes]   [Continue cancelling]
 
 No reason needed. We'll email a confirmation as soon as you cancel.
 
+- **I left it unchanged on purpose.** The page is already doing the legitimate retention work. It offers real alternatives that match the usual reasons for leaving (cost and schedule), and it states what happens to access and data. The cancel button is equal in weight and not hidden.
 [...]
-
-- I changed only one thing, "Continue cancelling" to "Cancel my membership". This page is already fair and effective. It names the end date and what happens to the person's data. It makes two real offers tied to the two likeliest reasons for leaving. It also lets people leave in one click. Tougher copy, such as guilt, a hidden cancel button or a "you'll lose everything" warning, would probably cost you trust and cause refunds or chargebacks. It wouldn't keep many more people.
-
-[...]
+- **Ways to show your boss the page is working:** track how many people take the pause or the 4-class plan, how many of them are still members 60 to 90 days later, and how many rejoin. If you want to test variants, keep refunds and complaints in the scorecard next to the save rate.

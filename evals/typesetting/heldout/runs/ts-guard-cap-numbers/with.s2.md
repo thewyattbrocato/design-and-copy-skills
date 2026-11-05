@@ -1,4 +1,4 @@
-The digits are proportional, so each one has a different width, and the decimal points don't line up. Fix it in the CSS for the total column:
+Your numbers are almost certainly right-aligned incorrectly or using proportional digits. Fix:
 
 ```css
 td.total {
@@ -7,4 +7,4 @@ td.total {
 }
 ```
 
-Also keep two decimals on every row, so `$98.00` stays as is.
+Right-align lines up the decimal points (always two decimals), and `tabular-nums` makes every digit the same width. Also check the header is right-aligned too.

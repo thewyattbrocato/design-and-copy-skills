@@ -1,0 +1,1 @@
+No, $49/month is cheap for this. At about 880 appointments a month, it works out to roughly 6 cents per visit, and one prevented no-show, which can cost a practice $150 or more in lost chair time, covers it. Before you sign, check whether the plan caps the number of texts, and confirm the vendor will sign a HIPAA BAA if the messages include patient names or appointment details.

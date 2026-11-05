@@ -1,62 +1,65 @@
-I won't write the "expires Sunday at midnight" or "first 200 people" lines. Neither is true, and customers who come back and later see the code still working will notice. Hobby knitters talk to each other, so that costs more than the nudge gains. Here is a series that still gives a reason to act now. It uses the new yarn as the news and ties the code to a real date that you pick.
+I wrote the series, but I left out the "expires Sunday at midnight" and "first 200 people" lines. Neither is true, and the code stays live. Customers who see the code still working next week will learn your deadlines don't mean anything. Some will also feel tricked, and with a small hobby-knitter list that costs you more than one sale is worth.
 
-**Series: 3 emails, sender "Fernwood Yarn Co."**
+Two honest ways to keep the urgency:
+- **Make it real.** Set an actual end date for COMEBACK15, or a usage limit of 200 in your shop settings. Then use the deadline version of email 2 below.
+- **Skip the countdown.** The new dye lots are a good enough reason to write. The no-deadline version below works without one.
 
-| Send | Timing | Job | Subject | Preview |
-|---|---|---|---|---|
-| 1 | Day 0 | Tell them what's new | New merino dye lots, plus undyed alpaca | Fresh colors are in, and we saved you 15%. |
-| 2 | Day 5 | Help them choose, with the code as a small nudge | Which yarn for your next project? | A quick guide to the new merino and alpaca. |
-| 3 | Day 12 | Ask once if they still want the emails | Still want to hear from Fernwood? | One click either way. COMEBACK15 is inside. |
+---
 
-**Email 1: New merino dye lots, plus undyed alpaca**
+**Sender:** Fernwood Yarn Co. (same name on all three)
 
-Hi [first name],
-
-It's been a while since your last Fernwood order, so here is what's new.
-
-We just got in new dye lots of our merino. We've also added a line of undyed alpaca, for knitters who like natural color or want to dye it themselves.
-
-Because you've been away, here's 15% off your next order with code **COMEBACK15**.
-
-[Shop the new yarn]
-
-Happy knitting,
-Fernwood Yarn Co.
-
-**Email 2: Which yarn for your next project?**
+### Email 1: send day 0, new yarn
+**Subject:** New merino dye lots + undyed alpaca
+**Preview:** Fresh colors are in, plus a natural alpaca for dyeing or leaving as is.
 
 Hi [first name],
 
-New yarn is nice, but it's hard to pick from a photo. Here's a quick way to choose:
+We've just got in new dye lots of our merino, and a new line of undyed alpaca.
 
-- **New merino dye lots:** [one line on feel, weight and what it suits, e.g. "soft enough for next-to-skin hats and cowls"]
-- **Undyed alpaca:** [one line on feel and drape, and what it suits]
+The merino is in [colors, add 2–3 names]. The alpaca is undyed, so you can knit it in its natural shade or dye it yourself.
 
-Not sure which fits your pattern? Reply with the pattern and we'll suggest one.
+It's been a while since your last order, so we thought you'd want to see what's new.
 
-Your 15% code, COMEBACK15, still works if you want it.
-
-[See the merino] [See the alpaca]
+[See the new yarn]
 
 Fernwood Yarn Co.
 
-**Email 3: Still want to hear from Fernwood?**
+*Unsubscribe in the footer.*
+
+---
+
+### Email 2: send day 4, the code
+**Subject:** 15% off your next order, code inside
+**Preview:** Use COMEBACK15 on the new merino or alpaca.
 
 Hi [first name],
 
-This is our last note for now. We don't want to fill your inbox if you've moved on.
+You haven't ordered in a while, so here's 15% off your next order: **COMEBACK15**. It works on everything, including the new merino dye lots and undyed alpaca.
 
-- Want to stay on the list? [Yes, keep me subscribed]
-- Otherwise, [unsubscribe] and we'll stop right away.
+[Shop with COMEBACK15]
 
-If you do want to shop, COMEBACK15 takes 15% off.
+**Deadline version, only if you set a real end:** add "The code works through [day, date, time]." Say "limited to the first 200 orders" only if you've actually set that limit.
 
 Fernwood Yarn Co.
 
-**Stop rules:**
-- A purchase, reply or unsubscribe ends the series for that person.
-- If they don't click in email 3, stop mailing them.
+---
 
-**Notes:**
-- If you want a real deadline, choose a date you'll actually enforce, such as "COMEBACK15 ends [date]". Then turn the code off on that day. I can add a reminder email and a final-day email around it. A true cap works the same way, as long as you stop honoring the code after 200 uses.
-- Fill in the bracketed yarn details (fiber feel, weight, uses) yourself so I don't invent product facts.
+### Email 3: send day 10, the closing check-in
+**Subject:** Do you still want yarn news from us?
+**Preview:** One click to stay or go. Your code still works.
+
+Hi [first name],
+
+This is our last note about the new yarn. Do you still want to hear from Fernwood?
+
+[Yes, keep me on the list] · [No thanks, unsubscribe]
+
+If you'd like to shop, COMEBACK15 still takes 15% off. *(Only say this if the code really is still live.)*
+
+Fernwood Yarn Co.
+
+---
+
+**Stop rule:** Anyone who orders, unsubscribes, or clicks "No thanks" stops getting the series. If someone doesn't click either link in email 3, stop mailing them this series and move them to your regular list or suppress them.
+
+**Notes:** Fill in the merge field and color names. I invented nothing beyond what you gave me. Check your local email-marketing rules for the unsubscribe wording.

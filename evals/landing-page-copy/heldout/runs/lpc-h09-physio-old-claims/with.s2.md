@@ -1,72 +1,56 @@
-**Plan:** The reader is someone with pain or an injury in Marlow Heights who is choosing a clinic. The page argues that Fernwood treats their kind of problem, that other people trust it, what the first visit involves, and how to book. The single ask is to book a first visit. Your three old claims sit beside the points they support.
+**Plan:** The reader is someone in Marlow Heights with an injury or pain who is comparing clinics. The one idea is that Fernwood is a small, local clinic with a full hour for the first visit. The order is hero, what we treat, first visit, proof, insurance and hours, then the ask. The one action is booking a first visit.
+
+Your three old claims are in, with two flagged for you to confirm. The 2021 award is kept with its year, so it reads as a dated fact and not a current one.
 
 ---
 
-**HERO**
+## Hero
 
-**Physical therapy for sports injuries, post-surgery rehab and back pain in Marlow Heights**
+**Headline:** Physical therapy in Marlow Heights, with a full hour for your first visit
 
-Fernwood Physical Therapy is a two-therapist clinic, open Monday to Saturday. We're now accepting new patients.
+**Subhead:** Fernwood Physical Therapy treats sports injuries, post-surgery recovery and back pain. Two therapists, open Monday to Saturday. [Confirm before publishing: Now accepting new patients.]
 
-[Book your first visit]
+**Button:** Book your first visit
 
----
+## What we treat
 
-**WHAT WE TREAT**
+**Heading:** Sports injuries, post-surgery rehab and back pain
 
-**Three kinds of problems, treated by therapists who see them every day**
+- **Sports injuries:** Get back to your sport with a plan built around what you play.
+- **Post-surgery rehab:** Recover after surgery with guided rehab, step by step.
+- **Back pain:** Find out what's driving the pain and work on it directly.
 
-- **Sports injuries.** [Add one line on the kinds of injuries you see, for example the sports or age groups.]
-- **Post-surgery rehab.** [Add one line on common surgeries or how you work with the surgeon's protocol.]
-- **Back pain.** [Add one line on how you approach it.]
+## The first visit
 
-[Book your first visit]
+**Heading:** Your first visit is 60 minutes
 
----
+**Body:** You get a full hour with your therapist, not a rushed intake. [Add what actually happens in that hour, such as the assessment, the plan and what you leave with.]
 
-**WHY FERNWOOD**
+**Button:** Book your first visit
 
-**A small clinic people in Marlow County have chosen**
+## Proof
 
-Voted Best Physical Therapist in Marlow County 2021.
-Over 3,000 patients treated.
+**Heading:** A local clinic with a track record
 
-With two therapists, [add a true line on what that means for patients, for example who they see each visit].
+- Voted Best Physical Therapist in Marlow County, 2021.
+- [Confirm the number, then use: Over 3,000 patients treated. If it's out of date, replace it with the current figure.]
+- [Add a real patient quote, ideally from someone with a sports injury, surgery or back pain.]
 
-[Therapist 1 name, credentials, one line]
-[Therapist 2 name, credentials, one line]
+## Insurance and hours
 
-[Add a real patient quote, ideally from someone with a sports injury, surgery or back pain]
+**Heading:** We take most insurance, and we're open six days a week
 
----
+**Body:** Fernwood works with most insurance plans. [List the plans you accept, or add "call us to check your plan".] We're open Monday to Saturday. [Add hours and the address.]
 
-**YOUR FIRST VISIT**
+## Close
 
-**The first visit is 60 minutes**
+**Heading:** Ready to get moving again?
 
-[Add what happens in those 60 minutes, for example the conversation, the exam and the plan. Only include what you actually do.]
+**Body:** Two therapists, an hour for your first visit, and a clinic in Marlow Heights. [Phone number and address.]
 
----
-
-**PRACTICAL DETAILS**
-
-**Hours, insurance and where to find us**
-
-- **Open:** Monday to Saturday, [add hours]
-- **Insurance:** We take most insurance. [Add the plans you accept, or "call and we'll check your plan".]
-- **Location:** Marlow Heights, [add address]
-- **New patients:** We're accepting them now.
+**Button:** Book your first visit
 
 ---
 
-**BOOK**
-
-**Ready to start? Book your first 60-minute visit**
-
-[Book your first visit]  [Add phone number or booking link]
-
----
-
-**Notes before you publish:**
-- **Check the three old claims.** I kept them because you asked, but "Best Physical Therapist 2021" is five years old and may read as dated. If you can't confirm "3,000" or the new-patient status, change or drop them. If the 3,000 count has grown, update it.
-- **Fill the bracketed gaps.** These are hours, insurance list, address, therapist details, a patient quote, and the first-visit description. I didn't invent any of them.
+- **To confirm:** whether you're still accepting new patients, whether 3,000 is still the right count, and whether to keep a 2021 award as your lead proof. It's the oldest claim on the page.
+- **Gaps to fill:** the insurance list, the opening hours, the booking method (the button needs somewhere to go) and a real patient quote.

@@ -1,13 +1,17 @@
-It's a good brief. The fields that matter are already there: a dated source of truth, a single owner, a retire condition, and "Not covering." I'd make four small changes before Monday.
+It's good. It's already better than most briefs because it forces a source of truth with a date, a single owner, a retire condition, and a "not covering" list. I'd change a few small things before Monday.
 
-1. **Split the owner and tester field.** "Owner (one name) and who will test the steps" asks for two people in one line. People tend to put the same name in both, and then nobody has tested the steps independently. Make it two fields: "Owner (one name)" and "Tester (not the writer)."
+**Worth changing**
+1. **Split the "Owner and who will test" line.** It's two answers in one field, and people will often write only the owner. Make it "Owner" and "Tester (not the author)". A tester who didn't write the steps is the one who catches missing steps.
+2. **Split the first field into two.** "Who it's for" and "what they were trying to do when they got stuck" are different questions, and people tend to answer only one. A good version of the second is "Where did they get stuck? (ticket links, search terms, or a quote)".
+3. **Add a line for the evidence that this article is needed.** Examples are ticket count, search queries with no results, or a request from support. Without it, the brief doesn't stop anyone from writing an article nobody needs. Your retire line covers the end of an article's life, but nothing covers its start.
 
-2. **Turn the re-check date into a trigger plus a date.** Six months works as a default, but help articles usually go wrong when the product changes, not when the calendar says so. Change the field to "Re-check date (default 6 months out) or sooner if: (release, UI change, plan change)." Then "Retire this article if" covers the end of the article's life, and this field covers its upkeep.
+**Worth considering**
+4. **Add "Words customers use for this."** The working title is usually written in internal terms, and this is how the article ends up findable. It can be a single line.
+5. **Make the re-check date also depend on events.** A date alone means a UI change in month 2 goes unnoticed until month 6. You could add "or when [feature/screen] changes" and name the feature. Your "Retire if" field partly covers this, but that field is about the article being wrong or unnecessary, not about when to re-check it.
 
-3. **Add a line for the words customers use.** Titles are often written in internal terms, and then people can't find the article. Add "How customers describe this problem (search terms, ticket phrases)." It also makes the working title easier to check.
+**Leave alone**
+- The 6-month default, since it's easy to override.
+- "Not covering." It's the field people skip, and it's the most useful one for stopping scope creep.
+- The length. With 2 and 3 added it's still one page, but I wouldn't add more than that.
 
-4. **Add a check at the top: "Could an existing article be fixed instead?"** Your "Replaces or links to" field comes close to this. But it's the last chance to avoid a duplicate, and the question belongs before anyone fills in the rest. A yes/no with the article link is enough.
-
-A smaller point: "What they should be able to do after reading it" works best when the answer is something you can observe, like "turn on two-factor sign-in," not "understand how two-factor works." You could put an example in that field.
-
-I wouldn't add anything else. Each extra field makes people less likely to fill in the ones that matter. If rollout feedback shows a gap, add the field then.
+If you can only do one thing, do #3.

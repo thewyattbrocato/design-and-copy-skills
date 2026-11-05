@@ -1,37 +1,38 @@
-**Screen 1: Cancel**
+**Cancel page**
 
-**Heading:** Cancel your Pennywise Pantry subscription
+**Heading:** Cancel your Pennywise Pantry subscription?
 
-**Body:** You'll keep full access until **[last day of access, e.g. Nov 14, 2026]**. After that, your plan won't renew and you won't be charged again. Your saved receipts and meal plans **[are kept until (date) / are deleted on (date)]**.
+**Body:** You'll keep full access until [end date]. After that, your plan won't renew and you won't be charged again. Your saved receipts and meal plans will be kept until [data deletion date]. We'll email you before then.
 
-**Option card, shown once, above the buttons:**
+**Pause option** (show only once eng confirms pause is built)
 
-*Version A, if the pause is built:*
-> **Need a break instead?** Pause for up to 3 months. You won't be charged while paused, and your receipts and plans will be there when you return.
-> [Pause for up to 3 months]
+> **Need a break instead?**
+> Pause your plan for [1, 2, or 3] months. Your receipts and meal plans stay saved, and billing restarts on [restart date] unless you resume sooner.
+>
+> [Pause my plan]
 
-*Version B, if the pause isn't built:*
-> **Want to keep cooking with us for less?** Switch to yearly: $79 billed once a year, about $6.58 a month instead of $9.
+**Fallback option** (show only if pause isn't built, and only to monthly subscribers)
+
+> **Want to keep going for less?**
+> Switch to yearly: $79/year, or $6.58/month. That's $29 less than paying monthly for a year.
+>
 > [Switch to yearly]
 
-**Buttons, same size and weight:**
-[Keep my subscription] [Cancel subscription]
+**Exits, at equal visual weight:**
 
-**Optional, below the buttons:**
+> [Keep my plan] [Cancel subscription]
+
+**Optional reason** (not required to continue)
+
 > Tell us why you're leaving (optional)
-> [Dropdown: Too expensive / Not cooking as much / Didn't find it useful / Something else / Skip]
+> ○ Too expensive ○ Not using it enough ○ Missing a feature ○ Something else
 
-Choosing a reason changes nothing about the cancel button. "Skip" is as prominent as the options.
+**Confirmation screen, after cancelling:**
 
-**Screen 2: Confirmed**
-
-**Heading:** Your subscription is cancelled
-
-> You have access until **[last day of access]**. To come back, sign in and restart any time. Your receipts and meal plans **[are waiting for you / are kept until (date)]**.
-
-Thanks for trying Pennywise Pantry.
+**Your subscription is cancelled.**
+You have access until [end date]. To come back, sign in and choose a plan any time. Your saved data is kept until [data deletion date].
 
 ---
 
-- **Placeholders and legal:** Fill the bracketed dates and data-retention lines from eng and your policy; I didn't assume any. Auto-renewal cancellation rules vary by location and change over time, so have counsel check this flow, including whether the annual plan's refund terms match the switch offer.
-- **Track:** Resubscribes within 90 days, split by cancel reason and by whether the person accepted the pause or annual offer. That shows whether the offer helps people stay or only delays the cancel.
+- Fill in the bracketed dates and pause lengths from your billing and data-retention rules. I didn't assume any of them. Show the pause option only after eng confirms it, and use the fallback if it isn't built.
+- Track refund requests, support contacts in the first week, and reactivations alongside cancellations, so you can tell whether the page is retaining people or just making them unhappy. Have someone check the cancellation terms against your local rules, since those vary by place and change over time.

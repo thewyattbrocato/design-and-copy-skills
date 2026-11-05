@@ -1,19 +1,26 @@
-Not ready to send yet. The biggest problem is that the form doesn't save anything.
+**Don't send it yet.** The biggest problem is that sign-ups go nowhere.
 
-**Blocking issues**
+**Blocking**
 
-1. **Sign-ups aren't stored or sent anywhere.** The script only updates the text on the page. "Save my place" and "You are on the list" are false: nobody on the committee receives the submission, and the next person to open the page sees an empty form. Before you send the link, connect it to something that records responses, such as a Google Form, Formspree, or a spreadsheet-backed form. If you want to keep this custom page, it needs a small backend or service endpoint.
-2. **The event details are missing.** The page doesn't say the date, start and end times, location, parking or access, what to bring, or what happens if it's cloudy or cancelled. Also, today is Saturday, October 17, 2026, so "Saturday" alone is ambiguous. Write the full date.
-3. **The form accepts an empty name.** `novalidate` turns off the browser's `required` check, and the script never checks the name. Submitting with no name shows "You are on the list: , party of 2." Add a name check with an error message like the one for the party size.
-4. **There's no contact method.** You can't reach people who sign up, for example to say the event was cancelled. Add an email or phone field if the form will stay custom.
+1. **Nothing is saved.** The form has no `action` and the script only updates the page. Anyone who clicks "Save my place" sees "You are on the list," but the organizer receives nothing. Connect it to something that stores responses, such as a Google Form, Formspree, or a spreadsheet-backed endpoint, or change the button to a mailto link.
+2. **The confirmation message is misleading.** Because nothing is stored, "You are on the list" is false. It should match whatever the backend actually does.
+3. **No event details.** The page never says which Saturday, the start time, the location, what to bring, or the deadline to sign up. Add them above the form. Since it's currently November 4, 2026, the next Saturday is November 7, so make sure the date is explicit.
+4. **No way to reach people.** Only a name is collected. Add an email or phone number so you can send weather cancellations or changes.
 
-**Smaller items**
+**Should fix**
 
-- Add a sign-up deadline, and say whether you have a cap on chairs or people. "Set out enough chairs" suggests you need an estimate by a certain date.
-- The page has to be hosted at a public URL. Don't attach the HTML file to the email, because most mail clients won't open it.
-- The telescope question should say what "small" and "large" mean, or give a rough size or weight. A "large one that needs a flat spot" is hard to judge without that.
-- Add a line on whether people should arrive before dark, since the sky matters more than anything else at a star party.
+5. **Empty name passes validation.** `required` is ignored because of `novalidate`, and the script never checks the name. Submitting a blank name produces "You are on the list: , party of 2."
+6. **Fractional party sizes are accepted.** `2.5` passes the `1–8` check. Use `Number.isInteger(v)`, or `step="1"` plus a check.
+7. **Errors may not be announced.** The error paragraph is toggled with `hidden` but has no `role="alert"` or live region, so screen-reader users may miss it. Add `role="alert"` to `#n-err`, or put it in the live region.
+8. **The error text is confusing.** "Sign up in two parts" won't make sense to most people, and it invites duplicate entries. Say something like "For a larger group, email [contact]."
+9. **Confirm the 8-person cap.** It may be right, but check that it's what the club intends.
+10. **No protection against double submits.** Disable the button while sending, or clear the form after success so people don't submit twice.
 
-The accessibility and dark-mode handling is fine. The labels, focus styles, reduced-motion check, and live status region are all in place. The name is also inserted as text, not HTML, so there's no injection risk.
+**Minor**
 
-If you tell me which way you want to collect responses, I can change the form and fix the name check. I'd need the event date, time, and location to fill in the details.
+11. **Set expectations for changes.** Tell people how to cancel or change their count, since the form doesn't allow it.
+12. **Add a meta description** if the link might be shared outside email.
+
+What already works: the labels, the hint text, the dark-mode colors, the focus outline, and the reduced-motion handling are fine.
+
+If you tell me where responses should go (a form service, a spreadsheet, or your email), I can wire it up and add the event details and the fixes above.

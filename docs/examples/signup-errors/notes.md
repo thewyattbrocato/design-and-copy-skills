@@ -20,9 +20,9 @@ The harness appends one format instruction in both arms: *Return the result as a
 
 ## Sonnet (`claude-sonnet-5-5`)
 
-![without and with, side by side](sonnet/compare.png)
+![Featured pair for the Plateful sign-up form with error states, Sonnet. Left, without the skill: a cream page with an error summary listing three fixes, red-outlined email and password fields with messages under them, and a green Create account button. Right, with the skill: an error summary headed There are 2 problems with your details, error messages that begin with the word Error, a password hint and a Show button.](sonnet/compare.png)
 
-![all six runs](sonnet/contact-sheet.png)
+![Contact sheet of all six Sonnet runs for the sign-up form: three without the skill on the top row and three with it below, each labelled with its run number and rubric mean. The featured median run of each row is outlined and labelled featured (median).](sonnet/contact-sheet.png)
 
 | Run | Without skill: rubric mean | With skill: rubric mean | With skill: skill invoked | Pair verdict (blind, swap-checked) |
 | --- | --- | --- | --- | --- |
@@ -48,9 +48,9 @@ Rubric means are the judge's 1 to 5 scores averaged over the rubric items and bo
 
 ## Haiku (`claude-haiku-4-5-20251001`)
 
-![without and with, side by side](haiku/compare.png)
+![Featured pair for the Plateful sign-up form with error states, Haiku. Left, without the skill: a small white card on a purple gradient, with short red messages under the name, password and terms fields. Right, with the skill: a plain white page with an error summary at the top, a message under each field in error and hints under the fields.](haiku/compare.png)
 
-![all six runs](haiku/contact-sheet.png)
+![Contact sheet of all six Haiku runs for the sign-up form: three without the skill on the top row and three with it below, each labelled with its run number and rubric mean. The featured median run of each row is outlined and labelled featured (median).](haiku/contact-sheet.png)
 
 | Run | Without skill: rubric mean | With skill: rubric mean | With skill: skill invoked | Pair verdict (blind, swap-checked) |
 | --- | --- | --- | --- | --- |

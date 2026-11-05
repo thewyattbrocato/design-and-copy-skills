@@ -5,90 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hollowbrook Vet Care · Design Foundation</title>
 <style>
-/* ==========================================================================
+/* =========================================================
    1. TOKENS
-   Raw palette values live in --palette-*. Feature code should use the
-   semantic --color-* aliases, never raw hex or palette names.
-   ========================================================================== */
+   Every color, space, size, and motion value lives here.
+   Components reference roles (--color-primary), never raw
+   hex values, so a brand change touches this block only.
+   ========================================================= */
 :root {
-  /* Raw palette */
-  --palette-teal-900: #123F3C;
-  --palette-teal-700: #1F5C57;
-  --palette-teal-600: #2A7069;
-  --palette-teal-100: #DDEFEC;
-  --palette-teal-50:  #EEF7F5;
-  --palette-ink-900:  #1B2627;
-  --palette-ink-700:  #3D4B4D;
-  --palette-ink-500:  #5B6B6E;
-  --palette-line:     #DCE2E0;
-  --palette-input:    #7A8B8D;
-  --palette-sand-50:  #FAF8F4;
-  --palette-white:    #FFFFFF;
-  --palette-green-700: #1E6B3A;
-  --palette-green-50:  #E7F4EC;
-  --palette-amber-800: #6E4500;
-  --palette-amber-50:  #FDF4DE;
-  --palette-red-700:   #A3262B;
-  --palette-red-50:    #FBEAEA;
-  --palette-blue-800:  #1D4E7A;
-  --palette-blue-50:   #E8F1FA;
+  /* Font: system stack only, no web fonts */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  /* Semantic color roles */
-  --color-canvas: var(--palette-sand-50);
-  --color-surface: var(--palette-white);
-  --color-text: var(--palette-ink-900);
-  --color-text-muted: var(--palette-ink-500);
-  --color-border: var(--palette-line);
-  --color-border-input: var(--palette-input);
-  --color-primary: var(--palette-teal-700);
-  --color-primary-hover: var(--palette-teal-900);
-  --color-primary-soft: var(--palette-teal-50);
-  --color-on-primary: var(--palette-white);
-  --color-focus: var(--palette-teal-600);
-  --color-danger: var(--palette-red-700);
-  --color-success-text: var(--palette-green-700);
-  --color-success-bg: var(--palette-green-50);
-  --color-warning-text: var(--palette-amber-800);
-  --color-warning-bg: var(--palette-amber-50);
-  --color-info-text: var(--palette-blue-800);
-  --color-info-bg: var(--palette-blue-50);
-  --color-danger-text: var(--palette-red-700);
-  --color-danger-bg: var(--palette-red-50);
+  /* Color: brand */
+  --color-primary: #0F5C5A;        /* main actions, links, key UI */
+  --color-primary-hover: #0A4745;
+  --color-primary-soft: #E3F1F0;   /* tinted backgrounds for brand surfaces */
+  --color-accent: #B7791F;         /* sparing highlight, never for text on white */
 
-  /* Typography */
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-               "Helvetica Neue", Arial, sans-serif;
-  --font-size-xs: 0.8125rem;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.375rem;
-  --font-size-2xl: 1.75rem;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --line-height-tight: 1.25;
-  --line-height-body: 1.55;
+  /* Color: neutrals */
+  --color-ink: #1B2A2F;            /* body text, headings */
+  --color-ink-muted: #4F6065;      /* secondary text, hints (4.5:1 on canvas) */
+  --color-canvas: #F4F7F6;         /* page background */
+  --color-surface: #FFFFFF;        /* cards, inputs */
+  --color-border: #CFDAD7;         /* default borders */
+  --color-border-strong: #8DA3A0;  /* input borders needing 3:1 contrast */
 
-  /* Spacing (4px base) */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
+  /* Color: status roles. Each pair is text-on-tint, meeting 4.5:1 */
+  --color-success-text: #1E6B3A;
+  --color-success-bg: #E7F4EC;
+  --color-warning-text: #7A4A00;
+  --color-warning-bg: #FCF1DC;
+  --color-danger-text: #A12A2A;
+  --color-danger-bg: #FBE7E7;
+  --color-info-text: #1D4F7A;
+  --color-info-bg: #E6F0F9;
 
-  /* Shape and elevation */
+  --color-focus: #1D4F7A;          /* focus ring, used everywhere */
+
+  /* Space: 4px base */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Type scale */
+  --text-xs: 0.8125rem;   /* 13px: metadata, captions */
+  --text-sm: 0.875rem;    /* 14px: hints, labels */
+  --text-base: 1rem;      /* 16px: body */
+  --text-lg: 1.125rem;    /* 18px: lead text, card titles */
+  --text-xl: 1.375rem;    /* 22px: section headings */
+  --text-2xl: 1.75rem;    /* 28px: page title */
+  --leading-tight: 1.25;
+  --leading-body: 1.55;
+
+  /* Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-pill: 999px;
-  --shadow-1: 0 1px 2px rgba(18, 40, 40, 0.06), 0 1px 1px rgba(18, 40, 40, 0.04);
-  --shadow-2: 0 6px 16px rgba(18, 40, 40, 0.08);
-  --focus-ring: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus);
+
+  /* Elevation: subtle, never dramatic */
+  --shadow-1: 0 1px 2px rgba(27, 42, 47, 0.06), 0 1px 1px rgba(27, 42, 47, 0.04);
+  --shadow-2: 0 6px 18px rgba(27, 42, 47, 0.08), 0 2px 4px rgba(27, 42, 47, 0.05);
 
   /* Motion */
   --duration-fast: 120ms;
@@ -96,791 +77,845 @@
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* ==========================================================================
+/* =========================================================
    2. BASE
-   ========================================================================== */
+   ========================================================= */
 *, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-body);
-  color: var(--color-text);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
   background: var(--color-canvas);
-  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3 {
-  line-height: var(--line-height-tight);
-  margin: 0 0 var(--space-3);
-  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-tight);
+  margin: 0;
+  color: var(--color-ink);
 }
-h1 { font-size: var(--font-size-2xl); }
-h2 { font-size: var(--font-size-xl); }
-h3 { font-size: var(--font-size-lg); }
-p  { margin: 0 0 var(--space-3); }
 
-.muted { color: var(--color-text-muted); }
-.tabular { font-variant-numeric: tabular-nums; }
+p { margin: 0; }
 
-/* ==========================================================================
-   3. PAGE SCAFFOLD (documentation only)
-   ========================================================================== */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* =========================================================
+   3. LAYOUT
+   ========================================================= */
+.site-header {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  padding: var(--space-5) var(--space-4);
+}
+.site-header__inner,
 .page {
-  max-width: 1080px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: var(--space-8) var(--space-5) var(--space-12);
 }
-.doc-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--space-3);
-  padding-bottom: var(--space-5);
+.site-header__eyebrow {
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.site-header h1 {
+  color: #FFFFFF;
+  font-size: var(--text-2xl);
+  margin-top: var(--space-1);
+}
+.site-header p {
+  margin-top: var(--space-2);
+  max-width: 60ch;
+  opacity: 0.92;
+}
+
+.page {
+  padding: var(--space-6) var(--space-4) var(--space-8);
+}
+
+.section {
+  margin-top: var(--space-7);
+}
+.section:first-child { margin-top: 0; }
+.section__title {
+  font-size: var(--text-xl);
+  padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--color-border);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-4);
 }
-.doc-section {
-  margin-bottom: var(--space-10);
+.section__intro {
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-5);
+  max-width: 68ch;
 }
-.doc-section > .muted { margin: 0 0 var(--space-5); max-width: 66ch; }
-.doc-block {
+.subtitle {
+  font-size: var(--text-lg);
+  margin: var(--space-5) 0 var(--space-3);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.panel {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: var(--space-6);
+  padding: var(--space-5);
   box-shadow: var(--shadow-1);
 }
-.grid-auto {
-  display: grid;
-  gap: var(--space-4);
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-}
+
 .code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
 }
 
-/* Color swatches */
+/* Foundation documentation pieces */
 .swatch {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--color-surface);
 }
-.swatch__chip { height: 64px; border-bottom: 1px solid var(--color-border); }
-.swatch__meta { padding: var(--space-3); }
-.swatch__name { font-weight: var(--font-weight-semibold); font-size: var(--font-size-sm); margin: 0; }
+.swatch__chip {
+  height: 64px;
+}
+.swatch__body {
+  padding: var(--space-3);
+}
+.swatch__name {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+.swatch__meta {
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  margin-top: 2px;
+}
 
-/* Type specimen */
 .type-row {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  justify-content: space-between;
   gap: var(--space-2) var(--space-4);
   padding: var(--space-3) 0;
   border-bottom: 1px solid var(--color-border);
 }
 .type-row:last-child { border-bottom: 0; }
-
-/* Spacing, radius, elevation specimens */
-.space-bar {
-  height: 12px;
-  background: var(--color-primary-soft);
-  border: 1px solid var(--color-primary);
-  border-radius: 2px;
+.type-row__label {
+  width: 140px;
+  flex-shrink: 0;
 }
+
+.space-bar {
+  height: 14px;
+  background: var(--color-primary);
+  border-radius: var(--radius-sm);
+}
+.space-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+}
+
 .radius-box {
   height: 64px;
   background: var(--color-primary-soft);
   border: 1px solid var(--color-primary);
 }
-.elevation-box {
+.elev-box {
   height: 72px;
   background: var(--color-surface);
   border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
 }
 
-/* ==========================================================================
-   4. COMPONENTS
-   ========================================================================== */
+.rules {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--color-ink);
+}
+.rules li { margin-bottom: var(--space-2); }
 
-/* --- Buttons ------------------------------------------------------------- */
+/* =========================================================
+   4. COMPONENTS
+   ========================================================= */
+
+/* --- Button --- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
   min-height: 44px;
-  padding: 0 var(--space-5);
+  padding: var(--space-2) var(--space-4);
   font: inherit;
-  font-weight: var(--font-weight-semibold);
-  line-height: 1;
-  text-decoration: none;
+  font-weight: 600;
+  line-height: 1.2;
+  border-radius: var(--radius-md);
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background-color var(--duration-fast) var(--ease-standard),
-              border-color var(--duration-fast) var(--ease-standard),
-              color var(--duration-fast) var(--ease-standard);
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 .btn--primary {
   background: var(--color-primary);
-  color: var(--color-on-primary);
+  color: #FFFFFF;
 }
-.btn--primary:hover { background: var(--color-primary-hover); }
-
+.btn--primary:hover:not(:disabled) { background: var(--color-primary-hover); }
 .btn--secondary {
   background: var(--color-surface);
   color: var(--color-primary);
   border-color: var(--color-primary);
 }
-.btn--secondary:hover { background: var(--color-primary-soft); }
-
+.btn--secondary:hover:not(:disabled) { background: var(--color-primary-soft); }
 .btn--ghost {
   background: transparent;
   color: var(--color-primary);
-  padding: 0 var(--space-3);
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
 }
-.btn--ghost:hover { background: var(--color-primary-soft); }
+.btn--ghost:hover:not(:disabled) { background: var(--color-primary-soft); }
+.btn--block { width: 100%; }
 
-.btn--danger {
-  background: var(--color-danger);
-  color: var(--palette-white);
-}
-.btn--danger:hover { filter: brightness(0.9); }
-
-.btn--sm { min-height: 36px; padding: 0 var(--space-4); font-size: var(--font-size-sm); }
-
-.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
-.btn:disabled {
-  background: var(--palette-line);
-  border-color: var(--palette-line);
-  color: var(--palette-ink-500);
-  cursor: not-allowed;
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
 }
 
-/* --- Form fields --------------------------------------------------------- */
+/* --- Form fields --- */
 .field {
-  display: grid;
-  gap: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
 }
 .field__label {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-}
-.field__label .optional {
-  font-weight: var(--font-weight-regular);
-  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: var(--text-sm);
 }
 .field__hint {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
 }
 .field__error {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-size: var(--text-sm);
   color: var(--color-danger-text);
+  font-weight: 600;
 }
 
-.input {
+.input,
+.select,
+.textarea {
   width: 100%;
   min-height: 44px;
   padding: var(--space-2) var(--space-3);
   font: inherit;
-  color: var(--color-text);
+  color: var(--color-ink);
   background: var(--color-surface);
-  border: 1px solid var(--color-border-input);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
   transition: border-color var(--duration-fast) var(--ease-standard);
 }
-textarea.input { min-height: 96px; resize: vertical; }
-.input:focus-visible { outline: none; border-color: var(--color-focus); box-shadow: var(--focus-ring); }
-.input[aria-invalid="true"] { border-color: var(--color-danger); box-shadow: inset 0 0 0 1px var(--color-danger); }
-.input:disabled { background: var(--palette-sand-50); color: var(--palette-ink-500); }
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+.input:hover,
+.select:hover,
+.textarea:hover {
+  border-color: var(--color-primary);
+}
+.input[aria-invalid="true"],
+.select[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
+  border-color: var(--color-danger-text);
+  box-shadow: 0 0 0 1px var(--color-danger-text);
+}
 
-/* Choice chips (radio groups, e.g. time slots) */
-.fieldset {
+/* Choice chips for time slots (radio group) */
+fieldset.field {
   border: 0;
-  margin: 0;
   padding: 0;
+  margin-left: 0;
+  margin-right: 0;
   min-width: 0;
 }
-.fieldset > legend {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
+fieldset.field legend {
   padding: 0;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
 }
-.choices {
+.chips {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
 }
-.choice { position: relative; display: inline-flex; }
-.choice input {
+.chip {
+  position: relative;
+}
+.chip input {
   position: absolute;
   opacity: 0;
   width: 1px;
   height: 1px;
-  margin: 0;
 }
-.choice span {
+.chip span {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0 var(--space-4);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-input);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+  font-weight: 600;
   cursor: pointer;
-  font-variant-numeric: tabular-nums;
+  transition: background-color var(--duration-fast) var(--ease-standard);
 }
-.choice input:checked + span {
+.chip:hover span { border-color: var(--color-primary); }
+.chip input:checked + span {
   background: var(--color-primary);
   border-color: var(--color-primary);
-  color: var(--color-on-primary);
+  color: #FFFFFF;
 }
-.choice input:focus-visible + span { box-shadow: var(--focus-ring); }
-.choice input:disabled + span {
-  color: var(--palette-ink-500);
-  border-style: dashed;
-  background: var(--palette-sand-50);
-  cursor: not-allowed;
+.chip input:focus-visible + span {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
-.checkbox {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-}
-.checkbox input {
-  width: 20px;
-  height: 20px;
-  margin: 2px 0 0;
-  accent-color: var(--color-primary);
-  flex-shrink: 0;
-}
-.checkbox input:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 4px; }
-
-/* --- Status messages ----------------------------------------------------- */
+/* --- Status message --- */
 .status {
   display: flex;
   gap: var(--space-3);
   align-items: flex-start;
-  padding: var(--space-4);
-  border: 1px solid currentColor;
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
+  border: 1px solid transparent;
+  font-size: var(--text-sm);
 }
 .status__icon {
   flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: currentColor;
-  font-weight: var(--font-weight-semibold);
-  font-size: 13px;
-  line-height: 1;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
 }
-.status__icon > span { color: var(--color-surface); }
-.status__title { margin: 0 0 var(--space-1); font-weight: var(--font-weight-semibold); color: inherit; font-size: var(--font-size-md); }
-.status p:last-child { margin-bottom: 0; }
-.status--success { color: var(--color-success-text); background: var(--color-success-bg); border-color: transparent; }
-.status--warning { color: var(--color-warning-text); background: var(--color-warning-bg); border-color: transparent; }
-.status--error   { color: var(--color-danger-text);  background: var(--color-danger-bg);  border-color: transparent; }
-.status--info    { color: var(--color-info-text);    background: var(--color-info-bg);    border-color: transparent; }
+.status__title {
+  font-weight: 600;
+  display: block;
+}
+.status--success { background: var(--color-success-bg); color: var(--color-success-text); border-color: currentColor; }
+.status--warning { background: var(--color-warning-bg); color: var(--color-warning-text); border-color: currentColor; }
+.status--danger  { background: var(--color-danger-bg);  color: var(--color-danger-text);  border-color: currentColor; }
+.status--info    { background: var(--color-info-bg);    color: var(--color-info-text);    border-color: currentColor; }
+.status[hidden] { display: none; }
 
-/* --- Badges -------------------------------------------------------------- */
+/* --- Badge --- */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: 2px var(--space-3);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+  padding: 2px var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
   border-radius: var(--radius-pill);
   white-space: nowrap;
 }
-.badge--confirmed { color: var(--color-success-text); background: var(--color-success-bg); }
-.badge--pending   { color: var(--color-warning-text); background: var(--color-warning-bg); }
-.badge--cancelled { color: var(--palette-ink-700);    background: var(--palette-line); }
-.badge--reminder  { color: var(--color-info-text);    background: var(--color-info-bg); }
+.badge--confirmed { background: var(--color-success-bg); color: var(--color-success-text); }
+.badge--pending   { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.badge--complete  { background: var(--color-info-bg);    color: var(--color-info-text); }
 
-/* --- Card ---------------------------------------------------------------- */
-.card {
+/* --- Appointment card --- */
+.appt {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: var(--space-4);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
+  padding: var(--space-4);
   box-shadow: var(--shadow-1);
-  padding: var(--space-5);
+  transition: box-shadow var(--duration-base) var(--ease-standard);
 }
-.card--appointment {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--space-5);
-  align-items: start;
-}
-.date-block {
+.appt:hover { box-shadow: var(--shadow-2); }
+.appt__date {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 84px;
-  padding: var(--space-3);
   background: var(--color-primary-soft);
   color: var(--color-primary);
   border-radius: var(--radius-md);
+  padding: var(--space-2);
   text-align: center;
-  font-variant-numeric: tabular-nums;
 }
-.date-block__day   { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.04em; }
-.date-block__date  { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); line-height: 1.1; }
-.date-block__month { font-size: var(--font-size-sm); }
-.appt__header {
+.appt__month {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.appt__day {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1;
+}
+.appt__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.appt__title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+.appt__meta {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+  margin-top: var(--space-1);
+}
+.appt__actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-2);
+  margin-top: var(--space-3);
 }
-.appt__title { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin: 0; }
-.appt__meta  { display: grid; gap: var(--space-1); font-size: var(--font-size-sm); color: var(--color-text-muted); margin: 0 0 var(--space-4); }
-.appt__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
-/* --- Layout helpers ------------------------------------------------------ */
+/* --- Booking form layout --- */
 .form-grid {
   display: grid;
-  gap: var(--space-5);
-  grid-template-columns: 1fr;
+  gap: 0 var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
-@media (min-width: 640px) {
-  .form-grid { grid-template-columns: 1fr 1fr; }
-  .form-grid .span-2 { grid-column: 1 / -1; }
-}
+.form-grid .span-all { grid-column: 1 / -1; }
+
 .form-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  align-items: center;
-  justify-content: flex-end;
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--color-border);
   margin-top: var(--space-2);
-  padding-top: var(--space-5);
-}
-.stack > * + * { margin-top: var(--space-4); }
-.sample-row {
-  display: grid;
-  gap: var(--space-6);
-  grid-template-columns: 1fr;
-}
-@media (min-width: 900px) {
-  .sample-row { grid-template-columns: 1.4fr 1fr; align-items: start; }
 }
 
-/* ==========================================================================
-   5. MOTION PREFERENCES
-   ========================================================================== */
+/* --- Motion preferences --- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: 0ms !important;
     animation-duration: 0ms !important;
   }
 }
+
+@media (max-width: 560px) {
+  .site-header h1 { font-size: var(--text-xl); }
+  .type-row__label { width: 100%; }
+}
 </style>
 </head>
 <body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__eyebrow">Hollowbrook Vet Care · Design foundation</div>
+    <h1>Shared tokens and components</h1>
+    <p>Every screen in the web app is built from the values and pieces below. If a value is not on this page, it does not get added to a screen. It gets added here first.</p>
+  </div>
+</header>
+
 <main class="page">
 
-  <header class="doc-header">
-    <div>
-      <h1>Hollowbrook Vet Care</h1>
-      <p class="muted" style="margin:0">Design foundation · v1.0 · Booking, pet records, reminders</p>
-    </div>
-    <p class="muted code" style="margin:0">Use semantic tokens only</p>
-  </header>
+  <!-- ================= FOUNDATION ================= -->
 
-  <!-- ===================== PRINCIPLES ===================== -->
-  <section class="doc-section" aria-labelledby="principles">
-    <h2 id="principles">Principles</h2>
-    <p class="muted">Calm, clear, and caring. Friendly in tone, precise in information. Pet owners are often anxious, so we state what happens next, use plain language, and never rely on color alone to convey meaning.</p>
-    <div class="grid-auto">
-      <div class="card">
-        <h3>Clear first</h3>
-        <p class="muted" style="margin:0">One primary action per screen. Dates, times, and names are shown in full.</p>
-      </div>
-      <div class="card">
-        <h3>Trustworthy</h3>
-        <p class="muted" style="margin:0">Neutral, restrained color. Confirmations state exactly what was saved and when.</p>
-      </div>
-      <div class="card">
-        <h3>Accessible by default</h3>
-        <p class="muted" style="margin:0">44px touch targets, visible focus, AA contrast, and labels on every input.</p>
-      </div>
-    </div>
-  </section>
+  <section class="section" aria-labelledby="color-title">
+    <h2 id="color-title" class="section__title">Color</h2>
+    <p class="section__intro">Colors are named by role, not by hue. Use <span class="code">--color-primary</span> for "this is the main action," never a raw hex value. Status colors always come as a text and background pair so they keep 4.5:1 contrast.</p>
 
-  <!-- ===================== COLOR ===================== -->
-  <section class="doc-section" aria-labelledby="color">
-    <h2 id="color">Color</h2>
-    <p class="muted">Feature code references the semantic role (for example <span class="code">--color-primary</span>). Palette values can change without touching components.</p>
-    <div class="grid-auto">
+    <h3 class="subtitle">Brand and neutrals</h3>
+    <div class="grid">
       <div class="swatch">
         <div class="swatch__chip" style="background: var(--color-primary)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Primary</p>
-          <span class="code">--color-primary</span>
+        <div class="swatch__body">
+          <div class="swatch__name">Primary</div>
+          <div class="swatch__meta code">--color-primary · #0F5C5A</div>
         </div>
       </div>
       <div class="swatch">
         <div class="swatch__chip" style="background: var(--color-primary-soft)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Primary soft</p>
-          <span class="code">--color-primary-soft</span>
+        <div class="swatch__body">
+          <div class="swatch__name">Primary soft</div>
+          <div class="swatch__meta code">--color-primary-soft · #E3F1F0</div>
         </div>
       </div>
       <div class="swatch">
-        <div class="swatch__chip" style="background: var(--color-canvas)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Canvas</p>
-          <span class="code">--color-canvas</span>
+        <div class="swatch__chip" style="background: var(--color-accent)"></div>
+        <div class="swatch__body">
+          <div class="swatch__name">Accent</div>
+          <div class="swatch__meta code">--color-accent · #B7791F · decoration only</div>
         </div>
       </div>
       <div class="swatch">
-        <div class="swatch__chip" style="background: var(--color-surface)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Surface</p>
-          <span class="code">--color-surface</span>
+        <div class="swatch__chip" style="background: var(--color-ink)"></div>
+        <div class="swatch__body">
+          <div class="swatch__name">Ink</div>
+          <div class="swatch__meta code">--color-ink · #1B2A2F · body text</div>
         </div>
       </div>
       <div class="swatch">
-        <div class="swatch__chip" style="background: var(--color-text)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Text</p>
-          <span class="code">--color-text</span>
+        <div class="swatch__chip" style="background: var(--color-canvas); border-bottom: 1px solid var(--color-border)"></div>
+        <div class="swatch__body">
+          <div class="swatch__name">Canvas</div>
+          <div class="swatch__meta code">--color-canvas · #F4F7F6 · page</div>
         </div>
       </div>
       <div class="swatch">
-        <div class="swatch__chip" style="background: var(--color-text-muted)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Text muted</p>
-          <span class="code">--color-text-muted</span>
+        <div class="swatch__chip" style="background: var(--color-border)"></div>
+        <div class="swatch__body">
+          <div class="swatch__name">Border</div>
+          <div class="swatch__meta code">--color-border · #CFDAD7</div>
         </div>
       </div>
-      <div class="swatch">
-        <div class="swatch__chip" style="background: var(--color-success-text)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Success</p>
-          <span class="code">--color-success-text</span>
-        </div>
+    </div>
+
+    <h3 class="subtitle">Status</h3>
+    <div class="grid">
+      <div class="status status--success"><span class="status__title">Success</span></div>
+      <div class="status status--warning"><span class="status__title">Warning</span></div>
+      <div class="status status--danger"><span class="status__title">Danger</span></div>
+      <div class="status status--info"><span class="status__title">Info</span></div>
+    </div>
+    <p class="section__intro" style="margin-top: var(--space-3); margin-bottom: 0;">Pairs: <span class="code">--color-success-text / --color-success-bg</span>, and the same for warning, danger, and info.</p>
+  </section>
+
+  <section class="section" aria-labelledby="type-title">
+    <h2 id="type-title" class="section__title">Typography</h2>
+    <p class="section__intro">The system font stack is used on purpose. It loads instantly, respects each device's native look, and adds no external requests.</p>
+    <div class="panel">
+      <div class="type-row">
+        <div class="type-row__label code">--text-2xl</div>
+        <div style="font-size: var(--text-2xl); font-weight: 700; line-height: var(--leading-tight);">Page title</div>
       </div>
-      <div class="swatch">
-        <div class="swatch__chip" style="background: var(--color-warning-text)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Warning</p>
-          <span class="code">--color-warning-text</span>
-        </div>
+      <div class="type-row">
+        <div class="type-row__label code">--text-xl</div>
+        <div style="font-size: var(--text-xl); font-weight: 700; line-height: var(--leading-tight);">Section heading</div>
       </div>
-      <div class="swatch">
-        <div class="swatch__chip" style="background: var(--color-danger)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Danger</p>
-          <span class="code">--color-danger</span>
-        </div>
+      <div class="type-row">
+        <div class="type-row__label code">--text-lg</div>
+        <div style="font-size: var(--text-lg); font-weight: 600;">Card title or lead text</div>
       </div>
-      <div class="swatch">
-        <div class="swatch__chip" style="background: var(--color-info-text)"></div>
-        <div class="swatch__meta">
-          <p class="swatch__name">Info</p>
-          <span class="code">--color-info-text</span>
-        </div>
+      <div class="type-row">
+        <div class="type-row__label code">--text-base</div>
+        <div>Body text. Your pet's next vaccine is due in three weeks.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__label code">--text-sm</div>
+        <div style="font-size: var(--text-sm); color: var(--color-ink-muted);">Hints, labels, and secondary detail.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-row__label code">--text-xs</div>
+        <div style="font-size: var(--text-xs); color: var(--color-ink-muted);">Metadata and captions</div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== TYPE ===================== -->
-  <section class="doc-section" aria-labelledby="type">
-    <h2 id="type">Typography</h2>
-    <p class="muted">System font stack only, so pages load instantly and read native on every device. Times and dates use tabular numerals so columns line up.</p>
-    <div class="doc-block">
-      <div class="type-row">
-        <span class="code">--font-size-2xl · semibold · page title</span>
-        <span style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold)">Your pet's care, in one place</span>
+  <section class="section" aria-labelledby="space-title">
+    <h2 id="space-title" class="section__title">Spacing, radius, elevation, motion</h2>
+    <p class="section__intro">Spacing is built on a 4px base. Pick the nearest step; do not invent values in between.</p>
+
+    <div class="grid">
+      <div class="panel">
+        <h3 class="subtitle" style="margin-top: 0;">Space</h3>
+        <div class="space-row"><span class="code">space-1 · 4</span><div class="space-bar" style="width: 4px"></div></div>
+        <div class="space-row"><span class="code">space-2 · 8</span><div class="space-bar" style="width: 8px"></div></div>
+        <div class="space-row"><span class="code">space-3 · 12</span><div class="space-bar" style="width: 12px"></div></div>
+        <div class="space-row"><span class="code">space-4 · 16</span><div class="space-bar" style="width: 16px"></div></div>
+        <div class="space-row"><span class="code">space-5 · 24</span><div class="space-bar" style="width: 24px"></div></div>
+        <div class="space-row"><span class="code">space-6 · 32</span><div class="space-bar" style="width: 32px"></div></div>
+        <div class="space-row"><span class="code">space-7 · 48</span><div class="space-bar" style="width: 48px"></div></div>
+        <div class="space-row"><span class="code">space-8 · 64</span><div class="space-bar" style="width: 64px"></div></div>
       </div>
-      <div class="type-row">
-        <span class="code">--font-size-xl · semibold · section</span>
-        <span style="font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold)">Upcoming appointments</span>
-      </div>
-      <div class="type-row">
-        <span class="code">--font-size-lg · semibold · card title</span>
-        <span style="font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold)">Biscuit's annual wellness exam</span>
-      </div>
-      <div class="type-row">
-        <span class="code">--font-size-md · regular · body</span>
-        <span>Please arrive ten minutes early so we can check Biscuit in.</span>
-      </div>
-      <div class="type-row">
-        <span class="code">--font-size-sm · regular · supporting</span>
-        <span class="muted" style="font-size: var(--font-size-sm)">Bring any current medication and your vaccination record.</span>
-      </div>
-      <div class="type-row">
-        <span class="code">--font-size-xs · semibold · labels</span>
-        <span style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.04em">Next visit · Thu 15 Oct · 9:30 AM</span>
+
+      <div class="panel">
+        <h3 class="subtitle" style="margin-top: 0;">Radius</h3>
+        <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: var(--space-3);">
+          <div><div class="radius-box" style="border-radius: var(--radius-sm)"></div><div class="code" style="margin-top: 6px;">sm · 6</div></div>
+          <div><div class="radius-box" style="border-radius: var(--radius-md)"></div><div class="code" style="margin-top: 6px;">md · 10</div></div>
+          <div><div class="radius-box" style="border-radius: var(--radius-lg)"></div><div class="code" style="margin-top: 6px;">lg · 16</div></div>
+        </div>
+
+        <h3 class="subtitle">Elevation</h3>
+        <div class="grid" style="grid-template-columns: repeat(2, 1fr); gap: var(--space-3);">
+          <div><div class="elev-box" style="box-shadow: var(--shadow-1)"></div><div class="code" style="margin-top: 6px;">shadow-1 · resting</div></div>
+          <div><div class="elev-box" style="box-shadow: var(--shadow-2)"></div><div class="code" style="margin-top: 6px;">shadow-2 · hover</div></div>
+        </div>
+
+        <h3 class="subtitle">Motion</h3>
+        <p class="code">fast 120ms · base 200ms · ease-standard. Reduced-motion users get no transitions.</p>
       </div>
     </div>
   </section>
 
-  <!-- ===================== SPACING / SHAPE ===================== -->
-  <section class="doc-section" aria-labelledby="space">
-    <h2 id="space">Spacing, shape, elevation</h2>
-    <p class="muted">A 4px base scale. Use the scale for every margin, padding, and gap. Do not introduce one-off values.</p>
-    <div class="grid-auto">
-      <div class="doc-block">
-        <p class="code" style="margin:0 0 var(--space-3)">--space-2 · 8px</p>
-        <div class="space-bar" style="width: var(--space-2)"></div>
-        <p class="code" style="margin:var(--space-4) 0 var(--space-3)">--space-4 · 16px</p>
-        <div class="space-bar" style="width: var(--space-4)"></div>
-        <p class="code" style="margin:var(--space-4) 0 var(--space-3)">--space-6 · 24px</p>
-        <div class="space-bar" style="width: var(--space-6)"></div>
-        <p class="code" style="margin:var(--space-4) 0 var(--space-3)">--space-8 · 32px</p>
-        <div class="space-bar" style="width: var(--space-8)"></div>
-      </div>
-      <div class="doc-block">
-        <p class="code" style="margin:0 0 var(--space-3)">--radius-sm · 6px · inputs, buttons</p>
-        <div class="radius-box" style="border-radius: var(--radius-sm)"></div>
-        <p class="code" style="margin:var(--space-4) 0 var(--space-3)">--radius-md · 10px · tiles</p>
-        <div class="radius-box" style="border-radius: var(--radius-md)"></div>
-        <p class="code" style="margin:var(--space-4) 0 var(--space-3)">--radius-lg · 16px · cards</p>
-        <div class="radius-box" style="border-radius: var(--radius-lg)"></div>
-      </div>
-      <div class="doc-block">
-        <p class="code" style="margin:0 0 var(--space-3)">--shadow-1 · resting cards</p>
-        <div class="elevation-box" style="box-shadow: var(--shadow-1)">Resting</div>
-        <p class="code" style="margin:var(--space-4) 0 var(--space-3)">--shadow-2 · floating menus</p>
-        <div class="elevation-box" style="box-shadow: var(--shadow-2)">Elevated</div>
-      </div>
+  <section class="section" aria-labelledby="rules-title">
+    <h2 id="rules-title" class="section__title">Rules for building screens</h2>
+    <div class="panel">
+      <ol class="rules">
+        <li>Use tokens only. No raw hex values, pixel spacing, or font sizes in screen code.</li>
+        <li>Every interactive element gets a visible focus ring. Do not remove outlines without a replacement.</li>
+        <li>Touch targets are at least 44px tall.</li>
+        <li>Every input has a visible label. Placeholder text is never the label.</li>
+        <li>Errors state what went wrong and how to fix it, with the message tied to its field.</li>
+        <li>Status is never conveyed by color alone. Pair it with a word or an icon.</li>
+        <li>Destructive actions use the danger role and ask for confirmation. Primary actions are one per view.</li>
+        <li>If a pattern is needed twice, it becomes a component here before it appears on a second screen.</li>
+      </ol>
     </div>
   </section>
 
-  <!-- ===================== BUTTONS ===================== -->
-  <section class="doc-section" aria-labelledby="buttons">
-    <h2 id="buttons">Buttons</h2>
-    <p class="muted">One primary button per view. Use secondary for alternatives and ghost for low-emphasis actions. Destructive actions use danger and always confirm first.</p>
-    <div class="doc-block">
-      <div style="display:flex; flex-wrap:wrap; gap: var(--space-3); align-items:center">
+  <!-- ================= COMPONENTS ================= -->
+
+  <section class="section" aria-labelledby="buttons-title">
+    <h2 id="buttons-title" class="section__title">Buttons</h2>
+    <p class="section__intro">One primary button per view. Secondary and ghost buttons carry the rest.</p>
+    <div class="panel">
+      <div class="btn-row">
         <button class="btn btn--primary" type="button">Book appointment</button>
         <button class="btn btn--secondary" type="button">Reschedule</button>
-        <button class="btn btn--ghost" type="button">View details</button>
-        <button class="btn btn--danger" type="button">Cancel visit</button>
-        <button class="btn btn--primary" type="button" disabled>Booking unavailable</button>
-        <button class="btn btn--secondary btn--sm" type="button">Small</button>
+        <button class="btn btn--ghost" type="button">Cancel</button>
+        <button class="btn btn--primary" type="button" disabled>Disabled</button>
       </div>
     </div>
   </section>
 
-  <!-- ===================== STATUS / BADGES ===================== -->
-  <section class="doc-section" aria-labelledby="status">
-    <h2 id="status">Status messages and badges</h2>
-    <p class="muted">Every message pairs a color with an icon and a text label. Errors use <span class="code">role="alert"</span>; confirmations and info use <span class="code">role="status"</span>.</p>
-    <div class="stack" style="margin-bottom: var(--space-5)">
-      <div class="status status--success" role="status">
-        <span class="status__icon" aria-hidden="true"><span>✓</span></span>
-        <div>
-          <p class="status__title">Appointment requested</p>
-          <p>We'll confirm Biscuit's visit on Thu 15 Oct at 9:30 AM by text within one business day.</p>
-        </div>
-      </div>
-      <div class="status status--warning" role="status">
-        <span class="status__icon" aria-hidden="true"><span>!</span></span>
-        <div>
-          <p class="status__title">Vaccination record expires soon</p>
-          <p>Rabies booster for Biscuit is due on 2 Nov. Upload the certificate before your visit.</p>
-        </div>
-      </div>
-      <div class="status status--error" role="alert">
-        <span class="status__icon" aria-hidden="true"><span>×</span></span>
-        <div>
-          <p class="status__title">That time is no longer available</p>
-          <p>Someone else just booked 9:30 AM. Choose another time below or call us at the front desk.</p>
-        </div>
-      </div>
-      <div class="status status--info" role="status">
-        <span class="status__icon" aria-hidden="true"><span>i</span></span>
-        <div>
-          <p class="status__title">Reminder scheduled</p>
-          <p>You'll get a reminder 24 hours before each appointment.</p>
-        </div>
-      </div>
-    </div>
-    <div class="doc-block" style="display:flex; flex-wrap:wrap; gap: var(--space-3)">
-      <span class="badge badge--confirmed">✓ Confirmed</span>
-      <span class="badge badge--pending">● Pending</span>
-      <span class="badge badge--reminder">◷ Reminder due</span>
-      <span class="badge badge--cancelled">Cancelled</span>
-    </div>
-  </section>
+  <section class="section" aria-labelledby="form-title">
+    <h2 id="form-title" class="section__title">Booking form</h2>
+    <p class="section__intro">A sample assembled from the form tokens. Submit it with required fields empty to see the error pattern.</p>
 
-  <!-- ===================== SAMPLE PIECES ===================== -->
-  <section class="doc-section" aria-labelledby="samples">
-    <h2 id="samples">Sample pieces</h2>
-    <p class="muted">Built only from the tokens and components above.</p>
-
-    <div class="sample-row">
-
-      <!-- Booking form -->
-      <form class="card" aria-labelledby="booking-title" onsubmit="return false">
-        <h3 id="booking-title">Request an appointment</h3>
-        <p class="muted" style="margin-bottom: var(--space-5)">Fields marked optional can be completed at check-in.</p>
+    <div class="panel">
+      <form id="booking" novalidate>
+        <div id="booking-status" class="status status--danger" role="alert" hidden style="margin-bottom: var(--space-5);">
+          <svg class="status__icon" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13.5v.5"/></svg>
+          <div>
+            <span class="status__title" id="booking-status-title">Please fix the highlighted fields.</span>
+            <span id="booking-status-body">Some required information is missing.</span>
+          </div>
+        </div>
 
         <div class="form-grid">
-          <div class="field">
-            <label class="field__label" for="pet-name">Pet's name</label>
-            <input class="input" id="pet-name" name="pet-name" type="text" value="Biscuit" autocomplete="off">
-          </div>
-
-          <div class="field">
-            <label class="field__label" for="species">Species</label>
-            <select class="input" id="species" name="species">
-              <option>Dog</option>
-              <option>Cat</option>
-              <option>Rabbit</option>
-              <option>Other</option>
+          <div class="field" id="field-pet">
+            <label class="field__label" for="pet">Pet</label>
+            <select class="select" id="pet" name="pet" required aria-describedby="pet-error">
+              <option value="">Choose a pet</option>
+              <option>Biscuit (dog, 6 years)</option>
+              <option>Miso (cat, 3 years)</option>
             </select>
+            <span class="field__error" id="pet-error" hidden>Choose the pet this visit is for.</span>
           </div>
 
-          <div class="field span-2">
-            <label class="field__label" for="reason">Reason for visit</label>
-            <select class="input" id="reason" name="reason">
-              <option>Annual wellness exam</option>
+          <div class="field" id="field-service">
+            <label class="field__label" for="service">Reason for visit</label>
+            <select class="select" id="service" name="service" required aria-describedby="service-hint service-error">
+              <option value="">Choose a service</option>
+              <option>Wellness exam</option>
               <option>Vaccination</option>
+              <option>Dental cleaning</option>
               <option>Sick visit</option>
-              <option>Dental check</option>
             </select>
+            <span class="field__hint" id="service-hint">Choose the closest match. The vet can adjust it.</span>
+            <span class="field__error" id="service-error" hidden>Choose a reason for the visit.</span>
           </div>
 
-          <div class="field">
-            <label class="field__label" for="visit-date">Preferred date</label>
-            <input class="input" id="visit-date" name="visit-date" type="date" value="2026-10-15">
-            <p class="field__hint">We're open Monday to Saturday.</p>
+          <div class="field" id="field-date">
+            <label class="field__label" for="date">Preferred date</label>
+            <input class="input" id="date" name="date" type="date" min="2026-10-27" required aria-describedby="date-error">
+            <span class="field__error" id="date-error" hidden>Pick a date from today onward.</span>
           </div>
 
-          <div class="field">
-            <label class="field__label" for="phone">Phone <span class="optional">(optional)</span></label>
-            <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 014-2290">
-          </div>
-
-          <fieldset class="fieldset span-2" aria-describedby="time-error">
-            <legend>Preferred time</legend>
-            <div class="choices">
-              <label class="choice"><input type="radio" name="time" value="0900"><span>9:00 AM</span></label>
-              <label class="choice"><input type="radio" name="time" value="0930" checked><span>9:30 AM</span></label>
-              <label class="choice"><input type="radio" name="time" value="1000" disabled><span>10:00 AM</span></label>
-              <label class="choice"><input type="radio" name="time" value="1100"><span>11:00 AM</span></label>
-              <label class="choice"><input type="radio" name="time" value="1330"><span>1:30 PM</span></label>
+          <fieldset class="field span-all" id="field-time">
+            <legend class="field__label">Preferred time</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="time" value="8:30 AM"><span>8:30 AM</span></label>
+              <label class="chip"><input type="radio" name="time" value="9:30 AM"><span>9:30 AM</span></label>
+              <label class="chip"><input type="radio" name="time" value="11:00 AM"><span>11:00 AM</span></label>
+              <label class="chip"><input type="radio" name="time" value="1:30 PM"><span>1:30 PM</span></label>
+              <label class="chip"><input type="radio" name="time" value="3:45 PM"><span>3:45 PM</span></label>
             </div>
-            <p class="field__hint" style="margin-top: var(--space-2)">Dashed options are already booked.</p>
+            <span class="field__error" id="time-error" hidden>Choose a time slot.</span>
           </fieldset>
 
-          <div class="field span-2">
-            <label class="field__label" for="notes">Anything we should know? <span class="optional">(optional)</span></label>
-            <textarea class="input" id="notes" name="notes" aria-describedby="notes-hint"></textarea>
-            <p class="field__hint" id="notes-hint">Medications, allergies, or recent changes in behavior.</p>
-          </div>
-
-          <div class="field span-2">
-            <label class="field__label" for="owner-email">Email</label>
-            <input class="input" id="owner-email" name="owner-email" type="email" aria-invalid="true" aria-describedby="email-error" value="owner@example">
-            <p class="field__error" id="email-error">Enter an email address in the format name@example.com.</p>
-          </div>
-
-          <div class="span-2">
-            <label class="checkbox">
-              <input type="checkbox" checked>
-              <span>Send me a reminder 24 hours before the visit</span>
-            </label>
+          <div class="field span-all" id="field-notes">
+            <label class="field__label" for="notes">Anything we should know? <span class="field__hint">(optional)</span></label>
+            <textarea class="textarea" id="notes" name="notes" aria-describedby="notes-hint"></textarea>
+            <span class="field__hint" id="notes-hint">Symptoms, medications, or changes in behavior. Do not include payment details.</span>
           </div>
         </div>
 
-        <div class="form-actions">
-          <button class="btn btn--ghost" type="button">Cancel</button>
+        <div class="btn-row form-actions">
           <button class="btn btn--primary" type="submit">Request appointment</button>
+          <button class="btn btn--ghost" type="reset">Clear form</button>
         </div>
       </form>
-
-      <!-- Appointment card -->
-      <div class="stack">
-        <article class="card card--appointment" aria-labelledby="appt-title">
-          <div class="date-block" aria-label="Thursday 15 October">
-            <span class="date-block__day">Thu</span>
-            <span class="date-block__date">15</span>
-            <span class="date-block__month">Oct</span>
-          </div>
-          <div>
-            <div class="appt__header">
-              <h3 class="appt__title" id="appt-title">Annual wellness exam</h3>
-              <span class="badge badge--confirmed">✓ Confirmed</span>
-            </div>
-            <dl class="appt__meta">
-              <div><strong style="color: var(--color-text)">9:30 AM</strong> · 30 minutes</div>
-              <div>Biscuit (Labrador, 6 yrs) with Dr. Sam Okafor</div>
-              <div>Hollowbrook Vet Care, 214 Main Street</div>
-            </dl>
-            <div class="appt__actions">
-              <button class="btn btn--secondary btn--sm" type="button">Reschedule</button>
-              <button class="btn btn--ghost btn--sm" type="button">Directions</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card card--appointment" aria-labelledby="appt-title-2">
-          <div class="date-block" aria-label="Friday 2 October">
-            <span class="date-block__day">Fri</span>
-            <span class="date-block__date">2</span>
-            <span class="date-block__month">Oct</span>
-          </div>
-          <div>
-            <div class="appt__header">
-              <h3 class="appt__title" id="appt-title-2">Vaccination</h3>
-              <span class="badge badge--pending">● Pending</span>
-            </div>
-            <dl class="appt__meta">
-              <div><strong style="color: var(--color-text)">2:00 PM</strong> · 15 minutes</div>
-              <div>Mochi (Cat, 3 yrs) with Dr. Lena Ruiz</div>
-            </dl>
-            <div class="appt__actions">
-              <button class="btn btn--primary btn--sm" type="button">Confirm visit</button>
-              <button class="btn btn--ghost btn--sm" type="button">Cancel</button>
-            </div>
-          </div>
-        </article>
-      </div>
-
     </div>
   </section>
 
-  <footer class="muted" style="font-size: var(--font-size-sm); border-top: 1px solid var(--color-border); padding-top: var(--space-5)">
-    <p style="margin:0">Hollowbrook Vet Care · Foundation rules: use semantic tokens, never raw hex. Add a new component here before using it in a feature screen.</p>
-  </footer>
+  <section class="section" aria-labelledby="card-title">
+    <h2 id="card-title" class="section__title">Appointment cards</h2>
+    <p class="section__intro">Cards list upcoming visits. Status uses a badge with a word, never color alone.</p>
+
+    <div class="grid">
+      <article class="appt" aria-labelledby="appt-1-title">
+        <div class="appt__date" aria-hidden="true">
+          <span class="appt__month">Nov</span>
+          <span class="appt__day">4</span>
+        </div>
+        <div>
+          <div class="appt__head">
+            <h3 class="appt__title" id="appt-1-title">Biscuit · Wellness exam</h3>
+            <span class="badge badge--confirmed">Confirmed</span>
+          </div>
+          <p class="appt__meta">Wednesday, 9:30 AM · Dr. Alvarez</p>
+          <p class="appt__meta">Hollowbrook Vet Care, Room 2</p>
+          <div class="appt__actions">
+            <button class="btn btn--secondary" type="button" style="min-height: 36px; padding: 6px var(--space-3); font-size: var(--text-sm);">Reschedule</button>
+            <button class="btn btn--ghost" type="button" style="min-height: 36px; padding: 6px var(--space-3); font-size: var(--text-sm);">Add to calendar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="appt" aria-labelledby="appt-2-title">
+        <div class="appt__date" aria-hidden="true">
+          <span class="appt__month">Nov</span>
+          <span class="appt__day">12</span>
+        </div>
+        <div>
+          <div class="appt__head">
+            <h3 class="appt__title" id="appt-2-title">Miso · Vaccination</h3>
+            <span class="badge badge--pending">Awaiting confirmation</span>
+          </div>
+          <p class="appt__meta">Thursday, 1:30 PM · Any available vet</p>
+          <p class="appt__meta">We'll confirm by email within one business day.</p>
+          <div class="appt__actions">
+            <button class="btn btn--secondary" type="button" style="min-height: 36px; padding: 6px var(--space-3); font-size: var(--text-sm);">Change time</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="status-title">
+    <h2 id="status-title" class="section__title">Status messages</h2>
+    <p class="section__intro">Use one status message per decision point. Say what happened, then what to do next.</p>
+
+    <div class="grid">
+      <div class="status status--success" role="status">
+        <svg class="status__icon" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.5l2.3 2.3 4.7-5"/></svg>
+        <div>
+          <span class="status__title">Appointment confirmed</span>
+          Biscuit's visit is booked for November 4 at 9:30 AM. A reminder will arrive 24 hours before.
+        </div>
+      </div>
+
+      <div class="status status--warning" role="status">
+        <svg class="status__icon" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3l8 14H2z"/><path d="M10 8v4M10 14.5v.5"/></svg>
+        <div>
+          <span class="status__title">Vaccine due soon</span>
+          Miso's rabies booster is due in 14 days. Book now to stay on schedule.
+        </div>
+      </div>
+
+      <div class="status status--info" role="status">
+        <svg class="status__icon" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 9v5M10 6v.5"/></svg>
+        <div>
+          <span class="status__title">Clinic closed Monday</span>
+          For holiday hours, call the front desk. Urgent after-hours care is listed on the contact page.
+        </div>
+      </div>
+    </div>
+  </section>
 
 </main>
+
+<script>
+(function () {
+  var form = document.getElementById('booking');
+  var banner = document.getElementById('booking-status');
+  var bannerTitle = document.getElementById('booking-status-title');
+  var bannerBody = document.getElementById('booking-status-body');
+
+  function setError(fieldId, errorId, invalid) {
+    var field = document.getElementById(fieldId);
+    var error = document.getElementById(errorId);
+    var control = field.querySelector('select, input, textarea');
+    error.hidden = !invalid;
+    if (control && control.type !== 'radio') {
+      control.setAttribute('aria-invalid', invalid ? 'true' : 'false');
+    }
+    return invalid;
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var pet = form.pet.value;
+    var service = form.service.value;
+    var date = form.date.value;
+    var time = form.querySelector('input[name="time"]:checked');
+    var today = '2026-10-27';
+
+    var bad = [
+      setError('field-pet', 'pet-error', !pet),
+      setError('field-service', 'service-error', !service),
+      setError('field-date', 'date-error', !date || date < today),
+      setError('field-time', 'time-error', !time)
+    ];
+
+    if (bad.some(Boolean)) {
+      banner.className = 'status status--danger';
+      bannerTitle.textContent = 'Please fix the highlighted fields.';
+      bannerBody.textContent = 'Some required information is missing.';
+      banner.hidden = false;
+      banner.focus && banner.setAttribute('tabindex', '-1');
+      banner.focus();
+      return;
+    }
+
+    banner.className = 'status status--success';
+    bannerTitle.textContent = 'Request received';
+    bannerBody.textContent = 'We\u2019ll confirm your ' + service.toLowerCase() + ' for ' + pet.split(' (')[0] + ' on ' + date + ' at ' + time.value + ' by email within one business day.';
+    banner.hidden = false;
+    banner.setAttribute('tabindex', '-1');
+    banner.focus();
+  });
+
+  form.addEventListener('reset', function () {
+    banner.hidden = true;
+    ['pet', 'service', 'date', 'time'].forEach(function () {});
+    Array.prototype.forEach.call(form.querySelectorAll('[aria-invalid]'), function (el) {
+      el.setAttribute('aria-invalid', 'false');
+    });
+    Array.prototype.forEach.call(form.querySelectorAll('.field__error'), function (el) {
+      el.hidden = true;
+    });
+  });
+})();
+</script>
 </body>
 </html>

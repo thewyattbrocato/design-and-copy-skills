@@ -1,29 +1,42 @@
 # Proposal: Fund a Content Program at Tallowby
 
-**Ask:** Two full-time writers and an annual program budget of **[$___]**.
+**Ask:** Two full-time writers plus a yearly program budget of **$[X]**, for a 12-month program with a review at month 6.
 
-## The problem
-Our two biggest competitors, **[Competitor A]** and **[Competitor B]**, each publish about five times as much content as we do. Restaurant owners searching for payroll help, such as tip reporting, overtime rules, and hiring seasonal staff, are finding them first. The gap grows every month we wait.
-
-## Why content
-- **It's a commonly cited benchmark that content marketing returns about 3x what's spent.** This is an industry figure, not our own result. We've never tracked content performance, so we have no baseline yet.
-- Small restaurant owners research payroll and compliance questions online before they buy. Useful answers to those questions put us in front of them early.
-- Unlike paid ads, content keeps working after it's published.
+## Why now
+Small restaurant owners search for answers on payroll, tip reporting, overtime, and compliance before they pick software. Right now our two biggest competitors, **[Competitor A]** and **[Competitor B]**, show up for those searches and we mostly don't. By our count they publish about **[5x] as much as we do**. Each month we wait, they build more search authority and more of the audience.
 
 ## What we'd do
-- **Two writers** producing guides, compliance explainers, and templates aimed at restaurant owners and managers.
-- **Budget of [$___]** covering salaries, tools, editing and design, and distribution.
-- **Focus** on the questions our buyers already ask, starting with where competitors currently outrank us.
+- Publish guides and tools for restaurant owners and managers: tip pooling, scheduling and overtime rules by state, onboarding seasonal staff, payroll mistakes to avoid.
+- Build a library that ranks, and use it to feed email and sales conversations.
+- Writer 1 owns search-driven guides. Writer 2 owns customer stories, comparisons, and sales enablement.
+
+## Expected return
+Industry benchmarks commonly put content marketing returns at around **3x spend**. We'd treat that as a planning assumption, not a promise, because we haven't measured our own results yet. Setting up tracking in the first 60 days is part of the plan.
+
+## Cost
+| Item | Annual |
+|---|---|
+| Two writers (salary and benefits) | $[ ] |
+| Tools, editing, design | $[ ] |
+| Distribution and promotion | $[ ] |
+| **Total** | **$[X]** |
+
+At a 3x return, this spend would generate roughly **$[3X]** in attributable revenue.
 
 ## How we'll know it's working
-We're starting without baseline data, so the first 60 days will set up tracking: organic traffic, demo requests, and signups attributed to content. At 6 and 12 months we'll report actual return against the 3x benchmark. If we're not on track, we'll adjust or stop.
+- **Day 60:** Tracking live for traffic, signups, demo requests, and pipeline sourced by content.
+- **Month 6:** Review of output, rankings, and leads against targets. We'd continue, adjust, or stop based on the results.
+- **Month 12:** Measured return on our own numbers, replacing the benchmark.
 
 ## Decision needed
-Approve two hires and **[$___]** for the next 12 months, starting **[date]**.
+Approve two headcount and a $[X] budget so we can start hiring in **[month]**.
 
 ---
 
-**Before you send it:**
-1. **Competitor claim:** Spend 20 minutes counting each competitor's blog posts over the last 6 months against ours. The CEO may ask where "5x" comes from, and a real count turns it into a solid number. If it's closer to 3x or 8x, change the text.
-2. **The 3x figure:** It's widely repeated but rarely traced to a solid source, so I framed it as a benchmark and not a promise. If you can cite a specific study, add it. I wouldn't write "content returns 3x" as a flat fact, because if the CEO checks and it doesn't hold, the rest of the pitch suffers.
-3. **Budget:** You didn't give me a number, so I left it blank. Two salaries will be most of the total. The CEO will want to see the breakdown, so I can add a small cost table if you share the figures.
+**Before this goes to the CEO:**
+
+1. **The 5x claim needs a quick check.** You don't have numbers on it, and it's the sort of line a CEO might ask about. Counting each competitor's posts over the last 6 to 12 months takes about 30 minutes. If it's really 3x or 8x, the pitch is just as strong with the true figure, and you won't get caught out. I wrote it as "by our count" on the assumption you'll do that count.
+2. **The 3x figure is a generic benchmark.** Returns vary a lot by industry and by how they're measured, and "everybody uses it" isn't a source. I framed it as a planning assumption with a measurement plan. If you can cite a specific study, add it. If the CEO pushes on it, "we'll measure our own return by month 6" is a stronger answer than defending 3x.
+3. **The budget is blank.** Fill in $[X] with real salary and tooling numbers. The "$[3X]" line only works once you have a figure.
+
+I can tighten this further or draft the 30-minute competitor audit if you'd like.

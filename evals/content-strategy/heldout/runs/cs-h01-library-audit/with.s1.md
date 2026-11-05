@@ -1,64 +1,68 @@
-**The decision you're making:** for each group of pages, do you keep it, fix it, merge it, or retire it, and who owns what stays? You don't need to read every page. You need an inventory, a way to sort it into groups, and a close look at a sample from each group.
+# Six-week content audit plan
 
-## Week 1: Build the inventory
+You don't need to read every page. You need an inventory, a few rules that sort pages into decisions, and close reading only where the rules can't decide. The decision your director needs is **what to keep, fix, merge, or retire, and who answers for what stays.**
 
-Pull a list of every URL from your CMS or a crawler. For each one, add these columns:
+## Weeks 1–2: Build the inventory
 
-- **ID** (so findings can point at a page)
-- **URL and title**
-- **Type:** branch page, event, blog, service, other
-- **Last edited**
-- **Page views over the last 12 months,** if you have analytics
-- **Inbound links** (from the crawl)
-- **Owner:** blank for now
+Export every URL from your CMS. If it can't export, crawl the site with a free tool such as Screaming Frog (free up to 500 URLs) or a sitemap export. Put the results in one spreadsheet with a stable ID per page and these columns:
 
-Ask your helper to do the tagging. Don't sort on traffic alone. A page with few views may just be hard to find, and "last edited" doesn't tell you whether the content is still right.
+- URL, title, page type (branch, event, blog, service, policy, other)
+- Last edited, and the author if the CMS records it
+- Page views for the last 12 months, from your analytics
+- Inbound links, internal and from search
+- **Proposed owner**, **Decision** (keep / fix / merge / retire), **Reason**
 
-## Week 2: Sort into groups and pick a rule for each
+Don't treat low traffic as a verdict. A page may be unfindable rather than unwanted. "Last edited" doesn't tell you whether a page is right.
 
-Most of the site will fall into a few groups, so decide each group once instead of page by page.
+Your helper fills in the mechanical columns. You decide the page types and the rules in week 2.
 
-- **Past events:** Retire or archive them in bulk. Keep a small number only if they have real search traffic or inbound links, and redirect those.
-- **Blog:** Keep a short list of posts that still get found and are still accurate. Mark the rest "archive, no new posts" unless someone commits to writing. If nobody can name who would write it and how often, don't revive it.
-- **Branch pages:** These matter most, because wrong hours, addresses and phone numbers cause real problems for patrons. Check every one. There are only 11.
-- **Service and policy pages** (cards, fines, meeting rooms, etc.): Check all of them. Library policy is usually the thing that contradicts itself across branches.
-- **Duplicates and orphans:** Merge, or redirect to the best version.
+## Weeks 2–3: Sort by rule, not by reading
 
-## Weeks 3–4: Review, using sampling for the big groups
+Most of the site can be decided by page type:
 
-- Review branch and policy pages fully, with your helper checking them against what the branches say is true. Ask a branch manager to confirm each branch page.
-- For the large groups (events, blog), review a sample from each. Look at 20 to 30 pages, note how they fail, and apply the rule to the whole group if the failures are consistent.
-- Log each decision in the inventory: **keep / fix / merge / retire**, with a one-line reason.
+- **Past events:** Retire or archive them in bulk, unless they carry a record you need to keep. Redirect them to the current events listing.
+- **Blog:** Skim the titles and pick a small set of posts that still help people, such as how-tos and service explainers. Retire the rest, or freeze the blog with a visible "archive" label. Don't restart it unless someone commits to writing and editing it.
+- **Branch pages:** Check each one against a fixed list: hours, address, phone, services, accessibility info, and a named contact. This takes minutes per page. Ask whether 11 hand-built layouts should become one template.
+- **Duplicates:** Find near-identical pages by title. Merge them into one and redirect.
+- **Everything else:** Read it. By now the pile should be small enough.
 
-## Week 5: Get owners and set freshness rules
+Required content stays, whatever the traffic: policies, accessibility statements, and anything with a legal or funding obligation.
 
-An audit that doesn't assign owners just recreates the mess in two years.
+## Week 4: Check the facts
 
-- Assign one named person per group, with the right to say no. For branch pages, that could be each branch manager. Where nobody fits, write "needed: owner" and flag it for your director. Don't assign it to "everyone."
-- Set a trigger for each type. Hours change, so branch pages are reviewed on a schedule, such as twice a year, and after any hours change. Policy pages are reviewed when the policy changes. Events expire automatically after their date.
-- Write a retire rule: events archive after the date passes, and anything with no owner and no traffic gets reviewed for removal once a year.
+For the pages you're keeping, verify what goes wrong most: hours, phone numbers, fees, card and borrowing policies, and links to the catalog or databases. Ask each branch manager to confirm their own page. They know the answer, and it makes them the owner from the start. Send a one-page form per branch, not a request to "review the site."
 
-## Week 6: Act and write up
+## Week 5: Assign owners and freshness rules
 
-Make the fixes that are quick: retire the bulk groups, correct the branch pages, set redirects. Leave bigger rewrites for the plan. Then write the report.
+Every kept page gets one named owner who can say no. For branch pages, that's the branch manager or whoever updates them today. For system-wide policy pages, it's the person who sets the policy. A page with no owner is a retire candidate.
 
-## What to hand your director
+Write a short review rule per content type:
 
-Aim for two pages plus the spreadsheet as an appendix.
+- **Events:** Expire automatically after the date.
+- **Branch pages:** Reviewed twice a year, and whenever hours or services change.
+- **Policies:** Reviewed when the policy changes.
 
-1. **Summary:** what you looked at, what you found, and what you recommend, in one paragraph.
-2. **What was reviewed:** the groups, how many pages each (from your inventory), and what was fully checked versus sampled. Be open about the sampling.
-3. **Findings by group:** the verdict and the reason, with a few examples.
-4. **What was done:** pages retired, merged, or corrected.
-5. **What needs a decision:** the blog (revive or archive), and the groups with no owner. Give a recommendation for each.
-6. **Ongoing plan:** the owner table, review triggers, and a monthly 30-minute check by you.
-7. **Appendix:** the spreadsheet.
+Keep this to one page. Add a monthly 30-minute check where you scan what's due.
 
-Use counts from your own inventory. Don't estimate. If your director wants a cost or traffic case, that comes from your analytics, so pull the numbers before you write the claim.
+## Week 6: Execute and report
 
-## Two notes
+Carry out the retire and merge decisions, with redirects, so you don't leave broken links. Take a snapshot or backup first. Then write the director's deliverable.
 
-- **Assumption:** you can export a page list from your CMS. If you can't, a crawler like Screaming Frog can build the same list.
-- **Cut line:** if the six weeks start to slip, drop the full review of lower-priority pages first. Keep branch and policy pages, owners, and the retire rules, because those make the audit last.
+## What you hand your director
 
-If you paste in your page export or a sample of titles, I can help you sort them into groups and draft the rules.
+A **short memo (2 pages) plus the spreadsheet as an appendix**:
+
+1. **What you did:** the scope and method in a paragraph.
+2. **What you found:** counts by decision (kept, fixed, merged, retired) from your own spreadsheet, plus the three or four biggest problems, such as outdated branch info or the abandoned blog.
+3. **What you changed:** what's already done.
+4. **What needs a decision from them:** for example, whether to restart the blog, standardize branch pages, or require managers to own their pages.
+5. **The upkeep plan:** the owner list and review rules. Say honestly what it takes: a monthly check and a few hours per branch twice a year.
+
+The spreadsheet is your evidence. It lets the director spot-check any decision.
+
+## Two things to confirm
+
+- **Can your CMS export a full page list with last-edited dates?** If not, week 1 becomes a crawl, and you should tell your director now.
+- **Do you have the authority to retire pages?** If not, get sign-off on the rules (especially "past events go") at the end of week 2. Otherwise week 6 stalls on approvals.
+
+I can draft the spreadsheet template or the director memo next if that would help.

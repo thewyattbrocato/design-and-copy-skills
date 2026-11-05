@@ -1,31 +1,25 @@
-The structure works, but the content is still generic commerce-app copy, and that will mislead the developer. Here's what I'd fix before handing it over.
+It's a solid skeleton, but a few things would confuse the developer or don't fit a seed library, so I'd fix them before handing it over.
 
-**Biggest issues**
+**Fix before handing off**
 
-1. **The `$0.00` prices don't fit a seed library.** Seeds are shared, not sold. Showing a price suggests a store, and the developer may build payment fields. Replace it with what matters for lending: availability (e.g., "3 packets available"), or "Shared by [neighbor]," or nothing.
+1. **"$0.00" doesn't fit.** Seeds are shared, not sold. Replace the price with what a developer needs to build: availability (e.g., "Available," "Checked out," "Due back Mar 3") or "Free" if you want a fixed label. If the card needs a price-like slot, say what it shows and when.
+2. **"Featured" has no definition.** Who features items, and how? Staff picks, newest arrivals, or most-requested? Also state how many cards show (fixed three, or a horizontal scroll) and what tapping one does.
+3. **"Add" in the tab bar is ambiguous.** Add a seed? Donate one? List a surplus? Name the action and where it goes. It's probably the most-used action in the app, so it deserves clarity.
+4. **The empty state's "Get Started" has no destination.** Specify where it goes. For a new member, "Your Activity" is really "what you've borrowed and what's due back," so it should probably say that, with the button going to Search or to a how-it-works page.
+5. **Hero card copy is generic.** "Discover, connect and grow with our community" could belong to any app. It also appears on every visit. Decide whether it's first-run only or permanent, and consider a message that's specific to the library (e.g., "Seeds are back at the hall, Saturday 10–12").
+6. **The profile row duplicates the Profile tab and the gear icon.** Pick one place for account and settings. Showing the email on the home screen is also unnecessary for a neighborhood app, and users may not want their address visible when they're on a shared device.
 
-2. **The "Featured" cards have no selection rule.** The developer needs to know what gets featured: staff picks, newest arrivals, what's in season, or most-requested. That choice changes the data model and the copy, so decide it now.
+**Missing from the spec**
 
-3. **The seed card is missing its real fields.** A seed item needs at least variety name, seed year or harvest date, quantity, growing notes or days to maturity, and where to pick it up (the cupboard at the hall). "Item Title / Short description" will probably get rebuilt once someone looks at real data.
-
-4. **The profile row shows `user@example.com` on the home screen.** In a neighborhood app, that exposes a personal email to anyone glancing at the phone, and it's probably not what you want. Show the name and maybe a neighborhood or a "Member since" line instead, and keep email in settings.
-
-5. **"Your Activity" has nothing useful to say.** "Nothing to see here yet" with "Get Started" doesn't tell a new member what the section is for. Name the activity: "Seeds you've borrowed" / "Returns due" / "Seeds you're growing," and give the empty state a specific prompt, e.g., "You haven't borrowed or shared any seeds yet." with a button "Browse seeds" that goes to Search.
-
-6. **The "Explore" button has no destination.** Decide whether it goes to Search, a catalog, or a seasonal list.
-
-**Gaps to add**
-
-- **What "Add" does.** A center tab labeled "Add" needs a spec: add a seed to the library, offer seeds from your own garden, or request one? Those are different flows.
-- **Redundant profile entry.** The profile row at the bottom duplicates the Profile tab. Keep one, or make the row a link to the tab.
-- **States:** loading, no featured items, network error, and logged out. For a community app, the first one or two may be the most common.
-- **Messages badge** (unread count) and the active-tab indicator for Home.
-- **Gear icon:** say where it goes (Settings) and whether it's needed on Home at all, since Profile already covers account settings.
-- **Hero card:** it's the largest element on the screen but says nothing actionable. A seasonal prompt ("Spring planting starts in March. See what's available.") would do more work than the generic welcome. If you keep it, make the copy tell people what to do first.
+- **States:** loading, error/offline (the cupboard may have no signal), and the returning-user version of each section.
+- **Item model:** what is an "Item"? A seed packet, a variety, a tool? Its fields (quantity, year harvested, seed-saving notes) drive the card design.
+- **Image and alt text:** specify the aspect ratio and a fallback when there's no photo, since most seed packets will be photographed by volunteers.
+- **Copy consistency:** you use "Explore," "Get Started," "Discover," and "Search." Pick a shared vocabulary (borrow, return, list, donate) and use it everywhere.
+- **Language:** you write "Nothing to see here yet." Consider a sentence that explains the next step, like "You haven't borrowed anything yet. Browse what's available."
 
 **Minor**
 
-- The title bar says "Home," and the Home tab is also highlighted, so the title is redundant. Consider the hall or library name instead.
-- Set the image placeholder aspect ratio, since the developer will otherwise guess.
+- Title case or sentence case: pick one and apply it to headings and buttons.
+- Mark the placeholder text clearly so the developer doesn't ship "Item Title."
 
-**Suggested fix:** Before handing it off, pick the Featured rule, the seed card fields, and the "Add" flow. Those three decisions shape the data model, and the developer will have to guess at them otherwise. The rest is copy and states that can be tightened in review.
+If you tell me what the core loop is (borrow, return, donate, and whether members have accounts), I can rewrite the screen with real copy and a clear tab structure.

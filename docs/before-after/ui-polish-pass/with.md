@@ -1,0 +1,1 @@
+A light kiln booking page: "Book a kiln" with the line "Booked windows are greyed out and labelled.", numbered steps for kiln, firing type and the next 14 days, days with nothing free marked "No windows", and a "Your upcoming bookings" panel whose empty state says how a booking will appear there and can be cancelled.

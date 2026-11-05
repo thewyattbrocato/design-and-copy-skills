@@ -1,1 +1,3 @@
-It's generic enough to be any SaaS: "Work smarter, not harder," "powerful platform," and "whole team" say nothing about bookshops or stock counting. Name the actual job instead, e.g. **"Count your shelves in an afternoon, not a weekend."** with a subline like "Stock counting built for independent bookshops," and make the button say something concrete like "Start your first count."
+Gut check: it's generic. "Work smarter, not harder" and "one powerful platform" could be any SaaS, and nothing says bookshops or stock counting.
+
+Try something specific, like "Count your shelves in an afternoon, not a weekend." Follow it with "Stock counting for independent bookshops, shared across your whole team." Make the button more concrete too, like "Start your first count."

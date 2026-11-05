@@ -1,51 +1,47 @@
-**Assumptions:** the name is "Southbank Reading Room," set on one line beside the mark. Brand colors aren't given, so I've used placeholders: ink `#1F2A44` and paper `#F6F1E7`. Replace them with the real palette once chosen. The tote is printed in one ink on natural canvas.
+## Shared files to build first
 
-## Shared rules
+Build these from the one master drawing, then use them in the four places below.
 
-- **Clear space:** keep a margin equal to the height of the middle book on every side of any lockup.
-- **Mark-to-name ratio:** in the horizontal lockup, the mark's height equals the name's cap-to-baseline height ×2.4, so the stack reads as heavier than the type. Adjust by eye.
-- **Versions to build:** solid ink on paper, reversed (paper on ink), and one-color (for print and tote). Full color is optional.
-- **Heavier small version:** build a simplified symbol with thicker book spines and wider gaps for the avatar and bookmark, so it holds at 32 px and in print.
+1. **Horizontal lockup:** mark left, name on one line to its right.
+2. **Stacked lockup:** mark above, name centered below in one or two lines.
+3. **Symbol only:** the mark alone.
+4. **One-color versions** of 1 to 3, in ink on light and in reversed (light on ink).
+5. **Small-size symbol:** a heavier, simplified cut for 16 to 32 px. Thicken the book bars, widen the gaps between them, and drop any hairline.
+
+Set the name in one typeface with one custom adjustment (a reshaped letter or a tuned join), and keep its weight close to the mark's bars. Use one ink color for everything. Add no gradients, shadows, or tagline.
+
+Clear space on every side equals the height of one book bar in the mark.
 
 ## 1. Wide website header
 
-- **Lockup:** horizontal. Mark on the left, name on the right, one line.
-- **Name:** set in one weight, sentence-free caps or title case as chosen, with one custom adjustment (for example, a tightened "RR" pair) so it isn't stock type.
-- **Size:** minimum 140 px wide. Keep the mark's top and bottom aligned to the name's cap height plus descender.
-- **Background:** ink on paper, or paper on ink in a dark header.
+- **Layout:** horizontal lockup, mark on the left, name on one line to its right, left-aligned to the content column.
+- **Size:** the mark is about 2 times the cap height of the name. Keep the whole lockup at 40 px tall or more; the mark alone should not drop below 32 px.
+- **Color:** ink on light background. If the header is dark, switch to the reversed one-color horizontal, not the full-color file.
+- **Clear space:** one book bar on all sides, including from the top and bottom edge of the header bar.
 
 ## 2. Square social avatar
 
-- **Lockup:** symbol only, no name. The name won't read at avatar size.
-- **Use the heavier small version** of the mark.
-- **Size:** the mark fills about 70% of the square, centered, with even margins.
-- **Background:** solid paper or solid ink. No gradient, no photo.
-- **Files:** export at 400×400 and check it at 32×32.
+- **Layout:** symbol only, centered, filling about 70% of the square's width. Leave the name out.
+- **Why:** the name will not read at avatar sizes (often 40 to 180 px). The avatar is for recognition, and the name is shown beside it on the profile.
+- **Color:** reversed (light mark on ink square) for the strongest contrast at thumbnail size. Use the small-size cut if the platform displays it below 64 px.
+- **Crop test:** circle-crop the square and check that the outer book bars are not clipped.
 
 ## 3. Narrow bookmark
 
-- **Lockup:** stacked. Mark on top, name below in two lines: "Southbank" over "Reading Room."
-- **Layout:** centered, with the mark about half the bookmark's width and the name no wider than the mark.
-- **Orientation:** keep the name horizontal. Don't rotate it along the spine, since it will not read.
-- **Color:** one-color ink on paper, or reversed on a dark stock.
-- **Min size:** the name's cap height must be at least 2.5 mm in print.
+- **Layout:** stacked lockup in a vertical strip. The mark sits in the upper part, with the name below it, set in two lines ("Southbank" over "Reading Room") so it fits the narrow width.
+- **Size:** the mark is about 60% of the bookmark's width. The name's widest line must fit within 80% of the width.
+- **Margins:** at least 5 mm from every edge, and keep the mark clear of any tassel hole or punch.
+- **Color:** one ink on the paper, or reversed if the bookmark stock is dark.
+- **Avoid:** rotating the name along the spine. It is hard to read on a bookmark and breaks the stacked rule.
 
 ## 4. Canvas tote bag
 
-- **Lockup:** stacked, large. Mark centered at the top third of the front, name below in one line.
-- **Scale:** the mark about 40–50% of the bag's print width. Leave at least 25 mm of canvas on every side.
-- **Color:** one ink only, which keeps screen-printing to a single screen. Ink on natural canvas. Reversed only if the canvas is dark.
-- **Files:** supply a one-color vector (no gradients, no fine hairlines) and check it at the print width.
+- **Layout:** stacked lockup, centered on the front panel, with the mark about one third of the bag's printed width. A 30 cm wide front gives a mark about 10 cm wide.
+- **Color:** one ink, printed or screen printed onto natural canvas. Use ink on light canvas. Do not use the reversed version here, since a bag print is normally a single dark ink on natural fabric.
+- **Print limits:** no line or gap thinner than about 1 mm, since fabric ink spreads. Use the small-size cut only for a tiny detail on the back, if ever.
+- **Placement:** keep the print 5 cm or more from seams and the top handle attachment.
 
-## Files for the volunteer designer
+## Assumptions
 
-1. `srr-horizontal` (ink, paper, reversed)
-2. `srr-symbol-avatar` (heavier small version)
-3. `srr-stacked-bookmark` (ink, reversed)
-4. `srr-stacked-tote` (one-color vector)
-
-Each file should be an SVG with outlined text, so no font needs to be installed to open it.
-
-**Notes:**
-- The placeholder colors and the proportions above are starting points. The first test is a printed bookmark and a 32 px avatar, judged by eye.
-- Whether this mark is distinctive enough to protect is a legal question. It needs a trademark search by a lawyer before use.
+- The organization's colors are unknown, so I assumed one ink color on light and reversed grounds. If they have a brand color, the designer should swap that in the same places.
+- The name's typeface is left for the designer to pick, since no existing identity was provided.

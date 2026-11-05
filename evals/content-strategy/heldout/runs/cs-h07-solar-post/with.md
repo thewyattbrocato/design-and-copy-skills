@@ -1,15 +1,9 @@
-Here's a draft (about 105 words):
+Last week, our crew of 9 at Aldercreek Solar finished a rooftop solar install on the Hollis Valley grange hall. It's our first community hall project.
 
----
+The best part came this past Sunday. The hall's kitchen is where the monthly pancake breakfast gets cooked, and this month's breakfast ran on the new panels.
 
-Last week, Aldercreek Solar wrapped up a rooftop install on the Hollis Valley grange hall. It's our first community hall project, and it meant a lot to our crew of 9.
+The grange volunteers were part of the job, too. They held ladders and made lunch for our crew, which is hard to beat on an install day.
 
-The best proof came this past Sunday. The hall's kitchen, where the monthly pancake breakfast gets cooked, ran on the new panels. Breakfast powered by the sun.
+Thank you, Hollis Valley Grange, for trusting us with a building that means so much to your neighbors. We're glad to have played a small part in keeping the griddles hot.
 
-Thank you to the grange volunteers, who held ladders and made lunch for the crew. That's how a community project should feel.
-
-We'll share system details once we have them. For now, we're just glad the pancakes were hot.
-
----
-
-I left out system size and savings, since you don't have those yet. The last line says details are coming. If you'd rather not promise that, you can cut it.
+(About 112 words. I left out system size and savings, since you don't have those yet. If you have a photo of the crew with the volunteers or of the panels on the roof, it would pair well with this.)

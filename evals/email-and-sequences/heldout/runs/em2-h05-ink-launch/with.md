@@ -1,38 +1,37 @@
 **Subject line options**
 
-1. Harbor Fog is here: a three-ink set
-2. Meet Harbor Fog, our new ink set
-3. Harbor Fog: 3 inks, $24, from Duluth
-4. New from Quillfeather: Harbor Fog
-5. Three new inks, one foggy harbor
+1. Harbor Fog is here: three new inks, $24
+2. Meet Harbor Fog, our new three-ink set
+3. New from Quillfeather: the Harbor Fog set
+4. Three inks, one set: Harbor Fog
+5. Harbor Fog just landed in Duluth
 
-**Preview text** (pairs with any of the above): Three inks, $24 for the set, shipped from our shop in Duluth.
+**Preview text:** A new three-ink set from our little shop, $24 and shipped from Duluth.
 
 ---
 
-**Email**
+**Subject:** Harbor Fog is here: three new inks, $24
 
-**Subject:** Harbor Fog is here: a three-ink set
+Hello,
 
-Hi there,
+Harbor Fog is ready. It's our new set of three fountain pen inks, and it's $24 for all three.
 
-Harbor Fog is ready. It's our new set of three fountain pen inks, and it's $24 for the set.
+We made it in Duluth, and we pack and ship every order from here too. When you order, it goes out from our shop to your desk.
 
-We made it with a gray, misty Duluth morning in mind: the kind where the lake and the sky run together and the harbor goes soft around the edges. Three inks, one mood, meant to be used together or on their own.
+Three inks that belong together is one of our favorite things to put in front of you. A set lets you fill a few pens and see how the colors work side by side. Or you can keep all three close and reach for whichever suits the day.
 
-We're a tiny shop, so every set is packed and shipped from Duluth by us.
+**[Get the Harbor Fog set – $24]** [link]
 
-[Get the Harbor Fog set]({{link}})
-
-Thanks for being part of Quillfeather. We're really glad to finally share this one.
+Thank you for being on our list. You're the first to hear about this one.
 
 Happy writing,
-The Quillfeather Ink team
+Quillfeather Ink
+Duluth
 
-You're getting this because you subscribed to Quillfeather Ink updates. [Unsubscribe]({{unsubscribe_link}})
+*P.S. Pictures are coming soon, and we'll send them along when they're ready.* [optional, cut if you'd rather not mention it]
 
 ---
 
-Notes:
-- I kept the description to mood only, with nothing about how the inks behave on paper, since you haven't tested widely. Once you have photos or swatches, add them above the button. If you want to name the three inks or their colors, that's the easiest way to add more excitement.
-- Add a launch date or availability line if there's a real one (for example, "available [date]"). I left out urgency since none was given.
+Two things to check:
+- **Launch date:** The email says "ready," so it assumes the set is orderable the moment this goes out. If you send it before the set is live, add the date, e.g. "Harbor Fog arrives [date]."
+- **Colors:** I left out color names and descriptions because you haven't supplied them. Naming the three colors, even just their names, would probably make this more exciting. Drop them in after the "three inks" paragraph if you want.

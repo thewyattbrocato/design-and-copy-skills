@@ -2,5 +2,5 @@
 
 Changes made:
 - "ordres" → "orders" (three times)
-- Comma after "Orders placed before 2pm ship the same business day" changed to a semicolon, since it joined two independent clauses
-- Added a comma after "10 business days" following the introductory clause
+- Comma splice after "business day" changed to a semicolon
+- Added a comma after "10 business days"

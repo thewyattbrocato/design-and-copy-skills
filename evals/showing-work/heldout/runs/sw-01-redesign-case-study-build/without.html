@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Outfitters: Redesigning the returns flow</title>
+<meta name="description" content="Product design case study: a returns flow redesign for Kestrel Outfitters that lifted return-request form completion from 37% to 68%.">
+<style>
+  :root {
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --ink: #1d2420;
+    --muted: #5b655f;
+    --line: #e2ddd3;
+    --accent: #2f5d46;
+    --accent-ink: #ffffff;
+    --accent-soft: #e4eee7;
+    --old: #b9b2a3;
+    --max: 44rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141916;
+      --surface: #1c231f;
+      --ink: #eef1ec;
+      --muted: #a2ada6;
+      --line: #2e3832;
+      --accent: #7fc09b;
+      --accent-ink: #10201789;
+      --accent-soft: #223329;
+      --old: #5b6560;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem; }
+  header.hero { padding: 4.5rem 0 2.5rem; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 1rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1.12;
+    margin: 0 0 1.25rem; letter-spacing: -.02em;
+  }
+  .lede { font-size: 1.2rem; color: var(--muted); margin: 0; max-width: 38rem; }
+  dl.meta {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 1.25rem 1.5rem; margin: 2.25rem 0 0;
+  }
+  dl.meta dt { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
+  dl.meta dd { margin: .2rem 0 0; font-weight: 600; }
+  section { padding: 3rem 0 0; }
+  h2 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 1rem; letter-spacing: -.01em; }
+  h3 { font-size: 1.15rem; margin: 0 0 .4rem; }
+  p { margin: 0 0 1rem; }
+  .callout {
+    background: var(--accent-soft); border-left: 4px solid var(--accent);
+    padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0;
+  }
+  .callout p { margin: 0; }
+
+  /* flow comparison */
+  .flows { display: grid; gap: 1rem; margin: 1.5rem 0 0; }
+  @media (min-width: 40rem) { .flows { grid-template-columns: 1fr 1fr; } }
+  .flow {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.25rem;
+  }
+  .flow h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: .9rem; }
+  .flow.new h3 { color: var(--accent); }
+  .flow ol { list-style: none; counter-reset: s; margin: 0; padding: 0; }
+  .flow li {
+    counter-increment: s; position: relative;
+    padding: .35rem 0 .35rem 2.2rem; font-size: .98rem; line-height: 1.45;
+  }
+  .flow li::before {
+    content: counter(s); position: absolute; left: 0; top: .3rem;
+    width: 1.5rem; height: 1.5rem; border-radius: 50%;
+    background: var(--old); color: var(--bg);
+    font-size: .8rem; font-weight: 700; text-align: center; line-height: 1.5rem;
+  }
+  .flow.new li::before { background: var(--accent); color: var(--bg); }
+
+  /* decisions */
+  .decision {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.5rem; margin: 0 0 1rem;
+  }
+  .decision .num {
+    display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: .35rem;
+  }
+  .decision h3 { font-size: 1.3rem; margin-bottom: .6rem; }
+  .decision .why { color: var(--muted); margin-bottom: 0; }
+  .decision .why strong { color: var(--ink); }
+
+  /* results chart */
+  figure.chart { margin: 1.5rem 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; }
+  figure.chart figcaption { font-size: .85rem; color: var(--muted); margin-top: 1.25rem; }
+  .bar-row { margin: 0 0 1.1rem; }
+  .bar-label { display: flex; justify-content: space-between; font-size: .9rem; font-weight: 600; margin-bottom: .35rem; }
+  .track { background: var(--bg); border-radius: 6px; height: 2.25rem; overflow: hidden; border: 1px solid var(--line); }
+  .fill { height: 100%; border-radius: 5px 0 0 5px; }
+  .fill.before { width: 37%; background: var(--old); }
+  .fill.after { width: 68%; background: var(--accent); }
+  .big { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: baseline; margin: 0 0 1.25rem; }
+  .big .n { font-size: 3rem; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--accent); }
+  .big .t { font-size: .9rem; color: var(--muted); display: block; margin-top: .3rem; font-weight: 500; letter-spacing: 0; }
+
+  footer { margin-top: 4rem; padding: 2rem 0 3rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+  footer p { margin: 0; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Case study · E-commerce UX</p>
+    <h1>Making returns something customers could actually start</h1>
+    <p class="lede">I redesigned the returns flow for Kestrel Outfitters, a mid-size online camping gear shop. Return-request form completion went from 37% to 68%.</p>
+    <dl class="meta">
+      <div><dt>Role</dt><dd>Sole product designer</dd></div>
+      <div><dt>Team</dt><dd>PM (Daria), two engineers</dd></div>
+      <div><dt>Timeline</dt><dd>About 10 weeks, 2025</dd></div>
+      <div><dt>Client</dt><dd>Kestrel Outfitters</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section aria-labelledby="problem">
+    <h2 id="problem">The problem</h2>
+    <p>To start a return at Kestrel, customers had to email support. The way in was a “Contact us” form buried in the site footer, so before a customer could return anything, they first had to find that form.</p>
+    <p>I read through support tickets to understand where people got stuck. The most common complaint was not knowing whether an item was eligible for return. Customers were asking support a question the site could have answered, and the old flow only revealed the answer after they had already committed to the process.</p>
+    <div class="callout">
+      <p><strong>Design goal:</strong> let customers start a return from where they already look for their purchases, tell them early whether an item qualifies, and cut every step that didn’t need a human.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="flow">
+    <h2 id="flow">The flow, before and after</h2>
+    <p>The redesign moved the starting point into the account page and brought the eligibility answer and the shipping label into the flow itself.</p>
+    <div class="flows">
+      <div class="flow">
+        <h3>Before</h3>
+        <ol>
+          <li>Hunt for “Contact us” in the footer</li>
+          <li>Fill out a general contact form</li>
+          <li>Pick a reason from a 9-option dropdown</li>
+          <li>Wait for support to reply by email</li>
+          <li>Learn about eligibility and label later</li>
+        </ol>
+      </div>
+      <div class="flow new">
+        <h3>After</h3>
+        <ol>
+          <li>Open an order in your account</li>
+          <li>Tap “Return an item” on that order</li>
+          <li>See eligibility for each item up front</li>
+          <li>Choose a reason in one tap, add a note if you like</li>
+          <li>Get your prepaid label and drop-off map right away</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="decisions">
+    <h2 id="decisions">Three design decisions</h2>
+
+    <article class="decision">
+      <span class="num">Decision 1</span>
+      <h3>Start returns from each order, and check eligibility per item up front</h3>
+      <p>I added a “Return an item” action to every order in the account page. Once a customer picks an item, the flow checks whether it’s eligible right away, instead of at the end.</p>
+      <p class="why"><strong>Why:</strong> uncertainty about eligibility was the most common complaint in the tickets I read. Putting the answer at the start means people don’t invest effort in a return that can’t go through. Starting from the order also means the customer doesn’t have to describe what they bought.</p>
+    </article>
+
+    <article class="decision">
+      <span class="num">Decision 2</span>
+      <h3>Replace the 9-option reason dropdown with one tap and an optional note</h3>
+      <p>The reason step became a single tap, with a free-text note for anyone who wants to add detail.</p>
+      <p class="why"><strong>Why:</strong> in the old dropdown, most answers were “Other.” Nine options were adding effort without producing useful data, so I cut the step down to what customers would actually use.</p>
+    </article>
+
+    <article class="decision">
+      <span class="num">Decision 3</span>
+      <h3>Show the prepaid label and drop-off map on the confirmation screen</h3>
+      <p>When a customer finishes the request, the confirmation screen shows their prepaid label and a map of drop-off locations immediately, rather than sending them by email later.</p>
+      <p class="why"><strong>Why:</strong> the moment a return is confirmed is when customers want to know what to do next. Showing the label and the map there removes a wait and a dependency on finding an email.</p>
+    </article>
+  </section>
+
+  <section aria-labelledby="results">
+    <h2 id="results">Results</h2>
+    <div class="big" aria-hidden="true">
+      <div><span class="n">37% → 68%</span><span class="t">return-request form completion</span></div>
+    </div>
+    <p>In the six weeks after launch, the completion rate of the return-request form rose from 37% to 68%, a gain of 31 percentage points. Figures come from the product manager’s dashboard.</p>
+
+    <figure class="chart">
+      <div class="bar-row">
+        <div class="bar-label"><span>Old flow</span><span>37%</span></div>
+        <div class="track"><div class="fill before" role="img" aria-label="37 percent"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label"><span>Redesigned flow (first six weeks)</span><span>68%</span></div>
+        <div class="track"><div class="fill after" role="img" aria-label="68 percent"></div></div>
+      </div>
+      <figcaption>Return-request form completion rate. Source: PM dashboard, six weeks after launch.</figcaption>
+    </figure>
+
+    <p>This is the one metric I have. I changed three things together, so I can’t say how much each decision contributed on its own.</p>
+  </section>
+
+  <section aria-labelledby="team">
+    <h2 id="team">Working together</h2>
+    <p>I was the only designer on the project. I worked day to day with Daria, the PM, and two engineers over about ten weeks, and I owned the research read-through, the flow design, and the interface decisions above.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Kestrel Outfitters returns redesign · 2025</p>
+  </div>
+</footer>
+</body>
+</html>

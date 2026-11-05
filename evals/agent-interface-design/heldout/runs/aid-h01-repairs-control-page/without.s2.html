@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Lettings · Repairs desk</title>
+<style>
+:root{
+  --bg:#f5f4f0; --panel:#fff; --ink:#1d2127; --muted:#5f6670; --line:#e1ded6; --soft:#faf9f6;
+  --em:#b3261e; --em-bg:#fbe9e7;
+  --ur:#9a5b00; --ur-bg:#fdf0d9;
+  --ro:#3b4a5a; --ro-bg:#e8edf2;
+  --ok:#1f6b45; --ok-bg:#e1f2e8;
+  --accent:#1f4f7a;
+  --focus:#1f4f7a;
+}
+@media (prefers-color-scheme:dark){
+:root{
+  --bg:#16181b; --panel:#1f2226; --ink:#e8e8e6; --muted:#9aa1aa; --line:#32363c; --soft:#252a2f;
+  --em:#ff9a90; --em-bg:#4a1f1b;
+  --ur:#f2c26b; --ur-bg:#42320f;
+  --ro:#b5c3d1; --ro-bg:#2c3640;
+  --ok:#8fd5ab; --ok-bg:#183626;
+  --accent:#8fbfe8; --focus:#8fbfe8;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;padding:18px 28px 6px;max-width:1180px;margin:0 auto}
+h1{font-size:20px;margin:0;font-weight:650}
+header .sub{color:var(--muted);font-size:13px}
+header .live{margin-left:auto;color:var(--muted);font-size:13px}
+main{max-width:1180px;margin:0 auto;padding:8px 28px 48px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 20px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.stat b{display:block;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:13px}
+.stat.hot{border-color:var(--em);}
+.stat.hot b{color:var(--em)}
+h2{font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:22px 0 8px;font-weight:650}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:6px 12px;border-radius:99px;font:inherit;font-size:13px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip .n{color:var(--muted);margin-left:4px;font-variant-numeric:tabular-nums}
+.chip[aria-pressed=true] .n{color:inherit;opacity:.75}
+input[type=search]{margin-left:auto;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;font-size:14px;min-width:220px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.list{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.row{border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.head{display:grid;grid-template-columns:54px 112px minmax(0,1.7fr) minmax(0,1.2fr) 170px 20px;gap:14px;align-items:center;width:100%;padding:12px 16px;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.head:hover{background:var(--soft)}
+.time{color:var(--muted);font-variant-numeric:tabular-nums;font-size:13px}
+.tag{display:inline-block;font-size:12px;font-weight:650;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.tag.em{background:var(--em-bg);color:var(--em)}
+.tag.ur{background:var(--ur-bg);color:var(--ur)}
+.tag.ro{background:var(--ro-bg);color:var(--ro)}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+.what b{display:block;font-weight:600}
+.what small,.who small{color:var(--muted);font-size:13px}
+.who{min-width:0}
+.who b{font-weight:500}
+.st{font-size:13px}
+.st .flag{color:var(--em);font-weight:650}
+.chev{color:var(--muted);transition:transform .15s}
+.row.open .chev{transform:rotate(90deg)}
+.row.attn{box-shadow:inset 4px 0 0 var(--em)}
+.attnbar{display:flex;gap:8px;padding:0 16px 12px 16px;margin-top:-4px;font-size:13px;color:var(--em);font-weight:600}
+.detail{display:none;padding:4px 16px 16px 84px;background:var(--soft);border-top:1px dashed var(--line)}
+.row.open .detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px 28px}
+.detail h3{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:12px 0 4px}
+.detail p{margin:0}
+.msg{border-left:3px solid var(--line);padding-left:10px;font-style:italic}
+.actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 14px;border-radius:8px;font:inherit;font-size:13px;cursor:pointer}
+.btn.pri{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
+.btn:hover{filter:brightness(.96)}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+@media (max-width:860px){
+  header,main{padding-left:14px;padding-right:14px}
+  .head{grid-template-columns:1fr auto;gap:4px 10px}
+  .head .time,.head .chev{display:none}
+  .head .who{grid-column:1/-1}
+  .head .st{grid-column:1/-1}
+  .detail{padding-left:16px}
+  input[type=search]{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Repairs desk</h1>
+  <span class="sub">Kestrel Lettings · 312 flats · agent reads requests, rates urgency, books vendors</span>
+  <span class="live">Tue 27 Oct, last checked <b id="now">11:42</b> · agent running</span>
+</header>
+<main>
+  <div class="summary" id="summary"></div>
+
+  <div class="toolbar" id="filters" role="group" aria-label="Filter requests"></div>
+  <div class="toolbar" style="margin-top:-2px"><input type="search" id="q" placeholder="Search flat, tenant, issue, vendor…" aria-label="Search requests"></div>
+
+  <div class="list" id="list"></div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const R = [
+ {id:"R-2291",t:"11:09",flat:"Flat 4B",addr:"22 Marlowe Court, Leeds LS6",tenant:"Priya Nair",phone:"07700 900412",
+  sum:"Smell of gas in kitchen",msg:"Hi, there's been a smell of gas by the hob since about 10.50. I've opened the windows. Is someone coming?",
+  u:"Emergency",why:"Possible gas leak. Rated emergency on the keyword and the tenant describing a smell near an appliance.",
+  trade:"Gas engineer",vendor:"Pennine Gas & Heating (24h)",status:"attn",stext:"No vendor confirmation",
+  flag:"Booked 11:12 with Pennine, no confirmation after 30 min. Agent has sent the tenant the gas emergency advice.",
+  ask:"Phone Pennine on 0113 496 0182. If no answer, call the backup (Aire Valley Gas)."},
+ {id:"R-2288",t:"10:31",flat:"Flat 11",addr:"8 Tanner Row, Leeds LS2",tenant:"Tomasz Wrona",phone:"07700 900865",
+  sum:"Water coming through bathroom ceiling",msg:"Water is dripping through the bathroom ceiling, getting worse. Flat above is 15, nobody answers the door.",
+  u:"Urgent",why:"Active leak, likely from Flat 15. Needs plumber and access to the flat above.",
+  trade:"Plumber",vendor:"Kirkgate Plumbing",status:"attn",stext:"Needs access to Flat 15",
+  flag:"Plumber can attend at 13:00, but Flat 15's tenant (Mr Osei) has not replied and the agent can't authorise entry.",
+  ask:"Try Mr Osei by phone; if unreachable, decide on emergency entry with the landlord."},
+ {id:"R-2284",t:"09:48",flat:"Flat 2",addr:"41 Holbeck Lane, Leeds LS11",tenant:"Grace Mensah",phone:"07700 900231",
+  sum:"No heating or hot water, baby in flat",msg:"Boiler is off and showing a flashing light. We have a 5 month old. It was 4 degrees last night.",
+  u:"Urgent",why:"No heating, vulnerable occupant, cold weather. Agent raised this from Routine because of the infant.",
+  trade:"Heating engineer",vendor:"Northern Boiler Care",status:"attn",stext:"Slot is 16:00, tenant wants sooner",
+  flag:"Earliest slot is 16:00 today. Agent is unsure whether to pay the out-of-hours rate for an earlier visit.",
+  ask:"Approve the call-out premium (£95) for a visit before 13:00, or keep 16:00 and offer a heater."},
+ {id:"R-2279",t:"09:05",flat:"Flat 7",addr:"3 Wexford Close, Headingley LS6",tenant:"Daniel Okafor",phone:"07700 900118",
+  sum:"Socket sparking in lounge",msg:"The socket behind the sofa made a bang and there's a burn mark. I've switched it off at the fuse box.",
+  u:"Urgent",why:"Electrical fault with scorch marks. Tenant has isolated the circuit.",
+  trade:"Electrician",vendor:"Brightside Electrical",status:"booked",stext:"Booked today 14:00–16:00"},
+ {id:"R-2276",t:"08:40",flat:"Flat 19",addr:"22 Marlowe Court, Leeds LS6",tenant:"Helen Ashworth",phone:"07700 900774",
+  sum:"Front door won't lock",msg:"The latch has stopped catching so the door doesn't lock properly. I'm a bit worried about leaving the flat.",
+  u:"Urgent",why:"Security issue on an external door.",
+  trade:"Locksmith",vendor:"Safeguard Locks",status:"progress",stext:"On the way, ETA 11:55"},
+ {id:"R-2271",t:"Yesterday 17:22",flat:"Flat 3",addr:"57 Burley Road, Leeds LS3",tenant:"Marcus Bell",phone:"07700 900350",
+  sum:"Mould spreading in bedroom corner",msg:"Black mould is getting bigger on the wall behind the wardrobe. Been there a few weeks.",
+  u:"Routine",why:"No safety risk shown. Damp survey needed to find the cause.",
+  trade:"Damp specialist",vendor:"DryRight Surveys",status:"attn",stext:"Agent unsure on urgency",
+  flag:"Third mould report for this building this year. Agent rated Routine but thinks it may be a building-wide issue.",
+  ask:"Confirm Routine, or raise to Urgent and tell the landlord."},
+ {id:"R-2268",t:"Yesterday 15:10",flat:"Flat 12",addr:"8 Tanner Row, Leeds LS2",tenant:"Aisha Rahman",phone:"07700 900603",
+  sum:"Kitchen tap dripping constantly",msg:"The cold tap won't turn off fully. Drips all night.",
+  u:"Routine",why:"Minor leak, isolation valve works, no damage reported.",
+  trade:"Plumber",vendor:"Kirkgate Plumbing",status:"booked",stext:"Booked Thu 29 Oct, 09:00–12:00"},
+ {id:"R-2266",t:"Yesterday 13:52",flat:"Flat 6",addr:"14 Cardigan Mews, Leeds LS4",tenant:"Sam Whitfield",phone:"07700 900947",
+  sum:"Bedroom window latch broken",msg:"Handle snapped off the bedroom window. It shuts but I can't lock it.",
+  u:"Routine",why:"Ground-floor window that can't lock, but still closes. Rated Routine, with a 3 day target.",
+  trade:"Glazier / handyman",vendor:"A. Doyle Property Maintenance",status:"booked",stext:"Booked Wed 28 Oct, 10:00–13:00"},
+ {id:"R-2263",t:"Yesterday 11:14",flat:"Flat 9",addr:"3 Wexford Close, Headingley LS6",tenant:"Lucy Fenwick",phone:"07700 900529",
+  sum:"Extractor fan in bathroom not working",msg:"Fan stopped working last week, bathroom gets really steamy.",
+  u:"Routine",why:"Comfort and damp prevention. No safety risk.",
+  trade:"Electrician",vendor:"Brightside Electrical",status:"attn",stext:"Vendor declined",
+  flag:"Brightside declined (fully booked until 9 Nov). Agent has not found another electrician.",
+  ask:"Pick an alternative from the vendor list, or accept the 9 Nov date with the tenant."},
+ {id:"R-2259",t:"Mon 26 Oct 09:30",flat:"Flat 1",addr:"41 Holbeck Lane, Leeds LS11",tenant:"Peter Gallagher",phone:"07700 900086",
+  sum:"Hallway light flickering",msg:"The communal hall light flickers on and off.",
+  u:"Routine",why:"Communal lighting, low risk.",
+  trade:"Electrician",vendor:"Brightside Electrical",status:"booked",stext:"Booked Fri 30 Oct, 13:00–17:00"},
+ {id:"R-2254",t:"Mon 26 Oct 08:02",flat:"Flat 14",addr:"22 Marlowe Court, Leeds LS6",tenant:"Chloe Banerjee",phone:"07700 900312",
+  sum:"Toilet not flushing",msg:"Cistern fills but won't flush. It's our only toilet.",
+  u:"Urgent",why:"Only toilet in the flat is out of use.",
+  trade:"Plumber",vendor:"Kirkgate Plumbing",status:"done",stext:"Fixed Mon 12:40"},
+ {id:"R-2250",t:"Sun 25 Oct 19:45",flat:"Flat 5",addr:"57 Burley Road, Leeds LS3",tenant:"Ravi Desai",phone:"07700 900700",
+  sum:"Door entry buzzer silent",msg:"Visitors ring but nothing sounds in the flat.",
+  u:"Routine",why:"Inconvenience only.",
+  trade:"Electrician",vendor:"Brightside Electrical",status:"done",stext:"Fixed Tue 27 Oct 08:50"}
+];
+const U={Emergency:"em",Urgent:"ur",Routine:"ro"};
+const ORD={Emergency:0,Urgent:1,Routine:2};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let filter="attn",query="";
+const open=new Set(["R-2291"]);
+
+const FILTERS=[["attn","Needs Dede"],["all","All open"],["Emergency","Emergency"],["Urgent","Urgent"],["Routine","Routine"],["done","Done"]];
+const isOpen=r=>r.status!=="done";
+function matches(r,f){
+  if(f==="attn")return r.status==="attn";
+  if(f==="all")return isOpen(r);
+  if(f==="done")return r.status==="done";
+  return isOpen(r)&&r.u===f;
+}
+function renderSummary(){
+  const open_=R.filter(isOpen);
+  const s=[
+   ["hot",R.filter(r=>r.status==="attn").length,"need you now"],
+   ["",open_.filter(r=>r.u==="Emergency").length,"emergency open"],
+   ["",open_.filter(r=>r.u==="Urgent").length,"urgent open"],
+   ["",open_.filter(r=>r.status==="booked"||r.status==="progress").length,"booked or in progress"],
+   ["",R.filter(r=>r.status==="done").length,"fixed since Sunday"]
+  ];
+  document.getElementById("summary").innerHTML=s.map(([c,n,l])=>`<div class="stat ${c}"><b>${n}</b><span>${l}</span></div>`).join("");
+}
+function renderFilters(){
+  document.getElementById("filters").innerHTML=FILTERS.map(([k,l])=>
+    `<button class="chip" data-f="${k}" aria-pressed="${filter===k}">${l}<span class="n">${R.filter(r=>matches(r,k)).length}</span></button>`).join("");
+}
+function row(r){
+  const o=open.has(r.id), a=r.status==="attn";
+  const stTag=r.status==="done"?`<span class="tag ok">Done</span>`:"";
+  return `<div class="row ${o?"open":""} ${a?"attn":""}" data-id="${r.id}">
+   <button class="head" aria-expanded="${o}" aria-controls="d-${r.id}">
+    <span class="time">${esc(r.t.replace(/^(Yesterday|Mon 26 Oct|Sun 25 Oct) ?/,m=>"").trim()||r.t)}${/^(Yesterday|Mon|Sun)/.test(r.t)?`<br><small>${esc(r.t.split(" ").slice(0,-1).join(" "))}</small>`:""}</span>
+    <span><span class="tag ${U[r.u]}">${r.u}</span></span>
+    <span class="what"><b>${esc(r.sum)}</b><small>${esc(r.flat)} · ${esc(r.addr)}</small></span>
+    <span class="who"><b>${esc(r.vendor)}</b><br><small>${esc(r.trade)}</small></span>
+    <span class="st">${a?`<span class="flag">⚑ ${esc(r.stext)}</span>`:esc(r.stext)} ${stTag}</span>
+    <span class="chev" aria-hidden="true">›</span>
+   </button>
+   <div class="detail" id="d-${r.id}">
+    ${a?`<div style="grid-column:1/-1"><h3 style="color:var(--em)">Why this needs you</h3><p>${esc(r.flag)}</p><p style="margin-top:6px"><b>Suggested:</b> ${esc(r.ask)}</p></div>`:""}
+    <div><h3>Tenant said</h3><p class="msg">“${esc(r.msg)}”</p><p style="margin-top:6px;color:var(--muted);font-size:13px">${esc(r.tenant)} · ${esc(r.phone)}</p></div>
+    <div><h3>Why the agent rated it ${r.u}</h3><p>${esc(r.why)}</p><h3>Booked with</h3><p>${esc(r.vendor)} · ${esc(r.stext)}</p></div>
+    <div class="actions">
+      ${a?`<button class="btn pri" data-act="Marked as handled">Mark handled</button>`:""}
+      <button class="btn" data-act="Calling ${esc(r.tenant)}…">Call tenant</button>
+      <button class="btn" data-act="Opening vendor list…">Change vendor</button>
+      <button class="btn" data-act="Choose a new urgency…">Change urgency</button>
+      <span style="margin-left:auto;color:var(--muted);font-size:12px;align-self:center">${r.id}</span>
+    </div>
+   </div>
+  </div>`;
+}
+function renderList(){
+  const q=query.toLowerCase();
+  const rows=R.filter(r=>matches(r,filter)).filter(r=>!q||[r.flat,r.addr,r.tenant,r.sum,r.vendor,r.trade,r.id].join(" ").toLowerCase().includes(q))
+    .sort((a,b)=>ORD[a.u]-ORD[b.u]||R.indexOf(a)-R.indexOf(b));
+  document.getElementById("list").innerHTML=rows.length?rows.map(row).join(""):`<div class="empty">${filter==="attn"&&!q?"Nothing needs you right now. The agent has it covered.":"No requests match."}</div>`;
+}
+function render(){renderSummary();renderFilters();renderList()}
+document.getElementById("filters").addEventListener("click",e=>{const b=e.target.closest(".chip");if(b){filter=b.dataset.f;render()}});
+document.getElementById("q").addEventListener("input",e=>{query=e.target.value;renderList()});
+let tt;
+document.getElementById("list").addEventListener("click",e=>{
+  const act=e.target.closest("[data-act]");
+  if(act){const t=document.getElementById("toast");t.textContent=act.dataset.act+" (demo)";t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1800);return}
+  const h=e.target.closest(".head");if(!h)return;
+  const id=h.parentElement.dataset.id;open.has(id)?open.delete(id):open.add(id);
+  h.parentElement.classList.toggle("open");h.setAttribute("aria-expanded",open.has(id));
+});
+render();
+</script>
+</body>
+</html>

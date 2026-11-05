@@ -27,7 +27,7 @@ Scale the work to the task. A one-field newsletter box needs a label, an input t
 
 ## Judgment calls
 
-**What to ask.** Default: for each field, name the step that needs it right now; otherwise drop it, defer it, or infer it (a postal code implies a city). One "full name" field unless the system truly needs the parts. Ask for a phone number only when a reason you can print beside the field exists, and then print it. Change when the answer affects price, eligibility or safety: ask early, do not defer.
+**What to ask.** Default: for each field, name the step that needs it right now; otherwise drop it, defer it, or infer it (a postal code implies a city). One "full name" field unless the system truly needs the parts. Ask for a phone number, or anything personal (title, gender, marital status, health, birth date), only when a reason you can print beside the field exists, and then print it; a field with no named use is dropped, and when the use is real, free text or an optional field beats a short list. Change when the answer affects price, eligibility or safety: ask early, do not defer.
 
 **One page or steps.** Default: a short form on a single topic (about eight fields or fewer) stays on one page. Change to short pages, each about one decision, when the form is long, branches on earlier answers, takes payment on a phone, or must survive interruption. Group two questions only when the person treats them as one decision (a start and end date). Order questions by when they feel reasonable to answer: commitment before payment, easy facts before hard ones.
 
@@ -85,7 +85,7 @@ Scale the work to the task. A one-field newsletter box needs a label, an input t
 
 - Every field has a visible, associated label that is not a placeholder, and earns its place.
 - Optional or required is marked in words, with no unexplained asterisk.
-- Input types, keyboards and autofill tokens fit each field; text is 16px or larger.
+- Input types, keyboards and autofill tokens fit each field; text is 16px or larger; on a phone, targets are about 44px with a gap and the submit stays visible above the keyboard.
 - Nothing shows an error before the first submit, except the named exceptions; the submit button is always pressable and names its action.
 - An error state exists and shows a message with a fix, at the field and in a summary when there are several; values survive an error, a back press and a reload where practical.
 - Irreversible actions have a review step; the confirmation says what happens next.
@@ -99,3 +99,4 @@ Scale the work to the task. A one-field newsletter box needs a label, an input t
 - [multi-step-and-long-forms.md](references/multi-step-and-long-forms.md): load when a form spans steps or sittings, or when designing checkout, review and confirmation.
 - [settings-and-instant-controls.md](references/settings-and-instant-controls.md): load for settings, preferences, switches, mute or auto-off, system-initiated prompts, remember-me, context defaults and input limits.
 - [choice-controls.md](references/choice-controls.md): load when choosing between radios, checkboxes, selects, autocomplete and switches, or when building filter panels.
+- [touch-and-sensitive-fields.md](references/touch-and-sensitive-fields.md): load when the form is used on a phone (one-tap options, card entry, thumb reach, destructive steps, gestures) or asks for personal, identity or health data, location or contacts, or consent and tracking choices.

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brightwell Tools · Quarterly Ops Review · Slide 9</title>
+<style>
+  :root {
+    --ink: #1f2933;
+    --ink-2: #52606d;
+    --muted: #7b8794;
+    --rule: #d9dee3;
+    --surface: #ffffff;
+    --bg: #eef1f4;
+    --accent: #1f4e79;
+    --bar-before: #b8c2cc;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .stage {
+    width: 1280px;
+    height: 720px;
+    flex: none;
+    transform-origin: center center;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: var(--surface);
+    padding: 56px 72px 48px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .kicker {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.01em;
+    max-width: 1100px;
+  }
+  .lede {
+    font-size: 20px;
+    color: var(--ink-2);
+    margin: 14px 0 0;
+    line-height: 1.4;
+  }
+  .body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    margin-top: 36px;
+    min-height: 0;
+  }
+
+  /* Left: backlog comparison */
+  .chart-panel {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+  }
+  .panel-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 18px;
+  }
+  .bars {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 96px;
+    padding: 0 24px;
+    position: relative;
+    border-bottom: 2px solid var(--ink);
+  }
+  .bar-col {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+  }
+  .bar-value {
+    font-size: 44px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .bar-value.before { color: var(--ink-2); }
+  .bar-value.after { color: var(--accent); }
+  .bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+  }
+  .bar.before { height: 330px; background: var(--bar-before); }
+  .bar.after { height: 77px; background: var(--accent); }
+  .bar-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 12px;
+    padding-bottom: 10px;
+    color: var(--ink);
+  }
+  .delta {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: right;
+  }
+  .delta .big {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .delta .small {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-top: 6px;
+  }
+
+  /* Right: the three changes */
+  .changes-panel {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+  }
+  .change-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .change {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .change h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 2px 0 6px;
+    line-height: 1.25;
+  }
+  .change p {
+    font-size: 17px;
+    color: var(--ink-2);
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .timeline {
+    margin-top: auto;
+    font-size: 15px;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  footer {
+    margin-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <main class="slide">
+    <p class="kicker">Support operations</p>
+    <h1>Open support backlog fell from 412 to 96 tickets after the April triage rotation</h1>
+    <p class="lede">Three process changes, in place since April, cut the backlog by 77% between March and September.</p>
+
+    <section class="body">
+      <div class="chart-panel">
+        <p class="panel-label">Open support tickets</p>
+        <div class="bars" style="position:relative;">
+          <div class="bar-col">
+            <div class="bar-value before">412</div>
+            <div class="bar before"></div>
+            <div class="bar-name">March</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-value after">96</div>
+            <div class="bar after"></div>
+            <div class="bar-name">September</div>
+          </div>
+          <div class="delta">
+            <div class="big">−316</div>
+            <div class="small">tickets closed net, −77%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="changes-panel">
+        <p class="panel-label">What we changed in April</p>
+        <ol class="change-list">
+          <li class="change">
+            <div class="num">1</div>
+            <div>
+              <h2>Sort tickets twice a day</h2>
+              <p>Triage moved from a weekly sort to a morning and afternoon pass, so new tickets get a first look within hours.</p>
+            </div>
+          </li>
+          <li class="change">
+            <div class="num">2</div>
+            <div>
+              <h2>Route billing questions to a dedicated pair</h2>
+              <p>Two named people own every billing question, so those tickets stop waiting on general queue order.</p>
+            </div>
+          </li>
+          <li class="change">
+            <div class="num">3</div>
+            <div>
+              <h2>Name an owner for anything older than 5 days</h2>
+              <p>Aging tickets get a specific person accountable for resolution, not a shared queue.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <span>Brightwell Tools · Quarterly Ops Review</span>
+      <span>Open tickets at month end, March and September</span>
+    </footer>
+  </main>
+</div>
+<script>
+  // Scale the fixed 1280x720 slide to fit any window while keeping 16:9.
+  (function () {
+    var stage = document.getElementById('stage');
+    function fit() {
+      var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+      stage.style.transform = 'scale(' + s + ')';
+    }
+    window.addEventListener('resize', fit);
+    fit();
+  })();
+</script>
+</body>
+</html>

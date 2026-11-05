@@ -1,64 +1,82 @@
-I won't write the fake "Only 2 seats left!", the nightly-resetting timer, or the "sold out in 48 hours" claim. They'd tell customers things that aren't true, and a $240 purchase is where that costs you: people who sign up feel misled, and in a small town that gets around. You also don't need them, because you already have real urgency. The class starts in five days, and the seats are limited at ten.
+I won't write the fake "Only 2 seats left!", the nightly-resetting timer, or the "sold out within 48 hours" line. None of it is true, and it's the kind of thing that backfires for a small studio. Pottery classes sell on word of mouth and repeat students, and one person noticing the timer reset can sour that. Fake scarcity claims can also run afoul of consumer-protection rules on deceptive advertising.
 
-Here's the email and landing block built on that. Swap in the real numbers where there are brackets.
+You do have real urgency to work with: ten seats, a fixed start date, and wheels that are limited. Below is a version that uses it. Fill in the brackets.
+
+One thing to check first: today is Oct 28, 2026, so an October 20 start looks like it has already passed. If you meant a different date, swap it in below.
 
 ---
 
 ## Email
 
-**Subject:** Wheel-throwing starts Oct 20. Seats are open.
-**Preview text:** Six weeks, ten seats, and you'll take home your own pots.
+**Subject:** Ten wheels, six weeks, starting [Oct 20]
+**Preview text:** Learn to throw on the wheel, with a small group and plenty of hands-on help.
 
 Hi [First name],
 
-In five days, ten people will sit down at the wheel at Marrowfield Pottery. There's room for you to be one of them.
+On **[Tuesday, October 20]**, our next 6-week wheel-throwing class begins at Marrowfield Pottery. We keep it to **ten students**, so everyone gets real time on the wheel and real time with the instructor.
 
-**Wheel-Throwing, 6 Weeks**
-Starts Tuesday, October 20 [confirm day/time]
-[Day/time, location]
-$240, clay, tools, and firing included [confirm what's included]
+**What you'll do**
+- Center clay and pull your first cylinders in week one
+- Make bowls, mugs, and vases by week six
+- Trim, glaze, and take home your finished pieces
 
-Over six weeks you'll learn to center clay, pull walls, and shape bowls, mugs, and cups. You'll glaze and fire your best pieces and take them home. No experience needed.
+**The details**
+- 6 weeks, [day] evenings, [time]
+- $240, with clay and firing included [confirm what's included]
+- No experience needed
 
-Classes are capped at ten so everyone gets real time with the instructor and a wheel of their own. [X of 10] seats are still open, and registration closes [date] or when the class fills, whichever comes first.
+We have **[X] of 10 seats open**, and we'll close registration on **[date]** so we can prep clay and schedule kiln loads.
 
 **[Reserve your seat →]**
 
-Questions? Just reply to this email. I read every one.
+Questions? Reply to this email and I'll answer personally.
 
-[Your name]
+[Name]
 Marrowfield Pottery
-
-P.S. Can't make this session? Reply and I'll put you on the list for the next one. [Only include if true.]
 
 ---
 
 ## Landing page block
 
-**Headline:** Learn to throw pots on the wheel in six weeks
-**Subhead:** A small class of ten, starting October 20. You'll leave with pieces you made yourself.
+**Headline:** Learn to throw on the wheel in six weeks
 
-**What you get**
-- Six weekly sessions with hands-on instruction
-- Your own wheel, with ten students per class at most
-- Clay, tools, glazing, and firing included [confirm]
-- Your finished pieces to take home
+**Subhead:** A small class of ten, so you get hands-on help at every step.
 
-**Details:** Starts Oct 20 · [day/time] · $240 · [location]
+**Details strip:**
+Starts [Oct 20] · 6 weeks · [Day, time] · $240 · **[X] seats left**
 
-**Seats:** [X of 10] remaining *(update this as people sign up)*
+**Body:**
+Most people quit the wheel because nobody showed them how to center the clay. In this class you'll learn that first, then build up to bowls, mugs, and vases you'll actually use. Clay, tools, and firing are [included].
 
-**[Reserve your seat →]**
+**Button:** Reserve my seat
 
-*Registration closes [date].*
+**Under the button:** Registration closes [date]. Seats are first come, first served.
 
 ---
 
-## Honest urgency that works
+## Optional: an honest countdown
 
-- **Real countdown timer.** Run it to an actual deadline, like registration closing Oct 18 or 19, and let it end. Don't reset it.
-- **Live seat count.** Once you have 3, 4, or 5 sign-ups, "5 seats left" is true and persuasive. Update it by hand or with your booking tool.
-- **Personal outreach.** For a studio your size, a short note to past students or your list ("I have a few spots left, want one?") will probably beat any page trick.
-- **A waitlist for the next session.** It captures interest from people who miss this one.
+If you want a timer, point it at your real registration deadline so it never resets:
 
-If you tell me the registration deadline and how many seats are filled, I'll finalize the copy. I can also write a short follow-up email to send 48 hours before the deadline.
+```html
+<p>Registration closes in <strong id="cd"></strong></p>
+<script>
+  const end = new Date("2026-10-18T23:59:00-04:00"); // your real deadline
+  const el = document.getElementById("cd");
+  function tick() {
+    const ms = end - Date.now();
+    if (ms <= 0) { el.textContent = "Registration is closed"; return; }
+    const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4);
+    el.textContent = `${d}d ${h}h ${m}m`;
+  }
+  tick(); setInterval(tick, 3e4);
+</script>
+```
+
+## Other ways to lift sign-ups
+- **Update the seat count truthfully.** "6 of 10 seats left" works, and it gets stronger as it falls.
+- **Add an early-bird price** ($220 until a real date), or a "bring a friend" discount.
+- **Offer a waitlist** for the next session. That also gives you a list to email later.
+- **Add photos and a short quote** from past students.
+
+If you tell me the real details (date, seats open, deadline, what's included), I can finalize the copy.

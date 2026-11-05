@@ -1,6 +1,6 @@
 # Hard moments and naming
 
-Load for an apology, outage or incident notice, goodbye or unsubscribe page, canned support replies, a policy or legal-adjacent notice, or a request to audit or unify the terms across many strings. Examples are invented; adapt the pattern, not the words.
+Load for an outage or incident notice, goodbye or unsubscribe page, canned support replies, a policy or legal-adjacent notice, or a request to audit or unify the terms across many strings. Examples are invented; adapt the pattern, not the words.
 
 ## Tone by reader state
 
@@ -16,7 +16,7 @@ Pick the tone from what the reader is feeling when the string appears, not from 
 
 ## Apology
 
-Use one when the failure cost the person something: a plain apology, what happened, what is fixed or safe, what they can do. Skip it for normal states (loading, empty, "no results") and never write "sorry for any inconvenience", which apologizes for nothing.
+Skip it for normal states (loading, empty, "no results"). When the failure cost the person something, load [apology-and-repair.md](apology-and-repair.md) for what to name, what to repair and when.
 
 ## Incident or outage notice
 

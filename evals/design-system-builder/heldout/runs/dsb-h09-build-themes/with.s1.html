@@ -5,209 +5,237 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kelpie themes: light, dark, high contrast</title>
 <style>
-/* Tier 1: raw values. Only themes read these. */
+/* ==========================================================
+   TIER 1: RAW VALUES (never read by components)
+   ========================================================== */
 :root {
-  --white: #ffffff;
-  --black: #000000;
-  --ink-900: #14171a;
-  --ink-600: #555d66;
-  --ink-200: #dfe3e1;
-  --night-900: #101411;
-  --night-800: #1a201c;
-  --night-600: #2c352f;
-  --mist-100: #eef2ef;
-  --mist-400: #a6b1aa;
-  --green-800: #0b5a34;
-  --green-600: #1f7a4d;   /* brand green */
-  --green-600-hover: #19653f;
-  --green-300: #55c48a;
-  --green-300-hover: #6fd09c;
-  --red-800: #8f2112;
-  --red-600: #b3412f;     /* brand brick red */
-  --red-300: #f08a79;
+  --raw-white: #ffffff;
+  --raw-ink-900: #14171a;   /* near-black, current light text */
+  --raw-ink-600: #5b6168;
+  --raw-ink-100: #f3f5f4;
+  --raw-ink-200: #dfe3e1;
+  --raw-black: #000000;
+  --raw-ink-800: #2b2f33;
 
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
+  --raw-green-700: #1f7a4d;  /* current brand green */
+  --raw-green-900: #0b5a34;
+  --raw-green-400: #4ec58a;  /* re-tuned for dark ground */
+
+  --raw-red-700: #b3412f;    /* current brick red */
+  --raw-red-900: #8a1f10;
+  --raw-red-300: #f2917c;    /* re-tuned for dark ground */
+
+  --raw-night-900: #0f1311;
+  --raw-night-800: #19201c;
+  --raw-night-700: #2b3530;
+  --raw-night-100: #eef2ef;
+  --raw-night-300: #a6b0aa;
+  --raw-night-ink: #06140c;
+
+  --raw-blue-600: #1a5fb4;   /* focus ring, light + HC */
+  --raw-blue-300: #8ab8ff;   /* focus ring, dark */
+
+  /* Shared scales (identical in every theme) */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+  --space-4: 16px; --space-5: 24px; --space-6: 32px;
+  --radius-sm: 8px; --radius-md: 14px;
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Tier 2: semantic roles. Each theme remaps these and nothing else. */
-[data-theme="light"] {
-  --surface-page: var(--white);
-  --surface-raised: #f5f7f6;
-  --text-primary: var(--ink-900);
-  --text-secondary: var(--ink-600);
-  --border-subtle: var(--ink-200);
-  --border-width: 1px;
-  --accent: var(--green-600);
-  --accent-hover: var(--green-600-hover);
-  --on-accent: var(--white);
-  --positive: var(--green-600);
-  --negative: var(--red-600);
-  --focus-ring: var(--ink-900);
-  --shadow-raised: 0 1px 2px rgb(20 23 26 / .08);
+/* ==========================================================
+   TIER 2: SEMANTIC ROLES, remapped per theme
+   Light is the default; the others only repoint roles.
+   ========================================================== */
+[data-theme="light"], :root {
+  --surface:        var(--raw-white);
+  --surface-raised: var(--raw-ink-100);
+  --text:           var(--raw-ink-900);
+  --text-muted:     var(--raw-ink-600);
+  --border:         var(--raw-ink-200);
+  --border-width:   1px;
+  --accent:         var(--raw-green-700);   /* button fill */
+  --accent-hover:   var(--raw-green-900);
+  --on-accent:      var(--raw-white);
+  --positive:       var(--raw-green-700);   /* gains text */
+  --negative:       var(--raw-red-700);     /* spending text */
+  --focus:          var(--raw-blue-600);
+  --focus-width:    3px;
 }
+
 [data-theme="dark"] {
-  --surface-page: var(--night-900);
-  --surface-raised: var(--night-800);   /* higher surfaces are lighter */
-  --text-primary: var(--mist-100);
-  --text-secondary: var(--mist-400);
-  --border-subtle: var(--night-600);
-  --border-width: 1px;
-  --accent: var(--green-300);           /* re-tuned for a dark ground */
-  --accent-hover: var(--green-300-hover);
-  --on-accent: var(--night-900);
-  --positive: var(--green-300);
-  --negative: var(--red-300);
-  --focus-ring: var(--mist-100);
-  --shadow-raised: none;
+  --surface:        var(--raw-night-900);
+  --surface-raised: var(--raw-night-800);   /* raised = lighter */
+  --text:           var(--raw-night-100);
+  --text-muted:     var(--raw-night-300);
+  --border:         var(--raw-night-700);
+  --accent:         var(--raw-green-400);
+  --accent-hover:   #6fd6a1;
+  --on-accent:      var(--raw-night-ink);
+  --positive:       var(--raw-green-400);
+  --negative:       var(--raw-red-300);
+  --focus:          var(--raw-blue-300);
 }
+
 [data-theme="contrast"] {
-  --surface-page: var(--white);
-  --surface-raised: var(--white);
-  --text-primary: var(--black);
-  --text-secondary: #2b2f33;
-  --border-subtle: var(--black);
-  --border-width: 2px;
-  --accent: var(--green-800);
-  --accent-hover: #06402a;
-  --on-accent: var(--white);
-  --positive: var(--green-800);
-  --negative: var(--red-800);
-  --focus-ring: var(--black);
-  --shadow-raised: none;
+  --surface:        var(--raw-white);
+  --surface-raised: var(--raw-white);       /* separation by border, not tint */
+  --text:           var(--raw-black);
+  --text-muted:     var(--raw-ink-800);
+  --border:         var(--raw-black);
+  --border-width:   2px;
+  --accent:         var(--raw-green-900);
+  --accent-hover:   var(--raw-black);
+  --on-accent:      var(--raw-white);
+  --positive:       var(--raw-green-900);
+  --negative:       var(--raw-red-900);
+  --focus:          var(--raw-black);
+  --focus-width:    4px;
 }
 
-/* Tier 3: components read roles only. */
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  padding: var(--space-5);
-  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: #e6e9e7;
-  color: #14171a;
-}
-h1 { font-size: 1.25rem; margin: 0 0 var(--space-4); }
-.themes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-5);
-  align-items: start;
-}
-.theme-label { font-size: .8125rem; font-weight: 600; margin: 0 0 var(--space-2); letter-spacing: .04em; text-transform: uppercase; }
-
+/* ==========================================================
+   TIER 3: COMPONENTS (read semantic roles only)
+   ========================================================== */
 .screen {
-  background: var(--surface-page);
-  color: var(--text-primary);
-  border: var(--border-width) solid var(--border-subtle);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-ui);
+  border: var(--border-width) solid var(--border);
   border-radius: var(--radius-md);
   padding: var(--space-5);
-  display: grid;
-  gap: var(--space-4);
+  display: flex; flex-direction: column; gap: var(--space-4);
+  color-scheme: light;
 }
-.balance {
+[data-theme="dark"].screen { color-scheme: dark; }
+
+.screen-header { display: flex; justify-content: space-between; align-items: baseline; }
+.screen-title { font-size: 1.125rem; font-weight: 700; margin: 0; }
+.meta { font-size: .8125rem; color: var(--text-muted); }
+
+.card {
   background: var(--surface-raised);
-  border: var(--border-width) solid var(--border-subtle);
+  border: var(--border-width) solid var(--border);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-raised);
   padding: var(--space-4);
 }
-.balance-label { margin: 0; font-size: .875rem; color: var(--text-secondary); }
-.balance-amount { margin: var(--space-1) 0; font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-.balance-delta { margin: 0; font-size: .875rem; color: var(--positive); font-weight: 600; }
+.balance-label { font-size: .8125rem; color: var(--text-muted); margin: 0; }
+.balance-value { font-size: 2rem; font-weight: 700; margin: var(--space-1) 0 var(--space-3); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.balance-split { display: flex; gap: var(--space-5); font-size: .875rem; font-variant-numeric: tabular-nums; }
+.balance-split span { display: block; color: var(--text-muted); font-size: .75rem; }
 
-.section-title { margin: 0; font-size: 1rem; }
-.tx-list { list-style: none; margin: 0; padding: 0; border-top: var(--border-width) solid var(--border-subtle); }
-.tx {
-  display: flex; justify-content: space-between; gap: var(--space-3);
-  padding: var(--space-3) 0;
-  border-bottom: var(--border-width) solid var(--border-subtle);
-}
-.tx-name { margin: 0; min-width: 0; overflow-wrap: anywhere; }
-.tx-meta { display: block; font-size: .8125rem; color: var(--text-secondary); }
-.tx-amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.tx-amount[data-sign="gain"] { color: var(--positive); }
-.tx-amount[data-sign="spend"] { color: var(--negative); }
+.section-title { font-size: .8125rem; font-weight: 600; color: var(--text-muted); margin: 0; text-transform: uppercase; letter-spacing: .06em; }
+
+.txn-list { list-style: none; margin: 0; padding: 0; border: var(--border-width) solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.txn { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); }
+.txn + .txn { border-top: var(--border-width) solid var(--border); }
+.txn-name { font-size: .9375rem; font-weight: 500; }
+.txn-note { display: block; font-size: .75rem; color: var(--text-muted); font-weight: 400; }
+.amount { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.amount--gain  { color: var(--positive); }
+.amount--spend { color: var(--negative); }
 
 .btn {
+  appearance: none; cursor: pointer;
   font: inherit; font-weight: 600;
-  min-height: 44px; padding: 0 var(--space-5);
+  background: var(--accent); color: var(--on-accent);
   border: var(--border-width) solid var(--accent);
   border-radius: var(--radius-sm);
-  background: var(--accent); color: var(--on-accent);
-  cursor: pointer;
+  min-height: 44px; padding: 0 var(--space-5);
 }
-.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn:hover  { background: var(--accent-hover); border-color: var(--accent-hover); }
 .btn:active { transform: translateY(1px); }
-.btn:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
-.btn:disabled { background: transparent; color: var(--text-secondary); border-color: var(--border-subtle); cursor: not-allowed; }
+.btn:focus-visible { outline: var(--focus-width) solid var(--focus); outline-offset: 2px; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
 
 @media (forced-colors: active) {
-  .btn { border: 2px solid ButtonText; }
+  .btn { border-color: ButtonText; }
+  .card, .txn-list, .screen { border-color: CanvasText; }
 }
+
+/* ==========================================================
+   Presentation page (not part of the app)
+   ========================================================== */
+body { margin: 0; padding: var(--space-6) var(--space-5); background: #e6e9e7; color: #14171a; font-family: var(--font-ui); }
+.page-title { font-size: 1.25rem; margin: 0 0 var(--space-1); }
+.page-sub { margin: 0 0 var(--space-5); color: #434a50; font-size: .875rem; max-width: 60ch; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-5); align-items: start; max-width: 1200px; }
+.panel-label { font-size: .8125rem; font-weight: 700; margin: 0 0 var(--space-2); }
 </style>
 </head>
 <body>
-<h1>Kelpie themes</h1>
-<div class="themes">
+  <h1 class="page-title">Kelpie themes</h1>
+  <p class="page-sub">One component set, three themes. Each theme only remaps semantic roles; amounts also carry a +/− sign so meaning never depends on color alone.</p>
 
-  <section>
-    <p class="theme-label">Light</p>
-    <div class="screen" data-theme="light">
-      <div class="balance">
-        <p class="balance-label">Available balance</p>
-        <p class="balance-amount">$4,218.36</p>
-        <p class="balance-delta">+$312.50 this month</p>
+  <div class="grid">
+
+    <section>
+      <p class="panel-label">Light</p>
+      <div class="screen" data-theme="light">
+        <div class="screen-header"><h2 class="screen-title">Kelpie</h2><span class="meta">October</span></div>
+        <div class="card">
+          <p class="balance-label">Available balance</p>
+          <p class="balance-value">$2,481.30</p>
+          <div class="balance-split">
+            <div><span>Income</span><b class="amount amount--gain">+$3,226.00</b></div>
+            <div><span>Spent</span><b class="amount amount--spend">−$744.70</b></div>
+          </div>
+        </div>
+        <h3 class="section-title">Recent</h3>
+        <ul class="txn-list">
+          <li class="txn"><span class="txn-name">Payroll<span class="txn-note">Oct 25</span></span><span class="amount amount--gain">+$3,200.00</span></li>
+          <li class="txn"><span class="txn-name">Groceries<span class="txn-note">Oct 24</span></span><span class="amount amount--spend">−$84.12</span></li>
+          <li class="txn"><span class="txn-name">Coffee<span class="txn-note">Oct 23</span></span><span class="amount amount--spend">−$4.75</span></li>
+          <li class="txn"><span class="txn-name">Refund<span class="txn-note">Oct 21</span></span><span class="amount amount--gain">+$26.00</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
       </div>
-      <h2 class="section-title">Recent transactions</h2>
-      <ul class="tx-list">
-        <li class="tx"><p class="tx-name">Paycheck<span class="tx-meta">Oct 1</span></p><span class="tx-amount" data-sign="gain">+$2,150.00</span></li>
-        <li class="tx"><p class="tx-name">Greenleaf Market<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$54.20</span></li>
-        <li class="tx"><p class="tx-name">Rent<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$1,200.00</span></li>
-        <li class="tx"><p class="tx-name">Savings interest<span class="tx-meta">Oct 5</span></p><span class="tx-amount" data-sign="gain">+$3.42</span></li>
-      </ul>
-      <button class="btn" type="button">Add transaction</button>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <p class="theme-label">Dark</p>
-    <div class="screen" data-theme="dark">
-      <div class="balance">
-        <p class="balance-label">Available balance</p>
-        <p class="balance-amount">$4,218.36</p>
-        <p class="balance-delta">+$312.50 this month</p>
+    <section>
+      <p class="panel-label">Dark</p>
+      <div class="screen" data-theme="dark">
+        <div class="screen-header"><h2 class="screen-title">Kelpie</h2><span class="meta">October</span></div>
+        <div class="card">
+          <p class="balance-label">Available balance</p>
+          <p class="balance-value">$2,481.30</p>
+          <div class="balance-split">
+            <div><span>Income</span><b class="amount amount--gain">+$3,226.00</b></div>
+            <div><span>Spent</span><b class="amount amount--spend">−$744.70</b></div>
+          </div>
+        </div>
+        <h3 class="section-title">Recent</h3>
+        <ul class="txn-list">
+          <li class="txn"><span class="txn-name">Payroll<span class="txn-note">Oct 25</span></span><span class="amount amount--gain">+$3,200.00</span></li>
+          <li class="txn"><span class="txn-name">Groceries<span class="txn-note">Oct 24</span></span><span class="amount amount--spend">−$84.12</span></li>
+          <li class="txn"><span class="txn-name">Coffee<span class="txn-note">Oct 23</span></span><span class="amount amount--spend">−$4.75</span></li>
+          <li class="txn"><span class="txn-name">Refund<span class="txn-note">Oct 21</span></span><span class="amount amount--gain">+$26.00</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
       </div>
-      <h2 class="section-title">Recent transactions</h2>
-      <ul class="tx-list">
-        <li class="tx"><p class="tx-name">Paycheck<span class="tx-meta">Oct 1</span></p><span class="tx-amount" data-sign="gain">+$2,150.00</span></li>
-        <li class="tx"><p class="tx-name">Greenleaf Market<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$54.20</span></li>
-        <li class="tx"><p class="tx-name">Rent<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$1,200.00</span></li>
-        <li class="tx"><p class="tx-name">Savings interest<span class="tx-meta">Oct 5</span></p><span class="tx-amount" data-sign="gain">+$3.42</span></li>
-      </ul>
-      <button class="btn" type="button">Add transaction</button>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <p class="theme-label">High contrast</p>
-    <div class="screen" data-theme="contrast">
-      <div class="balance">
-        <p class="balance-label">Available balance</p>
-        <p class="balance-amount">$4,218.36</p>
-        <p class="balance-delta">+$312.50 this month</p>
+    <section>
+      <p class="panel-label">High contrast</p>
+      <div class="screen" data-theme="contrast">
+        <div class="screen-header"><h2 class="screen-title">Kelpie</h2><span class="meta">October</span></div>
+        <div class="card">
+          <p class="balance-label">Available balance</p>
+          <p class="balance-value">$2,481.30</p>
+          <div class="balance-split">
+            <div><span>Income</span><b class="amount amount--gain">+$3,226.00</b></div>
+            <div><span>Spent</span><b class="amount amount--spend">−$744.70</b></div>
+          </div>
+        </div>
+        <h3 class="section-title">Recent</h3>
+        <ul class="txn-list">
+          <li class="txn"><span class="txn-name">Payroll<span class="txn-note">Oct 25</span></span><span class="amount amount--gain">+$3,200.00</span></li>
+          <li class="txn"><span class="txn-name">Groceries<span class="txn-note">Oct 24</span></span><span class="amount amount--spend">−$84.12</span></li>
+          <li class="txn"><span class="txn-name">Coffee<span class="txn-note">Oct 23</span></span><span class="amount amount--spend">−$4.75</span></li>
+          <li class="txn"><span class="txn-name">Refund<span class="txn-note">Oct 21</span></span><span class="amount amount--gain">+$26.00</span></li>
+        </ul>
+        <button class="btn" type="button">Add transaction</button>
       </div>
-      <h2 class="section-title">Recent transactions</h2>
-      <ul class="tx-list">
-        <li class="tx"><p class="tx-name">Paycheck<span class="tx-meta">Oct 1</span></p><span class="tx-amount" data-sign="gain">+$2,150.00</span></li>
-        <li class="tx"><p class="tx-name">Greenleaf Market<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$54.20</span></li>
-        <li class="tx"><p class="tx-name">Rent<span class="tx-meta">Oct 3</span></p><span class="tx-amount" data-sign="spend">−$1,200.00</span></li>
-        <li class="tx"><p class="tx-name">Savings interest<span class="tx-meta">Oct 5</span></p><span class="tx-amount" data-sign="gain">+$3.42</span></li>
-      </ul>
-      <button class="btn" type="button">Add transaction</button>
-    </div>
-  </section>
+    </section>
 
-</div>
+  </div>
 </body>
 </html>

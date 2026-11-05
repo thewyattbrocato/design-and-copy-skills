@@ -1,75 +1,46 @@
-**Plan.** The reader is a new puppy owner who clicked an ad. They need to know what the class is, what it costs, whether their puppy qualifies, and how to sign up. The page opens with the nav and the price, then the offer, what's covered, who it's for, the requirements, and the ask. The ask repeats in the same words.
+**Plan:** The reader is a new puppy owner in or near Ellis Falls who clicked an ad and is ready to compare. The one idea is that six weeks gets a young puppy the basics in a small class. The order is nav, price, hero, what's covered, who it's for and the requirements, then the ask. The sign-up action is the same at every decision point.
 
 ---
 
-**NAV**
+**NAV (top of page)**
 Home · Classes · Blog · About · Contact
 
----
-
-**PRICE BAR (top of page)**
-$240 for the full 6 weeks
-
----
+**PRICE BAR (first thing under the menu)**
+**$240 for the full 6 weeks.** Tuesdays at 6:30 p.m.
+[Sign up for Puppy Foundations]
 
 **HERO**
+**Puppy Foundations: 6 weeks of puppy class in Ellis Falls**
+Your puppy learns sit, down, come, loose-leash walking and settling calmly. Classes are small, with a maximum of 8 puppies, at Corner Post Dog School.
+[Sign up for Puppy Foundations]
+Or call 555-0188
 
-**Headline:** Puppy Foundations: a 6-week puppy class in Ellis Falls
-
-**Subhead:** Tuesdays at 6:30 p.m. at Corner Post Dog School. Your puppy learns sit, down, come, loose-leash walking and settling calmly, in a class of no more than 8.
-
-**Button:** Sign up for Puppy Foundations
-
-*Or call 555-0188*
-
----
-
-**WHAT YOUR PUPPY LEARNS**
-
-**Heading:** Five skills you'll use every day
-
+**Six weeks cover the five skills you'll use every day**
 - **Sit**
 - **Down**
 - **Come**
 - **Walking on a loose leash**
 - **Settling calmly**
 
----
+**Small classes: 8 puppies at most**
+Every class is capped at 8 puppies.
 
-**CLASS DETAILS**
+**The schedule is the same every week**
+Tuesdays at 6:30 p.m. for 6 weeks. The $240 covers the full 6 weeks.
+[Sign up for Puppy Foundations]
 
-**Heading:** Six Tuesdays, eight puppies at most
+**Check that your puppy qualifies**
+- Your puppy must be 8 to 16 weeks old on the first night.
+- Bring proof of first vaccinations before the first class.
 
-- **When:** Tuesdays at 6:30 p.m. for 6 weeks
-- **Where:** Corner Post Dog School, Ellis Falls
-- **Class size:** Max 8 puppies per class
-- **Price:** $240 for the full 6 weeks
+If your puppy is older than 16 weeks on the first night, this class isn't the right fit.
 
----
-
-**WHO IT'S FOR**
-
-**Heading:** Is your puppy the right age?
-
-Puppies must be 8 to 16 weeks old on the first night. If your puppy is in that range, this class is for you.
-
-Before the first class, we need proof of your puppy's first vaccinations.
+**Ready to save a spot?**
+$240 for 6 weeks of Tuesday nights at 6:30 p.m., with a maximum of 8 puppies.
+[Sign up for Puppy Foundations]
+corner-post.example/puppy · or call 555-0188
 
 ---
 
-**HOW TO JOIN**
-
-**Heading:** Sign up before the class fills
-
-Classes are capped at 8 puppies. Reserve your puppy's place online or by phone.
-
-**Button:** Sign up for Puppy Foundations
-corner-post.example/puppy
-
-Or call 555-0188
-
----
-
-**Notes**
-- I left out the "before the class fills" urgency only in spirit. The line rests on the real 8-puppy cap, but cut it if you'd rather not hint at scarcity.
-- No testimonials or results were supplied, so there's no proof section. If you have a real customer quote, add it beside the "What your puppy learns" section.
+- I added no start date because none was given. If you have one, put it in the price bar and the close: [add next start date].
+- The "older than 16 weeks isn't the right fit" line follows from your age rule. Cut it if your partner wants no exclusions on the page.

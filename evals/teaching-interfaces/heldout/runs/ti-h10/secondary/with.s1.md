@@ -1,38 +1,42 @@
-Here's a version that groups the steps by when they matter, drops the feature list, and explains each step in terms of what it does for the clinic.
+Here's a rewrite that splits one long modal into a short welcome plus a checklist that stays visible until setup is done.
 
----
+## Welcome modal (shown once)
 
 **Welcome to Stackwell**
 
-Stackwell helps your clinic keep supplies stocked without overordering. Setup is a one-time process, and you can finish the rest later.
+Stackwell tracks the supplies your clinic has, when to reorder them, and what you've ordered. To start, we'll set your currency and time zone and add the first place supplies are kept.
+
+[Start setup]  [Skip for now]
+
+*You can pick up setup anytime from the Setup checklist. Need help? Visit the Help Center.*
+
+## Setup checklist (stays in the app until complete)
 
 **Start here**
+1. **Set currency and time zone.** Used for costs and order dates.
+2. **Add a location.** Where supplies are kept, such as front desk, exam rooms, or storage.
+3. **Import your item catalog.** Upload a spreadsheet, or add one item to try things out first.
 
-1. **Set your currency and time zone.** Costs and order dates will use these.
-2. **Add your locations,** such as Front Desk, Exam Rooms, and Storage. Stock is tracked by location.
-3. **Import your item catalog** from a spreadsheet. You can add or edit items later.
+**Before your first order**
+4. **Add vendors.** Who you order from and their payment terms.
+5. **Set approval rules.** Who must approve a purchase order before it goes out.
+6. **Set par levels.** The stock you want to keep on hand for each item. Start with the items you order most.
 
-**Set up before your first order**
+**Later**
+7. **Invite your team.** Assign roles so people see what they need.
+8. **Connect accounting software.** Optional. Sends costs and purchases to your accounting system.
+9. **Schedule weekly cycle counts.** Keeps stock counts accurate over time.
 
-4. **Add your vendors** and their payment terms.
-5. **Set par levels** for your items: the amount you want on hand. Start with the items you use most.
-6. **Set approval rules** for purchase orders, such as who signs off on orders above a set amount.
+[Done for now]
 
-**Set up when you're ready**
+## What changed and why
 
-7. **Invite your team** and assign their roles.
-8. **Connect your accounting software** so purchases and costs sync automatically.
-9. **Schedule weekly cycle counts,** which are quick spot-checks that catch stock errors early.
+- **Two actions in the welcome, not nine.** New admins can finish the basics in minutes and reach the product sooner. Each remaining step appears when it's useful, not all at once.
+- **Reordered the steps.** Par levels depend on items, so the catalog comes before them. Team invites, accounting, and cycle counts aren't needed for a first order, so they move to the end. The original order had par levels before the catalog existed.
+- **Cut the feature list.** It described the product without teaching anyone a task. The checklist introduces each feature when it's needed.
+- **"Finish" became "Done for now."** Setup doesn't end here, so the checklist stays available.
 
-When you're done, click **Finish**. You can revisit any step later. For more help, visit the Help Center.
+## Assumptions to check
 
----
-
-**What changed and why**
-
-- **Cut the feature list.** Fifteen nouns in one sentence don't help a new admin decide what to do first. Each feature now appears in the step where it matters.
-- **Split steps into "start here," "before first order," and "later."** This tells the admin what's urgent and what can wait.
-- **Put each step's purpose in plain words** (for example, "so purchases and costs sync automatically"), so the admin knows why it matters, not just what to click.
-- **Numbered the steps and kept each one to one action.**
-
-I assumed the steps aren't all required before Finish. If they are, I'd drop the groupings and keep one numbered list. I also didn't add any navigation paths (like where to find setup later), since I don't know your menu structure. If you tell me those, I can add them.
+- I wrote the par level definition from general usage. If Stackwell's par levels and reorder points work differently, please correct item 6.
+- Button labels and checklist names are proposed copy. Match them to what the product actually calls these screens.

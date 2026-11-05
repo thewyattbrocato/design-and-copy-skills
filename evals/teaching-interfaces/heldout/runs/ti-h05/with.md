@@ -1,13 +1,12 @@
-This is already good, so I'd change one line and leave the rest. Each screen has one job and the text is short and plain. The first walk is added in the real form, and Skip is on every screen. Your support-ticket drop fits that. If you want to confirm it, check whether people who finished it still add walks unaided a week later.
+**Verdict: ship it as written. I'd change nothing.**
 
-**Change (screen 2 only):**
-- Before: "Draw a circle on the map where you walk. We'll only offer you walks inside it."
-- After: "Move the circle to where you walk. We'll only offer you walks inside it."
+- **It's a guided first task, not a tour.** Each screen has one sentence of context, then the real form or map, and the last screen says what now exists. That is the pattern that works.
+- **The copy is plain and short.** Each screen introduces one idea: dog, day and time; then your walking area; then how to change or cancel. That is under the three-idea limit, and there's no mascot, confetti or benefits carousel.
+- **The map is a good default.** The circle is already placed over the user's city, so people adjust it instead of starting from a blank map.
+- **Screen 3 earns its place.** It says what happened and how to undo it. "Tap it any time to change or cancel" is the part people will need later.
 
-"Draw" doesn't match the screen, because the circle is already placed and the user drags it. If people can also resize it, add "and resize it". I can't tell that from your description, so I haven't added it.
+Your evidence is the drop in setup tickets and the under-a-minute finish. That shows the flow doesn't confuse people. It doesn't show they can add a walk unaided days later. To measure that, track the share of new users who add a second walk without opening help within their first week.
 
-**Before you ship, check one thing:**
-- Screen 3 says "Your first walk is on the calendar." That's false if someone tapped Skip on screen 1 or left the form unfinished.
-- Either show a fallback for that case, such as "Add a walk any time from the calendar." (I haven't confirmed the button or label, so use your real one.) Or make Skip on screens 1 and 2 jump straight to the calendar so screen 3 only appears after a walk exists.
-
-I left the titles, the button labels and screen 1 and screen 3's text as they are.
+Two things to check before tomorrow, since I can't see the app:
+1. Make sure screen 3's "Your first walk is on the calendar" is true when someone skips screen 1, or skips straight through. If it can be false, show different text in that case.
+2. Make sure Skip leaves a way back, such as a "Setup help" entry in settings or on the empty calendar.

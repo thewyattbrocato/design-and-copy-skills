@@ -6,236 +6,219 @@
 <title>Forklift Safety Check</title>
 <style>
   :root {
-    --bg: #f5f4f0; --card: #ffffff; --ink: #1c1c1a; --muted: #5d5d57;
-    --line: #d8d6cf; --accent: #b45309; --accent-ink: #ffffff;
-    --good: #166534; --good-bg: #e6f4ea; --bad: #9f1239; --bad-bg: #fdecef;
+    --bg: #f5f5f2; --card: #ffffff; --text: #1d1d1b; --muted: #5c5c57;
+    --line: #d6d6cf; --accent: #b45309; --accent-text: #ffffff;
+    --ok: #166534; --ok-bg: #e6f4ea; --bad: #9f1239; --bad-bg: #fdecef;
     --focus: #1d4ed8;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #161614; --card: #212120; --ink: #f1f0ec; --muted: #a9a8a0;
-      --line: #3a3a37; --accent: #f59e0b; --accent-ink: #1c1c1a;
-      --good: #86efac; --good-bg: #14301f; --bad: #fda4af; --bad-bg: #3a1620;
+      --bg: #161614; --card: #212120; --text: #f2f2ee; --muted: #aaa9a2;
+      --line: #3b3b38; --accent: #f59e0b; --accent-text: #1a1200;
+      --ok: #86efac; --ok-bg: #16301f; --bad: #fda4af; --bad-bg: #3a1620;
       --focus: #93c5fd;
     }
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5; padding: 20px 16px 48px;
   }
-  main { max-width: 680px; margin: 0 auto; padding: 24px 16px 56px; }
+  main { max-width: 680px; margin: 0 auto; }
+  header { border-left: 8px solid var(--accent); padding-left: 14px; margin-bottom: 22px; }
   h1 { font-size: 1.6rem; margin: 0 0 4px; }
-  .sub { color: var(--muted); margin: 0 0 24px; }
+  header p { margin: 0; color: var(--muted); }
   fieldset {
     background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-    margin: 0 0 16px; padding: 16px 18px 12px;
+    margin: 0 0 16px; padding: 16px 16px 8px; min-width: 0;
   }
-  legend { font-weight: 650; padding: 0 6px; margin-left: -6px; }
+  legend { font-weight: 700; padding: 0 6px; font-size: 1.05rem; }
   .qnum { color: var(--accent); }
   label {
-    display: flex; gap: 10px; align-items: flex-start;
-    padding: 10px 12px; margin: 6px 0; border: 1px solid var(--line);
-    border-radius: 8px; cursor: pointer;
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px; margin: 0 0 8px; border: 2px solid var(--line);
+    border-radius: 8px; cursor: pointer; min-height: 48px;
   }
   label:hover { border-color: var(--accent); }
-  label:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
-  input[type=radio] { margin-top: 4px; accent-color: var(--accent); flex: none; }
-  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  label:has(input:checked) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  input[type=radio] { width: 22px; height: 22px; margin: 1px 0 0; flex: none; accent-color: var(--accent); }
+  input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
   button {
-    font: inherit; font-weight: 650; cursor: pointer; border-radius: 8px;
-    padding: 12px 22px; border: 0; background: var(--accent); color: var(--accent-ink);
+    font: inherit; font-weight: 700; background: var(--accent); color: var(--accent-text);
+    border: 0; border-radius: 8px; padding: 14px 28px; cursor: pointer; min-height: 48px;
   }
-  button.secondary { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-  .error { color: var(--bad); font-weight: 600; margin: 12px 0 0; min-height: 1.5em; }
-  #results { display: none; }
+  button.secondary { background: transparent; color: var(--text); border: 2px solid var(--line); }
+  #msg { color: var(--bad); font-weight: 600; margin: 0 0 12px; min-height: 1.5em; }
+  #result { display: none; }
   .score {
     background: var(--card); border: 1px solid var(--line); border-radius: 10px;
     padding: 20px; margin-bottom: 16px; text-align: center;
   }
-  .score .big { font-size: 2.6rem; font-weight: 750; line-height: 1.1; }
-  .miss {
-    background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--bad);
-    border-radius: 10px; padding: 14px 18px; margin-bottom: 14px;
+  .score .big { font-size: 2.6rem; font-weight: 800; line-height: 1.1; }
+  .score p { margin: 6px 0 0; color: var(--muted); }
+  .review {
+    background: var(--bad-bg); color: var(--text); border: 1px solid var(--bad);
+    border-left-width: 8px; border-radius: 10px; padding: 14px 16px; margin-bottom: 14px;
   }
-  .miss h3 { margin: 0 0 8px; font-size: 1rem; }
-  .row { padding: 8px 10px; border-radius: 6px; margin: 6px 0; }
-  .row.wrong { background: var(--bad-bg); color: var(--bad); }
-  .row.right { background: var(--good-bg); color: var(--good); }
-  .row b { display: block; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
-  .perfect { background: var(--good-bg); color: var(--good); padding: 14px 18px; border-radius: 10px; font-weight: 600; }
+  .review h3 { margin: 0 0 8px; font-size: 1rem; }
+  .review .row { margin: 4px 0; }
+  .tag { font-weight: 700; }
+  .tag.bad { color: var(--bad); }
+  .tag.ok { color: var(--ok); }
+  .perfect {
+    background: var(--ok-bg); border: 1px solid var(--ok); border-left-width: 8px;
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; font-weight: 600;
+  }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Forklift Safety Check</h1>
-  <p class="sub">5 questions for new hires. Pick one answer for each, then submit.</p>
+  <header>
+    <h1>Forklift Safety Check</h1>
+    <p>5 questions for new hires. Choose one answer for each, then submit.</p>
+  </header>
 
-  <form id="quiz" novalidate>
-    <div id="questions"></div>
-    <button type="submit">Submit answers</button>
-    <p class="error" id="error" role="alert"></p>
-  </form>
-
-  <section id="results" aria-live="polite" tabindex="-1">
-    <div class="score">
-      <div class="big" id="scoreText"></div>
-      <div id="scoreMsg"></div>
-    </div>
-    <div id="missed"></div>
-    <button type="button" class="secondary" id="retry">Retake quiz</button>
-  </section>
+  <form id="quiz" novalidate></form>
+  <div id="result" aria-live="polite"></div>
 </main>
 
 <script>
-const QUESTIONS = [
-  {
-    q: "Where do you find the maximum load a forklift can safely lift?",
-    options: [
-      "On the data plate (capacity plate) on the truck",
-      "On the shipping label of the load",
-      "It is the same for every forklift",
-      "Ask a coworker what they usually lift"
-    ],
-    answer: 0
-  },
-  {
-    q: "A pedestrian steps into your travel path. What should you do?",
-    options: [
-      "Sound the horn and keep going so you don't lose time",
-      "Stop and wait until they are clear and aware of you",
-      "Speed up to get past them quickly",
-      "Steer around them as close as you can"
-    ],
-    answer: 1
-  },
-  {
-    q: "You are approaching a blind corner in the aisle. What is correct?",
-    options: [
-      "Keep your speed and rely on others to get out of the way",
-      "Slow down, sound the horn, and look in the direction you are travelling",
-      "Take the corner fast to clear the intersection sooner",
-      "Turn off the horn so you don't startle people"
-    ],
-    answer: 1
-  },
-  {
-    q: "When carrying a load, how should the forks be positioned for travel?",
-    options: [
-      "Raised high so the load clears obstacles",
-      "Level with your eyes for better visibility",
-      "Low, about 4–6 inches off the floor, with the mast tilted back",
-      "Anywhere, as long as the load is wrapped"
-    ],
-    answer: 2
-  },
-  {
-    q: "You are finished and leaving the forklift parked. What must you do?",
-    options: [
-      "Leave the forks slightly raised so they're ready for the next person",
-      "Park in the aisle, since it's only for a minute",
-      "Lower forks fully to the floor, neutralize controls, set the parking brake, and turn it off",
-      "Leave the engine running so it doesn't need restarting"
-    ],
-    answer: 2
+(function () {
+  var questions = [
+    {
+      q: "You need to know how much weight your forklift can safely lift. Where do you find the load limit?",
+      options: [
+        "Ask a coworker what they usually lift",
+        "On the truck's data plate (capacity plate)",
+        "It's the same for every forklift in the warehouse",
+        "On the label of the load being moved"
+      ],
+      answer: 1,
+      why: "Every truck's rated capacity is on its data plate. Never exceed it, and check it again if an attachment is added."
+    },
+    {
+      q: "A pedestrian walks into your path while you are driving. What should you do?",
+      options: [
+        "Stop, sound the horn if needed, and wait until they are clear",
+        "Speed up to get past before they reach you",
+        "Steer around them without slowing down",
+        "Flash your lights and keep going"
+      ],
+      answer: 0,
+      why: "Pedestrians always have the right of way. Stop and wait until the path is clear and the person has seen you."
+    },
+    {
+      q: "You are approaching a blind corner or an intersection. What is the safe way to proceed?",
+      options: [
+        "Maintain speed so you clear the corner quickly",
+        "Slow down, sound the horn, and look before entering",
+        "Drive in the middle of the aisle with forks raised",
+        "Stop only if you hear another truck"
+      ],
+      answer: 1,
+      why: "Slow down, sound the horn, and look both ways at blind spots and intersections. Keep to the posted speed limit."
+    },
+    {
+      q: "You are finished and leaving the forklift. What is the correct way to park it?",
+      options: [
+        "Leave the forks slightly raised so they are easy to reach",
+        "Park in the aisle and leave the engine running for the next driver",
+        "Lower the forks fully to the floor, set the parking brake, and turn off the truck",
+        "Park on a slope so the load stays put"
+      ],
+      answer: 2,
+      why: "Lower the forks flat to the floor, neutralize the controls, set the brake, and turn the truck off. Park in a designated area, not blocking aisles, exits, or equipment."
+    },
+    {
+      q: "While carrying a load across the warehouse, how should the forks be positioned?",
+      options: [
+        "Raised high for the best view under the load",
+        "Low to the ground (about 4 to 6 inches) with the mast tilted slightly back",
+        "At chest height so pedestrians can see them",
+        "Level and raised above the driver's head"
+      ],
+      answer: 1,
+      why: "A low, back-tilted load keeps the truck stable and reduces the risk of tipping or dropping the load."
+    }
+  ];
+
+  var letters = ["A", "B", "C", "D"];
+  var form = document.getElementById("quiz");
+  var result = document.getElementById("result");
+
+  function esc(s) {
+    var d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
   }
-];
 
-const form = document.getElementById("quiz");
-const qBox = document.getElementById("questions");
-const errBox = document.getElementById("error");
-const results = document.getElementById("results");
-
-function build() {
-  qBox.innerHTML = "";
-  QUESTIONS.forEach((item, i) => {
-    const fs = document.createElement("fieldset");
-    const lg = document.createElement("legend");
-    const num = document.createElement("span");
-    num.className = "qnum";
-    num.textContent = (i + 1) + ". ";
-    lg.append(num, item.q);
-    fs.appendChild(lg);
-    item.options.forEach((opt, j) => {
-      const lab = document.createElement("label");
-      const inp = document.createElement("input");
-      inp.type = "radio"; inp.name = "q" + i; inp.value = j;
-      const span = document.createElement("span");
-      span.textContent = opt;
-      lab.append(inp, span);
-      fs.appendChild(lab);
+  function build() {
+    var html = "";
+    questions.forEach(function (item, i) {
+      html += '<fieldset><legend><span class="qnum">Q' + (i + 1) + '.</span> ' + esc(item.q) + '</legend>';
+      item.options.forEach(function (opt, j) {
+        html += '<label><input type="radio" name="q' + i + '" value="' + j + '"><span>' +
+                letters[j] + '. ' + esc(opt) + '</span></label>';
+      });
+      html += '</fieldset>';
     });
-    qBox.appendChild(fs);
-  });
-}
-
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const picks = QUESTIONS.map((_, i) => {
-    const c = form.querySelector('input[name="q' + i + '"]:checked');
-    return c ? Number(c.value) : null;
-  });
-  const first = picks.indexOf(null);
-  if (first !== -1) {
-    const n = picks.filter(p => p === null).length;
-    errBox.textContent = n === 1
-      ? "Question " + (first + 1) + " still needs an answer."
-      : n + " questions still need an answer (first: question " + (first + 1) + ").";
-    qBox.children[first].querySelector("input").focus();
-    return;
-  }
-  errBox.textContent = "";
-  showResults(picks);
-});
-
-function showResults(picks) {
-  let score = 0;
-  const missed = document.getElementById("missed");
-  missed.innerHTML = "";
-
-  QUESTIONS.forEach((item, i) => {
-    if (picks[i] === item.answer) { score++; return; }
-    const box = document.createElement("div");
-    box.className = "miss";
-    const h = document.createElement("h3");
-    h.textContent = (i + 1) + ". " + item.q;
-    const wrong = document.createElement("div");
-    wrong.className = "row wrong";
-    const wl = document.createElement("b"); wl.textContent = "Your answer";
-    wrong.append(wl, item.options[picks[i]]);
-    const right = document.createElement("div");
-    right.className = "row right";
-    const rl = document.createElement("b"); rl.textContent = "Correct answer";
-    right.append(rl, item.options[item.answer]);
-    box.append(h, wrong, right);
-    missed.appendChild(box);
-  });
-
-  document.getElementById("scoreText").textContent = score + " / " + QUESTIONS.length;
-  document.getElementById("scoreMsg").textContent = score === QUESTIONS.length
-    ? "Perfect score."
-    : "Review the " + (QUESTIONS.length - score) + " missed question" + (QUESTIONS.length - score > 1 ? "s" : "") + " below.";
-  if (score === QUESTIONS.length) {
-    const p = document.createElement("div");
-    p.className = "perfect";
-    p.textContent = "You got every question right. Nice work.";
-    missed.appendChild(p);
+    html += '<p id="msg" role="alert"></p><button type="submit">Submit answers</button>';
+    form.innerHTML = html;
   }
 
-  form.style.display = "none";
-  results.style.display = "block";
-  results.focus();
-  window.scrollTo(0, 0);
-}
+  function submit(e) {
+    e.preventDefault();
+    var picks = [], missing = [];
+    questions.forEach(function (_, i) {
+      var c = form.querySelector('input[name="q' + i + '"]:checked');
+      if (c) { picks.push(parseInt(c.value, 10)); }
+      else { picks.push(null); missing.push(i + 1); }
+    });
+    var msg = document.getElementById("msg");
+    if (missing.length) {
+      msg.textContent = "Please answer " + (missing.length === 1 ? "question " : "questions ") + missing.join(", ") + " before submitting.";
+      var first = form.querySelector('input[name="q' + (missing[0] - 1) + '"]');
+      first.scrollIntoView({ block: "center" });
+      first.focus();
+      return;
+    }
 
-document.getElementById("retry").addEventListener("click", () => {
-  results.style.display = "none";
-  form.style.display = "block";
+    var score = 0, wrongHtml = "";
+    questions.forEach(function (item, i) {
+      if (picks[i] === item.answer) { score++; return; }
+      wrongHtml += '<div class="review"><h3>Question ' + (i + 1) + ': ' + esc(item.q) + '</h3>' +
+        '<div class="row"><span class="tag bad">✗ Your answer:</span> ' + letters[picks[i]] + '. ' + esc(item.options[picks[i]]) + '</div>' +
+        '<div class="row"><span class="tag ok">✓ Correct answer:</span> ' + letters[item.answer] + '. ' + esc(item.options[item.answer]) + '</div>' +
+        '<div class="row">' + esc(item.why) + '</div></div>';
+    });
+
+    var total = questions.length;
+    var note = score === total ? "Perfect score. You're ready to go."
+             : score >= 4 ? "Good, but review the missed question below."
+             : "Please review the answers below and retake the quiz before operating a forklift.";
+
+    result.innerHTML =
+      '<div class="score"><div class="big">' + score + ' / ' + total + '</div><p>' + note + '</p></div>' +
+      (score === total ? '<div class="perfect">✓ All answers correct.</div>' : '<h2 style="font-size:1.15rem">Questions to review</h2>' + wrongHtml) +
+      '<div class="actions"><button type="button" id="retake">Retake quiz</button></div>';
+
+    form.style.display = "none";
+    result.style.display = "block";
+    window.scrollTo(0, 0);
+    document.getElementById("retake").addEventListener("click", function () {
+      result.style.display = "none";
+      result.innerHTML = "";
+      build();
+      form.style.display = "";
+      window.scrollTo(0, 0);
+    });
+  }
+
+  form.addEventListener("submit", submit);
   build();
-  window.scrollTo(0, 0);
-});
-
-build();
+})();
 </script>
 </body>
 </html>

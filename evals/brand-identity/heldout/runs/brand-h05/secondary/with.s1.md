@@ -1,17 +1,17 @@
-**Refine it. Keep the dog.**
+**Refine. Keep the dog and redraw it.**
 
-The rule I'd apply: a mark people already recognize, whose meaning still fits, gets redrawn and adapted, not replaced. Your dog passes both tests. Neighbors know it, and a friendly dog with one ear up fits a vet clinic. The problem is the execution (wobbly line, pencil texture, no reversed or small version), not the idea.
+The dog is the one thing your neighborhood already recognizes, and a clean professional mark can carry it forward. Replacing it would throw away the only asset a 12-year-old sketch can't buy: years of people seeing it on the door, the signs, and the invoices. The wobble is the problem to fix, not the drawing.
 
 **What I'd do:**
 
-1. **Redraw the dog as clean vector art, keeping the silhouette.** Keep the pose, the raised ear, and the proportions people remember. Replace the sketchy line with one confident weight. Hand-drawn character is fine to keep if it reads as intentional, but it must survive at favicon size.
-2. **Test the redraw in solid black first.** It has to work at 16 to 32 pixels, in one color, and reversed on dark. If the ear or any fine detail disappears small, simplify that detail. Don't add it back for the large version.
-3. **Keep the rounded name, but refine it.** Adjust spacing and maybe one custom letter so it isn't a stock font, and make sure the name and dog share the same weight and friendliness.
-4. **Build the system around the dog.** Give the three locations a shared color, the dog as a standalone device, and a horizontal and stacked lockup. Location names go on a separate line, not inside the mark.
+1. **Redraw the dog as a flat, solid vector.** Keep the pose, the ear-up silhouette, and the expression that makes it "the clinic dog." Remove the sketch lines, the uneven stroke, and any tiny detail that won't survive at small sizes. A designer should trace the original, not start from scratch.
+2. **Make a heavier, simplified small version** for favicons, the app icon, and collars or stamps. Hairlines disappear at 16–32 px, so the small version should be bolder with fewer details.
+3. **Rebuild the name in a clean version of the rounded face you already use.** Keep the typeface's character, tune the spacing, and make one custom adjustment (a letter or a terminal) so it isn't an untouched stock font. Stack the name under the dog for the new locations and keep the side-by-side lockup for the main clinic.
+4. **Keep the original color** if it's part of recognition, and check it in one color and reversed on dark.
+5. **Test it on real surfaces:** the sign at the new locations, a letterhead, a van or door decal, and an avatar crop. Show your partner the redrawn dog next to the original so the change reads as "same dog, cleaned up," not "new logo."
 
-**Before you commit, two things to handle:**
+**For your partner:** this gives a clean, professional system for all three locations, which is what they asked for, without dropping the dog. If they still want a full replacement, the question to answer first is whether the current mark misleads, fails small, or looks like another clinic's. If it doesn't, "modern" alone is not a good reason to replace a mark people know.
 
-- **Ownership of the original.** Your friend's kid made the drawing, and a redraw is derivative of it. Confirm with the family that they're fine with you adapting it, ideally in writing. That's cheap now and awkward later.
-- **Trademark check.** Have a lawyer clear the final mark before you put it on three signs. I can't tell you it's unique.
+**Recognition check, not an assumption:** ask a handful of longtime clients or neighbors, without showing them the new version first, whether they recognize the dog and what it means to them. That answer, not my opinion or anyone's taste, should settle the debate.
 
-**The evidence test:** Show the redraw next to the original to 10 or so regular clients and ask which one they'd recognize on a sign. If they say the new one is the same clinic, you've kept the equity. If they don't recognize it, the redraw has lost too much, and that's the signal to rethink, not the instinct to replace.
+I haven't seen the original, so this is based on your description. If the sketch has a real flaw (it reads as a different animal, or it's illegible small), that changes the call toward a bigger redraw, but it still keeps the dog.

@@ -1,136 +1,145 @@
-# Forklift safety quiz: Kestrel Ridge Cold Storage
+# Forklift Safety Quiz: New Hires
 
-These are 8 scenario questions, one per topic from the session. They work as open-book or closed-book. After each answer I've said what happens if a new hire picks the wrong option.
+I wrote 9 scenario questions, one per rule from the session. They're meant to be done with the session's one-page summary beside them, so nobody has to memorize numbers. Each wrong answer has a line on what would happen and which misunderstanding it comes from. Show those lines right after each answer.
 
 ---
 
 **1. Pre-shift check**
-Dana is doing the pre-shift check. Forks, tires, brakes, lights and hydraulics all look fine, but the horn makes no sound. The shift starts in five minutes. What should Dana do?
+Tomas starts his shift in 10 minutes. During the check, the horn gives only a weak squeak. Forks, tires, brakes, lights and hydraulics all look fine, and the other trucks are already in use. What does he do?
 
-- A. Drive it and call out loudly at corners instead of using the horn.
-- B. Tag the truck out, report the fault, and get a different truck.
-- C. Use it for the shift and report the horn when the shift ends.
-- D. Ask a coworker to walk ahead as a spotter while Dana drives it.
+- A. Drive carefully and shout at blind corners instead.
+- B. Tag the truck out and report the horn.
+- C. Use it for this shift and report the horn at the end.
+- D. Check again after the first aisle to see if it improves.
 
-**Answer: B.** Any failed item means tag it out and report it.
-- **A:** Shouting won't carry over freezer fans and racking, and the horn is the warning at blind corners. A truck with a dead horn shouldn't be driven.
-- **C:** The truck stays in service with a known fault for a whole shift. Report it before use, not after.
-- **D:** A spotter adds a second person near a moving truck and doesn't fix the fault. The rule is to tag the truck out.
-
----
-
-**2. Speed**
-Marcus is carrying a pallet through the freezer chamber. The aisle is clear and he's doing 8 km/h. What should he do?
-
-- A. Stay at 8 km/h, because the aisle is clear.
-- B. Slow to 5 km/h, the limit inside freezer chambers.
-- C. Speed up to 10 km/h to spend less time in the cold.
-- D. Stay at 8 km/h and sound the horn the whole way.
-
-**Answer: B.** The limit is 8 km/h in aisles and 5 km/h inside freezer chambers.
-- **A:** 8 km/h is the aisle limit. A clear aisle doesn't change the limit inside a chamber.
-- **C:** This is over both limits. Getting out of the cold faster is not a reason to speed.
-- **D:** The horn doesn't change the speed limit.
+**Answer: B.**
+- A: At a blind corner, a shout won't carry over a running truck and a freezer fan. Pedestrians would have no warning you're coming.
+- C: A fault that shows up in the check means the truck doesn't go out. Reporting afterward means a whole shift of risk.
+- D: A weak horn won't fix itself. Any failed item means tag out and report, however busy the shift is.
 
 ---
 
-**3. Blind corner**
-Priya is driving a loaded truck toward a blind corner in an aisle. She can't see or hear anyone. What does she do?
+**2. Capacity plate**
+Priya is told to move a pallet. Its label shows a weight above the maximum on her truck's capacity plate. What does she do?
 
-- A. Sound the horn and slow to a crawl.
-- B. Slow to a crawl and skip the horn, so she doesn't startle anyone.
-- C. Sound the horn and hold 8 km/h, since the horn gives warning.
-- D. Speed up slightly so she's through the corner quickly.
-
-**Answer: A.** At blind corners you sound the horn and slow to a crawl.
-- **B:** Someone just around the corner can't see her coming. The horn is how they find out.
-- **C:** The horn warns people, but she still can't see them. At full speed she can't stop in time if someone steps out.
-- **D:** Speeding up reduces her reaction time at the point where she can see the least.
-
----
-
-**4. Passengers**
-It's the end of a long shift. A tired coworker asks for a ride on your empty truck to the dock, about 40 m away. What do you do?
-
-- A. Let them ride on the forks, since the truck is empty and the trip is short.
-- B. Let them stand on the back of the truck, driving at 5 km/h.
-- C. Say no and let them walk, even though it's a short trip.
-- D. Say yes this once and tell your supervisor afterward.
-
-**Answer: C.** Never carry passengers, ever. There's no exception for short trips, empty trucks or slow speeds.
-- **A, B:** The risk is falling off or being crushed, and speed and an empty truck don't remove it.
-- **D:** Telling your supervisor afterward doesn't make the ride safe. "Ever" includes this once.
-
----
-
-**5. Capacity plate**
-Sam checks the capacity plate on the mast. The label on the pallet shows a weight above the plate's maximum. What does Sam do?
-
-- A. Lift it a few centimetres to see if the truck copes.
-- B. Not lift it, and ask the supervisor how to move it.
-- C. Lift it and drive at 5 km/h to be safe.
-- D. Lift it with the mast tilted back further for stability.
-
-**Answer: B.** If a load is heavier than the plate maximum, you don't lift it.
-- **A:** A test lift is still a lift. Overloading can tip the truck or damage it before there's any warning sign.
-- **C:** Slow driving doesn't make the truck able to carry the weight.
-- **D:** Tilting the mast doesn't raise the plate maximum.
-
----
-
-**6. Pedestrians**
-You're about to move off with a pallet. A coworker wearing headphones is walking across your path, about 10 m ahead. They haven't looked up. What do you do?
-
-- A. Sound the horn once and start moving, since they'll hear it.
-- B. Wait, and move only after you've made eye contact with them.
-- C. Drive around them quickly before they reach your path.
-- D. Wave from the seat and start moving.
-
-**Answer: B.** Pedestrians always have right of way, and you make eye contact before moving near one.
-- **A:** Headphones mean the horn may not be heard, and you still don't know they've seen you.
-- **C:** Speeding toward a pedestrian who hasn't seen you takes their right of way.
-- **D:** A wave doesn't tell you they saw it. Eye contact confirms they've seen you.
-
----
-
-**7. Loads and ramps**
-Two parts:
-
-**(a)** Chidi's pallet is stacked so high he can't see past it straight ahead. The aisle is clear. How should Chidi drive?
-
-- A. Forward, leaning out to see around the load.
-- B. In reverse.
-- C. Forward, with a coworker walking ahead.
-- D. Forward, slowly with the horn sounding.
-
-**(b)** Chidi now has to take a loaded pallet down a ramp. Which way do the forks point?
-
-- A. Downhill, driving forward.
-- B. Uphill, driving in reverse.
-- C. Downhill, with the mast tilted forward.
-- D. Either way, as long as he's slow.
-
-**Answers: (a) B, (b) B.** If the load blocks your view, drive in reverse. Going down a ramp with a load, the forks point uphill.
-- **(a) A, C, D:** Each of these still has him driving toward things he can't see.
-- **(b) A, C:** With the forks downhill the load can slide off the front of the forks.
-- **(b) D:** Slow speed doesn't make up for the wrong fork direction.
-
----
-
-**8. Travel position**
-Lena is carrying a loaded pallet across the warehouse. Which setup is correct?
-
-- A. Forks about a metre up, mast upright, for a better view.
-- B. Forks resting on the floor, mast tilted forward.
-- C. Forks 10 to 15 cm off the floor, mast tilted slightly back.
-- D. Forks 10 to 15 cm off the floor, mast tilted slightly forward.
+- A. Lift it a few centimeters to see if the truck handles it.
+- B. Lift it and drive at the slower freezer speed.
+- C. Not lift it and ask for a way to move it that fits the truck.
+- D. Lift it only as far as the next aisle.
 
 **Answer: C.**
-- **A:** A high load makes the truck less stable and can block her view.
-- **B:** Forks on the floor can catch on cracks and drag, and a forward tilt can let the load slide off.
-- **D:** The height is right, but a forward tilt can let the load slide off the forks.
+- A: The plate is the limit. A test lift risks tipping the truck or damaging the hydraulics, and passing the test proves nothing.
+- B: Driving slower doesn't change the load. An overweight load can still tip the truck on a turn or when braking.
+- D: A short distance is still an overweight lift. If the load is heavier than the plate allows, don't lift it.
 
 ---
 
-- I haven't set a pass mark. If you want one, choose it yourself rather than borrowing a number from somewhere else.
-- A retake the next day, with the questions in a different order and the surface details changed (different names, aisles and loads), will tell you more than the same-day score.
+**3. Travel position**
+Marcus has picked up a loaded pallet and is about to drive down the aisle. How should he carry it?
+
+- A. Forks 10 to 15 cm off the floor, mast tilted slightly back.
+- B. Forks about waist height so he can see under the load.
+- C. Forks 10 to 15 cm off the floor, mast tilted slightly forward.
+- D. Forks on the floor, dragging the pallet.
+
+**Answer: A.**
+- B: High forks raise the center of gravity, so the truck is much more likely to tip on a turn.
+- C: Tilting forward lets the load slide off the forks when he brakes.
+- D: Dragging the pallet damages the floor, the load and the forks, and can jam the truck.
+
+---
+
+**4. Blind corner**
+Aisha is carrying a pallet toward an aisle intersection where she can't see around the shelving. What does she do?
+
+- A. Keep her speed steady so she clears the intersection quickly.
+- B. Slow down and rely on the mirror, with no horn.
+- C. Sound the horn once she is already in the intersection.
+- D. Sound the horn and slow to a crawl before the corner.
+
+**Answer: D.**
+- A: Speeding up is the opposite of what's needed. If someone steps out, she has no room to stop.
+- B: The mirror shows only what's in its view. Without the horn, nobody around the corner knows she's coming.
+- C: A horn blown inside the intersection warns people too late. Do it before the corner, while there's still room to stop.
+
+---
+
+**5. Pedestrians**
+Lena is driving down the aisle. A coworker in headphones starts to cross about 10 meters ahead, looking at their phone. Lena has the horn ready. What does she do?
+
+- A. Sound the horn and keep going, since they should hear it.
+- B. Stop, and make eye contact before moving near them.
+- C. Speed up so she passes before they reach her path.
+- D. Steer around the back of them, as she's the one driving.
+
+**Answer: B.**
+- A: Headphones and a phone mean they may not hear the horn. If they step into her path, she hits them.
+- C: Speeding up leaves her less room to stop and breaks the aisle speed limit.
+- D: Swerving toward someone who hasn't seen her is dangerous. They might step the same way, and the load swings wider than she expects. Pedestrians always have right of way, and eye contact confirms they've seen her.
+
+---
+
+**6. Passengers**
+It's the end of a long shift. A coworker's feet hurt and they ask for a ride on the forks to the dock, which is only a short distance away. What does Devon say?
+
+- A. "Sure, but only on the empty forks at walking speed."
+- B. "Okay, if you hold onto the mast."
+- C. "No. Never on a forklift. Walk, or I'll get you help."
+- D. "Only this once, since nobody is around."
+
+**Answer: C.**
+- A: Empty forks and low speed don't make it safe. Someone on the forks can fall or be crushed with one jolt.
+- B: Holding on doesn't help if the truck stops suddenly or tips.
+- D: There's no "just once" exception. The rule is that nobody rides, ever.
+
+---
+
+**7. Blocked view**
+Sam has stacked a tall pallet. Looking forward, he can't see the aisle ahead. The destination is straight along the aisle. What does he do?
+
+- A. Drive forward slowly with the horn going.
+- B. Lean out to the side to see around the load.
+- C. Ask a coworker to walk ahead and wave him on.
+- D. Drive in reverse so he can see where he's going.
+
+**Answer: D.**
+- A: The horn doesn't show him what's in the path. He could hit a person or rack without seeing it.
+- B: Leaning out takes his body out of the cab's protection and his eyes off the controls.
+- C: A guide walking ahead is in the path of a truck that can't see them. If the guide stumbles or he misjudges, they're hurt.
+
+---
+
+**8. Ramp**
+Nadia is carrying a load down a ramp. Which way should the forks point?
+
+- A. Downhill, so the load is ahead of her as she descends.
+- B. Uphill, so the load stays against the mast.
+- C. Whichever way gives her the better view.
+- D. Sideways, by driving across the slope.
+
+**Answer: B.**
+- A: With the forks pointing downhill, the load can slide off the front as the truck tips forward.
+- C: View matters, but on a ramp the forks point uphill. If the load blocks her view, she drives in reverse.
+- D: Driving across a slope can roll the truck over.
+
+---
+
+**9. Speed limits**
+Carlos is moving from a main aisle into a freezer chamber. He has been driving at the aisle limit. What speed does he drive inside the chamber?
+
+- A. 8 km/h, the same as the aisle.
+- B. 5 km/h.
+- C. Whatever speed feels safe to him.
+- D. 10 km/h, to get out of the cold quickly.
+
+**Answer: B.**
+- A: The aisle limit is 8 km/h. Inside the freezer chambers it drops to 5 km/h.
+- C: The limit is set so nobody has to judge it. "Feels safe" tends to drift upward when people are busy.
+- D: Hurrying to get out of the cold is exactly why the limit is lower. It's not a reason to go faster.
+
+---
+
+## Next steps
+
+- **Bring it back tomorrow.** Have the hires redo 4 or 5 of these the next day with changed details, for example a different corner or a different load. A same-day pass shows they remember the session. It doesn't show they'll still do it a week from now.
+- **Watch them drive.** For the first few shifts, a supervisor should observe each hire using a short checklist: forks height, horn at corners, eye contact with pedestrians. Put the observation results beside the quiz scores.

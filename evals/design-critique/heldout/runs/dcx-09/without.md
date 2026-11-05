@@ -1,40 +1,38 @@
+The copy is good: it's concrete, warm, and tells people what to do. The problems are in the logistics it implies and in the missing basics. In order of severity:
+
 **Fix before printing**
 
-1. **The headline promises something your hours don't allow.** You're open Saturday 10-1 and Wednesday 6-8, but the headline says to return it by Monday 5pm. If nobody is there on Monday, either there's a drop box or the promise is wrong. The page doesn't say which.
+1. **You can't return it by Monday 5pm.** You're open Saturday 10-1 and Wednesday 6-8, so there's no Monday opening. The headline, the tile saw ("back by Monday") and the pressure washer ("2 days") all promise something the hours contradict. The same goes for the post hole digger: 3 days from Saturday is Tuesday, and you're closed. If there's a drop box or an arrangement, say so. If there isn't, the headline is wrong.
 
-2. **The loan periods don't fit the hours.** Counting from the days you're open:
-   - Wet tile saw, 2 days: Saturday pickup means a Monday return, and you're closed.
-   - Pressure washer, 2 days: a Wednesday pickup means Friday, and a Saturday pickup means Monday. You're closed both times.
-   - Post hole digger, 3 days: Saturday pickup means Tuesday, and you're closed.
-   - Only the 1-week sander lines up.
+2. **No address.** "The back of the Eastgate Methodist hall" doesn't help a stranger who scanned a flyer. Add the street address, a map link, and which door to use. People will walk around the hall looking for you.
 
-   Either say "back at the next open session" or explain the return arrangement. As written, a first-timer will turn up on Monday to a locked hall.
+3. **`lend@loanshed.example` is a placeholder.** `.example` is a reserved TLD and can never receive mail. If that's the real address, it will bounce. If it's a stand-in, replace it. Make it a `mailto:` link too.
 
-3. **The button contradicts the copy.** The text says "$20 a year, or pay what you can", but the button says "Join for $20". Someone who can't afford $20 will see the button and leave. Use something like "Join (from $0, suggested $20)", or make sure `/join` shows the sliding scale up front.
+4. **The page isn't a valid mobile page.** There's no doctype, `<html lang>`, `<title>` or `<meta name="viewport">`. Without the viewport tag, phones render it at desktop width with tiny text, and a QR page is read almost entirely on phones. Even if your template adds these, check that it does.
 
-4. **There's no viewport meta tag, `<html lang>`, `<title>` or doctype.** The page is only reached by QR code, so everyone will be on a phone. Without `<meta name="viewport" content="width=device-width, initial-scale=1">`, most mobile browsers render a shrunken desktop layout. This is the most likely thing to make the page look broken.
+5. **"Join for $20" contradicts "pay what you can."** The only button tells people who can't afford $20 that the price is $20. Rename it "Join" and say "$20, or pay what you can" on the `/join` page and next to the button. Otherwise the pay-what-you-can policy is invisible to the people it's meant for.
 
-5. **There's no address.** "The back of the Eastgate Methodist hall" doesn't tell a newcomer where to go. Add a street address and, ideally, a map link and where to find the entrance. Also add "am" and "pm" to the hours.
+**The committee will ask about these**
 
-6. **`lend@loanshed.example` is a placeholder domain.** If that's the real address, fine. If it's a stand-in, a printed flyer with a dead address is the sort of mistake you only catch after it's printed.
+6. **Nothing on safety or liability.** You're lending wet tile saws and pressure washers to the public with no mention of induction, a waiver, a deposit, or late fees. The page doesn't have to carry all of that, but "What if I'm late?" and "What if I've never used one?" are the first two questions you'll get.
 
-**Should fix**
+7. **The ID step is unclear.** Step 1 says "Join (bring photo ID the first time)", but the button joins online. Can I join and pay online and show ID later, or do I have to come in? Spell out the order.
 
-7. **The photo ID requirement is buried at the end of step 1.** People who dislike handing over ID will find out at the desk. Say what counts as ID and why you ask for it. Say whether `/join` is completed online or in person.
+8. **"Popular this month" will go stale.** It's a printed flyer pointing at a permanent URL. Rename it "Popular tools" or "Most borrowed", or accept that someone must update it monthly. The durations ("2 days", "1 week") also don't say what they are. Write "loan: 2 days".
 
-8. **Some basics are missing.** There's nothing on what "clean" means, late returns or fees, deposits, or whether the tile saw and other risky tools need a quick induction. Committee members will ask. A line each is enough, even "no late fees, just tell us".
+9. **Naming Renata.** It's friendly, but flyers outlive volunteer rosters. Use "ask at the Saturday desk" instead, or accept that the flyer needs a reprint when Renata moves on.
 
-9. **The headline leads with the rule, not the benefit.** "Return it clean by Monday 5pm" is a condition, and it's the first thing people read. Try "Borrow a tile saw for the weekend. Free for members." and put the return rule lower down.
+**Smaller things**
 
-10. **"Popular this month" will go stale.** If someone has to edit it by hand each month, it won't get updated. Either automate it or rename it "Things people borrow a lot".
+- "Loan Shed" never appears in a heading, only in the first paragraph. Someone landing from a QR code should see the name straight away.
+- "10-1" and "6-8" have no am/pm. It's obvious, but cheap to fix.
+- Check whether the hours change on holidays or over winter.
+- The hours sit between the pitch and the buttons, so they're easy to miss. They're the most important logistical fact on the page, so consider giving them their own line.
 
-11. **Naming Renata on a public page has costs.** Volunteers move on, and it's their name on the open web. "Find a volunteer at the Saturday desk" ages better.
+**Print checks (I can't see the QR code)**
 
-**Minor**
+- Scan it from the printed proof at final size, on a cheap phone, in bad light.
+- Use a short, stable URL with no tracking parameters, so the code stays simple and scannable.
+- Put the URL in small text under the code for people who can't scan it.
 
-- Two adjacent `<a>` buttons with no wrapper or spacing may touch on mobile. Check the CSS.
-- The `<strong>Wet tile saw</strong>:` pattern is fine, but "2 days, back by Monday" duplicates the problem in item 2.
-- The only call to action is "Join". There's no "come see us Saturday" for people who aren't ready to commit.
-- Test the QR code on a phone off your Wi-Fi, in the printed size and on the printed paper.
-
-Items 1, 2 and 4 are the ones I wouldn't print without fixing. If you tell me how Monday returns actually work, I can rewrite the headline and the list to match.
+I'd fix #1 first, because the page's main promise breaks on contact with your own opening hours. Do you have a Monday drop-off arrangement I should be writing around, or is that a real gap?

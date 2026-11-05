@@ -1,37 +1,48 @@
-I'm assuming a single-page notice, A3 portrait for print, and the same layout as a PDF on phones. Here's the approach.
+**Assumptions:** the PDF is vector with fonts embedded, and the printed A3 and the phone PDF come from the same file.
 
-**Typeface**
-- Pick the Devanagari face first, because it's the harder script, then pick a Latin face that sits well beside it. Noto Sans Devanagari with Noto Sans is a safe default. It's open-licensed, the two are designed as a matched family, and they have real bold weights. Other options are Mukta or Hind, which also pair a Devanagari face with a Latin one. Check that whatever you choose has the weights you need (regular, semibold or bold) and the conjunct and matra shapes you use. Don't let the Latin font supply Hindi glyphs, because a fallback will be substituted and won't match.
-- Use one family pair for everything. Hierarchy comes from size and weight, not from extra faces.
-- Embed and subset both fonts in the PDF. Phones won't have them, and an unembedded font silently turns into a default.
-- Avoid light or thin weights. Devanagari has fine headline-bar and matra details that disappear at small sizes on phone screens.
+## Fonts
 
-**What gets bigger**
-1. **Route numbers.** These are the largest thing on the page, set in bold. People scan for their number first. Put each in a solid block or badge, and use tabular figures if numbers sit in a column.
-2. **New times.** These come second. Make them bold and large, with the old times clearly marked as old, in a smaller size or struck through, so nobody reads them as current.
-3. **Stop names.** Make these body-large rather than small print. They're the content people actually read.
-4. **Everything else** (explanatory text, dates, contact info) is smaller, but it has to stay readable.
+- **Pick the Devanagari face first, then a Latin face to match it.** The Devanagari set is the smaller choice, and the Latin has to sit beside it.
+- **Prefer one family that covers both scripts.** Noto Sans / Noto Sans Devanagari is the usual option. It is an open license, but confirm that on the foundry's page. Other Hindi-and-Latin families exist, such as Mukta and Hind. Check that the family has real regular, medium and bold weights in both scripts. If you use two separate fonts, pick ones with a similar stroke weight and x-height.
+- **Choose a sturdy sans with a plain, open shape.** The notice has to be read quickly and from a distance, so avoid thin, ornamental or calligraphic Devanagari. Avoid light weights in both scripts. Phone screens and A3 print at distance both punish thin strokes.
+- **Don't let a Latin-only font supply Hindi glyphs.** The system will swap in an unmatched face. Embed both fonts in the PDF.
+- **Use bold or color for emphasis, not italics.** Devanagari has no italic tradition, and a slanted Hindi font is usually a fake.
 
-Starting sizes for A3:
-- Title: 70–90 pt
-- Route numbers: 100 pt or more
-- Times: 36–48 pt
-- Stop names: 28–36 pt
-- Smallest text: 18–20 pt
+## What gets bigger
 
-The PDF scales down on a phone (A3 on a phone screen is about 1/4 size), so the smallest text still has to read at that scale. Test it by opening the PDF on an actual phone.
+Make the information people act on the largest, and set the rest in small, calm type.
 
-**Two scripts**
-- **Match apparent size, not point size.** Devanagari has a smaller x-height than Latin, so at equal points it looks smaller. Set Hindi about 10–15% larger, then adjust by eye.
-- **Line height.** Hindi needs more leading than English because of the headline bar (shirorekha) and the tall matras above and below the line. Use about 1.5–1.6 for Hindi and about 1.3–1.4 for English.
-- **Layout.** Pick one pattern and use it everywhere. Either put Hindi and English in two parallel columns, or stack them with Hindi first (if that's the main audience) and English directly below. Don't alternate between the two.
-- **Same weight, same hierarchy.** The Hindi and English versions of each element should have the same visual weight so neither looks like a translation of the other.
-- **Don't italicize or letterspace Hindi.** Devanagari has no true italic, so the browser or PDF tool will fake a slant, which distorts it. Letterspacing breaks the headline bar and joined letters.
-- **Numerals.** Decide up front whether to use Western (0–9) or Devanagari (०–९) digits. Most bus signage uses Western digits for route numbers and times, since that's what riders match against the bus. Use the same digits in both scripts.
+1. **Route numbers are the largest.** They are the first thing people scan for. Put them in a bold weight, in a block or badge, and keep them identical in both languages.
+2. **Then the headline,** such as "Route changed from [date]". Give it in both scripts.
+3. **Then stop names and new times.** This is the main content, so keep it large enough to read at a distance. Set the times in tabular figures, so columns align, and use a consistent 24-hour or AM/PM format.
+4. **Small text last:** reason for the change, helpline, validity dates and contact. Small text should still be readable on a phone.
 
-**Checks before you send it out**
-- Print a draft at A3, or at 50% scale on A4 and view it from arm's length.
-- Open the PDF on a low-end phone and confirm that the route numbers and times are still legible without zooming.
-- Have a Hindi reader check that no conjuncts or matras are broken.
+Starting sizes for A3 are a guide only, so test them on a printout:
 
-If you tell me which fonts you have installed, or what tool you're laying this out in, I can be more specific.
+| Role | A3 print |
+|---|---|
+| Route number | 150–250 pt |
+| Headline | 56–80 pt |
+| Stop names and times | 28–40 pt |
+| Detail text | 16–20 pt |
+
+For the phone PDF, the same layout scales down to about 1/3 on a 6-inch screen. That means the detail text will be around 6–7 pt there. Either make it larger than the table suggests, or set the phone version in a single column with the key content first.
+
+## Handling the two scripts
+
+- **Give Devanagari more size and more line height.** At the same point size it looks smaller than Latin. Start with Hindi at about 10–15% larger than English. Use about 1.5× line height for Hindi, versus about 1.2–1.3× for English. The headline and matras (the marks above and below the line) need room, and tight leading makes them collide.
+- **Don't letter-space Hindi.** Tracking breaks the headline bar (shirorekha) and the joined conjuncts.
+- **Use the same hierarchy in both languages.** Both should carry the same weight and size roles. Neither should look like a footnote.
+- **Pick one layout for the two languages:** side by side for A3 (Hindi on the left, English on the right, or the reverse), and stacked for the phone PDF. If you have to choose one language to go first, put Hindi first, since it is probably the main audience.
+- **Don't translate the numerals unless you have to.** Use the same figure style in both languages. If the local audience reads Devanagari digits, use them in the Hindi text and Western digits for route numbers and times, and make that decision once. Don't mix them in one line.
+- **Keep stop names in their native script,** with the other script as a secondary line. This also helps people who can read only one script.
+- **Set the language tag** (`lang="hi"` and `lang="en"`) if the file is made in HTML, so the right glyph forms are chosen.
+
+## Checks before you send it
+
+- Print one page at 100% and read it from 2–3 metres.
+- Open the PDF on a phone and check that route numbers and times are readable without zooming.
+- Look at the PDF's font list to confirm that both fonts are embedded and none was substituted.
+- Check Hindi conjuncts and matras by eye. Broken conjuncts (e.g. in क्ष, त्र, श्र) or detached marks mean a font or rendering problem.
+
+If you tell me the tool you're using (InDesign, Word, Canva, HTML to PDF) and which fonts you have installed, I can give you exact settings.

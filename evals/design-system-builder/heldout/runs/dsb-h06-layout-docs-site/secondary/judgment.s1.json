@@ -2,32 +2,32 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "360f6ddfbc89a441",
+    "with": "cbb678e6a2780bf7",
     "without": "1eb4e3a8fadfc35d"
   },
   "result": {
-    "winner": "without",
-    "judge_notes": "pass 1 (A=without, B=with): Both answers pick sensible numbers (68ch reading measure, a capped frame, a wider column for code and tables) and both make code and tables scroll inside their own boxes. In both, a `.wide` block placed inside `.prose` stays at 68ch instead of breaking out as claimed; A at least says to put wide blocks outside `.prose`. B has more problems: `.grid-tiers` never sets `display: grid` unless it is also given `.grid`, the 12-column grid only uses spans 12, 6 and 4, the 1440px breakpoint only changes the gutter, and its 'never orphaned' claim fails for three items on tablet. A is leaner and handles 3- and 4-tier pricing on purpose. | pass 2 (A=with, B=without): B wins narrowly. It separates feature rows (text beside media) from card and pricing grids, uses clamp() gutters and gaps that need fewer breakpoint overrides, and gives a concrete wide-monitor check. Both answers wrongly suggest code can be wider than the prose column while still nested inside it. B's HTML comment says this outright, though its prose then says to put wide blocks outside .prose. A's 1440 breakpoint only changes the gutter, and its 12-column grid is more machinery than these pages need.",
+    "winner": "with",
+    "judge_notes": "pass 1 (A=without, B=with): B's article grid really does work: prose sits in a min(65ch, 100%) middle column, while pre, tables and figures span the full 1120px. It also handles scrolling tables and long unbroken strings well. A says code breaks out to --wide, but its CSS keeps a pre inside .prose capped at the 68ch measure, and its 1360px frame token adds little beyond the 1120px wide cap. B is weaker on over-engineering: its 4/8/12 column tokens and .grid class go unused, and the feature row hard-codes 12 columns. | pass 2 (A=with, B=without): Answer A's breakout is built into the CSS. A three-track article grid keeps prose at 65ch, while pre and table-wrap span the full 1120px width and scroll inside their own box. It uses three breakpoints and one shared frame, though it hardcodes repeat(12) in .feature instead of using its --cols token. Answer B gives sound tokens and a useful testing checklist, but its usage example says a pre inside .prose 'breaks out to --wide', and the CSS doesn't do that. It also adds a separate 1360px frame cap and a fourth breakpoint that the pages don't clearly need.",
     "rubric_scores": {
-      "with": 3.917,
-      "without": 4.5
+      "with": 4.5,
+      "without": 3.75
     },
     "rubric_items": {
       "with": [
         5.0,
-        4.0,
-        3.5,
+        5.0,
+        5.0,
         4.5,
-        3.5,
-        3.0
+        4.0,
+        3.5
       ],
       "without": [
-        5.0,
+        4.0,
+        4.0,
+        3.0,
         4.5,
         3.5,
-        5.0,
-        4.5,
-        4.5
+        3.5
       ]
     },
     "position_consistent": true,
@@ -37,18 +37,18 @@
           "without",
           "with"
         ],
-        "raw_verdict": "A",
-        "winner": "without",
-        "notes": "Both answers pick sensible numbers (68ch reading measure, a capped frame, a wider column for code and tables) and both make code and tables scroll inside their own boxes. In both, a `.wide` block placed inside `.prose` stays at 68ch instead of breaking out as claimed; A at least says to put wide blocks outside `.prose`. B has more problems: `.grid-tiers` never sets `display: grid` unless it is also given `.grid`, the 12-column grid only uses spans 12, 6 and 4, the 1440px breakpoint only changes the gutter, and its 'never orphaned' claim fails for three items on tablet. A is leaner and handles 3- and 4-tier pricing on purpose."
+        "raw_verdict": "B",
+        "winner": "with",
+        "notes": "B's article grid really does work: prose sits in a min(65ch, 100%) middle column, while pre, tables and figures span the full 1120px. It also handles scrolling tables and long unbroken strings well. A says code breaks out to --wide, but its CSS keeps a pre inside .prose capped at the 68ch measure, and its 1360px frame token adds little beyond the 1120px wide cap. B is weaker on over-engineering: its 4/8/12 column tokens and .grid class go unused, and the feature row hard-codes 12 columns."
       },
       {
         "order": [
           "with",
           "without"
         ],
-        "raw_verdict": "B",
-        "winner": "without",
-        "notes": "B wins narrowly. It separates feature rows (text beside media) from card and pricing grids, uses clamp() gutters and gaps that need fewer breakpoint overrides, and gives a concrete wide-monitor check. Both answers wrongly suggest code can be wider than the prose column while still nested inside it. B's HTML comment says this outright, though its prose then says to put wide blocks outside .prose. A's 1440 breakpoint only changes the gutter, and its 12-column grid is more machinery than these pages need."
+        "raw_verdict": "A",
+        "winner": "with",
+        "notes": "Answer A's breakout is built into the CSS. A three-track article grid keeps prose at 65ch, while pre and table-wrap span the full 1120px width and scroll inside their own box. It uses three breakpoints and one shared frame, though it hardcodes repeat(12) in .feature instead of using its --cols token. Answer B gives sound tokens and a useful testing checklist, but its usage example says a pre inside .prose 'breaks out to --wide', and the CSS doesn't do that. It also adds a separate 1360px frame cap and a fourth breakpoint that the pages don't clearly need."
       }
     ]
   }

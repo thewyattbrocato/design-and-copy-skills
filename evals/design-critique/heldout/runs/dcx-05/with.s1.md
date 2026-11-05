@@ -1,35 +1,39 @@
-**Don't ship it as is.** Each screen reads fine alone, but the flow contradicts itself in three places. Screens that were reviewed one at a time wouldn't have shown these.
+**Don't ship it yet.** Each screen reads fine alone, but together they contradict each other in three places. Two of those hit the core promise of the app.
 
-**1. Skipping the plant leads to a false "You're all set!" (Blocker)**
-- Screen 4 offers "Skip". Its footer says reminders can't start without a plant.
-- Screen 5 then says "Your sanctuary is ready", and screen 3 has just promised a daily nudge.
-- Someone who skips gets a success screen for an app that will never remind them of anything. The warning also sits below the buttons, after the decision.
-- **Fix:** Put the consequence at the skip, for example "Skip for now. Reminders start once you add a plant." Give skippers their own final screen that says what's missing and offers "Add a plant". Reserve "You're all set!" for people who added one.
+**1. Skipping plant entry silently breaks reminders (Major).**
+- Screen 3 asks for a reminder time and promises a daily nudge.
+- Screen 4 offers "Skip". Only the small footer says you need at least one plant before reminders can start.
+- Someone who skips has set a time for reminders that will never arrive. Screen 5 then tells them "You're all set!", which is false for them.
+- Fix: put the consequence on the Skip control, for example "Skip for now. Reminders start once you add a plant." Give the skip path its own final screen, such as "Almost there. Add a plant whenever you're ready," with a button back to adding one. Otherwise drop Skip.
 
-**2. The progress counter changes mid-flow (Major, on 3 of 4 counted screens)**
+**2. The progress counter is wrong (Major, trivial fix).**
 - Screen 1 says "Step 1 of 4". Screens 2–4 say "of 5". Screen 5 has no bar.
-- The goalpost moves on the first tap. Four steps plus an unnumbered finish is consistent with screen 5, so "of 4" everywhere is the likely fix. If the finish screen is meant to count, add the bar to it and use 5.
+- The first screen the user sees is the one with the wrong total. The bar will jump on step 2, and it undermines trust at the start.
+- Fix: decide whether the flow is 4 steps or 5, and make every screen match. Screen 5 as a completion screen with no bar is fine.
 
-**3. "Plot" is a new word on the screen where people are most likely to stall (Major)**
-- The flow already calls the same things a garden, rooms, spaces, plants and a sanctuary. Screen 4's footer adds "plot" for the plant you're about to add. A new user won't know it means a plant.
-- **Fix:** Use "plant" in all instruction copy. Keep "garden" as the one brand word if you want one. Drop "sanctuary" and "plot".
-- Smaller point: the screen 2 title says "rooms", but Balcony isn't a room and the body says "spaces". Use "spaces" in both.
+**3. The vocabulary drifts (Moderate).**
+- The flow calls your things rooms, spaces, garden, plot and sanctuary.
+- "Plot" in the Screen 4 footer is the worst case. It means "plant" there, and a first-time user may read it as a new thing to create.
+- Fix: use "plant" in the footer. Pick one container word, probably "space", since "rooms" doesn't fit Balcony. Keep "garden" or "sanctuary", not both. This is partly taste, but the "plot" confusion is functional.
 
-**4. Nothing in the copy asks for notification permission (Major, unverified)**
-- Reminders are the whole product. If the OS prompt fires cold on first launch, or never fires, many people will deny it or never see a reminder.
-- Screen 3 is the natural place to ask, right after they choose a time. I can't see whether this is handled elsewhere, so please check.
+**4. Screen 1 overpromises (Moderate).**
+- "So we can take care of the rest" implies the app waters the plants. It reminds you to.
+- A user who believes that is let down in week one.
+- Fix: say what it does, for example "Tell us a little about your plants and we'll remind you when they need water, food or a bigger pot."
 
-**5. Promises that don't match what the app does (Minor)**
-- Screen 1 says "we can take care of the rest". Fernway reminds people. It doesn't care for plants. Something like "so we can remind you when each one needs you" is more honest.
-- "Work out how thirsty it is" on screen 4 is cute, but it promises watering guidance from a photo. Check that the app delivers it.
-- "Continue" on screen 1 versus "Next" on 2–4 is trivial. Pick one.
+**5. Smaller items:**
+- **Button labels (Minor):** "Continue" on screen 1 and "Next" on 2–3 is inconsistent. Pick one.
+- **Screen 2 (Minor):** It doesn't say why you're picking rooms. Adding "so we can tailor care to light and conditions" would help, if that's true.
+- **Screen 3 (Minor):** "Choose a time that suits you" is filler and can go.
+- **Screen 4 (Minor):** The body mentions only thirst, though the app also handles feeding and repotting.
+- **Emoji on screen 5 (Taste):** This is fine if it matches your brand voice.
 
-**What works and should stay**
-- **Screen 3 copy:** "one nudge per day with everything that needs attention" is specific. It answers the worry about spammy notifications before anyone has it.
-- **Screen 2:** "You can add more spaces later" takes the pressure off a choice people will otherwise agonize over.
-- **Screen 4:** It offers two ways to add a plant and an escape hatch. The structure is right. Only the skip consequence needs fixing.
-- **Titles:** They're framed as questions in plain language, so each screen has an obvious single task.
+**What works, so keep it:**
+- Titles are short and phrased as questions, so each screen has one clear job.
+- The "one nudge per day with everything" line on screen 3 sets a calm expectation about notification volume.
+- Photo or search by name as two routes to adding a plant lowers the effort of the hardest step.
+- Defaulting to 8:00 AM means a user can accept it and move on.
 
-**Fix order:** 1, then 2 and 3 (both are quick copy changes), then 4, then 5.
+**Fix order:** 1, then 2 (minutes of work), then 3 and 4 in one copy pass.
 
-**Not checked:** I only had copy, so layout, contrast, tap targets, and what happens with zero chips selected on screen 2 are unreviewed.
+I only had the copy. I didn't check layout, contrast, tap targets, empty or error states (for example, whether Next is disabled with no chips selected), or when the notification permission prompt appears.

@@ -1,30 +1,33 @@
-**Build (c), the interactive setup with a live preview of today's conditions.**
+**Ship (c): the interactive setup, where the first alert is built step by step with a live preview of today's conditions.**
 
-**Why (c) over (a) and (b)**
+You have no data, so this rests on how people learn, not on a measured result.
 
-- **It's the real task.** Users get the alert wrong, so the fix is to have them make one correctly. With (c) they leave onboarding with a working first alert. With (a) and (b) they leave having watched or read something, and then still have to set up the alert unaided.
-- **The preview explains the settings.** "Swell height range" and "wind direction limit" are abstract until you see them applied to a real beach. If the preview says "with these settings, today at [beach] would/wouldn't trigger", the effect of each choice shows up right away. A card or video can only describe that effect. The preview also catches mistakes immediately, for example a wind limit set so tight that the alert never fires.
-- **It has no memory load.** A video or carousel asks people to remember four settings and apply them later on a different screen. In (c) the instructions and their earlier choices stay on screen while they work.
-- **(a) is the weakest.** Ninety seconds is long for a first launch. People skip it, can't scrub back to the one setting they're unsure about, and it needs captions and a no-audio version to be usable. Surfers opening the app on a beach car park will rarely sit through it.
-- **(b) is a fallback, not a fix.** A four-card carousel is cheap, but it's a benefits-style explainer shown before the product opens. It's the option most likely to be swiped through without reading.
+**Why (c)**
+- **It teaches by doing.** After it, a user can say, "I can set an alert that fires on days I'd want to surf." The user finishes with a real alert, not a memory of one. (a) and (b) end with the user still facing the blank form.
+- **The settings are hard to understand in the abstract.** Is 3–5 ft too small? Does "wind limit" mean offshore or onshore? A live preview shows the answer: "With these settings, today would be a yes/no at [your beach]." Users see what each setting does as they change it.
+- **It limits what users must remember.** Build the alert one setting at a time, in the order beach, swell, wind, then time window. Each step shows the earlier choices and its own preview. That keeps new ideas to about one per screen.
+- **It's the better choice when you can't measure.** The video and carousel risk the same failure. Users skip them, forget them, or finish them and still misconfigure the alert. (c) puts the setup in the path they're already taking, and its result is the thing you want, a correct first alert.
 
-**Design points that matter for (c)**
+**Why not the others**
+- **(a) Video:** It runs 90 seconds before the user can do anything. It's passive, and users will have forgotten the wind setting by the time they reach the form. It also needs captions and a re-record whenever the UI changes.
+- **(b) Carousel:** It's the cheapest option, but it's a benefits-style carousel shown before the app opens. It explains four settings at once, which is more than people retain, and it's far from the moment they use them.
 
-1. **The goal is one sentence:** "Afterwards they can set an alert that fires on the days they'd want to surf."
-2. **One setting per step**, in the order beach, swell height, wind direction, time window. Keep the running summary and the live preview visible throughout.
-3. **Start from a default.** Pre-fill sensible values for the chosen beach, labelled as suggested, so users edit rather than build from blank. Don't invent the defaults: base them on the beach's actual exposure or let them come from your surf-forecast data.
-4. **Explain only what's Swellwise-specific.** For example, what "wind direction limit" means (offshore versus onshore) in plain words next to the control. Skip explaining things like dragging a slider.
-5. **Give feedback in their terms**, such as "This alert would have fired on [n] of the last 7 days", rather than "Great job!". Only include that history line if your data supports it.
-6. **Add a skip for experienced users** and a way to re-run the guide later.
-7. **Fix labels in parallel if they're confusing.** If testing shows people misread "wind direction limit", rename or redesign it. That's cheaper than teaching around it.
+**Make it work**
+1. **Fix the form first.** If "wind direction limit" confuses people, rename it or show it as a small compass or offshore/onshore choice at that step. Do that before you add teaching.
+2. **Offer a starting point.** Prefill sensible defaults for the chosen beach. Label them as suggested, and let users change them with one tap.
+3. **Show the preview at each step.** Use real conditions for today and say why it passes or fails, for example "Wind is onshore at 18 kt, so this would not alert."
+4. **Add a visible skip.** Experienced users should get the plain form, and a "how this works" link should stay available later.
+5. **Show what the alert will do.** End on a short confirmation, such as "You'll be alerted when [conditions] at [beach], [time window]." Don't use celebration screens.
 
-**Since you have no data, this is how to check it worked**
+**Risks**
+- It costs the most to build. If today's conditions are calm or unusual, the preview may show nothing useful. Consider also previewing the last few days or the next 48 hours.
+- Scope it tightly. Four steps with one preview component is enough. Don't add branching or a tutorial layer.
 
-- Instrument two measures: the share of new users who finish creating a first alert, and the share who still have an active alert, unedited or deliberately edited, a week later. Completion of the guide itself is not the target.
-- Before or during the sprint, watch 3–5 new users do the setup. If they stumble at the same step, that tells you which label to change.
-- If you can afford it later, A/B (c) against (b) on that week-one measure.
+**How to check it without existing data**
+Don't judge by completion of the setup. Instrument two things:
+- the share of new users who create an alert in their first session, and
+- whether that alert fires and the user keeps it or edits it within about two weeks.
 
-**Notes**
+Edits or deletions after the first alert suggest users set it up wrongly. If you can, run 5 to 6 quick usability sessions on the prototype before you build it fully.
 
-- I assumed (c) is feasible within the sprint, since the preview needs conditions data you already display. If the preview is the expensive part, a static "this range means roughly X to Y ft at [beach]" line is the cheaper variant. It keeps most of the benefit.
-- The main trade-off is build effort: (c) is the most work of the three, but it's the only one that gets people to a working alert.
+**Assumption:** I assumed you can get live or forecast conditions for the spot at setup time. If you can't, (c) loses most of its advantage, and a trimmed (b) with inline hints on the form would be the fallback.

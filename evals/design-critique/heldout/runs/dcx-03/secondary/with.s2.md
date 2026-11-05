@@ -1,28 +1,27 @@
-**Not ready to hand off.** The structure is a reasonable starting point, but the spec doesn't yet say what an item is, and the first screen doesn't say what Seedlend does.
+The structure is reasonable, but a few things need fixing before a developer builds it. The biggest is that the spec reads like a generic marketplace template, not a seed library.
 
-**Findings, most severe first**
+**Fix before handoff**
 
-1. **High: The item model is unresolved, and "$0.00" points the wrong way.** Each Featured card shows a price, and the Add tab implies users create something. A seed library usually lends or swaps items, so a price may be wrong, and the developer can't build the card or Add flow without knowing the item's fields and states (available, borrowed, returned, and so on). Fix: decide what a Featured item is, list its fields, and replace the price with its real status or drop it.
+1. **`$0.00` on every card.** A community seed library is probably free to borrow or swap, so a price doesn't fit. Replace it with what the developer needs to build: availability ("Available", "Checked out", "Due back Mar 3"), quantity, or a swap/borrow label. Confirm the actual model first.
 
-2. **High: The hero doesn't name the offer.** "Discover, connect and grow with our community" could describe any community app. A new neighbor can't tell from the first viewport that they can borrow seeds from the hall cupboard. The hero is also a "Welcome" banner, which returning users see every time and which takes the top of the screen. Fix: say the offer in plain words (for example, "Borrow and share seeds from the community hall library"), and show the banner only to new users or drop it.
+2. **"Featured" has no definition.** Who or what decides what's featured: curators, newest additions, or seasonal picks? What does the section show when the library has fewer than three items? This is the first thing a new member sees, so it should have a clear rule.
 
-3. **Medium: Two calls to action compete with no clear difference.** "Explore" in the hero and "Get Started" in the empty state both lead somewhere vague. The empty state says nothing about what will fill it. Fix: say what the section will hold ("Seeds you've borrowed and swaps you've agreed will appear here") and name the action by what it does ("Browse the library").
+3. **"Your Activity" is undefined.** Specify what counts as activity (requests, borrows, returns, due dates, messages). "Nothing to see here yet" doesn't tell a new member what the section is for. "Get Started" also needs a destination, probably a specific action such as requesting a first seed.
 
-4. **Medium: "Add" is unlabeled.** The tab could mean add a seed to the library, offer a seed, or start a swap. That changes the destination and the tab's icon. Fix: name the action and what it creates.
+4. **Profile appears twice.** The bottom row shows the user's name and email, and the Profile tab does the same job. Pick one. If the row stays, show a username, not an email, on a screen that neighbors might see.
 
-5. **Medium: Profile appears twice.** The profile row at the bottom of Home duplicates the Profile tab. The row also sits below the scroll and may be hidden by the tab bar. Fix: remove the row or move it into the title bar or the Profile tab.
+5. **The hero duplicates the other calls to action.** "Explore" repeats the Search tab, and "Welcome to Seedlend!" is wasted space for returning users. Consider replacing it with something useful now, such as a seasonal prompt ("Time to start tomatoes indoors") or a count of seeds available nearby.
 
-6. **Medium: Featured has no rules.** The spec fixes three cards but doesn't say what happens with two or two hundred items, who chooses what is featured, whether there's a "See all" link, or what shows when nothing is featured.
+**Missing from the spec**
 
-7. **Low: Missing states and labels.** The gear icon needs an accessible label ("Settings"). The spec has no loading, error, or offline behavior for the list.
+- **States:** loading, error, offline, logged out, and first run. Your Activity has one empty state, but the rest of the screen has none.
+- **Domain fields for a seed card:** variety, harvest year, quantity, growing notes, and return terms. A generic title and description won't carry the information a seed library needs.
+- **Image fallback:** many seed packets have no photo, so the placeholder should be the default, not a special case.
+- **Gear icon destination:** name the screen it opens, or mark it as TBD.
+- **Tab rules:** what "Add" creates (a seed donation, a listing, a request?) and whether "Messages" is for pickup coordination.
 
-**What works and should stay**
+**Suggested order for the home screen**
 
-- The five-tab bar matches what people expect from a mobile app.
-- Featured cards use one consistent structure: image, title, description.
-- An empty state exists for Your Activity. Many specs skip it.
-- The copy is short, which will help when the real visuals come.
+Title bar with settings → one useful, time-sensitive block (seasonal tip or nearby availability) → Featured (defined rule and fallback) → Your Activity (with states and a clear action) → tabs. Drop the separate profile row.
 
-**Assumptions and not checked**
-
-I assumed a mobile app, a lend-and-share model (not a sale), and a mix of first-time and returning users. I haven't checked the visuals, since none exist yet, or any real user flows. If the library does charge for seeds, finding 1 is less serious, but the spec should still state that.
+If you tell me the borrow/swap model, the sort or feature rule, and who creates listings, I can rewrite the spec with those filled in.

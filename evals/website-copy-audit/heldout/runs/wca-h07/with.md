@@ -1,11 +1,11 @@
-Top 4 problems, ranked. There are no rewrites, and I skipped the tagline.
+Here are the top four, ranked. I haven't rewritten anything and I've left the tagline out.
 
-1. **The hero doesn't say what the product is.** "A smarter way to manage your team" could describe any HR or workforce tool, and "all in one place" is filler. A stranger has to reach the second sentence to learn this is rota software, and the tagline doesn't help since "Rotas that don't bite" only lands if you already know what a rota is.
+1. **The hero says nothing a rival couldn't say.** "A smarter way to manage your team" is generic, and "smarter" isn't defined. The only concrete detail is the list after it (schedules, swaps, labor costs). A stranger has to read that far to learn it's shift scheduling for restaurants.
 
-2. **The button gives no sense of what happens next.** "Request access" sounds like a waitlist or a gated beta, and nothing on the page says what access means, how long it takes, or whether there's a demo or trial. Together with "Pricing on request", a manager has to commit to a sales conversation without knowing what they'd get or pay.
+2. **"Request access" and "Pricing on request" leave the visitor guessing.** The visitor can't tell if this is a waitlist, a demo call or a trial. They also can't tell what it costs or what happens after they click. Together these make the next step feel like a commitment before they know anything.
 
-3. **The sections have no proof, and "minutes" is an unsupported claim.** "Build next week's rota in minutes" and "Schedules your staff will actually follow" are promises with no evidence behind them: no customer, number, or screenshot. If you can't back "minutes" with something real, it needs a source on file or softer wording.
+3. **The claims have no backing on the page.** "Schedules your staff will actually follow" and "Build next week's rota in minutes" are promises with no customer, number or example behind them. If you have real evidence, it needs to sit next to the claim. If you don't, the claims need to be ones you can stand behind.
 
-4. **The footer buries important information.** "Available in the UK and Ireland" is a deal-breaker for anyone elsewhere, and it's only at the bottom. Hiding it wastes the time of visitors who can't buy, and "Pricing on request" there is easy to miss for those who can.
+4. **UK and Ireland availability is buried in the footer, and the wording doesn't match that market.** The visitor only learns the market limit after reading the whole page. The copy also says "labor" (US spelling) where a UK or Irish reader would expect "labour". It switches between "schedules" and "rota" for the same thing, which makes the page feel imported.
 
-**Not reviewed:** layout, other pages, and the sign-up flow. I only had the text you pasted.
+I only had the pasted text, so I couldn't review the rest of the site, the sign-up flow or the page design.

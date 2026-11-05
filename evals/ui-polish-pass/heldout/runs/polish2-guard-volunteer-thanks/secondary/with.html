@@ -3,147 +3,191 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>You're signed up to volunteer | Lantern Festival</title>
+  <title>You're on the volunteer list | Lantern Festival</title>
   <style>
     :root {
       --bg: #fdf8f0;
       --card: #ffffff;
       --text: #2b2118;
-      --muted: #6b5d4f;
-      --accent: #b45309;
+      --muted: #6b5a48;
+      --accent: #b8571a;
       --accent-text: #ffffff;
-      --accent-soft: #fef3c7;
-      --border: #e7dccd;
+      --accent-soft: #fbe9d6;
+      --border: #ead9c4;
       --focus: #1d4ed8;
     }
-
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #1a1510;
-        --card: #241d16;
-        --text: #f5ede2;
-        --muted: #b8a994;
-        --accent: #f59e0b;
-        --accent-text: #1a1510;
-        --accent-soft: #3a2c12;
-        --border: #3d3226;
+        --bg: #1c1612;
+        --card: #261e18;
+        --text: #f5ebdd;
+        --muted: #c1ae97;
+        --accent: #f0883e;
+        --accent-text: #1c1612;
+        --accent-soft: #3a2a1d;
+        --border: #3f3026;
         --focus: #93c5fd;
       }
     }
-
     * { box-sizing: border-box; }
-
+    html, body { height: 100%; }
     body {
       margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
     }
-
     main {
       width: 100%;
       max-width: 480px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 40px 32px;
+      padding: 32px 28px;
       text-align: center;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
     }
-
     .icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
-      background: var(--accent-soft);
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      display: block;
       color: var(--accent);
-      display: grid;
-      place-items: center;
-      font-size: 28px;
     }
-
     h1 {
-      margin: 0 0 12px;
       font-size: 1.6rem;
       line-height: 1.25;
+      margin: 0 0 8px;
     }
-
-    p {
-      margin: 0 0 12px;
+    .lede {
       color: var(--muted);
+      margin: 0 0 24px;
     }
-
-    .next {
-      margin: 24px 0 0;
-      padding: 16px;
-      border-radius: 10px;
-      background: var(--accent-soft);
-      color: var(--text);
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
       text-align: left;
-      font-size: 0.95rem;
-    }
-
-    .next strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .actions {
-      margin-top: 28px;
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
       gap: 12px;
-      justify-content: center;
     }
-
-    a.button {
-      display: inline-block;
-      padding: 12px 20px;
-      border-radius: 999px;
+    .steps li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      background: var(--accent-soft);
+      border-radius: 10px;
+    }
+    .num {
+      flex: 0 0 auto;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
       background: var(--accent);
       color: var(--accent-text);
-      text-decoration: none;
       font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    a.button.secondary {
+    .steps strong { display: block; }
+    .steps span.detail { color: var(--muted); font-size: 0.95rem; }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: var(--accent-text);
+      cursor: pointer;
+    }
+    .btn.secondary {
       background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
+      color: var(--accent);
     }
-
-    a:focus-visible {
+    .btn:hover { filter: brightness(1.05); }
+    a:focus-visible, button:focus-visible {
       outline: 3px solid var(--focus);
-      outline-offset: 3px;
+      outline-offset: 2px;
     }
-
-    @media (max-width: 420px) {
-      main { padding: 32px 20px; }
-      h1 { font-size: 1.4rem; }
+    .note {
+      margin: 20px 0 0;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+    @media (min-width: 480px) {
+      .actions { flex-direction: row; justify-content: center; }
+      .actions .btn { flex: 1; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      main { animation: rise 0.4s ease-out both; }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: none; }
+      }
     }
   </style>
 </head>
 <body>
   <main>
-    <div class="icon" aria-hidden="true">✦</div>
-    <h1>Thanks for volunteering!</h1>
-    <p>You're signed up to help with the Lantern Festival. We're glad to have you.</p>
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 6v6"/>
+        <path d="M24 12h16"/>
+        <path d="M22 18c0-2 4-4 10-4s10 2 10 4l4 26c0 3-6 6-14 6s-14-3-14-6z"/>
+        <path d="M22 28h20"/>
+        <path d="M22 36h20"/>
+        <path d="M28 52v4M36 52v4"/>
+      </g>
+    </svg>
 
-    <div class="next">
-      <strong>What happens next</strong>
-      We'll email you your shift details and a short orientation guide. Check your inbox (and spam folder) in the next few days.
-    </div>
+    <h1>Thanks for volunteering!</h1>
+    <p class="lede">You're signed up for the Lantern Festival volunteer team. Here's what happens next.</p>
+
+    <ol class="steps">
+      <li>
+        <span class="num" aria-hidden="true">1</span>
+        <div>
+          <strong>Check your inbox</strong>
+          <span class="detail">We'll send a confirmation email with your sign-up details. If it doesn't arrive within a few minutes, check your spam folder.</span>
+        </div>
+      </li>
+      <li>
+        <span class="num" aria-hidden="true">2</span>
+        <div>
+          <strong>Pick your shifts</strong>
+          <span class="detail">Choose the setup, event, and cleanup times that work for you.</span>
+        </div>
+      </li>
+      <li>
+        <span class="num" aria-hidden="true">3</span>
+        <div>
+          <strong>Join the volunteer orientation</strong>
+          <span class="detail">A short session covers safety, lantern handling, and your role on the day.</span>
+        </div>
+      </li>
+    </ol>
 
     <div class="actions">
-      <a class="button" href="#">View my shifts</a>
-      <a class="button secondary" href="#">Back to festival home</a>
+      <a class="btn" href="#">Choose my shifts</a>
+      <a class="btn secondary" href="#">Back to festival home</a>
     </div>
+
+    <p class="note">Questions? Reply to your confirmation email and our volunteer team will get back to you.</p>
   </main>
 </body>
 </html>

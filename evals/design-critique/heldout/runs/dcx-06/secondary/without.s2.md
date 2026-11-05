@@ -1,18 +1,21 @@
-The math and dates check out, so the problem is in what the flow tells the customer, and where.
+The arithmetic and date are correct. The problem is that the flow never carries the booking's key details forward, and the terms show up only at the moment of payment. Each page passes alone, but a customer can pay without ever seeing the full booking.
 
-**1. The sport choice disappears after Page 1.** The customer picks Tennis or Pickleball, but the result line ("Court 3, 18:00-19:00, $24") doesn't name a sport, and neither the payment summary nor the confirmation repeats it. Someone can book the wrong sport's court and have no chance to notice before paying. This is the most likely thing the manager is sensing.
+**What I checked:** Sat 14 Nov 2026 is a Saturday. $24.00 + $1.92 tax (8%) = $25.92. The slot times match across pages 1 and 3.
 
-**2. The cancellation policy shows up only at the moment of payment, in small print below the button.** Nothing on Page 1 or 2 mentions it, and there's no acknowledgement step. The customer is committing money before they see that late cancellations are non-refundable. Consumer-protection and chargeback rules often care about exactly this kind of disclosure timing.
+**What's wrong:**
 
-**3. The confirmation page doesn't confirm the booking.** It doesn't show the court, date, time, sport, or amount, and it doesn't repeat the cancellation terms. The only detail is the reservation number. It also says the receipt is "on its way" without saying where it went. And there's no link to view or cancel the reservation, so the 24-hour cancellation rule has no path in the flow.
+1. **The sport disappears after page 1.** The user picks Tennis or Pickleball, but "Court 3" is the only thing shown in the result, and the payment summary doesn't name a sport either. If a court is shared or the filter is stale, the customer could book the wrong sport and pay for it without a chance to notice.
 
-**4. Guests are collected but go nowhere.** Page 2 asks for 0-3 guests, but the price, tax, and payment summary are identical whatever the number. Either guests are free (say so) or there's a missing charge.
+2. **Guests are collected but never used.** Page 2 asks for 0–3 guests, and nothing afterward mentions them. Either guests cost extra and the total doesn't reflect it, or the field does nothing. Either way it's a mismatch between what the customer enters and what they pay for.
 
-**5. Smaller items:**
-- The payment summary has no year, which matters for a booking several weeks out.
-- "Cancellations must be made at least 24 hours before your slot" doesn't say what happens to a cancellation made inside that window, or to a no-show.
-- Nothing says how long the slot is held while the customer fills in details. If it isn't held, two people can start checkout for the same court.
+3. **The email is never confirmed before payment.** The confirmation goes to "your inbox," but the payment page never shows the address. A typo means no confirmation, and the customer has no earlier point to catch it.
 
-**Why each page passed QA:** each page is correct on its own. The defects are in what carries over between pages (sport, guests, policy, booking details), and a page-by-page sign-off wouldn't catch that. I'd suggest the manager test the flow end to end, starting from Page 1 with Pickleball selected, and check whether she could tell what she was buying before she paid.
+4. **Price shown and price paid differ.** Page 1 shows $24 and the total is $25.92. The tax only appears on the payment page, so the first number the customer sees is not what they'll pay.
 
-I only had the pasted text, so I couldn't check the live UI, whether the policy is shown elsewhere, or whether the backend handles guests. Those are worth confirming before changing anything.
+5. **Cancellation terms are small print under the button.** "Late cancellations are not refunded" is the only refund disclosure, and there's no checkbox or explicit acceptance. The customer agrees just by clicking "Complete purchase." That's a common basis for refund disputes, and it may also be a consumer-protection issue depending on your jurisdiction.
+
+6. **The confirmation page doesn't say what was booked.** It shows only the reservation number. It doesn't repeat the court, date, time, sport, guests, or cancellation deadline, and it calls the order a "purchase" even though the customer booked a slot.
+
+**Likely source of the manager's unease:** Nothing in the flow restates the booking (sport, court, time, guests, email, and refund terms) at the point of commitment. QA tested each page for its own content, which is why all four passed.
+
+**Next steps:** I'd check the actual app for items 1–3 first, since the page text alone can't tell whether guests change the price or whether the sport is stored with the booking. I can write test cases for those checks, or draft a single "review and confirm" page that shows everything before payment.

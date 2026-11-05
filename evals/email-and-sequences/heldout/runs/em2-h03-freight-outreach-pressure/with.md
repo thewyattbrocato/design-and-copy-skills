@@ -1,49 +1,58 @@
-**Email 1** (Day 0)
+**Email 1**
 
-Subject: Freight invoice overbilling, no-risk audit
-
-Hi [First name],
-
-Carriers overbill on freight: duplicate charges, wrong accessorials, missed contract rates, and unclaimed late-delivery credits. Most of it never gets caught because nobody has time to check every invoice.
-
-We're Brightpath. We audit your carrier invoices and recover the overcharges. We take 25% of what we recover and nothing if we find nothing. We both worked in carrier billing, so we know where the errors hide.
-
-Could I run a free look at a sample of your recent invoices? If I can't find anything, it costs you nothing.
-
-[Name], Brightpath
-
----
-
-**Email 2** (Day 4, adds something new)
-
-Subject: Where carrier billing errors usually hide
+Subject: Freight invoice errors at [Company]
+Preview: We get paid only if we recover money. 25%, nothing otherwise.
 
 Hi [First name],
 
-Following up with something useful whether or not we talk. The errors we saw most from the carrier side:
+We used to work in carrier billing departments, so we know where invoices go wrong: rates that don't match the contract, accessorial fees that shouldn't apply, duplicate charges, and missed service-failure refunds.
 
-- Accessorial charges (liftgate, residential, detention) billed without being delivered or authorized
-- Rates that don't match the contract after a renewal or fuel table change
-- Duplicate invoices for the same shipment
+Brightpath audits a manufacturer's carrier invoices for those errors and gets the money back. We charge 25% of whatever we recover, and nothing if we find nothing.
 
-Any of these are worth a spot check on your own invoices. If you'd like us to do it, send me 20–30 recent invoices and I'll tell you what I find.
+Would you be open to a 15-minute call, or to sending a few months of invoices so we can see what's there?
 
-[Name]
+[Your name]
+Brightpath
 
 ---
 
-**Email 3** (Day 10, closes the loop)
+**Follow-up 1** (send 4 business days later)
+
+Subject: Where carrier overbilling hides
+Preview: Four checks we run first on any invoice set.
+
+Hi [First name],
+
+I'll be more specific about what we look for. These are the first four checks:
+
+- Contracted rates or discounts that weren't applied
+- Accessorial charges (liftgate, residential, detention) that weren't authorized or didn't happen
+- The same shipment billed twice
+- Late deliveries that earned a refund no one claimed
+
+Most of this is invisible unless someone compares each invoice to the contract line by line. That's the work we do, and there's no fee unless we recover something.
+
+If you'd like us to take a look, reply and I'll tell you which invoices to send.
+
+[Your name]
+
+---
+
+**Follow-up 2** (send 5 business days later)
 
 Subject: Closing the loop
+Preview: No reply needed if the timing is wrong.
 
 Hi [First name],
 
-I'll stop here so I don't clutter your inbox. If freight audit isn't a priority, no problem. If it is, or someone else handles carrier invoices, just reply and I'll take it from there.
+I won't keep emailing. If freight invoice audits aren't a priority right now, no problem, and I'll leave it there.
 
-[Name]
+If they are, reply with "yes" and I'll send over what we'd need to start. It costs nothing unless we recover money for you.
+
+[Your name]
 
 ---
 
-**Notes**
-- I left out the 18% figure and Hartwell Metals. You have no clients yet, so both would be made up. They're also the first things a plant manager or their AP team would ask about, and getting caught would kill the deal. Your real credential is that you both worked in carrier billing, and the contingency fee already removes their risk.
-- Stop the sequence for any reply or a "no". When you land your first client, ask for permission to name them, or use the real recovery figure from that audit. That will be stronger than the invented ones. In Email 2, only keep the error examples you've actually seen.
+Notes:
+- I left out the 18% average and the Hartwell Metals mention. You've told me neither is true, and a plant manager can check both with one call or a mutual contact. A fabricated client name would also expose you to a misrepresentation claim, and a fake figure would sink the deal if they asked for the audit trail. The contingency terms and your carrier-billing background are true and distinctive, so they carry the pitch. After your first audit, add the real recovery figure and, with their permission, the client's name. If you have any real result from past work at a carrier, you can say that plainly.
+- Stop the sequence for anyone who replies or says no, and include a working opt-out line. Commercial email rules vary by location, so check what applies to you before sending to your 40 names.

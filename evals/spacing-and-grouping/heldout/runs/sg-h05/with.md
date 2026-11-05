@@ -1,22 +1,19 @@
-**Use a 1px hairline between rows, with comfortable padding inside each row.** Don't use extra space between rows or zebra striping.
+**Use the 1px line.** Add a little vertical padding to each row, but don't add gaps between rows.
 
-**Why, for 30 uniform rows:**
+**Why a line works best here**
+- The rows are uniform (date, merchant, amount) and there are 30 of them. The user scans down and across to compare amounts and dates, so a hairline marks where each row ends without breaking the scan.
+- A line costs almost no vertical space, so more rows fit on screen. Extra gaps between rows use up space on a list this long.
+- A line separates rows without adding a second visual signal. Space and a line together would be redundant.
 
-- **Extra space between rows** only groups well when items form distinct units. Here every row is the same kind of thing, so gaps just cut the rows per screen and add scrolling. Space also gives your eye nothing to track along a row, from the date on the left to the amount on the right.
-- **Alternating backgrounds** are built for wide tables with many columns, where the eye can lose its row. With three fields they add visual noise, and they break down when you add anything that already uses a background:
-  - pending or selected states
-  - date-group headers
-  - the pressed state
-  - dark mode, where low-contrast stripes tend to vanish or look muddy
-- **A hairline** gives a scan line without using any extra height. It stays neutral, so you can still use background tint for meaningful states such as pending or selected.
+**Why not the other two**
+- **Extra space between rows:** the gaps would be too big. If you make them small enough to fit many rows, they are too small to group anything. The rows would also start to look like separate cards, and these are entries in one ledger, not objects. Space also gives weak separation when every row has the same three fields.
+- **Alternating backgrounds (zebra stripes):** these suit wide tables where the eye has to travel far across a row. Here the amount is a short distance from the merchant, so they add little. They also cause trouble in dark mode and with accessibility settings, because the contrast between stripes is hard to get right. Tapping a row would also clash with the stripes (pressed, selected or highlighted states). Finally, banking lists often have date-group headers ("Today", "Yesterday"), and stripes collide with those.
 
-**How to make it work:**
+**How to set it up**
+- **Row height:** use about 56–64 px with roughly 12–16 px of vertical padding inside each row. That keeps a comfortable 44 px or larger tap target without needing gaps between rows.
+- **Line style:** use one quiet color, such as a low-contrast gray, and the same weight everywhere. Put it only *between* rows, not after the last one. Let the container or the following row own it, so you don't get a doubled line at the end.
+- **Line inset:** start the line at the left text edge, not the screen edge. This is a common mobile pattern and it keeps the list from looking like a stack of boxes.
+- **Grouping by day:** if you group by date, use extra space above each group header and less below it. That is the one place where space should do the grouping work.
+- **Alignment:** right-align the amounts and use tabular (monospaced) figures so the digits line up in a column.
 
-- **Padding:** give each row about 12–16px of vertical padding. The rule needs space on both sides of it. Touch targets should be at least 44px tall.
-- **Rule style:** use a quiet color, such as a low-contrast gray. Use one weight throughout.
-- **Rule inset:** start the rule at the text's left edge instead of the screen edge. It then reads as a list divider and not a table border.
-- **Spacing owned by the container:** put the rule on the following row, or use a divider. That way the last row doesn't get a stray line.
-- **Grouping:** with 30 rows, group by day or week with a sticky header, for example "Today" or "Oct 12". Put more space above each header than below it, so it sits closer to its own rows. This is where space is the right tool, because it separates groups and not individual rows.
-- **Alignment:** right-align amounts and use tabular numerals so the digits line up. That does more for scanning than any row separator.
-
-**Summary:** hairlines separate the rows, space separates the day groups, and tint is reserved for states.
+If you later offer a "compact" mode for power users, you can drop the vertical padding and keep the lines. The lines still separate the rows even when the list is dense.

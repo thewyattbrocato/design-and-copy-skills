@@ -1,22 +1,31 @@
-**Yes, mostly.** The flow works by making cancelling hard to find, hard to finish, and emotionally costly, which the signup doesn't do. The steering parts:
+**Yes, mostly.** The cancel is harder than the sign-up, and the phone-only exit and the email held until the call are the main problems. The pause offer is fine.
 
-1. **Buried entry.** "Cancel" sits as a small grey link under "Billing FAQs," so people who want to leave have to hunt for it.
-2. **Lopsided screen 2.** A big green "Keep" button against a tiny grey "Continue," plus a "3x more likely to hit their goals" claim that's unsourced and framed to make leaving feel like failing.
-3. **Required reason.** Leaving is blocked until someone picks a dropdown option.
-4. **Phone-only finish.** You made signup two taps online, so requiring a weekday-business-hours call to cancel is a channel barrier that makes leaving harder than joining.
-5. **Delayed confirmation.** The cancellation isn't confirmed until the call, so people can't tell whether they've left.
+**What steers**
 
-**What's fine:** the pause offer is a reasonable, honest alternative, shown once. "Sorry to see you go" is a fine tone. Keep both.
+- **Cancel is buried.** A small grey link at the bottom of Billing FAQs, while sign-up takes two taps.
+- **Asymmetric buttons.** "Keep" is big and green, "Continue" is a small grey link.
+- **Unverified stat.** "3x more likely to hit their goals" needs a source, or it's a guilt-style claim.
+- **Required reason.** You can't leave until you pick a dropdown option.
+- **Phone-only exit.** Cancelling an online sign-up by phone, during business hours only, is the clearest violation here. Many places regulate this directly, and rules vary and change, so have counsel check.
+- **Email held until the call.** The user gets no proof of cancellation and no last-day date until the call is made.
 
-**Fair version:**
+**What's fine**
 
-1. **Settings > Membership.** "Cancel membership" is a visible row on that screen, not under Billing FAQs.
-2. **"Cancel your membership?"** "You'll keep access until [end date]. Your next charge of [amount] on [date] won't happen." Buttons at equal size and weight: **[Keep membership]** and **[Cancel membership]**. Drop the 3x claim, or replace it with a stat you can source and cite.
-3. **"Need a break? Pause your membership for up to 2 months, free."** **[Pause membership]** and **[Not now]**, equal weight. If they choose "Not now," go on.
-4. **"Help us improve (optional)"** with a reason dropdown and a **[Skip]** option. The cancel button works whether or not a reason is picked.
-5. **Cancel in the app, on that screen.** Show "Membership cancelled. Your access ends [end date]. You can rejoin anytime at [location in app]." Send the confirmation email immediately.
-6. **Phone line** stays as "Need help? Call (555) 0142, Mon–Fri 9–5," offered as help, not as a required step.
+- The pause offer. It's a real alternative that solves a likely reason for leaving.
+- One retention screen, if it's shown once.
 
-**Notes:**
-- Fill in `[end date]`, `[amount]` and `[date]` from your billing data, and confirm the 3x figure's source before using it anywhere.
-- Rules on cancellation vary by jurisdiction and change over time (some places require online cancellation or a grace period). Have counsel check the flow before launch.
+**Fair version**
+
+1. **Settings > Membership.** "Cancel membership" sits with the other membership actions, not under Billing FAQs. It's the same size and weight as "Manage."
+
+2. **Pause (optional, shown once).** "Need a break? Freeze your membership for up to 2 months, free." Buttons: **[Pause membership]** and **[Not now]**, same size and weight. Skip the stat, or put a sourced version in small text.
+
+3. **Cancel confirmation.** Heading: "Cancel your membership?" Body: "Your access ends on [last day of access]. You won't be charged after [date]. Your bookings and data: [what happens to them, by date]." Buttons: **[Cancel membership]** and **[Keep membership]**, equal weight. Optional line below: "Tell us why (optional)," with an optional dropdown.
+
+4. **Confirmation.** Done in the app, with the same info: "Your membership ends [date]. To rejoin, [how]." Email sent immediately, with the same details.
+
+**Notes**
+
+- Fill the brackets with your real dates, data policy, and rejoin steps. I haven't assumed any of them.
+- If the phone line stays for people who want it, add it as an optional help line, not the only way to cancel.
+- Track cancellation complaints and chargebacks alongside pause and retention rates, so you can see whether the flow is causing regret.

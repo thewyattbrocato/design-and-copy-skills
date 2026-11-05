@@ -1,62 +1,53 @@
 # Coldnote messaging doc
 
 ## Who it's for
-Food producers who keep product in coolers and freezers: creameries, butchers, small caterers, farmers-market vendors. Most keep a paper log and check a dial thermometer by hand.
+Owners of small food businesses who keep product in coolers and freezers and check them by hand: creameries, butchers, small caterers, farmers-market vendors. Today they keep a paper log and read a dial thermometer.
 
-**Not for:** anyone who needs a certified food-safety system, freezers colder than -25°C, or a stall with no Wi-Fi.
+**Not for:**
+- Anyone who needs a certified food-safety system.
+- Anyone who needs sensors below -25°C.
+- Locations without Wi-Fi. [confirm: this likely includes some market stalls]
 
-## How we describe it
-**One-liner:** Coldnote is a wireless temperature sensor and app for food producers. It texts you when a cooler or freezer leaves the range you set, and it keeps the log you now write by hand.
+## The line
+**Coldnote texts you when your cooler drifts out of range, and keeps the log you'd otherwise write by hand.**
 
-**Controlling idea:** A dial shows you the temperature when you look. Coldnote tells you when you're not looking.
-
-**Price, said plainly:** $29 per sensor, $12 a month per location, battery about 14 months.
+Our real competitor is the clipboard and the dial thermometer. Both depend on someone standing at the cooler at the right moment. Coldnote doesn't. Use this line to test headlines and feature requests. If a request doesn't help a food producer know sooner or log less by hand, it waits.
 
 ## Versions by buyer
 The claim stays the same. Only the emphasis changes.
 
-- **Creamery:** Lead with Marisol Quen's story (below). The alert came at 3 a.m., and the dairy was moved in time.
-- **Butcher:** Lead with the walk-in. If the walls are metal, plan on the $79 hub inside the cooler. Say so on the first call.
-- **Small caterer:** Lead with the log. It exports as a PDF in place of the paper form. Say up front whether their county gets the inspector-style layout or the plain one.
-- **Farmers-market vendor:** Lead with the home cooler or freezer. The sensor needs Wi-Fi, so don't promise coverage at the stall itself. [confirm with the team: do we sell to vendors for their stall coolers?]
-
-> "The alert came at 3 a.m. and the walk-in was at 46°F. We moved the dairy before it turned." — Marisol Quen, owner, Quen Family Creamery
+- **Creamery / dairy:** "If the walk-in warms up overnight, you get a text, not a surprise." Proof: Marisol Quen's quote, below.
+- **Butcher:** "Stop walking to the cooler to read the dial. Set your range and get a text when it's left." Mention the hub early, because walk-ins are often metal.
+- **Small caterer:** "Your coolers and freezers log themselves, so the paper form stops being a nightly chore." Pitch one sensor per unit at $29 each.
+- **Farmers-market vendor:** "A $29 sensor in the cooler, with alerts to your phone." Lead only after confirming the stall has Wi-Fi. [confirm: how market vendors connect]
 
 ## The awkward bits
+- **Cold limit.** "Sensors are rated down to -25°C. Below that we can't guarantee them, so deep-freeze or blast-freeze setups aren't a fit."
+- **Wi-Fi and metal walk-ins.** "Sensors need Wi-Fi. Metal-walled walk-ins often block the signal, so those locations need our $79 hub inside the cooler." Say this before the sale, not after.
+- **Compliance.** "Coldnote is not a certified food-safety system, and we make no compliance claim." Never say "inspector-approved" or "compliant."
+- **The PDF.** Say "laid out like the temperature log forms used by health inspectors in Marlow and Dunmore counties. Other counties get a plain PDF." Don't imply any inspector has accepted it.
+- **Cost.** Say it all at once: "$29 per sensor, $12 a month per location, $79 for a hub if you need one. Battery lasts about 14 months."
 
-| Topic | We say | We never say |
-|---|---|---|
-| Wi-Fi | "Sensors need Wi-Fi. Metal-walled walk-ins often block it, so those need our $79 hub inside the cooler." | "Works anywhere." |
-| Cold limit | "Rated to -25°C. Below that, we don't guarantee it." | "Works in any freezer." |
-| Compliance | "Coldnote is not a certified food-safety system. We make no compliance claim." | "Inspector-approved" or "compliant." |
-| Log format | "In Marlow and Dunmore counties, the PDF is laid out like the inspector's temperature log form. Everywhere else you get a plain PDF." | "Works with your inspector." |
-| Evidence | "Nine kitchens have used it in a pilot since spring." | "Proven" or "trusted by..." |
-| Size | "Two of us, in Madison." | Anything that implies a bigger team. |
-| Monthly fee | "$12 a month per location covers the records and the alerts." | "Free" or "one-time." |
+## What we can back up
+**Today:**
+- Specs and prices above.
+- Nine kitchens have used it in a pilot since spring.
+- One approved quote: *"The alert came at 3 a.m. and the walk-in was at 46°F. We moved the dairy before it turned."* (Marisol Quen, owner, Quen Family Creamery.)
+- Two-county PDF layout.
 
-## What we can back up today and what we still need
+**Still needed:**
+- Case studies, which we don't have.
+- Survey or outcome numbers, which we don't have. Don't say "saves X" or "catches Y%."
+- A second and third approved quote, ideally a butcher and a caterer. [add]
+- Pilot data we could state once we've counted it, such as alerts sent or false alarms. [unproven: pull from pilot logs]
+- Whether market vendors can reliably get Wi-Fi. [unproven: ask pilot users]
+- Whether inspectors in Marlow and Dunmore actually accept the printout. Ask before we ever say it.
+- Real-world battery life beyond "about 14 months." [unproven: pilot check]
 
-| Can back up today | Still need |
-|---|---|
-| Prices: $29, $12/month, $79 hub | Case studies (we have none published) |
-| Battery life of about 14 months | Survey or usage numbers (we have none) |
-| Rated to -25°C | A second customer quote, ideally a butcher or caterer |
-| Text alerts and a log, both set by the owner's range | Hub results in metal-walled walk-ins [add: how many pilot sites needed one, and whether it worked] |
-| Inspector-style PDF for Marlow and Dunmore | Layouts for other counties |
-| 9 pilot kitchens since spring | Pilot details: which business types, and how many alerts fired |
-| The approved Quen quote | |
+Don't use "trusted by," "leading," or "thousands." The true version is "nine kitchens in a pilot."
 
-Don't claim more than the left column. Don't say "leading," "trusted," or any number of businesses beyond nine.
+## Company bio, 60 words
+Coldnote is a small wireless temperature sensor and app for food producers who keep things in coolers and freezers: creameries, butchers, small caterers and farmers-market vendors. It texts the owner when a reading leaves the range they set and keeps the log. Sensors are $29 each, service $12 a month per location. Coldnote is a two-person company based in Madison.
 
-## Bios
-
-**60 words**
-Coldnote is a small wireless temperature sensor and app for food producers who keep product in coolers and freezers: creameries, butchers, small caterers and farmers-market vendors. It texts the owner when a reading leaves the range they set and keeps the log for them. Coldnote is built by two people in Madison, and nine kitchens have piloted it since spring.
-
-**150 words**
-Coldnote is a wireless temperature sensor and app for food producers who keep product in coolers and freezers: creameries, butchers, small caterers and farmers-market vendors. Most keep a paper log and check a dial thermometer by hand. Coldnote sits in the cooler, texts the owner when a reading leaves the range they set, and keeps the log. The log exports as a PDF laid out like the forms health inspectors use in Marlow and Dunmore counties; other counties get a plain PDF. Coldnote is not a certified food-safety system, and we make no compliance claim. Sensors cost $29 each and the alerts and records service is $12 a month per location. Nine kitchens have piloted it since spring. One of them, Quen Family Creamery, got an alert at 3 a.m. with the walk-in at 46°F and moved the dairy before it turned. Coldnote is built by two people in Madison.
-
----
-Two notes:
-- The bios and the table use only the fact sheet. The market-vendor line is my inference from "needs Wi-Fi," so please confirm it.
-- The 150-word bio leaves out the $79 hub to hit the count. Use the table when a buyer has a metal-walled walk-in.
+## Company bio, 150 words
+Coldnote makes a small wireless temperature sensor and an app for food producers who keep their product in coolers and freezers: creameries, butchers, small caterers and farmers-market vendors. Most of them still keep a paper log and check a dial thermometer by hand. Coldnote does that watching for them. The sensor reports to the app, which texts the owner when a reading leaves the range they set and keeps the log. The log exports as a PDF, laid out like the temperature log forms used by health inspectors in Marlow and Dunmore counties. Sensors are rated to -25°C, run about 14 months on a battery, and cost $29 each. Records and alerts are $12 a month per location. Metal-walled walk-ins may need a $79 hub. Coldnote is not a certified food-safety system and makes no compliance claims. Nine kitchens have piloted it since spring. Two people in Madison make it.

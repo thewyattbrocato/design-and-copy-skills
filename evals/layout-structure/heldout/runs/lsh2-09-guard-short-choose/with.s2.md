@@ -1,1 +1,3 @@
-Go with the full-bleed illustration. For an illustrator, the work is the pitch, and a huge image shows her style in the first second, before anyone reads a word. Keep her name in the corner, but add a short line about what she does (e.g. "Illustrator for editorial & children's books") beside it so visitors know what she offers and can tell it's a portfolio, not just a pretty picture.
+Go with the smaller image paired with her name and a one-line description. A visitor who lands cold, from a referral or a search, needs to know who she is and what she does right away. A full-bleed hero with a tiny name looks striking, but it leaves them guessing, and it can crop or load badly on phones.
+
+If her work is so distinctive that the image alone sells it, the big hero can win. For most freelancers who want inquiries, I'd pick the clearer option.

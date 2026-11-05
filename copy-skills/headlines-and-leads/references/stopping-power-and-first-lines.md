@@ -10,7 +10,7 @@ Write the plain version before any clever one: who it is for, the one benefit, a
 
 - **Glance:** the line plus the sender or logo alone must say what it is, for whom, and what they get. If a reader needs the body to decode it, rewrite.
 - **Delete:** remove each word group in turn. If the idea survives, the group was decoration; leave it out. A line of fourteen words with two benefits usually loses one.
-- **Second meaning:** read it for an unintended meaning, and as a stranger who knows nothing about the product.
+- **Second meaning:** read it for an unintended meaning, and as a stranger who knows nothing about the product. An intended double meaning must make sense in both readings, or it is a pun to cut.
 
 For posters, ads and notifications, aim for about seven words as a starting budget, not a rule; count them, and test the figure when a test is possible.
 
@@ -25,7 +25,7 @@ For posters, ads and notifications, aim for about seven words as a starting budg
 
 ## Division of labor
 
-- Clever headline: pair with a plain subhead or straight visual. Do not make the visual repeat the words.
+- Clever headline: pair with a plain subhead or straight visual. Do not make the visual repeat the words. A visual that contradicts the line can carry the idea when the line still reads alone; default to the straight visual.
 - Subhead adds the specifics; it does not restate the headline.
 - The first body line continues the headline and states the benefit. It never explains the headline, and the warm-up is deleted. A story or surprising fact may open only an article-style page.
 

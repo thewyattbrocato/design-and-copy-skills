@@ -1,18 +1,24 @@
-**Use one family, bundled inside the app: Figtree, as a variable font.** I haven't checked its script coverage or its tabular figures, so confirm both before you commit (details below).
+**Use one family, bundled in the app: Figtree.** It's friendly and modern without being thin or fussy, and it has a weight range, so the founder's look comes from weight and size rather than a second font.
 
-- **Why it fits "friendly and modern":** it has soft, open, geometric shapes and a sturdy build. That holds up on mid-range LCD screens, where thin rounded faces like Nunito can look weak at small sizes.
-- **Offline:** bundle the font file in the app (an Android `res/font` resource, or your framework's asset bundle). Don't load it from the web, since prepaid data and spotty signal would break that. Subset it to the scripts you need and ship one variable file, which keeps the app small.
-- **Hierarchy:** use weight and size within the one family.
-  - Body text: Regular (400), at 16sp or larger.
-  - Labels and buttons: Medium or SemiBold.
-  - Headings and balances: Bold.
-  - Don't use Light for anything. Don't use faux bold or italic.
-- **Money:** contribution amounts and balances should line up in columns. Turn on tabular figures (`tnum`) if the font has them. The `0`, `O`, `1` and `l` should also be easy to tell apart.
-- **Fallback:** Figtree, then `Roboto`, then `sans-serif`. Roboto is on virtually all Android phones, so the app still looks intentional if the font fails.
-- **No second family:** the app is mostly forms, lists and numbers, so a display face or a mono face has no job here.
+```css
+--font-ui: "Figtree", Roboto, system-ui, sans-serif;
+```
 
-**Two things to check:**
-1. **Languages.** I assumed Latin script. If your vendors read Swahili, Hindi, Arabic, Amharic or another script, check that the font covers it, including diacritics. If it doesn't, switch to **Noto Sans**, which is open-licensed and designed to cover many scripts. It's a bit plainer, but it never falls back to a mismatched glyph.
-2. **Licence and tabular figures.** Figtree is distributed under an open licence, but confirm that it permits embedding in an app. Check the font file itself for `tnum` support. If it lacks `tnum`, Noto Sans is the alternative here too.
+Use it for everything: Regular for body, Medium or SemiBold for labels and buttons, Bold for headings and amounts. The one-line reason for the pick: a geometric-humanist sans with open shapes holds up better at small sizes than a purely geometric face, and it's open-source.
 
-Whichever you pick, test a real screen of your app on an actual low-end Android phone at the smallest text size. Do this before you settle the choice.
+**Offline and prepaid data**
+- **Bundle the font files in the app.** Don't use a Google Fonts link or any CDN. It fails with no connection and costs vendors data.
+- **Ship one variable file or three static weights** (Regular, SemiBold, Bold), as WOFF2 if it's a web or PWA build. Subset to the languages you actually use.
+- **Keep Roboto in the fallback.** It's already on every Android phone, so if the font fails to load, the app still looks fine and nothing breaks.
+- **Don't add a second display font.** It's more download for no role the first font can't cover.
+
+**Check these before committing**
+1. **Money.** Confirm the font offers tabular figures and that your currency symbol is in it. If either is missing, amounts won't align in columns and the symbol will fall back to a different font.
+2. **Look-alike characters.** Set `1 l I` and `0 O` at your smallest size, on a real mid-range phone. Vendors will be reading balances and contributions at a glance.
+3. **Languages.** I assumed Latin script. If you need Swahili, Vietnamese, Hindi, Arabic or others, check Figtree's coverage and tell me. The harder script should drive the choice.
+4. **License.** I believe Figtree is under the SIL Open Font License, but confirm that on the font's source page before shipping.
+5. **Weights.** Use real weights only. If you use italics, make sure the family includes them, and set `font-synthesis: none` so the browser doesn't fake bold or italic.
+
+If the founder wants something rounder and warmer, **Nunito** is the alternative. Its rounded ends read as "friendly" more obviously. The same offline and bundling advice applies.
+
+If this is a native or React Native app rather than web, tell me and I'll translate this into the font-loading setup for that platform.

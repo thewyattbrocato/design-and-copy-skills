@@ -1,33 +1,23 @@
-Not quite yet. The structure is reasonable, but the content is still generic app-template filler, and a developer will either build it literally or come back with questions. Here's what I'd fix first.
+Not yet. The structure is sound, but most of the copy is generic app-template placeholder text, and a developer would have to guess at what you actually want. Some of it also conflicts with what Seedlend is.
 
-## Content that doesn't fit Seedlend
+**Content that doesn't fit a seed library**
+- **"$0.00" on every card:** A shared cupboard has no prices. If it ships as written, it implies a marketplace. Replace it with what a neighbor needs to know, such as availability ("In stock", "3 packets left"), a "Borrow" state, or the seed type and planting season.
+- **"Item Title" and "Short description goes here.":** Write real sample content, like "Cherokee Purple Tomato / Heirloom, sow indoors in March." Placeholders hide layout problems, such as long names and missing descriptions.
+- **"Welcome to Seedlend! Discover, connect and grow with our community.":** This could be any app's welcome text. Say what it is: "Borrow seeds, save seeds, return seeds" and mention the cupboard at the community hall.
+- **"Nothing to see here yet." with "Get Started":** "Get Started" doesn't say what it does. Name the action, for example "Borrow your first seeds". The empty state should also say what will appear there (borrowed packets, return reminders).
 
-- **"$0.00" on the cards.** A shared seed library is lending or swapping, not selling. Replace the price with something real, like availability ("In stock", "3 packets left") or a type ("Tomato · Heirloom"). If nothing is exchanged for money, a price field shouldn't exist at all.
-- **"Item Title" / "Short description goes here."** Say what a card is. For seeds, that's probably variety name, a one-line note (e.g. "Sow after last frost"), and who donated it or when.
-- **"Welcome to Seedlend! Discover, connect and grow with our community."** This could be any app. Say what the app does and where it happens, for example "Borrow seeds from the cupboard at [Hall name]. Save some from your harvest to give back."
-- **"Explore" and "Get Started".** Both are vague, and the spec doesn't say where either goes. Name the action ("Browse seeds", "Add your first seed") and say its destination.
-- **"Nothing to see here yet."** This is the best place to teach the loop. For example: "You haven't borrowed or shared any seeds yet." Then the button, "Browse seeds".
+**Structural gaps and ambiguities**
+- **Profile appears twice:** The bottom profile row and the Profile tab do the same job. Drop the row, or say what it adds, such as a quick sign-out.
+- **Email on the home screen:** Is it needed? In a neighbor community, showing it on screen is a small privacy risk, and it's rarely useful there.
+- **"Explore" and the Search tab overlap:** Say where Explore goes. If it just opens Search or a browse view, the hero button may be redundant.
+- **"Featured" is undefined:** Who picks the items, and by what rule (newest, most borrowed, seasonal, librarian's choice)? Also say what tapping a card does and whether there's a "See all".
+- **"Add" is vague:** Does it mean donating seeds, adding a request, or logging a return? In a lending app those are different flows.
+- **Gear icon:** Say whether it opens Settings or something else.
 
-## Structural gaps
+**Missing from the spec**
+- **States:** Loading, error and offline behavior, and what happens with fewer than three featured items.
+- **Messages tab:** Whether it shows an unread badge.
+- **Hall details:** Cupboard opening hours or location, if people need them. This may belong on Home.
+- **Accessibility:** Alt text for card images and a label for the gear icon.
 
-- **Profile appears twice.** There's a Profile tab and a profile row at the bottom of Home. Drop the row, or say why both exist. Showing the email on a home screen is also a privacy concern on shared or visible screens.
-- **"Add" is ambiguous.** Does it mean donate seeds to the cupboard, log a borrow, or post a request? Those are different flows. Name the tab for the action.
-- **What does "Featured" mean?** Is it chosen by a librarian, newest arrivals, or most popular? Say how many items show, and whether there's a "See all".
-- **Missing interactions.** What happens when you tap a card or the gear icon? Does "Your Activity" show borrowed seeds, due-back reminders, or messages?
-- **Missing states.** Home needs spec'd behavior for loading, error or offline, signed-out, and fewer than three featured items. As written, it assumes exactly three items and a signed-in user.
-
-## Things a seed library probably needs
-
-I'm guessing at your model here, so correct me. Check whether Home should surface the physical side:
-
-- Cupboard location and opening hours.
-- Return expectations, such as "bring back seeds from your harvest".
-- Whether items are limited per person.
-
-## Smaller notes
-
-- Spell out the real tab labels and icons, and which tab is active on this screen.
-- The gear icon needs an accessible label ("Settings").
-- Image placeholders need a defined fallback, since many seed packets won't have photos.
-
-If you tell me how borrowing works (take and return seeds, swap, or just take), I can rewrite the spec with real copy and the missing states filled in.
+If you tell me how borrowing and returning works, I can rewrite the copy with real Seedlend content.

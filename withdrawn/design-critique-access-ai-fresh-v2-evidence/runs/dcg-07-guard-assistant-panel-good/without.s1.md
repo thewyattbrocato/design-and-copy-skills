@@ -1,0 +1,3 @@
+Mostly solid: nothing reaches the reply box without a click, and the off switch persists. The one change I'd make is to treat "no underline" as a claim you have to earn, because model uncertainty is poorly calibrated and agents will read an un-underlined sentence as verified. So underline any factual sentence that has no source link or whose cited passage doesn't clearly support it, and say in the UI that a clean sentence still isn't a guarantee.
+
+Also check that "use draft" is still gated when a sentence is flagged (for example, a quick "N flagged" confirmation), and decide whether the off switch is per agent or per workspace.

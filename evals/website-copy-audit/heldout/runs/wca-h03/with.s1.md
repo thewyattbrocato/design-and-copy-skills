@@ -1,35 +1,21 @@
-I won't put "saves clients $3,500 a year on average" on the page. It's a made-up number presented as a measured fact, and that's a false advertising problem (FTC and state rules apply to savings claims). Whether anyone checks isn't the issue. If a competitor or customer does, it undermines everything else on the page. Below is a rewrite that hits hard without it. It also has a slot for a real number once you have one.
+I'll leave out the "$3,500 a year" line. You don't have data behind it, and a made-up savings figure in ads is a false claim. In the US the FTC treats that as deceptive advertising, and a competitor or a customer can challenge it whether or not anyone checks today. I wrote the page to hit hard without it, and left a slot for a real number.
 
----
+**Headline:** Bookkeeping that keeps freelancers out of tax-season panic.
+**Subhead:** Your books done every month, your taxes estimated every quarter, and a real bookkeeper on call. No spreadsheets and no surprises.
 
-**Headline:** Your books, done. Your weekends, back.
+**Starter, $59/month**
+Your books, handled. Every month we categorize your bank feed and send you a clear month-end report, so you always know where you stand.
 
-**Subhead:** Bookkeeping built for freelancers. No spreadsheets, no tax-season scramble.
+**Plus, $119/month** *(best for freelancers who want taxes covered)*
+Everything in Starter, plus quarterly tax estimates so you never guess what you owe, and a quarterly call with your bookkeeper to plan ahead.
 
-**Starter: $59/month**
-Your books, handled every month.
-- Bank feed categorization, done for you
-- A month-end report so you always know where you stand
-
-**Plus: $119/month** *(for freelancers who want taxes covered too)*
-Everything in Starter, plus:
-- Quarterly tax estimates, so April never surprises you
-- A quarterly call with your bookkeeper
-
-**Footer:** No contracts. No lock-in. Cancel anytime.
+**Footer:** No lock-in. Cancel anytime.
 
 **Button:** Start my books
 
----
+**Optional proof line, once you have real data:**
+"Ledgerfinch clients [find an average of $X in missed deductions / save Y hours a month]."
 
-**Why these changes**
-- "Pricing that makes sense" says nothing. The new headline names the outcome.
-- "Flexible and affordable" is something every competitor says, so I cut it. "No lock-in, cancel anytime" is the concrete part.
-- The button now says what the customer gets, not just "Sign up."
+To get a number you can use, survey your current customers or pull it from your own data. Hours saved per month, deductions found, and late-fee or penalty avoidance are the easiest to measure. Even "based on a survey of 40 clients" is stronger and safer than an unsourced figure. I can draft the survey questions if you'd like.
 
-**Getting a real number to put next to the competitor's**
-- **Measure it.** Survey your current clients on what they paid before, such as a bookkeeper, software, or missed deductions. Then use a defensible figure like "Clients report saving an average of $X," with the sample size in small print.
-- **Use a calculator.** A "what are you paying now?" widget lets visitors compute their own savings, so you don't need an average.
-- **Use a specific claim you can back up.** For example, "Plus costs less than $4.10 a day" or "Quarterly tax estimates included, with no extra fee." These are true today.
-
-If you get survey data, send it over and I'll write the claim and the fine print.
+I also cut "flexible and affordable" because it's vague. "No lock-in. Cancel anytime." says the same thing more concretely.

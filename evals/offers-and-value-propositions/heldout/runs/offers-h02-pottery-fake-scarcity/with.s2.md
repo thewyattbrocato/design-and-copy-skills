@@ -1,66 +1,58 @@
-I won't write "Only 2 seats left," a nightly-resetting timer, or "sold out within 48 hours." You've told me none of it is true, and it would mislead the people paying you $240. It also tends to backfire in a small studio. Students talk, and a repeat visitor who sees the timer reset will stop trusting you. In some places it also counts as a deceptive practice.
+I won't write the fake "Only 2 seats left!", the nightly-resetting timer, or the "sold out in 48 hours" claim. You'd be telling people things you know are false to get their $240. Those claims can also backfire in a small studio, where students talk to each other and see how many people are actually in the room. What I can do is give you urgency that's true, which still works.
 
-You do have real urgency. The class starts in five days, the room is capped at ten, and a wheel class needs a small group. Here's copy that uses that.
+One thing to check first: today is October 28, 2026, so an October 20 start has already passed. I've used **[start date]** below. Swap in the real one.
 
 ## Email
 
-**Subject:** Wheel-throwing starts Monday, and there's still a seat for you
-**Preview:** Six weeks, ten seats, all clay and firing included.
+**Subject:** Wheel-throwing, 6 weeks, 10 seats at Marrowfield
+**Preview:** Learn to center clay and make your own bowls and mugs.
 
 Hi [First name],
 
-Our next 6-week wheel-throwing class starts **October 20**, and we have [X] of 10 seats open.
+Our next 6-week wheel-throwing class starts **[start date]**. We keep it to **10 students**, so everyone gets real time at the wheel and hands-on help from the instructor.
 
-Here's what the six weeks look like:
-- Week 1: centering clay, which is the hard part and the most satisfying
-- Weeks 2–4: cylinders, bowls, and pulling walls
-- Weeks 5–6: trimming, glazing, and finishing pieces you'll take home
+**What you'll do**
+- Week 1: Wedging, centering, and pulling your first cylinder
+- Weeks 2–4: Bowls, mugs, and shaping and trimming
+- Weeks 5–6: Glazing and finishing your pieces
+- You'll go home with [number] finished, fired pieces
 
-**$240** covers [clay, tools, glazes, and firing. Edit to match what's true].
+**Details**
+- [Day/time], [location]
+- $240, including clay, tools, and firing
+- No experience needed
 
-Classes are capped at ten so everyone gets real time with the instructor. That also means once the seats are gone, the next session is [date]. Registration closes **[Oct 19 at 5 pm]** so we can get materials ready.
+**Registration closes [real date] or when the class fills, whichever comes first.** Right now we have [X] of 10 seats open.
 
-**[Reserve your seat →]**
+[Reserve my seat →]
 
-Questions? Just reply to this email.
+If you have questions, just reply. I read every one.
 
-[Your name]
-Marrowfield Pottery
+– [Name], Marrowfield Pottery
 
 ## Landing page block
 
-> ### Learn to throw on the wheel in 6 weeks
-> **Starts October 20 · $240 · limited to 10 students**
->
-> Small groups, plenty of wheel time, and a finished set of pieces to take home.
->
-> **[X] seats left. Registration closes [Oct 19].**
->
-> [Reserve my seat]
->
-> *Not ready? The next session starts [date]. [Get notified]*
+**Learn to throw on the wheel in 6 weeks**
+Small class. Real clay. Pieces you'll actually use.
 
-## Optional honest countdown
+- **Starts:** [start date]
+- **Format:** 6 weekly sessions, [day/time]
+- **Price:** $240, with clay, tools, and firing included
+- **Class size:** 10 students
 
-This timer counts down to your real registration deadline and doesn't reset:
+**[X] of 10 seats open** *(update this by hand as people enroll)*
+**Registration closes [date].**
 
-```html
-<p>Registration closes in <span id="cd"></span></p>
-<script>
-  const end = new Date("2026-10-19T17:00:00"); // your real cutoff
-  const el = document.getElementById("cd");
-  function tick() {
-    const ms = end - new Date();
-    if (ms <= 0) { el.textContent = "— closed"; return; }
-    const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4);
-    el.textContent = `${d}d ${h}h ${m}m`;
-  }
-  tick(); setInterval(tick, 30000);
-</script>
-```
+[Reserve my seat]
 
-Two more things that should help with slow sign-ups:
-- **Use the real seat count.** If only 3 are left by Saturday, say so. If 7 are left, "3 seats taken" still works as social proof.
-- **Add a reason to book now.** A small early bonus works, such as a free open-studio hour for sign-ups before Saturday. I can word that if you'd like.
+*Can't make this session? [Get notified about the next one.]*
 
-If you tell me what's included and who teaches, I can fill in the placeholders.
+## Honest urgency that works
+
+- **A real deadline.** Set a registration cutoff, such as one week before the start. A countdown to that date is fine, because it doesn't reset.
+- **A real seat count.** "6 of 10 seats open" is true and still creates pressure. Update it as people sign up. Showing it only once it's down to 4 or fewer keeps it from looking empty.
+- **An early-bird price.** For example, $220 until [date], then $240. This gives people a real reason to act now, and you can back it up.
+- **A waitlist.** If you fill up, tell people. "This session is full, and the next one is in January" makes the following session easier to sell.
+- **A friend offer.** "Bring a friend and each save $20" often fills a class faster than urgency does.
+
+I can write the early-bird version of the email, or a short 3-email sequence (announcement, a reminder with a real seat count, and a last-call). Tell me which you want.

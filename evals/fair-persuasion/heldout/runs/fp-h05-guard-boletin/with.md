@@ -1,22 +1,20 @@
-**Ventana emergente (tras finalizar el pedido)**
+**Ventana emergente (al terminar el pedido)**
 
 **Título:** ¿Quieres recibir el pan del fin de semana?
 
 **Texto:**
-Cada semana te enviamos un correo con el pan del fin de semana y las promociones de Horno Cantarana. Solo eso. Puedes darte de baja cuando quieras desde cualquier correo, con un solo clic.
+Cada semana te mandamos un correo con el pan del fin de semana y las promociones de Horno Cantarana. Solo eso, un correo por semana. Puedes darte de baja cuando quieras desde cualquier correo.
 
-**Campo:** Correo electrónico: [ tu@correo.com ]
-*(Si ya lo indicó en el pedido, que aparezca rellenado.)*
+☐ Quiero recibir el boletín en **[tu correo del pedido]**
+*(casilla sin marcar)*
 
-**Botones (mismo tamaño y mismo peso visual):**
-- **[ Sí, quiero el boletín ]**
-- **[ No, gracias ]**
+**Botones:**
+[ **Sí, apuntarme** ]  [ **No, gracias** ]
 
-**Letra pequeña bajo los botones:**
-Usaremos tu correo solo para enviarte este boletín semanal. Más información en nuestra [política de privacidad].
+*Pie, en letra pequeña:* Usaremos tu correo solo para enviarte el boletín. [Política de privacidad]
 
 ---
 
-**Notas:**
-- Que el botón "No, gracias" cierre la ventana sin más, y que no vuelva a salir en ese mismo pedido. Así la gente que acepta lo hace queriendo, y te darán menos bajas y menos correos marcados como spam.
-- Las normas sobre consentimiento para enviar correos comerciales (RGPD y LSSI en España) cambian según el lugar y el momento, así que conviene que alguien las revise. Mide cuántas personas se dan de baja en el primer mes para saber si el mensaje atrae a quien de verdad lo lee.
+Notas:
+- Si usas la casilla, el botón "Sí, apuntarme" debería quedar inactivo hasta marcarla. Si prefieres solo los dos botones, quita la casilla. Lo importante es que "No, gracias" tenga el mismo tamaño y peso visual que "Sí".
+- Las normas sobre consentimiento para enviar correos comerciales varían según el país y cambian con el tiempo, así que conviene que alguien las revise. Para saber si el mensaje funciona, mira cuántas personas se dan de baja en las primeras semanas además de cuántas se apuntan.

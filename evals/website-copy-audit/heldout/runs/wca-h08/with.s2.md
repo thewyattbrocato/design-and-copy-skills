@@ -1,20 +1,20 @@
-Here are the new titles and descriptions. I counted each one character by character, spaces and punctuation included.
+Here are the rewrites. I counted each one character by character, including spaces and punctuation.
 
-| Page | Title (max 60) | Chars |
+| Page | Title | Chars |
 |---|---|---|
-| Home | Family Dentist in Tulsa \| Brightwater Family Dental | 51 |
+| Home | Brightwater Family Dental \| Tulsa Family Dentist | 48 |
 | Teeth whitening | Teeth Whitening in Tulsa \| Brightwater Family Dental | 52 |
-| Emergency dentist | Emergency Dentist in Tulsa \| Brightwater Family Dental | 54 |
-| New patients | New Patients \| Brightwater Family Dental, Tulsa | 47 |
+| Emergency dentist | Same-Day Emergency Dentist in Tulsa \| Brightwater | 49 |
+| New patients | New Patients Welcome \| Brightwater Family Dental, Tulsa | 55 |
 
-| Page | Description (max 155) | Chars |
+| Page | Description | Chars |
 |---|---|---|
-| Home | Brightwater Family Dental on Elm Road in Tulsa provides dental care for the whole family. Call or visit to book your appointment. | 129 |
-| Teeth whitening | Teeth whitening at Brightwater Family Dental on Elm Road in Tulsa. Call today to find out more and book your visit. | 115 |
-| Emergency dentist | Dental emergency in Tulsa? Brightwater Family Dental on Elm Road holds same-day emergency appointments on weekdays. Call us today. | 130 |
-| New patients | New to Brightwater Family Dental in Tulsa? Your first visit includes an exam, and you can fill in your forms online beforehand. | 127 |
+| Home | Brightwater Family Dental on Elm Road in Tulsa offers quality dental care for the whole family in a friendly environment. Call to book a visit. | 143 |
+| Teeth whitening | Brighten your smile with professional teeth whitening at Brightwater Family Dental on Elm Road, Tulsa. Call today to book your appointment. | 139 |
+| Emergency dentist | Dental emergency? Brightwater Family Dental holds same-day appointments on weekdays at our Elm Road office in Tulsa. Call us now. | 129 |
+| New patients | New to Brightwater Family Dental? Your first visit includes an exam, and you can fill in the forms online beforehand. Find us on Elm Road, Tulsa. | 145 |
 
-- **Home title:** The old one was about 130 characters, so Google was cutting it off. The new one leads with the keyword people search for and keeps the practice name.
-- **Home description:** The old one was blank, so Google was choosing its own snippet.
-- **Whitening description:** I dropped "the best teeth whitening available" because it's an unsupported claim. I also didn't add details like pricing or methods, since I don't know them.
-- **Missing details:** I left out a phone number and opening hours because you didn't give me any. If you want them in the descriptions, there's room. Each one has at least 25 characters to spare.
+- **Emergency title:** it uses "Brightwater" instead of the full name. The full name would make it 63 characters.
+- **Whitening copy:** I dropped the "best teeth whitening available" claim because it's unverifiable. Add it back if you can back it up.
+- **Home page:** the old description was blank, so the new one is written from the old title's wording. The old title was well over 60 characters, and the new one keeps only the name and location.
+- **Phone number:** I didn't include one. If you want it in the descriptions, send it and I'll check the counts again.

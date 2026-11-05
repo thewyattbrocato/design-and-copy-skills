@@ -1,35 +1,43 @@
-The copy is short and plain, and the trial terms are clear. But several lines are vague in ways that will cost signups, and the biggest problem is the word "items."
+Your copy is clear and well organized, but it's generic SaaS copy. A pottery studio owner reading it still wouldn't know what they'd be buying. The biggest problem is the unit you're pricing on.
 
-## Fix first
+## Biggest issue: "items" is undefined
 
-1. **"Up to 100 items."** A studio owner can't tell what an item is: a member, a booking, a wheel, a kiln? Basic vs. Pro hinges on this, so define the unit on the card, e.g. "Up to 100 members."
-2. **Nothing says what happens when the trial ends.** You promise "no credit card required," so the next question is "will I be charged on day 15, and what happens to my schedule and member data?" Add that to the FAQ.
-3. **"Is my data secure?"** "Absolutely. We take security very seriously" is what every vendor says, so it reads as filler. Replace it with one or two concrete, true facts (hosting location, encryption, how to export). If you can't back specifics yet, say what you can commit to rather than asserting strength.
-4. **"How does it work?"** doesn't answer the question. Describe the actual flow: the studio sets up wheel and kiln availability, members book, and so on. Use only what the product really does.
+"Up to 100 items" is the core of the Basic-vs-Pro decision, and a studio owner can't tell what counts. Wheels? Kilns? Members? Bookings? If you're counting wheels and kilns, say so: "Up to 100 wheels and kilns" or "Up to 100 bookable resources." If it's something else, the limit needs a clear definition.
 
-## Pricing card
+## Pricing section
 
-- **"Choose the plan that's right for you."** Generic. Make it help the decision, e.g. "Basic fits a single studio with up to [X] members. Pro removes the limit and adds [analytics]."
-- **"Perfect for getting started."** Vague. "For small studios just getting started" is more concrete.
-- **Pro: "Everything in Basic, plus more."** "Plus more" is the weakest phrase on the page. Name what's added. "Advanced analytics" should say which analytics, and only if they exist.
-- **Enterprise: "For large organizations."** Most pottery studios are small, so this may make a prospect think the page isn't for them. Consider "For multi-location studios or co-ops." Also name the custom integrations, or drop the line.
-- **"Select" buttons.** Use "Start free trial" on Basic and Pro. It matches the trial line and tells people what happens next.
-- **"Most Popular" badge.** Only keep it if it's true. Otherwise "Recommended" is honest.
-- **Support tiers.** "Email support" vs. "Priority support" means little without response times. Add them (e.g. "within 1 business day") so the difference is real.
+- **"Simple, transparent pricing"** is fine, but the pricing isn't transparent while "items" is undefined. Fixing the unit fixes this.
+- **"Perfect for getting started"** is a hedge. Say who it's for: "For a single studio with a few wheels and kilns."
+- **"Everything in Basic, plus more."** The "plus more" is filler, and Pro's list (unlimited items, priority support, advanced analytics) doesn't say what the analytics show. "Advanced analytics" should be concrete, e.g., "Kiln usage and member booking reports."
+- **"Email support"** vs. **"Priority support"**: say what the difference is (response time?).
+- **Enterprise, "For large organizations"**: most pottery studios aren't large organizations. "For multi-location studios" is more accurate if that's the target. "Custom integrations" with what? Naming one or two (e.g., a payment processor or accounting tool) helps.
+- **CTA labels**: "Select" doesn't match your trial offer. "Start free trial" on Basic and Pro would reduce friction and tie the CTA to the trial line.
 
 ## FAQ
 
-- **"Can I cancel anytime?" → "Yes!"** The exclamation adds nothing. Answer what matters: how to cancel, whether partial months are refunded, and what happens to member data and whether it can be exported.
-- **"Do you offer support?"** Repeats the pricing, and "friendly team" is self-praise. Give channels and hours: "Yes. Email on every plan, with priority response on Pro. [Hours]."
-- **Missing questions this buyer will ask:**
-  - Can I import my existing member list?
-  - Can members pay through Kilnbook, and what are the fees? (For studios this is often the deciding question.)
-  - Can members book from their phones?
+- **"How does it work?"** The answer is only "sign up and start." Describe the flow for the owner and for members: set up your wheels and kilns, members book time, you see who's booked. Three short steps would do it.
+- **"Can I cancel anytime?"** "Yes!" answers the question but leaves the real questions open. Add what happens: do they keep access until the end of the billing period? Is there a refund? What happens to their data? Drop the exclamation mark, too.
+- **"Is my data secure?"** "Absolutely. We take security very seriously" is the weakest answer on the page. It's reassurance with no information. Replace it with specifics you can actually back up: where data is hosted, whether it's encrypted, who can access it, whether backups exist, and whether they can export it. Don't claim certifications you don't have.
+- **"Do you offer support?"** "Our friendly team is here to help" is self-praise. Answer with channels and hours: "Yes. Email support on every plan, with priority response on Pro. [Hours/response time]." Also, "Do you offer support?" repeats what the pricing cards already say, so consider cutting it.
+
+## Missing questions a studio owner will ask
+
+- What happens when the trial ends? Is there an automatic charge, and do they need a card to continue?
+- Can I import my existing bookings or member list? Can I export my data if I leave?
+- Can members pay through Kilnbook, or is this scheduling only?
+- Can I change plans later, and how does billing work when I do?
+- Is there an annual price?
 
 ## Tone
 
-Cut the filler: "Simply," "right away," "Absolutely," "friendly," "Yes!" Plain statements read as more confident here.
+The copy uses "simply," "absolutely," "friendly," and "right away," which are generic. Your audience is studio owners who think in wheels, kilns, members, and firing schedules. Using those words would make the page feel like it was written for them.
 
-## Before you publish
+## Suggested priority
 
-Confirm the facts behind the claims: the item/member unit, the support response times, what "advanced analytics" includes, whether the Pro badge reflects real data, and the payment handling. I can't verify any of those from the copy, and the lines that depend on them are the ones most likely to be wrong.
+1. Define "items" (or rename the unit).
+2. Replace the security and "How does it work?" answers with specifics.
+3. Add the trial-end and data-export questions.
+4. Tighten the plan descriptions and CTA labels.
+5. Sand down the tone.
+
+If you tell me the real limits, what payments look like, and how data is stored, I can draft the revised pricing cards and FAQ answers. Until then, I'd leave any specifics in brackets rather than guess.

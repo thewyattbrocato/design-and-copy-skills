@@ -1,4 +1,4 @@
-The flow is a checkout flow with the payment step, "Place order", "purchase", and "confirmed" left in. Those words tell boaters they've paid and booked, but the harbormaster still has to approve. The fix is to rename the payment step to a review step, change the wording to "request," and say that approval is still pending.
+The flow is a copy of a store checkout. The structure is fine for a request, but the payment step, the purchase wording, and the "confirmed" wording all tell the boater they've paid and booked. I changed only text, one step label, and one button label, and left the structure, names, and IDs alone.
 
 ```html
 <ol class="steps"><li class="on">Boat</li><li>Dates</li><li>Review</li><li>Done</li></ol>
@@ -12,34 +12,35 @@ The flow is a checkout flow with the payment step, "Place order", "purchase", an
 </section>
 
 <section id="s2">
-  <h2>Choose your slip</h2>
+  <h2>Request a guest slip</h2>
   <label>Arrival <input type="date" name="a"></label>
   <label>Departure <input type="date" name="d"></label>
-  <button>Review request</button>
+  <button>Continue to review</button>
 </section>
 
 <section id="s3">
-  <h2>Review &amp; confirm</h2>
-  <p>Please check your details. This is a request only. It is not a booking until the harbormaster approves it.</p>
+  <h2>Review your request</h2>
+  <p>Please check your details. The harbormaster will review your request. It is not a booking until it is approved.</p>
   <dl><dt>Name</dt><dd>Sea Wren</dd><dt>Length</dt><dd>9</dd><dt>Arrival</dt><dd>2025-07-04</dd><dt>Departure</dt><dd>2025-07-06</dd></dl>
   <button>Submit request</button>
 </section>
 
 <section id="s4">
   <h2>Request submitted</h2>
-  <p>Your slip request has been sent. The harbormaster will review it, and you will get an email when it is approved.</p>
+  <p>Your slip request has been sent to the harbormaster. You will be notified when it is approved. No payment is due now.</p>
 </section>
 ```
 
-Changes:
-- Step 3 label: "Payment" → "Review".
-- s2 button: "Continue to payment" → "Review request".
-- s3: added a line that says this is only a request and not a booking yet. Button: "Place order" → "Submit request".
-- s4: heading "Thank you for your purchase!" → "Request submitted". Body now says the request is pending and the boater will be emailed on approval, instead of "Your booking is confirmed."
+**What changed**
+- **Step 3:** "Payment" → "Review". Nothing is paid in this flow.
+- **S2 heading and button:** "Choose your slip" → "Request a guest slip"; "Continue to payment" → "Continue to review".
+- **S3 heading:** "Review & confirm" → "Review your request". Added a line saying it isn't a booking until approved.
+- **S3 button:** "Place order" → "Submit request". "Place order" implies a purchase.
+- **S4 heading and body:** "Thank you for your purchase!" / "Your booking is confirmed" → "Request submitted", with a note that the harbormaster must approve it and no payment is due.
 
-Things I didn't change, since they need your app code or a decision from you:
-- The s2 heading says "Choose your slip," but there is no slip control, only dates. If boaters pick a specific slip, that input needs to be added.
-- The values in the s3 `<dl>` are hardcoded sample data. They need to be filled from the inputs when the page is rendered.
-- The "you will get an email" line assumes the marina sends approval emails. If it doesn't, change that sentence.
-
-This isn't a git repo and I didn't find a source file to edit, so the markup above is the result. Tell me the file path and I'll apply it there.
+**Not changed, but you should look at these**
+- **The review table is hardcoded.** The `<dl>` shows "Sea Wren", "9", and the dates no matter what the boater entered. It needs to be filled from the s1 and s2 inputs, or the boater will submit wrong data without noticing. This is a script change, so I didn't make it in markup.
+- **No date check.** Nothing stops a departure date before the arrival date.
+- **Length has no unit.** "9" could mean feet or meters. Consider adding "ft" or "m" to the label.
+- **Info isn't on the review screen.** The notes the boater typed in s1 disappear before submission.
+- **The request isn't saved anywhere yet.** The Submit button only changes the screen, so the harbormaster never sees the request unless the submit handler sends it to a backend.

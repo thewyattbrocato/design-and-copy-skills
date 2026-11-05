@@ -88,4 +88,5 @@ Judge a design like a careful colleague: what it is for, what works, what fails 
 ## References
 
 - [references/report-format.md](references/report-format.md): load for a full review, audit or scored review; order, finding template, severity labels, score anchors, compact template.
-- [references/checks.md](references/checks.md): load when judging flows, forms, states, errors, accessibility, content, charts, tables, dashboards, or pricing, consent and cancellation.
+- [references/checks.md](references/checks.md): load when judging flows, forms, states, errors, accessibility, content, charts, tables, dashboards, pricing, consent and cancellation, or a feature where a model generates or suggests content or software acts for the person.
+- [references/accessibility-review.md](references/accessibility-review.md): load for an access review or audit, or any ask whether something is accessible or compliant; method, proof labels, blockers, what scanners miss.

@@ -1,53 +1,57 @@
 **Findings, ranked**
 
-**1. Blocker: "Best-in-class scheduling. Industry-leading reporting. Trusted by teams everywhere."** (Why Kettlebridge?)
-Each phrase is a superlative or a broad claim with no basis shown. "Industry-leading" and "trusted by teams everywhere" are unverifiable, and "everywhere" is vague for a buyer comparing tools for a 5 to 30 tech shop. A skeptical owner reads this as filler, and the section is the only place the page argues its case. Fix: if you have a source on file (a customer count, a named customer with permission, a rating with its sample size), state it exactly. If not, delete the superlatives and say what each feature does.
-*Rewrite:* "Scheduling: [what it does, e.g., drag a job onto a tech's day]. Reporting: [the report an owner checks each week]. Integrations: [named tools, e.g., QuickBooks]. [Customer count or named customer, only if you can document it.]"
+1. **Blocker. Hero, headline and subhead.** "Unlock the power of seamless field operations" and "the all-in-one, next-generation platform that empowers service businesses..." never say what the product is. Nothing says field service software, dispatch, or plumbing and HVAC. A visitor from search could be looking at any scheduling tool. The subhead is four vague verbs ("streamline workflows, boost productivity," "take their operations to the next level") with no mechanism behind them. A search visitor doesn't know whether this is for them within the first screen.
+   *Fix:* name the category and the buyer in the headline and subhead (see rewrites).
 
-**2. Major: Hero headline "Unlock the power of seamless field operations"**
-This could be signed by any field service rival. It names no trade, no category, and no job the product does. Visitors from search for plumbing or HVAC software get "field operations" and can't tell whether this is for them. Fix: name the trade and the work.
-*Rewrite:* "Dispatch, scheduling and invoicing for plumbing and HVAC crews." (Confirm these three match what the product actually does.)
+2. **Blocker. "Why Kettlebridge?" section.** "Best-in-class scheduling. Industry-leading reporting. ... Trusted by teams everywhere." These are superlatives and a proof claim with no basis, no comparison, and no customer. The header is also a question the section never answers. An owner reading "best-in-class" against a competitor's identical line gets nothing they can use, and "trusted by teams everywhere" reads as unverifiable.
+   *Fix:* cut the superlatives unless you have a dated, sourced comparison. Replace "trusted" with a real count or named customer, or remove it. Needs a source on file either way.
 
-**3. Major: Subhead "all-in-one, next-generation platform that empowers service businesses to streamline workflows, boost productivity and take their operations to the next level"**
-Nine abstract words, no product, no outcome. "Empowers," "streamline," "next-generation" and "next level" all carry the same non-claim. Fix: say what the product runs and for whom, then give one result you can show.
-*Rewrite:* "Kettlebridge runs your dispatch board, job scheduling, mobile job work and invoicing in one place. [One result from your customers, e.g., hours saved per week or days to payment.]"
+3. **Major. Two different next steps.** The hero says "Get started," the footer says "Book a demo today." A visitor can't tell whether this is self-serve or sales-led, and no price or trial is visible in the copy supplied. Both are asks, but they promise different things.
+   *Fix:* choose one primary action to match how you actually sell, and use it in both places. Assumption: sales-led, since the footer offers a demo and you sell to 5–30 tech shops. If that's wrong, tell me and I'll adjust.
 
-**4. Major: Primary button "Get started" versus footer "Book a demo today"**
-The page has two different asks and never says what "Get started" does. A visitor can't tell whether they'll sign up, start a trial, or be sold to. Fix: use one primary action that matches your real sales path and name it.
-*Rewrite:* "Book a demo" (if demo is the path). Use "Start free trial" only if one exists.
+4. **Major. "Invoicing: Get paid faster."** This is the outcome your buyer cares most about, and it has no basis: faster than what, by how much, measured how.
+   *Fix:* keep the outcome only with a sourced number. Otherwise describe what invoicing does.
 
-**5. Major: No price, trial terms or pricing path anywhere**
-Software buyers decide on cost early, and the page gives no range, no "from," and no "pricing after a demo" note. The 5 to 30 tech band makes a per-tech or tiered answer easy to state. Fix: put the cost frame near the main CTA, even if it's a range or "quoted after a demo."
-*Rewrite:* "Pricing by team size: [range or per-tech rate]. [Or: Quoted after a 20-minute demo, no obligation.]"
+5. **Major. "Smart Dispatch: Our intelligent engine optimizes your routes."** This is a result claim ("optimizes") with no evidence, wrapped in "intelligent engine," which says nothing a dispatcher can check.
+   *Fix:* say what it does in plain words. Claim a route result only if you measured it.
 
-**6. Major: "Invoicing: Get paid faster."**
-The outcome is the strongest line for this audience, but "faster" has no basis or comparison. Owners will ask faster than what. Fix: keep the outcome, attach the mechanism, and back the number or cut the word.
-*Rewrite:* "Invoicing: Send the invoice from the job as soon as it's closed. [Days to payment, from customer data, or drop 'faster.']"
+6. **Minor. "Mobile App: Work from anywhere."** It doesn't say what a tech does on the app, so the benefit is generic. Every field app claims this.
+   *Fix:* say the one or two things a tech does from the truck.
 
-**7. Major: "Smart Dispatch: Our intelligent engine optimizes your routes."**
-This is the feature most likely to matter to a dispatcher, and it's the vaguest. "Intelligent engine" is jargon, and "optimizes" doesn't say what changes. Fix: name the inputs and the result.
-*Rewrite:* "Smart Dispatch: Routes each day's jobs by [what it actually uses, e.g., location and tech availability], so techs drive less between calls. [Only if you can show it.]"
+7. **Minor. Footer banner.** "Ready to transform your business? Book a demo today." "Transform" is filler, and "today" implies a deadline with nothing behind it.
+   *Fix:* drop "today" unless there is a real date or offer.
 
-**8. Minor: "Mobile App: Work from anywhere."**
-"Anywhere" is vague, and techs work at customer addresses, not everywhere. What the app lets a tech do is the useful information.
-*Rewrite:* "Mobile App: Techs see the day's jobs, addresses and notes, and close out work on site. [Confirm against the real screens.]"
+8. **Minor. Voice.** The page reads like one template: "seamless," "unlock," "next-generation," "empowers," "streamline," "boost productivity," "best-in-class," "industry-leading," "powerful," "intelligent," "all-in-one," "transform." Owners skim past this vocabulary; it doesn't tell them anything specific.
+   *Fix:* the rewrites below remove most of it. Keep the rest of the voice out of the rewrites.
 
-**9. Minor: "Ready to transform your business?" and the heading "WHY KETTLEBRIDGE?"**
-"Transform" is template language, and the heading is a question the section never answers directly.
-*Rewrite:* "See your dispatch board in a 30-minute demo. [What happens on the call.]"
+**What works (keep these)**
 
-**What works**
-- "Smart Dispatch": a concrete feature name that matches the trade's problem. Keep the name; fix the sentence under it.
-- "Invoicing: Get paid faster.": an owner-level outcome. Keep the frame and back the claim.
-- "Book a demo today": a specific action, clearer than "Get started." Keep the action, drop "today" unless a real deadline applies.
+- "Smart Dispatch" as a feature name. It's specific and it's the page's most distinctive item; keep it as the anchor.
+- "Mobile App" and "Invoicing" as plain labels a dispatcher or owner can scan.
+- "Get paid faster." The idea is the right one for this buyer. Keep the idea and back it (finding 4).
+- "Book a demo" as a verb-first action. Keep the wording if the demo is your primary CTA.
+
+**Rewrites** (bracketed items need your facts; nothing here adds a claim you haven't made)
+
+- Headline: **Field service software for plumbing and HVAC companies**
+- Subhead: **Kettlebridge runs scheduling, dispatch, a mobile app for your techs, and invoicing for plumbing and HVAC companies with 5 to 30 techs.**
+- "Best-in-class scheduling. Industry-leading reporting.": **Cut both**, unless you have a dated comparison: [comparison, with source].
+- "Trusted by teams everywhere.": **[Number] plumbing and HVAC companies use Kettlebridge**, or **[customer name, with permission]**. If neither is true, remove the line.
+- "Smart Dispatch: Our intelligent engine optimizes your routes.": **Smart Dispatch: [what it assigns and how, in plain words].** Add a route-time result only if measured: [result, with source].
+- "Invoicing: Get paid faster.": **Invoicing: [how an invoice goes out and gets paid, in one sentence].** Add "faster" back only with [measured days to payment, with source].
+- "Mobile App: Work from anywhere.": **Mobile App: [one or two things a tech does on the app].**
+- Footer: **See Kettlebridge run a crew like yours. Book a [length] demo.**
+- Hero button: **Book a demo** (if sales-led; see finding 3).
 
 **Fix order**
-1. Remove or document the superlatives in the Why section (blocker). Small effort if you delete; medium if you gather proof.
-2. Rewrite the hero headline and subhead to name the trade and the work. Small.
-3. Choose one primary CTA and make it match the sales path. Small.
-4. Add a pricing frame near the CTA. Medium, since it needs a pricing decision.
-5. Rewrite the three feature lines to say what they do, and back "faster" with a number or cut it. Medium.
+
+1. Rewrite the headline and subhead to name the category and buyer. *Small.*
+2. Remove or source the superlatives and "trusted by teams everywhere." *Small to medium; needs proof from you.*
+3. Pick one primary action and use it in the hero and footer. *Small decision; medium if the sign-up or demo flow differs.*
+4. Back "faster" and "optimizes" with numbers, or cut them. *Medium.*
+5. Say what each feature does in one plain sentence. *Medium; needs product detail.*
 
 **Notes**
-- Reviewed only the pasted text. I did not see the page title, meta description, search snippet, demo form, or sign-up flow. Since visitors come from search, check that the title and snippet name plumbing or HVAC, so the search promise matches the hero.
-- No analytics were available, so I can't measure conversion. Check where visitors drop off: the demo form and the first screen after the CTA are the next places to look.
+
+- Not reviewed: only the copy you pasted. No screenshots, pricing or trial page, sign-up flow, or search listing. If price or trial terms appear elsewhere on the site, finding 3 becomes less severe.
+- The superlatives and outcome claims are unverified, not judged false. Each needs a source on file before it goes live. This is a copy review, not a legal one.

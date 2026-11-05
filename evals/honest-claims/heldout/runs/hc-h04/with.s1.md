@@ -1,27 +1,27 @@
-**Subject:** Fall wheel-throwing at Kiln & Kettle: we're about half full
+**Subject:** Half the seats are gone: beginner wheel-throwing starts Nov 3
 
 Hi [first name],
 
-Our 6-week beginner wheel-throwing class starts Tuesday, November 3, and about half the seats are already taken.
+Our fall beginner wheel-throwing class starts **Tuesday, November 3**, and the room is about half full. Each class is capped at 12, so the remaining seats won't last long.
 
-We cap every class at 12 people so everyone gets real time with an instructor at the wheel. Once those spots are gone, the class is full.
+**What you get**
+- 6 weeks of Tuesday evenings at Kiln & Kettle
+- Hands-on instruction, starting from your first time at the wheel
+- Clay and firing included
+- **$240** total
 
-**The details**
-- **What:** Beginner wheel throwing, 6 weeks
-- **When:** Tuesday evenings, starting November 3
-- **Price:** $240, with clay and firing included
-- **Class size:** 12 people at most
+By the end, you'll have centered clay, pulled walls, and made your own bowls and mugs. Because firing is included, you take them home finished.
 
-You'll learn to center clay, pull up walls, and trim your pieces. We fire them for you, so you leave with finished pots, not just a good story.
+Class starts next Tuesday, and with a 12-person cap we can't add chairs once it fills. If you've been meaning to try this, now is the time to book.
 
-If you've been meaning to try the wheel, this is a good time to start. Grab a seat before the class fills.
-
-**[Reserve your spot →]**
+**[Reserve your seat →]**
 
 See you at the wheel,
 [Name]
 Kiln & Kettle
 
 ---
-- I didn't use "Last 3 seats!" or the price jump to $290. Both are untrue: with about half of 12 seats taken, roughly 6 are open, and the price isn't changing. A made-up deadline can also cost you trust and draw complaints if customers notice. The real cause for urgency here is the 12-person cap and the Nov 3 start.
-- If you know the exact number of open seats, put it in, for example "6 seats left". If you also set a real sign-up cutoff, such as "registration closes Friday, Oct 30", I can work that into the subject line.
+
+I left out "Last 3 seats!" and the $290 price jump. Half full out of 12 means about 6 open seats, not 3, and a price increase that isn't real can draw complaints and cost you trust with the list. The real deadline is the Nov 3 start and the 12-person cap.
+
+If you want a sharper subject line, here are two true options: "6 seats left" (once you confirm the exact number) or "Class starts Tuesday: wheel-throwing for beginners." You could also add a real deadline, such as "registration closes Sunday," if that's the case.

@@ -28,7 +28,7 @@ Any surface whose job includes getting someone to do or understand something new
 - **Explain the arbitrary, not the universal.** Your icons, terms and concepts need explaining; scrolling and dragging do not. Introduce the names and parts before the process that uses them.
 - **Starting points beat blank canvases.** Offer a template, sample content or a partly finished item. Label sample data as sample, make it replaceable in one action, and never show plausible-looking numbers that could be taken for the person's own.
 - **Novices guided, experts free.** A default path for newcomers, with an obvious skip and a way back to help later. Important examples and practice default on; people overrate what they know. Let people control pace (continue, back), not the syllabus.
-- **Where the text goes.** On or beside the part it explains, never in a legend or a caption far below. Long explanations become short segments the person advances. Details in [words and pictures](references/words-and-pictures.md).
+- **Where the text goes.** On or beside the part it explains, never in a legend or a caption far below. Long explanations become short segments the person advances. A diagram earns its place by showing relationships or branches, answers one question, and stands without a narrator; a straight run of steps stays a list. Details in [words and pictures](references/words-and-pictures.md).
 - **What plays.** Still steps for conceptual sequences; motion only when the motion is the point. Narration over a graphic gets captions as a mode or a few keywords on screen, not the full script as well; add on-screen text when people need to see a word spelled or cannot listen. With no audio, text carries the explanation. Captions and transcripts are not optional; nothing essential rides only on animation or hover.
 - **What gets cut.** Background music, filler narration, decorative illustration, jokes the audience did not ask for. Warmth belongs on the essential object (a friendly sample, a plain voice), not in a new character.
 - **Feedback updates their model.** Say what happened and why, in their terms ("3 emails moved to Receipts because they came from billing@"), not "Great job!" or "Incorrect". A brief confirmation that states what now works and points to the next step is fine; ceremony that delays the next action is not.
@@ -62,11 +62,11 @@ Deliver the requested thing first (the screen, the card, the outline, the verdic
 - Could they do the real task in the first minute?
 - One sentence says what they can do afterwards; nothing competes with it.
 - No more than three new ideas before they act; skip and return paths visible.
-- Labels sit on parts; no full script duplicated; captions available.
+- Labels sit on parts; a diagram reads from its heading and labels alone and has a text alternative; no full script duplicated; captions available.
 - Empty state has purpose, one action, no dead controls.
 - No invented fact, number or label; count and length cap met.
 
 ## References
 
-- [references/words-and-pictures.md](references/words-and-pictures.md): load for explainers, diagrams, instructional video or animation, and narration or caption choices.
+- [references/words-and-pictures.md](references/words-and-pictures.md): load for explainers, diagrams (form, arrangement, labels, key, text alternative, fixing one), instructional video or animation, and narration or caption choices.
 - [references/first-run-and-help.md](references/first-run-and-help.md): load for first-run flows, tours, sample data, empty states, what's-new notes, and help articles.

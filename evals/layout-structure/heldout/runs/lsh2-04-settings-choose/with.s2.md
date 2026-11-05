@@ -1,36 +1,30 @@
-**Pick: the designer's left sidebar.** Each group gets its own page, and the sidebar is the navigation between them. Use the dev's anchor links only inside a long group, and only if one needs them.
+**Go with the designer's left sidebar, but make each group its own page rather than one scrolling list.** The sidebar picks a group, and the main area shows only that group's settings.
 
 **Why not the other two**
-- **Top tabs (PM):** You have about 9 groups: company, billing, team, vehicles and drivers, alerts, notifications, integrations, export, security. That's too many for a tab row. On a phone the tabs would scroll sideways and hide half the groups. Tabs also can't hold a nested level. Integrations will eventually want one sub-page per integration.
-- **One long page (dev):** With about 40 settings, the page is a few thousand pixels tall. People arrive to do one thing, such as change a role or rotate an API key, and don't want to read through everything else. Anchor links make people scroll past unrelated settings, and a single Save button for the whole page gets ambiguous. Billing and security also deserve their own URLs, so you can link to them and restrict them by permission. A page that loads every group at once will also get slow as the product grows.
+- **Top tabs:** You have 9 groups, which is too many for a tab row. On a phone they'd scroll sideways and hide the later ones. Tabs also look the same as your app's main navigation, so people can't tell which level they're on.
+- **One long page:** 40 settings on one page means a lot of scrolling and no sense of where you are. It also has a single Save problem: it's unclear what a button covers. Anchor links only fix the first of those.
 
-**Laptop (about 1280px wide)**
-- Your app's usual top bar sits across the top.
-- On the left is a sidebar about 15rem wide. It lists the groups in the order people reach for them. It could be grouped like this:
-  - Account: Company profile, Billing & invoices, Team & roles
-  - Operations: Vehicles & drivers, Alert rules, Notification channels
-  - Connections: Integrations, Data export
-  - Security
-- The current group is highlighted. The sidebar stays in place while the content scrolls.
-- To the right is one content column, with its left edge lined up under the page title. The form fields are capped at about 40–60ch, with labels above the fields.
-- Each section in the column has a heading, one sentence on what it's for, and its controls. Save sits in a sticky bar at the bottom of the column, so it's always visible.
-- Don't stretch the form across the empty space on the right. Leave it empty.
-- Two exceptions can run wider than the form cap because they're data, not forms: the team members table and the vehicles/drivers list. Integrations works best as a grid of 6 equal cards, each with a Connect or Connected state.
+**Sidebar groups (9, in four clusters)**
+- Account: Company profile, Billing & invoices, Team & roles
+- Operations: Vehicles & drivers, Alert rules, Notification channels
+- Connections: Integrations, Data export
+- Security
 
-**Phone (about 390px wide)**
-- The settings landing screen is just the list of groups. Each row has a name and a chevron, and you tap one to open it. The list is the navigation, so there's no sidebar.
-- A group opens full-screen with a back arrow and the group title at the top. Fields are full width, with labels above them.
-- The Save bar stays pinned to the bottom.
-- Tables turn into stacked rows. A team member becomes a card showing name, role, and a "⋯" menu.
-- Within a long group such as Alert rules, you can add a short "Jump to" menu at the top. That is the one place the dev's anchors are worth using.
+**Laptop**
+- A sidebar about 15rem wide sits on the left, under the app header. Its left edge lines up with the header's left edge. It has a small search box at the top, since people will look for a specific setting.
+- The main area holds one group at a time, with the group name as a heading.
+- Forms and toggles sit in a column about 40–45rem wide, so labels and fields stay close together. Sections inside a group get subheadings and their own Save button.
+- Table-style groups use the full main width: Team & roles, Vehicles & drivers, and Alert rules.
+- Integrations is a list of 6 rows. Each row has a name, a status, and a Connect or Manage button, and Manage opens that integration's detail.
+- If a group has two distinct halves, use tabs inside that group only. Billing could split into Plan and Invoices. That gives the PM their tabs in the one place they fit.
 
-**Worst cases to check before you build**
-- **Empty states:** no integrations connected, no drivers yet.
-- **Long text:** a long company name, or a translation that runs 30–40% longer, in the sidebar labels.
-- **Growth:** the sidebar should still work if you go from 9 groups to 14.
-- **Permissions:** a non-admin may see only 3 of the groups. Hide the others rather than showing them locked.
+**Phone**
+- The sidebar becomes the first screen. "Settings" opens a full-width list of the 9 groups, with the clusters as small labels and a chevron on each row. The search box sits at the top.
+- Tapping a row opens that group as a single-column screen with a back arrow to "Settings". I'd avoid a hamburger drawer, because it hides the only map of the area.
+- Fields stack full-width. Tables become cards or compact rows, such as a vehicle name with its driver and status.
+- Save sits in a bar fixed to the bottom of the screen, and it only appears once something has changed.
+- The source order is the list, then the group, then its sections. The back button is always at the top, so nothing important ends up below the fold.
 
-**Short version for the three of you**
-- The designer is right about the structure.
-- The dev is right that anchors are useful inside a long group.
-- The PM's tabs would only work if the groups dropped to 5 or fewer.
+**For your dev**
+- Give every group its own URL, such as `/settings/billing`, and every section an anchor, such as `/settings/billing#invoices`. Links from emails, support, and alerts then land exactly where they should. Anchor links still work, just inside a group instead of across the whole page.
+- Build the sidebar as a plain list of links. The same component then renders as the laptop sidebar and as the phone's first screen.

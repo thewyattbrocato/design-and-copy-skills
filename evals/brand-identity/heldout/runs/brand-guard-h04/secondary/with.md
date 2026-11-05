@@ -1,14 +1,16 @@
-**Verdict: keep the identity and refine it. Don't replace it.**
+**I'd keep the wordmark and refresh around it rather than rebrand.** You have something most small retailers would pay a lot to have: a name that people recognize from across the street and associate with the place. A heavy slab serif in safety orange is distinctive and reads as "hardware" without trying. A modern sans with a gradient icon would look like a lot of other businesses, including the big-box and app brands that already own that look. You'd be trading recognition you've built over 41 years for something generic.
 
-The sign works. It's legible from across a parking lot, it's one color in two versions, and the town already knows it. Those are the things a mark has to do, and a 41-year-old name with a recognized color is equity that a new look would spend. "Looks dated" is a taste claim, not evidence that customers are confused or that the mark is failing anywhere it needs to work.
+The "dated" complaint may still have a point, but it's probably about execution, not the core design:
 
-Some of the marketing hire's concerns are real, though, and you can address them without a rebrand:
+- **Clean up the drawing.** Check the spacing, letter weights, and consistency across versions. Hand-tuned details that drifted over decades often make a mark look older than it is.
+- **Lock down the color.** Pick an exact spec (Pantone plus hex/CMYK/RGB) so the orange on the sign, bags, and screen matches. Faded or inconsistent orange is a big part of why things look tired.
+- **Make a proper one-color and reversed version** for receipts, stamps, and small print, if you don't already have them.
+- **Modernize around the logo, not the logo itself.** A cleaner sans for web and body text, updated photography, and a tidier website and social presence can make the whole thing feel current while the wordmark stays put.
 
-- **Small and digital sizes.** Heavy slab serifs can fill in at favicon, app-icon, and social-avatar sizes. Make a simplified version for those, with heavier letterforms, looser spacing, and perhaps just a "P" or a monogram. The full wordmark stays on the sign and bags.
-- **Spacing and details.** Tune the letter spacing and the join between "PINEGATE" and "HARDWARE" by eye. A few hand adjustments often make an old slab serif look current without changing its character.
-- **The gradient icon.** Don't use it. Gradients belong to specific digital uses, not the core mark, and they would weaken the flat safety-orange that makes the sign readable from a distance. It would also break the receipt version, which has to work in plain black.
-- **Sans-serif.** Adding a clean sans-serif for secondary text (web body, signage captions, price tags) would modernize the system without touching the wordmark. That's a system change, not a logo change.
+A gradient icon is the piece I'd skip. Gradients often break in one-color printing, embroidery, receipts, and small sizes, and they date fast.
 
-**Next test before deciding anything:** ask ten to twenty regulars, in person or by a short text survey, to name the store from a blank color block in your orange, and to describe what the store is known for. If they recognize it fast and describe it as dependable, the mark is doing its job. If the answers are vague, that's evidence worth acting on, and a refinement is still the first step. Only consider replacing the mark if it turns out to mislead people or fail at a size you need.
+**Test before deciding:** mock up the refreshed version on a bag and the sign, then show it to 15–20 regulars alongside the current one. Ask which one they'd recognize at a glance and which one feels like Pinegate. If they pick the current one, that's your answer.
 
-Assumptions: I haven't seen the sign, bags, or any brand guide, and I'm assuming the orange-and-slab-serif version is the one customers see most. If you send photos of the sign and the website or social header, I can give you a more specific list of refinements.
+**When a full rebrand would make sense:** a name change, new ownership, a real expansion beyond the local area, or a trademark problem. "The marketing hire thinks it looks dated" alone isn't enough.
+
+If you want, I can help with the refresh: a cleaned-up SVG of the wordmark, a color spec, or a simple style guide for the web and social pages.

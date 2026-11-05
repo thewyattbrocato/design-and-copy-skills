@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Old Weir Brewing – Cellar Board</title>
+<style>
+*{box-sizing:border-box;margin:0}
+:root{
+  --bg:#17120e;--row:#221b15;--line:#3b3025;
+  --text:#f3e9d4;--muted:#b0a088;
+  --ferm:#e8aa3a;--hop:#a5c75f;--cold:#86b9dc;--idle:#b0a088;
+  --alert-bg:#55201a;--alert:#e8553e;--alert-text:#ffb9a6;
+  --fs:clamp(12px,2.1vh,28px);
+  --cols:4.2em minmax(0,1.9fr) 4.2em minmax(0,1.5fr) 3em 5.6em 5em 4.6em minmax(0,2fr) 3.6em;
+}
+html,body{height:100%}
+body{
+  height:100vh;height:100dvh;overflow:hidden;
+  display:flex;flex-direction:column;
+  padding:1.4vh 1.8vw 1.6vh;gap:1.4vh;
+  background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:var(--fs);font-variant-numeric:tabular-nums;
+}
+header{display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:1.1vh;border-bottom:2px solid var(--ferm)}
+.brand{display:flex;align-items:center;gap:.7em}
+.brand svg{height:1.7em;width:auto}
+.brand h1{font-family:Georgia,"Times New Roman",serif;font-size:1.55em;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;line-height:1}
+.sub{font-family:Georgia,serif;font-style:italic;font-size:1.1em;color:var(--muted)}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2vw}
+.kpi{display:flex;align-items:baseline;gap:.7em;background:var(--row);
+  border:1px solid var(--line);border-top:4px solid var(--c);padding:.45em .8em .5em}
+.kpi b{font-family:Georgia,serif;font-size:2.5em;line-height:1;color:var(--c);font-weight:700}
+.kpi span{font-size:.85em;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+.board{flex:1;min-height:0;display:grid;grid-template-rows:auto repeat(14,minmax(0,1fr));gap:.35vh}
+.row{display:grid;grid-template-columns:var(--cols);align-items:center;column-gap:.8em;
+  padding:0 1em 0 .9em;min-height:0;white-space:nowrap}
+.head{color:var(--muted);font-size:.72em;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding-bottom:.3em}
+.data{background:var(--row);border-left:.35em solid var(--st,var(--idle))}
+.data>div{overflow:hidden;text-overflow:ellipsis}
+.n{text-align:right}
+.gap{margin-top:.9vh}
+
+.tank{font-weight:800;font-size:1.1em;letter-spacing:.03em}
+.beer{font-weight:600}
+.batch{color:var(--muted)}
+.stage{color:var(--st);font-weight:700}
+.day,.gr,.tp,.sp{font-weight:600}
+.sp{color:var(--muted)}
+.next{color:var(--text)}
+.brewer{color:var(--muted);font-weight:700;text-align:center}
+
+.f{--st:var(--ferm)}.h{--st:var(--hop)}.c{--st:var(--cold)}.e{--st:var(--idle)}
+.e .beer,.e .batch,.e .day,.e .gr,.e .tp,.e .sp,.e .brewer{color:#7d705e}
+.e .next{color:var(--muted)}
+
+.alert{background:var(--alert-bg)}
+.badge{display:inline-block;padding:.05em .55em;font-weight:800;border-radius:.2em;
+  background:var(--alert);color:#1a0b06}
+.go{display:inline-block;padding:.05em .55em;font-weight:800;border-radius:.2em;
+  border:2px solid var(--ferm);color:var(--ferm)}
+.hot{color:var(--alert-text);font-weight:800}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 48 32" fill="none" stroke="#e8aa3a" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+      <path d="M2 8c6-6 10 6 16 0s10 6 16 0 8 2 12-2"/>
+      <path d="M2 18c6-6 10 6 16 0s10 6 16 0 8 2 12-2"/>
+      <path d="M2 28c6-6 10 6 16 0s10 6 16 0 8 2 12-2"/>
+    </svg>
+    <h1>Old Weir Brewing</h1>
+  </div>
+  <div class="sub">Cellar Board</div>
+</header>
+
+<section class="kpis">
+  <div class="kpi" style="--c:var(--ferm)"><b>7</b><span>Fermenting</span></div>
+  <div class="kpi" style="--c:var(--cold)"><b>4</b><span>Conditioning</span></div>
+  <div class="kpi" style="--c:var(--idle)"><b>3</b><span>Empty / clean</span></div>
+  <div class="kpi" style="--c:var(--text)"><b>1</b><span>Packaging today</span></div>
+</section>
+
+<main class="board" role="table" aria-label="Tank status">
+  <div class="row head" role="row">
+    <div role="columnheader">Tank</div><div role="columnheader">Beer</div><div role="columnheader">Batch</div><div role="columnheader">Stage</div>
+    <div class="n" role="columnheader">Day</div><div class="n" role="columnheader">Gravity °P</div><div class="n" role="columnheader">Temp °C</div><div class="n" role="columnheader">Set °C</div>
+    <div role="columnheader">Next</div><div style="text-align:center" role="columnheader">Brewer</div>
+  </div>
+
+  <div class="row data f" role="row"><div class="tank">FV1</div><div class="beer">Weir Pale</div><div class="batch">2231</div><div class="stage">Fermenting</div><div class="n day">3</div><div class="n gr">7.9</div><div class="n tp">19.0</div><div class="n sp">19.0</div><div class="next">Dry hop day 5</div><div class="brewer">AM</div></div>
+  <div class="row data f" role="row"><div class="tank">FV2</div><div class="beer">Quarry Stout</div><div class="batch">2229</div><div class="stage">Fermenting</div><div class="n day">6</div><div class="n gr">5.2</div><div class="n tp">20.0</div><div class="n sp">20.0</div><div class="next">Diacetyl check</div><div class="brewer">JB</div></div>
+  <div class="row data f" role="row"><div class="tank">FV3</div><div class="beer">Smallwater Lager</div><div class="batch">2224</div><div class="stage">Fermenting</div><div class="n day">11</div><div class="n gr">3.4</div><div class="n tp">11.0</div><div class="n sp">11.0</div><div class="next">Free rise Fri</div><div class="brewer">AM</div></div>
+  <div class="row data f alert" role="row"><div class="tank">FV4</div><div class="beer">Rye Saison</div><div class="batch">2232</div><div class="stage">Fermenting</div><div class="n day">2</div><div class="n gr">10.6</div><div class="n tp hot">21.6</div><div class="n sp">19.0</div><div class="next"><span class="badge">▲ Temp +2.6</span></div><div class="brewer">JB</div></div>
+  <div class="row data f" role="row"><div class="tank">FV5</div><div class="beer">Hollow Pine IPA</div><div class="batch">2227</div><div class="stage">Fermenting</div><div class="n day">8</div><div class="n gr">3.1</div><div class="n tp">20.0</div><div class="n sp">20.0</div><div class="next">Crash Thu</div><div class="brewer">RT</div></div>
+  <div class="row data f" role="row"><div class="tank">FV6</div><div class="beer">Weir Pale</div><div class="batch">2233</div><div class="stage">Fermenting</div><div class="n day">1</div><div class="n gr">11.8</div><div class="n tp">18.5</div><div class="n sp">18.5</div><div class="next">Pitch check</div><div class="brewer">RT</div></div>
+  <div class="row data h alert" role="row"><div class="tank">FV7</div><div class="beer">Hollow Pine IPA</div><div class="batch">2226</div><div class="stage">Dry hop</div><div class="n day">9</div><div class="n gr">2.9</div><div class="n tp">19.5</div><div class="n sp">19.5</div><div class="next"><span class="badge">▲ Dry hop overdue</span></div><div class="brewer">AM</div></div>
+  <div class="row data e" role="row"><div class="tank">FV8</div><div class="beer">–</div><div class="batch">–</div><div class="stage">Empty</div><div class="n day">–</div><div class="n gr">–</div><div class="n tp">–</div><div class="n sp">–</div><div class="next">CIP done</div><div class="brewer">–</div></div>
+  <div class="row data c" role="row"><div class="tank">FV9</div><div class="beer">Smallwater Lager</div><div class="batch">2219</div><div class="stage">Lagering</div><div class="n day">24</div><div class="n gr">2.6</div><div class="n tp">1.0</div><div class="n sp">1.0</div><div class="next">Transfer to BT3</div><div class="brewer">JB</div></div>
+  <div class="row data e" role="row"><div class="tank">FV10</div><div class="beer">–</div><div class="batch">–</div><div class="stage">Clean</div><div class="n day">–</div><div class="n gr">–</div><div class="n tp">–</div><div class="n sp">–</div><div class="next">Ready to fill</div><div class="brewer">–</div></div>
+
+  <div class="row data c gap" role="row"><div class="tank">BT1</div><div class="beer">Quarry Stout</div><div class="batch">2220</div><div class="stage">Conditioning</div><div class="n day">5</div><div class="n gr">4.8</div><div class="n tp">1.5</div><div class="n sp">1.5</div><div class="next">Carb check</div><div class="brewer">RT</div></div>
+  <div class="row data c" role="row"><div class="tank">BT2</div><div class="beer">Weir Pale</div><div class="batch">2225</div><div class="stage">Conditioning</div><div class="n day">3</div><div class="n gr">2.4</div><div class="n tp">1.0</div><div class="n sp">1.0</div><div class="next"><span class="go">Package today</span></div><div class="brewer">AM</div></div>
+  <div class="row data e" role="row"><div class="tank">BT3</div><div class="beer">–</div><div class="batch">–</div><div class="stage">Empty</div><div class="n day">–</div><div class="n gr">–</div><div class="n tp">–</div><div class="n sp">–</div><div class="next">Waiting on FV9</div><div class="brewer">–</div></div>
+  <div class="row data c" role="row"><div class="tank">BT4</div><div class="beer">Gose</div><div class="batch">2221</div><div class="stage">Conditioning</div><div class="n day">7</div><div class="n gr">2.2</div><div class="n tp">1.0</div><div class="n sp">1.0</div><div class="next">Package Mon</div><div class="brewer">JB</div></div>
+</main>
+</body>
+</html>

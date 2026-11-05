@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Lettings · Repairs Agent</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --panel: #ffffff;
+    --ink: #1d2330;
+    --muted: #5d6676;
+    --line: #dde1e8;
+    --accent: #2f5d8a;
+    --emergency: #b42318;
+    --emergency-bg: #fdecea;
+    --urgent: #b54708;
+    --urgent-bg: #fef0e0;
+    --routine: #1f6f5c;
+    --routine-bg: #e5f4ef;
+    --low: #5d6676;
+    --low-bg: #eef0f4;
+    --warn-bg: #fff8e6;
+    --warn-line: #e8c15a;
+    --radius: 8px;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #13161c;
+      --panel: #1b1f27;
+      --ink: #e7eaf0;
+      --muted: #9aa3b2;
+      --line: #2c3340;
+      --accent: #7fb0e0;
+      --emergency: #ff8a80;
+      --emergency-bg: #3a1d1b;
+      --urgent: #f6b26b;
+      --urgent-bg: #3a2c18;
+      --routine: #7dd3b8;
+      --routine-bg: #17322b;
+      --low: #aab2c0;
+      --low-bg: #262c37;
+      --warn-bg: #3a3218;
+      --warn-line: #7a6a2c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header h1 { font-size: 18px; margin: 0; font-weight: 650; }
+  header .sub { color: var(--muted); font-size: 13px; }
+  .status-pill {
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--routine-bg);
+    color: var(--routine);
+    font-weight: 600;
+  }
+  main { padding: 20px 24px 40px; max-width: 1280px; margin: 0 auto; }
+  section { margin-bottom: 24px; }
+  h2 { font-size: 15px; margin: 0 0 10px; font-weight: 650; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13px; }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+  }
+  .tile {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .tile .label { color: var(--muted); font-size: 13px; }
+  .tile .value { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .tile .note { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .tile.alert { border-color: var(--emergency); }
+  .tile.alert .value { color: var(--emergency); }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+
+  .attention-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .attention-list li {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .attention-list li.emergency {
+    background: var(--emergency-bg);
+    border-color: var(--emergency);
+  }
+  .attention-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; justify-content: space-between; }
+  .attention-head strong { font-size: 14px; }
+  .attention-list .why { margin: 6px 0 0; font-size: 13px; }
+  .attention-list .ask { margin: 6px 0 0; font-size: 13px; font-weight: 600; }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+  .filters button, .chip {
+    font: inherit;
+    font-size: 13px;
+    padding: 5px 11px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .filters button[aria-pressed="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  input[type="search"] {
+    font: inherit;
+    font-size: 14px;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--panel);
+    color: var(--ink);
+    min-width: 240px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-weight: 600;
+    background: var(--panel);
+    position: sticky;
+    top: 0;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr.emergency td:first-child { box-shadow: inset 4px 0 0 var(--emergency); }
+  tr.urgent td:first-child { box-shadow: inset 4px 0 0 var(--urgent); }
+  td .reason { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  td .id { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 650;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .badge.emergency { background: var(--emergency-bg); color: var(--emergency); }
+  .badge.urgent { background: var(--urgent-bg); color: var(--urgent); }
+  .badge.routine { background: var(--routine-bg); color: var(--routine); }
+  .badge.low { background: var(--low-bg); color: var(--low); }
+  .badge.state-booked { background: var(--routine-bg); color: var(--routine); }
+  .badge.state-human { background: var(--warn-bg); color: var(--ink); border: 1px solid var(--warn-line); }
+  .badge.state-queued { background: var(--low-bg); color: var(--low); }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  .log { list-style: none; margin: 0; padding: 0; font-size: 13.5px; }
+  .log li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .log li:last-child { border-bottom: none; }
+  .log time { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 2px; }
+
+  .empty { color: var(--muted); padding: 24px; text-align: center; }
+  footer { color: var(--muted); font-size: 12.5px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Kestrel Lettings · Repairs Agent</h1>
+    <div class="sub">Portfolio: 300 flats · Tenant repair requests triaged and booked automatically</div>
+  </div>
+  <div>
+    <span class="status-pill">Agent running</span>
+    <span class="sub" style="margin-left:8px">Last sync 04 Nov 2026, 08:42</span>
+  </div>
+</header>
+
+<main>
+
+  <section aria-labelledby="summary-h">
+    <h2 id="summary-h">Today at a glance</h2>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section aria-labelledby="attn-h">
+    <h2 id="attn-h">Needs a person</h2>
+    <div class="panel">
+      <p class="muted small" style="margin-top:0">The agent stops and waits for a human in these cases. Anything marked emergency is listed first.</p>
+      <ul class="attention-list" id="attention"></ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="queue-h">
+    <h2 id="queue-h">Repair requests</h2>
+    <div class="toolbar">
+      <div class="filters" role="group" aria-label="Filter by urgency" id="filters"></div>
+      <input type="search" id="search" placeholder="Search flat, tenant, issue or vendor" aria-label="Search requests">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Request</th>
+            <th scope="col">Flat</th>
+            <th scope="col">Issue</th>
+            <th scope="col">Urgency</th>
+            <th scope="col">Trade</th>
+            <th scope="col">Vendor and slot</th>
+            <th scope="col">State</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>No requests match this filter.</div>
+    </div>
+  </section>
+
+  <div class="two-col">
+    <section aria-labelledby="vendor-h">
+      <h2 id="vendor-h">Vendor capacity</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Vendor</th>
+              <th scope="col">Trade</th>
+              <th scope="col">Today</th>
+              <th scope="col">Next free</th>
+            </tr>
+          </thead>
+          <tbody id="vendors"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="log-h">
+      <h2 id="log-h">What the agent did</h2>
+      <div class="panel">
+        <ul class="log" id="log"></ul>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    All names, flats, phone numbers and vendors on this page are invented sample data.
+    Urgency is the agent's assessment and can be overridden from the case file.
+  </footer>
+</main>
+
+<script>
+(function () {
+  var requests = [
+    { id: "KL-2610", flat: "Flat 5, Harbour Court", tenant: "Marcus Oyelaran", received: "04 Nov 07:40",
+      issue: "Smell of gas near the hob", urgency: "emergency", trade: "Gas",
+      vendor: "Mercer Heating & Gas (emergency line)", slot: "Dispatched 07:46",
+      state: "booked", stateLabel: "Dispatched",
+      reason: "Possible gas escape. Told tenant to open windows, avoid switches and call the National Gas Emergency line. Engineer dispatched." },
+    { id: "KL-2599", flat: "Flat 12, Quay Road Terrace", tenant: "Yusuf Demir", received: "04 Nov 06:30",
+      issue: "No hot water, heating works", urgency: "urgent", trade: "Heating",
+      vendor: "None yet", slot: "Waiting",
+      state: "human", stateLabel: "No vendor",
+      reason: "Mercer is full today. Calder Gas has not replied in 20 minutes. Needs a gas-safe engineer before Thursday." },
+    { id: "KL-2611", flat: "Flat 2B, Alder House", tenant: "Priya Nair", received: "04 Nov 07:12",
+      issue: "No heating or hot water since last night, boiler shows F28", urgency: "urgent", trade: "Heating",
+      vendor: "Mercer Heating & Gas", slot: "Today 14:00–17:00",
+      state: "booked", stateLabel: "Booked",
+      reason: "Loss of heat in November. Vulnerable occupant flag on file. F28 usually means low pressure, so a same-day slot was booked." },
+    { id: "KL-2609", flat: "Flat 1, Birch Cottages", tenant: "Sophie Adeyemi", received: "04 Nov 06:55",
+      issue: "Water coming through kitchen ceiling from the flat above", urgency: "urgent", trade: "Plumbing",
+      vendor: "Parkside Plumbing", slot: "Today 10:00",
+      state: "booked", stateLabel: "Booked",
+      reason: "Active leak with ceiling damage. Flat above has no answer, so access is being arranged through the key safe." },
+    { id: "KL-2606", flat: "Flat 3, Harbour Court", tenant: "Joanne Whitfield", received: "03 Nov 11:02",
+      issue: "Oven element not heating", urgency: "routine", trade: "Appliance",
+      vendor: "Kestrel Appliance Care (quote)", slot: "Quote requested",
+      state: "human", stateLabel: "Needs approval",
+      reason: "Oven is landlord property. Likely repair cost is over the £150 auto-approval limit, so a quote is needed." },
+    { id: "KL-2604", flat: "Flat 6, Birch Cottages", tenant: "Aisha Kamara", received: "02 Nov 16:40",
+      issue: "Damp patch on bedroom wall, black mould spreading", urgency: "urgent", trade: "Damp",
+      vendor: "Pennine Damp Surveys", slot: "Survey 12 Nov 09:00",
+      state: "booked", stateLabel: "Booked",
+      reason: "Mould is spreading and the cause is unknown (condensation or leak). Survey first, before any treatment is booked." },
+    { id: "KL-2603", flat: "Flat 2A, Alder House", tenant: "Ruth Ferreira", received: "02 Nov 16:05",
+      issue: "Disputes last month's boiler callout charge", urgency: "low", trade: "Billing",
+      vendor: "Not applicable", slot: "—",
+      state: "human", stateLabel: "Passed to office",
+      reason: "This is a charge dispute, not a repair. The agent does not handle billing, so the case went to the office." },
+    { id: "KL-2602", flat: "Flat 8, Mill Court", tenant: "Ben Clarke", received: "03 Nov 19:50",
+      issue: "Smoke alarm chirping in hallway", urgency: "urgent", trade: "Electrical",
+      vendor: "Volt & Co Electrical", slot: "Mon 05 Nov 08:00",
+      state: "booked", stateLabel: "Booked",
+      reason: "Chirping means a low battery or a failing unit. Safety item, so it was booked for the first morning slot." },
+    { id: "KL-2608", flat: "Flat 7, Alder House", tenant: "Dev Patel", received: "03 Nov 22:14",
+      issue: "Bathroom light flickers when the shower runs", urgency: "routine", trade: "Electrical",
+      vendor: "Volt & Co Electrical", slot: "Thu 12 Nov",
+      state: "booked", stateLabel: "Booked",
+      reason: "Probably a loose connection or failing extractor. Not a hazard on its own, but work must be done by a qualified electrician." },
+    { id: "KL-2598", flat: "Flat 6, Harbour Court", tenant: "Ellen Foster", received: "03 Nov 14:20",
+      issue: "Intercom not working, visitors cannot get in", urgency: "routine", trade: "Electrical",
+      vendor: "Volt & Co Electrical", slot: "Tue 10 Nov",
+      state: "booked", stateLabel: "Booked",
+      reason: "Entry system is not working but the building is still accessible. Booked for the next available slot." },
+    { id: "KL-2601", flat: "Flat 11, Quay Road Terrace", tenant: "Grace Mensah", received: "03 Nov 10:12",
+      issue: "Toilet keeps running, tank refills constantly", urgency: "routine", trade: "Plumbing",
+      vendor: "Parkside Plumbing", slot: "Wed 05 Nov",
+      state: "booked", stateLabel: "Booked",
+      reason: "Running toilet wastes water and can be fixed with a new fill valve. Routine slot booked." },
+    { id: "KL-2605", flat: "Flat 9, Station Yard", tenant: "Tomasz Wójcik", received: "04 Nov 08:20",
+      issue: "Bathroom extractor fan very loud and rattling", urgency: "low", trade: "Ventilation",
+      vendor: "Not booked", slot: "Next batch",
+      state: "queued", stateLabel: "Queued",
+      reason: "Not urgent. Grouped with other fan work on Station Yard for the Tuesday batch." },
+    { id: "KL-2600", flat: "Flat 10, Station Yard", tenant: "Liam Dunne", received: "01 Nov 09:45",
+      issue: "Garden gate off its hinges", urgency: "low", trade: "General",
+      vendor: "Hadley General Maintenance", slot: "Week of 09 Nov",
+      state: "queued", stateLabel: "Queued",
+      reason: "Security is fine with a temporary latch. Scheduled with general maintenance for the next week." },
+    { id: "KL-2607", flat: "Flat 4, Mill Court", tenant: "Helen Brandt", received: "04 Nov 09:30",
+      issue: "Front door lock stiff, key barely turns", urgency: "routine", trade: "Locks",
+      vendor: "Lockwise Locksmiths", slot: "Fri 06 Nov",
+      state: "booked", stateLabel: "Booked",
+      reason: "Lock is still working but getting worse. Booked before it fails and the tenant is locked out." }
+  ];
+
+  var vendors = [
+    { name: "Mercer Heating & Gas", trade: "Heating, gas (Gas Safe)", today: "3 of 4 slots", next: "Today 17:00" },
+    { name: "Parkside Plumbing", trade: "Plumbing", today: "2 of 5 slots", next: "Today 13:00" },
+    { name: "Volt & Co Electrical", trade: "Electrical", today: "4 of 4 slots", next: "Tue 10 Nov" },
+    { name: "Calder Gas", trade: "Heating, gas (Gas Safe)", today: "No reply since 07:20", next: "Unknown" },
+    { name: "Pennine Damp Surveys", trade: "Damp and mould", today: "1 of 2 slots", next: "Today 15:00" },
+    { name: "Lockwise Locksmiths", trade: "Locks and access", today: "1 of 3 slots", next: "Today 11:30" },
+    { name: "Hadley General Maintenance", trade: "General", today: "Full this week", next: "Mon 09 Nov" },
+    { name: "Kestrel Appliance Care", trade: "Appliances", today: "Quotes only", next: "On request" }
+  ];
+
+  var log = [
+    { t: "08:46", text: "Triaged KL-2610 as emergency (gas). Dispatched Mercer emergency line and sent tenant safety advice." },
+    { t: "08:31", text: "Could not book KL-2599 with Mercer (no capacity today). Asked Calder Gas, no reply after 20 min. Flagged for office." },
+    { t: "08:12", text: "Booked KL-2611 with Mercer for today 14:00–17:00. Vulnerable occupant flag applied to the job." },
+    { t: "07:58", text: "KL-2609 booked with Parkside Plumbing for 10:00. Key safe access requested for flat above." },
+    { t: "07:15", text: "Read 3 new requests overnight. 2 routine items queued for batch, 1 urgent item booked." },
+    { t: "06:40", text: "Reclassified KL-2603 as billing, not repair. Sent to office without booking anything." },
+    { t: "Yesterday 16:20", text: "KL-2606 estimate exceeded £150 approval limit. Quote requested from Kestrel Appliance Care." }
+  ];
+
+  var urgencyOrder = { emergency: 0, urgent: 1, routine: 2, low: 3 };
+  var urgencyLabel = { emergency: "Emergency", urgent: "Urgent", routine: "Routine", low: "Low" };
+  var currentFilter = "all";
+  var query = "";
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function renderTiles() {
+    var open = requests.filter(function (r) { return r.state !== "queued" || true; }).length;
+    var needsYou = requests.filter(function (r) { return r.state === "human" || r.urgency === "emergency"; }).length;
+    var emergencies = requests.filter(function (r) { return r.urgency === "emergency"; }).length;
+    var booked = requests.filter(function (r) { return r.state === "booked"; }).length;
+    var tiles = [
+      { label: "Open requests", value: open, note: "Across 300 flats" },
+      { label: "Booked or dispatched", value: booked, note: "Vendor confirmed" },
+      { label: "Needs a person", value: needsYou, note: "See panel below", alert: needsYou > 0 },
+      { label: "Emergencies today", value: emergencies, note: "Gas or safety", alert: emergencies > 0 },
+      { label: "Median time to book", value: "11 min", note: "From tenant report" }
+    ];
+    document.getElementById("tiles").innerHTML = tiles.map(function (t) {
+      return '<div class="tile' + (t.alert ? " alert" : "") + '">' +
+        '<div class="label">' + esc(t.label) + '</div>' +
+        '<div class="value">' + esc(t.value) + '</div>' +
+        '<div class="note">' + esc(t.note) + '</div></div>';
+    }).join("");
+  }
+
+  function renderAttention() {
+    var items = requests
+      .filter(function (r) { return r.state === "human" || r.urgency === "emergency"; })
+      .sort(function (a, b) { return urgencyOrder[a.urgency] - urgencyOrder[b.urgency]; });
+    var asks = {
+      "KL-2610": "Confirm the engineer has arrived and the flat is safe.",
+      "KL-2599": "Find a gas-safe engineer for tomorrow, or approve an out-of-network vendor.",
+      "KL-2606": "Approve or decline the oven quote when it arrives.",
+      "KL-2603": "Office to reply to the tenant. The agent will not touch the charge."
+    };
+    var html = items.map(function (r) {
+      return '<li class="' + (r.urgency === "emergency" ? "emergency" : "") + '">' +
+        '<div class="attention-head"><strong>' + esc(r.id) + " · " + esc(r.flat) + '</strong>' +
+        '<span class="badge ' + r.urgency + '">' + urgencyLabel[r.urgency] + '</span></div>' +
+        '<p class="why">' + esc(r.reason) + '</p>' +
+        '<p class="ask">' + esc(asks[r.id] || "Review the case.") + '</p></li>';
+    }).join("");
+    document.getElementById("attention").innerHTML = html || '<li>Nothing needs a person right now.</li>';
+  }
+
+  function renderFilters() {
+    var keys = ["all", "emergency", "urgent", "routine", "low"];
+    var labels = { all: "All", emergency: "Emergency", urgent: "Urgent", routine: "Routine", low: "Low" };
+    document.getElementById("filters").innerHTML = keys.map(function (k) {
+      return '<button type="button" data-filter="' + k + '" aria-pressed="' + (k === currentFilter) + '">' + labels[k] + '</button>';
+    }).join("");
+  }
+
+  function renderRows() {
+    var q = query.toLowerCase();
+    var list = requests.filter(function (r) {
+      if (currentFilter !== "all" && r.urgency !== currentFilter) return false;
+      if (!q) return true;
+      return [r.id, r.flat, r.tenant, r.issue, r.vendor, r.trade].join(" ").toLowerCase().indexOf(q) !== -1;
+    }).sort(function (a, b) {
+      return urgencyOrder[a.urgency] - urgencyOrder[b.urgency];
+    });
+
+    document.getElementById("empty").hidden = list.length > 0;
+    document.getElementById("rows").innerHTML = list.map(function (r) {
+      var stateClass = r.state === "booked" ? "state-booked" : r.state === "human" ? "state-human" : "state-queued";
+      return '<tr class="' + r.urgency + '">' +
+        '<td><div class="id">' + esc(r.id) + '</div><div class="small">' + esc(r.received) + '</div></td>' +
+        '<td><div>' + esc(r.flat) + '</div><div class="small muted">' + esc(r.tenant) + '</div></td>' +
+        '<td><div>' + esc(r.issue) + '</div><div class="reason">' + esc(r.reason) + '</div></td>' +
+        '<td><span class="badge ' + r.urgency + '">' + urgencyLabel[r.urgency] + '</span></td>' +
+        '<td>' + esc(r.trade) + '</td>' +
+        '<td><div>' + esc(r.vendor) + '</div><div class="small muted">' + esc(r.slot) + '</div></td>' +
+        '<td><span class="badge ' + stateClass + '">' + esc(r.stateLabel) + '</span></td>' +
+        '</tr>';
+    }).join("");
+  }
+
+  function renderVendors() {
+    document.getElementById("vendors").innerHTML = vendors.map(function (v) {
+      return '<tr><td>' + esc(v.name) + '</td><td class="small">' + esc(v.trade) + '</td>' +
+        '<td class="small num">' + esc(v.today) + '</td><td class="small num">' + esc(v.next) + '</td></tr>';
+    }).join("");
+  }
+
+  function renderLog() {
+    document.getElementById("log").innerHTML = log.map(function (e) {
+      return '<li><time>' + esc(e.t) + '</time><span>' + esc(e.text) + '</span></li>';
+    }).join("");
+  }
+
+  document.getElementById("filters").addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-filter]");
+    if (!btn) return;
+    currentFilter = btn.getAttribute("data-filter");
+    renderFilters();
+    renderRows();
+  });
+
+  document.getElementById("search").addEventListener("input", function (e) {
+    query = e.target.value.trim();
+    renderRows();
+  });
+
+  renderTiles();
+  renderAttention();
+  renderFilters();
+  renderRows();
+  renderVendors();
+  renderLog();
+})();
+</script>
+</body>
+</html>

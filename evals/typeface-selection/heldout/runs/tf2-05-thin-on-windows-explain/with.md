@@ -1,21 +1,22 @@
-The CSS and font files are the same on every device, but the text is drawn differently on each one.
+**Why it happens**
 
-## Why it happens
+The CSS and font files are identical, but the rasterizer and the screen are not.
 
-1. **Pixel density.** A MacBook Retina screen has about 220 ppi and uses 2× pixels. A typical office monitor is around 96 ppi at 1×, and an old tablet is often low-res too. A thin stroke that spans several pixels on the Mac gets about one pixel on the other screens, so the curves turn into stair-steps and look jagged.
-2. **Different rasterizers.** macOS fattens glyphs slightly when it draws them, and it doesn't snap them to the pixel grid. That gives the soft, slightly heavier look. Windows (DirectWrite/ClearType) snaps stems to whole pixels and doesn't add weight, so the same weight looks thinner and sharper-edged. Android varies by device and version, and old tablets are usually the worst.
-3. **Light weights and high-contrast faces suffer most.** A light, hairline or high-contrast face looks elegant on Retina. On a low-density screen its thin strokes drop out or break up. This is the most likely cause if your body text is a light weight (300 or below) or a thin geometric or Didot-style face.
-4. **Possible file mismatch.** If the web font files are unhinted, or if only one weight is loaded and the browser fakes the others, Windows and Android will look worse. Check this too.
+- **Pixel density.** A MacBook Retina display has about 220 ppi and renders at 2x. A typical office monitor is around 90–110 ppi, and an old tablet may be similar or worse. A 1px stem that is smooth on Retina has to snap to whole pixels on the lower-density screens. That produces stems that are too thin or too heavy, and curves that look jagged.
+- **Different renderers.** macOS smooths glyphs with grayscale antialiasing and doesn't snap them to the pixel grid. It also tends to make strokes a little heavier. Windows uses DirectWrite with hinting, and sometimes ClearType subpixel rendering. It keeps shapes closer to their true outline, so thin strokes look thinner and sharper. Android varies by device, and old tablets often have weak hinting and low-quality rendering.
+- **Delicate fonts suffer most.** Light weights, hairline strokes and high-contrast faces break up first on low-density screens. A regular-weight face with moderate contrast usually looks fine on all three.
+- **A mismatched file can make it worse.** If the web font is an unhinted or auto-hinted conversion, or a different format than the designer's installed copy, Windows may render it differently. Check whether the designer has the font installed locally. Then her Mac would be using the local copy instead of your web files.
 
-## What to do
+**What to do**
 
-1. **Test on the bad screens first.** Look at a real paragraph at its smallest size on the Windows monitor and the old tablet. Don't judge from the Mac.
-2. **Change the weight and face before the CSS.**
-   - Set body text to regular (400) or heavier, not light.
-   - If the face is thin or high-contrast, use it only for big headlines, at about 40px or larger. Give body text and UI a sturdier, lower-contrast partner with open apertures and a larger x-height.
-3. **Check the weights.** Make sure every weight you use (regular, medium or semibold, bold, true italic) is actually loaded. If any is missing, the browser fakes it, so remove the synthesis or add the real file.
-4. **Check the web font files.** Confirm the fonts are loading (DevTools → Network or Computed → Rendered Fonts) and aren't silently falling back to something else. If you control the files, use a build that's hinted for Windows. Most well-made open fonts are, and a foundry can confirm for a commercial one.
-5. **Don't try to force the Mac look.** Avoid `-webkit-font-smoothing: antialiased`. It only affects macOS and makes the text thinner there. A 400 weight at a reasonable size (16px or larger for body) also helps.
-6. **If you have light text on dark backgrounds,** step the weight down one notch. Light-on-dark looks bolder, so the same weight doesn't need to be as heavy.
+1. **Test the way your dad and you see it.** Use a real paragraph at the smallest size you ship, on the real background. Check it on a low-density Windows screen and a mid-range Android device. Don't judge it on the Mac alone.
+2. **Check the weight first.** If body text is a Light, Thin or hairline cut, move it to Regular (400) or a sturdier cut. Keep the light weights for large headlines, roughly 40px and up. This is the most likely fix. Change it before you touch any CSS.
+3. **Prefer a lower-contrast, sturdier face for body and UI.** Look for open apertures and a larger x-height. If the brand face is delicate, keep it for headings and pair it with a sturdy sans or text serif for small text.
+4. **Keep small text at 12px or larger, in regular weight or heavier.** If 12px looks weak, change the face before you raise the size.
+5. **Check the font files.** Confirm the site serves the files you think it does, with the weights you use. Make sure it isn't faking bold or italic, because synthesized styles look rough on low-density screens. Also confirm the designer isn't previewing a locally installed copy. If you self-host, use properly hinted WOFF2 files, or ask the foundry or font vendor for web-optimized builds.
+6. **Don't use `-webkit-font-smoothing` to "fix" Windows.** It only affects macOS. Windows and Android rendering is mostly out of your control, so the fix is choosing the right weights and faces.
+7. **Check dark backgrounds separately.** Light text on dark looks bolder, so step down a weight there.
 
-If you tell me which font and weights the site uses, I can tell you which of these is the likely culprit and suggest a replacement or pairing. I haven't looked at your code, so these are the usual causes. I haven't confirmed which one applies to you.
+The designer's Mac is the most forgiving screen your users will have. The goal is to make the text hold up on the worst of them.
+
+If you tell me which font and weights you're using, I can suggest a specific sturdier cut or pairing.

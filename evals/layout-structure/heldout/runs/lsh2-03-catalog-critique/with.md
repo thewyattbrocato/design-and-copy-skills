@@ -1,58 +1,56 @@
-**Diagnosis.** This is a browsing and comparison page, and the structure works against that. Shoppers on a category page are narrowing 1,800 SKUs and comparing peers. Almost everything above the first product, and everything inside each card, is spent on something else.
+**Short version:** the page spends its prime space on things that don't help someone choose a product, and it squeezes the thing they came to compare. People on a category page are comparing peers and narrowing them down. The layout should push them to the products fast and give each product enough information to judge.
 
 ## What's wrong
 
-1. **The banner takes the first screen.** A 180px full-width banner plus the header leaves little or no product above the fold on a laptop. The delivery paragraph is sitewide reassurance, not category content. It pushes the products down on every category page.
+1. **The banner pushes the products down.** 180px of dark band plus a paragraph of delivery copy sits above everything. On a 1440×800 viewport, the sidebar and grid both start low. The delivery promise is useful, but it's the same on every category, so it's not what the category page is for. A shopper arriving from search or an ad needs to see products first.
 
-2. **The filter sidebar is a second page.** Fourteen groups, all expanded, run to about four screens. Three things go wrong:
-   - The groups that matter (type, size, material, finish, price) are buried among rarely used ones.
-   - The sidebar is longer than the visible grid, so the two columns scroll out of step and the left column ends up mostly blank.
-   - On a phone it's worse. The stacked sidebar sits above the grid, so shoppers scroll four screens of filters before they see a single product.
+2. **The sidebar is a wall.** 14 groups, all expanded, about four screens tall. The top few groups are visible, and the rest is scroll-past clutter. Most of these groups will be used rarely. Hardware filters like thread size, material, or head type only matter in specific categories, and applying them is the real task. A long sidebar also leaves the grid sitting beside empty space once the sidebar scrolls out of view, or makes the sidebar fight the grid for attention.
 
-3. **Six across on 1440 makes the cards too small for the job.** Each cell is roughly 190–200px wide. Hardware is compared on detail (thread, length, pack size, finish), and the small square photo shows none of it.
+3. **The cards are too thin for fixings.** A small square photo, a name, and a price don't let someone tell an M6 × 40 zinc bolt from an M6 × 50 stainless one. For this product type, the differentiators (size, material, pack quantity, stock or delivery) are the content. With nothing else on the card, people must open each product, and that's a likely source of lost conversions.
 
-4. **The cards hold name and price and nothing else.** For fixings, near-identical products differ in exactly the attributes you've left out: pack quantity, size or spec, stock and delivery status, and unit price. Shoppers can't compare from the grid, so they open product pages and bounce back. That drives both the lower conversion and the pogo-sticking.
+4. **Six across at 1440 makes the cards tiny and the grid hard to scan.** With a sidebar taking roughly 260px, six cells leave about 170–180px each. Photos are small, names will wrap or truncate, and there's no room to add useful card content. You've traded information per item for items per row.
 
-5. **24 per page with plain pagination is too few across 1,800 SKUs.** That's 75 pages. At six across it's only four rows, so the shopper hits the pager almost immediately. There is also no sort control, no result count and no active-filter summary. You can't tell what you've applied or how many products are left.
+5. **24 per page with numbered pagination is hard work at 1,800 SKUs.** Categories will run to many pages. Pagination is fine, but 24 is low, and there's no sort control or result count, so people can't orient themselves or re-order.
 
-6. **The phone layout has no mobile structure.** The content order is banner, filters, grid. The primary task is last.
+6. **Mobile stacks the sidebar above the grid.** On a phone, a four-screen filter list means the first product is several screens down, or never reached. This is almost certainly your worst-performing breakpoint, and probably much of the conversion drop.
+
+7. **There's no sort, result count, or active-filter row.** Nothing tells people how many products they're looking at, what's applied, or how to clear it. Also unplanned: the zero-results state after stacking filters.
 
 ## What I'd change
 
 **Top of page**
-- Cut the banner to a compact header: breadcrumb, category name, result count. Move the delivery promise to a one-line strip in the site header or under the sort bar.
-- Add a row above the grid with sort on one side, the active filters as removable chips, and the count.
-- If you have subcategories (say Screws → Wood, Machine, Self-tapping), show them as one row of links. They narrow the range faster than any filter.
+- Cut the banner to a compact heading row: category name, result count, and a one-line description. Move the delivery promise to a slim strip or the site header, so it's seen without costing 180px.
+- Under it, one toolbar row: sort, active-filter chips with "clear all", and a view toggle if you want one.
+- Optional: if the category has obvious sub-categories (say, Screws → Wood / Machine / Self-tapping), show them as a single row of links above the grid. That's often a faster filter than any sidebar group.
 
-**Filter rail**
-- Keep a fixed-width rail of about 16–18rem on the left.
-- Open only the 4–5 groups that apply to the category, and collapse the other nine.
-- Order the groups by use, with size, type and material first.
-- Add a "show more" inside long groups, with counts per option.
-- Let the rail scroll or stick independently so it never outlasts the grid.
-- Show the filters that change by category only where they apply, since a drill-bit size filter has no place on a hinge page.
+**Filters**
+- Keep a left rail, about 16–18rem, sticky, scrolling independently of the page.
+- Open only the 3–4 groups that matter for that category (usually type, size, material, price or availability), and collapse the rest. Order groups by use, not alphabetically. Drive this from category data, since "thread pitch" is irrelevant under adhesives.
+- Show counts per option, and cap long option lists with a "show more" link or a search box inside the group (size lists get long fast).
+- Put the selected options in the chips row so people don't have to reopen groups to see what's on.
 
-**Grid**
-- Use 3–4 columns on desktop, set by a minimum cell width of about 260–280px and letting the count follow, rather than fixing it at six.
-- Use a 4:3 or square image ratio, the same in every cell.
-- Give each card a fixed content order:
-  1. Image.
-  2. Name, with room for two lines.
-  3. One line of key spec (size, material, pack of N).
-  4. Price, with unit price if you sell in packs.
-  5. Stock and delivery state.
-  6. Quick add, if the product has no required options.
-- Raise the page size to 48 or more, or use "Load more" with a visible count ("Showing 48 of 612"). If you keep pagination, repeat it above the grid.
+**Grid and cards**
+- Go to 4 across at 1440 with the rail, and let it wrap by minimum card width (roughly 220–240px) rather than fixed column counts. That gives 3 on a laptop, 2 on a tablet.
+- Keep one image ratio and one content order in every card. Add what distinguishes fixings: key spec line (size, material, finish), pack quantity or price per unit, stock or delivery status, and an add-to-basket or quantity control if people often reorder. The longest product name should wrap cleanly in two or three lines without breaking the card heights.
+- Consider a list view toggle for trade buyers, who compare specs more than photos. It's the same data in a full-width row with more columns.
+
+**Pagination**
+- Raise the page size to 48 (or use "Load more" with a visible count, e.g. "Showing 48 of 312"), keep the toolbar's sort and count at the top, and repeat pagination at the bottom. Check that back-navigation from a product returns people to the same page, scroll position, and filters, because that's a common leak.
 
 **Phone**
-- Order the page as header and count, then a sticky "Filter and sort" bar, then the grid.
-- Open the filters as a full-screen sheet with an "Apply (N results)" button.
-- Use 2 columns, with the spec line cut to one line and the quick add dropped.
+- Products first. Put one "Filter & sort" button in a sticky bar; it opens a full-screen sheet with the groups collapsed, and an "Apply (N results)" button at the bottom.
+- 2 columns for cards, with a shortened spec line. Chips for active filters appear under the sticky bar.
+- Banner shrinks to the title and result count. The delivery copy goes to a single line.
 
-## Worst cases to test
-- The longest product name, such as "M8 × 120mm zinc-plated hex head coach bolt, pack of 50".
-- A filter combination that returns zero results, which needs a message and a "clear filters" action.
-- A category with 6 products, where the rail would be mostly empty.
-- A category with 600 products.
+**Empty and worst cases to plan for**
+- Zero results: say which filter removed everything and offer a one-click remove.
+- One result and 300 results should both look intentional.
+- Longest product name, translated or enlarged text, and a filter option list of 60 sizes.
 
-If you can share analytics, I'd check the filter-open rate by group, the scroll depth on the sidebar, and the product-page bounce back to the category page. That would tell you which of the 14 groups earn their place, and it would confirm whether the thin cards are what's costing you conversions.
+## If you can only do three things
+
+1. Shrink the banner so products start in the first screen.
+2. Collapse the filters to a few relevant groups, and on phones move them behind a button.
+3. Add spec, pack size, and stock to each card, and drop to 4 across so there's room for them.
+
+I'd also check your analytics before and after: scroll depth on mobile, filter usage per group, and whether product-page entry rate dropped (suggesting cards don't give enough to click) or whether clicks held up but add-to-basket fell (suggesting the problem is on the product page, not the listing). That tells you which of these to do first.

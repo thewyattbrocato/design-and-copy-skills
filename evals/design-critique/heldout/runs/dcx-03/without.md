@@ -1,27 +1,25 @@
-It doesn't hold up yet. The structure is reasonable, but the content reads like a generic marketplace template, not Seedlend. A developer would have to guess at most of it.
+Not yet. The structure is fine, but the content reads like a generic marketplace template, not Seedlend. A developer would build exactly what's written, so these are worth fixing first.
 
-**Content that contradicts the product**
-- **"$0.00" on every card.** A seed library lends or shares, so prices don't belong. Replace the price with something real, like availability ("12 packets left"), a status ("Available" or "Checked out"), or a season ("Sow in spring").
-- **"Item Title" and "Short description goes here."** These are lorem-ipsum placeholders. Say what the fields are, for example: seed name, variety, a one-line growing note, and who donated it.
-- **"Welcome to Seedlend! Discover, connect and grow with our community."** This could be any app. Say what Seedlend is: "Borrow seeds, save seeds, share them back" or something that mentions the cupboard at the community hall.
-- **"Explore" and "Get Started".** Neither says where it goes. Name the destination, such as "Browse the seed library" and "Borrow your first seeds".
+**Likely mistakes**
+- **"$0.00" on every card.** A shared seed library has no prices. If it stays, it implies a payment flow. Replace it with something real, like availability ("5 packets left"), or "Free to borrow" if you want to state it.
+- **Placeholder text such as "Item Title" and "Short description goes here."** It's unclear whether this is dummy content or the real spec. Say what each card shows, for example: seed name, variety, quantity available, and the sow-by season.
+- **The hero copy is generic.** "Discover, connect and grow with our community" could be any app. Something specific would work better, such as "Borrow seeds. Grow them. Return some." Also say what "Explore" does, and where it goes.
 
-**Structural gaps**
-- **Missing practical info.** The cupboard is a physical place. The home tab should probably show where it is, when it's open, or how to borrow and return. That's likely the most useful thing for a neighbor.
-- **Duplicate profile entry points.** There's a profile row at the bottom and a Profile tab. Pick one. If the row stays, say what tapping it does.
-- **"Featured" is undefined.** Say who picks the items: you, newest additions, or most popular. The developer needs a rule.
-- **"Your Activity" has only an empty state.** Spec what it shows once it's populated. Likely candidates are current loans, due-back dates, and your donations.
-- **"Add" is ambiguous.** Does it mean donate seeds, request seeds, or log a return? That is a core flow.
-- **The gear icon has no destination.** Say what settings contains, or drop it for now.
+**Missing or unclear behavior**
+- **What "Featured" means.** Is it curated by a volunteer, newest arrivals, or most popular? The developer needs a rule. Also say whether it's always three cards, and what shows if the cupboard has fewer than three items.
+- **Where the cards link.** Say whether tapping one opens an item detail screen.
+- **Where "Get Started" goes.** The empty state "Nothing to see here yet" gives no hint. Say what the activity is (borrowed seeds, returns due, messages?) and where the button leads, for example "You haven't borrowed any seeds yet" with a "Browse the cupboard" button.
+- **What "Add" does.** It could mean donating seeds, listing a request, or logging a return. This is the core action in a seed library, so name it, e.g. "Donate".
+- **Your Activity once it has content.** Only the empty state is specced. Say what items look like and how many show.
 
-**Missing from the spec**
-- **Tap targets and navigation.** Say where each card, button, and row leads.
-- **Other states.** Cover loading, error, signed-out, and a Featured section with fewer than three items.
-- **Data source.** Say whether the content is static or comes from a backend.
-- **Real user data.** "User Name / user@example.com" is fine as a placeholder, but the spec should say these come from the account.
+**Structure**
+- **The profile row duplicates the Profile tab.** A user name and email at the bottom of Home sits right above a Profile tab. Cut the row, or explain why it's there. Showing the email on the home screen is also a small privacy concern on a shared device.
+- **The gear icon.** Say what it opens, and how that differs from the Profile tab (settings versus profile).
+- **Search and Messages.** Check that both are needed at launch. Messages makes sense if neighbors coordinate handoffs, but say so.
 
-**Small points**
-- Use "Messages" only if neighbors will message each other. If so, the home tab might surface unread messages.
-- Tab labels and the title bar are consistent, which is good.
+**Something the spec doesn't cover**
+A cupboard at a community hall has a physical context. Consider a small block on Home with the hall location, opening or access hours, and who to contact. That's likely the first thing someone needs, and it's the main thing that makes this a Seedlend home screen and not a template.
 
-If you tell me how borrowing works (loan periods, whether seeds are returned or just taken, who manages the cupboard), I can rewrite the spec with real copy and defined behavior.
+**States to add before handoff:** loading, no items in the library, and offline or error.
+
+I can rewrite the spec with real copy and these gaps filled in. If so, tell me what "Add" and "Your Activity" mean in your lending model.

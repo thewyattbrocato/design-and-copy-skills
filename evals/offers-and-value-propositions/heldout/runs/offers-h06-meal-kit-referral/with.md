@@ -1,49 +1,45 @@
-**The offer: Give $20, get $20.**
+## The offer
 
-| | Reward | Earned when |
-|---|---|---|
-| Friend | $20 off their first box ($48 instead of $68) | At checkout, with the referral link |
-| Referrer | $20 account credit toward a future box | After the friend's second box is delivered |
+- **Friend:** $15 off their first box, so $53 instead of $68. We still keep about $5 on that box.
+- **Referrer:** a $20 credit on their next box, earned once the friend's **third** box is delivered.
+- **Why the third box:** many customers cancel after one or two boxes, and you don't want to pay for those. The credit goes to the referrer only when the friend has stayed.
+- **Cost against ads:** a referral that works costs $35 ($15 + $20), against $55 in ads. By box 3 the friend has produced about $60 of margin. After the $35 reward you're about $25 ahead, and every box after that adds more.
+- **If the friend cancels early:** you've only given the $15 discount, and no referrer credit is paid.
+- **Credit as a credit, not cash:** it only reduces what the referrer pays for a box, so it can't be taken out and it brings them back to order.
 
-- **Cost:** The most it can cost is $40 per new customer, against the $55 you pay in ads. You also keep the roughly $20 margin on each later box.
-- **Timing:** Many customers cancel after one or two boxes. Paying the referrer only after box two means you don't pay for friends who try one box and leave.
-- **Friend's discount:** With $20 off, the first box earns you about $0. I chose that so the friend has a real reason to try it.
-- **Limits (my proposal):** New customers only, up to 5 rewarded friends per person, and credit that isn't cash and expires 12 months after it's added.
+## In-app card
 
----
+**Give $15, get $20**
+Your friend's first box is $15 off. When their third box is delivered, you get $20 off your next box.
 
-**In-app card**
+[Share your link]
 
-**Give $20, get $20**
-Friends get $20 off their first Fernway box. You get $20 credit once their second box is delivered.
+*New customers only. Credit is applied automatically, not redeemable for cash, and earned for up to 5 friends. [Full terms]*
 
-[Share my link]
+## Email
 
-*New customers only. Their boxes after the first are $68. Credit is for future boxes, not cash, and expires 12 months after it's added. Up to 5 friends. [Full terms]*
-
----
-
-**Email**
-
-**Subject:** Give $20, get $20 on Fernway
+**Subject:** Give a friend $15 off their first Fernway box
 
 Hi [first name],
 
-Know someone who'd like dinner sorted? Send them your link in the app. They get $20 off their first box, so $48 instead of $68. Once their second box is delivered, you get $20 credit toward a future box.
+Know someone who'd like Fernway? Send them your link from the app.
 
-To share: open the app, tap Refer a friend, and send the link.
+- **They get** $15 off their first box.
+- **You get** a $20 credit once their third box is delivered.
 
-The terms:
-- New Fernway customers only.
-- Their boxes after the first are $68 each.
-- Your credit is for boxes, not cash. It expires 12 months after it's added.
-- Up to 5 friends can earn you credit.
+The details:
+- Your friend must be new to Fernway and sign up through your link.
+- Your credit is applied automatically to your next box. It can't be redeemed for cash.
+- You can earn credit for up to 5 friends.
+- [Credit expiry, if any]
 
-[Share my link]
+[Share your link]
 
-*(About 95 words.)*
+The Fernway team
 
----
+(about 105 words)
 
-- The 5-friend cap and 12-month expiry are my suggestions, not facts you gave me, so change them if you prefer. Whatever you settle on, make sure the app and the email say the same thing.
-- Check the rules where you sell on referral incentives and on how you describe a discounted first box.
+## Before you publish
+
+- The 5-friend cap and the third-box trigger are my proposals, not facts you gave me. They protect the margin, so change them if your system can't track them.
+- Fill in the credit expiry and the terms link. If you won't set an expiry, delete that bullet.

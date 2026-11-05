@@ -2,12 +2,12 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "0a82f30030c8ce97",
+    "with": "42633727f19a1949",
     "without": "3f59a8d07b11cd32"
   },
   "result": {
     "winner": "with",
-    "judge_notes": "pass 1 (A=without, B=with): B moves every repeated value into a token: colours, a type scale, a spacing scale, radii, shadow and duration. It keeps every value exact, and it explains the cascade and the risk of clashing with variable names the app may already define. A leaves font sizes and most spacing hard-coded, even though its summary says each value appears once. Its per-variant --btn-* pattern also changes how the variant classes work: .btn-danger would have no effect if used without .btn. Both handle the secondary button's 1px border cleanly with calc. | pass 2 (A=with, B=without): Answer A turns every repeated value, including spacing, font sizes, weights and duration, into a token and keeps each value exactly the same. It also keeps the 1px padding offset with calc and gives useful notes on name collisions and visual testing. Answer B leaves most spacing and font sizes hardcoded, uses component-specific token names like --radius-button, and adds a variant-token pattern that wasn't asked for. Its cascade still works and its summary is good.",
+    "judge_notes": "pass 1 (A=without, B=with): B pulls every repeated value into tokens: colours, radii, font sizes, weights, spacing and motion. Each token resolves to the original value, the secondary button keeps its 1px border compensation via calc, and the notes are short and accurate (apart from one loosely worded comment). A's variant-token approach for the buttons is tidy and keeps the cascade correct, but it leaves font sizes, card spacing and gaps as hard-coded literals, so it falls short of the main goal of building future components from shared values. | pass 2 (A=with, B=without): Answer A turns every repeated value into a variable, including spacing, font sizes, weights and motion. Its color names describe roles and its spacing scale uses numbered steps. Every variable resolves to the original value, and the secondary button's padding is reduced by exactly 1px with calc. Answer B leaves spacing and font sizes as literals, and its --btn-* variant pattern is extra structure nobody asked for. That pattern also means .btn-secondary or .btn-danger used without .btn no longer shows its colors, which is a visible regression B doesn't flag.",
     "rubric_scores": {
       "with": 5.0,
       "without": 4.0
@@ -22,10 +22,10 @@
       ],
       "without": [
         3.0,
-        4.5,
+        4.0,
         5.0,
         3.5,
-        4.0
+        4.5
       ]
     },
     "position_consistent": true,
@@ -37,7 +37,7 @@
         ],
         "raw_verdict": "B",
         "winner": "with",
-        "notes": "B moves every repeated value into a token: colours, a type scale, a spacing scale, radii, shadow and duration. It keeps every value exact, and it explains the cascade and the risk of clashing with variable names the app may already define. A leaves font sizes and most spacing hard-coded, even though its summary says each value appears once. Its per-variant --btn-* pattern also changes how the variant classes work: .btn-danger would have no effect if used without .btn. Both handle the secondary button's 1px border cleanly with calc."
+        "notes": "B pulls every repeated value into tokens: colours, radii, font sizes, weights, spacing and motion. Each token resolves to the original value, the secondary button keeps its 1px border compensation via calc, and the notes are short and accurate (apart from one loosely worded comment). A's variant-token approach for the buttons is tidy and keeps the cascade correct, but it leaves font sizes, card spacing and gaps as hard-coded literals, so it falls short of the main goal of building future components from shared values."
       },
       {
         "order": [
@@ -46,7 +46,7 @@
         ],
         "raw_verdict": "A",
         "winner": "with",
-        "notes": "Answer A turns every repeated value, including spacing, font sizes, weights and duration, into a token and keeps each value exactly the same. It also keeps the 1px padding offset with calc and gives useful notes on name collisions and visual testing. Answer B leaves most spacing and font sizes hardcoded, uses component-specific token names like --radius-button, and adds a variant-token pattern that wasn't asked for. Its cascade still works and its summary is good."
+        "notes": "Answer A turns every repeated value into a variable, including spacing, font sizes, weights and motion. Its color names describe roles and its spacing scale uses numbered steps. Every variable resolves to the original value, and the secondary button's padding is reduced by exactly 1px with calc. Answer B leaves spacing and font sizes as literals, and its --btn-* variant pattern is extra structure nobody asked for. That pattern also means .btn-secondary or .btn-danger used without .btn no longer shows its colors, which is a visible regression B doesn't flag."
       }
     ]
   }

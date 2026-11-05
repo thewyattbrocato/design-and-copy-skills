@@ -1,35 +1,36 @@
-**On a phone, stop showing a table. Show one card per order, stacked down the screen, with no sideways scrolling.** Reps are looking up one customer's order, not comparing orders. Eight columns can't fit in 360px, and a frozen first column with sideways scrolling would still hide most of what they need.
+On a phone, show each order as a stacked card instead of a table row. Dispatchers keep the table on big monitors.
 
-**What each order looks like (about 360px wide):**
+Reps look up one order at a time while a customer is on the line. That isn't a comparison task, so sideways scrolling is the wrong fix. Eight columns can't fit in 360px without making numbers wrap or the text tiny.
+
+**What a rep sees for each order (about 5 lines):**
 
 ```
-#48213                      [Shipped]
-Dana Whitfield
-3 items: Oak shelf, brackets, screws
-─────────────────────────────────────
-Tracking   1Z999AA10123456784
-Ship via   Ground
-Placed     Oct 12, 2026
-Total      $184.50
+#10482                          ● Shipped
+Maria Alvarez
+2× desk lamp, 1× shade set
+Placed Oct 27 · Total $184.20
+Tracking 1Z999AA10123456784  [Copy]
+Ground (UPS)
 ```
 
-- **Top line:** order number on the left in bold, status on the right as a word (Shipped, Backordered, Cancelled). A small icon or shape can go with it, but color shouldn't be the only cue.
-- **Second line:** customer name, in regular body text. Reps usually find the order by the caller's name or order number, so these two lead.
-- **Third line:** the items text, wrapped to at most two lines. If it's longer, cut it with an ellipsis and let the rep tap the card to see the full text.
-- **Below the divider:** four labeled pairs, in this order: tracking number, ship method, date placed, total. Tracking comes first because "where's my package?" is the most common call. Labels sit on the left and values on the right. The total is right-aligned, in tabular figures, with the currency stated once.
-- **Tracking number:** it never wraps. It's a tap-to-copy or tap-to-open-carrier link, and the tap target is about 44px tall. If an order hasn't shipped, show "—", not a blank.
-- **Text size:** 14px or larger throughout. Cards are separated by a hairline or some space, not by heavy boxes.
+- **Top line:** the order number in bold on the left, and the status as a word on the right, with a small shape and color as extra cues. Never use a colored dot alone.
+- **Customer:** on its own line, at body size. This is usually what the rep is matching against the caller.
+- **Items:** the short text, allowed to wrap to two lines. It is the one column that wraps.
+- **Date and total:** one line, labeled "Placed" and "Total". The currency is stated once, and the date includes the year if it isn't this year.
+- **Tracking:** labeled, on one line, and never wrapped or cut off. Add a copy button of about 44px, because reps will paste it to the customer or the carrier site.
+- **Ship method:** a quiet line below tracking.
+- **Missing tracking:** show "Tracking —  Not shipped yet". Don't leave it blank.
 
-**Finding the right order**
-- A search box is pinned at the top: order number, customer name or tracking number. This matters more than anything else on the screen. Without it, reps are just scrolling a long list of cards.
-- A sort control sits next to the search box, defaulting to newest first. Quick filter chips for status ("Shipped", "Not shipped") are optional.
+All eight fields stay visible, so nothing is hidden behind a tap. Every value keeps its label, and the order matches the desktop columns.
 
-**What stays the same**
-- Dispatchers keep the full table on wide screens. Switch layouts at about 700px.
-- Both layouts use the same data, and the fields are in the same order, so reps and dispatchers see the same thing.
+**Finding the order (this matters more than the card layout):**
+- Put a sticky search box at the top. It should match order number, customer name, and tracking number, since callers give any of the three.
+- Add a status filter next to it, and sort newest first by default.
+- When nothing matches, show "No orders match 'xyz'" with a Clear button.
 
-**Build notes**
-- Keep the real `<table>` for wide screens. For phones, render a separate list where each order is a description list (label and value pairs), and show one layout or the other with CSS. Restyling table cells into blocks can strip their table semantics in some browsers, and a separate list avoids that.
-- Don't use `display: none` to drop columns, because screen-reader users lose that data too.
+**Build notes:**
+- Switch at roughly 720px. Below that, render a separate list of cards, each a description list. Above it, render the real `<table>`. This avoids the screen-reader problems of restyling table cells into blocks.
+- Keep the same data and the same order in both views.
+- Keep the card text at 14px or larger.
 
-I haven't seen your code, so I can't say how this fits your components. If you point me to the table component, I can build the phone layout.
+I can sketch the HTML and CSS for both views if you share the current component.

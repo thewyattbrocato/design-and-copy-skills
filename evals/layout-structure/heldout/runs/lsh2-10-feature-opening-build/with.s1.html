@@ -3,16 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Last Salt Barge — Rhea Okonkwo-Hale</title>
+<title>The Last Salt Barge</title>
 <style>
   :root {
     --paper: #f4efe6;
-    --ink: #1b1a17;
-    --muted: #6b645a;
-    --rule: #cfc5b4;
-    --accent: #a5381f;
+    --ink: #1b1d1f;
+    --muted: #5d625f;
+    --rust: #a4401f;
+    --rule: #cfc7b8;
+    --deep: #14282c;
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-    --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     --edge: clamp(1.25rem, 5vw, 4rem);
   }
   * { box-sizing: border-box; }
@@ -22,185 +23,216 @@
     background: var(--paper);
     color: var(--ink);
     font-family: var(--serif);
+    line-height: 1.65;
   }
 
-  /* Running masthead strip */
-  .strip {
+  .masthead {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 0.9rem var(--edge);
-    font: 600 0.7rem/1 var(--sans);
+    align-items: baseline;
+    padding: 1.1rem var(--edge);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 0.72rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    border-bottom: 1px solid var(--rule);
     color: var(--muted);
   }
-  .strip b { color: var(--accent); font-weight: 700; }
+  .masthead strong { color: var(--ink); letter-spacing: 0.28em; }
 
-  /* Lead image with title set into it */
-  .lead { margin: 0; }
-  .frame {
-    position: relative;
-    min-height: min(88vh, 62rem);
-    display: flex;
-    align-items: flex-end;
-    padding: var(--edge);
-    color: #fff;
-    overflow: hidden;
-    background:
-      radial-gradient(120% 70% at 75% 18%, #d8b27a 0%, rgba(216,178,122,0) 55%),
-      linear-gradient(180deg, #7d8c8f 0%, #56686d 38%, #2f3e44 62%, #1c262b 100%);
-  }
-  /* water line + hull silhouette, purely decorative placeholder */
-  .frame::before {
-    content: "";
-    position: absolute; inset: 0;
-    background:
-      linear-gradient(180deg, transparent 52%, rgba(20,28,32,.55) 52%, rgba(20,28,32,.9) 100%),
-      repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 2px, transparent 2px 14px);
-  }
-  .frame::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(10,14,16,0) 35%, rgba(10,14,16,.82) 100%);
-  }
-  .ph {
-    position: absolute;
-    top: 1.25rem; right: var(--edge);
-    z-index: 2;
-    font: 600 0.68rem/1 var(--sans);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    padding: 0.5rem 0.7rem;
-    border: 1px dashed rgba(255,255,255,.65);
-    color: rgba(255,255,255,.9);
-  }
-  .titleblock { position: relative; z-index: 2; max-width: 68rem; }
-  .kicker {
-    font: 700 0.78rem/1 var(--sans);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #f0c9a0;
-    margin: 0 0 1.4rem;
-  }
-  h1 {
-    margin: 0;
-    font-weight: 400;
-    font-size: clamp(3.4rem, 12.5vw, 10.5rem);
-    line-height: 0.9;
-    letter-spacing: -0.035em;
-    text-wrap: balance;
-  }
-  h1 em { font-style: italic; color: #f0c9a0; }
-  .dek {
-    max-width: 34rem;
-    margin: 1.8rem 0 0;
-    font-size: clamp(1.2rem, 2.4vw, 1.65rem);
-    line-height: 1.35;
-    font-style: italic;
-    color: #f1ece2;
-  }
-  .credit {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0.7rem var(--edge) 0;
-    font: 0.72rem/1.4 var(--sans);
-    letter-spacing: 0.04em;
-    color: var(--muted);
-  }
-  .credit span { text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; margin-right: 0.5em; }
-
-  /* Byline column + reading column */
-  .article {
-    display: grid;
-    grid-template-columns: minmax(10rem, 15rem) minmax(0, 40rem);
-    column-gap: clamp(2rem, 6vw, 6rem);
-    padding: clamp(2.5rem, 7vw, 6rem) var(--edge) 6rem;
-    max-width: 78rem;
+  .opener {
+    padding: clamp(2.5rem, 7vw, 6rem) var(--edge) clamp(1.75rem, 4vw, 3rem);
+    max-width: 82rem;
     margin: 0 auto;
   }
-  .meta {
+  .kicker {
     font-family: var(--sans);
-    border-top: 3px solid var(--ink);
-    padding-top: 1rem;
-    align-self: start;
-  }
-  .meta p { margin: 0 0 1.1rem; }
-  .meta .label {
-    display: block;
-    font-size: 0.66rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin: 0 0 1.5rem;
+  }
+  h1 {
+    font-weight: 400;
+    font-size: clamp(3.4rem, 13vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--rust); }
+
+  .dek-row {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    margin-top: clamp(1.75rem, 4vw, 3.25rem);
+    align-items: end;
+  }
+  .dek {
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    line-height: 1.3;
+    font-style: italic;
+    margin: 0;
+    max-width: 30ch;
+  }
+  .byline {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    border-top: 2px solid var(--ink);
+    padding-top: 0.8rem;
+    margin: 0;
+  }
+  .byline .by {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 0.3rem;
   }
-  .meta .val { font-size: 1.02rem; font-weight: 600; line-height: 1.3; }
-  .meta .val.time { color: var(--accent); }
+  .byline .name { font-weight: 700; font-size: 1rem; }
+  .byline .time { color: var(--muted); }
 
-  .body p {
-    margin: 0 0 1.45em;
+  figure.lead { margin: 0; }
+  .photo {
+    position: relative;
+    height: min(78vh, 52rem);
+    min-height: 22rem;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, #8fa3a4 0%, #b9c4bf 38%, #d8d6c8 49%, #3c5559 49.2%, #24393d 70%, #14282c 100%);
+    color: #e9e6da;
+  }
+  .photo::before {
+    /* sail silhouette, drawn in CSS so the block reads as a barge scene */
+    content: "";
+    position: absolute;
+    left: 58%;
+    bottom: 51%;
+    width: clamp(5rem, 11vw, 11rem);
+    height: clamp(8rem, 24vw, 22rem);
+    background: rgba(120, 44, 20, 0.55);
+    clip-path: polygon(46% 0, 100% 100%, 0 100%);
+  }
+  .photo::after {
+    content: "";
+    position: absolute;
+    left: calc(58% - 3rem);
+    bottom: calc(51% - 0.6rem);
+    width: clamp(11rem, 20vw, 20rem);
+    height: 0.9rem;
+    background: rgba(12, 22, 24, 0.7);
+    border-radius: 0 0 1rem 1rem;
+  }
+  .photo .tag {
+    position: absolute;
+    left: var(--edge);
+    bottom: 1.25rem;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid rgba(233, 230, 218, 0.6);
+    padding: 0.4rem 0.7rem;
+  }
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 0.8rem var(--edge) 0;
+    max-width: 82rem;
+    margin: 0 auto;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  figcaption .credit {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+
+  article {
+    max-width: 82rem;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6.5rem) var(--edge) 6rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 36rem) minmax(0, 1fr);
+  }
+  .story { grid-column: 2; }
+  .story p {
     font-size: clamp(1.1rem, 1.5vw, 1.28rem);
-    line-height: 1.62;
+    margin: 0 0 1.4em;
     hyphens: auto;
   }
-  .body p:first-child { margin-top: 0; }
-  .body p:first-child::first-letter {
+  .story p:first-child::first-letter {
     float: left;
     font-size: 5.6em;
     line-height: 0.78;
     padding: 0.06em 0.1em 0 0;
-    color: var(--accent);
+    color: var(--rust);
   }
-  .body p:first-child::first-line {
+  .story p:first-child::first-line {
     font-variant: small-caps;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
   }
 
-  @media (max-width: 52rem) {
-    .article { grid-template-columns: 1fr; row-gap: 2rem; }
-    .meta { display: flex; flex-wrap: wrap; gap: 0 2.2rem; }
-    .frame { min-height: 78vh; }
-    .strip span:last-child { display: none; }
+  @media (max-width: 760px) {
+    .dek-row { grid-template-columns: 1fr; }
+    .byline { max-width: 20rem; }
+    article { display: block; }
+    .photo { height: 58vh; }
+    .masthead span:last-child { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="strip">
-  <span><b>Long Read</b> &nbsp;/&nbsp; Rivers &amp; Estuary</span>
-  <span>Regional Magazine</span>
+<div class="masthead">
+  <strong>Estuary &amp; Edge</strong>
+  <span>The Long Read</span>
 </div>
 
-<figure class="lead">
-  <div class="frame" role="img" aria-label="Placeholder for lead photograph of a Thames sailing barge on the Medway at dawn">
-    <div class="ph">Lead photo placeholder</div>
-    <div class="titleblock">
-      <p class="kicker">Feature</p>
-      <h1>The Last <em>Salt</em> Barge</h1>
-      <p class="dek">On the Medway, one family keeps a trade alive that the tide stopped paying for.</p>
-    </div>
+<header class="opener">
+  <p class="kicker">Rivers &middot; Work &middot; Inheritance</p>
+  <h1>The Last<br><em>Salt</em> Barge</h1>
+  <div class="dek-row">
+    <p class="dek">On the Medway, one family keeps a trade alive that the tide stopped paying for.</p>
+    <p class="byline">
+      <span class="by">Words by</span>
+      <span class="name">Rhea Okonkwo-Hale</span>
+      <span class="time">22 minute read</span>
+    </p>
   </div>
-  <figcaption class="credit"><span>Photograph</span> Photographer name / Magazine archive</figcaption>
+</header>
+
+<figure class="lead">
+  <div class="photo" role="img" aria-label="Placeholder for lead photograph: a sailing barge on the Medway at dawn">
+    <span class="tag">Lead image placeholder</span>
+  </div>
+  <figcaption>
+    <span>Maren Pollard brings the barge up the Medway on the last of the flood, a little after dawn.</span>
+    <span class="credit">Photograph: Tomas Verrall</span>
+  </figcaption>
 </figure>
 
-<main class="article">
-  <aside class="meta" aria-label="Article details">
-    <p><span class="label">Words by</span><span class="val">Rhea Okonkwo-Hale</span></p>
-    <p><span class="label">Reading time</span><span class="val time">22 minutes</span></p>
-  </aside>
+<article>
+  <div class="story">
+    <p>The barge comes up the Medway on the last of the flood, low and slow, her rust-red sail furled against the mast like a folded umbrella. Dawn is still a rumour over the Hoo peninsula. At the tiller, Maren Pollard keeps one eye on the mudbanks and one on the water, reading a river she has known since before she could read anything else. Below her feet, forty tonnes of grey sea salt ride in the hold, damp and glittering. It is the same cargo her great-grandfather carried, over the same stretch of water, for a great deal more money.</p>
 
-  <div class="body">
-    <p>Before the light comes up over Upnor, Tobias Marlow is already on the foredeck, a mug going cold in his fist, reading the water the way other men read the post. The Medway is slack and brown and giving nothing away. Behind him the Ellen Rose sits low at her mooring, forty tons of Cheshire salt in the hold, her sails furled against the wait. The tide turns at ten past six. It has turned there twice a day for longer than his family has kept records.</p>
+    <p>Nobody planned for this to be the last one. Salt barges once worked the estuary in dozens, hauling from the evaporating pans at the river mouth to the wharves and curing sheds upstream, and every one of them had a family attached. Then came the lorries, the bypass, and the long arithmetic of fuel and insurance. One by one the hulls were sold for houseboats or left to settle into the saltmarsh, where on a low spring tide their ribs still show, black and patient, like the remains of something enormous that simply lay down.</p>
 
-    <p>The trade is older than the railway and, by most accounts, should have died with it. Salt came up the river for the fish curers of Rochester and the tanneries beyond, and it went out again as a currency of small favours. By the 1960s the lorries had taken nearly all of it. What remains is a single contract with a pickling works in Aylesford, worth less each year than the insurance on the hull. Tobias does the sums on the back of an envelope every January, then puts the envelope in the stove.</p>
+    <p>Maren does not call it nostalgia, a word she says belongs to people who can afford to leave. The barge, the <em>Edith Ann</em>, was built in 1911 and has been rebuilt so often that her owner jokes only the name is original, and even that was repainted in 1974. She carries salt because the salt must go somewhere, and because the alternative is a very good boat becoming a very expensive ornament. “A barge that stops working,” she tells me, “is already halfway to being a museum. I would rather be late and useful.”</p>
 
-    <p>His daughter, Imani, thinks the envelope is a kind of prayer. She is twenty-six, holds a master's licence the Medway Ports Authority issued with visible reluctance, and spent three years in Rotterdam working for a firm that moved containers by app. She came home, she says, because she missed being able to see what she was carrying. Her father says she came home because her mother asked. Both are probably true. On the quay at Upnor they argue about it daily, in the flat, affectionate voices of people who have shared a small space for decades.</p>
-
-    <p>Nobody pretends the arithmetic will change. A barge of this age drinks money: a new mainsail alone costs more than the year's freight, and the last sailmaker on the estuary is seventy-nine. Yet the Ellen Rose goes out. She went out in January sleet and in August glare, and when the tide finally lifts her at ten past six she moves with a patience that makes the engine, which they rarely use, seem like an interruption. “You don't get paid for the river,” Tobias says, loosing the line. “You get paid for being the one who goes.”</p>
+    <p>Useful is a generous word for the economics. A run from the pans to the old wharf at Rochester takes eleven hours when the wind behaves, and pays roughly what a delivery driver earns in three. The tide, which once set the rhythm of the whole trade, now sets only the schedule of a loss. Her brother Dale does the sums each winter at the kitchen table, lays the figures flat, and says nothing. Then, each spring, they scrape the hull, tar the rigging and go out again anyway.</p>
   </div>
-</main>
+</article>
 
 </body>
 </html>

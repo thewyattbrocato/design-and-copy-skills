@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Village Hall Tea Rota – November</title>
+<style>
+  :root{
+    --bg:#faf6ef; --card:#fff; --ink:#2b2622; --muted:#6f655b; --line:#e6dccb;
+    --accent:#a2412b; --accent-ink:#fff; --soft:#f6e6d9; --ok:#2f6b3f;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    display:flex; justify-content:center; padding:16px;
+  }
+  main{width:100%; max-width:560px; display:flex; flex-direction:column; gap:12px}
+  header h1{font:700 1.5rem/1.2 Georgia,"Times New Roman",serif; margin:0}
+  header p{margin:2px 0 0; color:var(--muted); font-size:.95rem}
+  ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px}
+  li{
+    display:grid; grid-template-columns:64px 1fr auto; align-items:center; gap:12px;
+    background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+  }
+  .date{text-align:center; line-height:1.1}
+  .date b{display:block; font-size:1.5rem}
+  .date span{font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted)}
+  .who{font-weight:600}
+  .what{font-size:.9rem; color:var(--muted)}
+  li.past{opacity:.6; background:transparent}
+  li.picked{border-color:var(--accent); background:var(--soft); box-shadow:0 0 0 2px var(--accent) inset}
+  li.target button{border-color:var(--accent); color:var(--accent)}
+  button{
+    font:inherit; font-size:.9rem; font-weight:600; min-height:40px; padding:6px 14px;
+    border-radius:8px; border:1.5px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;
+  }
+  button:hover:not(:disabled){border-color:var(--accent)}
+  button:focus-visible{outline:3px solid #1d5fd1; outline-offset:2px}
+  button:disabled{cursor:default; color:var(--muted); background:transparent; border-color:transparent}
+  li.picked button{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+  #status{
+    min-height:2.6em; padding:8px 12px; border-radius:8px; background:var(--soft);
+    font-size:.95rem; display:flex; align-items:center; justify-content:space-between; gap:8px;
+  }
+  #undo{min-height:32px; padding:2px 10px}
+  #undo[hidden]{display:none}
+  footer{font-size:.8rem; color:var(--muted)}
+  @media (max-width:380px){ li{grid-template-columns:52px 1fr auto; gap:8px} }
+  @media (prefers-reduced-motion:no-preference){ li{transition:background .2s,border-color .2s} }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Tea Rota · November 2026</h1>
+    <p>Who’s bringing cake each Sunday, 3pm in the village hall.</p>
+  </header>
+
+  <ul id="rota"></ul>
+
+  <div id="status" role="status" aria-live="polite">
+    <span id="msg">Tap “Swap” on a Sunday, then “Swap here” on the one you’d like to trade with.</span>
+    <button id="undo" type="button" hidden>Undo</button>
+  </div>
+
+  <footer>Swaps are saved on this device only. Please also tell the person you’ve swapped with!</footer>
+</main>
+
+<script>
+(function(){
+  var today = new Date(2026, 10, 4); // fixed to the month shown
+  var days = [1,8,15,22,29];
+  var initial = [
+    {who:"Margaret", cake:"Lemon drizzle"},
+    {who:"Dave & Sue", cake:"Victoria sponge"},
+    {who:"Priya", cake:"Carrot cake"},
+    {who:"Old Tom", cake:"Fruit loaf"},
+    {who:"Hannah", cake:"Ginger parkin"}
+  ];
+  var KEY = "teaRota-2026-11";
+  var slots = initial.map(function(s){return {who:s.who, cake:s.cake}});
+  try{
+    var saved = JSON.parse(localStorage.getItem(KEY));
+    if(saved && saved.length === days.length) slots = saved;
+  }catch(e){}
+
+  var picked = null, last = null;
+  var list = document.getElementById("rota");
+  var msg = document.getElementById("msg");
+  var undo = document.getElementById("undo");
+
+  function isPast(i){ return new Date(2026,10,days[i]) < new Date(today.getFullYear(),today.getMonth(),today.getDate()); }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(slots)); }catch(e){} }
+  function label(i){ return "Sunday " + days[i] + " November"; }
+
+  function render(){
+    list.innerHTML = "";
+    slots.forEach(function(s,i){
+      var li = document.createElement("li");
+      var past = isPast(i);
+      if(past) li.className = "past";
+      if(picked === i) li.className = "picked";
+      else if(picked !== null && !past) li.className += " target";
+
+      var d = document.createElement("div"); d.className = "date";
+      d.innerHTML = "<span>Sun</span><b>"+days[i]+"</b>";
+
+      var m = document.createElement("div");
+      var w = document.createElement("div"); w.className = "who"; w.textContent = s.who;
+      var c = document.createElement("div"); c.className = "what";
+      c.textContent = past ? s.cake + " · done" : s.cake;
+      m.appendChild(w); m.appendChild(c);
+
+      var b = document.createElement("button"); b.type = "button";
+      if(past){ b.textContent = "Done"; b.disabled = true; }
+      else if(picked === i){ b.textContent = "Cancel"; b.setAttribute("aria-label","Cancel swap for "+label(i)); }
+      else if(picked !== null){ b.textContent = "Swap here"; b.setAttribute("aria-label","Swap "+s.who+" on "+label(i)+" with "+slots[picked].who); }
+      else { b.textContent = "Swap"; b.setAttribute("aria-label","Swap "+s.who+" on "+label(i)); }
+      if(!past) b.addEventListener("click", function(){ click(i); });
+
+      li.appendChild(d); li.appendChild(m); li.appendChild(b);
+      list.appendChild(li);
+    });
+  }
+
+  function click(i){
+    if(picked === null){
+      picked = i;
+      msg.textContent = "Swapping " + slots[i].who + " (" + label(i) + "). Now choose who to swap with.";
+    } else if(picked === i){
+      picked = null;
+      msg.textContent = "Swap cancelled.";
+    } else {
+      var a = picked, t = slots[a]; 
+      slots[a] = slots[i]; slots[i] = t;
+      last = [a,i]; picked = null; save();
+      msg.textContent = "Done! " + slots[a].who + " now has " + label(a) + "; " + slots[i].who + " has " + label(i) + ".";
+      undo.hidden = false;
+      render(); return;
+    }
+    undo.hidden = true;
+    render();
+  }
+
+  undo.addEventListener("click", function(){
+    if(!last) return;
+    var a = last[0], b = last[1], t = slots[a];
+    slots[a] = slots[b]; slots[b] = t; last = null; save();
+    undo.hidden = true;
+    msg.textContent = "Swap undone.";
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

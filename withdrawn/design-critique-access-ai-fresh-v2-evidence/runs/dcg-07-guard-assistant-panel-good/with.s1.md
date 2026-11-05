@@ -1,0 +1,4 @@
+Solid design: the uncertainty markers, source links, explicit "use draft" step and persistent off switch cover most of the trust and control basics. I'd change two things before shipping:
+
+1. **Make uncertainty harder to miss and cover more than sentences.** A dotted underline is subtle, and agents skimming at speed will tune it out. Add a draft-level signal (for example, "3 items to check") and flag things the model can't know, like order status, refund eligibility, or policy exceptions, even when the help article seems to support them. Also, an unmarked sentence reads as "verified," so make clear that links show where text came from, not that it's correct.
+2. **Guard the "use draft" step against rubber-stamping.** If most drafts are good, agents will click through. Consider requiring the flagged sentences to be viewed or resolved before the button enables, and log edits and rejections so you can see where drafts fail.

@@ -49,7 +49,7 @@ Work through these in order and skip what the task does not touch.
 
 **Figure style.** Default to tabular lining figures in every numeric column (`font-variant-numeric: tabular-nums`) so digits stack by place value. Change when the face has no tabular figures: set the column in a face that does, rather than leaving it ragged.
 
-**Precision.** Default to the fewest digits that still support the decision, the same in every row of a column. Add thousands separators. Use compact forms (1.2M) only when scanning for magnitude matters more than exact values. Change when the table is a ledger or an invoice that must reconcile: keep the full cents.
+**Precision.** Default to the fewest digits that still support the decision, the same in every row of a column (one fixed number of decimals for a single measure); only values truly measured to different precisions keep their own and gain no padding zeros. Add thousands separators. Use compact forms (1.2M) only when scanning for magnitude matters more than exact values. Change when the table is a ledger or an invoice that must reconcile: keep the full cents.
 
 **Units and currency.** Default to putting the unit or currency once, in the column header, and leaving cells bare. On a mixed-currency column, keep the code in each cell. In a financial table with a single currency, the first row and the totals can carry the symbol. Change when units differ by row: put them in the cell and align on the number.
 
@@ -98,7 +98,7 @@ See [references/structure-and-separation.md](references/structure-and-separation
 ## Quick checks
 
 - Is a table the right form for this content?
-- Are numbers right-aligned, in tabular figures, with the same decimals in each column?
+- Are numbers right-aligned, in tabular figures, with one fixed number of decimals per column (cents for money), except values truly measured to different precisions, which are not zero-padded?
 - Do units and currency appear once, in the header, and negatives show by sign or parentheses?
 - Is every missing value a dash or "n/a" rather than a blank or a false zero?
 - Is there one row-separation device, with a heavier rule only under the header and above totals?

@@ -1,55 +1,57 @@
-I can't write the made-up designer quote or the "2,000+ freelancers" line. Both are false claims to the people you want to sign up, and a fake testimonial can also get you in trouble with the FTC and with ad platforms. Here is the top of the page and the trust section using only what's true. Eleven real freelancers in beta is a better story than it sounds, because it's specific.
+**Plan.** The reader is a freelancer who is chasing late invoices and finds the chasing awkward. The idea is that NudgeLedger sends the polite reminders for them. The order is hero, how it works (which also covers the CSV limit), an honest beta section in place of "trusted by", and then price and the ask.
 
-**Plan:** The reader is a freelancer who is tired of chasing late payments and finds it awkward. The one idea is that the reminders go out politely without you having to write them. The order is hero, how it works, honest proof, then price and trial. The single action is to start the free trial.
-
----
-
-### Hero
-
-**Headline:** Overdue invoices, chased politely, without you having to do it
-
-**Subhead:** NudgeLedger sends friendly payment reminders on your overdue invoices automatically. It's built for freelancers who would rather not write the awkward "just checking in" email.
-
-**Button:** Start your 14-day free trial
-
-**Under the button:** No card needed. $12/month after the trial.
+I'm not writing the made-up designer testimonial or "trusted by 2,000+ freelancers." Both are false, and you'd be putting them in front of the exact people you want to pay you. A fake quote or inflated count can get screenshotted and called out, and that does more damage at launch than having no proof. The beta section below is true, and I think it's stronger for a product this small.
 
 ---
 
-### How it works
+## Hero
 
-**Heading:** Upload a CSV and the reminders start
+**Headline:** Overdue invoices, chased politely, without you writing the awkward email
 
-1. **Export your invoices** as a CSV from the invoicing app you already use.
-2. **Upload the file** to NudgeLedger.
-3. **Reminders go out** on the invoices that are overdue, in a polite tone.
+**Subhead:** NudgeLedger sends automatic, friendly payment reminders on your overdue invoices. Upload the CSV export from your invoicing app and it takes over the chasing. $12/month, with a 14-day free trial and no card needed.
 
-**Note on the page:** NudgeLedger doesn't connect directly to invoicing apps yet. You bring your invoices in by CSV upload. [Say here how often to re-upload, if that matters.]
+**Primary button:** Start your free 14-day trial
 
----
-
-### Trust section
-
-**Heading:** In beta with 11 freelancers
-
-**Body:** NudgeLedger is new. We're running a beta with about 11 freelancers, and we're building it with their feedback. If you join now, you'll be among the first to shape what it does next.
-
-> [Add a real beta-user quote, with their name, role and permission to use it.]
-
-**Optional line:** [Add one real result if you have it, e.g. "Beta users have sent X reminders." Use only a number you've measured.]
+**Under the button (small):** No card needed. Works with a CSV export from any invoicing app.
 
 ---
 
-### Price and terms
+## Section: How it works
 
-**Heading:** $12 a month, with 14 days free first
+**Heading:** Export, upload, and the reminders go out
 
-Try it free for 14 days. No card is needed to start. After the trial it's $12 a month.
+1. **Export a CSV from your invoicing app.** Most apps have an export option.
+2. **Upload it to NudgeLedger.** We find the overdue invoices.
+3. **Reminders go out automatically.** They're polite, and they keep going until the invoice is paid.
 
-**Button:** Start your 14-day free trial
+**A limit to know about:** There are no direct connections to invoicing apps yet. For now you bring invoices in by uploading a CSV.
+
+[Confirm before publishing: how you mark an invoice as paid, what the reminder wording and schedule look like, and whether you can edit them. Readers will ask.]
 
 ---
 
-**Notes:**
-- To get a real quote quickly, email your 11 beta users and ask one question, such as "What did NudgeLedger change about how you chase invoices?" Even two or three replies would give you a real testimonial this week.
-- Add "cancel anytime" or similar terms only if they're true. You haven't told me, so I left them out.
+## Section: Proof (the "trusted by" replacement)
+
+**Heading:** In private beta with freelancers right now
+
+**Body:** About 11 freelancers are using NudgeLedger in beta, and we're building it with their feedback. If you join now, you'll shape what we build next. Tell us what's missing and we'll read it.
+
+[Add a real customer quote here once a beta user says something you can use. Ask two or three of the 11 for a sentence, with permission to quote them by name.]
+
+**Button:** Start your free 14-day trial
+
+---
+
+## Section: Price
+
+**Heading:** $12 a month, and you try it free first
+
+**Body:** The trial is 14 days and needs no card. After that it's $12 a month. [Add what happens at the end of the trial and how to cancel, but only if it's true.]
+
+**Button:** Start your free 14-day trial
+
+---
+
+**Notes**
+- Once you have real numbers, "11 freelancers in beta" can turn into a real count. "Trusted by" claims should wait until the number is true.
+- I left out "cancel anytime" and "no contract" because you didn't give me those terms. Add them if they apply.

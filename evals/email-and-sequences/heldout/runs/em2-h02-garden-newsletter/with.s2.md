@@ -1,36 +1,25 @@
-**Subject:** October at Kettle Hill: bed cleanup, compost day, new shed lock
+**Subject:** Kettle Hill October: winter beds, compost day, new shed lock
+**Preview:** Compost day is [date]. Plot holders, the shed code is coming separately.
 
-**Preview:** What to do with your plot before winter, and what's changed at the shed
+Hi Kettle Hill neighbors,
 
----
+Here's what's happening at the garden this month.
 
-Hi all,
+**Compost day: [day, date, time]**
+We're hosting a compost day at the garden. [One line on what to bring or what we'll be doing.] Come for as long as you can. If you can only make part of it, that still helps. Reply to this email if you have questions.
 
-October is when the garden starts to wind down, so this issue covers three things: putting the beds to rest, a compost day, and the new shed lock.
-
-**Clearing and covering the beds**
-
-We're clearing and covering the beds for winter this month. If you have a plot, please clear out spent plants and anything that's finished for the season. Then cover the bed so the soil is protected until spring. If you're not sure what to pull and what to leave, ask a neighbor at the garden or reply to this email.
-
-Neighbors who aren't plot holders are welcome to come lend a hand.
-
-**Compost day**
-
-We're holding a compost day this month. The date is [date and time], at [meeting spot]. Bring [gloves / tools, if needed]. It's a good chance to meet other gardeners, and you don't need any experience to join in.
+**Clearing and covering the beds for winter**
+It's time to put the beds to rest. If you have a plot, please clear out finished plants and cover your bed for the winter. [Add any deadline, or where to find cover materials, if there is one.]
 
 **New lock on the tool shed**
+The shed lock has been replaced, so the old code no longer works. Plot holders, you'll get the new code in a separate message. If you have a plot and don't see it by [date], let us know.
 
-The tool shed lock has been replaced, so the old code no longer works. If you have a plot, you'll need the new code. It's coming in a separate email, so keep an eye out for it. If it hasn't arrived by [date], reply to this email and we'll sort it out.
-
-Thanks for everything you've put into the garden this year.
+Thanks for everything you've put into the garden this season.
 
 [Your name]
 Kettle Hill Community Garden
-
-[Unsubscribe]
+[Unsubscribe link]
 
 ---
-
-Before you send:
-- Fill in the bracketed spots. The compost date is the main one. If you still haven't picked it by tonight, replace that paragraph with "Date coming soon, we'll email as soon as it's set."
-- I made up "neighbors are welcome to help" and the "no experience needed" line. Delete them if they don't match how you run things.
+- Today is Oct 29, so "sometime this month" is nearly over. Either pick a date in the next couple of days, or move compost day to early November and change the wording. The `[date]` brackets need your answer either way.
+- I left out anything I didn't know, like cover materials, bed-clearing deadlines and what to bring. Fill those in or delete those lines.

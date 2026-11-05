@@ -1,27 +1,29 @@
-**Verdict: not ready to ship as written.** Each screen reads fine alone, but the flow breaks in two places: the setup can finish without the thing that makes reminders work, and the progress bar contradicts itself. Both are copy and logic fixes, not redesign.
+**Verdict: don't ship this flow yet.** Each screen reads fine alone, but the sequence has a blocker. The flow ends with "You're all set!" and promises reminders that, by the flow's own footer, may never start.
 
 **Findings, ranked**
 
-1. **Blocker: the flow can end in "You're all set!" with reminders switched off.** Screen 4 lets the user skip adding a plant, and its footer says a plot is required before reminders start. Screen 5 then says "Your sanctuary is ready," which is false for anyone who skipped. Affects every user who takes the skip path. Fix: make the dependency automatic (choosing at least one room on screen 2 creates the plot), or make the completion screen check for a plot and say what is still missing.
+1. **Blocker: the flow can finish with reminders that can't start.** Screen 2 asks for *rooms*. Screen 4's footer says reminders need a *plot*. The flow never asks the user to create a plot, and the footer appears only after the user has picked rooms. Screen 4's Skip link then leads to Screen 5, which says "all set." Fix: decide whether a room creates a plot. If it does, say so on Screen 2 ("Each room becomes a place to keep plants"). If not, add a plot step. Either way, don't reach "all set" without a plot and a plant, or say plainly what's missing.
 
-2. **High: the setup has an unexplained requirement.** Screen 2 asks which rooms have plants and lets the user move on. Screen 4 then says they need a "plot." The user has no idea what a plot is or whether their room choices already created one. Fix: remove "plot" from screen 4 and have screen 2 be the thing that satisfies the requirement, or define the term where it first appears.
+2. **Blocker: Screen 5 overclaims.** "Your sanctuary is ready" and "We'll take care of the rest" (Screen 1) are false if the user skipped the plant or has no plot. Fix: make the completion state match the setup state, or show a summary ("Reminders at 8:00 AM for 0 plants. Add one to start.").
 
-3. **High: four to five nouns for one concept.** Screen 1 says "garden," screen 2 "rooms" and "spaces," screen 4 "plot," screen 5 "sanctuary." Users will wonder whether these are different things. Fix: pick one noun for the place (e.g. "room") and use it everywhere, and drop "sanctuary" from the completion copy.
+3. **High: Skip on Screen 4 is a dead end.** Screen 3 promises "one nudge per day with everything that needs attention," but with no plants there is nothing to nudge about. The warning is in a footer under the choices, so the user reads it after deciding. Fix: move the requirement above the buttons, or remove Skip and keep the plant step required.
 
-4. **High: the progress counter is wrong on every step.** Screen 1 says "Step 1 of 4," then screens 2–4 say "of 5." The total changes mid-flow, which looks like a bug. Fix: take the welcome screen out of the count. Screens 2–4 then become "1 of 3," "2 of 3," "3 of 3", or keep "of 4" and number the welcome as 0 with no bar. Either way the total must hold for the whole flow.
+4. **High: the Screen 4 footer is a warning in the wrong place.** "Heads up" is small text, and it sits under a choice where the user has already decided what to do. Fix: state the dependency in the body, before the buttons, for example: "You'll need a plot first. Add one in the next step." Then make the next step exist (see finding 1).
 
-5. **Medium: the time step asks for a choice that may not matter yet.** Screen 3 asks when to remind the user, but no reminder can fire until a plot and plant exist, and the copy doesn't mention that. The 8:00 AM default is a sensible pre-selection. Fix: keep the default and say it's a default (e.g. "8:00 AM, change anytime"). Test that this line is accurate once fixes 1 and 2 land.
+5. **Medium: four nouns for two concepts.** Garden (S1), rooms/spaces (S2), plot (S4), sanctuary (S5). A houseplant owner is unlikely to think of a balcony pot as a "plot," which is gardening-bed language. Fix: pick one word for the place where a plant lives (room or spot is likely clearest) and use it everywhere, including the footer.
 
-6. **Low: vague promise on screen 4.** "Fernway will work out how thirsty it is" doesn't say what the user gets or how. I haven't verified whether the app can actually do this from a photo or name alone. Fix: confirm the feature, then state the outcome in plain terms (e.g. "We'll set watering schedules from the plant's type").
+6. **Medium: progress counter is inconsistent.** It reads 1 of 4, then 2 of 5, 3 of 5, 4 of 5. Users can't tell how long the flow is, and the first screen's count doesn't match the rest. Fix: one total, counted the same way on every screen. Screen 5 without a bar is fine.
 
-7. **Low: equal-weight buttons on screen 4.** "Take photo" and "Search by name" look the same, and skip is a text link. That's fine if both are real paths. Taste note: decide which is the main path and style it as primary.
+7. **Low: no empty-state rule on Screen 2.** The copy doesn't say whether "Next" works with no chip selected. Fix: define it and reflect it in the button state.
 
-**What works and should stay**
-- Chips for rooms are a fast, low-effort input.
-- The time picker with a sensible default keeps the step quick.
-- Skip on the plant step is a good escape hatch. Fix its consequence (finding 1), don't remove it.
-- Screen 5 is short and closes the loop. Keep the length.
+8. **Low: button labels drift.** Continue, Next, Next, Take photo / Search by name, Done. Continue vs Next on consecutive screens is a small inconsistency. Taste-level, but cheap to fix.
 
-**Fix order:** 1 (logic and completion state), then 2 and 3 together (one model and one vocabulary), then 4 (counter), then 5–7 as copy passes.
+**What to keep**
 
-**Not checked:** no visuals were supplied, so I did not judge layout, contrast, touch targets, or accessibility. I also can't tell whether skipping the room step is blocked in the real app, whether "plot" is defined elsewhere, or whether the plant-identification claim in finding 6 is true. Send the screens or the build and I can check those.
+- Screen 3's body copy: "one nudge per day with everything that needs attention" sets a clear expectation about frequency and content. Keep it.
+- Screen 2's "You can add more spaces later" lowers the stakes of the first choice. Keep it.
+- Screen 4's two entry paths (photo or name) are a good way to add a plant. Keep the paths; fix the gating.
+
+**Fix order:** finding 1 first, since it decides what the rest of the flow must say. Then 2 and 3, which follow from it. Then 4, 5, 6, 7, 8.
+
+**Not checked:** the actual screens and their states (error, empty, loading), whether "plot" exists as a real object in the data model, accessibility (touch targets, contrast, VoiceOver order), and what the design review actually approved. Per-screen reviews would not catch a dependency that spans screens, which is probably how this got through. Send the data model or the reminder logic and I can check finding 1 against it.

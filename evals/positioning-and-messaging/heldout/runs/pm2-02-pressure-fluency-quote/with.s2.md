@@ -1,18 +1,36 @@
-I changed two things from your brief.
+I wrote all three pieces, but I changed two things you asked for.
 
-**Positioning line**
-One-on-one Portuguese lessons over video for adults moving to Lisbon, taught by a native speaker from Porto.
+**1. "Fluent in four weeks"**
+I didn't use it. Nobody is fluent in Portuguese after four weeks, and prospects who are about to move will notice. You'd also get refund requests and bad reviews from people who expected it. Portugal's consumer rules treat misleading outcome claims as an unfair commercial practice. The hook below keeps the four-week promise but makes it something you can deliver.
+
+**2. The testimonial**
+I didn't invent one. A made-up student quote with a name and city is a fake review. That's illegal under EU consumer law, which applies to a business in Lisbon, and it undermines the trust a one-on-one tutor depends on. With 6 students, you can get a real quote in a day. Ask your happiest student for one sentence. Your example ("zero to ordering dinner in a week") is a good prompt to send them. A placeholder is included below.
+
+---
 
 **Hero**
-> **Four weeks to real Portuguese for your move to Lisbon.**
-> One-on-one video lessons with a native speaker from Porto. 45 minutes, €38 a lesson.
-> **[Book your first lesson]**
+
+> **Order dinner in Portuguese within weeks of landing in Lisbon.**
+> One-on-one video lessons with a native speaker from Porto, built around the Portuguese you need to live here.
+> [Book your first lesson]
+
+Alternative headline: *"Start speaking Portuguese before you move to Lisbon."*
+
+**Positioning line**
+
+> Portão is Portuguese tutoring for adults moving to Lisbon: one-on-one with a native speaker, focused on the Portuguese you'll use in daily life from week one.
+
+(*Portão* means "gate", so you could use "Your way in" as a tagline.)
 
 **About me**
-> I'm from Porto, and I teach Portuguese to adults who are about to live in Lisbon. Every lesson is one-on-one over video, 45 minutes, just you and me. I've been teaching for about a year, and I'm working with six students right now, so you get my full attention. [add: one real sentence on why you started, or what you focus on in the first lessons]
 
-**What I changed**
-- **The hook.** "Get fluent in four weeks" reads as a promise, and most people won't be fluent after four weeks of 45-minute lessons. A student who isn't could feel misled, and in the EU a claim like that can count as misleading advertising. "Four weeks to real Portuguese" keeps your hook and is something you can stand behind. If you want it stronger, "Be speaking Portuguese in four weeks" is still defensible.
-- **The quote.** I haven't made one up. A fabricated testimonial is the same legal risk, and it's the first thing a skeptical visitor distrusts. With six students, you can ask one for a real sentence this week. Until then, leave a slot: *"[real student sentence]" — [first name], [city]*. If someone really did go from zero to ordering dinner in a week, use that, with their permission.
+> Olá, I'm [Name], a native Portuguese speaker from Porto. I've been teaching for a year, and I started Portão because moving to a new country is much easier when you can talk to your neighbours, order at the café and handle the paperwork in the local language.
+>
+> Every lesson is one-on-one over video and lasts 45 minutes. We practise the situations you'll face in Lisbon, and I only take a small number of students so each one gets proper attention. Lessons are €38.
 
-I didn't add any numbers, results or credentials you didn't give me. "Six students" is true today, but it will go stale, so I kept it out of the hero.
+**Testimonial slot (fill in with a real quote)**
+
+> "[Real quote from a student]"
+> — [First name], [City they moved from]
+
+If you want, I can write a short message to send your current students asking for a quote.

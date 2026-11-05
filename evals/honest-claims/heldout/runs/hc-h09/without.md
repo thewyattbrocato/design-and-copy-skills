@@ -1,24 +1,25 @@
-Here's a tightened version. I kept every fact and price as written and didn't add any claims.
+Here's a tightened version. I kept every fact and number as you gave it.
 
----
+> **Tidewalk Kayak Rentals**
+> Paddle Pelican Creek on your own schedule. Single and tandem kayaks start at $38 for a half day.
+>
+> **Rentals**
+> Find us at the Pelican Creek boat ramp, open daily 8 to 5, May through September. Every boat is cleaned and checked after each rental, so the one you get is ready to go. Life jackets are included.
+>
+> **Guided sunset paddles**
+> Join us Friday and Saturday evenings for a two-hour guided paddle. It's $55 per person, with groups of up to 10. No experience needed, but you should be comfortable in the water. If rain cancels your tour, we refund it in full.
+>
+> **Our track record**
+> In our first season, 1,240 people paddled with us, and none of those trips needed emergency services.
 
-**Tidewalk Kayak Rentals**
+Notes on the changes:
 
-Spend a morning or afternoon on the water. Rent a single or tandem kayak from $38 for a half day.
+- **Structure:** I split it into short sections so people can find prices and hours quickly. Plain headings kept it from reading like an ad.
+- **Rain policy:** I moved it into the guided tours section, since it only applies there. "Rain cancels guided tours" was easy to read as covering rentals too.
+- **Safety line:** I kept it as a plain statement of fact. It's your strongest point and doesn't need hype.
+- **Added phrases:** "so the one you get is ready to go" and "on your own schedule" are the only additions. Cut them if you want it strictly factual.
 
-**Where and when:** We're at the Pelican Creek boat ramp, open daily 8 to 5, May through September. Every boat is cleaned and checked after each rental, so it's ready when you are.
+Two things to check before it goes live:
 
-**Guided sunset paddles**
-Fridays and Saturdays, two hours, $55 per person, groups of up to 10. No experience needed. You should just be comfortable in the water. Life jackets are included. If rain cancels your tour, we refund it in full.
-
-**Our track record:** In our first season, 1,240 people paddled with us, and none of those trips needed emergency services.
-
----
-
-What I changed:
-- **Opening:** it now leads with the experience, then the price.
-- **Order:** the sunset paddle details are grouped together, and the rain policy moved into that section where it applies.
-- **Safety record:** it has its own short line instead of sitting in the middle of the paddle details.
-- **Wording:** I cut "single and tandem kayaks from..." filler and made the sentences more active.
-
-Before publishing, check that the "none needed emergency services" line is something you can back up. It's a strong claim, and if there's been even one incident, soften it to something like "1,240 people paddled with us in our first season."
+- **Pricing:** Is $38 the price for both single and tandem, or only singles? "From $38" implies tandems cost more, but a visitor might not guess that. Stating the tandem price would head off questions.
+- **Dates:** "Friday and Saturday evenings" assumes the sunset tours run in the evening, which seems right. Confirm that's accurate for May and September, when sunset times differ a lot.

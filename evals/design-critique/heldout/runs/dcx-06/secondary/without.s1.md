@@ -1,17 +1,24 @@
-Each page is internally correct. The math works (8% tax on $24 is $1.92, so $25.92), and Sat 14 Nov 2026 is a Saturday. The problems show up when the pages are read as one flow.
+The thing most likely bugging her is the **cancellation policy**. It only appears once the customer is about to pay, in small print under the button, and nothing asks them to acknowledge it. Each page passes QA alone because the policy is technically shown, but as a whole flow the customer is asked to commit to a non-refundable charge with little notice:
 
-**1. The price shown isn't the price charged.** Page 1 says $24. Page 3 charges $25.92, because an 8% tax is added at the last step. The tax is disclosed before payment, so this may be legal, but the headline number understates what the user pays. That's the kind of gap drip-pricing rules target, and it's the most likely thing a manager would sense without naming.
+- **Page 1 (select a court)** says nothing about cancellation or refunds.
+- **Page 3 (payment)** has the policy in the smallest text on the page, directly under the action button. There's no checkbox or "I understand" step.
+- **Page 4 (confirmation)** doesn't repeat the policy, shows no court, time, or amount, and gives no way to cancel. It only says the confirmation is "on its way to your inbox."
 
-**2. The cancellation policy is shown after the card is entered, with no acknowledgment.** It appears as small print under "Complete purchase." There's no checkbox or "I understand," and nothing earlier in the flow mentions it. The user commits to a non-refundable late cancellation without having affirmatively agreed to it. The flow also never says how to cancel, and the confirmation page has no cancel link. The policy is in force but has no working path.
+So a customer who books, pays, and later wants out has no visible path to cancel and may not have understood that a late cancellation forfeits $25.92. That's a complaints and chargeback risk, and it's the kind of thing a manager senses without being able to name it.
 
-**3. The sport disappears after page 1.** The user picks Tennis or Pickleball, but the result shows only "Court 3, 18:00-19:00." The summary and confirmation never name the sport. A pickleball player can end up booked on a tennis court without noticing. (Whether Court 3 can be either sport is unclear from the text.)
+Smaller issues that compound it:
 
-**4. The guest count is collected and then dropped.** Page 2 asks for 0-3 guests, but no price, summary, or confirmation mentions them. Either a guest fee is missing or the field does nothing. Either way, the club's record of the booking won't show the guests.
+1. **The confirmation page is thin.** It lacks the booking details, the policy, and a cancel link. Once the email is delayed or lands in spam, the customer has only "#HC-2231" to go on.
+2. **Guests don't appear to affect the price.** Page 2 asks for 0–3 guests, but the Page 3 summary shows only the court rental and tax. Either guests are free (and that should be stated) or the total is wrong.
+3. **The sport choice doesn't carry through.** A customer filters by Tennis or Pickleball on Page 1, but the Page 3 summary ("Court 3, Sat 14 November, 6:00 PM to 7:00 PM") doesn't name the sport. A pickleball booking could be paid for as a tennis court, or the reverse, if Court 3 is shared or the sport filter is changed mid-flow.
+4. **"Complete purchase" describes a reservation as a purchase.** The button and the "Thanks for your purchase!" line frame it as a retail sale, which reinforces the feeling that the policy is a fine print add-on.
+5. **No time zone is shown** on the slot times. That matters for the 24-hour cutoff.
 
-**5. The slot isn't held.** Court 3 is chosen on page 1, but nothing reserves it through details and payment. If someone else books it in the meantime, no page says what happens after the card is charged.
+I only had the page text, not the code, so I can't confirm whether any of these happen in the actual system. The first things to check are:
 
-**6. The confirmation is thin.** It shows only a reservation number and says the details are "on its way to your inbox." It doesn't show the date, court, time, sport, guests, amount paid, or a cancel link. If the email is delayed or lands in spam, the user has a number and one button, "Back to home." Small points: "Thanks for your purchase" is odd for a court booking, and the flow shows times as "18:00" on page 1 and "6:00 PM" on page 3.
+- Does a cancel path exist anywhere in the product? If not, that's the biggest gap.
+- Does the guest count change the charge?
+- Does the sport selection get saved to the booking record?
+- Does the confirmation email include the court, time, sport, and policy?
 
-Since each page passed QA on its own, the issues fall between pages. The most serious combination is #1 and #2 together: the user pays more than advertised and agrees to a non-refundable policy they only glimpsed at the last step. #3 and #4 are data-loss problems that will cause support tickets.
-
-If you want, I can draft the fixes as a spec or a list of copy changes for the manager, for example a pre-tax/total price on page 1, an explicit policy checkbox before payment, sport and guests carried through to the summary and confirmation, and a confirmation page with full details and a cancel link.
+If you want, I can draft a revised Page 3 with an explicit acknowledgment checkbox and a Page 4 that restates the booking details and policy.

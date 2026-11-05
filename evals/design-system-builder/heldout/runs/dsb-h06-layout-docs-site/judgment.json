@@ -2,22 +2,22 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "4eee8ee2a024384c",
+    "with": "722fc102c1e8be99",
     "without": "a81913ef0b770a9f"
   },
   "result": {
     "winner": "with",
-    "judge_notes": "pass 1 (A=with, B=without): Answer A has the tighter shared system. A single content/wide/full grid and one spacing token serve both docs and marketing, there are only three breakpoints, and the shell stops growing at a clear 1440px cap. It has small flaws: the 4/8-column scheme in its table is never implemented, and 52ch appears as a literal number even though a matching token exists. Answer B handles code and tables more thoroughly, including bleeding them to the screen edge on phones, but its CSS is messier: a duplicated `.pricing` block with a `composes` line that only works in CSS modules, repeated magic numbers (34rem, 4rem, 28rem), a fourth breakpoint, and root-font scaling that keeps the page growing on very large monitors. | pass 2 (A=without, B=with): B uses one content/wide/full grid that serves both articles and marketing. Code and tables break out to the wide track and scroll, and it gets by with three breakpoints and a clear 1440px cap. A is thorough, with good phone bleed and min-width fixes, but its CSS has an invalid `composes` line, defines the pricing grid twice, and repeats magic values like 4rem and 34rem. Its root-font bump on very wide screens also partly undercuts the stop-growing goal. B has small lapses of its own: 52ch and 16.25rem are hard-coded rather than tokenized, and the 4/8/12 columns in its table are never implemented, but it is cleaner overall.",
+    "judge_notes": "pass 1 (A=with, B=without): Both answers give plausible numbers, use a 68ch reading measure, scroll code and tables inside their own box, and bleed them to the screen edge on phones. A's CSS is tighter and more consistent: one shared grid serves both page types through span variables, values are tokenized, and it adds the fewest breakpoints its pages need. B explains its choices well, especially the code-width reasoning, but repeats the pricing grid, includes a non-standard `composes` line, and hard-codes several values (34rem, 4rem, 28rem) outside its tokens. | pass 2 (A=without, B=with): Both answers give plausible numbers (68ch measure, rem-based wrappers, a clamp() gutter, a root font bump on huge monitors) and handle code and tables well, with scrolling inside the block and edge-to-edge bleed on phones. A lets code use the full article column, which is a thoughtful touch, but its CSS has an invalid `composes:` line, a duplicated pricing block and several repeated magic numbers (4rem, 34rem, 28rem). B's CSS is cleaner and more token-driven, with three breakpoints and a clear split between the prose and wide containers, though its 4/8/12 span system is a little heavier than these pages strictly need.",
     "rubric_scores": {
-      "with": 4.417,
-      "without": 4.0
+      "with": 4.5,
+      "without": 4.167
     },
     "rubric_items": {
       "with": [
         5.0,
         5.0,
         4.0,
-        4.5,
+        5.0,
         4.0,
         4.0
       ],
@@ -25,7 +25,7 @@
         5.0,
         4.0,
         5.0,
-        4.0,
+        5.0,
         3.0,
         3.0
       ]
@@ -39,7 +39,7 @@
         ],
         "raw_verdict": "A",
         "winner": "with",
-        "notes": "Answer A has the tighter shared system. A single content/wide/full grid and one spacing token serve both docs and marketing, there are only three breakpoints, and the shell stops growing at a clear 1440px cap. It has small flaws: the 4/8-column scheme in its table is never implemented, and 52ch appears as a literal number even though a matching token exists. Answer B handles code and tables more thoroughly, including bleeding them to the screen edge on phones, but its CSS is messier: a duplicated `.pricing` block with a `composes` line that only works in CSS modules, repeated magic numbers (34rem, 4rem, 28rem), a fourth breakpoint, and root-font scaling that keeps the page growing on very large monitors."
+        "notes": "Both answers give plausible numbers, use a 68ch reading measure, scroll code and tables inside their own box, and bleed them to the screen edge on phones. A's CSS is tighter and more consistent: one shared grid serves both page types through span variables, values are tokenized, and it adds the fewest breakpoints its pages need. B explains its choices well, especially the code-width reasoning, but repeats the pricing grid, includes a non-standard `composes` line, and hard-codes several values (34rem, 4rem, 28rem) outside its tokens."
       },
       {
         "order": [
@@ -48,7 +48,7 @@
         ],
         "raw_verdict": "B",
         "winner": "with",
-        "notes": "B uses one content/wide/full grid that serves both articles and marketing. Code and tables break out to the wide track and scroll, and it gets by with three breakpoints and a clear 1440px cap. A is thorough, with good phone bleed and min-width fixes, but its CSS has an invalid `composes` line, defines the pricing grid twice, and repeats magic values like 4rem and 34rem. Its root-font bump on very wide screens also partly undercuts the stop-growing goal. B has small lapses of its own: 52ch and 16.25rem are hard-coded rather than tokenized, and the 4/8/12 columns in its table are never implemented, but it is cleaner overall."
+        "notes": "Both answers give plausible numbers (68ch measure, rem-based wrappers, a clamp() gutter, a root font bump on huge monitors) and handle code and tables well, with scrolling inside the block and edge-to-edge bleed on phones. A lets code use the full article column, which is a thoughtful touch, but its CSS has an invalid `composes:` line, a duplicated pricing block and several repeated magic numbers (4rem, 34rem, 28rem). B's CSS is cleaner and more token-driven, with three breakpoints and a clear split between the prose and wide containers, though its 4/8/12 span system is a little heavier than these pages strictly need."
       }
     ]
   }

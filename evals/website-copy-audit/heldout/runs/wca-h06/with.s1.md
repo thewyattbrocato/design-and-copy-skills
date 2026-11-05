@@ -1,24 +1,20 @@
-Here's the copy. I left weekday names out of the date line because of a mismatch I flag below.
+**Hero**
 
-## Hero
-
-**Headline:** Learn to throw clay at Kilnside Studio
-
-**Subhead:** A four-week beginner course on Alder Street. No experience needed. Small classes, and you take your finished pieces home.
-
+**Headline:** Learn to throw clay in four evenings
+**Subhead:** A beginner pottery course at Kilnside Studio on Alder Street. No experience needed, and you take your finished pieces home.
 **Button:** Reserve your spot
+**Small line under the button:** Next classes start 4 November and 6 November
 
-## Intro bullets
+**Intro bullets**
 
-- **Start from zero.** Meet one evening a week for four weeks, Tuesdays or Thursdays, 6:30 to 9:00pm. No experience needed.
-- **Room to learn.** We cap every class at 6 students, so you get real time with your instructor.
-- **Everything's covered.** $180 includes clay, glazing, and firing. After the final week, you take your pieces home.
+- **Start from zero.** You don't need any experience. Over four weeks you'll learn the basics and make pieces of your own.
+- **One price covers everything.** $180 includes clay, glazing and firing fees, so there's nothing extra to buy.
+- **Small classes, 6 students at most.** You get real time with the teacher, and you take your finished pieces home after the last week.
 
-**Next classes start 4 November and 6 November.**
+**Course details line (optional, below the bullets)**
+4 weeks, one evening a week. Tuesdays or Thursdays, 6:30 to 9:00pm.
 
-## Things to check
-
-- **Dates:** In 2026, 4 November is a Wednesday and 6 November is a Friday, but the course runs Tuesdays and Thursdays. Either the dates are off by a day (3 and 5 November?) or I've misread something. Please confirm before this goes live. I'd also add the weekday to the date line once it's settled, e.g. "Tuesday 4 November".
-- **"Throw clay":** The headline assumes the course is wheel work. If it's hand-building or a mix, change it to something like "Learn pottery at Kilnside Studio".
-- **"Real time with your instructor":** This is my inference from the 6-student cap. Cut it if you'd rather not imply a specific amount of attention.
-- **Button:** "Reserve your spot" assumes there's a booking link or form to point it at.
+**Things to check**
+- **Dates and weekdays:** In 2026, 4 November is a Wednesday and 6 November is a Friday, which doesn't match "Tuesdays or Thursdays." I left weekdays off the dates. Please confirm whether the dates or the days are right.
+- **"Throw clay" in the headline:** You didn't say the course is wheel-based. If it also covers handbuilding, or only that, I'd change it to something like "Make your first pots in four evenings."
+- **Button:** I assumed there's a booking or contact link to point it at. Tell me where it should go.

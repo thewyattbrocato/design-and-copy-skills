@@ -2,57 +2,51 @@
 
 ## Hero
 
-**Small-batch hot sauce, fermented for three weeks.**
-Made in a commercial kitchen outside Duluth, from peppers grown by farmers we know by name.
+**Small-batch hot sauce, fermented slow.**
+Made outside Duluth from peppers grown by people we know. Three weeks in the crock before a single bottle is filled.
 
-**[Shop the Sauces]**  ·  $9 a bottle. Ships anywhere in the U.S.
+**[Shop the Sauces]**  ·  $9 a bottle, shipped anywhere in the US
 
 ---
 
-## Slow on purpose
+## Made the slow way
 
-Every batch of Copper Hollow ferments for three full weeks before it goes into a bottle. That's the whole secret. Time gives the peppers a depth and tang that you can't get by rushing, and it's why our sauces taste like more than heat.
+Good hot sauce can't be rushed. Every batch of Copper Hollow ferments for three full weeks before it's bottled. That time gives the peppers a deeper, rounder flavor with some tang and real complexity, and it's why the heat comes with something worth tasting.
 
-We make everything in small batches, by hand, in a rented commercial kitchen outside Duluth. When a batch is ready, it's ready.
+We cook in small batches in a commercial kitchen outside Duluth. We make only as much as we can watch over, taste, and stand behind.
 
-## Four sauces
+## Peppers from people we know
 
-**Smoked Peach Habanero.** Sweet, smoky, and bright, with the habanero's fruity heat coming in right behind. Good on pork, chicken, and anything off the grill.
+Our peppers come from two farms. We know both farmers personally, and one of the farms is in our own county. We know who grew what we're putting in the bottle, and that shows in the sauce.
 
-**Green Ghost.** Jalapeño and tomatillo, fresh and tangy with a green, citrusy kick. Put it on eggs, tacos, or anything that needs waking up.
+## The lineup
 
-**Black Garlic Mild.** Deep, savory, and a little sweet, with all the flavor and very little burn. This is the one for people who say they don't like hot sauce.
+**Smoked Peach Habanero.** Sweet fruit, wood smoke, and a habanero kick that builds as you eat.
 
-**Copper Reaper.** The hot one. It's for people who ask for the hottest thing on the menu and mean it. Start with a drop.
+**Green Ghost.** Jalapeño and tomatillo, bright and tangy. It's the one for tacos, eggs, and anything that needs a lift.
 
-**[See All Four]**
+**Black Garlic Mild.** Deep, dark, and savory, with all the flavor and very little burn. Keep it within reach.
 
-## Know your farmer
+**Copper Reaper.** This is our hot one. It's built for people who ask for the hottest thing on the menu. Consider yourself warned.
 
-The peppers come from two farms we know personally. One of them is in our own county. We know who grows them and how, and we can say so because we've stood in the fields. Good sauce starts with good peppers, and we'd rather buy from people we trust than from a catalog.
+## From the Saturday market to your table
 
-## Started at the market
-
-Copper Hollow began at a Saturday farmers market, one table and a handful of bottles, with people tasting and telling us what they thought. They came back the next week and brought friends. That's how we knew we were onto something.
-
-The online store opened this month, so now you don't have to wait for Saturday. The sauce is the same, made the same way, and it ships to your door anywhere in the U.S.
+Copper Hollow started at a folding table at the Saturday farmers market. People tasted, came back the next week, and brought friends. That's still the best review we could ask for. We just opened our online store, so now you can get the same bottles without waiting for Saturday.
 
 ---
 
 ## Closer
 
 **Find your bottle.**
-
-Four sauces, $9 each, made slowly in small batches. Pick the one that sounds like you, or try all four and settle the argument at your own table.
+Four sauces, $9 each, shipped anywhere in the US. Start with the one that sounds like you, then add a second so you're not caught short.
 
 **[Shop Copper Hollow]**
 
-*Small batch. Slow fermented. Shipped nationwide.*
-
 ---
 
-**A few notes:**
+**Notes**
 
-- **I only used what you told me.** I left out founding dates, awards, press mentions, and "family recipe" lines. Those would read as established, but they'd be made up, and a customer who finds out can lose trust fast. Your real story (market table to online store, farms you know, three-week ferment) holds up well on its own.
-- **For social proof,** the strongest thing you can add is real quotes from market regulars or your first online customers. Drop one or two under the hero or near the closer. If you have a count (bottles sold, markets attended), that works too.
-- **Check the flavor descriptions.** I wrote them from the names and ingredients you gave me, so adjust anything that doesn't match how the sauces actually taste. Tell me the farm's name or county if you'd like to name it, since that would make the farm section more specific.
+- **No invented history.** I left out founding years, awards, press mentions, and "family recipe" language, since I don't know what's true. The market origin, the farms, and the three-week ferment carry the "established" feel on their own, and it holds up if anyone asks.
+- **Things you could add:** your name or a short first-person line, the name of the county or farms (if the farmers are happy to be named), and the market's name. Specifics like these build trust faster than adjectives.
+- **Check these claims:** I wrote "people tasted, came back, and brought friends" based on what you said about people loving the sauces. Change it if it doesn't match what happened. I also gave flavor descriptions, such as the "wood smoke" in the peach and "bright and tangy" for Green Ghost, from the names and ingredients alone. Adjust them to how the sauces actually taste.
+- **Add if true:** shipping times, an ingredient or allergen note, and a heat scale (for example, 1 to 5 per sauce) would help first-time buyers. I didn't make up any numbers.

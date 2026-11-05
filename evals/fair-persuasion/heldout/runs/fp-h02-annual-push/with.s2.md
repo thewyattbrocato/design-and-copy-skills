@@ -1,17 +1,18 @@
-## 1. Pricing page: plan-comparison block
+## 1. Pricing page: plan comparison block
 
-**Same features on both plans. The difference is how you pay.**
+**Choose how you pay. Features are identical on both plans.**
 
-| | **Monthly** | **Annual** |
+| | **Monthly** | **Annual** (better value if you'll use Ledgerlight all year) |
 |---|---|---|
 | Price | $18 per month | $180 per year, billed once |
-| Monthly equivalent | $18 | $15 |
-| Over 12 months | $216 | $180 (**$36 less**) |
-| Cancelling | Any time. The plan runs to the end of your billing month. | Full refund within 21 days of purchase. After that there is no refund, and the plan runs to the end of the year. |
-| 45-minute setup call with a bookkeeper | $40 | Included |
-| Features | Everything in Ledgerlight | Everything in Ledgerlight |
+| Per month | $18 | $15 |
+| Over 12 months | $216 | $180, which is $36 less |
+| Setup call with a bookkeeper (45 min) | $40 | Included |
+| Cancel | Any time. Your plan runs to the end of the billing month. | Full refund within 21 days of purchase. After that there is no refund, and the plan runs to the end of the year. |
 
-**Which fits?** Choose annual if you expect to use Ledgerlight for the full year and want the lower price. Choose monthly if you'd rather keep the option to stop at the end of any month.
+**Monthly** suits you if you want to stay flexible or you're not sure how long you'll need a bookkeeping app.
+
+**Annual** suits you if you already know you'll be using Ledgerlight for the year. You pay less overall, and the setup call is included.
 
 [Choose monthly] [Choose annual]
 
@@ -19,37 +20,36 @@
 
 ## 2. In-app banner
 
-**Pay once a year and spend $36 less.**
-Annual is $180 billed once, which works out to $15 a month instead of $18. Features are the same, and the 45-minute bookkeeper setup call is included. Full refund within 21 days.
+**Paying monthly? Annual works out to $15 a month, which is $36 less over a year.**
+It's $180 billed once, with a full refund within 21 days. The 45-minute setup call with a bookkeeper is included. On monthly it's $40.
 
-[See the annual plan] [Not now]
+[See annual plan] [Not now]
 
 ---
 
 ## 3. Email to current monthly subscribers
 
-**Subject:** Annual or monthly for Ledgerlight: the numbers
+**Subject:** Annual would cost you $36 less than monthly
 
 Hi [first name],
 
-You're on Ledgerlight's monthly plan at $18 a month. We also offer an annual plan, and here is how the two compare so you can pick the one that suits you.
+You're on Ledgerlight's monthly plan at $18 a month. If you expect to keep using Ledgerlight for the next year, the annual plan costs less, so here are the numbers.
 
-- **Annual:** $180, billed once. That's $15 a month, or $36 less than twelve months at the monthly price.
-- **Same features:** Nothing is locked to either plan.
-- **Setup call:** The annual plan includes a 45-minute setup call with a bookkeeper. On monthly, the same call costs $40.
-- **Refund window:** If you switch to annual and change your mind, you can get a full refund within 21 days of purchase. After 21 days there is no refund, and the plan runs to the end of the year.
+- **Annual:** $180 billed once. That's $15 a month, or $36 less than twelve months at the monthly price.
+- **Same product:** features are identical on both plans.
+- **Setup call:** annual includes a 45-minute setup call with a bookkeeper. On monthly, the same call costs $40.
 
-Annual makes sense if you expect to keep using Ledgerlight for the next twelve months. If you'd rather keep the freedom to cancel at the end of any month, staying on monthly is a fine choice. Nothing changes unless you act.
+Before you decide, here's what you'd be agreeing to. You can get a full refund within 21 days of buying the annual plan. After 21 days there's no refund, and the plan runs to the end of the year. On monthly you can cancel any time, and the plan runs to the end of the billing month.
 
-[See the annual plan: link]
+If you're not sure you'll need Ledgerlight for a full year, staying on monthly is a sensible choice, and nothing changes for you.
 
-Thanks for using Ledgerlight.
+If annual suits you, you can switch here: [link]
 
-[Sender name]
+[Name]
 Ledgerlight
 
 ---
 
 **Notes**
-- I didn't say how a switch works: whether the rest of the current month is credited, or when the annual term starts. Add that to the email and pricing block once confirmed, because people will ask.
-- To check this isn't pushing people into plans they regret, track annual refund requests inside the 21-day window and any rise in support tickets about "I didn't realize it was non-refundable after 21 days."
+- Placeholders to fill in: `[first name]`, `[link]`, `[Name]`. You didn't say how the switch treats the rest of someone's current billing month, so I left that out. Add it if people will ask.
+- To check this isn't over-pushing, track annual refund requests inside the 21-day window and complaints from people who didn't realise there's no refund after day 21. Watch those alongside conversion.

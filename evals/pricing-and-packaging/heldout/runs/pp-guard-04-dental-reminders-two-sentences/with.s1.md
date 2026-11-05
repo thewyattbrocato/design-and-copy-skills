@@ -1,0 +1,1 @@
+No, $49 a month is cheap for a clinic that size: 40 patients a day is about 850 appointments a month, so it works out to roughly 6 cents per appointment. If it prevents even one no-show a month (often $150 or more in lost chair time), it pays for itself. Just check that it includes two-way confirmations and doesn't charge per-text overages.

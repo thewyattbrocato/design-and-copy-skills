@@ -1,95 +1,81 @@
 # Moss Hollow Ceramics Supply: content briefs
 
-**Assumption:** Tobias writes drafts and uploads. Ines is the only person who can approve technical claims. Class pages are out of scope.
+## Brief 1: Product page (clay, glaze, tool, kiln accessory)
 
-## Who owns what
+**Job:** A buyer can tell whether this product suits their work and can add it to the cart without emailing us. We want fewer pre-sale questions and fewer wrong-product orders.
 
-| Item | Writes and uploads | Decides / signs off |
-|---|---|---|
-| Product page copy | Tobias | Tobias for copy. Ines for firing temperatures, safety and anything about materials. |
-| Product facts (spec, price, stock) | Ines supplies notes | Ines |
-| Product photos | Freelance photographer | Ines briefs and accepts |
-| Glaze how-to | Tobias | Ines (test results, temperatures, safety) |
-| Glaze test | Ines, in the shop kiln | Ines |
+**Reader:** A hobbyist or studio potter who knows ceramics basics but not this product. Assume they know their own kiln and clay body, and don't explain what bisque firing is.
 
-Ines has the right to say no on any technical claim. Tobias decides wording and layout. If Ines hasn't answered within 3 working days, Tobias asks again and doesn't publish the page.
+**Order:** The first screen shows what it is, the size or weight, the price and the photo. Next come use details such as firing range, compatibility and how to apply it. Safety and handling notes come last. Link to the spec sheet or safety data sheet if the supplier provides one.
 
----
-
-## Brief 1: Product page
-
-**Job:** A buyer can tell whether this is the right clay, glaze, tool or kiln accessory, and can add it to the cart. Success is a buyer who needs no email to Ines first.
-
-**Reader:** A hobbyist or studio potter who knows their own kiln and clay but not this product.
-
-**Order:**
-1. What it is and what it's for.
-2. Key specs: cone or temperature range, size, weight, pack size.
-3. Price and stock.
-4. Usage and safety notes.
-5. Detail on request: full spec, supplier data.
-
-**Facts that must appear:**
+**Facts that must appear**
 
 | Fact | Source | Confirmed by |
 |---|---|---|
-| Name, size, pack | Supplier spec sheet | Tobias |
-| Firing range (cone/temperature) | Spec sheet, Ines's notes | **Ines** |
-| Safety or handling (dust, food safety, kiln limits) | Spec sheet, Ines's notes | **Ines** |
-| Price, stock | Ines | Ines |
-| "Tested in our kiln" | Ines's test record | **Ines**; leave it out if untested |
+| Name, size or weight, price | Supplier sheet, our price list | Tobias |
+| Firing temperature or cone range | Supplier sheet | **Ines** |
+| Safety or handling notes (dust, food-safe claims, ventilation) | Supplier sheet, Ines's notes | **Ines** |
+| What it works with (clay bodies, kilns, other glazes) | Ines's notes | Ines |
+| Stock and shipping | Shop system | Tobias |
 
-**Source material:** Supplier spec sheet plus Ines's notes. Where they disagree, ask Ines and don't pick one. Don't copy supplier wording unchanged. Photos come from the photographer's shoot. If none exist yet, mark the page "photo needed" and leave it unpublished, or publish it with the supplier image only if Ines agrees.
+Tobias never writes a firing temperature or safety claim from memory. If the supplier sheet and Ines's notes disagree, leave the line out, mark it `[CHECK: Ines]` and carry on.
 
-**Terms and links:** Use the same product names as the spec sheet and the shelf label. Link to related glazes, tools or a how-to article only if it exists. Next step is add to cart.
+**Source material:** Supplier spec sheet plus Ines's notes. Ines gives Tobias notes when she buys stock. If a product has no notes, Tobias writes only what the spec sheet states and flags the gaps for Ines.
 
-**Review:** Tobias drafts. Ines checks only the temperature and safety lines, plus price. Ines gets 3 working days.
+**Photos:** The freelance photographer shoots new products a few times a year. Until then, use the supplier image or a plain phone photo, and mark the page `[needs photo]` on the tracking list. Ines books the photographer and sends the list of products waiting. Tobias uploads the finished images.
 
-**Stale when:** The supplier changes the formula or packaging, the price changes, or Ines's testing contradicts the page. Ines watches for these, since Ines buys the stock. Tobias updates within one working week of Ines flagging.
+**Terms and links:** Use the supplier's product name and add our own category label. Link to related products Ines names, and to the relevant glaze how-to article if one exists.
 
-**Before launch:** No placeholder text. Temperature and safety lines are signed off by Ines.
+**Owner and reviewers**
+- **Tobias** writes, uploads and decides wording and layout.
+- **Ines** approves anything about temperatures or safety, and decides what we stock. She replies within `[Ines to set: e.g. 2 working days]`. Pages with no temperature or safety content don't need her review.
 
----
+**Staleness:** Re-check the page when the supplier changes the formula, packaging or spec sheet, when price or stock changes, or when a customer asks the same question twice. Whoever takes the question or the supplier notice tells the other. Ines re-checks temperature and safety lines whenever she reorders from the supplier.
 
 ## Brief 2: Glaze how-to article
 
-**Job:** A potter can get a good result with this glaze on the first try. For the shop, the article ties together the glaze and the clay and tools needed to use it.
+**Job:** A potter can reproduce a result we have actually achieved, and sees which glaze to buy from us to get it.
 
-**Reader:** A potter who has bisque-fired work and has this glaze or is considering it.
+**Reader:** A potter who has glazed before and wants to use this glaze well: how to apply it, how it fires, what can go wrong.
 
-**Start only when:** Ines has tested the glaze in the shop kiln and handed Tobias the results. No test means no article, and Tobias writes nothing on a guess.
+**Order:** Start with the finished result and the fired-test photo. Then the glaze, clay body and cone used. Then application steps, then the firing schedule, then what to watch for. Product links go at the end of the article, not in the middle of the steps.
 
-**Order:**
-1. The result: what the glaze looks like fired, with a photo.
-2. What you need: glaze, clay body, tools, kiln settings.
-3. Steps: application, coats, drying, firing schedule.
-4. What can go wrong, and what to change.
-5. Safety notes.
-6. Related products.
-
-**Facts that must appear:**
+**Facts that must appear**
 
 | Fact | Source | Confirmed by |
 |---|---|---|
-| Clay body and bisque temperature tested | Ines's test | **Ines** |
-| Application: coats, thickness, method | Ines's test | **Ines** |
-| Firing schedule and cone | Ines's test | **Ines** |
-| Results and faults seen | Ines's test, test tiles | **Ines** |
-| Safety (mixing, dust, food safety) | Spec sheet, Ines | **Ines** |
+| Glaze, clay body, number of coats | Ines's test notes | **Ines** |
+| Cone, firing schedule, kiln type | Ines's test log (shop kiln) | **Ines** |
+| Result and any problems seen (running, pinholing, crawling) | Ines's test tiles | **Ines** |
+| Safety (ventilation, food-safe claims) | Ines, supplier sheet | **Ines** |
 
-State the kiln and clay body of the test, so readers know the result may differ in theirs. Write only what Ines saw. Don't generalize to other clays or kilns.
+**What the article may claim:** Only results from the shop kiln, in the words "tested in our shop kiln at `[cone]`". Don't promise the same result in other kilns. Don't write about untested combinations.
 
-**Source material:** Ines's test notes and tile photos. If the photos are Ines's own, ask Ines for them rather than waiting for the photographer.
+**Sequence**
+1. Ines tests the glaze and hands Tobias her notes plus the test tiles.
+2. Tobias writes the draft within `[Tobias to set: e.g. one working week]`.
+3. Ines checks the draft against her test, mainly the numbers, and approves.
+4. Tobias uploads and links the article from the product page.
 
-**Terms and links:** Link each glaze, clay and tool to its product page. Check those pages exist before publishing.
+No article is started until Ines has finished the test. Nothing goes live without her sign-off.
 
-**Review:** Tobias drafts. Ines reads the whole article once, because firing instructions are the riskiest content in the shop. Ines gets 3 working days.
+**Photos:** Tobias or Ines photographs the test tiles. The freelance photographer is not used for how-to articles.
 
-**Stale when:** The glaze is reformulated or discontinued, the supplier changes it, or Ines retests with a different result. Ines watches. If a linked product is retired, Tobias updates or removes the link.
+**Staleness:** Re-check an article when the glaze is reformulated or discontinued, when Ines retests and gets a different result, or when a customer reports a result that contradicts it. If a glaze is discontinued, Ines decides whether to retire the article or add a note.
 
----
+## Who owns what
 
-## Notes
+| Item | Owner | Final say |
+|---|---|---|
+| Product page wording and upload | Tobias | Tobias |
+| Temperatures and safety lines | Ines | Ines |
+| What we stock and supplier notes | Ines | Ines |
+| Glaze testing | Ines | Ines |
+| Article draft and upload | Tobias | Tobias (Ines approves facts) |
+| Booking the photographer | Ines | Ines |
 
-- **No analytics yet:** Judge freshness by Ines's read-through and by questions customers ask in the shop or by email. Setting up basic analytics is the first thing to measure.
-- **No reviews yet:** Don't write "customers love" or add rating placeholders. Add a review section only when real reviews exist.
+**Out of scope:** the four class pages.
+
+*Assumptions:* Ines books the photographer, and she can review within the turnaround she sets above. Change either if that's wrong.
+
+*Not included:* Success measures and review-based copy. You have no analytics or customer reviews yet, so add those once they exist.

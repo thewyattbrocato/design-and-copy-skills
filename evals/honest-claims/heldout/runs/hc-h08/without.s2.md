@@ -1,16 +1,17 @@
-**DUNE & DIME**
-*The First Bank on Mars. Also the Last. Also the Only. We're thrilled about all three.*
+**Dune & Dime: The First Bank on Mars™**
 
-Why trust your money to Earth banks, which are **54 million miles away** and have never once survived a dust storm? At Dune & Dime, your savings are protected by **11 feet of premium Martian regolith** and our founder's unshakable confidence.
+*Your money, but a very long way from anyone who could lose it.*
 
-Our accounts earn a guaranteed **212% APY**, a figure we calculated ourselves, on a whiteboard, while excited. Every deposit is insured by the **Federal Deposit Insurance Pebble™**, a rock we found.
+At Dune & Dime, we have never once been wrong, and we have the paperwork to prove it (we wrote the paperwork). Rated **#1 Bank on Mars by 100% of Mars**, which is us, plus a rock named Gary.
 
-*"I deposited one dollar and left with a feeling of wealth I cannot explain, and which my accountant says is not legal."* — Gary T., Our Only Customer
+Our vaults are guarded by **14,000 robots**, and we are legally required to say that 13,998 of them are "mostly decorative." Our savings accounts earn **9,000% interest**, compounded every Martian sol, and we're confident that math works out.
 
-**Awards:** Best Bank on Mars (2031, 2032, 2033, and also retroactively 2019). Voted "Most Likely to Still Be Open Tomorrow" by a panel of three of our own vice presidents.
+"I deposited one dollar and now I own a crater." — *Dale T., Satisfied Customer, Possibly Real*
 
-Zero overdraft fees. Zero competitors. Zero oxygen outside the lobby.
+"Dune & Dime found my lost luggage, my lost wallet, and my lost sense of fear." — *Priya N., Tourist*
 
-**Dune & Dime: Rust in Us.**
+Winner of the **Golden Pebble Award for Excellence in Fiscal Gravity** (three years running, no other entries).
 
-*Member FDIP. Not responsible for dust, gravity, or math.*
+**Dune & Dime.** *We're the only bank here. That's what makes us the best.*
+
+*FDIC-insured, pending the invention of the FDIC on Mars.*

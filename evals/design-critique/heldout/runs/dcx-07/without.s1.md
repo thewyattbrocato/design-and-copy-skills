@@ -1,25 +1,31 @@
-**Ship Version B**, with some changes.
+**Ship Version B, with some edits.**
 
 **Why B wins**
 
-- **It's specific.** Marta, Tuesday and Thursday mornings, and Pell Park make this feel like a local service with a person behind it. That's Brindle's whole pitch, and A could be any app.
-- **It gives a next step.** "Book Marta for Tuesday" is a one-tap action. A's "Get Started" doesn't say what you're starting.
-- **It sells the product.** The halfway photo is the emotional hook for a dog owner. A's "We can't wait to see where your journey takes you!" is filler, and "journey" is odd for a dog walk.
-- **It handles the trust question.** The vetted-and-local line answers a worry owners will have before they hand over their dog.
+- **It's specific.** It names a person, a place, days, and a concrete benefit (a photo halfway through). A is generic enough to fit any app.
+- **It gives a real next step.** "Book Marta for Tuesday" is one tap to the thing the user came to do. "Get Started" is vague, and it's unclear what it starts.
+- **It builds trust.** The vetted-and-local line answers the question a dog owner is most likely to have.
+- **A's copy is filler.** "Nothing here yet" and "We can't wait to see where your journey takes you!" say nothing, and "journey" is a cliché for a dog walk.
 
-A's one real advantage is polish. That's cheap to fix on B, while A's copy would need rewriting from scratch.
+**What A does better**
+
+The visual polish. Spacing, hierarchy, and a clear primary button are real strengths, and B's default-looking buttons and plain layout will feel unfinished.
 
 **What I'd change in B**
 
-1. **Style it.** Default web buttons look unfinished, especially on the screen where a new user decides whether to trust you with their dog. Borrow A's rounded corners, spacing, and type scale. Make "Book Marta for Tuesday" a filled primary button and "See other walkers" a secondary or outline one.
-2. **Check the empty-state logic.** "No walks booked this week" reads fine for a returning user. A brand-new user with no history needs a different line. It may also be wrong if someone has walks booked for next week. Decide which states this screen has to cover:
-   - **First-time user, no walks ever:** drop "this week" and use something like "No walks yet."
-   - **Returning user, nothing this week:** B's current heading works.
-3. **Don't hard-code Marta.** Check that she's actually available Tuesday and that she's a walker this user could book. If the data isn't reliable, the screen falls back to generic copy. A wrong name or time is worse than A's vagueness. For a first-time user, use the nearest or top-rated walker.
-4. **Reword the vetting link.** "Why only a few walkers?" raises a doubt the user may not have had, and it reads as defensive. Lead with the benefit instead, something like "All Brindle walkers are vetted and local," linking to how vetting works.
-5. **Trim the body.** Cutting "usually" and splitting it into two lines would help: "Marta's free Tuesday and Thursday mornings around Pell Park." Then, "Book a walk and she'll send a photo halfway through." Use the real availability only if it's accurate.
-6. **Add a walker photo.** A small photo of Marta would replace the dog emoji and add more warmth and trust than A's paw-print illustration.
+1. **Apply A's visual system to B's copy.** Use the design team's spacing, type scale, and button styles. Replace the emoji with the paw illustration, or a photo of Marta or a dog. This is the biggest win and costs little.
+2. **Make one primary action.** "Book Marta for Tuesday" should be the filled button. "See other walkers" should be a secondary or outline button, so the two don't compete.
+3. **Fix the heading.** "No walks booked this week" is accurate but flat. Something like "No walks this week yet" is softer. Keep it concrete.
+4. **Handle the cases where the copy breaks.** B hardcodes Marta and Tuesday. You need fallbacks for:
+   - a first-time user with no history (who is "Marta" then?)
+   - Marta being booked or unavailable
+   - no walkers nearby
+
+   Decide whether Marta is the user's past walker, a top match, or a featured walker. If she's not a real match, the personalization will feel fake. A generic version of A's layout should remain as the fallback.
+5. **Rework the small link.** "Why only a few walkers?" raises a doubt the user may not have had. Try "All walkers are vetted and local" as a plain reassurance line, or move it elsewhere.
+6. **Tighten the body.** "She'll send you a photo halfway through" is the best line, so keep it. Consider trimming "usually free" to "usually free Tue and Thu mornings near Pell Park."
+7. **Check accessibility.** Make sure the tap targets are large enough and the contrast is good, especially once the buttons are restyled.
 
 **Before Friday**
 
-If you have a week, you could run a quick test with a few dog owners, but I don't think you need one. If you're short on time, ship B with items 1 and 2, which are the minimum, and add the rest in a follow-up.
+If the personalization logic can't be built by then, ship the A layout with B's tone as a stopgap. For example: "No walks booked this week" / "Book a walk with a vetted local walker and get a photo halfway through." / "Find a walker." That's a safe fallback, and it's still better than A's current copy.

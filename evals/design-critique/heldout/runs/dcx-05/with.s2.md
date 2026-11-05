@@ -1,36 +1,40 @@
-**Not ready to ship as is.** Each screen reads fine alone, but together they contradict each other in a few places. The first two are visible bugs.
+**Verdict: the screens are fine one by one, but they don't agree with each other. Fix the step count and the "plot" wording before launch.**
 
-**1. Blocker: the progress counter changes mid-flow.**
-- Screen 1 says "Step 1 of 4". Screens 2, 3 and 4 say "of 5". Every user sees the total change on the second screen.
-- Screens 1–4 are four steps, and the finish screen has no bar. So "of 4" is the likely right answer. I'm inferring that, so check what the design file intends.
-- Fix: make the total 4 on all four screens, and drive it from one constant so it can't drift again.
+**1. Progress count contradicts itself (Blocker, every screen)**
+- Screen 1 says "Step 1 of 4". Screens 2, 3 and 4 say "of 5".
+- Screen 5 has no bar at all.
+- The total changes on the second screen, so the bar looks broken at the first moment of trust.
+- Fix: pick one total. Screen 1 is a welcome screen, so either count 5 steps and make Screen 1 "Step 1 of 5", or drop the number from the welcome and the finish and run 1 to 3 across the three real setup screens. Whichever you pick, state it in one place so the screens can't drift again.
 
-**2. Major: a user who skips the plant gets a false "all set".**
-- Screen 4 offers "Skip" and warns that reminders can't start without a plant. Screen 5 then says "Your sanctuary is ready" to everyone. A skipper just told you they have nothing set up, and nothing will remind them.
-- Fix: give screen 5 a skip variant, for example "You're in. Add a plant whenever you're ready and reminders will start." Its button should go to add-plant, not just "Done".
-- The footer is honest and should stay, but it sits under a Skip link, so it reads as a scolding. Move it up as part of the body copy, or make it a quiet note.
+**2. Screen 4 says "plot", and the app never says it elsewhere (High)**
+- Everywhere else the unit is "plant" or "garden". The footer, "you'll need at least one plot before reminders can start", introduces a new noun at the point where someone is deciding whether to skip.
+- Someone could reasonably read "plot" as a garden bed or a room.
+- Fix: use "plant", as in "You'll need at least one plant before reminders can start."
 
-**3. Major: the vocabulary drifts.**
-- The same thing is called garden (1), spaces and rooms (2), plant (4), plot (4) and sanctuary (5).
-- "Plot" appears only in the footer on screen 4, right where the user is deciding whether to skip. It's the most likely word to confuse, since the screen asks for a plant.
-- Fix: use "plant" for the item and "garden" for the collection. Cut "plot" and "sanctuary".
+**3. Screen 4 offers "Skip" and then warns that skipping breaks the product (High)**
+- The footer says reminders won't start without a plant. That makes "Skip" a path to an app that does nothing.
+- The warning is also tucked in small footer text, below the choices it explains.
+- Fix: move the consequence up next to the link, or relabel it ("I'll add one later") so the cost is clear. Then make sure the empty home screen after a skip shows a clear "Add a plant" prompt. I haven't seen that screen, so check it.
 
-**4. Moderate: screen 1 overpromises.**
-- "So we can take care of the rest" implies the app waters the plants. It only reminds you.
-- Fix: something like "Let's set up your garden so we can tell you what needs doing and when."
+**4. Screen 3 promises a daily nudge, then Screen 4 says reminders depend on a plant (Medium)**
+- "One nudge per day with everything that needs attention" is a promise made before there's anything to attend to. It's fine once plants exist, but it adds to the confusion in finding 3.
+- The copy also doesn't say that the app needs notification permission. If the OS prompt appears right after the time picker, say so in the body so the prompt has context. That's not checked, since I don't know when you trigger it.
 
-**5. Minor, and they add up.**
-- **Button labels:** "Continue" on screen 1 but "Next" on screens 2 and 3. Pick one.
-- **Screen 2:** "rooms" and "spaces" are mixed, and Balcony isn't a room. Say "spaces" in both places. The copy doesn't say whether you can continue with nothing selected. If you can, say so. If you can't, disable the button and explain why.
-- **Screen 3:** "Choose a time that suits you" adds nothing, since the time picker already shows that. Cut it.
-- **Screen 4:** "work out how thirsty it is" covers watering only. Feeding and repotting are half the pitch, so mention them somewhere before the flow ends.
+**5. Voice drifts at the end (Low, taste)**
+- Screens 1 to 4 are plain and practical. Screen 5 switches to "Your sanctuary is ready. Time to get growing 🌱", which sounds like a different brand.
+- "Sanctuary" also clashes with "garden" on Screen 1.
+- It's also a hollow ending if the person skipped Screen 4. Consider a line that names what happens next, such as "We'll remind you at 8:00 AM", which confirms their choice.
 
-**What works and should stay:**
-- The screens are short, and each asks one question.
-- "One nudge per day with everything that needs attention" sets expectations about notification volume, which is what people worry about at that point.
-- The 8:00 AM default means the screen can be passed with one tap.
-- Offering both photo and search on screen 4, with a way out, keeps a reluctant user in the flow.
+**6. Smaller inconsistencies (Low)**
+- Button labels: "Continue" on Screen 1, "Next" on 2 to 4. Use one.
+- Screen 2 doesn't say whether at least one room is required. If it is, say so. If not, say so.
 
-**Fix order:** 1 (a one-line change), then 3 (a copy pass), then 2 (needs a new screen state), then 4 and 5.
+**What works and should stay**
+- **Titles as questions** (Screens 2 to 4) tell people what they're being asked, and each screen has one job.
+- **"You can add more spaces later"** lowers the pressure of the room choice.
+- **"Snap a photo or search by name"** explains the two routes and gives a reason for each. "Fernway will work out how thirsty it is" shows the payoff.
+- **A default time of 8:00 AM** means people can move on without deciding.
 
-**Not checked:** visuals, contrast, tap-target sizes and the actual layout, since I only saw copy. Also check when the notification permission prompt appears. It should come right after the time is chosen on screen 3, and the camera prompt should come only when "Take photo" is tapped.
+**Fix order:** 1, then 2 and 3 together, then 4, 5 and 6.
+
+I judged copy only. I haven't seen layout, contrast, tap targets or the permission flow.

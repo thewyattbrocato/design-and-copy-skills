@@ -2,14 +2,14 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "5933c5aa2d78d54b",
+    "with": "d00bf0ae29bee525",
     "without": "214653d7c70472ba"
   },
   "result": {
     "winner": "with",
-    "judge_notes": "pass 1 (A=without, B=with): Both answers keep every class name and computed value, and both handle the secondary button's 1px border the same way, with `calc(token - 1px)`. B goes further on the main goal: it turns spacing, font sizes and weights into step-named variables, while A leaves spacing and card typography as literal values (it does explain why). B loses a little because `--color-white` describes appearance rather than role and is used for both button text and the card surface, which A keeps separate. | pass 2 (A=with, B=without): Both answers keep every class name, the rule order and the computed values, and both express the secondary button padding as calc(token - 1px), so solid and outlined buttons stay the same size. A goes further on the main goal: it turns spacing and the card font sizes into tokens with a step scale, while B leaves all spacing and card typography as literal values, which limits reuse across components. A's weaknesses are minor: one appearance-based name (--color-white) and a small miscount in its summary (#dde2e1 appears twice in the original, not three times).",
+    "judge_notes": "pass 1 (A=without, B=with): Both answers keep every class name and computed value, and both derive the secondary button's padding with a calc on the base padding minus 1px, so button sizes still match. B also turns spacing and font sizes into tokens without rounding any values, which covers more of what was asked for consistent new components. Its --color-white is named for appearance rather than role, while A's names (on-brand, surface) are better but A leaves spacing and card font sizes as literals. | pass 2 (A=with, B=without): Both answers keep every class and computed value intact and handle the secondary button's 1px border the same way, using calc() on the base padding. A goes further on the main goal by turning spacing, card font sizes and weights into tokens with step and role names, without rounding anything; its one weak name is --color-white, which describes the colour rather than its role. B uses better role names (on-brand, surface) and flags possible name collisions, but it leaves all spacing and card type values hard-coded, which works against building more components from the same values.",
     "rubric_scores": {
-      "with": 4.7,
+      "with": 4.8,
       "without": 4.6
     },
     "rubric_items": {
@@ -18,7 +18,7 @@
         5.0,
         5.0,
         5.0,
-        4.5
+        5.0
       ],
       "without": [
         3.0,
@@ -37,7 +37,7 @@
         ],
         "raw_verdict": "B",
         "winner": "with",
-        "notes": "Both answers keep every class name and computed value, and both handle the secondary button's 1px border the same way, with `calc(token - 1px)`. B goes further on the main goal: it turns spacing, font sizes and weights into step-named variables, while A leaves spacing and card typography as literal values (it does explain why). B loses a little because `--color-white` describes appearance rather than role and is used for both button text and the card surface, which A keeps separate."
+        "notes": "Both answers keep every class name and computed value, and both derive the secondary button's padding with a calc on the base padding minus 1px, so button sizes still match. B also turns spacing and font sizes into tokens without rounding any values, which covers more of what was asked for consistent new components. Its --color-white is named for appearance rather than role, while A's names (on-brand, surface) are better but A leaves spacing and card font sizes as literals."
       },
       {
         "order": [
@@ -46,7 +46,7 @@
         ],
         "raw_verdict": "A",
         "winner": "with",
-        "notes": "Both answers keep every class name, the rule order and the computed values, and both express the secondary button padding as calc(token - 1px), so solid and outlined buttons stay the same size. A goes further on the main goal: it turns spacing and the card font sizes into tokens with a step scale, while B leaves all spacing and card typography as literal values, which limits reuse across components. A's weaknesses are minor: one appearance-based name (--color-white) and a small miscount in its summary (#dde2e1 appears twice in the original, not three times)."
+        "notes": "Both answers keep every class and computed value intact and handle the secondary button's 1px border the same way, using calc() on the base padding. A goes further on the main goal by turning spacing, card font sizes and weights into tokens with step and role names, without rounding anything; its one weak name is --color-white, which describes the colour rather than its role. B uses better role names (on-brand, surface) and flags possible name collisions, but it leaves all spacing and card type values hard-coded, which works against building more components from the same values."
       }
     ]
   }

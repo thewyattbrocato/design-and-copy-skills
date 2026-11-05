@@ -1,46 +1,38 @@
-**Stranger read:** From the hero alone, a newcomer can't say whether Hollowpaw is a sitting service, a boarding business, a pet-parent community, or an app. Nothing says Portland, overnight care, or that you book individual sitters. The page works for any pet company.
+Your current copy never says what Hollowpaw does. "Caring, passionate sitters" and "community built on trust" could describe any pet business, and "best in the business" is a claim you can't back up. The rewrite below uses only the facts you gave me.
 
-## Findings (ranked)
+**HERO**
+> **Pet sitting in Portland, from sitters you can talk to first.**
+> Hollowpaw is a marketplace where you book background-checked local sitters by the night. They can host your pet at their place or stay at yours.
 
-**1. Blocker. "Our sitters" section: "Our sitters are the best in the business and treat every pet like family."**
-"Best in the business" is a superlative with no basis, and you launched in March, so nobody can back it. "Treat every pet like family" is a promise you can't guarantee for every sitter. The real, checkable trust fact (background checks) is missing from the page.
-Rewrite: *"Every sitter on Hollowpaw is background checked by an independent screening company. Message them before you book, so you can decide who gets your pet."*
+**BUTTON**
+> Find a sitter
 
-**2. Major. Hero: "Where pets feel at home. Hollowpaw connects loving pet parents with caring, passionate sitters in a community built on trust."**
-The tagline is fine, but the sentence under it is stacked adjectives ("loving," "caring," "passionate") and "community built on trust" is a claim with no proof beside it. It never says what you do, where, or how it works.
-Rewrite: *"Hollowpaw is a pet sitting marketplace in Portland. Pick a sitter who'll host your pet at their place or come to your home, and pay by the night."*
+"Learn more" sends people away from the thing you want them to do. If you have a separate page that explains the service, keep it as a smaller secondary link.
 
-**3. Major. Button: "Learn more"**
-It doesn't say what happens. The page already has a clear action: find a sitter. This is the only button you gave me, and it sends visitors away from that action.
-Rewrite: *"Find a sitter"* (use "Browse Portland sitters" if the button leads to listings).
+**HOW IT WORKS** (replacing "Find. Connect. Relax.")
+> **How it works**
+> 1. **Browse sitters.** See who's available in Portland and what they charge per night. Sitters set their own prices.
+> 2. **Message before you book.** Ask questions and see if they're a fit for your pet.
+> 3. **Book by the night.** Choose a sitter who hosts at their home, or one who comes to yours.
 
-**4. Major. "How it works": "Find. Connect. Relax."**
-The rhythm is good, but the steps don't tell the visitor what to do. "Connect" hides your best feature (messaging before booking), and "Relax" is a mood, not a step. Nothing says nightly pricing or the two care options.
-Rewrite as steps (adjust to your real flow):
-- **Find.** Browse Portland sitters and see their nightly rates. Sitters set their own prices.
-- **Connect.** Message a sitter before you book to ask questions and see if they're a fit.
-- **Book.** Choose a sitter who hosts at their home or one who comes to yours, and book by the night.
+**OUR SITTERS** (replacing "the best in the business")
+> **Our sitters**
+> Every sitter passes a background check through a third-party screening company before they can take bookings. You can message any sitter before you book, so you can decide for yourself who to trust with your pet.
 
-If you want to keep "Relax," use it as a closing line, not a step.
+This assumes the check happens before a sitter can take bookings. If it doesn't, change that sentence to match what really happens.
 
-**5. Minor. Footer: "Join the Hollowpaw family today!"**
-"Family" repeats the generic tone, and it doesn't say who is being asked to join. Owners and sitters are different audiences.
-Rewrite: *"Need a sitter? Find one in Portland. Love animals? Become a sitter."* Only use the second sentence if you're recruiting sitters now.
+**FOOTER**
+> Hollowpaw launched in Portland in March. Find a sitter for your next trip.
 
-## What works
-- *"Where pets feel at home."* A clear, warm tagline that fits both hosting and in-home care. Keep it.
-- *"Find. Connect. Relax."* Short and easy to scan. Keep the rhythm, but see #4 for the content.
+I replaced "Join the Hollowpaw family" because it doesn't say what joining means. If you also want to recruit sitters, add a separate line such as "Want to sit? Set your own prices" with its own button.
 
-## Message brief
-The page needs to say four things, in this order: what you are (a Portland pet sitting marketplace), how it works (individual sitters, per-night booking, host or visit), why to trust it (background checks, message first), and what to do next. Everything you can truthfully claim is specific, so use it in place of "best," "family," and "community."
+**What I changed and why**
+- **Specifics over adjectives.** Per-night booking, sitter-set prices, hosting or house-sitting, and messaging first are what set you apart, so they're now in the copy.
+- **Removed unprovable claims.** "Best in the business" and "treat every pet like family" are gone. The background check and the messaging are real reasons to trust you, so they carry that job.
+- **"Portland" is in the hero.** It tells people where you operate right away.
+- **"March" is now in the footer.** Since you launched this year, it reads as honest and new rather than as an established company.
 
-## Fix order
-1. Replace the "best in the business" line with the background-check and message-first facts (small).
-2. Rewrite the hero's second sentence so it names Portland, nightly booking, and host-or-visit (small).
-3. Change "Learn more" to an action button (small).
-4. Rewrite "How it works" as concrete steps (medium).
-5. Split the footer call to action for owners and sitters (small).
-
-## Notes
-- I reviewed only the five elements you pasted. I haven't seen pricing, sitter profiles, FAQs, or the sign-up flow.
-- Confirm the screening company's name and what the check covers before naming either. I left both out because you didn't give them to me. Once you have a number you can back, "launched March 2026" or a sitter count could also add credibility. I haven't added either.
+**Things to check**
+- Whether "background-checked" can go in the hero. I assumed all sitters are checked, per your note.
+- Whether you want to name the screening company. Naming it often builds more trust than "third party" does.
+- Whether "Browse sitters" matches the product, meaning owners can see sitters and prices before signing up.

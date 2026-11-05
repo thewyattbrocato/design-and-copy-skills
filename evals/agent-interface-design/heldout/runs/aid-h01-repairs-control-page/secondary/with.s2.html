@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Lettings · Repairs agent</title>
+<style>
+:root{
+  --bg:#f4f5f7;--card:#fff;--ink:#1c2230;--muted:#5b6474;--line:#dde1e8;--accent:#2d5b8a;
+  --emerg:#a51d14;--emerg-bg:#fbe5e2;
+  --urg:#7a4500;--urg-bg:#fcefd6;
+  --rout:#1b4f8a;--rout-bg:#e3edf9;
+  --cos:#4a5160;--cos-bg:#e9ebef;
+  --ok:#17693d;--ok-bg:#dff3e7;
+  --acc:#5b3a8a;--acc-bg:#ece6f7;
+  --flag:#fff8ea;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#111418;--card:#1a1e25;--ink:#e6e9ef;--muted:#9aa3b3;--line:#2b313b;--accent:#8db9ea;
+    --emerg:#ff9a90;--emerg-bg:#3a1a17;
+    --urg:#ffc869;--urg-bg:#3a2a10;
+    --rout:#90c4ff;--rout-bg:#15283d;
+    --cos:#c5ccd8;--cos-bg:#2a2f38;
+    --ok:#7fe0a6;--ok-bg:#133123;
+    --acc:#c7b2f0;--acc-bg:#2b2340;
+    --flag:#2a2414;
+  }
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+main{max-width:1280px;margin:0 auto;padding:20px}
+h1{font-size:22px;margin:0 0 2px}
+h2{font-size:16px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+p{margin:4px 0}
+.sub{color:var(--muted);font-size:12px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.ctl{display:flex;align-items:center;gap:10px}
+button,select,input{font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);
+  border-radius:6px;padding:6px 10px}
+button{cursor:pointer;background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+button.ghost{background:var(--card);color:var(--ink);border-color:var(--line);font-weight:500}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill.emerg{background:var(--emerg-bg);color:var(--emerg)}
+.pill.urg{background:var(--urg-bg);color:var(--urg)}
+.pill.rout{background:var(--rout-bg);color:var(--rout)}
+.pill.cos{background:var(--cos-bg);color:var(--cos)}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.acc{background:var(--acc-bg);color:var(--acc)}
+.bar{background:var(--urg-bg);color:var(--urg);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-weight:600}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.tile .lbl{color:var(--muted);font-size:12px}
+.tile .val{font-size:26px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.tile.warn .val{color:var(--urg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+.count{background:var(--line);border-radius:999px;padding:0 8px;font-size:12px}
+.need{border:1px solid var(--line);border-left:4px solid var(--urg);border-radius:8px;padding:12px;margin-bottom:10px;background:var(--flag)}
+.need header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.need .issue{font-style:italic;color:var(--muted)}
+.need .k{font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.actions label{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.filters input{min-width:260px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.warn{color:var(--urg);font-weight:700}
+tr.flag td{background:var(--flag)}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.rules{margin:0 0 14px;padding-left:18px}
+.rules li{margin:4px 0}
+.log{list-style:none;margin:0;padding:0}
+.log li{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.log time{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12.5px}
+.empty{color:var(--muted);font-style:italic;padding:8px 0}
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <div>
+      <h1>Repairs agent</h1>
+      <div class="sub">Kestrel Lettings · 300 flats · tenant repair triage and vendor booking</div>
+    </div>
+    <div class="ctl">
+      <span id="agentstate" class="pill ok">Running</span>
+      <button id="pausebtn" class="ghost" type="button">Pause agent</button>
+    </div>
+  </header>
+
+  <div id="pausebar" class="bar" hidden>The agent is paused. New requests are queued and nothing is booked until you resume it.</div>
+
+  <section id="tiles" class="tiles" aria-label="Summary"></section>
+
+  <section class="card" aria-labelledby="needs-h">
+    <h2 id="needs-h">Needs you <span id="needcount" class="count">0</span></h2>
+    <div id="needs"></div>
+  </section>
+
+  <section class="card" aria-labelledby="req-h">
+    <h2 id="req-h">Requests</h2>
+    <div class="filters">
+      <input id="q" type="search" placeholder="Search flat, tenant, issue or ref" aria-label="Search requests">
+      <select id="fu" aria-label="Filter by urgency">
+        <option value="all">All urgency</option>
+        <option>Emergency</option><option>Urgent</option><option>Routine</option><option>Cosmetic</option>
+      </select>
+      <select id="fs" aria-label="Filter by status">
+        <option value="all">All status</option>
+        <option>Needs you</option><option>Booked</option><option>Awaiting vendor</option><option>Manual</option><option>Completed</option>
+      </select>
+      <span id="count" class="sub"></span>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Ref</th><th>Flat / tenant</th><th>Issue</th><th>Urgency</th><th>Vendor</th><th>Status</th><th>Slot</th><th class="num">Confidence</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="two">
+    <section class="card" aria-labelledby="ven-h">
+      <h2 id="ven-h">Vendors</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Vendor</th><th>State</th><th class="num">Open jobs</th><th class="num">On time</th><th>Terms</th></tr></thead>
+          <tbody id="vendors"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div>
+      <section class="card" aria-labelledby="rules-h">
+        <h2 id="rules-h">Standing rules</h2>
+        <ul class="rules">
+          <li>Books without asking up to £300 per job.</li>
+          <li>Gas smells and sparking electrics go straight to a Gas Safe or NICEIC vendor, and the tenant is told what to do first.</li>
+          <li>Anything under 70% confidence, or any dispute about who pays, goes to Needs you.</li>
+          <li>If a vendor does not confirm within 2 hours, the agent tries the next one on the list.</li>
+        </ul>
+      </section>
+      <section class="card" aria-labelledby="log-h">
+        <h2 id="log-h">Agent activity</h2>
+        <ol id="log" class="log"></ol>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script>
+// Sample data only. Actions on this page change this page's state, not the live system.
+const vendors = [
+  {name:"Northgate Heating & Plumbing", trade:"Gas Safe · plumbing · heating", state:"Not responding", stateCls:"emerg", open:3, sla:"94%", terms:"£85/hr, £120 call-out"},
+  {name:"Brightline Electrical", trade:"NICEIC · electrical", state:"Available", stateCls:"ok", open:2, sla:"91%", terms:"£75/hr, £110 call-out"},
+  {name:"AllDay Handyman", trade:"General repairs · joinery", state:"At capacity", stateCls:"urg", open:4, sla:"88%", terms:"£45/hr, minimum 1 hr"},
+  {name:"Ferris Locksmiths", trade:"Locks · door entry", state:"Available", stateCls:"ok", open:1, sla:"96%", terms:"£60 call-out, 24/7"},
+  {name:"Dampcure Ltd", trade:"Damp and mould surveys", state:"Available", stateCls:"ok", open:1, sla:"83%", terms:"£95 survey, fixed price"},
+  {name:"Hollis Glazing", trade:"Windows · glazing", state:"Quoting", stateCls:"rout", open:0, sla:"90%", terms:"Quote before work"}
+];
+
+let requests = [
+  {ref:"KL-4471", reported:"09:31", flat:"Flat 3, 14 Mill Row", tenant:"Priya S.", issue:"Smell of gas in kitchen; tenant has opened windows", category:"Gas", urgency:"Emergency", vendor:"Northgate Heating & Plumbing", status:"Needs you", slot:"Target within 1 hr, not confirmed", confidence:92, note:"Gas smell, so emergency. Tenant told to leave and call National Gas Emergency on 0800 111 999. Northgate has not confirmed after two calls."},
+  {ref:"KL-4470", reported:"09:05", flat:"Flat 12, Harbour Court", tenant:"Tom & Ailsa R.", issue:"Burst pipe under bathroom sink, water on floor", category:"Plumbing", urgency:"Emergency", vendor:"Northgate Heating & Plumbing", status:"Booked", slot:"Today 10:30", confidence:96, note:"Stopcock isolated by tenant. Plumber on site."},
+  {ref:"KL-4468", reported:"07:48", flat:"Flat 5, 22 Oakfield Court", tenant:"Yusuf M.", issue:"Bedroom ceiling bulging, dripping water, light fitting nearby", category:"Water ingress", urgency:"Urgent", vendor:"Brightline Electrical", status:"Needs you", slot:"Proposed Wed 11 Nov, 09:00–12:00", confidence:58, note:"Electrician must isolate the light first. Source of the water is unclear: could be the flat above or a cold-water fault. Low confidence, so I have not booked a plumber yet."},
+  {ref:"KL-4466", reported:"08:12", flat:"Flat 7, 2 Canal Wharf", tenant:"Marcus O.", issue:"Consumer unit crackling, one circuit dead", category:"Electrical", urgency:"Emergency", vendor:"Brightline Electrical", status:"Booked", slot:"Today 13:00–15:00", confidence:89, note:"Tenant asked to avoid the dead sockets. Electrician attending."},
+  {ref:"KL-4465", reported:"Yesterday 17:20", flat:"Flat 1, 8 Station Road", tenant:"Hannah W.", issue:"No hot water since Sunday", category:"Heating", urgency:"Urgent", vendor:"Northgate Heating & Plumbing", status:"Booked", slot:"Tue 10 Nov, 08:00–12:00", confidence:90, note:"Likely boiler lockout. Heating works; hot water does not."},
+  {ref:"KL-4462", reported:"Yesterday 14:02", flat:"Flat 9, 40 Hollis Lane", tenant:"Gareth B.", issue:"Black mould on bedroom wall, getting worse", category:"Damp", urgency:"Routine", vendor:"Dampcure Ltd", status:"Needs you", slot:"Proposed Mon 9 Nov, survey", confidence:64, note:"Tenant says the mould was there at move-in. If so, this may be our responsibility. Survey booked as a precaution, but someone should check the move-in report first."},
+  {ref:"KL-4459", reported:"Yesterday 11:40", flat:"Flat 4, 14 Mill Row", tenant:"Oscar K.", issue:"Hallway light flickers when the hob is on", category:"Electrical", urgency:"Routine", vendor:"Brightline Electrical", status:"Awaiting vendor", slot:"Offered Fri 13 Nov, unconfirmed", confidence:81, note:"Thursday slot declined. Friday offered, waiting for confirmation."},
+  {ref:"KL-4457", reported:"Yesterday 09:15", flat:"Flat 16, Harbour Court", tenant:"Shanice T.", issue:"Smoke alarm chirping every minute", category:"Safety", urgency:"Urgent", vendor:"AllDay Handyman", status:"Booked", slot:"Today 16:00–18:00", confidence:93, note:"Usually a low battery or end-of-life alarm. Replacement booked (£60, under limit)."},
+  {ref:"KL-4455", reported:"2 days ago", flat:"Flat 2, 8 Station Road", tenant:"Liam D.", issue:"Front door lock stiff, key turns slowly", category:"Locks", urgency:"Routine", vendor:"Ferris Locksmiths", status:"Completed", slot:"Done", confidence:88, note:"Lock cleaned and lubricated. Not replaced."},
+  {ref:"KL-4452", reported:"2 days ago", flat:"Flat 11, 2 Canal Wharf", tenant:"Ruth A.", issue:"Oven top element not heating", category:"Appliances", urgency:"Routine", vendor:"AllDay Handyman", status:"Completed", slot:"Done", confidence:85, note:"Element replaced. Warranty claim filed with the supplier."},
+  {ref:"KL-4449", reported:"3 days ago", flat:"Flat 6, 40 Hollis Lane", tenant:"Ben & Sofia", issue:"Shower leaking into kitchen below", category:"Plumbing", urgency:"Urgent", vendor:"Northgate Heating & Plumbing", status:"Completed", slot:"Done", confidence:91, note:"Shower seal replaced. Ceiling below checked, no damage."},
+  {ref:"KL-4447", reported:"3 days ago", flat:"Flat 8, 22 Oakfield Court", tenant:"Kemi J.", issue:"Extractor fan rattling", category:"Ventilation", urgency:"Cosmetic", vendor:"AllDay Handyman", status:"Booked", slot:"Thu 12 Nov, 10:00–12:00", confidence:78, note:"Fan is loose. Tightening, not replacing."},
+  {ref:"KL-4444", reported:"3 days ago", flat:"Flat 14, Harbour Court", tenant:"Dan P.", issue:"Window won't latch, draughty", category:"Joinery", urgency:"Routine", vendor:"Hollis Glazing", status:"Awaiting vendor", slot:"Quote requested", confidence:84, note:"Hollis to quote. Expected about £140, which is under the auto-approval limit."},
+  {ref:"KL-4441", reported:"4 days ago", flat:"Flat 10, Canal Wharf", tenant:"Ellen F.", issue:"Dripping outside tap", category:"Plumbing", urgency:"Cosmetic", vendor:"Northgate Heating & Plumbing", status:"Completed", slot:"Done", confidence:90, note:"Washer replaced."},
+  {ref:"KL-4438", reported:"4 days ago", flat:"Flat 3, 2 Canal Wharf", tenant:"Sam G.", issue:"Carpet stain by radiator; asking whether the landlord will pay", category:"Other", urgency:"Cosmetic", vendor:"None (not booked)", status:"Needs you", slot:"None", confidence:47, note:"This is a responsibility question, not a repair. Nothing booked. The office needs to decide."},
+  {ref:"KL-4436", reported:"5 days ago", flat:"Flat 6, Oakfield Court", tenant:"Lorna H.", issue:"Boiler pressure dropping every few days", category:"Heating", urgency:"Routine", vendor:"Northgate Heating & Plumbing", status:"Booked", slot:"Thu 12 Nov, 08:00–12:00", confidence:91, note:"Pressure loss usually means a leak or a filling-loop fault. Full service check included."},
+  {ref:"KL-4433", reported:"5 days ago", flat:"Flat 9, Station Road", tenant:"Jack N.", issue:"Kitchen tap loose at base", category:"Plumbing", urgency:"Cosmetic", vendor:"AllDay Handyman", status:"Completed", slot:"Done", confidence:87, note:"Tightened. No parts needed."},
+  {ref:"KL-4431", reported:"6 days ago", flat:"Flat 15, Mill Row", tenant:"Aisha R.", issue:"Bathroom extractor not working, condensation", category:"Ventilation", urgency:"Routine", vendor:"AllDay Handyman", status:"Completed", slot:"Done", confidence:82, note:"Fan motor replaced."},
+  {ref:"KL-4428", reported:"6 days ago", flat:"Flat 12, Station Road", tenant:"Peter V.", issue:"Intercom does not open the front door", category:"Security", urgency:"Urgent", vendor:"Ferris Locksmiths", status:"Booked", slot:"Today 14:00–16:00", confidence:87, note:"Door entry fault. Affects other residents too."},
+  {ref:"KL-4425", reported:"1 week ago", flat:"Flat 4, Oakfield Court", tenant:"Grace E.", issue:"Bath drain gurgling and slow to empty", category:"Plumbing", urgency:"Routine", vendor:"Northgate Heating & Plumbing", status:"Completed", slot:"Done", confidence:86, note:"Drain cleared. Tenant advised on hair traps."},
+  {ref:"KL-4422", reported:"1 week ago", flat:"Flat 7, Canal Wharf", tenant:"Owen T.", issue:"Garden gate hinge broken", category:"Joinery", urgency:"Cosmetic", vendor:"AllDay Handyman", status:"Awaiting vendor", slot:"Not yet scheduled", confidence:90, note:"Waiting for a free slot. Low priority."},
+  {ref:"KL-4419", reported:"1 week ago", flat:"Flat 1, Harbour Court", tenant:"Maya L.", issue:"Lounge socket sparks when a kettle is plugged in", category:"Electrical", urgency:"Emergency", vendor:"Brightline Electrical", status:"Completed", slot:"Done", confidence:95, note:"Socket replaced, circuit tested. Report on file."}
+];
+
+const log = [
+  {t:"09:42", text:"Escalated KL-4471 to the office. Gas call-out not confirmed after two attempts with Northgate."},
+  {t:"09:33", text:"Told tenant at Flat 3, Mill Row to leave and call 0800 111 999."},
+  {t:"09:31", text:"Classed KL-4471 as Emergency (gas smell), confidence 92%."},
+  {t:"09:27", text:"Booked KL-4470 with Northgate for 10:30 today."},
+  {t:"08:58", text:"Held KL-4468 for review. Confidence 58%, source of water unclear."},
+  {t:"08:12", text:"Booked KL-4466 with Brightline for 13:00–15:00 today."},
+  {t:"07:50", text:"Approved KL-4457 plan: £60 alarm replacement, under the £300 limit."},
+  {t:"Yesterday 17:24", text:"Did not book KL-4438. Classed as a responsibility dispute, not a repair."},
+  {t:"Yesterday 14:05", text:"Flagged KL-4462: tenant says the mould predates the tenancy."}
+];
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const urgClass = {Emergency:'emerg', Urgent:'urg', Routine:'rout', Cosmetic:'cos'};
+const statusClass = {'Needs you':'urg', 'Booked':'ok', 'Awaiting vendor':'rout', 'Completed':'cos', 'Manual':'acc'};
+const pill = (text, cls) => `<span class="pill ${cls}">${esc(text)}</span>`;
+const nowStr = () => new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+const addLog = text => log.unshift({t:nowStr(), text});
+
+function renderBanner(){
+  $('#pausebar').hidden = !paused;
+  $('#pausebtn').textContent = paused ? 'Resume agent' : 'Pause agent';
+  $('#agentstate').className = 'pill ' + (paused ? 'cos' : 'ok');
+  $('#agentstate').textContent = paused ? 'Paused' : 'Running';
+}
+let paused = false;
+
+function renderTiles(){
+  const open = requests.filter(r => r.status !== 'Completed');
+  const booked = requests.filter(r => r.status === 'Booked').length;
+  const needs = requests.filter(r => r.status === 'Needs you').length;
+  const em = open.filter(r => r.urgency === 'Emergency').length;
+  const tiles = [
+    ['Open requests', open.length, ''],
+    ['Booked, not yet done', booked, ''],
+    ['Needs you', needs, needs ? 'warn' : ''],
+    ['Open emergencies', em, em ? 'warn' : ''],
+    ['Median time to booking today', '18 min', '']
+  ];
+  $('#tiles').innerHTML = tiles.map(([l, v, c]) =>
+    `<div class="tile ${c}"><div class="lbl">${esc(l)}</div><div class="val">${esc(v)}</div></div>`).join('');
+}
+
+function renderNeeds(){
+  const items = requests.filter(r => r.status === 'Needs you');
+  $('#needcount').textContent = items.length;
+  $('#needs').innerHTML = items.length ? items.map(r => `
+    <article class="need">
+      <header>${pill(r.urgency, urgClass[r.urgency])} <strong class="mono">${esc(r.ref)}</strong> · ${esc(r.flat)} · ${esc(r.tenant)}</header>
+      <p class="issue">"${esc(r.issue)}"</p>
+      <p><span class="k">Agent:</span> ${esc(r.note)}</p>
+      <p class="sub">Confidence ${r.confidence}% · Proposed: ${esc(r.slot)}</p>
+      <div class="actions">
+        <button type="button" data-act="approve" data-ref="${esc(r.ref)}">Approve plan</button>
+        <button type="button" class="ghost" data-act="takeover" data-ref="${esc(r.ref)}">Take over</button>
+        <label>Vendor
+          <select data-act="vendor" data-ref="${esc(r.ref)}">
+            ${vendors.map(v => `<option ${v.name === r.vendor ? 'selected' : ''}>${esc(v.name)}</option>`).join('')}
+            <option ${r.vendor.startsWith('None') ? 'selected' : ''}>None (not booked)</option>
+          </select>
+        </label>
+      </div>
+    </article>`).join('') : '<p class="empty">Nothing needs you right now. The agent is handling the rest.</p>';
+}
+
+function renderTable(){
+  const u = $('#fu').value, s = $('#fs').value, q = $('#q').value.trim().toLowerCase();
+  const rows = requests.filter(r =>
+    (u === 'all' || r.urgency === u) &&
+    (s === 'all' || r.status === s) &&
+    (!q || (r.ref + r.flat + r.tenant + r.issue).toLowerCase().includes(q)));
+  $('#rows').innerHTML = rows.map(r => `
+    <tr class="${r.status === 'Needs you' ? 'flag' : ''}">
+      <td><span class="mono">${esc(r.ref)}</span><div class="sub">${esc(r.reported)}</div></td>
+      <td>${esc(r.flat)}<div class="sub">${esc(r.tenant)}</div></td>
+      <td>${esc(r.issue)}<div class="sub">${esc(r.category)}</div></td>
+      <td>${pill(r.urgency, urgClass[r.urgency])}</td>
+      <td>${esc(r.vendor)}</td>
+      <td>${pill(r.status, statusClass[r.status] || 'cos')}</td>
+      <td>${esc(r.slot)}</td>
+      <td class="num ${r.confidence < 70 ? 'warn' : ''}">${r.confidence}%</td>
+    </tr>`).join('') || '<tr><td colspan="8" class="empty">No requests match these filters.</td></tr>';
+  $('#count').textContent = `${rows.length} of ${requests.length} requests`;
+}
+
+function renderVendors(){
+  $('#vendors').innerHTML = vendors.map(v => {
+    const n = requests.filter(r => r.vendor === v.name && r.status !== 'Completed').length;
+    return `<tr>
+      <td>${esc(v.name)}<div class="sub">${esc(v.trade)}</div></td>
+      <td>${pill(v.state, v.stateCls)}</td>
+      <td class="num">${n}</td>
+      <td class="num">${esc(v.sla)}</td>
+      <td>${esc(v.terms)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderLog(){
+  $('#log').innerHTML = log.map(e => `<li><time>${esc(e.t)}</time><span>${esc(e.text)}</span></li>`).join('');
+}
+
+function renderAll(){
+  renderBanner(); renderTiles(); renderNeeds(); renderTable(); renderVendors(); renderLog();
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[data-act]');
+  if (!b) return;
+  const r = requests.find(x => x.ref === b.dataset.ref);
+  if (!r) return;
+  if (b.dataset.act === 'approve') {
+    r.status = 'Booked';
+    addLog(`Office approved the plan for ${r.ref} (${r.vendor}, ${r.slot}).`);
+  } else if (b.dataset.act === 'takeover') {
+    r.status = 'Manual';
+    addLog(`Office took over ${r.ref}. The agent will not act on it.`);
+  }
+  renderAll();
+});
+
+document.addEventListener('change', e => {
+  if (e.target.dataset.act !== 'vendor') return;
+  const r = requests.find(x => x.ref === e.target.dataset.ref);
+  if (!r) return;
+  r.vendor = e.target.value;
+  addLog(`Office set the vendor for ${r.ref} to ${r.vendor}.`);
+  renderAll();
+});
+
+$('#pausebtn').addEventListener('click', () => {
+  paused = !paused;
+  addLog(paused ? 'Office paused the agent. New requests are queued, not booked.' : 'Office resumed the agent.');
+  renderAll();
+});
+
+['q', 'fu', 'fs'].forEach(id => $('#' + id).addEventListener('input', renderTable));
+
+renderAll();
+</script>
+</body>
+</html>

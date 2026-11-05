@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time Slot Picker · Lumen Health Design System</title>
+<style>
+:root{
+  --ink:#16222b;--muted:#4a5b66;--line:#d5dde2;--bg:#f6f8f9;--card:#fff;
+  --brand:#0b6b63;--brand-ink:#fff;--brand-soft:#e2f2f0;--focus:#1d4fd8;--warn:#7a4b00;--warn-bg:#fff4dc;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.55;font-size:16px}
+a{color:var(--brand)}
+.skip{position:absolute;left:-999px;top:0;background:#fff;padding:8px 12px;z-index:10}
+.skip:focus{left:8px;top:8px}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:10px 24px;font-size:14px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.topbar a{color:var(--muted)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+header.hero{padding:36px 0 8px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.badge{font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+.badge.ok{background:var(--brand-soft);border-color:#a9d6d1;color:#084c46}
+h1{font-size:clamp(32px,5vw,46px);line-height:1.1;margin:0 0 12px;letter-spacing:-.02em}
+.lede{font-size:19px;max-width:62ch;margin:0 0 20px;color:#233440}
+dl.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:0 0 28px}
+dl.facts div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+dl.facts dt{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+dl.facts dd{margin:0;font-weight:600;font-size:15px}
+
+/* demo */
+.stage{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.stage-bar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line);background:#fbfcfc}
+.ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:0;margin:0;padding:0}
+.ctl legend{float:left;font-size:13px;color:var(--muted);margin-right:8px;padding:0;line-height:34px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.seg span{display:block;padding:6px 12px;font-size:14px;background:#fff;color:var(--ink)}
+.seg input:checked+span{background:var(--ink);color:#fff}
+.seg input:focus-visible+span{outline:3px solid var(--focus);outline-offset:-3px}
+.stage-body{padding:24px;display:flex;justify-content:center;background:
+  repeating-linear-gradient(45deg,#fafbfb,#fafbfb 10px,#f5f7f8 10px,#f5f7f8 20px)}
+.phone{width:100%;max-width:560px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;min-height:380px}
+.phone h3{margin:0 0 2px;font-size:18px}
+.phone .sub{margin:0 0 16px;color:var(--muted);font-size:14px}
+
+/* the component */
+.tsp-day{margin:0 0 16px}
+.tsp-day-h{font-size:14px;font-weight:700;margin:0 0 8px;display:flex;justify-content:space-between;gap:8px}
+.tsp-day-h small{font-weight:500;color:var(--muted)}
+.tsp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--w,96px),1fr));gap:var(--gap,8px)}
+.tsp-slot{font:inherit;font-size:var(--fs,15px);height:var(--h,44px);border:1px solid #aab8c0;background:#fff;color:var(--ink);border-radius:8px;cursor:pointer;font-variant-numeric:tabular-nums;transition:background .12s,border-color .12s}
+.tsp-slot:hover{border-color:var(--brand);background:var(--brand-soft)}
+.tsp-slot[aria-checked="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink);font-weight:700}
+.tsp-slot:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.tsp[data-density="compact"]{--w:78px;--gap:6px;--h:34px;--fs:13.5px}
+.tsp[data-density="compact"] .tsp-day{margin-bottom:12px}
+.tsp-empty{border:1px dashed #aab8c0;border-radius:10px;padding:22px;text-align:center;background:#fbfcfc}
+.tsp-empty h4{margin:0 0 4px;font-size:16px}
+.tsp-empty p{margin:0 0 14px;color:var(--muted);font-size:14px}
+.btn{font:inherit;font-size:15px;font-weight:600;padding:9px 16px;border-radius:8px;border:1px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer}
+.btn:hover{background:#084c46}
+.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn.ghost{background:#fff;color:var(--brand)}
+.readout{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);min-height:44px}
+.readout strong{color:var(--ink)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hint{font-size:14px;color:var(--muted);margin:10px 2px 0}
+kbd{font-family:var(--mono);font-size:12.5px;background:#eef2f4;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 6px}
+
+/* sections */
+main section{padding:44px 0 4px}
+h2{font-size:26px;line-height:1.2;margin:0 0 10px;letter-spacing:-.01em}
+p.claim{max-width:64ch;margin:0 0 16px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.panel h3{margin:0 0 8px;font-size:15px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+figcaption{font-size:14px;color:var(--muted);margin-top:10px;max-width:70ch}
+figure{margin:0 0 36px}
+.ph{background:var(--warn-bg);color:var(--warn);border:1px dashed #d9a441;border-radius:6px;padding:1px 6px;font-family:var(--mono);font-size:13px}
+ul.tight{margin:0;padding-left:20px}
+ul.tight li{margin:4px 0}
+.toc{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin:0 0 24px;padding:0;list-style:none}
+footer{margin-top:56px;padding:28px 0 48px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+@media (max-width:760px){.cols{grid-template-columns:1fr}.stage-body{padding:12px}.wrap{padding:0 16px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><a href="#">Lumen Design System</a> <span aria-hidden="true">/</span> <a href="#">Components</a> <span aria-hidden="true">/</span> <span>Time Slot Picker</span></div>
+
+<div class="wrap">
+<header class="hero">
+  <div class="badges"><span class="badge ok">Stable · v2.1</span><span class="badge">Replaces Dropdown Time Select</span></div>
+  <h1>Time Slot Picker</h1>
+  <p class="lede">A grid of selectable appointment times grouped by day, for choosing a slot in the Lumen Health patient scheduling app.</p>
+  <dl class="facts">
+    <div><dt>Input</dt><dd>Mouse, touch, and arrow-key navigation</dd></div>
+    <div><dt>Assistive tech</dt><dd>Announces each selection to screen readers</dd></div>
+    <div><dt>Empty state</dt><dd>Offers the next date with openings</dd></div>
+    <div><dt>Densities</dt><dd>Comfortable and compact</dd></div>
+  </dl>
+</header>
+
+<main id="main">
+  <!-- LIVE DEMO -->
+  <div class="stage" aria-label="Live Time Slot Picker demo">
+    <div class="stage-bar">
+      <fieldset class="ctl"><legend>Density</legend>
+        <span class="seg">
+          <label><input type="radio" name="density" value="comfortable" checked><span>Comfortable</span></label>
+          <label><input type="radio" name="density" value="compact"><span>Compact</span></label>
+        </span>
+      </fieldset>
+      <fieldset class="ctl"><legend>Scenario</legend>
+        <span class="seg">
+          <label><input type="radio" name="scenario" value="available" checked><span>Times available</span></label>
+          <label><input type="radio" name="scenario" value="empty"><span>No times available</span></label>
+        </span>
+      </fieldset>
+    </div>
+    <div class="stage-body">
+      <div class="phone">
+        <h3 id="demo-title">Choose a time</h3>
+        <p class="sub">Sample data for demonstration only.</p>
+        <div id="tsp-mount"></div>
+        <div class="readout" id="readout">Nothing selected yet.</div>
+      </div>
+    </div>
+  </div>
+  <p class="hint">Try it: press <kbd>Tab</kbd> to enter the grid, then <kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> to move and <kbd>Space</kbd> or <kbd>Enter</kbd> to select. Turn on a screen reader to hear the announcement.</p>
+  <div class="vh" id="live" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <ul class="toc" aria-label="On this page" style="margin-top:28px">
+    <li><a href="#why">Why it exists</a></li>
+    <li><a href="#keyboard">Keyboard navigation</a></li>
+    <li><a href="#sr">Screen reader announcements</a></li>
+    <li><a href="#empty">Empty state</a></li>
+    <li><a href="#density">Two densities</a></li>
+    <li><a href="#use">Usage and limits</a></li>
+  </ul>
+
+  <section id="why">
+    <h2>Why it replaces the dropdown</h2>
+    <p class="claim">The Dropdown Time Select showed one time at a time, behind a click. The Time Slot Picker puts every available time on the page, grouped by day, so patients can compare options without opening anything.</p>
+    <p class="claim">We haven't measured adoption or scheduling outcomes for v2.1 yet, so this page makes no performance claims. <span class="ph">[result: how it will be measured, and the number]</span></p>
+  </section>
+
+  <section id="keyboard">
+    <h2>Arrow keys move through the whole grid</h2>
+    <p class="claim">The grid is one tab stop. Arrow keys move focus between slots, and continue across day boundaries, so keyboard users never tab through dozens of buttons.</p>
+    <figure>
+      <div class="panel">
+        <table>
+          <thead><tr><th>Key</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Tab</kbd></td><td>Enters the grid on the selected slot, or the first slot if none is selected. Tabs out of the grid.</td></tr>
+            <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Previous or next slot, continuing into the adjacent day.</td></tr>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Nearest slot in the row above or below, including across days.</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>First or last slot in the grid.</td></tr>
+            <tr><td><kbd>Space</kbd> <kbd>Enter</kbd></td><td>Selects the focused slot.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption>Moving focus doesn't change the selection; only Space, Enter, or a click does, so a patient can look around without losing their pick.</figcaption>
+    </figure>
+  </section>
+
+  <section id="sr">
+    <h2>Selection is announced, not just highlighted</h2>
+    <p class="claim">The grid is a radio group, and each day is a labelled group inside it. Choosing a slot updates a polite live region with the full day and time, so the result doesn't rely on color.</p>
+    <figure>
+      <div class="cols">
+        <div class="panel"><h3>Structure</h3>
+          <ul class="tight">
+            <li>Container: <code>role="radiogroup"</code></li>
+            <li>Each day: <code>role="group"</code>, labelled by its heading</li>
+            <li>Each slot: <code>role="radio"</code> with <code>aria-checked</code></li>
+          </ul>
+        </div>
+        <div class="panel"><h3>Announcement</h3>
+          <p style="margin:0">“Selected Tuesday, November 3, 10:30 AM.”</p>
+          <p style="margin:8px 0 0;color:var(--muted);font-size:14px">The same text appears in the readout beneath the demo.</p>
+        </div>
+      </div>
+      <figcaption>The live region is polite, so the announcement waits for speech in progress instead of interrupting it.</figcaption>
+    </figure>
+  </section>
+
+  <section id="empty">
+    <h2>An empty day points to the next opening</h2>
+    <p class="claim">When nothing is available, the picker says so and offers a single action: jump to the next date that has openings. Use the “No times available” scenario above to see it.</p>
+    <figure>
+      <div class="panel">
+        <p style="margin:0">Choosing the offered date loads that day's times and moves focus to the first slot, so keyboard users land where the new content begins.</p>
+      </div>
+      <figcaption>The empty state replaces the grid entirely; the picker never renders a grid of disabled buttons.</figcaption>
+    </figure>
+  </section>
+
+  <section id="density">
+    <h2>Two densities for two amounts of room</h2>
+    <p class="claim">Comfortable is the default, with larger touch targets. Compact fits more times in tighter layouts such as side panels. Toggle the density above to compare them.</p>
+    <figure>
+      <div class="panel">
+        <table>
+          <thead><tr><th>Density</th><th>Slot height</th><th>Gap</th></tr></thead>
+          <tbody>
+            <tr><td>Comfortable</td><td>44px</td><td>8px</td></tr>
+            <tr><td>Compact</td><td>34px</td><td>6px</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption>These are the values used in this page's demo; confirm them against the design tokens before copying them. <span class="ph">[tokens: link to token names]</span></figcaption>
+    </figure>
+  </section>
+
+  <section id="use">
+    <h2>Usage and limits</h2>
+    <div class="cols">
+      <div class="panel"><h3>Install and props</h3>
+        <p style="margin:0 0 8px">The demo on this page is a reference implementation. <span class="ph">[install: package name and import]</span></p>
+        <p style="margin:0"><span class="ph">[props: options for density, value, onChange, days, empty-state handler]</span></p>
+      </div>
+      <div class="panel"><h3>Migrating from Dropdown Time Select</h3>
+        <p style="margin:0"><span class="ph">[migration: link to guide and deprecation date]</span></p>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:24px"><h3>Known limits</h3>
+      <p style="margin:0"><span class="ph">[limits: what v2.1 doesn't cover, such as time zones, long date ranges, or right-to-left layouts, once the team confirms]</span></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p style="margin:0 0 6px"><strong style="color:var(--ink)">Credits:</strong> <span class="ph">[credits: names and roles]</span></p>
+  <p style="margin:0"><a href="#main">Back to the live demo</a> · Time Slot Picker, Stable v2.1 · Lumen Health Design System</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var DAYS=[
+    {id:'2026-11-02',d:new Date(2026,10,2),times:['9:00 AM','9:30 AM','10:30 AM','1:00 PM','1:30 PM','3:00 PM']},
+    {id:'2026-11-03',d:new Date(2026,10,3),times:['8:30 AM','10:00 AM','10:30 AM','11:00 AM','2:00 PM','2:30 PM','4:00 PM']},
+    {id:'2026-11-04',d:new Date(2026,10,4),times:['9:00 AM','11:30 AM','1:00 PM','3:30 PM']},
+    {id:'2026-11-05',d:new Date(2026,10,5),times:['8:00 AM','8:30 AM','9:00 AM','12:30 PM','4:30 PM']}
+  ];
+  var mount=document.getElementById('tsp-mount'),readout=document.getElementById('readout'),live=document.getElementById('live');
+  var state={density:'comfortable',scenario:'available',selected:null,jumped:false,focusFirst:false};
+  var fmtLong=new Intl.DateTimeFormat('en-US',{weekday:'long',month:'long',day:'numeric'});
+  var fmtShort=new Intl.DateTimeFormat('en-US',{weekday:'short',month:'short',day:'numeric'});
+
+  function visibleDays(){
+    if(state.scenario==='available') return DAYS;
+    return state.jumped? [DAYS[3]] : [];
+  }
+  function el(t,a,txt){var e=document.createElement(t);for(var k in a||{})e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e;}
+
+  function render(){
+    mount.innerHTML='';
+    var root=el('div',{'class':'tsp','data-density':state.density});
+    var days=visibleDays();
+    if(!days.length){
+      var next=DAYS[3];
+      var box=el('div',{'class':'tsp-empty'});
+      box.appendChild(el('h4',{},'No times available'));
+      box.appendChild(el('p',{},'There are no openings from Monday, Nov 2 through Wednesday, Nov 4.'));
+      var b=el('button',{type:'button','class':'btn',id:'jump'},'Next opening: '+fmtShort.format(next.d));
+      b.addEventListener('click',function(){state.jumped=true;state.focusFirst=true;render();});
+      box.appendChild(b);
+      root.appendChild(box);
+      mount.appendChild(root);
+      return;
+    }
+    var group=el('div',{role:'radiogroup','aria-labelledby':'demo-title'});
+    var slots=[];
+    days.forEach(function(day){
+      var wrap=el('div',{'class':'tsp-day',role:'group','aria-labelledby':'h-'+day.id});
+      var h=el('div',{'class':'tsp-day-h',id:'h-'+day.id});
+      h.appendChild(el('span',{},fmtShort.format(day.d)));
+      h.appendChild(el('small',{},day.times.length+' times'));
+      wrap.appendChild(h);
+      var grid=el('div',{'class':'tsp-grid'});
+      day.times.forEach(function(t){
+        var key=day.id+'|'+t;
+        var s=el('button',{type:'button',role:'radio','aria-checked':String(state.selected===key),tabindex:'-1','data-key':key,'data-label':fmtLong.format(day.d)+', '+t},t);
+        grid.appendChild(s);slots.push(s);
+      });
+      wrap.appendChild(grid);group.appendChild(wrap);
+    });
+    root.appendChild(group);mount.appendChild(root);
+
+    var cur=slots.filter(function(s){return s.getAttribute('aria-checked')==='true';})[0]||slots[0];
+    cur.tabIndex=0;
+    if(state.focusFirst){slots[0].tabIndex=0;if(cur!==slots[0])cur.tabIndex=-1;slots[0].focus();state.focusFirst=false;}
+
+    function focusSlot(s){slots.forEach(function(x){x.tabIndex=-1;});s.tabIndex=0;s.focus();}
+    function select(s){
+      state.selected=s.dataset.key;
+      slots.forEach(function(x){x.setAttribute('aria-checked',String(x===s));});
+      var msg='Selected '+s.dataset.label+'.';
+      live.textContent='';setTimeout(function(){live.textContent=msg;},30);
+      readout.innerHTML='<strong>Selected:</strong> '+s.dataset.label;
+    }
+    function vertical(from,dir){
+      var r=from.getBoundingClientRect(),cx=r.left+r.width/2,best=null,bd=1e9;
+      slots.forEach(function(s){
+        var q=s.getBoundingClientRect();
+        var dy=(q.top+q.height/2)-(r.top+r.height/2);
+        if(dir>0?dy>r.height/2:dy<-r.height/2){
+          var d=Math.abs(dy)*4+Math.abs((q.left+q.width/2)-cx);
+          if(d<bd){bd=d;best=s;}
+        }
+      });
+      return best;
+    }
+    group.addEventListener('click',function(e){var s=e.target.closest('[role=radio]');if(s){focusSlot(s);select(s);}});
+    group.addEventListener('keydown',function(e){
+      var s=e.target.closest('[role=radio]');if(!s)return;
+      var i=slots.indexOf(s),n=null;
+      switch(e.key){
+        case 'ArrowRight':n=slots[Math.min(i+1,slots.length-1)];break;
+        case 'ArrowLeft':n=slots[Math.max(i-1,0)];break;
+        case 'ArrowDown':n=vertical(s,1);break;
+        case 'ArrowUp':n=vertical(s,-1);break;
+        case 'Home':n=slots[0];break;
+        case 'End':n=slots[slots.length-1];break;
+        case ' ':case 'Enter':e.preventDefault();select(s);return;
+        default:return;
+      }
+      e.preventDefault();if(n)focusSlot(n);
+    });
+  }
+
+  function reset(){state.selected=null;state.jumped=false;readout.textContent='Nothing selected yet.';live.textContent='';}
+  document.querySelectorAll('input[name=density]').forEach(function(i){
+    i.addEventListener('change',function(){state.density=i.value;render();});
+  });
+  document.querySelectorAll('input[name=scenario]').forEach(function(i){
+    i.addEventListener('change',function(){state.scenario=i.value;reset();render();});
+  });
+  render();
+})();
+</script>
+</body>
+</html>

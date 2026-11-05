@@ -1,15 +1,14 @@
-Here are three options. Each is under 160 characters, with the link and spaces counted.
+Here are three options, all plain ASCII so they don't turn into 70-character Unicode segments. Character counts include spaces and the link.
 
-**1. Direct (129 characters)**
-> Odd Fern Goods: 20% off everything ends Sunday 11:59pm. Last chance! Use FERN20 on ceramics & candles: oddferngoods.example/sale
+**1. (117 characters)**
+Odd Fern Goods: 20% off everything ends Sunday 10/18, 11:59pm. Use FERN20 before it's gone! oddferngoods.example/sale
 
-**2. Urgency plus shipping (146 characters)**
-> Almost gone! Code FERN20 = 20% off all ceramics & candles, but only till Sunday 10/18, 11:59pm. Free shipping over $60. oddferngoods.example/sale
+**2. (125 characters)**
+Last chance: 20% off all ceramics & candles at Odd Fern Goods. Code FERN20, ends Sun 10/18 11:59pm. oddferngoods.example/sale
 
-**3. Last call (152 characters)**
-> Last call from Odd Fern! 20% off the whole shop with FERN20 until Sunday at 11:59pm. Grab your favorites before they're gone: oddferngoods.example/sale
+**3. (137 characters)**
+Almost gone! 20% off everything at Odd Fern Goods ends Sun 10/18, 11:59pm. Code FERN20. Free shipping over $60. oddferngoods.example/sale
 
-- **Counts:** I counted by hand, so paste them into your SMS tool to confirm before sending.
-- **Special characters:** All three use plain characters only. An emoji or curly quote would switch the text to a different encoding, which cuts the limit to 70 characters per segment.
-- **Free shipping:** Message 2 mentions it without saying it's weekend-only, since it's always on.
-- **Opt-out text:** If your SMS platform adds "Reply STOP to opt out" automatically, it may count toward the limit. Message 1 has the most room, with 31 characters to spare.
+- **Free shipping:** I only put it in #3, and I didn't tie it to the sale, since it's always available.
+- **Carrier opt-out text:** Some carriers and regulations require something like "Reply STOP to opt out." It adds about 22 characters, and all three still fit with it.
+- **Date:** Today is Oct 28, 2026, and the sale ends Oct 18. If that's a typo or a different year, tell me the right date and I'll update the messages. If the sale has really ended, don't send these as written.

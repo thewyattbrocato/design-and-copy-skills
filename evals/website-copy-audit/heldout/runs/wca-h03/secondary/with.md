@@ -1,36 +1,29 @@
-Here's a rewrite that makes the case with what you've told me. I left out the $3,500 figure because you don't have data behind it. A specific savings claim is a factual claim, and if it's wrong, it's a false advertising problem regardless of whether anyone checks today.
+I left the $3,500 figure out. It's a made-up statistic, and putting it on a public pricing page is false advertising. Competitors and regulators do check these claims, and a single customer who asks "where's that from?" can turn it into a bigger problem. The copy below doesn't need it.
 
----
+**Headline:** Your books closed every month, not whenever you get around to them.
 
-**Headline:** Clean books every month. No surprises at tax time.
+**Starter, $59/month**
+For solo freelancers who want clean books without the chase.
+- Bank feeds categorized automatically
+- A month-end report, every month
 
-**Subhead:** Freelance bookkeeping that categorizes your bank activity, closes your month, and keeps you ahead of quarterly taxes. No contracts.
+Button: Start with Starter
 
-**Starter · $59/month**
-For solo freelancers who want their books done every month.
-- Monthly bookkeeping for one person
-- Bank feed categorization
-- Month-end report
-
-[Start with Starter]
-
-**Plus · $119/month** *Most popular*
-Everything in Starter, plus the planning that keeps tax season calm.
-- Quarterly tax estimates
+**Plus, $119/month**
+For freelancers who want tax answers before tax season.
+- Everything in Starter
+- Quarterly tax estimates, so you know what to set aside
 - A quarterly call with your bookkeeper
 
-[Start with Plus]
+Button: Start with Plus
 
-**Footer:** Cancel anytime. No lock-in, no contracts.
+**Footer:** Cancel anytime. No contracts, no lock-in.
 
-**Button (alt):** Get started
+I cut "flexible and affordable" because it says nothing a visitor can check. The specifics ("categorized automatically," "a call every quarter") do more work.
 
----
+If you want a savings line, you need a number you can back up. Two options:
 
-**On the savings number:** Some options that will hold up:
+- **Measure it.** Survey a few customers about what they spent on bookkeeping or tax help before Ledgerfinch. Even 20 responses give you a real average you can cite.
+- **Compare to a benchmark you can source.** For example, "A freelance bookkeeper often charges [verified rate] — Ledgerfinch Starter is $59." You'd need to confirm the rate with a published source.
 
-1. **Measure it.** Ask your first 15 to 20 customers what they spent on bookkeeping or tax help before and what they spend now. If the median is a real number, you can say "customers save $X a year on average" and cite the sample ("based on 20 customers, Q1 2027").
-2. **Use a comparison you can prove.** "Plus costs less than [X] hours a month with a traditional bookkeeper at $Y/hour." This only works if the math is accurate for your market.
-3. **Skip the number for now.** The copy above already gives people a clear reason to buy.
-
-Your competitor's "$4,000" line has the same problem, so I wouldn't match it just because they made the claim. If you tell me which option you want, I can draft the copy for it.
+If you send me the real figure and where it comes from, I'll work it into the page.

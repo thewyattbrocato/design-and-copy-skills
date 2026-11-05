@@ -11,26 +11,26 @@
     --text: #1d2a21;
     --muted: #55645a;
     --line: #dde3d9;
-    --accent: #2f6b46;
+    --accent: #2f6b45;
     --accent-ink: #ffffff;
     --off: #6f7c73;
-    --danger: #a52a2a;
-    --danger-bg: #fbeeee;
-    --focus: #1a5fd0;
+    --danger: #a62b22;
+    --danger-bg: #fdf1ef;
+    --focus: #1a5fb4;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #141a16;
       --card: #1d251f;
       --text: #e8efe9;
-      --muted: #a3b2a8;
-      --line: #2f3b33;
-      --accent: #5fb583;
-      --accent-ink: #0d1a12;
-      --off: #8a978e;
-      --danger: #ff9b9b;
-      --danger-bg: #2b1a1a;
-      --focus: #8ab4ff;
+      --muted: #a7b5aa;
+      --line: #2e3a31;
+      --accent: #6cc28a;
+      --accent-ink: #0f1d14;
+      --off: #8a988d;
+      --danger: #ff8d82;
+      --danger-bg: #2c1b19;
+      --focus: #8ab8ff;
     }
   }
   * { box-sizing: border-box; }
@@ -38,90 +38,96 @@
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
   main { max-width: 600px; margin: 0 auto; padding: 24px 16px 64px; }
   h1 { font-size: 1.6rem; margin: 8px 0 4px; }
   .lede { margin: 0 0 24px; color: var(--muted); }
-  h2 {
-    font-size: .85rem; letter-spacing: .06em; text-transform: uppercase;
-    color: var(--muted); margin: 32px 0 8px;
-  }
-  .card {
-    background: var(--card); border: 1px solid var(--line);
-    border-radius: 12px; padding: 0 16px;
-  }
-  .row { padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .row:last-child { border-bottom: 0; }
-  .row-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-  .label { font-weight: 600; }
-  .hint { margin: 2px 0 0; color: var(--muted); font-size: .94rem; }
-  .saved {
-    display: block; min-height: 1.3em; margin-top: 6px;
-    font-size: .88rem; color: var(--accent); font-weight: 600;
-  }
-  .saved.err { color: var(--danger); }
+  h2 { font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 32px 4px 8px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+  .row { display: flex; align-items: center; gap: 16px; padding: 14px 16px; min-height: 64px; }
+  .row + .row, .card > .row + fieldset, .card > fieldset + .row { border-top: 1px solid var(--line); }
+  .row .text { flex: 1; min-width: 0; }
+  .row .title { display: block; font-weight: 600; }
+  .row .hint { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+  label.row { cursor: pointer; }
 
-  /* switch: shape, position and On/Off text all show state */
-  .switch {
-    flex: none; display: inline-flex; align-items: center; gap: 10px;
-    min-height: 44px; padding: 0 2px; background: none; border: 0;
-    color: var(--text); font: inherit; cursor: pointer;
+  /* Switch */
+  .sw { display: flex; align-items: center; gap: 10px; flex: none; }
+  .sw input {
+    appearance: none; -webkit-appearance: none; margin: 0;
+    width: 52px; height: 32px; border-radius: 16px; position: relative;
+    background: var(--off); cursor: pointer; transition: background .15s;
   }
-  .switch .state { min-width: 2.2em; text-align: right; font-weight: 600; font-size: .94rem; }
-  .track {
-    width: 50px; height: 30px; border-radius: 15px; position: relative;
-    background: transparent; border: 2px solid var(--off);
-    transition: background .15s, border-color .15s;
+  .sw input::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px;
+    border-radius: 50%; background: #fff; transition: transform .15s;
+    box-shadow: 0 1px 2px rgba(0,0,0,.3);
   }
-  .thumb {
-    position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
-    border-radius: 50%; background: var(--off); transition: transform .15s, background .15s;
-  }
-  .switch[aria-checked="true"] .track { background: var(--accent); border-color: var(--accent); }
-  .switch[aria-checked="true"] .thumb { transform: translateX(20px); background: var(--accent-ink); }
-  @media (prefers-reduced-motion: reduce) { .track, .thumb { transition: none; } }
+  .sw input:checked { background: var(--accent); }
+  .sw input:checked::after { transform: translateX(20px); }
+  .sw .state { min-width: 2.2em; font-size: 0.9rem; font-weight: 600; color: var(--muted); }
+  .sw .state::before { content: "Off"; }
+  .sw input:checked ~ .state::before { content: "On"; }
+  .sw input:checked ~ .state { color: var(--accent); }
 
   :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
-  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
-  legend { padding: 0; font-weight: 600; }
-  .radios { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  /* Fieldsets */
+  fieldset { border: 0; margin: 0; padding: 14px 16px; min-width: 0; }
+  legend { padding: 0; font-weight: 600; float: left; width: 100%; }
+  legend + * { clear: both; }
+  .hint-block { color: var(--muted); font-size: 0.9rem; margin: 2px 0 10px; }
+
+  .radios { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
   .radios label {
-    display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
-    padding: 0 16px 0 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer;
+    display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px 0 12px;
+    border: 1px solid var(--line); border-radius: 10px; cursor: pointer; flex: 1 1 140px;
   }
   .radios input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
   .radios label:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 
-  .times { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
-  .times label { display: block; font-weight: 600; font-size: .94rem; margin-bottom: 4px; }
+  .times { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+  .times .field { display: flex; flex-direction: column; gap: 4px; flex: 1 1 140px; }
+  .times label { font-size: 0.9rem; font-weight: 600; }
   input[type="time"] {
-    font: inherit; font-size: 1rem; color: var(--text); background: var(--bg);
-    border: 1px solid var(--off); border-radius: 8px; min-height: 44px; padding: 0 10px; width: 9.5em;
+    font: inherit; font-size: 16px; color: var(--text); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 10px; min-height: 44px; padding: 0 12px; width: 100%;
   }
-  .summary { margin: 12px 0 0; font-size: .94rem; }
+  .summary { margin: 10px 0 0; font-size: 0.9rem; color: var(--muted); }
 
-  .danger-card { border-color: var(--danger); }
-  .danger-title { color: var(--danger); font-weight: 600; }
-  button.btn {
-    font: inherit; font-weight: 600; min-height: 44px; padding: 0 18px;
-    border-radius: 10px; cursor: pointer; border: 1px solid var(--line);
-    background: var(--card); color: var(--text);
+  .saved {
+    flex: none; font-size: 0.85rem; color: var(--accent); font-weight: 600;
+    min-width: 4.5em; text-align: right; opacity: 0; transition: opacity .2s;
   }
-  button.btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
-  @media (prefers-color-scheme: dark) { button.btn.danger { color: #1b0c0c; } }
-  .danger-outline { border-color: var(--danger) !important; color: var(--danger) !important; margin-top: 12px; }
+  .saved.show { opacity: 1; }
+  .fs-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+
+  /* Danger zone */
+  .danger { border-color: color-mix(in srgb, var(--danger) 45%, var(--line)); }
+  .danger .row { align-items: flex-start; flex-wrap: wrap; }
+  button {
+    font: inherit; font-weight: 600; min-height: 44px; padding: 0 18px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text); cursor: pointer;
+  }
+  button.del { color: var(--danger); border-color: var(--danger); background: transparent; }
+  button.del:hover { background: var(--danger-bg); }
+  button.solid-danger { background: var(--danger); color: var(--card); border-color: var(--danger); }
+  button[disabled] { opacity: .6; cursor: default; }
 
   dialog {
-    max-width: 440px; width: calc(100% - 32px); border: 1px solid var(--line);
-    border-radius: 14px; padding: 24px; background: var(--card); color: var(--text);
+    border: 1px solid var(--line); border-radius: 16px; padding: 24px; max-width: 420px; width: calc(100% - 32px);
+    background: var(--card); color: var(--text);
   }
   dialog::backdrop { background: rgba(0,0,0,.5); }
-  dialog h3 { margin: 0 0 8px; font-size: 1.2rem; }
-  dialog p { margin: 0 0 12px; }
-  .dialog-actions { display: flex; gap: 12px; justify-content: flex-start; margin-top: 20px; flex-wrap: wrap; }
-  .gone { padding: 16px; border-radius: 10px; background: var(--danger-bg); margin-top: 16px; }
+  dialog h2 { text-transform: none; letter-spacing: 0; font-size: 1.2rem; color: var(--text); margin: 0 0 8px; }
+  dialog p { margin: 0 0 20px; color: var(--muted); }
+  .actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+  .notice {
+    margin: 16px 0 0; padding: 12px 16px; border-radius: 10px; background: var(--danger-bg);
+    color: var(--danger); border: 1px solid var(--danger); font-weight: 600;
+  }
+  .notice[hidden] { display: none; }
 </style>
 </head>
 <body>
@@ -131,221 +137,205 @@
 
   <h2>Notifications</h2>
   <div class="card">
-    <div class="row">
-      <div class="row-head">
-        <div>
-          <div class="label" id="l-water">Watering reminders</div>
-          <p class="hint" id="d-water">Get a notification when a plant is due for water. Quiet hours below still apply.</p>
-        </div>
-        <button class="switch" role="switch" id="s-water" data-key="water" aria-checked="true" aria-labelledby="l-water" aria-describedby="d-water">
-          <span class="state" aria-hidden="true">On</span><span class="track" aria-hidden="true"><span class="thumb"></span></span>
-        </button>
-      </div>
-      <span class="saved" data-for="water" role="status"></span>
-    </div>
+    <label class="row" for="watering">
+      <span class="text">
+        <span class="title">Remind me when plants need water</span>
+        <span class="hint" id="watering-hint">Quiet hours below still apply.</span>
+      </span>
+      <span class="saved" id="saved-watering" role="status"></span>
+      <span class="sw">
+        <input type="checkbox" role="switch" id="watering" name="watering" aria-describedby="watering-hint" checked>
+        <span class="state" aria-hidden="true"></span>
+      </span>
+    </label>
 
-    <div class="row">
-      <div class="row-head">
-        <div>
-          <div class="label" id="l-email">Weekly summary email</div>
-          <p class="hint" id="d-email">One email a week about how your plants are doing.</p>
-        </div>
-        <button class="switch" role="switch" id="s-email" data-key="email" aria-checked="true" aria-labelledby="l-email" aria-describedby="d-email">
-          <span class="state" aria-hidden="true">On</span><span class="track" aria-hidden="true"><span class="thumb"></span></span>
-        </button>
-      </div>
-      <span class="saved" data-for="email" role="status"></span>
-    </div>
+    <label class="row" for="weekly">
+      <span class="text">
+        <span class="title">Email me a weekly summary</span>
+        <span class="hint" id="weekly-hint">One email a week about your plants.</span>
+      </span>
+      <span class="saved" id="saved-weekly" role="status"></span>
+      <span class="sw">
+        <input type="checkbox" role="switch" id="weekly" name="weekly" aria-describedby="weekly-hint" checked>
+        <span class="state" aria-hidden="true"></span>
+      </span>
+    </label>
 
-    <div class="row">
-      <fieldset aria-describedby="d-quiet">
+    <fieldset aria-describedby="quiet-hint" id="quiet">
+      <div class="fs-head">
         <legend>Quiet hours</legend>
-        <p class="hint" id="d-quiet">Watering reminders stay silent between these times. Overnight ranges work, like 10:00 pm to 7:00 am.</p>
-        <div class="times">
-          <div>
-            <label for="qstart">Start</label>
-            <input type="time" id="qstart" data-key="qstart" value="22:00" required>
-          </div>
-          <div>
-            <label for="qend">End</label>
-            <input type="time" id="qend" data-key="qend" value="07:00" required>
-          </div>
+        <span class="saved" id="saved-quiet" role="status"></span>
+      </div>
+      <p class="hint-block" id="quiet-hint">Reminders stay silent between these times. If the start is later than the end, quiet hours run overnight.</p>
+      <div class="times">
+        <div class="field">
+          <label for="quiet-start">Start</label>
+          <input type="time" id="quiet-start" name="quiet-start" value="22:00" required>
         </div>
-        <p class="summary" id="qsummary"></p>
-        <span class="saved" data-for="quiet" role="status"></span>
-      </fieldset>
-    </div>
+        <div class="field">
+          <label for="quiet-end">End</label>
+          <input type="time" id="quiet-end" name="quiet-end" value="07:00" required>
+        </div>
+      </div>
+      <p class="summary" id="quiet-summary" aria-live="polite"></p>
+    </fieldset>
   </div>
 
   <h2>Privacy</h2>
   <div class="card">
-    <div class="row">
-      <div class="row-head">
-        <div>
-          <div class="label" id="l-photos">Show my plant photos on my public profile</div>
-          <p class="hint" id="d-photos">When off, only you can see your plant photos.</p>
-        </div>
-        <button class="switch" role="switch" id="s-photos" data-key="photos" aria-checked="false" aria-labelledby="l-photos aria-describedby" aria-describedby="d-photos">
-          <span class="state" aria-hidden="true">Off</span><span class="track" aria-hidden="true"><span class="thumb"></span></span>
-        </button>
-      </div>
-      <span class="saved" data-for="photos" role="status"></span>
-    </div>
+    <label class="row" for="photos">
+      <span class="text">
+        <span class="title">Show my plant photos on my public profile</span>
+        <span class="hint" id="photos-hint">When off, your photos are hidden from your public profile.</span>
+      </span>
+      <span class="saved" id="saved-photos" role="status"></span>
+      <span class="sw">
+        <input type="checkbox" role="switch" id="photos" name="photos" aria-describedby="photos-hint">
+        <span class="state" aria-hidden="true"></span>
+      </span>
+    </label>
   </div>
 
-  <h2>Display</h2>
+  <h2>Units</h2>
   <div class="card">
-    <div class="row">
-      <fieldset>
-        <legend>Temperature unit</legend>
-        <div class="radios">
-          <label><input type="radio" name="unit" value="C"> Celsius (°C)</label>
-          <label><input type="radio" name="unit" value="F"> Fahrenheit (°F)</label>
-        </div>
-        <span class="saved" data-for="unit" role="status"></span>
-      </fieldset>
-    </div>
+    <fieldset id="units">
+      <div class="fs-head">
+        <legend>Temperature</legend>
+        <span class="saved" id="saved-temp" role="status"></span>
+      </div>
+      <div class="radios">
+        <label><input type="radio" name="temp" value="C"> Celsius (°C)</label>
+        <label><input type="radio" name="temp" value="F"> Fahrenheit (°F)</label>
+      </div>
+    </fieldset>
   </div>
 
   <h2>Account</h2>
-  <div class="card danger-card">
+  <div class="card danger">
     <div class="row">
-      <div class="danger-title">Delete account</div>
-      <p class="hint">Permanently deletes your Fernwick account and everything in it. This can't be undone.</p>
-      <button class="btn danger-outline" id="open-delete" type="button">Delete my account…</button>
-      <div class="gone" id="gone" hidden role="status"></div>
+      <div class="text">
+        <span class="title">Delete account</span>
+        <span class="hint">Permanently deletes your Fernwick account and its data. You’ll be asked to confirm first.</span>
+      </div>
+      <button type="button" class="del" id="open-delete">Delete account…</button>
     </div>
   </div>
+  <p class="notice" id="deleted" role="status" hidden></p>
 </main>
 
-<dialog id="dlg" aria-labelledby="dlg-title">
-  <h3 id="dlg-title">Delete your account?</h3>
-  <p>Your account, plants, care history and photos will be permanently deleted. You can't get them back.</p>
-  <p>If you only want fewer emails or reminders, turn those off in settings instead.</p>
-  <div class="dialog-actions">
-    <button class="btn" id="cancel-delete" type="button" autofocus>Keep my account</button>
-    <button class="btn danger" id="confirm-delete" type="button">Delete my account</button>
-  </div>
+<dialog id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-desc">
+  <form method="dialog">
+    <h2 id="confirm-title">Delete your account?</h2>
+    <p id="confirm-desc">This permanently deletes your account and everything in it, including your plants and photos. This can’t be undone.</p>
+    <div class="actions">
+      <button value="cancel" autofocus>Keep my account</button>
+      <button value="delete" class="solid-danger" id="confirm-delete">Delete my account</button>
+    </div>
+  </form>
 </dialog>
 
 <script>
 (function () {
   var KEY = "fernwick-settings";
-  var locale = (navigator.language || "en-US");
-  // Default unit from locale: Fahrenheit for en-US, Celsius elsewhere. Shown in the control.
-  var defaults = {
-    water: true, email: true, photos: false,
-    unit: /^en-US$|^en-LR$|^my/i.test(locale) ? "F" : "C",
-    qstart: "22:00", qend: "07:00"
-  };
-  var s = Object.assign({}, defaults);
-  try { Object.assign(s, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
+  var $ = function (id) { return document.getElementById(id); };
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
 
-  // Replace with a real API call; reject to show the failure state.
-  function persist(next) {
-    return new Promise(function (resolve, reject) {
-      try { localStorage.setItem(KEY, JSON.stringify(next)); resolve(); }
-      catch (e) { reject(e); }
-    });
+  // Defaults: temperature unit from locale (Fahrenheit for en-US), otherwise Celsius.
+  var loc = (navigator.language || "en-US");
+  var defaultTemp = /^en-US$|^en-LR$|^my/i.test(loc) ? "F" : "C";
+
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {}
   }
 
   var timers = {};
-  function flash(name, msg, isErr) {
-    var el = document.querySelector('.saved[data-for="' + name + '"]');
-    if (!el) return;
-    el.textContent = msg;
-    el.className = "saved" + (isErr ? " err" : "");
-    clearTimeout(timers[name]);
-    if (!isErr) timers[name] = setTimeout(function () { el.textContent = ""; }, 2500);
+  function flashSaved(id) {
+    var el = $(id);
+    el.textContent = "Saved";
+    el.classList.add("show");
+    clearTimeout(timers[id]);
+    timers[id] = setTimeout(function () {
+      el.classList.remove("show");
+      setTimeout(function () { el.textContent = ""; }, 200);
+    }, 1800);
   }
 
-  function setSwitch(btn, on) {
-    btn.setAttribute("aria-checked", String(on));
-    btn.querySelector(".state").textContent = on ? "On" : "Off";
+  function save(key, value, savedId) {
+    store[key] = value;
+    persist();
+    flashSaved(savedId);
   }
 
-  function save(name, changes, revert) {
-    var next = Object.assign({}, s, changes);
-    persist(next).then(function () {
-      s = next; flash(name, "✓ Saved");
-    }).catch(function () {
-      revert();
-      flash(name, "Couldn't save. Your setting was put back. Try again.", true);
-    });
-  }
-
-  document.querySelectorAll(".switch").forEach(function (btn) {
-    var k = btn.dataset.key;
-    setSwitch(btn, s[k]);
-    btn.addEventListener("click", function () {
-      var prev = s[k], now = !prev;
-      setSwitch(btn, now);
-      save(k, (function (o) { o[k] = now; return o; })({}), function () { setSwitch(btn, prev); });
-    });
+  // Switches
+  [["watering", true], ["weekly", true], ["photos", false]].forEach(function (s) {
+    var el = $(s[0]);
+    el.checked = s[0] in store ? store[s[0]] : s[1];
+    el.addEventListener("change", function () { save(s[0], el.checked, "saved-" + s[0]); });
   });
 
-  document.querySelectorAll('input[name="unit"]').forEach(function (r) {
-    r.checked = r.value === s.unit;
-    r.addEventListener("change", function () {
-      var prev = s.unit;
-      save("unit", { unit: r.value }, function () {
-        document.querySelector('input[name="unit"][value="' + prev + '"]').checked = true;
-      });
-    });
+  // Temperature
+  var temp = store.temp || defaultTemp;
+  document.querySelectorAll('input[name="temp"]').forEach(function (r) {
+    r.checked = r.value === temp;
+    r.addEventListener("change", function () { save("temp", r.value, "saved-temp"); });
   });
 
-  var qs = document.getElementById("qstart"), qe = document.getElementById("qend"),
-      sum = document.getElementById("qsummary");
-  qs.value = s.qstart; qe.value = s.qend;
+  // Quiet hours
+  var qs = $("quiet-start"), qe = $("quiet-end");
+  if (store.quietStart) qs.value = store.quietStart;
+  if (store.quietEnd) qe.value = store.quietEnd;
 
   function fmt(v) {
     var p = v.split(":"), h = +p[0], m = p[1];
-    return (h % 12 || 12) + ":" + m + " " + (h < 12 ? "am" : "pm");
+    var suffix = h >= 12 ? "PM" : "AM";
+    h = h % 12 || 12;
+    return h + ":" + m + " " + suffix;
   }
-  function renderSummary() {
-    if (!qs.value || !qe.value) { sum.textContent = "Enter both a start and an end time."; return; }
-    if (qs.value === qe.value) { sum.textContent = "Start and end are the same time, so no hours are silenced. Choose different times."; return; }
-    var overnight = qs.value > qe.value;
-    sum.textContent = "Silent from " + fmt(qs.value) + " to " + fmt(qe.value) + (overnight ? " the next morning." : " each day.");
+  function summarize() {
+    var out = $("quiet-summary");
+    if (!qs.value || !qe.value) {
+      out.textContent = "Enter both a start and an end time.";
+    } else if (qs.value === qe.value) {
+      out.textContent = "Start and end are the same, so no hours are silent. Change one to set quiet hours.";
+    } else {
+      out.textContent = "Silent from " + fmt(qs.value) + " to " + fmt(qe.value) +
+        (qs.value > qe.value ? " (overnight)." : ".");
+    }
   }
-  renderSummary();
-
-  function onTime() {
-    renderSummary();
-    if (!qs.value || !qe.value || qs.value === qe.value) return; // wait for a usable pair
-    var prev = { qstart: s.qstart, qend: s.qend };
-    save("quiet", { qstart: qs.value, qend: qe.value }, function () {
-      qs.value = prev.qstart; qe.value = prev.qend; renderSummary();
-    });
+  function quietChanged() {
+    summarize();
+    if (qs.value && qe.value) {
+      store.quietStart = qs.value;
+      store.quietEnd = qe.value;
+      persist();
+      flashSaved("saved-quiet");
+    }
   }
-  qs.addEventListener("change", onTime);
-  qe.addEventListener("change", onTime);
+  qs.addEventListener("change", quietChanged);
+  qe.addEventListener("change", quietChanged);
+  summarize();
 
   // Delete account
-  var dlg = document.getElementById("dlg"), gone = document.getElementById("gone"),
-      openBtn = document.getElementById("open-delete"), confirmBtn = document.getElementById("confirm-delete");
-  openBtn.addEventListener("click", function () { dlg.showModal(); });
-  document.getElementById("cancel-delete").addEventListener("click", function () { dlg.close(); });
-
-  // Replace with a real API call.
-  function deleteAccount() { return Promise.resolve(); }
-
-  confirmBtn.addEventListener("click", function () {
-    confirmBtn.disabled = true; confirmBtn.textContent = "Deleting…";
-    deleteAccount().then(function () {
-      dlg.close();
-      try { localStorage.removeItem(KEY); } catch (e) {}
-      openBtn.hidden = true;
-      gone.hidden = false;
-      gone.textContent = "Your account has been deleted. You'll be signed out.";
-    }).catch(function () {
-      dlg.close();
-      gone.hidden = false;
-      gone.textContent = "We couldn't delete your account. Nothing was changed. Try again.";
-    }).then(function () {
-      confirmBtn.disabled = false; confirmBtn.textContent = "Delete my account";
-    });
+  var dlg = $("confirm");
+  $("open-delete").addEventListener("click", function () {
+    if (dlg.showModal) dlg.showModal();
+    else if (window.confirm("Delete your account? This can’t be undone.")) done();
   });
+  dlg.addEventListener("close", function () {
+    if (dlg.returnValue === "delete") done();
+    dlg.returnValue = "";
+    if (!$("deleted").hidden) return;
+    $("open-delete").focus();
+  });
+  function done() {
+    // Hook your delete-account request here.
+    var n = $("deleted");
+    n.textContent = "Account deletion requested.";
+    n.hidden = false;
+    n.setAttribute("tabindex", "-1");
+    n.focus();
+  }
 })();
 </script>
 </body>

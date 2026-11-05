@@ -1,121 +1,110 @@
-**Plan.** The reader is a renter who suspects their air is bad but can't tell, and who may have never heard of Nook. The one idea is that you can read your air at a glance, with nothing to install or drill. Because nothing has shipped, the page says so early and plainly, then spells out the deposit terms before the ask. The order is: hero, how it works, what it reads, who it's for, status and honesty, price and terms, FAQ, close.
+**Plan**
+- Reader: a renter who wonders about the air in their place and is deciding whether to put money down on a product that doesn't exist yet.
+- Idea: a glanceable light that tells you whether to open a window, backed by plain terms about the deposit and the stage the product is in.
+- Order: hero with the ask, what it is, how it works, who it's for and not for, where it stands today, price and deposit terms, FAQ, close.
+- Ask: "Reserve yours for $10", repeated in the same words.
 
 ---
 
 ## Hero
 
-**Headline:** Know what's in your air without reading a chart.
+**Headline:** Know when your air is bad. Just look at the light.
 
-**Subhead:** Nook Air is a pocket-sized air quality monitor for renters. It measures fine particles and CO2 and shows one light on the front: green, yellow or red.
+**Subhead:** Nook Air is a pocket-sized air quality monitor for renters. It reads fine particles and CO2 and shows green, yellow or red on the front. No app needed.
 
-**Button:** Preorder for $10
+**Button:** Reserve yours for $10
 
-**Under the button:** Planned price $79. The $10 deposit is refundable. The rest is charged when it ships. Aiming for spring, no date promised yet.
-
----
-
-## What the light tells you
-
-**Heading:** One light, three answers
-
-- **Green:** [add what green means, in plain words]
-- **Yellow:** [add what yellow means]
-- **Red:** [add what red means, and what to do about it]
-
-Glance at it when you walk in, and open a window or turn on the fan if it isn't green.
+**Under the button:** $79 planned price. $10 refundable deposit today, the rest charged when it ships. Aiming for spring, with no date promised yet.
 
 ---
 
-## How it works
+## Section: A light you can read from across the room
 
-**Heading:** Put it down. That's the setup.
+Green means fine. Yellow means worth paying attention to. Red means open a window or change something.
 
-- **Set it on a shelf or clip it to a bag.** It's pocket-sized, so it moves with you from bedroom to kitchen to office.
-- **No app, no account.** The light on the front is the whole interface.
-- **No installation.** Nothing to mount or drill, so your deposit stays safe.
+Nook Air measures two things: fine particles (the dust and smoke kind) and CO2 (the stuffy-room kind). It combines them into one light, so you don't have to interpret numbers.
 
----
-
-## What it measures
-
-**Heading:** The two things worth watching in a small apartment
-
-- **Fine particles:** the tiny stuff from cooking, candles, traffic and smoke.
-- **CO2:** it builds up in closed rooms where people sleep or work. Stuffy air is the usual sign.
-
-Both feed the same light, so you don't have to interpret two numbers.
+**Button:** Reserve yours for $10
 
 ---
 
-## Who it's for
+## Section: Made for a place you can't renovate
 
-**Heading:** Made for places you don't own
-
-You can't change the ventilation, the windows or the stove hood. You can find out when the air is bad and what's causing it, and then decide whether to open a window, move the desk or run a fan.
-
-**Not for you if** you want a whole-home system wired into your HVAC, or a dashboard of readings and history. Nook Air gives you a light, not a data feed.
+- **It sits on a shelf or clips to a bag.** There's nothing to install, drill or ask your landlord about.
+- **It's pocket-sized.** Move it from the bedroom to the desk, or take it with you.
+- **No app needed.** The light on the front is the whole interface.
 
 ---
 
-## Where we are
+## Section: Where Nook Air is today
 
-**Heading:** Here's exactly how far along this is
+We're being plain about this because you're being asked to pay before it exists in stores.
 
-Nook Air hasn't shipped. The prototypes have been used in my apartment and in a few friends' places, and that's the only testing so far. We have no reviews to show you, and we won't make any up.
+- Nothing has shipped yet.
+- Working prototypes have been used in the founder's apartment and a few friends' homes. That's the full extent of testing so far.
+- We're aiming to ship in spring. We can't promise a date, and we'd rather tell you that now than guess.
 
-That's why the preorder starts at $10 and not $79. If you'd rather wait until there are independent reviews, that's a reasonable call.
-
-[Add a short founder note: your name, why you built it, a photo of the prototype in your apartment.]
-
----
-
-## Price and terms
-
-**Heading:** $10 now. The rest when it ships.
-
-- **Planned price:** $79
-- **Today:** $10 deposit, which is refundable
-- **At shipping:** the remaining balance is charged
-- **Timing:** aiming for spring. We can't promise a date, and we'll email you as soon as we know more.
-
-[Add how to get the deposit back: e.g. reply to the confirmation email. Add for how long.]
-
-**Button:** Preorder for $10
+[Add a short founder note and photo of the prototype, if you want one. A real one will do more here than any claim.]
 
 ---
 
-## Questions
+## Section: What it costs and what happens to your money
 
-**Can I really get my $10 back?**
-Yes, the deposit is refundable. [Add the exact steps and any deadline.]
+| | |
+|---|---|
+| **Planned price** | $79 |
+| **Today** | $10 deposit, refundable |
+| **When it ships** | The remaining $69 is charged |
 
-**When will I be charged the rest?**
+Your deposit holds your place in the preorder. [Confirm: how to request a refund, e.g. reply to the confirmation email, and any time limit on refund requests.]
+
+**Button:** Reserve yours for $10
+
+---
+
+## Section: Is it for you?
+
+**It's a good fit if** you rent, you want a quick read on your air without an app or a dashboard, and you're comfortable preordering an early product.
+
+**It's probably not for you if** you need lab-grade measurements or want to chart air quality over time, or if you need it by a fixed date.
+
+---
+
+## FAQ
+
+**Is the deposit really refundable?**
+Yes. The $10 is refundable. [Add how to request it and until when.]
+
+**When will I be charged the other $69?**
 When your Nook Air ships, not before.
 
 **When will it ship?**
-We're aiming for spring, but we can't promise a date. Preordering doesn't lock you in until it ships. [Confirm whether you can still cancel after the ship notice.]
+We're aiming for spring, but we can't promise a date. Nothing has shipped yet.
 
-**Do I need a phone?**
-No. There's no app. The light on the front shows the result.
+**Has anyone actually used it?**
+The prototypes have been used in the founder's apartment and a few friends' homes. It hasn't been tested more widely than that.
 
-**Will it work in my apartment?**
-It has been tested in my place and a few friends' places so far. [Add anything you know about room size or placement.]
+**Do I need to install anything or connect it to my phone?**
+No. There's no app. You read the light on the front.
 
-**Where do you ship?**
-[Add regions.]
+**What does it measure?**
+Fine particles and CO2.
+
+**Where do I put it?**
+On a shelf, or clipped to a bag.
 
 ---
 
 ## Close
 
-**Heading:** Find out what you're breathing.
+**Heading:** Put down $10 now. Pay the other $69 only when it ships.
 
-$10 holds your Nook Air. It's refundable, and nothing more is charged until it ships.
+**Body:** If spring slips, or you change your mind, your deposit is refundable.
 
-**Button:** Preorder for $10
+**Button:** Reserve yours for $10
 
 ---
 
 **Notes**
-- **Fill the placeholders or cut them.** The ones that matter most are what each light color means and how to get a refund. People will look for both before paying.
-- **I made no promises you didn't give me.** Some terms are unconfirmed, so decide: can the $79 price change before shipping, and can people still cancel after the ship notice? I left both out of the claims rather than guess.
+- Fill in the two bracketed gaps: the refund process and any time limit, and optionally a real founder note and prototype photo. I didn't invent either.
+- I left out specs like accuracy, battery life and sensor models, since you didn't give them. If you have them, a short "What's inside" line would help skeptical buyers.

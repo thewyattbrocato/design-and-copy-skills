@@ -7,10 +7,23 @@
 <style>
   :root {
     --bg: #faf6f0;
-    --ink: #2e2a26;
-    --muted: #6f665d;
-    --accent: #5b6b4e;
-    --line: #ddd3c5;
+    --ink: #2b2623;
+    --muted: #6d625a;
+    --accent: #7a4b3a;
+    --accent-ink: #fff;
+    --rule: #dccfc2;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1e1a18;
+      --ink: #f1e9e1;
+      --muted: #b5a89d;
+      --accent: #e0a98f;
+      --accent-ink: #1e1a18;
+      --rule: #3a3330;
+    }
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -18,102 +31,112 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--sans);
     font-size: 1.0625rem;
     line-height: 1.6;
   }
-  main { max-width: 36rem; margin: 0 auto; padding: 0 1.25rem 4rem; }
-  header { text-align: center; padding: 4.5rem 0 3rem; border-bottom: 1px solid var(--line); }
+  main {
+    max-width: 38rem;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 3rem;
+  }
+  header { text-align: center; padding-bottom: 2.5rem; }
   .kicker {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
     font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     color: var(--muted);
     margin: 0 0 1rem;
   }
   h1 {
+    font-family: var(--serif);
     font-weight: normal;
-    font-size: clamp(2.5rem, 10vw, 3.75rem);
+    font-size: clamp(2.6rem, 11vw, 4.25rem);
     line-height: 1.1;
     margin: 0 0 1rem;
   }
-  .date { font-size: 1.35rem; margin: 0; }
-  .place { color: var(--muted); margin: 0.25rem 0 0; }
+  .when { font-family: var(--serif); font-size: 1.35rem; margin: 0; }
+  .where { color: var(--muted); margin: 0.25rem 0 0; }
   .btn {
     display: inline-block;
     margin-top: 2rem;
-    padding: 0.8rem 2.2rem;
+    padding: 0.85rem 2.25rem;
     background: var(--accent);
-    color: #fff;
+    color: var(--accent-ink);
     text-decoration: none;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    font-size: 0.95rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-radius: 2px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    border-radius: 999px;
   }
-  .btn:hover { background: #4a5940; }
+  .btn:hover { filter: brightness(1.1); }
   .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-  section { padding: 2.5rem 0 0; }
+  section { border-top: 1px solid var(--rule); padding: 2rem 0; }
   h2 {
+    font-family: var(--serif);
     font-weight: normal;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin: 0 0 1rem;
-    color: var(--accent);
   }
-  ul.schedule { list-style: none; margin: 0; padding: 0; }
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+  ol.schedule { list-style: none; margin: 0; padding: 0; }
   .schedule li {
     display: flex;
     gap: 1.25rem;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--line);
+    padding: 0.6rem 0;
+    border-bottom: 1px dotted var(--rule);
   }
   .schedule li:last-child { border-bottom: 0; }
-  .schedule .time {
+  .schedule time {
     flex: 0 0 5.5rem;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    font-variant-numeric: tabular-nums;
-    color: var(--muted);
+    font-family: var(--serif);
+    color: var(--accent);
+    font-size: 1.15rem;
   }
-  p { margin: 0 0 1rem; }
-  footer { text-align: center; padding-top: 3rem; }
-  #rsvp { scroll-margin-top: 1rem; }
+  footer {
+    text-align: center;
+    border-top: 1px solid var(--rule);
+    padding-top: 2rem;
+  }
+  footer p { color: var(--muted); }
 </style>
 </head>
 <body>
 <main>
   <header>
-    <p class="kicker">Together with their families</p>
+    <p class="kicker">We’re getting married</p>
     <h1>Ines &amp; Tomás</h1>
-    <p class="date">20 June</p>
-    <p class="place">The chapel at Quinta do Moinho</p>
+    <p class="when">20 June</p>
+    <p class="where">The chapel at Quinta do Moinho</p>
     <a class="btn" href="#rsvp">RSVP</a>
   </header>
 
-  <section>
-    <h2>Schedule</h2>
-    <ul class="schedule">
-      <li><span class="time">4:00 pm</span><span>Ceremony</span></li>
-      <li><span class="time">5:30 pm</span><span>Drinks</span></li>
-      <li><span class="time">7:30 pm</span><span>Dinner</span></li>
-      <li><span class="time">After dinner</span><span>Dancing till late</span></li>
-    </ul>
+  <section id="schedule">
+    <h2>The day</h2>
+    <ol class="schedule">
+      <li><time>4:00 pm</time><span>Ceremony</span></li>
+      <li><time>5:30 pm</time><span>Drinks</span></li>
+      <li><time>7:30 pm</time><span>Dinner</span></li>
+      <li><time>Late</time><span>Dancing till late</span></li>
+    </ol>
   </section>
 
-  <section>
+  <section id="getting-there">
     <h2>Getting there</h2>
-    <p>The ceremony takes place in the chapel at Quinta do Moinho, and the celebration continues at the same venue. Search for “Quinta do Moinho” in your maps app of choice.</p>
-    <p>We recommend arriving by 3:30 pm so everyone is seated before the ceremony begins. If you are driving, carpooling is encouraged, as parking may be limited. Please get in touch with us if you need help with transport or directions.</p>
+    <!-- TODO: replace with the real address, a map link, parking and shuttle/taxi details. -->
+    <p>The ceremony takes place in the chapel at Quinta do Moinho, and everything after happens at the same estate, so there’s no need to travel between venues.</p>
+    <p>Search for “Quinta do Moinho” in your maps app. If you’re driving, please plan to arrive a little before 4:00 pm so you can park and find your seat. Taxis and ride-hailing are a good option if you’d like to enjoy the evening.</p>
   </section>
 
-  <section>
-    <h2>Dress code</h2>
-    <p>Smart and comfortable. The ceremony and drinks are outdoors, so consider light layers for the evening, and shoes that will cope with grass or gravel.</p>
+  <section id="dress-code">
+    <h2>What to wear</h2>
+    <!-- TODO: confirm the dress code with Ines & Tomás. -->
+    <p>Smart and comfortable. Think summer wedding: suits, dresses, and light fabrics. The afternoon may be warm and the evening cooler, so a light layer is a good idea. Flat or block-heel shoes will be easier on any grass or gravel paths.</p>
   </section>
 
-  <footer id="rsvp">
-    <p>We would love to celebrate with you.</p>
+  <footer id="rsvp-note">
+    <h2>Will you join us?</h2>
+    <p>Please let us know if you can make it.</p>
     <a class="btn" href="#rsvp">RSVP</a>
   </footer>
 </main>

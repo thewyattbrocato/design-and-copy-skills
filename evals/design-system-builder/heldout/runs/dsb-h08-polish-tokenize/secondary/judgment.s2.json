@@ -2,21 +2,21 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "c982d1af5ddcbff9",
+    "with": "2601835f7cfc0d44",
     "without": "a651270252672d2a"
   },
   "result": {
-    "winner": "with",
-    "judge_notes": "pass 1 (A=with, B=without): Both answers keep every value, class name and rule order, and both derive the secondary button's padding with calc() from the padding tokens and the border width. A goes further in tokenizing: it also pulls out the button gap, font size, font weight and radius alias, and uses --border-width for the card borders. B leaves literal 1px borders, so its new border token is only half used. B's checklist also mentions disabled states, which this CSS doesn't have. | pass 2 (A=without, B=with): Both answers handle the secondary button's border compensation the same way, using calc() on the padding tokens. Both keep the class names, rule order and output values unchanged, and both explain why one-off values stay literal. B is more consistent: it also applies the border-width token to the card borders and tokenizes the button's gap, font size and weight. A's checklist asks the user to check 'disabled' states, which don't exist in this CSS, a small slip that makes it slightly less precise.",
+    "winner": "without",
+    "judge_notes": "pass 1 (A=with, B=without): Both answers keep every class name and every resolved value, and both pull the colors, radii and shadow into role-named variables. B goes further: it turns the button padding and border width into variables, works out the secondary button's padding from them so both buttons stay the same size, and explains why the one-off spacing and font sizes stay as literals. A is a bit tighter, but its hard-coded calc(10px - 1px) won't follow future padding changes, and it never says why spacing wasn't turned into variables. B's checklist does mention a disabled state the CSS doesn't have. | pass 2 (A=without, B=with): Both answers keep every class name and the visible result, and both pull out the repeated colours, radii and shadow under role-based names. A is better on button size parity: it defines padding and border-width variables and works out the secondary button's padding from them, so the variants stay the same size if the padding changes. B hard-codes calc(10px - 1px), which keeps the size today but doesn't update with the main button's padding. Neither turns the spacing or font sizes into variables, though A says why. B's summary is slightly tighter, while A mentions a disabled state that the original CSS doesn't have and declares a border-width variable that the card rules never use.",
     "rubric_scores": {
-      "with": 4.9,
+      "with": 4.3,
       "without": 4.5
     },
     "rubric_items": {
       "with": [
+        3.0,
         4.5,
-        5.0,
-        5.0,
+        4.0,
         5.0,
         5.0
       ],
@@ -35,18 +35,18 @@
           "with",
           "without"
         ],
-        "raw_verdict": "A",
-        "winner": "with",
-        "notes": "Both answers keep every value, class name and rule order, and both derive the secondary button's padding with calc() from the padding tokens and the border width. A goes further in tokenizing: it also pulls out the button gap, font size, font weight and radius alias, and uses --border-width for the card borders. B leaves literal 1px borders, so its new border token is only half used. B's checklist also mentions disabled states, which this CSS doesn't have."
+        "raw_verdict": "B",
+        "winner": "without",
+        "notes": "Both answers keep every class name and every resolved value, and both pull the colors, radii and shadow into role-named variables. B goes further: it turns the button padding and border width into variables, works out the secondary button's padding from them so both buttons stay the same size, and explains why the one-off spacing and font sizes stay as literals. A is a bit tighter, but its hard-coded calc(10px - 1px) won't follow future padding changes, and it never says why spacing wasn't turned into variables. B's checklist does mention a disabled state the CSS doesn't have."
       },
       {
         "order": [
           "without",
           "with"
         ],
-        "raw_verdict": "B",
-        "winner": "with",
-        "notes": "Both answers handle the secondary button's border compensation the same way, using calc() on the padding tokens. Both keep the class names, rule order and output values unchanged, and both explain why one-off values stay literal. B is more consistent: it also applies the border-width token to the card borders and tokenizes the button's gap, font size and weight. A's checklist asks the user to check 'disabled' states, which don't exist in this CSS, a small slip that makes it slightly less precise."
+        "raw_verdict": "A",
+        "winner": "without",
+        "notes": "Both answers keep every class name and the visible result, and both pull out the repeated colours, radii and shadow under role-based names. A is better on button size parity: it defines padding and border-width variables and works out the secondary button's padding from them, so the variants stay the same size if the padding changes. B hard-codes calc(10px - 1px), which keeps the size today but doesn't update with the main button's padding. Neither turns the spacing or font sizes into variables, though A says why. B's summary is slightly tighter, while A mentions a disabled state that the original CSS doesn't have and declares a border-width variable that the card rules never use."
       }
     ]
   }

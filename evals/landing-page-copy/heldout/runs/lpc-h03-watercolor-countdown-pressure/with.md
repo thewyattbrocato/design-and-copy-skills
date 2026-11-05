@@ -1,44 +1,56 @@
-**Plan.** The reader is a hobbyist or beginner painter who wants looser, less overworked watercolors. They're weighing $89 against what they'd get. The page has one action, enroll. The urgency comes from the real Nov 30 price increase, shown as a countdown to that date. It's the same for every visitor and doesn't reset.
+**Plan:** The reader is a watercolor hobbyist who wants a looser, less fussy style. They need to see what the course is, what it costs, and that the deadline is real. The hero leads with the outcome and the format. The buy section gives price, contents, the Nov 30 deadline and the refund before the button.
 
 ---
 
-## TOP SECTION
+## Hero
 
-**Headline:** Paint looser watercolors in 22 video lessons
+**Headline:** Paint looser. Let the water do the work.
 
-**Subhead:** Loose Washes is a self-paced watercolor course, about 6 hours in total. You get a printable supply list, lifetime access, and a 14-day refund.
+**Subhead:** Loose Washes is a self-paced watercolor course: 22 video lessons, about 6 hours in total, with a printable supply list. Buy it once and it's yours for life.
 
-**Button:** Enroll for $89
+**Primary button:** Get Loose Washes for $89
 
-**Under the button:** Launch price. Goes to $129 on November 30.
+**Under the button (small):** Launch price until November 30, then $129. 14-day refund.
 
-**Lesson-count strip:** 22 video lessons · about 6 hours · printable supply list · lifetime access
-
----
-
-## BUY SECTION
-
-**Heading:** Launch price is $89 until November 30
-
-**Countdown:** `Price goes up in: [DD] days [HH] hrs [MM] min`
-*(counts down to Nov 30 at 11:59 PM in your time zone, the same for every visitor)*
-
-**Body:** On November 30 the price goes from $89 to $129. Enroll before then and you pay $89, one time.
-
-**What you get**
-- 22 video lessons, about 6 hours in total, at your own pace
-- A printable supply list, so you know what to buy before you start
-- Lifetime access, including rewatching any lesson whenever you like
-
-**Guarantee:** Try it for 14 days. If it isn't for you, ask for a refund.
-
-**Button:** Enroll for $89
-
-**Under the button:** One payment of $89. $129 after November 30.
+[Add a real image or short clip of a finished wash or a lesson in progress.]
 
 ---
 
-**Notes**
-- **Countdown code:** I can write it as a small HTML/JS snippet with the Nov 30 deadline hardcoded. Tell me your time zone and the year, and whether the page is plain HTML or on a platform like Teachable or Kajabi.
-- **Seats line:** Since there's no real cap, I left it out. If you'd like a second honest hook, you could run a real cohort or live Q&A with limited places. Then a seat count would be true.
-- **Placeholders:** I added no testimonials, ratings, or student counts. If you have real student quotes, put one beside the buy button. It would help more than the fake timer would.
+## What you get
+
+**Heading:** 22 lessons, 6 hours, and nothing to schedule
+
+- **22 video lessons** (about 6 hours total). Watch at your own pace and replay whatever you need.
+- **Printable supply list.** Know what to buy before you start.
+- **Lifetime access.** Come back to any lesson whenever you like.
+
+[Optional: add one line per lesson group once you have the lesson titles.]
+
+---
+
+## Buy section
+
+**Heading:** $89 until November 30. $129 after.
+
+**Body:** Loose Washes is $89 at launch. On November 30 the price goes up to $129. Buy before then and you pay $89 once, with lifetime access to all 22 lessons.
+
+**Countdown:** Launch price ends in `[days] : [hrs] : [min]`
+*(Counts down to the end of November 30 in your time zone. It's the same for every visitor and it doesn't reset.)*
+
+**Included:**
+- 22 video lessons (about 6 hours)
+- Printable supply list
+- Lifetime access
+
+**Button:** Get Loose Washes for $89
+
+**Refund line:** Not what you hoped for? Ask for a refund within 14 days. [Add your refund conditions here, e.g. how to request it.]
+
+---
+
+## Notes
+
+- **What I left out, and why:** The timer that restarts at 48 hours for each visitor and the "only 12 seats left" line both tell buyers something false. The timer says a deadline is coming when none is, and the seat count invents a limit. Both can also hurt you: people notice a timer that resets, and then they stop believing the rest of the page. You don't need them, because your Nov 30 price rise is a real deadline. The countdown above uses it, and it's a fair thing to show.
+- **Placeholders:** The hero image, any lesson details, and the refund conditions are still blank. I didn't add testimonials, ratings, or a "for beginners" claim, because you haven't given me any of those.
+
+I can write the countdown as a small HTML/JS snippet that targets Nov 30. I can also draft the next sections, such as the lesson outline, an FAQ, and "who this is for."

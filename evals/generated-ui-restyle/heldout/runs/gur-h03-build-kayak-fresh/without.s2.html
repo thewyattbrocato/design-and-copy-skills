@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saltrow — trip log and tide windows for sea kayakers</title>
+<meta name="description" content="Saltrow logs your sea kayak trips and shows tide and current windows for the launch spots you save. Coming this spring to iPhone and Android.">
+<style>
+  :root{
+    --paper:#f1eee4;
+    --paper-2:#e8e4d6;
+    --ink:#13222c;
+    --ink-soft:#44555f;
+    --sea:#1d5a66;
+    --sea-wash:#cfe0dd;
+    --signal:#c8430f;
+    --rule:#b9b5a4;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:17px;line-height:1.55;
+    background-image:
+      linear-gradient(var(--paper-2) 1px,transparent 1px),
+      linear-gradient(90deg,var(--paper-2) 1px,transparent 1px);
+    background-size:48px 48px;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  .mono{font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;font-size:12px}
+
+  header{padding:22px 0;border-bottom:2px solid var(--ink);background:var(--paper)}
+  header .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+  .wordmark{font-family:var(--serif);font-weight:700;font-size:26px;letter-spacing:.01em}
+  .wordmark span{color:var(--signal)}
+
+  .hero{padding:64px 0 48px}
+  h1{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(38px,7vw,68px);line-height:1.04;margin:0 0 22px;max-width:14em;
+    letter-spacing:-.01em;
+  }
+  .lede{font-size:19px;max-width:36em;margin:0 0 30px;color:var(--ink-soft)}
+  .lede strong{color:var(--ink);font-weight:600}
+
+  form{max-width:520px}
+  label{display:block;margin-bottom:8px;color:var(--ink-soft)}
+  .row{display:flex;gap:0;flex-wrap:wrap}
+  input[type=email]{
+    flex:1 1 240px;min-width:0;font:inherit;padding:14px 16px;
+    border:2px solid var(--ink);border-right:0;background:#fbfaf5;color:var(--ink);border-radius:0;
+  }
+  button{
+    font:inherit;font-weight:700;padding:14px 22px;cursor:pointer;
+    background:var(--signal);color:#fff;border:2px solid var(--ink);border-radius:0;
+  }
+  button:hover{background:#a93608}
+  input:focus-visible,button:focus-visible{outline:3px solid var(--sea);outline-offset:2px}
+  .note{font-size:14px;color:var(--ink-soft);margin:10px 0 0}
+  #thanks{display:none;border-left:6px solid var(--sea);background:var(--sea-wash);padding:14px 16px;max-width:520px;margin:0}
+  @media (max-width:480px){
+    input[type=email]{border-right:2px solid var(--ink);flex-basis:100%}
+    button{width:100%;margin-top:8px}
+  }
+
+  section{padding:48px 0;border-top:2px solid var(--ink);background:var(--paper)}
+  h2{font-family:var(--serif);font-size:clamp(26px,4vw,36px);margin:0 0 8px;line-height:1.15}
+  .sub{color:var(--ink-soft);margin:0 0 28px;max-width:38em}
+
+  /* chart */
+  figure{margin:0;border:2px solid var(--ink);background:#fbfaf5;padding:16px 16px 10px}
+  figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--ink-soft);padding-top:8px;border-top:1px solid var(--rule);margin-top:6px}
+  svg{display:block;width:100%;height:auto}
+  svg text{font-family:var(--mono);font-size:11px;fill:var(--ink-soft)}
+  svg .lab{fill:var(--ink);font-weight:700}
+
+  /* what it does: ledger rows */
+  .ledger{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+  .ledger li{
+    display:grid;grid-template-columns:64px 1fr;gap:8px 20px;
+    padding:22px 0;border-bottom:1px solid var(--ink);
+  }
+  .ledger .n{font-family:var(--mono);font-size:14px;color:var(--signal);font-weight:700;padding-top:6px}
+  .ledger h3{font-family:var(--serif);font-size:24px;margin:0 0 6px;line-height:1.2}
+  .ledger p{margin:0;max-width:40em;color:var(--ink-soft)}
+  .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--signal);color:var(--signal);padding:1px 6px;margin-left:8px;vertical-align:middle}
+
+  /* sample log entry */
+  .log{border:2px solid var(--ink);background:#fbfaf5;font-family:var(--mono);font-size:14px;margin-top:28px}
+  .log .bar{background:var(--ink);color:var(--paper);padding:6px 14px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  .log dl{margin:0;padding:6px 14px 10px}
+  .log .r{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:8px 0;border-bottom:1px dashed var(--rule)}
+  .log .r:last-child{border-bottom:0}
+  .log dt{color:var(--ink-soft);text-transform:uppercase;font-size:12px;letter-spacing:.05em;padding-top:1px}
+  .log dd{margin:0}
+
+  /* price */
+  .plans{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink);background:#fbfaf5}
+  .plan{padding:26px 24px}
+  .plan + .plan{border-left:2px solid var(--ink);background:var(--sea-wash)}
+  .plan h3{margin:0;font-family:var(--serif);font-size:22px}
+  .price{font-family:var(--serif);font-size:44px;font-weight:700;line-height:1.1;margin:6px 0 14px}
+  .price small{font-size:16px;font-weight:400;font-family:var(--sans);color:var(--ink-soft)}
+  .plan ul{margin:0;padding-left:20px}
+  .plan li{margin:4px 0}
+  @media (max-width:640px){
+    .plans{grid-template-columns:1fr}
+    .plan + .plan{border-left:0;border-top:2px solid var(--ink)}
+    .ledger li{grid-template-columns:40px 1fr}
+    .log .r{grid-template-columns:1fr;gap:2px}
+  }
+
+  .final form{margin-top:18px}
+  footer{padding:28px 0 48px;border-top:2px solid var(--ink);background:var(--paper);color:var(--ink-soft);font-size:15px}
+  footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="wordmark">Salt<span>row</span></div>
+    <div class="mono">Trip log &amp; tide windows for sea kayakers</div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <p class="mono" style="color:var(--signal);margin:0 0 14px">iPhone and Android · launching this spring</p>
+      <h1>Know when to go out, and when you need to be back.</h1>
+      <p class="lede">Saltrow is a logbook for your paddling. Record each trip, save the launch spots you use, and see the tide and current windows for them at a glance. <strong>Two of us built it, and we paddle out of Gannet Sound.</strong></p>
+
+      <form id="waitlist" aria-label="Join the waitlist">
+        <label for="email">Get one email when Saltrow is in the app stores.</label>
+        <div class="row">
+          <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+          <button type="submit">Join the waitlist</button>
+        </div>
+        <p class="note">Email only. No spam, and we won't share it.</p>
+      </form>
+      <p id="thanks" role="status">Thanks. You're on the list, and we'll write when Saltrow launches.</p>
+    </div>
+  </div>
+
+  <section aria-labelledby="windows-h">
+    <div class="wrap">
+      <h2 id="windows-h">The window, drawn out</h2>
+      <p class="sub">For each saved launch, Saltrow lays out the day's tide and current so the plan is simple: the easy stretch to paddle, and the time you're off the water.</p>
+
+      <figure>
+        <svg viewBox="0 0 640 230" role="img" aria-labelledby="chart-t chart-d">
+          <title id="chart-t">Example tide curve with a paddling window and a return time</title>
+          <desc id="chart-d">A tide height curve from 06:00 to 18:00 falling to a low near 12:40 and rising again. A shaded band around low water marks the easy window from about 10:30 to 14:50, with a return-by line at 16:00.</desc>
+          <!-- grid -->
+          <g stroke="#d6d2c1" stroke-width="1">
+            <line x1="40" y1="40" x2="600" y2="40"/>
+            <line x1="40" y1="90" x2="600" y2="90"/>
+            <line x1="40" y1="140" x2="600" y2="140"/>
+            <line x1="40" y1="190" x2="600" y2="190"/>
+          </g>
+          <!-- window -->
+          <rect x="226" y="30" width="206" height="160" fill="#cfe0dd" opacity=".85"/>
+          <text class="lab" x="236" y="48">EASY WINDOW</text>
+          <text x="236" y="62">about 10:30–14:50</text>
+          <!-- curve -->
+          <path d="M40,58 C120,50 250,170 352,170 C450,170 540,100 600,66" fill="none" stroke="#1d5a66" stroke-width="3"/>
+          <circle cx="352" cy="170" r="5" fill="#13222c"/>
+          <text x="362" y="164">low 12:40</text>
+          <!-- return line -->
+          <line x1="500" y1="26" x2="500" y2="190" stroke="#c8430f" stroke-width="3" stroke-dasharray="7 5"/>
+          <text class="lab" x="508" y="44" style="fill:#c8430f">BE BACK BY 16:00</text>
+          <!-- axis -->
+          <line x1="40" y1="190" x2="600" y2="190" stroke="#13222c" stroke-width="2"/>
+          <g>
+            <text x="40" y="212" text-anchor="middle">06</text>
+            <text x="133" y="212" text-anchor="middle">08</text>
+            <text x="227" y="212" text-anchor="middle">10</text>
+            <text x="320" y="212" text-anchor="middle">12</text>
+            <text x="413" y="212" text-anchor="middle">14</text>
+            <text x="507" y="212" text-anchor="middle">16</text>
+            <text x="600" y="212" text-anchor="middle">18</text>
+          </g>
+        </svg>
+        <figcaption class="mono"><span>Illustration only, not real tide data</span><span>Hours, local time</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="does-h">
+    <div class="wrap">
+      <h2 id="does-h">Three things it does</h2>
+      <p class="sub">It's a logbook with tide and current windows. It's not a social feed or a leaderboard.</p>
+
+      <ol class="ledger">
+        <li>
+          <span class="n">01</span>
+          <div>
+            <h3>Log every trip</h3>
+            <p>Launch spot, route, distance, conditions, and who you paddled with. Do it on the beach or at the kitchen table. A season later you'll be able to answer "when did we last do the east shore in a southwesterly?"</p>
+          </div>
+        </li>
+        <li>
+          <span class="n">02</span>
+          <div>
+            <h3>See the tide and current windows for your launches</h3>
+            <p>Save the spots you actually use. Saltrow shows each one's tide and current windows, so you can see when it makes sense to go out and when you need to be back.</p>
+          </div>
+        </li>
+        <li>
+          <span class="n">03</span>
+          <div>
+            <h3>Take your charts offline <span class="tag">Pro</span></h3>
+            <p>Water and signal don't always come together. Saltrow Pro keeps your charts on the phone for the places where coverage drops out.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="log" aria-label="Sample trip log entry">
+        <div class="bar"><span>Sample log entry</span><span>Example</span></div>
+        <dl>
+          <div class="r"><dt>Launch</dt><dd>Gannet Sound</dd></div>
+          <div class="r"><dt>Route</dt><dd>Out along the shore, across, and back on the flood</dd></div>
+          <div class="r"><dt>Distance</dt><dd>11.5 km</dd></div>
+          <div class="r"><dt>Conditions</dt><dd>Light wind, small chop, current slackening by midday</dd></div>
+          <div class="r"><dt>Paddled with</dt><dd>Two others</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="price-h">
+    <div class="wrap">
+      <h2 id="price-h">Price</h2>
+      <p class="sub">Logging your trips is free. Pro is for when you need charts without a signal.</p>
+      <div class="plans">
+        <div class="plan">
+          <h3>Saltrow</h3>
+          <div class="price">Free</div>
+          <ul>
+            <li>Log your trips</li>
+            <li>Save launch spots</li>
+            <li>Tide and current windows</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <h3>Saltrow Pro</h3>
+          <div class="price">$4 <small>/ month</small></div>
+          <ul>
+            <li>Everything in the free app</li>
+            <li>Offline charts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" aria-labelledby="join-h">
+    <div class="wrap">
+      <h2 id="join-h">Be on the list for launch</h2>
+      <p class="sub">We're a team of two, with no user numbers or reviews to show yet. We'll email you once, when the iPhone and Android apps go live this spring.</p>
+      <form id="waitlist2" aria-label="Join the waitlist">
+        <label for="email2">Email address</label>
+        <div class="row">
+          <input id="email2" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+          <button type="submit">Join the waitlist</button>
+        </div>
+      </form>
+      <p id="thanks2" role="status" style="display:none;border-left:6px solid var(--sea);background:var(--sea-wash);padding:14px 16px;max-width:520px;margin:18px 0 0">Thanks. You're on the list, and we'll write when Saltrow launches.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Saltrow · made by two paddlers on Gannet Sound</span>
+    <span>iPhone and Android, spring launch</span>
+  </div>
+</footer>
+
+<script>
+  /* NOTE: This page has no backend. Before publishing, send the address to your
+     own signup endpoint or mailing-list provider inside this handler (e.g. fetch
+     to your own server). As written, it only shows the confirmation message. */
+  function wire(formId, thanksId){
+    var f = document.getElementById(formId), t = document.getElementById(thanksId);
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      f.style.display = 'none';
+      t.style.display = 'block';
+    });
+  }
+  wire('waitlist','thanks');
+  wire('waitlist2','thanks2');
+</script>
+</body>
+</html>

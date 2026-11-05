@@ -1,15 +1,13 @@
-Mostly it's fine. The core of it is sound: a capped single column with a 66-character measure, 18px text, and breaks that each have a job (a wider lead image, pull quotes hanging into the margin). I'd settle five things before shipping.
+It's mostly fine. The measure is right (66 characters is in the sweet spot), 18px body with generous leading suits long reading, and the single column suits continuous prose. The lead image running wider than the text and the pull quotes hanging into the margin each have a clear job, so they aren't arbitrary grid breaks. I'd check four things before it ships.
 
-**Worth deciding**
-1. **Top bar edges.** If the bar runs the full viewport width, the logo and Subscribe sit far from the column's edges, so nothing in the header lines up with the content. That's acceptable for a global bar. But either pick it deliberately, or hold the bar's inner container to the lead image's width so the edges relate.
-2. **The in-between widths.** You've described phone and desktop, but not tablet or a narrow laptop window. Pull quotes that extend 80px each side need roughly column width plus 160px plus some gutter. Below that they'll clip or force horizontal scroll. Define a breakpoint where they fold back into the column. The wider lead image needs the same treatment, shrinking toward the column width as the viewport narrows.
-3. **Phone behaviour of the breaks.** State whether the lead image goes full-bleed or stays inside the 20px padding. Say whether pull quotes stay in the column (they should).
+1. **Top bar edges vs. the column.** This is the one real issue. The logo and Subscribe sit at the far edges of the page, while the text is a narrow centered column. On a wide desktop the bar and the content share no vertical edge, so the logo floats far from the headline. Constrain the bar's inner width to the lead image's width. Then the logo lines up with the image edge and Subscribe with the other edge. Alternatively, align to the text column. Pick one and use it on every page.
 
-**Worst cases, since this is an archive**
-4. **Old issues won't all match.** Some may have no lead image, no subheads, a very long headline, or a standfirst that wraps to two lines. Make sure the template doesn't leave a hole or break when those are missing, and let the "one-line" standfirst wrap.
-5. **Specify the measure in `ch`, not pixels.** Something like `max-width: 66ch` keeps it tied to the font. Also pin down "generous" line height, for example about 1.6, so it doesn't vary between implementations.
+2. **Pull quote room at in-between widths.** An 80px overhang on each side needs about 66ch plus 160px plus your page margins. That fails on small laptops and tablets in portrait, where the quote would clip or cause horizontal scroll. Set the overhang breakpoint from that arithmetic, not from a generic "desktop" value. Below it, pull quotes should sit inside the column.
 
-**Optional**
-- Archive readers often want to move to the next or previous issue. "More from this issue" covers sideways movement, but a prev/next link would help if you have the data.
+3. **Worst-case content.** Test with a three-line headline and a standfirst that wraps. On phones, "one-line standfirst" will wrap, so make sure that's styled on purpose and not clipped. Also test an article with no lead image, two subheads in a row, and a pull quote right after a subhead.
 
-None of these are structural. Handle 2, 3 and 4 and it's ready.
+4. **Phone details.** Say whether the lead image bleeds to the screen edge or stays inside the 20px padding. Bleeding usually looks better, but then the in-text images should do the same, or the two will look inconsistent. Also check that the text-width images aren't cropped to a fixed ratio. Tall or wide whole images should keep their shape.
+
+You didn't mention captions and credits. If images carry them, decide now whether they sit under the image at the text width, including under the wider lead image. For an archive, you might also want previous/next issue links or a link back to the archive index near "More from this issue". That's a content call, not a layout flaw.
+
+I haven't seen the actual page or CSS. This review is based only on your description.

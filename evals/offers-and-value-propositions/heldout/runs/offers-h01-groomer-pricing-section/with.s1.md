@@ -1,54 +1,64 @@
-## Pricing
+## Bookkeeping for mobile groomers, priced per groomer team, not per feature
 
-**Keep your books from your phone. Try every feature free for 21 days.**
+Tallybird is bookkeeping built by a former mobile groomer. You can invoice from your phone, log mileage, track tips, and hand your tax preparer a quarterly summary. You don't need a spreadsheet for any of it.
 
-Tallybird is bookkeeping for mobile dog groomers. It was founded by a former mobile groomer. You can send invoices from the van, log mileage, track tips, and hand your tax preparer a quarterly summary. You don't need a spreadsheet, or a shoebox of receipts at tax time.
+Both plans have every feature. The only difference is how many groomers use the account.
 
-### Two plans, same features
+### Solo
+**$14/month** or **$140/year**
 
-Both plans include everything below. The only difference is how many groomers use the account.
+For one groomer running their own van.
 
 - Invoice from your phone
 - Mileage log
 - Tips tracking
-- A quarterly summary you can hand to your tax preparer
+- Quarterly summary you can hand to your tax preparer
 - Import from a spreadsheet or CSV
+- One groomer
 
-**Solo: $14 a month**
-For one groomer running their own van. Pay yearly and it's $140 a year.
+### Team
+**$29/month** or **$290/year**
 
-**Team: $29 a month**
-For a shop with up to 5 groomers on one account. Pay yearly and it's $290 a year.
+For a shop with two or more groomers on the road, up to five.
 
-**Pay yearly, get two months free.** Annual billing is 10 months for the price of 12. Solo is $140 instead of $168, and Team is $290 instead of $348. The saving comes from paying once a year, and the plan itself is identical.
+- Everything in Solo
+- Up to 5 groomers on one account
 
-If you groom alone, start with Solo. If you have even one other groomer who needs to log in, choose Team.
+If you work alone, start with Solo. If you have a second groomer, or you're about to hire one, Team costs $15 more a month than Solo and covers up to five people.
 
-### What happens when you sign up
+**Paying yearly is 10 months for the price of 12.** Solo is $140 a year instead of $168 (12 × $14). Team is $290 a year instead of $348 (12 × $29). The discount is for paying once a year instead of monthly. Nothing else changes.
 
-1. **Start the trial.** You get all of Tallybird's features for 21 days. You don't need a card to start.
-2. **Bring your numbers over.** If your records live in a spreadsheet, import them as a CSV. Our six beta users took between 15 and 30 minutes to get set up.
-3. **Use it on real jobs.** Send an invoice from your phone after an appointment. Log the drive. Record the tip. By the end of the trial you'll have seen how it handles a normal week.
-4. **Pick a plan, or don't.** When the 21 days end, you choose Solo or Team, monthly or yearly. If you don't choose, your account goes read-only. You can still look at everything, but you can't add to it. Nothing is deleted for 90 days, so you can come back and pick up where you left off.
+### Try it for 21 days before you pay anything
+
+Every feature is unlocked for the whole trial, and you don't need a card to start.
+
+Here's what happens when you sign up:
+
+1. **Create your account.** No card, no payment details.
+2. **Bring your records over.** If your clients, invoices, or mileage are in a spreadsheet, import them from a spreadsheet or CSV. Our six beta users took between 15 and 30 minutes to get set up.
+3. **Use it on real jobs.** Send an invoice from your phone after a groom, log the drive, and record the tip.
+4. **On day 21, choose.** Pick Solo or Team, monthly or yearly. If you don't pick, your account goes read-only. You can still see everything, but you can't add to it. Nothing is deleted for 90 days, so you can come back and pick a plan without losing your records.
+
+Because we never ask for a card, the trial can't turn into a charge you didn't choose.
 
 ### Your data stays yours
 
-You can export all of your data as a CSV at any time, during the trial or on a paid plan. If Tallybird isn't right for you, you can take your records with you.
+You can export all your data as CSV at any time, during the trial or on a paid plan. If Tallybird isn't right for you, your records go with you.
 
-### Questions
+### Who answers when you have a question
 
-Support is by email, and we answer within one business day. You'll hear from people who know what a groomer's day looks like.
+Tallybird was founded by a former mobile groomer, so the person who built the invoicing and mileage log has done the job. Support is by email, and we answer within one business day.
 
-### Start your free 21-day trial
+### Start your 21-day free trial
 
-Every feature is unlocked, and you don't need a card. Set up your account, import your records, and send your first invoice.
+Set up in about 15 to 30 minutes, with every feature unlocked and no card needed.
 
 **[Start free trial]**
 
-*21 days, all features, no card needed. After that, choose a plan or your account becomes read-only, and nothing is deleted for 90 days.*
+Prefer to talk to a person first? Email us and we'll answer within one business day.
 
 ---
 
-Two notes:
-- **Why the trial:** I picked the trial over a demo call. The app is cheap, it takes 15–30 minutes to set up, and groomers are usually between appointments, not free for a scheduled call. A no-card trial lets them judge it on their own jobs. The copy doesn't mention a demo call, so add a line if you decide to offer one.
-- **Team vs. Solo pricing:** two Solo plans cost $28, which is less than Team at $29. A two-groomer shop could notice that. I assumed a Team account is one shared set of books, but I haven't said so on the page. If that's true, add a line saying it. That is the real reason to choose Team.
+**Notes**
+- You didn't give a refund or cancellation policy for paid plans, so I wrote none. Add one (for example, [refund policy for annual plans]) near the button once it's decided.
+- I chose the free trial because the no-card, 21-day, full-feature setup is your strongest proof, and a demo call would add friction for solo groomers. The email line keeps a human option without making it a second call to action. Check trial and billing wording against the rules where you sell.

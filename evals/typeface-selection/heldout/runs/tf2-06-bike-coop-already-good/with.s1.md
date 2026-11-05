@@ -1,22 +1,16 @@
-Your type setup is already sound, so I'd leave it mostly alone.
+This type setup is already sound, so I'd leave it almost untouched.
 
 **What works**
-- The system stack suits a volunteer-run portal. It loads instantly, needs no licensing, and looks native on each device.
-- Body text at 17px with 1.55 line height is comfortable for reading.
-- Headings are a heavier weight of the same family, with tight leading and slight negative tracking, which keeps the hierarchy clean.
-- `tabular-nums` and right alignment on number cells keep dues and counts lined up.
-- Monospace is used only for `code`, with a real fallback list.
+- The system font stack gives each person a native font that loads instantly, with no web font to host or license. It ends in `sans-serif`, so there's a real fallback.
+- The 17px body size and 1.55 line height are comfortable for reading.
+- Headings use the same family at a heavier weight. That's the right amount of hierarchy for a member portal.
+- `tabular-nums` on right-aligned number columns keeps dues, counts and dates lined up.
+- Monospace is used only for `code`, and the slightly smaller size stops it looking oversized next to body text.
 
-**One change I'd make**
+**One optional tweak**
+- Weight `650` only works on fonts with variable weights, such as recent macOS and Windows system fonts. On static fonts like Roboto or Arial it snaps to regular bold (700). That's harmless and nothing gets faked. If you'd like every member to see identical headings, use `font-weight: 700`.
 
-Add `font-synthesis: none` to `body`:
+**Tidying, not polish**
+- `font-family: var(--font-body)` on the headings is redundant because they inherit it from `body`. You can delete it or leave it.
 
-```css
-body { font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; font-weight: 400; font-synthesis: none; }
-```
-
-The 650 heading weight is a variable-font value. Some fallback fonts, such as Roboto or Segoe UI, only come in fixed weights. Normally the browser picks the nearest real weight, which is fine. This line stops it from ever faking a bold or italic, which looks smeared.
-
-**Optional tidy-up:** `font-family: var(--font-body)` on the headings is redundant, because they inherit it from `body`. It's harmless, so remove it only if you want less to maintain.
-
-I assumed a screen-only, English-language portal. If members use other scripts, such as Arabic or Vietnamese, tell me. The system stack handles those well, but line height may need a small increase.
+I'd only make the weight change if consistency across devices matters to you. I assumed the portal is Latin-script, screen-only text with no web fonts. If you need other languages, or want a distinct look for the co-op, tell me and I'll suggest a heading font to pair with this body font.

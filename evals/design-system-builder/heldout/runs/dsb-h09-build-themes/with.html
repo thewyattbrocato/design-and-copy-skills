@@ -3,178 +3,242 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kelpie themes</title>
+<title>Kelpie themes: light, dark, high contrast</title>
 <style>
-/* ---------- Tier 1: raw values (only theme blocks read these) ---------- */
+/* ==========================================================
+   Tier 1: raw values (only referenced by theme blocks)
+   ========================================================== */
 :root {
-  --green-700: #1f7a4d; --green-800: #176340; --green-900: #005a30; --green-950: #003d20;
-  --green-400: #4cc58a; --green-300: #6fd6a2;
-  --red-700: #b3412f; --red-300: #ff8a75; --red-900: #8f1d0c;
-  --ink-900: #151a17; --ink-600: #55605a; --ink-100: #e8ede9; --ink-300: #a3aea7;
+  --green-900: #06361e; --green-800: #0b4d2c; --green-700: #18633e; --green-600: #1f7a4d;
+  --green-400: #4fbf86; --green-300: #6fd09e;
+  --red-800: #8a1f10; --red-600: #b3412f; --red-300: #f08a76;
+  --ink-950: #000;     --ink-900: #14171a; --ink-700: #4f5659; --ink-800: #2a2f2c;
+  --ink-100: #eef2ef;  --ink-300: #a9b4ad;
+  --paper-0: #fff;     --paper-50: #f5f7f6; --paper-200: #d9dfdb;
+  --night-900: #111513; --night-800: #1b211e; --night-700: #323b36;
 
-  --space-1: 4px; --space-2: 8px; --space-3: 16px; --space-4: 24px; --space-5: 32px;
-  --radius-sm: 6px; --radius-md: 12px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
+  --radius-sm: 8px; --radius-md: 14px;
   --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-/* ---------- Tier 2: semantic roles, remapped per theme ---------- */
-[data-theme="light"] {
+/* ==========================================================
+   Tier 2: semantic roles, remapped per theme.
+   Components read ONLY these. Nothing is inverted; each theme
+   chooses its own raw values per role.
+   ========================================================== */
+.theme-light {
+  --surface:         var(--paper-0);
+  --surface-raised:  var(--paper-50);
+  --text:            var(--ink-900);
+  --text-muted:      var(--ink-700);
+  --border:          var(--paper-200);
+  --border-width:    1px;
+  --accent:          var(--green-600);
+  --accent-hover:    var(--green-700);
+  --on-accent:       var(--paper-0);
+  --positive:        var(--green-600);
+  --negative:        var(--red-600);
+  --focus:           var(--ink-900);
+  --shadow:          0 1px 2px rgb(0 0 0 / .08);
   color-scheme: light;
-  --bg: #ffffff;
-  --surface: #f5f6f4;
-  --text: var(--ink-900);
-  --text-muted: var(--ink-600);
-  --border: #d5dad6;
-  --border-width: 1px;
-  --accent: var(--green-700);
-  --accent-hover: var(--green-800);
-  --on-accent: #ffffff;
-  --gain: var(--green-700);
-  --spend: var(--red-700);
-  --focus: #1b5fd1;
 }
-[data-theme="dark"] {
+.theme-dark {
+  --surface:         var(--night-900);
+  --surface-raised:  var(--night-800);   /* raised = lighter */
+  --text:            var(--ink-100);
+  --text-muted:      var(--ink-300);
+  --border:          var(--night-700);
+  --border-width:    1px;
+  --accent:          var(--green-400);   /* re-tuned for dark ground */
+  --accent-hover:    var(--green-300);
+  --on-accent:       var(--night-900);
+  --positive:        var(--green-400);
+  --negative:        var(--red-300);
+  --focus:           var(--ink-100);
+  --shadow:          none;
   color-scheme: dark;
-  --bg: #0f1411;
-  --surface: #1a211c;
-  --text: var(--ink-100);
-  --text-muted: var(--ink-300);
-  --border: #34403a;
-  --border-width: 1px;
-  --accent: var(--green-400);
-  --accent-hover: var(--green-300);
-  --on-accent: #08130d;
-  --gain: var(--green-400);
-  --spend: var(--red-300);
-  --focus: #8ab4ff;
 }
-[data-theme="contrast"] {
+.theme-contrast {
+  --surface:         var(--paper-0);
+  --surface-raised:  var(--paper-0);
+  --text:            var(--ink-950);
+  --text-muted:      var(--ink-800);
+  --border:          var(--ink-950);
+  --border-width:    2px;                /* structure carried by borders, not tint */
+  --accent:          var(--green-800);
+  --accent-hover:    var(--green-900);
+  --on-accent:       var(--paper-0);
+  --positive:        var(--green-800);
+  --negative:        var(--red-800);
+  --focus:           var(--ink-950);
+  --shadow:          none;
   color-scheme: light;
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --text: #000000;
-  --text-muted: #2b2b2b;
-  --border: #000000;
-  --border-width: 2px;
-  --accent: var(--green-900);
-  --accent-hover: var(--green-950);
-  --on-accent: #ffffff;
-  --gain: var(--green-900);
-  --spend: var(--red-900);
-  --focus: #0033cc;
 }
 
-/* ---------- Tier 3: components read roles only ---------- */
+/* ==========================================================
+   Page chrome (neutral, outside the themed screens)
+   ========================================================== */
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: var(--space-5);
+  font-family: var(--font); background: #e4e8e5; color: #14171a;
+}
+header.page { max-width: 1100px; margin: 0 auto var(--space-5); }
+header.page h1 { margin: 0 0 var(--space-1); font-size: 1.5rem; }
+header.page p  { margin: 0; color: #3d4441; font-size: .9rem; max-width: 60ch; }
+.grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: start;
+}
+.grid h2 {
+  margin: 0 0 var(--space-2); font-size: .8rem; letter-spacing: .06em;
+  text-transform: uppercase; color: #3d4441;
+}
+
+/* ==========================================================
+   Components (semantic roles only)
+   ========================================================== */
 .screen {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
+  background: var(--surface); color: var(--text);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-md);
-  padding: var(--space-4);
-  display: flex; flex-direction: column; gap: var(--space-4);
+  padding: var(--space-5);
+  font-family: var(--font);
+  display: grid; gap: var(--space-5);
 }
-.screen h2 { margin: 0; font-size: 1rem; font-weight: 600; color: var(--text-muted); }
-.balance { background: var(--surface); border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-md); padding: var(--space-3); }
-.balance .label { font-size: .8125rem; color: var(--text-muted); }
-.balance .value { font-size: 2rem; font-weight: 700; margin: var(--space-1) 0; font-variant-numeric: tabular-nums; }
-.balance .delta { font-size: .875rem; color: var(--gain); font-weight: 600; }
-.txns { list-style: none; margin: 0; padding: 0; border-top: var(--border-width) solid var(--border); }
-.txns li { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3);
-  padding: var(--space-3) 0; border-bottom: var(--border-width) solid var(--border); }
-.txns .name { font-weight: 500; }
-.txns .meta { display: block; font-size: .8125rem; color: var(--text-muted); }
-.amount { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
-.amount.gain { color: var(--gain); }
-.amount.spend { color: var(--spend); }
-.btn {
-  font: inherit; font-weight: 600; cursor: pointer;
+.screen h3 { margin: 0; font-size: .95rem; font-weight: 600; color: var(--text-muted); }
+
+.summary {
+  background: var(--surface-raised);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  box-shadow: var(--shadow);
+}
+.summary .label  { font-size: .8rem; color: var(--text-muted); }
+.summary .amount { font-size: 2rem; font-weight: 700; margin: var(--space-1) 0 var(--space-3); font-variant-numeric: tabular-nums; }
+.summary .split  { display: flex; gap: var(--space-5); font-size: .85rem; font-variant-numeric: tabular-nums; }
+.summary .split span { display: block; color: var(--text-muted); font-size: .75rem; }
+
+.txn-list { list-style: none; margin: 0; padding: 0; }
+.txn {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: var(--border-width) solid var(--border);
+}
+.txn:first-child { border-top: 0; }
+.txn .name { font-weight: 600; font-size: .95rem; }
+.txn .meta { font-size: .8rem; color: var(--text-muted); }
+.txn .value { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.value.is-positive { color: var(--positive); }
+.value.is-negative { color: var(--negative); }
+
+.button {
+  appearance: none; font: inherit; font-weight: 600; cursor: pointer;
+  width: 100%; min-height: 44px; padding: var(--space-3) var(--space-4);
   background: var(--accent); color: var(--on-accent);
   border: var(--border-width) solid var(--accent);
-  border-radius: var(--radius-sm); padding: var(--space-3) var(--space-4); min-height: 44px;
+  border-radius: var(--radius-sm);
 }
-.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
-.btn:active { transform: translateY(1px); }
-.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.btn:disabled { opacity: .5; cursor: not-allowed; }
+.button:hover  { background: var(--accent-hover); border-color: var(--accent-hover); }
+.button:active { transform: translateY(1px); }
+.button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.button:disabled { opacity: .5; cursor: not-allowed; }
 
-/* ---------- Page chrome for the comparison only ---------- */
-body { margin: 0; padding: var(--space-5) var(--space-3); background: #e9ebe9; font-family: var(--font); color: #151a17; }
-.page { max-width: 1200px; margin: 0 auto; }
-.page > h1 { font-size: 1.25rem; margin: 0 0 var(--space-4); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); align-items: start; }
-.theme-label { font: 600 .75rem var(--font-mono); letter-spacing: .04em; text-transform: uppercase; margin: 0 0 var(--space-2); }
-
+/* Forced-colors: let the OS palette win, keep structure visible */
 @media (forced-colors: active) {
-  .btn { border-color: ButtonText; }
+  .screen, .summary, .txn { border-color: CanvasText; }
+  .button { border: 2px solid ButtonText; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .button { transition: background-color .15s ease; }
 }
 </style>
 </head>
 <body>
-<main class="page">
-  <h1>Kelpie: light, dark and high contrast</h1>
-  <div class="grid">
 
-    <section>
-      <p class="theme-label">Light</p>
-      <div class="screen" data-theme="light">
-        <h2>Main account</h2>
-        <div class="balance">
-          <div class="label">Available balance</div>
-          <div class="value">$4,218.60</div>
-          <div class="delta">+$312.40 this month</div>
+<header class="page">
+  <h1>Kelpie themes</h1>
+  <p>One screen, three themes. Components read only semantic roles (surface, text, accent, positive, negative); each theme remaps those roles. Gains and spending also carry a +/− sign, so meaning never depends on color alone.</p>
+</header>
+
+<main class="grid">
+
+  <section aria-labelledby="t-light">
+    <h2 id="t-light">Light</h2>
+    <div class="screen theme-light">
+      <div class="summary">
+        <div class="label">Total balance</div>
+        <div class="amount">$4,218.60</div>
+        <div class="split">
+          <div><span>Income</span><b class="value is-positive">+$1,240.00</b></div>
+          <div><span>Spent</span><b class="value is-negative">−$862.40</b></div>
         </div>
-        <ul class="txns">
-          <li><span><span class="name">Paycheck</span><span class="meta">Oct 7</span></span><span class="amount gain">+$1,850.00</span></li>
-          <li><span><span class="name">Greenleaf Grocers</span><span class="meta">Oct 6</span></span><span class="amount spend">−$84.12</span></li>
-          <li><span><span class="name">Transit pass</span><span class="meta">Oct 4</span></span><span class="amount spend">−$62.00</span></li>
-          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 3</span></span><span class="amount gain">+$39.99</span></li>
-        </ul>
-        <button class="btn" type="button">Add transaction</button>
       </div>
-    </section>
+      <div>
+        <h3>Recent transactions</h3>
+        <ul class="txn-list">
+          <li class="txn"><div><div class="name">Paycheck</div><div class="meta">Oct 25 · Income</div></div><div class="value is-positive">+$1,240.00</div></li>
+          <li class="txn"><div><div class="name">Greenleaf Market</div><div class="meta">Oct 24 · Groceries</div></div><div class="value is-negative">−$68.14</div></li>
+          <li class="txn"><div><div class="name">City Transit</div><div class="meta">Oct 22 · Transport</div></div><div class="value is-negative">−$32.00</div></li>
+          <li class="txn"><div><div class="name">Refund: Headphones</div><div class="meta">Oct 21 · Shopping</div></div><div class="value is-positive">+$45.00</div></li>
+        </ul>
+      </div>
+      <button class="button" type="button">Add transaction</button>
+    </div>
+  </section>
 
-    <section>
-      <p class="theme-label">Dark</p>
-      <div class="screen" data-theme="dark">
-        <h2>Main account</h2>
-        <div class="balance">
-          <div class="label">Available balance</div>
-          <div class="value">$4,218.60</div>
-          <div class="delta">+$312.40 this month</div>
+  <section aria-labelledby="t-dark">
+    <h2 id="t-dark">Dark</h2>
+    <div class="screen theme-dark">
+      <div class="summary">
+        <div class="label">Total balance</div>
+        <div class="amount">$4,218.60</div>
+        <div class="split">
+          <div><span>Income</span><b class="value is-positive">+$1,240.00</b></div>
+          <div><span>Spent</span><b class="value is-negative">−$862.40</b></div>
         </div>
-        <ul class="txns">
-          <li><span><span class="name">Paycheck</span><span class="meta">Oct 7</span></span><span class="amount gain">+$1,850.00</span></li>
-          <li><span><span class="name">Greenleaf Grocers</span><span class="meta">Oct 6</span></span><span class="amount spend">−$84.12</span></li>
-          <li><span><span class="name">Transit pass</span><span class="meta">Oct 4</span></span><span class="amount spend">−$62.00</span></li>
-          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 3</span></span><span class="amount gain">+$39.99</span></li>
-        </ul>
-        <button class="btn" type="button">Add transaction</button>
       </div>
-    </section>
+      <div>
+        <h3>Recent transactions</h3>
+        <ul class="txn-list">
+          <li class="txn"><div><div class="name">Paycheck</div><div class="meta">Oct 25 · Income</div></div><div class="value is-positive">+$1,240.00</div></li>
+          <li class="txn"><div><div class="name">Greenleaf Market</div><div class="meta">Oct 24 · Groceries</div></div><div class="value is-negative">−$68.14</div></li>
+          <li class="txn"><div><div class="name">City Transit</div><div class="meta">Oct 22 · Transport</div></div><div class="value is-negative">−$32.00</div></li>
+          <li class="txn"><div><div class="name">Refund: Headphones</div><div class="meta">Oct 21 · Shopping</div></div><div class="value is-positive">+$45.00</div></li>
+        </ul>
+      </div>
+      <button class="button" type="button">Add transaction</button>
+    </div>
+  </section>
 
-    <section>
-      <p class="theme-label">High contrast</p>
-      <div class="screen" data-theme="contrast">
-        <h2>Main account</h2>
-        <div class="balance">
-          <div class="label">Available balance</div>
-          <div class="value">$4,218.60</div>
-          <div class="delta">+$312.40 this month</div>
+  <section aria-labelledby="t-contrast">
+    <h2 id="t-contrast">High contrast</h2>
+    <div class="screen theme-contrast">
+      <div class="summary">
+        <div class="label">Total balance</div>
+        <div class="amount">$4,218.60</div>
+        <div class="split">
+          <div><span>Income</span><b class="value is-positive">+$1,240.00</b></div>
+          <div><span>Spent</span><b class="value is-negative">−$862.40</b></div>
         </div>
-        <ul class="txns">
-          <li><span><span class="name">Paycheck</span><span class="meta">Oct 7</span></span><span class="amount gain">+$1,850.00</span></li>
-          <li><span><span class="name">Greenleaf Grocers</span><span class="meta">Oct 6</span></span><span class="amount spend">−$84.12</span></li>
-          <li><span><span class="name">Transit pass</span><span class="meta">Oct 4</span></span><span class="amount spend">−$62.00</span></li>
-          <li><span><span class="name">Refund: headphones</span><span class="meta">Oct 3</span></span><span class="amount gain">+$39.99</span></li>
-        </ul>
-        <button class="btn" type="button">Add transaction</button>
       </div>
-    </section>
+      <div>
+        <h3>Recent transactions</h3>
+        <ul class="txn-list">
+          <li class="txn"><div><div class="name">Paycheck</div><div class="meta">Oct 25 · Income</div></div><div class="value is-positive">+$1,240.00</div></li>
+          <li class="txn"><div><div class="name">Greenleaf Market</div><div class="meta">Oct 24 · Groceries</div></div><div class="value is-negative">−$68.14</div></li>
+          <li class="txn"><div><div class="name">City Transit</div><div class="meta">Oct 22 · Transport</div></div><div class="value is-negative">−$32.00</div></li>
+          <li class="txn"><div><div class="name">Refund: Headphones</div><div class="meta">Oct 21 · Shopping</div></div><div class="value is-positive">+$45.00</div></li>
+        </ul>
+      </div>
+      <button class="button" type="button">Add transaction</button>
+    </div>
+  </section>
 
-  </div>
 </main>
 </body>
 </html>

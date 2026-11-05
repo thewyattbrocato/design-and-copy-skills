@@ -1,23 +1,28 @@
-**Not yet. Uploading the files is the one step I'd hold off on.**
+**Probably not as it stands. Confirm the license before you upload anything.**
 
-A desktop license, which is what installing .otf files on laptops normally falls under, usually doesn't cover web embedding. Foundries typically sell web licenses separately, often priced by traffic. They may also restrict converting the font to WOFF2 or subsetting it. I can't verify the terms for Marlowe Grotesk, so ask your designer for the license document, or ask the foundry. You need to know three things:
-- Whether web use is covered.
-- Whether self-hosting is allowed, or whether it must be served from the foundry's hosted service.
-- Whether you can convert or subset the files.
+Having the .otf files installed on laptops doesn't mean you can serve them from a website. Desktop licenses and web licenses are usually separate, and a desktop license often doesn't allow embedding or hosting the font files. I don't know the terms for Marlowe Grotesk, and I can't verify them, so check these with your designer or the foundry:
 
-If web use isn't covered, you'd buy a web license or use a hosted kit. Self-hosting without one risks a license violation, and the files are easy to download from a live site.
+1. **Who holds the license, and what does it cover?** Ask whether it includes web or webfont use, since the designer may have bought it for desktop or logo work only. Also ask whether it covers the number of seats or the traffic you have.
+2. **Is self-hosting allowed?** Some foundries only allow web use through their own hosted service, and some require a separate webfont package.
+3. **Is it a custom or commissioned face?** If so, the contract decides, not a standard license.
 
-**Fallback for now:** ship the fallback alone and leave out the `@font-face` rule. Marlowe Grotesk is a grotesque, so use a neutral sans:
+If the license does cover the web, ask the foundry or designer for the **WOFF2 webfont files**. Don't upload the .otf files. WOFF2 is smaller, and it's the format the license normally covers for web use. Subset it to the characters you need and load it with `font-display: swap`.
+
+**Fallback until then**
+
+Name only fonts that are actually loaded or reliably present, so leave "Marlowe Grotesk" out of the stack until the files are live. A grotesque is closest to a system UI sans:
 
 ```css
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+:root {
+  --font-brand: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
+body { font-family: var(--font-brand); }
 ```
 
-I put Helvetica and Arial ahead of `system-ui` because they're closer to a grotesque. Check how it looks on Windows and Android too. Your team's laptops will show the real font because it's installed locally, so they won't see what visitors see. Review the site on a machine without the font.
+Don't use a bare `sans-serif` as the whole stack, because then the browser picks. Don't list "Marlowe Grotesk" on its own without an `@font-face`, either. Visitors don't have it installed, so they would just get the generic fallback. Your team will see the real font on their laptops, so check the site on a machine without it installed to see what customers get.
 
-**Once the license is confirmed:**
+**When the licensed WOFF2 files arrive**
+
 ```css
 @font-face {
   font-family: "Marlowe Grotesk";
@@ -26,16 +31,15 @@ I put Helvetica and Arial ahead of `system-ui` because they're closer to a grote
   font-style: normal;
   font-display: swap;
 }
-/* repeat for medium/bold, and italic only if the family has a true italic */
+/* repeat for the weights and the true italic you actually have */
 
-body {
-  font-family: "Marlowe Grotesk", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+:root {
+  --font-brand: "Marlowe Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 ```
 
-- Load only the weights you use, usually two to four files.
-- Preload the regular weight.
-- `font-display: swap` avoids invisible text.
-- Tune the fallback with `size-adjust` so the page doesn't jump when the font loads.
+- Load only the weights the brand uses. If there's no italic file, set `font-synthesis: none` so the browser doesn't fake one.
+- Preload the one or two critical files.
+- Tune the fallback's `size-adjust` to match Marlowe's x-height so the swap doesn't shift the layout.
 
-If you tell me which weights the designer supplied, I can write the full rules. The logo files are a separate matter. Logos are normally outlined artwork, so they don't need the font.
+If it turns out the license doesn't cover the web, you can ask the foundry for a web license or look for an open-licensed grotesque as a stand-in. The fallback stack above works in the meantime.

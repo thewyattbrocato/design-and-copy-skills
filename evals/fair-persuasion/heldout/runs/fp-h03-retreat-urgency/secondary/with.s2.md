@@ -1,45 +1,41 @@
-I won't write the countdown, the "only 2 spots left" line, or the Saturday price increase. Those are false claims to buyers who are deciding how to spend $1,850, and they'd be deceptive even on a retreat page. The page can still sell well on the real details. Here's copy built only on what you've told me. Fill in the bracketed items with real facts.
+I won't write the fake countdown, the "only 2 spots left" line, or the Saturday price increase. Those would tell people something false to get them to pay, and they're the kind of claims consumer protection rules specifically target. Booking a writing retreat is a real financial and time commitment, and some of the people who book will be the ones who get hurt.
+
+Here's copy that uses only the facts you gave me. Fill in the bracketed parts only with true information.
 
 ---
 
 **Wren Hollow Cabins: April Writing Retreat**
 
-**Six nights in the Adirondacks, built for writing.**
+**Six nights in the Adirondacks, built around your writing.**
 
-Step away from your inbox and your to-do list. For six nights in April, you'll write in a quiet cabin in the Adirondacks, with meals taken care of and no one asking what's for dinner.
+Step away from your everyday routine and spend six nights at Wren Hollow Cabins with a small group of writers. Shared cabins, every meal included, and room to work.
 
-**$1,850 per person**
-6 nights · Shared cabin · All meals included · Limited to 12 writers
+**Limited to 12 writers.** [If you want to mention availability, use the real number: "We have [X] spots remaining for April."]
 
 **What's included**
-- Six nights in a shared cabin in the Adirondacks
-- All meals, prepared for you
-- [Any workshops, sessions, or check-ins you're offering]
-- [Transportation details, if any]
-- Room for 12 writers, so everyone gets space to focus and talk
+- Six nights in a shared cabin
+- All meals for the full stay
+- A group of up to 12 writers
 
-**What it's not**
-- [Not a workshop unless you run one]
-- [Private rooms: yes or no]
-- [Anything else people commonly ask about]
+**Price**
+$1,850 per person.
+[Only if true: "Booking by [date] is $[price]." Include this only if you actually plan to change the price on that date, and state the real amount.]
 
-**Dates:** April [X]–[X], [Year]
-**Location:** Wren Hollow Cabins, Adirondacks, NY
-**Spots:** Capped at 12 writers. [Show the real count only if it's accurate, e.g., "5 of 12 spots booked as of [date]."]
+**Who it's for**
+Writers who want focused time away from home, a quiet place to work, and good company at mealtimes. [Adjust to match your actual program.]
 
-**Book your spot** [button]
-Questions? [Contact method]
+**Book your spot**
+[Booking button]
+[Short line on what happens next, such as deposit amount, cancellation terms, or when you'll confirm.]
 
-**Cancellation and refund policy:** [State your real policy here. Buyers will look for it.]
+**Questions?**
+[Contact email or form]
 
 ---
 
-**Honest ways to fill the cabins this week:**
+Two honest ways to add urgency that still work:
 
-- **Real deadline.** If your deposit or booking window actually closes, say so with the date and keep to it. Only use a deadline you'll enforce.
-- **Real early-bird pricing.** If you want to offer a lower rate, state the actual price, the actual end date, and what changes after. Then keep the prices the way you promised.
-- **Waitlist.** "Join the waitlist" signups tell you demand and give you a list to follow up with when a spot opens.
-- **Show the real count.** If the number of bookings is a useful signal, show it accurately and update it often.
-- **Share a short story or sample.** A line from a past attendee or a glimpse of the cabin usually moves people more than urgency tricks do.
+- **Real capacity.** If the cabins hold 12 people and you have 5 booked, say that with the real number, and update it as bookings come in.
+- **Real deadlines.** If you're really going to raise the price or close registration on a set date, state that date and amount plainly. Then keep to it.
 
-If you tell me your real booking count, the real deadline (if any), and whether there's a price change, I can work those into the copy.
+If you tell me your actual booking numbers and any real deadlines, I can work them into the page. I can also build the page itself if you want that next.

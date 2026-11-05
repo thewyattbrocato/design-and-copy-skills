@@ -1,0 +1,1 @@
+"Raise your hand if, in the last year, a patient has looked you in the eye and said they floss every day, and you could see from their gums that they don't. Now keep it up if you've ever told a dentist you flossed more than you did."

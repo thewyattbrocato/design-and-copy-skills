@@ -1,18 +1,24 @@
-Here's a draft.
+Here's a draft for the hero and intro.
 
-**Hero**
+## Hero
 
-# Make something with your hands at Kilnside Studio
-Beginner pottery classes on Alder Street. No experience needed.
+**Headline:** Make something with your hands.
 
-[Book your spot]  *Next classes start 4 and 6 November*
+**Subhead:** A 4-week beginner pottery course at Kilnside Studio on Alder Street. No experience needed.
 
-**Intro bullets**
+**CTA button:** Reserve your spot
 
-- **Start from zero.** Our 4-week beginner course is one evening a week, 6:30 to 9:00pm, on Tuesdays or Thursdays. No experience needed.
-- **Everything's covered.** $180 includes your clay, glazing and firing fees, so there are no extras to buy.
-- **Small classes, finished pieces.** There are never more than 6 students, so you get real attention. After the last week, you take your pieces home.
+**Under the button:** Next classes start 4 and 6 November.
 
-**Check before publishing:** 4 and 6 November 2026 fall on a Wednesday and a Friday, but the course runs Tuesdays and Thursdays. Those dates match Tuesday and Thursday in 2025, so the year may be off, or the dates may be wrong. I left weekdays out of the date line so it doesn't contradict itself. Once you confirm the dates, I can say "Tuesday 4 November" and so on.
+## Intro bullets
 
-I also assumed a booking button. If there's no booking link yet, swap the button for an email or phone line.
+- **Start from zero.** Tuesday or Thursday evenings, 6:30 to 9:00pm, for four weeks. No experience needed.
+- **Everything's included.** $180 covers your clay, glazing and firing fees.
+- **Small by design.** There are never more than 6 students per class, so you get real time with your teacher. At the end of week four, you take your finished pieces home.
+
+## Two things to check
+
+1. **The dates don't match the weekdays.** In 2026, 4 November is a Wednesday and 6 November is a Friday, but the course runs Tuesdays and Thursdays. If the start dates are right, the days need changing. If the days are right, the dates need changing. I kept your dates as given.
+2. **"Reserve your spot" is a placeholder.** I don't know how people book (form, email, phone), so change the button to match.
+
+I left out anything about the teacher, the studio's atmosphere, or what students make, because I don't have facts on those. If you send some, I can add a line or two.

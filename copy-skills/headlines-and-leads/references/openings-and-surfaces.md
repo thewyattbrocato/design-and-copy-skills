@@ -21,7 +21,7 @@ When rivals all make the same promise, lead with the proof a reader can check, n
 - **Ads:** the headline is often the whole exposure. Say who it is for and what they get; keep the brand where the surface does not show it. Count against the hard cap and cut the lowest-value word first.
 - **Articles and case studies:** a title that promises something specific, then a first sentence that delivers news or the reader's situation. Do not open by defining the topic.
 - **Section headings:** each states the section's point; read only the headings and the page's argument should survive.
-- **Taglines:** one idea, short, usable out of context. Offer a plain version beside any clever one.
+- **Taglines:** one idea, short, usable out of context. Offer a plain version beside any clever one. Default a plain working line while the idea is still open, labeled as working; polish the final once it settles.
 
 ## Short pairs (generic, for the pattern only)
 

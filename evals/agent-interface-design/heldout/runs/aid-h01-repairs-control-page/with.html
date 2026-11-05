@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repairs desk · Kestrel Lettings</title>
+<style>
+:root{
+  --bg:#f6f5f2;--panel:#fff;--ink:#1d2127;--muted:#5f6670;--line:#e3e0d9;
+  --accent:#1f4e79;--accent-ink:#fff;
+  --em-bg:#fbe4e1;--em-ink:#8a1c10;--em-line:#d9503f;
+  --ur-bg:#fdefd2;--ur-ink:#6b4300;--ur-line:#d98e00;
+  --ro-bg:#e6edf3;--ro-ink:#2f4658;--ro-line:#7c95a8;
+  --ok:#1d6b3a;--warn-bg:#fff7e0;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#16181b;--panel:#1f2226;--ink:#e9e8e4;--muted:#a0a6ad;--line:#33373c;
+  --accent:#7fb2e0;--accent-ink:#10202e;
+  --em-bg:#4a1d18;--em-ink:#ffc9c1;--em-line:#e5705f;
+  --ur-bg:#43320a;--ur-ink:#ffdf9c;--ur-line:#e0a526;
+  --ro-bg:#27323b;--ro-ink:#c3d3df;--ro-line:#7c95a8;--ok:#6fcf93;--warn-bg:#2d2a1c}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 20px 60px}
+header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;margin-bottom:18px}
+h1{font-size:20px;margin:0}
+.sub{color:var(--muted);font-size:13px}
+.agent{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ok)}
+.agent.paused .dot{background:var(--ur-line)}
+button{font:inherit;cursor:pointer;border-radius:7px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:6px 12px}
+button:hover{border-color:var(--muted)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:22px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.stat b{display:block;font-size:26px;line-height:1.1}
+.stat span{font-size:13px;color:var(--muted)}
+.stat.alert{border-color:var(--em-line)}
+h2{font-size:16px;margin:0 0 10px;display:flex;gap:8px;align-items:center}
+.count{background:var(--ink);color:var(--bg);border-radius:20px;font-size:12px;padding:1px 9px}
+.need{display:grid;gap:10px;margin-bottom:28px}
+.card{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--ur-line);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 16px}
+.card.em{border-left-color:var(--em-line)}
+.card h3{margin:0;font-size:15px}
+.card p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.card .why{color:var(--ink)}
+.acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.empty{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.list{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+details{border-top:1px solid var(--line)}
+details:first-child{border-top:0}
+summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:62px 112px 1fr 1.1fr;gap:6px 14px;padding:10px 14px;align-items:start}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:color-mix(in srgb,var(--line) 35%,transparent)}
+.time{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.flat{font-weight:600}
+.issue small,.act small{display:block;color:var(--muted);font-size:13px}
+.chip{display:inline-flex;gap:5px;align-items:center;font-size:12px;font-weight:700;border-radius:5px;padding:2px 8px;border:1px solid;white-space:nowrap}
+.chip.em{background:var(--em-bg);color:var(--em-ink);border-color:var(--em-line)}
+.chip.ur{background:var(--ur-bg);color:var(--ur-ink);border-color:var(--ur-line)}
+.chip.ro{background:var(--ro-bg);color:var(--ro-ink);border-color:var(--ro-line)}
+.st{font-size:12px;font-weight:600;color:var(--muted)}
+.st.done{color:var(--ok)}
+.detail{padding:4px 14px 14px 90px;display:grid;gap:8px;font-size:14px}
+.detail dl{margin:0;display:grid;grid-template-columns:130px 1fr;gap:4px 12px}
+.detail dt{color:var(--muted)}
+.detail dd{margin:0}
+.quote{border-left:3px solid var(--line);padding-left:10px;color:var(--muted);font-style:italic}
+.foot{margin-top:24px;font-size:13px;color:var(--muted)}
+.banner{background:var(--warn-bg);border:1px solid var(--ur-line);border-radius:10px;padding:10px 14px;margin-bottom:16px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+[hidden]{display:none!important}
+@media (max-width:760px){
+  summary{grid-template-columns:56px 1fr}
+  summary .issue,summary .act{grid-column:1/-1}
+  .detail{padding-left:14px}.card{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Repairs desk</h1>
+      <div class="sub">Kestrel Lettings · Wednesday 4 November 2026 · 14:12</div>
+    </div>
+    <div class="agent" id="agent">
+      <span class="dot" aria-hidden="true"></span>
+      <div><strong id="agentState">Agent running</strong><div class="sub" id="agentSub">Last action 3 min ago · reading new requests</div></div>
+      <button id="pauseBtn">Pause agent</button>
+    </div>
+  </header>
+
+  <div class="banner" id="pausedBanner" hidden><strong>Agent is paused.</strong> New requests are being collected but not triaged or booked. Anything urgent needs calling in by hand.</div>
+
+  <section class="stats" aria-label="Today at a glance">
+    <div class="stat alert"><b id="sNeed">3</b><span>Need you now</span></div>
+    <div class="stat"><b>1</b><span>Emergency open</span></div>
+    <div class="stat"><b>6</b><span>Waiting on a vendor reply</span></div>
+    <div class="stat"><b>11</b><span>Booked for today / tomorrow</span></div>
+    <div class="stat"><b>38</b><span>Handled without you this week</span></div>
+  </section>
+
+  <section aria-labelledby="needH">
+    <h2 id="needH">Needs you <span class="count" id="needCount">3</span></h2>
+    <div class="need" id="need"></div>
+  </section>
+
+  <section aria-labelledby="allH">
+    <h2 id="allH">Everything the agent has done today</h2>
+    <div class="tabs" role="group" aria-label="Filter by urgency">
+      <button data-f="all" aria-pressed="true">All (12)</button>
+      <button data-f="em" aria-pressed="false">Emergency</button>
+      <button data-f="ur" aria-pressed="false">Urgent</button>
+      <button data-f="ro" aria-pressed="false">Routine</button>
+    </div>
+    <div class="list" id="list"></div>
+  </section>
+
+  <p class="foot">Standing rules: agent books without asking up to £250 per job, never books outside 08:00–20:00 unless Emergency, and always asks you before changing a tenant's appointment twice. Tap any row to see why the agent decided what it did, and to change it.</p>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const LABEL={em:"▲ Emergency",ur:"● Urgent",ro:"■ Routine"};
+const needs=[
+ {id:"n1",lvl:"em",flat:"Flat 2, 41 Tannery Row",title:"Gas smell reported — vendor hasn't confirmed",
+  why:"Tenant (Priya Raman) reported a gas smell at 13:41. Agent told her to leave, not use switches, and call the National Gas Emergency line (0800 111 999). Northern Gas & Heat were booked at 13:46 but have not accepted after 26 minutes.",
+  sug:"Suggested: phone Northern Gas & Heat now; if no answer, agent can try Calder Heating (24h line).",
+  btns:[["Try Calder Heating","primary"],["I'll phone them",""]]},
+ {id:"n2",lvl:"ur",flat:"Flat 9, Marlow House",title:"Unsure how urgent — no heating, baby in the flat",
+  why:"Agent is 55% sure this is Urgent, 45% Routine. Boiler off since last night; message mentions a 3-week-old baby. Outside is 6°C. Agent hasn't booked anyone yet.",
+  sug:"Suggested: mark Urgent, book Northern Gas & Heat for today before 18:00 (est. £95 call-out).",
+  btns:[["Mark Urgent & book","primary"],["Mark Routine",""]]},
+ {id:"n3",lvl:"ur",flat:"Flat 14, Ashgrove Court",title:"Over your £250 limit — ceiling leak",
+  why:"Hartley Plumbing declined (fully booked). ClearFlow Drainage can come at 16:00 but quote is £340, above the £250 auto-approve limit. Water is dripping through the downstairs neighbour's ceiling.",
+  sug:"Suggested: approve £340 and book ClearFlow at 16:00.",
+  btns:[["Approve £340","primary"],["Find someone cheaper",""]]}
+];
+const log=[
+ {t:"14:09",lvl:"ro",flat:"Flat 6, 18 Orchard Lane",issue:"Kitchen cupboard door hanging off",q:"The hinge has snapped on the cupboard under the sink and the door won't stay shut.",act:"Booked A. Okafor Handyman",when:"Fri 6 Nov, 09:00–12:00",st:"Awaiting vendor confirmation",done:0,why:"Cosmetic, no safety or water risk. Handyman is the cheapest suitable vendor.",cost:"£45 est.",ten:"Tenant offered mornings only."},
+ {t:"13:58",lvl:"ur",flat:"Flat 3, Birch Mews",issue:"Half the sockets dead",q:"Lost power to all the sockets in the lounge and kitchen. Lights still work.",act:"Booked Brightside Electrical",when:"Today, 16:00–18:00",st:"Confirmed",done:1,why:"Likely tripped or faulty circuit. Tenant checked the consumer unit; trip switch won't reset, so marked Urgent.",cost:"£80 est.",ten:"Confirmation text sent 14:01."},
+ {t:"13:41",lvl:"em",flat:"Flat 2, 41 Tannery Row",issue:"Smell of gas in the hallway",q:"Can smell gas near the meter cupboard, getting stronger.",act:"Booked Northern Gas & Heat",when:"ASAP",st:"No reply · see above",done:0,why:"Keyword and context match gas leak. Emergency rule: advise evacuation and the gas line, book Gas Safe engineer immediately.",cost:"Emergency rate",ten:"Safety advice sent 13:42. Tenant replied 'outside now'."},
+ {t:"13:20",lvl:"ro",flat:"Flat 11, Marlow House",issue:"Bathroom extractor fan noisy",q:"The fan has been rattling for a couple of weeks. Not urgent.",act:"Booked Brightside Electrical",when:"Mon 9 Nov, 13:00–15:00",st:"Confirmed",done:1,why:"Noise only, fan still works. Grouped with another Marlow House visit that day to save a call-out.",cost:"£60 est.",ten:"Tenant confirmed access."},
+ {t:"12:47",lvl:"ur",flat:"Flat 14, Ashgrove Court",issue:"Water coming through bathroom ceiling",q:"Water dripping from the ceiling light. Flat above says nothing is wrong on their side?",act:"Hartley Plumbing declined",when:"—",st:"Needs you",done:0,why:"Active leak into a light fitting counts as Urgent, with an electrical risk. Agent told tenant not to use the light.",cost:"Quote £340",ten:"Photos received."},
+ {t:"12:15",lvl:"ro",flat:"Flat 1, 7 Quay Street",issue:"Dripping kitchen tap",q:"The cold tap drips constantly, probably needs a washer.",act:"Booked Hartley Plumbing",when:"Thu 5 Nov, 10:00–12:00",st:"Confirmed",done:1,why:"Slow drip, isolation valve under sink works. Routine.",cost:"£70 est.",ten:"Reminder set for tomorrow 08:00."},
+ {t:"11:52",lvl:"ur",flat:"Flat 5, Birch Mews",issue:"Locked out, key snapped in door",q:"The key broke in the lock this morning and I can't get in. I'm at work.",act:"Booked Lockwise Locksmiths",when:"Today, 17:30 (tenant home)",st:"Confirmed",done:1,why:"Tenant can't access the home; not safety-critical as they're out. Next slot that matched when she's back.",cost:"£110 est.",ten:"Tenant agreed to 17:30."},
+ {t:"11:30",lvl:"ro",flat:"Flat 8, 18 Orchard Lane",issue:"Mould on bedroom window frame",q:"Black mould has been coming back round the window.",act:"Flagged for inspection",when:"Not booked",st:"Handled by agent",done:1,why:"Needs surveyor not a quick fix. Added to Monday's inspection list and sent the tenant ventilation advice.",cost:"—",ten:"Advice sent 11:31."},
+ {t:"10:44",lvl:"ur",flat:"Flat 7, Ashgrove Court",issue:"Toilet blocked, only toilet",q:"Toilet blocked and water is rising. We only have the one.",act:"Booked ClearFlow Drainage",when:"Today, 12:00–13:00",st:"Completed 12:40",done:1,why:"Only toilet in the flat, so Urgent rather than Routine.",cost:"£95 final",ten:"Tenant confirmed fixed."},
+ {t:"10:05",lvl:"ro",flat:"Flat 12, Marlow House",issue:"Intercom buzzer not ringing",q:"Visitors press the buzzer but nothing rings in our flat.",act:"Booked Brightside Electrical",when:"Tue 10 Nov, 09:00–11:00",st:"Awaiting vendor confirmation",done:0,why:"Inconvenience only. Routine.",cost:"£75 est.",ten:"—"},
+ {t:"09:30",lvl:"em",flat:"Flat 4, 41 Tannery Row",issue:"Burst pipe under kitchen sink",q:"Pipe has burst, water everywhere!!",act:"Booked Hartley Plumbing",when:"Today, 10:15",st:"Completed 11:20",done:1,why:"Active flood. Agent told tenant how to find the stopcock; plumber attended within 45 minutes.",cost:"£180 final",ten:"Tenant confirmed fixed."},
+ {t:"08:12",lvl:"ro",flat:"Flat 10, Birch Mews",issue:"Wardrobe door off track",q:"Sliding wardrobe door keeps coming off.",act:"Booked A. Okafor Handyman",when:"Fri 6 Nov, 13:00–16:00",st:"Confirmed",done:1,why:"Cosmetic. Grouped with Orchard Lane visit.",cost:"£40 est.",ten:"—"}
+];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2600)}
+function renderNeeds(){
+  const box=$("#need");
+  if(!needs.length){box.innerHTML='<div class="empty">Nothing needs you right now. The agent will interrupt you here if that changes.</div>'}
+  else box.innerHTML=needs.map(n=>`<article class="card ${n.lvl}">
+    <div><h3><span class="chip ${n.lvl}">${LABEL[n.lvl]}</span> ${esc(n.flat)} — ${esc(n.title)}</h3>
+    <p class="why">${esc(n.why)}</p><p>${esc(n.sug)}</p></div>
+    <div class="acts">${n.btns.map(b=>`<button class="${b[1]}" data-n="${n.id}" data-l="${esc(b[0])}">${esc(b[0])}</button>`).join("")}</div></article>`).join("");
+  $("#needCount").textContent=needs.length;$("#sNeed").textContent=needs.length;
+}
+function renderLog(f){
+  $("#list").innerHTML=log.filter(r=>f==="all"||r.lvl===f).map(r=>`<details>
+   <summary><span class="time">${r.t}</span><span><span class="chip ${r.lvl}">${LABEL[r.lvl]}</span></span>
+   <span class="issue"><span class="flat">${esc(r.flat)}</span><small>${esc(r.issue)}</small></span>
+   <span class="act">${esc(r.act)}<small>${esc(r.when)} · <span class="st ${r.done?"done":""}">${esc(r.st)}</span></small></span></summary>
+   <div class="detail"><div class="quote">“${esc(r.q)}”</div>
+   <dl><dt>Why this urgency</dt><dd>${esc(r.why)}</dd><dt>Cost</dt><dd>${esc(r.cost)}</dd><dt>Tenant</dt><dd>${esc(r.ten)}</dd></dl>
+   <div class="acts"><button data-t="Urgency change">Change urgency</button><button data-t="Reassign vendor">Change vendor</button><button data-t="Calling tenant">Call tenant</button></div></div></details>`).join("")||'<div class="empty">Nothing here.</div>';
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.n){const i=needs.findIndex(n=>n.id===b.dataset.n);needs.splice(i,1);renderNeeds();toast("Done: "+b.dataset.l+". Agent will carry on and update the log.")}
+  else if(b.dataset.f){document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderLog(b.dataset.f)}
+  else if(b.dataset.t){toast(b.dataset.t+" — opened (demo)")}
+});
+$("#pauseBtn").onclick=function(){
+  const p=$("#agent").classList.toggle("paused");
+  this.textContent=p?"Resume agent":"Pause agent";
+  $("#agentState").textContent=p?"Agent paused":"Agent running";
+  $("#agentSub").textContent=p?"Paused by you · no new bookings":"Last action just now · reading new requests";
+  $("#pausedBanner").hidden=!p;
+};
+renderNeeds();renderLog("all");
+</script>
+</body>
+</html>

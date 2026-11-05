@@ -1,38 +1,42 @@
-**Verdict: this reads as a generic SaaS admin template with Coldshelf's name on it. A food bank operator opening it would not learn that the product monitors fridge temperatures, and nothing on the screen tells them what to do next. Fix this before any demo.**
+**Verdict: this screen does not serve temperature safety. It reads as a generic SaaS admin template with the food-bank content swapped out in name only.** A volunteer opening it cannot tell whether any fridge or freezer is currently safe, which is the one question the app exists to answer. Blocker.
 
-**Blocker**
+## Findings
 
-1. **The first screen doesn't say what Coldshelf does.** Every metric and label (Total Users, Revenue, Active Sessions, Conversion Rate, Analytics, Users) comes from a sales-analytics dashboard. There is no unit, fridge, freezer, temperature, or alert anywhere. The core job is "is every unit in its safe range right now?" and the screen doesn't answer it. Fix: lead with unit status (for example, "4 units: 3 in range, 1 out of range since 9:40 AM"), then the readings.
+**1. Blocker: the screen shows no temperatures.** The stat cards (Total Users, Revenue, Active Sessions, Conversion Rate), the Overview chart, and the Recent Activity table contain nothing about units, temperatures, or alerts. Users, Revenue, and Conversion Rate have no meaning for a food bank, and "Revenue" may be misleading for a nonprofit. *Fix:* replace the four cards with safety-state counts, for example: units in range, units out of range, units overdue for a reading (no reading in X hours), open alerts. Keep the card pattern, change the content.
 
-2. **Out-of-range alerts have no visible home.** The bell is the only plausible place for them, and nothing on the screen indicates an alert. For a food-safety tool this is the most important thing a volunteer needs to see at a glance. Fix: an alert banner or count near the top, and a bell with a badge when something needs attention.
+**2. Blocker: the error toast can hide a failed food-safety log.** "Something went wrong. Please try again." says nothing about what failed or whether the reading was saved. A volunteer may believe a 45°F reading was recorded when it was not. It also appears "everywhere," so it's a pattern problem, not a one-off. *Fix:* for save failures, say what failed and whether it was saved ("Reading for Walk-in Fridge 2 was NOT saved. Retry."), keep it on screen until dismissed, and include a retry action. Use the generic toast only for truly generic failures.
 
-**High**
+**3. Major: the chart has no units and no safe range.** "Overview," Jan to Dec, one blue line, no y-axis labels. A trend line with no scale can't show whether anything is in range. *Fix:* a temperature trend for one selected unit, with the y-axis in °F or °C, a shaded safe band (the threshold should come from the food bank's own requirements; cold holding is commonly 41°F/5°C or below, freezers 0°F/-18°C or below), a unit selector, and a time range that matches "today."
 
-3. **The four stat cards are wrong for this audience.** Revenue and Conversion Rate don't apply to a nonprofit, and "Active Sessions" in red reads as a problem with no meaning here. Replace them with operational numbers: units in range, readings logged today, overdue logs, open alerts. Keep the arrow-plus-percent pattern only where a trend matters.
+**4. Major: the table can't show a unit's state.** Rows are "Item 1/2/3," the Status values (Active, Pending, Inactive) don't describe a fridge, and Date has no time. Temperature logs depend on when a reading was taken. *Fix:* rows are units; Status is In range / Out of range / Overdue; Last reading shows date and time; Action is "Log reading" or "View."
 
-4. **The "Overview" chart can't be read.** It has no y-axis labels, no units, and no reference for what a good value is. A temperature chart with the axis removed is unusable. Fix: plot temperature per unit over time, label the axis in °F or °C, and draw the safe range as a shaded band (for example, a fridge at or below 41°F). Show Jan to Dec only if the data is annual, and only if that's the question a volunteer is asking.
+**5. Major: the sidebar lacks the core objects.** Dashboard, Analytics, Reports, Users, Settings has no Fridges/Freezers (units), no Temperature Logs, no Alerts. Users is a top-level item, which may matter less to volunteers than the units themselves. *Fix:* add Units, Logs, and Alerts; consider renaming Users to Volunteers if that's what they are.
 
-5. **The error toast will cause real harm.** "Something went wrong. Please try again." doesn't say whether a temperature reading was saved. A volunteer who thinks a log was recorded when it wasn't has a food-safety gap. Fix: say what happened and the state of the data, for example "Reading not saved. Retry now or the reading will be lost." Use the same wording for every failed save; a generic toast is fine for a failed page refresh.
+**6. Major: the date format is ambiguous.** 01/02/2026 reads as January 2 in the US and February 1 elsewhere. For a logging record, that ambiguity is a real error risk. *Fix:* "Jan 2, 2026, 9:14 AM" everywhere.
 
-6. **Recent Activity holds placeholder data.** "Item 1 / Item 2 / Item 3" and three identical "View" actions tell the user nothing. Dates are fixed to January 2026, which is stale for a screen dated October 2026, and "01/02/2026" is ambiguous for anyone outside the US. Fix: real rows such as unit name, latest reading, status ("In range" / "Out of range" / "Missed log"), last logged by, and time, with one row-level action where it matters, such as "Log reading." Use a consistent date format and show relative times ("2 h ago") with the exact time on hover.
+**7. Minor: the empty state is generic.** "No data yet. Get started by adding your first item!" and "Add Item" don't say what to add or why. *Fix:* "No units yet. Add your first fridge or freezer to start logging temperatures." with an "Add fridge or freezer" button. The icon-plus-CTA pattern is correct; the copy isn't specific enough.
 
-**Medium**
+**8. Minor: the subtitle doesn't match the content.** "Here's what's happening today" over monthly trend numbers is a mismatch. *Fix:* state the actual status, e.g., "2 units need attention."
 
-7. **The sidebar labels are generic.** For this product, "Users" and "Analytics" probably mean less than "Units," "Logs," "Alerts," and "Volunteers." Taste-level note: "Dashboard" and "Analytics" overlap here, so one of them needs a clear reason to exist.
+**9. Minor: red/green deltas on the wrong metric.** The red down arrow on Active Sessions implies a problem. Nothing in a food-bank app should be colored by a vanity delta. Once the cards change, delete the delta colors or tie them to safety status.
 
-8. **The subtitle is filler.** "Welcome back! Here's what's happening today." Replace it with the status summary from finding 1. Labeled as a copy suggestion, not a rule.
+**10. Minor: the top bar is underspecified.** The bell should show an alert count, and the search placeholder should say what it searches ("Search units"). Note: the sample dates are January 2026 and today is November 4, 2026. If that is placeholder data, fine; if the screen is meant to look live, it looks stale.
 
-9. **The Reports empty state is close, but vague.** "Get started by adding your first item!" doesn't say what a report is or what it contains. Fix: "No reports yet. Log temperatures for a few days and generate your first report for [your food bank's] records." Change "Add Item" to the actual noun, such as "Add a unit" or "Generate report."
+## Keep
 
-10. **The search box has no defined scope.** "Search..." doesn't say whether it searches units, people, or logs. Fix: "Search units, volunteers, or logs."
+- **Top bar and sidebar layout.** Conventional, so volunteers will recognize it.
+- **Stat card pattern (number, label, change).** Reusable once the metrics are safety-relevant.
+- **Empty state structure (icon, message, one button).** Right pattern, wrong copy.
+- **"Welcome back" tone.** Friendly for volunteers, if the content underneath supports it.
 
-**What works and should stay**
+## Fix order
 
-- The top bar and sidebar layout is familiar, so volunteers won't have to learn navigation from scratch.
-- The stat cards pair arrows with text, not color alone, which keeps the trend readable.
-- The empty state has one clear primary action and an appropriate icon.
-- The table uses standard columns, so the structure can carry real data once the content is correct.
+1. Decide what the first screen answers: "Are all units safe right now, and what needs action?"
+2. Replace the stat cards and table content with unit-based safety data (findings 1, 4).
+3. Fix the error and save-failure behavior (finding 2). This is a trust issue and should ship before any demo.
+4. Rebuild the chart around one unit with a scale and safe band (finding 3).
+5. Update the sidebar (finding 5), date format (6), empty state (7), subtitle (8), and the remaining minor items.
 
-**Fix order:** 1 and 2 first (what the product is and how alerts surface), then 4 and 5 (chart legibility and failed-save messaging, which are the riskiest for food safety), then 3 and 6 (replace the data with operational content), then the rest.
+## Not checked
 
-**Not checked:** colors, contrast, type sizes, spacing, and tablet or phone layouts. Your description doesn't include them, and volunteers may be using tablets beside a fridge, which would change the layout. I also don't know whether logging works offline; that changes the wording in finding 5. Send an export or a screenshot and I can check the contrast and layout.
+I worked from your text description only. I did not see the actual layout, visual weight, colors, contrast, type sizes, or mobile behavior. Walk-in staff often use phones with cold or gloved hands, so target size and mobile layout matter and should be checked on the real design. No volunteer has used it, so these findings are from inspection, not observed use.

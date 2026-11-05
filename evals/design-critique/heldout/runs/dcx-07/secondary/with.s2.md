@@ -1,16 +1,13 @@
-**Ship B, with two fixes before Friday.** It answers the question the empty state exists for: what can I do right now? A gives the user nothing to act on except "Get Started," which doesn't say what starts or what happens next.
+**Ship Version B, but rebuild its visual layer before Friday.** B is the only version that helps the user do something next. A's copy ("We can't wait to see where your journey takes you!") and its "Get Started" button don't tell someone what the Walks tab is for or what to do there. B names a specific walker, a specific time, and a specific next step, and it's the only one that says why the product is trustworthy.
 
-**Findings**
+B's problems are mostly presentation, and they're fixable:
 
-1. **Major, copy contradiction in B.** The heading says "No walks booked this week," but the primary button says "Book Marta for Tuesday." Today is Friday, so "Tuesday" most likely means next week's Tuesday. Fix: "No walks booked yet" as the heading, or name the date on the button ("Book Marta for Tue, Oct 20").
-2. **Major, B depends on live data.** "Marta's usually free Tuesday and Thursday mornings" is only true if it comes from her real availability. If she's full, or the user is in an area with no walkers, the copy and button are wrong. Fix: pull the name and slots from the data, and fall back to the generic "See other walkers" layout when no match exists.
-3. **Moderate, B's buttons look unfinished.** Two default-looking buttons with equal weight give the user no clear primary action. Fix: make "Book Marta…" the one filled button in the brand color, and turn "See other walkers" into a text or outline button. This is partly taste, but the equal weight is a function problem.
-4. **Minor, the "vetted and local" link is in the wrong place.** It answers a question the user hasn't asked yet. It's fine as a small link, but it belongs next to the walker list, not in the empty state.
-5. **Minor, A's copy is vague.** "Your journey" and "We can't wait" are filler. A's illustration and spacing are clean, but they don't help someone decide what to do.
+1. **Use the paw illustration from A, or a proper icon, in place of the emoji.** Keep the visual care from A and the content from B.
+2. **Restyle the buttons.** Make "Book Marta for Tuesday" the one filled primary button in the brand style. Make "See other walkers" a secondary outline or text button. Right now both look like browser defaults, which undercuts the trust the copy is trying to build.
+3. **Move "Why only a few walkers?" out of the empty state.** Nobody asked that yet. It belongs on the walker-selection screen or in onboarding. If support tickets show people ask it often, keep it as a short line under the buttons.
+4. **Make the copy conditional on the user's state.** Use "No walks booked this week" only for users who have walked before. A brand-new user needs something like "Book your first walk. Walkers near Pell Park are free Tuesday and Thursday mornings." Otherwise the heading implies a history they don't have.
+5. **Confirm that Marta's availability and the "photo halfway through" promise are real.** If availability is hard-coded or guessed, the button will eventually book a time that isn't open. If the photo feature doesn't exist yet, remove the line. Don't ship a promise the product can't keep.
 
-**What to keep from B**
-- The specific walker and time. Concrete names are what make a first booking feel safe.
-- "She'll send you a photo halfway through." It's the most persuasive line on either screen. Confirm it's a real feature before shipping it.
-- Left alignment and plain type. They read as direct, which suits a utility flow.
+I'm assuming the Walks tab is visible to new users as well as returning ones. If it's only shown after a first booking, you can skip item 4.
 
-**Not checked:** I haven't seen either screen rendered, so I can't measure contrast or tap target sizes. I have no data on how Marta's availability is actually sourced, and no user testing. A cheap test before Friday: show five people each version and ask what they would do next. If they tap the primary button in B without hesitation, the copy is working.
+Before Friday, if you have the traffic or a handful of test users, put both versions in front of them and ask what they would do next. That will settle the choice faster than debating it.

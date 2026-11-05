@@ -1,27 +1,34 @@
 **Why they skip**
 
-Step 1 tells people nothing except that a tour is coming. It offers no reason to stay, and a freelancer who just signed up wants to send an invoice, not sit through a tour. The rest of the tour shows they're right.
+Step 1 says nothing a person wants. "Let's take a quick tour" promises a lecture, and people who just signed up to send an invoice want to do that, not sit through a tour. The skip rate is also a verdict on the whole tour, because the Skip button is the only preview of what's coming. Seven steps is long, and the tour doesn't try to hide it.
 
-- **It's an inventory, not a lesson.** Steps 2–4 list about 20 things (nine sidebar items, five top-bar items, five dashboard widgets) that people can see and read for themselves. Nobody remembers a list that long.
-- **It sits over the dashboard, which is empty on day one.** The revenue and overdue widgets it points at have nothing in them yet.
-- **It blocks the real task.** The one thing the tour is really for, creating an invoice, doesn't appear until step 5, and it's only described there. Step 7 ("You're all set!") celebrates having read.
-- **It's a mandatory sequence of seven "Next" clicks.** Step 1 gives no preview of the payoff, so Skip is the sensible choice.
+The rest of the tour gives them the same reasons to skip:
+
+- **It's an inventory.** Steps 2 to 4 list 9 sidebar items, 5 top-bar items and 5 dashboard widgets. That's about 20 things to remember, and the person hasn't done anything yet.
+- **It covers the obvious.** A sidebar labelled "Invoices" doesn't need explaining.
+- **It sits over the thing it describes.** Everything shows over the dashboard, and the dashboard is probably empty or sample data for a new user.
+- **The one useful step comes late.** Creating an invoice is step 5, and step 5 itself packs in 6 features.
+- **It ends on "You're all set!"** with nothing to do next.
+- **It asks for a bank connection** before they've seen any value.
 
 **What I'd change**
 
-1. **Cut the tour and replace it with one guided first task.** After they sign up, the goal is "afterwards they can send their first invoice."
-2. **Fix the interface before teaching it.** Make "New invoice" a labeled button (with N as a hint), not a bare + that needs explaining. Then the sidebar and top bar need no tour.
-3. **Start with a one-line prompt on the dashboard.** For example: "Send your first invoice. It takes about two minutes." with a **Create invoice** button and a quiet **Skip, I'll explore** link.
-4. **Guide the form with a few hints, each beside its field.** Cover client, line items, due date and send. Mention taxes, discounts and the payment link only as optional fields. Keep that hint on screen while they fill in the form.
-5. **Offer a starting point.** Let them pick an existing client or a sample client, clearly labeled "Sample" and replaceable in one action. Don't show fake revenue on the dashboard that could pass for their own numbers.
-6. **Confirm what happened, then point to the next step.** For example: "Invoice sent to [client]. You'll see it under Outstanding. When they pay, connect your bank to match payments automatically." This replaces the old step 6 and step 7, and it appears when it's relevant.
-7. **Make the dashboard's empty state do the teaching.** Each widget should say what it will show and what starts it ("Revenue appears here after your first paid invoice").
-8. **Keep a way back.** Put a "Product tour" or "Getting started" item in the help menu for anyone who skipped.
+Fix first: if the sidebar needs a tour, the labels are the problem. Then replace the tour with a guided first task.
 
-If you want to keep a tour for some users, limit it to 3–5 steps that lead to the first invoice: the + button, the client, line items, send.
+The sentence to aim for is: *afterwards they can send their first invoice.*
 
-**How to judge it**
+1. **Drop the welcome step.** On first login, show one line on the dashboard with a clear primary action: "Send your first invoice. It takes about [N] minutes." The buttons are **Create invoice** and a visible **Skip, I'll explore** link. I've left the time as a placeholder because I don't have a measured figure.
+2. **Do the real task in the real product.** The invoice form opens with a few small coach marks, no more than three, and only on fields that aren't obvious: client, line items, and the send or payment-link action. Add taxes, discounts and due date as optional extras they can find later.
+3. **Confirm with what happened.** After sending, say something like "Invoice sent to [client]. You'll see it under Outstanding, and you'll get a notification when it's paid." Point to the next real action. Skip the confetti.
+4. **Move the bank connection** to a later prompt, once they have a sent invoice that a payment could match. Until then, an empty-state prompt on the relevant screen is enough.
+5. **Handle the rest on demand.**
+   - The `N` shortcut goes in the + button's tooltip.
+   - The sidebar and top bar need no explanation.
+   - Estimates, Expenses, Reports, Time Tracking and Tax Center each get an empty state that says what the area is for and offers one action.
+   - A "Replay tour" or help entry stays available for people who skipped.
 
-Don't use tour completion as the measure. Compare, for new signups, the share who send a first invoice within 7 days, and the share who create a second invoice unaided a week or two later. Run the new flow against the old tour as an A/B test. Skip rate on step 1 is a symptom, not the goal.
+**How to check it**
 
-*Assumptions: I'm inferring the cause from the tour text and your 80% figure, with no session recordings. Checking where skippers go next (do they create an invoice anyway?) would confirm it.*
+Completion of the tour isn't the measure. Compare the share of new users who send an invoice within 7 days, and the share who create a second invoice unaided, between the old tour and the new flow. Skip rate on the new prompt is a useful secondary signal. I'm not predicting a number for any of these.
+
+Two assumptions: the dashboard is empty for new users, and invoice creation is the core first success. If most people arrive to track time or expenses instead, aim the first task there.

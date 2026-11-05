@@ -1,27 +1,41 @@
-On a phone, I'd replace the table with a stacked list of order cards, one per order, with a search box pinned above it. Dispatchers keep the full table on big screens. Your reps look up one customer's order at a time and read it across, so sideways scrolling is the wrong fix. Stacking suits that job, and nothing needs to scroll horizontally.
+On a phone, show each order as a two-line row with the five fields a rep needs to recognize it, and put the rest behind a tap. Nothing scrolls sideways.
 
-**What a rep sees, top to bottom**
+**What a rep sees in the collapsed row (about 360px wide)**
 
-1. **Search field, pinned at the top.** It's labeled "Search order #, customer, or tracking #". Most calls start with a name or an order number, so a rep should type that and not scroll. The list sits below it, newest orders first.
-2. **One card per order, about four lines, full width.**
-   - **Line 1:** the order number in bold on the left, and the status as a word on the right ("Shipped", "Delayed", "Processing"), with a small icon and color as extra cues. Never color alone.
-   - **Line 2:** the customer name.
-   - **Line 3:** the items text, cut to one line with an ellipsis. Tapping the card shows the full text.
-   - **Line 4:** "Placed Oct 12 · $84.20". The date and total are on one line, and the total uses tabular figures. The currency goes in the label, not repeated.
-   - **Line 5:** the ship method and tracking number, such as "UPS Ground · 1Z999AA10123456784". The tracking number is a tappable link to the carrier page, with a copy button next to it, because reps will paste it to the customer. If the order hasn't shipped, this line shows "— Not shipped yet", not a blank.
-3. **Every value keeps its label.** The date and total can share a line, but each is tagged ("Placed", "Total"). The same eight fields appear in the same order as in the desktop table.
+- **Line 1:** the order number in bold on the left, and the status as a word with a small icon on the right (for example "Shipped" or "Processing"). Color is only a third cue.
+- **Line 2:** the customer name, which wraps if it's long, and the date placed, such as "Oct 24".
+- Rows are at least 48px tall with 14px or larger text, and a hairline between them.
+- A search box stays pinned above the list. It matches order number, customer, and tracking number. When a customer calls, typing a name or order number is faster than scrolling, so this is the biggest fix.
+- Orders are newest first.
 
-Tapping a card opens a detail view with the full item list. The cards can stay short because everything is still reachable.
+**What they see after tapping a row**
 
-**Why this and not the alternatives**
-- **Horizontal scroll with a frozen order-number column** is the right call for comparing many numeric columns. Your reps don't compare. They find one order and read the answer, so scrolling would keep the problem you have now.
-- **Hiding columns** would drop tracking number or ship method, and those are what a customer on the phone usually asks about.
+The row expands in place and shows the other four fields as label and value pairs:
 
-**Build notes**
-- Render the stacked list as its own structure at narrow widths, with each card holding a description list. Show the real `<table>` (caption, `th scope`) at wide widths and swap between them with a breakpoint. This is safer for screen readers than restyling table cells into blocks.
-- Make the tap targets, meaning the card, the tracking link and the copy button, at least 44px tall.
-- Use 14px text or larger. Keep order numbers, dates and tracking numbers on a single line.
-- Keep the search term and scroll position when a rep opens a detail view and goes back.
-- Design the empty states too. "No orders match 'Smith'" should have a clear-search button, and the list should show placeholder cards while it loads.
+- **Items:** the full text, wrapping as needed.
+- **Ship method**
+- **Total:** right-aligned with tabular figures, and the currency named in the label.
+- **Tracking number:** on its own line with a "Copy" button and a link to the carrier's page. If there's no tracking number yet, it shows "— Not shipped yet", never a blank.
 
-If you share the component or markup, I can sketch the CSS and breakpoint swap.
+Several rows can be open at once. Opening one doesn't collapse the others, so a rep can compare a customer's two orders. Open rows stay open if the data refreshes.
+
+**Why this split**
+
+This is a lookup task: the rep scans for the right order, then reads one or two details from it.
+
+- Order number, customer, date, and status identify the order and answer "where is it?" at a glance.
+- Items, ship method, total, and tracking are details you read after you've found it.
+- Tracking is probably what reps want most often. If so, swap it with date placed so it's visible without a tap. Your call counts here, since I'm guessing at their call patterns.
+
+**What I'd avoid**
+
+- Shrinking the table until text wraps.
+- Stacking all eight fields on every row. That's about eight lines per order, so you'd see two orders per screen.
+- Truncating the customer name or order number.
+
+**Implementation notes**
+
+- Keep the real `<table>` markup and restyle it below roughly 640px. Dispatchers on big monitors keep the full table unchanged.
+- Make the expand control a real button with `aria-expanded`, so it works with keyboard and screen readers.
+
+I can build this as a CSS and markup change if you point me at the order screen's code. This directory doesn't have it.

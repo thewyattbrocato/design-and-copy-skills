@@ -1,10 +1,9 @@
 **Headlines**
-1. `Locked Out in Dunmore?` (22 characters)
-2. `We Come to You, Car or Home` (27 characters)
-3. `Quillhook Lock & Key` (20 characters)
+1. `Locked Out? We Come to You` (26)
+2. `Dunmore Car & Home Locksmith` (28)
+3. `Licensed & Insured Locksmith` (28)
 
 **Description**
-`Licensed, insured. We come to you for car and home lockouts in Dunmore and nearby towns.` (88 characters)
+`Quillhook Lock & Key: Dunmore and nearby towns. Licensed and insured. We come to you.` (85)
 
-- I counted each line by hand. Paste them into the Google Ads editor to confirm before you launch, since it shows a live count.
-- "Licensed and insured" doesn't fit in the headlines with the other facts, so it's in the description. If you'd rather have it in a headline, `Licensed & Insured Locksmith` is 28 characters. It would replace the brand name in headline 3.
+I counted each one, spaces included, and all are under the limits. The brand name is in the description because the headlines are at the 30-character limit. If you'd rather have it in a headline, `Quillhook Lock & Key` is 20 characters and could replace headline 3.

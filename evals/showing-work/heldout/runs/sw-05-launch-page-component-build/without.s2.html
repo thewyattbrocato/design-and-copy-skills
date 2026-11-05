@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time Slot Picker · Lumen Health Design System</title>
+<style>
+:root{
+  --bg:#f6f8f9; --surface:#fff; --ink:#14232b; --ink2:#44565f; --muted:#6b7b84;
+  --line:#dbe3e7; --brand:#0b6e75; --brand-d:#075359; --brand-tint:#e2f2f3;
+  --ok:#17663a; --ok-bg:#e3f4ea; --focus:#1a55d6;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.55;font-size:16px}
+a{color:var(--brand-d)}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+.topbar{background:var(--surface);border-bottom:1px solid var(--line);font-size:14px}
+.topbar .wrap{display:flex;gap:8px;align-items:center;padding-top:12px;padding-bottom:12px;color:var(--muted)}
+.topbar b{color:var(--ink)}
+header.hero{padding:48px 0 32px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink2)}
+.badge.stable{background:var(--ok-bg);color:var(--ok);border-color:#b7dfc7}
+.badge.stable::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok)}
+h1{font-size:40px;line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.lede{font-size:19px;color:var(--ink2);max-width:660px;margin:0}
+section{padding:32px 0;border-top:1px solid var(--line)}
+h2{font-size:24px;margin:0 0 8px;letter-spacing:-.01em}
+h3{font-size:16px;margin:0 0 4px}
+p{margin:0 0 12px;color:var(--ink2)}
+.sub{max-width:660px}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.card p{margin:0;font-size:15px}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:16px}
+.controls{display:flex;flex-wrap:wrap;gap:20px;padding:12px 16px;border-bottom:1px solid var(--line);background:#fafcfc}
+.ctl{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.seg button{font:inherit;font-size:13px;border:0;background:#fff;color:var(--ink2);padding:6px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--brand);color:#fff}
+button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.demo{padding:24px;display:flex;justify-content:center;background:
+  linear-gradient(var(--bg),var(--bg))}
+/* Component */
+.tsp{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.tsp-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.tsp-title{font-weight:700;font-size:16px}
+.tsp-range{font-size:13px;color:var(--muted)}
+.tsp-day{display:grid;grid-template-columns:84px 1fr;gap:12px;padding:var(--dpad,12px) 0;border-top:1px solid var(--line);align-items:start}
+.tsp-day:first-of-type{border-top:0}
+.tsp-dayname{font-size:14px;font-weight:600;line-height:1.3}
+.tsp-dayname span{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.tsp-slots{display:flex;flex-wrap:wrap;gap:var(--gap,8px)}
+.slot{font:inherit;font-size:var(--fs,15px);min-width:var(--w,84px);height:var(--h,44px);padding:0 10px;border:1px solid #b9c7cd;border-radius:8px;background:#fff;color:var(--ink);cursor:pointer;font-variant-numeric:tabular-nums}
+.slot:hover{border-color:var(--brand);background:var(--brand-tint)}
+.slot[aria-checked="true"]{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600}
+.tsp[data-density="compact"]{--gap:6px;--w:68px;--h:32px;--fs:13px;--dpad:8px}
+.tsp-summary{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;color:var(--ink2);min-height:28px}
+.tsp-empty{text-align:center;padding:28px 12px}
+.tsp-empty .ico{width:44px;height:44px;border-radius:50%;background:var(--brand-tint);color:var(--brand-d);display:inline-flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:8px}
+.tsp-empty h3{font-size:17px}
+.btn{font:inherit;font-size:15px;font-weight:600;border:0;background:var(--brand);color:#fff;border-radius:8px;padding:10px 16px;cursor:pointer;margin-top:6px}
+.btn:hover{background:var(--brand-d)}
+.live-note{font-size:13px;color:var(--muted);padding:10px 16px;border-top:1px solid var(--line);background:#fafcfc}
+.live-note code{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* tables, lists */
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:15px;margin-top:12px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#fafcfc;font-size:13px;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+kbd,code{font-family:var(--mono);font-size:13px;background:#eaf0f2;border-radius:4px;padding:1px 6px;color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.do h3::before{content:"Do · ";color:var(--ok)}
+.dont h3::before{content:"Don’t · ";color:#a12a2a}
+ul{margin:0;padding-left:20px;color:var(--ink2)}
+li{margin-bottom:6px}
+footer{padding:32px 0 56px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+@media (max-width:640px){
+  h1{font-size:32px}.two{grid-template-columns:1fr}
+  .tsp-day{grid-template-columns:1fr;gap:6px}
+  .tsp-dayname span{display:inline;margin-left:6px}
+}
+@media (prefers-reduced-motion:no-preference){.slot{transition:background .12s,border-color .12s}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><b>Lumen Health Design System</b> <span>/</span> <span>Components</span> <span>/</span> <span>Time Slot Picker</span></div></div>
+
+<div class="wrap">
+<header class="hero">
+  <div class="badges">
+    <span class="badge stable">Stable</span>
+    <span class="badge">v2.1</span>
+    <span class="badge">Replaces Dropdown Time Select</span>
+  </div>
+  <h1>Time Slot Picker</h1>
+  <p class="lede">A grid of selectable appointment times, grouped by day. It helps patients scan availability at a glance and choose a time with a keyboard, a screen reader, or a finger.</p>
+</header>
+
+<section aria-labelledby="h-highlights">
+  <h2 id="h-highlights">What it does</h2>
+  <div class="features">
+    <div class="card"><h3>Keyboard navigation</h3><p>Arrow keys move through the grid. One tab stop for the whole picker.</p></div>
+    <div class="card"><h3>Announces selection</h3><p>Choosing a time is announced to screen readers with the full day, date and time.</p></div>
+    <div class="card"><h3>Helpful empty state</h3><p>When nothing is open, it offers the next date that has openings.</p></div>
+    <div class="card"><h3>Two densities</h3><p>Comfortable for primary flows, compact for tight layouts.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="h-live">
+  <h2 id="h-live">Live example</h2>
+  <p class="sub">This is the real component. Click a time, or tab into the grid and use the arrow keys. Use the controls to switch density or preview the empty state.</p>
+  <div class="stage">
+    <div class="controls">
+      <div class="ctl">Density
+        <div class="seg" id="seg-density">
+          <button type="button" data-v="comfortable" aria-pressed="true">Comfortable</button>
+          <button type="button" data-v="compact" aria-pressed="false">Compact</button>
+        </div>
+      </div>
+      <div class="ctl">Availability
+        <div class="seg" id="seg-scn">
+          <button type="button" data-v="open" aria-pressed="true">Times available</button>
+          <button type="button" data-v="empty" aria-pressed="false">No times this week</button>
+        </div>
+      </div>
+    </div>
+    <div class="demo"><div id="tsp" class="tsp" data-density="comfortable"></div></div>
+    <div class="live-note">Sample data only. Dates and times shown are illustrative.</div>
+  </div>
+</section>
+
+<section aria-labelledby="h-kb">
+  <h2 id="h-kb">Keyboard and screen reader behavior</h2>
+  <table>
+    <thead><tr><th>Key</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Move to the previous or next time within a day.</td></tr>
+      <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Move to the same position in the previous or next day (or the nearest time if that day has fewer).</td></tr>
+      <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>Jump to the first or last time in the current day.</td></tr>
+      <tr><td><kbd>Space</kbd> <kbd>Enter</kbd></td><td>Select the focused time.</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Enter or leave the grid. Focus returns to the last selected or last focused time.</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:12px">Each day is a labeled group and each time is a radio-style option, so only one can be selected. On selection, a polite live region announces, for example, “Selected Tuesday, November 3 at 9:30 AM.”</p>
+</section>
+
+<section aria-labelledby="h-den">
+  <h2 id="h-den">Densities</h2>
+  <table>
+    <thead><tr><th>Density</th><th>Time target</th><th>Use when</th></tr></thead>
+    <tbody>
+      <tr><td><b>Comfortable</b> (default)</td><td>44 px tall</td><td>Primary scheduling flows, touch-first screens.</td></tr>
+      <tr><td><b>Compact</b></td><td>32 px tall</td><td>Side panels, modals, or views showing many days at once.</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:12px">Set with <code>density="comfortable | compact"</code>.</p>
+</section>
+
+<section aria-labelledby="h-empty">
+  <h2 id="h-empty">Empty state</h2>
+  <p class="sub">If the visible range has no openings, the picker says so plainly and offers a single action: jump to the next date that does. Don’t leave patients with a blank grid.</p>
+</section>
+
+<section aria-labelledby="h-use">
+  <h2 id="h-use">Usage guidelines</h2>
+  <div class="two">
+    <div class="card do"><h3>&nbsp;</h3><ul>
+      <li>Show only bookable times.</li>
+      <li>Group by day and label each day with weekday and date.</li>
+      <li>Always pair the picker with a visible confirmation of the chosen time.</li>
+    </ul></div>
+    <div class="card dont"><h3>&nbsp;</h3><ul>
+      <li>Don’t use it for choosing a date range or free-form time entry.</li>
+      <li>Don’t hide the empty state behind an error message.</li>
+      <li>Don’t mix densities within one flow.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section aria-labelledby="h-mig">
+  <h2 id="h-mig">Migrating from Dropdown Time Select</h2>
+  <p class="sub">Time Slot Picker replaces the Dropdown Time Select. Times are visible up front instead of hidden in a menu, and selection is announced to assistive tech. Plan to swap usages over to the new component; check the changelog for the v2.1 details.</p>
+</section>
+
+<footer>Time Slot Picker · Stable, v2.1 · Lumen Health Design System (internal)</footer>
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('tsp');
+  var state={scn:'open',selected:null,density:'comfortable'};
+  var weekA=[
+    {label:'Mon',date:'Nov 2',full:'Monday, November 2',times:['9:00 AM','9:30 AM','11:00 AM','2:30 PM']},
+    {label:'Tue',date:'Nov 3',full:'Tuesday, November 3',times:['9:30 AM','10:00 AM','10:30 AM','1:00 PM','1:30 PM','3:00 PM']},
+    {label:'Wed',date:'Nov 4',full:'Wednesday, November 4',times:['8:30 AM','4:00 PM']},
+    {label:'Thu',date:'Nov 5',full:'Thursday, November 5',times:['10:00 AM','10:30 AM','11:30 AM','2:00 PM','2:30 PM']}
+  ];
+  var weekB=[
+    {label:'Mon',date:'Nov 9',full:'Monday, November 9',times:['8:30 AM','9:00 AM','1:00 PM']},
+    {label:'Tue',date:'Nov 10',full:'Tuesday, November 10',times:['10:00 AM','11:00 AM','3:30 PM']}
+  ];
+  var live=document.createElement('div');
+  live.className='sr';live.setAttribute('role','status');live.setAttribute('aria-live','polite');
+  document.body.appendChild(live);
+
+  function days(){return state.scn==='open'?weekA:(state.scn==='later'?weekB:[]);}
+  function rangeText(){
+    if(state.scn==='open')return 'Nov 2 – Nov 5';
+    if(state.scn==='later')return 'Nov 9 – Nov 10';
+    return 'Nov 2 – Nov 8';
+  }
+  function render(focusKey){
+    var d=days();
+    root.setAttribute('data-density',state.density);
+    var h='<div class="tsp-head"><div class="tsp-title" id="tsp-t">Choose a time</div><div class="tsp-range">'+rangeText()+'</div></div>';
+    if(!d.length){
+      h+='<div class="tsp-empty"><div class="ico" aria-hidden="true">–</div><h3>No times available this week</h3><p>Next openings start Monday, November 9.</p><button type="button" class="btn" id="next">Show Mon, Nov 9</button></div>';
+      root.innerHTML=h;
+      document.getElementById('next').onclick=function(){state.scn='later';state.selected=null;render();var f=root.querySelector('.slot');if(f)f.focus();};
+      return;
+    }
+    h+='<div role="radiogroup" aria-labelledby="tsp-t" id="grid">';
+    var tabKey=state.selected||(d[0].date+'|'+d[0].times[0]);
+    d.forEach(function(day,di){
+      h+='<div class="tsp-day" role="group" aria-label="'+day.full+'" data-row="'+di+'"><div class="tsp-dayname">'+day.label+'<span>'+day.date+'</span></div><div class="tsp-slots">';
+      day.times.forEach(function(t,ti){
+        var key=day.date+'|'+t, sel=state.selected===key;
+        h+='<button type="button" class="slot" role="radio" aria-checked="'+sel+'" tabindex="'+(key===tabKey?0:-1)+'" data-key="'+key+'" data-r="'+di+'" data-c="'+ti+'" data-full="'+day.full+' at '+t+'">'+t+'</button>';
+      });
+      h+='</div></div>';
+    });
+    h+='</div><div class="tsp-summary" aria-hidden="true">'+(state.selected?'Selected: <b>'+selText()+'</b>':'No time selected yet.')+'</div>';
+    root.innerHTML=h;
+    if(focusKey){var el=root.querySelector('[data-key="'+focusKey+'"]');if(el)el.focus();}
+  }
+  function selText(){
+    var el=root.querySelector('[aria-checked="true"]');
+    if(el)return el.getAttribute('data-full');
+    var p=state.selected.split('|');
+    return p[0]+' at '+p[1];
+  }
+  root.addEventListener('click',function(e){
+    var b=e.target.closest('.slot');if(!b)return;
+    state.selected=b.getAttribute('data-key');
+    render(state.selected);
+    live.textContent='';
+    var msg='Selected '+b.getAttribute('data-full');
+    setTimeout(function(){live.textContent=msg;},30);
+  });
+  root.addEventListener('keydown',function(e){
+    var b=e.target.closest('.slot');if(!b)return;
+    var r=+b.dataset.r,c=+b.dataset.c,d=days(),nr=r,nc=c,k=e.key;
+    if(k==='ArrowRight'){nc=Math.min(c+1,d[r].times.length-1);}
+    else if(k==='ArrowLeft'){nc=Math.max(c-1,0);}
+    else if(k==='ArrowDown'){nr=Math.min(r+1,d.length-1);nc=Math.min(c,d[nr].times.length-1);}
+    else if(k==='ArrowUp'){nr=Math.max(r-1,0);nc=Math.min(c,d[nr].times.length-1);}
+    else if(k==='Home'){nc=0;}
+    else if(k==='End'){nc=d[r].times.length-1;}
+    else return;
+    e.preventDefault();
+    var target=root.querySelector('[data-r="'+nr+'"][data-c="'+nc+'"]');
+    if(target){b.tabIndex=-1;target.tabIndex=0;target.focus();}
+  });
+  function seg(id,fn){
+    var s=document.getElementById(id);
+    s.addEventListener('click',function(e){
+      var b=e.target.closest('button');if(!b)return;
+      s.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+      fn(b.dataset.v);
+    });
+  }
+  seg('seg-density',function(v){state.density=v;render();});
+  seg('seg-scn',function(v){state.scn=v;state.selected=null;render();});
+  render();
+})();
+</script>
+</body>
+</html>

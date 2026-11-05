@@ -1,14 +1,12 @@
-**Ship B, with its words and a cleaned-up layout.**
+**Ship Version B.** It tells the user what to do next, and A doesn't. A's "Get Started" button on a Walks tab that has no walks is a dead end, and its body copy ("where your journey takes you") says nothing specific about dog walking. B names a real walker, a real time, and a real next step, and it answers the obvious trust question ("why so few walkers?"). Its styling is weak, but that's cheap to fix. A's clean visual calm is worth borrowing, but the copy is the more valuable part.
 
-**Why B:** It answers the question someone lands on this screen with: what do I do now? It names a walker, a time, and a place, and the button says exactly what will happen. A's "Your journey" copy is filler, and "Get Started" is a dead end on a tab that already implies an account. A's visuals are better, but the copy is doing the work in an empty state, and B's is better.
+**Changes I'd make to B before shipping:**
 
-**What I'd change in B:**
+1. **Confirm the Marta line is live data.** "Usually free Tuesday and Thursday mornings" is a factual claim. If it's pulled from her availability, keep it. If it's hardcoded or guessed, the empty state will mislead people. Also check that "Pell Park" comes from the user's location, not a fixed value.
+2. **Make the button label exact.** "Book Marta for Tuesday" should include the time, such as "Book Marta, Tue 9:00am," so the user knows what they're committing to.
+3. **Fix button hierarchy.** Make "Book Marta…" the filled primary button and "See other walkers" a secondary/outline button. Restyle both to the brand system so they stop looking like browser defaults.
+4. **Replace the emoji** with the same icon or illustration style used elsewhere in the app, or drop it. A single emoji looks accidental next to a designed product.
+5. **Reword the trust line.** "Why only a few walkers?" frames the supply as scarce. Try: "Every walker is vetted and lives nearby." Make it readable body text, not a tiny link, because it's the reassurance people need before they book.
+6. **Write a fallback.** Marta won't always be free. Define what this screen says when no walker has availability in the user's area. Otherwise someone will ship the empty state and have no answer for that case.
 
-1. **Drop the dog emoji and use a real photo of Marta.** A face from the actual walker builds more trust than an emoji, and it fits a product that depends on trust between owners and walkers.
-2. **Restyle the buttons.** Make "Book Marta for Tuesday" the filled primary button and "See other walkers" a secondary or text button. Use the app's existing button components, not browser defaults. Borrow A's spacing so the screen doesn't look unfinished.
-3. **Move "Why only a few walkers?" out of the empty state.** It answers a question nobody asked here, and "only a few" reads as a limitation. Put the vetting message in onboarding or the walker profile. If it stays, reword it as a positive: "Every walker is vetted and lives nearby."
-4. **Make the copy data-driven.** Hard-coded "Marta" and "Tuesday and Thursday" are fine for a mockup but will break in production. Generate the walker name, days, and park from real availability. Define what happens when no one is free, and when the user has upcoming walks (the heading "No walks booked this week" should only show when that's true).
-5. **Check the "Tuesday" logic.** It should mean the next upcoming Tuesday in the user's timezone, and "Book" should confirm the time before charging or committing.
-6. **Make sure the photo promise is real.** "She'll send you a photo halfway through" sets an expectation. If it's only true for Marta, say so, or verify that every walker does it before it ships.
-
-**Before Friday:** You don't need a long test. Show the two screens to five owners and ask what they'd do next. If B wins, as I expect, the changes above are mostly polish plus making the copy real. I haven't seen the rendered screens, so this is based on your descriptions. The choice would change if the data behind B's specifics can't be produced reliably.
+**Caveat:** I'm judging this from copy and layout alone. If you have a few days, show both versions to 5 or so dog owners and see which one they'd book from. If you don't, ship B with the changes above and watch the Walks-tab booking rate after launch.

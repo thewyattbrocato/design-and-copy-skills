@@ -9,173 +9,135 @@
     --paper:#f4efe6;
     --ink:#16191c;
     --muted:#5d625f;
-    --rule:#cfc7b8;
-    --accent:#a3361f;
-    --serif:Charter,"Bitstream Charter","Sitka Text",Cambria,Georgia,"Times New Roman",serif;
-    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    --margin:clamp(1.25rem,5vw,4rem);
+    --rust:#a8402a;
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    --edge:clamp(1.25rem,5vw,4rem);
   }
-  *{box-sizing:border-box}
+  *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font-family:var(--serif);font-size:1.1875rem;line-height:1.62;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.6}
 
-  /* Masthead strip */
-  .strip{
+  .mast{
     display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-    padding:1rem var(--margin);
+    padding:1rem var(--edge);border-bottom:1px solid var(--ink);
     font:600 .72rem/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
-    border-bottom:1px solid var(--rule);
   }
-  .strip span:last-child{color:var(--muted);font-weight:500}
+  .mast span:last-child{color:var(--muted);font-weight:500}
 
-  /* Opening: title + lead image */
-  .opening{
-    display:grid;
-    grid-template-columns:minmax(var(--margin),1fr) minmax(0,72rem) minmax(var(--margin),1fr);
+  .hero{
+    position:relative;min-height:min(92vh,60rem);
+    display:grid;grid-template-rows:1fr auto;
+    background:#1c2a30;color:#fff;overflow:hidden;
   }
-  .opening>*{grid-column:2}
-
+  /* placeholder photo block */
+  .photo{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(180deg,rgba(10,16,20,.15) 0%,rgba(10,16,20,.15) 35%,rgba(10,16,20,.88) 100%),
+      repeating-linear-gradient(135deg,#2c3f47 0 22px,#27383f 22px 44px);
+  }
+  .photo-label{
+    position:absolute;top:1.25rem;left:var(--edge);
+    font:500 .68rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+    color:rgba(255,255,255,.7);border:1px dashed rgba(255,255,255,.45);padding:.5rem .7rem;
+  }
+  .hero-inner{
+    position:relative;align-self:end;
+    padding:clamp(6rem,18vh,12rem) var(--edge) 0;
+    max-width:80rem;
+  }
   .kicker{
-    margin:clamp(2.5rem,7vw,5.5rem) 0 1.25rem;
-    font:700 .78rem/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--accent);
-    display:flex;align-items:center;gap:.9rem;
+    font:700 .78rem/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;
+    color:#f0b49f;margin-bottom:1.4rem;
   }
-  .kicker::before{content:"";width:2.5rem;height:2px;background:var(--accent)}
-
   h1{
-    margin:0;
-    font-weight:400;
-    font-size:clamp(3.4rem,13vw,10.5rem);
-    line-height:.88;
-    letter-spacing:-.035em;
-    max-width:11ch;
-    text-wrap:balance;
+    font-weight:400;font-size:clamp(3.4rem,11vw,9.5rem);
+    line-height:.92;letter-spacing:-.03em;text-wrap:balance;
   }
-  h1 em{font-style:italic;color:var(--accent);letter-spacing:-.04em}
-
+  h1 em{font-style:italic;color:#f0b49f}
   .dek{
-    margin:clamp(1.5rem,3vw,2.5rem) 0 0;
-    max-width:34rem;
-    font-size:clamp(1.3rem,2.4vw,1.75rem);
-    line-height:1.3;
-    color:#2c3134;
-    text-wrap:pretty;
+    margin-top:clamp(1.25rem,3vw,2.2rem);max-width:34rem;
+    font-size:clamp(1.2rem,2.2vw,1.65rem);line-height:1.35;font-style:italic;
+    color:rgba(255,255,255,.92);
   }
+  .credit{
+    position:relative;display:flex;justify-content:flex-end;
+    padding:1.5rem var(--edge) 1rem;
+    font:400 .72rem/1.4 var(--sans);letter-spacing:.06em;color:rgba(255,255,255,.7);
+  }
+  .credit b{font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-right:.5em}
 
   .byline{
-    margin:clamp(1.75rem,3vw,2.5rem) 0 clamp(2rem,4vw,3rem);
-    padding:.9rem 0;
-    border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);
-    display:flex;flex-wrap:wrap;gap:.4rem 2rem;
-    font:500 .8rem/1.4 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+    display:flex;flex-wrap:wrap;gap:.6rem 2rem;align-items:center;
+    padding:1.4rem var(--edge);border-bottom:1px solid rgba(22,25,28,.25);
+    font:500 .8rem/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;
   }
-  .byline b{font-weight:700}
-  .byline span{color:var(--muted)}
+  .byline .by{color:var(--muted)}
+  .byline .by strong{color:var(--ink);font-weight:700}
+  .byline .time{margin-left:auto;color:var(--rust);font-weight:700}
 
-  /* Lead image: full-bleed job = the page opens on the picture */
-  figure.lead{margin:0 0 clamp(2.5rem,6vw,5rem);grid-column:1/-1}
-  .photo{
-    position:relative;width:100%;aspect-ratio:21/9;min-height:16rem;
-    background:
-      linear-gradient(180deg,rgba(22,25,28,0) 55%,rgba(22,25,28,.35) 100%),
-      linear-gradient(172deg,#b9c3c4 0%,#8c9ea3 38%,#5f777f 62%,#3b4e55 100%);
-    display:grid;place-items:center;color:rgba(255,255,255,.85);
-    font:600 .75rem/1.4 var(--sans);letter-spacing:.22em;text-transform:uppercase;text-align:center;
-    overflow:hidden;
-  }
-  .photo::after{ /* waterline hint */
-    content:"";position:absolute;left:0;right:0;bottom:30%;height:1px;background:rgba(255,255,255,.35);
-  }
-  .photo span{position:relative;padding:0 1rem}
-  figcaption{
+  article{
     display:grid;
-    grid-template-columns:minmax(var(--margin),1fr) minmax(0,72rem) minmax(var(--margin),1fr);
-    margin-top:.8rem;
-    font:.78rem/1.5 var(--sans);color:var(--muted);
+    grid-template-columns:minmax(0,1fr) minmax(0,38rem) minmax(0,1fr);
+    padding:clamp(3rem,7vw,6rem) var(--edge) 6rem;
   }
-  figcaption div{
-    grid-column:2;display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;
+  .story{grid-column:2}
+  .story p{
+    font-size:clamp(1.08rem,1.5vw,1.25rem);line-height:1.68;
+    margin-bottom:1.35em;hanging-punctuation:first;
   }
-  figcaption .credit{letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--ink)}
-
-  /* Story text: capped measure, offset to align with title edge on wide screens */
-  .story{
-    display:grid;
-    grid-template-columns:minmax(var(--margin),1fr) minmax(0,72rem) minmax(var(--margin),1fr);
-    padding-bottom:6rem;
-  }
-  .story .text{
-    grid-column:2;
-    max-width:34rem;
-  }
-  @media (min-width:62rem){
-    .story .text{margin-left:calc((100% - 34rem)/2)}
-  }
-  .story p{margin:0 0 1.15em;hyphens:auto;text-wrap:pretty}
   .story p:first-child::first-letter{
     float:left;font-size:5.6em;line-height:.78;
-    padding:.07em .09em 0 0;color:var(--accent);font-weight:400;
+    padding:.08em .1em 0 0;color:var(--rust);font-weight:400;
   }
   .story p:first-child::first-line{
-    font-variant:small-caps;letter-spacing:.06em;
+    font-variant:small-caps;letter-spacing:.05em;
   }
-  .place{font:700 .78em/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}
-
-  .end{
-    margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--rule);
-    font:.75rem/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  .rule{
+    width:3rem;height:3px;background:var(--rust);border:0;margin:0 0 2rem;
   }
 
-  @media (max-width:40rem){
-    body{font-size:1.0625rem}
-    .photo{aspect-ratio:4/3}
+  @media (max-width:760px){
+    article{display:block}
+    .byline .time{margin-left:0;width:100%}
+    .hero{min-height:84vh}
+    .credit{justify-content:flex-start}
   }
 </style>
 </head>
 <body>
 
-<div class="strip">
-  <span>Long Read</span>
-  <span>Estuary &amp; Coast</span>
+<div class="mast">
+  <span>Features</span>
+  <span>The Long Read</span>
 </div>
 
-<header class="opening">
-  <p class="kicker">Lives &amp; Livelihoods</p>
-  <h1>The Last <em>Salt</em> Barge</h1>
-  <p class="dek">On the Medway, one family keeps a trade alive that the tide stopped paying for.</p>
-  <div class="byline">
-    <span>By <b>Rhea Okonkwo-Hale</b></span>
-    <span>22 minute read</span>
+<header class="hero">
+  <div class="photo" role="img" aria-label="Placeholder for lead photograph: a salt barge on the Medway at low tide"></div>
+  <div class="photo-label">Lead image placeholder</div>
+  <div class="hero-inner">
+    <p class="kicker">The Long Read</p>
+    <h1>The Last <em>Salt</em> Barge</h1>
+    <p class="dek">On the Medway, one family keeps a trade alive that the tide stopped paying for.</p>
   </div>
-
-  <figure class="lead">
-    <div class="photo" role="img" aria-label="Placeholder for lead photograph: a sailing barge on the Medway at low water"><span>Lead photograph<br>placeholder</span></div>
-    <figcaption>
-      <div>
-        <span>The barge at low water, waiting for the turn.</span>
-        <span class="credit">Photograph: Photographer Name</span>
-      </div>
-    </figcaption>
-  </figure>
+  <p class="credit"><span><b>Photograph</b>Photographer Name / Magazine Name</span></p>
 </header>
 
-<main class="story">
-  <div class="text">
-    <p><span class="place">Upnor, Kent —</span> At ten to five the mud is still the colour of pewter, and Tom Harker is already standing on the foredeck with a mug going cold in his fist. He reads the water the way other men read newspapers, quickly and with suspicion. The ebb is nearly spent. In forty minutes the river will hesitate, then turn, and the <i>Marguerite</i> will either be ready or she will sit another day. Nobody has paid him to be here for years, and he is here anyway.</p>
+<div class="byline">
+  <span class="by">By <strong>Rhea Okonkwo-Hale</strong></span>
+  <span class="time">22 minute read</span>
+</div>
 
-    <p>She is eighty-one feet of oak and pitch pine, built in a Rochester yard in 1924, and she carries a cargo most people assume stopped moving when the railways arrived. Forty tonnes of coarse grey salt, shovelled from a quay at Grain, destined for a smokehouse, a tannery and a handful of road gritters. The sums have never been kind. Fuel, insurance and the cost of keeping her afloat swallow nearly every pound the salt earns, and the tide takes its own cut.</p>
-
-    <p>Tom’s daughter, Ayo, sleeps below with a laptop for a pillow. She is thirty-four, an accountant by training, and she can recite the barge’s losses to the penny: eleven thousand and forty pounds last year, nine thousand the year before. She says the figures aloud the way some people say grace, as a form of respect rather than hope. Then she gets up, pulls on yesterday’s boots, and goes to help her father haul the mainsail up its creaking mast.</p>
-
-    <p>The Medway has carried cargo for two thousand years, and at its peak hundreds of these flat-bottomed sailing barges worked its reaches, hauling bricks, grain, cement and rubbish to London and bringing back whatever the city had left over. Today the <i>Marguerite</i> is among the last that still earn a wage. Most of her sisters are houseboats, or restaurants, or rotting at moorings with ferns growing from their hatches. She is not a museum. That, her owners will tell you, is exactly the problem.</p>
-
-    <p class="end">Continued · Part Two: The Arithmetic of Water</p>
+<article>
+  <div class="story">
+    <hr class="rule">
+    <p>Before the light has properly arrived, Tomas Ardley is already standing on the foredeck of the <i>Marguerite Anne</i>, one boot against the hatch coaming, reading the water. The Medway at this hour is the colour of pewter and moves with the patience of something that has never been hurried. He cannot say what he is looking for. His father could not either. Both men, in their separate decades, simply looked until the river told them whether to go or wait.</p>
+    <p>The barge is eighty-one feet of oak and iron, tarred black, her sails the rust-red of old brick. She was built in 1923 to carry salt downriver from the pans at Upnor, and for most of a century that is what she did. Now she carries it less often than she carries memory. Ardley loads twenty tonnes when he can find a buyer, which this year has meant eleven times, and each run costs him more in fuel and insurance than the cargo returns.</p>
+    <p>His daughter Imani, twenty-six, keeps the books, and she does not soften them. She sits at the galley table with a ledger that her grandmother started, columns in three different hands, and shows me the line where the trade turned. It was not a collapse. It was a slow slackening, like a rope paid out a hand at a time, until one season the figures no longer reached the bottom of the page. “We’re not losing money,” she says. “We’re buying something.”</p>
+    <p>What they are buying, I come to understand over the following weeks, is hard to name and harder to price. The salt itself is ordinary; a lorry could move it in a fraction of the time. But a lorry cannot work the tide, cannot slip through the shallows at Hoo on a spring flood, cannot make a village stand on the quay at dusk simply to watch it come in. That, Ardley says, is the real cargo. The rest is ballast.</p>
   </div>
-</main>
+</article>
 
 </body>
 </html>

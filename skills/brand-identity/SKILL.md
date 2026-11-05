@@ -29,6 +29,7 @@ Drawing or critiquing a logo, wordmark, monogram, icon or favicon; deciding whet
 - **Gradients, glass, shine and 3D are not ideas.** The core mark is flat and solid; effects belong to specific applications.
 - **Refine or replace on evidence.** A widely recognized mark whose meaning still fits is redrawn and adapted (sizes, weight, one outdated detail) and keeps its known color; novelty is not a reason to replace. Replace when it misleads, fails at needed sizes, is generic or confusable with another, or blocks the strategy. Recognition evidence means asking customers, so propose that rather than asserting a number. Details in [existing marks and systems](references/existing-marks-and-systems.md).
 - **A system is more than the logo.** Cover the mark: the organization should still be recognizable from color roles, type, a graphic device, image style and layout constants, with rules that let others extend it. Details in the same reference.
+- **Cues and continuity.** Whether people link a cue to the brand, and to no rival, needs data: ask or write unknown. Keep the few recognized cues across campaigns, change one per release, and try a rival's name on the look. Details in [distinctive cues and continuity](references/distinctive-cues-and-continuity.md).
 - **Present few, strong directions in context.** Two or three you would ship (or one, with its reasoning, when the strategy is settled), each with a sentence of reasoning, shown on real surfaces (app icon, site header, card, avatar, sign). No decoy options. Treat feedback naming a hex value or a font as a problem to solve, and when you disagree make both versions and compare them to the brief.
 - **Claim only what is true.** Say a mark is distinctive, appropriate and adaptable. Never guarantee it is unique or forecast sales, recognition or ROI; unique needs a trademark search by a lawyer. Check symbol, color and direction meanings in the markets served, and ask before using a community's sacred or traditional sign.
 - **Files.** A mark delivered as SVG or a page follows [mark production](references/mark-production.md).
@@ -58,9 +59,11 @@ Deliver the requested thing first (the mark, the versions, the verdict, the outl
 - Name read aloud and in each crop says nothing else.
 - Cover the mark: is the system still recognizable?
 - Existing mark kept, redrawn or replaced on stated evidence.
+- Cue recognition marked unknown or sourced; one recognized cue changed per release; a rival's name on the look tested.
 - No guarantee, forecast or invented proof; direction count and length cap met.
 
 ## References
 
 - [references/existing-marks-and-systems.md](references/existing-marks-and-systems.md): load when an identity already exists, a merger or sub-brands are involved, or the task is a system or guidelines outline.
 - [references/mark-production.md](references/mark-production.md): load when producing SVG, icon sizes, a presentation page or the file set.
+- [references/distinctive-cues-and-continuity.md](references/distinctive-cues-and-continuity.md): load when a known look must carry through campaigns or a refresh, or recognition or confusability with rivals is the question.

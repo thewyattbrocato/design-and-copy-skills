@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repairs desk · Kestrel Lettings</title>
+<style>
+:root{
+  --bg:#f4f3ef;--card:#fff;--ink:#1d2127;--mute:#5d6672;--line:#dcdad3;
+  --ok:#1f6b45;--okbg:#e3f1e9;--warn:#8a5200;--warnbg:#fbeccb;--bad:#a3201b;--badbg:#fbe0dd;--info:#24508a;--infobg:#e2ebf8;
+  --accent:#24508a;
+}
+@media (prefers-color-scheme:dark){
+:root{--bg:#16181c;--card:#1f2227;--ink:#e8e9eb;--mute:#9aa2ad;--line:#343840;
+  --ok:#7fd0a1;--okbg:#17301f;--warn:#f0c26a;--warnbg:#38290c;--bad:#ff9a92;--badbg:#3d1916;--info:#9ec1f2;--infobg:#17283f;--accent:#9ec1f2}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+h1{font-size:18px;margin:0}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin:0 0 10px}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+@media (prefers-color-scheme:dark){button.primary{color:#101418}}
+button.danger{color:var(--bad);border-color:var(--bad)}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.status{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:8px solid var(--ok);border-radius:8px;padding:12px 16px}
+.status.paused{border-left-color:var(--warn);background:var(--warnbg)}
+.status .state{font-size:17px;font-weight:700}
+.status .kv{font-size:13px;color:var(--mute)}
+.status .kv b{display:block;color:var(--ink);font-size:14px;font-weight:600}
+.status .push{margin-left:auto;display:flex;gap:8px;align-items:center}
+.promise{margin:10px 2px 18px;color:var(--mute);font-size:14px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.emerg{background:var(--badbg);color:var(--bad)}
+.urgent{background:var(--warnbg);color:var(--warn)}
+.routine{background:var(--infobg);color:var(--info)}
+.low{background:var(--okbg);color:var(--ok)}
+.need{border-left:6px solid var(--bad)}
+.need.amber{border-left-color:var(--warn)}
+.need h3{margin:0 0 2px;font-size:16px}
+.need .meta{font-size:13px;color:var(--mute);margin-bottom:8px}
+.need p{margin:6px 0}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.quote{font-style:italic;color:var(--mute)}
+.done{display:none;margin-top:10px;font-weight:600;color:var(--ok)}
+.resolved .actions{display:none}.resolved .done{display:block}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;color:var(--mute);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line)}
+td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.cancelled td{opacity:.55;text-decoration:line-through}
+tr.cancelled td:last-child{text-decoration:none;opacity:1}
+td small{display:block;color:var(--mute);font-size:12.5px}
+.conf{font-size:12px;color:var(--warn);font-weight:600}
+details summary{cursor:pointer;color:var(--accent);font-size:13px;list-style:none;padding:2px 0}
+details summary::-webkit-details-marker{display:none}
+details[open] summary{margin-bottom:6px}
+.menu{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.menu button{font-size:13px;padding:4px 9px}
+.bar{height:10px;background:var(--line);border-radius:5px;overflow:hidden;margin:4px 0 2px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.side p{margin:6px 0;font-size:14px}
+.side ul{margin:6px 0;padding-left:18px;font-size:14px}
+.side li{margin-bottom:5px}
+.small{font-size:12.5px;color:var(--mute)}
+.help{background:var(--badbg);border-color:var(--bad)}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs button[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+@media (prefers-color-scheme:dark){.tabs button[aria-pressed=true]{color:#101418}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">
+  <h1>Repairs desk <span style="font-weight:400;color:var(--mute)">· Kestrel Lettings</span></h1>
+  <span class="small">Wed 4 Nov 2026 · page updated 11:42</span>
+</header>
+
+<section class="status" id="status" aria-live="polite">
+  <div class="state" id="stateText">● Agent running</div>
+  <div class="kv">Last action<b>11:38 · booked plumber, Flat 21 Marsh Lane</b></div>
+  <div class="kv">Next inbox check<b id="nextCheck">11:45 (every 5 min)</b></div>
+  <div class="kv">Requests today<b>17 read · 13 booked · 2 need you · 2 left alone</b></div>
+  <div class="push">
+    <button id="pauseBtn">Pause agent</button>
+  </div>
+</section>
+<p class="promise" id="promise">While you're away it reads new repair requests, rates urgency, and books vendors from the approved list within the limits on the right. It never books above the limits, never contacts a tenant to promise a cost, and never handles a gas, fire, flood or no-heating-for-vulnerable-tenant case without you being told straight away.</p>
+
+<div class="grid">
+<main>
+
+  <section aria-labelledby="needh">
+    <h2 id="needh">Needs you now (3)</h2>
+
+    <article class="card need">
+      <h3>Flat 14, Alder Court · “Smell of gas in the kitchen” <span class="chip emerg">EMERGENCY</span></h3>
+      <div class="meta">Tenant: Priya Nair · received 11:26 · agent rated it Emergency, high confidence</div>
+      <p class="quote">“There's a smell like rotten eggs by the hob since this morning. Hob is off.”</p>
+      <p><b>Done so far:</b> told tenant at 11:27 to open windows, avoid switches and call the National Gas Emergency line (0800 111 999). Called Hartley Gas (first choice): no answer, voicemail left 11:31. <b>Not yet booked.</b></p>
+      <p><b>Needed from you:</b> phone Priya and book an engineer. Backup: Brightwell Gas Services, 07700 900412.</p>
+      <div class="actions">
+        <button class="primary" data-resolve="Marked as handled by you at 11:43. Agent will not book this one.">I'm calling now</button>
+        <button data-resolve="Agent asked to try Brightwell Gas Services (within limits). You'll hear if they don't confirm in 15 min.">Let agent try Brightwell</button>
+      </div>
+      <div class="done"></div>
+    </article>
+
+    <article class="card need amber">
+      <h3>Flat 3, 22 Perry Road · “Boiler off, no heating or hot water” <span class="chip urgent">URGENT</span></h3>
+      <div class="meta">Tenant: Mrs E. Okafor (age 78 on file) · received 10:58 · over the per-job limit</div>
+      <p><b>Agent's proposal:</b> Calder Heating, tomorrow 08:00–12:00, estimate £420 incl. likely pump part. Limit is £250 per job, so it has <b>not</b> booked. Earlier slot: none until tomorrow from any listed heating vendor.</p>
+      <p class="small">Meanwhile it suggested a loan heater from the office; not sent to the tenant, since that's your call.</p>
+      <div class="actions">
+        <button class="primary" data-resolve="Approved Calder Heating, tomorrow 08:00–12:00, up to £420. Tenant will be sent the slot.">Approve £420 booking</button>
+        <button data-resolve="Left with you. Agent will not book this one.">I'll handle it</button>
+      </div>
+      <div class="done"></div>
+    </article>
+
+    <article class="card need amber">
+      <h3>Flat 9, Wren House · “Black spots on bedroom wall, getting bigger” <span class="chip routine">ROUTINE?</span></h3>
+      <div class="meta">Tenant: Tomasz Wiśniewski · received 09:14 · <span class="conf">agent unsure: Routine vs Urgent</span></div>
+      <p><b>Why unsure:</b> third damp or mould report from Wren House in 6 weeks (Flats 4 and 12 earlier). Could point to a building problem rather than one flat. Held, no vendor booked.</p>
+      <div class="actions">
+        <button class="primary" data-resolve="Rated Urgent; agent booked Dryden Damp Surveys, Fri 6 Nov, £85 survey (within limits).">Treat as Urgent, book survey</button>
+        <button data-resolve="Kept as Routine. Agent booked Dryden Damp Surveys for next week, £85.">Routine is fine, book it</button>
+        <button data-resolve="Left with you. Agent will not book this one.">I'll handle it</button>
+      </div>
+      <div class="done"></div>
+    </article>
+  </section>
+
+  <section class="card" aria-labelledby="acth">
+    <h2 id="acth">What the agent booked today</h2>
+    <div class="tabs" role="group" aria-label="Filter">
+      <button aria-pressed="true" data-f="all">All 13</button>
+      <button aria-pressed="false" data-f="doubt">Least sure first</button>
+    </div>
+    <table>
+      <thead><tr><th>Time</th><th>Flat · issue</th><th>Urgency</th><th>Booked</th><th></th></tr></thead>
+      <tbody id="rows">
+        <tr data-doubt="1"><td>11:38</td><td>21 Marsh Lane · Kitchen tap leaking under sink<small>Mr D. Reilly</small></td><td><span class="chip urgent">Urgent</span><small class="conf">Medium confidence</small></td><td>Fenn &amp; Sons Plumbing<small>Today 14:00–16:00 · est. £90</small></td><td><details><summary>Change</summary><div class="menu"><button class="cancel">Cancel booking</button><button>Not this one: re-rate…</button><button>Always rate “leak under sink” as Urgent</button></div></details></td></tr>
+        <tr data-doubt="1"><td>11:12</td><td>Flat 6, Castle Mews · Intercom not buzzing<small>Ms A. Haddad</small></td><td><span class="chip routine">Routine</span><small class="conf">Medium confidence</small></td><td>Volt Electrical<small>Mon 9 Nov, AM · est. £65</small></td><td><details><summary>Change</summary><div class="menu"><button class="cancel">Cancel booking</button><button>Not this one: re-rate…</button><button>Never auto-book intercom faults</button></div></details></td></tr>
+        <tr><td>10:47</td><td>Flat 2, 8 Tanner St · Socket sparked when plugged in<small>Mr J. Pryce</small></td><td><span class="chip urgent">Urgent</span></td><td>Volt Electrical<small>Today 13:00–15:00 · est. £80</small></td><td><details><summary>Change</summary><div class="menu"><button class="cancel">Cancel booking</button><button>Not this one: re-rate…</button></div></details></td></tr>
+        <tr><td>10:20</td><td>Flat 17, Alder Court · Bathroom extractor fan noisy<small>Ms K. Lindqvist</small></td><td><span class="chip low">Low</span></td><td>Volt Electrical<small>Thu 12 Nov, AM · est. £70</small></td><td><details><summary>Change</summary><div class="menu"><button class="cancel">Cancel booking</button><button>Not this one: re-rate…</button></div></details></td></tr>
+        <tr><td>09:55</td><td>Flat 11, Perry Road · Toilet won't stop running<small>Mr S. Adeyemi</small></td><td><span class="chip routine">Routine</span></td><td>Fenn &amp; Sons Plumbing<small>Fri 6 Nov, PM · est. £75</small></td><td><details><summary>Change</summary><div class="menu"><button class="cancel">Cancel booking</button><button>Not this one: re-rate…</button></div></details></td></tr>
+        <tr><td>09:31</td><td>Flat 5, Wren House · Front door lock sticking<small>Ms R. Mbeki</small></td><td><span class="chip urgent">Urgent</span></td><td>Castle Locksmiths<small>Today 12:00–14:00 · est. £70</small></td><td><details><summary>Change</summary><div class="menu"><button class="cancel">Cancel booking</button><button>Not this one: re-rate…</button></div></details></td></tr>
+        <tr><td colspan="5" class="small">+ 7 earlier today (all Routine or Low). <a href="#" onclick="return false" style="color:var(--accent)">Show all</a></td></tr>
+      </tbody>
+    </table>
+    <p class="small">Cancelling tells the vendor and the tenant that the slot is off; it can't recall a message the tenant has already read. Bookings stay cancellable until the vendor arrives.</p>
+  </section>
+
+  <section class="card" aria-labelledby="skiph">
+    <h2 id="skiph">Left alone by the agent (2)</h2>
+    <p class="small" style="margin-top:0">Check these in case it was wrong to skip.</p>
+    <table>
+      <tbody>
+        <tr><td>10:03</td><td>Flat 8, Castle Mews · Hallway light bulb blown<small>Reason: tenant's responsibility under the tenancy agreement. Replied with a how-to note.</small></td><td><button>It should have booked</button></td></tr>
+        <tr><td>08:41</td><td>Flat 1, Tanner St · “Neighbour's music every night”<small>Reason: not a repair. Passed to you, unread.</small></td><td><button>Mark as seen</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<aside class="side">
+  <section class="card help">
+    <h2 style="color:var(--bad)">If the agent is wrong or stuck</h2>
+    <p>Phone the tenant first. For gas, fire, flooding or no heating for an elderly or ill tenant, don't wait for the agent. Out-of-hours on-call: <b>Marcus (07700 900155)</b>.</p>
+  </section>
+
+  <section class="card">
+    <h2>Limits <span class="small" style="text-transform:none;letter-spacing:0">(starting values, editable)</span></h2>
+    <p style="margin:0">Spend this week</p>
+    <div class="bar" role="img" aria-label="£1,260 of £2,000 used"><i style="width:63%"></i></div>
+    <p class="small" style="margin:0">£1,260 of £2,000 weekly limit. You'll be warned at £1,600 (80%), before it's reached.</p>
+    <p style="margin-bottom:0">Per job: <b>£250</b> · Bookings per day: <b>20</b> (13 used)</p>
+    <p class="small">Vendors: only the 14 on your approved list. Fenn &amp; Sons, Volt Electrical, Calder Heating, Castle Locksmiths, Hartley Gas and others.</p>
+    <button>Edit limits</button>
+  </section>
+
+  <section class="card">
+    <h2>How it reads the rules</h2>
+    <ul>
+      <li>Gas smell, fire, flood, no power → <b>Emergency</b>: tell the tenant safety steps, alert Dede, don't wait.</li>
+      <li>No heating or hot water, sparking, lock failure, active leak → <b>Urgent</b>: book same or next day.</li>
+      <li>Dripping tap, running toilet, faulty fan → <b>Routine</b>: book within the week.</li>
+      <li>Cosmetic, bulbs, noise complaints → <b>no booking</b>; passed to you or answered with a note.</li>
+    </ul>
+    <p class="small">Example: “radiator cold in one room” → Routine. “Radiator cold, tenant is 78” → Urgent.</p>
+    <button>View or edit rules</button>
+  </section>
+
+  <section class="card">
+    <h2>When you'll hear from it</h2>
+    <ul>
+      <li><b>Interrupts you:</b> emergencies, over-limit jobs, unsure cases (this page, plus a phone alert for emergencies).</li>
+      <li><b>Warning:</b> when spend reaches 80% of the weekly limit.</li>
+      <li><b>Daily summary:</b> 17:00 email of everything it booked.</li>
+    </ul>
+    <p class="small">Each can be switched off separately. Nothing here asks you to keep watching: unanswered emergencies go to Marcus after 10 minutes.</p>
+  </section>
+
+  <section class="card">
+    <h2>Control</h2>
+    <p class="small" style="margin-top:0">Pausing or stopping needs no reason. Bookings already made stay in place unless you cancel them. New requests go to the office inbox, unread by the agent.</p>
+    <button id="pauseBtn2">Pause agent</button>
+    <button class="danger">Switch off</button>
+  </section>
+</aside>
+</div>
+</div>
+
+<script>
+const status=document.getElementById('status'),st=document.getElementById('stateText'),nc=document.getElementById('nextCheck');
+function setPaused(p){
+  status.classList.toggle('paused',p);
+  st.textContent=p?'⏸ AGENT PAUSED: new requests are NOT being read or booked':'● Agent running';
+  nc.textContent=p?'None until you resume':'11:45 (every 5 min)';
+  document.querySelectorAll('#pauseBtn,#pauseBtn2').forEach(b=>{b.textContent=p?'Resume agent':'Pause agent';b.classList.toggle('primary',p)});
+  document.getElementById('promise').textContent=p?'Paused at '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})+'. Requests arriving now wait in the office inbox. Nothing else changes: existing bookings stay.':'While you\'re away it reads new repair requests, rates urgency, and books vendors from the approved list within the limits on the right. It never books above the limits, never contacts a tenant to promise a cost, and never handles a gas, fire, flood or no-heating-for-vulnerable-tenant case without you being told straight away.';
+}
+let paused=false;
+document.querySelectorAll('#pauseBtn,#pauseBtn2').forEach(b=>b.onclick=()=>{paused=!paused;setPaused(paused)});
+document.querySelectorAll('[data-resolve]').forEach(b=>b.onclick=()=>{
+  const a=b.closest('article');a.classList.add('resolved');a.querySelector('.done').textContent='✓ '+b.dataset.resolve;
+});
+document.querySelectorAll('.cancel').forEach(b=>b.onclick=()=>{
+  const tr=b.closest('tr');const c=tr.classList.toggle('cancelled');
+  b.textContent=c?'Booking cancelled. Undo':'Cancel booking';
+});
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const d=b.dataset.f==='doubt';
+  document.querySelectorAll('#rows tr').forEach(r=>{r.style.display=(d&&!r.dataset.doubt)?'none':''});
+});
+</script>
+</body>
+</html>

@@ -1,142 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Marrow County Dispatch: M-Signal Study Sheet</title>
 <style>
-  @page { size: letter; margin: 0.5in; }
+  @page {
+    size: letter;
+    margin: 0.6in;
+  }
 
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
-  body {
+  html, body {
     margin: 0;
-    padding: 24px;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #111;
-    background: #fff;
-    line-height: 1.3;
+    padding: 0;
+    background: #ffffff;
+    color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .page {
-    max-width: 7.5in;
+    width: 100%;
+    max-width: 7.3in;
     margin: 0 auto;
+    padding: 0.3in;
+    min-height: 9.8in;
+    display: flex;
+    flex-direction: column;
   }
 
   header {
-    border-bottom: 3px solid #111;
-    padding-bottom: 8px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  h1 {
-    font-size: 22px;
-    margin: 0;
-    letter-spacing: 0.02em;
-  }
-
-  .sub {
-    font-size: 13px;
-    color: #444;
-  }
-
-  h2 {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin: 14px 0 6px;
-    padding-bottom: 3px;
-    border-bottom: 1px solid #888;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px 14px;
-  }
-
-  .signal {
-    display: grid;
-    grid-template-columns: 78px 1fr;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #333;
-    border-radius: 4px;
-    padding: 6px 10px;
-    min-height: 44px;
-  }
-
-  .code {
-    font-size: 20px;
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.02em;
-    border-right: 2px solid #111;
-    padding-right: 8px;
-  }
-
-  .meaning {
-    font-size: 15px;
-    font-weight: 600;
-  }
-
-  .tip {
-    font-size: 11.5px;
-    color: #444;
-    font-weight: 400;
-    margin-top: 2px;
-  }
-
-  .drill {
-    margin-top: 14px;
-    border: 2px dashed #555;
-    border-radius: 4px;
-    padding: 8px 12px;
-    font-size: 13px;
-  }
-
-  .drill strong {
-    display: block;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 12px;
-  }
-
-  .drill ol {
-    margin: 0;
-    padding-left: 18px;
-    columns: 2;
-    column-gap: 24px;
-  }
-
-  .drill li {
-    margin-bottom: 4px;
-    break-inside: avoid;
-  }
-
-  .blank {
-    display: inline-block;
-    width: 110px;
-    border-bottom: 1px solid #111;
-  }
-
-  footer {
-    margin-top: 12px;
-    font-size: 11px;
-    color: #555;
+    border-bottom: 3px solid #000;
+    padding-bottom: 0.12in;
+    margin-bottom: 0.2in;
     text-align: center;
   }
 
+  header .agency {
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 0.04in 0;
+  }
+
+  header h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  header .subtitle {
+    font-size: 11pt;
+    margin: 0.05in 0 0 0;
+    font-style: italic;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15pt;
+  }
+
+  thead th {
+    text-align: left;
+    font-size: 9.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 2px solid #000;
+    padding: 0.04in 0.12in 0.06in 0.12in;
+  }
+
+  tbody td {
+    padding: 0.15in 0.12in;
+    border-bottom: 1px solid #000;
+    vertical-align: middle;
+  }
+
+  tbody tr:nth-child(even) td {
+    background: #f0f0f0;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 2px solid #000;
+  }
+
+  td.code {
+    width: 1.5in;
+    font-weight: 800;
+    font-size: 20pt;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    padding-right: 0.2in;
+  }
+
+  td.meaning {
+    font-weight: 500;
+  }
+
+  td.check {
+    width: 0.45in;
+    text-align: center;
+  }
+
+  .box {
+    display: inline-block;
+    width: 0.22in;
+    height: 0.22in;
+    border: 2px solid #000;
+    vertical-align: middle;
+  }
+
+  .tips {
+    margin-top: 0.22in;
+    border: 2px solid #000;
+    padding: 0.14in 0.18in;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+
+  .tips h2 {
+    font-size: 11pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.08in 0;
+  }
+
+  .tips ul {
+    margin: 0;
+    padding-left: 0.2in;
+  }
+
+  .tips li {
+    margin-bottom: 0.03in;
+  }
+
+  footer {
+    margin-top: auto;
+    padding-top: 0.14in;
+    font-size: 9pt;
+    text-align: center;
+    border-top: 1px solid #000;
+  }
+
+  @media screen {
+    body {
+      background: #d9d9d9;
+      padding: 0.3in 0;
+    }
+    .page {
+      background: #ffffff;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+  }
+
   @media print {
-    body { padding: 0; }
-    .page { max-width: none; }
-    .signal, .drill { break-inside: avoid; }
+    .page {
+      padding: 0;
+      min-height: auto;
+      max-width: none;
+    }
   }
 </style>
 </head>
@@ -144,105 +175,85 @@
 <div class="page">
 
   <header>
-    <h1>M-Signal Codes: Marrow County Dispatch</h1>
-    <span class="sub">Know all ten from memory. Say the code and the meaning aloud.</span>
+    <p class="agency">Marrow County Dispatch</p>
+    <h1>M-Signal Radio Codes</h1>
+    <p class="subtitle">Know all ten cold. No lookups on live calls.</p>
   </header>
 
-  <h2>Unit Status</h2>
-  <div class="grid">
-    <div class="signal">
-      <div class="code">M-1</div>
-      <div>
-        <div class="meaning">Unit available</div>
-        <div class="tip">Ready for assignment</div>
-      </div>
-    </div>
-    <div class="signal">
-      <div class="code">M-2</div>
-      <div>
-        <div class="meaning">Unit en route</div>
-        <div class="tip">Moving toward the call</div>
-      </div>
-    </div>
-    <div class="signal">
-      <div class="code">M-3</div>
-      <div>
-        <div class="meaning">On scene</div>
-        <div class="tip">Arrived at the location</div>
-      </div>
-    </div>
-    <div class="signal">
-      <div class="code">M-8</div>
-      <div>
-        <div class="meaning">Out of service</div>
-        <div class="tip">Unavailable for calls</div>
-      </div>
-    </div>
-    <div class="signal">
-      <div class="code">M-10</div>
-      <div>
-        <div class="meaning">Return to station</div>
-        <div class="tip">Heading back, available after arrival</div>
-      </div>
-    </div>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Signal</th>
+        <th>Meaning</th>
+        <th style="text-align:center;">Drilled</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="code">M-1</td>
+        <td class="meaning">Unit available</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-2</td>
+        <td class="meaning">Unit en route</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-3</td>
+        <td class="meaning">On scene</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-4</td>
+        <td class="meaning">Need backup</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-5</td>
+        <td class="meaning">Suspect in custody</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-6</td>
+        <td class="meaning">Medical needed</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-7</td>
+        <td class="meaning">Road blocked</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-8</td>
+        <td class="meaning">Out of service</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-9</td>
+        <td class="meaning">Traffic stop</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+      <tr>
+        <td class="code">M-10</td>
+        <td class="meaning">Return to station</td>
+        <td class="check"><span class="box"></span></td>
+      </tr>
+    </tbody>
+  </table>
 
-  <h2>Requests and Incidents</h2>
-  <div class="grid">
-    <div class="signal">
-      <div class="code">M-4</div>
-      <div>
-        <div class="meaning">Need backup</div>
-        <div class="tip">Requesting additional units</div>
-      </div>
-    </div>
-    <div class="signal">
-      <div class="code">M-5</div>
-      <div>
-        <div class="meaning">Suspect in custody</div>
-        <div class="tip">Subject detained</div>
-      </div>
-    </div>
-    <div class="signal">
-      <div class="code">M-6</div>
-      <div>
-        <div class="meaning">Medical needed</div>
-        <div class="tip">Request EMS response</div>
-      </div>
-    </div>
-    <div class="signal">
-      <div class="code">M-7</div>
-      <div>
-        <div class="meaning">Road blocked</div>
-        <div class="tip">Route obstructed or closed</div>
-      </div>
-    </div>
-    <div class="signal">
-      <div class="code">M-9</div>
-      <div>
-        <div class="meaning">Traffic stop</div>
-        <div class="tip">Vehicle stop in progress</div>
-      </div>
-    </div>
-  </div>
+  <section class="tips">
+    <h2>Drill Tips</h2>
+    <ul>
+      <li>Cover the Meaning column and say each signal out loud before checking.</li>
+      <li>Quiz yourself in random order, not 1 to 10, so the codes stick by meaning.</li>
+      <li>Mark a box each time you recall a signal without hesitation. Re-drill any you miss.</li>
+    </ul>
+  </section>
 
-  <div class="drill">
-    <strong>Quick self-test (cover the list, then fill in)</strong>
-    <ol>
-      <li>M-1 = <span class="blank"></span></li>
-      <li>M-2 = <span class="blank"></span></li>
-      <li>M-3 = <span class="blank"></span></li>
-      <li>M-4 = <span class="blank"></span></li>
-      <li>M-5 = <span class="blank"></span></li>
-      <li>M-6 = <span class="blank"></span></li>
-      <li>M-7 = <span class="blank"></span></li>
-      <li>M-8 = <span class="blank"></span></li>
-      <li>M-9 = <span class="blank"></span></li>
-      <li>M-10 = <span class="blank"></span></li>
-    </ol>
-  </div>
-
-  <footer>Marrow County Dispatch. Training reference. Practice until recall is automatic.</footer>
+  <footer>
+    For training use. Verify against current Marrow County SOPs before updating this sheet.
+  </footer>
 
 </div>
 </body>

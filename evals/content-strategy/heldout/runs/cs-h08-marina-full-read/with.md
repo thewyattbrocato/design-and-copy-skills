@@ -1,63 +1,70 @@
-# Plan: read and score all 280 pages
+# Full-site audit plan: Gull Point Marina, 280 pages
 
-**Budget.** 10 hours a week for 12 weeks is 120 hours. Setup and wrap-up take about 20 of those, which leaves about 100 hours for reading. Over 10 weeks that is about 28 pages a week, or roughly 20 minutes a page, which is enough for a careful read. Don't let a page run past 30 minutes. If one does, log it as "needs owner" and move on.
+**The decision:** for every page, keep, fix, merge or retire, with someone named who answers for it.
+
+**Budget:** 120 hours (10 hours a week for 12 weeks), which is about 25 minutes a page if it were all reading. I've held back about 40 hours for setup, owner questions, buffer and the write-up. That leaves about 80 hours of reading, or about 17 minutes a page on average. Slip and rate pages get more time because every price and term has to be checked. Staff bios and news posts get less.
 
 ## Schedule
 
-| Weeks | Work | Output |
+| Week | Work | Output |
 |---|---|---|
-| 1 | Build the spreadsheet with all 280 URLs from the sitemap. Assign IDs, page type and owner. Calibrate the scoring on 10 pages, then rescore them. Send the harbormaster and events coordinator a heads-up on what you'll ask and when. | Finished sheet, rubric locked |
-| 2–6 | Slip and service pages (about 120), in sitemap order within each sub-type. | About 24 pages a week |
-| 7–8 | Events pages (`[events page count]`). Send the coordinator one batch of questions at the end of week 7. | Events scored |
-| 9–10 | News, area and staff pages (the rest). | All 280 read |
-| 11 | Chase owner answers. Re-check any "ask owner" rows. Look for duplicates and contradictions across pages. | Actions settled |
-| 12 | Summarize and present to your boss: counts by action, worst problems, owner table. | One-page summary and the sheet |
+| 1 | Build the sheet from the sitemap, with one row per page and a stable ID. Tag each page by type and owner. Score about 15 mixed pages to calibrate the scale. | Locked columns and scoring guide |
+| 2–5 | Slip, rate and service pages (~120, about 30 a week). Send the harbormaster one batched list of questions each Friday. | Scored rows, with questions open or answered |
+| 6 | Event pages, including old ones. Send the events coordinator one batch. | Scored rows |
+| 7 | News posts | Scored rows |
+| 8 | Local area pages | Scored rows |
+| 9 | Staff bios, plus any pages you missed | Every row scored |
+| 10 | Buffer for slippage. Look across pages for duplicates, contradictions (the same rate or phone number given two ways) and orphan pages. | Merge and conflict list |
+| 11 | Owners review verdicts for their pages and sign off or overrule. | Verdicts confirmed |
+| 12 | Write-up: what to fix first, what to retire, and a review schedule per content type. | Report |
 
-Do the slip pages first, because they are the largest group and the harbormaster owns them. Their questions have time to come back before week 11. Send each owner's questions in one batch per group, not page by page.
+If you fall behind, week 10 absorbs it. Don't cut reading time per page to catch up.
 
-## Columns, one row per page
+## What to write down for each page
 
-**Identity (filled in week 1)**
-- **ID**: P001 to P280. It never changes, even if a page is cut.
-- **URL** and **page title**
-- **Type**: slip/service, news, area, staff bio, or event
-- **Owner**: harbormaster, events coordinator, or you for the rest. If nobody clearly owns a page, write "needed: owner".
+**Identity (fill in during week 1):**
+- ID (P001…), URL, page title, type (slip/service, news, local area, bio, event), owner.
 
-**What you observe (while reading)**
-- **Date read**
-- **Date shown on page**: a "last updated" or post date, or "none"
-- **What it's for**: one line, in plain words
-- **Facts to verify**: prices, rates, hours, phone numbers, names, dates. List them. You can't judge these yourself.
-- **Verified by / date**: filled in when the owner confirms.
-- **Broken or odd**: dead links, broken forms, missing images, duplicate of another ID. Put the ID if it's a duplicate.
-- **Inbound links**: how many pages link here, if your CMS shows it. Otherwise leave it blank.
+**Facts from reading:**
+- Date shown on the page, if any.
+- Perishable facts on the page: prices, hours, dates, names, phone numbers, seasonal terms. Copy them into a cell so the owner can check them quickly.
+- Links in and out: is it reachable from the navigation? Do any links break?
+- Near-duplicate of another page (give the ID).
 
-**Scores, 0–2 each**
+**Scores, 0–2 each:**
 
-| Score | Accurate | Useful | Works |
+| Score | 0 | 1 | 2 |
 |---|---|---|---|
-| 2 | Facts checked and current | Answers a real visitor question, easy to find | Links, forms and images all work, reads clearly |
-| 1 | Unverified, or one small thing off | Partly useful, or buried | Minor faults |
-| 0 | Known wrong or clearly out of date | Nobody would need it | Broken, or hard to follow |
+| Accuracy | Wrong or contradicts another page | Can't verify, or partly out of date | Verified correct |
+| Job | No clear reader or purpose | Purpose is there but weak or buried | A visitor can do or learn what they came for |
+| Clarity | Confusing, or the next step is missing | Understandable but clumsy | Clear, with a next step |
+| Condition | Broken links, missing images or old contact details | Minor problems | Clean |
 
-Score Accurate only against what you can check. If the owner hasn't confirmed, cap it at 1 and say so in "Verified by". Add a **Total** column (0–6).
+**Decision:**
+- Verdict: keep, fix, merge into [ID] or retire.
+- What's wrong, in one line, quoting the text. For example: "Rate table says 2023 season."
+- Fix size: S (under 15 minutes), M (an hour or so), L (needs rewriting or new information).
+- Who confirmed it, and the date.
+- Open question for the owner (blank once answered).
 
-**Decision**
-- **Action**: keep, fix, merge into `[ID]`, cut, or ask owner
-- **Fix needed**: one line, written so someone else could do it
-- **Question for owner**: only if you can't decide without them
-- **Owner answer / date**
+**Rules that keep the scoring consistent:**
+- Accuracy 0 means the verdict can't be "keep".
+- Accuracy 1 on a price or rate page becomes a question for the harbormaster. Never score it 2 by guessing.
+- "Not edited recently" is not a defect by itself. Score what the page says, not its date.
+- Check traffic if you have analytics, but only to inform the verdict. A page nobody visits may just be hard to find.
+- Retire or merge old event pages unless there's a reason to keep them (for example, an annual event with history). The events coordinator decides.
 
-## Rules that keep 280 rows comparable
+## Keeping it manageable
 
-1. Score right after reading, not at the end of the day.
-2. Write the action in the same sitting. Don't leave it for later.
-3. Don't score a page on traffic alone. Low traffic may only mean nobody can find it.
-4. Old event pages: ask the coordinator whether each stays as an archive, gets merged, or goes. Don't decide that yourself.
-5. A "last updated" date doesn't make a page right or wrong. Write down the date and check the facts.
-6. Once a week, sort by Total and by Action and check your own consistency. Rescore anything that looks off.
+- Use a time-box of about 20 minutes for slip pages and 12–15 for the rest. If a page needs more, mark the question and move on.
+- Add drop-down lists for type, verdict and fix size, so you can filter and count at the end.
+- Don't fix anything during the audit. Fixing mixes two jobs, and you'll lose the reading pace.
+- Read each batch in one sitting where you can. Comparing similar pages side by side is how you catch contradictions.
 
-## Two notes
+## At the end
 
-- **Assumption:** I assumed the 20 hours for setup and wrap-up. If your boss wants a longer write-up, take the time from weeks 11–12, not from reading.
-- **To measure:** count the event pages in week 1 and fill in `[events page count]`. If it's large, weeks 7–8 may need to grow, and the news and area weeks will shrink.
+For each content type, set a trigger and a next-review date. Slips and rates, for example, get reviewed whenever the harbormaster changes a rate and at the start of each season. Events get retired or archived a set time after the event date. The owner column from this audit becomes the permanent owner list.
+
+*Note: I assumed the harbormaster and events coordinator can each give you roughly an hour a week for questions. If not, slip pages will pile up with unverified accuracy and weeks 2–5 will stall. Check this first.*
+
+*Note: I haven't seen the pages, so the 17-minute average is only a budget. After the 15 calibration pages in week 1, time yourself and adjust the schedule.*

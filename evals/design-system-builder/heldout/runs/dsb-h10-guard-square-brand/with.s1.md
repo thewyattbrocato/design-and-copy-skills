@@ -1,75 +1,78 @@
-Assumptions: web, one brand, small team, no existing site to inventory. The brand sets the scale sizes here, so some scales are shorter than usual.
+Assumptions: a web product, one brand, a small team, and no existing tokens. I haven't contrast-checked anything.
 
-## Radius: 1 token, 1 opt-in
+Your brand is mostly a decision to not use these categories. So the scales are deliberately tiny, and the main job is to make "no" the default so it doesn't erode.
 
-| Token | Value | Use |
-|---|---|---|
-| `radius.none` | `0` | Everything: buttons, inputs, cards, images, tags, menus |
-| `radius.full` | `9999px` | Opt-in exception for things that are circular by function (avatar, radio). Drop it if you'd rather make those square too. |
-
-A radius scale exists to give you steps, and this brand has none. Set `radius.none` anyway and have components read it. Then "why is this rounded?" becomes a defect you can find, because a stray `border-radius` no longer looks normal.
-
-## Elevation: rules instead of shadows
-
-Depth comes from border weight, so first define the rule widths:
+## Radius: 1 value, plus 1 functional exception
 
 | Token | Value | Use |
 |---|---|---|
-| `border.width.thin` | `1px` | Table rows, list dividers |
-| `border.width.medium` | `2px` | Controls, cards |
-| `border.width.thick` | `4px` | Section rules, page header and footer rules |
+| `radius.none` | `0` | Everything: buttons, inputs, cards, images, modals, tags |
+| `radius.round` | `50%` | Only where the shape is semantically a circle: radio buttons, status dots, avatars (if you use them) |
 
-Then three elevation levels built from them:
+Components read `radius.none` through a semantic role (`radius.control`, `radius.surface`). That way, if the brand ever softens, you change two mappings instead of hunting through components.
 
-| Token | Recipe | Use |
-|---|---|---|
-| `elevation.flat` | no border, no shadow | Content on the page |
-| `elevation.raised` | `2px solid ink` | Cards, inputs, buttons |
-| `elevation.overlay` | `3px solid ink` plus a hard offset block, `4px 4px 0 ink`, zero blur | Menus, dialogs, toasts |
+## Elevation: depth through rules, not blur
 
-Overlays are the one place I'd go beyond the brief. A menu with only a border blends into a bordered card underneath it. A hard offset block fits the print look (it's a stamped edge, not a soft shadow) and separates the layers. If you want strictly rules only, drop the offset and make overlays `4px` bordered. The cost is weaker separation.
+Elevation is a combination of border weight and, for overlays only, a hard offset. There are no blurred shadows and no tinted surfaces.
 
-## Motion: 2 durations, 1 easing
+| Token | Border | Offset shadow | Use |
+|---|---|---|---|
+| `elevation.flat` | none | none | Page, sections, body content |
+| `elevation.raised` | `2px solid ink` | none | Cards, inputs, buttons, table frames |
+| `elevation.overlay` | `4px solid ink` | `6px 6px 0 0 ink` (0 blur) | Menus, dialogs, toasts |
+
+Supporting border-width scale (3 values): `border.hairline` 1px (table row dividers), `border.rule` 2px, `border.heavy` 4px (section dividers, overlays).
+
+Overlays need the hard offset because a thick border on top of another thick border doesn't read as "above". The offset is the one print-style shadow I'd allow. If you want zero shadows, use `overlay` = 4px border plus a page scrim in `ink` at 60% opacity instead.
+
+## Motion: nearly none
 
 | Token | Value | Use |
 |---|---|---|
-| `duration.instant` | `0ms` | Default. State changes just switch. |
-| `duration.fast` | `100ms` | Optional: color change on hover or focus, and nothing else |
-| `easing.standard` | `linear` | The only curve. At 100ms, easing is invisible. |
+| `motion.duration.instant` | `0ms` | Default. Focus rings, menus opening, dialogs, route changes, disclosure |
+| `motion.duration.fast` | `100ms` | Hover and pressed color flips on controls |
+| `motion.easing.standard` | `linear` | The only easing; at 100ms nothing else is visible |
 
-Nothing moves, fades, slides or scales. Hover and press are hard swaps (for example, ink background with paper text), which suits the print look. Under `prefers-reduced-motion`, `duration.fast` resolves to `0ms`. Add a longer duration only when a real component needs it and it passes the second-use rule.
+That's two durations and one easing, which is below the usual three or four. It's intentional, and adding a third duration should need a reason.
+
+Rules to document with the tokens:
+- Transition `color`, `background-color` and `border-color` only. Never transform, opacity, size or position.
+- No entrance, scroll or parallax animation, and no skeleton shimmer. Use static placeholder blocks.
+- Under `prefers-reduced-motion: reduce`, `fast` remaps to `0ms`. The semantic layer handles this, so components don't need to.
 
 ## CSS
 
 ```css
 :root {
-  /* shape */
-  --radius-none: 0;
-  --radius-full: 9999px;
+  /* raw */
+  --radius-0: 0;
+  --radius-circle: 50%;
+  --border-1: 1px; --border-2: 2px; --border-4: 4px;
+  --duration-0: 0ms; --duration-100: 100ms;
 
-  /* rules */
-  --border-width-thin: 1px;
-  --border-width-medium: 2px;
-  --border-width-thick: 4px;
+  /* semantic */
+  --radius-control: var(--radius-0);
+  --radius-surface: var(--radius-0);
+  --radius-indicator: var(--radius-circle);
 
-  /* elevation (color comes from the semantic ink role) */
   --elevation-flat: none;
-  --elevation-raised-border: var(--border-width-medium) solid var(--color-border-strong);
-  --elevation-overlay-border: 3px solid var(--color-border-strong);
-  --elevation-overlay-shadow: 4px 4px 0 var(--color-border-strong);
+  --elevation-raised-border: var(--border-2) solid var(--color-ink);
+  --elevation-overlay-border: var(--border-4) solid var(--color-ink);
+  --elevation-overlay-shadow: 6px 6px 0 0 var(--color-ink);
 
-  /* motion */
-  --duration-instant: 0ms;
-  --duration-fast: 100ms;
-  --easing-standard: linear;
+  --motion-duration-instant: var(--duration-0);
+  --motion-duration-fast: var(--duration-100);
+  --motion-easing-standard: linear;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root { --duration-fast: 0ms; }
+  :root { --motion-duration-fast: var(--duration-0); }
 }
 ```
 
-`--color-border-strong` is your ink black. Define it in the color tokens, not here. The tomato red stays out of these tokens, because it's an accent for color and focus, not for depth.
+`--color-ink` comes from your color tokens. Tomato red stays out of these categories: it's an accent color, not a depth cue, so don't use it for borders on elevated surfaces.
 
-- **Trade-off:** the scales are shorter than the usual 2–4 radii and 3–4 durations. That's deliberate, since the brand is the constraint.
-- **Not checked:** I haven't looked at contrast or at a dark theme. If you want one, the overlay offset needs a paper-colored variant.
+## Two things to settle
+
+1. **Focus indicator:** I'd make it a 4px tomato (or ink) outline with a 2px offset, appearing instantly. That belongs in the component specs, but the border-width scale above already covers it.
+2. **Dark theme:** if you ever add one, `ink` and `paper` swap through the semantic layer. The overlay offset then needs to use the light value, or it disappears.

@@ -1,16 +1,14 @@
-I'd skip "ONLY 3 LEFT" and "ends tonight" because they'd be false. Fake scarcity and fake deadlines can count as deceptive marketing under the FTC Act, and CAN-SPAM bars misleading subject lines. They also backfire with a small shop's customers: if the sale is still running tomorrow, people notice, and they stop trusting your deadlines when you have a real one.
+I left out "ONLY 3 LEFT" and "ends tonight". Both are false for your sale, and fake scarcity can get you in trouble under FTC rules on deceptive claims. It also costs you with a small shop's repeat customers, who notice when "tonight" turns out to be all month. These 8 use urgency that's true:
 
-You can still get urgency from the real facts: 15% off, every lock, and a hard end date of April 30.
-
-1. Spring sale: 15% off every Tumbler Lock
-2. 15% off all locks through April 30
+1. 15% off every lock, through April 30
+2. Spring sale: 15% off all Tumbler Locks
 3. Your bike's been outside all winter. Lock it up right.
-4. Spring sale is on. Sale ends April 30.
-5. 15% off the lock that keeps your bike yours
-6. Ride season's here. Get 15% off your lock.
-7. Every lock, 15% off, all April
-8. Don't wait for May: 15% off Tumbler Locks ends April 30
+4. April only: 15% off locks
+5. Last month of the spring sale (15% off)
+6. Bike season's here. Is your lock ready?
+7. 15% off ends April 30. Don't wait for the thaw to be over.
+8. Save 15% on the lock that actually stays locked
 
-If you want more urgency without lying, you can send a second email in the last few days with something like "Last week: 15% off locks ends April 30" or "Final day: 15% off Tumbler Locks." That works because it's true. If a specific model really is low on stock, "Only X left" is fine for that model, as long as the number is accurate.
+If you want more urgency, you can use real deadlines later in the month. Send a reminder around April 25 with "5 days left: 15% off locks" or "Final weekend: 15% off Tumbler Locks". Those are true, and they tend to work well because the deadline is real.
 
-I can also write the preview text or the email body to match any of these.
+I can also do a few variations in a more playful or more straightforward tone.

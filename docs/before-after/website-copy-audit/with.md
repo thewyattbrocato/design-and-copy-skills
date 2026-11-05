@@ -1,27 +1,21 @@
+## Findings
+
+No blockers. Nothing on the page is false, unsupported or manipulative. One major gap in the price section is worth fixing before Friday.
+
+**1. Major: Price section leaves the main questions open**
+> "Free for households of up to 4. Larger households are $2 a month."
+
+- **Who pays:** a reader can't tell whether $2 is per household or per person. If it's per household, they can't tell who pays.
+- **What happens at the fifth person:** it isn't clear whether they get blocked, the list freezes, or the household gets prompted to pay.
 [...]
+> "Free for households of up to 4 people. Add a fifth and it's $2 a month [per household / per person; who pays]. [Cancel any time / what happens if you stop paying]."
 
-**Stranger read:** A newcomer would say "some business software for operations." The page never names plumbing, HVAC, techs, jobs or dispatch. An owner who arrived from a search like "HVAC scheduling software" can't tell from the first screen that this is for them. I'm assuming the page has no price, logos, quotes or screenshots beyond what you pasted.
-
+**2. Minor: Hero subhead buries the definition and hides "free"**
 [...]
-
-**1. Blocker: "Why Kettlebridge?" is unsupported claims stated as fact**
-> "Best-in-class scheduling. Industry-leading reporting. Powerful integrations. Trusted by teams everywhere."
-
-- Nothing backs "best-in-class" or "industry-leading": no comparison, source or customer.
-- "Trusted by teams everywhere" reads as invented proof. A skeptical owner will discount the whole section.
-
+## What works (leave alone)
+- "One grocery list for the whole household": a stranger knows the product, the audience and the benefit.
+- "so nobody buys the milk twice": a concrete outcome in the reader's own terms.
 [...]
-
-**2. Blocker: the hero doesn't say what this is or who it's for**
-
-[...]
-
-- **Rewrite:** "Scheduling, dispatch and invoicing for plumbing and HVAC companies." Subhead: "Kettlebridge puts your techs, routes and invoices in one place, built for teams of 5 to 30." That adds no fact beyond what you told me.
-
-[...]
-
 ## Fix order
-1. Rewrite hero headline and subhead to name trade, category and outcome. **Small**
-2. Remove or substantiate the "Why Kettlebridge?" claims. **Small** to cut, **medium** to replace with real proof
-
-[...]
+1. Spell out the price terms: who pays, what happens at a fifth member, billing and cancellation (small, once the founder confirms the facts).
+2. Reorder the hero subhead and add "free for up to 4" (small).

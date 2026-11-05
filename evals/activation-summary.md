@@ -4,7 +4,7 @@
 
 This is a routing check from descriptions only. A model is shown the name and description of every skill (what an agent sees before it loads anything) and one request, and says which single skill, if any, it would load. It does not show that a skill is good, and it is not the loaded rate of the held-out runs, which stays the evidence for whether the model uses a skill in a real task. No description was changed because of it. Requests are in `evals/<skill>/activation.json` and per-request picks in `evals/<skill>/activation-results.json`; regenerate with `python3 scripts/activation_summary.py`.
 
-**Overall:** recall 171 of 186 (92%); false-pick rate 0 of 124 (0%) across 31 skills. Model: haiku (claude-haiku-5-5); run 2026-10-15.
+**Overall:** recall 209 of 228 (92%); false-pick rate 0 of 152 (0%) across 38 skills. Model: haiku (claude-haiku-5-5); run 2026-10-15 to 2026-11-01.
 
 ## Flagged
 
@@ -16,6 +16,7 @@ No skill is flagged.
 
 | Skill | Recall | False picks | Missed requests went to | Should-not requests went to |
 |---|---|---|---|---|
+| agent-interface-design | 6 of 6 | 0 of 4 | - | editing-and-cutting 1, interface-behavior 1, user-research-basics 1, ux-microcopy 1 |
 | brand-identity | 6 of 6 | 0 of 4 | - | none 2, color-palette 1, design-system-builder 1 |
 | chart-design | 6 of 6 | 0 of 4 | - | color-palette 1, data-tables 1, layout-structure 1, none 1 |
 | color-palette | 6 of 6 | 0 of 4 | - | brand-identity 1, chart-design 1, design-system-builder 1, none 1 |
@@ -23,10 +24,16 @@ No skill is flagged.
 | design-critique | 4 of 6 | 0 of 4 | form-design 1, layout-structure 1 | none 2, brand-identity 1, spacing-and-grouping 1 |
 | design-system-builder | 6 of 6 | 0 of 4 | - | brand-identity 1, color-palette 1, design-critique 1, none 1 |
 | form-design | 5 of 6 | 0 of 4 | interface-behavior 1 | data-tables 1, interface-behavior 1, none 1, ux-microcopy 1 |
+| generated-ui-restyle | 6 of 6 | 0 of 4 | - | color-palette 1, editing-and-cutting 1, none 1, ui-polish-pass 1 |
 | interface-behavior | 5 of 6 | 0 of 4 | none 1 | layout-structure 1, none 1, ui-motion 1, ux-microcopy 1 |
+| journey-and-service-mapping | 5 of 6 | 0 of 4 | none 1 | chart-design 1, interface-behavior 1, none 1, user-research-basics 1 |
 | layout-structure | 6 of 6 | 0 of 4 | - | none 1, responsive-layout 1, spacing-and-grouping 1, visual-hierarchy 1 |
 | practice-and-assessment | 6 of 6 | 0 of 4 | - | none 2, design-critique 1, teaching-interfaces 1 |
+| presentation-design | 6 of 6 | 0 of 4 | - | chart-design 1, editing-and-cutting 1, user-research-basics 1, ux-microcopy 1 |
+| pricing-and-packaging | 6 of 6 | 0 of 4 | - | chart-design 1, none 1, user-research-basics 1, ux-microcopy 1 |
 | responsive-layout | 6 of 6 | 0 of 4 | - | layout-structure 1, none 1, spacing-and-grouping 1, typesetting 1 |
+| sales-conversations | 4 of 6 | 0 of 4 | presentation-design 1, pricing-and-packaging 1 | chart-design 1, editing-and-cutting 1, email-and-sequences 1, user-research-basics 1 |
+| showing-work | 5 of 6 | 0 of 4 | none 1 | chart-design 1, landing-page-copy 1, layout-structure 1, presentation-design 1 |
 | spacing-and-grouping | 6 of 6 | 0 of 4 | - | design-system-builder 1, layout-structure 1, none 1, visual-hierarchy 1 |
 | teaching-interfaces | 5 of 6 | 0 of 4 | ux-microcopy 1 | none 1, practice-and-assessment 1, ui-motion 1, ux-microcopy 1 |
 | typeface-selection | 5 of 6 | 0 of 4 | brand-identity 1 | brand-identity 1, design-system-builder 1, none 1, typesetting 1 |

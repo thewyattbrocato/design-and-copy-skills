@@ -1,0 +1,110 @@
+[
+  {
+    "id": "pfb-01",
+    "kind": "polish",
+    "prompt": "Our village food co-op's ordering page is a single file that switches between browse, basket and checkout without reloading. It works fine on my laptop with a mouse, but one member who only uses a keyboard says she keeps getting lost in it. Can you finish it before the weekend launch? Please keep the look as it is.\n\n```html\n<body>\n<header><h1>greenbarrow food co-op</h1></header>\n<main>\n <section id=\"browse\">\n  <h2>This week's boxes</h2>\n  <article class=\"item\">\n   <h3>Veg box</h3>\n   <img src=\"veg-box-price.png\" alt=\"\">\n   <div class=\"qty\"><div class=\"minus\" data-id=\"veg\">-</div><span id=\"q-veg\">0</span><div class=\"plus\" data-id=\"veg\">+</div></div>\n  </article>\n  <article class=\"item\">\n   <h3>Eggs and honey</h3>\n   <img src=\"eggs-honey-price.png\" alt=\"\">\n   <div class=\"qty\"><div class=\"minus\" data-id=\"eggs\">-</div><span id=\"q-eggs\">0</span><div class=\"plus\" data-id=\"eggs\">+</div></div>\n  </article>\n </section>\n <section id=\"basket\" hidden>\n  <h2>Your basket</h2>\n  <ul id=\"lines\"></ul>\n  <button id=\"to-checkout\">Checkout</button>\n </section>\n <section id=\"checkout\" hidden>\n  <h2>Collection details</h2>\n  <form>\n   <label for=\"fname\">Full name</label><input id=\"fname\" autocomplete=\"name\" required>\n   <label for=\"phone\">Phone</label><input id=\"phone\" type=\"tel\" autocomplete=\"tel\" required>\n   <button type=\"submit\">Place order</button>\n  </form>\n </section>\n</main>\n<div class=\"basket-bar\"><span id=\"total\">£0.00</span><button id=\"go\">View basket</button></div>\n<script>\n const prices = {veg: 8.5, eggs: 6};\n const qty = {veg: 0, eggs: 0};\n function show(id){\n  document.querySelectorAll('main section').forEach(s => s.hidden = s.id !== id);\n }\n function refresh(){\n  let t = 0;\n  for (const k in qty){ document.getElementById('q-'+k).textContent = qty[k]; t += qty[k]*prices[k]; }\n  document.getElementById('total').textContent = '£' + t.toFixed(2);\n }\n document.querySelectorAll('.plus').forEach(b => b.addEventListener('mousedown', () => { qty[b.dataset.id]++; refresh(); }));\n document.querySelectorAll('.minus').forEach(b => b.addEventListener('mousedown', () => { if (qty[b.dataset.id] > 0) qty[b.dataset.id]--; refresh(); }));\n document.getElementById('go').onclick = () => show('basket');\n document.getElementById('to-checkout').onclick = () => show('checkout');\n</script>\n<style>\n .basket-bar{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:12px 20px;background:#2f5d3a;color:#fff}\n .plus,.minus{display:inline-block;width:32px;height:32px;line-height:32px;text-align:center;border:1px solid #2f5d3a;border-radius:50%;cursor:pointer}\n</style>\n</body>\n```",
+    "rubric": [
+      "Replaces the div-based plus and minus controls with real buttons (or gives them equivalent keyboard operation and button semantics), so a keyboard user can reach and press them.",
+      "Gives the quantity buttons names that say which item they change, for example 'add one veg box', rather than a bare plus or minus sign.",
+      "Handles the view switching for keyboard and screen-reader users: the page title or a clear announcement changes with each view and focus moves to the new view's heading or first control.",
+      "Notes that the prices shown only inside images are invisible to a screen reader (alt is empty) and moves them into real text or supplies a meaningful alternative.",
+      "Deals with the fixed bottom bar so it cannot cover the last items or the focused control, for example by padding the page bottom, without changing its colours or layout.",
+      "Leaves what already works alone: the real labels on the checkout fields, the colours, the green bar and the overall look are not restyled or rewritten."
+    ]
+  },
+  {
+    "id": "pfb-02",
+    "kind": "polish",
+    "prompt": "This is the events page for our canoe club. Please make it production-ready. The committee likes how it looks, so please don't restyle it.\n\n```html\n<html lang=\"en\">\n<head>\n <meta charset=\"utf-8\">\n <title>Untitled</title>\n <style>\n  .nav a{margin-right:14px}\n  .card{display:grid;grid-template-columns:1fr auto;gap:8px;border:1px solid #cfd8dc;padding:16px;border-radius:8px}\n  .card .actions{display:contents}\n  .card .book{grid-column:2;grid-row:1}\n  .card .cancel{grid-column:1;grid-row:1}\n  a:focus,button:focus,input:focus{outline:none;box-shadow:0 0 4px rgba(0,120,200,.25)}\n </style>\n</head>\n<body>\n <header class=\"nav\">\n  <a href=\"/\"><img src=\"logo.svg\" alt=\"Canoe club home\"></a>\n  <a href=\"/about\">About</a><a href=\"/trips\">Trips</a><a href=\"/kit\">Kit hire</a>\n  <a href=\"/safety\">Safety</a><a href=\"/juniors\">Juniors</a><a href=\"/coaching\">Coaching</a>\n  <a href=\"/news\">News</a><a href=\"/gallery\">Gallery</a><a href=\"/shop\">Shop</a>\n  <a href=\"/join\">Join</a><a href=\"/contact\">Contact</a><a href=\"/login\">Member login</a>\n  <input type=\"search\" aria-label=\"Search the site\">\n </header>\n <main>\n  <h1>Upcoming paddles</h1>\n  <div class=\"card\">\n   <h4>Estuary evening paddle</h4>\n   <p>Thursday 7pm, flat water, all abilities.</p>\n   <div class=\"actions\">\n    <button class=\"cancel\">Cancel booking</button>\n    <button class=\"book\"><span class=\"sr-only\">Reserve</span>Book a place</button>\n   </div>\n  </div>\n  <div class=\"card\">\n   <h4>Weir run for improvers</h4>\n   <p>Saturday 9am, moving water, helmet required.</p>\n   <div class=\"actions\">\n    <button class=\"cancel\">Cancel booking</button>\n    <button class=\"book\"><span class=\"sr-only\">Reserve</span>Book a place</button>\n   </div>\n  </div>\n </main>\n</body>\n</html>\n```",
+    "rubric": [
+      "Replaces the 'Untitled' title with a specific one that names the page and the club.",
+      "Adds a way past the long run of menu links to the main content (for example a skip link) and keeps it from changing the visible design.",
+      "Fixes the heading structure so the card headings follow the h1 in order (h2 rather than h4) without changing how they look.",
+      "Makes the 'Book a place' button's accessible name contain its visible words (removing or aligning the hidden 'Reserve'), and puts the source order of the two buttons in line with what is seen on screen.",
+      "Replaces the faint box-shadow-only focus with a clearly visible focus indicator while keeping the page's look otherwise unchanged.",
+      "Does not restyle the page or rewrite working parts such as the logo link's alt text, the search label, or the card layout beyond what each fix needs."
+    ]
+  },
+  {
+    "id": "pfb-03",
+    "kind": "explain",
+    "prompt": "Our developer put tabindex 1 to 9 on the fields of our sign-up form so people tab through them in the right order, because on screen the postcode sits above the street. Is that a good fix? Short answer please.\n\n```html\n<form class=\"signup\" style=\"display:flex;flex-direction:column\">\n  <label style=\"order:1\">Email <input tabindex=\"1\" name=\"email\" type=\"email\"></label>\n  <label style=\"order:3\">Street <input tabindex=\"4\" name=\"street\"></label>\n  <label style=\"order:2\">Postcode <input tabindex=\"3\" name=\"postcode\"></label>\n  <label style=\"order:4\">Town <input tabindex=\"5\" name=\"town\"></label>\n  <label style=\"order:5\">Password <input tabindex=\"2\" name=\"pw\" type=\"password\"></label>\n  <button tabindex=\"9\">Create account</button>\n</form>\n```",
+    "rubric": [
+      "Answers directly that it is not a good fix, within a short answer rather than an essay.",
+      "Explains that positive tabindex values pull those fields ahead of everything else on the page (menus, links, other controls), so the order breaks across the whole page and is fragile to maintain.",
+      "Points out that the tabindex values here do not even match the visual order (for example password tabs second while shown last), so the change makes things worse.",
+      "Recommends the real fix: put the fields in the source in the order they appear, drop the visual reordering and remove the tabindex values (or use tabindex 0 or none).",
+      "Does not suggest a rewrite of the form's look or add unrelated changes."
+    ]
+  },
+  {
+    "id": "pfb-04",
+    "kind": "polish",
+    "prompt": "Patients tell us the appointment reminder page is hard to use on phones and with screen readers. Fix what you can in this file; we can't change the chat widget vendor.\n\n```html\n<body>\n <img class=\"banner\" src=\"reminder-banner.png\" alt=\"banner\">\n <!-- banner image contains the text: Your appointment: Tuesday 14 May, 10:40, Riverside clinic, 22 Mill Lane -->\n <main>\n  <h1>Appointment reminder</h1>\n  <p>Please arrive ten minutes early and bring your referral letter.</p>\n  <p>To change or cancel your appointment, click <a href=\"/appointments/manage\">here</a>.</p>\n  <p>Need directions? <a href=\"/clinics/riverside\">Riverside clinic page</a></p>\n </main>\n <script src=\"https://chat-vendor.example/widget.js\"></script>\n <script>\n  // vendor widget opens its welcome dialog on load\n  window.addEventListener('load', () => window.ChatWidget.open());\n </script>\n <style>\n  .banner{width:100%;height:auto;display:block}\n  main{padding:16px;font-size:13px;line-height:1.4}\n </style>\n</body>\n```",
+    "rubric": [
+      "Identifies that the date, time and clinic address exist only inside the banner image and puts that information into real page text, or at minimum a full, specific alternative text.",
+      "Replaces the vague 'here' link text with wording that says what the link does, such as 'Change or cancel your appointment'.",
+      "Stops the chat widget from opening on load (or makes it open only when the patient asks), since an unrequested modal that traps focus blocks everyone using a keyboard or screen reader, while accepting the vendor script itself stays.",
+      "Raises the small 13px body text to a comfortable phone size and checks the viewport setup, as the page has no viewport meta tag.",
+      "Does not claim to fix the vendor's internals, and does not rewrite or remove the reminder content and links that already work."
+    ]
+  },
+  {
+    "id": "pfb-guard-05",
+    "kind": "polish",
+    "prompt": "Can you give our account settings page a last accessibility pass before we merge it?\n\n```html\n<html lang=\"en\">\n<head>\n <meta charset=\"utf-8\">\n <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n <title>Account settings - lakeside rentals</title>\n <style>\n  body{font:16px/1.5 system-ui,sans-serif;color:#1d2530;margin:0}\n  .skip{position:absolute;left:-999px}\n  .skip:focus{left:8px;top:8px;background:#fff;padding:6px}\n  main{max-width:560px;margin:0 auto;padding:24px}\n  label{display:block;margin-top:16px;font-weight:600}\n  input{width:100%;padding:8px;border:1px solid #5b6675;border-radius:4px;font:inherit}\n  :focus-visible{outline:3px solid #0b57d0;outline-offset:2px}\n  button{margin-top:20px;padding:10px 18px;background:#0b57d0;color:#fff;border:0;border-radius:4px;font:inherit}\n </style>\n</head>\n<body>\n <a class=\"skip\" href=\"#main\">Skip to settings</a>\n <nav aria-label=\"Account\"><a href=\"/bookings\">My bookings</a> <a href=\"/help\">Help</a></nav>\n <main id=\"main\">\n  <h1>Account settings</h1>\n  <form>\n   <label for=\"name\">Display name</label>\n   <input id=\"name\" name=\"name\" autocomplete=\"name\" value=\"Sam\">\n   <label for=\"email\">Email address</label>\n   <input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\" aria-describedby=\"email-hint\">\n   <p id=\"email-hint\">We send booking confirmations here.</p>\n   <label><input type=\"checkbox\" name=\"news\"> Send me the monthly newsletter</label>\n   <button type=\"submit\">Save changes</button>\n  </form>\n </main>\n</body>\n</html>\n```",
+    "rubric": [
+      "States plainly that the page is already in good shape for accessibility and names specific things that work, such as real labels, one h1, a specific title, visible focus outline, a skip link and native controls.",
+      "Changes nothing or only one or two small, optional things, and clearly marks any such note as optional rather than a defect.",
+      "Does not invent problems, for example by demanding aria-labels on inputs that already have visible labels, adding redundant roles, or reporting contrast failures the colours do not have.",
+      "Does not rewrite the markup or restyle the page, and any code it shows is limited to the exact small change suggested."
+    ]
+  },
+  {
+    "id": "pfb-guard-06",
+    "kind": "polish",
+    "prompt": "Only rename the footer link that says 'Proceed' so people know where it goes. Don't touch anything else in this file.\n\n```html\n<body>\n <header><a href=\"/\"><img src=\"logo.png\" alt=\"\"></a></header>\n <main>\n  <h1>Your order is ready to review</h1>\n  <h3>Items</h3>\n  <ul><li>2 x sourdough loaf</li><li>1 x rye</li></ul>\n  <div class=\"btn\" onclick=\"edit()\">Edit order</div>\n  <p style=\"color:#9aa0a6\">Delivery is free over 20 pounds.</p>\n </main>\n <footer>\n  <a href=\"/privacy\">Privacy</a>\n  <a href=\"/checkout/payment\">Proceed</a>\n </footer>\n</body>\n```",
+    "rubric": [
+      "Renames the footer link to say where it goes, such as 'Continue to payment' or 'Pay for your order', keeping the href as it was.",
+      "Changes only that link text; the rest of the file is left exactly as given, and the full file is not rewritten.",
+      "Any other issues (the div used as a button, the empty logo alt, the h3 under the h1, the pale grey text) are at most mentioned in a sentence as left alone, not fixed or demanded.",
+      "Stays brief: no long audit, no restyling and no extra suggestions beyond what the person asked for."
+    ]
+  },
+  {
+    "id": "pfb-guard-07",
+    "kind": "build",
+    "prompt": "Make a one-screen page for our village hall's tea rota: who is bringing cake on each Sunday this month, with a way to swap with someone. One self-contained HTML file.",
+    "rubric": [
+      "The screen shows a complete rota at a glance: four or five Sundays with dates and a person named as bringing the cake for each.",
+      "Each row has a clear, visible swap action (such as a button) and the primary action is easy to tell from the rest.",
+      "The page looks finished and pleasant, with readable text size, sensible spacing and a clear heading, and is not cluttered with banners, notices or extra controls.",
+      "Controls are visibly real buttons or links with labels that say what they do, not bare icons or unlabelled shapes.",
+      "Nothing is broken or half-done: no overlapping text, no lorem ipsum, no empty sections."
+    ]
+  },
+  {
+    "id": "pfb-08",
+    "kind": "polish",
+    "prompt": "We're showing the volunteer sign-up form at the trustees' meeting tomorrow. It submits and works, but it feels unfinished. Final touches please, but keep the layout.\n\n```html\n<form id=\"vol\" novalidate>\n <label for=\"vname\">Name</label>\n <input id=\"vname\" name=\"name\" autocomplete=\"name\">\n <label for=\"vemail\">Email</label>\n <input id=\"vemail\" name=\"email\" type=\"email\" autocomplete=\"email\">\n <button id=\"send\" type=\"submit\">Sign me up</button>\n <p id=\"msg\"></p>\n</form>\n<div class=\"dots\"></div>\n<script>\n const f = document.getElementById('vol');\n f.addEventListener('submit', async e => {\n  e.preventDefault();\n  const email = document.getElementById('vemail');\n  if (!email.value.includes('@')) {\n   email.style.borderColor = 'red';\n   return;\n  }\n  document.querySelector('.dots').classList.add('spin');\n  const r = await fetch('/api/volunteers', {method: 'POST', body: new FormData(f)});\n  document.querySelector('.dots').classList.remove('spin');\n  document.getElementById('msg').textContent = r.ok ? 'Done' : 'Something went wrong';\n  document.getElementById('msg').style.color = r.ok ? 'green' : 'red';\n });\n</script>\n<style>\n .spin{width:24px;height:24px;border:3px solid #ccc;border-top-color:#333;border-radius:50%;animation:turn 1s linear infinite}\n @keyframes turn{to{transform:rotate(360deg)}}\n #msg{margin-top:12px}\n</style>\n```",
+    "rubric": [
+      "Replaces the red-border-only email error with a written message next to the field that says what is wrong and how to fix it, tied to the field (for example with aria-describedby) and not shown by colour alone.",
+      "Announces the result to screen readers, for example with a status or alert region for the success and failure message, and gives wording more useful than 'Done' and 'Something went wrong'.",
+      "Handles the waiting state: disables or relabels the button while the request is running so it cannot be sent twice, and gives the spinner a text equivalent.",
+      "Covers the failure case in a way that keeps what the person typed and offers a way to try again, and respects reduced-motion for the spinner animation.",
+      "Does not rebuild the form, change the labels that are already fine, or add fields; the layout stays as it was."
+    ]
+  },
+  {
+    "id": "pfb-09",
+    "kind": "critique",
+    "prompt": "Before we ship this delete-confirmation dialog, what did I forget? Be honest, I'd rather hear it now.\n\n```html\n<button id=\"del\">Delete album</button>\n\n<div id=\"overlay\" class=\"overlay\" style=\"display:none\">\n <div class=\"dialog\">\n  <span class=\"x\" onclick=\"closeDlg()\">x</span>\n  <h3>Delete this album?</h3>\n  <p>The 48 photos in it will be removed for good.</p>\n  <div class=\"btn danger\" onclick=\"reallyDelete()\">Delete</div>\n  <div class=\"btn\" onclick=\"closeDlg()\">Cancel</div>\n </div>\n</div>\n\n<script>\n document.getElementById('del').onclick = () => {\n  document.getElementById('overlay').style.display = 'flex';\n };\n function closeDlg(){ document.getElementById('overlay').style.display = 'none'; }\n function reallyDelete(){ fetch('/albums/12', {method: 'DELETE'}).then(closeDlg); }\n</script>\n<style>\n .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center}\n .dialog{background:#fff;padding:24px;border-radius:8px;max-width:360px}\n .btn{display:inline-block;padding:8px 14px;border:1px solid #888;cursor:pointer}\n .danger{background:#c62828;color:#fff}\n</style>\n```",
+    "rubric": [
+      "Flags that the Delete, Cancel and close controls are divs and a span with click handlers, so they cannot be reached or pressed with a keyboard, and recommends real buttons.",
+      "Flags the missing dialog behaviour: no dialog role or name, focus is not moved into the dialog on open, not kept inside it, and not returned to the Delete album button on close.",
+      "Notes that Escape does not close it and that the close control is a bare 'x' with no accessible name.",
+      "Points out the missing states around the delete itself: no pending state, no error handling if the request fails, and no feedback that the album is gone.",
+      "Orders the problems by importance and keeps the rest of the design (copy, red danger button, overlay look) as is, without proposing a redesign."
+    ]
+  }
+]

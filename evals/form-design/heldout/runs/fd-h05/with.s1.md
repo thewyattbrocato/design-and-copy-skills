@@ -1,5 +1,3 @@
-1. **Country:** Use a searchable select (autocomplete) with `autocomplete="country-name"`. It's a long, known list, and typing a few letters is faster than scrolling 190 entries. It also lets browser autofill work.
-
-2. **Delivery speed:** Use three visible radios. Show the speed and price on each row, for example "Express, 2 days, $18". There are only three options and people compare them on price and time, so they should all be visible at once. Preselect Standard.
-
-3. **Gift note:** Use a multi-line textarea. Label it "Gift note (optional)" and show a live counter such as "42 / 200". Set `maxlength` to 200 so the counter and the limit agree and nobody loses text silently.
+1. **Country: autocomplete (type-ahead select).** With about 190 options, people know the name they want and can type it. Add `autocomplete="country"` so autofill works.
+2. **Delivery speed: three visible radios.** Three options that differ in price and time should sit side by side for comparison. Put the speed and price in each label, such as "Express, 2 days, $18", and default to Standard.
+3. **Gift note: multi-line textarea, labeled "Gift note (optional)".** It's free text, so use a textarea. Show a live "0/200" counter that stops at the limit, so people can't go over and never see an error.

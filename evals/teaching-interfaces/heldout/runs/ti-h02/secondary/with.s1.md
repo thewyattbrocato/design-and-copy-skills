@@ -1,22 +1,23 @@
-**Verdict:** The tour is an inventory of the product, shown before anyone has a reason to care. Step 1 gives the user nothing to do and a seven-step promise of more of the same, so 80% leave at the first click.
+**Verdict:** The tour teaches the product's parts, not a task, and it asks people to sit through it before they've done anything. Step 1 is where people leave because it's the first thing they meet, and it promises six more screens of inventory.
 
 **Why people skip**
 
-- **No task.** Every step says "this is X" and asks for nothing. The user never does anything in the product, so the tour teaches nothing they'll remember.
-- **It blocks the screen.** It sits over an empty dashboard, so the user can't see what the tour is describing.
-- **It duplicates the interface.** Step 2 reads the sidebar aloud, and step 3 does the same for the top bar. Those labels are already on screen.
-- **It front-loads features they don't need yet.** Step 6 (bank connection) and the invoice options in step 5 matter only after a first invoice exists.
-- **Length signals a chore.** "Quick tour" followed by seven steps reads as a gate, not a help.
+- **Nothing to gain yet.** The first screen offers a tour, not a result. People don't yet know what they'd get from the product.
+- **Steps 2 to 4 are lists of names.** Nine sidebar items, five top-bar items and four dashboard metrics are asked to be memorized, with no connection to anything they're trying to do. Nobody can retain that from one pass.
+- **Labels float over the whole dashboard.** Nothing points at the part being described, so the person has to match words to screen.
+- **The useful step is fifth.** Creating an invoice, the core job, arrives after four passive steps.
+- **Bank connection is a setup task described as a tour step.** It can't be done during the tour, so it's just a sentence they're told to remember.
+- **"You're all set!" comes after no action.** The tour ends without the person having done anything, so it doesn't feel finished.
 
-**What I'd change**
+**What to change**
 
-1. **Replace the tour with one guided first task.** Goal: "After this, you can send an invoice." The empty Invoices area has one primary button, "Create your first invoice," and the form is pre-filled with a sample client and line item, labeled *Sample*, with a one-click replace.
-2. **Cut steps 1, 2, 3 and 7.** Labels don't need a tour. Keep "Skip" visible, and don't show the tour again once it's been dismissed.
-3. **Move step 4 into the dashboard's empty state.** Say what fills each card once there are invoices, and hide cards that have no data yet.
-4. **Move step 6 to the moment it matters.** After the first invoice is sent, show a single prompt: "Connect your bank so paid invoices mark themselves." Keep it dismissible.
-5. **Keep step 5's content, but put it in the form.** Show line items, taxes, discounts and the payment link as the user reaches each field, not as a list up front. Mention the `N` shortcut in the button's tooltip.
-6. **Use at most three anchored tooltips, each on the element it describes,** and only if the user stalls.
+1. **Replace the tour with a guided first task.** Goal: "After this, you can send an invoice." Highlight the real `+` button, open a pre-filled sample invoice labeled *Sample*, and let the person change the client or amount and save it. Confirm what happened: "Invoice saved. Your client can pay through the link." That's a real success, and it's the only thing the first session needs.
+2. **Cut the inventory.** Remove the sidebar and top-bar lists. Explain a control only when someone first reaches for it, with a short label on that control (for example, "Tax Center: tax summaries for your filing"). Don't explain the whole sidebar up front.
+3. **Move the shortcut to the button.** Put "Press N" in the `+` button's tooltip. It doesn't need its own step.
+4. **Make the dashboard empty state explain itself.** Say what the revenue and overdue figures will show once there are invoices, with one action: "Create your first invoice." Don't show sample numbers that could be mistaken for real ones.
+5. **Turn bank connection into a later, optional prompt.** Show a checklist item such as "Match payments automatically: connect your bank" after the first invoice or the first payment, with one line on what it does. Don't ask for it on day one.
+6. **Keep skip, and add a way back.** Make "Skip for now" visible, and let people reopen the first task from Help. Skipping should not hide the path to the core task.
 
-**How to measure it:** Track the share of new users who send a first invoice within their first session, and again at day 7 without any help. Skip rate alone doesn't tell you whether the change worked.
+**How to measure it:** Track whether people create an invoice on their own within their first week, not whether they finish the tour. Completion of the tour is a poor proxy for learning.
 
-**Caveat:** The analytics show *that* people skip, not *why*. Watch five or so first-login sessions, or ask the first few skippers one question, before you commit to the redesign.
+**Assumptions:** I assumed a new account has no data and no bank connection. If the 80% skip rate is measured at step 1 only, check how many of the skippers still create an invoice later; that tells you whether the tour is the problem or the signup intent is.

@@ -1,24 +1,52 @@
-Define these three groups, and keep each one small. Boxcar's look comes from restraint, so a long scale would invite drift.
+Here's the shape, depth and motion set. Depth is carried by black rules, not shadows, so the elevation tokens are border weights.
 
-**Shape (radius)**
-- Define `--radius-none: 0` and make it the value for every control, card, input, and image.
-- Add `--radius-round: 50%` only for the few things that are genuinely circular, like avatars, status dots, and spinners. Naming it makes those exceptions deliberate.
-- Don't define a `sm/md/lg` scale. A scale invites someone to pick `radius-md` "just a little."
+## Radius
 
-**Depth (elevation and rules)**
-Flat doesn't mean no depth. Express depth with rule weight and hard, unblurred offsets, not blur or gradients.
-- Rules: `--rule-thin: 1px`, `--rule-thick: 3px`, `--rule-heavy: 6px`, all in `--ink`. Borders do most of the work.
-- Elevation: `--elevation-0: none`, `--elevation-1: 0 0 0 var(--rule-thick) var(--ink)` for outlined raised items, `--elevation-2: 4px 4px 0 var(--ink)` for a hard block offset like a print drop shadow. Never use a blur radius, and don't put gradients on surfaces.
-- Surfaces: `--surface-paper` (the off-white base) and `--surface-ink` for inverted blocks. Keep the number of surfaces low, because elevation should come from rules, not from tinting.
-- Stacking: `--z-base`, `--z-raised`, `--z-overlay`, `--z-modal`, as a short ordered list.
-- Focus: `--focus-ring: var(--rule-thick) solid var(--accent)`, with a visible offset. Tomato on paper meets contrast only at large sizes, so check that before you ship it. Ink is the safe fallback.
+```css
+--radius-none: 0;
+```
 
-**Motion**
-Motion should be almost absent, so the tokens should make the default obvious.
-- `--motion-instant: 0ms` for nearly everything, including hover, press, and open/close states that just switch.
-- `--motion-fast: 100ms` with `--ease-linear` (or `steps()`) as the only duration you allow, for the rare case where a change needs a beat.
-- No token for entrance, scroll-linked, or looping animation. If someone needs one, that's a conversation, not a token.
-- Use a press state that snaps: on `:active`, remove the offset shadow and translate by the offset amount, at 0ms. That gives tactile feedback in a flat style with no animation.
-- Include a `prefers-reduced-motion` block that sets all durations to 0. It costs nothing and is a good habit even though you barely animate.
+One value. Everything is square, so there's no scale to tune. If a control ever needs a circle (a radio dot, an avatar), add it as a marked exception rather than a token.
 
-I can write these as a CSS custom properties file, or as a JSON token set if your print and web tooling read from one source. This folder isn't a git repo and has no existing tokens to match, so tell me where the file should go and whether it should be CSS or JSON.
+## Elevation (rule weight)
+
+```css
+--color-ink: #141414;          /* proposed, not contrast-checked */
+
+--elevation-flat: 0;           /* page, inline blocks, body surfaces */
+--elevation-raised: 2px;       /* cards, product tiles, callouts */
+--elevation-overlay: 4px;      /* menus, dialogs, anything that sits above the page */
+```
+
+Usage: `border: var(--elevation-raised) solid var(--color-ink);`
+
+- Three tiers, each about double the last, so they read as different without needing a fourth.
+- No `box-shadow` tokens. A raised surface gets its rule, and an overlay gets a heavier rule plus a surface color change if it needs to stand apart.
+- If you need a hairline for table or list dividers, that's a separate `--rule-hairline: 1px` and should be justified, since it's a fourth weight.
+
+## Motion
+
+```css
+--motion-duration-none: 0ms;     /* default for everything */
+--motion-duration-short: 120ms;  /* hover, focus, pressed state change */
+--motion-duration-medium: 240ms; /* disclosure, dialog open/close */
+
+--motion-ease-out: cubic-bezier(0.2, 0, 0, 1);
+--motion-ease-linear: linear;
+```
+
+Rules:
+
+- Default is `none`. Motion has to earn its duration.
+- Only state changes and overlays get `short` or `medium`. No motion on page load, scroll, or decorative loops.
+- No bounce, spring, or parallax. Those aren't tokens.
+- `prefers-reduced-motion` sets every duration to `0ms`. For this brand that's close to the default anyway, so it costs almost nothing.
+
+## Checks
+
+- Radius: one value, no neighbors to confuse.
+- Elevation: three tiers, 2px and 4px are clearly different.
+- Motion: three durations and two easings, all within the scale ranges.
+- None of these tokens reference raw colors except `--color-ink`, which the components should read through a semantic role such as `color.border.default`.
+
+**Assumption:** I'm treating the print material's black as the same ink used for web rules. **Trade-off:** pure zero-radius and zero-shadow is distinctive but makes dense interfaces (long forms, data tables) harder to scan. Watch for that when specifying those components.

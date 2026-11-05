@@ -29,6 +29,13 @@ Order: the face you want first, then close system matches, then a generic family
 5. Tune the fallback to the web font's metrics (`size-adjust`, `ascent-override`, `descent-override`, `line-gap-override` on a local fallback `@font-face`) so the swap does not shift the layout.
 6. Test throttled, with the font blocked, and with the cache empty.
 
+## Fallback fit and same-name faces
+
+- Choose the fallback by fit, not familiarity. Render the web font and each candidate on one line and compare x-height and width; the closer both are, the less the swap moves. Default: match x-height so body text keeps its apparent size; change when a tight headline must keep its line breaks, then match width.
+- Put adjustments tuned to the web font (extra letter spacing, a size nudge, special features) behind a class set when `document.fonts.ready` resolves, so the fallback is not distorted by settings meant for another face. Check support before relying on it.
+- One name can be several designs. Revivals of the same classic differ in x-height, weight and optical sizes; name the exact release you ship, and prefer one that offers text and display cuts or a metric-compatible companion.
+- Before adopting a free font, check it has the weights, a true italic, accents, punctuation, currency signs and decent spacing for the real copy. Missing pieces fall back silently.
+
 ## Variable fonts
 
 - Map named instances to weight tokens; avoid raw axis values at call sites.

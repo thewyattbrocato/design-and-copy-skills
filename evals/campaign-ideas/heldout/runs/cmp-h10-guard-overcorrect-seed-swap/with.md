@@ -1,12 +1,12 @@
-The concept works. "Bring a pocketful. Leave with a garden." is warm and specific, and it puts the focus on trading rather than saving. It also fits the envelope-handing you saw last year. I found one thing to fix before printing and a few smaller things to consider.
+The concept works. The headline carries the swap-as-pleasure idea without mentioning money. "No seeds to trade? Come anyway." keeps it welcoming, and the envelope-handing detail from last year gives you something real to build on.
 
-**Check the date before it goes to the printer.** March 14 falls on a Saturday in 2026, which has already passed. The next March 14 is in 2027, and that's a Sunday. If this flyer is for 2027, "Saturday, March 14" is wrong. Either the day is Sunday, March 14, or the date is Saturday, March 13. Please confirm which one the event is.
+**Check the date before printing.** March 14 is a Saturday in 2026, but that date has already passed. The next March 14 is in 2027, and it falls on a Sunday. If this is the 2027 swap, "Saturday, March 14" is wrong, and the Saturday would be March 13. If the date is right and the weekday is wrong, or the reverse, fix it now. The flyer has no year, so I'd also confirm this isn't carried over from last year's file.
 
-**Smaller suggestions:**
-- **"Seed packets from last year welcome"** could be read two ways: seeds saved last year, or leftover store-bought packets. It could also be confused with "last year's swap." Something like "Last season's seeds and unopened packets are welcome" is clearer.
-- **"Free" opens the subline**, which slightly cuts against "not about saving money." I'd keep it, since people need to know there's no cost. You could move it later: "Seed swap at Alder Park, free and open to all."
-- **Hierarchy:** "No seeds to trade? Come anyway." is your most welcoming line, but it's buried in the subline. Consider giving it its own line or a slightly larger size so newcomers see it.
-- **Weather:** if the swap is outdoors by the pavilion, a short "rain or shine" or a rain plan would save you questions.
-- **Contact:** if people might have questions, add an email, a phone number, or a website to the footer.
+**Smaller notes:**
+- **"Seed packets from last year welcome"** is ambiguous. It could mean old store-bought packets, or seeds saved from last year's harvest. "Seeds saved from last year's garden are welcome, labeled if you can" is clearer.
+- **"Bring seeds you saved, leave with something new"** repeats the headline. You could use that space for the tone instead, for example "Trade a few envelopes, meet a few neighbors."
+- **"Free"** in the subline is fine. It's just clarity, and the headline still carries the trading idea.
+- **Weather:** if the swap could be rained out or moved, add a short line such as "Rain or shine" or a backup location. Pavilions usually make it a non-issue, but people will wonder.
+- **Contact:** consider adding an email or social handle to the footer for questions. This is optional.
 
-The headline and tone need no changes. Once you confirm the date, I'd say it's ready.
+Fix the date and the "last year" wording, and it's ready to print.

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halloran Piano Service</title>
+<style>
+:root{
+  --ebony:#17120e;
+  --panel:#1f1912;
+  --line:#3a3026;
+  --ivory:#f0e7d5;
+  --muted:#b8ab94;
+  --brass:#cfa85e;
+  --brass-dk:#17120e;
+  --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --s1:8px;--s2:16px;--s3:24px;--s4:48px;--s5:80px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);background:var(--ebony);color:var(--ivory);line-height:1.6}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--s2);padding:var(--s3) var(--s4);max-width:76rem;margin:0 auto}
+.logo{font-family:var(--serif);font-size:22px;letter-spacing:.01em;color:var(--ivory)}
+nav .links a{color:var(--muted);text-decoration:none;margin:0 14px;font-size:15px}
+nav .links a:hover{color:var(--ivory);text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--brass)}
+.btn{display:inline-block;padding:12px 24px;border-radius:3px;background:var(--brass);color:var(--brass-dk);font-weight:700;font-size:15px;text-decoration:none;border:1px solid var(--brass)}
+.btn:hover{background:var(--ivory);border-color:var(--ivory)}
+.btn.ghost{background:transparent;color:var(--ivory);border-color:var(--muted)}
+.btn.ghost:hover{border-color:var(--ivory);background:rgb(240 231 213 / .08)}
+
+/* keyboard strip: the one decorative element, a single octave repeated */
+.keys{height:26px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:
+  linear-gradient(90deg,transparent 15px,#17120e 15px 29px,transparent 29px) 0 0/154px 58% repeat-x,
+  linear-gradient(90deg,transparent 37px,#17120e 37px 51px,transparent 51px) 0 0/154px 58% repeat-x,
+  linear-gradient(90deg,transparent 81px,#17120e 81px 95px,transparent 95px) 0 0/154px 58% repeat-x,
+  linear-gradient(90deg,transparent 103px,#17120e 103px 117px,transparent 117px) 0 0/154px 58% repeat-x,
+  linear-gradient(90deg,transparent 125px,#17120e 125px 139px,transparent 139px) 0 0/154px 58% repeat-x,
+  repeating-linear-gradient(90deg,#e9dfc9 0 21px,#17120e 21px 22px)}
+
+.hero{max-width:76rem;margin:0 auto;padding:var(--s5) var(--s4) var(--s4)}
+.pill{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:var(--s3);padding-bottom:6px;border-bottom:1px solid var(--brass)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(36px,6vw,64px);line-height:1.08;margin:0 0 var(--s3);max-width:42rem;color:var(--ivory)}
+.sub{color:var(--muted);font-size:19px;max-width:38rem;margin:0 0 var(--s4)}
+.hero .btn{margin-right:10px;margin-bottom:10px}
+
+.cards{max-width:76rem;margin:0 auto;padding:0 var(--s4) var(--s5);display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.card{padding:var(--s3) var(--s3) var(--s3) 0;margin-right:var(--s3);border-top:2px solid var(--ivory);display:flex;flex-direction:column}
+.card:last-child{margin-right:0}
+.card h3{font-family:var(--serif);font-weight:400;font-size:26px;margin:var(--s1) 0 var(--s1);color:var(--ivory)}
+.card p{margin:0;color:var(--muted)}
+.card .price{margin-top:auto!important;padding-top:var(--s3);color:var(--brass);font-weight:700;font-variant-numeric:tabular-nums}
+.card .price:before{content:"";display:block;border-top:1px dotted var(--muted);margin-bottom:var(--s2);opacity:.6}
+
+.band{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band-in{max-width:76rem;margin:0 auto;padding:var(--s5) var(--s4);display:grid;grid-template-columns:1.4fr 1fr;gap:var(--s5)}
+.band h2,.cta h2{font-family:var(--serif);font-weight:400;font-size:32px;margin:0 0 var(--s2);color:var(--ivory)}
+.band p{color:var(--muted);margin:0;max-width:36rem}
+
+.cta{max-width:76rem;margin:0 auto;padding:var(--s5) var(--s4)}
+.cta p{color:var(--muted);max-width:36rem;margin:0 0 var(--s3)}
+.cta p a{color:var(--ivory);text-decoration-color:var(--brass);text-underline-offset:4px;white-space:nowrap}
+
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:var(--s3) var(--s4);max-width:76rem;margin:0 auto}
+
+@media (max-width:760px){
+  nav{padding:var(--s2) var(--s2)}
+  nav .links{order:3;width:100%}
+  nav .links a{margin:0 14px 0 0}
+  .hero{padding:var(--s4) var(--s2) var(--s3)}
+  .cards{grid-template-columns:1fr;padding:0 var(--s2) var(--s4)}
+  .card{margin-right:0;padding-right:0;margin-bottom:var(--s2)}
+  .band-in{grid-template-columns:1fr;gap:var(--s4);padding:var(--s4) var(--s2)}
+  .cta{padding:var(--s4) var(--s2)}
+  footer{padding:var(--s3) var(--s2)}
+}
+</style></head><body>
+<nav><span class="logo">Halloran Piano</span><div class="links"><a href="#services">Services</a><a href="#about">About</a><a href="#area">Service area</a><a href="#contact">Contact</a></div><a class="btn" href="#contact">Book now</a></nav>
+<div class="keys" aria-hidden="true"></div>
+<section class="hero">
+<span class="pill">Trusted piano experts</span>
+<h1>Elevate your sound with expert piano care</h1>
+<p class="sub">Seamless, professional tuning and repair for every piano, delivered right to your home anywhere in the Wendle valley.</p>
+<a class="btn" href="#contact">Get started</a> <a class="btn ghost" href="#services">Learn more</a>
+</section>
+<section class="cards" id="services">
+<div class="card"><h3>Tuning</h3><p>Precision tuning to A440 for perfect harmony, every time.</p><p class="price">$135 per visit, pitch raise add $45</p></div>
+<div class="card"><h3>Repairs</h3><p>Sticky keys, broken strings, squeaky pedals and worn hammers, fixed on site.</p><p class="price">From $60</p></div>
+<div class="card"><h3>Regulation</h3><p>Unlock your piano's full potential with a complete action adjustment.</p><p class="price">Quoted after inspection</p></div>
+</section>
+<section class="band"><div class="band-in">
+<div id="about"><h2>About Tom</h2><p>I've tuned and repaired pianos in the Wendle valley since 2003, from family uprights to the grand at Grace Chapel and the pianos at both high schools. Every visit includes a free check of the action and pedals.</p></div>
+<div id="area"><h2>Service area</h2><p>Wendle, Pike Hill, Coldbrook and anywhere within 30 miles. No travel charge.</p></div>
+</div></section>
+<section class="cta" id="contact"><h2>Ready to transform your piano?</h2><p>Call <a href="tel:+15550148822">(555) 014-8822</a> or email <a href="mailto:tom@halloranpiano.example">tom@halloranpiano.example</a>. I usually book about two weeks out.</p><a class="btn" href="tel:+15550148822">Book now</a></section>
+<footer>&copy; Halloran Piano Service. All rights reserved.</footer>
+</body></html>

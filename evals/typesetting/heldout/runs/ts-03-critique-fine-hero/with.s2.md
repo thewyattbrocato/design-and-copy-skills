@@ -1,36 +1,36 @@
-The setup is mostly sound. The lead and body sizes and leading are fine, and the scale is a reasonable five sizes. A few things are actually wrong.
+The hierarchy is sound. The sizes (11, 16, 20, 32 and 56px) each have a role, and the lead and body leading are right. The 1.05 leading on the h1 and its -0.02em tracking are correct for display size. There are four real problems.
 
-**1. The stats have no labels (the biggest problem).**
-"1,284 / 97 / 12,060" tells the reader nothing. Drills, streak days and strokes scored need a label each, and the card is the one place where the numbers are the content. The numbers also need `tabular-nums`, because they're stacked and right-aligned and proportional figures will make the right edges and digit widths wobble.
-
-**2. The eyebrow fails twice.**
-It's 11px, under the 12px floor, and it's all caps with `letter-spacing: 0`. Small caps text needs tracking to be readable.
-
-**3. The h1 will wrap to about three lines at 56px in 640px.**
-A fixed 56px on a phone will be huge. It needs `clamp()` and `text-wrap: balance` so it doesn't leave a stranded last word. 1.05 leading is tight for a multi-line heading, so I'd open it slightly to 1.1.
-
-**4. The body paragraph runs about 80+ characters per line.**
-That's over the comfortable range. Cap the paragraph, not the hero.
-
-Fixes:
-
+**1. The eyebrow is tiny, capitalised and untracked.**
+It's 11px uppercase with `letter-spacing: 0`, so the capitals look cramped and the size is below the 12px floor.
 ```css
-.eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: #6b5d3f; }
-h1 { font-size: clamp(2.25rem, 7vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; margin: 8px 0 16px; text-wrap: balance; }
-.body { font-size: 1rem; line-height: 1.5; margin: 0 0 24px; max-width: 60ch; text-wrap: pretty; }
-.stats { text-align: right; }
-.stat { font-size: 2rem; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums; }
-.stat-label { display: block; font-size: 0.875rem; line-height: 1.4; font-weight: 400; color: #5c5646; }
+.eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; }
 ```
 
+**2. The stats are bare numbers.**
+Nothing in the markup says what 1,284, 97 and 12,060 are. Without the labels (drills, streak days, strokes scored) they're decoration. The figures also use proportional digits, so in a stacked right-aligned column the digits won't line up.
 ```html
-<div class="stats">
-  <div class="stat">1,284 <span class="stat-label">drills completed</span></div>
-  <div class="stat">97 <span class="stat-label">day streak</span></div>
-  <div class="stat">12,060 <span class="stat-label">strokes scored</span></div>
-</div>
+<div class="stat"><span class="stat-label">Drills</span><span class="stat-num">1,284</span></div>
+<div class="stat"><span class="stat-label">Streak days</span><span class="stat-num">97</span></div>
+<div class="stat"><span class="stat-label">Strokes scored</span><span class="stat-num">12,060</span></div>
+```
+```css
+.stat { display: flex; justify-content: space-between; align-items: baseline; }
+.stat-num { font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat-label { font-size: 0.875rem; }
+```
+The label and number sit on one baseline. The label should be a small, dimmer shade of your text colour, not an opacity change. Drop the `text-align: right` on `.stats` once the labels are in.
+
+**3. The h1 is fixed at 56px.**
+On a phone, "Beautiful handwriting in ten minutes a day" will wrap to four or five lines and some words may break badly. Use a fluid size with a floor, and balance the wrap.
+```css
+h1 { font-size: clamp(2.25rem, 7vw, 3.5rem); text-wrap: balance; }
 ```
 
-The label wording is my guess from your description, so adjust it to match your copy.
+**4. The body measure is a little long.**
+At 16px inside a 640px container, lines run about 80 characters. Cap the paragraph itself, not the wrapper.
+```css
+.body { max-width: 65ch; text-wrap: pretty; }
+```
+This matters less if the text column is already narrowed by the stats card beside it.
 
-I left the lead paragraph, the body size, the h1 tracking and the colors alone. They hold up.
+I left everything else alone, including the lead and body sizes, the margins and the colours.

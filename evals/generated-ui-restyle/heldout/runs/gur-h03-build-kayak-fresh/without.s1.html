@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saltrow: trip log and tide windows for sea kayakers</title>
+<meta name="description" content="Saltrow logs every sea kayak trip and shows the tide and current windows for your saved launch spots. Coming to iPhone and Android in the spring.">
+<style>
+  :root{
+    --paper:#f2eee2;
+    --paper-2:#e9e4d4;
+    --ink:#13273a;
+    --muted:#4a5c6b;
+    --rule:rgba(19,39,58,.28);
+    --signal:#bf3f0a;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:17px;line-height:1.55;
+    background-image:
+      linear-gradient(var(--rule) 1px,transparent 1px),
+      linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+    background-size:100% 100%,100% 100%;
+    background-image:none;
+  }
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .mono{font-family:var(--mono);letter-spacing:.02em}
+  .tag{font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+
+  /* header */
+  header{border-bottom:2px solid var(--ink)}
+  header .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-top:18px;padding-bottom:14px;flex-wrap:wrap}
+  .brand{font-family:var(--serif);font-size:28px;font-weight:700;letter-spacing:.01em;text-decoration:none}
+  .brand span{color:var(--signal)}
+
+  /* hero */
+  .hero{padding:56px 0 48px;border-bottom:1px solid var(--rule)}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:40px}
+  @media(min-width:900px){.hero-grid{grid-template-columns:5fr 7fr;gap:56px;align-items:start}}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,6vw,60px);line-height:1.04;margin:14px 0 20px;letter-spacing:-.01em}
+  h1 em{font-style:italic;color:var(--signal)}
+  .lede{font-size:19px;max-width:34em;margin:0 0 28px}
+
+  form{max-width:30em}
+  label{display:block;font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .row{display:flex;gap:0;flex-wrap:wrap}
+  input[type=email]{
+    flex:1 1 220px;min-width:0;font:inherit;font-size:17px;padding:13px 14px;
+    background:#fbf9f2;color:var(--ink);border:2px solid var(--ink);border-right:0;border-radius:0;
+  }
+  input[type=email]::placeholder{color:#6b7885}
+  button{
+    font:inherit;font-weight:600;font-size:17px;padding:13px 20px;cursor:pointer;
+    background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:0;
+  }
+  button:hover{background:#0a1824}
+  input:focus-visible,button:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+  @media(max-width:520px){
+    input[type=email]{border-right:2px solid var(--ink);flex-basis:100%}
+    button{width:100%;margin-top:8px}
+  }
+  .fine{font-size:14px;color:var(--muted);margin:10px 0 0}
+  .ok{display:none;margin-top:12px;padding:10px 14px;border-left:4px solid var(--signal);background:var(--paper-2);font-size:16px}
+  .ok.show{display:block}
+
+  /* chart plate */
+  figure{margin:0}
+  .plate{border:2px solid var(--ink);padding:6px;background:var(--paper)}
+  .plate-inner{border:1px solid var(--ink);background:#f8f5ea;overflow-x:auto}
+  .plate svg{display:block;width:100%;min-width:560px;height:auto}
+  figcaption{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  /* sections */
+  section{padding:56px 0;border-bottom:1px solid var(--rule)}
+  h2{font-family:var(--serif);font-size:clamp(28px,4vw,38px);line-height:1.15;margin:8px 0 28px;max-width:20em}
+  .three{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+  .three li{display:grid;grid-template-columns:64px 1fr;gap:8px 16px;padding:22px 0;border-bottom:1px solid var(--rule)}
+  @media(min-width:800px){.three li{grid-template-columns:80px 260px 1fr;gap:24px}}
+  .num{font-family:var(--mono);font-size:30px;line-height:1;color:var(--signal)}
+  .three h3{font-family:var(--serif);font-size:23px;margin:0;line-height:1.2}
+  .three p{margin:0;max-width:36em}
+  @media(max-width:799px){.three li > div, .three li > p{grid-column:2}}
+
+  /* logbook */
+  .log-wrap{overflow-x:auto;margin-top:36px;border:2px solid var(--ink);background:#f8f5ea}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-family:var(--mono);font-size:14px}
+  caption{caption-side:top;text-align:left;padding:10px 14px;background:var(--ink);color:var(--paper);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{font-weight:400;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+  tr:last-child td{border-bottom:0}
+
+  /* price */
+  .price{display:grid;grid-template-columns:1fr;border:2px solid var(--ink)}
+  @media(min-width:760px){.price{grid-template-columns:1fr 1fr}}
+  .tier{padding:28px}
+  .tier + .tier{border-top:2px solid var(--ink)}
+  @media(min-width:760px){.tier + .tier{border-top:0;border-left:2px solid var(--ink)}}
+  .tier h3{font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 10px;font-weight:400;color:var(--muted)}
+  .amt{font-family:var(--serif);font-size:48px;font-weight:700;line-height:1}
+  .amt small{font-family:var(--sans);font-size:17px;font-weight:400;color:var(--muted)}
+  .tier ul{margin:18px 0 0;padding-left:1.1em}
+  .tier li{margin:6px 0}
+  .pro{background:var(--paper-2)}
+
+  .final{background:var(--ink);color:var(--paper);border-bottom:0}
+  .final h2{color:var(--paper)}
+  .final label{color:var(--paper)}
+  .final .fine{color:#b9c4cd}
+  .final input[type=email]{border-color:var(--paper)}
+  .final button{background:var(--signal);border-color:var(--signal);color:#fff}
+  .final button:hover{background:#a53607}
+  .final input:focus-visible,.final button:focus-visible{outline-color:#fff}
+  .final .ok{background:rgba(255,255,255,.1);color:var(--paper)}
+
+  footer{padding:24px 0 40px;font-size:14px;color:var(--muted)}
+  footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">Salt<span>row</span></a>
+    <span class="tag">Built by two paddlers · Gannet Sound</span>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="tag">Trip log + tide &amp; current windows</span>
+        <h1>Know when to go out. Know when to <em>be back.</em></h1>
+        <p class="lede">Saltrow is a trip log for sea kayakers. It also shows the tide and current windows for the launch spots you save, so you can see when a paddle makes sense and when you need to be off the water.</p>
+
+        <form class="waitlist" novalidate>
+          <label for="email-1">Join the waitlist</label>
+          <div class="row">
+            <input id="email-1" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            <button type="submit">Notify me</button>
+          </div>
+          <p class="fine">iPhone and Android, launching in the spring. One email when it's out, nothing else.</p>
+          <div class="ok" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <figure>
+        <div class="plate">
+          <div class="plate-inner">
+            <svg id="chart" viewBox="0 0 700 380" role="img" aria-labelledby="chart-title chart-desc">
+              <title id="chart-title">Sample tide and current chart for one launch spot</title>
+              <desc id="chart-desc">A tide height curve over a day with a low tide mid-morning. Below it, current speed drops to near zero at low tide. A shaded window marks when current is gentle, with a launch time at the start and a be-back-by time at the end.</desc>
+            </svg>
+          </div>
+        </div>
+        <figcaption>
+          <span>Sample day, Gannet Sound launch</span>
+          <span>Illustrative figures, not real tide data</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <span class="tag">What it does</span>
+      <h2>Three jobs, done without fuss.</h2>
+      <ol class="three">
+        <li>
+          <span class="num">01</span>
+          <h3>Log the trip</h3>
+          <p>Launch spot, route, distance, conditions, and who you paddled with. Written down the same way every time, so next season you can look back and see what a day was actually like.</p>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <h3>See the window</h3>
+          <p>Save the launch spots you use. Saltrow shows the tide and current for each one, so you can see when the water is moving gently and when it isn't.</p>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <h3>Plan the return</h3>
+          <p>The window has two ends. Saltrow shows both, so the time you need to be back is part of the plan before you leave the beach, not something you work out halfway across the sound.</p>
+        </li>
+      </ol>
+
+      <div class="log-wrap">
+        <table>
+          <caption>Example log entry</caption>
+          <thead>
+            <tr><th>Launch</th><th>Route</th><th>Distance</th><th>Conditions</th><th>With</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Gannet Sound</td><td>Out along the north shore, across, and back</td><td>9.5 km</td><td>Light wind, slack at midday, small chop</td><td>Two others</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="tag">Price</span>
+      <h2>Logging is free. Pro is four dollars a month.</h2>
+      <div class="price">
+        <div class="tier">
+          <h3>Saltrow</h3>
+          <div class="amt">Free</div>
+          <ul>
+            <li>Log every trip</li>
+            <li>Launch spot, route, distance, conditions, paddling partners</li>
+          </ul>
+        </div>
+        <div class="tier pro">
+          <h3>Saltrow Pro</h3>
+          <div class="amt">$4 <small>/ month</small></div>
+          <ul>
+            <li>Everything in the free version</li>
+            <li>Offline charts, for when the signal drops out on the water</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <span class="tag" style="color:#b9c4cd">Spring launch</span>
+      <h2>Get one email when Saltrow is ready.</h2>
+      <form class="waitlist" novalidate>
+        <label for="email-2">Email address</label>
+        <div class="row">
+          <input id="email-2" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          <button type="submit">Join the waitlist</button>
+        </div>
+        <p class="fine">There are two of us building this. We'll write when it's on iPhone and Android.</p>
+        <div class="ok" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Saltrow. Made by two paddlers who put in at Gannet Sound.</span>
+    <span>Tide and current information is a planning aid. It does not replace your own judgment on the water.</span>
+  </div>
+</footer>
+
+<script>
+/* Waitlist: this is front-end only. To collect emails, set a real endpoint
+   on the forms (action + method) or POST the address in the submit handler. */
+document.querySelectorAll('form.waitlist').forEach(function(f){
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var input=f.querySelector('input[type=email]');
+    var ok=f.querySelector('.ok');
+    var v=input.value.trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
+      ok.textContent='That email address doesn\u2019t look right. Check it and try again.';
+      ok.classList.add('show');input.focus();return;
+    }
+    ok.textContent='Thanks. We\u2019ll email you once, when Saltrow is out.';
+    ok.classList.add('show');
+    input.value='';
+  });
+});
+
+/* Sample tide + current chart (illustrative values) */
+(function(){
+  var svg=document.getElementById('chart'),NS='http://www.w3.org/2000/svg';
+  var INK='#13273a',SIG='#bf3f0a',MUT='#4a5c6b';
+  function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;svg.appendChild(e);return e}
+  var T0=6,T1=20,L=56,R=676,W=R-L;
+  function X(t){return L+(t-T0)/(T1-T0)*W}
+  var period=12.42,hi=4.0;
+  function tide(t){return 2.0+1.5*Math.cos(2*Math.PI*(t-hi)/period)}
+  function cur(t){return Math.abs(Math.sin(2*Math.PI*(t-hi)/period))*2.2}
+  var tTop=40,tBot=190,cTop=250,cBot=325;
+  function YT(h){return tBot-(h-0.5)/3.0*(tBot-tTop)}
+  function YC(c){return cBot-c/2.2*(cBot-cTop)}
+
+  /* window: current under 1.5 kn around the low */
+  var lowT=hi+period/2, lim=1.5/2.2;
+  var half=Math.asin(lim)/(2*Math.PI)*period;
+  var w0=lowT-half,w1=lowT+half;
+
+  el('rect',{x:X(w0),y:tTop-14,width:X(w1)-X(w0),height:cBot-tTop+14,fill:SIG,'fill-opacity':.13});
+
+  /* grid */
+  for(var h=6;h<=20;h+=2){
+    el('line',{x1:X(h),x2:X(h),y1:tTop,y2:cBot,stroke:INK,'stroke-opacity':.14});
+    el('text',{x:X(h),y:cBot+22,'text-anchor':'middle','font-family':'ui-monospace,Menlo,monospace','font-size':12,fill:MUT},(h<10?'0':'')+h+':00');
+  }
+  [1,2,3].forEach(function(m){
+    el('line',{x1:L,x2:R,y1:YT(m),y2:YT(m),stroke:INK,'stroke-opacity':.14});
+    el('text',{x:L-8,y:YT(m)+4,'text-anchor':'end','font-family':'ui-monospace,Menlo,monospace','font-size':12,fill:MUT},m+' m');
+  });
+  el('text',{x:L,y:tTop-22,'font-family':'ui-monospace,Menlo,monospace','font-size':12,fill:INK,'letter-spacing':'1.2'},'TIDE HEIGHT');
+  el('text',{x:L,y:cTop-10,'font-family':'ui-monospace,Menlo,monospace','font-size':12,fill:INK,'letter-spacing':'1.2'},'CURRENT SPEED');
+  [0,1,2].forEach(function(k){
+    el('text',{x:L-8,y:YC(k)+4,'text-anchor':'end','font-family':'ui-monospace,Menlo,monospace','font-size':12,fill:MUT},k+' kn');
+  });
+  el('line',{x1:L,x2:R,y1:cBot,y2:cBot,stroke:INK,'stroke-width':1.5});
+
+  /* tide line */
+  var d='',i,t;
+  for(i=0;i<=140;i++){t=T0+i/140*(T1-T0);d+=(i?'L':'M')+X(t).toFixed(1)+' '+YT(tide(t)).toFixed(1)}
+  el('path',{d:d,fill:'none',stroke:INK,'stroke-width':2.5,'stroke-linejoin':'round'});
+
+  /* current area */
+  var a='M'+X(T0)+' '+cBot;
+  for(i=0;i<=140;i++){t=T0+i/140*(T1-T0);a+='L'+X(t).toFixed(1)+' '+YC(cur(t)).toFixed(1)}
+  a+='L'+X(T1)+' '+cBot+'Z';
+  el('path',{d:a,fill:INK,'fill-opacity':.16,stroke:INK,'stroke-width':1.5});
+
+  /* window edges + labels */
+  function fmt(t){var h=Math.floor(t),m=Math.round((t-h)*60);if(m===60){h++;m=0}return (h<10?'0':'')+h+':'+(m<10?'0':'')+m}
+  el('line',{x1:X(w0),x2:X(w0),y1:tTop-14,y2:cBot,stroke:INK,'stroke-width':2});
+  el('line',{x1:X(w1),x2:X(w1),y1:tTop-14,y2:cBot,stroke:SIG,'stroke-width':2.5});
+  el('text',{x:X(w0)-8,y:tTop-2,'text-anchor':'end','font-family':'ui-monospace,Menlo,monospace','font-size':13,'font-weight':700,fill:INK},'LAUNCH '+fmt(w0));
+  el('text',{x:X(w1)+8,y:tTop-2,'font-family':'ui-monospace,Menlo,monospace','font-size':13,'font-weight':700,fill:SIG},'BE BACK BY '+fmt(w1));
+
+  /* low tide marker */
+  el('circle',{cx:X(lowT),cy:YT(tide(lowT)),r:5,fill:'#f8f5ea',stroke:INK,'stroke-width':2});
+  el('text',{x:X(lowT),y:YT(tide(lowT))+22,'text-anchor':'middle','font-family':'ui-monospace,Menlo,monospace','font-size':12,fill:INK},'low '+fmt(lowT));
+})();
+</script>
+</body>
+</html>

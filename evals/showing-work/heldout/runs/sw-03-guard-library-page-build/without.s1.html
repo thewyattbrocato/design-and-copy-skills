@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dotenv-diff – compare .env files from the command line</title>
+<meta name="description" content="dotenv-diff is a small Node CLI that compares two .env files and shows which keys are missing, extra or changed. Values are masked by default.">
+<style>
+:root {
+  --bg: #fafaf9;
+  --fg: #1c1917;
+  --muted: #57534e;
+  --border: #e7e5e4;
+  --card: #ffffff;
+  --code-bg: #1c1917;
+  --code-fg: #f5f5f4;
+  --accent: #0f766e;
+  --accent-fg: #ffffff;
+  --missing: #f87171;
+  --extra: #fbbf24;
+  --changed: #60a5fa;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0a09;
+    --fg: #f5f5f4;
+    --muted: #a8a29e;
+    --border: #292524;
+    --card: #1c1917;
+    --code-bg: #000000;
+    --code-fg: #f5f5f4;
+    --accent: #2dd4bf;
+    --accent-fg: #042f2e;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  font-size: 17px;
+}
+code, pre, kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+header.top {
+  border-bottom: 1px solid var(--border);
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+}
+nav .brand { font-weight: 700; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--fg); text-decoration: none; }
+nav ul { list-style: none; display: flex; gap: 1.25rem; margin: 0; padding: 0; flex-wrap: wrap; }
+nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+nav a:hover { color: var(--fg); text-decoration: underline; }
+.hero { padding: 3.5rem 0 2.5rem; }
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+.hero p.lead { font-size: 1.2rem; color: var(--muted); margin: 0 0 1.75rem; max-width: 40ch; }
+.btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--accent);
+}
+.btn.primary { background: var(--accent); color: var(--accent-fg); }
+.btn.secondary { color: var(--accent); background: transparent; }
+.btn:hover { opacity: 0.88; }
+.btn:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 1rem 1.15rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 1rem 0;
+}
+pre .c { color: #a8a29e; }
+pre .m { color: var(--missing); }
+pre .e { color: var(--extra); }
+pre .h { color: var(--changed); }
+:not(pre) > code {
+  background: color-mix(in srgb, var(--muted) 15%, transparent);
+  padding: 0.12em 0.4em;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+section { padding: 2.25rem 0; border-top: 1px solid var(--border); }
+section h2 { margin: 0 0 0.75rem; font-size: 1.5rem; letter-spacing: -0.01em; }
+section h3 { margin: 1.5rem 0 0.4rem; font-size: 1.05rem; }
+.features { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 1rem; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+}
+.card h3 { margin: 0 0 0.3rem; font-size: 1rem; }
+.card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.dot { display: inline-block; width: 0.65em; height: 0.65em; border-radius: 50%; margin-right: 0.45em; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+th, td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+td:first-child { white-space: nowrap; }
+.table-scroll { overflow-x: auto; }
+footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; color: var(--muted); font-size: 0.9rem; }
+footer a { color: var(--muted); }
+a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="brand" href="#top">dotenv-diff</a>
+      <ul>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#options">Options</a></li>
+        <li><a href="#exit-codes">Exit codes</a></li>
+        <li><a href="https://github.com/example/dotenv-diff">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <h1>See what's different between your .env files.</h1>
+      <p class="lead">dotenv-diff is a small Node CLI that compares two <code>.env</code> files and shows which keys are missing, extra or changed. Values are masked by default.</p>
+      <div class="btns">
+        <a class="btn primary" href="#install">Get started</a>
+        <a class="btn secondary" href="https://github.com/example/dotenv-diff">View on GitHub</a>
+      </div>
+      <pre aria-label="Example output"><span class="c">$ dotenv-diff .env .env.example</span>
+<span class="m">- missing</span>  STRIPE_KEY
+<span class="e">+ extra</span>    DEBUG_SQL
+<span class="h">~ changed</span>  DATABASE_URL  <span class="c">(values masked)</span></pre>
+    </div>
+
+    <section id="features">
+      <h2>What it does</h2>
+      <div class="features">
+        <div class="card">
+          <h3><span class="dot" style="background:var(--missing)"></span>Missing keys</h3>
+          <p>Keys present in one file but absent from the other.</p>
+        </div>
+        <div class="card">
+          <h3><span class="dot" style="background:var(--extra)"></span>Extra keys</h3>
+          <p>Keys that exist only in the file you're comparing against.</p>
+        </div>
+        <div class="card">
+          <h3><span class="dot" style="background:var(--changed)"></span>Changed values</h3>
+          <p>Keys in both files whose values differ.</p>
+        </div>
+        <div class="card">
+          <h3>Masked by default</h3>
+          <p>Values are hidden unless you ask for them, so output is safer to paste or log.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>Install</h2>
+      <p>Requires Node.js. Install globally with npm:</p>
+      <pre>npm install -g dotenv-diff</pre>
+    </section>
+
+    <section id="usage">
+      <h2>Usage</h2>
+      <p>Pass the two files you want to compare:</p>
+      <pre>dotenv-diff .env .env.example</pre>
+
+      <h3>Reveal values</h3>
+      <pre>dotenv-diff .env .env.example --show-values</pre>
+
+      <h3>Skip specific keys</h3>
+      <pre>dotenv-diff .env .env.example --ignore NODE_ENV,DEBUG</pre>
+
+      <h3>Machine-readable output</h3>
+      <pre>dotenv-diff .env .env.example --json</pre>
+    </section>
+
+    <section id="options">
+      <h2>Options</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Flag</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--show-values</code></td><td>Reveal values in the output. They are masked by default.</td></tr>
+            <tr><td><code>--ignore KEY1,KEY2</code></td><td>Comma-separated list of keys to skip.</td></tr>
+            <tr><td><code>--json</code></td><td>Print machine-readable JSON output.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="exit-codes">
+      <h2>Exit codes</h2>
+      <p>dotenv-diff exits with <code>1</code> if any key is missing, which makes it easy to use as a check in scripts and CI.</p>
+      <pre>dotenv-diff .env .env.example || echo "Some keys are missing"</pre>
+    </section>
+
+    <section id="license">
+      <h2>License</h2>
+      <p>Open source under the MIT license. Source code, issues and contributions live on <a href="https://github.com/example/dotenv-diff">GitHub</a>.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>dotenv-diff · MIT License · <a href="https://github.com/example/dotenv-diff">github.com/example/dotenv-diff</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

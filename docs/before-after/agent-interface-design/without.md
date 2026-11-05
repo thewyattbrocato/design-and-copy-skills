@@ -1,0 +1,1 @@
+A dark "Repairs desk" page: a header with the time and "Agent running", six count tiles (14 open, 3 needs you, 3 waiting on vendor, 4 booked, 1 on site, 3 done), a legend for the urgency levels, then a table of requests. The three that need Dede are expanded, each with what the agent needs from her, a call button and "Mark as handled".

@@ -1,42 +1,44 @@
-The table was already in good shape, with a caption, real header cells, right-aligned numbers and tabular figures. I made small changes:
-
-- **Cleaner markup:** the repeated inline styles are now two classes, so the table is easier to edit next season.
-- **Roomier rows:** padding goes up a little, which puts rows at about 42px and makes them easier to scan.
-- **Clearer last column:** the header now reads "Min. order (units)", so it's obvious that 24 means 24 buns and 2 means 2 tarts.
-- **Phone-friendly:** the table sits in a scrollable wrapper, so it won't squash if an owner opens it on a phone.
-- **Unchanged:** the items, prices, order quantities and wording of the caption.
+The table was already in good shape: real markup, right-aligned numbers, tabular figures, one hairline per row, and the unit in the header. I made a few small changes and left the data alone.
 
 ```html
-<div class="price-list" role="region" aria-labelledby="price-caption" tabindex="0">
-  <table>
-    <caption id="price-caption">Autumn wholesale prices, effective Oct 1. Prices per unit, excluding delivery.</caption>
-    <thead>
-      <tr>
-        <th scope="col">Item</th>
-        <th scope="col">Unit</th>
-        <th scope="col" class="num">Price (USD)</th>
-        <th scope="col" class="num">Min. order (units)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><th scope="row">Sourdough loaf</th><td>800 g</td><td class="num">4.20</td><td class="num">6</td></tr>
-      <tr><th scope="row">Seeded rye</th><td>700 g</td><td class="num">4.60</td><td class="num">6</td></tr>
-      <tr><th scope="row">Cardamom bun</th><td>each</td><td class="num">1.35</td><td class="num">24</td></tr>
-      <tr><th scope="row">Pear and almond tart</th><td>20 cm</td><td class="num">14.00</td><td class="num">2</td></tr>
-      <tr><th scope="row">Pumpkin loaf</th><td>600 g</td><td class="num">6.75</td><td class="num">4</td></tr>
-    </tbody>
-  </table>
+<div class="wrap" role="region" aria-labelledby="cap" tabindex="0">
+<table>
+  <caption id="cap">Autumn wholesale prices, effective Oct 1. Price is per item as sized in the Unit column, excluding delivery.</caption>
+  <thead>
+    <tr>
+      <th scope="col" class="t">Item</th>
+      <th scope="col" class="t">Unit</th>
+      <th scope="col" class="n">Price (USD)</th>
+      <th scope="col" class="n">Min. order (items)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row" class="t">Sourdough loaf</th><td>800 g</td><td class="n">4.20</td><td class="n">6</td></tr>
+    <tr><th scope="row" class="t">Seeded rye</th><td>700 g</td><td class="n">4.60</td><td class="n">6</td></tr>
+    <tr><th scope="row" class="t">Pumpkin loaf</th><td>600 g</td><td class="n">6.75</td><td class="n">4</td></tr>
+    <tr><th scope="row" class="t">Cardamom bun</th><td>each</td><td class="n">1.35</td><td class="n">24</td></tr>
+    <tr><th scope="row" class="t">Pear and almond tart</th><td>20 cm</td><td class="n">14.00</td><td class="n">2</td></tr>
+  </tbody>
+</table>
 </div>
-
 <style>
-.price-list{overflow-x:auto}
-.price-list table{border-collapse:collapse;font:15px/1.4 system-ui,sans-serif}
-.price-list caption{text-align:left;padding-bottom:8px;color:#444}
-.price-list th,.price-list td{padding:10px 16px 10px 0;border-bottom:1px solid #ddd;text-align:left}
-.price-list thead th{border-bottom:2px solid #999}
-.price-list tbody th{font-weight:400}
-.price-list .num{text-align:right;font-variant-numeric:tabular-nums}
+.wrap{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;font:15px/1.4 system-ui,sans-serif}
+caption{text-align:left;padding-bottom:8px;color:#444}
+th,td{padding:12px 20px 12px 0;border-bottom:1px solid #ddd;white-space:nowrap}
+thead th{border-bottom:2px solid #999}
+tbody th{font-weight:400}
+.t{text-align:left}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+td.n:last-child,th.n:last-child{padding-right:0}
+caption{white-space:normal}
 </style>
 ```
 
-If any of the café owners get this as an email, check that it renders properly first. Many email clients drop `<style>` blocks. If so, I can switch it back to inline styles.
+- **Row order:** I moved the pumpkin loaf up so the loaves sit together, followed by the bun and the tart. If you'd rather keep your original order, move that row back.
+- **Header and caption wording:** "Min. order" is now "Min. order (items)". The caption now says price is per item as sized in the Unit column, which fixes the clash between "per unit" and the Unit column.
+- **Row height:** Rows are a little taller (12px padding), so they're easier to scan. Prices and minimums still stay on one line.
+- **Phones:** The table sits in a scrollable, keyboard-focusable wrapper, so it won't squash on a narrow screen.
+- **Styles:** I moved the repeated inline styles into `.t` and `.n` classes. It looks the same, but it's easier to edit.
+
+If this goes out as an email, many mail clients drop `<style>` blocks and classes. Tell me if that's the plan, and I'll give you an inline-styled version.

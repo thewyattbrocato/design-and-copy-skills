@@ -1,148 +1,138 @@
-Assumptions: one brand, plain CSS, and a docs template (nav, article, TOC) alongside the marketing template. The numbers are starting points; I haven't tested them against your fonts or content.
+Assumptions: one brand, a plain CSS stack, and a docs shell with a left nav and a right table of contents. Treat the numbers as starting points and check them against your real articles.
 
 ## The rules
 
 | Decision | Value | Why |
 |---|---|---|
-| Breakpoints (3) | 40rem (640), 64rem (1024), 80rem (1280) | Phone → tablet → laptop. Layouts change only at these. |
-| Page gutter | `clamp(1rem, .5rem + 2.5vw, 2rem)` | 16px on phones, 32px on desktop. Fluid, so no breakpoint is needed. |
-| Grid gap | `clamp(1rem, .5rem + 2vw, 1.5rem)` | One gap for every card grid. |
-| Reading measure | `66ch` at body size (17px) | About 620px, which is 60–75 characters per line. |
-| Content width | `72rem` (1152px) | Feature rows and the pricing grid. |
-| Wide width | `80rem` (1280px) | Full-width code blocks and tables in marketing and long-form pages. Also the docs shell width. |
-| Docs article column | `48rem` (768px) | Prose stays at 66ch inside it. Code and tables use the full column, about 88 monospace columns at 14px. |
-| Docs nav / TOC | 15rem / 13rem | Nav appears at 64rem and above. TOC appears at 80rem and above. |
-| Column counts | 1 below 40rem, 2 from 40rem, 3 or 4 from 64rem | Set per grid with `--cols-md` and `--cols-lg`. |
-| Above 80rem | Nothing grows | Content stays centered, and only backgrounds go full-bleed. A big monitor gets margins. |
+| Breakpoints (3) | 40rem (640), 64rem (1024), 80rem (1280) | Phone to tablet, the point where the docs sidebar fits, and the point where the table of contents fits. |
+| Page max width | 80rem (1280) | Marketing and docs share it, so the header and footer line up. The page is centered above that and nothing scales up. |
+| Page margin | `clamp(1rem, 5vw, 2rem)` | 16px on small phones, 32px from about 640px up. |
+| Grid columns | 4, then 8 at 40rem, then 12 at 64rem | Marketing layouts snap to this grid. |
+| Column gap | 1rem, then 1.5rem at 64rem | |
+| Reading measure | 66ch for body prose | Applies in docs and marketing. |
+| Lead paragraph measure | 52ch | Shorter for large intro text. |
+| Heading measure | 24ch | Keeps headings from running into one long line. |
+| Body text | 1.0625rem (17px), line-height 1.6 | At 17px, 66ch is about 600px, which fits the narrowest docs column. |
+| Docs sidebar and TOC | 16rem and 14rem | Sidebar appears at 64rem, TOC at 80rem. Below that the TOC collapses to a block above the article. |
+| Code and tables | Fill the column up to its full width | Only text lines are held to the measure. Code and tables scroll horizontally inside their own wrapper and never wrap or shrink the page. |
 
-Only the reading measure is a text-width rule. Everything else is a container width, and prose never exceeds 66ch whichever page it is on.
+Doc content column width at the breakpoints: at 1024px it is about 664px, and at 1280px it is about 656px. Both are wider than the prose measure, so code and tables get the full column.
 
 ## CSS
 
 ```css
 :root {
+  /* widths and measure */
+  --width-page: 80rem;
+  --page-margin: clamp(1rem, 5vw, 2rem);
   --measure: 66ch;
-  --width-content: 72rem;
-  --width-wide: 80rem;
-  --width-docs-main: 48rem;
-  --width-nav: 15rem;
-  --width-toc: 13rem;
+  --measure-lead: 52ch;
+  --measure-heading: 24ch;
 
-  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2rem);
-  --grid-gap: clamp(1rem, 0.5rem + 2vw, 1.5rem);
-  --section-space: clamp(3rem, 2rem + 5vw, 6rem);
+  /* grid */
+  --grid-cols: 4;
+  --grid-gap: 1rem;
 
-  --text-body: 1.0625rem;
+  /* docs shell */
+  --docs-nav: 16rem;
+  --docs-toc: 14rem;
+  --docs-gap: 2.5rem;
+
+  --font-size-body: 1.0625rem;
+  --line-height-body: 1.6;
 }
 
-/* ---------- Page grid: prose < content < wide < full ---------- */
+/* Media queries can't read custom properties, so these are literals:
+   40rem / 64rem / 80rem. Keep them in sync with this file only. */
+@media (min-width: 40rem) { :root { --grid-cols: 8; } }
+@media (min-width: 64rem) { :root { --grid-cols: 12; --grid-gap: 1.5rem; } }
+
+body {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+/* page container: every page, every section */
 .page {
-  --content-extra: calc((var(--width-content) - var(--measure)) / 2);
-  --wide-extra: calc((var(--width-wide) - var(--width-content)) / 2);
-
-  font-size: var(--text-body); /* so ch resolves at body size */
-  display: grid;
-  grid-template-columns:
-    [full-start] minmax(var(--gutter), 1fr)
-    [wide-start] minmax(0, var(--wide-extra))
-    [content-start] minmax(0, var(--content-extra))
-    [prose-start] min(var(--measure), 100% - 2 * var(--gutter))
-    [prose-end] minmax(0, var(--content-extra))
-    [content-end] minmax(0, var(--wide-extra))
-    [wide-end] minmax(var(--gutter), 1fr)
-    [full-end];
+  inline-size: min(100% - 2 * var(--page-margin), var(--width-page));
+  margin-inline: auto;
 }
-.page > * { grid-column: prose; min-width: 0; }
-.page > .content { grid-column: content; }
-.page > .wide    { grid-column: wide; }
-.page > .full    { grid-column: full; }
 
-.prose { font-size: var(--text-body); line-height: 1.65; }
-.prose > :where(p, ul, ol, blockquote) { max-width: var(--measure); }
-.measure-narrow { max-width: 45ch; } /* hero subheads, feature copy */
-
-.section { padding-block: var(--section-space); }
-
-/* ---------- Card grid (pricing, features, logos) ---------- */
+/* the grid */
 .grid {
   display: grid;
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
   gap: var(--grid-gap);
-  grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr));
 }
-@media (min-width: 40rem) { .grid { --cols: var(--cols-md, 2); } }
-@media (min-width: 64rem) { .grid { --cols: var(--cols-lg, 3); } }
+.grid > * { grid-column: 1 / -1; }  /* default: full width; spans below */
 
-/* 3 tiers: stack until 64rem (avoids a 2+1 orphan). 4 tiers: 2x2 then 4. */
-.grid--pricing-3 { --cols-md: 1; --cols-lg: 3; }
-.grid--pricing-4 { --cols-md: 2; --cols-lg: 4; }
+/* reading measure: text is capped, wide content is not */
+.prose > * { max-inline-size: var(--measure); }
+.prose > pre,
+.prose > .table-wrap,
+.prose > figure,
+.prose > .callout { max-inline-size: none; }
+.lead { max-inline-size: var(--measure-lead); }
+h1, h2 { max-inline-size: var(--measure-heading); text-wrap: balance; }
 
-/* ---------- Feature row ---------- */
-.feature-row { display: grid; gap: var(--grid-gap); align-items: center; }
-@media (min-width: 64rem) {
-  .feature-row { grid-template-columns: 1fr 1fr; gap: calc(var(--grid-gap) * 2); }
-  .feature-row--flip > :first-child { order: 2; }
-}
-
-/* ---------- Code and tables: scroll inside, never wrap or blow out ---------- */
+/* code and wide tables scroll in place */
 pre {
   overflow-x: auto;
-  white-space: pre;
-  tab-size: 2;
   font-size: 0.875rem;
-  max-width: 100%;
+  line-height: 1.5;
+  tab-size: 2;
+  white-space: pre;
 }
-.table-scroll { overflow-x: auto; max-width: 100%; } /* add tabindex="0" in markup */
-.table-scroll table { min-width: 100%; width: max-content; }
+.table-wrap { overflow-x: auto; }        /* add tabindex="0" in markup so it's keyboard-scrollable */
+.table-wrap > table { min-inline-size: 100%; }
+.prose :not(pre) > code { overflow-wrap: anywhere; }  /* long identifiers don't push the page wide */
 
-/* In .page layouts, opt long code and tables out to the wide column: */
-.page > :is(pre, .table-scroll) { grid-column: wide; }
-
-/* ---------- Docs shell: nav | article | TOC ---------- */
+/* docs shell */
 .docs {
-  --docs-gap: 2rem;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--docs-gap);
-  padding-inline: var(--gutter);
-  max-width: calc(var(--width-wide) + 2 * var(--gutter));
-  margin-inline: auto;
 }
-.docs-nav, .docs-toc { display: none; }  /* nav becomes a disclosure under 64rem */
-
+.docs-nav { display: none; }             /* drawer below 64rem */
 @media (min-width: 64rem) {
-  .docs { grid-template-columns: var(--width-nav) minmax(0, var(--width-docs-main)); }
+  .docs { grid-template-columns: var(--docs-nav) minmax(0, 1fr); }
   .docs-nav { display: block; position: sticky; top: 1rem; align-self: start; }
 }
 @media (min-width: 80rem) {
-  .docs { grid-template-columns: var(--width-nav) minmax(0, var(--width-docs-main)) var(--width-toc); }
-  .docs-toc { display: block; position: sticky; top: 1rem; align-self: start; }
+  .docs { grid-template-columns: var(--docs-nav) minmax(0, 1fr) var(--docs-toc); }
+  .docs-toc { position: sticky; top: 1rem; align-self: start; }
 }
-/* Docs article: prose keeps the measure, code and tables take the full column. */
-.docs main { min-width: 0; }
+@media (max-width: 79.999rem) {
+  .docs-toc { order: -1; }               /* collapsed block above the article */
+}
+
+/* marketing: feature rows on the 12-col grid */
+@media (min-width: 64rem) {
+  .feature-row > .feature-text  { grid-column: 1 / span 5; align-self: center; }
+  .feature-row > .feature-media { grid-column: 6 / span 7; }
+  .feature-row.is-reversed > .feature-text  { grid-column: 8 / span 5; grid-row: 1; }
+  .feature-row.is-reversed > .feature-media { grid-column: 1 / span 7; grid-row: 1; }
+}
+
+/* marketing: pricing grid (stacked below 64rem, three across above) */
+.pricing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gap);
+  max-inline-size: 36rem;
+  margin-inline: auto;
+}
+@media (min-width: 64rem) {
+  .pricing {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-inline-size: none;
+  }
+}
 ```
 
-## Markup
+## How to use it
 
-```html
-<!-- Marketing -->
-<main class="page">
-  <h1>…</h1>
-  <p class="measure-narrow">…</p>
-  <section class="content section">
-    <div class="grid grid--pricing-3">…cards…</div>
-  </section>
-  <div class="full" style="background: …">…</div>
-</main>
-
-<!-- Docs: nav, article, TOC -->
-<div class="docs">
-  <nav class="docs-nav">…</nav>
-  <main class="prose">…</main>
-  <aside class="docs-toc">…</aside>
-</div>
-```
-
-## Notes
-
-- Media queries can't read custom properties, so the three breakpoints appear as literals. Keep them identical everywhere.
-- On long-form pages that use `.page`, code blocks and tables go out to the wide column. In docs they use the 48rem article column, and anything wider scrolls inside its own box. Check your widest real table against that column before shipping.
+- Wrap every page section in `.page`. Docs articles use `.docs` inside it, with the article body in `.prose`. Marketing text blocks also use `.prose`, so both agree on the measure.
+- Make new layouts span the 12 columns (5 and 7, 4 and 4 and 4, 6 and 6) instead of adding widths.
+- Always give grid and flex children `minmax(0, 1fr)` or `min-width: 0`. Otherwise one wide table or code block stretches the whole page.
+- If you have more than three pricing tiers, move the 36rem cap to the 40rem breakpoint and use two columns between 40rem and 64rem.

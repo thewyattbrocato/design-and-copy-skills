@@ -1,151 +1,160 @@
-## The rules
+The rules below use one set of tokens and one page frame. Articles, the front page, and the pricing grid all cap at the same content width, and the prose column is set in `ch` so it scales with the type.
 
-Three widths, one set of breakpoints, and one column rule for every grid.
+## The numbers
 
-| Token | Value | Used for |
-|---|---|---|
-| `--page-max` | 1280px | Outer container for marketing and docs, including gutters |
-| `--wide-max` | 1080px | Code blocks, tables, figures, pricing and feature grids |
-| `--measure` | 68ch (about 680px at 18px) | Running prose, headings, lists |
-| `--gutter` | 16px / 24px / 40px / 48px | Side padding by breakpoint |
+| Token | Phone `<600px` | Tablet `600–899` | Small desktop `900–1199` | Desktop `≥1200` |
+|---|---|---|---|---|
+| Columns | 4 | 8 | 12 | 12 |
+| Gutter | 16px | 20px | 24px | 24px |
+| Page margin | 16px | 24px | 32px | 40px |
+| Prose measure | 65ch (capped by screen width) | 65ch | 65ch | 65ch |
+| Max content width | fluid | fluid | fluid | 1120px |
 
-Breakpoints: **<640** phone, **640–1023** tablet, **1024–1439** laptop and desktop, **≥1440** large monitor. Above 1440 the layout stops growing: the container stays at 1280px and centers.
+- **Body text:** 17px (`1.0625rem`), line-height 1.6, the same at every size. Phones get no smaller type.
+- **Reading measure:** `65ch` is about 70 characters of English prose, inside the 45–75 range.
+- **Max content width:** 1120px for everything: code, tables, feature rows, pricing. A big monitor gets more whitespace, not wider columns.
 
-Grid: a 12-column grid with a 16px gap on phones and a 24px gap from 640px up. Items use `span 12` on phones, `span 6` on tablets, and `span 4` on desktop. Column counts are set per breakpoint, not with `auto-fit`, so rows never end with orphaned items.
-
-Reading measure: prose is capped at 68ch. Code, tables and figures can extend to 1080px. Nothing in the page scrolls sideways except inside its own code or table box.
-
-## CSS
+## The CSS
 
 ```css
 :root {
-  /* Widths */
-  --page-max: 1280px;
-  --wide-max: 1080px;
-  --measure: 68ch;
+  /* Type */
+  --font-body: 1.0625rem;   /* 17px at every size */
+  --line-body: 1.6;
 
-  /* Gutters and gaps: phone first */
-  --gutter: 1rem;          /* 16px */
-  --grid-gap: 1rem;        /* 16px */
-
-  /* Type: body size steps up with the viewport */
-  --text-body: 1.0625rem;  /* 17px */
-  --leading-body: 1.6;
+  /* Layout tokens: change here only */
+  --cols: 4;
+  --gutter: 16px;
+  --margin: 16px;
+  --measure: 65ch;          /* prose line length */
+  --wide: 1120px;           /* max content width for every page */
+  --tiers: 4;               /* pricing tiers */
 }
 
-/* Tablet: 640px */
-@media (min-width: 40rem) {
-  :root {
-    --gutter: 1.5rem;      /* 24px */
-    --grid-gap: 1.5rem;    /* 24px */
-  }
+@media (min-width: 600px) {
+  :root { --cols: 8; --gutter: 20px; --margin: 24px; }
+}
+@media (min-width: 900px) {
+  :root { --cols: 12; --gutter: 24px; --margin: 32px; }
+}
+@media (min-width: 1200px) {
+  :root { --margin: 40px; }
 }
 
-/* Desktop: 1024px */
-@media (min-width: 64rem) {
-  :root {
-    --gutter: 2.5rem;      /* 40px */
-    --text-body: 1.125rem; /* 18px */
-    --leading-body: 1.65;
-  }
+body {
+  font-size: var(--font-body);
+  line-height: var(--line-body);
 }
 
-/* Large monitor: 1440px. Container stops growing here. */
-@media (min-width: 90rem) {
-  :root {
-    --gutter: 3rem;        /* 48px */
-  }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* Page container: every page and section uses this */
-.container {
+/* Page frame: every page wraps its content in this */
+.page {
   width: 100%;
-  max-width: var(--page-max);
+  max-width: calc(var(--wide) + 2 * var(--margin));
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  padding-inline: var(--margin);
 }
 
-/* Articles: running text is capped at the measure */
-.prose {
-  max-width: var(--measure);
-  margin-inline: auto;
-  font-size: var(--text-body);
-  line-height: var(--leading-body);
+/* Articles: prose in the middle column, blocks that need room span the full width */
+.article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(var(--measure), 100%) minmax(0, 1fr);
+}
+.article > * {
+  grid-column: 2;
+}
+.article > :where(pre, table, figure, .table-wrap, .wide) {
+  grid-column: 1 / -1;
+  min-width: 0;
 }
 
-/* Wide blocks: code, tables, figures, grids */
-.wide {
-  width: 100%;
-  max-width: var(--wide-max);
-  margin-inline: auto;
+/* Long code and wide tables scroll inside their own box, never the page */
+pre {
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
-
-/* Code and tables scroll inside their own box, never the page */
-.wide pre,
-.prose pre,
-.table-scroll {
+.table-wrap {
   overflow-x: auto;
 }
+.table-wrap table {
+  width: max-content;
+  min-width: 100%;
+}
 
-.table-scroll {
+/* Long unbroken strings (URLs, identifiers) must not push the measure wider */
+.article p,
+.article li {
+  overflow-wrap: anywhere;
+}
+
+/* Media never exceeds its column */
+img, video, svg {
   max-width: 100%;
+  height: auto;
 }
 
-.table-scroll table {
-  width: 100%;
-  min-width: 36rem; /* below this, the box scrolls */
-  border-collapse: collapse;
-}
-
-/* 12-column grid */
+/* Marketing: 12-column (or 4/8-column) grid inside the same page frame */
 .grid {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gap);
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: var(--gutter);
 }
 
-.grid > * {
-  min-width: 0;          /* lets long code and text shrink instead of overflowing */
-  grid-column: span 12;  /* phone: one per row */
+/* Feature rows: stacked on phone, split 5/6 on desktop */
+.feature {
+  display: grid;
+  gap: var(--gutter);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .feature {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .feature__text  { grid-column: 1 / span 5; }
+  .feature__media { grid-column: 7 / span 6; }
 }
 
-@media (min-width: 40rem) {
-  .grid > * { grid-column: span 6; }   /* tablet: two per row */
+/* Pricing: 1 column, then 2, then one column per tier */
+.pricing {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: minmax(0, 1fr);
 }
-
-@media (min-width: 64rem) {
-  .grid > * { grid-column: span 4; }   /* desktop: three per row */
+@media (min-width: 600px) {
+  .pricing { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-
-/* Three-tier pricing and other 3-item sets: one column until desktop. */
-.grid-tiers {
-  max-width: var(--wide-max);
-  margin-inline: auto;
-}
-
-.grid-tiers > * {
-  grid-column: span 12;
-}
-
-@media (min-width: 64rem) {
-  .grid-tiers > * { grid-column: span 4; }
+@media (min-width: 1200px) {
+  .pricing { grid-template-columns: repeat(var(--tiers), minmax(0, 1fr)); }
 }
 ```
 
-## How the pieces fit
+## Usage
 
-- **Marketing front page:** wrap sections in `.container`. Feature rows use `.grid` with 12, 6 or 4 spans. The pricing grid uses `.grid-tiers`, which is one column until 1024px and then three columns. Use `.wide` for the pricing block so the cards stop at 1080px on big monitors.
-- **Articles:** body text goes in `.prose`. Code blocks, tables and figures go in `.wide`, which lets them be wider than the text column without breaking the page.
-- **Tables:** wrap each table in `.table-scroll`. The 36rem `min-width` keeps columns readable, and the wrapper scrolls on phones.
+```html
+<main class="page">
+  <article class="article">
+    <h1>Title</h1>
+    <p>Prose sits in the measured column.</p>
+    <pre><code>long code scrolls inside this block</code></pre>
+    <div class="table-wrap"><table>…</table></div>
+  </article>
+</main>
 
-## Caveats
+<main class="page">
+  <section class="feature">
+    <div class="feature__text">…</div>
+    <div class="feature__media"><img src="…" alt=""></div>
+  </section>
+  <section class="pricing" style="--tiers: 3">…</section>
+</main>
+```
 
-- I haven't looked at your existing CSS, so the token names are placeholders. Map them onto whatever you already use.
-- The breakpoints use `rem`, which assumes the default 16px root size. If your root size is changed, the breakpoints move with it, which is usually what you want for accessibility.
-- The `span 6` rule for tablets fits feature rows well. If a row has an odd count on tablet, give the last item `grid-column: 1 / -1`.
+## Why these choices
+
+- **One frame for everything.** Articles and the marketing page both use `.page`, so the left and right edges line up from one page to the next.
+- **Measure in `ch`, not px.** `65ch` tracks the font. Set it on the element that holds the text.
+- **Wide content is not wider prose.** Code and tables get the full 1120px. Prose stays at 65ch, so the reading column does not change between pages.
+- **Scroll, don't squeeze.** Long code and wide tables scroll in their own box on phones. The page never scrolls sideways.
+- **Pricing counts fixed.** I assumed 4 tiers. Pass `--tiers` for a different count. With 3 tiers, the 1200px step gives three even columns. If the grid has to step at 900px instead, move that rule.
+
+I did not check for existing CSS in the working directory, since it has no project files and is not a git repo. If you already have stylesheets, the tokens in `:root` are the part to map onto them.

@@ -1,7 +1,10 @@
-The digits are probably proportional, so each one has a different width and the decimal points drift out of line. Add this to the total column:
+The numbers are probably left-aligned or in a proportional font, so the decimals don't line up. Fix both:
 
 ```css
-td.total { font-variant-numeric: tabular-nums; text-align: right; }
+td.total {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
 ```
 
-Right-alignment only lines up the decimals if every row has two decimals, so format each amount with two (`$98.00`, not `$98`).
+Right-alignment lines up the decimal points because every value has two decimals. Tabular figures give every digit the same width. Use the same two-decimal format on every row.

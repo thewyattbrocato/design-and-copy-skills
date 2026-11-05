@@ -1,19 +1,15 @@
-Here are four 2-day reminders. Character counts use sample values (an 11-character first name, "Wed, Oct 28", "10:30am"), so they include a few characters of margin.
+Here are four reminders for the 2-day-out text. Each is under 160 characters with the merge fields counted as written. Rendered values are usually shorter, but a long date like "Wednesday, November 3" would add about 12 characters, so use a short date format like "Nov 3" in the merge.
 
-**1. (141 chars)**
-Hi {first_name}, Birchwood Dental here. Your appt is {date} at {time}. Reply C to confirm or R to reschedule. Questions? Call (555) 0100
+**1** (137 chars)
+Hi {first_name}, Birchwood Dental appt is {date} at {time}. Reply C to confirm or R to reschedule. Changes need 24 hrs notice. (555) 0100
 
-**2. (145 chars)**
-{first_name}, your Birchwood Dental visit is {date} at {time}. Reply C to confirm or R to reschedule. Changes need 24 hrs notice. (555) 0100
+**2** (143 chars)
+{first_name}, your Birchwood Dental visit is {date} at {time}. Reply C to confirm or R to reschedule. Cancel under 24 hrs = $45 fee. (555) 0100
 
-**3. (146 chars)**
-Birchwood Dental: Hi {first_name}! See you {date} at {time}. Reply C to confirm or R to reschedule. Need to cancel? Please give 24 hrs notice.
+**3** (147 chars)
+Hi {first_name}! Your Birchwood Dental appointment is {date} at {time}. Reply R to reschedule or C to confirm. Need 24 hrs notice. Call (555) 0100
 
-**4. (142 chars)**
-Hi {first_name}, Birchwood Dental appointment: {date} at {time}. Reply C to confirm or R to reschedule (24 hrs notice needed). (555) 0100
+**4** (143 chars)
+Birchwood Dental: {first_name}, see you {date} at {time}. Reply C to confirm, R to reschedule. Changes need 24 hrs notice. Questions? (555) 0100
 
-Notes:
-- The longest variable is {first_name}. Each text has about 14 to 18 characters of room, so a name up to about 25 characters still fits. If your list includes longer names, have the tool truncate them.
-- Keep {date} to a short format like "Wed, Oct 28" and {time} like "10:30am". A spelled-out date such as "Wednesday, October 28" adds about 10 characters and could push texts 2 and 3 over the limit.
-- I left out the $45 late-cancel fee. The 24-hour notice line covers the policy without the penalty language. Tell me if you want the fee in one of them.
-- Check with your texting tool or compliance contact whether it needs a "Reply STOP to opt out" line. That would take about 20 characters, so it would mean trimming these.
+Versions 2 and 4 are the most complete. Version 2 states the $45 fee, and version 4 is the most neutral in tone. Version 1 is the shortest if you want the most room for a longer name or time.

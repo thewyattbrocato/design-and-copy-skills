@@ -1,32 +1,26 @@
-I'm assuming the usual fields: location, date, employee, role, start and end time, break, notes, and repeat. Prefilled values should be visible in the control and easy to change. Never apply them silently.
+Prefill a field when the guess is right most of the time and a wrong guess is obvious and cheap to fix. Leave it blank when a wrong guess would be accepted without anyone noticing, or when the field is the actual decision. I'm assuming the usual fields: location, date, start and end time, employee, role, break, notes and repeat.
 
 ## Prefill
 
 | Field | Prefill from | Notes |
 |---|---|---|
-| **Location** | The location open right now | If the manager has only one, show it as text, not a control. If they have several, keep a select. This is the highest-value default, because a wrong location puts the shift on the wrong schedule. |
-| **Date** | Today, or the date of the schedule view they came from | If they opened "New shift" from a day or week column, use that day. Today is the fallback. |
-| **Start and end time** | The most common start and end among their last 20 shifts at this location | Use the mode, not the last shift, so one odd shift doesn't skew it. Better still, key it to the role: once a role is chosen, switch to that role's typical times. |
-| **Break** | Same as the times, taken from recent shifts with the same role or length | Only prefill if the pattern is consistent. |
-| **Role** | The selected employee's usual role | This only applies if the employee is chosen first (see below). |
-| **Repeat** | "Does not repeat" | Only prefill a repeat pattern if the manager has created repeating shifts in most of their last 20. |
+| **Location** | The location they have open now | If they have only one, don't show it as a field. Show it as text in the heading. |
+| **Date** | The day they clicked in the calendar. Otherwise the date of the last shift they created. | Don't default to today. Managers mostly schedule ahead, and a same-day shift accepted by accident is costly. Use today's date only to stop the picker from allowing past dates. |
+| **Start and end time** | The most common pair among their last 20 shifts at this location | The most common pair beats the last one, which may have been a one-off. Show them as real values in the field, not grey placeholder text. |
+| **Role** | The chosen employee's usual role | This only works if the employee comes first. If the manager picks the role first, filter the employee list by it and leave the employee blank. |
+| **Break length** | The most common value in the last 20 shifts | Same method as the times. |
+| **Repeat** | "Does not repeat" | This is a safe default. A wrong "repeats weekly" creates a lot of bad shifts. |
 
 ## Leave blank on purpose
 
-- **Employee.** A guessed employee is the costliest wrong default. It looks finished, gets saved unnoticed, and puts the wrong person on the schedule. You can help without prefilling: sort the list by who is likely (usual role, available, not already scheduled) and let the manager pick.
-- **Notes.** There's no pattern to predict, and the field is optional anyway. Label it "optional".
-- **Anything that notifies or commits people.** This includes "notify employee" and "publish". Show these as a visible choice, not a hidden default. If you do default them, show the default in the control.
+- **Employee.** This is the main decision on the screen. A wrong prefill gets saved, and the wrong person may get notified. Make it quick to fill with a searchable list that puts people from recent shifts first. Offer "Open shift (unassigned)" as an explicit choice.
+- **Notes.** Notes are specific to one shift, and a carried-over note will be wrong.
+- **Anything with pay or cost impact**, such as overtime flags or rate overrides. Set these deliberately.
 
-## Field order
+## Practical details
 
-Put **employee first** if you can. Choosing them fills role, and the role fills the times. The manager answers one question and three fields follow. If your managers think "I need a closer Friday" rather than "I need Sam", put role first instead and filter employees by it.
-
-## Rules to keep it safe
-
-1. **Prefilled values must look editable and be visible.** Don't use gray placeholder text, which reads as empty. Use real values.
-2. **When a change cascades, say so.** If picking a role changes the times, update them, but not if the manager has already edited the times by hand. Don't overwrite manual input.
-3. **Prefill only when the pattern is strong.** For example, if one start time covers about 60% or more of recent shifts, use it. Otherwise leave the field blank rather than showing a coin-flip guess.
-4. **Keep the button pressable and specific.** "Add shift" is better than "Submit". After a save, keep the manager on the form with the location and date retained, so they can add a second shift in a few seconds.
-5. **Offer "Duplicate shift"** on existing shifts as a second route. For many managers it will beat any prefill.
-
-I left the thresholds out on purpose, because they should come from your real shift data. If you can look at the last 20 shifts for a handful of managers, check how often the mode start time matches the next shift before you commit to the defaults.
+- Show prefilled values as ordinary editable values, with the same styling as typed ones. Don't use grey placeholder text, because people read that as empty.
+- Validate on save, not on load. Prefilled values shouldn't open with errors showing.
+- Add a "Copy a recent shift" action that lists the last few shifts. It covers the cases where the guessed times or role are wrong, and it's often faster than editing fields.
+- After "Save and add another", keep the date, location and times. Clear only the employee and notes. Managers often enter a whole day's shifts in one sitting.
+- Prefill is a guess, so don't hide the fields it fills. Use an "Edit" toggle only if it's a lot of fields.

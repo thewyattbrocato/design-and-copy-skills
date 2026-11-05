@@ -1,47 +1,37 @@
-# Linenote pricing page
+# Meeting notes your whole agency can find again
 
-**Meeting notes for small agencies, tied to your calendar.**
-Linenote pulls each meeting from Google Calendar, gives you a notes page ready for it, and exports the finished notes to Word to send to the client.
+Linenote turns every client meeting into notes your team can use. It pulls meetings from Google Calendar and exports finished notes to Word, so you can send them to clients in a format they already open.
 
-## $9 per user per month
+## Pricing
 
-One plan. Everyone on your team gets the same thing.
+**$9 per user per month**
 
-**What's included**
-- Google Calendar connection: your meetings show up as note pages
-- Export to Word (.docx) for client-ready notes
-- [anything else that's in the plan, e.g. number of notes or storage limits, or say "no limits" only if true]
+- Meetings sync from Google Calendar
+- Export notes to Word
+- [Add any other included features]
 
-**Terms**
-- Billed [monthly/annually]. [Yearly total per user: $108 if billed monthly]
-- [Free trial: length, whether a card is needed, and the date and amount of the first charge, or "no trial"]
-- Cancel [how, and any notice period].
-- [Refund policy]
+[Start button text] · [Trial or free plan: say whether a card is needed and the date and amount of the first charge, or that there is none]
 
-[Start with Linenote]
+Billing, renewal and cancellation: [add how billing works, the renewal price, and how to cancel]. Refunds: [refund policy]. [Link to full terms]
+
+## How it works
+
+1. Connect Google Calendar.
+2. Take notes against each meeting.
+3. Export to Word and send.
 
 ## Who builds it
 
-Linenote is made by a team of three and launched in March. If you hit a problem, you'll be talking to the people who build it. [Support email and typical reply time, if you want to state one.]
+Linenote is made by a team of three and launched in March. We built it for small agencies, and we read every message you send us at [support email].
 
-## What a customer says
+## What customers say
 
-> [Add a real quote from a real customer, with their name and agency. Even one line from an early user works. Ask for permission to use it.]
-> — [Name, role, agency]
+[Add a real quote, with the person's name, agency and permission to use it. Ask your first few users for one.]
 
-## What Linenote does and doesn't do
+---
 
-| | Linenote |
-|---|---|
-| Google Calendar connection | Yes |
-| Export to Word | Yes |
-| [Other calendars, PDF export, etc.] | [Yes/Not yet] |
+I left out four things you asked for because they aren't true, and a visitor or competitor could easily catch them.
+- **Claims and quote:** "1,200+ agencies", the invented customer and the "only app that does this" claim. A made-up testimonial also breaks advertising rules in many places.
+- **Price comparison:** a crossed-out $15 "regular price" is only allowed if you actually charged $15. "Cheapest" needs a competitor check, and I can't confirm it.
 
-## Questions
-
-**Does it work with Outlook calendars?** [Answer]
-**Can I take my notes with me if I leave?** Yes, you can export to Word. [Confirm that covers all notes.]
-
-Notes:
-- I left out "Trusted by 1,200+ agencies", the invented quote, "cheapest", "the only app", the crossed-out $15 and the win-everything table. They're false, and in many places false claims and fake reviews or reference prices are illegal, so check the rules where you sell. A visitor who spots one will doubt everything else on the page.
-- Once you have real numbers, add them where the placeholders are, for example "Used by [N] agencies" or a real price comparison. A table naming specific competitors should list only things you've checked, including the ones where they win.
+If you want a comparison table, give me the real features and prices of two or three competitors and I'll build one that shows where you win. Check your local rules on trials, auto-renewal and price claims before you publish.

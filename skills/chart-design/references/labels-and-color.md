@@ -42,7 +42,7 @@ Color has three jobs: highlight, separate categories, and encode magnitude. Pick
 
 **Categories.** Use hue to separate categories. Keep it to about six to eight hues at most; beyond that, readers cannot match colors to a key, so use direct labels, grouping, or small multiples. Keep one category's color the same in every related chart. Choose hues with similar lightness so none looks more important by accident. If color is the only difference between lines, also vary the line style or add direct labels.
 
-**Sequential (low to high).** A single hue ramp from light to dark, with even perceived steps, for magnitude on maps and heat tables. Higher values should be darker on a light background. Use five to seven steps; more cannot be told apart.
+**Sequential (low to high).** A single hue ramp from light to dark, with even perceived steps, for magnitude on maps and heat tables. Higher values should be darker on a light background. Default five to seven steps; three to five when the view is small, projected or must survive grayscale; past about nine, steps cannot be matched to a key.
 
 **Diverging.** Two hues meeting at a light neutral, only when the data has a meaningful midpoint (zero change, a target, a neutral rating). Not for plain low-to-high data.
 

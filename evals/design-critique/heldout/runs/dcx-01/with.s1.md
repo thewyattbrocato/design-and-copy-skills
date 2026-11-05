@@ -1,36 +1,29 @@
-**Your cofounder is right, and the cause is that nothing on the page is about boatyards.** Replace "Slipway" with any other product name and every sentence still works. A yard manager lands on it and can't tell it's for them.
+**Your cofounder is right, and the cause is that the page could be for any software product. Nothing on it says boatyard.** Swap "Slipway" for any other name and every line still reads the same. A yard manager who lands here can't tell it's for them.
 
-**Findings, in fix order**
+**1. Generic copy with no domain content (blocker, affects every visitor)**
+- The hero reads "Work smarter, not harder… streamline their workflow and unlock their full potential." A newcomer can't name the offer. They can't tell it's scheduling, or that it's for boats.
+- The words haul-out, launch, travel lift, slip, crew, tide and berth appear nowhere on the page.
+- Fix: state the job in the H1, for example "Know who's hauling out, who's launching, and when the travel lift is free." The subhead names the audience: small boatyards. Say what replaces the current method (whiteboard, spreadsheet, phone calls), if that's true.
 
-1. **Blocker: the hero doesn't say what the product is or who it's for.**
-   - "Work smarter, not harder" and "streamline their workflow and unlock their full potential" describe no product.
-   - "Teams" and "workflow" aren't how a yard owner talks. They say haul-outs, launches, the lift, the schedule.
-   - Change: the headline should name the job, for example "Know who's on the travel lift, and when." The subhead should say it schedules haul-outs, launches and lift time for small yards. The only nautical signal now is the product name.
+**2. The feature cards describe no features (major)**
+- "Powerful," "Simple" and "Secure" are adjectives, and every competitor uses the same three. "Enterprise-grade security" is a mismatch for a 5-person yard. Nothing here shows what the product does.
+- Fix: replace them with the real jobs. Examples are a lift-and-crew calendar that stops double-booking, haul-out and launch requests from customers, and tide or weather conflicts flagged. Use your actual feature list, not mine.
 
-2. **Major: the feature cards are adjectives, not features.**
-   - "Powerful", "Simple" and "Secure" could sit on any SaaS page. "Cutting-edge technology" and "enterprise-grade security" also speak to the wrong buyer, since a 10-slip yard isn't buying enterprise software.
-   - Change: use three real capabilities as headings, such as a lift and crane calendar that prevents double-booking, haul-out and launch scheduling with customer notices, and a view of what's coming out this week. Each needs one concrete sentence.
+**3. Fake-feeling proof (major, trust)**
+- "John Doe, CEO at Acme Inc." reads as a placeholder. "Thousands of happy customers" is implausible for a niche tool, and a yard owner will notice.
+- Fix: use one real quote from a named yard owner, with the yard and location. If you have no customers yet, cut both lines. Honest and small ("Piloting with 3 yards in Maine") beats invented scale.
 
-3. **Major: the testimonial and the "thousands of happy customers" line look fake.**
-   - "John Doe, CEO at Acme Inc." reads as placeholder text, and a boatyard doesn't have a CEO.
-   - If you're pre-launch, "thousands" is also a claim you can't back up, which costs trust with a small, close-knit industry where yards know each other.
-   - Change: use a real quote from a yard manager, with their name and yard. If you have none yet, cut the section and the "thousands" line rather than ship fillers. A pilot-yard line like "Running at [Yard] since spring" is stronger.
+**4. Calls to action don't fit the buyer (moderate)**
+- "Get Started" appears twice, plus "Sign Up Free" and "Learn More." None says what happens next. The "free" is also unsupported if the nav has Pricing.
+- Fix: use one primary action with a concrete outcome, such as "See the lift calendar" or "Book a 15-minute demo." Small yards often buy after a conversation. Drop "Learn More."
 
-4. **Major: there's no picture of the product.**
-   - Scheduling is visual, and the page has no calendar or lift timeline anywhere.
-   - Change: put a real screenshot of the schedule view in the hero. It will explain the product faster than the copy.
+**5. No visual of the product (moderate)**
+- The page has no screenshot of the schedule. For a scheduling tool, the calendar view is the pitch.
+- Fix: put a real screenshot or a short loop of the travel-lift calendar beside the hero.
 
-5. **Moderate: the calls to action are muddled.**
-   - The page has three primary buttons in three wordings ("Get Started" twice, "Sign Up Free"), plus a vague "Learn More". It's unclear what happens after the click, and "Free" appears nowhere else, even though Pricing is in the nav.
-   - Change: pick one primary action and use the same label everywhere, for example "Start free trial" or "Book a 15-min demo". Small yards often prefer talking to a person. Make the secondary action specific, such as "See how scheduling works".
+**Keep**
+- The structure is sound: hero, features, proof, CTA. The skeleton is fine, so the problem is content.
+- The page is short and has one repeated primary action. Keep that discipline.
+- The name Slipway is a good, specific, nautical name. Let the copy live up to it.
 
-6. **Minor: smaller gaps.**
-   - There's no login link for existing users.
-   - The footer has no phone or email. Yard owners tend to call.
-
-**What works and should stay**
-- **Page order:** hero, benefits, proof, final call to action is a sound sequence, and the page is short. Keep that skeleton and fill it with real content.
-- **The name "Slipway":** it's short, memorable and on-theme. It's the only part of the page that currently speaks to the audience, so lean into it.
-- **Three cards:** three is the right number. Only the content needs to change.
-
-I assumed a first-time visitor who runs or works at a small yard and is deciding whether to try it. I didn't check the CSS, contrast or responsive behavior, as you asked.
+Not checked: the CSS, as you asked, so contrast, sizes and accessibility are unreviewed. I'm assuming the audience is yard owners or managers deciding whether this is for them.

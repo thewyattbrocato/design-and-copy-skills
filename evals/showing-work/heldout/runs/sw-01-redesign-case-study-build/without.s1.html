@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Outfitters: Redesigning returns | Case study</title>
+<meta name="description" content="Product design case study: redesigning the returns flow for Kestrel Outfitters, an online camping gear shop. Form completion rose from 37% to 68%.">
+<style>
+  :root{
+    --bg:#faf8f4; --surface:#ffffff; --ink:#1d2420; --muted:#5b645e; --line:#e3dfd6;
+    --accent:#2f5d46; --accent-ink:#ffffff; --accent-soft:#e4eee7; --warn:#a9552b;
+    --bar-old:#b9b3a6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#141a17; --surface:#1c2420; --ink:#eef0ec; --muted:#a3ada6; --line:#2d3731;
+      --accent:#7fc29c; --accent-ink:#10231a; --accent-soft:#223229; --warn:#e29a73;
+      --bar-old:#566059;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:18px; line-height:1.65;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 24px}
+  .wide{max-width:960px; margin:0 auto; padding:0 24px}
+  header.hero{padding:88px 0 56px; border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin:0 0 20px}
+  h1{font-family:Georgia,"Times New Roman",serif; font-size:clamp(34px,6vw,56px); line-height:1.1; margin:0 0 24px; letter-spacing:-.01em; font-weight:700}
+  .lede{font-size:clamp(19px,2.4vw,22px); color:var(--muted); margin:0; max-width:36em}
+  .meta{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:24px; margin:48px 0 0; padding:0}
+  .meta div{border-top:2px solid var(--ink); padding-top:10px}
+  .meta dt{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .meta dd{margin:4px 0 0; font-size:16px; line-height:1.4}
+  section{padding:64px 0 0}
+  h2{font-family:Georgia,"Times New Roman",serif; font-size:clamp(26px,4vw,34px); line-height:1.2; margin:0 0 20px; letter-spacing:-.005em}
+  h3{font-size:20px; margin:0 0 8px; line-height:1.3}
+  p{margin:0 0 18px}
+  .kicker{font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 8px}
+  .callout{background:var(--accent-soft); border-left:4px solid var(--accent); padding:20px 24px; border-radius:0 8px 8px 0; margin:28px 0}
+  .callout p{margin:0}
+  /* before/after */
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:28px 0}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:22px}
+  .card h3{font-size:14px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:12px}
+  .card ul{margin:0; padding-left:20px}
+  .card li{margin-bottom:8px; font-size:16px; line-height:1.5}
+  .card.new{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset}
+  .card.new h3{color:var(--accent)}
+  /* decisions */
+  .decision{display:grid; grid-template-columns:56px 1fr; gap:8px 20px; padding:36px 0; border-top:1px solid var(--line)}
+  .decision:first-of-type{margin-top:12px}
+  .num{font-family:Georgia,serif; font-size:44px; line-height:1; color:var(--accent); font-weight:700}
+  .why{font-size:16px; color:var(--muted); margin:0}
+  .why strong{color:var(--ink)}
+  /* mini diagrams (schematic, not screenshots) */
+  .diagram{grid-column:2; margin-top:18px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:20px}
+  .diagram figcaption{font-size:13px; color:var(--muted); margin-top:14px}
+  .row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border:1px solid var(--line); border-radius:8px; font-size:15px; background:var(--bg)}
+  .row + .row{margin-top:8px}
+  .pill{font-size:13px; font-weight:600; padding:4px 12px; border-radius:99px; background:var(--accent); color:var(--accent-ink); white-space:nowrap}
+  .pill.no{background:transparent; color:var(--warn); border:1px solid var(--warn)}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{padding:8px 14px; border:1px solid var(--line); border-radius:99px; font-size:14px; background:var(--bg)}
+  .chip.on{border-color:var(--accent); background:var(--accent-soft); font-weight:600}
+  .note{margin-top:10px; border:1px dashed var(--line); border-radius:8px; padding:10px 14px; font-size:14px; color:var(--muted)}
+  .conf{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .tile{border:1px solid var(--line); border-radius:8px; padding:16px; background:var(--bg); font-size:15px; text-align:center}
+  .tile b{display:block; font-size:16px; margin-bottom:2px}
+  /* result */
+  .result{background:var(--ink); color:var(--bg); border-radius:16px; padding:40px 32px; margin-top:12px}
+  @media (prefers-color-scheme: dark){ .result{background:var(--surface); color:var(--ink); border:1px solid var(--line)} }
+  .big{display:flex; align-items:baseline; flex-wrap:wrap; gap:6px 18px; font-family:Georgia,serif; font-weight:700; line-height:1}
+  .big .from{font-size:clamp(32px,6vw,48px); opacity:.6}
+  .big .arrow{font-size:clamp(24px,4vw,34px); opacity:.6}
+  .big .to{font-size:clamp(64px,13vw,112px)}
+  .result p{margin:16px 0 0; font-size:17px; opacity:.85}
+  .bars{margin-top:28px; display:grid; gap:12px}
+  .bar{display:grid; grid-template-columns:72px 1fr; align-items:center; gap:12px; font-size:14px}
+  .track{background:rgba(127,127,127,.25); border-radius:6px; height:30px; overflow:hidden}
+  .fill{height:100%; display:flex; align-items:center; justify-content:flex-end; padding-right:10px; font-weight:700; font-size:14px; border-radius:6px; color:#10231a}
+  .fill.old{background:var(--bar-old); width:37%}
+  .fill.new{background:#7fc29c; width:68%}
+  .source{font-size:14px; opacity:.7; margin-top:20px !important}
+  footer{margin-top:80px; padding:32px 0 56px; border-top:1px solid var(--line); color:var(--muted); font-size:15px}
+  @media (max-width:640px){
+    body{font-size:17px}
+    .compare{grid-template-columns:1fr}
+    .decision{grid-template-columns:1fr}
+    .diagram{grid-column:1}
+    .conf{grid-template-columns:1fr}
+    header.hero{padding-top:56px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wide">
+    <p class="eyebrow">Case study · E-commerce · Product design</p>
+    <h1>Making returns something customers can actually start</h1>
+    <p class="lede">I redesigned the returns flow for Kestrel Outfitters, an online camping gear shop, replacing a footer contact form with a self-serve flow that answers "can I return this?" before the customer has to ask.</p>
+    <dl class="meta">
+      <div><dt>Client</dt><dd>Kestrel Outfitters, mid-size online camping gear retailer</dd></div>
+      <div><dt>My role</dt><dd>Sole product designer</dd></div>
+      <div><dt>Team</dt><dd>Daria (PM), two engineers</dd></div>
+      <div><dt>Timeline</dt><dd>About 10 weeks, 2025</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <section>
+      <p class="kicker">The problem</p>
+      <h2>Starting a return meant writing to support</h2>
+      <p>At Kestrel, a customer who wanted to return something had to email support to begin. The entry point was a "Contact us" form buried in the footer, so the first step of a return was finding that form, and the second was waiting for a reply.</p>
+      <p>I read through support tickets to understand where people got stuck. The most common complaint wasn't about shipping or refunds. It was that customers <strong>didn't know whether their item was eligible</strong> to be returned at all.</p>
+
+      <div class="callout">
+        <p><strong>The core insight:</strong> the old flow made people commit effort before telling them whether the effort would pay off. Eligibility was the question on everyone's mind, and it was answered last, if at all.</p>
+      </div>
+
+      <div class="compare">
+        <div class="card">
+          <h3>Before</h3>
+          <ul>
+            <li>"Contact us" form in the footer</li>
+            <li>Customer emails support to start a return</li>
+            <li>Eligibility unclear until a human replies</li>
+            <li>Nine-option reason dropdown, mostly "Other"</li>
+            <li>Return label sent later by email</li>
+          </ul>
+        </div>
+        <div class="card new">
+          <h3>After</h3>
+          <ul>
+            <li>"Return an item" on each order in the account page</li>
+            <li>Customer starts the return themselves</li>
+            <li>Eligibility checked per item, up front</li>
+            <li>One-tap reason plus optional note</li>
+            <li>Prepaid label and drop-off map on the confirmation screen</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="kicker">Key decisions</p>
+      <h2>Three changes, each aimed at a specific point of friction</h2>
+
+      <article class="decision">
+        <div class="num" aria-hidden="true">1</div>
+        <div>
+          <h3>Put the entry point on the order, and check eligibility per item up front</h3>
+          <p>"Return an item" now lives on each order in the account page, right where a customer looks when they're thinking about a purchase. Eligibility is checked for each item at the start of the flow instead of at the end.</p>
+          <p class="why"><strong>Why:</strong> eligibility uncertainty was the top complaint in the tickets I read. Answering it first means customers don't invest effort in a return that can't happen, and the ones who can return get a confident yes immediately.</p>
+        </div>
+        <figure class="diagram" style="margin-left:0;margin-right:0">
+          <div class="row"><span>Item A</span><span class="pill">Eligible</span></div>
+          <div class="row"><span>Item B</span><span class="pill no">Not eligible</span></div>
+          <figcaption>Schematic of the idea: each item on an order shows its own status before the customer goes further. Not a screenshot.</figcaption>
+        </figure>
+      </article>
+
+      <article class="decision">
+        <div class="num" aria-hidden="true">2</div>
+        <div>
+          <h3>Reduce the reason dropdown to one tap plus an optional note</h3>
+          <p>The old form asked customers to pick from nine reasons. I replaced it with a single tap and an optional free-text note for anyone who wants to say more.</p>
+          <p class="why"><strong>Why:</strong> the nine-option dropdown was mostly answered with "Other," which meant the extra choices were adding effort without adding useful signal. A lighter question is faster to answer and keeps the door open for detail when someone has it.</p>
+        </div>
+        <figure class="diagram" style="margin-left:0;margin-right:0">
+          <div class="chips" aria-hidden="true">
+            <span class="chip">Reason</span><span class="chip on">Selected</span><span class="chip">Reason</span>
+          </div>
+          <div class="note">Optional note</div>
+          <figcaption>Schematic only: one tap to choose, then an optional note. Not the final reason wording.</figcaption>
+        </figure>
+      </article>
+
+      <article class="decision">
+        <div class="num" aria-hidden="true">3</div>
+        <div>
+          <h3>Show the prepaid label and drop-off map on the confirmation screen</h3>
+          <p>Once a return is submitted, the confirmation screen shows the prepaid label and a drop-off map right away, instead of sending the label by email later.</p>
+          <p class="why"><strong>Why:</strong> the end of the form is the moment the customer is most ready to act. Giving them what they need to finish the job right then removes a wait and a second place to look.</p>
+        </div>
+        <figure class="diagram" style="margin-left:0;margin-right:0">
+          <div class="conf" aria-hidden="true">
+            <div class="tile"><b>Prepaid label</b>Ready now</div>
+            <div class="tile"><b>Drop-off map</b>Find a location</div>
+          </div>
+          <figcaption>Schematic of the confirmation screen's two key elements. Not a screenshot.</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section>
+      <p class="kicker">Result</p>
+      <h2>Form completion nearly doubled</h2>
+      <div class="result" role="group" aria-label="Return-request form completion rate rose from 37 percent to 68 percent">
+        <div class="big"><span class="from">37%</span><span class="arrow" aria-hidden="true">→</span><span class="to">68%</span></div>
+        <p>Return-request form completion rate in the six weeks after launch, up 31 percentage points.</p>
+        <div class="bars" aria-hidden="true">
+          <div class="bar"><span>Before</span><div class="track"><div class="fill old">37%</div></div></div>
+          <div class="bar"><span>After</span><div class="track"><div class="fill new">68%</div></div></div>
+        </div>
+        <p class="source">Source: product manager's analytics dashboard.</p>
+      </div>
+      <p style="margin-top:28px">This is the one number I have, and I'd rather be clear about its limits than stretch it. It measures whether people who start the return-request form finish it. It doesn't tell me about support ticket volume, return rates, or customer satisfaction, so I'm not claiming effects on those.</p>
+    </section>
+
+    <section>
+      <p class="kicker">Reflection</p>
+      <h2>What I took from it</h2>
+      <p>The biggest lever wasn't a visual change. It was reordering the flow so the question customers cared about most, "is this eligible?", came first. The other two decisions followed the same principle: remove the steps that cost effort without paying it back.</p>
+      <p>Working as the only designer with Daria and two engineers kept the loop short. Decisions could be made, built and checked quickly, which mattered in a 10-week window.</p>
+      <p>If I did this again, I'd agree on secondary measures with Daria before launch, such as support contacts about returns, so the story wasn't resting on a single metric.</p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Kestrel Outfitters returns redesign · 2025 · Diagrams are simplified schematics, not product screenshots.</div>
+</footer>
+
+</body>
+</html>

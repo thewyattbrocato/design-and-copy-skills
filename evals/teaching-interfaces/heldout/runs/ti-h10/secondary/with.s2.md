@@ -1,34 +1,57 @@
-**Welcome to Stackwell**
+Here's a version split into short screens, so each one asks for a single action.
 
-Three quick steps and you can start tracking your supplies.
+**Screen 1: Welcome**
 
-**1. Set your currency and time zone**
-Costs and order dates use these settings.
+> **Set up your clinic**
+>
+> Stackwell tracks what you have, when to reorder, and what it costs. Start with two quick settings. You can do the rest later.
+>
+> [Start setup] [Skip for now]
 
-**2. Add a location**
-For example: front desk, exam rooms, or storage.
+**Screen 2: Clinic basics**
 
-**3. Import your item catalog**
-Upload a spreadsheet, or skip this and add items one at a time later.
+> **Currency and time zone**
+>
+> Costs and order dates will use these settings.
+>
+> Currency: [ ▾ ]  Time zone: [ ▾ ]
+>
+> [Save and continue]
 
-[Finish] [Skip for now]
+**Screen 3: Where supplies live**
 
-Need help? The Help Center has step-by-step guides.
+> **Where do you keep supplies?**
+>
+> Add the places you stock, like Front desk, Exam rooms, or Storage. You can rename or add more later.
+>
+> [ Add location ] [Continue] · Skip for now
 
----
+**Screen 4: Items**
 
-**Your setup checklist** (available any time at [checklist location])
+> **Add your items**
+>
+> Import your catalog from a spreadsheet, or add items one at a time later.
+>
+> [Import from spreadsheet] [I'll do this later]
 
-- Set par levels so Stackwell flags items when stock runs low
-- Add vendors and their payment terms
-- Set approval rules for purchase orders
-- Invite your team and assign roles
-- Connect your accounting software
-- Schedule weekly cycle counts
+**Final screen: Setup checklist**
 
----
+> **You're set up.**
+>
+> Finish these when you're ready. Each one opens the right page and stays here until it's done.
+>
+> - Set par levels: tells Stackwell when to reorder each item
+> - Add vendors: payment terms for purchase orders
+> - Set approval rules: who signs off on purchase orders
+> - Invite your team: assign roles to each person
+> - Connect accounting software
+> - Schedule weekly cycle counts
+>
+> Stuck? The Help Center has step-by-step guides for each one.
+>
+> [Go to dashboard]
 
-**Notes**
+**Changes and assumptions:**
 
-- I cut the feature list. New admins learn the features by using them, and the checklist covers the setup work.
-- I moved six steps to a checklist, so the modal asks for three decisions. I placed par levels after the catalog import because they need items to exist. The checklist location is a placeholder, so it needs a real destination in the app.
+- **Cut the setup from nine steps to two required ones.** Currency/time zone and locations are the only things that block everything else. Par levels for 200+ items is the largest task, so it moves to the checklist instead of blocking the first visit.
+- **Assumed the dashboard can hold a persistent checklist.** If it can't, the final screen should link to a single "Setup" page instead.

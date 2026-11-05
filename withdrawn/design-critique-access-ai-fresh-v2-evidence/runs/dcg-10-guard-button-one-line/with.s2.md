@@ -1,0 +1,1 @@
+Mostly yes: white on `#1b4f8a` is about 8.3:1 contrast, it's a real `<button>` with a 16px label and a target over 40px tall, and it has a focus style. The one weak spot is the `#ffbf47` focus ring, which is only about 1.6:1 against a white page and misses the 3:1 non-text contrast guideline, so use a darker ring or a two-tone one.

@@ -1,52 +1,44 @@
-**Decision: 4px base for spacing, with hand-set type steps instead of a generated ratio scale.** Dev A's base is the right grid for dense UI, and Tailwind's spacing already uses it, so Dev C gets most of what they want.
+**Decision: 4px spacing base, with a hand-picked integer type scale instead of a ratio.** This is closest to Dev A's base and borrows Dev C's Tailwind-style spacing names. Dev B's 8px base is too coarse for dense tables, and neither ratio gives usable sizes.
 
-**Why not 8px:** Dense tables need 4px steps for cell padding and tight gaps. An 8px-only grid forces 16px where 12px is needed or 24px where 20px would do.
+**Why not the ratios:** A 1.2 or 1.333 ratio produces fractional pixel sizes (for example, 14 × 1.2 = 16.8, 16.8 × 1.2 = 20.16), which render blurry or uneven. Dense tables and gloved tablets need specific sizes, not mathematically derived ones. Tailwind's type scale is also hand-picked, not a ratio, so Dev C's suggestion doesn't settle it.
 
-**Why not 1.333:** The steps are too large for desktop tables. Going from 16 to 21 to 28 skips the 14–16 range that dense UI relies on.
+**Spacing tokens (px, 4px base, rem-based in CSS so OS text scaling still works):**
 
-**Why not a generated ratio:** Pixel rounding makes generated sizes awkward, and tablet and desktop need different sizes anyway. Fixed tokens are easier to review and override.
-
-## Spacing (4px base)
-
-| Token | px | Typical use |
+| Token | Value | Typical use |
 |---|---|---|
-| `space-0` | 0 | |
-| `space-1` | 4 | Cell padding (y), icon gap |
-| `space-2` | 8 | Cell padding (x), tight gaps |
-| `space-3` | 12 | Between related fields |
-| `space-4` | 16 | Card/panel padding (desktop) |
-| `space-5` | 20 | |
-| `space-6` | 24 | Section gaps |
-| `space-8` | 32 | Page-level gaps |
-| `space-10` | 40 | |
-| `space-12` | 48 | |
-| `space-16` | 64 | |
+| space-0 | 0 | |
+| space-1 | 4 | Icon gaps, dense cell padding (Y) |
+| space-2 | 8 | Dense cell padding (X), inline gaps |
+| space-3 | 12 | Compact control padding |
+| space-4 | 16 | Default card and section padding |
+| space-5 | 20 | |
+| space-6 | 24 | Section gaps |
+| space-8 | 32 | Page margins (desktop) |
+| space-10 | 40 | |
+| space-12 | 48 | Page margins (tablet) |
+| space-14 | 56 | Tablet control gaps |
+| space-16 | 64 | |
 
-## Type
+**Type scale (px / line-height):**
 
-| Token | Size / line-height | Use |
+| Token | Size / LH | Use |
 |---|---|---|
-| `text-xs` | 12 / 16 | Desktop metadata only, never on tablet |
-| `text-sm` | 14 / 20 | Desktop dense table body |
-| `text-base` | 16 / 24 | Tablet body, desktop forms |
-| `text-lg` | 19 / 24 | Section labels |
-| `text-xl` | 23 / 28 | Subheads |
-| `text-2xl` | 28 / 32 | Page titles |
-| `text-3xl` | 33 / 40 | Hero numbers (rare) |
+| text-xs | 12 / 16 | Metadata, column captions (desktop only) |
+| text-sm | 14 / 20 | Desktop table body, dense forms |
+| text-base | 16 / 24 | Default UI text (desktop) |
+| text-lg | 18 / 24 | **Tablet body and table text** |
+| text-xl | 20 / 28 | Section headings |
+| text-2xl | 24 / 32 | Page titles |
+| text-3xl | 30 / 36 | Rare, large numeric KPIs |
 
-Step ratios are about 1.2, so the design intent holds, but the values are fixed tokens. Tablet UI uses `text-base` as its minimum.
+Use `font-variant-numeric: tabular-nums` for quantities, SKUs, and prices so columns align.
 
-## Density and touch
+**Density and touch targets:**
 
-Density is a token pair, so components don't hard-code sizes:
+- Desktop table rows: **32px** compact, **40px** default. Cell padding is space-1 vertically and space-2 horizontally.
+- Tablet (gloved): **56px minimum** control height. Primary actions are 64px. Table rows are 56px. Use text-lg for body text.
+- Interactive hit areas can extend past the visual control with padding, but never go under 48px on tablet.
 
-| Token | Desktop (dense) | Tablet (gloved) |
-|---|---|---|
-| `row-h` | 32 | 56 |
-| `control-h` (inputs, buttons) | 32 | 48 |
-| `hit-min` (minimum tap target) | 24 | 48 |
-| `hit-gap` (between targets) | 8 | 12 |
+**Implementation:** Put these as tokens (`--space-1: 0.25rem;` and so on). Switch density with a `data-density="tablet|desktop"` attribute on the root that remaps row height, control height, and table text, so components don't branch on device.
 
-Gloves need larger targets than WCAG's 44px minimum, so 48px is the tablet floor.
-
-If you want, I can write these as a tokens file (CSS custom properties plus a JSON source) in the project.
+Caveat: I picked these from the constraints you gave (gloves, dense tables, 10" screens) and general touch and typography guidance, not from measured testing. Check the 56px tablet target and the 14px desktop table text with real users on a warehouse tablet before locking them in.

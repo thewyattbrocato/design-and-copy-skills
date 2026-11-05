@@ -6,8 +6,6 @@ Nothing on the page is tied to dog groomers or bookkeeping. Each choice is the d
 2. **"AI-powered" is a feature, not a benefit.** Every competitor says it. A groomer doesn't want AI. They want to stop doing receipts at 10pm.
 3. **The cards are interchangeable.** Three identical cards with an icon tile, a bold title and two grey lines have no hierarchy. Nothing is the main point, so nothing gets read. The gradient icons are decoration and carry no information.
 [...]
-## What would make it yours
-
-[...]
 **Show the product instead of describing it.** Use a real screenshot or a realistic mock of a day's ledger with entries like "Biscuit, full groom, $85 + $15 tip" and "Blade sharpening, −$22." Concrete details like that are what make a page feel specific.
 [...]
+**Make one memorable move.** Pick a single distinctive element and commit to it, such as a paw-print-stamped receipt motif, an illustrated mascot, or a ledger that looks like a groomer's appointment book. Everything else can stay quiet.

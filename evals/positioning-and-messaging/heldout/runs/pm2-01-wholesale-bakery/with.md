@@ -1,10 +1,10 @@
-**One-line description**
+**One-liner**
 
-> Country sourdough, seeded rye, and milk buns, delivered to your café or restaurant before 6am, six days a week.
+Three breads, baked by two people, delivered to your café before 6am, six days a week.
 
-**About paragraph**
+**About**
 
-> Marrow Lane Bread is a wholesale bakery run by two bakers, Dessa and Calloway. We make three breads and nothing else: a country sourdough with a 36-hour cold ferment, a seeded rye, and a milk bun built for sandwiches. Making only three lets us make each one the same way every time. Our van is at your door before 6am, six days a week, so the bread is on your counter before your first customer, not after the morning rush has started. We deliver a minimum of 20 loaves per order, which suits cafés and restaurants that serve bread every day. If you're ready for bread that someone you can name baked for you, get in touch.
+Marrow Lane Bread is a wholesale bakery for cafés and restaurants. We make three breads and nothing else: a country sourdough, a seeded rye, and a milk bun for sandwiches. The sourdough gets a long cold ferment of about 36 hours, so it has real flavor and a crust that holds up through service. We're Dessa and Calloway, and we bake every loaf ourselves. We deliver before 6am, six days a week, so the bread is on your counter before you open and not halfway through the morning rush. Our minimum is 20 loaves per delivery. If that fits your kitchen, get in touch and we'll set up your first order.
 
-- **Established tone:** I got it from specifics (36 hours, 6am, three breads, a 20-loaf minimum) rather than claims like "trusted by" or "since." You can't honestly say those yet. Once you have a first regular customer who'll let you name them, add a line such as "Supplying [café name] since [month, year]." That will do more than any adjective.
-- **Tire shop:** I left it out because it undercuts "established." If you'd like some personality, "baked in a small unit on [street/area]" gives the same warmth without it.
+- **Why it sounds established:** I did this with specifics rather than claims of history. A short menu, a fixed delivery window and a stated minimum read as a bakery that knows what it is. I left out "years of experience" and "trusted by local cafés" because you can't back them yet. Once you have a real café or two who'll be named, add them under the about text.
+- **Check before you publish:** "Before 6am" is now a promise in print. If a delivery could slip to 6:15, say "by 6am" or "early morning" instead.

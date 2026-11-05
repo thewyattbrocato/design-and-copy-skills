@@ -1,36 +1,45 @@
-**Skip the radar chart.** I'd use a comparison table with small inline bars, or failing that, small multiples (one mini bar chart per spec).
+I'd skip the radar chart. A table with small bars inside the cells shows the same "everything at once" view and avoids the radar's problems.
 
-**Why radar is a poor fit here**
-- **The axes don't share a unit.** Km, kg, dollars, watts, hours and years can't sit on one scale. You'd have to rescale each to 0–100, and that hides the real numbers.
-- **Better isn't the same direction on every axis.** Higher range is good. Higher weight, price and charge time are bad. A big polygon wouldn't mean a better bike, and shoppers will read it that way.
-- **The shape depends on axis order.** Reorder the six spokes and each bike's outline changes. Polygon area is also hard to compare by eye.
-- **You can't read exact values off it.** A shopper deciding on a purchase wants to see "110 km" and "$2,400".
+**Why radar fits poorly here**
+- **Mixed units:** your six specs are km, kg, dollars, watts, hours and years. A radar needs each one rescaled to a made-up 0–100 axis, and the rescaling decides how the shapes look.
+- **Mixed directions:** higher is better for range, motor and warranty, but lower is better for weight, price and charge time. A bigger polygon wouldn't mean a better bike unless you flip some axes, and shoppers won't guess that you did.
+- **Axis order:** the shape changes if you reorder the axes, so the visual impression is partly arbitrary.
+- **Hard to read values:** shoppers can't pull out "how much heavier is the Ridgeway?" from a polygon.
 
-**Recommended setup: table with in-cell bars**
+**What I'd build**
 
-Rows are specs and columns are the three bikes. Each cell shows the actual value with a thin bar on a shared scale for that row. The bars start at zero and are scaled within each row only.
+A comparison table, with specs as rows and the three models as columns:
 
-| | Trekline | Ridgeway | Cove |
-|---|---|---|---|
-| Price | $1,850 | $2,400 | $1,350 |
-| Range | 80 km | 110 km | 60 km |
-| Motor | 500 W | 750 W | 350 W |
-| Weight | 24 kg | 28 kg | 19 kg |
-| Charge time | 4.5 h | 5.5 h | 3.5 h |
-| Warranty | 2 yr | 3 yr | 2 yr |
+1. **Layout:**
+   - Use a real HTML `<table>`. It's accessible, works on mobile and lets shoppers read exact values.
+   - Put a short horizontal bar behind or beside each value.
+2. **Bar scale:**
+   - Start every bar at zero.
+   - Scale each row to its own maximum, so Ridgeway's 110 km is a full bar and Cove's 60 km is about 55%.
+   - Add a small note that bars are scaled within each row.
+3. **Column order:** Cove, Trekline, Ridgeway (price ascending), the same everywhere on the page.
+4. **Row labels:**
+   - Include units: "Range (km)", "Weight (kg)", "Price ($)", "Motor (W)", "Charge time (h)" and "Warranty (years)".
+   - Add "lower is better" to weight, price and charge time, in text rather than red or green.
+5. **Color:**
+   - Make the bars one muted neutral.
+   - If you want to push one model, give only that model's column an accent color.
+   - Don't use a different saturated hue for each model.
+6. **Takeaway line above the table:** for example, "Ridgeway goes farthest and has the strongest motor. Cove is the lightest and cheapest." Check it against the numbers before you publish.
 
-- **Order the rows by what shoppers care about.** Price, range and motor go first, with weight, charge time and warranty after.
-- **Don't color good and bad.** Use one neutral color for all bars. If you want a highlight, mark the best value in each row with bold text or a small marker. For price, weight and charge time, the best value is the lowest. For range, motor and warranty, it's the highest. Add a note like "lowest is best" so the direction is clear. Avoid red versus green, which fails for color-blind shoppers.
-- **Put the bike names at the top of each column.** Use the same color or position for each bike everywhere on the page.
-- **Make it work on mobile.** Stack each spec as a small group of three bars, or keep the table and let it scroll horizontally.
-- **Add a text takeaway.** For example: "Ridgeway has the longest range and strongest motor. Cove is the lightest and cheapest. Trekline sits in the middle on every spec." That also covers accessibility.
+**If you want an actual chart**
 
-**If you want a real chart instead**
+Use small multiples: six small panels, one per spec, each with three horizontal bars. Keep the same model order and color in every panel, label values directly on the bars, and start each bar at zero. This takes more space than the table, but it's a good fit if the page is chart-led.
 
-Use six small bar panels, one per spec, with three bars each. Keep the bike order the same in every panel, start each axis at zero, and label the values directly on the bars. Use gray bars with one accent color. This is more visual than a table, but takes more room.
+**If you still want the radar**
 
-**Price per km of range**
+You'd need to:
+- normalize every axis to a percentage of the best value;
+- flip weight, price and charge time so outward always means better;
+- fix a deliberate axis order;
+- print the raw values at each vertex;
+- say how the scaling works in a caption.
 
-With only three bikes, you could add one derived row: price per km of range. That works out to about $23/km for Trekline, $22/km for Ridgeway and $22.50/km for Cove. It would show shoppers that Ridgeway costs more but isn't worse value. I'd only include it if you're happy to show that comparison.
+Even then, I'd put the table underneath it.
 
-If you'd like, I can build this as HTML/CSS for your product page. Tell me your stack (plain HTML, React, etc.) and whether you have brand colors.
+I can write the table (HTML and CSS) or the small-multiples version (SVG) if you tell me which you prefer.

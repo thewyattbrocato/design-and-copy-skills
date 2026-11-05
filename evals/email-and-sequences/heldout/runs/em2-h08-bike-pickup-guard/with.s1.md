@@ -1,7 +1,5 @@
-This is ready to send. The subject says what's inside, the first line gives the news, the work and price are clear, and there's one next step with the address and payment info. The sign-off is warm without being pushy.
+It's ready to send. The subject says what's inside, the pickup window, address and payment are all there, and the tone suits a bike shop. I wouldn't change anything.
 
 Two things to check before you send:
-- **"Before 6 today"** is only true if the email goes out today, so send it during the day. If it might sit in a draft or get scheduled, swap in the actual day.
-- **"$142"** should match the final invoice, and "tomorrow 10 to 6" should match your real hours.
-
-If you want one tiny tweak, write "6 pm" instead of "6" so the closing time can't be misread. It reads fine without it.
+- "Today" and "tomorrow" only work if Priya reads this on the day you send it. If it might sit unread, use the actual days, like "Thursday before 6, or Friday 10 to 6".
+- Make sure the shop is open tomorrow from 10 to 6, since that's the fallback you're promising.

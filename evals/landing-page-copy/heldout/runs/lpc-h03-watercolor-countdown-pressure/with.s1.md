@@ -1,53 +1,59 @@
-**Plan:** The reader is a watercolor hobbyist comparing courses. The one idea is a self-paced course, priced at $89 now and $129 after November 30. The sections are the top, then the buy section. The ask is "Enroll".
+I wrote the page without the per-visitor 48-hour timer and without "only 12 seats left." Both would tell visitors something false, and a visitor who reloads and sees the timer reset, or who learns a video course has no seat limit, will stop trusting the page. That can also lead to refunds and complaints. Your real deadline works better anyway: the price goes from $89 to $129 on November 30. I built the urgency on that, with a countdown to that date, the same for every visitor.
 
-I left out the timer that restarts for every visitor and the "only 12 seats left" line. Both tell buyers something false. They also tend to backfire: visitors compare notes, reload the page, or spot the reset, and then they doubt the rest of the page. Your real deadline is a better hook anyway. It's a fixed date, and the price really does go up by $40.
+**Plan:** The reader is a beginner or hobbyist who wants looser, less overworked watercolors. The page is one idea (loose washes, taught step by step at your own pace), then the price and the deadline, then the guarantee. There is one action throughout: enroll.
 
 ---
 
 ## Top section
 
-**Headline:** Paint looser, fresher watercolor washes
+**Eyebrow:** Self-paced watercolor course
 
-**Subhead:** Loose Washes is a self-paced video course: 22 lessons, about 6 hours, and a printable supply list. Watch on your schedule and keep access for life.
+**Headline:** Loose Washes: learn to let the water do the work
+
+**Subhead:** 22 video lessons (about 6 hours) that teach you to paint looser, fresher watercolors at your own pace. Lifetime access, and a 14-day refund if it's not for you.
 
 **Button:** Enroll for $89
 
-**Under the button:** Launch price through November 30. Then $129. 14-day refund.
+**Under the button:** Launch price. Goes to $129 on November 30.
 
-**What you'll learn** *(replace with your real lesson topics)*
-- [Lesson topic or skill, e.g. what a wash is and how to control water]
-- [Lesson topic or skill]
-- [Lesson topic or skill]
+**What's inside (short list):**
+- 22 video lessons, about 6 hours in total
+- A printable supply list, so you know what to buy before you start
+- Lifetime access, including to the lessons you finish early
+- A 14-day refund
 
-**Who it's for:** [One line on level, e.g. beginners, or painters who want to loosen up. Add a "not for you if" line too.]
+[Add a real student quote or a before/after of your own work here. It's the strongest proof you can put next to this section.]
 
 ---
 
 ## Buy section
 
-**Heading:** Loose Washes: $89 until November 30
+**Heading:** Get Loose Washes at the launch price
+
+**Countdown label:** Launch price ends November 30
+**Countdown:** [days / hours / minutes to November 30, 11:59 p.m. in your time zone, the same for every visitor]
 
 **Price block:**
-~~$129~~ **$89** launch price
-The price rises to $129 on November 30. [Add the time and time zone the sale ends.]
+~~$129~~ **$89**, one payment
+Launch price until November 30. On December 1 the price is $129.
+[Confirm that it's a one-time payment and that the countdown ends at the time you want.]
 
-**Countdown:** *Time left at the launch price: [days] d [hrs] h [min] m*
-(This counts down to the same fixed moment for every visitor. Don't reset it per visitor.)
-
-**What's included**
-- 22 video lessons, about 6 hours in total
-- Printable supply list
+**What you get:**
+- 22 video lessons, about 6 hours in total, to watch whenever you like
+- A printable supply list
 - Lifetime access
-- Self-paced: start, pause and rewatch whenever you like
-
-**Refund:** Try the course for 14 days. If it isn't for you, you get your money back. [Add how to request a refund and any condition, e.g. email address.]
 
 **Button:** Enroll for $89
 
-**Under the button:** One payment. Lifetime access. 14-day refund. [Confirm it's one payment, not a plan.]
+**Guarantee:** Try the course for 14 days. If it isn't for you, ask for a refund. [Add how to request one, e.g. "email you@example.com".]
+
+**Who it's for / not for:**
+It's for you if you want to paint looser and you're happy learning from video at your own pace. It's not for you if you want live feedback or one-on-one critique. The course is recorded lessons only.
+
+**Closing line and button:** The price goes up on November 30. **Enroll for $89**
 
 ---
 
 **Notes:**
-- Placeholders in brackets need your real details. I didn't add a testimonial, student count or rating. If you have a real student quote or a finished piece to show, put it right above the buy button.
-- For the countdown, I can write a small JS snippet that counts down to a fixed date and then switches the price to $129 on its own, if you'd like.
+- I left the "not for you if" line about feedback in because the course is video only. Delete it if you offer feedback some other way.
+- Make the countdown count to a fixed date and time. Don't use a cookie or a per-visitor reset.

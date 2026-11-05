@@ -1,7 +1,9 @@
-The flow reads like an e-commerce checkout, and that's what feels off. It has a payment step, "Place order," and a confirmed booking on submit, but nothing is paid and nothing is booked until the harbormaster approves. The fix is mostly copy and one step label. The structure stays the same.
+The flow reads like a checkout. The "Payment" step, "Place order," "purchase," and "booking is confirmed" all imply an instant paid booking, but a booking only exists after the harbormaster approves it. The confirmation screen is the most serious problem because it tells the boater they're booked before anyone has approved anything.
+
+Here is the revised markup with the same four screens and structure:
 
 ```html
-<ol class="steps"><li class="on">Boat</li><li>Dates</li><li>Review</li><li>Requested</li></ol>
+<ol class="steps"><li class="on">Boat</li><li>Dates</li><li>Review</li><li>Submitted</li></ol>
 
 <section id="s1">
   <h2>Vessel information</h2>
@@ -19,27 +21,27 @@ The flow reads like an e-commerce checkout, and that's what feels off. It has a 
 </section>
 
 <section id="s3">
-  <h2>Review your request</h2>
-  <p>The harbormaster will review this request. Your slip is not reserved until it is approved.</p>
+  <h2>Review &amp; submit request</h2>
+  <p>Please check your details. This is a request only. You are not booked until the harbormaster approves it.</p>
   <dl><dt>Name</dt><dd>Sea Wren</dd><dt>Length</dt><dd>9</dd><dt>Arrival</dt><dd>2025-07-04</dd><dt>Departure</dt><dd>2025-07-06</dd></dl>
   <button>Submit request</button>
 </section>
 
 <section id="s4">
   <h2>Request submitted</h2>
-  <p>Thanks! We've received your slip request. You'll be notified once the harbormaster approves it.</p>
+  <p>Thanks! The harbormaster will review your request and contact you once it is approved. No payment is due now.</p>
 </section>
 ```
 
-What changed:
-- **Step 3:** "Payment" became "Review," since no payment happens.
-- **Step 4:** "Done" became "Requested," so the last step doesn't imply a booking exists.
-- **s2 button:** "Continue to payment" became "Continue to review."
-- **s3 heading, copy, and button:** "Review & confirm" became "Review your request," with a note that the slip isn't reserved until approval. "Place order" became "Submit request."
-- **s4 heading and copy:** "Thank you for your purchase! / Your booking is confirmed." became "Request submitted," with a note that approval comes later.
+What changed (11 text edits, no structural changes):
+- Step 3 "Payment" → "Review", and step 4 "Done" → "Submitted".
+- s2 button "Continue to payment" → "Continue to review".
+- s3 heading "Review & confirm" → "Review & submit request", with a line saying it's a request and not a booking until approved.
+- s3 button "Place order" → "Submit request".
+- s4 heading "Thank you for your purchase!" → "Request submitted", and "Your booking is confirmed" → a note that the harbormaster will review and contact them, with no payment due.
 
-Two things the markup alone can't fix:
-- **The review values are hardcoded.** The `<dd>` values say "Sea Wren," 9, and the July dates no matter what the boater entered. The script that drives these screens has to fill them from the inputs before showing step 3. If it doesn't, that's a bug to fix first.
-- **The "Requested" text needs the right backend behavior.** The copy now says the slip is not reserved until approval. Make sure submitting creates a pending request, not a booking, and that the harbormaster's approval is what changes it to a booking. I haven't seen that code, so I can't confirm it.
-
-I didn't add validation, such as requiring a name or checking that departure is after arrival. That's a separate change, and I can add it if you want.
+Things I didn't change, which you'll want to handle in the code that renders these screens:
+- The review `<dl>` values are hardcoded ("Sea Wren", "9", the dates). They need to be filled from the inputs, or the boater will submit whatever placeholder is shown.
+- The review doesn't show the Info field, so boaters can't check what they wrote there.
+- Nothing checks that Departure is after Arrival.
+- There's no slip selection, even though the heading says "Choose your slip." If the marina assigns slips, consider renaming that heading to "Choose your dates."

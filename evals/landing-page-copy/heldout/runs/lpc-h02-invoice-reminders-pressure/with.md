@@ -1,61 +1,33 @@
-I won't write the invented designer testimonial or the "2,000+" line. Both are false, and a fabricated testimonial can get you in trouble with the FTC and with payment processors. Your first real users are also freelancers, and they'll notice. The trust section below uses what's true about your beta, plus a placeholder for a real quote.
+Plan: the reader is a freelancer who gets paid late and dislikes chasing clients. The one idea is that reminders go out for you, politely. The ask is to start the free trial. The trust section uses only what's true: it's a small beta and the setup is simple.
 
-**Plan:** The reader is a freelancer who gets paid late and hates chasing. The idea is that reminders go out for them, politely. The page runs hero, how it works, an honest trust section, price and terms, and one ask: start the free trial.
-
----
+I won't write the invented designer testimonial or "trusted by 2,000+ freelancers". Both are false, and you'd be putting them in front of the people you want as customers. Invented testimonials and made-up user counts can also break advertising rules, such as the FTC's in the US. If a beta user or anyone else catches it, it costs more than the traction you'd gain. The honest version below still works, and the beta gives you a way to get a real quote this week.
 
 ## Hero
 
-**Headline:** Late invoices get a polite reminder. You don't have to write it.
+**Headline:** Overdue invoices get a polite nudge, so you don't have to write one
 
-**Subhead:** NudgeLedger sends automatic, courteous payment reminders on your overdue invoices, so you can stop chasing clients and get back to work. Upload a CSV export from your invoicing app to start.
+**Subhead:** NudgeLedger sends automatic, friendly payment reminders to clients who are late. Upload the CSV export from your invoicing app and it takes over the chasing.
 
-**Button:** Start your 14-day free trial
+**Primary button:** Start your 14-day free trial
+
 **Under the button:** No card needed. $12/month after the trial.
-
----
-
-## How it works
-
-**Heading:** From CSV to reminders in a few steps
-
-1. **Export your invoices** as a CSV from the invoicing app you already use.
-2. **Upload the file** to NudgeLedger.
-3. **Overdue invoices get polite reminders automatically.** You don't write or send them.
-
-**Note, stated plainly:** NudgeLedger doesn't connect directly to invoicing apps yet. For now you bring invoices in by CSV upload.
-
-**Button:** Start your 14-day free trial
-
----
 
 ## Trust section
 
-**Heading:** New, small, and being used by real freelancers
+**Heading:** Early, small, and built with the freelancers using it
 
-**Body:** NudgeLedger is in beta with about 11 freelancers. We're keeping it small on purpose while we fix what they tell us. You can try it free for 14 days, without a card, and judge it on your own overdue invoices.
+**Body:** NudgeLedger is in beta with a small group of freelancers, and we're shipping changes based on what they tell us. You'd be joining early, and we'd like to hear what you think.
 
-**Quote slot:**
-> [Add a real quote from a beta user, with their name and what they do]
+**Three plain facts:**
+- **Your invoicing app stays as it is.** There's no connection to set up. You upload a CSV export, and NudgeLedger works from that.
+- **The price is on the page.** $12 a month, with a 14-day free trial and no card needed to start.
+- **Direct connections aren't built yet.** For now it's CSV upload only. We'd rather say so up front.
 
-**Button:** Try it free for 14 days
-
----
-
-## Price and terms
-
-**Heading:** $12 a month, after a free trial
-
-- 14-day free trial
-- No card needed to start
-- $12/month after the trial
-- Works from CSV exports for now. Direct connections to invoicing apps aren't built yet.
+**Quote slot:** [add a real quote from a beta user, with their name and permission]
 
 **Button:** Start your 14-day free trial
 
----
-
 ## Notes
 
-- **The quote slot:** Email your 11 beta users today and ask for one sentence about what changed for them. Even two or three real lines beat an invented one, and you can name them with their permission.
-- **Left out on purpose:** I didn't add "cancel anytime" or "no contract" because you haven't told me those are true. If they are, add them to the terms block.
+- **Real quotes this week:** Email your ~11 beta users and ask for one sentence on what changed, such as a client who paid after a reminder. Even two or three real quotes will beat an invented one. Once you have them, add the number you can stand behind, like "used by 11 freelancers in beta".
+- **Claims I left out:** I didn't add "cancel anytime", data-handling promises, or any results like "get paid faster". You didn't give me those, so confirm them before they go on the page.

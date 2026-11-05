@@ -50,11 +50,11 @@ A short request ("this looks cramped") is not a small one. Check the whole text 
 
 **Move one step at a time.** Add emphasis as more space first, then weight, then size. Large bold text looks heavier than it is, so headlines rarely need the heaviest weight. A pull quote, caption or total differs from body by one or two properties, not all of them. A hero is the exception, where a big jump is the point.
 
-**Spacing.** About twice as much space above a heading as below it. Separate paragraphs by a gap of half to one line or a first-line indent of about 1em, never both; no indent after a heading. Print and ebook flip this: indents, no gaps, justified with hyphenation.
+**Spacing.** About twice as much space above a heading as below it. Separate paragraphs by a gap of half to one line or a first-line indent of about 1em, never both; no indent after a heading. Print and ebook flip this (indents, no gaps; documents-and-print.md).
 
-**Figures.** Tabular lining (`font-variant-numeric: tabular-nums`) for anything in columns, prices, timers and counters; right-aligned or on the decimal, same decimals on every row. Proportional in prose. Old-style only in long editorial prose with lowercase. Mixed sizes on one line (price and currency, label and value) share a baseline. A total differs by one step.
+**Figures.** Tabular lining (`font-variant-numeric: tabular-nums`) for anything in columns, prices, timers and counters; right-aligned or on the decimal, same decimals on every money row. Proportional in prose. Old-style only in long editorial prose with lowercase. Mixed sizes on one line (price and currency, label and value) share a baseline. A total differs by one step.
 
-**Capitals.** Sentence case for buttons, labels, tabs and headings. All caps only for short labels, tracked 0.05 to 0.1em, at 12px or more; capitals read slower, so never for sentences. Tighten large display slightly (about -0.01 to -0.02em); otherwise trust the face's own spacing.
+**Capitals.** Sentence case for buttons, labels, tabs and headings. All caps only for short labels, tracked 0.05 to 0.1em, at 12px or more; capitals read slower, so never for sentences. Tighten large display slightly (about -0.01 to -0.02em); otherwise trust the face's own spacing, and open the word gaps if you tighten body letters.
 
 **Alignment.** Flush at the reading start, ragged on screens; center only a few short lines; right-align numbers. Justify only with `hyphens: auto` and `lang` set, a wide enough measure, and a medium that calls for it.
 
@@ -94,3 +94,6 @@ Do not stall on questions. Assume a screen, a light ground, the face already in 
 
 - [references/reading-text.md](references/reading-text.md): load when setting a reading page, a scale or dark and small text; ranges by context, CSS recipes, ramps, heading mapping, audit routine.
 - [references/figures-and-details.md](references/figures-and-details.md): load when text holds numbers, units, dates, quotes, dashes or capitals, or must be truncated.
+- [references/documents-and-print.md](references/documents-and-print.md): load when the output is a letter, report, proposal, résumé or other paper or PDF document, or a word-processor file to fix; print-only size, margins, headings, signature blocks, export.
+- [references/display-and-headlines.md](references/display-and-headlines.md): load when a headline, hero line, slide title or pull quote is set large and its line breaks, word gaps, leading, quote marks or reversed finish are in play.
+- [references/hard-reading-conditions.md](references/hard-reading-conditions.md): load when text is small, far away or glanced at, aimed at children or low-vision readers, or when asked what is "more legible"; letter spacing, caps, bold, measure by task, confusable characters.

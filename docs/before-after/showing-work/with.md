@@ -1,0 +1,1 @@
+A design system page for the Time Slot Picker: the title with a "Stable · v2.1" tag, one sentence saying what it is and what it replaces, four chips naming the key points, and the working component with density and availability switches already on the first screen, showing three days of times and "No time selected."

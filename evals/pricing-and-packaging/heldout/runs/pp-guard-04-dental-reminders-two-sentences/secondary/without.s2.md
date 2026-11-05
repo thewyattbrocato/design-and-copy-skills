@@ -1,0 +1,1 @@
+No, $49 a month is reasonable for this volume. At about 40 patients a day, you're sending roughly 1,500 to 2,000 reminder texts a month, so confirm the plan includes that many messages or doesn't charge per text, and that it integrates with your practice software.

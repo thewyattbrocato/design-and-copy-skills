@@ -1,18 +1,22 @@
-**What's going on:** Every element is a bakery default, and the mark stacks four or five ideas at once. The wheat stalk is the stock bakery icon. Script is the most common café and bakery typeface. Cream-and-pink is the standard "sweet treats" palette. The gold outline and banner read as a generic heritage badge. The tagline is locked inside the mark. Each choice is reasonable alone, but together they describe a category rather than this bakery. The one thing that could be specific, the name "Crumb & Co," doesn't appear in the design.
+**What's going on:** the mark is built from the bakery kit. Each element is a common choice, and together they make it look like every other bakery:
 
-**The test that shows it:** Make the mark solid dark brown on white and shrink it to a 32px Instagram avatar. The wheat, outline, banner and tiny-caps tagline all disappear, and what's left is a brown script word that any café could use. On a shop sign it has the same problem.
+- **The wheat stalk** is the most generic bakery symbol there is. It says "bread" and nothing about Crumb & Co.
+- **Script wordmark, cream, pink and gold** is the usual "artisan" look. Each choice is fine alone, but the combination is what competitors use.
+- **The banner and gold outline** are decoration. They add parts without adding an idea, and they will look muddy or disappear on a small Instagram avatar or a shop sign viewed from across the street.
+- **The tagline** is common copy, and at tiny caps it is unreadable at most sizes. Putting it under the mark also makes the whole thing harder to lock up cleanly.
+- **The name gets the least attention.** "Crumb & Co" is the most distinctive thing you have. A script wordmark with a stalk and banner competing for attention hides it.
+
+Most of this is a stack of three or four ideas (wheat, banner, script, tagline) when the mark needs one.
 
 **What I'd change:**
 
-1. **Build the mark from the name.** Assuming you haven't already settled a concept, the name is your strongest material. Crumb and the ampersand are warm and a little playful. Make the wordmark itself the mark, with one custom adjustment, such as a reshaped ampersand or a "C" whose counter echoes a crumb or a torn-open loaf. That one drawn detail is what makes it yours.
-2. **Drop the script.** A sturdy, slightly soft sans or a chunky serif with a warm cut will look more distinctive and holds up on a box and a sign. Pick it for the wordmark's temperament, not for "bakery."
-3. **Remove the wheat, banner, gold outline and tagline from the core mark.** Keep the mark flat and solid. The tagline becomes a separate line only where there's room, like the box lid or the website, never inside the logo.
-4. **Make color a decision, not a default.** Start with the dark brown, which is already doing work, and add one accent with a reason. Avoid the cream/pink/gold set because it's the category palette.
-5. **Create a lockup set:** horizontal, stacked and symbol-only, each with clear space and a minimum size. Test the stacked version as an Instagram circle crop.
-6. **Give the system something ownable beyond the logo.** One graphic device, such as a crumb-dot pattern or a signature ampersand treatment on boxes, plus a type pairing and color roles. That makes the bakery recognizable even when the logo is absent.
+1. **Make the name the hero.** Set "Crumb & Co" in a custom or lightly adjusted wordmark. Give the ampersand a specific treatment, since it is the most memorable character in the name. Keep it dark and simple.
+2. **Replace the wheat with one owned cue.** Something tied to Crumb specifically: a crumb-shaped detail in the letters, your signature loaf's silhouette, or a mark from your real storefront. Ask customers what they associate with you before choosing. I can't tell from here which of your details customers already recognize.
+3. **Drop the banner and gold outline.** Use a flat, solid mark. Effects belong in specific applications, not the core logo.
+4. **Pick color for a reason, not for the category.** Dark brown can stay. Choose one accent that is not the default cream-pink-gold trio, and check that it works on the box, the sign and a phone.
+5. **Move the tagline off the mark.** Keep it as an optional line in the layout, at a size that reads, or drop it. It is not part of the logo.
+6. **Test it the hard way:** solid black on white, reversed on dark, at 32 px, and as a cropped avatar. If it fails any of these, simplify again.
 
-**Refine or replace?** If the current logo is new and not yet widely recognized, replace the parts above and keep the brown and name lettering as a starting point. If customers already know it, keep the brown, the name and the overall layout, and change only the wheat, outline and tagline. I can't tell which applies from here.
+**Next step:** show three or four people the name with no tagline and no stalk, and ask what they think the business sells. If the answer is "bread" or "bakery", the name is doing its job. If it isn't, the cue in step 2 is what needs work. Before you adopt any new mark, get a trademark search from a lawyer; I can't confirm a new design is unique.
 
-**Evidence to collect next:** Show 15–20 customers the current logo and one redrawn version, then ask what they would guess the bakery sells. Before adopting a new mark, have a trademark search done by a lawyer.
-
-*Assumptions:* I've assumed the bakery is independent and not yet a regional chain, and that the three words you'd want it known for are warm, handmade and local. Tell me if either is wrong and I'll redo the direction.
+*Assumption:* I haven't seen your current files, so these notes come from your description, not the actual artwork. Send me the logo and I can review the specific shapes and spacing.

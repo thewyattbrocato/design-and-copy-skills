@@ -1,25 +1,26 @@
-**Why it looks boxed in**
+**Why it feels boxed in**
 
-1. **Every section gets the same treatment.** A border plus 16px padding on every section gives each one equal weight, so nothing reads as more or less related to anything else. Groups only show up when the space inside a group is clearly smaller than the space between groups. Identical boxes erase that difference.
-2. **Borders compete with the content.** Every section gets a closed outline, so your eye reads a grid of containers before it reads the content. A border says "this is a discrete object". Applied to everything, it just adds noise.
-3. **The gaps between cards are probably too small.** If the gap between cards is about the same as or smaller than the 16px padding, the cards blur into one mass of lines.
-4. **Cards often nest.** A bordered section holding bordered sub-items, or a border plus a shadow plus a fill on one element, compounds the heavy feel.
+1. **Every section gets the same container.** When all sections are bordered cards, the border says "this is a separate object" for each one. Nothing is more or less related to anything else, so the page reads as a stack of unrelated crates. The boxes carry the grouping, and they carry it identically everywhere.
+2. **Borders add visual noise.** Each card has four edges, and the eye has to trace every one of them. With many cards, the edges compete with your content.
+3. **Uniform 16px padding makes the inside and the outside look alike.** The gap inside a card is about the same as the gap between cards. The groups blur together, and the page looks squashed and uniform instead of organized. If the gap between cards is smaller than the padding, the cards also merge into one mass.
+4. **Nesting makes it worse.** A card inside a card (or a bordered table or input inside a card) creates a box within a box. That is the strongest "boxed in" signal.
 
-**Lighter ways to show items belong together**
+**Other ways to show that items belong together**
 
-Try these in order and stop at the first one that works:
+Use the lightest device that works, and move down this list only when the one above fails:
 
-1. **Space.** Keep items in a group close, about half the gap you use between groups. For example, use 8px within a group, 24px between groups, and 40–48px between major sections. Put more space above a heading than below it, about 2:1, so the heading sits with its content.
-2. **Headings and alignment.** A clear heading and a shared left edge group things well on their own.
-3. **A hairline rule.** Use it when space alone isn't enough, such as dense lists or tables. Use one quiet color and one weight, with space on both sides of the line.
-4. **A tinted region, with no border.** Use it when a cluster of controls must read as one unit and can't be moved closer together, such as a toolbar, a filter panel, or a sticky footer.
-5. **A card.** Keep it for discrete objects the user can open, select, drag, or compare as a whole. Give every such object the same single surface, using a border or a fill or a shadow, not all three.
+1. **Space (try this first).** Make the space within a group about half the space between groups, or less. For example, use 8px between a label and its field, 16px between fields in a group, and 32–48px between sections. Proximity alone does most of the grouping.
+2. **Headings and alignment.** A heading placed closer to its content than to the section above it (roughly 2:1 above to below) anchors the group. A shared left edge ties items together without a line.
+3. **A hairline rule.** Use a thin, quiet divider when rows are dense, as in lists and tables, or when unlike things have to sit close together. Leave space on both sides of the rule, and use one weight and color everywhere.
+4. **A tinted region.** Use a subtle background fill when a cluster of controls must read as one unit and can't be moved apart, such as a toolbar, a filter panel, or a sticky footer. Skip the border, because the fill is enough.
+5. **A card, only for discrete objects.** Keep cards for things the user can open, select, drag, compare, or act on as a whole, like a product, a project, or a message. If you do use cards, give them one consistent surface. Use a border or a shadow or a fill, not all three, and don't nest them.
 
-**Practical fixes**
+**A practical way to fix your page**
 
-- Remove the borders from most sections and let headings and space do the work.
-- Keep cards only for real objects, like items in a list or grid.
-- Build spacing from a small scale, for example 4, 8, 12, 16, 24, 32, 48. Don't use one-off values.
-- Let the parent container own the gaps (`display: grid; gap: …`) instead of putting a bottom margin on every child.
+- Remove the borders from the section containers and let headings and whitespace separate the sections.
+- Set the spacing from a small scale (for example 4, 8, 16, 24, 32, 48) so every gap is a deliberate step.
+- Let the parent container own the gaps (`gap` in flex or grid) instead of putting a bottom margin on every child.
+- Keep the cards only for the items that are real objects, such as a list of projects.
+- Squint at the page. You should see only the groups you meant, no more and no fewer.
 
-To check the result, squint at the page. You should see the groups you intended, no more and no fewer. If you share the markup or CSS, I can suggest specific changes.
+If you share the markup or CSS, I can show you specific changes.

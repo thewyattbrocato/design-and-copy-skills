@@ -1,1 +1,1 @@
-**Lanterman County Building Permits Annual Summary Report: Calendar Year 2025**
+Lanterman County Records Office 2025 Annual Summary Report of Building Permits: New Construction, Additions, and Demolitions

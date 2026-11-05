@@ -1,26 +1,18 @@
-It's the screens and the font renderers, not your CSS or font files. The same outlines get drawn differently on each device.
+**Why it happens:** the font files and CSS are identical, but the rasterizer is not.
 
-## Why it happens
+- **macOS** applies extra smoothing. It doesn't snap outlines to the pixel grid, and it adds some stem darkening. That makes strokes look slightly bolder and softer. Retina screens also have about 2x the pixel density, so even thin strokes land on several pixels.
+- **Windows** uses DirectWrite with ClearType. On a typical 96 dpi office monitor, hinting snaps stems to whole pixels. A 1px-wide stroke is either one pixel or none, so thin weights look spindly and diagonals and curves look jagged.
+- **Old Android tablets** are worse. They are usually low density, have weaker grayscale antialiasing, and have no subpixel tuning. Light weights and high-contrast faces break up the most there.
 
-1. **Pixel density.** A MacBook Retina display has about 220 ppi, so a thin stroke gets several physical pixels and edges look smooth. A typical office monitor (about 90–110 ppi) and an older tablet give the same stroke one or two pixels. Thin strokes then drop out, get uneven, or look jagged.
-2. **Different rasterizers.**
-   - macOS adds a little stem darkening and doesn't snap glyphs to the pixel grid. Text looks slightly heavier and softer.
-   - Windows (DirectWrite/ClearType) fits glyphs to the pixel grid and uses subpixel RGB rendering. Strokes come out thinner and sharper, and they can look jagged when the font has weak hinting. Web fonts that are only auto-hinted, or not hinted at all, make this worse.
-   - Older Android uses FreeType with lighter smoothing and often a low-density panel. Together those give thin, rough text.
-3. **Weight and contrast of the font itself.** A light or regular cut of a high-contrast or geometric face has hairline strokes. These survive on Retina and break up on low-density screens.
-4. **Possibly a mismatched web font file.** Check that Windows and Android are loading the same file as the Mac. A missing weight or a failed load can mean a fallback font or a faux-bolded one.
+So your designer sees the design as intended. You and your dad see it on screens where thin strokes can't be drawn cleanly.
 
-## What to do
+**What to do:**
 
-1. **Check what actually loads on the bad devices.** Open DevTools → Network/Computed → Rendered Fonts on the Windows machine. Confirm the intended family and weight, not a fallback and not synthesized bold.
-2. **Use a sturdier weight.** If body text is 300 or a thin regular, move to a true 400, or 500 for small text. If the face has hairline strokes or high contrast, switch to a lower-contrast, more open face for body and keep the delicate face for large headings only. The usual cause on Windows is a light or hairline cut, not the size.
-3. **Keep text at 16px or larger for body.** About 12px is the floor for labels, and only in regular weight or heavier.
-4. **Don't compensate in CSS.**
-   - Don't use `-webkit-font-smoothing: antialiased` on everything. It only affects macOS and makes light text lighter, which widens the gap you're seeing.
-   - Leave `text-rendering: optimizeLegibility` alone unless you need kerning or ligatures.
-   - Avoid `font-weight` below 400 for text.
-5. **Ship hinted, current font files.** Use WOFF2 from a source that includes hinting for Windows (ttfautohint output, or the foundry's web-optimized files). If you're using a variable font, test it on Windows. Some render noticeably lighter there.
-6. **Add real fallbacks.** Put a system stack after the web font, with `font-display: swap` and `font-size-adjust: from-font` so a fallback doesn't change the apparent size.
-7. **Test on the weakest devices, not just the designer's Mac.** Before you sign off, use your office monitor, your dad's tablet, and a dark-background version of the page. Light text on dark looks bolder, so you may need to step the weight down there.
+1. **Check the weight and face first.** This is the most likely cause, and the fix needs no hacks. If body text uses a light or thin weight (300 or lower) or a high-contrast or thin geometric face, switch body and small text to a regular (400) weight in a sturdier face with lower contrast and open apertures. Keep delicate weights for large headings only.
+2. **Test on real low-density screens.** Use a Windows monitor at 100% scaling and a mid-range Android device, not just the Mac. Also test any light-on-dark text, which looks bolder on screen, so you may need to step the weight down there.
+3. **Check that the right font file is loading.** In DevTools, look at the Network and Computed → Rendered Fonts panes on Windows. A missing weight, a wrong `@font-face` mapping, or a failed load makes the browser fall back to a system font or fake the weight. Faux bold and italic look especially rough.
+4. **Check the font format.** Serve WOFF2 files, and prefer fonts that ship with good hinting, or variable fonts built for screen. Some fonts that look great on Mac are poorly hinted for Windows. If this is a commercial font, ask the foundry about its screen or hinted version.
+5. **Don't rely on `-webkit-font-smoothing`.** It only affects macOS, and it's the reason the Mac render differs. Using `antialiased` there makes Mac text thinner, which makes the gap smaller, but it does nothing for Windows or Android. Don't use it to chase the Windows look.
+6. **Set a sensible body size.** Aim for 16px or larger for body text, with 12px as the floor for small UI text. A bump in size helps low-density screens more than any CSS rendering property.
 
-Tell the designer to check the design on a low-density screen. Something that is crisp only on Retina is not finished. If you share the font name and the CSS weights you use for body text, I can say which of these applies and suggest a specific replacement.
+If you tell me which font and weights the site uses, I can say whether the typeface or weight is the likely culprit and suggest a replacement. I can also look at the `@font-face` rules if you point me to the project. The working directory has no project files right now.

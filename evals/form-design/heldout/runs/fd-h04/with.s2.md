@@ -1,27 +1,32 @@
-**Prefill these**
+# New shift: what to prefill
+
+## Prefill
 
 | Field | Prefill from | Notes |
 |---|---|---|
-| Location | The location they have open now. If none is open, use the location of their most recent shift. | Show it as a visible, changeable control. If they have only one location, show it as plain text and not a picker. |
-| Date | Today's date. If they arrived from a calendar day, use that day instead. | Constrain the picker so past dates are hard to pick. Don't show an error for something the picker could have prevented. |
-| Start and end time | The most recent shift at that location with the same role. Fall back to the most common start and length in the last 20 shifts. | Match on location as well. A lunch pattern at one site shouldn't carry over to another. |
-| Role | The chosen employee's usual role. If no employee is chosen yet, the role from the last shift. | Make it a visible, editable value. People cover other roles, so don't lock it. |
-| Break length, notes, and other fields that rarely change | The last shift at this location. | Leave notes blank unless the manager is duplicating a shift. |
+| **Location** | The location they have open right now. | If they belong to only one, show it as plain text instead of a field. Keep it changeable, because managers sometimes build another site's schedule. |
+| **Date** | Today's date, or the date they were viewing if they opened "New shift" from a day or cell in the calendar. | A calendar click beats "today". Don't prefill a past date. |
+| **Start and end time** | The start and end of their most recent shift at this location. If the last few shifts differ, use the most common pair among the last 20. | Show the end time as a duration too ("8 hrs") so a wrong default is obvious. Prevent an invalid state instead of erroring on it. For example, let overnight shifts roll to the next day with a visible "ends next day" cue. |
+| **Role** | The selected employee's usual role. | If no employee is chosen yet, use the role from their last shift at this location. Changing the employee updates the role only if the manager hasn't edited it by hand. |
+| **Break** | Whatever the last shift at this location used. | Only if you have a break field. |
+| **Notes** | Nothing. | See below. |
 
-**Order matters.** Put location and date first, then role, then employee, then times. Each answer can then improve the next prefill. If the manager picks an employee, set the role from that employee's usual role. If they change the location, refresh the times. If they have already edited a field, never overwrite it silently.
+If the manager clicked an employee's row, prefill that employee and their role from the calendar. That context is stronger than anything from history.
 
-**Leave these blank on purpose**
+## Leave blank on purpose
 
-- **Employee.** Prefilling it risks scheduling the wrong person, and the manager will often skip past a wrong guess. Do a quick search or autocomplete. You can offer a short list of people who usually work that role at that location, but don't preselect one.
-- **Anything that costs money or notifies someone.** Examples are overtime-triggering hours, pay rate overrides, and "notify employee" if it sends a message. Make these deliberate choices.
-- **Notes and special instructions.** Copying them forward leaves stale text, such as "cover for Sam", on new shifts.
-- **A field with no real pattern.** If the last 20 shifts show no common value, such as scattered start times, leave it blank. A wrong guess is slower to fix than an empty field.
+- **Employee.** A wrong prefill here means someone gets scheduled by accident, and it's easy to miss when saving quickly. Make the manager pick, but put people who usually work this role, day and location at the top of the list.
+- **Notes.** Carrying over last week's "cover for Sam" would be wrong and embarrassing. Copying it silently is worse than typing it fresh.
+- **Anything that notifies or commits**, such as "publish to employee" or "send alert". Don't default it to on based on past behavior. Make it an explicit choice, or put it on the button ("Save shift" and "Save and notify").
+- **Pay rate and overrides**, if they exist. Take them from the employee record, not from the last shift.
 
-**Make prefill safe**
+## Practical rules
 
-- Prefilled values should look like real values in the control, not gray placeholder text. Managers need to see at a glance what will be saved.
-- The button says "Create shift" and stays pressable.
-- After saving, offer "Add another" that keeps the location, date and times. Managers building a week often create many similar shifts.
-- Offer "Copy from a previous shift" as a separate shortcut for repeating a specific shift. Don't make it the default behavior.
+1. **Show the defaults in the fields.** Don't hide them behind a "use last shift" link. Prefilled fields should look like real values the manager can read and overwrite in one keystroke.
+2. **Tell people what you prefilled.** A one-line hint such as "Times from your last shift at Downtown" under the time fields lets them trust or ignore it. This matters most for times, where a wrong default looks plausible.
+3. **Use recency per location, not globally.** A manager with two locations probably has different hours at each. Pull the last shifts only from the open location, and refresh the defaults if they switch location before editing anything.
+4. **Order the form by how fast it can be done.** Employee first, since it drives role and suggestions. Then date and times, which are usually already right. Then everything else.
+5. **Add "Save and add another".** It keeps the date, location and times for the next shift. Entering a block of similar shifts is where the biggest time savings are, more than prefilling the first one.
+6. **Don't prefill empty history.** For new managers with fewer than a few shifts, fall back to blank times instead of a guess from one data point.
 
-Start with location, date and times, since they give the biggest saving. Add role and employee-driven prefill after that.
+Worth testing: track how often managers change each prefilled field. If a default gets overwritten more than about half the time, it isn't helping and should go back to blank.

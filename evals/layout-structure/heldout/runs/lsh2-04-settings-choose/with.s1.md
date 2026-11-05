@@ -1,31 +1,31 @@
-**Pick: the left sidebar, with each group as its own page.** Don't make it one long scroll, and don't use tabs.
+**Pick: the left sidebar, with each group as its own page.** Group the sidebar's nine entries under three small headings.
 
-**Why the other two lose**
-- **Top tabs:** you have 9 groups, and Team, Alert rules and Integrations will grow. Nine tabs don't fit across a laptop, and on a phone they become a horizontal scroll strip where people miss the ones off-screen.
-- **One long page with anchors:** 40 settings with different save behavior makes a very long scroll. Saving gets ambiguous ("did my billing change save when I edited alerts?"). Vehicles, drivers and alert rules are lists that grow, and they would push everything below them down the page. Your dev's instinct for deep-linkable sections is still right: give each group its own URL, like `/settings/alerts`.
+**Why not the other two**
+- **Top tabs:** you have nine groups, and tabs run out of room at about five. On a phone they turn into a scrolling strip with hidden tabs.
+- **One long page:** the 40 settings aren't all short form fields. Team, vehicles and drivers, and invoices are tables or lists, and integrations is six cards. Stacked on one page, they bury each other. Anchor links also leave people scrolling through billing to reach alert rules.
+- **Sidebar:** nine groups is what side navigation handles well, and the sidebar always shows where you are. The designer's pick fits the content best.
 
-**Sidebar grouping (9 items, under 3 quiet headings)**
+**Sidebar contents**
 - **Account:** Company profile, Billing & invoices, Team & roles
 - **Operations:** Vehicles & drivers, Alert rules, Notification channels, Integrations
 - **Data & security:** Data export, Security
 
 **Laptop**
-- The app's top bar is unchanged. Below it, a sidebar about 15rem wide sits on the left, aligned with the logo's left edge. It stays in view while the content scrolls. The current group is highlighted.
-- The content area has a page title, a one-sentence description, then the controls. Form groups (Company profile, Security, Notification channels) use a column about 40–60ch wide, left-aligned, with labels above fields. Leave the empty space to the right empty.
-- List-type pages (Vehicles & drivers, Team & roles, Alert rules) fill the width as tables with search and filters.
-- Integrations is a list of 6 rows, each with a name, a status (Connected or Not connected) and a Connect or Manage button. Clicking one opens its detail.
-- Each page has its own Save bar, which is always visible and only enabled when something has changed.
+- The page has the app header on top. Below it is a sidebar about 15rem wide that stays in place while the content scrolls.
+- The selected item is highlighted. The sidebar's left edge lines up with the header logo.
+- The content area shows one group at a time: a title, a one-sentence purpose line, then the controls.
+- Form groups like Company profile and Security stay in a column about 40 to 60 characters wide, with labels above the fields. Leave the extra width empty instead of stretching the fields.
+- Table groups like Team, Vehicles & drivers, and Invoices use the full content width.
+- Integrations is a wrapping grid of six equal cards. Each shows the logo, the name, a status, and a Connect or Manage button.
+- Save sits in a bar that stays visible, and it appears only when something has changed.
 
 **Phone**
-- `/settings` shows the 9 groups as a full-width list of rows with chevrons, under the same 3 headings. It doesn't show a sidebar or a form.
-- Tapping a row opens that group full-screen with a back arrow and the group's title in the header. Forms stack in one column.
-- Tables become cards or rows. A sticky Save button sits at the bottom of the screen.
-- The URLs match the laptop's, so a link to Alert rules works on both.
+- The sidebar becomes its own screen. Tapping Settings opens a full-width list of the nine groups under their three headings, with a chevron on each row.
+- Tapping a row opens that group as a single column with a back arrow to the list. This is better than a hamburger drawer, because the list is the menu and nothing is hidden.
+- Tables become stacked rows: a name, a role or status, and a chevron that opens a detail view.
+- Integration cards go to one column.
+- Save is pinned to the bottom of the screen when there are unsaved changes.
 
-**Worst cases to check before building**
-- A translated label that's 40% longer.
-- A company with 200 vehicles.
-- An empty Integrations list.
-- A non-admin user. Hide or lock the groups they can't edit, such as Billing, instead of leaving them as dead links.
-
-I haven't built anything yet. If you'd like, I can sketch the sidebar and page as HTML or React.
+**What to give the others**
+- **Dev:** every group gets its own URL, such as `/settings/billing`, so links and deep links work. Within a long group like Security or Alert rules, anchors can still jump to a section.
+- **PM:** if a group such as Alert rules later has distinct subareas (rules, schedules, history), use tabs inside that group. Local tabs work well there, but they shouldn't be the top-level navigation.

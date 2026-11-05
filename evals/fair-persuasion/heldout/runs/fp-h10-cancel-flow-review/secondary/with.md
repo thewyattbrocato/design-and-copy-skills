@@ -1,27 +1,30 @@
-**Partly. The offer is fine, but the flow as a whole is a dark pattern, mainly because cancelling is harder than joining.**
+**Partly.** The pause offer and the "Sorry to see you go" line are fine. The phone-only cancellation, the required reason, the unequal buttons, and the email held until after the call are dark patterns. Leaving takes more steps and a different channel than joining did.
 
 **What's fine**
-- The pause offer. It's a real alternative with a clear free term.
-- The "Sorry to see you go" tone.
-- Asking why they're leaving, as long as it's optional.
+- "Cancel membership" is findable in Settings. It's small and grey, so make it an ordinary row.
+- A pause offer is a real alternative, and [No thanks] is a clear way out.
+- "Sorry to see you go" is neutral.
 
 **What isn't**
-- **Leaving takes a different channel.** Joining is two taps online. Cancelling needs a phone call during business hours. That's the core problem.
-- **The cancel path is hidden.** It's a small grey link, last under "Billing FAQs".
-- **The reason is required.** The dropdown blocks cancelling until they answer.
-- **Unequal buttons.** "Keep my membership" is big and green, "Continue" is a small grey link.
-- **Guilt framing.** "Before you go" plus a stat that implies they'll fail their goals. The stat is also a claim you need to source or cut.
-- **No written confirmation.** The email comes only after the call, and it's the only record of the cancellation.
-- **Missing facts.** Nothing says when access ends, what happens to bookings, or what happens to their data.
+- **Phone-only cancellation for an online sign-up** (step 4). Joining took two taps, so leaving must be possible in the app. Cancelling by phone only, during weekday office hours, blocks people who simply want out.
+- **Required reason** (step 4). Asking why is fine, but it can't be a condition of leaving. Make it optional and skippable.
+- **Unequal buttons** (step 2). A big green "Keep" beside a small grey "Continue" steers the choice. Both exits need equal weight.
+- **Two retention screens** (steps 2 and 3). Stacking a guilt-style line, then a pause offer, then a survey is more friction than joining. Offer one alternative, once.
+- **"Stay 6+ months, 3x more likely to hit goals"** (step 2). It's a guilt-tinged line aimed at the exit. Drop it from the cancel flow. If you keep it anywhere, it must be true, sourced, and not used to push someone out.
+- **Confirmation only after a phone call** (step 5). The person doesn't know if they've cancelled, and billing may keep running. Send the confirmation immediately.
+- **No end date or billing terms shown.** People need to know when access stops and whether they'll be charged again.
 
-**What to change**
+**Fair version**
 
-1. **Entry:** Settings > Membership shows a visible "Cancel membership" row next to "Manage", not last under FAQs.
-2. **Pause offer (one alternative, shown once):** "Pause instead? Freeze your membership for up to 2 months, free." Buttons: [Pause] [Continue cancelling], same size and weight.
-3. **Cancel screen:** "You'll keep access until [end date]. After that, your bookings are removed and you won't be charged again. Your data: [what happens and for how long]." Optional field: "Tell us why (optional)." Buttons: [Cancel membership] [Go back].
-4. **Confirmation (on screen and by email, sent immediately):** "Your membership ends on [end date]. To rejoin, [how to rejoin]." No phone step.
-5. **Drop** the "3x more likely" line, or keep it only if it's sourced and presented as information, not as "before you go."
+1. **Settings > Membership > Cancel membership.** A normal row in the Membership section.
+2. **One screen:** "Cancel your Gripline membership?"
+   - "You'll keep access until [end date]. You won't be charged after that. Your upcoming bookings will be [cancelled / kept until end date]."
+   - Optional, one alternative: "Need a break? Pause for up to 2 months, free." [Pause instead]
+   - Two equal buttons: [Cancel membership] and [Keep membership]
+3. **Reason (optional):** "Help us improve? (optional)" with a dropdown and a [Skip] option. Cancellation proceeds either way.
+4. **Confirmation, in-app and by email, immediately:** "Your membership ends on [end date]. To rejoin, [how to rejoin]." The phone number can appear as "Questions? Call (555) 0142, Mon–Fri 9–5," but it's never required.
 
-Notes:
-- Fill in `[end date]`, the data policy, and the rejoin path. I didn't invent them.
-- Cancellation rules vary by place and change over time. Some US states, California among them, require online cancellation when signup was online, so have counsel check this.
+**Notes**
+- Replace [end date], [how to rejoin], and the booking behaviour with your actual policy. I didn't assume them.
+- Rules on online cancellation vary by place and change over time, and some regions require it to be as easy as signing up. Have legal check this before launch.
+- Track cancellation complaints and chargebacks after the change, since they're the best signal that the flow is too hard.

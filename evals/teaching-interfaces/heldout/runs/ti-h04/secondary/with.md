@@ -1,28 +1,29 @@
-## Layout: a four-step build, one diagram drawn up in stages
+**Layout, top to bottom**
 
-**Headline and one sentence (above the fold):** "A heat pump water heater moves heat from the air into your water instead of making heat from scratch." Afterwards, a reader should be able to explain where the heat comes from. Nothing else competes with that sentence.
+1. **A headline that states the takeaway**, such as "A heat pump water heater moves heat from the air into your water." If a visitor reads only this line, they should still get the idea.
 
-**Diagram: the same drawing, four stills.** Don't show all eight parts at once. Each still adds two or three parts, and each part gets its label on or beside it, not in a legend.
+2. **The diagram, directly under the headline**, full width. Put the part names on the parts, not in a key. Label the arrows in plain words ("warm air in," "cooler air out," "heat into water"). Use one diagram for the whole story, since it answers one question: where does the heat come from and where does it go.
 
-1. **Water path.** Tank, cold-water inlet at the bottom, hot-water outlet at the top. Text: where the water enters, where it leaves, and that it's stored in the tank.
-2. **Heat into the water.** Add the condenser coil wrapped around the tank. Label the arrow with what it does, e.g. "heat moves into the water," not a bare arrow.
-3. **Heat from the air.** Add the fan and evaporator coil on top. Arrows: "air in" and "cool air out." Keep the cool-air arrow labeled with what it is.
-4. **The pump.** Add the compressor, which links the evaporator and condenser. Show the full loop once.
+3. **Five short sections in the order the heat travels.** Use the same names as the diagram labels so readers can match text to picture:
+   - **Air is the heat source:** fan and evaporator
+   - **A refrigerant carries the heat:** the loop between them
+   - **The compressor concentrates it:** compressor
+   - **The condenser hands the heat to the water:** coil around the tank
+   - **Cold water in at the bottom, hot water out at the top:** the inlet and outlet
 
-Introduce the names before the process: stills 1 and 2 name the parts, and the sequence in stills 3 and 4 uses those names.
+   Give each section about 100 to 120 words, which is roughly 3 to 4 sentences. Keep the headings short so people can skim them.
 
-**Text: one segment per still, next to its picture.** About 150 words per segment, which fits your 600. Each segment is two to four short sentences beside its still, so no one scrolls away from the picture to read it. On mobile, stack each still directly above its sentence.
+4. **Answers to the questions homeowners will ask**, placed in the section they relate to. Two likely ones: "Does it cool my house?" (your diagram shows cool air out, so people will ask) and "Does it work in a cold garage or basement?" Write these only with facts you can stand behind, such as [operating temperature range] or [clearance needed]. Don't guess numbers.
 
-**After the stills: one practical section.** Keep it short and use plain headings:
-- What the homeowner will notice (cool, dry air exits; the unit runs on electricity).
-- Where it needs to go (enough room and air around it). Use Tidewater's own install requirements here, not general numbers you haven't verified.
-- One next step: "Talk to us about whether it fits your home," with a single button.
+5. **One action at the end**, such as "Ask us whether one fits your home," linking to your contact form or a site visit. Use one button only.
 
-**Accessibility and cut list**
-- Alt text describes each still's relationship (e.g., "heat moves from the condenser coil into the tank"), not just the parts.
-- No meaning carried by color alone; arrows are labeled in words.
-- No decorative art, no mascot, no animation unless you add a short loop with stills as the fallback.
+**Fix before launch**
 
-## Assumptions
-- I assumed a desktop and mobile web page with static stills. If you want a short animation, keep it to one loop of the heat flow, make it pausable, and add captions.
-- I haven't added any Tidewater-specific claims (savings, rebates, warranties, sizing). Fill those in with real facts or leave them out.
+- **The refrigerant loop has no expansion valve.** Anyone who knows the system will notice. Add it, or label the diagram "simplified."
+- **Don't rely on color alone.** If hot and cool arrows use different colors, they also need words and a different line style. Check that the diagram still reads in grayscale.
+- **Write alt text** of two sentences that names the parts in order and points to the sections below.
+- **Keep labels at about 12px or larger** at the smallest screen width. If they get too small on a phone, restack the labels instead of shrinking the type.
+
+**What to leave out:** tours, animation, and clickable hotspots. A still diagram with short sections teaches this better, and motion would only be worth adding to show the refrigerant cycle as a moving loop.
+
+**Notes:** I haven't seen the 600 words, so the sections are split by part, not by content. If you paste the copy, I'll assign each paragraph to its section and cut anything that doesn't serve the takeaway.

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Outfitters Returns Flow – Case Study</title>
+<style>
+  :root{
+    --bg:#faf8f4; --surface:#ffffff; --ink:#1d2420; --muted:#5b665f;
+    --line:#e3dfd6; --accent:#2f5d46; --accent-soft:#e4eee8; --warn:#8a5a1c; --warn-soft:#f6ebd9;
+    --max:720px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#141a16; --surface:#1c241f; --ink:#eef1ec; --muted:#a2aea6;
+      --line:#2f3a33; --accent:#7fc29e; --accent-soft:#223229; --warn:#e0b673; --warn-soft:#3a2f1c;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:18px; line-height:1.65;
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px}
+  header{padding:72px 0 40px; border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin:0 0 16px}
+  h1{font-size:clamp(32px,6vw,48px); line-height:1.1; margin:0 0 20px; letter-spacing:-.02em}
+  .lede{font-size:clamp(19px,2.6vw,22px); color:var(--muted); margin:0}
+  dl.meta{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px 24px; margin:36px 0 0}
+  dl.meta div{border-top:2px solid var(--ink); padding-top:10px}
+  dl.meta dt{font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); font-weight:600}
+  dl.meta dd{margin:2px 0 0; font-size:16px; line-height:1.4}
+  section{padding:56px 0 8px}
+  h2{font-size:28px; line-height:1.2; margin:0 0 16px; letter-spacing:-.01em}
+  p{margin:0 0 16px}
+  .callout{background:var(--warn-soft); border-left:4px solid var(--warn); padding:16px 20px; border-radius:0 8px 8px 0; margin:24px 0; font-size:17px}
+  .callout strong{color:var(--warn)}
+
+  /* flow comparison */
+  .flows{display:grid; gap:16px; margin:28px 0}
+  .flow{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:20px}
+  .flow h3{margin:0 0 14px; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .flow.new h3{color:var(--accent)}
+  .steps{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+  .steps li{background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:6px 14px; font-size:15px; line-height:1.4}
+  .flow.new .steps li{background:var(--accent-soft); border-color:transparent}
+  .steps li + li::before{content:"→"; margin-right:10px; color:var(--muted)}
+  .steps li{display:inline-flex}
+
+  /* decisions */
+  .decision{display:grid; grid-template-columns:48px 1fr; gap:4px 16px; padding:28px 0; border-top:1px solid var(--line)}
+  .decision:first-of-type{margin-top:12px}
+  .num{font-size:32px; font-weight:700; color:var(--accent); line-height:1.2}
+  .decision h3{margin:0 0 8px; font-size:22px; line-height:1.3}
+  .decision p{margin:0 0 12px}
+  .tag{display:inline-block; font-size:13px; font-weight:600; color:var(--accent); background:var(--accent-soft); padding:2px 10px; border-radius:999px; margin-bottom:8px}
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px}
+  .compare div{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 16px; font-size:15px; line-height:1.5}
+  .compare b{display:block; font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:2px}
+  .compare .after{background:var(--accent-soft); border-color:transparent}
+  .compare .after b{color:var(--accent)}
+
+  /* result */
+  .result{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:32px 28px; margin:24px 0}
+  .big{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:24px}
+  .big .from{font-size:28px; color:var(--muted); text-decoration:line-through; text-decoration-thickness:2px}
+  .big .arrow{font-size:28px; color:var(--muted)}
+  .big .to{font-size:clamp(56px,12vw,80px); font-weight:700; color:var(--accent); line-height:1; letter-spacing:-.03em}
+  .bar{margin:14px 0}
+  .bar .label{display:flex; justify-content:space-between; font-size:14px; color:var(--muted); margin-bottom:4px}
+  .track{background:var(--bg); border-radius:6px; height:28px; overflow:hidden; border:1px solid var(--line)}
+  .fill{height:100%; border-radius:5px 0 0 5px}
+  .fill.before{background:var(--muted); opacity:.55; width:37%}
+  .fill.after{background:var(--accent); width:68%}
+  .source{font-size:14px; color:var(--muted); margin:20px 0 0}
+
+  footer{padding:48px 0 80px; margin-top:48px; border-top:1px solid var(--line); color:var(--muted); font-size:15px}
+
+  @media (max-width:560px){
+    body{font-size:17px}
+    header{padding-top:48px}
+    .compare{grid-template-columns:1fr}
+    .decision{grid-template-columns:1fr}
+    .result{padding:24px 20px}
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">Case study · E-commerce UX</p>
+      <h1>Making returns something customers can start on their own</h1>
+      <p class="lede">I redesigned the returns flow for Kestrel Outfitters, a mid-size online camping gear shop. Return-request form completion went from 37% to 68%.</p>
+      <dl class="meta">
+        <div><dt>Role</dt><dd>Sole product designer</dd></div>
+        <div><dt>Team</dt><dd>Daria (PM), two engineers</dd></div>
+        <div><dt>Timeline</dt><dd>About 10 weeks, 2025</dd></div>
+        <div><dt>Client</dt><dd>Kestrel Outfitters</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section>
+      <h2>The problem</h2>
+      <p>To start a return at Kestrel, customers had to email support. The way in was a “Contact us” form buried in the site footer, so the process started with a hunt for the right page and ended in a wait for a reply.</p>
+      <p>I read through support tickets to see what was going wrong. The most common complaint was that customers didn't know whether an item was eligible for return. They were committing to a process without knowing if it would work for them.</p>
+      <div class="flows">
+        <div class="flow">
+          <h3>Before</h3>
+          <ul class="steps">
+            <li>Find footer</li>
+            <li>“Contact us” form</li>
+            <li>Email support</li>
+            <li>Learn eligibility</li>
+          </ul>
+        </div>
+        <div class="flow new">
+          <h3>After</h3>
+          <ul class="steps">
+            <li>Account page</li>
+            <li>“Return an item” on the order</li>
+            <li>Eligibility shown per item</li>
+            <li>One-tap reason</li>
+            <li>Label + map</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Three design decisions</h2>
+      <p>Each decision targeted a specific point where the old flow lost people or made them wait.</p>
+
+      <article class="decision">
+        <div class="num">1</div>
+        <div>
+          <span class="tag">Entry point &amp; eligibility</span>
+          <h3>Put “Return an item” on every order, and check eligibility up front</h3>
+          <p>The return action now lives on each order in the account page, where customers already look when something needs sorting out. Eligibility is checked per item at the start, so customers learn whether a return is possible before they invest any effort. This addresses the top complaint in the tickets directly.</p>
+          <div class="compare">
+            <div><b>Before</b>Footer form; eligibility unclear until support replied</div>
+            <div class="after"><b>After</b>Action on each order; eligibility checked per item at the start</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="decision">
+        <div class="num">2</div>
+        <div>
+          <span class="tag">Reducing effort</span>
+          <h3>Replace the 9-option reason dropdown with one tap and an optional note</h3>
+          <p>The old dropdown had nine options, and most responses were “Other”. That meant the field cost customers effort without producing useful categories. A single tap, plus an optional note for anyone who wants to explain, keeps the step quick and lets people say it in their own words.</p>
+          <div class="compare">
+            <div><b>Before</b>9-option dropdown, mostly “Other”</div>
+            <div class="after"><b>After</b>One tap, plus an optional note</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="decision">
+        <div class="num">3</div>
+        <div>
+          <span class="tag">Closing the loop</span>
+          <h3>Show the prepaid label and drop-off map on the confirmation screen</h3>
+          <p>Rather than emailing the label later, the confirmation screen gives customers what they need to finish the return right away: a prepaid label and a map of drop-off locations. The flow ends with a next step instead of a wait.</p>
+          <div class="compare">
+            <div><b>Before</b>Label sent by email afterward</div>
+            <div class="after"><b>After</b>Label and drop-off map on the confirmation screen</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Result</h2>
+      <p>In the six weeks after launch, the completion rate of the return-request form rose from 37% to 68%.</p>
+      <div class="result" role="group" aria-label="Return-request form completion rate, before and after">
+        <div class="big">
+          <span class="from">37%</span>
+          <span class="arrow" aria-hidden="true">→</span>
+          <span class="to">68%</span>
+        </div>
+        <div class="bar">
+          <div class="label"><span>Old flow</span><span>37%</span></div>
+          <div class="track"><div class="fill before"></div></div>
+        </div>
+        <div class="bar">
+          <div class="label"><span>New flow, first six weeks after launch</span><span>68%</span></div>
+          <div class="track"><div class="fill after"></div></div>
+        </div>
+        <p class="source">Return-request form completion rate. Source: PM's dashboard.</p>
+      </div>
+      <div class="callout">
+        <strong>A note on the evidence.</strong> Completion rate is the one metric I have. I don't have user quotes or other figures, such as support volume or return rates, and I haven't attributed the change to any single decision. The three changes shipped together.
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Kestrel Outfitters returns flow · Redesign led by me as the sole designer, in partnership with Daria (PM) and two engineers.</div>
+</footer>
+</body>
+</html>

@@ -20,9 +20,9 @@ The harness appends one format instruction in both arms: *Return the result as a
 
 ## Sonnet (`claude-sonnet-5-5`)
 
-![without and with, side by side](sonnet/compare.png)
+![Featured pair for the Intro to Bread Baking workshop card, Sonnet. Left, without the skill: an orange Free community workshop pill, a large serif title with Bread Baking in orange italics, a loaf drawing and a boxed When, Where and Bring list. Right, with the skill: a dark pill, a three-line serif title, a round Free! for everyone stamp, three bulleted details and a dark sign-up bar with the web address.](sonnet/compare.png)
 
-![all six runs](sonnet/contact-sheet.png)
+![Contact sheet of all six Sonnet runs for the workshop card: three without the skill on the top row and three with it below, each labelled with its run number and rubric mean. The featured median run of each row is outlined and labelled featured (median).](sonnet/contact-sheet.png)
 
 | Run | Without skill: rubric mean | With skill: rubric mean | With skill: skill invoked | Pair verdict (blind, swap-checked) |
 | --- | --- | --- | --- | --- |
@@ -47,9 +47,9 @@ Rubric means are the judge's 1 to 5 scores averaged over the rubric items and bo
 
 ## Haiku (`claude-haiku-4-5-20251001`)
 
-![without and with, side by side](haiku/compare.png)
+![Featured pair for the Intro to Bread Baking workshop card, Haiku. Left, without the skill: a tan card with a bread emoji, the title, stacked white boxes for date, location, a Free tag and what to bring, and a sign-up bar. Right, with the skill: a lighter card with the same details as small labelled lines down the middle, a Bring your apron tag, a Free tag and the sign-up address in orange.](haiku/compare.png)
 
-![all six runs](haiku/contact-sheet.png)
+![Contact sheet of all six Haiku runs for the workshop card: three without the skill on the top row and three with it below, each labelled with its run number and rubric mean. The featured median run of each row is outlined and labelled featured (median).](haiku/contact-sheet.png)
 
 | Run | Without skill: rubric mean | With skill: rubric mean | With skill: skill invoked | Pair verdict (blind, swap-checked) |
 | --- | --- | --- | --- | --- |

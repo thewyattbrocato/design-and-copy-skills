@@ -2,28 +2,28 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "52de601ddda94151",
+    "with": "66b545cbb174a1bd",
     "without": "a77c46ebe416e38d"
   },
   "result": {
     "winner": "with",
-    "judge_notes": "pass 1 (A=with, B=without): A's CSS is correct and matches its token table. Code and tables scroll inside their own wrappers within a wider article column, and grid columns use minmax(0, 1fr) to stop wide content from stretching them. B's .bleed approach has a bug: its usage example wraps pre in div.bleed, but only .bleed:is(pre) or .bleed.scroll gets overflow-x, so long code can overflow the page. B also relies on 100vw, which it admits causes scrollbar overflow, and adds unnamed values such as gap: 4rem. | pass 2 (A=without, B=with): B is the more complete system. Every `pre` and table wrapper scrolls inside its own box, `.article > *` caps prose at 68ch while letting code and tables widen to a shared article width, and it gives concrete widths to check from 360 to 2560px. A's bleed approach has a real bug: its usage example wraps `pre` in a plain `.bleed` div, so the `overflow-x` rule never applies and long code would overflow on a phone. A also relies on `100vw`, which it admits can cause a horizontal scrollbar, and it uses literal values (4rem gap, 80rem, 36rem) instead of named tokens. B has a small slip: `.split` uses `5fr 7fr` without `minmax(0, \u2026)`, which goes against its own rule 5.",
+    "judge_notes": "pass 1 (A=with, B=without): Answer A gives a complete, consistent token set. Its prose and wide columns share one centre line, code scrolls inside its own box and tables scroll in a wrapper, and all of it is valid CSS with no repeated magic numbers. Answer B is leaner, with only two breakpoints, but it has real bugs: in its own usage example neither the `.bleed` div nor the `pre` gets `overflow-x`, so long code lines spill out. Its 100vw bleed can also cause horizontal overflow, and it adds a hard-coded `4rem` gap and a global `min-width` on every table. A is somewhat heavier than needed, with four breakpoints and separate classes for 3- and 4-tier pricing. | pass 2 (A=without, B=with): B's CSS works as described: code blocks scroll inside their own box, tables get a scroll wrapper, and prose and wide blocks are centered on the same axis using named tokens. A has a real bug: `.bleed:is(pre)` never matches because the bleed element is a div, so long code lines inside `pre` have no `overflow-x` and can overflow. A also hardcodes a 4rem feature gap and lets pricing sit at 2 columns, which orphans the third card. B adds a few more breakpoints and tokens than strictly needed, but it is the more correct and more complete answer overall.",
     "rubric_scores": {
-      "with": 4.833,
-      "without": 3.833
+      "with": 4.5,
+      "without": 3.75
     },
     "rubric_items": {
       "with": [
         5.0,
         5.0,
         5.0,
-        5.0,
         4.5,
-        4.5
+        4.5,
+        3.0
       ],
       "without": [
         4.5,
-        4.5,
+        4.0,
         3.0,
         4.0,
         3.0,
@@ -39,7 +39,7 @@
         ],
         "raw_verdict": "A",
         "winner": "with",
-        "notes": "A's CSS is correct and matches its token table. Code and tables scroll inside their own wrappers within a wider article column, and grid columns use minmax(0, 1fr) to stop wide content from stretching them. B's .bleed approach has a bug: its usage example wraps pre in div.bleed, but only .bleed:is(pre) or .bleed.scroll gets overflow-x, so long code can overflow the page. B also relies on 100vw, which it admits causes scrollbar overflow, and adds unnamed values such as gap: 4rem."
+        "notes": "Answer A gives a complete, consistent token set. Its prose and wide columns share one centre line, code scrolls inside its own box and tables scroll in a wrapper, and all of it is valid CSS with no repeated magic numbers. Answer B is leaner, with only two breakpoints, but it has real bugs: in its own usage example neither the `.bleed` div nor the `pre` gets `overflow-x`, so long code lines spill out. Its 100vw bleed can also cause horizontal overflow, and it adds a hard-coded `4rem` gap and a global `min-width` on every table. A is somewhat heavier than needed, with four breakpoints and separate classes for 3- and 4-tier pricing."
       },
       {
         "order": [
@@ -48,7 +48,7 @@
         ],
         "raw_verdict": "B",
         "winner": "with",
-        "notes": "B is the more complete system. Every `pre` and table wrapper scrolls inside its own box, `.article > *` caps prose at 68ch while letting code and tables widen to a shared article width, and it gives concrete widths to check from 360 to 2560px. A's bleed approach has a real bug: its usage example wraps `pre` in a plain `.bleed` div, so the `overflow-x` rule never applies and long code would overflow on a phone. A also relies on `100vw`, which it admits can cause a horizontal scrollbar, and it uses literal values (4rem gap, 80rem, 36rem) instead of named tokens. B has a small slip: `.split` uses `5fr 7fr` without `minmax(0, \u2026)`, which goes against its own rule 5."
+        "notes": "B's CSS works as described: code blocks scroll inside their own box, tables get a scroll wrapper, and prose and wide blocks are centered on the same axis using named tokens. A has a real bug: `.bleed:is(pre)` never matches because the bleed element is a div, so long code lines inside `pre` have no `overflow-x` and can overflow. A also hardcodes a 4rem feature gap and lets pricing sit at 2 columns, which orphans the third card. B adds a few more breakpoints and tokens than strictly needed, but it is the more correct and more complete answer overall."
       }
     ]
   }

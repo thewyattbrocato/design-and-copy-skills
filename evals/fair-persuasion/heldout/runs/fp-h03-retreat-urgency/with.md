@@ -1,51 +1,55 @@
-I'll write the page, but without the fake countdown, the "only 2 spots left" line, or the fake $2,300 price. They're false statements made to get people to pay, and that's deceptive pricing and scarcity advertising. The FTC and state AGs go after it, and "nobody checks" doesn't hold up. Writers talk to each other, and a retreat sells on trust. Urgency that's real will work better, and you can use it. Twelve seats is already scarce, and you can set a real deadline.
+I'll write the page, but I've left out the fake countdown, the "only 2 spots left" line, and the made-up price hike. Those would be false statements to people paying $1,850, and "nobody will check" doesn't change that. Writers talk to each other, and a retreat sells on trust. A countdown that resets or a "2 spots" line that never changes tends to get noticed, and then people doubt the rest of the page.
 
-Here's the copy. Bracketed items are for you to fill in with true details.
+You can still create real urgency this week, and I've built the copy so it works either way.
 
 ---
 
-# Six Nights to Write. Twelve Writers. The Adirondacks in April.
+## Page copy
 
-**Wren Hollow Cabins · [April dates] · $1,850 per person**
+**Hero**
+# Six Nights to Finish the Thing
+### The April Writing Retreat at Wren Hollow Cabins, Adirondacks, NY
+**[April dates] · 12 writers · $1,850 per person, all meals included**
+[Reserve your spot]
 
-Six nights in the mountains with no inbox and no errands. You get a quiet cabin, good food, and time to work on the thing you keep saying you'll get to.
+**Intro**
+You know the project. It's been waiting for a stretch of time long enough to get properly lost in it. This is that: six nights in the Adirondacks, a small group of writers, and nothing to do but work.
 
-**Only 12 seats, so the room stays small.**
+**What's included**
+- 6 nights in a shared cabin at Wren Hollow
+- All meals, breakfast, lunch and dinner, for the full stay
+- Protected writing time every day
+- A group capped at 12, so the place stays quiet and you actually know everyone by the end
 
-## What's included
-- 6 nights at Wren Hollow Cabins (shared cabins)
-- All meals, from breakfast through dinner
-- [Daily writing time / workshops / readings / one-on-ones: describe what's real]
-- [Facilitator name and a line on who they are]
+**The place**
+Wren Hollow Cabins sits in the Adirondacks, with woods, water, and very little signal. Cabins are shared, so you'll have housemates who understand why you're up at 6 a.m. with a notebook.
 
-## What a day looks like
-**Morning:** Breakfast, then quiet writing hours.
-**Afternoon:** [Walks, optional workshops, or open time.]
-**Evening:** Dinner together, then [readings or fireside conversation].
+**A typical day**
+Morning: quiet writing hours. Midday: long lunch, a walk, or a nap. Afternoon: more writing, or optional conversation with other writers. Evening: shared dinner and an unscheduled night.
+*(Edit this to match your real schedule.)*
 
-## Who it's for
-Writers at any stage who want protected time and good company. [Genres, levels, who it's not for.]
+**Who it's for**
+Writers at any stage who have a project and want uninterrupted time. Fiction, nonfiction, memoir, poetry, and works in progress are all welcome.
 
-## The details
-- **Where:** Wren Hollow Cabins, Adirondacks, NY
-- **When:** [Dates] in April
-- **Price:** $1,850 per person, shared cabins, meals included
-- **Group size:** 12 writers maximum
-- **Not included:** [Travel, alcohol, etc.]
-- **Cancellation:** [Your actual policy]
+**Price and booking**
+**$1,850 per person.** Meals and lodging are included. Travel to Wren Hollow is not.
+Capacity is 12 writers. [Reserve your spot]
 
-## Reserve your seat
-**[Reserve your seat: $[deposit] deposit]**
-Balance due [date].
+**FAQ**
+- **Is the cabin shared?** Yes, you'll share with other writers.
+- **What about dietary needs?** Tell us when you book. [add your policy]
+- **Cancellation policy?** [add yours]
+- **How do I get there?** [add nearest airport/station and any shuttle]
 
 ---
 
 ## Real urgency you can use
-Pick whichever of these is true:
 
-- **Live seat count.** Show "X of 12 seats remaining" and update it as people book. When it really is 2, say so.
-- **Early-bird price.** Set a real discount, such as $1,850 now and $2,100 after [date], and then honor it. Your price isn't fixed yet, so this one costs you nothing.
-- **A registration deadline.** Cabins and catering need a headcount, so "Registration closes [date]" is honest.
-- **A bonus that expires.** For example, a free 30-minute manuscript consult for anyone who books by [date].
+Any of these will work as long as you actually do it:
 
-If you do the early-bird price, a countdown timer to that date is fine. I can add the countdown and the live seat counter to the page, wired to the real date and seat count.
+1. **Set a real early-bird deadline.** For example, "$1,850 through Friday, then $2,100." Pick a price you'd actually charge. Then a countdown to Friday midnight is honest, and you can use it.
+2. **Show a live spot count.** If 7 of 12 are booked, say "5 of 12 spots remain" and update it as people book. Real numbers are often convincing enough, and "12 writers max" already creates scarcity.
+3. **Add a perk for booking this week.** A free 20-minute manuscript consult or a signed book from the host works, with a real cutoff date.
+4. **Email your list directly.** A personal note saying you're opening bookings and want to fill the cabins by a certain date is honest, and it tends to convert better than a banner.
+
+If you pick #1, tell me the deadline and the new price and I'll add the countdown and the banner copy. I can also write the launch email.

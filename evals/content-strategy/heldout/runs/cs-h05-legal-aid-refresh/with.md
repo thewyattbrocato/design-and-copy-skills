@@ -1,65 +1,48 @@
-I'd leave the date bump out of the plan, and I haven't written a script or wording for it. These are legal rights pages. A "last updated" date there tells someone deciding whether to rely on the page that a person checked it against current law. If the date is new but the content isn't, a tenant could miss a deadline or use an old court form because the page said it was current. It also puts the nonprofit in a bad spot if that's ever questioned. Google tends to work out real content changes anyway, and fake freshness signals don't help for long.
+I'd leave out the bulk date change. A "last updated" date on legal information tells readers the law was checked on that date. If someone relies on an outdated eviction deadline or benefits rule under a fresh date, they can be harmed, and the organization is exposed. The lawyer's name is effectively attached to every page. Google also uses dates mainly as a hint, not a ranking trick, and actual content changes matter more. So I won't write that script. The plan below gets you honest dates, and it gets them fast.
 
-You can still get most of what you want. The plan below makes a date honest, and then it means something.
+## Direction
 
-## The stuck decision
-Out-of-date pages with no owner and almost no reviewer time. The fix is to review fewer pages, in a deliberate order, and show a date that records a real review.
+Don't try to review 200 pages. Sort them by risk, review the risky ones first, and show a true "Last reviewed by [role], [date]" only on pages someone has actually checked. The lawyer's limited time goes only to the pages where being wrong costs the most.
 
-## Assumptions
-- You can pull a list of all pages from your CMS.
-- The lawyer's time is the scarce resource. Everything else is arranged to spend as little of it as possible.
-- Owners: you (list, log, site changes), the paralegals (first-pass check), the lawyer (sign-off). Adjust if that's wrong.
+## Step 1: Inventory (this week, you)
 
-## Step 1 (this week): build the list
-One spreadsheet, one row per page, with these columns:
+Make one spreadsheet with a row per page and these columns:
+- ID, URL, title
+- Topic (housing, benefits, court forms, other)
+- Page views over the last 12 months (from analytics)
+- Does it cite statutes, deadlines, dollar amounts, fees, form numbers or phone numbers? (y/n)
+- Last real edit (from your CMS)
+- Owner, review status, next review date
 
-| ID | Title | URL | Topic (housing, benefits, courts…) | Contains deadlines, fees, form numbers, or statute cites? (Y/N) | Page views, if you can pull them | Last real edit | Owner | Notes |
+## Step 2: Triage (next 2 weeks, you plus a paralegal)
 
-You can fill in most of it from the CMS. A paralegal can fill in the "contains deadlines, fees, forms, or cites" column quickly, and it drives the order of work. Put `[pages in scope]` at the top once you count them.
+| Tier | What it is | Treatment |
+|---|---|---|
+| A | Hard deadlines, dollar thresholds, court forms, eligibility rules, or heavily visited pages | Paralegal checks against current sources, then the lawyer signs off |
+| B | Explains rights in general terms, with few specifics | Paralegal checks and updates. The lawyer only sees changes that the paralegal flags |
+| C | Duplicate, thin, or superseded | Merge or retire (redirect to the best page) |
 
-## Step 2: triage, not a full audit
-Sort each page into one of four buckets:
-1. **Check first:** it states a deadline, fee, form number, or statute, **and** it's a high-use topic. Short cycle.
-2. **Check next:** it states those things but gets little traffic.
-3. **General explainers:** they rarely change, so they get a longer cycle.
-4. **Merge or retire:** duplicates, or pages for programs or forms that no longer exist. Redirect to the best remaining page. Don't delete by traffic alone, since a low-traffic page may be the only one on a rare but important topic.
+I expect that retiring and merging will shrink the list a lot, so plan for that first. It's also the cheapest way to cut the workload. I haven't seen your pages, so I can't say how many fall into each tier.
 
-Cutting and merging is the cheapest way to cut the review workload, so do it early.
+## Step 3: Review in batches (ongoing)
 
-## Step 3: the review pass
-For each page in the "check first" bucket:
-1. **A paralegal** checks every deadline, fee, form, link, and cite against the source (court site, agency site, statute). They mark each one "confirmed" or "needs change" and fix obvious ones like dead links.
-2. **The lawyer** reviews only the flagged items and the pages with substantive changes, not whole pages. She gets a short list with the old text, the proposed text, and the source link, so each item takes minutes.
-3. **You** publish and record the review in the log.
+- **Owners:** Give each topic area one paralegal as owner (for example, one takes housing and one takes benefits and court forms). The lawyer is the sign-off for Tier A only.
+- **Cadence:** Set a fixed block each month, such as 4 hours per paralegal and 1 hour for the lawyer. Work the list from Tier A downward. Adjust the block once you see how many pages it clears.
+- **Checklist per page:** Confirm each cited law, number and form against its primary source. Check that links work. Check that the page still matches how local courts and agencies work. Fix whatever is wrong, then record the date and reviewer.
+- **Unreviewed pages:** Until a page is reviewed, don't show a fresh date. Either show no date, or add a plain banner: "This page hasn't been reviewed recently. Check with [contact] before relying on it." For high-risk Tier A pages that stay unreviewed for too long, consider unpublishing them temporarily.
 
-Pace it as one topic area per month, for example housing, then benefits, then courts. Set the number of pages per month from the hours the paralegals and lawyer have: `[hours per week]`. Don't promise more than that.
+## Step 4: Keep it current
 
-## Step 4: honest dates
-Show two things on each page:
-- **"Last reviewed: [month year] by [role]"**, which changes only when someone did the check in step 3, even if nothing needed editing.
-- **"Last changed"**, if you want it, which changes only when the content did.
+- **Triggers beat the calendar.** Subscribe to the things that change your content: legislative session ends and new laws' effective dates, annual benefit-amount updates, court form revisions, and agency announcements. When one fires, find the affected pages (the spreadsheet's topic column helps) and move them to the top of the queue.
+- **Scheduled review:** Tier A every 6 months, Tier B every 12 months. Put the next-review date in the spreadsheet.
+- **Reader feedback:** Add a "Something wrong or outdated?" link on every page that goes to one shared inbox.
+- **Rule for new pages:** Every new page needs an owner, a tier and a next-review date before it's published.
 
-While the backlog exists, add a plain banner to pages not yet reviewed, something like: *"This page was last reviewed in [year]. Laws and forms change. Contact us or check [official source] to confirm before you act."* That is honest, it protects readers, and it takes the banner off as each page gets reviewed. Pages that are reviewed show a real date, which builds the trust you're after.
+## Dates on the pages
 
-## Step 5: staying current
-Review cycle by kind of content:
-- Pages with deadlines, fees, or form numbers: every 6 months, or sooner when a trigger fires.
-- General explainers: every 12–18 months.
+Show two honest things: "Last reviewed: [month year] by [paralegal/attorney]" and, if you want, "Next review: [month year]". Change the date only when someone has done the checklist, not when a typo is fixed. As reviews finish, the site gets a real freshness signal, and the pages that have it will have earned it.
 
-Triggers that bring a page forward:
-- A new law, court rule, or form takes effect. Assign someone to watch the court and agency sources for each topic.
-- A client or staff member reports the page is wrong. Add a "report an error" link or email to every page.
-- A repeated question to the paralegals that the page should have answered.
+## Two notes
 
-Log each page on one line: last review, by whom, next review, what would bring it forward. A monthly 30-minute look at the log catches anything coming due.
-
-## Step 6: what not to do
-- No new pages until the backlog is under control.
-- No review committee. Three people, one sheet.
-- No full-page legal read-throughs by the lawyer. She sees flags only.
-
-## Two things to note
-- Ask your insurer or board whether they have a view on the "not yet reviewed" banner. It may matter for liability, and it's a quick question.
-- To make the case to the board or funders, pull `[number of pages with deadlines/fees]`, `[top 10 pages by traffic]`, and `[error reports or questions per month]` rather than estimating.
-
-If you can share the page export, I can help set up the triage columns or write the banner and "last reviewed" templates.
+- If you can export the page list and analytics, I can help build the spreadsheet or write a script that does the inventory, flags pages with deadlines, dollar amounts or form numbers, and finds duplicates. That script would only read your content. It wouldn't change any dates.
+- The main risk to this plan is the lawyer's time. It's worth asking her how many hours she can commit each month, then setting the Tier A batch size from that number.

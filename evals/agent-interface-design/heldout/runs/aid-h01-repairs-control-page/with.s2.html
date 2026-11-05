@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repairs desk · Kestrel Lettings</title>
+<style>
+:root{
+  --bg:#f5f4f0;--card:#fff;--ink:#1d2327;--mute:#5d676d;--line:#dcdad2;
+  --ok:#1f6b45;--okbg:#e4f1e9;
+  --warn:#8a5a00;--warnbg:#fbf0d3;
+  --bad:#a3262a;--badbg:#fbe5e4;
+  --info:#27506e;--infobg:#e3edf4;
+  --accent:#1d4b5e;
+}
+@media (prefers-color-scheme:dark){
+:root{--bg:#161a1c;--card:#1f2527;--ink:#e8ebec;--mute:#9aa5aa;--line:#343d40;
+  --ok:#7fd0a1;--okbg:#1c3327;--warn:#f0c46a;--warnbg:#3a2f14;--bad:#f1908f;--badbg:#3d1f20;--info:#8fc0e0;--infobg:#1b2e3b;--accent:#8fc0e0}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:19px;margin:0}
+h2{font-size:15px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute)}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.top small{color:var(--mute)}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:6px 12px}
+button:hover{border-color:var(--mute)}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--info);outline-offset:2px}
+button.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
+button.small{padding:3px 9px;font-size:13px}
+.status{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;background:var(--okbg);border:1px solid var(--ok);border-radius:10px;padding:14px 16px;margin-bottom:8px}
+.status.paused{background:var(--warnbg);border-color:var(--warn)}
+.state{font-size:17px;font-weight:700;color:var(--ok);display:flex;align-items:center;gap:8px}
+.paused .state{color:var(--warn)}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--ok)}
+.paused .dot{background:var(--warn);border-radius:2px}
+.fact{display:flex;flex-direction:column}
+.fact b{font-size:12px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.status .push{margin-left:auto}
+.promise{color:var(--mute);margin:0 2px 20px;font-size:14px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+section{margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.card.problem{border-left:6px solid var(--bad)}
+.card.concern{border-left:6px solid var(--warn)}
+.card h3{margin:0 0 4px;font-size:16px}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;margin-right:6px;vertical-align:1px}
+.t-em{background:var(--badbg);color:var(--bad)}
+.t-ur{background:var(--warnbg);color:var(--warn)}
+.t-ro{background:var(--okbg);color:var(--ok)}
+.t-hold{background:var(--infobg);color:var(--info)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.muted{color:var(--mute)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.row{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.row.undone{opacity:.65}
+.row .head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.row .where{font-weight:600}
+.row .what{margin:2px 0 6px}
+.meta{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13.5px;color:var(--mute)}
+.meta span b{color:var(--ink);font-weight:600}
+.doubt{font-size:13.5px;background:var(--warnbg);color:var(--warn);padding:5px 9px;border-radius:6px;margin-top:8px}
+details{margin-top:8px;font-size:14px}
+summary{cursor:pointer;color:var(--info);font-weight:600}
+details p{margin:6px 0}
+.rule{display:none;margin-top:8px;padding:8px 10px;background:var(--infobg);color:var(--ink);border-radius:6px;font-size:13.5px}
+.rule.on{display:block}
+.meter{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:4px 0 2px}
+.meter i{display:block;height:100%;background:var(--accent)}
+.lim{margin-bottom:14px;font-size:14px}
+.lim .l{display:flex;justify-content:space-between}
+ul.plain{margin:0;padding-left:18px}
+ul.plain li{margin-bottom:6px}
+.foot{border-top:1px solid var(--line);padding-top:14px;margin-top:8px;font-size:13.5px;color:var(--mute)}
+.foot button{margin-right:6px;margin-top:6px}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <h1>Repairs desk <small>· Kestrel Lettings · Wed 4 Nov 2026, 11:42</small></h1>
+    <small>Signed in as Dede</small>
+  </div>
+
+  <!-- STATUS HOME -->
+  <div class="status" id="status" role="status" aria-live="polite">
+    <div class="state"><span class="dot"></span><span id="stateText">Running</span></div>
+    <div class="fact"><b>Last action</b><span>11:38 · booked Spark &amp; Co for 22 Orchard Row</span></div>
+    <div class="fact"><b>Next check of inbox</b><span id="next">11:47 (every 5 min)</span></div>
+    <div class="fact"><b>Spend today</b><span>£412 of £1,500 daily cap</span></div>
+    <button class="push" id="pauseBtn" type="button">Pause booking</button>
+  </div>
+  <p class="promise" id="promise">While you're away it reads new repair requests, rates how urgent they are, and books a vendor from the approved list within the limits on the right. It never books above those limits, never contacts a vendor who is not on the list, and never closes a request without a person confirming the repair was done.</p>
+
+  <div class="grid">
+  <main>
+
+    <!-- NEEDS YOU -->
+    <section aria-labelledby="needs">
+      <h2 id="needs">Needs you now <span class="muted" style="text-transform:none;letter-spacing:0">(3)</span></h2>
+
+      <article class="card problem">
+        <h3><span class="tag t-em">Emergency</span>14 Alder Court · gas smell in kitchen</h3>
+        <p style="margin:0">Tenant (Marta K.) texted at 11:21. Agent sent the National Gas Emergency number (0800 111 999) and booked Hartley Gas &amp; Heating, engineer due about 12:20. <b>Marta hasn't replied since 11:24</b> and the agent can't confirm she has left the flat.</p>
+        <div class="actions">
+          <button class="primary small" type="button">Call Marta · 07700 900142</button>
+          <button class="small" type="button">Call Hartley dispatch</button>
+          <button class="small" type="button">I've handled it</button>
+        </div>
+      </article>
+
+      <article class="card problem">
+        <h3><span class="tag t-hold">Over cap</span>40 Fenwick Road · roof leak into top-floor bedroom</h3>
+        <p style="margin:0">Roofline Repairs quoted <b>£780</b> to make safe. The limit for one job is £250 (£600 for emergencies), so nothing is booked. Tenant has been told someone will call by 14:00. A bucket is catching the water; no electrics are affected.</p>
+        <div class="actions">
+          <button class="primary small" type="button">Approve £780</button>
+          <button class="small" type="button">Ask for a second quote</button>
+          <button class="small" type="button">Take this one over</button>
+        </div>
+      </article>
+
+      <article class="card concern">
+        <h3><span class="tag t-hold">Not sure</span>5 Harbour View · mould on bedroom wall</h3>
+        <p style="margin:0">Could be condensation (routine, damp specialist) or a leak from the flat above (plumber, sooner). The photo doesn't settle it. <b>Nothing booked.</b> Agent's lean: leak check first. It will ask the tenant for a second photo at 13:00 unless you decide before then.</p>
+        <div class="actions">
+          <button class="small" type="button">Book plumber (leak check)</button>
+          <button class="small" type="button">Book damp survey</button>
+          <button class="small" type="button">I'll ring the tenant</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- ACTIVITY -->
+    <section aria-labelledby="act">
+      <h2 id="act">Today's requests <span class="muted" style="text-transform:none;letter-spacing:0">(9 booked, 3 waiting on you, 2 not handled)</span></h2>
+      <div class="filters" role="group" aria-label="Filter">
+        <button type="button" aria-pressed="true" data-f="all">All</button>
+        <button type="button" aria-pressed="false" data-f="doubt">Agent unsure first</button>
+        <button type="button" aria-pressed="false" data-f="em">Emergency / urgent</button>
+        <button type="button" aria-pressed="false" data-f="ro">Routine</button>
+      </div>
+      <p class="muted" style="margin:0 0 10px;font-size:13.5px">Doubtful ones are listed first. Every booking can be undone until the vendor arrives; after that, cancel with the vendor directly.</p>
+
+      <div id="list">
+
+        <article class="row" data-k="doubt ur">
+          <div class="head"><span class="where">Flat 2, 7 Mill Lane</span><span><span class="tag t-ur">Urgent</span><span class="muted">10:56</span></span></div>
+          <div class="what">“Boiler off since last night, no heating or hot water. Baby in the flat.”</div>
+          <div class="meta"><span>Vendor: <b>Northside Heating</b></span><span>When: <b>Thu 5 Nov, 08:00–12:00</b></span><span>Est. <b>£95</b> call-out</span></div>
+          <div class="doubt">Unsure: rated Urgent, not Emergency, because no gas smell and the forecast low is not frozen. That means a next-morning slot. Same-day slots: none of the 3 heating vendors answered. Tenant offered a heater loan? Not yet.</div>
+          <details><summary>Why this rating</summary><p>Heating loss with an infant is on your “vulnerable tenant → Urgent at minimum” rule. Not escalated further because the tenant reported no leak, smell or sparks.</p></details>
+          <div class="actions">
+            <button class="small" type="button" data-undo>Not this one – cancel booking</button>
+            <button class="small" type="button" data-rule="Rule if you choose this: “No heating with a child under 5 in the household → treat as Emergency and book the first vendor who can attend the same day, up to the £600 emergency cap.” Would have changed 2 earlier requests (Flat 6 Dunmore Rd, 19 Oct; 3 Quay House, 28 Oct).">Always treat like this…</button>
+          </div>
+          <div class="rule" role="note"></div>
+        </article>
+
+        <article class="row" data-k="em ur">
+          <div class="head"><span class="where">Flat 3, 22 Orchard Row</span><span><span class="tag t-ur">Urgent</span><span class="muted">11:30</span></span></div>
+          <div class="what">“Fuse board keeps tripping, lights flicker in the hallway.”</div>
+          <div class="meta"><span>Vendor: <b>Spark &amp; Co</b></span><span>When: <b>Today 15:00–17:00</b></span><span>Est. <b>£120</b></span></div>
+          <details><summary>Why this rating</summary><p>Repeated tripping is a possible fault, not a nuisance. Tenant told to leave the main switch off for anything not needed. Spark &amp; Co is first on the electrician list and had a slot.</p></details>
+          <div class="actions">
+            <button class="small" type="button" data-undo>Not this one – cancel booking</button>
+            <button class="small" type="button" data-rule="Rule if you choose this: “Never auto-book electricians for fuse board faults; send to Dede first.” Would have held 4 bookings in the last 30 days.">Never auto-book this kind…</button>
+          </div>
+          <div class="rule" role="note"></div>
+        </article>
+
+        <article class="row" data-k="em">
+          <div class="head"><span class="where">14 Alder Court</span><span><span class="tag t-em">Emergency</span><span class="muted">11:21</span></span></div>
+          <div class="what">“Smell of gas in the kitchen.”</div>
+          <div class="meta"><span>Vendor: <b>Hartley Gas &amp; Heating</b></span><span>When: <b>Today ~12:20</b></span><span>Est. <b>£140</b></span></div>
+          <p class="muted" style="margin:6px 0 0;font-size:13.5px">See “Needs you now”. Engineer dispatch can't be recalled by this page; call Hartley.</p>
+        </article>
+
+        <article class="row" data-k="ro">
+          <div class="head"><span class="where">Flat 18, Corn Exchange</span><span><span class="tag t-ro">Routine</span><span class="muted">09:48</span></span></div>
+          <div class="what">“Bedroom window latch snapped, window won't lock.”</div>
+          <div class="meta"><span>Vendor: <b>Calder Glazing</b></span><span>When: <b>Mon 9 Nov, AM</b></span><span>Est. <b>£85</b></span></div>
+          <div class="doubt">Unsure: it's a 2nd-floor flat with a fire-escape balcony, so a lock fault may be a security issue. Agent chose Routine; you may prefer Soon.</div>
+          <div class="actions">
+            <button class="small" type="button" data-undo>Not this one – cancel booking</button>
+            <button class="small" type="button" data-rule="Rule if you choose this: “Window or door that can't be locked, any floor → Urgent, book within 48 hours.” Would have moved 3 earlier requests up.">Always treat like this…</button>
+          </div>
+          <div class="rule" role="note"></div>
+        </article>
+
+        <article class="row" data-k="ro">
+          <div class="head"><span class="where">9 Quay House</span><span><span class="tag t-ro">Routine</span><span class="muted">09:15</span></span></div>
+          <div class="what">“Bathroom tap dripping constantly.”</div>
+          <div class="meta"><span>Vendor: <b>Pembry Plumbing</b></span><span>When: <b>Fri 6 Nov, PM</b></span><span>Est. <b>£70</b></span></div>
+          <div class="actions"><button class="small" type="button" data-undo>Not this one – cancel booking</button></div>
+        </article>
+
+        <article class="row" data-k="ro">
+          <div class="head"><span class="where">Flat 11, Dunmore Road</span><span><span class="tag t-ro">Routine</span><span class="muted">08:52</span></span></div>
+          <div class="what">“Washing machine won't drain. Provided with the flat.”</div>
+          <div class="meta"><span>Vendor: <b>Allway Appliance Repair</b></span><span>When: <b>Tue 10 Nov, 10:00–14:00</b></span><span>Est. <b>£65</b></span></div>
+          <div class="actions"><button class="small" type="button" data-undo>Not this one – cancel booking</button></div>
+        </article>
+
+        <article class="row" data-k="ro">
+          <div class="head"><span class="where">Flat 6, 3 Beacon Court</span><span><span class="tag t-ro">Routine</span><span class="muted">08:30</span></span></div>
+          <div class="what">“Extractor fan in bathroom is very loud.”</div>
+          <div class="meta"><span>Vendor: <b>Spark &amp; Co</b></span><span>When: <b>Wed 11 Nov, AM</b></span><span>Est. <b>£80</b></span></div>
+          <div class="actions"><button class="small" type="button" data-undo>Not this one – cancel booking</button></div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SKIPPED -->
+    <section aria-labelledby="skip">
+      <h2 id="skip">Not handled by the agent</h2>
+      <div class="card">
+        <ul class="plain">
+          <li><b>Lift out of order, Corn Exchange.</b> Communal area, belongs to the block's managing agent. Not booked; tenant told who to contact. <button class="small" type="button">Handle it myself</button></li>
+          <li><b>“Neighbour is noisy at night”, 4 Harbour View.</b> Not a repair. Passed to the lettings inbox. <button class="small" type="button">Put back to the agent</button></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <aside>
+    <section aria-labelledby="lim">
+      <h2 id="lim">Its limits</h2>
+      <div class="card">
+        <p class="muted" style="margin:0 0 10px;font-size:13px">Starting values, set by Kestrel. Change them any time.</p>
+        <div class="lim"><div class="l"><span>Spend today</span><b>£412 / £1,500</b></div><div class="meter"><i style="width:27%"></i></div></div>
+        <div class="lim"><div class="l"><span>Per job, routine/urgent</span><b>£250</b></div></div>
+        <div class="lim"><div class="l"><span>Per job, emergency</span><b>£600</b></div></div>
+        <div class="lim"><div class="l"><span>Bookings today</span><b>9 / 20</b></div><div class="meter"><i style="width:45%"></i></div></div>
+        <div class="lim"><div class="l"><span>Who it may book</span><b>Approved vendor list only</b></div></div>
+        <button class="small" type="button">Edit limits</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="warn">
+      <h2 id="warn">Heads-up</h2>
+      <div class="card concern">
+        <b>Cresswell Electrical</b> has rescheduled 2 of its last 3 jobs. The agent is now choosing Spark &amp; Co first for electrical work. Next vendor review in your Friday digest.
+        <div class="actions"><button class="small" type="button">Keep Cresswell in rotation</button></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="rules">
+      <h2 id="rules">Rules it is following</h2>
+      <div class="card">
+        <ul class="plain" style="font-size:14px">
+          <li>Gas smell, flooding, no power, sparks, or a broken lock on an outside door → <b>Emergency</b>. Same-day vendor.</li>
+          <li>Vulnerable tenant (listed in tenant notes) → at least <b>Urgent</b>.</li>
+          <li>Anything it can't classify → held for you, not booked.</li>
+          <li>Tenants are always texted what was booked and when.</li>
+        </ul>
+        <div class="actions"><button class="small" type="button">Edit rules</button><button class="small" type="button">Try a made-up request</button></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="msg">
+      <h2 id="msg">How it contacts you</h2>
+      <div class="card" style="font-size:14px">
+        <p style="margin:0 0 6px"><b>Interrupts:</b> emergencies, over-cap quotes, anything held.</p>
+        <p style="margin:0 0 6px"><b>Digest, 17:00 daily:</b> routine bookings and vendor notes.</p>
+        <p style="margin:0">If nobody has opened this page for 30 minutes during an emergency, it texts the office mobile, then the on-call manager.</p>
+      </div>
+    </section>
+  </aside>
+  </div>
+
+  <div class="foot">
+    Prefer to run repairs by hand for a while? <button type="button" id="pause2">Pause booking</button>
+    <button type="button">Stop the agent and hand all open requests to the office</button>
+    <div>Pausing or stopping needs no reason. Bookings already made stay in place; open requests go to the lettings inbox. Questions about the agent: ask your system administrator.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var status=document.getElementById('status'),st=document.getElementById('stateText'),
+      next=document.getElementById('next'),b1=document.getElementById('pauseBtn'),b2=document.getElementById('pause2'),
+      promise=document.getElementById('promise'),paused=false,orig=promise.textContent;
+  function toggle(){
+    paused=!paused;
+    status.classList.toggle('paused',paused);
+    st.textContent=paused?'Paused. Nothing is being booked':'Running';
+    next.textContent=paused?'Still reading and sorting; 0 booked since pausing':'11:47 (every 5 min)';
+    var t=paused?'Resume booking':'Pause booking';
+    b1.textContent=t;b2.textContent=t;
+    promise.textContent=paused?'New requests are queued for you with an urgency rating. Emergencies will still text the office mobile. Existing bookings are unchanged.':orig;
+  }
+  b1.onclick=toggle;b2.onclick=toggle;
+
+  document.querySelectorAll('[data-undo]').forEach(function(btn){
+    btn.onclick=function(){
+      var row=btn.closest('.row');
+      var undone=row.classList.toggle('undone');
+      btn.textContent=undone?'Booking cancelled. Undo':'Not this one – cancel booking';
+      var m=row.querySelector('.undo-note');
+      if(undone&&!m){m=document.createElement('p');m.className='undo-note muted';m.style.cssText='margin:6px 0 0;font-size:13.5px';
+        m.textContent='Vendor and tenant will be told. Request moved to “Needs you”.';row.appendChild(m);}
+      else if(!undone&&m){m.remove();}
+    };
+  });
+  document.querySelectorAll('[data-rule]').forEach(function(btn){
+    btn.onclick=function(){
+      var r=btn.closest('.row').querySelector('.rule');
+      r.textContent=btn.getAttribute('data-rule');
+      r.classList.toggle('on');
+    };
+  });
+  var fb=document.querySelectorAll('.filters button');
+  fb.forEach(function(b){
+    b.onclick=function(){
+      fb.forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+      var f=b.dataset.f;
+      document.querySelectorAll('#list .row').forEach(function(r){
+        r.style.display=(f==='all'||r.dataset.k.split(' ').indexOf(f==='em'?'em':f)>-1||(f==='em'&&r.dataset.k.indexOf('ur')>-1))?'':'none';
+      });
+    };
+  });
+})();
+</script>
+</body>
+</html>

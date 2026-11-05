@@ -1,24 +1,17 @@
-**Refine it.** Keep the dog and redraw it cleanly. I wouldn't replace it.
+**Refine it.** Keep the dog and redraw it properly.
 
-**Why**
-- Twelve years of neighborhood recognition is the most valuable thing the logo has. A new location is a stranger's first visit. A dog people already know tells them "this is the same clinic."
-- A friend's kid drew it, and that's part of the clinic's story. It also fits a vet clinic: warm and personal, not corporate.
-- Your partner's real concern is that it looks amateur and won't hold up across three sites. That's fixable by redrawing it, and it doesn't require a new idea.
+**Why:** Twelve years of neighborhood recognition is the thing a new location can't buy. Two new clinics will open with a face people already trust, and a replacement would throw that away to fix a problem that is really about drawing quality. Your partner's goal, a clean and professional look, is achievable without replacing the dog. "Professional" here means consistent and well-built, not new.
 
-**What I'd do**
-1. **List what people recognize.** I'd guess it's the one raised ear, the dog's posture, and the rounded, friendly feel. Those stay exactly as they are.
-2. **Redraw the dog as a clean, solid shape.** Use one confident line weight and keep a little of the hand-drawn wobble so it still feels like the original. The pencil sketch has to go. Thin graphite lines disappear at small sizes and on signs.
-3. **Make a heavier, simpler version for small uses.** That covers the favicon, social avatar and stamps. Don't just shrink the full logo.
-4. **Fix the name lettering.** Keep the rounded feel, but have it set properly: tuned spacing and one custom touch, so it isn't an untouched stock font.
-5. **Build three versions.** Horizontal, stacked, and dog-only. Include one-color and reversed versions for dark backgrounds, with a minimum size.
-6. **Handle the three locations in the system, not the logo.** Use the same mark, with the neighborhood name set as a separate line underneath. That way all three look like one clinic.
+**What I'd do:**
 
-**How to settle it with your partner**
-- Show them the redrawn dog next to a mockup of a "clean generic" alternative, on real surfaces: the storefront sign, a website header, an appointment card and a phone icon.
-- Before you commit, show the old logo to about 20 to 30 clients with the clinic name covered. If most of them name your clinic, that settles it. If they don't, you've learned something and can reconsider.
+1. **Trace and rebuild the dog as a solid, one-color shape.** Keep the pose and the single raised ear, since that's the feature people remember. Replace the pencil texture with one confident line weight. I'd leave a little of the hand-drawn irregularity in the curves, so it looks drawn by a person and not generated from geometry.
+2. **Make a heavier, simpler small version** for favicons, social avatars and stamps. Pencil-thin detail disappears at 16–32 px, so this version drops detail and keeps the silhouette and the ear.
+3. **Tune the wordmark.** Keep the rounded letterforms, since they match the dog's friendliness. Fix the spacing by eye and make one custom tweak so it isn't a stock font. Check that it reads cleanly stacked and cropped.
+4. **Build three lockups:** horizontal, stacked, and dog-only. Put the location name ("Eastside", "Northgate") on a separate line beneath the mark, not inside it. That is what lets one mark serve three clinics.
+5. **Keep the current color** if it's distinctive, or pick one on purpose. Then check that the logo works in solid black and reversed on a dark background.
 
-**Two notes**
-- I assumed the dog is still a good fit for the clinic (friendly, local, caring), and that you have no trademark conflicts. A lawyer should check that before you print signage for the new sites.
-- The trade-off is that a redrawn logo looks less dramatically "new" than a replacement. The upside is that none of your 12 years of recognition gets thrown away.
+**How to settle it with your partner:** Don't argue taste. Run two quick tests:
+- Show 15–20 clients the dog next to a generic modern logo and ask which clinic they'd recognize. I don't have recognition data, so this would be the first real evidence.
+- Put the current logo in black at 16 px and on a dark sign. If it fails badly there, or if it looks too much like another local vet, that is real grounds to replace it. Those are the only grounds I'd accept.
 
-If you can send me a photo or scan of the original, I can draft the clean version as an SVG.
+I haven't seen the logo, so this assumes it's a recognizable dog that just needs cleanup. If you send me the image, I can sketch the redrawn version and the small-size version for you to compare.

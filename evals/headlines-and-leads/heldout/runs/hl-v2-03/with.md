@@ -1,20 +1,21 @@
-**Option 1: the problem in their words (my pick)**
+**Option 1: the reader's problem, then the fix**
 
-**Title:** Why Your Lower Back Hurts After a Long Flight or Drive, and What to Do About It
+**Title:** Why Your Lower Back Aches After a Long Flight or Drive, and What Helps
 
-**Opening:** You step off the plane or out of the car and your lower back is stiff, achy, or hard to straighten. Hours in one position keep the same muscles and joints working with no break, and the soreness shows up when you finally stand.
+**Opening:** You get out of the car or off the plane and can't stand up straight. Your lower back feels tight, stiff, and worse than when you left. Hours in one bent position are the cause, and a few small changes before, during, and after the trip can ease it.
 
-**Option 2: the outcome**
+**Option 2: the reader's real question**
 
-**Title:** How to Keep Your Back From Seizing Up on Long Flights and Drives
+**Title:** Why Does My Lower Back Hurt After Sitting for Hours?
 
-**Opening:** A stiff lower back after hours of sitting is common, and you can usually do something about it. Here's why travel sets it off and what to do before, during, and after the trip.
+**Opening:** If your back feels worse after a long flight or drive than after a full day of work, you're not imagining it. Travel keeps you locked in one position with no chance to get up and move, so your back tightens up. Here's what's going on and how to loosen it.
 
-**Option 3: the contrast**
+**Option 3: outcome first**
 
-**Title:** Sitting Still for Hours Is Harder on Your Back Than Sitting at All
+**Title:** How to Keep Your Lower Back Loose on Long Flights and Drives
 
-**Opening:** If your desk job doesn't bother your back but a long drive or flight does, the difference is how long you stay in one position without moving. Here's what's happening and how to fix it.
+**Opening:** A long trip doesn't have to end with a stiff, sore lower back. Most of that pain comes from sitting in one position for hours, which means small changes to how you sit and move can make a real difference.
 
-- **Pick:** Option 1. People with this problem search in these words, so the title says what the post covers. Option 3 only works if the post actually argues that point.
-- **Facts to check:** I didn't add any statistics or specific medical claims. Check the physiology in the opening against your own clinical view before you publish.
+**Notes:**
+- I'd go with Option 1. It uses the words a patient would use ("can't stand up straight") and says what the post delivers. Option 2 is the best fit if you want to show up in searches for "lower back hurts after sitting."
+- I left out numbers and specific causes like discs or hip flexors because you haven't told me which ones you'll cover. Once you've drafted the body, I can adjust the opening to match.

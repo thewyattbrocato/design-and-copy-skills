@@ -1,44 +1,47 @@
-I'd swap the trapezoids for left-aligned horizontal bars. I couldn't see your graphic, so this is based on your description and numbers.
+I'd replace the trapezoids with horizontal bars. I'm swapping the form rather than polishing it because the tiny bottom stage comes from the shape itself. A funnel's width and area stand in for the count, and 1,100 against 12,400 is always going to be a sliver. A label can't fit inside a sliver. The shape also hides the number an investor cares about most, which is how many people drop out between stages.
 
-**Why it's cluttered and the bottom stage is unreadable**
-- Trapezoid width is the only thing carrying the value, so the 1,100 stage ends up about 9% as wide as the top. The name and percentage have to fit inside that sliver.
-- The sloped sides make it hard to compare widths. A trapezoid that narrows toward its bottom edge doesn't show whether the width means its top edge, its bottom edge or its average.
-- The gradient adds no information, and every shape holds two labels.
+## What I'd change
 
-**What I'd change**
-1. **Use bars on a shared zero baseline, one row per stage in funnel order.** Length is easy to compare, and the 1,100 bar stays visible (about 9% of the top bar).
-2. **Put stage names outside the bars, in a column on the left.** Then the bar length doesn't limit the label length.
-3. **Put the count and % of downloads at the end of each bar.** Use "7,900 · 64%", so one label does the work of two.
-4. **Show step conversion between rows in small gray text** (for example "↓ 64% continue"). This answers "where do we lose people?", which a percent-of-top label can't.
-5. **Use flat, solid fills with no gradient.** Make the first four bars a muted blue and the last bar (Paid subscription) the strong accent blue, because that's the number investors care about.
-6. **Make the title state the finding,** and add a one-line source note.
+1. **Use horizontal bars in stage order.** Bars start at zero, share one scale and are left-aligned, so lengths compare directly. Keep the top-to-bottom order so it still reads as a funnel.
+2. **Move the labels outside the bars.** The stage name goes at the left and the count at the bar tip. Nothing has to fit inside a shape, so the last stage is as legible as the first.
+3. **Add a step-conversion column on the right.** This replaces the percentage you had inside each shape. Each figure is the share that made it from the previous stage, which shows where people leak out.
+4. **Drop the gradient.** Use one flat color for the bars and a stronger accent on "Paid subscription", since that's the stage investors will look at. A gradient implies a second quantity that isn't in the data.
+5. **Remove the decoration.** No frame, gridlines, shadows or axis. The printed values make an axis redundant.
+6. **Write the title as the finding.** For example: *"9% of downloads become paying subscribers. The steepest drop is between finished setup and paying."*
+7. **Add a provenance line.** Put the unit, period, as-of date and source under the chart. You haven't given me those, so I'd leave `[period]`, `[as of date]` and `[source]` as visible placeholders for you to fill in.
 
-**Sketch**
+## Sketch
 
 ```
-Only 9% of downloads become paid; most of the loss after setup is at the paywall
+9% of downloads become paying subscribers.
+The steepest drop is between finished setup and paying.
 
-Downloaded           ████████████████████████████████████████  12,400 · 100%
-                       ↓ 64% continue
-Created account      ██████████████████████████  7,900 · 64%
-                       ↓ 54%
-Added first device   ██████████████  4,300 · 35%
-                       ↓ 92%
-Finished setup       █████████████  3,950 · 32%
-                       ↓ 28%
-Paid subscription    ████  1,100 · 9%      ← accent color
+                                            Count    Step conversion
+Downloaded          ████████████████████████████████████████  12,400
+Created account     █████████████████████████                  7,900    64% of previous
+Added first device  ██████████████                             4,300    54%
+Finished setup      █████████████                              3,950    92%
+Paid subscription   ████  (accent color)                       1,100    28%
 
-Wavecrest app users by stage · [period] · as of [date] · source: [source]
+Users, [period], as of [date]. Source: [source].
 ```
 
-**What the numbers say**
-- The step into **Added first device** loses about 46% of account creators (7,900 to 4,300).
-- **Added first device → Finished setup** is healthy at 92%.
-- **Finished setup → Paid** converts only 28%, the weakest step. About 2,850 people who finished setup didn't pay.
-- Overall, 8.9% of downloads become paying subscribers.
+Bar lengths are drawn to scale. The values behind the right-hand columns:
 
-Be careful with the title wording. I'd call the setup-to-paid step the weakest conversion, but I wouldn't say why people don't pay, because the data doesn't show that.
+| Stage | Count | Of previous stage | Of downloads |
+|---|---|---|---|
+| Downloaded | 12,400 | n/a | 100% |
+| Created account | 7,900 | 64% | 64% |
+| Added first device | 4,300 | 54% | 35% |
+| Finished setup | 3,950 | 92% | 32% |
+| Paid subscription | 1,100 | 28% | 9% |
 
-**Keeping the funnel shape:** if you want it for the investor deck's look, keep the centered shape but make widths strictly proportional to the counts. Put all text outside, in a column to the left and right of the shapes. Even then, the last stage will be a thin sliver, so I'd still recommend the bars.
+## What the chart shows
 
-**Placeholders:** I left the period, as-of date and source in brackets because you didn't give them. If you send those, or the file itself, I can build the final version in SVG.
+- **Biggest relative drop:** 72% of people who finish setup never pay. That's why I'd put the accent on the last bar and use it in the title.
+- **Biggest drop before setup:** 46% of new accounts never add a device.
+- **Healthy step:** 92% of people who add a device finish setup, so the setup flow itself isn't losing people.
+
+If you'd like a "Of downloads" column as well, it fits next to the step conversion. I'd keep only one of the two in the main view, because showing both gets cluttered again. I'd keep the step conversion, since it points to where the problem is.
+
+I can also write this as an SVG or HTML file if you want something to drop into the update.

@@ -1,15 +1,13 @@
-Here are four reminders for the 2-day-before text. Each is under 160 characters with the merge fields counted as their placeholder text, so the rendered message will stay under the limit as long as the name is short.
+Here are four reminders for the 2-day-before text. Each is under 160 characters with the merge fields left as placeholders, and stays under the limit with typical values filled in.
 
-1. `Birchwood Dental: Hi {first_name}, appt {date} at {time}. Reply C to confirm or R to reschedule. Changes need 24 hrs notice. Questions? (555) 0100` (146 chars)
+1. `Hi {first_name}, reminder: Birchwood Dental appt {date} at {time}. Reply C to confirm or R to reschedule. Changes need 24 hrs notice. Call (555) 0100` (~149 chars)
 
-2. `Birchwood Dental: {first_name}, you're booked {date} at {time}. Reply C to confirm, R to reschedule. Late cancels within 24 hrs: $45 fee.` (137 chars)
+2. `{first_name}, your Birchwood Dental visit is in 2 days: {date} at {time}. Reply C to confirm or R to reschedule. Changes need 24 hrs notice.` (~140 chars)
 
-3. `Hi {first_name}, reminder: visit at Birchwood Dental {date} {time}. Reply C to confirm or R to reschedule (24 hrs notice). Call (555) 0100` (138 chars)
+3. `Birchwood Dental: Hi {first_name}, see you {date} at {time}. Reply C to confirm, R to reschedule. Late cancels within 24 hrs: $45 fee.` (~134 chars)
 
-4. `Birchwood Dental: {first_name}, see you {date} at {time}! Reply C to confirm or R to reschedule. Changes need 24 hrs notice. (555) 0100` (135 chars)
+4. `Hi {first_name}, your Birchwood dental appt is {date} at {time}. Reply C to confirm or R to reschedule (24 hrs notice). Questions? (555) 0100` (~141 chars)
 
-Things to check before you load these:
+Variant 3 is the only one that mentions the $45 fee. If you want the fee in more of the set, it's the most direct way to reduce late cancellations, but it reads harsher, so you may want to keep it to one message.
 
-- **Name length:** Message 1 has the least room. A first name up to about 26 characters fits. Messages 2–4 allow about 34–37.
-- **Date format:** If `{date}` renders as something long like "Thursday, October 22," the messages will go over. Use a short format such as "Oct 22."
-- **Opt-out line:** Many carriers and state rules expect "Reply STOP to opt out" on marketing or reminder texts. Adding it takes about 20 characters, so message 2 would need trimming. Check with whoever handles compliance for Birchwood.
+Adding "Reply STOP to opt out" would push most of these over 160. Check with your texting tool whether transactional appointment reminders need it. If they do, you'll need a shorter base message or a multi-part send.

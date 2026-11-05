@@ -1,21 +1,21 @@
-**The idea: "Banked, not budgeted."**
-Every other budgeting app asks what you *expect* to earn. Tally Nest only counts what's already in your account. The campaign makes that difference the story: freelancers are tired of budgets built on income that hasn't arrived yet.
+**The idea:** Budget what you've banked, not what you hope to earn. A thin month stops looking like a failed month.
 
-**Buyer truth** [assumed, so check it against your beta users' own words]: freelancers feel guilty when a monthly budget falls apart in a slow month, even though the budget's income number was a guess.
+**Why it should land:** Monthly budgets assume a paycheck on the 1st, and freelancers don't get one. A slow month makes them feel like they failed. [assumed: check this against your beta users' own words.] Tally Nest's whole premise answers that. The app starts from what's in the account, so the budget never depends on income that hasn't arrived.
 
-**Three forms (each works without the others):**
+**Three forms**
 
-1. **The "Banked so far" post series (social).** Short screen-recorded clips of the app's real view, with captions like "It's the 19th. You've banked $X. Here's what that covers." Use [add: real numbers from your own accounts or a consenting beta user]. Show the same freelancer's slow month and good month, and let the app calmly handle both. No guilt framing.
-2. **A free "Lumpy Income Month" printable or shareable card (useful on its own).** One page where a freelancer writes down what they've actually banked and sorts it into must-pay and nice-to-have. It works without the app and carries the Tally Nest name. Freelancers can share it in their own communities.
-3. **A launch-day message to your beta testers (direct).** Ask those who are willing to share one sentence about their experience, with permission to quote them by first name or anonymously. Pair it with the plain offer: free first month, then $6/month. On Nov 3, that quote and the clip go out together.
+1. **Post or short video: "Same month, two budgets."** Show a $0 invoice week against a standard monthly budget, which turns red and says you're over. Then show the same week in Tally Nest, which says "here's what you've banked, here's what it covers." Use a generic monthly-budget template, not a named rival.
+   - Sample lines: "Your income isn't monthly. Your budget shouldn't be." / "A slow month isn't a failed month."
 
-**Ask the owner:**
-- Can you get permission from 3–5 beta users to quote them? Do you have any real usage numbers, even rough ones, such as "X people used it for Y weeks"? Don't claim traction beyond what you can show.
-- Who's the first audience? Designers, writers, drivers, and consultants all have lumpy income, but picking one niche for launch week will land harder than "all freelancers."
-- Which communities do you already have access to (newsletters, subreddits, Slack groups)? Join them honestly and say you built the app. Don't post as a fake user.
+2. **A free tool that works without the app: a "banked runway" calculator.** It's a single web page. You enter what you've banked and your essentials, and it tells you how many weeks that covers. The result page links to the app. Freelancers can use and share it without ever installing anything, and it shows the app's logic in about ten seconds.
 
-**Plain fallback:** a launch-week post and email saying what the app does in one line ("Budget from what you've banked, not what you hope to earn"), with a short demo video, the free-month offer, and a link to the App Store. It needs no extra assets and still sets up the "banked" idea.
+3. **A message: the founders' launch note.** This goes in an email, a post, and a DM to beta users. It's two people explaining in plain words why they built a budget for lumpy income, with the free first month and then $6/month. It can also ask beta testers whether they'd share a line about their experience.
 
-**Why this pick:** it's true to how the product works, you can show it in the first ten seconds, and it gives you a phrase a stranger can repeat. It also needs only what two people with a beta can produce: screen recordings, one printable, and a few honest quotes.
+Each form works if the other two never run.
 
-If you pull the beta numbers together before Nov 3, send them over. I can tighten the clips and the launch message around what's actually true.
+**Ask the owner**
+- Why did you two build this? The founder note needs your real story [add: founder story].
+- Do any beta users have a line they'd let you quote? Get their consent and credit them, and don't use anything without it. Until then, skip proof entirely, since you have no numbers yet.
+- Can you ship a one-page calculator by Nov 3? That's five days out. If not, run forms 1 and 3 on launch day and add the calculator in week one.
+
+**Plain fallback:** A 30-second screen-recorded demo of the banked-so-far view, a short founder note, and the offer: free for a month, then $6/month. It needs nothing beyond what you have today.

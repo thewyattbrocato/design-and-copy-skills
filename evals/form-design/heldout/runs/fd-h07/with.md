@@ -1,31 +1,19 @@
-Neither is fully right, but your designer is closer. I'd go with a hybrid that's mostly "validate on submit."
+**Neither is fully right, but your designer is closer.** I'd validate on submit by default, then re-check live once a field has shown an error. Two fields get exceptions.
 
-**Why per-keystroke validation is wrong**
-- The first characters of a valid value are never valid yet. Someone typing `sam` into the email field sees "Enter a valid email" before they've finished.
-- It's noisy on the password field. They'd see "too short" at 1, 2, 3... characters, which only tells them what they already know.
-- Tabbing away or autofill can also trigger errors mid-task, so validating on blur isn't a clean fix either.
+**Why per-keystroke validation fails:** The first characters of a valid value aren't valid yet. Someone typing `jo` on the way to `jo@example.com` gets an error for doing nothing wrong. That's noise, and it makes the form feel like it's scolding them.
 
-**Why submit-only isn't enough**
-- A unique username is the one case where waiting until submit is bad. Someone fills in everything, hits submit, and learns their username is taken.
-- Once a field has shown an error, it should clear as soon as the fix is made. Otherwise the stale error stays on screen while they correct it.
+**Why submit-only falls short:** If errors only appear on submit, a person who fixes a mistake still sees the old error until they press the button again. Live re-checking after the first error fixes that.
 
-**What I'd do, field by field**
+**What I'd do, field by field:**
 
-| Field | Behavior |
-|---|---|
-| **Email** | Check on submit. After an error appears, re-check as they edit so the message disappears the moment it's fixed. |
-| **Username** | Check availability after a short pause in typing (about 500 ms), not on every keystroke. Show a quiet "checking…" state, then "Taken" or "Available". This is where your developer's instinct is right. |
-| **Password** | Show the rule before they type ("At least [N] characters") in the hint under the label. Optionally tick it off as they meet it, and don't show it as an error. |
+- **Email:** Check on submit. If it fails, re-check as they edit so the message clears as soon as it's true. Use `type="email"`, `autocomplete="email"`, and turn off autocapitalize and autocorrect.
+- **Password:** Show the rule before they type ("At least [N] characters"). Tick it off live as they meet it. This is the one place where per-keystroke feedback helps, because it's a checklist and not an error. Allow paste and add a show-password control.
+- **Username (unique):** Check availability after a short pause once they stop typing, not on every keystroke. Show "Checking…", then "Available" or "Taken". Also check on the server at submit, because the live check can go stale.
+- **Submit button:** Keep it pressable at all times, with a label like "Create account". A button that's disabled until the form is valid gives no reason and is hard to reach by keyboard.
+- **After a failed submit:** Put the message next to each field, in words, with an icon or text cue as well as color. For example: "Enter an email address with an @, like name@example.com". With two or more errors, add a summary at the top that links to each field. Keep everything the person typed.
 
-**Other details**
-- Keep the submit button always pressable. Don't gray it out until the form is valid, because that gives no reason and is often unreachable by keyboard.
-- Put each error next to its field, in words, with an icon or text cue as well as red. Say how to fix it, for example "Enter an email address with an @, like name@example.com". Avoid "Invalid email".
-- If two or more fields fail, add a summary at the top that links to each one.
-- Keep everything they typed after any error, including server errors.
-- Run the same checks on the server. The username check especially has to be enforced there too, since someone can claim it between the live check and the submit.
-- Use the right input types and autofill: `type="email"` with `autocomplete="email"`, `autocomplete="username"` with autocapitalize and spellcheck off, and `autocomplete="new-password"` with a show-password toggle. Allow paste.
+**For the developer:** Their goal of fast feedback is right. It belongs on the password checklist and the username availability check, where the person benefits from it as they type.
 
-**How to settle it**
-Your developer gets instant feedback where it helps, on username availability and the password checklist. Your designer gets calm fields that don't yell while people are still typing. The rule is that errors don't appear on a first attempt, and once they do appear, they clear live.
+**For the designer:** Pure submit-only leaves stale errors on screen. Live re-checking after the first error fixes that.
 
-I didn't touch any code, since there's no project here. If you share the form's markup or component, I can implement this.
+Whichever way you go, the server has to run the same checks again.

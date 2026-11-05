@@ -1,64 +1,77 @@
-## Hallazgos (de más a menos grave)
+# Auditoría de la página principal
 
-**1. Blocker. Titular: un desconocido no sabe qué eres**
-> "Pasión por las dos ruedas desde siempre"
+**Lectura de un desconocido:** con solo la primera pantalla, alguien diría "un taller de algo con dos ruedas, no sé dónde, no sé cuánto cuesta ni cómo pedir hora". La web no responde a lo que la gente pregunta por teléfono, y por eso llaman.
 
-No dice taller, ni reparación, ni Zaragoza. Podría ser una tienda, un club o una marca de ropa, y cualquier competidor podría firmarlo. "Desde siempre" tampoco se puede comprobar, y el lector no saca nada de ahí. Quien llega buscando dónde arreglar la bici tiene que adivinar que es el sitio.
-**Arreglo:** el titular dice qué haces, dónde y qué puede hacer el lector.
-> "Taller de bicicletas en Zaragoza. Reserva tu cita online."
+## Hallazgos (de mayor a menor)
 
-**2. Major. Nada invita a reservar**
-> BOTÓN: "Más información" · FORMULARIO: "Nombre, Email, Mensaje" · "Enviar"
+No he encontrado ningún bloqueante. Ninguna afirmación es claramente falsa ni hay urgencia inventada. Los tres primeros son los que explican que nadie reserve.
 
-La web promete información y ofrece un formulario de contacto genérico. Nadie ve que pueda reservar una cita. Además, el formulario no pregunta lo que necesitas para dar una cita (servicio y día), ni teléfono, que es el canal que ya usa tu clientela. "Enviar" no dice qué pasa después.
-**Arreglo:**
-- Botón principal: "Reservar cita".
-- Campos: nombre, teléfono o email, servicio (desplegable con los tres), día preferido, mensaje opcional.
-- Botón del formulario: "Pedir cita".
-- Debajo: "Te confirmamos la cita en [plazo real]."
+**1. Mayor: no hay forma de reservar cita.**
+- Texto: `BOTÓN: Más información` y `FORMULARIO: Nombre, Email, Mensaje. Botón: Enviar`.
+- Problema: el botón principal manda a leer, no a actuar. El formulario es de contacto genérico. No dice que sirva para pedir cita, ni qué servicio, ni qué día, ni cuándo te responden. Quien ya quiere reservar tiene que escribir un mensaje libre y esperar, y llamar es más rápido.
+- Arreglo: el botón principal y el formulario deben decir "cita". Pide servicio, tipo de bici y día preferido, y di cuándo contestáis.
+  - Botón: `Pedir cita`
+  - Formulario: `Nombre · Teléfono o email · Servicio (básica / completa / puesta a punto) · Día que te viene bien · Botón: Pedir cita`
+  - Debajo del botón: `Te confirmamos la cita en [plazo de respuesta real].`
 
-**3. Major. Precios y plazos escondidos**
-> "(Los precios y plazos los tenemos en un PDF aparte que no está enlazado.)"
-> "Revisión básica · Revisión completa · Puesta a punto premium"
+**2. Mayor: precios y plazos escondidos.**
+- Texto: "Los precios y plazos los tenemos en un PDF aparte que no está enlazado."
+- Problema: precio y plazo son las dos preguntas que se resuelven con una llamada. Con la web callada, el teléfono gana. Un PDF que nadie ve no sirve.
+- Arreglo: pon "desde X €" y "listo en X días" junto a cada servicio, en la propia página, y no en un PDF. Si los precios varían, indica el rango o "desde". No inventes cifras, saca las reales del PDF.
 
-Esta es probablemente la razón de las llamadas: la gente quiere saber cuánto cuesta y cuánto tarda, y la web no lo dice. Los tres nombres tampoco explican qué incluye cada uno ni en qué se diferencian. "Premium" es vocabulario interno. Sin esos datos, llamar es la única forma de decidir.
-**Arreglo:**
-- Una línea por servicio: qué incluye, "desde [precio]" y [plazo].
-- Si no puedes publicar precios exactos, enlaza el PDF como mínimo.
-- Escribe cada servicio con el problema del cliente, por ejemplo "Revisión básica: [para quien solo quiere comprobar que la bici va bien]".
-- Solo pon lo que sea cierto.
+**3. Mayor: el titular no dice qué sois ni dónde.**
+- Texto: `Pasión por las dos ruedas desde siempre`.
+- Problema: "dos ruedas" también describe una tienda de motos. No aparecen "bici", "taller" ni "Zaragoza". Cualquier competidor podría firmarlo. Además, "pasión" es lo que dice todo el mundo y no es una razón para elegiros.
+- Arreglo (el titular debe decir qué hacéis, para quién y dónde):
+  - `Taller de bicicletas en Zaragoza. Reserva tu revisión online.`
+  - O, si preferís conservar el tono: `Taller de bicis en Zaragoza, hecho por gente que vive en la bici.` Usadlo solo si es cierto.
 
-**4. Major. Subtítulo: genérico y con superlativo sin respaldo**
-> "servicios integrales de mantenimiento y reparación con la máxima calidad y un trato cercano y profesional"
+**4. Mayor: los servicios son etiquetas sin contenido.**
+- Texto: `Revisión básica · Revisión completa · Puesta a punto premium`.
+- Problema: nadie sabe qué incluye cada una, cuál le conviene ni en qué se diferencia "completa" de "premium". Sin eso, elegir cuesta y se pospone o se pregunta por teléfono.
+- Arreglo: una línea por servicio con qué incluye, para quién es y precio/plazo. Cada una con su botón `Pedir cita`.
+  - Plantilla: `Revisión básica — [qué se revisa]. Para [tipo de uso]. Desde [€] · [plazo].`
+  - Valorad cambiar "premium", que solo suena a más caro, por lo que realmente añade.
 
-"Integrales", "máxima calidad" y "profesional" los dice cualquier taller. Ninguna de las tres frases se puede comprobar ni recordar. El lector no encuentra un motivo para elegirte a ti.
-**Arreglo:** cambia los adjetivos por un hecho tuyo.
-> "Mantenimiento y reparación de bicicletas de [tipos: ciudad, carretera, montaña, eléctricas]. [Dato verificable: plazo, garantía, años de oficio]."
+**5. Mayor: "Por qué elegirnos" no da ningún motivo.**
+- Texto: `Somos un equipo apasionado y comprometido con tus necesidades.`
+- Problema: es una frase que vale para cualquier negocio, no se puede comprobar y no dice nada que el cliente pueda usar. Es el sitio donde se decide entre vosotros y otro taller.
+- Arreglo: sustitúyela por 2 o 3 hechos concretos y verdaderos que solo vosotros podáis decir, por ejemplo:
+  - `[años en Zaragoza]`
+  - `[tipos de bici que arregláis]`
+  - `[garantía del trabajo, si existe]`
+  - `[plazo habitual]`
+  - `[una opinión real de un cliente]`
 
-**5. Major. "Por qué elegirnos" no da ninguna razón**
-> "Somos un equipo apasionado y comprometido con tus necesidades."
+  Si no tenéis alguno de estos datos, no lo pongáis. Pedid a dos o tres clientes habituales que os dejen una opinión.
 
-Es la sección donde se decide la reserva y solo repite la pasión del titular. No hay un solo hecho. "Comprometido con tus necesidades" no significa nada concreto.
-**Arreglo:** de dos a cuatro razones reales, con placeholders hasta que las completes:
-- [años en Zaragoza]
-- [garantía en reparaciones, si existe]
-- [plazo habitual de entrega]
-- [marcas o tipos de bici que atendéis]
+**6. Menor: subtítulo de plantilla.**
+- Texto: `servicios integrales de mantenimiento y reparación con la máxima calidad y un trato cercano y profesional`.
+- Problema: "integrales", "máxima calidad" y "profesional" son adjetivos apilados que nadie puede comprobar. "Máxima calidad" necesitaría algo detrás, como una garantía. Quien lee no aprende nada que no supusiera ya.
+- Arreglo: `Revisamos y reparamos tu bici en Zaragoza. Elige el servicio, pide cita y te decimos [plazo] y precio antes de empezar.` Dejad la última parte solo si es verdad.
 
-Si no tienes testimonios reales, no los inventes. Puedes pedir a clientes habituales una frase de opinión.
+**7. Menor: "desde siempre".**
+- Problema: suena a tradición, pero no da año ni dato. Si sois un taller con historia, ese dato es un buen argumento. Si no, es una exageración.
+- Arreglo: `Desde [año]` si es real, o quitarlo.
 
-**6. Major (por confirmar). Teléfono, dirección y horario**
-No aparecen en el texto que has pegado. Si tampoco están en la web, deberían ir junto al botón de reservar. El teléfono es lo que ya funciona, así que ponlo a la vista y deja la cita online como la opción cómoda, no como sustituta.
+**8. Menor: el formulario no recoge teléfono.**
+- Problema: vuestros clientes llaman, así que probablemente prefieren el teléfono. Pedir solo email puede frenarles.
+- Arreglo: `Teléfono o email`, un solo campo, a elegir.
 
-## Lo que funciona
-- "Revisión básica · Revisión completa · Puesta a punto premium": la escalera de tres niveles es fácil de entender. Solo le falta el contenido (hallazgo 3).
-- Un formulario corto, de tres campos, no echa atrás a nadie. Conviene conservar esa sencillez al añadir campos.
+**También noté:** en el texto que pegaste no aparecen teléfono, dirección ni horario. Si no están en otra parte de la página, ponedlos junto al botón de cita.
+
+## Lo que funciona (no tocar)
+
+- `Revisión básica · Revisión completa`: nombres claros, en palabras de cliente, con una escalera fácil de entender.
+- El formulario corto (pocos campos): mantened esa brevedad al convertirlo en cita.
+- Que ya tengáis precios y plazos escritos en el PDF: el trabajo difícil está hecho, solo falta publicarlo.
 
 ## Orden de arreglos
-1. Titular que diga "taller de bicicletas en Zaragoza" y botón "Reservar cita" (pequeño).
-2. Mostrar precios y plazos en la página, o al menos enlazar el PDF (medio, depende de cuánto quieras publicar).
-3. Describir qué incluye cada servicio (medio).
-4. Rehacer "Por qué elegirnos" y el subtítulo con hechos reales (medio, necesita tus datos).
-5. Añadir al formulario servicio, día y teléfono, y poner teléfono y horario a la vista (pequeño).
 
-*No he revisado el resto de la web, la maquetación ni si el teléfono ya aparece. No hay analíticas, así que para medir si funciona compara cuántas citas llegan por la web y cuántas por teléfono antes y después de los cambios.*
+1. **Convertir el botón y el formulario en "Pedir cita"**, con servicio y día. *(pequeño)*
+2. **Publicar precios y plazos en la página** a partir del PDF. *(pequeño)*
+3. **Reescribir el titular** con "bicis", "taller" y "Zaragoza". *(pequeño)*
+4. **Describir qué incluye cada servicio**, con su botón de cita. *(medio)*
+5. **Sustituir "Por qué elegirnos"** por hechos reales y, si podéis, una opinión de cliente. *(medio)*
+
+**Notas:** solo he revisado el texto de la portada que pegaste, sin diseño, otras páginas ni el PDF. Como no hay analítica, para saber si funciona mirad cuántas citas llegan por la web y cuántas llamadas preguntan por precio o plazo antes y después del cambio.

@@ -1,17 +1,29 @@
-Here are four options. Each is 152 characters or fewer with the merge fields left unexpanded.
+Here are 4 options for the 2-day-before text. Each is under 160 characters even after the merge fields are filled in. I counted the template text with the fields at their full `{...}` length, then allowed for a long name and date like "Christopher" and "Mon, Nov 14".
 
-**1. Simple (135)**
-`Hi {first_name}, reminder: your Birchwood Dental appt is {date} at {time}. Reply C to confirm or R to reschedule. Questions? (555) 0100`
+**1. Straightforward**
+```
+Hi {first_name}, reminder: your Birchwood Dental visit is {date} at {time}. Reply C to confirm or R to reschedule. Questions? (555) 0100
+```
+136 characters as written, about 146 in the worst case.
 
-**2. Fee up front (148)**
-`{first_name}, see you at Birchwood Dental {date} at {time}! Reply C to confirm or R to reschedule. Changes within 24 hrs incur a $45 fee. (555) 0100`
+**2. Fee notice**
+```
+{first_name}, you're booked at Birchwood Dental {date} at {time}. Reply C to confirm or R to reschedule. 24 hrs notice needed to avoid a $45 fee.
+```
+145 characters as written, about 153 in the worst case.
 
-**3. Friendly, "spot is held" (148)**
-`Hi {first_name}! Your spot at Birchwood Dental is held for {date}, {time}. Reply C to confirm. Need to move it? Reply R (24+ hrs notice). (555) 0100`
+**3. Friendly, with a phone option**
+```
+Hi {first_name}! Your Birchwood Dental appointment is {date} at {time}. Reply C to confirm. Need to change it? Reply R or call (555) 0100.
+```
+138 characters as written, about 146 in the worst case.
 
-**4. Brand-first, short (152)**
-`Birchwood Dental: {first_name}, you're booked {date} at {time}. Reply C to confirm, R to reschedule. Change 24+ hrs ahead to avoid a $45 fee. (555) 0100`
+**4. Warm, with a light policy nudge**
+```
+Birchwood Dental: {first_name}, we're looking forward to seeing you {date} at {time}! Reply C to confirm, R to reschedule. 24 hrs notice please.
+```
+144 characters as written, about 152 in the worst case.
 
-- **Merge field length:** The counts treat each field as its template text, like `{first_name}`, which is 12 characters. Real values vary. A long name or a date like "Wednesday, October 21" could add around 10 characters. If your tool counts after merging, use a short date format such as "Wed 10/21". The 8–25 characters of headroom in each message is there for that.
-- **Fee wording:** #1 leaves out the fee, and #3 only mentions the 24-hour notice. #2 and #4 state the $45 fee outright. I'd A/B test #1 against #2 or #4 to see whether the fee mention changes confirmations or cancellations.
-- **Tracking results:** You have no no-show baseline. Log no-show rates by variant for a few weeks before judging which one works.
+- **Fee wording:** Only #2 states the $45 fee. #4 mentions the 24-hour notice without the amount. #1 and #3 leave the policy out so the text stays short. If you want the fee in every message, #2's last sentence will fit into #1 or #3 if you drop the phone number.
+- **Date and time format:** If your tool fills `{date}` with something long, like "Monday, November 14", #2 and #4 could get close to the limit. Check one real preview before sending.
+- **No-show stats:** Since you have no no-show data, I'd run all four against each other for a few weeks. Compare how many people reply C or R, and how many still don't show.

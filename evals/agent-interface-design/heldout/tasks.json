@@ -1,0 +1,125 @@
+[
+  {
+    "id": "aid-h01-repairs-control-page",
+    "kind": "build",
+    "prompt": "We manage about 300 rental flats (Kestrel Lettings). We have an agent that reads tenant repair requests, decides how urgent each one is, and books a plumber, electrician or whoever from our vendor list. Dede in the office checks on it between phone calls. Can you build the page she looks at? One self-contained HTML file, inline CSS, system fonts, no external assets. Make up realistic sample data.",
+    "rubric": [
+      "The first screen separates what needs Dede from what the agent handled by itself, instead of one mixed chronological log.",
+      "Each sample action says what the agent did, to which request, and why (the urgency call or the vendor choice) in plain words, not only a status label.",
+      "A pause or stop control for the whole agent is visible without scrolling and the page shows whether the agent is currently running or paused.",
+      "Handled items show what can still be reversed or taken over and what cannot (for example a vendor already dispatched or a tenant already messaged); no undo is offered for something that cannot be undone.",
+      "Sample data is realistic and internally consistent, contains no invented accuracy or time-saved figures, and the page is calm and scannable rather than a dashboard of decorative stats."
+    ]
+  },
+  {
+    "id": "aid-h02-inbox-setup-critique",
+    "kind": "critique",
+    "prompt": "We ship our email assistant for freelancers (Quill Mail) next month. This is the setup screen people see right after install. Thoughts?\n\nTitle: \"Let's set up your assistant!\"\n- A toggle: \"Enable AI\" (on by default)\n- A slider: \"Autonomy level\", 1 to 10, set to 7 by default\n- A list of 12 mail categories (invoices, newsletters, client requests, meeting invites, receipts, cold pitches, and so on). Each has a dropdown with four options: Archive, Reply, Ask me, Ignore. All start on Ask me except newsletters and cold pitches, which start on Archive\n- A text box: \"Describe your tone of voice\"\n- A button: \"Finish\"\n- Small grey text under the button: \"You can change this later in Settings > Advanced > Assistant.\"",
+    "rubric": [
+      "Says the 1-to-10 autonomy slider is unpredictable: a person cannot tell what 7 will actually do, and suggests tying choices to concrete behaviors or examples instead.",
+      "Points out that twelve categories with four actions each, asked before the person has seen the assistant do anything, is too much up front, and proposes starting with a few decisions that matter and widening later.",
+      "Notes there is no way to see what the assistant would do on real mail before it acts, and that the default level means it starts acting on day one.",
+      "Names at least one thing worth keeping (for example the per-category control, the Ask me option, or the note that settings can be changed) rather than rejecting the whole screen.",
+      "Orders the problems by importance and gives a concrete fix for the top one or two, without a long list of equal-weight nitpicks."
+    ]
+  },
+  {
+    "id": "aid-h03-guard-filing-approval",
+    "kind": "choose",
+    "prompt": "I run a one-person bookkeeping side business. I'm building a little tool that watches my shared inbox and files PDF receipts into the right client's folder in Drive. It only moves and renames files: nothing is deleted and nothing is sent to anyone. My cofounder says it should ask me to approve every single filing so nothing goes wrong. That's maybe 60 a week. What do you think it should do?",
+    "rubric": [
+      "Gives a clear recommendation up front, and it is not 'approve every filing': the actions are low-stakes and easy to reverse, and approving 60 a week would train the owner to click through.",
+      "Still keeps mistakes catchable: a short running log or digest of what was filed where, and an easy way to move a file back.",
+      "Picks out the uncertain cases (no matching client, two possible matches, unreadable receipt) as the ones that should stop and ask, instead of treating all filings alike.",
+      "Does not invent accuracy figures or time savings, and does not pile on unrelated features such as permission tiers or analytics.",
+      "Is brief and reads as advice to a person making a decision, not a survey of options."
+    ]
+  },
+  {
+    "id": "aid-h04-shift-swap-morning-layout",
+    "kind": "layout",
+    "prompt": "Our restaurant group (Salt Cellar, six locations) has an agent that handles shift swaps. Staff message that they can't work a shift, it finds cover among people who opted in, offers the shift, and updates the rota. On a given night it might do 0 to 15 things. Most are routine, but a couple might be stuck: nobody accepted, or covering would put someone into overtime. Each morning the general manager opens a summary on their phone. Lay out that screen: what goes where, in what order, and what's tappable. A text description is fine.",
+    "rubric": [
+      "Puts the stuck items that need the manager's decision first, above the routine completed swaps.",
+      "Condenses routine completed swaps (for example a count that expands) instead of giving fifteen equal rows, while any single one can still be opened.",
+      "Each stuck item says why it is stuck and offers its next action on the same screen (for example approve the overtime, ask a specific person, or take it over).",
+      "Says how the manager can reverse a completed swap or take over from the agent, and where a pause for the whole agent lives.",
+      "Gives the empty state for a quiet night, when nothing happened or nothing needs the manager.",
+      "Is specific about order and what each area contains on a phone, not a general list of good ideas."
+    ]
+  },
+  {
+    "id": "aid-h05-guard-irrigation-spec-polish",
+    "kind": "polish",
+    "prompt": "Can you polish this before I send it to the eng team? Fix whatever needs fixing.\n\nGreenline watering agent, v1 behavior\n\nSetup: three questions only. Which zones do you have, what is each one (lawn, beds, pots), and do you have watering restrictions from your town. Nothing else is asked.\n\nFirst week: it runs in suggest mode. Each morning it shows what it would have done and why. Nothing waters. After day 7 it asks once whether to switch on automatic watering, showing the week's suggestions next to the actual weather.\n\nDaily: it waters at dawn. It skips a zone if rain is forecast above 60% or the soil sensor reads wet. The home screen shows one line, for example \"Watered lawn 18 min, skipped beds (rain)\".\n\nInterruptions: it sends a notification only for a suspected leak (water flowing while all zones are off), a sensor offline for more than 24 hours, or a conflict with the user's restrictions. Everything else goes in a weekly summary.\n\nControl: a Pause button on the home screen with three choices: a day, a week, until I resume. Any run can be stopped from its line on the home screen. A manual run always wins, and the agent picks the plan back up the next day.\n\nMistakes: if the user cancels or overrides the same zone's run twice in a row, it asks whether that zone got too much or too little and adjusts, and tells the user what it changed.\n\nLimits: it never waters outside the user's restrictions, never edits the restrictions itself, and never orders anything.",
+    "rubric": [
+      "Leaves the structure, order and decisions of the spec essentially intact; it is not rewritten into a new template or reorganized.",
+      "Makes few, specific edits, each with a stated reason; it does not change lines just to show activity.",
+      "Says plainly what is already strong and should be kept, with a reason tied to how the product will behave.",
+      "Does not add new features, modes, settings or sections that the author did not ask for.",
+      "If it raises any gap, it is a real ambiguity stated in one or two lines (for example what the override rule means during a suspected leak), not a general call for more detail."
+    ]
+  },
+  {
+    "id": "aid-h06-full-spend-day-one",
+    "kind": "explain",
+    "prompt": "Our small-shop customers keep telling us in interviews that they want our ad assistant to just handle everything. Our CTO wants to ship it with full control of ad spend from day one because that's literally what they asked for. I don't think that's right but I can't say why in a way he'll accept. He's a numbers person. What do I tell him?",
+    "rubric": [
+      "Takes the customers' request seriously by separating the outcome they want (not having to manage it) from the permission level it should start with.",
+      "Gives concrete reasons that fit ad spend: no track record yet for this shop, early mistakes cost real money, and the owner cannot yet judge what to trust.",
+      "Lays out a path where what the assistant may do widens as it proves itself, with a concrete example of the steps (for example suggest only, then act within a spend cap, then broader) and who decides each step.",
+      "Does not cite invented statistics or studies; numbers are offered as things to measure, such as how often the owner accepts its suggestions or how often a change is reversed.",
+      "Is framed for a numbers person: includes a testable condition for widening permission, and is short enough to say in a meeting."
+    ]
+  },
+  {
+    "id": "aid-h07-invoice-agent-failure-section",
+    "kind": "write",
+    "fact_sheet": true,
+    "pressure": false,
+    "prompt": "Write the \"when it goes wrong\" section of the product spec for our invoice-chasing agent, Nudge. Engineers and the support lead will read it. Use only these facts.\n\nFacts:\n- Nudge emails clients who are late on invoices, on the freelancer's behalf, from the freelancer's own address.\n- Reminders go out 3, 10 and 21 days after the due date unless the freelancer has paused that client.\n- A sent email cannot be recalled. A freelancer can stop any scheduled reminder up until 15 minutes before it sends.\n- Marking an invoice as paid, at any time, cancels all remaining reminders for it.\n- Every reminder is logged with the text sent, the time and the reason it was sent.\n- Known failure seen in beta: when a client pays by bank transfer and the freelancer has not marked the invoice paid, Nudge can send a reminder for an invoice that is already settled. This happened 3 times across 40 beta accounts.\n- Support can read the log but cannot edit, resend or cancel anything on a freelancer's behalf.\n- There is no apology or credit policy yet.",
+    "rubric": [
+      "Uses only the supplied facts: it does not promise recalling a sent email or detecting bank payments, and does not invent percentages, deadlines, owners or features.",
+      "Describes the known failure (reminder for an already-settled invoice) and what the freelancer can do before it sends (stop it within the 15-minute window, mark paid) and after.",
+      "States the unrecoverable part honestly: a sent reminder cannot be taken back, and what the freelancer and support can actually see and do about it, without giving support powers it does not have.",
+      "Marks the missing apology or credit policy as undecided instead of inventing one.",
+      "Is written for engineers and a support lead: concrete, scannable, no marketing tone."
+    ]
+  },
+  {
+    "id": "aid-h08-trip-agent-push-volume",
+    "kind": "critique",
+    "prompt": "Our travel agent (Wayfarer) watches booked flights and rebooks people when things change. Users say the notifications are \"a lot\" and some have turned them off entirely, which is worse for us. Right now every one of these is a push notification:\n\n1. Booking confirmed\n2. Price dropped $12 on a watched route\n3. Gate changed\n4. Flight delayed 20 minutes or more\n5. Flight cancelled, rebooked automatically\n6. Check-in is open\n7. Weekly deals roundup\n8. \"We looked for a better fare and found none\"\n9. Seat upgrade available\n10. Agent paused because the card on file expired\n\nWhat should we do?",
+    "rubric": [
+      "Assigns every one of the ten events a treatment (push now, held for a summary, in-app only, or not sent) instead of giving only general advice.",
+      "Keeps the interrupting pushes for events where the traveler must or can act soon, such as the cancellation and rebooking, the paused-agent card problem, and the delay or gate change, and says why.",
+      "Drops or demotes the nothing-happened message (found no better fare) and the promotional ones, saying that no news should stay quiet unless the user asked to hear it.",
+      "For the automatic rebooking, says the message should state what the agent changed and let the traveler review or change it, not only announce it.",
+      "Offers a light way for users to adjust what interrupts them without a ten-toggle settings page, or says honestly that a sensible default may be enough."
+    ]
+  },
+  {
+    "id": "aid-h09-guard-ticket-setup-100-words",
+    "kind": "explain",
+    "prompt": "I'm designing an agent for our support team that sorts incoming tickets, assigns them, and sends replies to the simple ones. When a team lead sets it up for the first time, what should it ask them first? Keep it under 100 words, I'm pasting this into a Slack thread.",
+    "rubric": [
+      "Stays under 100 words and is directly pasteable: no heading, no preamble, no closing offer.",
+      "Names a small set of questions (roughly three to five) rather than a questionnaire.",
+      "The questions decide what the agent may do: which kinds of ticket it may answer alone versus only route, and which topics it must never answer (for example refunds, legal or angry customers).",
+      "Includes where uncertain tickets go and who gets told, so the agent's limits are set before it starts.",
+      "Invents no features or numbers."
+    ]
+  },
+  {
+    "id": "aid-h10-guard-payroll-review-step",
+    "kind": "choose",
+    "prompt": "Bluepeak Payroll serves small businesses, typically around 8 employees. Our autopilot prepares each pay run from the timesheets and shows a review screen with a big \"Approve and send\" button. Product wants to drop the review for any customer who has approved three runs in a row, because \"they obviously just click through.\" Support says money lands in bank accounts the next day and is hard to pull back. Should we do it?",
+    "rubric": [
+      "Gives a clear answer: do not remove the review for money that is hard to pull back on the strength of past approvals alone.",
+      "Explains that three approvals in a row do not show the customer read the screen, and that the better signal is whether this run differs from the last ones.",
+      "Proposes a narrower relief: a light confirmation when the run matches the previous one within a tolerance, and a full stop and ask when something differs (a new hire, a rate change, an unusual number of hours).",
+      "Keeps a way to stop a run before the money moves, and is honest about what cannot be undone after it does.",
+      "Invents no statistics about click-through or error rates."
+    ]
+  }
+]

@@ -1,32 +1,47 @@
-**The sign-up doesn't save anything.** Pressing "Save my place" only prints "You are on the list" in the visitor's own browser. No one is added to a list and you won't receive anything. Members will think they're signed up when they aren't, so fix this before you send the link.
+The layout, labels, dark mode, focus rings and the party-size error all work, and I'd leave them alone. Two things should stop you from sending it as is.
 
-The rest of the page is in good shape: labels, keyboard focus, dark mode, the count error message and the status announcement all work.
+## Fix before sending
 
-Findings, most serious first:
+**1. The form doesn't save anything.** The submit handler only prints "You are on the list…" on the page. Nobody on the organising side receives the sign-up, so every member would see a false confirmation. Send the data somewhere (a form service, a Google Sheet endpoint, your own server) and only show success once that succeeds. I don't know what you use, so the endpoint below is a placeholder:
 
-1. **Nothing is sent anywhere.** Point the form at wherever you collect responses: a Google Form or Sheet, a form service, or a small endpoint. I don't know which you use, so I haven't invented one. Once it submits for real, it also needs:
-   - a "Saving…" state with the button disabled, so people can't double-submit;
-   - a failure message that keeps what they typed and offers a retry. The success line should only appear after the save succeeds.
+```js
+f.addEventListener('submit',async ev=>{ev.preventDefault();
+  const v=+n.value,badN=!Number.isInteger(v)||v<1||v>8,badName=!f.name.value.trim();
+  e.hidden=!badN;n.setAttribute('aria-invalid',badN);
+  ne.hidden=!badName;f.name.setAttribute('aria-invalid',badName);
+  s.textContent='';
+  if(badName){f.name.focus();return} if(badN){n.focus();return}
+  b.disabled=true;b.textContent='Saving…';
+  try{
+    const r=await fetch('[your sign-up endpoint]',{method:'POST',body:new FormData(f)});
+    if(!r.ok)throw 0;
+    s.style.color='';s.textContent='You are on the list: '+f.name.value.trim()+', party of '+v+'. See you under the stars.';
+    b.textContent='Saved';
+  }catch{
+    s.style.color='var(--bad)';s.textContent='We could not save your place, and your answers are still here. Please try again.';
+    b.disabled=false;b.textContent='Save my place';
+  }});
+```
 
-2. **Event details are missing.** The page never says which Saturday, the start time, the location, what to bring (warm clothes, a red torch), or what happens if it's cloudy. Add a line under the heading, for example: `Saturday [date], [time] at [location]. If it's cloudy: [rain plan].` I left the details as placeholders because I don't have them.
-
-3. **The name field isn't validated.** An empty name gives "You are on the list: , party of 2." The count field also accepts 1.5. Suggested fix:
+You'd also need `const b=f.querySelector('button'),ne=document.getElementById('name-err');`. Add this after the name input, and add `aria-describedby="name-err"` to the input:
 
 ```html
-<input id="name" name="name" autocomplete="name" required aria-describedby="name-err">
-<p class="err" id="name-err" hidden>Enter your name so we know who to expect.</p>
-```
-```js
-const nm=document.getElementById('name'),ne=document.getElementById('name-err');
-// inside the submit handler, replacing the existing validity check:
-const badN=!nm.value.trim(), bad=!(Number.isInteger(v)&&v>=1&&v<=8);
-ne.hidden=!badN; nm.setAttribute('aria-invalid',badN);
-e.hidden=!bad; n.setAttribute('aria-invalid',bad); s.textContent='';
-if(badN||bad){(badN?nm:n).focus();return}
+<p class="err" id="name-err" hidden>Enter your name so we know who is coming.</p>
 ```
 
-4. **The field borders are faint.** `--line` is about 1.5:1 against the background in light mode, and the dark value is similarly low. Input borders should reach about 3:1. Darkening `--line` to roughly `#8a91a0` in light mode and `#6b7280` in dark mode would do it, but it also changes the card look, so it's your call.
+**2. The page doesn't say when or where.** Members will open it and not know the date, start time, meeting place or what happens if clouds roll in. Add a line under the lead, for example:
 
-5. **There's no way to change or cancel.** Someone who can't come, or who got the count wrong, has nowhere to go. Add a line like "Plans changed? Contact [organiser email]" under the form.
+```html
+<p class="lead">[Date] from [start time] at [location]. If the sky is clouded out, we will [how you will tell people].</p>
+```
 
-I only read the code. I haven't run it in a browser or tested it with a screen reader.
+I left those as placeholders because I don't have the facts.
+
+## Smaller gaps
+
+- **Empty name:** with `novalidate` and no name check, a blank name gives "You are on the list: , party of 2". The patch above fixes this.
+- **Decimals:** `2.5` currently passes the party-size check. The patch above uses `Number.isInteger`.
+- **Contact for cancellations:** if you may cancel for weather, consider an optional email or phone field. That's your call, so I haven't added it.
+- **Changing a sign-up:** once someone submits, they have no way to edit or cancel. Even a line like "Need to change this? Reply to [contact]" would help.
+
+I only read the code. I haven't run the page, tested it on a phone, or checked it with a screen reader.

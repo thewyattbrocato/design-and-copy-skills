@@ -1,51 +1,57 @@
-Your structure is fine (three tiers, a highlighted middle plan, a trial line, a short FAQ). The problem is that none of the copy mentions pottery, so it could be for any SaaS product. Here are the issues, most important first.
+Your structure is fine, but the copy is generic. Swap in a different product name and it would work for any SaaS, and it never mentions pottery, studios, wheels, or kilns. For a niche product, that's the biggest missed opportunity.
 
-**1. "Items" doesn't mean anything for Kilnbook.**
-- Nobody knows what 100 items is. Are they members, bookings, wheels, kiln loads, or pieces?
-- Your customer is a studio owner deciding if the plan fits their studio. Limit on the thing they already count, like members, wheels/stations, or bookings per month.
-- "Unlimited items" on Pro has the same problem. If the limit is hard to explain, the tier split will feel arbitrary.
+## Pricing
 
-**2. The tiers are described by adjectives, not differences.**
-- "Everything in Basic, plus more" says nothing. List what Pro adds.
-- "Advanced analytics" is vague. For a studio it could be "see which wheels and kiln slots fill up, and who your most active members are."
-- "Priority support" needs a number, like "replies within 4 hours."
-- Basic's only features are a cap and email support. It reads like a list of what you don't get, so add what it does include (online booking, member waitlists, whatever is true).
+**Heading and subheading**
+- "Simple, transparent pricing" is filler. Every pricing page says it.
+- "Choose the plan that's right for you" says nothing. Use that line to say who the product is for, for example "Plans for studios of every size, from a four-wheel co-op to a multi-location school."
 
-**3. Enterprise is unclear for this market.**
-- Most pottery studios are small, so who is Enterprise for? If it's multi-location studios, schools, or community arts centers, say so. "Large organizations with advanced needs" reads as boilerplate.
-- "Custom integrations" with what? Accounting software, door access, a payment processor?
+**"Up to 100 items"**
+- This is the most serious problem. A studio owner won't know what an "item" is. It could be members, bookings, wheels, kilns, or classes.
+- The limit is also the only thing separating Basic from Pro, so it needs to be concrete. "Up to 100 members" or "up to 500 bookings/month" lets someone place themselves on the page right away.
 
-**4. Generic filler.**
-- "Simple, transparent pricing" and "Choose the plan that's right for you" are on a thousand pricing pages, and the subheading adds nothing. Use the space for something specific, like "Plans for studios of every size. Try any of them free for 14 days."
-- "Perfect for getting started" is similar. Replace it with who the plan fits, such as "For studios with up to 25 members."
+**Basic**
+- "Perfect for getting started" is empty. Say what they get: "For small studios and co-ops managing wheel and kiln bookings."
 
-**5. The CTAs and the trial don't match.**
-- Your hook is a free trial with no card, but the buttons say "Select," which sounds like a purchase.
-- Use "Start free trial" on Basic and Pro. Keep "Contact Sales" on Enterprise.
-- Say whether the trial applies to Enterprise, since "all plans" includes it.
+**Pro**
+- "Everything in Basic, plus more" is a non-statement.
+- "Advanced analytics" and "priority support" are vague. Name the specifics, such as kiln utilization reports, revenue per member, or a response time ("replies within 4 hours").
+- Unlimited items on Pro reads like a pure usage gate. Give people a reason to upgrade besides size.
 
-**6. The FAQ answers don't answer anything.**
-- "How does it work?" gets a non-answer. Describe the actual flow: add your wheels and kilns, set your hours, invite members, and they book online.
-- "Is my data secure?" and "Do you offer support?" are the weakest. "We take security very seriously" is what every company says. Say something checkable, like where data is stored, how payments are handled (for example, through Stripe), and whether members' details are private.
-- Support should state the hours, the channels, and how the answer differs by plan. Right now it ignores that Basic only gets email.
-- The cancellation answer skips what people actually worry about: Do I lose my data? Can I export it? Is there a refund for the current month?
-- Drop the exclamation mark and "friendly team." They don't add information.
+**Enterprise**
+- "Large organizations" probably doesn't describe your customers. Most pottery studios are small businesses, and a few are multi-location. "Multi-location studios, schools, and arts centers" would fit better.
+- "Custom integrations" with no examples feels hollow.
 
-**7. Missing questions a studio owner would ask.**
-- What happens when the trial ends? Does it auto-charge, or just lock?
-- Can members pay for studio time or kiln firings through Kilnbook, and are there fees?
-- Can I move over from a spreadsheet or my current system?
-- What happens if I go over my plan limit?
-- Does it handle firing schedules, glaze or bisque loads, and shared kiln time?
-- Is there a discount for annual billing or for nonprofits and schools?
+**Buttons**
+- Replace "Select" with "Start free trial." It matches your trial offer and is more motivating.
 
-**Smaller things**
-- "No credit card required" is a good line. Put it near the buttons as well as in the footer, since that's where people hesitate.
-- Check that the "Most Popular" badge is true. If it isn't, "Best for most studios" is safer and more useful.
+**Missing details**
+- Is there an annual discount?
+- Is there a payment processing fee on member charges? Studio owners will look for this immediately.
+- What happens when the trial ends?
 
-**Example rewrite (Pro card)**
-> **Pro, $29/mo**: Best for growing studios
-> Unlimited members and bookings · Kiln and firing scheduling · Usage reports for wheels and kilns · Replies within 4 hours
-> [Start free trial]
+The trial line, "14-day free trial. No credit card required," is good and clear.
 
-Swap in the real details. If you tell me what each tier includes, I can rewrite the whole section with you.
+## FAQ
+
+The answers are placeholders. "Absolutely. We take security very seriously" is something a skeptical reader trusts less after reading it.
+
+- **How does it work?** "Sign up and start using it" tells them nothing. Describe the studio workflow: members book wheel time, kiln loads get scheduled, and fees are tracked.
+- **Can I cancel anytime?** Add what happens to their data and whether they get a refund. Say whether they can export their member list.
+- **Is my data secure?** Be specific: where payments are processed (Stripe, for example), whether data is encrypted, and who owns the member data. If you can't say much yet, shorten the answer rather than padding it.
+- **Do you offer support?** "Our friendly team is here to help" is padding. Give hours, channels, and response times, and say which plan includes what.
+
+**Questions your customers will actually ask:**
+- Can members book and pay on their own, or do I have to enter bookings?
+- Can I charge for kiln firings by shelf or by size?
+- Can I import my current members or spreadsheet?
+- What happens when a member no-shows?
+- Can I switch plans later?
+
+## Example rewrite
+
+> **Basic, $9/mo.** For small studios and co-ops. Up to 50 members. Wheel and kiln booking. Email support.
+
+It names the audience, uses a unit people understand, and lists features instead of an adjective.
+
+Overall, the tone is clean and professional, and the layout is sound. The work left is replacing generic phrases with pottery-specific detail. If you send me your real feature list and limits, I can draft a full rewrite.

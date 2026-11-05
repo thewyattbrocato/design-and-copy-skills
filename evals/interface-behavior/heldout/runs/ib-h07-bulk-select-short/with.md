@@ -1,8 +1,7 @@
-Assumed: desktop users, frequent sessions.
+Assumption: finance staff on desktop, using the list daily.
 
-- Show a checkbox on each row. Add a header checkbox that selects the current page.
-- Once a page is fully selected, show "Select all 4,000 matching filter" in the selection bar. Selection then means the filter, not the loaded rows.
-- Keep selection across pages and filter changes. Show the count, and offer Clear.
-- Support shift-click ranges and keyboard selection.
-- "Mark paid" gets an Undo toast. "Send reminders" gets one specific confirmation that names the count, because emails can't be recalled.
-- Run large batches in the background with progress.
+- **Checkboxes:** Show a visible checkbox on every row, plus a header checkbox that selects the current page. Shift-click selects a range, and all of it works from the keyboard.
+- **Select all matches:** After a page select, show "Select all 4,000 matching". Selection follows the active filter, so "all overdue" is one click.
+- **Persistence:** Selection survives paging, sorting and filtering.
+- **Action bar:** Show the count and the actions, "Mark paid" and "Send reminders", with Clear.
+- **Bulk action:** Show how many invoices it will affect. Mark paid gets an Undo toast. Reminders can't be unsent, so confirm once, naming the count and recipients.

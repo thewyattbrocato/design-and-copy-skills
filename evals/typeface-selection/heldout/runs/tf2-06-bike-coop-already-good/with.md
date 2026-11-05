@@ -1,21 +1,21 @@
-This setup is sound, so I'd change only one thing.
+Your type setup is already sound, so I'd make one small change.
 
 **What works**
-- The system font stack needs no downloads, loads instantly, and looks native on every device. That suits a volunteer-run portal.
-- Body text at 17px with 1.55 line height reads comfortably.
-- Headings use the same family at a heavier weight with tighter line height and spacing. That's all the hierarchy you need.
-- `tabular-nums` on right-aligned number columns keeps digits lined up.
-- Monospace is only used for `code`, and the `0.92em` size stops it looking oversized next to body text.
+- It uses one family with real range. Headings and body share the system UI stack, and the weight and size do the hierarchy.
+- The body text is 17px with 1.55 line height, which is comfortable for reading.
+- Mono is used only for `code`.
+- `tabular-nums` and right alignment on number cells keep dues and counts lined up.
+- Every stack ends in a real fallback, and nothing depends on a web font loading. That's a good choice for a volunteer-run site.
 
-**The one fix: change the heading weight from 650 to 600 or 700**
-Most system fonts (Segoe UI, Roboto, Helvetica Neue, Arial) come in fixed weights, not a continuous range. A 650 weight gets rounded to whichever weight each device has, so headings will look slightly different from machine to machine. Use `600` if you want a softer heading, or `700` if you want a firmer one. I'd pick 600:
+**The one change**
+- `font-weight: 650` only works on variable system fonts like San Francisco on Apple devices. Segoe UI and static Roboto only have 400, 600 and 700, so headings will render differently on different machines. Using `600` makes them match across platforms.
+- Headings already inherit the body font, so the `font-family` line on `h1, h2, h3` is redundant. It's harmless, but I removed it.
 
 ```css
-h1, h2, h3 { font-family: var(--font-body); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+h1, h2, h3 { font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
 ```
 
-You could also delete `font-family: var(--font-body)` from the heading rule, since headings inherit it from `body`. It's harmless, so leave it if you prefer.
+**Optional**
+- If you ever use `<em>` or `<strong>` in a font that lacks that style, add `font-synthesis: none;` to `body` so the browser doesn't fake it. The system fonts you're using have real italics and bolds, so this isn't needed now.
 
-I'd skip adding a web font. It would add loading and licensing work for little gain here. If the portal later needs a more distinct look, one open-licensed sans with a real semibold would be the upgrade, but nothing is broken now.
-
-I assumed Latin-script text on screens, with no brand font mandated.
+I assumed a screen-only, English-language portal with no custom fonts installed. If you later want a distinct brand look, that would be the point to add a second font for headings. For a member portal, I'd leave it as is.

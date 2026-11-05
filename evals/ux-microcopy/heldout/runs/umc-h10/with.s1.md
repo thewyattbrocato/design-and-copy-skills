@@ -1,12 +1,13 @@
-**Title**
-Banish [character name]?
+**Dialog title**
+Banish [Character name]?
 
 **Body**
-Banishing [character name] sweeps their inventory, quest progress and guild rank into the void. No power in the realm can undo it. Your account, your other characters and your purchased cosmetics remain untouched.
+Banishing [Character name] erases their inventory, quest progress and guild rank, and no spell or scroll can undo it. Your account, your other characters and every cosmetic you've purchased remain untouched. Once the gates close behind this hero, their tale ends here.
 
 **Buttons**
 - Confirm: Yeah, banish them forever
-- Decline: Nope, they stay
+- Decline: Spare them
 
-- I used "banish" in the title, body and button so the dialog uses one word for the action. Replace "[character name]" with the character's actual name, so players can see which character they're about to lose.
-- The confirm and decline buttons should have the same size and visual weight. The theatrical wording is fine, but the consequences are stated literally so nobody has to guess what's lost.
+Notes:
+- Replace `[Character name]` with the real name in both places it appears. Naming the character keeps the dramatic wording from hiding which one is being deleted.
+- I kept the facts literal (inventory, quest progress, guild rank, can't be undone) and put the theater around them, because this action is irreversible. If the menu entry that opens this dialog says "Delete Character", consider "Banish Character" there too, so the player sees one name for the action.

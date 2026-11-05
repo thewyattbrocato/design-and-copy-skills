@@ -1,41 +1,23 @@
-**Not ready to send yet. The biggest problem is that the page doesn't save anything.** The submit handler only updates the text on screen, so every sign-up is lost, but the page says "You are on the list." Everything else is close.
+**Don't send it yet.** The biggest problem is that the form doesn't save anything.
 
-What already works: the layout and labels are clear, focus outlines are kept, dark mode uses its own colors with readable contrast, the error appears next to the field and is announced to screen readers, focus moves to the problem field, and the name is inserted as text, not HTML.
+**Blocking**
 
-**Ranked findings**
+1. **Sign-ups go nowhere.** The form has no `action` and the script only updates the page text. Anyone who clicks "Save my place" sees "You are on the list," but nothing is recorded and no one on the committee gets notified. Connect it to something before sending: a form service such as Google Forms, Formspree, or Tally, or a small backend. Then test it with a real submission.
+2. **The page doesn't say what the event is.** It has no date, start and end times, location, parking or access directions, or cost. "Saturday" is ambiguous, especially since it's currently early November. Put the exact date and location on the page.
 
-1. **Sign-ups go nowhere (blocks the purpose).** You need a destination before sending: a form endpoint, a Google Form, or your mailing-list tool's embed. Once you tell me which, I'll wire it in. Until then, don't say "You are on the list" in the success message. Also show a busy state on the button while sending, and if sending fails, keep what they typed and show a retry message.
+**Should fix**
 
-2. **Missing event facts (a member can't act on this page).** The page doesn't say when, where, or what to bring. Add these, and fill in the placeholders yourself: `[date and start time]`, `[location / parking note]`, `[what to bring, e.g. warm layers]`, `[contact for questions]`, and `[what happens if weather cancels]`. I did not invent any of these.
+3. **Empty name gets through.** `required` alone doesn't stop submission here because `novalidate` is set and the script never checks the name. An empty name produces "You are on the list: , party of 2." Add a name error like the one for the party size.
+4. **No contact details.** If the club needs to reach people about a cancellation or a change, the form has no email or phone field.
+5. **No cancellation or weather policy.** Star parties are often called off for clouds. Say how people will be told and whether the event is rescheduled.
+6. **No deadline, and no way to change or cancel a sign-up.** Say when sign-ups close and how to update one.
+7. **The "two parts" advice has no mechanism.** The error tells groups over 8 to sign up in two parts. If that's allowed, the organizer needs a way to link them, or the message should just say "email the organizer if your group is larger than 8."
 
-3. **Blank name passes validation.** Submitting with no name shows "You are on the list: , party of 2." Fix:
+**Minor**
 
-   Markup, after the name input:
-   ```html
-   <input id="name" name="name" autocomplete="name" required aria-describedby="name-err">
-   <p class="err" id="name-err" hidden>Please enter your name so we know who to expect.</p>
-   ```
+8. **No fallback without JavaScript.** Without it the form does nothing useful. A plain `action` pointing at your form service covers this.
+9. **Error text isn't announced.** The party-size error appears without an announcement. Focus moves to the field and the error is linked to it, which mostly covers this, but an `aria-live` region would be more reliable.
 
-   Script, replacing the existing `<script>` block:
-   ```html
-   <script>
-   const f=document.getElementById('f'),name=document.getElementById('name'),nameErr=document.getElementById('name-err'),
-   n=document.getElementById('n'),e=document.getElementById('n-err'),s=document.getElementById('status');
-   f.addEventListener('submit',ev=>{ev.preventDefault();
-   const who=name.value.trim(),v=n.value.trim()===''?NaN:Number(n.value),
-   nameBad=!who,bad=!(Number.isInteger(v)&&v>=1&&v<=8);
-   nameErr.hidden=!nameBad;name.setAttribute('aria-invalid',nameBad);
-   e.hidden=!bad;n.setAttribute('aria-invalid',bad);s.textContent='';
-   if(nameBad){name.focus();return}
-   if(bad){n.focus();return}
-   s.textContent='You are on the list: '+who+', party of '+v+'. See you under the stars.'});
-   </script>
-   ```
+The visual design is fine. Focus rings, dark mode, reduced-motion handling, and color contrast all look correct.
 
-4. **Fractional headcounts pass.** "2.5" is accepted because the check only tests the range. The new `Number.isInteger` check above fixes this.
-
-5. **No way to withdraw or change a sign-up.** Leaving should be as easy as joining. Add a line such as "To change or cancel, email [contact]," or decide that a second sign-up is the way to change it. This is a decision for you.
-
-6. **The "sign up in two parts" rule.** Groups over 8 are told to submit twice. Confirm that's what you want, since each part will be recorded as a separate entry with the same name.
-
-**Not checked:** I read the code but did not run it in a browser, with a screen reader, on a phone, or at 200% zoom. I also did not test the dark theme visually.
+I can fix items 3, 8, and 9 in the HTML now, and add placeholders for the date, location, and policy text. Items 1 and 2 need your input: which form service or backend you're using, and the event details.

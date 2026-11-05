@@ -1,43 +1,46 @@
-**Modal (shown once)**
+# Stackwell setup: rewrite
+
+## Welcome modal (replaces the current one)
 
 > **Welcome to Stackwell**
-> Stackwell helps your clinic keep supplies stocked and orders organized. Set up four things and you can place your first purchase order.
+> Stackwell helps your clinic keep supplies stocked and orders organized.
 >
-> 1. **Basics:** your currency and time zone
-> 2. **Locations:** where you keep supplies, like the front desk, exam rooms, and storage
-> 3. **Items:** import your catalog from a spreadsheet
-> 4. **Team:** invite coworkers and choose their roles
+> Let's get your first supply order ready. It takes 4 short steps, and you can stop and pick up again anytime.
 >
-> Everything else can wait. We'll keep this checklist on your home screen.
->
-> [Start with Basics] [Skip for now]
+> **[Start setup]**  ·  Skip for now
 
-**Checklist (stays on the home screen until finished)**
+The modal does only three jobs: say what Stackwell is for, name the goal, and start the first step. The feature list is cut. Admins will meet those features when they use them.
 
-*Get started*
-- Set currency and time zone
-- Add locations
-- Import your items
-- Invite your team
+## Setup checklist (stays visible until done, not a one-time modal)
 
-*When you're ready*
-- Add vendors and their payment terms
-- Set par levels, which are the amounts you want on hand, for your most-used items first
+**Get ready to place your first order**
+
+1. **Set your currency and time zone**
+   Used for costs and for order and expiration dates.
+2. **Add your locations**
+   Places you keep supplies, like front desk, exam rooms, storage.
+3. **Import your items from a spreadsheet**
+   Start with a few items if you're not sure about all 200+. You can add more later. *[Download sample spreadsheet]*
+4. **Add a vendor**
+   Just one to start. Payment terms can be added now or later.
+
+When step 4 is done, the checklist updates to say what now works. For example: *"You can now create a purchase order for [vendor name]. [Create order]"*
+
+## "Next, when you're ready" (appears after step 4, each item optional)
+
+- Set par levels, the amount of each item you want on hand. Start with your most-used items. *(Needs your items, so it comes after the import.)*
+- Invite your team and assign roles
 - Set approval rules for purchase orders
 - Connect your accounting software
 - Schedule weekly cycle counts
 
-Each line opens the real screen for that task. Finished lines show a check, and the next one is highlighted. Help Center link: "Need help? Help Center" in the corner of the checklist.
+Help Center link sits at the bottom of the checklist, so it's always there.
 
-**What changed and why**
-- **Cut the feature list.** The 12-item list of features (lot tracking, audit logs, and so on) gave new admins nothing to act on. They can discover those later in the product.
-- **Four steps up front, five later.** Nine steps at once is too many for a first session. The second group is real setup work, but none of it is needed to place a first order.
-- **Reordered.** Items now come before par levels, because you can't set par levels for items that aren't in the system yet. The spreadsheet import also replaces entering 200+ items by hand.
-- **A checklist instead of a one-time modal.** A modal can't be consulted while you work, and nobody can remember nine steps. The checklist keeps the list visible and lets admins stop and resume.
-- **Skip is visible.** The checklist is still on the home screen afterward, so skipping loses nothing.
+## What changed and why
 
-**Assumptions**
-- I assumed the goal is "place your first purchase order." If the real first success is different, such as a first receiving or a first count, change the opening line and the four starter steps to match.
-- I used "Basics" and "Start with Basics" as placeholder labels. Swap in your actual screen names.
+- **One goal.** After setup, the admin can place a first order. Nine equal steps became 4 required ones and 5 optional ones.
+- **Fixed an ordering problem.** The original had par levels (step 3) before the item import (step 8), but you can't set levels for items that don't exist yet.
+- **The checklist persists.** A one-time modal can't be revisited, and nobody finishes nine tasks while a popup is open.
+- **No feature inventory.** Terms like "reorder points" and "lot tracking" are better explained where they appear in the product.
 
-To check whether this works, measure how many new admins have placed a purchase order a week or two later without opening the Help Center. Don't use checklist completion as the measure.
+**Assumptions:** I haven't seen the product, so the button labels, the "stop and pick up again" behavior, and the sample spreadsheet are my suggestions. Bracketed items are placeholders. To check that it works, look at how many new admins place a real order within their first week without opening the Help Center.

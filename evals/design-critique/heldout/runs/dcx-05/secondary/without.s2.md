@@ -1,26 +1,17 @@
-**Not ready to ship as-is.** Each screen reads fine alone, but the sequence has a few problems that a user will hit.
+Each screen reads fine alone, but the flow has problems that only show up when you read them in order. I'd fix these before launch.
 
-**Must fix**
+**1. "Plot" is never introduced, and it conflicts with "rooms."** Screen 2 asks where plants live and says "You can add more spaces later." Screen 4's footer then says you need "at least one plot before reminders can start." A user who picked rooms on screen 2 has no reason to think they've created a plot, so they'll likely hit a blocker on screen 4 with no explanation. Pick one term and use it everywhere. If a plot is a room, or a room needs a plot, say that on screen 2.
 
-1. **The progress bar is wrong.** It reads 1 of 4, then 2 of 5, 3 of 5, 4 of 5, then no bar. The total changes mid-flow. Pick one count. If the welcome screen is an intro and not a step, drop its progress label and make screens 2–4 "Step 1 of 3" through "Step 3 of 3." Or count all four screens as "of 4."
+**2. The progress counts don't match.** Screen 1 says "Step 1 of 4," but screens 2–4 say "of 5." That's probably a typo, but if it's intentional, the user will notice the total changing. Fix it to "of 5" or explain the difference.
 
-2. **Screen 4 contradicts the flow.** The footer says reminders can't start without a plot, but screen 4 also offers "Skip," and screen 5 says "You're all set!" If a user skips, they land on a false success message with no reminders. Either:
-   - Make screen 2 create the place where plants live, so the plot exists before screen 4, or
-   - Keep the skip path and change screen 5 to something like "You're all set! Add a plant anytime to start your reminders."
+**3. Screen 5 says "You're all set!" when reminders may not work.** If the user skipped the plant on screen 4, or never got a plot, reminders can't start, but the last screen celebrates. Either make the Skip path lead somewhere that says what's still missing, or make screen 5 conditional.
 
-3. **"Plot" is a term nobody has seen.** Screen 2 calls them "rooms" and "spaces," screen 1 says "garden," and screen 5 says "sanctuary." Use one noun for where plants live, and ideally one word for the app's world. Suggested: "rooms" for the places, and drop "sanctuary."
+**4. Smaller copy points:**
+- The product uses four names for the same idea: "garden" (screen 1), "rooms/spaces" (screen 2), "plots" (screen 4), "sanctuary" (screen 5). Pick one and drop the rest.
+- Screen 4, "Fernway will work out how thirsty it is," is vague about what the app will do. Something like "Fernway will figure out how often it needs water" says the benefit more plainly.
+- Screen 2 doesn't say what happens if the user selects nothing. Either require one chip or say "Skip" is fine.
+- Screen 3, "nudge" is a bit casual next to "remind you" in the title. Either is fine, but pick one.
 
-**Should fix**
+**Suggested order of fixes:** settle the rooms/plots model first, since it determines screens 2, 4, and 5. Then fix the step count and the screen 5 message. The wording tweaks can go last.
 
-4. **Button labels are inconsistent.** Screen 1 says "Continue," screens 2 and 3 say "Next," screen 4 has no primary button, and screen 5 says "Done." Use one verb for forward steps, such as "Continue," and keep "Done" for the final screen only.
-
-5. **The footer is in the wrong place.** The warning comes after the buttons, where people may have already tapped Skip. Move it above the buttons and say what happens: "Reminders start once you add your first plant."
-
-6. **Screen 2 doesn't say whether chips are required.** If someone selects none, it's unclear whether Next is disabled, whether the app assumes all rooms, or whether they get an empty state. Pick a rule and make the body text match it.
-
-**Minor**
-
-7. Screen 3 says "nudge," but the product is a *reminder* app. Use "reminder" to match screen 1's promise.
-8. Screen 4's "Fernway will work out how thirsty it is" implies automatic plant identification. If that's a real feature, say so. If it's an estimate, say "suggest a watering schedule" so the expectation is accurate.
-
-The biggest risk is #2. Your review was per screen, so nobody checked what a user does when they skip.
+Because each screen passed review in isolation, I'd suggest a quick walkthrough of the whole flow with the Skip path and the empty-selection path as well as the happy path. Those are where the problems above show up. I can draft revised copy for all five screens if you tell me which model you want, rooms-as-plots or a separate plot step.

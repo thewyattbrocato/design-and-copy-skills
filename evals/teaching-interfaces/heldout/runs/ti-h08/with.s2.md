@@ -1,42 +1,29 @@
-Your instinct is right. Don't walk everyone through all forty on day one. Let people learn shortcuts through the work they're already doing, and give them a reference for when they want more.
+Your instinct is right. A 40-step walkthrough on day one won't stick. People can hold about three new things at a time, and a shortcut only gets learned when the person is about to do that action. Eight hours a day in the app is an advantage: they'll hit every action many times, so you can teach each shortcut when it's relevant instead of all at once.
 
-**The goal:** after a week, a user reaches for the two or three shortcuts that matter to their own work without looking anything up.
+**What I'd do instead**
 
-**Why the full walkthrough fails**
-- People can't hold forty new things at once. Maybe three stick, and nobody can tell which three.
-- Shortcuts only make sense once you feel the friction they remove. A paralegal who hasn't yet juggled two matters has no use for "jump between matters."
-- Your users spend eight hours a day in the app and are experts at their job. A mandatory tutorial reads as friction, and they'll click through it.
+1. **Make shortcuts visible where the action happens.** Show the key combo in every menu item, button tooltip, and context menu. This costs the least and teaches the most, because people see the shortcut each time they use the mouse.
 
-**What to do instead**
+2. **Add a command palette that shows the shortcut next to each command.** One key opens it, and people can search "split view" and see the combo beside the result. It's the one shortcut worth teaching on day one, because it's a fallback for the other 39.
 
-1. **Put the shortcut where the action happens.**
-   - Show the key next to every menu item, button and tooltip that has one.
-   - This is the highest-value fix. It teaches at the moment of need, and users don't have to remember anything.
-   - Make sure the shortcut is visible wherever the mouse path is.
+3. **Teach 2–3 shortcuts in the first real task.** Pick the ones tied to what a new user does first. I'd guess jump-between-matters and quick-cite, but check your usage data. Have them do the real thing, such as opening a second matter or inserting a citation, and show the shortcut after it works: "Jumped to *Smith v. Jones*. Next time: ⌘J". The first-run flow is optional and skippable.
 
-2. **Offer a shortcut after someone does the slow version.**
-   - If someone opens split view from the menu for the third time, show a small, dismissible hint like "Next time: [shortcut]."
-   - Show it once or twice per shortcut, then stop. Tie it to what they just did, not to a clock.
+4. **Nudge after a mouse action, not before.** When someone does something by mouse that has a shortcut, show a small non-blocking hint once the action is done. Keep these rules:
+   - Show it only after they've done the action a few times (for example 3), not on the first.
+   - Stop as soon as they use the shortcut.
+   - Cap it at one hint per session, with a "don't show hints" option.
+   - Don't use streaks, daily drips, or guilt-style reminders.
 
-3. **Add a command palette and a searchable cheat sheet.**
-   - A palette (typing "split" finds the action and shows its key) lets people discover shortcuts by intent.
-   - Put the cheat sheet behind a single key, like `?`, so it's always one press away. Group it by task (matters, citing, layout), not alphabetically.
+5. **Keep a searchable reference.** Open it with `?` or from the Help menu, group it by task (matters, citing, layout), and make it printable. Lawyers often want a sheet at their desk. It's a reference for people who go looking, not a tutorial.
 
-4. **Give day one a small optional start.**
-   - Pick the 3 shortcuts that fit the first real tasks, such as quick-cite and jumping between matters, and let users try them in a real note.
-   - Include a visible skip, and a way back to it from the help menu.
-   - Don't try to cover all forty.
+6. **Fix the shortcuts themselves.** Use mnemonics where you can, keep combos consistent across related actions, and avoid clashes with OS and browser shortcuts. Every shortcut that's easy to guess is one less you have to teach.
 
-5. **Bring more in later, tied to what they do.**
-   - When someone starts using split view, mention the related shortcuts.
-   - A short "what's new" note can cover new shortcuts as you add them.
+**For the PM**
 
-6. **Make the keys easy to remember.**
-   - Check that the forty follow a consistent logic, such as one modifier for navigation and another for layout. Consistent keys largely teach themselves.
-   - Fixing a confusing mapping beats explaining it.
+This isn't a smaller version of their plan. It reaches the same goal, people using all 40, by a path that works better. Offer the compromise: a short day-one task covering 2–3 shortcuts, with the rest introduced in context. Experts who already live on the keyboard also won't be forced through a tutorial they'd resent.
 
-**How to pitch it to your PM:** the PM wants every user to know the shortcuts. This plan gets there with better odds, because users meet each shortcut when it's useful.
+**How to judge it**
 
-**How to measure it:** don't use tour completion. Track the share of users who use each shortcut unaided two to four weeks in, and how often they still choose the menu for actions that have a shortcut. You could A/B test the full tour against this approach on that measure.
+Don't measure tour completion. Measure the share of eligible actions done by shortcut instead of mouse at day 14 and day 30, with no hint showing. Compare that for the PM's tour and your approach in an A/B test if you can. That's the number that shows whether people learned them.
 
-I assumed a desktop app with a keyboard-and-mouse workflow. If you tell me the actual shortcuts, I can suggest which three to feature first and draft the contextual hint copy.
+I assumed you have usage analytics to pick the first 2–3 shortcuts, and that a command palette is feasible. If you don't have a palette, items 1, 3, and 4 still work without it.

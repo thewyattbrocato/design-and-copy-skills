@@ -1,1 +1,1 @@
-No. Cramming all three makes the logo hard to read at small sizes and on cans. Pick one primary mark, usually the bear or the wordmark, and use the hops crest as a secondary badge or in the packaging system. Show the full set in a lockup for brand materials, not in the logo itself.
+No. Crammed marks turn to mush at small sizes, like cans and taps. Pick one hero: the bear if it's distinctive, or the wordmark if the name is strong. Use the crest or hops as a secondary badge or pattern on packaging. Let the wider identity carry the rest.

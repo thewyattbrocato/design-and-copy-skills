@@ -27,6 +27,8 @@ jobs:
           python scripts/results_table.py --help > /dev/null
           python scripts/make_results_chart.py --help > /dev/null
           python scripts/before_after_gallery.py --help > /dev/null
+          python scripts/make_share_images.py --help > /dev/null
+          python scripts/make_film.py --help > /dev/null
           python scripts/run_activation.py --help > /dev/null
           python scripts/activation_summary.py --help > /dev/null
           python scripts/ci_local.py --help > /dev/null
@@ -42,9 +44,13 @@ jobs:
           python scripts/check_skill_fixtures.py --strict || echo "::warning::dev-suite fixtures still appear under skills/ (not blocking; held-out hits fail the step above)"
       - name: Check README tables
         run: python scripts/results_table.py --check
-      - name: Check results chart
+      - name: Check results chart and its PNG copy
         run: python scripts/make_results_chart.py --check
       - name: Check before-and-after gallery
         run: python scripts/before_after_gallery.py --check
+      - name: Check share images, library map and their PNG copies
+        run: python scripts/make_share_images.py --check
+      - name: Check the film, its poster, still and transcript
+        run: python scripts/make_film.py --check
       - name: Check activation summary
         run: python scripts/activation_summary.py --check

@@ -35,6 +35,14 @@ Two files with one name can be different drawings (a stripped web cut, a lighter
 5. **Keep emphasis inside the owner.** Italic and bold come from the family the text is in. A script beside an italic of the same name clashes.
 6. **One idea per page.** One expressive face per view. If every heading is loud, none is.
 
+## Testing a body face and a partner on screen
+
+1. **Test body faces in order.** Does it stay sturdy at the smallest size? Squint at a ragged-right paragraph: is the gray even, without dark or pale patches from letter shapes or spacing? Only then read it for liveliness. A face that fails an early step is not rescued by a later one.
+2. **Tear the anchor down by traits.** Write its contrast, width, x-height and build. For each partner decide whether it should contrast on one trait or complement on all of them; a partner that differs by a hair on every trait is the near miss.
+3. **Set the pair on one surface** with real copy, then check it from a distance (proportion), up close (letter shapes) and squinting (color).
+4. **A headline face must survive the real headlines**: the longest one, accents, italic words, and a narrower width when the line wraps.
+5. **A second voice** (captions, asides, pull quotes) may use the partner face; do not spread it into body text.
+
 ## Common wrong pairs
 
 - Two near-identical neo-grotesques (indistinguishable except in small flaws).

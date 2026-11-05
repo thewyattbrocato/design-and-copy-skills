@@ -1,29 +1,23 @@
-Your designer is half right. Embroidery does have hard limits, but the fix is a simplified version of the logo made for each use. That's a small job, not a redesign.
+Your designer is half right. Embroidery does have hard limits, but "just how embroidery works" is an incomplete answer. The real issue is that you have one logo file doing every job, and it was drawn for screens and print.
 
 **Why it happens**
 
-Your logo was drawn for screens and print, where a line can be almost any thickness. A favicon and a polo are two very small canvases:
+- **Favicon:** The logo is probably a detailed full-color horizontal or a shrunk-down version of it. At 32px (and 16px on many tabs) there are only 1,024 pixels. Fine lines blur into gray, and a wordmark or tagline can't survive at all.
+- **Embroidery:** Thread has body, roughly 0.3 to 0.4 mm wide. A stitched line needs to be about 1 mm or thicker, and lettering needs to be about 5 to 6 mm tall to stay legible. Gaps narrower than that fill in with thread, which is why your fine lines melted together. A tagline on a polo's chest mark is usually well under that size. Gradients and shading also don't exist in thread. Each color is a flat patch.
+- **Why the website and PDF look fine:** Screens and print handle hairlines and tiny type, so nobody noticed that the logo depends on them.
 
-- **32px tab icon:** The tab shows your whole logo in about 32×32 pixels, and often 16×16 on standard displays. Hairlines, small type and gaps between shapes blur into gray. Shrinking the full logo can't fix that. The icon needs its own simpler drawing.
-- **Embroidery:** The design is stitched with thread, and thread has a physical width. As a rough rule, lines thinner than about 1–1.5mm (around 0.04") fill in. Gaps narrower than that close up, which is why your fine lines melted together. Text under roughly 5–6mm (about ¼") tall turns to mush, and that is why the tagline became unreadable. Thread on fabric also pulls and puckers, so fine detail gets worse, not better.
+**What the designer should have done**
 
-So "that's how embroidery works" is true of the full logo. It is not true that you have to live with the result. Every brand with a detailed logo uses a simplified small version, and that's the normal fix.
+Embroidery does force simplification. But a designer shouldn't just ship the web logo to the embroiderer. They should supply a purpose-built small version. That's standard practice, and it's a reasonable thing to ask for.
 
-**What to do**
+**What to do (a small job, not a project)**
 
-You need three versions of the logo. This is a short job for a designer, probably an hour or two.
+1. **Make a simplified small-size mark.** Redraw the logo with heavier strokes, wider gaps, and no fine detail. Judge it in solid black on white, then reversed on dark. If it reads at 16 to 32px, it will usually stitch well too.
+2. **Make a symbol-only favicon.** This could be a monogram or the single strongest shape from the logo, with no wordmark and no tagline. Export it as SVG plus 32px and 180px PNGs.
+3. **Drop the tagline from the mark for embroidery.** A tagline is a separate optional line. Leave it off the polos. If you want it on something, put it on a printed item, where it can be bigger.
+4. **Have the embroiderer digitize from the simplified file.** Ask for a stitch-out sample, which is a small test sew, before the full order. Limit the design to 2 to 4 flat colors. Specify a chest width of about 3.5 to 4 inches.
+5. **Write down the set.** Keep three files: the full logo, a simplified small version, and the symbol alone. Add a minimum size for each.
 
-1. **Favicon / symbol-only mark.** Use the most recognizable shape or monogram, drawn with heavy strokes, no tagline and no thin lines. Test it as solid black on white at 16 and 32px. If it reads there, it works.
-2. **Embroidery version.** This is a simplified, bolder copy of the logo. Thin lines get thicker, tight gaps open up, and small details are dropped or merged. Use few colors, flat and with no gradients. **The tagline comes out of the logo.** At polo size it won't be readable. If you still want it on a shirt, stitch it larger as a separate line, or leave it off.
-3. **Keep the full logo** for the website and deck, where it already works.
+Ask the designer for items 1, 2, and 5. That's likely a few hours of work. If they push back again, that tells you something about the fit.
 
-**Practical steps**
-
-- Ask your designer for the three versions as SVG files, plus a one-color version.
-- Ask the embroiderer to **digitize** the simplified version. Digitizing converts art into a stitch file, and a good digitizer can also adjust stitch paths for the fabric. Request a sample stitch-out and approve it before the whole order is run.
-- Keep a one-page note saying which version goes where: full logo for web, deck and letterhead, simplified for apparel, symbol for the favicon and social avatars.
-
-**Two notes**
-
-- I'm assuming your logo has a symbol or monogram that can stand alone. If it's only a wordmark with a tagline, the favicon could be a bold initial or two letters in your brand color.
-- I haven't seen the logo itself. If you send me the file, I can say which details are likely to fail and what to simplify.
+I assumed your logo has fine lines, a wordmark, and a tagline, since I haven't seen the file. If you send it, or tell me where it lives, I can say exactly which details to cut and sketch the small-size and favicon versions.

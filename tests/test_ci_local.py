@@ -23,6 +23,8 @@ EXPECTED_STEPS = [
         "python scripts/results_table.py --help > /dev/null",
         "python scripts/make_results_chart.py --help > /dev/null",
         "python scripts/before_after_gallery.py --help > /dev/null",
+        "python scripts/make_share_images.py --help > /dev/null",
+        "python scripts/make_film.py --help > /dev/null",
         "python scripts/run_activation.py --help > /dev/null",
         "python scripts/activation_summary.py --help > /dev/null",
         "python scripts/ci_local.py --help > /dev/null"]),
@@ -34,8 +36,10 @@ EXPECTED_STEPS = [
         'python scripts/check_skill_fixtures.py --strict || echo "::warning::dev-suite fixtures still appear under '
         'skills/ (not blocking; held-out hits fail the step above)"']),
     ("Check README tables", ["python scripts/results_table.py --check"]),
-    ("Check results chart", ["python scripts/make_results_chart.py --check"]),
+    ("Check results chart and its PNG copy", ["python scripts/make_results_chart.py --check"]),
     ("Check before-and-after gallery", ["python scripts/before_after_gallery.py --check"]),
+    ("Check share images, library map and their PNG copies", ["python scripts/make_share_images.py --check"]),
+    ("Check the film, its poster, still and transcript", ["python scripts/make_film.py --check"]),
     ("Check activation summary", ["python scripts/activation_summary.py --check"]),
 ]
 
@@ -182,14 +186,26 @@ class FreshnessTest(unittest.TestCase):
     def test_an_out_of_date_results_chart_fails_freshness(self):
         runner = lambda command, cwd: 1 if "make_results_chart" in command else 0
         problem = ci_local.freshness(self.work, fetch=True, runner=runner)
-        self.assertIn("results chart is out of date", problem)
-        self.assertIn("make_results_chart.py", problem)
+        self.assertIn("results chart or its PNG copy is out of date", problem)
+        self.assertIn("make_results_chart.py --png docs/img/results.png", problem)
 
     def test_an_out_of_date_gallery_fails_freshness(self):
         runner = lambda command, cwd: 1 if "before_after_gallery" in command else 0
         problem = ci_local.freshness(self.work, fetch=True, runner=runner)
         self.assertIn("gallery is out of date", problem)
         self.assertIn("before_after_gallery.py", problem)
+
+    def test_out_of_date_share_images_fail_freshness(self):
+        runner = lambda command, cwd: 1 if "make_share_images" in command else 0
+        problem = ci_local.freshness(self.work, fetch=True, runner=runner)
+        self.assertIn("share images", problem)
+        self.assertIn("make_share_images.py --png", problem)
+
+    def test_an_out_of_date_film_fails_freshness(self):
+        runner = lambda command, cwd: 1 if "make_film" in command else 0
+        problem = ci_local.freshness(self.work, fetch=True, runner=runner)
+        self.assertIn("film", problem)
+        self.assertIn("make_film.py", problem)
 
     def test_a_missing_remote_is_explained(self):
         sh(self.work, "remote", "remove", "origin")

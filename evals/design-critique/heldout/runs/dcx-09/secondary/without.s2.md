@@ -1,24 +1,31 @@
-**Don't print yet.** Three things on this page will generate questions at the desk or get people turned away.
+**Fix before printing:**
 
-**Blockers (factual contradictions or gaps)**
+1. **The return promise can't be kept.** The headline says "Return it clean by Monday 5pm," but the shed is only open Saturday 10-1 and Wednesday 6-8. Nothing says where to return a tool on a Monday. Is there a drop box, an after-hours return, or should people bring it back Wednesday? Until that's answered, the headline makes a promise the building can't keep.
 
-1. **Returns have nowhere to go.** The h1 says "Return it clean by Monday 5pm," but the only open times are Saturday 10-1 and Wednesday 6-8. Someone who borrows a wet tile saw for the weekend can't return it at the stated deadline. Either add drop-off details (a box, a key-safe, a hall-caretaker arrangement) or change the deadline.
-2. **Price is contradictory.** "Free for members" plus "$20 a year, or pay what you can" plus a button reading "Join for $20" means the button tells people who can't pay $20 that they can't join. Say what "pay what you can" means (any amount? a minimum?), and make the button label match the sliding scale, e.g. "Join: from $0 to $20" or "Become a member."
-3. **There's no address.** "At the back of the Eastgate Methodist hall" is not findable from a flyer. Add a street address, a map link, and where the entrance is (car park side, back door, etc.).
-4. **The email is probably a placeholder.** `.example` is a reserved domain that can never receive mail (RFC 2606). If this is what's printed, nobody can reach you. Confirm the real address before it goes to print.
-5. **No late-return or damage policy.** "If something breaks, tell us, it happens" is friendly, but the committee will ask what happens if it's two days late or the saw is wrecked. Even one sentence each prevents arguments at the desk.
-6. **The join flow is unclear.** The button sends people to `/join` online, but step 1 says to bring photo ID, which implies in-person. Say whether they can join online and then verify at the shed, or whether the first visit must be in person.
+2. **`lend@loanshed.example` is a placeholder.** `.example` is a reserved domain and won't receive mail. Replace it with a real address, send a test, and check that someone reads it.
 
-**Fix before print**
+3. **There's no address.** "At the back of the Eastgate Methodist hall" doesn't help someone who scanned a QR code on a noticeboard. Add the street address, which door to use, and a map link. Add a phone number too, since some people won't email.
 
-7. **The h1 doesn't name the place.** Someone scanning a flyer lands on a sentence about a tile saw and doesn't learn what Loan Shed is until paragraph two. Something like "Loan Shed: borrow tools free for members" with the saw line as a subhead would work better.
-8. **"Popular this month" on a printed flyer is stale within a week**, and the page will stay live for months. Drop it, or replace it with a link to live catalogue search.
-9. **Naming Renata is fragile.** A volunteer's name on a printed flyer goes stale when rotas change. Use "any volunteer at the Saturday desk."
-10. **Hours need explicit times and days.** "10-1" and "6-8" should read "10am-1pm" and "6pm-8pm," and consider a line saying whether the shed is closed on public holidays.
+4. **The page never names the org in its heading.** "Loan Shed" appears only in the second paragraph. The h1 should start with it, or the page needs a header with the name, so a scanner knows whose page they're on.
 
-**Markup (minor, but this page will be read on phones)**
+**Questions the committee will get asked:**
 
-11. The fragment has no `<title>`, `<meta name="viewport">`, `lang`, or meta description. Without the viewport tag, the page will render tiny on most phones, and that's where the QR code gets scanned.
-12. The two `<a>` buttons are fine, but the primary CTA should be visually obvious at phone width. Check it at 375px before sending.
+5. **The pricing contradicts itself.** The button says "Join for $20," but the body says "or pay what you can." Anyone who can't pay $20 sees the button and leaves. Either show the sliding option on the button or on the join page, or say how to choose it. Also clarify whether non-members can borrow ("free for members" implies they can't, or pay something).
 
-If you send me the real address, email, return procedure, and the actual pricing rule, I can rewrite the page with those filled in.
+6. **Borrowing terms are missing.** People will ask about deposits, late fees, what happens if a tool is damaged, whether there's a minimum age, and whether a tile saw or pressure washer needs a induction. "If something breaks, tell us, it happens" reads as "no consequences." State what happens: do they pay for repair or replacement, or does the library cover it?
+
+7. **"Clean" is undefined.** Give one concrete example per tool, or a line like "rinse the blade and clear the tray." Otherwise you'll get returns that don't meet the committee's standard.
+
+8. **"Popular this month" will be wrong next month.** On a printed flyer it goes stale immediately, and it doesn't show availability, so it sends people to tools that are already out. Cut it from the print version.
+
+9. **The join step is ambiguous.** "Join (bring photo ID the first time)" doesn't say whether joining happens online or in person. If it's online, say that ID is needed at the first pickup.
+
+10. **Naming Renata on a printed flyer goes stale.** Use "the Saturday desk" or a role-based contact instead of a person who could move on. Also, "ask a volunteer on the day" implies Wednesday help, but the Renata line only covers Saturday.
+
+**Print and QR:**
+
+11. **Print the URL under the QR code.** Black-and-white photocopies lose the code, and some people won't scan. Also, point the QR at a short, stable URL rather than `/join`, so it can be reused.
+
+12. **If this is the whole document, it's missing the basics.** There's no doctype, `<title>`, `lang`, or viewport meta tag. Phones will render it badly and the page title will be blank.
+
+**Priority:** items 1–4 are blockers. If you tell me the return arrangement, the real email, and the address, I'll rewrite the page with the terms, pricing, and print fixes included.

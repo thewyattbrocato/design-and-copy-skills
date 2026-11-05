@@ -37,7 +37,7 @@ Start with a stranger read: from the first screen alone, what would a newcomer s
 - **Offer and terms.** Price, renewal, fees, trial and guarantee conditions beside the decision they affect; outcomes before features; one name per plan or term across all pages.
 - **Fairness of choices.** Exit as easy as entry, honest defaults, a decline link that does not shame, cancellation stated. These are blockers, whatever they do for conversion.
 - **Interface text** (a sample). An error says what happened and the next step, without blame or "invalid"; empty states offer a move; buttons say what happens; one term per concept.
-- **Voice.** Flag template sameness (interchangeable openers, "seamless", "unlock", stacked adjectives, hedging) by quoting it. An unusual voice that works for its reader, such as long and technical for engineers or playful for a consumer brand, is a strength; keep it.
+- **Voice.** Flag template sameness (interchangeable openers, "seamless", "unlock", stacked adjectives, hedging) by quoting it. An unusual voice that works for its reader, such as long and technical for engineers or playful for a consumer brand, is a strength; keep it. On pages that bind the reader (price, terms, cancellation, notices), also check who acts in each consequence and whether the point comes early.
 - **Continuity.** The ad or email promise appears on the page; the page promise holds on the sign-up screen and first email; no dead ends.
 
 Diagnose by which job is failing (get attention, state the point, prove it, ask) rather than by how the line feels. When the owner supplies competitor copy or asks for a comparison, use only supplied or fetched text, dated, on the same dimensions; credit what rivals do well; never mock.
@@ -85,3 +85,4 @@ When the user supplies a rewrite, check it against the earlier findings: fixed, 
 ## References
 
 - [report-patterns.md](references/report-patterns.md): load when the user wants scores, a pre-launch verdict, a competitor comparison, a systemic message brief, or a sign-up path or email review.
+- [reader-effort.md](references/reader-effort.md): load when findings turn on wording, such as evasive or noun-heavy terms and notices, a hero with no stake, a buried point, stacked certainty or hedges, or "why does this feel corporate".

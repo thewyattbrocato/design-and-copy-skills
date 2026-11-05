@@ -1,12 +1,12 @@
-**(a) Free period ending**
-1. `30 min in. Per-minute billing starts soon.` (42)
-2. `Day pass covers 30 min. Per-minute billing starts after.` (56)
-3. `Included time is almost up. Per-minute billing comes next.` (58)
+**(a) Free-ride period about to end**
+1. Your included 30 minutes end soon. Then billed per minute. (58)
+2. 30 included minutes almost up. Then you pay per minute. (55)
+3. Heads up: after 30 minutes, you're billed per minute. (53)
 
-**(b) Reservation hold**
-1. `Your bike is held for 5 more minutes.` (37)
-2. `5 minutes left to pick up your reserved bike.` (45)
-3. `Reservation ends in 5 minutes. Your bike is waiting.` (51)
+**(b) Reserved bike held for 5 more minutes**
+1. Your bike is held for 5 more minutes. Unlock it to ride. (56)
+2. 5 minutes left to pick up your reserved bike. (45)
+3. Your bike is held for 5 more minutes, then released. (52)
 
-- I counted every string by hand, spaces included. Run them through a character counter before you ship, since the limit is hard.
-- I left the price out. Adding it won't fit in most of the (a) options. Options 1 and 2 have 18 and 4 characters of room, so a figure like "$0.xx/min" only fits in option 1.
+- The character counts include spaces. I counted by hand, so paste them into your push tool's preview to confirm before sending.
+- I left the price out. If you add it, "Then $X/min" fits in (a)1 and (a)2 only if you cut a few words elsewhere, because both are already near the limit.

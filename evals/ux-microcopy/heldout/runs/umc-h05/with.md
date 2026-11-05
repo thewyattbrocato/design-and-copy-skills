@@ -1,22 +1,27 @@
-**Coordinator, no shifts posted yet**
+**Coordinator: no shifts posted yet**
+
 Title: No shifts yet
-Body: Post your first shift and parents can sign up for it. They'll get reminders before they're due.
+Body: Post your first shift and parents can sign up for it. You can see who's signed up right here.
 Button: Post a shift
 
-**Parent, no open shifts**
-Title: No open shifts right now
-Body: Every shift is taken, or none have been posted yet. Check back later. Your coordinator can post more.
+**Parent: no open shifts**
 
-**Reminder permission prompt**
+Title: No open shifts right now
+Body: Every shift is taken, or none have been posted yet. Check back soon. If you turn on reminders, you'll hear about shifts you've signed up for.
+(No button. There's nothing for a parent to do here.)
+
+**Push notification permission (your screen, before the browser's prompt)**
+
 Title: Get shift reminders?
-Body: We'll send a notification to this device before a shift you've signed up for. You can turn this off anytime in your browser settings.
+Body: We'll send a reminder before each shift you sign up for, so you don't miss it. You can turn reminders off anytime in your browser settings.
 Buttons: Turn on reminders / Not now
 
 **Shift just taken**
+
 Title: Someone just took this shift
-Body: Another parent signed up a moment ago, so it's no longer open. You haven't been signed up for it. Here are the shifts that are still open.
+Body: Another parent signed up a moment ago, so it's no longer open. You haven't been signed up for it.
 Button: See open shifts
 
 Notes:
-- The "Here are the shifts…" line and button assume the parent lands on the open-shifts list. If none are left, they'll see the "No open shifts right now" screen instead.
-- The browser shows its own permission dialog after "Turn on reminders", and you can't change its wording. Show this screen first, and only trigger the browser dialog when they choose "Turn on reminders". If they choose "Not now", don't ask again right away.
+- The parent empty state only promises reminders for shifts they've signed up for. I didn't promise "we'll tell you when new shifts are posted," since that isn't a feature yet.
+- "Turn on reminders" should be the button that triggers the browser's own permission prompt. Only show it when the parent is about to need it, such as right after their first sign-up. If they choose "Not now," don't ask again right away.

@@ -59,7 +59,7 @@ If the user asked for a chart anyway, build it, then keep it honest and minimal.
 
 - Use a map only when position or neighborhood explains something. If the question is "which region is highest", sorted bars answer it better.
 - Shade by rate (per person, per household), not by raw count, or the map just redraws population.
-- Use one hue ramp from light to dark, a modest number of classes, and a legend that shows the ranges. Large sparse regions dominate visually; consider a small label or inset for small dense ones.
+- Use one hue ramp from light to dark, a modest number of classes, and a legend that shows the ranges. Large sparse regions dominate visually; consider a small label or inset for small dense ones. Classing, symbols, projection and legends are in [maps, percentages and chart sets](maps-percentages-and-chart-sets.md).
 
 ## Forms to avoid by default
 

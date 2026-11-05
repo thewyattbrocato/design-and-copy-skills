@@ -1,19 +1,20 @@
-Yes, do it, with a few changes. Pre-selecting annual is fine. Shrinking the monthly price to small grey text is the part I'd change.
+**Yes, do it, with a few changes.** Pre-selecting annual is a normal, fair default. Most people who'd pick a meditation app long-term would sensibly choose annual, and the toggle stays one tap either way. The risk is in the execution, not the default.
 
-**Why pre-selecting annual is fine.** It's a plan someone could sensibly buy, and it's the better deal for anyone who'll use the app for more than about 7 months. The toggle stays, so monthly is one click away. The default steers people but doesn't hide anything.
+**What I'd change**
 
-**Why the small grey monthly price is the weak spot.** Making the alternative hard to read is how this tips from "recommended" into "easy to miss". The risk is people who sign up for annual without realizing they've paid $89.99 up front, then ask for refunds or dispute the charge. That costs you more than the conversions you gained.
+1. **Don't make the monthly price a grey footnote.** If it's low-contrast and tiny, people can miss that a cheaper-to-start option exists. Keep both plans as equal-weight options in the toggle. The monthly one should be easy to read and easy to tap.
+2. **State the annual charge up front.** The big number should be "$89.99 per year", with "$7.50/month, billed yearly" beneath it. If the headline is "$7.50/mo", some people will think they're paying monthly and be surprised by an $89.99 charge. That's what causes refund requests and angry reviews.
+3. **Show the saving in dollars as well as percent.** Monthly for a year costs $155.88, so annual saves $65.89 (about 42%). Something like "Save $65.89 a year vs. monthly" is true and persuasive without any tricks.
+4. **Put the terms next to the button.** For example: "Charged $89.99 today. Renews yearly on [renewal date] unless you cancel. Cancel anytime in [where]. [Refund policy]." Send a renewal reminder before the second year's charge, with the date and amount.
+5. **Label the default honestly.** A "Best value" tag with the reason ("saves $65.89 a year") works. Avoid countdown timers or "limited-time" language unless an offer really expires.
 
-**What I'd ship:**
+**Sample layout**
 
-1. **Annual pre-selected, labelled with a reason.** Something like "Best value" with "$7.50/month, billed $89.99 once a year". The total has to appear next to the monthly equivalent, at the same size or close to it.
-2. **Show the saving in dollars as well as a percentage.** $12.99 × 12 = $155.88, so annual saves $65.89, about 42%. Write "Save $65.89 a year", not only "Save 42%".
-3. **Monthly at normal legibility.** Use regular body text and normal contrast, "$12.99 billed monthly", on an equally clickable toggle. It can be visually secondary, but readable at a glance and passing accessibility contrast.
-4. **Renewal terms before the button.** Include the amount, the renewal date, and how to cancel, for example "Renews at $89.99 on [date]. Cancel anytime in Settings." Send a reminder email before the annual renewal too. This is the single biggest protection against refund requests and chargebacks.
-5. **Cancelling takes no more effort than signing up did.** That matters more with annual plans, because people who feel trapped are the ones who dispute charges.
+- **Annual** (selected): $89.99 / year. $7.50/month, billed yearly. Save $65.89.
+- **Monthly**: $12.99 / month. Billed monthly, cancel anytime.
+- Under the button: the charge-and-renewal line from point 4.
 
-**What to track.** Conversion to annual is the obvious metric. Also watch refund requests and chargebacks within 30 days, and annual renewal rate at month 12. If annual is winning at signup but losing on those, the default is attracting people who didn't understand what they bought.
+**How to know it's working**
+Don't judge the test on conversion to annual alone. Track refund requests, cancellations in the first 30 days, and support tickets that say "I didn't know it was yearly" next to it. If those rise along with annual uptake, the default is catching people off guard and the copy needs to be clearer.
 
-Rules on auto-renewal disclosure and cancellation vary by place and change over time, so have someone check the renewal wording against where you sell.
-
-I'd tell your growth person it's a yes on the default, and that the small grey text isn't needed to make the default work.
+Rules on auto-renewal disclosure vary by place and change over time, so have someone check the renewal and cancellation wording against the markets you sell in.

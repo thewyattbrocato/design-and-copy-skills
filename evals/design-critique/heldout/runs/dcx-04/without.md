@@ -1,43 +1,53 @@
-It's clean and readable, but it's generic. Nothing in it says "pottery studio," and that's the biggest problem. Swap the name and it could sell any SaaS product.
+Your structure is fine: three tiers, a badge on the middle one, and a no-card trial line. The problem is that almost none of the copy is about pottery. You could paste it into any SaaS product and it would still read the same. That's the main thing to fix.
 
-**Biggest issues**
+## Pricing
 
-1. **No studio-specific language anywhere.** Your buyer is a studio owner who rents wheel and kiln time. Pricing is by "items" (up to 100 items of what?). That unit doesn't map to anything in their world. Studios think in members, wheel slots, kiln firings, and classes. Price on something they already count, like members or bookable resources (e.g. "Up to 40 members" or "up to 10 wheels and 2 kilns").
+**1. "Items" is the biggest problem.** A studio owner won't know what an item is. Is it a member, a booking, a wheel, or a kiln? Your plan limit is the first thing they'll try to map to their own studio, so use units they recognize, like "Up to 40 members" or "1 studio location." If "items" really means something obscure, rethink the limit, because it's the main reason someone would upgrade.
 
-2. **Tiers aren't differentiated by value.** Pro is "Everything in Basic, plus more." That's a placeholder. "Advanced analytics" and "Priority support" are vague. Say what they get: "See which wheels and kiln slots fill up and which sit empty," "Kiln firing logs and glaze tracking," "Member waitlists," "Automated no-show fees." Concrete features justify $29 vs. $9.
+**2. Pro is defined by vagueness.** "Everything in Basic, plus more," "Priority support," and "Advanced analytics" don't tell anyone what they're paying $20 more for. Name the concrete features, such as:
+- Waitlists
+- Kiln load scheduling
+- Member billing
+- Reports on wheel utilization
 
-3. **Basic has almost nothing listed.** Three lines, and one is just "Email support." A small studio owner can't tell whether Basic handles recurring bookings, payments, or member accounts. Does it? List the core capabilities.
+Say what "priority" means too ("replies within 4 hours"). Otherwise it's just a label.
 
-4. **Enterprise doesn't fit your market.** "Large organizations" and a "dedicated account manager" read like a different product. Do multi-location studios or co-ops need it? If so, say "Multi-location studios" and name what they get (shared memberships across sites, consolidated reporting). If not, consider dropping the tier.
+**3. Basic has almost no content.** "Perfect for getting started" is filler, and the plan has two bullets. A small studio owner can't tell whether Basic can actually run their studio (wheel slots, kiln bookings, member sign-ups). List what it does.
 
-5. **The FAQ answers are filler.** "Absolutely. We take security very seriously" says nothing, and "Is my data secure?" is a weak question anyway. Each answer should resolve a real objection. Right now none of them do.
+**4. Enterprise may not fit your market.** Pottery studios are mostly small, and a few have multiple locations. "Large organizations with advanced needs" sounds like a different product. If you're expecting multi-location studios, community colleges, or art centers, say so: "Multiple locations or a school program? Let's talk." If you aren't, consider cutting the tier and showing two plans.
 
-**Smaller things**
+**5. Headline and subheading are generic.** "Simple, transparent pricing" and "Choose the plan that's right for you" are both placeholder-grade. Something like "Pricing that fits a studio of any size" would work, or a line about no per-booking fees if that's true.
 
-- "Simple, transparent pricing" and "Choose the plan that's right for you" are the most overused lines in SaaS. Try something like "Fill your wheels and kilns, not your inbox" or just state the benefit.
-- "Perfect for getting started" is a feeling, not a description. Say who Basic is for: "For home studios and small co-ops."
-- "Select" buttons are flat. "Start free trial" matches what you're offering and lowers friction.
-- The trial note ("14-day free trial. No credit card required.") is your strongest reassurance, but it sits at the bottom. Move it up near the buttons.
-- Say what happens when someone hits the 100-item cap, and whether there's an annual discount.
-- "Most Popular" is a claim you may not be able to back up yet. If you have few customers, use "Best for most studios" or drop it.
-- "Simply sign up…" uses "simply," which can read as dismissive when setup isn't trivial.
+**6. The buttons undercut your best offer.** The 14-day free trial is your strongest hook, but the buttons say "Select." Use "Start free trial" on Basic and Pro. The trial line at the bottom is easy to miss, so consider moving it up near the heading.
 
-**FAQ questions to replace or add**
+**7. Check for missing basics.** Is there an annual discount? Do you take a cut of member payments? Can someone switch plans later? Add whatever applies.
 
-These are what a studio owner will actually wonder:
-- Can members book and pay on their own, or do I have to manage it?
-- Can I charge for kiln firings by size or by shelf?
-- How do I move over from my spreadsheet or current system?
-- What happens to my data if I cancel, and can I export it?
-- Do you handle payments, and what are the processing fees?
-- What happens when someone no-shows or cancels late?
+## FAQ
 
-For "Can I cancel anytime?", add the details: whether there's a refund, whether it's month to month, and whether you keep access through the paid period. "Yes! You can cancel at any time" is true, but it doesn't answer the questions behind it.
+Every answer is a non-answer. "Absolutely. We take security very seriously" is the weakest of them, because every company says it and it tells the reader nothing. Each answer should contain at least one fact the reader didn't have before.
 
-**What works**
+- **How does it work?** Describe the real flow instead: "Add your wheels and kilns, set your hours, invite members. Most studios are booking within an afternoon."
+- **Cancel anytime?** Cover what people actually worry about: Is there a contract? Do you get a refund for the unused month? Can you export your member and booking data? What happens to it afterward?
+- **Is my data secure?** Say something concrete: where payments are handled (e.g. Stripe), whether data is encrypted, and who owns the data. If you can't say much yet, a short honest answer beats a vague one.
+- **Support?** Give channels, hours, and typical response time. "Friendly team" is filler.
 
-- Three tiers with a highlighted middle is a proven structure.
-- The no-credit-card trial is a strong, low-friction offer.
-- The tone is friendly and not pushy.
+**Questions to add** (these are what a studio owner would ask):
+- What happens when the trial ends?
+- Can members book and pay online?
+- Can I import my current member list from a spreadsheet?
+- Does it handle firing fees, class passes, or open-studio memberships?
+- Do my members need to create accounts?
 
-**Bottom line:** the structure is sound, but the content is a template. Rewrite it around studio owners' real concerns (members, wheel time, kiln scheduling, no-shows), and let the pricing tiers reflect those things. If you send me what each plan really includes, I can draft a revised version.
+## Tone
+
+Exclamation points ("Yes!"), "Simply," and "right away" all sound like template copy. "Simply" is also a mild red flag, because it tells people something is easy instead of showing them. Since the product is for a craft community, a little personality would help: a warm, specific line about kilns or wheel time would do more than "friendly team."
+
+## Priority order
+
+1. Replace "items" with a real unit.
+2. Name the actual features in each tier.
+3. Rewrite the FAQ answers with concrete facts.
+4. Change the buttons to "Start free trial."
+5. Decide whether Enterprise belongs.
+
+If you send me what Kilnbook actually does (features, limits, how billing works), I can draft a revised version using your real details.

@@ -1,46 +1,41 @@
-**Pinewake mattress review: three weeks on a medium-firm queen**
+**Slow Weekend: The Pinewake mattress, three weeks in**
 
-*Full disclosure up front: Pinewake sent me the queen for free, and I earn 8% if you buy through my link. Everything below is what I actually thought.*
+A quick note up front: Pinewake sent me the queen for free, and I earn 8% if you buy through my link. Everything below is what I actually thought.
 
-I'm suspicious of mattress reviews. Most are written after two nights, and the verdict is always "I slept great." So I gave the Pinewake three full weeks, which is long enough to get past the honeymoon and into the "oh, that's how it is" phase.
+I've slept on a lot of mattresses in my life, mostly because I keep convincing myself the next one will fix everything. So I wasn't expecting much from a box on my porch. Three weeks later, I have opinions.
 
 **The basics**
 
-It's a medium-firm mattress, and the queen is $1,150. For context, I'm a side sleeper at about 170 lb. That matters, because side sleepers tend to want a little give at the shoulder and hip, and "medium-firm" can mean very different things depending on who's lying on it.
+The Pinewake is a medium-firm mattress. I'm a side sleeper, around 170 lb, so I'm squarely in the group that tends to complain about firm beds and wake up with a numb shoulder. That didn't happen here. The mattress has enough give at the shoulder and hip to keep my spine reasonably level, and enough push-back that I never felt like I was sinking into a hole. It's not a cloud. It's more like a very competent friend.
 
-**What I liked**
+**What I loved**
 
-The edges are the surprise. They're properly supportive. I could sit on the side to put on socks without feeling like I was slowly sliding off, and I could sleep near the edge without that "one more inch and I'm on the floor" feeling. If you share a bed, or you're a sprawler, that makes the bed feel bigger than its dimensions.
+The edges. I know that's not a glamorous thing to lead with, but hear me out. Most mattresses collapse a little when you sit on the side to put on socks, and they get iffy when you sleep near the edge. The Pinewake just doesn't. I could sit on the edge, sprawl to the side, and roll over in the dark without feeling like I was about to slide off. It makes the whole bed feel bigger.
 
-The other win is temperature. I tested it through summer weeks, which is when a lot of mattresses turn into a warm, sad sandwich. This one didn't sleep hot. I wasn't kicking off the covers at 3 a.m. or flipping the pillow to find a cool spot. I can't promise it will beat your personal thermostat, but in my bedroom, in summer, it behaved.
+The other win was temperature. I tested this over summer-ish weeks, which is when most mattresses reveal their true personalities, and I didn't wake up sweaty once. No dramatic cooling-gel miracle to report, it just never got in the way, which is the best thing I can say about a mattress in July.
 
 **What I didn't love**
 
-It weighs 52 lb. That's not outrageous for a queen, but it's awkward and floppy, and you'll feel it if you ever have to move it. Get a friend, and don't plan on rearranging the bedroom every season.
+It's heavy. 52 lb doesn't sound outrageous until you try to rotate it, or wrestle it up a staircase, or change the sheets while it's slumped halfway off the frame. If you move often, factor that in. Get a friend, or bribe one.
 
-There was also a smell for the first two days. It's the usual new-mattress odor, and it faded on its own. I'd unbox it in a room where you can crack a window, and maybe not on the night before overnight guests arrive.
+There was also a smell for the first two days. It's the standard new-mattress odor, and it faded on its own, but I aired the room out and still noticed it. Plan to unbox it a couple of days before you need it.
 
-And my partner found it a bit firm. I was fine with it, but they noticed it. If you and your sleeping partner disagree about firmness at the best of times, take that seriously. It's a "your mileage may vary" situation, and mileage is exactly what the trial period is for.
+And my partner found it a bit firm. I'll be fair: they sleep differently than I do, and firmness is the most personal thing about a mattress. But if you're shopping for two people with different preferences, take that seriously. We're still negotiating.
 
-**The trial**
+**Price and the trial**
 
-Pinewake's site lists a 100-night trial. Check the current terms before you buy, since return conditions can change and the fine print is where the details live. But a trial that long is the right way to test a mattress. Three weeks told me a lot, and it's still only a fraction of 100 nights.
+The queen is $1,150. That's real money, though not outrageous for what you get. Pinewake's site says there's a 100-night trial, which matters a lot here. Three weeks told me plenty, but a mattress is a long game, and I'd want the full window before deciding. Check the return terms yourself before buying, since I'm only going by what's on their site.
 
 **Who it's for**
 
-I'd point it at side sleepers who like a supportive feel, hot sleepers, and anyone who uses the whole bed, edges included. I'd steer away from people who like a soft, sink-in mattress, or whose partner leans that way.
+If you're a side or combo sleeper who runs warm, likes a supportive edge, and leans toward firmer beds, this is worth a look. If you like to sink into your mattress, or your partner does, I'd test it carefully or look elsewhere.
 
-**Bottom line**
+For me, I'm keeping it. The shoulder thing alone is worth it. I'll report back if that changes.
 
-I liked it. The edge support and the cool sleep are the two things I'd tell a friend about. The weight and the first-two-days smell are minor annoyances. The firmness comes down to personal taste, and I'd treat my partner's verdict as a real data point. At $1,150 for a queen, it's a considered purchase, and the trial is what makes it a reasonable one.
-
-If you want to try it, my link is below. If you don't, I hope the notes on edges and temperature are useful for whatever you do buy.
+*Link below if you want to take a look.*
 
 ---
 
-A few notes on what I did:
-
-- **Disclosure:** I kept it to one plain sentence near the top. A free product and a commission both need to be disclosed, and the FTC expects that disclosure to be clear and easy to see. A line like this doesn't make it a big deal, and it's what keeps the post organic and trustworthy. I wouldn't move it to the bottom or soften it further.
-- **Trial:** I attributed the 100 nights to their site and suggested readers confirm the terms, since that came from the site and not from your own testing.
-- **Link:** I left the link placement for you to fill in.
-- **Length:** The post runs about 500 words.
+**Two notes:**
+- I kept the disclosure short and casual, but I put it at the top rather than burying it. The FTC expects free product and affiliate relationships to be clear and easy to spot, and that holds even when the brand wants the post to feel organic. A line like this reads as honest and tends to build trust with newsletter readers anyway.
+- I attributed the 100-night trial to their site, as in your notes. If you can confirm the terms (return shipping, fees, minimum sleep period), I'd add them.

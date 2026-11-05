@@ -1,18 +1,16 @@
-**Dune & Dime: The First Bank on Mars™**
-*Your money has never been this far from anywhere.*
+**DUNE & DIME: The First Bank on Mars™**
+*"Your money is safe here. Where else would it go?"*
 
-Why trust your savings to an Earth bank, 140 million miles away, when you could trust them to us, a bank that has existed for almost six weeks?
+Since opening our doors (airlock A, the one that works) eleven minutes ago, Dune & Dime has held 100% of all Martian deposits, a market share we expect to keep through 2400. Our vault is guarded by Gary, a rock, and Gary has never once been robbed.
 
-At Dune & Dime, we're **99.97% confident** we are right about everything. Our vaults are guarded by the Red Planet itself, which has never once been robbed, mostly because nobody else is here.
+**Our rates are out of this world.** Literally. Earn 14,000% APY on the Martian Super Saver, compounded hourly, or by whim. Our FDIC-adjacent insurance is backed by the full faith and credit of a guy named Todd.
 
-Our checking accounts earn **412% interest**. Not annually. Per sol. Please don't ask us to show our math. We don't have any.
+*"I deposited one Earth dollar and now I own a crater."* — Brenda K., Satisfied Customer, Possibly Real
 
-*"I deposited one dollar and now I own a crater."* — Dale P., Satisfied Colonist and Crater Owner
+*"No fees. Only 'gratitude surcharges.'"* — Dust Monthly
 
-*"Dune & Dime is the only bank that has never lost my money, because I haven't given them any yet."* — Brenda, Cautiously Optimistic
+**Award-winning!** Voted Best Bank in the Solar System by the Solar System Bank Voting Board (est. last Tuesday, membership: us).
 
-**Winner of the Golden Rover for Excellence in Banking (we were the only entrant).**
+Dune & Dime. We're not just a bank. We're the *only* bank.
 
-Dune & Dime: *Small change. Giant leap. Terms not yet invented.*
-
-*Not FDIC insured. Not insured by anyone. Not entirely sure what insurance is.*
+*Dune & Dime is not responsible for dust, gravity, or interest.*

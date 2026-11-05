@@ -8,30 +8,15 @@
   :root {
     --bg: #f4f1ea;
     --card: #ffffff;
-    --ink: #1d1d1b;
-    --muted: #5c5a54;
-    --line: #d6d1c4;
+    --ink: #1f2328;
+    --muted: #5b6370;
+    --line: #d9d4c7;
     --accent: #b45309;
     --accent-ink: #ffffff;
     --good: #166534;
-    --good-bg: #e7f4ea;
+    --good-bg: #e7f5ec;
     --bad: #991b1b;
-    --bad-bg: #fbeaea;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #17160f;
-      --card: #23211a;
-      --ink: #f2efe6;
-      --muted: #b5b0a0;
-      --line: #3d3a2e;
-      --accent: #f59e0b;
-      --accent-ink: #1d1d1b;
-      --good: #86efac;
-      --good-bg: #16301d;
-      --bad: #fca5a5;
-      --bad-bg: #3a1c1c;
-    }
+    --bad-bg: #fdecec;
   }
   * { box-sizing: border-box; }
   body {
@@ -41,21 +26,21 @@
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.5;
   }
-  main { max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; }
   header { border-left: 8px solid var(--accent); padding-left: 14px; margin-bottom: 20px; }
   h1 { margin: 0; font-size: 1.6rem; }
   header p { margin: 4px 0 0; color: var(--muted); }
-  fieldset {
+  .q {
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: 10px;
-    margin: 0 0 16px;
     padding: 16px;
+    margin: 0 0 16px;
   }
-  fieldset.missing { border-color: var(--bad); box-shadow: 0 0 0 2px var(--bad); }
-  legend { font-weight: 700; padding: 0 6px; font-size: 1.05rem; }
-  .qnum { color: var(--accent); }
-  label {
+  .q legend { font-weight: 700; padding: 0 6px; margin-left: -6px; }
+  .q.wrong { border-color: var(--bad); }
+  .q.right { border-color: var(--good); }
+  .opt {
     display: flex;
     gap: 10px;
     align-items: flex-start;
@@ -65,10 +50,18 @@
     border-radius: 8px;
     cursor: pointer;
   }
-  label:hover { border-color: var(--accent); }
-  label:has(input:checked) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
-  input[type=radio] { margin-top: 5px; accent-color: var(--accent); flex: none; width: 18px; height: 18px; }
-  input:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .opt:hover { background: #faf7f0; }
+  .opt input { margin-top: 4px; width: 18px; height: 18px; flex: none; accent-color: var(--accent); }
+  .opt:focus-within { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+  .locked .opt { cursor: default; }
+  .locked .opt:hover { background: transparent; }
+  .opt.correct { background: var(--good-bg); border-color: var(--good); }
+  .opt.incorrect { background: var(--bad-bg); border-color: var(--bad); }
+  .tag { font-weight: 700; font-size: 0.85rem; }
+  .feedback { margin-top: 12px; padding: 10px 12px; border-radius: 8px; font-size: 0.95rem; }
+  .feedback.bad { background: var(--bad-bg); color: var(--bad); }
+  .feedback.good { background: var(--good-bg); color: var(--good); }
+  .feedback.bad span { color: var(--ink); }
   button {
     font: inherit;
     font-weight: 700;
@@ -79,224 +72,202 @@
     padding: 12px 24px;
     cursor: pointer;
   }
-  button.secondary { background: transparent; color: var(--ink); border: 2px solid var(--line); }
-  #error { color: var(--bad); font-weight: 600; margin: 0 0 12px; min-height: 1.5em; }
-  #results[hidden], #quiz[hidden] { display: none; }
-  .score {
+  button:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+  button.secondary { background: transparent; color: var(--ink); border: 2px solid var(--ink); margin-left: 8px; }
+  #msg { color: var(--bad); font-weight: 600; margin: 0 0 12px; min-height: 1.5em; }
+  #result {
     background: var(--card);
-    border: 1px solid var(--line);
+    border: 2px solid var(--ink);
     border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
   }
-  .score .big { font-size: 3rem; font-weight: 800; line-height: 1.1; color: var(--accent); }
-  .score p { margin: 6px 0 0; color: var(--muted); }
-  .review {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-left: 8px solid var(--bad);
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-bottom: 12px;
-  }
-  .review h3 { margin: 0 0 8px; font-size: 1rem; }
-  .ans { padding: 8px 10px; border-radius: 6px; margin-top: 6px; }
-  .ans.wrong { background: var(--bad-bg); color: var(--bad); }
-  .ans.right { background: var(--good-bg); color: var(--good); }
-  .ans b { display: block; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
-  .why { color: var(--muted); margin: 8px 0 0; font-size: .95rem; }
-  .allgood { border-left-color: var(--good); }
+  #result h2 { margin: 0 0 4px; font-size: 1.4rem; }
+  #result p { margin: 0; }
+  [hidden] { display: none !important; }
 </style>
 </head>
 <body>
-<main>
+<div class="wrap">
   <header>
     <h1>Forklift Safety Check</h1>
-    <p>5 questions for new hires. Pick one answer for each, then submit.</p>
+    <p>5 questions for new hires. Choose one answer for each, then submit.</p>
   </header>
+
+  <div id="result" role="status" tabindex="-1" hidden></div>
 
   <form id="quiz" novalidate></form>
 
-  <section id="results" hidden aria-live="polite" tabindex="-1"></section>
-</main>
+  <p id="msg" role="alert"></p>
+  <div>
+    <button type="submit" form="quiz" id="submit">Submit answers</button>
+    <button type="button" class="secondary" id="retry" hidden>Try again</button>
+  </div>
+</div>
 
 <script>
-const QUESTIONS = [
-  {
-    q: "Where do you find the maximum load a forklift can safely lift?",
-    options: [
-      "On the capacity data plate attached to the truck",
-      "In the pallet's shipping paperwork",
-      "It is the same for every forklift in the warehouse",
-      "Ask the person who loaded the pallet"
-    ],
-    answer: 0,
-    why: "Each truck has its own rated capacity, shown on its data plate. Never exceed it, and remember attachments or a high load center can reduce it."
-  },
-  {
-    q: "A pedestrian steps into your path while you are driving. What do you do?",
-    options: [
-      "Honk and keep going so they know to move",
-      "Speed up and go around them",
-      "Stop, make eye contact, and wait until they have clearly moved out of the way",
-      "Flash your lights and continue slowly"
-    ],
-    answer: 2,
-    why: "Pedestrians always have the right of way. Stop completely and proceed only when you are sure they have seen you and are clear."
-  },
-  {
-    q: "How fast should you drive the forklift?",
-    options: [
-      "As fast as needed to keep up with orders",
-      "At a speed that lets you stop safely, and slower on wet floors, corners and in busy areas",
-      "Full speed when the aisle is empty",
-      "Fast when empty, slow only when carrying a load"
-    ],
-    answer: 1,
-    why: "Forklifts can tip when turning too fast and take longer to stop than you expect. Obey posted limits and slow down for hazards, corners and blind spots."
-  },
-  {
-    q: "You are finished and need to park the forklift. What is the correct procedure?",
-    options: [
-      "Leave the forks raised so they are ready for the next driver",
-      "Stop in the aisle, keep the engine running, and walk away briefly",
-      "Park on a slope so it is easy to roll away",
-      "Fully lower the forks to the floor, put it in neutral, set the parking brake, and turn it off"
-    ],
-    answer: 3,
-    why: "Raised forks are a trip and collision hazard. Park only in a designated area, never blocking exits, aisles or fire equipment."
-  },
-  {
-    q: "When driving with a load, where should the forks be?",
-    options: [
-      "Raised high so you can see under the load",
-      "Low, just above the floor (about 4 to 6 inches), with the mast tilted slightly back",
-      "At chest height so pedestrians can see the load",
-      "It doesn't matter if you are driving slowly"
-    ],
-    answer: 1,
-    why: "A low, tilted-back load keeps the center of gravity low and stable. If the load blocks your view, drive in reverse or use a spotter."
+(function () {
+  var QUESTIONS = [
+    {
+      q: "Where do you find your forklift's maximum safe load?",
+      opts: [
+        "On the capacity data plate on the truck",
+        "Ask a coworker how much they usually carry",
+        "It's the same for every forklift",
+        "Whatever the forks can physically lift"
+      ],
+      a: 0,
+      why: "The capacity plate lists the rated load for that specific truck and attachment. Never exceed it."
+    },
+    {
+      q: "A pedestrian is walking across your path. What do you do?",
+      opts: [
+        "Sound the horn and keep going so they hurry up",
+        "Stop, make eye contact, and wait until they signal or clear the path",
+        "Speed up to pass in front of them",
+        "Flash the lights and steer around them"
+      ],
+      a: 1,
+      why: "Pedestrians always have the right of way. Stop and be sure they have seen you before moving."
+    },
+    {
+      q: "How should you drive when carrying a load?",
+      opts: [
+        "As fast as the floor allows to save time",
+        "Fast on straight aisles, slow only at corners",
+        "At a slow, controlled speed, with the load low and tilted back",
+        "With the forks raised for a better view"
+      ],
+      a: 2,
+      why: "Travel within posted limits with forks 4 to 6 inches off the floor and the mast tilted back. Slow down at corners, wet floors and doorways."
+    },
+    {
+      q: "You are finished and need to park the forklift. What is correct?",
+      opts: [
+        "Leave it in an aisle with the forks raised so it's ready",
+        "Park in a designated area, lower forks flat to the floor, neutralize controls, set the brake and turn it off",
+        "Park by an exit so it can be moved quickly",
+        "Leave the engine running if you'll be back soon"
+      ],
+      a: 1,
+      why: "Park only in designated areas, never blocking aisles, exits or fire equipment. Lower the forks fully, set the brake and shut off the truck."
+    },
+    {
+      q: "A load blocks your view straight ahead. What should you do?",
+      opts: [
+        "Drive forward slowly and rely on the horn",
+        "Lean out and look around the side while moving forward",
+        "Travel in reverse, looking in the direction of travel",
+        "Raise the load higher to see underneath it"
+      ],
+      a: 2,
+      why: "If the load blocks your view, drive in reverse while looking where you are going (unless going up a ramp, where the load should face uphill). Use a spotter if needed."
+    }
+  ];
+
+  var form = document.getElementById("quiz");
+  var msg = document.getElementById("msg");
+  var result = document.getElementById("result");
+  var submitBtn = document.getElementById("submit");
+  var retryBtn = document.getElementById("retry");
+  var LETTERS = ["A", "B", "C", "D"];
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
   }
-];
 
-const form = document.getElementById("quiz");
-const results = document.getElementById("results");
-
-function build() {
-  form.innerHTML = "";
-  QUESTIONS.forEach((item, i) => {
-    const fs = document.createElement("fieldset");
-    fs.id = "q" + i;
-    const lg = document.createElement("legend");
-    lg.innerHTML = '<span class="qnum">Q' + (i + 1) + '.</span> ';
-    lg.appendChild(document.createTextNode(item.q));
-    fs.appendChild(lg);
-    item.options.forEach((opt, j) => {
-      const label = document.createElement("label");
-      const input = document.createElement("input");
-      input.type = "radio";
-      input.name = "q" + i;
-      input.value = j;
-      input.addEventListener("change", () => {
-        fs.classList.remove("missing");
-        document.getElementById("error").textContent = "";
+  function build() {
+    form.innerHTML = "";
+    form.classList.remove("locked");
+    QUESTIONS.forEach(function (item, i) {
+      var fs = el("fieldset", "q");
+      fs.id = "q" + i;
+      fs.appendChild(el("legend", null, (i + 1) + ". " + item.q));
+      item.opts.forEach(function (text, j) {
+        var label = el("label", "opt");
+        var input = document.createElement("input");
+        input.type = "radio";
+        input.name = "q" + i;
+        input.value = j;
+        label.appendChild(input);
+        var span = el("span");
+        span.appendChild(document.createTextNode(LETTERS[j] + ". " + text));
+        label.appendChild(span);
+        fs.appendChild(label);
       });
-      const span = document.createElement("span");
-      span.textContent = opt;
-      label.append(input, span);
-      fs.appendChild(label);
+      form.appendChild(fs);
     });
-    form.appendChild(fs);
-  });
-  const err = document.createElement("p");
-  err.id = "error";
-  err.setAttribute("role", "alert");
-  const btn = document.createElement("button");
-  btn.type = "submit";
-  btn.textContent = "Submit answers";
-  form.append(err, btn);
-}
-
-function review(i, chosen) {
-  const item = QUESTIONS[i];
-  const div = document.createElement("div");
-  div.className = "review";
-  const h = document.createElement("h3");
-  h.textContent = "Q" + (i + 1) + ". " + item.q;
-  const mine = document.createElement("div");
-  mine.className = "ans wrong";
-  mine.innerHTML = "<b>Your answer</b>";
-  mine.appendChild(document.createTextNode(item.options[chosen]));
-  const right = document.createElement("div");
-  right.className = "ans right";
-  right.innerHTML = "<b>Correct answer</b>";
-  right.appendChild(document.createTextNode(item.options[item.answer]));
-  const why = document.createElement("p");
-  why.className = "why";
-  why.textContent = item.why;
-  div.append(h, mine, right, why);
-  return div;
-}
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const picks = QUESTIONS.map((_, i) => {
-    const el = form.querySelector('input[name="q' + i + '"]:checked');
-    return el ? Number(el.value) : null;
-  });
-  const unanswered = picks.map((p, i) => (p === null ? i : -1)).filter(i => i >= 0);
-  QUESTIONS.forEach((_, i) => document.getElementById("q" + i).classList.toggle("missing", unanswered.includes(i)));
-  if (unanswered.length) {
-    document.getElementById("error").textContent =
-      "Please answer question" + (unanswered.length > 1 ? "s " : " ") +
-      unanswered.map(i => i + 1).join(", ") + " before submitting.";
-    document.getElementById("q" + unanswered[0]).scrollIntoView({ behavior: "smooth", block: "center" });
-    return;
   }
 
-  const wrong = picks.map((p, i) => (p !== QUESTIONS[i].answer ? i : -1)).filter(i => i >= 0);
-  const score = QUESTIONS.length - wrong.length;
-
-  results.innerHTML = "";
-  const box = document.createElement("div");
-  box.className = "score";
-  box.innerHTML = '<div class="big">' + score + " / " + QUESTIONS.length + "</div>";
-  const msg = document.createElement("p");
-  msg.textContent = wrong.length === 0
-    ? "Perfect score. Nice work."
-    : "Review the " + (wrong.length === 1 ? "question" : "questions") + " you missed below. Ask your supervisor if anything is unclear.";
-  box.appendChild(msg);
-  results.appendChild(box);
-
-  if (wrong.length === 0) {
-    const ok = document.createElement("div");
-    ok.className = "review allgood";
-    ok.textContent = "You answered every question correctly.";
-    results.appendChild(ok);
-  } else {
-    wrong.forEach(i => results.appendChild(review(i, picks[i])));
+  function selected(i) {
+    var c = form.querySelector('input[name="q' + i + '"]:checked');
+    return c ? parseInt(c.value, 10) : -1;
   }
 
-  const again = document.createElement("button");
-  again.type = "button";
-  again.className = "secondary";
-  again.textContent = "Retake quiz";
-  again.addEventListener("click", () => {
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var missing = [];
+    QUESTIONS.forEach(function (_, i) { if (selected(i) < 0) missing.push(i + 1); });
+    if (missing.length) {
+      msg.textContent = "Please answer question" + (missing.length > 1 ? "s " : " ") + missing.join(", ") + " before submitting.";
+      document.getElementById("q" + (missing[0] - 1)).querySelector("input").focus();
+      return;
+    }
+    msg.textContent = "";
+    var score = 0;
+    QUESTIONS.forEach(function (item, i) {
+      var pick = selected(i);
+      var fs = document.getElementById("q" + i);
+      var labels = fs.querySelectorAll(".opt");
+      var ok = pick === item.a;
+      if (ok) score++;
+      fs.classList.add(ok ? "right" : "wrong");
+      labels[item.a].classList.add("correct");
+      labels[item.a].querySelector("span").appendChild(el("strong", "tag", " (correct answer)"));
+      if (!ok) {
+        labels[pick].classList.add("incorrect");
+        labels[pick].querySelector("span").appendChild(el("strong", "tag", " (your answer)"));
+      }
+      var fb = el("div", "feedback " + (ok ? "good" : "bad"));
+      if (ok) {
+        fb.appendChild(el("strong", null, "Correct. "));
+      } else {
+        fb.appendChild(el("strong", null, "Incorrect. "));
+        fb.appendChild(el("strong", null, "Right answer: " + LETTERS[item.a] + ". " + item.opts[item.a] + " "));
+      }
+      fb.appendChild(el("span", null, item.why));
+      fs.appendChild(fb);
+      fs.querySelectorAll("input").forEach(function (inp) { inp.disabled = true; });
+    });
+    form.classList.add("locked");
+
+    var wrong = QUESTIONS.length - score;
+    result.innerHTML = "";
+    result.appendChild(el("h2", null, "Score: " + score + " / " + QUESTIONS.length));
+    result.appendChild(el("p", null, wrong === 0
+      ? "Perfect. You're ready to move on."
+      : "You missed " + wrong + ". Review the corrections below, then try again. Ask your supervisor if anything is unclear."));
+    result.hidden = false;
+    submitBtn.hidden = true;
+    retryBtn.hidden = false;
+    result.focus();
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  retryBtn.addEventListener("click", function () {
     build();
-    results.hidden = true;
-    form.hidden = false;
+    result.hidden = true;
+    submitBtn.hidden = false;
+    retryBtn.hidden = true;
+    msg.textContent = "";
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
-  results.appendChild(again);
 
-  form.hidden = true;
-  results.hidden = false;
-  results.focus();
-  window.scrollTo({ top: 0 });
-});
-
-build();
+  build();
+})();
 </script>
 </body>
 </html>

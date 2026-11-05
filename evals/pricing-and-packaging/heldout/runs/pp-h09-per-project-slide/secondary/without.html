@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proposal: price per active project</title>
+<!--
+  Presenter notes (not shown on slide):
+  - Sample of 3 accounts: today $560/mo, proposed $435/mo (-$125, -22%).
+  - Fennmark rises from $40 to $300/mo (+650%). Expect that question. Decide on a transition
+    cap or phase-in for project-heavy accounts before Thursday, then add it to the ask.
+  - Tallgrass drops $350/mo (-80%). Expect the question of whether this is a revenue give-up.
+-->
+<style>
+  html, body { margin: 0; height: 100%; background: #e9ebef; }
+  body {
+    display: flex; align-items: center; justify-content: center;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1d2330;
+  }
+  .slide {
+    position: relative;
+    width: min(100vw, 177.78vh);
+    height: min(100vh, 56.25vw);
+    box-sizing: border-box;
+    background: #ffffff;
+    padding: 4.2% 5% 3.6%;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,.12);
+  }
+  .kicker {
+    font-size: clamp(10px, 1.1vw, 15px); letter-spacing: .12em; text-transform: uppercase;
+    color: #5a6372; font-weight: 600; margin: 0 0 .6em;
+  }
+  h1 {
+    font-size: clamp(20px, 3.1vw, 42px); line-height: 1.15; margin: 0 0 1.1em;
+    font-weight: 700; letter-spacing: -.01em;
+  }
+  .body { display: grid; grid-template-columns: 1.55fr 1fr; gap: 4%; flex: 1; min-height: 0; }
+
+  /* Left: paired bars */
+  .chart-title { font-size: clamp(11px, 1.2vw, 16px); font-weight: 600; color: #3c4553; margin: 0 0 .9em; }
+  .legend { display: flex; gap: 1.6em; font-size: clamp(10px, 1.1vw, 15px); color: #3c4553; margin-bottom: 1.2em; }
+  .legend span { display: inline-flex; align-items: center; gap: .45em; }
+  .swatch { width: .9em; height: .9em; border-radius: 2px; display: inline-block; }
+  .sw-cur { background: #b7bdc8; }
+  .sw-prop { background: #1f5fbf; }
+
+  .row { margin-bottom: 1.35em; }
+  .row-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .35em; }
+  .name { font-size: clamp(12px, 1.4vw, 19px); font-weight: 700; }
+  .profile { font-size: clamp(10px, 1.05vw, 14px); color: #5a6372; font-weight: 400; margin-left: .5em; }
+  .delta { font-size: clamp(11px, 1.25vw, 17px); font-weight: 700; }
+  .delta.down { color: #1d6b3a; }
+  .delta.up { color: #a33a1f; }
+
+  .bar-line { display: flex; align-items: center; gap: .6em; margin: .18em 0; }
+  .bar-track { flex: 1; height: 1.25em; background: #f2f3f6; border-radius: 3px; overflow: hidden; }
+  .bar { height: 100%; border-radius: 0 4px 4px 0; }
+  .bar.cur { background: #b7bdc8; }
+  .bar.prop { background: #1f5fbf; }
+  .bar-val { font-size: clamp(10px, 1.05vw, 14px); font-variant-numeric: tabular-nums; min-width: 4.2em; text-align: right; color: #3c4553; }
+  .bar-val.strong { color: #1d2330; font-weight: 700; }
+
+  /* Right: rationale and ask */
+  .panel { background: #f5f7fa; border-radius: 10px; padding: 3.2% 3.4%; display: flex; flex-direction: column; }
+  .panel h2 { font-size: clamp(12px, 1.35vw, 18px); margin: 0 0 .7em; color: #1d2330; }
+  .panel ul { margin: 0; padding-left: 1.1em; font-size: clamp(11px, 1.2vw, 16px); line-height: 1.45; color: #2b3240; }
+  .panel li { margin-bottom: .6em; }
+  .totals { margin-top: auto; padding-top: .9em; border-top: 1px solid #d5dae2; font-size: clamp(11px, 1.2vw, 16px); color: #2b3240; }
+  .totals .row-t { display: flex; justify-content: space-between; margin-bottom: .25em; font-variant-numeric: tabular-nums; }
+
+  .ask {
+    margin-top: .9em; background: #1f5fbf; color: #ffffff; border-radius: 8px;
+    padding: 2.4% 3%; font-size: clamp(11px, 1.25vw, 17px); line-height: 1.35;
+  }
+  .ask strong { display: block; font-size: clamp(10px, 1vw, 13px); letter-spacing: .08em; text-transform: uppercase; opacity: .85; margin-bottom: .3em; }
+
+  .footer { margin-top: 1.2%; font-size: clamp(9px, .9vw, 12px); color: #6b7383; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<main class="slide" role="img" aria-label="Slide: proposed move from $20 per user to $15 per active project">
+  <p class="kicker">Pricing proposal · Leadership decision</p>
+  <h1>Price follows the projects customers actually run: $15 per active project, not $20 per user</h1>
+
+  <div class="body">
+    <section aria-labelledby="chart-title">
+      <p class="chart-title" id="chart-title">Monthly bill for three current customers, today vs proposed</p>
+      <div class="legend">
+        <span><i class="swatch sw-cur"></i>Today: $20 × users</span>
+        <span><i class="swatch sw-prop"></i>Proposed: $15 × active projects</span>
+      </div>
+
+      <div class="row">
+        <div class="row-head">
+          <div><span class="name">Birchline Design</span><span class="profile">4 users · 3 active projects</span></div>
+          <span class="delta down">−$35 (−44%)</span>
+        </div>
+        <div class="bar-line"><div class="bar-track"><div class="bar cur" style="width:18.2%"></div></div><span class="bar-val">$80</span></div>
+        <div class="bar-line"><div class="bar-track"><div class="bar prop" style="width:10.2%"></div></div><span class="bar-val strong">$45</span></div>
+      </div>
+
+      <div class="row">
+        <div class="row-head">
+          <div><span class="name">Tallgrass Civil</span><span class="profile">22 users · 6 active projects</span></div>
+          <span class="delta down">−$350 (−80%)</span>
+        </div>
+        <div class="bar-line"><div class="bar-track"><div class="bar cur" style="width:100%"></div></div><span class="bar-val">$440</span></div>
+        <div class="bar-line"><div class="bar-track"><div class="bar prop" style="width:20.5%"></div></div><span class="bar-val strong">$90</span></div>
+      </div>
+
+      <div class="row">
+        <div class="row-head">
+          <div><span class="name">Fennmark Studio</span><span class="profile">2 users · 20 active projects</span></div>
+          <span class="delta up">+$260 (+650%)</span>
+        </div>
+        <div class="bar-line"><div class="bar-track"><div class="bar cur" style="width:9.1%"></div></div><span class="bar-val">$40</span></div>
+        <div class="bar-line"><div class="bar-track"><div class="bar prop" style="width:68.2%"></div></div><span class="bar-val strong">$300</span></div>
+      </div>
+    </section>
+
+    <aside class="panel" aria-labelledby="why-title">
+      <h2 id="why-title">Why per active project</h2>
+      <ul>
+        <li><strong>Matches the work.</strong> A project is the unit customers track. Seats that only view or sit idle stop inflating the bill.</li>
+        <li><strong>Charges heavy project load.</strong> Fennmark runs 20 active projects on 2 seats and pays $40 today. Per-user pricing undercharges that usage.</li>
+        <li><strong>One number to explain.</strong> $15 per active project per month, with no seat counting or tiers.</li>
+      </ul>
+
+      <div class="totals">
+        <div class="row-t"><span>Sample of 3 accounts, today</span><span>$560 / mo</span></div>
+        <div class="row-t"><span>Sample of 3 accounts, proposed</span><span>$435 / mo</span></div>
+        <div class="row-t"><span>Net change in sample</span><span>−$125 (−22%)</span></div>
+      </div>
+
+      <div class="ask">
+        <strong>Decision requested</strong>
+        Approve moving from $20 per user per month to $15 per active project per month.
+      </div>
+    </aside>
+  </div>
+
+  <div class="footer">
+    <span>Figures are monthly list price for the three named accounts. Active project = project with activity in the billing period.</span>
+    <span>Leadership review</span>
+  </div>
+</main>
+</body>
+</html>

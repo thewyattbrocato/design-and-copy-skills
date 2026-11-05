@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Village Hall Tea Rota</title>
+<style>
+  :root{
+    --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2622; --muted:#6b6259; --line:#e4dccb;
+    --accent:#9a3b2e; --accent-ink:#fff; --soft:#f3e3dd; --ok:#2f6b3f;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1f1b18; --card:#2a2521; --ink:#f1ebe2; --muted:#b0a69a; --line:#413a33;
+      --accent:#e08a78; --accent-ink:#2a1511; --soft:#44302b; --ok:#8cc79a; }
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    display:flex; justify-content:center; align-items:center; padding:12px;
+  }
+  main{width:100%; max-width:560px}
+  header{margin:0 4px 10px}
+  h1{margin:0; font:700 1.5rem/1.2 Georgia,"Times New Roman",serif}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:.92rem}
+  #status{
+    min-height:44px; margin:0 0 10px; padding:9px 12px; border-radius:10px;
+    background:var(--soft); font-size:.92rem; display:flex; gap:10px; align-items:center; justify-content:space-between;
+  }
+  #status[hidden]{display:none}
+  ul{list-style:none; margin:0; padding:0; background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden}
+  li{display:flex; align-items:center; gap:12px; padding:11px 14px; border-top:1px solid var(--line); min-height:62px}
+  li:first-child{border-top:0}
+  .date{flex:none; width:52px; text-align:center; line-height:1.1}
+  .date b{display:block; font:700 1.4rem Georgia,serif}
+  .date span{font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted)}
+  .who{flex:1; min-width:0}
+  .who strong{display:block; overflow-wrap:anywhere}
+  .who small{color:var(--muted)}
+  li.past{opacity:.6}
+  li.next{background:var(--soft)}
+  li.source{outline:2px solid var(--accent); outline-offset:-2px}
+  .tag{font-size:.72rem; font-weight:600; color:var(--ok); margin-left:6px}
+  button{
+    font:inherit; font-size:.9rem; min-height:40px; padding:0 14px; border-radius:999px; cursor:pointer;
+    border:1.5px solid var(--accent); background:transparent; color:var(--accent); white-space:nowrap;
+  }
+  button.primary{background:var(--accent); color:var(--accent-ink)}
+  button:hover{filter:brightness(.95)}
+  button:focus-visible{outline:3px solid var(--ink); outline-offset:2px}
+  button:disabled{opacity:.4; cursor:not-allowed}
+  .done{font-size:.85rem; color:var(--muted); padding-right:6px}
+  #toast{
+    margin:10px 4px 0; min-height:24px; font-size:.9rem; color:var(--muted);
+    display:flex; gap:10px; align-items:center;
+  }
+  #toast button{min-height:32px; padding:0 10px; font-size:.85rem}
+  footer{margin:6px 4px 0; font-size:.78rem; color:var(--muted)}
+  @media (prefers-reduced-motion:no-preference){ li{transition:background .2s} }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="title">Tea rota</h1>
+    <p class="sub">Who’s bringing cake each Sunday. Need a different day? Swap.</p>
+  </header>
+
+  <div id="status" role="status" hidden></div>
+  <ul id="list" aria-labelledby="title"></ul>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <footer>Names shown are examples. Swaps are saved on this device only.</footer>
+</main>
+
+<script>
+(function(){
+  var people = [
+    {n:"Margaret", c:"Lemon drizzle"},
+    {n:"Dev", c:"Carrot cake"},
+    {n:"Joan", c:"Victoria sponge"},
+    {n:"Tom & Aisha", c:"Flapjacks"},
+    {n:"Reverend Pat", c:"Coffee & walnut"},
+    {n:"Gwen", c:"Ginger parkin"}
+  ];
+  var now = new Date(), y = now.getFullYear(), m = now.getMonth();
+  var today = new Date(y, m, now.getDate());
+  var sundays = [];
+  for (var d = new Date(y, m, 1); d.getMonth() === m; d.setDate(d.getDate() + 1)) {
+    if (d.getDay() === 0) sundays.push(new Date(d));
+  }
+  var key = "tea-rota-" + y + "-" + (m + 1);
+  var order = sundays.map(function(_, i){ return i % people.length; });
+  try {
+    var saved = JSON.parse(localStorage.getItem(key));
+    if (Array.isArray(saved) && saved.length === order.length) order = saved;
+  } catch (e) {}
+
+  var list = document.getElementById("list"),
+      status = document.getElementById("status"),
+      toast = document.getElementById("toast"),
+      picking = null, undo = null;
+
+  document.getElementById("title").textContent =
+    "Tea rota – " + now.toLocaleString(undefined, {month:"long", year:"numeric"});
+
+  function save(){ try { localStorage.setItem(key, JSON.stringify(order)); } catch (e) {} }
+  function isPast(i){ return sundays[i] < today; }
+  function nextIdx(){ for (var i = 0; i < sundays.length; i++) if (!isPast(i)) return i; return -1; }
+  function longDate(i){ return sundays[i].toLocaleDateString(undefined, {weekday:"long", day:"numeric", month:"long"}); }
+
+  function render(){
+    list.innerHTML = "";
+    var nx = nextIdx();
+    sundays.forEach(function(dt, i){
+      var p = people[order[i]], li = document.createElement("li");
+      if (isPast(i)) li.className = "past";
+      if (i === nx) li.className = "next";
+      if (i === picking) li.className += " source";
+
+      var date = document.createElement("div");
+      date.className = "date";
+      date.innerHTML = "<span>" + dt.toLocaleString(undefined,{month:"short"}) + "</span><b>" + dt.getDate() + "</b>";
+
+      var who = document.createElement("div");
+      who.className = "who";
+      var s = document.createElement("strong"); s.textContent = p.n;
+      if (i === nx) { var t = document.createElement("span"); t.className = "tag"; t.textContent = "NEXT UP"; s.appendChild(t); }
+      var sm = document.createElement("small"); sm.textContent = p.c;
+      who.appendChild(s); who.appendChild(sm);
+
+      li.appendChild(date); li.appendChild(who);
+
+      if (isPast(i)) {
+        var dn = document.createElement("span"); dn.className = "done"; dn.textContent = "Done"; li.appendChild(dn);
+      } else {
+        var b = document.createElement("button");
+        if (picking === null) {
+          b.textContent = "Swap";
+          b.setAttribute("aria-label", "Swap " + p.n + " on " + longDate(i));
+          b.onclick = function(){ picking = i; clearToast(); render(); focusFirst(i); };
+        } else if (picking === i) {
+          b.textContent = "Cancel"; b.onclick = cancel;
+        } else {
+          b.textContent = "Swap here"; b.className = "primary";
+          b.setAttribute("aria-label", "Swap " + people[order[picking]].n + " with " + p.n + " on " + longDate(i));
+          b.onclick = function(){ doSwap(picking, i); };
+        }
+        li.appendChild(b);
+      }
+      list.appendChild(li);
+    });
+
+    if (picking === null) { status.hidden = true; }
+    else {
+      status.hidden = false;
+      status.innerHTML = "";
+      var msg = document.createElement("span");
+      msg.textContent = people[order[picking]].n + " (" + longDate(picking) + ") – choose a Sunday to swap with.";
+      var c = document.createElement("button"); c.textContent = "Cancel"; c.onclick = cancel;
+      status.appendChild(msg); status.appendChild(c);
+    }
+  }
+
+  function focusFirst(i){
+    var btns = list.querySelectorAll("button.primary");
+    if (btns.length) btns[0].focus();
+  }
+  function cancel(){ picking = null; render(); }
+  function clearToast(){ toast.textContent = ""; undo = null; }
+
+  function doSwap(a, b){
+    var before = order.slice();
+    var na = people[order[a]].n, nb = people[order[b]].n;
+    var t = order[a]; order[a] = order[b]; order[b] = t;
+    picking = null; save(); render();
+    toast.textContent = "Swapped: " + na + " ↔ " + nb + ". ";
+    var u = document.createElement("button"); u.textContent = "Undo";
+    u.onclick = function(){ order = before; save(); clearToast(); render(); };
+    toast.appendChild(u);
+  }
+
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && picking !== null) cancel(); });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -2,14 +2,12 @@
 $320 a month, flat, for offices up to 5,000 sq ft
 
 **Subhead**
-Weekly visits, with supplies and equipment included. Month-to-month, and you can cancel with two weeks' notice. We serve the Kestrel Valley.
+Weekly visits, with supplies and equipment included. Month-to-month, cancel with two weeks' notice. Serving the Kestrel Valley.
 
 **Button**
 Book your free walkthrough
 
-**Line under the button**
-You get a written quote before you commit to anything.
+**Line under the button (optional)**
+We walk your office and send a written quote before you commit.
 
-Notes:
-- The subhead and the line under the button carry the terms and the free quote. That keeps the headline to the number, as you asked.
-- You didn't give a price for offices over 5,000 sq ft. If buyers will ask, add a line such as "Larger office? [price or 'we'll quote it at the walkthrough']."
+Note: I put the walkthrough and written quote under the button instead of in the subhead. That keeps the subhead to the price terms your buyers are comparing. If you want the button to say what they get, "Get a written quote" also works.

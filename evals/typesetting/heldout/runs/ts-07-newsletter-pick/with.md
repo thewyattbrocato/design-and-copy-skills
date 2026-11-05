@@ -1,7 +1,12 @@
-**Option B.**
+**Go with Option B.**
 
-- **Size:** 17px is in the comfortable range for reading on both laptops and phones. A is 14px, which is too small for 600–900 word stories. C at 22px is oversized for body text.
-- **Line length:** 36rem is about 576px, which gives roughly 60–70 characters per line, the best range for continuous reading. A has no cap, so lines run very long on a laptop. C's 30rem gives about 45 characters, which makes the line breaks choppy.
-- **Line height:** 1.55 is right for a serif at this size and measure. A's 1.3 is cramped, and C's 1.95 is so loose that the lines stop reading as a block.
+```css
+.story { font: 17px/1.55 Georgia, serif; max-width: 36rem; }
+```
 
-I'd make two small changes, though you didn't ask for them. Use `rem` units instead of `px` so the text respects users' browser font settings. On phones, add `max-width: 100%` and some side padding so the text doesn't touch the screen edge.
+- **Size:** 17px suits long reading on both laptops and phones. Option A's 14px is too small for a 600–900 word story.
+- **Line length:** 36rem is about 65 characters per line at this size, which is the comfortable range. Option A has no cap, so lines run across the whole laptop screen. Option C's 30rem at 22px gives only about 40 characters per line, so lines break too often.
+- **Line height:** 1.55 is right for body text. Option A's 1.3 is cramped, and Option C's 1.95 is so loose that lines stop reading as a block.
+- **Typeface:** Georgia is a good serif for long reading on screens.
+
+One optional change: write the size as `1.0625rem` instead of `17px`, so it respects readers' browser font settings.

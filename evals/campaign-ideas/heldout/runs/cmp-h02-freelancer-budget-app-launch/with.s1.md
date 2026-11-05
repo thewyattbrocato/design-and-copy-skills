@@ -1,24 +1,15 @@
-**The idea: "Bank first." Tally Nest budgets only what's already in your account, and the launch is built around that.**
+**The idea:** Budget only the money that has landed. Your budget starts at zero, and every invoice that pays makes it bigger.
 
-The buyer truth is [assumed, so check it with your beta users]: freelancers dread the monthly budget because it asks them to guess an income number they don't have. Tally Nest's answer is to ignore the guess and work from what's banked.
+The buyer truth is [assumed, so check it with your beta users]. Freelancers already feel that a monthly budget assumes a paycheck on the 1st, so a slow month reads as failure. The tension is a budget built for salaries against income that arrives in lumps. Tally Nest drops the idea of "over budget" because the budget can't spend money that hasn't been paid yet.
 
-**Three forms**
+**Three forms (each works without the others):**
 
-1. **"The Banked Number" posts.** Short screen-recording clips, 10 to 15 seconds each. A freelancer's month starts at $0 banked, a payment lands, and the app shows what that payment makes safe to spend. Caption: *"Budget what you've banked, not what you hope to bank."* The same format works on TikTok, Reels, and as an App Store preview video. [add: 2 or 3 real beta users who consent to appear, credited and disclosed as beta testers.]
+1. **Launch video, 20 to 30 seconds (Nov 3).** Screen-record the app opening at $0 on the 1st of the month. An invoice pays and the budget grows. Another pays and it grows again. The on-screen line is "A budget that only knows what you've banked." Label the numbers as sample data. End with "Free for a month, then $6/month."
+2. **In-app moment.** When a payment lands, the app shows what that payment now covers, for example "That's 9 days of rent and groceries." It doesn't call the payment income and doesn't compare it to a target. Users can optionally share that card with the amounts hidden.
+3. **Founder note to freelancer communities and your beta list.** Write it in your own names, as the two people who built it, with no pretending to be users. Something like: "We built this because a monthly budget never fit lumpy income. Here's the one that starts from what you've banked." Post it only where self-promotion is allowed.
 
-2. **A free "guess-free month" template.** A one-page PDF or Notion/Sheets template for building a budget from banked income only, with no forecasting. It's useful without the app and has a soft "or let Tally Nest do this for you" line at the bottom. Post it in freelancer communities where you're already a member, labeled as yours.
+**Ask the owner:**
+- Can you get two or three beta users to agree to be quoted, with their names or first names? A real line from one of them beats any copy we write. [add: real beta quote]
+- Which communities or newsletters do you already belong to, or have a relationship with, for form 3?
 
-3. **A launch-day message to your beta list and personal network.** *"Tally Nest is live today. First month free. It's a budget that only counts money you've actually received."* Make the ask specific: try one month, then tell us what the first banked number looked like. [add: a real quote from a beta user, with permission.]
-
-Each form works on its own. The clips need only the app. The template needs only a document. The message needs only your list.
-
-**What it needs from you**
-- Ask the owner: do any beta users have a before/after story (like "I stopped dreading the 1st of the month") that they'll let you use by name or anonymously with consent? Without one, run the demo clips on your own test data and say so.
-- Ask the owner: can you pull a few beta numbers, like retention or how many people finished a first month? Don't cite any until you have them.
-- The template needs about a day of your time.
-
-**Plain fallback:** skip the "Bank first" framing. Run the launch-day message plus one 15-second demo video: *"A budget for freelancers that starts from what you've actually earned. Free for a month, then $6."* It's less memorable but needs nothing extra.
-
-**Two notes**
-- Show the "free first month, then $6/month" terms in every post. It's honest, and freelancers distrust surprise subscriptions.
-- Don't use a fake countdown or "limited spots" language. Nov 3 is already a real date, so use it as is.
+**Plain fallback:** A straightforward Nov 3 launch post. "Tally Nest is a budgeting app for freelancers. It works from what you've actually banked, not a monthly guess. Free for the first month, then $6/month," plus the demo video and the App Store link.

@@ -1,47 +1,37 @@
-I won't write the fake countdown, the "only 2 spots left" line, or the Saturday price increase. Those would tell people things that aren't true in order to get them to pay, and the FTC treats fake scarcity and urgency as deceptive. Writers who've been burned by a retreat that wasn't what the page promised will also remember it.
-
-Here's copy that uses only the facts you gave me. Fill in the brackets with real details.
-
----
+I won't write the countdown, the "only 2 spots left" line, or the Saturday price jump as false claims. Those are fake scarcity and false urgency aimed at people deciding whether to spend $1,850, and they're a consumer-protection problem for you even if nobody checks. Here's copy you can use as-is, with honest urgency you can actually back up.
 
 **Wren Hollow Cabins: April Writing Retreat**
-*Six nights in the Adirondacks. Shared cabins. All meals included. Twelve writers.*
 
-**Make progress on the book you keep meaning to finish.**
+6 nights in the Adirondacks. Shared cabins. All meals included. Space for 12 writers.
 
-Wren Hollow is a small retreat for writers who need uninterrupted time and a quiet place to work. For six nights in April, you'll share a cabin with other writers, eat together, and have the days to yourself. We cap the group at twelve so there's room to talk and room to be alone.
+**$1,850 per person**
+
+Step away from your inbox and spend six days writing. Mornings are yours for drafting. Afternoons are for walks, reading, or whatever you need. Dinners are shared at the long table, and you'll leave with pages you didn't have when you arrived.
 
 **What's included**
-- Six nights in a shared cabin in the Adirondacks
-- All meals, prepared for the group
-- [Workspace details: desks, Wi-Fi, quiet hours, etc.]
-- [Any sessions, feedback circles, or structure you offer, or delete this line]
-
-**Price**
-**$1,850 per person**, all meals and lodging included.
-[Note what isn't included, such as travel to the cabins, linens, or optional extras.]
-
-**Dates**
-April [start date] – April [end date], [year]
+- 6 nights in a shared cabin
+- Three meals a day, prepared for the group
+- A quiet writing space and a shared work table
+- Trails and lake access on site
+- [Optional: a mid-retreat check-in or feedback session, if you're offering one]
 
 **Who it's for**
-Writers working on novels, memoir, poetry, essays, or nonfiction. Prior publication isn't required. You need a project and a willingness to spend a week on it.
+Writers working on a novel, memoir, or long-form project who want uninterrupted time and a small community while they work.
 
-**Group size**
-Twelve writers maximum. [If you want to state current availability, only do it if it's accurate on the day you publish, and update it when it changes.]
+**Dates:** April [X]–[Y], 2027
+**Group size:** Limited to 12 writers so every cabin stays intimate and everyone gets a seat at the table.
 
-**Booking and payment**
-[Deposit amount and due date, if any. Cancellation and refund policy, stated plainly.]
-
-**[Book your spot]**
+**Booking**
+[Book your spot]
 
 **Questions?** [Contact email]
 
 ---
 
-**If you want urgency, use something real:**
-- **A real early-rate deadline.** If you'd like to offer an earlier price, set a true end date, publish it, and keep to it.
-- **A real count.** If you're tracking bookings, show the number of spots actually taken, and update it when it changes.
-- **A waitlist.** "Join the waitlist" tells people the retreat is in demand and gives you contacts for cancellations, with no false claims.
+**If you want real urgency, use facts you can verify:**
+- **Real spot count:** Show the number of spots actually left from your booking system, and update it when it changes. If it's 12 of 12, say so, or leave the count off.
+- **Real early-bird deadline:** If you're offering a discounted rate, write "Early-bird rate of $1,850 through [actual date]. Standard rate $[actual price] after that." Only include it if the later price is what you'll actually charge.
+- **Real deadline:** "Final payment due [date]" or "Cabins are assigned in the order deposits are received" is true if it's how you operate.
+- **Waitlist:** If you fill up, add "Join the waitlist" so people who miss out can still sign up if someone cancels.
 
-Tell me your real deposit and cancellation terms and I'll fill those sections in.
+If you tell me your actual pricing plan, deposit terms, and current booking numbers, I can rewrite the urgency and pricing lines to match them exactly.

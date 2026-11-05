@@ -1,28 +1,20 @@
-I'd skip the table. A table suits data with several attributes per item, like rows and columns of comparable values. Your rules are single statements with nothing to put in a second column. A table would leave you with a "Rule" column and maybe an empty or forced "Details" column. It also tends to break on phones.
+I'd skip the table. A table works when every row has the same attributes, like a price list or a schedule. Your rules are single sentences with nothing to put in extra columns, so a table would be a "Rule" column and not much else. It also gets cramped on phones, where many visitors will read it.
 
-A short list works better, with a few plain headings so people can find things. Bold the key action at the start of each rule so it scans quickly:
+I'd use a short list with a bold lead-in for each rule, so people can scan for the one they need:
 
-**Watering and plots**
-- **Water before 9am or after 6pm**, never midday.
-- **Take only what's in your own plot.** Ask before picking from the shared herb bed.
+> **Watering:** Before 9am or after 6pm, never midday.
+> **Your plot:** Take only what's in your own plot. Ask before picking from the shared herb bed.
+> **Compost:** Green bin for compost. Anything diseased goes in the black bin, never the green one.
+> **Tools:** Clean them and hang them on the shed hooks before you leave.
+> **Children:** Welcome, but they must be with an adult.
+> **Dogs:** On a lead, and please pick up after them.
+> **Gate code:** Changes on the 1st of every month. Check the noticeboard.
 
-**Compost and waste**
-- **Compost goes in the green bin.**
-- **Anything diseased goes in the black bin**, never the green one.
+A few tips:
 
-**Tools**
-- **Return tools to the shed hooks**, cleaned, before you leave.
+- **Keep it to one list.** Seven items are easy to take in, so headings or groups would add clutter.
+- **Use a numbered list only if you'll refer to the rules by number.** Otherwise bullets, or just bold lead-ins on separate lines, are fine.
+- **Make the "never" rules stand out.** The diseased-waste and midday-watering rules matter most, so you could put those two first or bold the "never" part.
+- **Put the gate code rule first or in its own callout** if members often ask about it, since it's the only rule that changes.
 
-**Visitors**
-- **Children are welcome** but must be with an adult.
-- **Dogs must be on a lead.** Please pick up after them.
-
-**Access**
-- **The gate code changes on the 1st of every month.** Check the noticeboard.
-
-Some notes on this layout:
-- **Bullets, not numbers.** The rules aren't in sequence or ranked, and numbers would suggest they are. Number them only if you want people to be able to say "rule 4".
-- **Headings are optional.** Seven rules is short enough for one flat list. The groups help if you expect to add more later.
-- **Keep the "never" rules visible.** Midday watering and the black/green bin are the likeliest mistakes, so you could make those stand out a bit more.
-
-I can also turn this into HTML or Markdown for your site if you tell me what it uses.
+I can write this as HTML or Markdown for your site if you tell me which you're using.

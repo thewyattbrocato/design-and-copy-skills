@@ -2,20 +2,20 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "1475de566363c3c1",
+    "with": "6d3afb78889b62fe",
     "without": "a36eccb414f97a2f"
   },
   "result": {
     "winner": "without",
-    "judge_notes": "pass 1 (A=with, B=without): B explains why both extremes fail: keystroke checks flag half-typed input, and submit-only checks leave errors such as a taken username until the end. It then recommends checking on blur, with errors shown only after a field has been touched and cleared live once fixed. A advises against checking on blur and gives a weak account of why submit-only fails, though its handling of each field (debounced username check, password checklist, errors that clear live) is strong. | pass 2 (A=without, B=with): Answer A meets every rubric item. It explains why both extremes fail, recommends checking a field when the person leaves it, and says not to show errors on fields they haven't touched. Once an error shows, it re-checks as they type, and it gives specific handling for each of the three fields. Answer B has strong field-specific detail and accessibility advice, but it argues against checking on leaving a field and keeps submit as the main trigger, which goes against item 2. It also never names the main weakness of submit-only checking, which is a pile of errors at the end.",
+    "judge_notes": "pass 1 (A=with, B=without): B explains why both extremes fail. It recommends checking a field when the person leaves it, using 'touched' state, and adds stale-response handling for the username check. A makes submit the default instead of checking on leaving a field, and it doesn't explain why submit-only validation fails, so it mostly sides with the designer. Both answer the username and password cases well and give concrete behavior for each field. | pass 2 (A=without, B=with): Answer A recommends validating when the person leaves a field, using a 'touched' rule so untouched fields show no errors, and re-checking live once an error is showing. It also explains the problems with both extremes, including the drawbacks of waiting until submit. Answer B is strong on field details and adds useful extras like input attributes and keeping the button pressable, but it defaults to submit-time validation for email. That means it misses blur-based checking and does not really deal with errors piling up at submit.",
     "rubric_scores": {
-      "with": 3.9,
+      "with": 4.0,
       "without": 5.0
     },
     "rubric_items": {
       "with": [
         3.0,
-        1.5,
+        2.0,
         5.0,
         5.0,
         5.0
@@ -37,7 +37,7 @@
         ],
         "raw_verdict": "B",
         "winner": "without",
-        "notes": "B explains why both extremes fail: keystroke checks flag half-typed input, and submit-only checks leave errors such as a taken username until the end. It then recommends checking on blur, with errors shown only after a field has been touched and cleared live once fixed. A advises against checking on blur and gives a weak account of why submit-only fails, though its handling of each field (debounced username check, password checklist, errors that clear live) is strong."
+        "notes": "B explains why both extremes fail. It recommends checking a field when the person leaves it, using 'touched' state, and adds stale-response handling for the username check. A makes submit the default instead of checking on leaving a field, and it doesn't explain why submit-only validation fails, so it mostly sides with the designer. Both answer the username and password cases well and give concrete behavior for each field."
       },
       {
         "order": [
@@ -46,7 +46,7 @@
         ],
         "raw_verdict": "A",
         "winner": "without",
-        "notes": "Answer A meets every rubric item. It explains why both extremes fail, recommends checking a field when the person leaves it, and says not to show errors on fields they haven't touched. Once an error shows, it re-checks as they type, and it gives specific handling for each of the three fields. Answer B has strong field-specific detail and accessibility advice, but it argues against checking on leaving a field and keeps submit as the main trigger, which goes against item 2. It also never names the main weakness of submit-only checking, which is a pile of errors at the end."
+        "notes": "Answer A recommends validating when the person leaves a field, using a 'touched' rule so untouched fields show no errors, and re-checking live once an error is showing. It also explains the problems with both extremes, including the drawbacks of waiting until submit. Answer B is strong on field details and adds useful extras like input attributes and keeping the button pressable, but it defaults to submit-time validation for email. That means it misses blur-based checking and does not really deal with errors piling up at submit."
       }
     ]
   }

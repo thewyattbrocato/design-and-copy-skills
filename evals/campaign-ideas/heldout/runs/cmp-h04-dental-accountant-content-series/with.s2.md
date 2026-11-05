@@ -1,53 +1,81 @@
-**The idea:** *Reading the Chart.* Dentists read an x-ray without thinking about it, so each part reads one line of the practice's books the same way. It covers what's normal, what's worth a second look, and what to ask. You don't need case studies, because the "patient" is a generic practice and the lesson is how to read it.
+**The idea:** "Follow the $100." Each part tracks $100 of dental production from the chair to the owner's pocket, one stop at a time. It shows why a busy year doesn't feel like a rich one, with no tax tips.
+
+**Buyer truth [assumed, check with a few of your clients]:** Dentists say "I had my best production year ever, so where did the money go?" They're clinicians who were never taught to read what happens after the procedure.
 
 **The six parts**
-1. **Three numbers that get called "revenue."** Production, collections, and what hit the bank. (Written below.)
-2. **The overhead number.** What's in it, what's usually missing, and why your own pay muddies it.
-3. **The month that never closes.** What it costs to make decisions on numbers that are six weeks old.
-4. **What a chair costs.** The real cost of an associate or hygienist beyond the paycheck, and how to see whether the schedule pays for it.
-5. **Before you buy the scanner.** How the books and the tax return each treat a big equipment purchase, and why cash and tax answers differ.
-6. **The checkup.** What a good monthly package from a bookkeeper looks like, and ten questions to ask yours.
+1. **Production isn't collection.** $100 on the schedule doesn't arrive as $100.
+2. **The supply and lab stop.** The costs that move with every procedure.
+3. **The payroll stop.** Team and associate pay, and who really earns what.
+4. **The cash that isn't on the P&L.** Equipment loan principal, build-out debt, and the money that leaves without showing as an expense.
+5. **The tax stop.** What's owed on profit you may not have in the bank.
+6. **What's left.** The owner's actual pay, and the three levers that move it.
 
-**Three forms, each standing alone**
-- **LinkedIn post:** Part 1 below, about 250 words. Each later part follows the same shape: one line of the chart, one flag, one question.
-- **Monthly email:** The same part expanded with a "Questions to ask your bookkeeper" box at the end. Subscribers get one useful thing to act on that month.
-- **One-page "chart" PDF:** The three numbers as a simple labeled diagram. It can be a lead magnet or something you hand a prospect on a call.
+**How it runs**
+- **LinkedIn:** a short post per stop, with a simple "$100 → $X" graphic.
+- **Monthly email:** the full walk-through for that stop plus one question to ask your own books.
+- **A one-page "Follow your $100" worksheet** at the end that clients can fill in for their own practice.
 
----
-
-## Part 1 (LinkedIn)
-
-**Your practice has three "revenue" numbers. Most owners only watch one.**
-
-Dentists read a radiograph and know what they're looking at. The books deserve the same read, and it starts with this:
-
-**Production** is the work you did, at your full fee schedule.
-**Collections** is what you were actually paid, after PPO write-offs, adjustments, and what insurance and patients still owe.
-**Deposits** is what landed in the bank this month, which includes payments for work done weeks ago.
-
-Here's an illustration, not a real practice. Say the month shows $100K in production. After write-offs, collections might be well under that. The bank deposits might not match collections either, because of timing.
-
-None of the three numbers is wrong. They answer different questions:
-- Production tells you how busy the chairs were.
-- Collections tells you what the work was worth.
-- Deposits tell you whether you can make payroll.
-
-Trouble starts when someone plans around production and pays bills out of deposits. The gap between them is where practices feel "busy but broke."
-
-**One flag to look for:** production climbing while collections stay flat. That's worth a closer look at write-offs, aging receivables, and fee schedules.
-
-**One question for your bookkeeper:** "Can I see production, collections, and deposits side by side for the last six months?"
-
-If the answer takes more than a day, that's useful information too.
-
-Next month: the overhead number, and what's usually hiding in it.
+Each stop works alone, so someone who joins at part four still gets it.
 
 ---
 
-**What I need from you**
-- **Your voice:** Swap in one real, anonymous pattern you've seen across eight years, such as "the most common mix-up I see is…" It stays true and private as long as it names no client. [add: your real pattern]
-- **Check the facts:** Confirm the definitions match how your clients' practice software reports them. Dentrix, Eaglesoft, and Open Dental label these differently. [assumed: standard definitions]
-- **Disclaimer:** For anything touching tax (Part 5), add a line that this is general information and not advice for a specific practice.
-- **Ask the owner:** Are you comfortable offering the one-page PDF as a free download in exchange for an email address? That would build the list for your monthly email.
+## Part 1: Production isn't collection
 
-**Plain fallback:** The same six topics as straight explainers with no "reading the chart" frame. It's easier to write, but it's the "accountant tips" tone you wanted to avoid.
+**LinkedIn post**
+
+> Your schedule says you produced $100 today.
+> Your bank account will never see $100.
+>
+> Here's where some of it goes before it's even yours:
+>
+> $100 produced
+> – $__ written off to insurance fee schedules
+> – $__ in patient balances that take months, or never get paid
+> = what you actually collected
+>
+> Example numbers, rounded and made up for illustration: $100 → $78 → $75. Yours will differ. That's the point.
+>
+> Nothing here means anyone is doing something wrong. The production number just isn't the money number, and most practice dashboards lead with production.
+>
+> That gap is the first stop on a six-part series I'm calling "Follow the $100." Over the next few months I'll walk one $100 of dental production from the chair to the owner's pocket and show where it goes.
+>
+> Want to see your own gap? Look at this month's production and this month's collections side by side. The difference is your first stop.
+>
+> Next month: the supply and lab stop.
+
+**Email version**
+
+> **Subject:** Your best production year might not be your best income year
+>
+> Hi [first name],
+>
+> A question I hear from practice owners a lot: "Production is up, so why doesn't it feel like it?"
+>
+> The answer starts with a number your practice software puts front and center, production, and a number your bank account cares about, collections. They're not the same, and the gap between them is where this series begins.
+>
+> I'm calling it **Follow the $100.** Each month I'll trace $100 of production from the chair to your pocket, one stop at a time. No tax tips. Just where the money actually goes.
+>
+> **Stop 1: production to collection**
+>
+> Take $100 produced. Before it's yours:
+> - Insurance contracts often mean you're paid less than your listed fee. The difference gets written off.
+> - Some patient balances come in late, and some don't come in.
+>
+> Illustrative numbers only: $100 produced might turn into $78 after write-offs and $75 after uncollected balances. Your real numbers will be different, and they're worth knowing.
+>
+> **Try this (10 minutes):** Pull last month's production, adjustments, and collections from your practice software. Write down all three. Divide collections by production. That percentage is your first stop.
+>
+> If the number surprises you, reply and tell me. I read every response.
+>
+> Next month: the supply and lab stop.
+>
+> [Your name]
+
+---
+
+**Ask the owner**
+- The $100 → $78 → $75 numbers are placeholders. Swap in a range you've seen across your clients, in general terms only, or keep them labeled as illustrative.
+- Confirm that the "collections ÷ production" exercise matches the reports your clients' software gives them. Different systems name these differently.
+- Don't use any figure that could identify a client, even a rounded one.
+
+**Plain fallback:** a series called "Six numbers every dental owner should know," with one number per post and no running story. It needs less from you but is easier to forget.

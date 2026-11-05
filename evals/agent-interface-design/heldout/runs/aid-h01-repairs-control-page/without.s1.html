@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repairs desk · Kestrel Lettings</title>
+<style>
+:root{
+  --bg:#f5f4f1; --surface:#fff; --ink:#1d2127; --muted:#5d6570; --line:#dedbd4;
+  --accent:#1f4f8f; --accent-ink:#fff;
+  --em-bg:#b3261e; --em-ink:#fff;
+  --ur-bg:#fbe7bd; --ur-ink:#5c3b00; --ur-line:#c98a12;
+  --ro-bg:#eceae5; --ro-ink:#3d444c;
+  --need-bg:#fdf1ef; --need-line:#b3261e;
+  --ok:#1d6b3a;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#15181c; --surface:#1e2227; --ink:#e8e9ea; --muted:#9aa3ad; --line:#333940;
+    --accent:#7fb0f0; --accent-ink:#0d1b2e;
+    --em-bg:#e5675e; --em-ink:#1a0806;
+    --ur-bg:#46350f; --ur-ink:#f6d98a; --ur-line:#d9a634;
+    --ro-bg:#2a2f35; --ro-ink:#c5cbd2;
+    --need-bg:#2a1a19; --need-line:#e5675e;
+    --ok:#6fcf93;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding:20px 16px 48px}
+header{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+h1{font-size:22px;margin:0}
+.meta{color:var(--muted);font-size:13px}
+.meta b{color:var(--ok);font-weight:600}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.tile:focus-visible,.btn:focus-visible,.more:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tile .n{font-size:28px;font-weight:700;line-height:1.1;display:block}
+.tile .l{font-size:13px;color:var(--muted)}
+.tile[aria-pressed=true]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.tile.need .n{color:var(--em-bg)}
+.legend{font-size:13px;color:var(--muted);margin:0 0 14px}
+.list{display:flex;flex-direction:column;gap:8px}
+.req{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:8px;padding:12px 14px}
+.req.attention{background:var(--need-bg);border-color:var(--need-line);border-left-width:5px}
+.row{display:grid;grid-template-columns:minmax(150px,1.1fr) minmax(220px,2.2fr) 120px minmax(160px,1.4fr) 150px;gap:8px 16px;align-items:start}
+.flat{font-weight:650}
+.sub{color:var(--muted);font-size:13px}
+.issue{font-weight:600}
+.chip{display:inline-block;font-size:12.5px;font-weight:700;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.chip.emergency{background:var(--em-bg);color:var(--em-ink)}
+.chip.urgent{background:var(--ur-bg);color:var(--ur-ink);box-shadow:inset 0 0 0 1px var(--ur-line)}
+.chip.routine{background:var(--ro-bg);color:var(--ro-ink)}
+.status{font-weight:600}
+.status.attention{color:var(--em-bg)}
+.status.done{color:var(--ok)}
+.ask{margin-top:10px;padding-top:10px;border-top:1px dashed var(--need-line)}
+.ask p{margin:0 0 8px}
+.ask strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--em-bg)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font:inherit;font-weight:600;font-size:14px;padding:6px 14px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer;text-decoration:none;display:inline-block}
+.btn.sec{background:transparent;color:var(--accent)}
+.more{font:inherit;font-size:13px;background:none;border:0;color:var(--accent);cursor:pointer;padding:6px 0 0;text-decoration:underline}
+.detail{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:6px;font-size:14px}
+.detail[hidden]{display:none}
+.detail dt{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-top:6px}
+.detail dt:first-child{margin-top:0}
+.detail dd{margin:0}
+.empty{padding:28px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:8px}
+.colhead{display:grid;grid-template-columns:minmax(150px,1.1fr) minmax(220px,2.2fr) 120px minmax(160px,1.4fr) 150px;gap:16px;padding:0 14px 4px 19px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+@media (max-width:820px){
+  .colhead{display:none}
+  .row{grid-template-columns:1fr 1fr}
+  .row > :nth-child(2){grid-column:1/-1;order:-1}
+}
+@media (max-width:480px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Repairs desk</h1>
+    <div class="meta">Tue 27 Oct, 11:47 · Agent <b>running</b> · last request read 11:44 · 300 flats</div>
+  </header>
+
+  <div class="tiles" id="tiles" role="group" aria-label="Filter requests"></div>
+  <p class="legend"><b>Emergency</b>: danger or damage, same day · <b>Urgent</b>: within 48 hours · <b>Routine</b>: within a week. Urgency is the agent's call; open a request to see why.</p>
+
+  <div class="colhead" aria-hidden="true"><span>Flat / tenant</span><span>Issue</span><span>Urgency</span><span>Vendor and slot</span><span>Status</span></div>
+  <div class="list" id="list"></div>
+</div>
+
+<script>
+var reqs = [
+ {id:"KL-4821",flat:"Flat 3",addr:"14 Alder Court",tenant:"Priya Nair",phone:"07700 900412",recv:"11:31",
+  issue:"Smell of gas in kitchen",urgency:"emergency",vendor:"Hartley Gas & Heating",slot:"Today, ASAP",status:"attention",
+  ask:"Hartley hasn't confirmed after 16 minutes. Phone their out-of-hours line (0161 496 0142) or I can try Northside Heating.",
+  msg:"Hi, there's a strong smell of gas in the kitchen near the hob. It's been getting worse since about 11.",
+  why:"Gas smell is always treated as an emergency. Tenant told to leave the flat, open windows, avoid switches and call the National Gas Emergency line (0800 111 999). Gas Safe engineer requested from Hartley at 11:31."},
+ {id:"KL-4819",flat:"Flat 12",addr:"Brindley House, 9 Canal St",tenant:"Tom Whitcombe",phone:"07700 900388",recv:"10:58",
+  issue:"Water coming through bathroom ceiling",urgency:"urgent",vendor:"None booked yet",slot:"",status:"attention",
+  ask:"I can't tell if the leak is from Flat 16 above or the roof, and Flat 16 isn't answering. Tell me whether to book a plumber for both, or ring the Flat 16 tenant first.",
+  msg:"Water is dripping through the bathroom ceiling, a small but steady drip. Put a bowl under it. Nothing upstairs that I know of.",
+  why:"Active leak, so urgent at minimum. Raised to emergency if it spreads or touches light fittings. Confidence is low on the source, so I held off booking. Two calls to Flat 16 (11:05, 11:30) went unanswered."},
+ {id:"KL-4815",flat:"Flat 7",addr:"22 Mercer Row",tenant:"Grace Adeyemi",phone:"07700 900231",recv:"Mon 16:20",
+  issue:"Boiler dead, no heating or hot water",urgency:"urgent",vendor:"Northside Heating",slot:"Attended today 09:10",status:"attention",
+  ask:"Engineer says the boiler can't be repaired. Quote to replace is £2,140, over the £500 limit I can approve. Needs your approval or the landlord's.",
+  msg:"Boiler has stopped completely, no heating and no hot water since this afternoon. I have a 7-month-old baby.",
+  why:"No heat or hot water with an infant in the household, so urgent with next-morning attendance. Two portable heaters were offered from stock; tenant accepted."},
+ {id:"KL-4822",flat:"Flat 9",addr:"3 Tanner's Yard",tenant:"Marcus Hale",phone:"07700 900745",recv:"11:40",
+  issue:"Front door lock won't turn, locked out",urgency:"emergency",vendor:"QuickKey Locksmiths",slot:"Today 12:30–13:00",status:"booked",
+  msg:"Key goes in but the lock won't turn. I'm stuck outside, flat is empty.",why:"Tenant locked out and flat can't be secured. Booked the first available locksmith; confirmed by phone at 11:43."},
+ {id:"KL-4818",flat:"Flat 21",addr:"Brindley House, 9 Canal St",tenant:"Joanna Pryce",phone:"07700 900519",recv:"10:15",
+  issue:"Kitchen sockets dead, fridge off",urgency:"urgent",vendor:"Voltline Electrical",slot:"Today 15:00–17:00",status:"booked",
+  msg:"All the sockets in the kitchen have stopped working. I've checked the fuse box and nothing has tripped. Fridge is off.",
+  why:"Possible circuit fault plus food spoilage risk. Urgent, not emergency: no burning smell or sparking reported. Tenant advised not to use the sockets."},
+ {id:"KL-4816",flat:"Flat 8",addr:"Mercer House, 40 Mercer St",tenant:"Peter Olsen",phone:"07700 900067",recv:"10:30",
+  issue:"Living room radiator stone cold",urgency:"routine",vendor:"Hartley Gas & Heating",slot:"Offered Thu 29 Oct AM",status:"awaiting",
+  msg:"The radiator in the living room never gets warm. Others are fine.",why:"Rest of the heating works. Probably a stuck valve or air in the system. Northside declined (fully booked), so I re-offered the job to Hartley at 11:20."},
+ {id:"KL-4820",flat:"Flat 5",addr:"14 Alder Court",tenant:"Daniel Okafor",phone:"07700 900903",recv:"11:12",
+  issue:"Toilet keeps running after flush",urgency:"routine",vendor:"Clearwater Plumbing",slot:"Offered Thu 29 Oct AM",status:"awaiting",
+  msg:"Toilet runs for ages after flushing and the cistern keeps refilling.",why:"Not overflowing, so water loss is slow. Routine. Asked Clearwater at 11:15; no reply yet."},
+ {id:"KL-4823",flat:"Flat 10",addr:"14 Alder Court",tenant:"Mei Lin Zhou",phone:"07700 900156",recv:"11:44",
+  issue:"Kitchen tap dripping",urgency:"routine",vendor:"Choosing vendor…",slot:"",status:"triage",
+  msg:"The cold tap in the kitchen drips constantly even when fully turned off.",why:"Just received. Provisionally routine."},
+ {id:"KL-4812",flat:"Flat 2",addr:"8 Foundry Lane",tenant:"Sofia Marchetti",phone:"07700 900820",recv:"Mon 14:05",
+  issue:"Black mould on bedroom wall and window",urgency:"routine",vendor:"Greenfield Damp Surveys",slot:"Fri 30 Oct 10:00–12:00",status:"booked",
+  msg:"Mould is spreading on the bedroom external wall and around the window. Photos attached.",why:"Needs a survey before any repair. Tenant has no reported breathing problems, so routine."},
+ {id:"KL-4817",flat:"Flat 6",addr:"3 Tanner's Yard",tenant:"Lucy Brennan",phone:"07700 900274",recv:"10:02",
+  issue:"Smoke alarm chirping",urgency:"routine",vendor:"Pinnacle Property Maintenance",slot:"Wed 28 Oct 14:00–17:00",status:"booked",
+  msg:"The hallway smoke alarm beeps every minute or so.",why:"Almost certainly a low battery. Alarm still works, so routine. Tenant asked to press the test button and confirm it sounds."},
+ {id:"KL-4808",flat:"Flat 14",addr:"Mercer House, 40 Mercer St",tenant:"Ahmed Rahman",phone:"07700 900631",recv:"Mon 09:30",
+  issue:"Shower has almost no pressure",urgency:"routine",vendor:"Clearwater Plumbing",slot:"On site since 10:50",status:"onsite",
+  msg:"Shower is just a trickle. Taps are fine.",why:"Likely a blocked shower head or cartridge. Routine."},
+ {id:"KL-4811",flat:"Flat 18",addr:"Brindley House, 9 Canal St",tenant:"Helen Strand",phone:"07700 900098",recv:"Mon 11:20",
+  issue:"Ground-floor bedroom window won't close",urgency:"urgent",vendor:"Pinnacle Property Maintenance",slot:"Done today 10:20",status:"done",
+  msg:"The bedroom window handle snapped and the window won't lock shut.",why:"Ground floor and can't be secured, so urgent for security. Handle replaced, tenant confirmed."},
+ {id:"KL-4809",flat:"Flat 4",addr:"8 Foundry Lane",tenant:"Callum Reid",phone:"07700 900352",recv:"Mon 08:50",
+  issue:"Hallway light flickering",urgency:"routine",vendor:"Voltline Electrical",slot:"Done today 08:45",status:"done",
+  msg:"The hallway light flickers on and off.",why:"No heat or smell reported. Routine. Faulty fitting replaced."},
+ {id:"KL-4803",flat:"Flat 1",addr:"22 Mercer Row",tenant:"Kwame Boateng",phone:"07700 900477",recv:"Sun 18:12",
+  issue:"Washing machine leaking",urgency:"routine",vendor:"No vendor booked",slot:"Tenant's own appliance",status:"done",
+  msg:"My washing machine is leaking onto the kitchen floor.",why:"Tenancy record shows the machine is the tenant's own, so no repair booked. Replied with guidance and asked them to say if the leak is from the pipework."}
+];
+var filters = [
+ {key:"all",label:"All open and today",test:function(){return true}},
+ {key:"need",label:"Needs you",cls:"need",test:function(r){return r.status==="attention"}},
+ {key:"wait",label:"Waiting on vendor",test:function(r){return r.status==="awaiting"||r.status==="triage"}},
+ {key:"booked",label:"Booked",test:function(r){return r.status==="booked"||r.status==="handled"}},
+ {key:"onsite",label:"On site",test:function(r){return r.status==="onsite"}},
+ {key:"done",label:"Done",test:function(r){return r.status==="done"}}
+];
+var statusText={attention:"Needs you",awaiting:"Waiting for vendor",triage:"Agent triaging",booked:"Booked",onsite:"On site now",done:"Done",handled:"Handled by you"};
+var uLabel={emergency:"▲ Emergency",urgent:"● Urgent",routine:"○ Routine"};
+var uRank={emergency:0,urgent:1,routine:2};
+var sRank={attention:0,triage:1,awaiting:2,handled:3,booked:3,onsite:4,done:5};
+var current="all", open={};
+
+function sorted(){
+  return reqs.slice().sort(function(a,b){
+    return (sRank[a.status]-sRank[b.status]) || (uRank[a.urgency]-uRank[b.urgency]);
+  });
+}
+function renderTiles(){
+  var h="";
+  filters.forEach(function(f){
+    var n=reqs.filter(f.test).length;
+    h+='<button class="tile '+(f.cls||"")+'" data-f="'+f.key+'" aria-pressed="'+(current===f.key)+'"><span class="n">'+n+'</span><span class="l">'+f.label+'</span></button>';
+  });
+  document.getElementById("tiles").innerHTML=h;
+}
+function renderList(){
+  var f=filters.filter(function(x){return x.key===current})[0];
+  var rows=sorted().filter(f.test);
+  var h="";
+  if(!rows.length) h='<div class="empty">Nothing here right now.</div>';
+  rows.forEach(function(r){
+    var isOpen=!!open[r.id];
+    h+='<article class="req '+r.status+'">'+
+     '<div class="row">'+
+      '<div><div class="flat">'+r.flat+'</div><div class="sub">'+r.addr+'</div><div class="sub">'+r.tenant+'</div></div>'+
+      '<div><div class="issue">'+r.issue+'</div><div class="sub">'+r.id+' · received '+r.recv+'</div></div>'+
+      '<div><span class="chip '+r.urgency+'">'+uLabel[r.urgency]+'</span></div>'+
+      '<div>'+r.vendor+(r.slot?'<div class="sub">'+r.slot+'</div>':'')+'</div>'+
+      '<div class="status '+(r.status==="attention"?"attention":r.status==="done"?"done":"")+'">'+(r.status==="attention"?"⚠ ":r.status==="done"?"✓ ":"")+statusText[r.status]+'</div>'+
+     '</div>';
+    if(r.status==="attention"){
+      h+='<div class="ask"><strong>What the agent needs from you</strong><p>'+r.ask+'</p>'+
+       '<div class="actions"><a class="btn" href="tel:'+r.phone.replace(/\s/g,"")+'">Call '+r.tenant.split(" ")[0]+' · '+r.phone+'</a>'+
+       '<button class="btn sec" data-handled="'+r.id+'">Mark as handled</button></div></div>';
+    }
+    h+='<button class="more" data-more="'+r.id+'" aria-expanded="'+isOpen+'">'+(isOpen?"Hide details":"Tenant message and agent reasoning")+'</button>'+
+     '<dl class="detail" '+(isOpen?"":"hidden")+'><dt>Tenant wrote</dt><dd>“'+r.msg+'”</dd><dt>Why the agent chose this</dt><dd>'+r.why+'</dd><dt>Contact</dt><dd>'+r.tenant+' · '+r.phone+'</dd></dl>'+
+    '</article>';
+  });
+  document.getElementById("list").innerHTML=h;
+}
+function render(){renderTiles();renderList();}
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-f],[data-more],[data-handled]"); if(!t) return;
+  if(t.dataset.f){current=t.dataset.f;render();var b=document.querySelector('[data-f="'+current+'"]');if(b)b.focus();}
+  else if(t.dataset.more){open[t.dataset.more]=!open[t.dataset.more];renderList();var m=document.querySelector('[data-more="'+t.dataset.more+'"]');if(m)m.focus();}
+  else if(t.dataset.handled){
+    reqs.forEach(function(r){if(r.id===t.dataset.handled){r.status="handled";r.slot="Marked handled 11:47";}});
+    render();
+  }
+});
+render();
+</script>
+</body>
+</html>

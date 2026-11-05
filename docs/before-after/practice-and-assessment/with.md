@@ -1,21 +1,16 @@
-# Forklift safety quiz: 8 scenario questions
-
-**Assumptions:** the learners are new hires who've just finished the session, and this is a low-stakes practice quiz, so they get feedback straight after each answer. Answers are marked ✔.
-
+These are 8 scenario questions, one per topic in the session. I assumed the hires take them right after the session with the session rules at hand. Each wrong answer has a one-line explanation, so the quiz also works as feedback.
 [...]
-
 **5. The heavy pallet**
-A pallet has a weight label that's a little over the maximum load on your forklift's capacity plate. Your team lead is waiting on it. What do you do?
+Jin is about to lift a pallet. The capacity plate on the mast shows the truck's maximum load, and the pallet's label shows a heavier weight. What does Jin do?
 
-- A. Lift it slowly. A small overage is probably fine.
-- B. Lift it a few centimetres first to see how the forklift handles it.
-- C. Leave it on the floor and don't lift it. ✔
-- D. Lift it, but drive at 5 km/h instead of 8.
+A. Lift it a few centimeters to see how the truck handles it
+B. Lift it and drive at a crawl
+C. Not lift it, leave it where it is, and tell [supervisor/lead]
+D. Lift it, but only with the mast tilted back as far as it goes
 
-**Feedback**
-- A: A forklift tips when it's overloaded, and "a little over" is still over. The plate gives the maximum, and a heavier load means you don't lift.
-- B: A test lift is still a lift. If the forklift handles the weight badly, you find out at the worst moment.
-- C: Correct. If the load is heavier than the capacity plate allows, don't lift it, no matter who is waiting.
-- D: Driving slower doesn't make the forklift able to carry more. The limit is on the lift itself.
-
+**Answer: C.**
+- A: A test lift can tip the truck or strain the hydraulics, and he'd find out when it's too late.
+- B: Driving slowly doesn't fix a truck that's overloaded. It can still tip.
+- D: Tilting back doesn't increase capacity. If the load is heavier than the plate allows, don't lift it.
 [...]
+- Use these at the end of the session, then ask the same eight again tomorrow without the answers, with changed details (different names, different loads). That later, changed version is the better evidence they've learned it.

@@ -1,16 +1,21 @@
 ```css
 :root {
   /* Color */
-  --color-brand: #0f766e;
-  --color-brand-hover: #0d6b63;
-  --color-brand-subtle: #e6f4f2;
+  --color-primary: #0f766e;
+  --color-primary-hover: #0d6b63;
+  --color-primary-tint: #e6f4f2;
   --color-danger: #c0392b;
   --color-danger-hover: #a93226;
-  --color-on-accent: #fff;
+  --color-on-primary: #fff;
   --color-surface: #fff;
   --color-border: #dde2e1;
-  --color-text: #14201f;
+  --color-text-strong: #14201f;
   --color-text-muted: #5a6b69;
+
+  /* Shape and elevation */
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --shadow-card: 0 1px 4px rgba(16, 24, 40, .10);
 
   /* Type */
   --font-size-sm: 13px;
@@ -19,7 +24,7 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Space */
+  /* Spacing scale */
   --space-1: 6px;
   --space-2: 10px;
   --space-3: 12px;
@@ -27,11 +32,8 @@
   --space-5: 18px;
   --space-6: 20px;
 
-  /* Shape, elevation, motion */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --shadow-card: 0 1px 4px rgba(16, 24, 40, .10);
-  --duration-base: .18s;
+  /* Motion */
+  --transition-fast: .18s ease;
 }
 
 /* Buttons */
@@ -42,31 +44,31 @@
   padding: var(--space-2) var(--space-5);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius-sm);
-  background: var(--color-brand);
-  color: var(--color-on-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
   border: 0;
-  transition: background var(--duration-base) ease;
+  transition: background var(--transition-fast);
 }
-.btn:hover { background: var(--color-brand-hover); }
+.btn:hover { background: var(--color-primary-hover); }
 
-/* Outlined variant: 1px border is offset by 1px less padding so its size matches .btn */
+/* 1px border is inside the padding, so padding is reduced by 1px to keep the same box size */
 .btn-secondary {
   background: transparent;
-  color: var(--color-brand);
-  border: 1px solid var(--color-brand);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
   padding: calc(var(--space-2) - 1px) calc(var(--space-5) - 1px);
 }
-.btn-secondary:hover { background: var(--color-brand-subtle); }
+.btn-secondary:hover { background: var(--color-primary-tint); }
 
-.btn-danger { background: var(--color-danger); color: var(--color-on-accent); }
+.btn-danger { background: var(--color-danger); color: var(--color-on-primary); }
 .btn-danger:hover { background: var(--color-danger-hover); }
 
-/* Cards */
+/* Card */
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   padding: var(--space-6);
   box-shadow: var(--shadow-card);
 }
@@ -75,7 +77,7 @@
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   margin: 0 0 var(--space-2);
-  color: var(--color-text);
+  color: var(--color-text-strong);
 }
 
 .card-meta {
@@ -96,7 +98,7 @@
 
 Notes:
 
-- **Values are unchanged.** Every token holds the exact value the original rule used, and all class names are kept. The `.btn-secondary` padding is now `calc(... - 1px)`, which gives the same 9px/17px as before.
-- **Rule order is preserved.** `.btn-secondary:hover` still comes after `.btn:hover` and has the same specificity, so the hover background still wins on a secondary button, as before.
-- **Possible collision.** The custom properties are defined on `:root` with generic names like `--color-brand` and `--space-2`. If your app already defines variables with those names, the values here will override them. Grep for `--color-`, `--space-`, and `--radius-` before merging, or add a prefix such as `--ui-`.
-- **Not visually tested.** I checked this by reading the rules, not by rendering the components. A quick visual diff of a page with buttons and cards would confirm it.
+- **Same output:** Every token resolves to the original literal value, and the class names, selectors, and specificity are unchanged. `.btn-secondary` keeps its 10px/18px outer box by subtracting the 1px border from its padding, which is the same calculation the original numbers did.
+- **Spacing scale:** The original values (6, 10, 12, 14, 18, 20) become a six-step scale. New components can pick from it, and off-scale values will stand out in review.
+- **Left alone on purpose:** I didn't add `:focus-visible` styles or a disabled state, since they would be visible changes. They are good candidates for a follow-up.
+- **Not verified in a browser:** I checked the values by reading them against the originals, not by rendering. A quick visual diff of a few pages would confirm it.

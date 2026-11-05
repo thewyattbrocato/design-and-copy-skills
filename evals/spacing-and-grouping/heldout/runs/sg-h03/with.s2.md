@@ -1,4 +1,4 @@
-I couldn't save the file because the Write tool is disabled in this session. Here is the full HTML to save as `index.html`:
+I couldn't save the file because the Write tool is disabled in this session. The full HTML is below, so you can save it as `index.html`. I haven't opened it in a browser.
 
 ```html
 <!DOCTYPE html>
@@ -9,74 +9,71 @@ I couldn't save the file because the Write tool is disabled in this session. Her
 <title>Library Books</title>
 <style>
   :root {
-    --s1: 4px;
-    --s2: 8px;
-    --s3: 12px;
-    --s4: 20px;
-    --s5: 24px;
-    --s6: 40px;
-    --ink: #1c2330;
-    --muted: #5b6577;
-    --line: #d9dee7;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --ink: #1c1f26;
+    --muted: #5b6270;
+    --line: #dde1e8;
+    --bg: #f4f5f7;
     --accent: #1f5fbf;
   }
   * { box-sizing: border-box; margin: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
     color: var(--ink);
-    background: #f4f6f9;
-    padding: var(--s6) var(--s4);
+    background: var(--bg);
+    line-height: 1.5;
+    padding: var(--space-6) var(--space-4);
   }
   .list {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: var(--s5);           /* between cards: larger than card padding */
+    gap: var(--space-5);          /* parent owns the gap between cards */
+    max-width: 560px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
   }
   .card {
     display: flex;
     flex-direction: column;
-    gap: var(--s3);
-    padding: var(--s4);
+    gap: var(--space-4);          /* between text block and actions */
+    padding: var(--space-5);
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 12px;
   }
-  .text { display: flex; flex-direction: column; gap: var(--s3); }   /* heading block to synopsis */
-  .heading { display: flex; flex-direction: column; gap: var(--s1); } /* title + author = one unit */
-  h2 { font-size: 1.25rem; line-height: 1.3; font-weight: 650; }
+  .text { display: flex; flex-direction: column; gap: var(--space-3); }
+  .head { display: flex; flex-direction: column; gap: var(--space-1); }  /* title + author: tightest */
+  h2 { font-size: 1.25rem; line-height: 1.3; }
   .author { font-size: 0.9375rem; color: var(--muted); }
   .synopsis {
+    font-size: 0.9375rem;
+    color: #333844;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .actions {
-    display: flex;
-    gap: var(--s2);
-    margin-top: var(--s2);    /* extra separation: text group vs actions */
-  }
+  .actions { display: flex; gap: var(--space-2); }
   button {
     font: inherit;
     font-weight: 600;
     min-height: 44px;
-    padding: var(--s3) var(--s4);
+    padding: var(--space-3) var(--space-5);
     border-radius: 8px;
     border: 1px solid var(--accent);
     cursor: pointer;
   }
-  .primary { background: var(--accent); color: #fff; }
-  .secondary { background: transparent; color: var(--accent); }
-  button:focus-visible { outline: 3px solid #9cc0f5; outline-offset: 2px; }
-  @media (max-width: 480px) {
-    body { padding: var(--s5) var(--s3); }
-    .actions button { flex: 1; }
+  .reserve { background: var(--accent); color: #fff; }
+  .details { background: transparent; color: var(--accent); }
+  button:focus-visible { outline: 3px solid #9ec0f5; outline-offset: 2px; }
+  @media (max-width: 420px) {
+    .actions button { flex: 1; padding-inline: var(--space-4); }
   }
 </style>
 </head>
@@ -84,41 +81,41 @@ I couldn't save the file because the Write tool is disabled in this session. Her
   <ul class="list">
     <li class="card">
       <div class="text">
-        <div class="heading">
-          <h2>The Ashgrove</h2>
-          <p class="author">Robert Pearsall</p>
-        </div>
-        <p class="synopsis">Nine strangers, each drawn to the old orchard in different ways, converge to protect the last standing groves in a sweeping novel of activism and wonder.</p>
-      </div>
-      <div class="actions">
-        <button class="primary" type="button">Reserve</button>
-        <button class="secondary" type="button">Details</button>
-      </div>
-    </li>
-    <li class="card">
-      <div class="text">
-        <div class="heading">
-          <h2>Merriwick</h2>
-          <p class="author">Suzanne Clayborn</p>
-        </div>
-        <p class="synopsis">Merriwick lives in a vast house of endless corridors and fog. As strange evidence of another person appears, the truth about his world begins to surface.</p>
-      </div>
-      <div class="actions">
-        <button class="primary" type="button">Reserve</button>
-        <button class="secondary" type="button">Details</button>
-      </div>
-    </li>
-    <li class="card">
-      <div class="text">
-        <div class="heading">
+        <div class="head">
           <h2>The Stillness of Dusk</h2>
           <p class="author">Kaspar Ingleby</p>
         </div>
-        <p class="synopsis">An aging steward takes a coastal trip in 1956 and reflects on duty, dignity, and the personal cost of a life spent in service.</p>
+        <p class="synopsis">An aging steward reflects on a lifetime of service and the choices he made in the name of dignity, loyalty and duty, as a coastal trip forces him to face what he gave up.</p>
       </div>
       <div class="actions">
-        <button class="primary" type="button">Reserve</button>
-        <button class="secondary" type="button">Details</button>
+        <button class="reserve" type="button">Reserve</button>
+        <button class="details" type="button">Details</button>
+      </div>
+    </li>
+    <li class="card">
+      <div class="text">
+        <div class="head">
+          <h2>Merriwick</h2>
+          <p class="author">Suzanne Clayborn</p>
+        </div>
+        <p class="synopsis">Merriwick lives in a vast house of endless corridors and fog, keeping careful journals of its wonders, until signs appear that someone else is there and his world begins to unravel.</p>
+      </div>
+      <div class="actions">
+        <button class="reserve" type="button">Reserve</button>
+        <button class="details" type="button">Details</button>
+      </div>
+    </li>
+    <li class="card">
+      <div class="text">
+        <div class="head">
+          <h2>A Guest at the Grand Meridian</h2>
+          <p class="author">Amos Thornbury</p>
+        </div>
+        <p class="synopsis">Sentenced to house arrest in a grand harbor hotel, Count Halvard finds a life of unexpected purpose and friendship while decades of upheaval unfold outside its doors.</p>
+      </div>
+      <div class="actions">
+        <button class="reserve" type="button">Reserve</button>
+        <button class="details" type="button">Details</button>
       </div>
     </li>
   </ul>
@@ -126,20 +123,16 @@ I couldn't save the file because the Write tool is disabled in this session. Her
 </html>
 ```
 
-I haven't opened it in a browser, so the layout is unchecked.
-
-**Spacing changes**
-- **Title and author:** 4px apart, so they read as one heading unit.
-- **Heading and synopsis:** 12px apart.
-- **Synopsis and buttons:** 20px apart (12px gap plus 8px extra margin), so the actions sit visibly apart from the text.
-- **Between the two buttons:** 8px.
-- **Between cards:** 24px, which is larger than the 20px card padding, so the cards don't blur together. They previously touched.
-- **Gap ownership:** the containers set every gap with flex `gap`, so no child has a margin and the last item adds no extra space.
-- **Scale:** every value comes from one small scale (4, 8, 12, 20, 24, 40).
-
-**Other details**
-- **Cards:** each card uses a single border on a white fill, with no shadow.
-- **Buttons:** they are at least 44px tall, with horizontal padding larger than vertical. "Reserve" is the filled primary button and "Details" is outlined.
+**What changed in the spacing**
+- **Three levels instead of one value:**
+  - Title to author is 4px, so they read as one heading.
+  - Heading to synopsis is 12px.
+  - Text block to buttons is 16px.
+  - The closer items sit, the more closely related they are.
+- **Cards:** there is now a 24px gap between cards, where before they touched. Each card has 24px of padding, so the gap is never smaller than the padding and the cards don't blur together. Each card is a white surface with a hairline border and no shadow.
+- **Gaps owned by the parent:** spacing comes from flex `gap` on the containers, not from margins on every element. There's no doubled space after the last item.
+- **Buttons:** each is at least 44px tall, with horizontal padding about twice the vertical, and an 8px gap between them. "Reserve" is the filled primary button and "Details" is the outlined secondary one. On narrow screens they share the row equally.
 - **Synopsis:** it is clamped to two lines.
-- **Small screens:** at 480px wide or less, the buttons share the row equally.
-- **Fonts and assets:** it uses system fonts and no external assets.
+- **Spacing scale:** every value comes from one scale (4, 8, 12, 16, 24 and 32px), kept as CSS custom properties.
+
+The book titles and synopses are placeholders. Swap in your real data.

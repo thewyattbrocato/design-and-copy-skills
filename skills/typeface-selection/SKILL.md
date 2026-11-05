@@ -30,7 +30,7 @@ A short request ("this font feels off") is not a small one: name the role that f
 - A named font that is not loaded or installed, with no real fallback after it; a bare generic family as the whole stack.
 - Faux bold, italic or small caps. Pick a family that has them, or turn synthesis off and drop the style.
 - Hairline weights for text; light-on-dark text with the light-theme weight.
-- An invented fact about a font: its license terms, popularity, file size, or script coverage you have not checked. Say "confirm with the foundry" instead.
+- An invented fact about a font: its license terms, popularity, file size, or script coverage you have not checked. Say "confirm with the foundry" instead. Likewise no readability statistic, and no claim that serif or sans is proven easier.
 - A plainer page than asked for. A poster, a brand moment or an expressive brief wants an expressive display face, used big and short, with a plain partner for the small text.
 
 ## Choosing
@@ -39,9 +39,11 @@ A short request ("this font feels off") is not a small one: name the role that f
 
 **One family by default.** Choose one with real range: regular, a medium or semibold, bold, and a true italic. Hierarchy comes from weight and size inside it. Add a second family only for a role the first cannot play: long reading, a display voice, or code.
 
-**Reading text.** Neither serif nor sans wins by category; the specific face, size and screen decide. What matters is comfort at the size used: moderate contrast, open apertures, a medium to generous x-height, sturdy serifs or terminals that survive small rendering, a drawn italic. Test a real paragraph at the smallest size on the real background, not a headline specimen. For an essay, article, recipe or book-like page a text serif or humanist stack is the stronger default.
+**Reading text.** Neither serif nor sans wins by category, and ordinary text faces read at much the same speed; the specific face, size and screen decide. What matters is comfort at the size used: moderate contrast, open apertures, a medium to generous x-height, sturdy serifs or terminals that survive small rendering, a drawn italic. Test a real paragraph at the smallest size on the real background, not a headline specimen. For an essay, article, recipe or book-like page a text serif or humanist stack is the stronger default.
 
 **Interface text.** A sturdy grotesque or humanist sans with distinct I, l, 1 and O, 0, tabular figures for money and counts, and a weight range. Round, closed geometric shapes suit headlines better than dense small text.
+
+**Hard cases.** For codes, tiny labels, far or glanced text and unusual brand letterforms, set the confusable letters at the smallest size on the real ground before choosing; prose needs this less, since context rescues most pairs.
 
 **Display.** Contrast, width and character are allowed where text is big and short. Keep the voice of the face tied to the brand's actual tone, not its subject. Pair a display face with a calm text face, not another display face.
 
@@ -76,12 +78,13 @@ Do not stall on questions. Assume a screen, a Latin-script audience, no installe
 - Every role (reading, interface, display, code) has a named face or stack, and each stack ends in a real fallback.
 - No more than two families plus mono; no pair that is nearly the same.
 - Bold and italic exist in the family; no synthesis.
-- Digits and I, l, 1, O, 0 can be told apart where it matters; money has tabular figures.
+- Digits and I, l, 1, O, 0, e, c, o can be told apart at the smallest size where it matters; money has tabular figures.
 - Offline, the page still looks as intended: the fallback was checked, not assumed.
 - Languages, license and loading are stated, or the open question is.
 
 ## References
 
-- [references/judging-and-pairing.md](references/judging-and-pairing.md): load when shortlisting from several faces, comparing candidates or building a pair; the structure checklist and pairing table.
-- [references/stacks-loading-scripts.md](references/stacks-loading-scripts.md): load when fonts cannot load, or when shipping web fonts, variable fonts or several scripts; stacks by role, loading recipe, script notes.
+- [references/judging-and-pairing.md](references/judging-and-pairing.md): load when shortlisting from several faces, comparing candidates or building a pair; the structure checklist, pairing table and on-screen test order.
+- [references/stacks-loading-scripts.md](references/stacks-loading-scripts.md): load when fonts cannot load, or when shipping web fonts, variable fonts or several scripts; stacks by role, loading recipe, fallback fit, script notes.
 - [references/screen-fit-and-genres.md](references/screen-fit-and-genres.md): load for tiny or dense interface text, a delicate or mandated brand face, a thin or blurry render, a genre-only brief ("elegant", "quiet"), or fallback matching.
+- [references/legibility-and-hard-cases.md](references/legibility-and-hard-cases.md): load when a readability claim is cited, or for codes, tiny, far or glanced text, an unusual brand letterform, or readers with special needs; what holds, confusable letters, what is unknown.

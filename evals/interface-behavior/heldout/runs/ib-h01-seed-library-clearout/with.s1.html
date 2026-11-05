@@ -5,250 +5,348 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Seed Library – Volunteer Desk</title>
 <style>
-  :root{
-    --bg:#f6f3ec; --card:#fffdf8; --ink:#2b2a26; --muted:#6b675c; --line:#ddd7c8;
-    --green:#3d6b3a; --green-d:#2d5230; --amber:#9a5b00; --amber-bg:#fbeccc;
-    --red:#a3322a; --red-bg:#f7dcd8; --sel:#e6efdd;
+  :root {
+    --bg: #f6f4ee; --card: #ffffff; --ink: #1f2a22; --muted: #5d6b61;
+    --line: #dcd8ca; --accent: #2f6b3f; --accent-ink: #ffffff;
+    --warn-bg: #fbeed0; --warn-ink: #6b4a00; --empty-bg: #f6dcd6; --empty-ink: #7a2415;
+    --sel: #e8f1e6; --focus: #1b5fb8;
   }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
-  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 120px}
-  h1{font-size:1.5rem;margin:0 0 2px}
-  .sub{color:var(--muted);margin:0 0 16px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
-  .card h2{font-size:1rem;margin:0 0 8px}
-  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-  button,input,select{font:inherit}
-  button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 12px;border-radius:8px;cursor:pointer}
-  button:hover{border-color:#b9b29d}
-  button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #7aa874;outline-offset:1px}
-  button.primary{background:var(--green);border-color:var(--green-d);color:#fff}
-  button.primary:hover{background:var(--green-d)}
-  button.danger{background:var(--red);border-color:var(--red);color:#fff}
-  button:disabled{opacity:.45;cursor:default}
-  input[type=text],input[type=number],select{border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:#fff}
-  input[type=number]{width:5.5em}
-  .stats{color:var(--muted);font-size:.9rem;margin-left:auto}
-  table{width:100%;border-collapse:collapse}
-  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
-  th{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);white-space:nowrap}
-  th button{all:unset;cursor:pointer}
-  th button:hover{color:var(--ink)}
-  th button:focus-visible{outline:3px solid #7aa874}
-  td.num,th.num{text-align:right}
-  tr.sel{background:var(--sel)}
-  td.name{font-weight:600}
-  .tag{display:inline-block;font-size:.72rem;font-weight:600;padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:middle}
-  .tag.empty{background:var(--red-bg);color:var(--red)}
-  .tag.old{background:var(--amber-bg);color:var(--amber)}
-  .qty{display:inline-flex;align-items:center;gap:6px}
-  .qty button{padding:2px 9px;line-height:1.2}
-  .qty span{min-width:2em;text-align:center;font-variant-numeric:tabular-nums}
-  input[type=checkbox]{width:20px;height:20px;accent-color:var(--green)}
-  .empty-msg{padding:24px;text-align:center;color:var(--muted)}
-  .bar{position:fixed;left:0;right:0;bottom:0;background:#2b2a26;color:#fff;padding:12px 16px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;transform:translateY(110%);transition:transform .15s}
-  .bar.show{transform:none}
-  .bar button{border-color:#555}
-  .toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#fff;border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.18);border-radius:10px;padding:10px 14px;display:none;gap:12px;align-items:center;max-width:92vw;z-index:5}
-  .toast.show{display:flex}
-  .hint{font-size:.85rem;color:var(--muted);margin:8px 0 0}
-  @media (max-width:560px){ .hide-s{display:none} th,td{padding:8px 4px} }
-  @media (prefers-reduced-motion:reduce){.bar{transition:none}}
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151a16; --card: #1e251f; --ink: #e8ece6; --muted: #9aa89d;
+      --line: #34403a; --accent: #6fbf80; --accent-ink: #0e1a11;
+      --warn-bg: #4a3b12; --warn-ink: #f3d889; --empty-bg: #55231a; --empty-ink: #f5b9ac;
+      --sel: #25352a; --focus: #7db3f5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 24px 16px 110px;
+  }
+  main { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 2px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  button, input, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  button { cursor: pointer; }
+
+  .banner {
+    background: var(--card); border: 1px solid var(--line); border-left: 6px solid var(--accent);
+    border-radius: 8px; padding: 14px 16px; display: flex; gap: 12px 16px;
+    align-items: center; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .banner.clean { border-left-color: var(--line); }
+  .banner .msg { flex: 1 1 260px; }
+  .banner strong { font-size: 1.05rem; }
+  .banner small { display: block; color: var(--muted); }
+  .btn {
+    border: 1px solid var(--line); background: var(--card); border-radius: 6px;
+    padding: 8px 14px; min-height: 40px;
+  }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  .btn.danger { background: #a3321f; color: #fff; border-color: #a3321f; font-weight: 600; }
+  .btn:hover { filter: brightness(0.96); }
+
+  .tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .tools input[type=search] {
+    flex: 1 1 180px; min-height: 40px; padding: 6px 10px; border: 1px solid var(--line);
+    border-radius: 6px; background: var(--card);
+  }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 12px; min-height: 36px; }
+  .chip[aria-pressed=true] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+  .tablewrap { background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); white-space: nowrap; }
+  th button { background: none; border: 0; padding: 4px 0; text-transform: inherit; letter-spacing: inherit; font-size: inherit; color: inherit; font-weight: 700; }
+  th button::after { content: " ↕"; opacity: .35; }
+  th[aria-sort=ascending] button::after { content: " ↑"; opacity: 1; }
+  th[aria-sort=descending] button::after { content: " ↓"; opacity: 1; }
+  td.num, th.num { text-align: right; }
+  tr.sel td { background: var(--sel); }
+  input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); }
+  .name { font-weight: 600; }
+  .tag { display: inline-block; font-size: .75rem; font-weight: 600; border-radius: 4px; padding: 1px 7px; margin-left: 6px; vertical-align: 1px; }
+  .tag.old { background: var(--warn-bg); color: var(--warn-ink); }
+  .tag.empty { background: var(--empty-bg); color: var(--empty-ink); }
+  .stepper { display: inline-flex; align-items: center; gap: 6px; }
+  .stepper button { width: 34px; height: 34px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); font-size: 1.1rem; line-height: 1; }
+  .stepper button:disabled { opacity: .35; cursor: default; }
+  .stepper output { min-width: 2ch; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .emptyrow td { text-align: center; color: var(--muted); padding: 28px; }
+
+  details { margin-top: 18px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px; }
+  summary { cursor: pointer; font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+  form.add { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; align-items: end; padding: 10px 0 6px; }
+  label { display: grid; gap: 3px; font-size: .85rem; color: var(--muted); }
+  label input, label select { min-height: 40px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+  .settings { margin-top: 14px; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: .9rem; }
+  .settings input { width: 4.5rem; min-height: 36px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); }
+  .linkbtn { background: none; border: 0; color: var(--muted); text-decoration: underline; padding: 6px; }
+
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0; background: var(--card);
+    border-top: 1px solid var(--line); padding: 12px 16px; display: none; z-index: 5;
+    box-shadow: 0 -4px 14px rgba(0,0,0,.12);
+  }
+  .bar.show { display: block; }
+  .bar div { max-width: 900px; margin: 0 auto; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .bar span { flex: 1 1 200px; font-weight: 600; }
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 90px; background: #25302a; color: #fff;
+    padding: 10px 14px; border-radius: 8px; display: none; gap: 14px; align-items: center; z-index: 10;
+    max-width: calc(100% - 32px); box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  }
+  .toast.show { display: flex; }
+  .toast button { background: none; border: 0; color: #9fe0ad; font-weight: 700; text-decoration: underline; padding: 6px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>🌱 Seed Library Desk</h1>
-  <p class="sub">Sample data – changes are saved in this browser only.</p>
+<main>
+  <h1>Seed Library – Volunteer Desk</h1>
+  <p class="sub">Sample data for <span id="year"></span>. Changes are saved in this browser.</p>
 
-  <div class="card">
-    <h2>End-of-season cleanup</h2>
-    <div class="row">
-      <button id="selEmpty" type="button"></button>
-      <span class="row" style="gap:6px">
-        <button id="selOld" type="button"></button>
-        <label for="cutoff" class="hint" style="margin:0">packed in or before</label>
-        <input id="cutoff" type="number" min="1990" max="2100">
-      </span>
-      <button id="selBoth" type="button" class="primary"></button>
-    </div>
-    <p class="hint">Pick what to clear, look over the highlighted rows, untick anything you want to keep, then remove. Removals can be undone.</p>
+  <section class="banner" id="banner" aria-live="polite"></section>
+
+  <div class="tools">
+    <input type="search" id="q" placeholder="Search by name or type" aria-label="Search packets">
+    <div class="chips" id="chips" role="group" aria-label="Filter"></div>
   </div>
 
-  <div class="card">
-    <div class="row" style="margin-bottom:8px">
-      <input id="q" type="text" placeholder="Search name or type…" aria-label="Search" style="flex:1;min-width:160px">
-      <select id="typeFilter" aria-label="Filter by type"></select>
-      <span class="stats" id="stats"></span>
-    </div>
+  <div class="tablewrap">
     <table>
-      <thead><tr>
-        <th style="width:34px"><input type="checkbox" id="all" aria-label="Select all shown"></th>
-        <th><button type="button" data-k="name">Name</button></th>
-        <th class="hide-s"><button type="button" data-k="type">Type</button></th>
-        <th><button type="button" data-k="year">Packed</button></th>
-        <th class="num"><button type="button" data-k="left">Left</button></th>
-      </tr></thead>
-      <tbody id="body"></tbody>
+      <thead>
+        <tr>
+          <th style="width:44px"><input type="checkbox" id="all" aria-label="Select all shown"></th>
+          <th data-k="name"><button type="button">Name</button></th>
+          <th data-k="type"><button type="button">Type</button></th>
+          <th data-k="year" class="num"><button type="button">Year packed</button></th>
+          <th data-k="left" class="num"><button type="button">Left</button></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
     </table>
-    <div id="none" class="empty-msg" hidden>No packets match.</div>
   </div>
 
-  <div class="card">
-    <h2>Add a packet</h2>
-    <form id="add" class="row">
-      <input id="aName" type="text" placeholder="Name" required style="flex:1;min-width:140px" aria-label="Name">
-      <select id="aType" aria-label="Type"></select>
-      <input id="aYear" type="number" aria-label="Year packed" required>
-      <input id="aLeft" type="number" min="0" value="10" aria-label="Number left">
-      <button class="primary" type="submit">Add</button>
+  <div class="settings">
+    <label style="display:flex;flex-direction:row;align-items:center;gap:8px;color:inherit;font-size:inherit">
+      Count a packet as old after
+      <input type="number" id="age" min="1" max="20" aria-label="Years before a packet counts as old">
+      years
+    </label>
+    <span id="cutoffNote"></span>
+    <button class="linkbtn" type="button" id="reset">Reset sample data</button>
+  </div>
+
+  <details id="addbox">
+    <summary>Add a packet</summary>
+    <form class="add" id="add">
+      <label>Name <input name="name" required maxlength="60"></label>
+      <label>Type
+        <select name="type"><option>Vegetable</option><option>Herb</option><option>Flower</option><option>Bean &amp; pea</option></select>
+      </label>
+      <label>Year packed <input name="year" type="number" required min="2000" max="2100"></label>
+      <label>How many <input name="left" type="number" required min="0" max="999" value="10"></label>
+      <button class="btn primary" type="submit">Add packet</button>
     </form>
-  </div>
-</div>
+  </details>
+</main>
 
-<div class="toast" id="toast" role="status"><span id="toastMsg"></span><button id="undo" type="button">Undo</button><button id="dismiss" type="button" aria-label="Dismiss">✕</button></div>
+<div class="bar" id="bar"><div>
+  <span id="barCount"></span>
+  <button class="btn" type="button" id="clearSel">Deselect</button>
+  <button class="btn danger" type="button" id="removeSel"></button>
+</div></div>
 
-<div class="bar" id="bar">
-  <strong id="barCount"></strong>
-  <button id="remove" type="button" class="danger"></button>
-  <button id="clear" type="button">Clear selection</button>
-</div>
+<div class="toast" id="toast" role="status"><span id="toastMsg"></span><button type="button" id="undo">Undo</button></div>
+<div class="sr" id="live" aria-live="polite"></div>
 
 <script>
-(function(){
+(function () {
   var NOW = new Date().getFullYear();
-  var TYPES = ["Vegetable","Herb","Flower","Fruit","Legume"];
-  var KEY = "seedlib-desk-v1";
-  var seed = [
-    ["Brandywine Tomato","Vegetable",2025,24],["Genovese Basil","Herb",2025,31],
-    ["Cosmos Sensation Mix","Flower",2024,18],["Cherokee Purple Tomato","Vegetable",2023,0],
-    ["Provider Bush Bean","Legume",2024,40],["Detroit Dark Red Beet","Vegetable",2022,9],
-    ["Calendula Resina","Flower",2021,6],["Lacinato Kale","Vegetable",2026,28],
-    ["Moon & Stars Watermelon","Fruit",2023,3],["Italian Parsley","Herb",2022,0],
-    ["Blue Lake Pole Bean","Legume",2026,35],["Zinnia State Fair","Flower",2025,0],
-    ["Sugar Snap Pea","Legume",2021,12],["Rainbow Chard","Vegetable",2024,15],
-    ["Lemon Balm","Herb",2023,7]
+  var KEY = "seedlib.desk.v1";
+  var SAMPLE = [
+    ["Cherokee Purple Tomato","Vegetable",NOW-1,14],
+    ["Genovese Basil","Herb",NOW,9],
+    ["Blue Lake Bush Bean","Bean & pea",NOW-3,6],
+    ["Zinnia 'State Fair'","Flower",NOW-1,0],
+    ["Lacinato Kale","Vegetable",NOW-2,11],
+    ["Sugar Snap Pea","Bean & pea",NOW,18],
+    ["Calendula","Flower",NOW-4,4],
+    ["Chives","Herb",NOW-2,7],
+    ["Detroit Dark Red Beet","Vegetable",NOW-3,0],
+    ["Cilantro 'Slow Bolt'","Herb",NOW-1,2],
+    ["Scarlet Runner Bean","Bean & pea",NOW-1,12],
+    ["Marigold 'Naughty Marie'","Flower",NOW,22],
+    ["Danvers Carrot","Vegetable",NOW-5,8],
+    ["Dill 'Bouquet'","Herb",NOW-2,0],
+    ["Cosmos 'Sensation'","Flower",NOW-1,5]
   ];
-  var items, nextId = 1;
-  try { items = JSON.parse(localStorage.getItem(KEY)); } catch(e){}
-  if(!Array.isArray(items) || !items.length){
-    items = seed.map(function(s){return {name:s[0],type:s[1],year:s[2],left:s[3]};});
+  function fresh() {
+    return { next: SAMPLE.length + 1, age: 3, items: SAMPLE.map(function (r, i) {
+      return { id: i + 1, name: r[0], type: r[1], year: r[2], left: r[3] };
+    })};
   }
-  items.forEach(function(it){ it.id = nextId++; });
+  var S;
+  try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+  if (!S || !Array.isArray(S.items)) S = fresh();
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 
-  var selected = {}, sortK = "name", sortDir = 1, lastRemoved = null;
-  var $ = function(id){return document.getElementById(id);};
-  var cutoff = $("cutoff"); cutoff.value = NOW - 3;
-  $("aYear").value = NOW;
+  var sel = {}, filter = "all", query = "", sortK = "name", sortDir = 1, lastRemoved = null, toastTimer;
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function isOld(p) { return NOW - p.year >= S.age; }
+  function isEmpty(p) { return p.left <= 0; }
+  function needs(p) { return isOld(p) || isEmpty(p); }
+  function plural(n, w) { return n + " " + w + (n === 1 ? "" : "s"); }
 
-  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(items)); }catch(e){} }
-  function isEmpty(it){ return it.left <= 0; }
-  function isOld(it){ return it.year <= (parseInt(cutoff.value,10) || 0); }
+  $("year").textContent = NOW;
+  var FILTERS = [["all","All"],["needs","Needs clearing"],["empty","Empty"],["old","Old"]];
+  $("chips").innerHTML = FILTERS.map(function (f) {
+    return '<button type="button" class="chip" data-f="' + f[0] + '" aria-pressed="' + (f[0] === filter) + '"></button>';
+  }).join("");
 
-  $("typeFilter").innerHTML = '<option value="">All types</option>' + TYPES.map(function(t){return '<option>'+t+'</option>';}).join("");
-  $("aType").innerHTML = TYPES.map(function(t){return '<option>'+t+'</option>';}).join("");
-
-  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
-
-  function visible(){
-    var q = $("q").value.trim().toLowerCase(), t = $("typeFilter").value;
-    return items.filter(function(it){
-      return (!t || it.type===t) && (!q || (it.name+" "+it.type).toLowerCase().indexOf(q)>-1);
-    }).sort(function(a,b){
-      var x=a[sortK], y=b[sortK];
-      if(typeof x==="string"){ x=x.toLowerCase(); y=y.toLowerCase(); }
-      return (x<y?-1:x>y?1:a.name.localeCompare(b.name))*sortDir;
+  function visible() {
+    var q = query.trim().toLowerCase();
+    var list = S.items.filter(function (p) {
+      if (filter === "needs" && !needs(p)) return false;
+      if (filter === "empty" && !isEmpty(p)) return false;
+      if (filter === "old" && !isOld(p)) return false;
+      return !q || (p.name + " " + p.type).toLowerCase().indexOf(q) > -1;
     });
-  }
-
-  function render(){
-    var list = visible();
-    $("body").innerHTML = list.map(function(it){
-      var tags = (isEmpty(it)?'<span class="tag empty">Empty</span>':'') + (isOld(it)?'<span class="tag old">Old</span>':'');
-      return '<tr class="'+(selected[it.id]?'sel':'')+'">' +
-        '<td><input type="checkbox" data-id="'+it.id+'" aria-label="Select '+esc(it.name)+'"'+(selected[it.id]?' checked':'')+'></td>' +
-        '<td class="name">'+esc(it.name)+tags+'</td>' +
-        '<td class="hide-s">'+esc(it.type)+'</td>' +
-        '<td>'+it.year+'</td>' +
-        '<td class="num"><span class="qty"><button type="button" data-d="-1" data-id="'+it.id+'" aria-label="One fewer '+esc(it.name)+'">−</button><span>'+it.left+'</span><button type="button" data-d="1" data-id="'+it.id+'" aria-label="One more '+esc(it.name)+'">+</button></span></td></tr>';
-    }).join("");
-    $("none").hidden = list.length>0;
-    var shownSel = list.filter(function(it){return selected[it.id];}).length;
-    $("all").checked = list.length>0 && shownSel===list.length;
-    $("all").indeterminate = shownSel>0 && shownSel<list.length;
-
-    var ne = items.filter(isEmpty).length, no = items.filter(isOld).length,
-        nb = items.filter(function(i){return isEmpty(i)||isOld(i);}).length;
-    $("selEmpty").textContent = "Select empty ("+ne+")";
-    $("selOld").textContent = "Select old ("+no+")";
-    $("selBoth").textContent = "Select all empty + old ("+nb+")";
-    $("stats").textContent = items.length+" packets · "+ne+" empty · "+no+" old";
-
-    var n = Object.keys(selected).length;
-    $("bar").classList.toggle("show", n>0);
-    $("barCount").textContent = n+" selected";
-    $("remove").textContent = "Remove "+n+" packet"+(n===1?"":"s");
-    document.querySelectorAll("th button").forEach(function(b){
-      var th=b.parentNode; th.setAttribute("aria-sort", b.dataset.k===sortK?(sortDir>0?"ascending":"descending"):"none");
-      b.textContent = b.textContent.replace(/ [▲▼]$/,"") + (b.dataset.k===sortK?(sortDir>0?" ▲":" ▼"):"");
+    list.sort(function (a, b) {
+      var x = a[sortK], y = b[sortK];
+      var c = typeof x === "number" ? x - y : String(x).localeCompare(String(y), undefined, {sensitivity: "base"});
+      return (c || a.name.localeCompare(b.name)) * sortDir;
     });
-    save();
+    return list;
   }
 
-  function pick(fn){
-    selected = {};
-    items.forEach(function(it){ if(fn(it)) selected[it.id]=true; });
-    render();
-    // make sure the chosen rows are visible
-    $("q").value=""; $("typeFilter").value=""; render();
-  }
-  $("selEmpty").onclick = function(){ pick(isEmpty); };
-  $("selOld").onclick = function(){ pick(isOld); };
-  $("selBoth").onclick = function(){ pick(function(i){return isEmpty(i)||isOld(i);}); };
-  cutoff.oninput = render;
-  $("q").oninput = render; $("typeFilter").onchange = render;
+  function render() {
+    var nOld = S.items.filter(isOld).length, nEmpty = S.items.filter(isEmpty).length, nNeeds = S.items.filter(needs).length;
+    var counts = { all: S.items.length, needs: nNeeds, empty: nEmpty, old: nOld };
+    Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {
+      var f = b.getAttribute("data-f");
+      b.textContent = FILTERS.filter(function (x) { return x[0] === f; })[0][1] + " (" + counts[f] + ")";
+      b.setAttribute("aria-pressed", f === filter);
+    });
+    $("age").value = S.age;
+    $("cutoffNote").textContent = "(packed " + (NOW - S.age) + " or earlier)";
 
-  $("body").addEventListener("click", function(e){
-    var t = e.target;
-    if(t.type==="checkbox"){ if(t.checked) selected[t.dataset.id]=true; else delete selected[t.dataset.id]; render(); }
-    else if(t.dataset.d){
-      var it = items.filter(function(i){return i.id==t.dataset.id;})[0];
-      it.left = Math.max(0, it.left + parseInt(t.dataset.d,10)); render();
+    var b = $("banner");
+    if (nNeeds) {
+      b.className = "banner";
+      b.innerHTML = '<div class="msg"><strong>' + plural(nNeeds, "packet") + ' ready to clear out</strong>' +
+        '<small>' + nEmpty + ' empty, ' + nOld + ' old (packed ' + (NOW - S.age) + ' or earlier). Some are both.</small></div>' +
+        '<button class="btn primary" type="button" id="pick">Select these ' + nNeeds + '</button>';
+      $("pick").onclick = function () {
+        S.items.forEach(function (p) { if (needs(p)) sel[p.id] = true; });
+        filter = "needs"; render();
+        $("live").textContent = nNeeds + " packets selected. Review, then remove.";
+      };
+    } else {
+      b.className = "banner clean";
+      b.innerHTML = '<div class="msg"><strong>Nothing to clear out</strong><small>No empty or old packets right now.</small></div>';
     }
+
+    var list = visible();
+    $("rows").innerHTML = list.length ? list.map(function (p) {
+      var tags = (isEmpty(p) ? '<span class="tag empty">Empty</span>' : "") + (isOld(p) ? '<span class="tag old">Old</span>' : "");
+      return '<tr class="' + (sel[p.id] ? "sel" : "") + '" data-id="' + p.id + '">' +
+        '<td><input type="checkbox" class="pick" aria-label="Select ' + esc(p.name) + '"' + (sel[p.id] ? " checked" : "") + '></td>' +
+        '<td><span class="name">' + esc(p.name) + '</span>' + tags + '</td>' +
+        '<td>' + esc(p.type) + '</td>' +
+        '<td class="num">' + p.year + '</td>' +
+        '<td class="num"><span class="stepper">' +
+          '<button type="button" class="dec" aria-label="Take one packet of ' + esc(p.name) + '"' + (p.left <= 0 ? " disabled" : "") + '>−</button>' +
+          '<output>' + p.left + '</output>' +
+          '<button type="button" class="inc" aria-label="Add one packet of ' + esc(p.name) + '">+</button></span></td></tr>';
+    }).join("") : '<tr class="emptyrow"><td colspan="5">No packets match.</td></tr>';
+
+    Array.prototype.forEach.call(document.querySelectorAll("th[data-k]"), function (th) {
+      th.setAttribute("aria-sort", th.getAttribute("data-k") === sortK ? (sortDir > 0 ? "ascending" : "descending") : "none");
+    });
+
+    var shownSel = list.filter(function (p) { return sel[p.id]; }).length;
+    var all = $("all");
+    all.checked = list.length > 0 && shownSel === list.length;
+    all.indeterminate = shownSel > 0 && shownSel < list.length;
+
+    var n = S.items.filter(function (p) { return sel[p.id]; }).length;
+    $("bar").className = "bar" + (n ? " show" : "");
+    $("barCount").textContent = n + " selected";
+    $("removeSel").textContent = "Remove " + plural(n, "packet");
+  }
+
+  $("rows").addEventListener("click", function (e) {
+    var tr = e.target.closest("tr[data-id]"); if (!tr) return;
+    var p = S.items.filter(function (x) { return x.id === +tr.getAttribute("data-id"); })[0];
+    if (e.target.classList.contains("pick")) { if (e.target.checked) sel[p.id] = true; else delete sel[p.id]; render(); }
+    else if (e.target.classList.contains("dec")) { p.left = Math.max(0, p.left - 1); save(); render(); }
+    else if (e.target.classList.contains("inc")) { p.left += 1; save(); render(); }
   });
-  $("all").onchange = function(){
+  $("all").onchange = function () {
     var on = this.checked;
-    visible().forEach(function(it){ if(on) selected[it.id]=true; else delete selected[it.id]; });
+    visible().forEach(function (p) { if (on) sel[p.id] = true; else delete sel[p.id]; });
     render();
   };
-  document.querySelectorAll("th button").forEach(function(b){
-    b.onclick = function(){ if(sortK===b.dataset.k) sortDir*=-1; else {sortK=b.dataset.k; sortDir=1;} render(); };
-  });
+  $("chips").onclick = function (e) { var f = e.target.getAttribute("data-f"); if (f) { filter = f; render(); } };
+  $("q").oninput = function () { query = this.value; render(); };
+  document.querySelector("thead").onclick = function (e) {
+    var th = e.target.closest("th[data-k]"); if (!th) return;
+    var k = th.getAttribute("data-k");
+    if (k === sortK) sortDir = -sortDir; else { sortK = k; sortDir = 1; }
+    render();
+  };
+  $("age").onchange = function () {
+    var v = Math.max(1, Math.min(20, parseInt(this.value, 10) || 3));
+    S.age = v; save(); render();
+  };
+  $("clearSel").onclick = function () { sel = {}; render(); };
 
-  $("clear").onclick = function(){ selected={}; render(); };
-  $("remove").onclick = function(){
-    var gone = items.filter(function(it){return selected[it.id];});
-    if(!gone.length) return;
+  function showToast(msg, canUndo) {
+    $("toastMsg").textContent = msg;
+    $("undo").style.display = canUndo ? "" : "none";
+    $("toast").className = "toast show";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $("toast").className = "toast"; lastRemoved = null; }, 15000);
+    $("live").textContent = msg;
+  }
+  $("removeSel").onclick = function () {
+    var gone = S.items.filter(function (p) { return sel[p.id]; });
+    if (!gone.length) return;
     lastRemoved = gone;
-    items = items.filter(function(it){return !selected[it.id];});
-    selected = {};
-    $("toastMsg").textContent = "Removed "+gone.length+" packet"+(gone.length===1?"":"s")+".";
-    $("toast").classList.add("show");
-    render();
+    S.items = S.items.filter(function (p) { return !sel[p.id]; });
+    sel = {}; save(); render();
+    showToast("Removed " + plural(gone.length, "packet") + ".", true);
   };
-  $("undo").onclick = function(){
-    if(lastRemoved){ items = items.concat(lastRemoved); lastRemoved=null; }
-    $("toast").classList.remove("show"); render();
+  $("undo").onclick = function () {
+    if (!lastRemoved) return;
+    S.items = S.items.concat(lastRemoved);
+    lastRemoved.forEach(function (p) { sel[p.id] = true; });
+    var n = lastRemoved.length; lastRemoved = null;
+    save(); render();
+    showToast("Restored " + plural(n, "packet") + ".", false);
   };
-  $("dismiss").onclick = function(){ lastRemoved=null; $("toast").classList.remove("show"); };
-
-  $("add").onsubmit = function(e){
+  $("add").onsubmit = function (e) {
     e.preventDefault();
-    items.push({id:nextId++, name:$("aName").value.trim(), type:$("aType").value,
-      year:parseInt($("aYear").value,10)||NOW, left:Math.max(0,parseInt($("aLeft").value,10)||0)});
-    $("aName").value=""; render();
+    var f = this.elements;
+    S.items.push({ id: S.next++, name: f.name.value.trim(), type: f.type.value, year: +f.year.value, left: +f.left.value });
+    save(); this.reset(); f.year.value = NOW; f.left.value = 10; render();
+    showToast("Added packet.", false);
+    f.name.focus();
   };
-
+  $("add").elements.year.value = NOW;
+  $("reset").onclick = function () {
+    lastRemoved = null; sel = {}; S = fresh(); save(); render();
+    showToast("Sample data restored.", false);
+  };
   render();
 })();
 </script>

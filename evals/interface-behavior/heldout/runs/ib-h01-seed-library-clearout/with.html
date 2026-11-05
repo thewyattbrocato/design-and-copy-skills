@@ -6,309 +6,349 @@
 <title>Seed Library – Volunteer Desk</title>
 <style>
   :root {
-    --bg: #f6f4ee; --card: #fffdf8; --ink: #23291f; --muted: #636b5c; --line: #ddd8c9;
-    --accent: #2f6b3a; --accent-ink: #fff; --warn-bg: #fbeacb; --warn-ink: #6b4300;
-    --empty-bg: #f3d9d4; --empty-ink: #7a2216; --row-flag: #fbf4e4; --focus: #1a5fb4;
+    --bg: #f6f4ee; --card: #ffffff; --ink: #1f2a1f; --muted: #5d6b5d; --line: #dcd8ca;
+    --accent: #2f6b3a; --accent-ink: #ffffff; --warn-bg: #fbeed0; --warn-ink: #6b4a00;
+    --empty-bg: #f6dcd6; --empty-ink: #7a2415; --sel: #e8f1e4; --danger: #a63a24;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #1a1d17; --card: #23271f; --ink: #ece9dd; --muted: #a2a898; --line: #3a4033;
-      --accent: #7fc48b; --accent-ink: #11190f; --warn-bg: #4a3a14; --warn-ink: #f3d79a;
-      --empty-bg: #4d241d; --empty-ink: #f2b9ae; --row-flag: #2b2a1e; --focus: #8ab8ff;
+      --bg: #151a15; --card: #1e251e; --ink: #e8ede4; --muted: #a2b0a0; --line: #334033;
+      --accent: #7fc08a; --accent-ink: #10200f; --warn-bg: #4a3a12; --warn-ink: #f3dca0;
+      --empty-bg: #55231b; --empty-ink: #f6c9c0; --sel: #26342a; --danger: #e58a76;
     }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  main { max-width: 860px; margin: 0 auto; padding: 20px 16px 100px; }
-  h1 { font-size: 1.5rem; margin: 0 0 2px; }
-  .sub { color: var(--muted); margin: 0 0 18px; }
-  button, input, select { font: inherit; color: inherit; }
-  button { cursor: pointer; border: 1px solid var(--line); background: var(--card);
-    border-radius: 8px; padding: 8px 14px; min-height: 40px; }
-  button:hover { border-color: var(--muted); }
-  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
-  button:disabled { opacity: .5; cursor: not-allowed; }
-  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-  input, select { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-height: 40px; }
-
-  .cleanup { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
-    padding: 14px 16px; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
-  .cleanup .info { flex: 1 1 260px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 920px; margin: 0 auto; padding: 24px 16px 96px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; min-width: 130px; }
+  .stat b { display: block; font-size: 1.5rem; line-height: 1.2; }
+  .stat span { color: var(--muted); font-size: .85rem; }
+  .cleanup {
+    background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--accent);
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 16px;
+    display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; justify-content: space-between;
+  }
   .cleanup h2 { font-size: 1rem; margin: 0 0 2px; }
-  .cleanup p { margin: 0; color: var(--muted); font-size: .92rem; }
-  .cleanup label { display: flex; align-items: center; gap: 8px; font-size: .92rem; }
-  .cleanup input[type=number] { width: 84px; }
-
-  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
-  .tools input[type=search] { flex: 1 1 200px; }
-  .count { color: var(--muted); font-size: .9rem; margin-left: auto; }
-
-  details.add { margin-bottom: 12px; }
-  details.add summary { cursor: pointer; display: inline-block; padding: 8px 0; font-weight: 600; color: var(--accent); }
-  details.add form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; background: var(--card);
-    border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
-  details.add label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: 2px; }
-  details.add input[type=number] { width: 90px; }
-
-  .tablewrap { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-  table { width: 100%; border-collapse: collapse; }
+  .cleanup p { margin: 0; color: var(--muted); font-size: .9rem; }
+  .cutoff { display: inline-flex; align-items: center; gap: 6px; }
+  input, select, button { font: inherit; color: inherit; }
+  input[type=number], input[type=text], input[type=search], select {
+    background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px;
+  }
+  input[type=number].yr { width: 5.2em; }
+  button {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 14px; cursor: pointer; min-height: 38px;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  button.danger { background: var(--danger); color: #fff; border-color: var(--danger); font-weight: 600; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .toolbar .grow { flex: 1; min-width: 160px; }
+  .toolbar input[type=search] { width: 100%; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .seg button { border: 0; border-radius: 0; background: var(--card); }
+  .seg button[aria-pressed=true] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .tablewrap { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; }
   th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
   tr:last-child td { border-bottom: 0; }
-  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; background: var(--bg); }
-  th button { all: unset; cursor: pointer; font: inherit; text-transform: inherit; letter-spacing: inherit; }
-  th button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-  th .arrow { margin-left: 4px; }
-  td.num, th.num { text-align: center; }
-  tr.flagged { background: var(--row-flag); }
-  tr.selected { box-shadow: inset 4px 0 0 var(--accent); }
-  td input[type=checkbox], th input[type=checkbox] { width: 20px; height: 20px; min-height: 0; accent-color: var(--accent); }
-  .name { font-weight: 600; }
-  .badge { display: inline-block; font-size: .75rem; font-weight: 600; padding: 2px 8px; border-radius: 99px; margin-left: 6px; }
-  .badge.old { background: var(--warn-bg); color: var(--warn-ink); }
-  .badge.empty { background: var(--empty-bg); color: var(--empty-ink); }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); white-space: nowrap; }
+  th button { all: unset; cursor: pointer; }
+  th button:focus-visible { outline: 3px solid var(--accent); }
+  th .arrow { opacity: .7; }
+  tbody tr.sel { background: var(--sel); }
+  td.name { font-weight: 600; }
+  input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer; }
   .qty { display: inline-flex; align-items: center; gap: 4px; }
-  .qty button { min-width: 36px; min-height: 36px; padding: 0; font-weight: 700; }
-  .qty output { min-width: 34px; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
-  .empty-state { padding: 32px; text-align: center; color: var(--muted); }
-
-  .bar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; gap: 10px;
-    padding: 12px; background: var(--card); border-top: 1px solid var(--line); align-items: center; flex-wrap: wrap; }
-  .bar[hidden] { display: none; }
-  #toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 76px; background: var(--ink); color: var(--bg);
-    padding: 10px 12px 10px 16px; border-radius: 10px; display: flex; gap: 12px; align-items: center;
-    box-shadow: 0 4px 16px rgba(0,0,0,.3); max-width: 92vw; }
-  #toast[hidden] { display: none; }
-  #toast button { background: transparent; color: inherit; border-color: currentColor; min-height: 34px; padding: 4px 12px; }
-  .foot { color: var(--muted); font-size: .85rem; margin-top: 14px; }
-  .foot button { all: unset; cursor: pointer; text-decoration: underline; }
-  .foot button:focus-visible { outline: 3px solid var(--focus); }
-
-  @media (max-width: 560px) {
-    th.hide-s, td.hide-s { display: none; }
+  .qty button { min-height: 32px; width: 32px; padding: 0; }
+  .qty input { width: 3.6em; text-align: center; padding: 4px; }
+  .tag { display: inline-block; font-size: .78rem; padding: 2px 8px; border-radius: 99px; font-weight: 600; }
+  .tag.old { background: var(--warn-bg); color: var(--warn-ink); }
+  .tag.empty { background: var(--empty-bg); color: var(--empty-ink); }
+  .none { padding: 28px; text-align: center; color: var(--muted); }
+  details { margin-top: 18px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; }
+  summary { cursor: pointer; font-weight: 600; }
+  form { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; align-items: end; }
+  form label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: 2px; }
+  .foot { margin-top: 14px; font-size: .85rem; color: var(--muted); }
+  .foot button { min-height: 30px; padding: 3px 10px; font-size: .85rem; }
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line);
+    padding: 12px 16px; display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap;
+    box-shadow: 0 -4px 16px rgba(0,0,0,.12);
   }
+  .bar[hidden], .toast[hidden] { display: none; }
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 76px; background: var(--ink); color: var(--bg);
+    padding: 10px 14px; border-radius: 10px; display: flex; gap: 12px; align-items: center; box-shadow: 0 4px 16px rgba(0,0,0,.3);
+    max-width: calc(100vw - 24px);
+  }
+  .toast button { background: transparent; color: inherit; border-color: currentColor; min-height: 32px; padding: 3px 12px; }
+  .toast.noBar { bottom: 20px; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Seed Library – Volunteer Desk</h1>
-  <p class="sub">Packets on the shelf. Changes save automatically in this browser.</p>
+  <h1>🌱 Seed Library – Volunteer Desk</h1>
+  <p class="sub">Check packets in and out, and clear out the old and empty ones at season's end.</p>
 
-  <section class="cleanup" aria-labelledby="cl-h">
-    <div class="info">
-      <h2 id="cl-h">End-of-season cleanup</h2>
-      <p id="cl-text" aria-live="polite"></p>
-    </div>
-    <label>Old = packed before
-      <input type="number" id="cutoff" min="1990" max="2100" aria-label="Packets packed before this year count as old">
-    </label>
-    <button class="primary" id="clear-btn"></button>
-  </section>
-
-  <div class="tools">
-    <input type="search" id="q" placeholder="Search by name…" aria-label="Search packets">
-    <select id="typeFilter" aria-label="Filter by type"></select>
-    <select id="statusFilter" aria-label="Filter by status">
-      <option value="all">All packets</option>
-      <option value="flagged">Old or empty only</option>
-    </select>
-    <span class="count" id="count" aria-live="polite"></span>
+  <div class="stats" aria-live="polite">
+    <div class="stat"><b id="sTotal">0</b><span>packets on the shelf</span></div>
+    <div class="stat"><b id="sEmpty">0</b><span>empty</span></div>
+    <div class="stat"><b id="sOld">0</b><span>packed before cutoff</span></div>
   </div>
 
-  <details class="add">
-    <summary>+ Add a packet</summary>
-    <form id="addForm">
-      <label>Name <input id="aName" required maxlength="40" placeholder="e.g. Dill 'Bouquet'"></label>
-      <label>Type <select id="aType"></select></label>
-      <label>Year packed <input id="aYear" type="number" min="1990" max="2100" required></label>
-      <label>How many <input id="aQty" type="number" min="0" max="999" value="10" required></label>
-      <button class="primary" type="submit">Add</button>
-    </form>
-  </details>
+  <section class="cleanup" aria-labelledby="cuH">
+    <div>
+      <h2 id="cuH">End-of-season cleanup</h2>
+      <p><span id="cuCount">0</span> packets are empty or too old. Review them, uncheck any you want to keep, then remove.</p>
+    </div>
+    <div class="cutoff">
+      <label for="cutoff">Too old if packed before</label>
+      <input type="number" id="cutoff" class="yr" min="1990" max="2100">
+      <button class="primary" id="selectFlagged">Review &amp; select them</button>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="grow"><input type="search" id="q" placeholder="Search by name or type…" aria-label="Search packets"></div>
+    <div class="seg" role="group" aria-label="Filter">
+      <button id="fAll" aria-pressed="true">All</button>
+      <button id="fFlag" aria-pressed="false">Needs clearing</button>
+    </div>
+  </div>
 
   <div class="tablewrap">
     <table>
       <thead>
         <tr>
-          <th style="width:36px"><input type="checkbox" id="selAll" aria-label="Select all shown packets"></th>
-          <th aria-sort="none"><button data-sort="name">Name<span class="arrow"></span></button></th>
-          <th class="hide-s" aria-sort="none"><button data-sort="type">Type<span class="arrow"></span></button></th>
-          <th class="num" aria-sort="none"><button data-sort="year">Packed<span class="arrow"></span></button></th>
-          <th class="num" aria-sort="none"><button data-sort="left">Left<span class="arrow"></span></button></th>
+          <th style="width:44px"><input type="checkbox" id="all" aria-label="Select all shown"></th>
+          <th aria-sort="none" data-k="name"><button>Name <span class="arrow"></span></button></th>
+          <th data-k="type"><button>Type <span class="arrow"></span></button></th>
+          <th data-k="year"><button>Packed <span class="arrow"></span></button></th>
+          <th data-k="left"><button>Left <span class="arrow"></span></button></th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody id="rows"></tbody>
     </table>
-    <div class="empty-state" id="none" hidden>No packets match.</div>
+    <div class="none" id="none" hidden>No packets match.</div>
   </div>
 
-  <p class="foot">Ctrl/⌘+Z undoes the last removal. <button id="reset">Reset to sample data</button></p>
+  <details>
+    <summary>Add a packet</summary>
+    <form id="add">
+      <label>Name <input type="text" id="aName" required maxlength="40"></label>
+      <label>Type
+        <select id="aType"><option>Vegetable</option><option>Herb</option><option>Flower</option><option>Fruit</option></select>
+      </label>
+      <label>Year packed <input type="number" id="aYear" class="yr" required></label>
+      <label>How many <input type="number" id="aLeft" class="yr" min="0" value="10" required></label>
+      <button class="primary" type="submit">Add</button>
+    </form>
+  </details>
+
+  <p class="foot">Changes are saved in this browser. Sample data only. <button id="reset">Reset sample data</button></p>
 </main>
 
 <div class="bar" id="bar" hidden>
   <strong id="selCount"></strong>
-  <button id="removeSel" class="primary">Remove selected</button>
-  <button id="deselect">Clear selection</button>
+  <button id="clearSel">Deselect</button>
+  <button class="danger" id="remove">Remove selected</button>
 </div>
-<div id="toast" role="status" hidden><span id="toastMsg"></span><button id="undo">Undo</button><button id="dismiss" aria-label="Dismiss">✕</button></div>
+
+<div class="toast" id="toast" role="status" hidden>
+  <span id="toastMsg"></span>
+  <button id="undo">Undo</button>
+  <button id="dismiss" aria-label="Dismiss">✕</button>
+</div>
 
 <script>
 (function () {
-  var THIS_YEAR = new Date().getFullYear();
-  var TYPES = ["Vegetable", "Herb", "Flower", "Fruit"];
-  var KEY = "seedlib-desk-v1";
+  var NOW = new Date().getFullYear();
+  var KEY = 'seedlib-desk-v1';
   var SAMPLE = [
-    ["Cherokee Purple Tomato","Vegetable",2026,34],["Genovese Basil","Herb",2026,22],
-    ["Scarlet Nantes Carrot","Vegetable",2025,18],["Blue Lake Pole Bean","Vegetable",2025,40],
-    ["Zinnia 'State Fair' Mix","Flower",2025,0],["Cilantro 'Santo'","Herb",2024,12],
-    ["Sugar Snap Pea","Vegetable",2024,0],["Lemon Cucumber","Vegetable",2023,9],
-    ["Calendula 'Pacific Beauty'","Flower",2023,15],["Detroit Dark Red Beet","Vegetable",2022,6],
-    ["Moon & Stars Watermelon","Fruit",2024,7],["Sunflower 'Mammoth'","Flower",2026,28],
-    ["Lacinato Kale","Vegetable",2022,0],["Chives","Herb",2025,11],["Alpine Strawberry","Fruit",2023,4]
+    ['Cherokee Purple Tomato','Vegetable',2026,34], ['Genovese Basil','Herb',2026,22],
+    ['Detroit Dark Red Beet','Vegetable',2025,18], ['Zinnia Benary\'s Giant','Flower',2025,0],
+    ['Lacinato Kale','Vegetable',2024,12], ['Calendula Resina','Flower',2024,7],
+    ['Provider Bush Bean','Vegetable',2023,0], ['Sugar Snap Pea','Vegetable',2023,9],
+    ['Italian Parsley','Herb',2022,15], ['Marigold Crackerjack','Flower',2022,0],
+    ['Danvers Carrot','Vegetable',2021,6], ['Cilantro Slow Bolt','Herb',2021,11],
+    ['Alpine Strawberry','Fruit',2025,5], ['Sunflower Mammoth','Flower',2026,40],
+    ['Butternut Squash','Vegetable',2024,0]
   ];
-  var state = { items: [], cutoff: THIS_YEAR - 2, sel: {}, sort: { key: "name", dir: 1 }, nextId: 1 };
-  var lastRemoved = null;
-
+  var nextId = 1;
   function seed() {
-    state.items = SAMPLE.map(function (r, i) { return { id: i + 1, name: r[0], type: r[1], year: r[2], left: r[3] }; });
-    state.nextId = SAMPLE.length + 1; state.cutoff = THIS_YEAR - 2; state.sel = {};
+    return SAMPLE.map(function (r) { return { id: nextId++, name: r[0], type: r[1], year: r[2], left: r[3] }; });
   }
-  function save() {
-    try { localStorage.setItem(KEY, JSON.stringify({ items: state.items, cutoff: state.cutoff, nextId: state.nextId })); } catch (e) {}
-  }
-  function load() {
-    try {
-      var d = JSON.parse(localStorage.getItem(KEY));
-      if (d && Array.isArray(d.items)) { state.items = d.items; state.cutoff = d.cutoff; state.nextId = d.nextId; return; }
-    } catch (e) {}
-    seed();
-  }
+  var state = { items: [], cutoff: NOW - 2 };
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY));
+    if (saved && Array.isArray(saved.items)) { state = saved; }
+  } catch (e) {}
+  if (!state.items.length && !localStorage.getItem(KEY)) state.items = seed();
+  nextId = state.items.reduce(function (m, i) { return Math.max(m, i.id); }, 0) + 1;
 
+  var selected = new Set(), sortKey = 'name', sortDir = 1, filter = 'all', query = '', lastRemoved = null;
   var $ = function (id) { return document.getElementById(id); };
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
-  function isOld(p) { return p.year < state.cutoff; }
-  function isEmpty(p) { return p.left === 0; }
-  function flagged(p) { return isOld(p) || isEmpty(p); }
-  function plural(n, w) { return n + " " + w + (n === 1 ? "" : "s"); }
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function isEmpty(i) { return i.left <= 0; }
+  function isOld(i) { return i.year < state.cutoff; }
+  function flagged(i) { return isEmpty(i) || isOld(i); }
 
   function visible() {
-    var q = $("q").value.trim().toLowerCase(), t = $("typeFilter").value, s = $("statusFilter").value;
-    var k = state.sort.key, d = state.sort.dir;
-    return state.items.filter(function (p) {
-      return (!q || p.name.toLowerCase().indexOf(q) > -1) && (t === "all" || p.type === t) && (s === "all" || flagged(p));
-    }).sort(function (a, b) {
-      var x = a[k], y = b[k];
-      var c = typeof x === "string" ? x.localeCompare(y) : x - y;
-      return (c || a.name.localeCompare(b.name)) * d;
+    var q = query.toLowerCase();
+    var list = state.items.filter(function (i) {
+      if (filter === 'flag' && !flagged(i)) return false;
+      return !q || (i.name + ' ' + i.type).toLowerCase().indexOf(q) > -1;
     });
+    list.sort(function (a, b) {
+      var x = a[sortKey], y = b[sortKey];
+      var c = typeof x === 'string' ? x.localeCompare(y) : x - y;
+      return (c || a.name.localeCompare(b.name)) * sortDir;
+    });
+    return list;
   }
 
   function render() {
     var list = visible();
-    var fl = state.items.filter(flagged);
-    var nOld = state.items.filter(isOld).length, nEmpty = state.items.filter(isEmpty).length;
-    $("cutoff").value = state.cutoff;
-    $("cl-text").textContent = fl.length
-      ? plural(fl.length, "packet") + " to clear (" + nEmpty + " empty, " + nOld + " packed before " + state.cutoff + "). Highlighted below."
-      : "Nothing to clear. Every packet is stocked and packed " + state.cutoff + " or later.";
-    $("clear-btn").textContent = "Remove " + plural(fl.length, "old/empty packet");
-    $("clear-btn").disabled = !fl.length;
+    $('rows').innerHTML = list.map(function (i) {
+      var tags = '';
+      if (isEmpty(i)) tags += '<span class="tag empty">Empty</span> ';
+      if (isOld(i)) tags += '<span class="tag old">Packed ' + i.year + '</span>';
+      return '<tr class="' + (selected.has(i.id) ? 'sel' : '') + '" data-id="' + i.id + '">' +
+        '<td><input type="checkbox" class="pick" aria-label="Select ' + esc(i.name) + '"' + (selected.has(i.id) ? ' checked' : '') + '></td>' +
+        '<td class="name">' + esc(i.name) + '</td><td>' + esc(i.type) + '</td><td>' + i.year + '</td>' +
+        '<td><span class="qty"><button class="dec" aria-label="One fewer ' + esc(i.name) + '">−</button>' +
+        '<input type="number" class="num" min="0" value="' + i.left + '" aria-label="Packets left of ' + esc(i.name) + '">' +
+        '<button class="inc" aria-label="One more ' + esc(i.name) + '">+</button></span></td>' +
+        '<td>' + tags + '</td></tr>';
+    }).join('');
+    $('none').hidden = list.length > 0;
 
-    $("rows").innerHTML = list.map(function (p) {
-      var badges = (isEmpty(p) ? '<span class="badge empty">Empty</span>' : "") + (isOld(p) ? '<span class="badge old">Old</span>' : "");
-      return '<tr data-id="' + p.id + '" class="' + (flagged(p) ? "flagged " : "") + (state.sel[p.id] ? "selected" : "") + '">' +
-        '<td><input type="checkbox" data-act="sel" aria-label="Select ' + esc(p.name) + '"' + (state.sel[p.id] ? " checked" : "") + '></td>' +
-        '<td><span class="name">' + esc(p.name) + '</span>' + badges + '</td>' +
-        '<td class="hide-s">' + esc(p.type) + '</td>' +
-        '<td class="num">' + p.year + '</td>' +
-        '<td class="num"><span class="qty"><button data-act="dec" aria-label="One fewer ' + esc(p.name) + '"' + (p.left ? "" : " disabled") + '>−</button>' +
-        '<output>' + p.left + '</output><button data-act="inc" aria-label="One more ' + esc(p.name) + '">+</button></span></td></tr>';
-    }).join("");
-    $("none").hidden = list.length > 0;
-    $("count").textContent = "Showing " + list.length + " of " + state.items.length;
-
-    var ids = list.map(function (p) { return p.id; });
-    var nSel = Object.keys(state.sel).length;
-    var shownSel = ids.filter(function (i) { return state.sel[i]; }).length;
-    $("selAll").checked = ids.length > 0 && shownSel === ids.length;
-    $("selAll").indeterminate = shownSel > 0 && shownSel < ids.length;
-    $("bar").hidden = nSel === 0;
-    $("selCount").textContent = nSel + " selected";
-    document.querySelectorAll("th[aria-sort]").forEach(function (th) {
-      var b = th.querySelector("button"), on = b.dataset.sort === state.sort.key;
-      th.setAttribute("aria-sort", on ? (state.sort.dir > 0 ? "ascending" : "descending") : "none");
-      b.querySelector(".arrow").textContent = on ? (state.sort.dir > 0 ? "▲" : "▼") : "";
+    var ths = document.querySelectorAll('th[data-k]');
+    Array.prototype.forEach.call(ths, function (th) {
+      var on = th.getAttribute('data-k') === sortKey;
+      th.setAttribute('aria-sort', on ? (sortDir > 0 ? 'ascending' : 'descending') : 'none');
+      th.querySelector('.arrow').textContent = on ? (sortDir > 0 ? '▲' : '▼') : '';
     });
+
+    var nEmpty = state.items.filter(isEmpty).length, nOld = state.items.filter(isOld).length;
+    var nFlag = state.items.filter(flagged).length;
+    $('sTotal').textContent = state.items.length;
+    $('sEmpty').textContent = nEmpty;
+    $('sOld').textContent = nOld;
+    $('cuCount').textContent = nFlag;
+    $('selectFlagged').disabled = nFlag === 0;
+    $('cutoff').value = state.cutoff;
+    $('fAll').setAttribute('aria-pressed', filter === 'all');
+    $('fFlag').setAttribute('aria-pressed', filter === 'flag');
+    $('fFlag').textContent = 'Needs clearing (' + nFlag + ')';
+
+    var shownSel = list.filter(function (i) { return selected.has(i.id); }).length;
+    $('all').checked = list.length > 0 && shownSel === list.length;
+    $('all').indeterminate = shownSel > 0 && shownSel < list.length;
+
+    var n = selected.size;
+    $('bar').hidden = n === 0;
+    $('selCount').textContent = n + ' selected';
+    $('remove').textContent = 'Remove ' + n + ' packet' + (n === 1 ? '' : 's');
+    $('toast').classList.toggle('noBar', n === 0);
   }
 
-  function removeItems(ids, label) {
-    var set = {}; ids.forEach(function (i) { set[i] = 1; });
-    var gone = state.items.filter(function (p) { return set[p.id]; });
-    if (!gone.length) return;
-    state.items = state.items.filter(function (p) { return !set[p.id]; });
-    ids.forEach(function (i) { delete state.sel[i]; });
-    lastRemoved = gone; save(); render();
-    $("toastMsg").textContent = "Removed " + plural(gone.length, "packet") + (label ? " (" + label + ")" : "") + ".";
-    $("toast").hidden = false;
-  }
-  function undo() {
-    if (!lastRemoved) return;
-    state.items = state.items.concat(lastRemoved); lastRemoved = null;
-    $("toast").hidden = true; save(); render();
+  function update(id, fn) {
+    var it = state.items.filter(function (i) { return i.id === id; })[0];
+    if (it) { fn(it); save(); }
   }
 
-  $("rows").addEventListener("click", function (e) {
-    var el = e.target.closest("[data-act]"); if (!el) return;
-    var id = +el.closest("tr").dataset.id, p = state.items.filter(function (x) { return x.id === id; })[0];
-    var act = el.dataset.act;
-    if (act === "sel") { if (el.checked) state.sel[id] = 1; else delete state.sel[id]; }
-    if (act === "inc") { p.left = Math.min(999, p.left + 1); save(); }
-    if (act === "dec") { p.left = Math.max(0, p.left - 1); save(); }
-    render();
-    if (act !== "sel") { var again = document.querySelector('tr[data-id="' + id + '"] [data-act="' + act + '"]'); if (again && !again.disabled) again.focus(); }
-  });
-  $("selAll").addEventListener("change", function () {
-    var on = this.checked;
-    visible().forEach(function (p) { if (on) state.sel[p.id] = 1; else delete state.sel[p.id]; });
-    render();
-  });
-  document.querySelectorAll("th button[data-sort]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      var k = b.dataset.sort;
-      state.sort = { key: k, dir: state.sort.key === k ? -state.sort.dir : 1 };
+  $('rows').addEventListener('click', function (e) {
+    var tr = e.target.closest('tr'); if (!tr) return;
+    var id = +tr.getAttribute('data-id');
+    if (e.target.classList.contains('inc')) { update(id, function (i) { i.left++; }); render(); }
+    else if (e.target.classList.contains('dec')) { update(id, function (i) { i.left = Math.max(0, i.left - 1); }); render(); }
+    else if (e.target.classList.contains('pick')) {
+      if (e.target.checked) selected.add(id); else selected.delete(id);
       render();
-    });
+    }
   });
-  ["q", "typeFilter", "statusFilter"].forEach(function (id) { $(id).addEventListener("input", render); });
-  $("cutoff").addEventListener("change", function () {
-    var v = parseInt(this.value, 10);
+  $('rows').addEventListener('change', function (e) {
+    if (!e.target.classList.contains('num')) return;
+    var id = +e.target.closest('tr').getAttribute('data-id');
+    var v = Math.max(0, Math.floor(+e.target.value || 0));
+    update(id, function (i) { i.left = v; }); render();
+  });
+  $('all').addEventListener('change', function () {
+    var on = $('all').checked;
+    visible().forEach(function (i) { if (on) selected.add(i.id); else selected.delete(i.id); });
+    render();
+  });
+  document.querySelector('thead').addEventListener('click', function (e) {
+    var th = e.target.closest('th[data-k]'); if (!th) return;
+    var k = th.getAttribute('data-k');
+    if (k === sortKey) sortDir = -sortDir; else { sortKey = k; sortDir = 1; }
+    render();
+  });
+  $('q').addEventListener('input', function () { query = $('q').value; render(); });
+  $('fAll').addEventListener('click', function () { filter = 'all'; render(); });
+  $('fFlag').addEventListener('click', function () { filter = 'flag'; render(); });
+  $('cutoff').addEventListener('change', function () {
+    var v = Math.floor(+$('cutoff').value);
     if (v >= 1990 && v <= 2100) { state.cutoff = v; save(); }
     render();
   });
-  $("clear-btn").addEventListener("click", function () {
-    removeItems(state.items.filter(flagged).map(function (p) { return p.id; }), "old/empty");
+  $('selectFlagged').addEventListener('click', function () {
+    filter = 'flag'; query = ''; $('q').value = '';
+    selected = new Set(state.items.filter(flagged).map(function (i) { return i.id; }));
+    render();
   });
-  $("removeSel").addEventListener("click", function () { removeItems(Object.keys(state.sel).map(Number), "selected"); });
-  $("deselect").addEventListener("click", function () { state.sel = {}; render(); });
-  $("undo").addEventListener("click", undo);
-  $("dismiss").addEventListener("click", function () { $("toast").hidden = true; });
-  document.addEventListener("keydown", function (e) {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z" && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) && lastRemoved) { e.preventDefault(); undo(); }
+  $('clearSel').addEventListener('click', function () { selected.clear(); render(); });
+
+  $('remove').addEventListener('click', function () {
+    var ids = selected, removed = [];
+    state.items.forEach(function (it, idx) { if (ids.has(it.id)) removed.push({ item: it, idx: idx }); });
+    if (!removed.length) return;
+    state.items = state.items.filter(function (i) { return !ids.has(i.id); });
+    lastRemoved = removed; selected = new Set(); save();
+    $('toastMsg').textContent = 'Removed ' + removed.length + ' packet' + (removed.length === 1 ? '' : 's') + '.';
+    $('toast').hidden = false;
+    render();
   });
-  $("addForm").addEventListener("submit", function (e) {
+  $('undo').addEventListener('click', function () {
+    if (!lastRemoved) return;
+    lastRemoved.forEach(function (r) { state.items.splice(Math.min(r.idx, state.items.length), 0, r.item); });
+    var n = lastRemoved.length; lastRemoved = null; save();
+    $('toastMsg').textContent = 'Restored ' + n + ' packet' + (n === 1 ? '' : 's') + '.';
+    $('undo').hidden = true;
+    render();
+    setTimeout(function () { $('toast').hidden = true; $('undo').hidden = false; }, 3000);
+  });
+  $('dismiss').addEventListener('click', function () { $('toast').hidden = true; $('undo').hidden = false; lastRemoved = null; render(); });
+
+  $('add').addEventListener('submit', function (e) {
     e.preventDefault();
-    state.items.push({ id: state.nextId++, name: $("aName").value.trim(), type: $("aType").value,
-      year: parseInt($("aYear").value, 10), left: Math.max(0, parseInt($("aQty").value, 10) || 0) });
-    $("aName").value = ""; save(); render(); $("aName").focus();
+    var name = $('aName').value.trim(); if (!name) return;
+    state.items.push({ id: nextId++, name: name, type: $('aType').value,
+      year: Math.floor(+$('aYear').value), left: Math.max(0, Math.floor(+$('aLeft').value || 0)) });
+    save(); $('aName').value = ''; render();
   });
-  $("reset").addEventListener("click", function () {
-    if (confirm("Replace everything with the made-up sample data?")) { seed(); lastRemoved = null; $("toast").hidden = true; save(); render(); }
+  $('reset').addEventListener('click', function () {
+    state.items = seed(); state.cutoff = NOW - 2; selected.clear(); lastRemoved = null;
+    $('toast').hidden = true; save(); render();
   });
 
-  $("typeFilter").innerHTML = '<option value="all">All types</option>' + TYPES.map(function (t) { return "<option>" + t + "</option>"; }).join("");
-  $("aType").innerHTML = TYPES.map(function (t) { return "<option>" + t + "</option>"; }).join("");
-  $("aYear").value = THIS_YEAR;
-  load(); render();
+  $('aYear').value = NOW;
+  render();
 })();
 </script>
 </body>

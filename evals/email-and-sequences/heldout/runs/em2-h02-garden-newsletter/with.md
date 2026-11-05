@@ -1,29 +1,31 @@
-**Subject:** October at Kettle Hill: beds, compost day, new shed lock
+**Subject:** Kettle Hill in October: beds, compost day, new shed lock
 
-**Preview:** Winter prep is under way, and the shed code is changing.
+**Preview:** Winter prep is under way, and plot holders need the new shed code.
 
 ---
 
 Hi everyone,
 
-Fall is here, and the garden is getting ready for winter. Here's what's happening in October.
+Here's what's happening at Kettle Hill this month.
 
 **Clearing and covering the beds**
-We're clearing out spent plants and covering the beds for winter. If you have a plot, please clear what's finished and cover your bed when you can. Covered beds keep their soil in better shape through the winter, and spring planting is easier. If you're not sure how to cover a bed, ask a neighbor in the garden. Someone will be glad to show you.
+We're clearing and covering the beds for winter. [If you have a plot, please clear and cover it by [date]. Otherwise, say how neighbors can help or just drop this line.]
 
-**Compost day**
-We're holding a compost day this month. The date isn't set yet, and we'll email it as soon as it is. Plot holders and neighbors are all welcome.
+**Compost day: [date and time]**
+We're holding a compost day on [date], [time], at the garden. [What to bring or what we'll be doing, if you want to say.] Come for as long as you can. If you can't make it, no worries.
 
-**New lock on the tool shed**
-The tool shed lock has been replaced, so the old code no longer works. Everyone with a plot will need the new code. We're sending it in a separate email, so watch for it. If you don't see it in a day or two, check your spam folder or reply to this email.
+**New lock on the tool shed (plot holders)**
+The tool shed lock has been replaced, so the old code no longer works. If you have a plot, you'll get the new code in a separate email. If you haven't seen it by [date], reply to this email and we'll get it to you.
 
-Thanks for everything you put into the garden this season. See you among the beds.
+Thanks for keeping the garden going.
 
 [Your name]
 Kettle Hill Community Garden
 
+[Unsubscribe]
+
 ---
 
 Two things to check before you send:
-- If you know how plot holders should cover their beds (cardboard, mulch, a tarp) or any deadline for clearing, add it to the first section. I left that out because you didn't give it to me.
-- The "check your spam folder or reply" line assumes replies reach you. Cut it if they don't.
+- Today is October 29, so "sometime this month" has almost run out. Pick a real date, which may be in early November, and update the compost section. If you'd rather not commit yet, replace it with "Compost day is coming, date to follow."
+- Fill in the bracketed bits, or delete those lines. I left out anything you didn't tell me, such as bed-clearing deadlines and what to bring.

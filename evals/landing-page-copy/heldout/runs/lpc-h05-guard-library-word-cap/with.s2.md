@@ -1,6 +1,4 @@
-**Plan:** Parents scrolling on a phone need the what, when, where, cost and action fast. The bucket is the hook, so it gets its own line. There's one button, and the URL is in its text.
-
----
+**Plan:** The reader is a local with a small home who might come on Saturday. The page has one idea: a free, no-experience workshop that sends you home with a bucket. The order is what it is, when and where, what you get, the catch (registration, 24 seats), then the ask.
 
 **Headline:** Compost in a Small Space
 
@@ -9,12 +7,13 @@
 **Details:**
 Saturday, November 8, 10:00–11:30 a.m.
 Eastgate Branch Library, Meeting Room B
-Registration required; 24 seats.
 
-**Bucket line:** Every household leaves with a countertop compost bucket while supplies last (30 buckets).
+**Bucket:** Every household leaves with a countertop compost bucket while supplies last (30 buckets).
+
+**Terms:** Registration required. 24 seats.
 
 **Button:** Register: eastgatelib.example/compost
 
----
+That comes to 44 words, counting the headline and button text, so it's well under your 70-word cap.
 
-Word count: 44 by my count, so there are 26 words of room under your 70 limit. I didn't fill it, since you said to use nothing beyond the facts you gave.
+I left out "limited spots" urgency language because the seat and bucket counts already say it. The two counts differ (24 seats, 30 buckets), and I kept both as you gave them.

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel Lettings · Repair agent check</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --series-1: #2a78d6;
+    --critical: #d03b3b;
+    --serious: #ec835a;
+    --warning: #fab219;
+    --good: #0ca30c;
+    --focus: #2a78d6;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --series-1: #3987e5;
+    --critical: #d03b3b;
+    --serious: #ec835a;
+    --warning: #fab219;
+    --good: #0ca30c;
+    --focus: #3987e5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface-1: #1a1a19;
+      --text-primary: #f0efec;
+      --text-secondary: #c3c2b7;
+      --text-muted: #898781;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --series-1: #3987e5;
+      --focus: #3987e5;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+    padding: 20px 28px 8px;
+  }
+  h1 { font-size: 20px; font-weight: 600; margin: 0; }
+  h2 { font-size: 15px; font-weight: 600; margin: 0 0 12px; }
+  .sub { color: var(--text-secondary); margin: 2px 0 0; }
+  main { padding: 12px 28px 40px; display: grid; gap: 16px; }
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  button, select, input {
+    font: inherit;
+    color: var(--text-primary);
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+  }
+  button { cursor: pointer; }
+  button:focus-visible, select:focus-visible, input:focus-visible {
+    outline: 2px solid var(--focus); outline-offset: 2px;
+  }
+
+  /* KPI row */
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
+  .kpi-label { color: var(--text-secondary); font-size: 13px; }
+  .kpi-value { font-size: 28px; font-weight: 600; margin-top: 4px; }
+  .kpi-note { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+
+  /* Two-column block */
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+  /* Trade bars */
+  .bar-row { display: grid; grid-template-columns: 110px 1fr 36px; align-items: center; gap: 10px; margin: 8px 0; }
+  .bar-track { height: 12px; background: var(--grid); border-radius: 0; position: relative; }
+  .bar-fill { height: 12px; background: var(--series-1); border-radius: 0 4px 4px 0; min-width: 2px; }
+  .bar-val { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-secondary); }
+  .axis-note { color: var(--text-muted); font-size: 12px; margin-top: 8px; }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; color: var(--text-secondary); font-size: 13px; margin-bottom: 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* Urgency marker: icon + label, never colour alone */
+  .urg { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .urg i { font-style: normal; font-size: 13px; width: 14px; text-align: center; }
+  .c-critical { color: var(--critical); }
+  .c-serious { color: var(--serious); }
+  .c-warning { color: var(--warning); }
+  .c-muted { color: var(--text-muted); }
+
+  /* Flags */
+  .flags { display: grid; gap: 10px; }
+  .flag {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--critical);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  .flag strong { font-weight: 600; }
+  .flag p { margin: 4px 0 0; color: var(--text-secondary); }
+  .flag .meta { color: var(--text-muted); font-size: 12px; margin-top: 4px; }
+  .empty { color: var(--text-muted); }
+
+  /* Filters */
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .filters input { min-width: 220px; flex: 1 1 220px; }
+  .filters .count { color: var(--text-muted); margin-left: auto; font-size: 13px; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th { color: var(--text-secondary); font-weight: 600; font-size: 12px; white-space: nowrap; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.said { min-width: 220px; }
+  .ref { color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .status { white-space: nowrap; }
+  .flagged-row td:first-child { box-shadow: inset 3px 0 0 var(--critical); }
+  .chk { color: var(--critical); font-weight: 600; }
+  .tag { display: inline-block; font-size: 12px; color: var(--text-secondary); border: 1px solid var(--border); border-radius: 4px; padding: 0 6px; margin-top: 4px; }
+
+  footer { color: var(--text-muted); font-size: 12px; padding: 0 28px 24px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Repair agent: check board</h1>
+    <p class="sub">Kestrel Lettings · 300 flats · last sync 27 Oct 2026, 09:14</p>
+  </div>
+  <button id="theme" type="button" aria-label="Toggle light or dark theme">Dark mode</button>
+</header>
+
+<main>
+
+  <section class="kpis" aria-label="Summary">
+    <div class="card">
+      <div class="kpi-label">Open requests</div>
+      <div class="kpi-value" id="kpi-open">–</div>
+      <div class="kpi-note">Not yet closed</div>
+    </div>
+    <div class="card">
+      <div class="kpi-label">Open emergencies</div>
+      <div class="kpi-value c-critical" id="kpi-emerg">–</div>
+      <div class="kpi-note">Target: booked within 1 hour</div>
+    </div>
+    <div class="card">
+      <div class="kpi-label">Median time to booking</div>
+      <div class="kpi-value" id="kpi-median">–</div>
+      <div class="kpi-note">Received to vendor confirmed</div>
+    </div>
+    <div class="card">
+      <div class="kpi-label">Needs your check</div>
+      <div class="kpi-value c-serious" id="kpi-flags">–</div>
+      <div class="kpi-note">Agent flagged, or policy disagrees</div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="flag-h">
+    <h2 id="flag-h">Needs your check</h2>
+    <div class="flags" id="flags"></div>
+  </section>
+
+  <section class="split">
+    <div class="card" aria-labelledby="trade-h">
+      <h2 id="trade-h">Open requests by trade</h2>
+      <div id="trades"></div>
+      <div class="axis-note">Open requests only. Hover a bar for the exact count.</div>
+    </div>
+
+    <div class="card" aria-labelledby="urg-h">
+      <h2 id="urg-h">Urgency the agent assigned (open requests)</h2>
+      <div class="legend" aria-hidden="true">
+        <span><i class="c-critical">⚠</i> Emergency</span>
+        <span><i class="c-serious">▲</i> Urgent</span>
+        <span><i class="c-warning">●</i> Soon</span>
+        <span><i class="c-muted">○</i> Routine</span>
+      </div>
+      <div id="urg-summary"></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="log-h">
+    <h2 id="log-h">Agent log</h2>
+    <div class="filters">
+      <label class="sr" for="f-urg" style="position:absolute;left:-9999px">Urgency</label>
+      <select id="f-urg" aria-label="Filter by urgency">
+        <option value="">All urgencies</option>
+        <option>Emergency</option>
+        <option>Urgent</option>
+        <option>Soon</option>
+        <option>Routine</option>
+      </select>
+      <select id="f-status" aria-label="Filter by status">
+        <option value="">All statuses</option>
+        <option>Booked</option>
+        <option>Awaiting vendor</option>
+        <option>Awaiting tenant</option>
+        <option>Escalated</option>
+        <option>Closed</option>
+      </select>
+      <input id="f-search" type="search" placeholder="Search flat, vendor, or what the tenant said" aria-label="Search requests">
+      <span class="count" id="count"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Ref</th>
+            <th scope="col">Received</th>
+            <th scope="col">Flat</th>
+            <th scope="col">Tenant said</th>
+            <th scope="col">Agent urgency</th>
+            <th scope="col">Trade</th>
+            <th scope="col">Vendor</th>
+            <th scope="col">Status</th>
+            <th scope="col">Booked in</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>Sample data for layout review. Figures are illustrative.</footer>
+
+<script>
+  const URG = {
+    Emergency: { icon: "⚠", cls: "c-critical", rank: 0 },
+    Urgent:    { icon: "▲", cls: "c-serious",  rank: 1 },
+    Soon:      { icon: "●", cls: "c-warning",  rank: 2 },
+    Routine:   { icon: "○", cls: "c-muted",    rank: 3 }
+  };
+
+  // Policy for the sample: gas smell, no water, live electrical fault = Emergency.
+  const DATA = [
+    { ref: "KL-4812", received: "Today 07:42", flat: "Flat 2, 14 Alder Street", said: "Water pouring through the kitchen ceiling light", urgency: "Emergency", trade: "Plumbing", vendor: "Harrow Plumbing Co.", status: "Booked", bookedIn: 14, flag: null },
+    { ref: "KL-4811", received: "Today 06:58", flat: "Flat 5, 31 Mill Road", said: "Smell of gas in the hallway. Tenant has left the flat.", urgency: "Urgent", trade: "Gas", vendor: "Teesside Gas & Heating", status: "Escalated", bookedIn: null, flag: "Gas smell reported. House policy puts this at Emergency; the agent chose Urgent. Confirm with the Gas Safe on-call team and call the tenant." },
+    { ref: "KL-4810", received: "Today 07:50", flat: "Flat 12, 5 Pilgrim Close", said: "Electric shower has tripped and won't come back on", urgency: "Urgent", trade: "Electrical", vendor: "Brightwell Electrical", status: "Booked", bookedIn: 58, flag: null },
+    { ref: "KL-4808", received: "Today 08:05", flat: "Flat 10, 2 Kiln Street", said: "Water coming through the ceiling from the flat above", urgency: "Urgent", trade: "Plumbing", vendor: "Harrow Plumbing Co.", status: "Awaiting vendor", bookedIn: null, flag: "Source may be in Flat 11 above. The agent has not contacted that tenant." },
+    { ref: "KL-4809", received: "Today 06:12", flat: "Flat 1, 8 Crown Court", said: "Smoke alarm keeps beeping, can't reach the ceiling", urgency: "Soon", trade: "General", vendor: "Mercer Handyman", status: "Booked", bookedIn: 40, flag: null },
+    { ref: "KL-4806", received: "Yesterday 19:20", flat: "Flat 3, 22 Alder Street", said: "Front door lock jammed, can't get the key in", urgency: "Urgent", trade: "Locks", vendor: "Oakfield Locks", status: "Awaiting vendor", bookedIn: null, flag: null },
+    { ref: "KL-4803", received: "Yesterday 17:05", flat: "Flat 4, 9 Westgate Parade", said: "Bedroom sockets dead, kettle still works", urgency: "Soon", trade: "Electrical", vendor: "Brightwell Electrical", status: "Booked", bookedIn: 95, flag: null },
+    { ref: "KL-4800", received: "25 Oct 09:40", flat: "Flat 6, 3 Fenwick Yard", said: "Black mould on the bedroom ceiling. Child has asthma.", urgency: "Urgent", trade: "Damp & mould", vendor: "DampFree Ltd", status: "Awaiting vendor", bookedIn: null, flag: "Vulnerable occupant mentioned. Check whether this needs a priority visit and a tenant call." },
+    { ref: "KL-4798", received: "25 Oct 14:22", flat: "Flat 2, 14 Alder Street", said: "Dripping tap in the bathroom", urgency: "Routine", trade: "Plumbing", vendor: "Harrow Plumbing Co.", status: "Booked", bookedIn: 1440, flag: null },
+    { ref: "KL-4795", received: "24 Oct 11:03", flat: "Flat 7, 40 Riverside Lane", said: "Bathroom extractor fan rattling loudly", urgency: "Routine", trade: "General", vendor: "Mercer Handyman", status: "Closed", bookedIn: 2880, flag: null },
+    { ref: "KL-4791", received: "24 Oct 08:15", flat: "Flat 1, 8 Crown Court", said: "Living room radiator cold at the top", urgency: "Soon", trade: "Heating", vendor: "Teesside Gas & Heating", status: "Booked", bookedIn: 210, flag: null },
+    { ref: "KL-4788", received: "23 Oct 16:48", flat: "Flat 9, 61 Station Road", said: "Landlord's fridge-freezer has stopped", urgency: "Soon", trade: "Appliances", vendor: "Mercer Handyman", status: "Awaiting tenant", bookedIn: null, flag: null },
+    { ref: "KL-4785", received: "23 Oct 10:30", flat: "Flat 5, 31 Mill Road", said: "Toilet keeps running, flush handle is loose", urgency: "Soon", trade: "Plumbing", vendor: "Harrow Plumbing Co.", status: "Closed", bookedIn: 360, flag: null },
+    { ref: "KL-4782", received: "22 Oct 13:10", flat: "Flat 8, 17 Harbour View", said: "Front door intercom buzzer not working", urgency: "Soon", trade: "Electrical", vendor: "Brightwell Electrical", status: "Booked", bookedIn: 130, flag: null },
+    { ref: "KL-4779", received: "22 Oct 09:02", flat: "Flat 4, 9 Westgate Parade", said: "Living room window won't close, draughty", urgency: "Routine", trade: "General", vendor: "Mercer Handyman", status: "Awaiting tenant", bookedIn: null, flag: null },
+    { ref: "KL-4770", received: "21 Oct 18:30", flat: "Flat 3, 22 Alder Street", said: "No heating at all. Boiler shows code F28.", urgency: "Urgent", trade: "Heating", vendor: "Teesside Gas & Heating", status: "Booked", bookedIn: 35, flag: null },
+    { ref: "KL-4766", received: "21 Oct 07:55", flat: "Flat 11, 2 Kiln Street", said: "Bathroom extractor fan not working", urgency: "Routine", trade: "General", vendor: "Mercer Handyman", status: "Closed", bookedIn: 1900, flag: null },
+    { ref: "KL-4762", received: "20 Oct 12:40", flat: "Flat 6, 3 Fenwick Yard", said: "Mouse droppings in the kitchen cupboards", urgency: "Soon", trade: "Pest control", vendor: "Ashdown Pest Control", status: "Awaiting vendor", bookedIn: null, flag: null },
+    { ref: "KL-4758", received: "20 Oct 09:15", flat: "Flat 9, 61 Station Road", said: "Garden gate hinge broken", urgency: "Routine", trade: "General", vendor: "Mercer Handyman", status: "Closed", bookedIn: 2100, flag: null },
+    { ref: "KL-4754", received: "19 Oct 22:10", flat: "Flat 12, 5 Pilgrim Close", said: "Smoke alarm chirping every minute", urgency: "Soon", trade: "General", vendor: "Mercer Handyman", status: "Closed", bookedIn: 180, flag: null }
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  function fmtMins(m) {
+    if (m == null) return "–";
+    if (m < 60) return m + " min";
+    const h = m / 60;
+    return (Number.isInteger(h) ? h : h.toFixed(1)) + " h";
+  }
+
+  function urgHtml(u) {
+    const c = URG[u];
+    return `<span class="urg ${c.cls}"><i aria-hidden="true">${c.icon}</i><span class="u-label">${u}</span></span>`;
+  }
+
+  function median(xs) {
+    if (!xs.length) return null;
+    const s = [...xs].sort((a, b) => a - b);
+    const mid = Math.floor(s.length / 2);
+    return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
+  }
+
+  function renderKpis() {
+    const open = DATA.filter((d) => d.status !== "Closed");
+    const emerg = open.filter((d) => d.urgency === "Emergency");
+    const booked = DATA.filter((d) => d.bookedIn != null).map((d) => d.bookedIn);
+    const flagged = open.filter((d) => d.flag);
+
+    $("kpi-open").textContent = open.length;
+    $("kpi-emerg").textContent = emerg.length;
+    $("kpi-median").textContent = fmtMins(median(booked));
+    $("kpi-flags").textContent = flagged.length;
+  }
+
+  function renderFlags() {
+    const flagged = DATA.filter((d) => d.flag && d.status !== "Closed");
+    $("flags").innerHTML = flagged.length
+      ? flagged.map((d) => `
+        <div class="flag">
+          <strong>${esc(d.ref)} · ${esc(d.flat)}</strong>
+          <p>${esc(d.flag)}</p>
+          <div class="meta">Agent urgency: ${urgHtml(d.urgency)} · ${esc(d.received)}</div>
+        </div>`).join("")
+      : `<p class="empty">Nothing waiting for you.</p>`;
+  }
+
+  function renderTrades() {
+    const open = DATA.filter((d) => d.status !== "Closed");
+    const counts = {};
+    open.forEach((d) => { counts[d.trade] = (counts[d.trade] || 0) + 1; });
+    const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const max = Math.max(1, ...entries.map((e) => e[1]));
+    $("trades").innerHTML = entries.map(([t, n]) => `
+      <div class="bar-row">
+        <span>${esc(t)}</span>
+        <div class="bar-track" title="${esc(t)}: ${n} open">
+          <div class="bar-fill" style="width:${(n / max) * 100}%"></div>
+        </div>
+        <span class="bar-val">${n}</span>
+      </div>`).join("");
+  }
+
+  function renderUrgency() {
+    const open = DATA.filter((d) => d.status !== "Closed");
+    const rows = Object.keys(URG).map((u) => {
+      const n = open.filter((d) => d.urgency === u).length;
+      return { u, n };
+    });
+    const max = Math.max(1, ...rows.map((r) => r.n));
+    $("urg-summary").innerHTML = rows.map(({ u, n }) => `
+      <div class="bar-row" style="grid-template-columns:110px 1fr 36px">
+        <span>${urgHtml(u)}</span>
+        <div class="bar-track" title="${u}: ${n} open">
+          <div class="bar-fill" style="width:${(n / max) * 100}%;background:var(--series-1)"></div>
+        </div>
+        <span class="bar-val">${n}</span>
+      </div>`).join("");
+  }
+
+  function renderRows() {
+    const u = $("f-urg").value;
+    const s = $("f-status").value;
+    const q = $("f-search").value.trim().toLowerCase();
+
+    const list = DATA
+      .filter((d) => !u || d.urgency === u)
+      .filter((d) => !s || d.status === s)
+      .filter((d) => !q || [d.flat, d.said, d.vendor, d.trade].join(" ").toLowerCase().includes(q))
+      .sort((a, b) => URG[a.urgency].rank - URG[b.urgency].rank);
+
+    $("rows").innerHTML = list.map((d) => `
+      <tr class="${d.flag ? "flagged-row" : ""}">
+        <td class="ref">${esc(d.ref)}</td>
+        <td class="num">${esc(d.received)}</td>
+        <td>${esc(d.flat)}</td>
+        <td class="said">${esc(d.said)}${d.flag ? `<br><span class="chk">Check:</span> ${esc(d.flag)}` : ""}</td>
+        <td>${urgHtml(d.urgency)}</td>
+        <td>${esc(d.trade)}</td>
+        <td>${esc(d.vendor)}</td>
+        <td class="status">${esc(d.status)}</td>
+        <td class="num">${fmtMins(d.bookedIn)}</td>
+      </tr>`).join("") || `<tr><td colspan="9" class="empty">No requests match these filters.</td></tr>`;
+
+    $("count").textContent = `${list.length} of ${DATA.length} requests`;
+  }
+
+  ["f-urg", "f-status"].forEach((id) => $(id).addEventListener("change", renderRows));
+  $("f-search").addEventListener("input", renderRows);
+
+  const root = document.documentElement;
+  $("theme").addEventListener("click", () => {
+    const dark = root.dataset.theme === "dark" ||
+      (root.dataset.theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+    root.dataset.theme = dark ? "light" : "dark";
+    $("theme").textContent = dark ? "Dark mode" : "Light mode";
+  });
+
+  renderKpis();
+  renderFlags();
+  renderTrades();
+  renderUrgency();
+  renderRows();
+</script>
+</body>
+</html>

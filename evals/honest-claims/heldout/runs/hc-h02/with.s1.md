@@ -1,27 +1,27 @@
 **Tallybee: Budget for Lumpy Income**
 
-Know what's safe to spend this week, even when your income changes every month.
+Know what's safe to spend this week, even when your income is anything but steady.
 
-Tallybee is a budgeting app for freelancers. It sets tax money aside from every client payment, so a big invoice doesn't turn into a surprise tax bill.
+Tallybee is a budgeting app for freelancers. Every time a client pays you, Tallybee sets aside your tax money automatically, so what's left is yours to spend.
 
-**HOW IT WORKS**
+**How it works**
+- Log a client payment, or sync it from your bank. Tallybee sets aside your tax share right away.
+- Check your "safe to spend this week" number. It's what's left after taxes and your upcoming bills.
+- Connect your bank with read-only access. Tallybee can see your transactions but can never move money.
 
-• **Tax money, set aside automatically.** Log a client payment or let it sync, and Tallybee sets aside your tax share right away.
-• **A "safe to spend this week" number.** One figure shows what you can spend after taxes are covered. It's useful in a month with three invoices and in a month with none.
-• **Read-only bank connection.** Link your bank to pull in client payments. Tallybee can see your transactions but can't move your money.
-• **Built for uneven income.** Most budgeting apps assume a steady paycheck. Tallybee doesn't.
+**Built for uneven income**
+Big month, quiet month, or a client who pays 60 days late: Tallybee works from the money you've actually received, not from a salary you don't have.
 
-**WHO IT'S FOR**
+**Why freelancers use it**
+- Tax money is set aside as you get paid, so tax time isn't a scramble.
+- One number answers "can I afford this?"
+- Logging a payment takes seconds, and syncing takes none.
 
-Freelancers, contractors, and independent creatives who get paid by clients on no fixed schedule.
+**Pricing**
+Free for your first two weeks, then $6 a month.
 
-**PRICING**
-
-Try Tallybee free for two weeks. After that, it's $6 a month.
-
-Tallybee is available on iPhone. Other platforms aren't available yet.
+Available on iPhone. Android is not available yet.
 
 ---
-
-- I left out the "$412 a month" line because you haven't measured it. A made-up savings figure in an App Store listing can get the listing flagged and create ad-claim problems. Once you have real data, I can put the number back in the first line with its basis, for example "In a survey of [N] Tallybee users, freelancers saved an average of $X a month."
-- I didn't add "cancel anytime" or any security claims beyond read-only access, because you didn't give me those. Tell me if they're true and I'll add them.
+- I left out the "$412 a month" line because it hasn't been measured, and an App Store headline with an unsupported savings figure is a claim you'd have to defend. Once you have real data, it can go back in as "In our [date] survey of N users, the average was $X". That would be a stronger line, too.
+- Apple requires subscription apps to state the renewal terms in the description. Add your auto-renewal and cancellation wording beside the pricing line, plus links to your Terms and Privacy Policy.

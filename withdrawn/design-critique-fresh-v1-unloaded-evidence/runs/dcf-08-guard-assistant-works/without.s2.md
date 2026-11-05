@@ -1,0 +1,3 @@
+Nothing blocks launch from what you've described: nothing is written until the user presses Insert, every claim has a source link, and the panel can be switched off. I haven't seen the code, so this is from your description only.
+
+Before launch, check two things. (1) Uncertainty shouldn't depend on the dotted underline alone, so add a non-visual cue such as an icon or screen-reader text. Also decide whether Insert keeps the source links and uncertainty notes or strips them, and say which on the button. (2) Any sentence with no matching passage in the user's notes should be flagged as unsourced, not shown as a normal claim, and the links should still resolve after the notes are edited.

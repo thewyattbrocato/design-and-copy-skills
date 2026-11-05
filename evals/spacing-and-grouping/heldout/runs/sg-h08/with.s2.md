@@ -1,28 +1,25 @@
-Yes, the problem is that every gap is 16px, so nothing reads as grouped.
+Yes, the main problem is that every gap is 16px, so nothing groups.
 
-The modal has three groups:
-- **Header:** the title and the paragraph that explains it.
-- **Form:** the two fields.
-- **Actions:** the footer buttons.
+Title to paragraph, paragraph to fields, field to field, and fields to footer all get the same space. Those relationships aren't the same, so the modal reads as one even stack. Within-group space should be about half or less of between-group space.
 
-With 16px between everything, the title looks as far from its paragraph as the paragraph is from the form, and the footer looks like just another row. Within-group space should be about half of between-group space, or less.
+**Suggested spacing (4px scale)**
 
-**Suggested spacing**
-- **Title to paragraph:** 8px. They're one unit, and 16px lets the title float.
-- **Paragraph to first field:** 24px. This is a group boundary.
-- **Between the two fields:** 16px. This is fine, though 12px also works if the form feels long.
-- **Label to input inside each field:** 4–8px. Check this one, because the label should sit clearly closer to its input than the fields sit to each other.
-- **Last field to footer:** 24–32px. The actions are a separate group, and 32px gives them a bit more weight.
-- **Between Cancel and Confirm:** 8–12px.
+| Relationship | Now | Suggested |
+|---|---|---|
+| Title → paragraph (header unit) | 16 | 8 |
+| Paragraph → fields (header to form) | 16 | 24 |
+| Field → field (same group) | 16 | 16 |
+| Label → input inside each field | not stated | 4–8 |
+| Fields → footer (content to actions) | 16 | 24–32 |
+| Cancel ↔ Confirm | not stated | 8–12 |
 
-**What's already fine**
-- 24px padding all around is reasonable. It's equal on every side and larger than the largest internal gap, so the content sits comfortably inside the surface.
-- The subtle shadow is fine. A modal is a discrete object, so it earns its surface. Make sure the border, shadow and fill aren't all doing the same job. One or two is enough.
-- Right-aligned Cancel and Confirm is the standard pattern.
+The title and paragraph become one tight unit. The fields form a group at 16px. The footer sits clearly apart from the form. The title gets less space below it than the gap that follows the paragraph, so it stays attached to its description.
 
-**Smaller things to check**
-- **Button padding:** horizontal padding should be about 1.5–2× vertical, for example 8px × 16px. Each button should be at least 36–40px tall, or 44px if the modal is used on touch devices.
-- **Gap ownership:** the container should own the gaps (flex or grid `gap`) instead of `margin-bottom` on each child. Otherwise the last element can add extra space above the footer or inside the padding.
-- **Scale values:** all the values above (4, 8, 12, 16, 24, 32) come from a 4px scale. If the teammate has anything off-scale, like 14 or 18, snap it to the nearest step.
+**Other notes**
+- **Padding:** 24px all around is fine. The outer padding is at least as large as the largest inner gap, so the content doesn't feel cramped against the edge.
+- **Shadow:** a subtle shadow is fine. Use it as the only surface device, with no extra border or tinted sections inside. A scrim behind the modal helps if there isn't one.
+- **Footer:** don't add a divider or tinted band unless the form scrolls and the footer is sticky. Space alone does the job here.
+- **Gap ownership:** use a flex/grid `gap` on the container instead of `margin-bottom` on each child, so the last element doesn't add extra space above the padding.
+- **Buttons:** horizontal padding should be about 1.5–2× the vertical, for example 8px × 16px. Make Confirm the visually primary button and Cancel secondary or ghost.
 
-The result keeps the 24px padding and the shadow. The header is tight, the form is separated from it, and the footer stands apart.
+If your design system already has spacing tokens, map these onto its nearest steps and keep the ratios: tight header, 16px field group, and a larger gap before the footer.

@@ -1,49 +1,62 @@
-**Short version:** this is a generic SaaS admin template with Coldshelf's name on it. A food bank volunteer opening it couldn't tell it's for fridges. Nothing on the screen mentions temperature, units, or whether the food is safe. That's the main problem, and the rest follows from it.
+**Bottom line:** this is a generic SaaS admin template with Coldshelf's name on it. Nothing on the screen says "temperature" or "fridge," and a food bank volunteer would have no idea what Revenue or Conversion Rate means here. Cosmetic polish won't fix that. The content needs rewriting around the actual job.
 
-I only have your text description, so I can't judge layout, spacing, contrast, or type size. Check those separately.
+## The core problem
+Someone opening this screen wants to know whether everything is cold enough and whether they need to do anything. The screen can't answer either question. A failed walk-in at 2am means lost food and possibly a food-safety incident, so the answer needs to be the first thing visible.
 
-## Biggest problems
+## Section by section
 
-**1. The stat cards are the wrong metrics.** Total Users, Revenue, Active Sessions, and Conversion Rate mean nothing to a food bank. Revenue and conversion rate are especially off for community nonprofits. The dashboard should answer "is my food safe right now?" Better cards:
-- Units in range (e.g. 5 of 6)
-- Units in alert or out of range
-- Last reading received, or sensors offline
-- Missed or overdue manual logs, if volunteers log by hand
+**Subtitle ("Welcome back! Here's what's happening today.")**
+This is filler. Replace it with a live status sentence, e.g. "All 6 units in range · Last reading 2 min ago" or "1 unit out of range for 25 min." If it has to be one line, it should be this line.
 
-"+12% from last month" comparisons don't suit temperature data. Current state and exceptions matter more than trends.
+**Stat cards**
+- Total Users, Revenue, Active Sessions and Conversion Rate are all irrelevant to this product.
+- Replace them with something like: *Units in range (5 of 6)*, *Active alerts*, *Sensors offline / stale*, and *Excursions this week*.
+- "vs. last month" comparisons don't help for safety data. Current state matters more than trend.
+- Arrow color alone carries meaning, which fails for colorblind users. Active Sessions down is also shown in red, though down isn't inherently bad. Pair status colors with an icon and text.
 
-**2. The chart can't do its job.** A single blue line over Jan–Dec with no y-axis labels tells you nothing about temperature. A temperature chart needs:
-- A labeled y-axis with units (°F/°C)
-- A time range that matches the job (last 24 hours or 7 days, not 12 months)
-- A visible safe-range band or threshold line (e.g. 41°F for refrigeration, 0°F for freezers), with excursions marked
-- One line per unit, or a unit selector
+**Chart ("Overview", Jan–Dec, one blue line, no y-axis labels)**
+- A line with no y-axis labels can't be read.
+- Jan–Dec is the wrong time scale. Temperature needs hours or days, with a 24h/7d/30d toggle.
+- It needs units (°F/°C) and a shaded safe-range band, so excursions are obvious. Common thresholds are ≤41°F (5°C) for refrigerators and ≤0°F (-18°C) for freezers. Please confirm against your local health code.
+- One line can't show multiple units. Default to a per-unit view, or a small chart per unit.
+- Blue is fine for a normal reading. Don't reuse it as the only signal for "bad."
 
-Don't use color alone to mark out-of-range readings. Add a marker or label too.
+**Table ("Recent Activity")**
+- "Item 1 / Active / Pending / Inactive / View" is placeholder data.
+- Make it a units table: *Unit name · Current temp · Status · Last reading · Action*. Sort out-of-range units to the top.
+- Use a clear action like "Acknowledge" or "Log corrective action." Food banks often need a paper trail for inspectors.
+- 01/02/2026 is ambiguous (Jan 2 or Feb 1?). For recent events, use relative times ("12 min ago").
 
-**3. "Recent Activity" with Item 1/2/3 is placeholder content.** It should be a units table: unit name, current temp, status, last reading, and maybe a small trend. Sort problems to the top. "Active / Pending / Inactive" doesn't map to anything real here. You want In range / Warning / Out of range / No signal. Three identical "View" links are also ambiguous for screen readers and for scanning. Make the row itself clickable and drop the Action column.
+**Navigation**
+- Analytics, Reports, Users and Settings are generic. Consider *Units* (or Locations), *Alerts*, *Logs/Reports* (inspection exports), *Team* (volunteers), and *Settings*.
+- Volunteers may use a shared tablet in a busy back room. Use large tap targets and keep the main view free of jargon.
 
-**4. The welcome subtitle wastes your best spot.** "Welcome back! Here's what's happening today." could be a live status line: "All 6 units in range. Last reading 2 min ago." or "Walk-in Freezer 2 has been above 10°F for 40 minutes."
+**Top bar**
+- "Search..." should say what it searches ("Search units, alerts").
+- The bell needs an unread badge. Critical alerts also can't live only in a bell icon, since nobody's looking at the dashboard overnight. You need SMS, push or email escalation.
 
-## Other issues
+**Empty state (Reports)**
+- "Add your first item!" is wrong. Reports are empty because no readings have been logged yet, not because the user forgot to add an item.
+- Say that directly: "No readings yet. Add a fridge or freezer and connect a sensor to start building inspection-ready logs." The button should read **Add a unit**, not "Add Item."
+- A generic document outline icon is fine, but not distinctive.
 
-- **Sidebar:** There's no Units/Locations or Alerts. Those are the core objects. Analytics vs. Reports is also vague. Health inspectors will want exportable logs, so call it something like "Compliance logs" if that's what it is.
-- **Bell icon:** It needs an unread count. Also, in-app alerts aren't enough, because nobody is watching the dashboard when a compressor fails at 2 a.m. Make sure SMS, email, or push alerts exist, and say so in the product.
-- **Search:** "Search..." doesn't say what it searches. Use "Search units, alerts, logs".
-- **Red/green arrows:** Don't rely on color alone, since about 1 in 12 men are red-green colorblind. Also, a green up arrow isn't always good. On a temperature metric, up is bad.
-- **Reports empty state:** "Add Item" and "first item" are generic. Say what's missing and why: "No readings yet. Add a fridge or freezer to start logging temperatures," with a button labeled "Add unit". If the page is empty because no report has been generated, offer "Generate report" instead. A document outline icon is fine.
-- **Error toast:** "Something went wrong. Please try again." is the weakest piece, and it matters most here. If a temperature log fails to save, the user needs to know:
-  - What failed ("Couldn't save the 2:15 pm reading for Walk-in Fridge")
-  - Whether data was lost
-  - What to do next
+**Error toast ("Something went wrong. Please try again.")**
+- This is the most dangerous string here. In a logging app, the user's real question is "is my temperature data still being recorded?" The toast doesn't answer it.
+- Say what failed and what's safe, e.g. "Couldn't reach the sensor in Walk-in Freezer 2. Last reading 14 min ago. Check that it's powered and in Wi-Fi range."
+- Walk-in boxes are metal-lined and often have bad Wi-Fi. Design a persistent "stale / offline" state per unit, not just a toast that disappears.
+- "Used everywhere" is a smell. Each failure type needs its own message.
 
-  Toasts also auto-dismiss. A failed save of a safety record should persist until acknowledged. Also plan for offline use, because walk-in coolers are often wifi dead zones.
+## Missing entirely
+- An offline or stale-data state.
+- A way to log a manual reading as a fallback when a sensor dies.
+- Alert history showing who acknowledged what and when.
+- Alert threshold settings, including how long a door can be open before alerting.
+- A one-click export for health inspectors.
 
-## Context to design for
+## Priority order
+1. Rewrite the stat cards and table around units and status. This is the biggest gap.
+2. Fix the chart with units, axes, time scale and a safe-range band.
+3. Design stale/offline states and specific error messages.
+4. Fix the nav, empty state and alert escalation.
 
-Your users are volunteers, often non-technical and sometimes older, and often on a phone or tablet in a cold, busy back room. That argues for large tap targets, high contrast, plain language, and a status you can read at a glance from a few feet away. A big "All good" or "1 unit needs attention" banner would do more than any of the current cards.
-
-## What's fine
-
-The overall structure works: top bar, sidebar, summary row, detail below. Selected-state nav and an outline-icon empty state with one clear action are also sound patterns. It's the content that needs replacing, not the skeleton.
-
-If you want, I can sketch a revised version of this screen as text or build a quick mockup.
+I can draft a replacement layout in the same text format, including the microcopy, if you'd like.

@@ -1,5 +1,3 @@
-**Our story**
+At Marrow & Rye, the bread starts with a jar. Dani Okafor has kept her rye starter going since 2016, and it's still the heart of everything we bake. In 2019, she and her brother Tunde opened our doors in a converted garage on Pell Street, and we've been building on that starter ever since. Every loaf is naturally leavened, made with flour from a mill two counties over. We bake six days a week and take Mondays to rest. Tunde runs the counter, so he's likely the one who'll greet you, and he also delivers our bread to four cafes nearby. Come by, say hello, and take something warm home with you.
 
-Marrow & Rye opened in 2019, when Dani Okafor and her brother Tunde turned a garage on Pell Street into a bakery. Everything we make is naturally leavened with a rye starter Dani has kept going since 2016, years before we had a shop to put it in. Our flour comes from a mill two counties over. We bake six days a week and close on Mondays. Tunde runs the counter, and he also handles our wholesale deliveries to four cafes nearby. So if you've had our bread at one of them, you've already tasted our work. Come by Pell Street and say hello.
-
-That's about 105 words. If you want it closer to 120, I can add a line, but it would need a fact from you, since I've kept strictly to the ones you gave me.
+(About 108 words. If you'd like it closer to 120, I can add a sentence, but I didn't want to pad it with anything beyond the facts you gave me.)

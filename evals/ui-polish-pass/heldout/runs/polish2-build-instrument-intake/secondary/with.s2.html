@@ -2,72 +2,73 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Instrument Repair Intake</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrument Drop-Off & Repair Request</title>
 <style>
   :root {
-    --bg: #f6f4f0;
+    --bg: #f6f3ee;
     --surface: #ffffff;
-    --text: #1f1d1a;
-    --muted: #5f5a52;
-    --border: #cfc8bc;
-    --accent: #7a3e1d;
-    --accent-hover: #5e2e14;
+    --text: #2a2622;
+    --muted: #6b635a;
+    --border: #d6cec3;
+    --accent: #8a4b1f;
+    --accent-hover: #6f3a16;
     --accent-text: #ffffff;
-    --focus: #1a5fb4;
     --error: #b42318;
     --error-bg: #fdecea;
-    --success: #1e6b3a;
-    --success-bg: #e8f5ec;
-    --radius: 8px;
-    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --success-bg: #e8f5ea;
+    --success: #1e6b34;
+    --focus: #1a5fb4;
+    --radius: 10px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #161412;
-      --surface: #201d1a;
-      --text: #f2eee8;
-      --muted: #b5ada1;
-      --border: #4a443c;
-      --accent: #d08a5a;
-      --accent-hover: #e3a077;
-      --accent-text: #161412;
-      --focus: #7ab3ff;
+      --bg: #1c1a18;
+      --surface: #262320;
+      --text: #f1ece5;
+      --muted: #b3aaa0;
+      --border: #4a443d;
+      --accent: #d89a63;
+      --accent-hover: #e8b080;
+      --accent-text: #1c1a18;
       --error: #ff8a80;
-      --error-bg: #3a1f1c;
-      --success: #7fd69a;
-      --success-bg: #1d3325;
+      --error-bg: #3d1f1d;
+      --success-bg: #1d3324;
+      --success: #8fdba4;
+      --focus: #7db4ff;
     }
   }
 
-  * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
 
   html, body { margin: 0; padding: 0; }
 
   body {
-    background: var(--bg);
-    color: var(--text);
     font-family: var(--font);
     font-size: 16px;
     line-height: 1.5;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
-    padding: 24px 16px 48px;
   }
 
   .wrap {
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
+    padding: 2rem 1rem 4rem;
   }
 
   header h1 {
     font-size: 1.75rem;
-    margin: 0 0 4px;
-    line-height: 1.2;
+    margin: 0 0 0.25rem;
+    letter-spacing: -0.01em;
   }
 
   header p {
-    margin: 0 0 24px;
+    margin: 0 0 1.5rem;
     color: var(--muted);
   }
 
@@ -75,49 +76,41 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 24px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
-  fieldset {
-    border: 0;
-    margin: 0 0 28px;
-    padding: 0;
-    min-width: 0;
-  }
-
-  legend {
+  .card h2 {
     font-size: 1.1rem;
-    font-weight: 600;
-    padding: 0;
-    margin-bottom: 12px;
+    margin: 0 0 1rem;
   }
 
   .grid {
     display: grid;
-    gap: 16px;
+    gap: 1rem;
     grid-template-columns: 1fr 1fr;
   }
 
   .full { grid-column: 1 / -1; }
 
-  label, .label {
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .card { padding: 1.1rem; }
+  }
+
+  label, .legend {
     display: block;
     font-weight: 600;
-    margin-bottom: 6px;
     font-size: 0.95rem;
+    margin-bottom: 0.35rem;
   }
 
   .hint {
     display: block;
     font-weight: 400;
-    color: var(--muted);
     font-size: 0.85rem;
-    margin-top: 4px;
-  }
-
-  .required::after {
-    content: " *";
-    color: var(--error);
+    color: var(--muted);
+    margin-top: 0.2rem;
   }
 
   input[type="text"],
@@ -129,11 +122,10 @@
     width: 100%;
     font: inherit;
     color: var(--text);
-    background: var(--bg);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 12px;
-    min-height: 44px;
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
   }
 
   textarea {
@@ -155,150 +147,145 @@
   select[aria-invalid="true"],
   textarea[aria-invalid="true"] {
     border-color: var(--error);
-    box-shadow: 0 0 0 1px var(--error) inset;
+    background: var(--error-bg);
   }
 
   .error {
     display: none;
     color: var(--error);
-    font-size: 0.875rem;
-    margin-top: 6px;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
   }
 
   .error.show { display: block; }
 
-  .options {
-    display: grid;
-    gap: 8px;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
   }
 
-  .option {
+  .checks {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    margin-top: 0.25rem;
+  }
+
+  .check {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 0.5rem;
+    padding: 0.5rem 0.6rem;
     border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--bg);
+    border-radius: 8px;
     cursor: pointer;
-    min-height: 44px;
+    font-weight: 400;
+    margin: 0;
   }
 
-  .option input {
-    margin: 3px 0 0;
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
+  .check input {
+    margin-top: 0.2rem;
     accent-color: var(--accent);
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
   }
-
-  .option:has(input:checked) {
-    border-color: var(--accent);
-  }
-
-  .option span { overflow-wrap: anywhere; }
 
   .radios {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
-  .radios .option { flex: 0 1 auto; }
+  .radios .check { margin: 0; }
 
-  .check {
+  .agree {
     display: flex;
-    gap: 10px;
+    gap: 0.6rem;
     align-items: flex-start;
-    margin-bottom: 12px;
+    font-weight: 400;
+    margin-top: 0.5rem;
   }
 
-  .check input {
-    width: 18px;
-    height: 18px;
-    margin-top: 3px;
-    flex-shrink: 0;
+  .agree input {
+    margin-top: 0.25rem;
     accent-color: var(--accent);
+    width: 1.05rem;
+    height: 1.05rem;
+    flex-shrink: 0;
   }
 
   .actions {
     display: flex;
     justify-content: flex-end;
+    gap: 0.75rem;
     align-items: center;
-    gap: 12px;
-    margin-top: 8px;
     flex-wrap: wrap;
+    margin-top: 0.5rem;
   }
 
-  button[type="submit"] {
+  button {
     font: inherit;
     font-weight: 600;
-    color: var(--accent-text);
-    background: var(--accent);
-    border: 0;
-    border-radius: 6px;
-    padding: 12px 22px;
-    min-height: 44px;
+    border-radius: 8px;
+    padding: 0.7rem 1.4rem;
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-text);
   }
 
-  button[type="submit"]:hover { background: var(--accent-hover); }
+  button:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
-  button[type="submit"]:disabled {
-    opacity: 0.6;
-    cursor: wait;
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
   }
+
+  button.secondary:hover { background: var(--bg); }
 
   .banner {
     display: none;
-    border-radius: 6px;
-    padding: 12px 14px;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--border);
   }
 
   .banner.show { display: block; }
 
-  .banner.error-banner {
-    color: var(--error);
-    background: var(--error-bg);
-    border: 1px solid var(--error);
-  }
-
-  .success {
-    display: none;
-    text-align: left;
-  }
-
-  .success.show { display: block; }
-
-  .success h2 {
-    margin: 0 0 8px;
-    color: var(--success);
-    font-size: 1.4rem;
-  }
-
-  .success .ref {
-    display: inline-block;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  .banner.success {
     background: var(--success-bg);
     color: var(--success);
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin: 8px 0 16px;
+    border-color: var(--success);
   }
 
-  .success dl {
+  .banner.error {
+    background: var(--error-bg);
+    color: var(--error);
+    border-color: var(--error);
+  }
+
+  .banner strong { display: block; margin-bottom: 0.25rem; }
+
+  .ticket {
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  dl.summary {
     display: grid;
     grid-template-columns: max-content 1fr;
-    gap: 6px 16px;
-    margin: 0 0 20px;
+    gap: 0.4rem 1rem;
+    margin: 0;
   }
 
-  .success dt { color: var(--muted); }
-  .success dd { margin: 0; overflow-wrap: anywhere; }
+  dl.summary dt { color: var(--muted); font-size: 0.9rem; }
+  dl.summary dd { margin: 0; word-break: break-word; }
 
   .sr-only {
     position: absolute;
@@ -312,24 +299,12 @@
     border: 0;
   }
 
-  .secondary {
-    font: inherit;
-    color: var(--text);
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 18px;
-    min-height: 44px;
-    cursor: pointer;
-  }
+  .hidden { display: none !important; }
 
-  .secondary:hover { border-color: var(--accent); }
-
-  @media (max-width: 560px) {
-    .grid { grid-template-columns: 1fr; }
-    .card { padding: 18px; }
-    .actions { justify-content: stretch; }
-    button[type="submit"], .secondary { width: 100%; }
+  @media print {
+    body { background: #fff; color: #000; }
+    .card { border: 1px solid #999; box-shadow: none; }
+    .no-print { display: none !important; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -339,269 +314,350 @@
 </head>
 <body>
 <div class="wrap">
+
   <header>
-    <h1>Instrument Repair Intake</h1>
-    <p>Tell us about your instrument and what's going wrong. We'll confirm your drop-off and get back to you with an estimate.</p>
+    <h1>Instrument Drop-Off &amp; Repair Request</h1>
+    <p>Tell us what's going on with your guitar or violin, and we'll get back to you with an estimate before any work begins.</p>
   </header>
 
-  <main class="card">
-    <div id="errorBanner" class="banner error-banner" role="alert" tabindex="-1">
-      Please fix the highlighted fields and try again.
-    </div>
+  <div id="banner" class="banner" role="status" aria-live="polite" tabindex="-1"></div>
 
-    <form id="intakeForm" novalidate>
-      <fieldset>
-        <legend>Your contact details</legend>
-        <div class="grid">
-          <div>
-            <label for="name" class="required">Full name</label>
-            <input type="text" id="name" name="name" autocomplete="name" required aria-describedby="name-error">
-            <div class="error" id="name-error">Please enter your name.</div>
-          </div>
-          <div>
-            <label for="phone" class="required">Phone</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" required aria-describedby="phone-error phone-hint">
-            <span class="hint" id="phone-hint">We'll text or call about your repair.</span>
-            <div class="error" id="phone-error">Please enter a valid phone number (at least 7 digits).</div>
-          </div>
-          <div class="full">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" autocomplete="email" aria-describedby="email-error">
-            <div class="error" id="email-error">Please enter a valid email address.</div>
-          </div>
-          <div class="full">
-            <span class="label" id="contact-pref-label">Preferred contact method</span>
-            <div class="radios" role="radiogroup" aria-labelledby="contact-pref-label">
-              <label class="option"><input type="radio" name="contactPref" value="Phone" checked><span>Phone</span></label>
-              <label class="option"><input type="radio" name="contactPref" value="Text"><span>Text</span></label>
-              <label class="option"><input type="radio" name="contactPref" value="Email"><span>Email</span></label>
-            </div>
-          </div>
+  <form id="repairForm" novalidate>
+
+    <section class="card" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Your contact details</h2>
+      <div class="grid">
+        <div>
+          <label for="name">Full name <span aria-hidden="true">*</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" required aria-describedby="name-error">
+          <div class="error" id="name-error">Please enter your name.</div>
         </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>About the instrument</legend>
-        <div class="grid">
-          <div>
-            <label for="instrumentType" class="required">Instrument type</label>
-            <select id="instrumentType" name="instrumentType" required aria-describedby="type-error">
-              <option value="">Choose one…</option>
-              <option>Acoustic guitar</option>
-              <option>Electric guitar</option>
-              <option>Bass guitar</option>
-              <option>Classical guitar</option>
-              <option>Ukulele / mandolin / banjo</option>
-              <option>Violin</option>
-              <option>Viola</option>
-              <option>Cello</option>
-              <option>Double bass</option>
-              <option>Other</option>
-            </select>
-            <div class="error" id="type-error">Please choose an instrument type.</div>
-          </div>
-          <div>
-            <label for="makeModel">Make and model</label>
-            <input type="text" id="makeModel" name="makeModel" placeholder="e.g. Martin D-28, Yamaha FG800">
-          </div>
-          <div>
-            <label for="serial">Serial number</label>
-            <input type="text" id="serial" name="serial" aria-describedby="serial-hint">
-            <span class="hint" id="serial-hint">Usually inside the soundhole or on the headstock label. Leave blank if unknown.</span>
-          </div>
-          <div>
-            <label for="dropoff" class="required">Preferred drop-off date</label>
-            <input type="date" id="dropoff" name="dropoff" required aria-describedby="dropoff-error">
-            <div class="error" id="dropoff-error">Please choose a drop-off date.</div>
-          </div>
+        <div>
+          <label for="phone">Phone <span aria-hidden="true">*</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" required aria-describedby="phone-error">
+          <div class="error" id="phone-error">Please enter a phone number we can reach you at.</div>
         </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>What's wrong?</legend>
-        <span class="label" id="issues-label">Select all that apply</span>
-        <div class="options" role="group" aria-labelledby="issues-label">
-          <label class="option"><input type="checkbox" name="issues" value="Setup / action adjustment"><span>Setup or action adjustment</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Intonation"><span>Intonation problems</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Buzzing or rattling"><span>Buzzing or rattling</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Crack or structural damage"><span>Crack or structural damage</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Neck or truss rod"><span>Neck or truss rod issue</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Fret wear or dead spots"><span>Fret wear or dead spots</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Tuning machines or nut"><span>Tuning machines or nut</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Electronics or pickups"><span>Electronics or pickups</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Finish or cosmetic"><span>Finish or cosmetic</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Bridge or saddle"><span>Bridge or saddle</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Sound post or bass bar"><span>Sound post or bass bar</span></label>
-          <label class="option"><input type="checkbox" name="issues" value="Bow rehair or bow repair"><span>Bow rehair or bow repair</span></label>
+        <div class="full">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" aria-describedby="email-error email-hint">
+          <span class="hint" id="email-hint">Optional, but recommended for estimates and updates.</span>
+          <div class="error" id="email-error">Please enter a valid email address.</div>
         </div>
-        <div style="margin-top:16px">
-          <label for="description" class="required">Describe the problem</label>
-          <textarea id="description" name="description" required aria-describedby="desc-hint description-error" placeholder="When did it start? What do you notice when you play or handle it?"></textarea>
-          <span class="hint" id="desc-hint">The more detail, the better. Photos help too, which you can bring on drop-off.</span>
-          <div class="error" id="description-error">Please describe the problem so we can prepare.</div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Timing and extras</legend>
-        <div class="grid">
-          <div class="full">
-            <span class="label" id="urgency-label">How urgent is this?</span>
-            <div class="radios" role="radiogroup" aria-labelledby="urgency-label">
-              <label class="option"><input type="radio" name="urgency" value="Routine" checked><span>Routine</span></label>
-              <label class="option"><input type="radio" name="urgency" value="Needed soon"><span>Needed soon</span></label>
-              <label class="option"><input type="radio" name="urgency" value="Gig or recording this week"><span>Gig or recording this week</span></label>
-            </div>
+        <fieldset class="full">
+          <legend class="legend">Preferred contact method</legend>
+          <div class="radios">
+            <label class="check"><input type="radio" name="contactPref" value="Phone" checked> Phone</label>
+            <label class="check"><input type="radio" name="contactPref" value="Text"> Text</label>
+            <label class="check"><input type="radio" name="contactPref" value="Email"> Email</label>
           </div>
-          <div class="full">
-            <label for="notes">Anything else we should know?</label>
-            <textarea id="notes" name="notes" style="min-height:80px" placeholder="Case included? Recent travel or climate changes? Budget limits?"></textarea>
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Confirm</legend>
-        <label class="check">
-          <input type="checkbox" id="estimate" name="estimate">
-          <span>I'd like a written estimate before any work begins.</span>
-        </label>
-        <label class="check">
-          <input type="checkbox" id="consent" name="consent" required aria-describedby="consent-error">
-          <span class="required">I understand that repair estimates are approximate until the instrument is inspected, and I agree to be contacted about this repair.</span>
-        </label>
-        <div class="error" id="consent-error">Please confirm before submitting.</div>
-      </fieldset>
-
-      <div class="actions">
-        <button type="reset" class="secondary">Clear form</button>
-        <button type="submit" id="submitBtn">Submit intake</button>
+        </fieldset>
       </div>
-    </form>
-
-    <section class="success" id="successPanel" tabindex="-1" aria-live="polite">
-      <h2>Thanks, your intake is received.</h2>
-      <p>Please bring your instrument on your drop-off date. We'll contact you to confirm.</p>
-      <span class="ref" id="refCode"></span>
-      <dl id="summary"></dl>
-      <button type="button" class="secondary" id="newIntake">Start another intake</button>
     </section>
-  </main>
+
+    <section class="card" aria-labelledby="instrument-heading">
+      <h2 id="instrument-heading">About your instrument</h2>
+      <div class="grid">
+        <div>
+          <label for="instrumentType">Instrument type <span aria-hidden="true">*</span></label>
+          <select id="instrumentType" name="instrumentType" required aria-describedby="type-error">
+            <option value="">Select one…</option>
+            <option value="Acoustic guitar">Acoustic guitar</option>
+            <option value="Electric guitar">Electric guitar</option>
+            <option value="Bass guitar">Bass guitar</option>
+            <option value="Classical guitar">Classical guitar</option>
+            <option value="Ukulele / other fretted">Ukulele / other fretted</option>
+            <option value="Violin">Violin</option>
+            <option value="Viola">Viola</option>
+            <option value="Cello">Cello</option>
+            <option value="Other string instrument">Other string instrument</option>
+          </select>
+          <div class="error" id="type-error">Please choose an instrument type.</div>
+        </div>
+        <div>
+          <label for="makeModel">Make and model</label>
+          <input type="text" id="makeModel" name="makeModel" placeholder="e.g. Martin D-28, Yamaha FG800" aria-describedby="makeModel-hint">
+          <span class="hint" id="makeModel-hint">If you know it. Helpful but not required.</span>
+        </div>
+        <div>
+          <label for="serial">Serial number</label>
+          <input type="text" id="serial" name="serial" aria-describedby="serial-hint">
+          <span class="hint" id="serial-hint">Usually on the headstock, label, or inside the body.</span>
+        </div>
+        <div>
+          <label for="finish">Color / finish</label>
+          <input type="text" id="finish" name="finish" placeholder="e.g. sunburst, natural spruce">
+        </div>
+        <fieldset class="full">
+          <legend class="legend">What seems to be wrong? <span class="hint">Select all that apply.</span></legend>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="issues" value="Buzzing or rattling"> Buzzing or rattling</label>
+            <label class="check"><input type="checkbox" name="issues" value="Intonation off"> Intonation off</label>
+            <label class="check"><input type="checkbox" name="issues" value="Action too high"> Action too high</label>
+            <label class="check"><input type="checkbox" name="issues" value="Action too low"> Action too low</label>
+            <label class="check"><input type="checkbox" name="issues" value="Neck bow or twist"> Neck bow or twist</label>
+            <label class="check"><input type="checkbox" name="issues" value="Crack or split"> Crack or split</label>
+            <label class="check"><input type="checkbox" name="issues" value="Loose or open seam"> Loose or open seam</label>
+            <label class="check"><input type="checkbox" name="issues" value="Fret wear or buzz"> Fret wear or buzz</label>
+            <label class="check"><input type="checkbox" name="issues" value="Cracked or damaged finish"> Cracked or damaged finish</label>
+            <label class="check"><input type="checkbox" name="issues" value="Tuners or pegs not working"> Tuners or pegs not working</label>
+            <label class="check"><input type="checkbox" name="issues" value="Electronics or pickup issue"> Electronics or pickup issue</label>
+            <label class="check"><input type="checkbox" name="issues" value="Bridge or saddle problem"> Bridge or saddle problem</label>
+            <label class="check"><input type="checkbox" name="issues" value="Sound post or bass bar"> Sound post or bass bar</label>
+            <label class="check"><input type="checkbox" name="issues" value="Bow rehair or repair"> Bow rehair or repair</label>
+            <label class="check"><input type="checkbox" name="issues" value="Setup or general tune-up"> Setup or general tune-up</label>
+            <label class="check"><input type="checkbox" name="issues" value="Not sure"> Not sure</label>
+          </div>
+        </fieldset>
+        <div class="full">
+          <label for="description">Describe the problem <span aria-hidden="true">*</span></label>
+          <textarea id="description" name="description" required aria-describedby="description-hint description-error" placeholder="When did it start? Did it get dropped, left in a hot car, or change after a string change? What have you tried so far?"></textarea>
+          <span class="hint" id="description-hint">The more detail, the more accurate our estimate.</span>
+          <div class="error" id="description-error">Please describe the problem so we know what to look at.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="service-heading">
+      <h2 id="service-heading">Drop-off details</h2>
+      <div class="grid">
+        <div>
+          <label for="dropoffDate">Drop-off date</label>
+          <input type="date" id="dropoffDate" name="dropoffDate" aria-describedby="date-error">
+          <div class="error" id="date-error">Please choose a date that is today or later.</div>
+        </div>
+        <div>
+          <label for="urgency">How soon do you need it back?</label>
+          <select id="urgency" name="urgency">
+            <option value="Flexible">Flexible</option>
+            <option value="Within 2 weeks">Within 2 weeks</option>
+            <option value="Within a few days">Within a few days</option>
+            <option value="Needed for an event">Needed for an event (please note the date below)</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="notes">Anything else we should know?</label>
+          <textarea id="notes" name="notes" style="min-height: 80px" placeholder="Event date, budget concerns, accessories included (case, bow, strap, etc.)"></textarea>
+        </div>
+        <fieldset class="full">
+          <legend class="legend">Would you like a written estimate before work starts?</legend>
+          <div class="radios">
+            <label class="check"><input type="radio" name="estimate" value="Yes" checked> Yes, please</label>
+            <label class="check"><input type="radio" name="estimate" value="No"> No, go ahead within a reasonable budget</label>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="terms-heading">
+      <h2 id="terms-heading">Terms</h2>
+      <label class="agree">
+        <input type="checkbox" id="agree" name="agree" required aria-describedby="agree-error">
+        <span>I understand that an estimate will be provided before major work begins, and that I authorize minor setup work needed to diagnose the issue. I have read the shop's drop-off policy.</span>
+      </label>
+      <div class="error" id="agree-error">Please confirm you have read and agree to the terms.</div>
+    </section>
+
+    <div class="actions no-print">
+      <button type="reset" class="secondary" id="resetBtn">Clear form</button>
+      <button type="submit">Submit repair request</button>
+    </div>
+  </form>
+
+  <section id="confirmation" class="card hidden" aria-labelledby="confirm-heading">
+    <h2 id="confirm-heading">Your repair request</h2>
+    <p>Please bring your instrument to the shop on the drop-off date. Keep this reference number for your records.</p>
+    <p>Reference: <span class="ticket" id="ticketId"></span></p>
+    <dl class="summary" id="summaryList"></dl>
+    <div class="actions no-print">
+      <button type="button" class="secondary" onclick="window.print()">Print this summary</button>
+      <button type="button" id="newBtn">Start another request</button>
+    </div>
+  </section>
+
 </div>
 
 <script>
 (function () {
-  var form = document.getElementById('intakeForm');
-  var banner = document.getElementById('errorBanner');
-  var success = document.getElementById('successPanel');
-  var submitBtn = document.getElementById('submitBtn');
+  "use strict";
 
-  // Each rule: field id, test function, and the error message id it reveals.
-  var rules = [
-    { id: 'name', test: function (v) { return v.trim().length > 0; } },
-    { id: 'phone', test: function (v) { return v.replace(/\D/g, '').length >= 7; } },
-    { id: 'email', test: function (v) { return v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); } },
-    { id: 'instrumentType', test: function (v) { return v !== ''; } },
-    { id: 'dropoff', test: function (v) { return v !== ''; } },
-    { id: 'description', test: function (v) { return v.trim().length > 0; } },
-    { id: 'consent', test: function (el) { return el.checked; }, isCheckbox: true }
-  ];
+  var form = document.getElementById("repairForm");
+  var banner = document.getElementById("banner");
+  var confirmation = document.getElementById("confirmation");
+  var summaryList = document.getElementById("summaryList");
+  var ticketEl = document.getElementById("ticketId");
 
-  function fieldEl(id) { return document.getElementById(id); }
+  function $(id) { return document.getElementById(id); }
 
-  function setInvalid(id, invalid) {
-    var el = fieldEl(id);
-    var err = document.getElementById(id + '-error') || document.getElementById(id + '-error');
-    if (!el) return;
-    el.setAttribute('aria-invalid', invalid ? 'true' : 'false');
-    if (err) err.classList.toggle('show', invalid);
+  function setError(input, errorEl, message) {
+    if (message) {
+      input.setAttribute("aria-invalid", "true");
+      errorEl.classList.add("show");
+      if (message !== true) errorEl.textContent = message;
+      return false;
+    }
+    input.removeAttribute("aria-invalid");
+    errorEl.classList.remove("show");
+    return true;
+  }
+
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  }
+
+  function isValidPhone(v) {
+    var digits = v.replace(/\D/g, "");
+    return digits.length >= 7 && /^[0-9+()\-.\s]+$/.test(v);
   }
 
   function validate() {
+    var valid = true;
     var firstBad = null;
-    rules.forEach(function (rule) {
-      var el = fieldEl(rule.id);
-      var ok = rule.isCheckbox ? rule.test(el) : rule.test(el.value);
-      setInvalid(rule.id, !ok);
-      if (!ok && !firstBad) firstBad = el;
-    });
-    return firstBad;
+
+    function check(ok, input, errEl) {
+      if (!ok) {
+        input.setAttribute("aria-invalid", "true");
+        errEl.classList.add("show");
+        if (!firstBad) firstBad = input;
+        valid = false;
+      } else {
+        input.removeAttribute("aria-invalid");
+        errEl.classList.remove("show");
+      }
+    }
+
+    var name = $("name");
+    check(name.value.trim().length > 0, name, $("name-error"));
+
+    var phone = $("phone");
+    check(phone.value.trim() !== "" && isValidPhone(phone.value.trim()), phone, $("phone-error"));
+
+    var email = $("email");
+    var emailVal = email.value.trim();
+    check(emailVal === "" || isValidEmail(emailVal), email, $("email-error"));
+
+    var type = $("instrumentType");
+    check(type.value !== "", type, $("type-error"));
+
+    var desc = $("description");
+    check(desc.value.trim().length >= 10, desc, $("description-error"));
+
+    var date = $("dropoffDate");
+    var dateVal = date.value;
+    var dateOk = true;
+    if (dateVal) {
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      var picked = new Date(dateVal + "T00:00:00");
+      dateOk = picked >= today;
+    }
+    check(dateOk, date, $("date-error"));
+
+    var agree = $("agree");
+    check(agree.checked, agree, $("agree-error"));
+
+    return { valid: valid, firstBad: firstBad };
   }
 
-  // Clear errors as the user fixes them.
-  rules.forEach(function (rule) {
-    var el = fieldEl(rule.id);
-    var evt = rule.isCheckbox ? 'change' : 'input';
-    el.addEventListener(evt, function () {
-      if (el.getAttribute('aria-invalid') === 'true') {
-        var ok = rule.isCheckbox ? rule.test(el) : rule.test(el.value);
-        setInvalid(rule.id, !ok);
-      }
+  function showBanner(type, html) {
+    banner.className = "banner show " + type;
+    banner.innerHTML = html;
+    banner.focus();
+  }
+
+  function hideBanner() {
+    banner.className = "banner";
+    banner.innerHTML = "";
+  }
+
+  function makeRef() {
+    var d = new Date();
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, "0");
+    var day = String(d.getDate()).padStart(2, "0");
+    var rand = Math.floor(1000 + Math.random() * 9000);
+    return "RPR-" + y + m + day + "-" + rand;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
-  });
+  }
 
-  form.addEventListener('submit', function (e) {
+  function addRow(label, value) {
+    var dt = document.createElement("dt");
+    dt.textContent = label;
+    var dd = document.createElement("dd");
+    dd.textContent = value || "—";
+    summaryList.appendChild(dt);
+    summaryList.appendChild(dd);
+  }
+
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-    banner.classList.remove('show');
+    hideBanner();
 
-    var firstBad = validate();
-    if (firstBad) {
-      banner.classList.add('show');
-      banner.focus();
-      firstBad.focus();
+    var result = validate();
+    if (!result.valid) {
+      showBanner("error", "<strong>Please fix the highlighted fields.</strong>Some required information is missing or needs correcting.");
+      result.firstBad.focus();
       return;
     }
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting…';
-
     var data = new FormData(form);
-    var issues = data.getAll('issues');
-    var ref = 'IR-' + Date.now().toString(36).toUpperCase().slice(-6);
+    var issues = data.getAll("issues");
+    var ref = makeRef();
 
-    // Replace this block with a real POST to your intake endpoint.
-    // It is client-side only here, so nothing is sent anywhere.
-    setTimeout(function () {
-      document.getElementById('refCode').textContent = 'Reference: ' + ref;
-      var rows = [
-        ['Name', data.get('name')],
-        ['Phone', data.get('phone')],
-        ['Email', data.get('email') || '—'],
-        ['Instrument', data.get('instrumentType') + (data.get('makeModel') ? ' — ' + data.get('makeModel') : '')],
-        ['Serial', data.get('serial') || '—'],
-        ['Drop-off', data.get('dropoff')],
-        ['Issues', issues.length ? issues.join(', ') : '—'],
-        ['Urgency', data.get('urgency')]
-      ];
-      var dl = document.getElementById('summary');
-      dl.innerHTML = '';
-      rows.forEach(function (r) {
-        var dt = document.createElement('dt'); dt.textContent = r[0];
-        var dd = document.createElement('dd'); dd.textContent = r[1];
-        dl.appendChild(dt); dl.appendChild(dd);
-      });
+    ticketEl.textContent = ref;
+    summaryList.innerHTML = "";
+    addRow("Name", data.get("name").trim());
+    addRow("Phone", data.get("phone").trim());
+    addRow("Email", (data.get("email") || "").trim());
+    addRow("Preferred contact", data.get("contactPref"));
+    addRow("Instrument", data.get("instrumentType"));
+    addRow("Make and model", (data.get("makeModel") || "").trim());
+    addRow("Serial number", (data.get("serial") || "").trim());
+    addRow("Finish", (data.get("finish") || "").trim());
+    addRow("Reported issues", issues.length ? issues.join(", ") : "None selected");
+    addRow("Description", data.get("description").trim());
+    addRow("Drop-off date", data.get("dropoffDate") || "Not set");
+    addRow("Turnaround", data.get("urgency"));
+    addRow("Written estimate", data.get("estimate"));
+    addRow("Notes", (data.get("notes") || "").trim());
 
-      form.hidden = true;
-      success.classList.add('show');
-      success.focus();
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit intake';
-    }, 600);
+    form.classList.add("hidden");
+    confirmation.classList.remove("hidden");
+    showBanner("success", "<strong>Request received.</strong>We'll contact you within one business day to confirm your drop-off.");
+    confirmation.scrollIntoView({ behavior: "smooth", block: "start" });
+    ticketEl.parentElement.setAttribute("tabindex", "-1");
+    $("confirm-heading").setAttribute("tabindex", "-1");
+    $("confirm-heading").focus();
   });
 
-  form.addEventListener('reset', function () {
+  form.addEventListener("reset", function () {
+    hideBanner();
     setTimeout(function () {
-      rules.forEach(function (rule) { setInvalid(rule.id, false); });
-      banner.classList.remove('show');
+      form.querySelectorAll("[aria-invalid]").forEach(function (el) {
+        el.removeAttribute("aria-invalid");
+      });
+      form.querySelectorAll(".error").forEach(function (el) {
+        el.classList.remove("show");
+      });
     }, 0);
   });
 
-  document.getElementById('newIntake').addEventListener('click', function () {
+  $("newBtn").addEventListener("click", function () {
+    confirmation.classList.add("hidden");
+    form.classList.remove("hidden");
     form.reset();
-    form.hidden = false;
-    success.classList.remove('show');
-    fieldEl('name').focus();
+    hideBanner();
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
+    $("name").focus();
   });
+
+  var dateInput = $("dropoffDate");
+  var todayStr = new Date().toISOString().slice(0, 10);
+  dateInput.setAttribute("min", todayStr);
 })();
 </script>
 </body>

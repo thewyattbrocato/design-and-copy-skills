@@ -1,33 +1,43 @@
-The body, lead and headline are mostly fine. The real problems are in the eyebrow and the stats.
+The type mostly holds up. The scale, the h1 tracking and leading, and the lead-to-body step are all fine, so I'd leave them alone. Four things do fail.
 
-**What works**
-- The h1 at 56px with 1.05 leading and -0.02em tracking is right for display type.
-- The lead is 20px at 1.5 and the body is 16px at 1.5. The two sizes have clear roles.
-- The color is a warm near-black, and the five sizes are a sensible count.
-
-**What's wrong**
-1. **The stats have no labels.** This is the biggest problem. "1,284 / 97 / 12,060" tells nobody anything. Nobody can tell they are drills, streak days and strokes scored. Big bare numbers in a card read as decoration, so the numbers need captions.
-2. **The stat figures are proportional.** Stacked and right-aligned, "97" and "12,060" won't line up digit for digit. Use `tabular-nums`.
-3. **The eyebrow is 11px, uppercase, with `letter-spacing: 0`.** That fails twice. Caps need tracking of about 0.05–0.1em, and 11px is below the 12px floor.
-4. **The body paragraph runs about 80+ characters per line** at 16px in a 640px box. That's a little long. Cap the paragraph, not the wrapper.
-5. **The h1 can leave a stranded last word** when it wraps. It's a short heading, so `text-wrap: balance` fixes it for free.
-
-**Fixes (changed rules only)**
+**1. Eyebrow: 11px, all caps, `letter-spacing: 0`.**
+This is the worst offender. Untracked caps at 11px look cramped and sit below the 12px floor.
 ```css
 .eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; }
-h1       { text-wrap: balance; }
-.body    { max-width: 62ch; text-wrap: pretty; }
-
-.stat       { font-size: 2rem; line-height: 1.1; font-weight: 700;
-              font-variant-numeric: tabular-nums; }
-.stat-label { display: block; font-size: 0.875rem; line-height: 1.3;
-              font-weight: 400; color: #6b5d3f; margin-top: 2px; }
-.stat + .stat { margin-top: 16px; }
 ```
+
+**2. Stats: three bare numbers with no labels.**
+"1,284 / 97 / 12,060" means nothing without "drills", "streak days" and "strokes scored". That's a content failure, not a typographic one. The figures are also proportional, so in a right-aligned stack the digits won't line up.
 ```html
-<div class="stat">1,284 <span class="stat-label">drills completed</span></div>
-<div class="stat">97 <span class="stat-label">day streak</span></div>
-<div class="stat">12,060 <span class="stat-label">strokes scored</span></div>
+<dl class="stats">
+  <div class="stat"><dd>1,284</dd><dt>drills</dt></div>
+  <div class="stat"><dd>97</dd><dt>streak days</dt></div>
+  <div class="stat"><dd>12,060</dd><dt>strokes scored</dt></div>
+</dl>
 ```
+```css
+.stats { text-align: right; margin: 0; }
+.stat { margin: 0 0 16px; }
+.stat dd { margin: 0; font-size: 2rem; line-height: 1.1; font-weight: 700;
+           font-variant-numeric: tabular-nums lining-nums; }
+.stat dt { font-size: 0.8125rem; color: #6b5d3f; }
+```
+I put the `dd` before the `dt` in the markup so the number reads first. Strictly, `dt` should come first in a `dl`. If that bothers you, use plain `div`/`span` and keep the same CSS.
 
-I wrote the label wording from your description, so change it to match your product copy. Because the label is `display: block`, it sits under each number. I left the h1 spacing and the lead alone.
+**3. h1 is a fixed 56px.**
+In a 640px column it already wraps to about three lines. On a phone it will run to four or five lines with ragged breaks.
+```css
+h1 { font-size: clamp(2.25rem, 8vw, 3.5rem); text-wrap: balance; }
+```
+The 1.05 leading is correct for display size. Keep it.
+
+**4. `.body` runs about 75–80 characters per line at 16px in 640px.**
+That's the top edge of comfortable, and the lead above it is shorter, so the two blocks don't match. Cap the text element, not the section.
+```css
+.body { max-width: 65ch; }
+```
+Add `text-wrap: pretty` if you like.
+
+**Optional:** 700 weight at 56px is heavy. Trying 600 is a matter of taste, not a fault.
+
+I assumed a light background. `#6b5d3f` is fine on white or cream, but check it if the hero sits on a tinted ground.

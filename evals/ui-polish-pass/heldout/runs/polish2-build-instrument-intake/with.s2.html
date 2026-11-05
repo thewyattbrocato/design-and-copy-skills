@@ -3,339 +3,438 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Instrument Repair Drop-off</title>
+<title>Instrument drop-off – guitar &amp; violin repair</title>
 <style>
-  :root{
-    --bg:#f6efe3; --card:#fffdf8; --ink:#2b2118; --muted:#5e5042; --line:#8a7a68;
-    --soft:#e6dac6; --accent:#7a3b12; --accent-ink:#fff; --err:#a3201a; --ok:#245c2e;
-    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+  :root {
+    --bg: #f6f0e6;
+    --paper: #fffdf8;
+    --ink: #2a1f17;
+    --muted: #5e4f43;
+    --line: #8a7767;
+    --soft-line: #ddd0bd;
+    --accent: #7a3b1d;
+    --accent-ink: #fff;
+    --accent-soft: #f1e1d2;
+    --err: #a3200f;
+    --err-bg: #fdeeea;
+    --ok: #2f5d34;
+    --ok-bg: #e9f2e6;
+    --focus: #0b57d0;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
   }
-  *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.5 var(--font)}
-  .wrap{max-width:42rem;margin:0 auto;padding:1.5rem 1rem 3rem}
-  header{padding:1rem 0 1.25rem}
-  h1{font:700 clamp(1.7rem,6vw,2.3rem)/1.15 var(--serif);margin:0 0 .5rem}
-  header p{margin:0;color:var(--muted);max-width:36rem}
-  .card{background:var(--card);border:1px solid var(--soft);border-radius:10px;padding:1.25rem;margin-bottom:1rem}
-  h2{font:700 1.15rem/1.3 var(--serif);margin:0 0 .25rem}
-  .hint{color:var(--muted);font-size:.9rem;margin:0 0 .9rem}
-  .field{margin:0 0 1rem}
-  label,legend{display:block;font-weight:600;margin-bottom:.3rem;padding:0}
-  .opt{font-weight:400;color:var(--muted)}
-  input[type=text],input[type=tel],input[type=email],input[type=date],select,textarea{
-    width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);
-    border-radius:6px;padding:.6rem .7rem;min-height:2.75rem}
-  textarea{min-height:8rem;resize:vertical}
-  .row{display:grid;gap:0 1rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))}
-  fieldset{border:0;margin:0 0 1rem;padding:0;min-width:0}
-  .choices{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr))}
-  .choice{position:relative}
-  .choice input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
-  .choice span{display:flex;align-items:center;gap:.6rem;min-height:2.75rem;padding:.5rem .75rem;
-    border:1.5px solid var(--line);border-radius:6px;background:#fff;font-weight:500}
-  .choice span::before{content:"";flex:none;width:1.1rem;height:1.1rem;border:2px solid var(--line);background:#fff}
-  .choice input[type=radio]+span::before{border-radius:50%}
-  .choice input[type=checkbox]+span::before{border-radius:3px}
-  .choice input:checked+span{border-color:var(--accent);background:#f7e9dc}
-  .choice input:checked+span::before{background:var(--accent);border-color:var(--accent);
-    box-shadow:inset 0 0 0 3px #fff}
-  .choice input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
-  :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0}
-  .err{color:var(--err);font-size:.92rem;font-weight:600;margin:.35rem 0 0}
-  .err::before{content:"⚠ "}
-  [aria-invalid=true]{border-color:var(--err);border-width:2px}
-  .summary{border:2px solid var(--err);border-radius:8px;background:#fff3f1;padding:.9rem 1rem;margin-bottom:1rem}
-  .summary h2{color:var(--err);font-size:1rem}
-  .summary ul{margin:.4rem 0 0;padding-left:1.2rem}
-  .summary a{color:var(--err);font-weight:600}
-  .empty{color:var(--muted);font-style:italic;margin:0}
-  .count{font-size:.85rem;color:var(--muted);text-align:right;margin:.2rem 0 0}
-  button{font:inherit;font-weight:700;min-height:2.9rem;padding:.6rem 1.25rem;border-radius:6px;cursor:pointer}
-  .primary{background:var(--accent);color:var(--accent-ink);border:2px solid var(--accent)}
-  .primary:hover{background:#5f2d0c}
-  .secondary{background:#fff;color:var(--accent);border:2px solid var(--accent)}
-  .actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
-  .fine{color:var(--muted);font-size:.9rem;margin:.9rem 0 0}
-  .ticket{border:2px dashed var(--accent)}
-  .ticket h2{font-size:1.4rem}
-  .ticket .num{font:700 1.1rem ui-monospace,Menlo,Consolas,monospace;background:var(--soft);
-    display:inline-block;padding:.15rem .5rem;border-radius:4px}
-  dl{display:grid;grid-template-columns:minmax(7rem,max-content) 1fr;gap:.4rem 1rem;margin:1rem 0}
-  dt{font-weight:700} dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
-  .status{min-height:1.4rem;color:var(--ok);font-weight:600;margin:.6rem 0 0}
-  [hidden]{display:none!important}
-  @media (max-width:30rem){dl{grid-template-columns:1fr}dt{margin-top:.4rem}}
-  @media print{
-    body{background:#fff}.wrap>*:not(#done){display:none!important}
-    #done .actions,#done .status{display:none}.ticket{border:2px solid #000}
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 1rem/1.5 var(--font);
+  }
+  .skip {
+    position: absolute; left: .5rem; top: -4rem; background: var(--ink); color: #fff;
+    padding: .6rem 1rem; border-radius: 6px; z-index: 10;
+  }
+  .skip:focus { top: .5rem; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  header.top {
+    border-bottom: 4px double var(--accent);
+    padding: 2rem 1rem 1.25rem; text-align: center;
+  }
+  header.top p { margin: .25rem auto 0; max-width: 34rem; color: var(--muted); }
+  h1 { font: 700 clamp(1.75rem, 5vw, 2.5rem)/1.15 var(--serif); margin: 0; letter-spacing: .01em; }
+  main { max-width: 42rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  .card {
+    background: var(--paper); border: 1px solid var(--soft-line); border-radius: 10px;
+    padding: 1.25rem; margin-bottom: 1.25rem;
+  }
+  h2 { font: 700 1.25rem/1.25 var(--serif); margin: 0 0 .25rem; }
+  .hint { color: var(--muted); font-size: .9375rem; margin: 0 0 1rem; }
+  .field { margin-bottom: 1.1rem; }
+  label, legend { display: block; font-weight: 600; margin-bottom: .3rem; padding: 0; }
+  .opt { font-weight: 400; color: var(--muted); }
+  fieldset { border: 0; margin: 0 0 1.1rem; padding: 0; min-width: 0; }
+  input[type=text], input[type=tel], input[type=email], input[type=date], textarea {
+    width: 100%; font: inherit; color: var(--ink); background: #fff;
+    border: 1.5px solid var(--line); border-radius: 6px; padding: .6rem .7rem; min-height: 2.75rem;
+  }
+  textarea { min-height: 8rem; resize: vertical; }
+  [aria-invalid="true"] { border-color: var(--err); border-width: 2px; }
+  .msg { color: var(--err); font-size: .9375rem; margin: .35rem 0 0; font-weight: 600; }
+  .msg::before { content: "Problem: "; }
+  .msg[hidden] { display: none; }
+  .row { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 34rem) { .row { grid-template-columns: 1fr; } }
+
+  .choices { display: grid; gap: .6rem; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 34rem) { .choices { grid-template-columns: 1fr; } }
+  .choice input, .check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .choice span {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    min-height: 3rem; padding: .5rem; border: 1.5px solid var(--line); border-radius: 8px;
+    background: #fff; cursor: pointer; font-weight: 600;
+  }
+  .choice input:checked + span { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .choice input:checked + span::before { content: "✓ "; margin-right: .3em; }
+  .choice input:focus-visible + span, .check input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .choice label { margin: 0; }
+  .checks { display: grid; gap: .5rem; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 34rem) { .checks { grid-template-columns: 1fr; } }
+  .check { margin: 0; font-weight: 400; }
+  .check span {
+    display: flex; gap: .6rem; align-items: center; min-height: 2.75rem; padding: .4rem .7rem;
+    border: 1.5px solid var(--soft-line); border-radius: 8px; background: #fff; cursor: pointer;
+  }
+  .check span::before {
+    content: ""; flex: none; width: 1.15rem; height: 1.15rem; border: 2px solid var(--line);
+    border-radius: 4px; background: #fff;
+  }
+  .check input:checked + span { border-color: var(--accent); background: var(--accent-soft); }
+  .check input:checked + span::before {
+    background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='white' stroke-width='2.2'/%3E%3C/svg%3E") center/100% no-repeat;
+    border-color: var(--accent);
+  }
+  .placeholder-note { padding: .8rem 1rem; background: var(--accent-soft); border-radius: 8px; color: var(--muted); }
+
+  .errsum {
+    background: var(--err-bg); border: 2px solid var(--err); border-radius: 10px;
+    padding: 1rem 1.25rem; margin-bottom: 1.25rem;
+  }
+  .errsum h2 { color: var(--err); font-size: 1.1rem; }
+  .errsum ul { margin: .4rem 0 0; padding-left: 1.2rem; }
+  .errsum a { color: var(--err); font-weight: 600; }
+  .errsum[hidden] { display: none; }
+
+  button, .btn {
+    font: inherit; font-weight: 700; min-height: 2.9rem; padding: .6rem 1.2rem; border-radius: 8px;
+    border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+  }
+  button.secondary, .btn.secondary { background: transparent; color: var(--accent); }
+  button:hover, .btn:hover { filter: brightness(1.1); }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+  .submit-note { color: var(--muted); font-size: .9375rem; margin: .75rem 0 0; }
+
+  .sheet h2 { font-size: 1.5rem; }
+  .status { background: var(--ok-bg); color: var(--ok); border-left: 5px solid var(--ok); padding: .8rem 1rem; border-radius: 6px; margin: 0 0 1rem; font-weight: 600; }
+  dl.summary { margin: 0 0 1.25rem; display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: .5rem 1rem; }
+  dl.summary dt { font-weight: 700; color: var(--muted); }
+  dl.summary dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+  @media (max-width: 34rem) { dl.summary { grid-template-columns: 1fr; gap: 0; } dl.summary dd { margin-bottom: .6rem; } }
+  .live { min-height: 1.5rem; color: var(--ok); font-weight: 600; margin: .75rem 0 0; }
+  noscript p { background: var(--err-bg); border: 2px solid var(--err); padding: 1rem; border-radius: 8px; }
+  [hidden] { display: none !important; }
+
+  @media print {
+    body { background: #fff; }
+    header.top p, .no-print, .skip { display: none !important; }
+    .card { border: 0; padding: 0; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .choice span, .check span, button { transition: background-color .15s, border-color .15s; }
   }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Instrument Repair Drop-off</h1>
-    <p>Guitars and violins. Tell me who you are and what's wrong, and I'll have it ready when you hand the instrument over. The more detail, the better the quote.</p>
-  </header>
+<a class="skip" href="#form-title">Skip to the drop-off form</a>
 
-  <div id="done" hidden></div>
+<header class="top">
+  <h1>Instrument drop-off</h1>
+  <p>Guitar and violin repair. Tell me what’s wrong with your instrument so I know what to look at when it arrives.</p>
+</header>
 
-  <form id="form" novalidate>
-    <div id="summary" class="summary" role="alert" tabindex="-1" hidden></div>
+<main id="main">
+  <noscript><p>This form needs JavaScript to check your answers and build your drop-off sheet. Please turn it on, or write the same details down and hand them over with the instrument.</p></noscript>
 
-    <section class="card" aria-labelledby="h-you">
-      <h2 id="h-you">1. How to reach you</h2>
-      <p class="hint">Phone or email, at least one, so I can send a quote and tell you when it's ready.</p>
+  <div id="errsum" class="errsum" role="alert" tabindex="-1" hidden>
+    <h2 id="errsum-title">Please fix these before continuing</h2>
+    <ul id="errlist"></ul>
+  </div>
+
+  <form id="form" novalidate class="no-print-when-done">
+    <section class="card" aria-labelledby="form-title">
+      <h2 id="form-title">1. Who you are</h2>
+      <p class="hint">Fields marked * are required. Give at least one way to reach you.</p>
+
       <div class="field">
-        <label for="name">Your name</label>
-        <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-e">
-        <p class="err" id="name-e" hidden></p>
+        <label for="name">Your name *</label>
+        <input type="text" id="name" name="name" autocomplete="name" aria-describedby="name-err">
+        <p class="msg" id="name-err" hidden></p>
       </div>
+
       <div class="row">
         <div class="field">
-          <label for="phone">Phone <span class="opt">(optional if you give email)</span></label>
-          <input id="phone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="phone-e">
-          <p class="err" id="phone-e" hidden></p>
+          <label for="phone">Phone <span class="opt">(call or text)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="contact-err">
         </div>
         <div class="field">
-          <label for="email">Email <span class="opt">(optional if you give phone)</span></label>
-          <input id="email" type="email" autocomplete="email" aria-describedby="email-e">
-          <p class="err" id="email-e" hidden></p>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" aria-describedby="contact-err">
         </div>
       </div>
+      <p class="msg" id="contact-err" hidden style="margin-top:-.6rem"></p>
     </section>
 
-    <section class="card" aria-labelledby="h-inst">
-      <h2 id="h-inst">2. The instrument</h2>
-      <fieldset id="type-set" aria-describedby="type-e">
-        <legend>What are you dropping off?</legend>
+    <section class="card" aria-labelledby="inst-title">
+      <h2 id="inst-title">2. The instrument</h2>
+
+      <fieldset aria-describedby="type-err">
+        <legend>What are you dropping off? *</legend>
         <div class="choices">
-          <label class="choice"><input type="radio" name="type" value="Guitar"><span>Guitar</span></label>
-          <label class="choice"><input type="radio" name="type" value="Violin"><span>Violin</span></label>
-          <label class="choice"><input type="radio" name="type" value="Other bowed or fretted instrument"><span>Something else</span></label>
+          <div class="choice"><label><input type="radio" name="type" value="Guitar"><span>Guitar</span></label></div>
+          <div class="choice"><label><input type="radio" name="type" value="Violin family"><span>Violin / viola / cello</span></label></div>
+          <div class="choice"><label><input type="radio" name="type" value="Other"><span>Something else</span></label></div>
         </div>
-        <p class="err" id="type-e" hidden></p>
+        <p class="msg" id="type-err" hidden></p>
       </fieldset>
-      <div class="row">
-        <div class="field">
-          <label for="kind">Kind <span class="opt">(optional)</span></label>
-          <select id="kind"><option value="">Not sure / skip</option></select>
-        </div>
-        <div class="field">
-          <label for="make">Brand or model <span class="opt">(optional)</span></label>
-          <input id="make" type="text" placeholder="e.g. Yamaha FG800, Stentor 2">
-        </div>
-      </div>
+
       <div class="field">
-        <label for="case">Is it coming with a case or bow?</label>
-        <select id="case">
-          <option>Instrument only</option>
-          <option>Hard case</option>
-          <option>Soft case / gig bag</option>
-          <option>Bow included</option>
-          <option>Case and bow</option>
-        </select>
+        <label for="model">Make, model or kind <span class="opt">(optional)</span></label>
+        <input type="text" id="model" name="model" placeholder="e.g. Yamaha dreadnought, 3/4 student violin">
+      </div>
+
+      <div class="field">
+        <label for="left">Left with the instrument <span class="opt">(optional)</span></label>
+        <input type="text" id="left" name="left" placeholder="e.g. hard case, bow, capo">
       </div>
     </section>
 
-    <section class="card" aria-labelledby="h-prob">
-      <h2 id="h-prob">3. What's wrong with it</h2>
-      <fieldset id="problems">
-        <legend>Tick everything that applies <span class="opt">(optional)</span></legend>
-        <p class="empty" id="prob-empty">Choose an instrument above to see common problems.</p>
-        <div class="choices" id="prob-list" hidden></div>
+    <section class="card" aria-labelledby="prob-title">
+      <h2 id="prob-title">3. What’s wrong</h2>
+
+      <fieldset id="issues-set">
+        <legend>Tick anything that fits <span class="opt">(optional)</span></legend>
+        <div id="issues" class="checks"></div>
+        <p id="issues-hint" class="placeholder-note">Choose the instrument above and the common problems for it will show here.</p>
       </fieldset>
+
       <div class="field">
-        <label for="desc">Describe the problem in your own words</label>
-        <textarea id="desc" maxlength="1500" aria-describedby="desc-h desc-e"
-          placeholder="What do you hear or see? When did it start? Did something happen, like a drop or a humid week?"></textarea>
-        <p class="count" id="desc-h">0 / 1500</p>
-        <p class="err" id="desc-e" hidden></p>
+        <label for="desc">Describe the problem *</label>
+        <p class="hint" id="desc-hint" style="margin-bottom:.4rem">When did it start? Does it happen on every note or one string? Any drops or knocks, or humidity changes?</p>
+        <textarea id="desc" name="desc" aria-describedby="desc-hint desc-err"></textarea>
+        <p class="msg" id="desc-err" hidden></p>
       </div>
-      <div class="row">
-        <div class="field">
-          <label for="when">Needed back by <span class="opt">(optional)</span></label>
-          <input id="when" type="date">
-        </div>
-        <div class="field">
-          <label for="budget">Budget limit <span class="opt">(optional)</span></label>
-          <input id="budget" type="text" inputmode="decimal" placeholder="e.g. 150">
-        </div>
-      </div>
+
       <div class="field">
-        <label class="choice" style="font-weight:400">
-          <input type="checkbox" id="quote"><span>Call or email me with a quote before any work starts</span>
-        </label>
+        <label for="needby">Need it back by <span class="opt">(optional)</span></label>
+        <input type="date" id="needby" name="needby" aria-describedby="needby-err needby-hint">
+        <p class="hint" id="needby-hint" style="margin:.3rem 0 0">A gig, recital or lesson date helps me plan. It’s a request, not a promise.</p>
+        <p class="msg" id="needby-err" hidden></p>
       </div>
     </section>
 
     <div class="actions">
-      <button class="primary" type="submit">Create drop-off ticket</button>
-      <button class="secondary" type="reset" id="reset">Clear form</button>
+      <button type="submit">Create drop-off sheet</button>
     </div>
-    <p class="fine">This page doesn't send anything over the internet. It makes a ticket you can print, copy, or show at the counter with the instrument.</p>
+    <p class="submit-note">This page doesn’t send anything over the internet. It builds a sheet you can copy, print or email, to hand over with your instrument.</p>
   </form>
-</div>
+
+  <section id="done" class="card sheet" aria-labelledby="done-title" hidden>
+    <h2 id="done-title" tabindex="-1">Your drop-off sheet</h2>
+    <p class="status">Sheet ready. Nothing has been sent yet. Print it, copy it, or email it, then bring it with the instrument.</p>
+    <dl class="summary" id="summary"></dl>
+    <div class="actions no-print">
+      <button type="button" id="print">Print sheet</button>
+      <button type="button" class="secondary" id="copy">Copy as text</button>
+      <a class="btn secondary" id="mail" href="#" hidden>Email this sheet</a>
+      <button type="button" class="secondary" id="edit">Go back and edit</button>
+    </div>
+    <p class="live no-print" id="live" role="status"></p>
+  </section>
+</main>
 
 <script>
-(function(){
-  var $ = function(id){return document.getElementById(id)};
-  var form=$("form"), summary=$("summary"), done=$("done");
+(function () {
+  // Set this to your shop's email address to show an "Email this sheet" button.
+  var SHOP_EMAIL = "";
 
-  var kinds = {
-    "Guitar":["Acoustic","Classical / nylon string","Electric","Bass","12-string"],
-    "Violin":["Violin","Viola","Cello","Fiddle (set up for folk)"],
-    "Other bowed or fretted instrument":[]
-  };
-  var probs = {
-    "Guitar":["Buzzing or fret noise","High action (hard to play)","Won't stay in tune","Crack in the body","Loose or lifted bridge","Worn frets","Crackling pots or jack (electric)","No sound or cuts out (electric)","Neck bowed or twisted","Broken headstock","Needs a setup","Needs new strings"],
-    "Violin":["Open seam or buzzing","Crack in the top or back","Bridge broken or leaning","Soundpost fell or moved","Pegs slipping or sticking","Fine tuners not working","Wolf tone or dull sound","Fingerboard worn","Chinrest or tailpiece loose","Bow needs rehair","Needs a setup","Needs new strings"],
-    "Other bowed or fretted instrument":["Crack or open seam","Won't stay in tune","Hard to play","Buzzing","Broken part","Needs a general check"]
+  var ISSUES = {
+    "Guitar": ["Buzzing or rattling", "Strings too high or too low", "Crack or open seam", "Crackle or no sound (electronics)", "Tuning machines slipping", "Needs restring or setup", "Neck bow or truss rod", "Loose or lifting bridge", "Fret wear or sharp fret ends", "Other"],
+    "Violin family": ["Open seam", "Crack in the top or back", "Bridge leaning or broken", "Sound post fell or moved", "Pegs slipping or sticking", "Fine tuners not working", "Bow needs rehair", "Buzzing or rattling", "Strings need replacing", "Other"],
+    "Other": ["Crack or open seam", "Buzzing or rattling", "Won’t stay in tune", "Needs restring or setup", "Other"]
   };
 
-  function chosenType(){var r=form.querySelector('input[name=type]:checked');return r?r.value:""}
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("form"), done = $("done"), errsum = $("errsum"), errlist = $("errlist");
+  var issues = $("issues"), hint = $("issues-hint");
+  var lastSummary = "";
 
-  function renderType(){
-    var t=chosenType(), k=$("kind"), list=$("prob-list");
-    k.innerHTML='<option value="">Not sure / skip</option>';
-    (kinds[t]||[]).forEach(function(x){var o=document.createElement("option");o.textContent=x;k.appendChild(o)});
-    list.innerHTML="";
-    (probs[t]||[]).forEach(function(p){
-      var l=document.createElement("label");l.className="choice";
-      var i=document.createElement("input");i.type="checkbox";i.name="prob";i.value=p;
-      var s=document.createElement("span");s.textContent=p;
-      l.appendChild(i);l.appendChild(s);list.appendChild(l);
+  // Date min = today (local)
+  var t = new Date();
+  $("needby").min = t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
+
+  function checkedType() {
+    var r = form.querySelector('input[name="type"]:checked');
+    return r ? r.value : "";
+  }
+
+  function renderIssues() {
+    var type = checkedType();
+    var keep = {};
+    issues.querySelectorAll("input:checked").forEach(function (i) { keep[i.value] = 1; });
+    issues.innerHTML = "";
+    if (!type) { hint.hidden = false; return; }
+    hint.hidden = true;
+    ISSUES[type].forEach(function (label, n) {
+      var l = document.createElement("label");
+      l.className = "check";
+      var i = document.createElement("input");
+      i.type = "checkbox"; i.name = "issue"; i.value = label; i.id = "iss" + n;
+      if (keep[label]) i.checked = true;
+      var s = document.createElement("span");
+      s.textContent = label;
+      l.appendChild(i); l.appendChild(s);
+      issues.appendChild(l);
     });
-    list.hidden=!t; $("prob-empty").hidden=!!t;
-    if(t) clearErr("type");
   }
-  form.querySelectorAll('input[name=type]').forEach(function(r){r.addEventListener("change",renderType)});
-
-  $("desc").addEventListener("input",function(){$("desc-h").textContent=this.value.length+" / 1500"});
-
-  function setErr(id,msg){
-    var e=$(id+"-e"), f=$(id);
-    e.textContent=msg; e.hidden=false;
-    if(f) f.setAttribute("aria-invalid","true");
-  }
-  function clearErr(id){
-    var e=$(id+"-e"), f=$(id);
-    if(e){e.hidden=true;e.textContent=""}
-    if(f) f.removeAttribute("aria-invalid");
-  }
-  ["name","phone","email"].forEach(function(id){
-    $(id).addEventListener("input",function(){clearErr(id);if(id!=="name"){clearErr("phone");clearErr("email")}})
+  form.querySelectorAll('input[name="type"]').forEach(function (r) {
+    r.addEventListener("change", function () { renderIssues(); clearErr("type"); });
   });
 
-  function validate(){
-    var errs=[];
-    ["name","phone","email","type","desc"].forEach(clearErr);
-    var name=$("name").value.trim(), phone=$("phone").value.trim(), email=$("email").value.trim();
-    if(!name) errs.push(["name","Enter your name so I know whose instrument this is."]);
-    if(!phone && !email){
-      errs.push(["phone","Give a phone number or an email so I can reach you."]);
-    } else {
-      if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.push(["email","That email doesn't look complete. It should look like name@example.com."]);
-      if(phone && phone.replace(/\D/g,"").length<7) errs.push(["phone","That phone number looks too short. Include the area code."]);
+  // Errors
+  var fieldMap = {
+    name:    { input: "name",  msg: "name-err" },
+    contact: { input: "phone", msg: "contact-err", also: ["email"] },
+    type:    { input: null,    msg: "type-err" },
+    desc:    { input: "desc",  msg: "desc-err" },
+    needby:  { input: "needby", msg: "needby-err" }
+  };
+  function setErr(key, text) {
+    var f = fieldMap[key], m = $(f.msg);
+    m.textContent = text; m.hidden = false;
+    if (f.input) $(f.input).setAttribute("aria-invalid", "true");
+    (f.also || []).forEach(function (id) { $(id).setAttribute("aria-invalid", "true"); });
+  }
+  function clearErr(key) {
+    var f = fieldMap[key], m = $(f.msg);
+    m.textContent = ""; m.hidden = true;
+    if (f.input) $(f.input).removeAttribute("aria-invalid");
+    (f.also || []).forEach(function (id) { $(id).removeAttribute("aria-invalid"); });
+  }
+  ["name", "desc", "needby"].forEach(function (k) {
+    $(fieldMap[k].input).addEventListener("input", function () { clearErr(k); });
+  });
+  ["phone", "email"].forEach(function (id) {
+    $(id).addEventListener("input", function () { clearErr("contact"); });
+  });
+
+  function validate() {
+    var problems = [];
+    Object.keys(fieldMap).forEach(clearErr);
+
+    if (!$("name").value.trim()) {
+      setErr("name", "Enter your name so I know who the instrument belongs to.");
+      problems.push({ text: "Your name is missing", target: "name" });
     }
-    if(!chosenType()) errs.push(["type","Choose guitar, violin, or something else."]);
-    var anyProb=form.querySelector('input[name=prob]:checked');
-    if(!anyProb && !$("desc").value.trim()) errs.push(["desc","Tick a problem above or describe what's wrong. I need at least one."]);
-    return errs;
+    var phone = $("phone").value.trim(), email = $("email").value.trim();
+    if (!phone && !email) {
+      setErr("contact", "Enter a phone number or an email address so I can reach you about the repair.");
+      problems.push({ text: "Add a phone number or an email address", target: "phone" });
+    } else if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setErr("contact", "That email address doesn’t look complete. It should look like name@example.com.");
+      problems.push({ text: "Check the email address", target: "email" });
+    }
+    if (!checkedType()) {
+      setErr("type", "Choose guitar, violin family, or something else.");
+      problems.push({ text: "Choose what kind of instrument it is", target: "type-first" });
+    }
+    if (!$("desc").value.trim()) {
+      setErr("desc", "Describe what’s wrong, even briefly, such as “buzzes on the high E string”.");
+      problems.push({ text: "Describe the problem", target: "desc" });
+    }
+    var nb = $("needby").value;
+    if (nb && nb < $("needby").min) {
+      setErr("needby", "That date has already passed. Pick today or later, or clear the field.");
+      problems.push({ text: "Pick a “need it back by” date that hasn’t passed", target: "needby" });
+    }
+    return problems;
   }
 
-  function showErrors(errs){
-    summary.innerHTML="";
-    var h=document.createElement("h2");
-    h.textContent=errs.length===1?"1 thing to fix before I can make your ticket":errs.length+" things to fix before I can make your ticket";
-    var ul=document.createElement("ul");
-    errs.forEach(function(e){
-      setErr(e[0],e[1]);
-      var li=document.createElement("li"),a=document.createElement("a");
-      a.href="#"+(e[0]==="type"?"type-set":e[0]);a.textContent=e[1];
-      a.addEventListener("click",function(ev){ev.preventDefault();focusField(e[0])});
-      li.appendChild(a);ul.appendChild(li);
+  function focusTarget(id) {
+    var el = id === "type-first" ? form.querySelector('input[name="type"]') : $(id);
+    if (el) el.focus();
+  }
+
+  function showErrors(problems) {
+    errlist.innerHTML = "";
+    problems.forEach(function (p) {
+      var li = document.createElement("li"), a = document.createElement("a");
+      a.href = "#"; a.textContent = p.text;
+      a.addEventListener("click", function (e) { e.preventDefault(); focusTarget(p.target); });
+      li.appendChild(a); errlist.appendChild(li);
     });
-    summary.appendChild(h);summary.appendChild(ul);summary.hidden=false;
-    summary.focus();
-    summary.scrollIntoView({block:"start"});
-  }
-  function focusField(id){
-    var el = id==="type" ? form.querySelector('input[name=type]') : $(id);
-    if(el){el.focus();el.scrollIntoView({block:"center"})}
+    $("errsum-title").textContent = problems.length === 1 ? "1 thing to fix before continuing" : problems.length + " things to fix before continuing";
+    errsum.hidden = false;
+    errsum.focus();
+    errsum.scrollIntoView({ block: "center" });
   }
 
-  function ticketNo(){
-    var d=new Date(), p=function(n){return String(n).padStart(2,"0")};
-    return "R"+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+"-"+Math.floor(1000+Math.random()*9000);
+  function fmtDate(v) {
+    if (!v) return "";
+    var p = v.split("-");
+    return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" });
   }
 
-  var lastText="";
-  form.addEventListener("submit",function(ev){
-    ev.preventDefault();
-    var errs=validate();
-    if(errs.length){showErrors(errs);return}
-    summary.hidden=true;
-    var probsPicked=[].map.call(form.querySelectorAll('input[name=prob]:checked'),function(i){return i.value});
-    var rows=[
-      ["Ticket",ticketNo()],
-      ["Dropped off",new Date().toLocaleString([], {dateStyle:"medium",timeStyle:"short"})],
-      ["Name",$("name").value.trim()],
-      ["Phone",$("phone").value.trim()||"—"],
-      ["Email",$("email").value.trim()||"—"],
-      ["Instrument",[chosenType(),$("kind").value].filter(Boolean).join(" · ")],
-      ["Brand / model",$("make").value.trim()||"—"],
-      ["Comes with",$("case").value],
-      ["Problems",probsPicked.length?probsPicked.join("\n"):"—"],
-      ["Details",$("desc").value.trim()||"—"],
-      ["Needed by",$("when").value||"No deadline"],
-      ["Budget limit",$("budget").value.trim()||"—"],
-      ["Quote first",$("quote").checked?"Yes, contact before starting":"No preference given"]
-    ];
-    lastText=rows.map(function(r){return r[0]+": "+r[1]}).join("\n");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var problems = validate();
+    if (problems.length) { showErrors(problems); return; }
+    errsum.hidden = true;
 
-    done.innerHTML="";
-    var card=document.createElement("section");card.className="card ticket";card.setAttribute("aria-labelledby","t-h");
-    var h=document.createElement("h2");h.id="t-h";h.tabIndex=-1;h.textContent="Your drop-off ticket is ready";
-    var p=document.createElement("p");p.className="hint";
-    p.textContent="Print it, copy it, or show it at the counter with your instrument. Nothing has been sent anywhere.";
-    var dl=document.createElement("dl");
-    rows.forEach(function(r){
-      var dt=document.createElement("dt"),dd=document.createElement("dd");
-      dt.textContent=r[0];dd.textContent=r[1];
-      if(r[0]==="Ticket"){dd.innerHTML="";var s=document.createElement("span");s.className="num";s.textContent=r[1];dd.appendChild(s)}
-      dl.appendChild(dt);dl.appendChild(dd);
+    var picked = [];
+    issues.querySelectorAll("input:checked").forEach(function (i) { picked.push(i.value); });
+    var contact = [];
+    if ($("phone").value.trim()) contact.push("Phone: " + $("phone").value.trim());
+    if ($("email").value.trim()) contact.push("Email: " + $("email").value.trim());
+
+    var rows = [
+      ["Name", $("name").value.trim()],
+      ["Contact", contact.join("\n")],
+      ["Instrument", checkedType() + ($("model").value.trim() ? " – " + $("model").value.trim() : "")],
+      ["Left with it", $("left").value.trim()],
+      ["Problems ticked", picked.join(", ")],
+      ["What’s wrong", $("desc").value.trim()],
+      ["Need back by", fmtDate($("needby").value)],
+      ["Sheet made", new Date().toLocaleString()]
+    ].filter(function (r) { return r[1]; });
+
+    var dl = $("summary"); dl.innerHTML = "";
+    rows.forEach(function (r) {
+      var dt = document.createElement("dt"), dd = document.createElement("dd");
+      dt.textContent = r[0]; dd.textContent = r[1];
+      dl.appendChild(dt); dl.appendChild(dd);
     });
-    var act=document.createElement("div");act.className="actions";
-    var pr=document.createElement("button");pr.className="primary";pr.type="button";pr.textContent="Print ticket";
-    pr.onclick=function(){window.print()};
-    var cp=document.createElement("button");cp.className="secondary";cp.type="button";cp.textContent="Copy as text";
-    var ed=document.createElement("button");ed.className="secondary";ed.type="button";ed.textContent="Edit my answers";
-    var st=document.createElement("p");st.className="status";st.setAttribute("role","status");
-    cp.onclick=function(){
-      function ok(){st.style.color="";st.textContent="Copied to clipboard."}
-      function fail(){
-        st.style.color="var(--err)";
-        st.textContent="Couldn't copy automatically. Select the ticket text above and copy it by hand.";
-      }
-      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(ok,fail)}else fail();
-    };
-    ed.onclick=function(){done.hidden=true;form.hidden=false;$("name").focus();window.scrollTo(0,0)};
-    act.appendChild(pr);act.appendChild(cp);act.appendChild(ed);
-    card.appendChild(h);card.appendChild(p);card.appendChild(dl);card.appendChild(act);card.appendChild(st);
-    done.appendChild(card);
-    done.hidden=false;form.hidden=true;
-    h.focus();window.scrollTo(0,0);
+    lastSummary = "INSTRUMENT DROP-OFF\n\n" + rows.map(function (r) { return r[0] + ": " + r[1]; }).join("\n");
+
+    if (SHOP_EMAIL) {
+      var m = $("mail");
+      m.href = "mailto:" + SHOP_EMAIL + "?subject=" + encodeURIComponent("Instrument drop-off: " + $("name").value.trim()) + "&body=" + encodeURIComponent(lastSummary);
+      m.hidden = false;
+    }
+
+    form.hidden = true; done.hidden = false;
+    $("live").textContent = "";
+    $("done-title").focus();
+    window.scrollTo(0, 0);
   });
 
-  form.addEventListener("reset",function(){
-    setTimeout(function(){
-      ["name","phone","email","type","desc"].forEach(clearErr);
-      summary.hidden=true;renderType();$("desc-h").textContent="0 / 1500";
-    },0);
+  $("edit").addEventListener("click", function () {
+    done.hidden = true; form.hidden = false;
+    $("name").focus();
+  });
+  $("print").addEventListener("click", function () { window.print(); });
+  $("copy").addEventListener("click", function () {
+    var live = $("live");
+    function ok() { live.textContent = "Copied. You can paste it into a message or note."; }
+    function fail() { live.style.color = "var(--err)"; live.textContent = "Couldn’t copy automatically. Select the sheet above and copy it by hand, or use Print."; }
+    live.style.color = "";
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(lastSummary).then(ok, fail);
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = lastSummary; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy") ? ok() : fail(); } catch (x) { fail(); }
+      document.body.removeChild(ta);
+    }
   });
 })();
 </script>

@@ -1,25 +1,40 @@
-**Cancel page (one screen)**
+**Cancel page**
 
-> **Cancel your subscription?**
->
-> If you cancel, you'll keep full access to Pennywise Pantry until **[end of billing period date]**. You won't be charged again after that. Your saved receipts and meal plans will be **[kept for X days / deleted on date]**.
->
-> **Just need a break?**
-> You can pause for up to 3 months instead. You won't be billed while paused, and your plan restarts on **[resume date]** unless you resume sooner or cancel.
-> [ Pause my subscription ]
->
-> [ Cancel subscription ]
->
-> *Optional: what's the main reason you're leaving? (You can skip this.)*
-> ○ Too expensive ○ Not using it enough ○ Meal plans didn't fit my household ○ Scanning receipts was a hassle ○ Something else
->
-> ---
->
-> **Confirmation (after they cancel)**
->
-> **Your subscription is canceled.**
-> You have access until **[end date]**, and you won't be billed again. If you change your mind, you can restart anytime at **[Settings > Subscription / link]**, and your plans will be waiting if you return before **[retention date]**.
+**Heading:** Cancel your Pennywise Pantry subscription?
+
+**Body:**
+If you cancel, you'll keep access to your meal plans until **[end of current billing period]**. You won't be charged again after that. [Your receipts and saved plans are kept for [retention period] / deleted on [date].]
+
+**Optional alternative (shown once, in a box below the body):**
+**Need a break instead?**
+You can pause for up to 3 months and pick back up where you left off. [Pause terms: e.g. whether billing stops, and the date it resumes.]
+[Pause my subscription] (secondary button)
+
+**Primary actions:**
+[Cancel subscription] (primary button, same size and weight as the pause button)
+[Keep my subscription] (text link)
+
+**Optional reason (not required, and the cancel button works without it):**
+Mind telling us why you're leaving? It helps us improve.
+○ Too expensive ○ Not using it enough ○ Meal plans didn't fit my needs ○ Receipt scanning was a hassle ○ Other: ______
+
+---
+
+**Confirmation screen (after they cancel)**
+
+**Heading:** Your subscription is cancelled.
+
+**Body:**
+You'll have access until **[end date]**, and you won't be billed again. A confirmation email is on its way to [email].
+
+If you change your mind, you can rejoin any time from **[Settings → Subscription]**. Plans are $9/month or $79/year.
+
+Thanks for giving Pennywise Pantry a try.
+
+---
 
 **Notes**
-- Pause is the only retention offer, and it fits month 2–3 churn (people who are busy or between shopping routines). Confirm with eng that it's built, including billing behavior while paused, before shipping. If it isn't, delete that block and ship the rest. Don't show a pause that doesn't work.
-- Fill in the bracketed items: access end date, data retention period, and the restart link. Track pause-to-cancel rate, reactivations, and support tickets about billing after cancel, because those show whether the page is retaining people or just frustrating them. Rules on cancellation flows vary by place and change, so have the final flow checked.
+- **Pause:** Check with eng before shipping. If it isn't built, delete the whole alternative box. Don't ship a pause that doesn't exist. Fill in the pause terms from what's actually built.
+- **Placeholders:** The end date, data retention and the settings path need real values. I didn't invent any of them. Rules on cancellation flows (for example, auto-renewal laws) vary by place and change over time, so have legal check this.
+
+I left out discounts, guilt lines and a required survey on purpose. If you want to cut month 2–3 churn further, track what share of pausers resume or cancel again, plus reactivation rate by reason. That shows whether the pause is helping people or only delaying the cancellation.

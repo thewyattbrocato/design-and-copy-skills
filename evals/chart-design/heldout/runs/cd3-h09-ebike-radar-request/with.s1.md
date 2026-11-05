@@ -1,30 +1,29 @@
-**I'd skip the radar chart. Use a comparison table, with small bar rows for the numeric specs.**
+I wouldn't use a radar chart for this. I'd use one small bar chart per spec (small multiples), or a comparison table with a mini bar in each cell.
 
-**Why radar doesn't fit this data**
-- **Mixed units.** Km, kg, dollars, watts, hours and years all get squeezed onto one 0–100 scale. That requires normalizing, and the choices you make while normalizing change how the chart looks.
-- **"Bigger" doesn't mean "better."** A high price, a heavy frame and a long charge time are bad, but they push the shape outward. Shoppers will read a bigger polygon as the better bike. You'd have to flip those axes, and then the labels no longer match the numbers.
-- **The shape depends on axis order.** Reorder the six spokes and each bike looks different.
-- **Exact values are hard to read.** Shoppers want to know "how much lighter is the Cove?", and a radar can't answer that.
+**Why radar is a poor fit here**
+- **Mixed units.** Your six specs are km, kg, dollars, watts, hours and years. A radar has to rescale each one to a made-up 0–100 axis, so the shape depends on those choices.
+- **Opposite directions.** Higher is better for range, motor and warranty. Lower is better for weight, price and charge time. On a radar, a bigger polygon looks "better" even when it isn't. You'd have to flip some axes, and shoppers wouldn't notice.
+- **Axis order changes the shape.** Reordering the same six axes gives a different polygon.
+- **Area misleads.** Readers compare the filled areas, but the area has no real meaning. Shoppers also can't read exact values off it.
 
-**Setup I'd recommend**
-1. **Layout.** Put one column per bike (Trekline, Ridgeway, Cove) and one row per spec.
-2. **Values.** Print the real value with its unit in each cell, so shoppers can read exact figures.
-3. **Bars.** Add a thin horizontal bar behind or under each number. Scale each row from zero to its own maximum, so the longest bar is the largest value in that row. The bars are flat and in one neutral color.
-4. **Direction.** Don't color anything red or green. Add a small "lower is better" or "higher is better" note to each row label. For price, weight and charge time, a smaller bar is the better result, and a note is more honest than a color.
-5. **Order.** Group the rows by what shoppers care about:
-   - Performance: range, motor
-   - Practicality: weight, charge time
-   - Value: price, warranty
-6. **Highlight.** Add a one-line takeaway per bike, for example "Ridgeway: most range and power, heaviest and priciest" or "Cove: lightest and cheapest, shortest range."
-7. **Mobile.** Keep the table readable on a phone. If three columns are too wide, stack one bike per card with the same rows.
+**How I'd set it up**
 
-**If you still want a graphic**
-Use small multiples: one small horizontal bar chart per spec, with three bars each (one per bike), in the same bike order and the same color for each bike throughout. That's essentially the table above, drawn out. It shows rank at a glance without combining units.
+*Option A (my pick): small multiples, six panels in a 3×2 grid.*
+- Each panel is one spec with three horizontal bars (Trekline, Ridgeway, Cove). Bars start at zero.
+- Give every panel the same model order and the same model colors. The order should follow the model lineup, such as price low to high: Cove, Trekline, Ridgeway.
+- Print the value at the end of each bar (e.g. "110 km"). Then you need no legend or axis.
+- Put the unit in each panel title and add a short cue like "lower is better" on weight, price and charge time. Don't use red/green for this.
+- Use three distinct, muted hues, one per model. Alternatively, use gray for all and one accent for the model you want to promote.
+- Start each panel with the plain finding, e.g. "Ridgeway leads on range, power and warranty. Cove is lightest and cheapest."
 
-**If you keep the radar**
-- Normalize each axis from 0 to the maximum among the three bikes.
-- Invert price, weight and charge time, and label them "lighter," "cheaper" and "faster charge" so outward always means better.
-- Fix the axis order.
-- Put the raw values next to the chart, because the polygon alone can't carry them.
+*Option B: a comparison table with in-cell bars.*
+- Rows are specs and columns are models. Each cell shows the number plus a thin bar scaled within that row.
+- This works best on mobile, where six panels would stack into a long scroll.
+- Shoppers can also look up exact values quickly.
 
-I can build the table version as HTML/CSS you can drop into the product page. Tell me if you want that, and what the page's fonts and colors are.
+**Both options**
+- **Accessibility.** Include a text summary and make sure the values are readable without hovering.
+- **Mobile.** Stack the panels into one column, keeping the same order.
+- **Price.** Show it as the nominal sticker price. Say so in the label if you add a sale price.
+
+If you share the page's stack (plain HTML/SVG, React, a chart library), I can write the markup or component for either option.

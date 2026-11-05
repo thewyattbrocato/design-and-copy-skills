@@ -1,37 +1,47 @@
-On a narrow screen, replace the table with a stack of order cards, one per order, and keep the real table for wide screens. Reps look up one order at a time and don't compare rows, so a card works better than a table here. A frozen first column plus sideways scroll would still leave them hunting.
+**Recommendation: on a phone, show each order as a stacked card. Don't scroll the table sideways, and don't try to shrink it.**
 
-## What a rep sees on a phone (below roughly 640px)
+Reps look up one customer's order at a time. They don't compare orders side by side. Eight columns can't fit in about 360px without scrolling, and scrolling is what's losing them the order now. A stacked list fits that job better than a scroll region or a squeezed table.
 
-**At the top:** a search box that stays pinned. It matches order number, customer name and tracking number, because a rep usually has one of those from the caller. Orders are sorted newest first. There is no sort control, since the search does that job.
+## What a rep sees on a phone
 
-**Each order is a card with four lines:**
+Each order is one block, about 4 lines tall, in this order:
 
 ```
-#48213                      ● Shipped
-Dana Whitfield
-2 × Trail jacket (blue, M), wool socks…
-Placed Oct 12            Total $184.20
-UPS Ground
-Tracking 1Z999AA10123456784        [Copy]
+#10482                    Shipped
+Maria Alvarez
+
+3 × Oak shelf, 1 × brackets…
+Ground · Placed Oct 24, 2026
+
+Total  $412.50
+Tracking  1Z999AA10123456784  [Copy]
 ```
 
-- **Line 1:** the order number in bold on the left, with the status as a word and a small shape on the right. Color is only a third cue.
-- **Line 2:** the customer name, at normal body size.
-- **Line 3:** the items text, wrapped and clamped to two lines. Tapping the card shows the full text. It helps a rep confirm "the blue jacket?" with the caller.
-- **Line 4:** the placed date on the left and the total on the right. The total is in tabular figures with the same decimals on every card, and the currency appears once in its label.
-- **Line 5:** the ship method, then the tracking number. The number sits on one line and is never truncated. It's a long code, so allow it to break rather than scroll sideways. A Copy button (about 44px tall) sits beside it, and it links to the carrier page if you have that.
-- **No tracking yet:** show "Tracking — not shipped yet" instead of leaving it blank.
+- **Top line:** the order number on the left, in bold, and the status on the right as a word, such as "Shipped" or "Delayed". Color can back the word up, but the word carries the meaning.
+- **Second line:** the customer name. A rep usually has the name or the order number from the caller, so these two come first. They are the two things they search by.
+- **Items:** one line of the short text, cut off with an ellipsis if it's long. Tapping the card opens the full text.
+- **Ship method and date placed:** one quiet line. They matter, but rarely.
+- **Total:** labeled, and right-aligned with the same decimals on every card.
+- **Tracking number:** labeled, on one line, never wrapped, with a Copy button. Reps will want to read it to the customer or paste it into a carrier site. The button should be about 44px tall so it's easy to hit.
+- **Missing values:** if there's no tracking number yet, show "— Not yet shipped" rather than a blank. That way the rep can tell "not shipped" from "the page didn't load."
 
-All eight fields stay visible, and each value keeps a small label (Placed, Total, Tracking), so nothing is hidden behind a tap. Text is 14px or larger, and cards are separated by a hairline or space, not boxes inside boxes. That gives about three or four orders per screen.
+Every value keeps its label, and the cards appear in the same order as the table rows.
 
-## What a dispatcher sees
+## Add search above the list
 
-At wider widths nothing changes. They keep the full table.
+Scrolling a list of cards isn't a good way to find one order. Put a sticky search box above the list that matches order number, customer name, and tracking number. Under it, add a few filter chips for status, such as Delayed and Shipped. This will help the rep more than any layout choice.
+
+## Why not the other options
+
+- **Sideways scroll with a frozen first column:** this suits comparison tables. Here it hides tracking number and status, the two fields reps need most, off-screen to the right.
+- **Priority columns only:** this would work as a fallback. With 8 columns and nearly all of them useful on a call, though, you'd be hiding too much.
+- **Shrinking the table:** the numbers and tracking IDs would wrap or become unreadable.
 
 ## Implementation notes
 
-- Don't restyle the `<table>` with `display: block`, because that can strip table semantics in some browsers. Render the cards as a separate list, with a description list (`dl`) inside each card, and show one structure or the other by breakpoint.
-- Keep the field order in the cards the same as in the table. Give the wide table a `<caption>`, `th scope`, and visible sort buttons with `aria-sort` on the active column.
-- Design the no-results state ("No orders match 'whitfeld'", with a Clear search button), plus loading placeholder cards and an error state with a retry.
+- **Keep the real `<table>` for wide screens.** Render a separate list for narrow screens, with each order as an item that has a label/value `<dl>`. Switch between them at about 640px. This avoids the screen-reader problems you get when you restyle table cells into blocks.
+- **Show only one at a time.** Hide the other with `display: none` so the same data isn't read twice.
+- **Keep text at 14px or larger.** Use 16px for the order number and total.
+- **Dispatchers' view doesn't change.**
 
-I haven't seen your code, so I can sketch the HTML and CSS if you tell me the framework.
+I can sketch the HTML and CSS for the card layout if you'd like. If you point me at your order screen's code, I can build it directly.

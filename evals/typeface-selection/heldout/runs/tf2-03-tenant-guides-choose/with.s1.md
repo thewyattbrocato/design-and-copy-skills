@@ -1,32 +1,37 @@
-**Use one family: Atkinson Hyperlegible Next, for headings, body and labels.** Use bold for hierarchy and its true italic for emphasis.
+**Recommendation: use one family, Source Sans 3, for everything.** Use regular for body text, semibold or bold for headings, and the true italic for emphasis. It's free and open source, and I believe it's under the SIL Open Font License. Confirm that on its download page before you rely on it. It comes in all the weights you need and has a real italic. Its shapes are sturdy and open, so it holds up on low-resolution screens and on photocopies.
 
-Atkinson Hyperlegible was designed for low vision, so letters like I/l/1 and O/0 are easy to tell apart. That matters for case numbers, dates and dollar amounts. I believe it's free under the SIL Open Font License, with several weights and real italics. Confirm the license on the Braille Institute or Google Fonts page before you embed it. It's sturdy at small sizes on weak screens and low-quality printers, and a second family would add nothing for guides like these.
+I assumed English text, possibly with some Spanish. Source Sans 3 covers accented Latin letters, but test your actual copy, including `¿`, `¡` and `ñ`. I also assumed the handouts are printed from the same files as the web pages.
 
-**If you'd rather have a serif for long reading,** pair it with a serif body: Source Serif 4 (also open) for body text, with Atkinson for headings, callouts and tables. Keep it to those two.
+**Why one family:** The guides are long and full of headings, checklists and deadlines. One family with strong weight differences keeps the look consistent between web and print. It also means only two to four font files to host, which matters on old phones and slow library connections.
 
 **Web CSS:**
 
 ```css
-:root {
-  --font: "Atkinson Hyperlegible Next", system-ui, "Segoe UI", Roboto, Verdana, sans-serif;
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("/fonts/SourceSans3-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
 }
-body { font-family: var(--font); font-size: 1.125rem; line-height: 1.6; }
+/* repeat for Italic (400 italic), Semibold (600), Bold (700) */
+
+body {
+  font-family: "Source Sans 3", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  font-synthesis: none;
+}
 ```
 
-- **Fallbacks:** Roboto is on Android and Segoe UI is on Windows. Verdana is the closest widely installed look-alike if neither is there.
-- **Hosting:** Self-host WOFF2 files, with only the regular, italic, bold and bold italic. Don't load them from a CDN, because library networks sometimes block those.
-- **Loading:** Use `font-display: swap`, so text shows right away in the fallback and never goes invisible.
-- **Old phones:** Test on one real older Android phone and on a library computer. Make sure the page still reads well in the fallback face.
+- **Self-host the fonts.** Use WOFF2 files, subset to Latin plus accents, and limit them to those four files. This keeps pages fast and makes sure the font actually loads.
+- **Fallback:** If the font fails, `system-ui` gives Roboto on Android and Segoe UI on Windows library machines. Both are decent, so the page degrades gracefully. Check it once by blocking the font in your browser.
+- **`font-synthesis: none`:** This stops browsers from faking bold or italic. It only works if you load the real italic and bold files.
 
-**Print:**
-- Embed the same font in your PDFs, so handouts match the web version.
-- Use at least 11 pt for body text. Go to 12 pt if your readers skew older.
-- Don't use faux bold or italic. If a weight is missing, load the real file.
+**Print:** Install the same font on whoever lays out the handouts, and export to PDF with fonts embedded. Don't use a different font for print. A different font would make the web and print versions look like separate publications.
 
-**Don't use:**
-- Thin or light weights for body text.
-- Decorative or script faces.
-- Monospace for headings.
-- A third family.
+**Starting sizes:** Use about 18px (roughly 12pt in print) for body text, because many of your readers will be on small or worn screens. Don't go below 16px anywhere. Use bold, not light weights, for headings. Avoid the light weights entirely.
 
-I assumed English text, or Spanish and other Latin-script languages. If you publish in Arabic, Chinese, Vietnamese or another script, tell me. Those need a different plan, because this font won't cover them.
+**Two things to skip:**
+- A decorative or "friendly" display font. It costs legibility and adds nothing.
+- Monospace for deadlines or case numbers. Use bold Source Sans 3 instead, with tabular figures if you show dollar amounts in columns.
+
+**If you want a second option:** Atkinson Hyperlegible is also free and designed for low-vision readers. It would suit the web pages well, but its look is more distinctive. Source Sans 3 is the safer match across web and print.
+
+I haven't checked either font's license or glyph coverage myself, so verify both before you publish.

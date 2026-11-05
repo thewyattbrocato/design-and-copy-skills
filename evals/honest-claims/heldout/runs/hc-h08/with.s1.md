@@ -1,14 +1,20 @@
 **DUNE & DIME**
-*The First Bank on Mars. Also the Last. Also the Only.*
+*The First Bank on Mars. Also the Only Bank on Mars. Also, Frankly, the Best Bank on Any Planet.*
 
-Why trust your money to Earth banks, which are **225 million kilometers away** and have never once seen a dust storm? At Dune & Dime, we've been in business for **nine whole days**, and in that time we've achieved a 100% customer satisfaction rate (both customers).
+Why trust your money to Earth banks, 140 million miles and one 22-minute hold music delay away, when you could trust it to us, a bank with **zero** competitors and **100%** confidence?
 
-Our vaults are guarded by **4,000 tons of red rock**, a lot of it technically on loan. Our interest rates are so high they're measured in *altitude*. Winner of the **Golden Crater Award for Excellence in Banking Without Competition** and the Intergalactic Chamber of Commerce's "Most Likely to Still Be Here Tomorrow" (shortlisted).
+**Our numbers speak for themselves (loudly, and often):**
+- 99.9997% of deposits are still on Mars!*
+- Voted "Most Trusted Bank" by 4 of the 4 people we asked
+- Winner of the Golden Vault Award, which we created and are very proud of
 
-*"I deposited a dollar and returned to find it had become a dollar-ten. I don't know how. I don't ask questions."* — **Gary, Colonist**
+**Our customers can't stop raving:**
+"I deposited one dollar and now I feel like a billionaire." *Kyle, Olympus Mons*
 
-*"Dune & Dime saved my life. Technically they only saved my savings, but I felt very safe."* — **Dr. Priya Vanterpool, Sole Tenant, Olympus Mons Condos**
+"They found my missing dime in under a decade." *Brenda, Valles Marineris*
 
-**Dune & Dime: We're Not Going Anywhere. There's Nowhere to Go.**
+"Dust storm took my roof, but not my savings. Well, some of it." *Gary, Gary's Crater*
 
-*FDIC-insured on Earth. On Mars, we insure ourselves, and we're very confident.*
+**Dune & Dime: Our Interest Rates Are Out of This World. Literally. Look Up.**
+
+*Deposits not FDIC insured. Or insured at all. Or, technically, legal tender.

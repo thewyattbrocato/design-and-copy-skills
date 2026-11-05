@@ -1,80 +1,69 @@
-**Assumptions:** The users are the general public on phones, mostly one-handed, and many use the app only occasionally. Most come to find a title, check a hold, or check a due date or open hour. Because this is a public context, I've designed for first-time use: visible labels and no tour.
+**Assumptions:** Patrons are mostly occasional, one-handed phone users in short sessions, with some regulars who check holds and due dates. Nothing here is based on usage data. The five tabs are Search (icon), Holds, Checkouts, Hours and Events.
 
 ## Navigation
 
-**Make search the front door, not an icon.**
-- **Tabs:** Use four tabs: **Search** (home), **My Items**, **Branches**, **Events**.
-  - My Items holds **Checkouts | Holds** as a two-way switch at the top. People think of these as "my stuff," and merging them frees a tab. If you must keep five tabs, split them back out. Every tab stays labeled with text, and the current one is highlighted.
-- **Account:** Put the library card and sign-in in the top corner. Showing the barcode there is the one thing people need at the desk.
-- **Search tab:** It opens with a large, visible search field at the top. Below it sit the things people come for:
-  - a "Ready for pickup" or "Due soon" strip (only when it applies)
-  - today's hours for the remembered branch
-  - a few event highlights
-- **Badges:** The My Items tab shows a count for holds ready and items due within about 3 days. The number is assumed and should be tunable.
-- **Back:** Going back always returns to the same scroll position, query and filters. Every item, branch and event has a shareable link.
-- **Remembered branch:** Ask for a home branch once, on first use of anything branch-specific, and infer it from location if the person allows. Show it as a chip ("Main Library ▾") where it affects results, with a one-tap change. Remember it across Search, Branches and Events.
+- **Make search a destination.** The top-corner icon is the likely reason people can't find anything. Replace it with a persistent search field at the top of the first tab, labeled "Search books, movies, events, branches". It is always visible, never behind an icon.
+- **Use four tabs, not five: Search, My Items, Branches, Events.**
+  - Holds and checkouts are one "what do I have" question. Put them under My Items as a two-segment control, "Checked out (n)" and "Holds (n)", so each tab doesn't need its own badge.
+  - Remember the last segment used. Open on Checked out when something is due soon.
+  - Show a badge on the tab when a hold is ready or an item is due soon. Show state in the tab, not in a popup.
+- **Put the library card in My Items.** Add a "Show my card" button at the top that opens the barcode full-screen. This is the most common reason to open the app at a desk. Account and settings go in a labeled secondary entry, not a tab.
+- **Always show where the patron is.** Highlight the active tab and give each screen a title. Back returns to the same scroll position, query and filters. Every screen, including a result or an event, has a shareable link.
+- **Remember a home branch.** Ask once, in the first search or hold, and show it beside the control ("Showing availability at Eastside · Change"). Branches opens on that branch, and Events and availability default to it.
 
 ## Search
 
-**Before typing (on focus):**
-- Show recent searches, each removable, with a "Clear all."
-- Add two shortcuts: **Scan a barcode/ISBN** and **Voice**.
-- If there's no history, show a few browse categories ("New books," "Audiobooks," "Kids," "Large print").
+**On focus, before typing**
+- Show recent searches, each removable.
+- Show the home branch's "Ready for pickup" and "Due soon" items.
+- Show a few quick links such as New arrivals and Events this week, if the library supplies them.
 
-**While typing:**
-- Start suggesting at 2 characters, and tolerate typos and partial words.
-- Group suggestions by kind: **Titles, Authors, Subjects, Branches, Events**. A search for "storytime" or "Eastside hours" then goes straight to the right place instead of failing in a catalog-only box.
-- Tapping a suggestion opens it directly. The keyboard's Search key runs the full search.
-- Keep the field's focus and the keyboard up while suggestions update. Don't move the layout under the person's thumb.
-- Index what people remember: title, author, series, subject, ISBN, and narrator for audiobooks, not only the title.
+**While typing**
+- Show suggestions after the first character or two, grouped by kind:
+  - Titles and authors
+  - Series and subjects
+  - Events
+  - Branches and services
+- Tolerate typos and partial words. Accept an ISBN or a barcode pasted into the same box.
+- Tapping a suggestion goes straight to that item, event or branch. Pressing Search runs the full query.
+- Keep the keyboard open and the list stable. Don't reorder suggestions under the thumb as more letters arrive.
 
-**Results:**
-- Show the result count and active filters as removable chips.
-- Each row shows cover, title, author, format, and **availability at the remembered branch**. Examples: "Available at Main," "2 holds, about 3 weeks (assumed wording)," "Available at 3 other branches."
-- The primary action on each row is **Place hold** or **Borrow**. If the person isn't signed in, sign in only at that moment and then continue the action.
-- One **Refine** button holds sort and filters together: format, audience, language, branch, and "available now." Filter counts update live. Facet counts keep a choice from leading to zero. Sort and filters persist across navigation and sessions, with a visible "Reset."
-- **Checked-out items stay in results.** They can be held, so "available now" is a filter, never the default. Hiding them is a main cause of "I can't find it."
+**Results**
+- Search all kinds of content at once. Group results as Catalog first, with "Events (2)" and "Branches (1)" as short rows below or as filter tabs. Don't make people choose a scope before searching.
+- Each catalog result shows the cover, title, author, format and availability at the home branch ("Available at Eastside" or "3 holds · est. wait [placeholder from system data]"). Include a Place hold button on the row so patrons don't have to open the detail page.
+- Use one "Refine" button for sort and filters. Filters:
+  - Format
+  - Available now
+  - Branch
+  - Language
+  - Audience
+  - Year
+- Show active filters as removable chips with the result count. Show counts on filter options so a choice never leads to zero. Apply filters live. Remember the sort and filters within a session, and clear them when a new query starts.
+- Use "Load more" with a position marker rather than infinite scroll, so Back lands where the patron left.
 
-**When nothing is found:**
-1. If filters caused it, say so: "No results for 'dune' with Large print + Spanish." Offer one tap to remove the most restrictive chip, with the count that would appear.
-2. If the spelling is the problem, show "Did you mean…?" and search the corrected term automatically when the match is confident, saying that you did.
-3. If the catalog really doesn't have it, say so plainly and offer the next step:
-   - search all branches
-   - **Suggest a purchase / request via interlibrary loan** (if the library offers them)
-   - matching events or branches, if any
-   - "Ask a librarian" (chat, call, or the branch phone number)
+**Placing a hold**
+- Use the home branch and the saved pickup branch as defaults, and show them beside the button.
+- Make Place hold one tap, with an Undo toast ("Hold placed · Undo"). Cancelling is also undoable until the library processes it.
 
-   Never show a blank screen or "0 results" alone.
-4. If the search failed because of a connection problem, say that. Keep the typed query and offer Retry. Don't present it as "no results."
+## When nothing is found
 
-## My Items
+1. **Spelling.** If a likely correction exists, show "Showing results for *x*. Search instead for *y*."
+2. **Filters caused it.** Name the cause: "No results with Large print + Available now. Remove Available now (14 results)". Relax in one tap.
+3. **Still nothing.** Say so plainly and offer next steps that work:
+   - Check other formats or branches.
+   - Search by author or subject only.
+   - Request that the library buy it or get it from another library, if the system supports it. Show only the routes the library actually offers.
+   - Ask a librarian, with a call or chat link.
+4. **Cross-type matches.** Show any event or branch matches even when the catalog has none ("1 event matches 'knitting'").
+5. **Never show a bare "No results"** or clear what the patron typed. Leave the query editable.
 
-- **Checkouts:** Sort by due date, soonest first. Overdue and due-soon rows differ by label and icon, not color alone. Each row has a visible **Renew** button, plus **Renew all**.
-  - A renewal that fails says why ("Someone is waiting for this") and gives the next step ("Return by Oct 22").
-  - Success is shown in place with the new due date, not in a popup.
-- **Holds:** Put **Ready for pickup** first, with branch, pickup-by date and (if available) a locker or shelf note. Then show waiting holds with queue position.
-  - Cancel and Suspend work with an undo toast, not an "Are you sure?" The toast is announced to screen readers and stays on screen long enough to read.
-  - Changing the pickup branch is an inline control on the row.
-- **Empty states** point to the next action: "No holds. Find something to read" opens Search.
-
-## Branches
-
-- Open the list sorted by **distance** (with location permission) or the remembered branch first. Each row shows **Open now / Closed, and today's hours**, so no tap is needed for the most common question.
-- The detail screen has the week's hours, with holiday and special closures called out, plus an address, a map link, a call button, and the services offered.
-- A branch's own events are listed in its detail screen.
-
-## Events
-
-- Show a date-ordered list, starting from today, filtered to the remembered branch. Use chips for **Branch, Age group, Type**, and a toggle to a month calendar. The list is the default because it's faster on a phone.
-- Branch and age choices are remembered, and the chips show what's applied.
-- Searching within Events filters this list, with the same zero-results behavior as above ("No events for Teens at Eastside this week. Show all branches / next week").
-- **Register** and **Add to calendar** are visible buttons on the event, not buried in a detail screen.
+**If search itself fails** (offline or slow): say so in place, keep the query, and offer Retry. Recent searches and My Items should still show cached data with a "Last updated" time.
 
 ## Quick checks
 
-- No primary function is behind an icon-only control.
-- Every filter that narrows results is visible and removable.
-- Back never loses a query.
-- Nothing asks for something the app could remember (branch, formats).
+- Search is reachable in one tap from every tab (the top field on Search, or the tab itself).
+- Nothing asks the patron what the app can remember: branch, pickup location, last segment.
+- Every hold or cancel can be undone. No "Are you sure?" and no success dialogs.
+- Everything works with the keyboard and screen readers. Undo toasts are announced and stay long enough to read (starting value: 6–10 seconds, extendable). Availability uses text, not only color.
 
-**Placeholders to set with your data:** the due-soon threshold (3 days is assumed), the suggestion minimum (2 characters), and which of "suggest a purchase," "interlibrary loan" and "ask a librarian" the library actually offers.
+**Open question:** I assumed the library can supply availability per branch, hold-queue estimates and a barcode for the card. If it can't, drop those rows rather than showing blanks.

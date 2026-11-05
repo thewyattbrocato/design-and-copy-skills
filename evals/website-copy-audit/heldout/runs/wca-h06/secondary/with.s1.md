@@ -1,17 +1,15 @@
 **Hero**
 
-**Headline:** Learn to make pottery at Kilnside
+**Headline:** Your first pottery class, start to finish.
 
-**Subhead:** A four-week beginner course on Alder Street. One evening a week, no experience needed, and you take your finished pieces home.
+**Subhead:** A four-week beginner course at Kilnside Studio on Alder Street. No experience needed.
 
-**Button:** Reserve your spot
-
-**Small line under button:** Next courses start 4 and 6 November.
+**Button:** Book your place
 
 **Intro**
 
 - **Four evenings, one a week.** Tuesdays or Thursdays, 6:30 to 9:00pm.
-- **$180 covers everything.** Clay, glazing, and firing are all included. Classes are capped at 6 students.
-- **No experience needed.** Your finished pieces come home with you after the last week.
+- **$180 covers everything.** Clay, glazing and firing fees are all included.
+- **Small classes, pieces to take home.** Six students at most, and you keep your finished work after the last week.
 
-**Check before publishing:** 4 November is a Wednesday and 6 November is a Friday, so neither falls on the Tuesday or Thursday schedule. Either the dates or the class days need correcting. If you tell me which is right, I'll update the copy.
+**Start dates:** 4 November and 6 November. These don't match your schedule. 4 November 2026 is a Wednesday and 6 November is a Friday. Tuesday and Thursday starts would be 3 and 5 November. Which dates are correct? I've left them out of the copy until you confirm.

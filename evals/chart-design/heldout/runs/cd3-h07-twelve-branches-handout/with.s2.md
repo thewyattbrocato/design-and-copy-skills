@@ -1,48 +1,43 @@
-**Recommendation: one page of 12 small multiples in a 3 × 4 grid, with Dunmere as the only highlighted panel.**
+# Layout for the A4 handout
 
-Twelve lines on one chart would be unreadable. Separate panels let the board see each branch's own shape, and the summer peak shows up as the same pattern repeated.
+**Recommended form:** small multiples, one panel per branch. Twelve lines in one frame would be unreadable, and a table would hide the seasonal shape. Small multiples show the summer peak in each branch and make Dunmere's break stand out.
 
-## Page structure (top to bottom)
+## Page structure (A4 portrait, about 15 mm margins)
 
-1. **Title (finding, not topic).** For example: "Visits peaked in summer at most branches; Dunmere fell sharply after its July roof closure." Add a subtitle with the unit and period: "Monthly visits per branch, Jan–Dec 2025."
-2. **Chart grid (about 80% of the page).** 3 columns × 4 rows fits A4 portrait well. Each panel is roughly 60 × 55 mm.
-3. **Footer.** Put the source and as-of date in brackets until you fill them in: "[source: door counter / ILS?], [data as of date]". Add a one-line note on how Dunmere's closure affected counting, if it did.
+**1. Title block (top, about 25 mm)**
+- **Title:** state the finding. For example: "Visits peaked in summer at most branches; Dunmere fell sharply after its July roof closure."
+- **Subtitle:** "Monthly visits by branch, January–December 2025." Put the unit (visits, or visitors if that's what you counted) here.
 
-## Each panel
+**2. Panel grid (middle, about 185 mm)**
+- Use **3 columns × 4 rows**, which fits portrait better than 4×3. Each panel is about 58 × 45 mm.
+- Keep the branch order **alphabetical**, as you listed them, so board members can find their branch. Dunmere lands in row 2, column 1, near the top left where the eye starts. The alternative is to sort by annual total, but that reshuffles the grid and loses the lookup order.
+- Put the branch name at the top-left of each panel, directly on it, with no legend.
 
-- **Branch name** top-left, in the same position every time. Under it, put the **annual total** in small text, so exact numbers are on the page without a table.
-- **A line with 12 monthly points.** Bars also work, but lines read better at this size.
-- **Same y-axis range in every panel**, so the board can compare branches by eye. Print the axis labels only on the left column, and the month letters (J F M … D) only on the bottom row. Use faint or no gridlines. If you do show gridlines, make them identical across panels.
-- **Optionally, a dot on each branch's peak month**, to make the summer pattern obvious.
+**3. Footer (bottom, about 30 mm)**
+- A two- or three-sentence text takeaway with the actual numbers. For example: "Dunmere fell from X in June to Y in August, while the other 11 branches rose by Z% on average." I'll leave X, Y and Z for you to fill in from your data.
+- Source and date: `[source]`, `[data as of]`.
+- A note that explains the shaded band and the marker line described below.
 
-## Colour and emphasis
+## Inside each panel
 
-- Draw 11 branches in one neutral dark gray or muted blue.
-- Draw Dunmere in a single accent colour, with a slightly thicker line.
-- Add a short note inside the Dunmere panel at July: "Roof closed". Add a faint vertical tick at July in that panel only.
-- Check the handout in grayscale, because library printers often print without colour. Use a thicker, darker line plus the annotation, so the emphasis doesn't depend on the colour.
+- **Shared y-axis across all 12 panels**, starting at zero, so a branch with twice the visits looks like it has twice the visits. Label the axis only in the left column, with 2–3 faint gridlines.
+  - If your branches differ in size by more than about 5×, the small ones will look flat. In that case, index each branch to its own average month (=100) and say so in the subtitle. That is better than free axes, which fake similarity.
+- **X-axis:** 12 monthly points, labelled with single letters (J F M A M J J A S O N D) on the bottom row only. Faint ticks on the other rows are enough.
+- **Line, not bars:** a line makes the seasonal curve readable at this size.
+- **Summer band:** a very light gray vertical band behind June–August in every panel. It ties to the "summer reading" story without needing words.
+- **Peak marker:** optionally, a small dot on each branch's peak month.
 
-## Order of panels
+## Dunmere's emphasis
 
-- **Alphabetical (the order you gave).** This is best for a board that will look up a branch by name. Dunmere lands in row 1, column 1 of the 4th... that is, position 4, which is the start of row 2.
-- **Sorted by annual total.** This is better if you want to show size, but it scatters the names.
-
-I'd go alphabetical and let the accent colour pull the eye to Dunmere.
-
-## One decision that depends on your data
-
-Shared y-axes only work if the branches are of broadly similar size. If the biggest branch has several times the visits of the smallest, the small ones will look flat and their summer peak will disappear. In that case, you have two options:
-
-- **Independent y-axes**, with each panel's scale labeled. State "each panel has its own scale" in the subtitle.
-- **Index each branch to its own monthly average (= 100).** This shows the seasonal shape and Dunmere's drop clearly. Keep the annual totals in the panel headers so absolute size isn't lost.
-
-Tell me roughly how much the branches differ in size and I'll pick one.
+- Use **one accent color and a thicker line** for Dunmere only. The other 11 are a single neutral dark gray, with no rainbow of hues.
+- Add a dashed vertical line at July with a short on-chart note: "Roof closed, July."
+- Optional: draw the **median of the other 11 branches** as a thin light-gray line in the Dunmere panel only. This shows the drop is Dunmere's and not a network-wide dip.
+- Because it's printed, the emphasis has to survive black and white. The thicker line, the annotation and the position carry it, not the color alone.
 
 ## Print details
 
-- Keep text at 7 pt or larger, and lines at 1 pt or thicker.
-- Keep 10–15 mm margins.
-- Don't use a legend. Every panel is labeled directly.
-- Add a one-sentence text takeaway under the title in case someone skips the grid.
+- Minimum text size is 7–8 pt, and lines are at least 1 pt (1.5 pt for Dunmere).
+- No gradients, frames, shadows or heavy gridlines.
+- Check whether July is a full or partial closure month. If the data for any month is partial, mark that point hollow and say so in the footnote.
 
-If you send me the monthly numbers, I can build the page as a print-ready SVG or PDF.
+I haven't seen your numbers, so the takeaway figures and the source line are placeholders. If you send the data, I can build it as a print-ready SVG or PDF.

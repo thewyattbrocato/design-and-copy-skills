@@ -1,0 +1,1 @@
+"Every one of you has asked a patient, 'So, how's the flossing going?' and watched them say 'Great' with a face that said otherwise, and today we're going to talk about why that answer comes so easily."

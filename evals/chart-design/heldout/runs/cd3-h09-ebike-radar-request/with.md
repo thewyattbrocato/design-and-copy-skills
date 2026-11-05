@@ -1,19 +1,20 @@
-**I'd skip the radar chart.** Use a small comparison table with a mini bar in each cell. If you want a chart as well, use one small bar panel per spec.
+I'd skip the radar chart. Use a small-multiples bar layout instead: one small panel per spec, with three bars (one per model) in each panel.
 
-**Why radar doesn't work here**
-- **Mixed units.** Km, kg, dollars, watts, hours and years have no shared scale. You'd have to normalize each to 0–100, and then the shape shows your normalization choices, not the bikes.
-- **Direction conflicts.** Higher is better for range, motor power and warranty. Lower is better for price, weight and charge time. On a radar, a bigger polygon would look better, but it wouldn't be.
-- **Axis order changes the shape.** Reordering the spokes changes the polygons. Shoppers can't read exact values, and three overlapping polygons are hard to tell apart.
+**Why not radar**
+- The six specs have different units: km, kg, dollars, watts, hours and years. To share one radial scale, each has to be rescaled to something like 0–100, and the shopper can no longer read the real numbers.
+- Direction is mixed. More range is good, but more weight, price and charge time are bad. You'd have to flip some axes, and then a bigger polygon doesn't clearly mean "better".
+- The polygon's shape and area change with the order of the axes, so the same data can look quite different.
+- A shopper can't read "Ridgeway costs $550 more" off a polygon.
 
-**What to build instead**
-1. **A table is the main element.** Models are columns and the six specs are rows, so shoppers get exact values. Add a thin horizontal bar in each cell, scaled from zero to the highest value in that row. Bars start at zero so the lengths stay honest.
-2. **Mark the better value in each row** with a bold weight or a small "best" tag, not red/green. For price, weight and charge time, "better" means lowest. Say so in a note, for example "Lower is better".
-3. **Use one color per model, consistently.** Ridgeway might be a dark blue, Trekline a mid-tone and Cove a muted gray. Keep the same colors and the same column order everywhere on the page.
-4. **Make the takeaway text.** For example: "Ridgeway goes farthest and has the strongest motor and warranty. Cove is the lightest, quickest to charge and cheapest. Trekline sits in the middle." This should be real text so screen readers and search engines can read it.
-5. **Optional chart version.** Use six small panels, one per spec. Each panel has three bars on a shared zero baseline, with values printed on the bars and the same model order and colors in every panel.
+**Setup**
+1. **Layout:** a 3×2 grid of panels, or a single column on mobile. Each panel has a plain-language title with its unit: "Range (km)", "Weight (kg)", "Price ($)", "Motor (W)", "Charge time (h)", "Warranty (years)".
+2. **Bars:** horizontal, three per panel, starting at zero. Put the value at the end of each bar so no axis or gridlines are needed.
+3. **Color:** one fixed color per model, the same in every panel. Label the models directly on the bars or in the first panel, so there's no separate legend. Use three clearly different hues that don't depend on red versus green.
+4. **Order:** keep the models in the same order in every panel (for example Cove, Trekline, Ridgeway, from cheapest up). Don't re-sort each panel, because shoppers will be comparing across panels.
+5. **Better/worse:** add a small note in each panel title, such as "longer is better" or "lighter is better". Don't color the winner. That keeps the chart neutral, and the shopper decides what matters.
+6. **Panel order:** lead with the specs shoppers weigh most, probably price, range and weight.
+7. **Accessibility:** include a text summary, for example "Ridgeway has the longest range and warranty but is the heaviest and most expensive." Also provide the same numbers as a table, which can sit behind a "View as table" toggle.
 
-**Optional extra.** Shoppers often decide on a trade-off such as range against price. A scatter with three labeled dots would show that, and Ridgeway's extra range costs about $550 more than Trekline. It's a bonus, not a replacement for the table.
+**Alternative:** if you want something more compact, a plain comparison table with the six specs as rows and the three models as columns also works well. Add a thin in-cell bar behind each number if you want a visual cue. Shoppers often want the exact figures, so a table may suit a product page better than any chart.
 
-If you still want the radar, I can build it honestly. I'd normalize each spec to 0–100, flip price, weight and charge time so outward always means better, put zero at the center, and label every spoke with the raw values. I'd still recommend the table.
-
-If you give me your stack (plain HTML, React, or a CMS), I can write the table with the inline bars.
+If you tell me your stack (plain HTML/SVG, React, a chart library), I can write the code. I'd also add a provenance line under the chart, such as "Specs as of [date], source: [your spec sheet]".

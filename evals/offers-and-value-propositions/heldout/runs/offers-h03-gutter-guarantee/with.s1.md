@@ -1,16 +1,14 @@
-## The Halyard Guarantee
+**Our Halyard Promise**
 
-**If we clean your gutters and they don't drain properly, we come back and make it right.**
+If you're not happy with the work, tell us within [number] days of the job and we'll [come back and redo it at no charge / refund the job]. Call [phone] or email [email] with your name and address. We'll reply within [timeframe].
 
-If water overflows or backs up from a gutter we cleaned within [X days] of our visit, call or email us at [phone / email]. We'll return within [X business days] and [re-clean it at no charge / refund the cleaning, your choice].
+[Add anything that isn't covered, e.g. damage to existing gutters or problems unrelated to our work. Say it in plain words next to the promise, not in fine print.]
 
-**Repairs:** If a repair we made fails within [X months], we'll fix it again at no charge. [Or: refund the labor.]
+**Short version for the booking button:**
+Not happy with the work? Tell us within [number] days and we'll [remedy]. [Link to full promise]
 
-**To claim:** Contact us at [phone / email] with your name, address and visit date. A photo helps but isn't required. [Add anything else the claim needs.]
+**Two notes:**
+- I left the days, remedy, and reply time blank because you haven't given me a policy and I won't make one up. A redo guarantee ("we come back and fix it free") is the safest one for a two-person crew to honor. Only promise a refund if you'd really pay it.
+- For nervous homeowners, add your real details near the promise: [years in Eastbrook], [insured? licensed?], and [a real customer quote]. Include only what's true. Check your local rules on licensing and insurance wording.
 
-**What's not covered:** [e.g., new debris from storms or trees after our visit, damage that was already there]. We'll tell you before we start if we see anything like that.
-
----
-
-- I filled in no terms because you haven't told me your policy. Choose the window and remedy you can honor with a two-person crew. A short return window with a free redo is easy to keep. A full refund is stronger but costs more when it's claimed.
-- You could also add a real customer quote or a line about your local roots, such as how long you've worked in Eastbrook. Both would calm nervous homeowners as much as the guarantee does. Use only facts that are true. If you take payments or sell prepaid services, check your local consumer rules on how guarantees must be worded.
+If you tell me what you'd be comfortable honoring (redo, refund, or both, and for how long), I'll finalize the wording.

@@ -1,40 +1,35 @@
-The copy is clear and readable, but it's generic in a few places where a pottery studio owner would want specifics. The biggest problems are an undefined pricing unit and two FAQ answers that don't answer their questions.
+**Overall:** The structure is clean and the pricing is easy to scan. The copy is generic SaaS, though, and the FAQ mostly doesn't answer its questions. Here are the issues, most important first.
 
-## Most important fixes
+**1. "Items" is undefined, and it's the core limit.** A studio owner won't know whether an item is a wheel, a kiln, a member, or a booking. Since Basic's cap depends on it, define it on the page or use the studio's own terms, like "Up to 100 members" or "Up to 10 wheels and kilns."
 
-1. **"Items" is never defined.** Basic is capped at "Up to 100 items," and Pro is "Unlimited items." Does an item mean a wheel, a kiln, a member, or a booking? Studio owners will need this to judge whether Basic fits, so define it in the plan card, e.g. "Up to 100 bookable wheels and kilns" or "Up to 100 active members."
+**2. The security answer is a claim, not an answer.** "Absolutely. We take security very seriously" is what every vendor says, and it's weak for a product that holds member contact details and possibly payment info. Name something concrete that's true: encryption, hosting region, who can access the data, export and deletion, and how payments are handled. If you can't back up any of that yet, that's worth knowing before launch.
 
-2. **The data security answer is an assertion, not an answer.** "Absolutely. We take security very seriously" is what every vendor says, and it's the question most likely to stop a studio from signing up, since it holds members' contact info and possibly payment details. Replace it with two or three concrete facts you can actually back up, such as encryption, where data is hosted, who can access it, and whether they can export it.
+**3. Several FAQ answers don't answer the question.**
+- "How does it work?" gets "Simply sign up... and start using Kilnbook right away." Describe the member experience: members book wheel and kiln time themselves, and you set the rules and rates.
+- "Do you offer support?" gets "our friendly team is here to help." Say what's included per plan, with response times if you have them. This also keeps the FAQ consistent with the pricing tiers.
 
-3. **"How does it work?" doesn't describe how it works.** "Simply sign up... and start using Kilnbook right away" describes signing up, not the product. Also, "right away" contradicts "set up your account," which implies some work. Say what the owner does and what members do.
+**4. Pricing terms are missing.** Is $9/mo billed monthly only, or is there an annual option? What happens when the trial ends: does it auto-convert, and is there a charge? Trial and billing questions are the top reason people hesitate, so answer them next to the price.
 
-4. **"Do you offer support?" ignores the plan differences you already listed.** Basic has email support, Pro has priority support, and Enterprise has a dedicated account manager. The FAQ should say that and give response times or hours, which "our friendly team" doesn't do. Drop "friendly," which is self-praise.
+**5. "Select" is a weak CTA.** Use "Start free trial" on Basic and Pro. It matches the trial message and says what happens next.
 
-## Line-level notes
+**6. The tier copy is vague.**
+- "Perfect for getting started" says nothing specific.
+- "Everything in Basic, plus more" followed by a list makes "plus more" redundant. Use "Everything in Basic, plus:".
+- "Advanced analytics" needs an example, like "kiln hours by member" or "monthly booking utilization."
 
-- **"Simple, transparent pricing"**: Fine, but generic. Consider "Pricing for studios of every size" or leave it. "Transparent" is a claim the page should earn, not declare.
-- **"Choose the plan that's right for you."**: Filler. Consider cutting it or making it specific: "Start free for 14 days. Pick a plan when you're ready."
-- **Basic: "Perfect for getting started."** Vague. Say who it's for: "For a single studio with a small membership."
-- **Pro: "Everything in Basic, plus more."** "Plus more" tells the reader nothing. Name the benefit or drop the line.
-- **Advanced analytics**: Say what it shows. "Wheel and kiln utilization, revenue per member" is far more useful than the label.
-- **Enterprise: "For large organizations with advanced needs."** A pottery studio probably doesn't see itself as a "large organization," so this may make some buyers feel the plan isn't for them. Consider "For multi-location studios or co-ops." Also name the "custom integrations" (e.g., accounting, Stripe, Google Calendar) or the reader can't tell what's custom.
-- **Buttons: "Select"** is weak. "Start free trial" matches the offer and tells the reader what happens next.
-- **Trial line**: Enterprise is "Custom" and "Contact Sales," so "All plans include a 14-day free trial" may be inaccurate for Enterprise. Confirm, or say "Basic and Pro include..."
-- **"Can I cancel anytime?" → "Yes!"**: The exclamation point reads less credible. Also state what happens on cancel: effective date, whether partial months are refunded, and what happens to their data.
+**7. Enterprise may not match your buyer.** "For large organizations" is probably not how a single studio or a small co-op sees itself. Something like "For multi-location studios or federations" would be clearer, if that's who you're targeting.
 
-## Questions the FAQ is missing
+**8. Missing FAQs that this audience will ask:**
+- Can I import my current members and bookings?
+- Can members pay through Kilnbook?
+- Can I switch plans later?
+- What happens when my trial ends?
 
-Likely candidates, depending on how the product works:
-- Do my members need to create an account to book?
-- Can I change plans later?
-- What happens when the trial ends? Is my card charged automatically?
-- Can I export my data if I leave?
-- Is there a setup fee or annual contract?
+**Smaller items:**
+- "Simply" and "Absolutely" add nothing. Cut them.
+- "Yes!" with an exclamation point reads as salesy. Plain "Yes" is more trustworthy.
+- "Choose the plan that's right for you" is filler. Something like "Start free. Upgrade when your studio grows." says more.
 
-## Suggested FAQ rewrites (fill in the brackets with facts you can confirm)
+**What's working:** Prices are up front, "No credit card required" is a strong conversion line, the "Most Popular" badge is well placed, and the tier layout is consistent.
 
-- **How does it work?** "Set your studio's wheel and kiln hours and rates, then share your booking link with members. They book and pay for time slots themselves, and you see everything in one dashboard."
-- **Is my data secure?** "Yes. [Data is encrypted in transit and at rest.] [Hosting location.] Only accounts you approve can access your studio's data, and you can export it at any time."
-- **Do you offer support?** "Every plan includes [email support, responding within X business hours]. Pro adds priority support, and Enterprise includes a dedicated account manager."
-
-If you tell me what the product actually does (how members pay, what "items" means, whether there's an export), I can tighten the rewrites so they're accurate and not placeholders.
+To rewrite the FAQ and tier copy properly, I need a few facts from you: what counts as an item, your billing terms, your support response times, what the security setup actually is, and whether annual billing exists. I can draft the revised version once you confirm those.

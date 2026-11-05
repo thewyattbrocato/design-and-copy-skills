@@ -1,10 +1,6 @@
-Your numbers are in proportional figures, where each digit has a different width, and they probably aren't right-aligned. Fix both on the total column:
+Your numbers are probably left-aligned or in a proportional font, so the digits don't line up. Fix it in two steps:
 
-```css
-.total {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-```
+1. Right-align the column (`text-align: right`) so the decimal points stack.
+2. Use tabular figures (`font-variant-numeric: tabular-nums`) so every digit has the same width.
 
-Every row also needs the same number of decimals, so $98.00 and not $98.
+Also keep two decimals on every value, like `$98.00`.

@@ -1,21 +1,20 @@
-**Use one family, bundled inside the app: Nunito Sans.** It's an open-license (SIL OFL) humanist sans with softly rounded forms, which gives the "friendly and modern" look. It's sturdy enough for small text on mid-range screens.
+**Use one family, bundled inside the app: Nunito Sans.** Use Regular for body, SemiBold for labels and buttons, and Bold for headings and amounts.
 
-**Roles**
-- **Everything (headings, body, buttons, labels):** Nunito Sans in Regular 400, SemiBold 600 and Bold 700. Hierarchy comes from weight and size, not a second font.
-- **Money and balances:** the same family with tabular figures turned on, so contributions and totals line up in columns. Check that the build you bundle includes `tnum`.
-- **Fallback:** `Roboto, sans-serif`. Roboto is already on Android, so if the font fails to load, the app still looks close to intended.
-- **No monospace and no second family.** Nothing in a savings-group app needs them.
+I'm assuming a Latin-script audience, so tell me if you need other scripts. That would change the pick, because the harder script comes first.
 
-**Why this fits your constraints**
-- **Offline and prepaid data:** package the font files in the APK or app bundle instead of downloading them at runtime. That way there's no data cost, nothing fails offline, and there's no flash of the wrong font. Ship only 3 weights, or one variable file, and subset to the scripts you need to keep the app small.
-- **Mid-range screens:** it has a generous x-height and open shapes, and the digits and the I/l/1 and O/0 shapes stay distinguishable. A hairline or thin geometric font would look faint on these phones.
-- **Friendly but not childish:** I'd avoid fully rounded display fonts like Nunito itself or Quicksand for body text. They get fuzzy at small sizes and make money screens look like a toy. The slightly softened Nunito Sans reads as warm without that.
+**Why this works for your users**
+- **Friendly and modern:** Nunito Sans has soft, open shapes and a warm tone, but it is still a sturdy sans. It stays clear at small sizes on mid-range screens, and the founder gets the look they asked for.
+- **One family:** The hierarchy comes from weight and size, so there's no second font to download or to clash with the first. A second family has no role here.
+- **Offline and prepaid data:** Bundle the font files in the APK or app bundle and never load them over the network. Ship only the three weights above, subset to the languages you support. Don't use a CDN or Google Fonts links, because they would fail offline and spend the vendors' data.
+- **Fallback:** Use `Roboto` (the Android system font) as the fallback. If a file fails to load, the app still looks sensible.
 
-**Starting sizes:** body 16sp, secondary text no smaller than 14sp, balances 20–24sp in SemiBold, screen titles 20–22sp in Bold.
+**Rules to keep it legible on those phones**
+- Use 16sp as the minimum for body text and 14sp for the smallest labels.
+- Don't use Light or Thin weights. They get spindly on low-density screens.
+- Money and counts need tabular figures, so columns of amounts line up. Check that your chosen build of Nunito Sans supports them. If it doesn't, use a different family rather than faking it.
+- Test the smallest text on a real mid-range device. Check that 1, l, I, 0 and O can be told apart, since these will be amounts and member IDs.
+- Don't rely on synthetic bold or italic. Only bundle weights the family actually provides.
 
-**Assumptions to confirm**
-- I assumed Latin script. If your vendors read another script such as Arabic, Devanagari or Amharic, choose the font for that script first. Noto Sans has the broadest coverage, and Nunito Sans won't cover those scripts.
-- Confirm that the specific font build includes tabular figures and every character your languages need, including accents.
-- The SIL OFL license allows app embedding, but check the license text for your exact files.
+**Licensing:** Nunito Sans is listed on Google Fonts as an open-license family, but confirm the terms yourself for app embedding before you ship.
 
-I haven't rendered it. Before you commit, put a real screen with amounts, names and a paragraph on an actual low-end Android phone at 1x brightness.
+**Backup option:** If APK size or time matters more than the look, use plain Roboto. It costs nothing, always works offline, and is familiar to your users. A friendlier feel then has to come from color, spacing and rounded UI shapes.

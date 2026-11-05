@@ -12,7 +12,7 @@ The owner decides whether a request fits the purpose. They do not rewrite everyt
 
 Ask or assume (and label which): where requests start, what counts as urgent, who touches a piece and in what order, how long each wait is, where work bounces back, how long the whole trip takes. If the user gives a delay in days, use it; do not estimate savings. Then:
 
-- Remove a layer unless it guards a named risk (legal for claims about money, support for accuracy of steps). Give each reviewer a scope, such as pages with a given tag, and a time limit after which silence means yes.
+- Remove a layer unless it guards a named risk (legal for claims about money, support for accuracy of steps). Give each reviewer a scope, such as pages with a given tag, and a time limit after which silence means yes. The exception is a page whose steps change or delete data, move money, or change security or access: it waits for someone who has run the steps on the current version.
 - Run reviews side by side, with one merged set of comments and one person who settles conflicts.
 - Let one approver decide wording, so the same sentence is not argued four times.
 - Write an emergency path: who may call it, who is told, what is skipped, how short the route is, and a look-back afterward.

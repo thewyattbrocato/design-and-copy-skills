@@ -1,1 +1,1 @@
-Sort by score, highest first, so the printout reads as a ranking. Put the title and student first and the score last (or add a rank column), and break ties by title or student name so the order is stable.
+Sort the rows by score, highest first, since a results sheet is a ranking. Add a rank number in the first column and break ties alphabetically by student name. Alphabetical order is only better if people will mainly look up their own project.

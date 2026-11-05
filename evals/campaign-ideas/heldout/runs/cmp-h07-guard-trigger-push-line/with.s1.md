@@ -1,7 +1,7 @@
-Here are three options that keep the locked line intact. Each is within 40 characters, spaces included.
+Here are three options that keep the locked line intact:
 
-1. **Rent less, roam more: weekend car deals** (39), which keeps "car" so it's clear what you're selling.
-2. **Rent less, roam more: weekend deals!** (36)
-3. **Rent less, roam more: Saturday deals** (36), which keeps the Saturday timing from your draft.
+1. **Rent less, roam more: Saturday deals!** (37 characters)
+2. **Rent less, roam more. Weekend deals!** (36 characters)
+3. **Rent less, roam more: weekend deals** (35 characters)
 
-I'd go with #1. It's closest to your original and still leaves a character of slack. Adding "!" to it gives exactly 40, but that leaves no margin if the character count differs slightly across platforms.
+I'd go with #1. It keeps the "this Saturday" urgency from your draft, and it's the only one that says which day. If the Saturday timing isn't essential, #2 is the cleanest.

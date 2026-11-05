@@ -1,1 +1,1 @@
-Sort by score, highest first, and add a rank column so the printout reads as results. Break ties alphabetically by title, and order the columns Rank, Title, Student, Grade, Score. If you'd rather group by grade level, sort by grade first and then by score within each grade.
+Sort the rows by score, highest first, so the printed table reads as a ranking. Break ties alphabetically by student name. If you'd rather people find their own project quickly, sort by student name or title instead and add a rank column.

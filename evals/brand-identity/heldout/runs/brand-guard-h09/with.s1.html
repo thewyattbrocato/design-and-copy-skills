@@ -2,78 +2,79 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quokka wordmark</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  :root {
-    --ink: #1f2a37;
-    --accent: #c2410c;
-  }
+  :root { --ink: #1f2a37; --paper: #ffffff; --accent: #c2410c; }
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: #f4f4f5;
-    color: var(--ink);
+    margin: 0; padding: 32px; background: #f3f4f6; color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
-  .panel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 72px 24px;
-  }
-  .panel.light { background: #ffffff; }
-  .panel.dark  { background: #111827; --ink: #f9fafb; --accent: #fb923c; }
-  .panel.small { padding: 20px 24px; justify-content: flex-start; border-top: 1px solid #e5e7eb; }
-
+  /* Wordmark: scales with font-size, uses currentColor so it works in one color or reversed */
   .wordmark {
     display: inline-block;
-    position: relative;
-    font-weight: 700;
-    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -0.035em;
     line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--ink);
     padding-bottom: 0.2em;
+    color: inherit;
     text-decoration: none;
+    white-space: nowrap;
   }
-  .wordmark svg {
+  /* The one custom detail: a smile under the "kk" */
+  .wordmark .kk { position: relative; display: inline-block; }
+  .wordmark .kk::after {
+    content: "";
     position: absolute;
-    left: 0.04em;
-    bottom: 0;
-    width: 2.1em;
+    left: 0.06em; right: 0.1em; bottom: -0.17em;
     height: 0.2em;
-    overflow: visible;
+    border-bottom: 0.075em solid var(--smile, currentColor);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
   }
-  .wordmark svg path {
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 5;
-    stroke-linecap: round;
+  .grid { display: grid; gap: 16px; max-width: 880px; margin: 0 auto; }
+  .panel {
+    background: var(--paper); border-radius: 10px; padding: 40px;
+    display: flex; align-items: center; justify-content: center;
   }
-  .wordmark.sm { font-size: 24px; }
-  .wordmark.sm svg path { stroke-width: 7; }
+  .panel.dark { background: #111827; color: #fff; --smile: #fb923c; }
+  .panel.light { --smile: var(--accent); }
+  .panel.mono { color: #000; --smile: #000; }
+  .row { display: flex; gap: 16px; }
+  .row .panel { flex: 1; }
+  .login { flex-direction: column; gap: 20px; padding: 48px 40px; }
+  .login .box { width: 260px; display: grid; gap: 8px; }
+  .login .field { height: 32px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; }
+  .login .btn { height: 32px; border-radius: 6px; background: var(--ink); }
+  .wiki {
+    display: block; padding: 0; overflow: hidden; text-align: left;
+  }
+  .wiki .bar { padding: 14px 20px; border-bottom: 1px solid #e5e7eb; }
+  .wiki .body { padding: 20px; color: #6b7280; font-size: 14px; }
+  .label { font-size: 12px; color: #6b7280; margin: 0 auto 8px; max-width: 880px; }
 </style>
 </head>
 <body>
-
-  <div class="panel light">
-    <span class="wordmark" role="img" aria-label="Quokka">Quokka
-      <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M3 3 Q50 14 97 3"/></svg>
-    </span>
+<div class="grid">
+  <div class="row">
+    <div class="panel light"><span class="wordmark" style="font-size:72px">Quo<span class="kk">kk</span>a</span></div>
+    <div class="panel dark"><span class="wordmark" style="font-size:72px">Quo<span class="kk">kk</span>a</span></div>
   </div>
 
-  <div class="panel dark">
-    <span class="wordmark" role="img" aria-label="Quokka">Quokka
-      <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M3 3 Q50 14 97 3"/></svg>
-    </span>
+  <div class="row">
+    <div class="panel mono"><span class="wordmark" style="font-size:40px">Quo<span class="kk">kk</span>a</span></div>
+    <div class="panel mono" style="background:#fff"><span class="wordmark" style="font-size:20px">Quo<span class="kk">kk</span>a</span></div>
   </div>
 
-  <div class="panel light small">
-    <span class="wordmark sm" role="img" aria-label="Quokka">Quokka
-      <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M3 3 Q50 14 97 3"/></svg>
-    </span>
+  <div class="panel login light">
+    <span class="wordmark" style="font-size:44px">Quo<span class="kk">kk</span>a</span>
+    <div class="box"><div class="field"></div><div class="field"></div><div class="btn"></div></div>
   </div>
 
+  <div class="panel wiki light">
+    <div class="bar"><span class="wordmark" style="font-size:22px; padding-bottom:0.25em">Quo<span class="kk">kk</span>a</span></div>
+    <div class="body">Team wiki</div>
+  </div>
+</div>
 </body>
 </html>

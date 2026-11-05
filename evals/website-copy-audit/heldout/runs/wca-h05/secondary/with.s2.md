@@ -1,63 +1,40 @@
-## Auditoría de la página principal
+## Hallazgos (ordenados por gravedad)
 
-**Bloqueantes:** ninguno. No veo afirmaciones falsas ni trucos de urgencia. Los puntos siguientes son de mayor a menor impacto.
+**1. Mayor: no hay un camino claro para reservar.** La página existe para que la gente reserve, pero el único botón dice **"Más información"** y el formulario es de contacto genérico (**"Nombre, Email, Mensaje. Botón: Enviar"**). Quien quiere cita no sabe si puede reservar, qué fecha pedir ni qué pasará después. Como la gente llama por teléfono, el lector que no quiere escribir no encuentra ningún número junto a la acción. Corrección: el botón debe decir lo que hace, el formulario debe pedir lo necesario para una cita y debe quedar claro qué pasa tras enviarlo.
 
-### Hallazgos
+- Botón: **"Más información"** → **"Reservar cita"**
+- Formulario: añade campos de servicio (desplegable), fecha preferida, teléfono y bici (marca/modelo). Cambia **"Enviar"** → **"Solicitar cita"**.
+- Bajo el botón: **"Te confirmamos la cita por [email/teléfono] en [plazo que puedas cumplir]. ¿Prefieres llamar? [teléfono]."** (Rellena plazo y teléfono; no inventes ninguno.)
 
-**1. Mayor · Botón y formulario: no hay forma de reservar cita.**
-- Botón: «Más información»
-- Formulario: «Nombre, Email, Mensaje» · «Enviar»
+**2. Mayor: el titular y el subtitular no dicen qué es el negocio ni dónde está.** **"Pasión por las dos ruedas desde siempre"** podría ser una tienda, una marca o un club ciclista. **"Ofrecemos servicios integrales de mantenimiento y reparación…"** es jerga de sector y tampoco menciona Zaragoza. Un visitante nuevo no sabe en 5 segundos que puede reservar una revisión en Zaragoza.
+- Titular: **"Mantenimiento y reparación de bicis en Zaragoza"**
+- Subtitular: **"Revisa, repara o pon a punto tu bici en [nombre del taller], [barrio]. Reserva tu cita online o llama al [teléfono]."**
 
-Quien quiere una cita ve un formulario de contacto genérico. Nada le dice que puede reservar, y «Enviar» no indica qué pasa después. El visitante que quiere reservar tiene que adivinar que el mensaje sirve para eso.
-**Arreglo:** cambia el botón y el envío a «Pedir cita» y añade campos de reserva (ver reescrituras).
+**3. Mayor: los servicios no dicen qué incluyen ni cuánto cuestan.** **"Revisión básica · Revisión completa · Puesta a punto premium"** son tres nombres sin descripción. El lector no puede comparar ni decidir. El precio está en un PDF que no está enlazado, así que la información que más decide la reserva queda fuera de la página.
+- Enlaza el PDF justo debajo de la lista: **"Ver precios y plazos (PDF)"**.
+- Añade una línea por servicio con datos reales: **"Revisión básica: [qué incluye] · desde [precio] · [duración]"**. Si no tienes esos datos a mano, el PDF enlazado ya cubre el hueco.
+- Usa el mismo nombre de servicio en el desplegable del formulario y en el PDF.
 
-**2. Mayor · Teléfono y horario no aparecen en el texto.**
-La gente llama, así que el teléfono es su canal natural. En el texto que pegaste no hay número, dirección ni horario.
-**Arreglo:** pon el teléfono y el horario arriba, junto al botón de cita. Si ya están en la cabecera o el pie, ignora este punto y revísalo en el punto de notas.
+**4. Mayor: "Por qué elegirnos" afirma sin pruebas.** **"Somos un equipo apasionado y comprometido con tus necesidades"** describe al equipo con adjetivos que cualquier taller podría escribir. No da nada que el lector pueda comprobar. Es la sección que debería convencer a quien duda entre tu taller y otro.
+- Sustitúyela por datos verificables que tengas: **"[años] años reparando bicis en Zaragoza · [marcas o tipos de bici que trabajáis] · [plazo medio de entrega]"**. Si no tienes un dato concreto, es mejor un hecho verdadero y pequeño que una frase de adjetivos.
 
-**3. Mayor · Los servicios no se explican.**
-«Revisión básica · Revisión completa · Puesta a punto premium» son solo nombres. El visitante no sabe qué incluye cada uno, cuánto dura ni cuánto cuesta, y no hay enlace al PDF de precios. Sin eso no puede elegir, y «premium» no dice qué tiene de más.
-**Arreglo:** una línea por servicio con lo que incluye, la duración y el precio (o un enlace claro al PDF).
+**5. Menor: "máxima calidad" y "trato cercano y profesional" son afirmaciones sin base.** Son superlativos y adjetivos genéricos. No son falsos, pero el lector no puede verificarlos y no lo distinguen de la competencia. Si puedes respaldar algo concreto (certificaciones, mecánicos, garantía sobre la reparación), úsalo en lugar de la frase. Si no, bórralos.
 
-**4. Mayor · El subtítulo promete reparación y la lista de servicios no la incluye.**
-«Servicios integrales de mantenimiento y reparación» contradice la lista, que solo tiene revisiones y una puesta a punto. Quien necesita arreglar una avería no ve su caso.
-**Arreglo:** si ofrecéis reparaciones, nómbralas como servicio. Si no, quita «reparación» del subtítulo.
+## Lo que funciona
 
-**5. Mayor · El titular no dice qué hacéis ni dónde.**
-«Pasión por las dos ruedas desde siempre» podría ser de cualquier tienda, blog o club ciclista. «Desde siempre» además es una afirmación sin fecha que no se puede comprobar.
-**Arreglo:** el titular debe decir qué hacéis y dónde (ver reescrituras).
+- **"Revisión básica"** y **"Revisión completa"**: nombres concretos que el cliente probablemente usa al llamar. Consérvalos tal cual.
+- **"Puesta a punto premium"**: nombre claro. Solo necesita una línea que explique qué la diferencia de la revisión completa.
+- **"Nombre, Email, Mensaje"**: campos simples. Se mantienen; solo se añaden los necesarios para la cita.
 
-**6. Mayor · «Por qué elegirnos» no da ninguna razón.**
-«Somos un equipo apasionado y comprometido con tus necesidades» lo podría decir cualquier taller. La sección promete motivos y no los da.
-**Arreglo:** tres datos reales (años de experiencia, marcas, plazos, tipo de cliente). Si no tenéis datos así, dilo en la sección con algo concreto y verdadero.
+## Orden de corrección
 
-**7. Menor · Adjetivos genéricos sin respaldo.**
-«Máxima calidad» y «trato cercano y profesional» son adjetivos que cualquier rival usa. «Máxima calidad» es una afirmación que necesita respaldo (certificaciones, garantía, mecánicos formados), y si no lo tenéis, mejor quitarla.
+1. **Cambiar el botón y el formulario para reservar cita** (pequeño): botón, campos y mensaje de confirmación.
+2. **Reescribir el titular y el subtitular para incluir Zaragoza, el servicio y la reserva** (pequeño).
+3. **Enlazar el PDF de precios y añadir una línea por servicio** (pequeño si el PDF ya está listo; medio si hay que redactar las líneas).
+4. **Sustituir la sección "Por qué elegirnos" por datos verificables** (medio: hay que reunir los datos).
+5. **Quitar o respaldar "máxima calidad" y "trato cercano"** (pequeño).
 
-### Lo que funciona
-- «mantenimiento y reparación»: categoría clara, mantenla.
-- «Revisión básica» / «Revisión completa»: nombres concretos que el cliente reconoce; mantenlos.
-- «Puesta a punto»: término real del sector; conservarlo.
+## Notas
 
-### Reescrituras
-Solo las líneas con hallazgo. Los corchetes son datos que tienes que aportar; no los rellené yo.
-
-- **Titular:** «Pasión por las dos ruedas desde siempre» → «Mantenimiento y reparación de bicis en Zaragoza»
-- **Subtítulo:** «Ofrecemos servicios integrales de mantenimiento y reparación con la máxima calidad y un trato cercano y profesional.» → «Revisiones, puesta a punto y reparaciones para tu bici. Precios y plazos en [enlace al PDF]. Llámanos al [teléfono] o pide cita aquí.»
-- **Botón:** «Más información» → «Pedir cita» (enlaza al formulario)
-- **Formulario:** «Nombre, Email, Mensaje» → añadir **Teléfono**, **Tipo de bici**, **Servicio** (desplegable con los servicios), **Día preferido** y **Mensaje** (opcional). Botón: «Pedir cita» en lugar de «Enviar».
-- **Servicios:** «Revisión básica · Revisión completa · Puesta a punto premium» → cada uno con una línea: «Revisión básica: [qué incluye] · [duración] · [precio]». Repite para los demás.
-- **Por qué elegirnos:** «Somos un equipo apasionado y comprometido con tus necesidades.» → «[Años de experiencia] · [marcas o tipo de bicis que atendemos] · [plazo habitual para una cita]».
-
-### Orden de arreglo
-1. **Pedir cita en el botón y el formulario, con campos de reserva.** Esfuerzo: pequeño.
-2. **Teléfono, dirección y horario arriba, junto al botón.** Esfuerzo: pequeño.
-3. **Titular y subtítulo claros, sin promesas que la lista no cumple.** Esfuerzo: pequeño.
-4. **Una línea por servicio con qué incluye, duración y precio.** Esfuerzo: medio (necesitas los datos del PDF).
-5. **Sustituir «Por qué elegirnos» por tres datos reales.** Esfuerzo: medio (necesitas los datos).
-
-### Notas
-- No he revisado la cabecera, el pie, el PDF de precios, la pantalla tras enviar el formulario ni el correo de confirmación. Si el teléfono ya aparece en la cabecera, el punto 2 baja de prioridad.
-- No tengo analítica, así que no puedo medir la conversión. Para comprobar el cambio, cuenta cuántas solicitudes llegan por el formulario antes y después.
-
-**Además observado:** «Pasión» en el titular y «apasionado» en la última sección repiten la misma idea; con el cambio de titular desaparece.
+- No he revisado el encabezado, el pie de página, el teléfono ni el resto de páginas. Si el teléfono aparece en cabecera, muévelo también junto al botón de reserva.
+- No hay una afirmación falsa en el texto. No hay bloqueadores.

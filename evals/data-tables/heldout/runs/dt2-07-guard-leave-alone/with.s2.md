@@ -1,42 +1,47 @@
-I made only light changes, because the table was already in good shape. Your alignment, tabular figures, units in the header, `<caption>` and `<th scope>` markup were all right.
+I changed very little, because the table already followed most of the good habits: a real caption, `th scope`, right-aligned numbers, and the currency stated once in the header. I made these changes:
 
-**What I changed**
-- **Min. order header:** it's now "Min. order (units)", so the number has a unit like the price column does.
-- **Row spacing:** padding goes up from 8px to 11px, so the rows are about 43px tall and easier to scan.
-- **Hairlines:** the rule under the last row is removed, and the header rule now has a little space below it.
-- **Phones:** the table sits in a horizontally scrolling wrapper, so numbers never wrap on a narrow screen.
-- **Styles:** the repeated inline styles are now CSS classes, which makes the file shorter and easier to edit.
+- **Spacing:** I increased the row padding from 8px to 11px so the rows are easier to scan.
+- **Min. order header:** It now reads "Min. order (units)". Before, "6" could have meant loaves, cases or dollars.
+- **Caption:** I split it into a short title and a smaller note, so the title is the first thing people read.
+- **Repeated styling:** I moved the inline alignment and tabular-figures styles into two classes, `num` and `item`. The table now looks the same but is much shorter.
+- **Small screens:** I wrapped it in a horizontal scroll region, so a café owner reading on a phone won't get wrapped numbers.
 
 ```html
-<div class="wrap" role="region" aria-label="Autumn wholesale prices" tabindex="0">
-<table class="prices">
-  <caption>Autumn wholesale prices, effective Oct 1. Prices per unit, excluding delivery.</caption>
+<div class="price-list" role="region" aria-labelledby="pl-cap" tabindex="0">
+<table>
+  <caption id="pl-cap">
+    Autumn wholesale prices
+    <small>Effective Oct 1. Prices per unit, excluding delivery.</small>
+  </caption>
   <thead>
-    <tr><th scope="col">Item</th><th scope="col">Unit</th><th scope="col" class="num">Price (USD)</th><th scope="col" class="num">Min. order (units)</th></tr>
+    <tr>
+      <th scope="col" class="item">Item</th>
+      <th scope="col" class="item">Unit</th>
+      <th scope="col" class="num">Price (USD)</th>
+      <th scope="col" class="num">Min. order (units)</th>
+    </tr>
   </thead>
   <tbody>
-    <tr><th scope="row">Sourdough loaf</th><td>800 g</td><td class="num">4.20</td><td class="num">6</td></tr>
-    <tr><th scope="row">Seeded rye</th><td>700 g</td><td class="num">4.60</td><td class="num">6</td></tr>
-    <tr><th scope="row">Cardamom bun</th><td>each</td><td class="num">1.35</td><td class="num">24</td></tr>
-    <tr><th scope="row">Pear and almond tart</th><td>20 cm</td><td class="num">14.00</td><td class="num">2</td></tr>
-    <tr><th scope="row">Pumpkin loaf</th><td>600 g</td><td class="num">6.75</td><td class="num">4</td></tr>
+    <tr><th scope="row" class="item">Sourdough loaf</th><td>800 g</td><td class="num">4.20</td><td class="num">6</td></tr>
+    <tr><th scope="row" class="item">Seeded rye</th><td>700 g</td><td class="num">4.60</td><td class="num">6</td></tr>
+    <tr><th scope="row" class="item">Cardamom bun</th><td>each</td><td class="num">1.35</td><td class="num">24</td></tr>
+    <tr><th scope="row" class="item">Pear and almond tart</th><td>20 cm</td><td class="num">14.00</td><td class="num">2</td></tr>
+    <tr><th scope="row" class="item">Pumpkin loaf</th><td>600 g</td><td class="num">6.75</td><td class="num">4</td></tr>
   </tbody>
 </table>
 </div>
 <style>
-.wrap{overflow-x:auto}
-.prices{border-collapse:collapse;font:15px/1.4 system-ui,sans-serif;font-variant-numeric:tabular-nums}
-.prices caption{text-align:left;padding-bottom:10px;color:#444}
-.prices th,.prices td{padding:11px 20px 11px 0;border-bottom:1px solid #ddd;text-align:left;white-space:nowrap}
-.prices thead th{border-bottom:2px solid #999}
-.prices tbody th{font-weight:400}
-.prices .num{text-align:right}
-.prices tbody tr:last-child th,.prices tbody tr:last-child td{border-bottom:0}
+.price-list{overflow-x:auto;max-width:100%}
+.price-list table{border-collapse:collapse;font:15px/1.4 system-ui,sans-serif;white-space:nowrap}
+.price-list caption{text-align:left;padding-bottom:10px;font-weight:600;font-size:17px}
+.price-list caption small{display:block;font-weight:400;font-size:14px;color:#444}
+.price-list th,.price-list td{padding:11px 20px 11px 0;border-bottom:1px solid #ddd;text-align:left}
+.price-list thead th{border-bottom:2px solid #999}
+.price-list tbody th{font-weight:400}
+.price-list .num{text-align:right;font-variant-numeric:tabular-nums}
 </style>
 ```
 
-**Before you send it:** most email clients strip `<style>` blocks. If you're pasting this into an email rather than attaching it or hosting it as a page, say so and I'll turn the classes back into inline styles.
+If you're pasting this into an email rather than putting it on a web page, many mail clients strip or ignore `<style>` blocks. In that case, tell me and I'll give you a version with the styles written inline.
 
-**Things to check**
-- **Unit column:** "each" for the bun is correct next to "800 g". If any prices are actually per case or per dozen, that needs to be stated.
-- **Prices:** I didn't change any figures or the item order.
+I kept the item order as you had it. If you'd like it grouped, with breads together and then pastries, say so and I'll reorder it.

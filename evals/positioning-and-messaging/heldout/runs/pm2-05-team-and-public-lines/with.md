@@ -1,53 +1,49 @@
-**Homepage line**
+# Spindle: team brief
 
-> Replacement parts for your dishwasher, dryer, or oven. Shipped from Ohio within a day, with a repair video on every part page.
+**What we are:** Spindle sells replacement parts for home appliances (dishwashers, dryers, ovens and so on), shipped from Ohio within a day. Every part page links to a repair video, and you can return parts within a month.
 
-I left out "fixed by the weekend". Shipping within a day isn't delivery by Saturday, so the line promises only what you control. If you can show delivery times by region, put a [source, date] figure here and say it outright.
+**Controlling idea:** We help you fix the appliance you have, fast, so you don't have to replace it.
 
----
+Customers hear "fast, and I can do it myself." We hear "fixing things is normal." Both describe the same thing, so we say it in the customer's words and keep the mission as our reason.
 
-**Spindle message brief (for the team)**
+**For:** People whose appliance just broke and who would rather fix it than buy a new one. [assumed: mostly DIYers who will watch a video and do the repair themselves. Check this against your order and video-view data.]
 
-**One-liner.** Spindle sells replacement parts for home appliances, so you can repair what you own instead of replacing it.
+**Not for:**
+- Anyone who wants a technician to do the repair.
+- Owners of brands whose manufacturers won't sell to resellers. We say so plainly rather than hiding it. [add: the list of brands we don't carry]
 
-**Controlling idea.** *Fixing it should be the normal thing to do.* Customers hear it as "I can get this working again, fast, and I'll know how." The team hears it as the reason we exist. The customer-facing words stay on the working appliance, and the mission is what we use to decide what we stock.
+**What customers do now:**
+- Buy a new appliance.
+- Pay a repair service.
+- Search for a part on a marketplace and hope it fits.
 
-**For / not for.**
-- For: people with a broken appliance who would fix it themselves if they had the right part and could see how.
-- Not for: people who want a technician to come and do it, and owners of brands that won't sell to resellers like us. We don't carry those brands, and we say so plainly rather than hide it.
+**Differences, each with its proof:**
+- **Ships within a day.** Proof: our Ohio warehouse.
+- **A repair video on every part page.** Proof: anyone can check it.
+- **A month to return a part.** Proof: our return policy.
+- **Each one lets the customer** order a part and know they can fit it themselves. [unproven: "working by the weekend" depends on carrier times. Don't promise it until we can show delivery times by region.]
 
-**Their current fix.**
-- Buying a new appliance. It's quick and certain, and it is the thing we're against.
-- Calling a repair person. They bring expertise and cost more. [add: typical cost, if you have it]
-- Hunting for the part on marketplaces. There's more choice, but it's hard to know whether the part fits or is any good.
+**Objections:**
+- **"Will it fit?"** [add: how we confirm fit]
+- **"Why don't you have my brand?"** Some manufacturers won't sell to resellers. We only list what we can source properly.
 
-**Differences and proof.**
-- Ships within a day from our Ohio warehouse. This is checkable, and it gets the appliance running sooner.
-- A repair video on every part page. This is checkable, and it lets someone who has never opened a dishwasher try it.
-- 30-day returns. This is checkable, and it makes a wrong or unneeded part low-risk.
-- Better fit or quality than marketplace sellers: [unproven: show return rates by part, or a fit guarantee].
+**Words:**
+- Use: fix, working again, ships within a day.
+- Avoid: sustainability, circular economy and "built to die." Those are our words, not the customer's.
 
-**Objections.**
-- "What if I order the wrong part?" We take returns for a month.
-- "Can I really do this myself?" Every part page links to a video.
-- "Why don't you carry brand X?" The manufacturer won't sell to resellers. [add: your wording for this]
+## Settling the knockoff argument
 
-**Words.** Use "part", "fix", "repair", "working again". Avoid "sustainability solutions", "circular economy", and "ecosystem". Customers never say those, and they hide the weekend deadline.
+The mission doesn't ban cheap parts. It bans parts that fail early, because a part that fails sends the customer back to a repair and sometimes to a new appliance. So the test is whether the part gets the appliance working and keeps it working.
 
-**Rule for the knockoff argument (proposal for you to approve).**
-The mission and the customer want the same thing: a repair that holds. So the test for any part, including cheap non-original ones, is:
+1. **Does it hold up?** Stock a non-original part only if its return and failure rate is close to the original's. [unproven: pull return data by part, or test a sample before listing.] A cheaper part that lasts serves the mission, because it lowers the cost of repair.
+2. **Is it labeled honestly?** Customers must be able to tell original from compatible on the page. Selling a knockoff as the real thing breaks the return promise and the trust behind it.
+3. **Does it sell but fail?** Don't stock it. A sale that comes back as a return, or ends in a new appliance, costs us twice.
+4. **Is there a hard case?** If a knockoff sells well and nobody has failure data, list it as a trial with a review date. Don't argue it in the abstract.
 
-1. Will it fit and work in the appliance it's listed for?
-2. Will it last about as long as the part it replaces? A repair that fails in three months means a second repair, or a new appliance, and that is the outcome we exist to prevent.
-3. Can we stand behind it with the video and the 30-day return?
+## Homepage line
 
-A part that passes all three can be stocked, however cheap it is. A part that fails the second is "built to die" and doesn't belong in the shop, however well it sells. Cheap and non-original is not the disqualifier. Short-lived is. For parts we can't vouch for, we need a way to find out, such as return and failure data by SKU. [unproven: we don't yet know which of our current parts fail early.]
-
-**Voice (inferred from how you described the company, so please correct it).**
-- *Plain about the job.* We say what the part does and whether it fits, before anything else. We stay short of curt, because people are mid-repair and stressed. We say: "Fits most 24-inch dishwashers. Video shows the swap in about ten minutes." [add: real time]. We don't say: "Unlock the power of DIY repair!"
-- *On the customer's side.* We assume they can do this. We don't talk down, and we don't oversell how easy it is.
-- The mission goes in the About page and in team decisions. It doesn't go in product headlines.
+**Fix the appliance you have. Parts ship within a day, and every one comes with a repair video.**
 
 Two notes:
-- Check any figure you add, such as repair times and delivery speed, against real data before it goes in print.
-- If you'd like the About-page version of the mission, I can write it separately, since it needs a different tone from the homepage.
+- I left out "by the weekend" on purpose. Shipping within a day doesn't guarantee delivery by then. If you can show regional delivery times, "working by the weekend" would be a strong headline.
+- The mission stays internal. A customer with a broken dishwasher wants the part, and the line says what we do for them.

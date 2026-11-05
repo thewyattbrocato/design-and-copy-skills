@@ -1,34 +1,36 @@
-I won't write the "$240 goes up to $290 after Friday" line, since it isn't true. "Last 3 seats!" would also be off: with a max of 12 and about half full, you have roughly 6 left. Both claims are easy for subscribers to check, and they can cost you trust with a list you'll keep emailing.
-
-Here's a version that still creates a clock, using only true facts:
+I wrote this one without the "$290 after Friday" line. The price isn't going up, so that line would be a made-up deadline, and customers who found out would feel misled. "Last 3 seats!" has the same problem. At 12 max and about half full, you have roughly 6 seats left. Both can be swapped for real urgency, and there's a way to get a real Friday deadline below.
 
 ---
 
-**Subject:** Only 6 seats left: wheel-throwing starts Nov 3
+**Subject:** 6 seats left: beginner wheel-throwing starts Tuesday, Nov 3
 
-**Preview:** Half the class is already claimed.
+Hi [First name],
 
-Hi there,
-
-Our fall beginner wheel-throwing class is filling up. We cap it at 12 so everyone gets real time at the wheel, and about half the spots are already taken.
+Our fall beginner wheel-throwing class starts **next Tuesday, November 3**, and we're about half full. Classes are capped at 12 so everyone gets real time at the wheel, which means the remaining seats won't last.
 
 **What you get**
-- 6 Tuesday evenings, starting **Tuesday, November 3**
-- Hands-on instruction from your first night, with no experience needed
-- Clay and firing included, so your finished pieces come home with you
-- **$240** total
+- 6 weeks of Tuesday evening classes, starting Nov 3
+- Hands-on instruction from centering your first lump of clay to finishing your own bowls, mugs, and more
+- All clay and firing included
+- Small group, max 12 students
 
-By week six you'll have bowls, mugs, and a few lopsided experiments you'll love anyway.
+**$240 for the full 6 weeks**
 
-Once the 12 seats are gone, the next chance to join is a future session. If you've been thinking about it, now's the time to grab a spot.
+No experience needed. If you've been meaning to try the wheel, this is the one to join.
 
 **[Reserve your seat →]**
 
+Questions? Just reply to this email.
+
 See you at the wheel,
+[Name]
 Kiln & Kettle
 
 ---
 
-If you want a real deadline, you could set an actual early-bird price, like $240 through Friday and $265 after. Or you could close registration a week before the start date to finalize clay orders. I can rewrite the email around either one.
+**Ways to add real urgency**
+- **Make the Friday deadline real.** Something like "Registration closes Friday at 5pm so we can order clay and plan firings" works if it's true. You could also offer a real early-bird price: keep $240 through Friday and charge $265 after. Then the clock is honest.
+- **Update the seat count.** If you're at 6 spots open, say so. When you get down to 3, "Last 3 seats" will be true and will work better.
+- **Add a fall-specific hook**, like "Make your own holiday gifts by December."
 
-When you're down to your last 3 seats, I can also write a follow-up with "Last 3 seats!" in the subject, and that one would be true.
+I can write a version with any of these if you pick one.

@@ -1,29 +1,51 @@
-Your cofounder is right. The page could be for any SaaS product. Nothing on it says boatyard, boat, lift, or launch until the footer copyright, and the visitor has to infer what Slipway does.
+The page reads like a generic SaaS template, and that's probably why it feels off. Nothing on it tells a boatyard manager what Slipway does or why it's for them. Your product is specific, and the copy is not.
 
-**What's making it feel off**
+**What's wrong**
 
-- **The copy is generic.** "All-in-one platform," "streamline their workflow," and "unlock their full potential" could describe a CRM or a project tool. The hero should say what the product does for a yard.
-- **The feature cards describe adjectives, not features.** "Powerful," "Simple," and "Secure" are claims anyone can make. "Built with cutting-edge technology" tells a yard manager nothing.
-- **The testimonial is a placeholder.** "John Doe, CEO at Acme Inc." reads as fake, and it's the first thing a skeptical buyer will notice. If it's not a real quote from a real customer, remove it. Don't ship it with a fake name.
-- **"Join thousands of happy customers" is probably not true yet,** and it's the kind of claim that backfires with a small, tight-knit industry.
-- **Three different CTAs.** The nav says "Get Started," the hero says "Get Started," and the bottom says "Sign Up Free." Pick one action and use it everywhere.
-- **The page has no proof of the product.** There's no screenshot of the lift calendar, no example schedule, and nothing that shows the scheduling problem being solved. For a scheduling tool, the schedule is the pitch.
-- **Nothing addresses the buyer's pain.** Yard managers are juggling the travel lift, tide windows, and customers calling about their boats. The page never mentions any of that.
-- **The markup has problems too.** The `<a>` tags have no `href`, so they aren't links. Keyboard users can't reach them, and "Pricing" and "Features" go nowhere. Give them real targets, or use `<button>` for actions.
+1. **The hero could be any product.** "Work smarter, not harder" and "all-in-one platform that helps teams streamline their workflow and unlock their full potential" say nothing. A yard manager scanning this learns nothing about haul-outs, launches, or the travel lift.
 
-**Possible direction for the copy**
+2. **The features are vague adjectives.** "Powerful," "Simple," and "Secure" are claims, not features. "Built with cutting-edge technology" is the kind of line buyers skip. Each card should name a job the tool does.
 
-These are drafts. Anything in brackets is a claim you need to confirm is true before publishing.
+3. **The testimonial hurts trust.** "John Doe, CEO at Acme Inc." is an obvious placeholder. Visitors notice, and it makes the page look unfinished or fake. Use a real quote from a real yard, or remove the section until you have one.
 
-- **Hero headline:** "Every haul-out and launch, on one schedule."
-- **Subhead:** "Slipway tracks the travel lift, your slips, and who's waiting, so the yard runs in order instead of off a whiteboard."
-- **Feature 1, Lift scheduling:** "See the travel lift's day at a glance. Book haul-outs and launches without double-booking the lift."
-- **Feature 2, Launch queue:** "[Show what's waiting and in what order, once that's built.]"
-- **Feature 3, [something you can actually back up]:** "[Replace 'Secure' with a specific: where data is hosted, who can see what, how access is controlled.]"
-- **Replacement for the testimonial:** a real yard quote, or "Built with [yard name]" if you have a pilot.
-- **Bottom CTA:** "Book a 20-minute walkthrough" fits a B2B tool better than "Sign Up Free," which suggests a self-serve consumer app.
-- **Single CTA label everywhere:** pick one, such as "See it on your schedule."
+4. **"Join thousands of happy customers" is probably not true yet,** and it's the kind of claim that makes a skeptical boatyard owner distrust everything else. Use a number only if you can back it up.
 
-The most useful thing you can add is one real screenshot of the schedule view above the fold, or right below the hero. That will do more than any copy change.
+5. **The CTAs are inconsistent.** The nav says "Get Started," the hero says "Get Started" plus "Learn More," and the bottom says "Sign Up Free." Pick one primary action and one secondary, and use them everywhere. "Learn More" is also a weak secondary. Something like "See how scheduling works" tells the visitor what they'll get.
 
-If you tell me what Slipway does today, what's built and what's planned, and who the first customers are, I can rewrite the full page around that and keep every claim to what's actually true.
+6. **Nothing shows the product.** For a scheduling tool, a screenshot or short clip of the lift schedule is the most persuasive thing on the page. Text alone doesn't show what the tool looks like.
+
+7. **The audience is missing.** Small boatyards have specific pain: double-booked travel lift slots, phone tag for launches, whiteboards that don't match reality. Naming that pain is what makes a visitor think "that's my problem."
+
+**A possible rewrite of the copy** (swap in facts you can confirm):
+
+```html
+<section class="hero">
+  <h1>The travel lift schedule, sorted.</h1>
+  <p>Slipway keeps haul-outs, launches, and lift time in one schedule, so your yard stops double-booking the lift and chasing owners by phone.</p>
+  <a class="btn">Start your free trial</a> <a class="btn-secondary">See how it works</a>
+</section>
+
+<section class="features">
+  <h2>Built around how a yard actually runs</h2>
+  <div class="card"><h3>Lift scheduling</h3><p>See every haul-out and launch against travel lift availability, so conflicts show up before the boat is in the slings.</p></div>
+  <div class="card"><h3>Owner visibility</h3><p>[Describe what owners can see or get notified about, if that exists.]</p></div>
+  <div class="card"><h3>[Third real feature]</h3><p>[One concrete sentence about what it does.]</p></div>
+</section>
+
+<section class="testimonial">
+  <blockquote>"[Real quote from a yard owner or manager, with permission.]"</blockquote>
+  <p>[Name], [Role], [Yard name]</p>
+</section>
+
+<section class="cta">
+  <h2>Stop losing afternoons to the lift schedule.</h2>
+  <a class="btn">Start your free trial</a>
+</section>
+```
+
+**Before you publish**, check these:
+- Does "free trial" match what you actually offer? If not, use the real offer.
+- Every bracketed placeholder needs real content or should be cut.
+- The features should be things Slipway does today, not roadmap items.
+
+If you tell me the three or four things Slipway does best and one real customer quote if you have one, I can tighten the rewrite further.

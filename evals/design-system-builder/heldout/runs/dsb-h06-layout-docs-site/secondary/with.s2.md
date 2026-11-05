@@ -1,121 +1,130 @@
-Here's one set of rules for every page. Articles, the front page, and pricing all sit on the same three-column frame. Prose is capped at a 68ch measure, and wide things like tables, code, and grids use a 1280px ceiling.
+**Recommendation:** one shell (1280px max), one gutter and gap scale that grows with the viewport, one reading measure (68ch), and three breakpoints (40rem, 64rem, 80rem). Wide blocks (code, tables, wide figures) break out to 960px. Big monitors get more whitespace, not wider lines.
 
-## The numbers
+## Numbers
 
-| Token | Value | Why |
+| Token | Value | Notes |
 |---|---|---|
-| Breakpoints | 40rem (640), 64rem (1024), 80rem (1280) | Phone, tablet, desktop, wide monitor |
-| Gutter | `clamp(1rem, 0.5rem + 2vw, 2rem)` | 16px on phones, 32px cap on large screens |
-| Column gap | `clamp(1rem, 0.75rem + 1vw, 1.5rem)` | Keeps cards from crowding on phones |
-| Reading measure | `68ch` | Inside the 60–75ch range; roughly 650px at 17px body |
-| Wide max | `1280px` | Tables, code, and grids stop growing on big monitors |
-| Body size | `1.0625rem` (17px), line-height 1.6 | Prose reads comfortably at that measure |
-| Section spacing | `clamp(3rem, 2rem + 5vw, 6rem)` | Vertical rhythm scales with the viewport |
-| Grid columns | 1 (phone), 2 (640+), 3 (1024+) for features; pricing 2 to 3 tiers → 1/2/N, 4 tiers → 1/2/2 then 4 at 1280+ | One pattern for every card grid |
+| `--page-max` | 1280px | Outer container. Never wider, on any screen. |
+| `--wide-max` | 960px | Code blocks, tables, wide figures. |
+| `--measure` | 68ch | About 66–72 characters per line at 17px body text. |
+| `--body-size` | 17px (1.0625rem) | Body text at every width. Leading 1.6. |
+| `--gutter` | 16px → 48px (`4vw`, clamped) | Side padding. |
+| `--gap` | 16px → 32px (`2.5vw`, clamped) | Grid and column gap. |
+| `--card-min` | 256px | Minimum card width for auto grids. Gives at most 4 columns at 1280. |
+| `--sidebar` | 240px | Docs nav, shown at 1024px and up. |
 
-Keep the pixel values out of the media queries. Custom properties can't be used in media queries, so the breakpoints are literals. Keep them in sync with the tokens.
+Breakpoints (rem, so they respond to browser text zoom):
+
+| Range | Layout |
+|---|---|
+| < 40rem (<640px), phone | One column. Docs nav becomes a drawer. |
+| 40rem–64rem (640–1023px), tablet | Grids 2 columns. Text stays at measure. |
+| 64rem–80rem (1024–1279px), laptop | Docs sidebar appears. Feature rows go 2-up. Grids 3 columns. |
+| ≥ 80rem (≥1280px), desktop and monitors | Container capped at 1280. Grids 4 columns. |
 
 ## CSS
 
 ```css
+/* 1. Tokens */
 :root {
-  /* Breakpoints (literal values: custom properties can't be used in @media) */
-  /* sm 40rem (640px) · lg 64rem (1024px) · xl 80rem (1280px) */
-
-  --gutter: clamp(1rem, 0.5rem + 2vw, 2rem);
-  --col-gap: clamp(1rem, 0.75rem + 1vw, 1.5rem);
-  --content-max: 1280px;   /* wide: tables, code, grids */
-  --measure: 68ch;         /* prose */
-  --section-space: clamp(3rem, 2rem + 5vw, 6rem);
-  --body-size: 1.0625rem;  /* 17px */
+  --page-max: 80rem;                      /* 1280px */
+  --wide-max: 60rem;                      /* 960px: code, tables, wide figures */
+  --measure: 68ch;                        /* reading column */
+  --sidebar: 15rem;                       /* 240px docs nav */
+  --gutter: clamp(1rem, 4vw, 3rem);       /* 16px → 48px */
+  --gap: clamp(1rem, 2.5vw, 2rem);        /* 16px → 32px */
+  --card-min: 16rem;                      /* 256px */
+  --body-size: 1.0625rem;                 /* 17px */
+  --body-leading: 1.6;
 }
 
-body {
-  font-size: var(--body-size);
-  line-height: 1.6;
-}
-
-/* One frame for every page: gutter | content | gutter */
-.layout {
-  display: grid;
-  grid-template-columns:
-    minmax(var(--gutter), 1fr)
-    minmax(0, var(--content-max))
-    minmax(var(--gutter), 1fr);
-}
-.layout > * {
-  grid-column: 2;
-  min-width: 0;
-}
-
-/* Articles: text capped at the measure, wide blocks opt in */
-.article > * {
+/* 2. Page shell: every page uses this */
+.container {
+  box-sizing: border-box;
   width: 100%;
-  max-width: var(--measure);
-  justify-self: center;
-}
-.article > .wide {
-  max-width: var(--content-max);
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-/* Code: scroll inside its own box, never the page */
-pre {
-  overflow-x: auto;
-  white-space: pre;
-  tab-size: 2;
-}
-
-/* Tables: scroll inside the wrapper, keep a minimum width so columns don't crush */
-.table-wrap {
-  overflow-x: auto;
-}
-.table-wrap table {
-  width: 100%;
-  min-width: 32rem;
-  border-collapse: collapse;
-}
-
-/* Card grids: features and pricing share the same rules */
-.card-grid {
+/* 3. Card grids (features, pricing) */
+.grid {
   display: grid;
-  gap: var(--col-gap);
+  gap: var(--gap);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min)), 1fr));
+}
+
+/* Pricing with a fixed tier count: explicit columns so the 4th tier never orphans */
+.grid--tiers {
   grid-template-columns: 1fr;
 }
 @media (min-width: 40rem) {
-  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 64rem) {
-  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .card-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid--tiers { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 80rem) {
-  .card-grid--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grid--tiers { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* Sections */
-.section {
-  padding-block: var(--section-space);
+/* 4. Feature rows: stacked, then side by side */
+.feature {
+  display: grid;
+  gap: var(--gap);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .feature { grid-template-columns: 1fr 1fr; }
+}
+
+/* 5. Article: text at measure, blocks that need room break out to wide-max */
+.article {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    min(var(--measure), 100%)
+    minmax(0, 1fr);
+  font-size: var(--body-size);
+  line-height: var(--body-leading);
+}
+.article > * {
+  grid-column: 2;
+}
+.article > pre,
+.article > table,
+.article > figure,
+.article > .wide {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(var(--wide-max), 100%);
+}
+.article pre,
+.article table {
+  overflow-x: auto;          /* scroll inside the block, never the page */
+  max-width: 100%;
+}
+.article table {
+  display: block;
+}
+
+/* 6. Docs shell: sidebar + main, sidebar from 1024px */
+.docs {
+  display: grid;
+  gap: var(--gap);
+}
+@media (min-width: 64rem) {
+  .docs {
+    grid-template-columns: var(--sidebar) minmax(0, 1fr);
+  }
+}
+.docs-main {
+  min-width: 0;              /* lets wide blocks scroll instead of pushing the layout */
 }
 ```
 
-Usage:
-
-```html
-<main class="layout article">
-  <h1>Title</h1>
-  <p>Prose is capped at 68ch and centered.</p>
-  <div class="table-wrap wide"><table>…</table></div>
-  <pre class="wide"><code>…</code></pre>
-</main>
-
-<section class="layout section">
-  <div class="card-grid card-grid--four">…</div>
-</section>
-```
+Usage: wrap each page in `.container`. Put marketing grids in `.grid` (or `.grid--tiers` for a fixed tier count). Put article HTML in `.article`, and docs pages in `.docs` with `.docs-main` holding the `.article`.
 
 ## Notes
 
-- **Wide blocks** get `.wide` so they can use the full 1280px column. Everything else stays at the measure.
-- **Pricing**: if you have 2 or 3 tiers, use `.card-grid` alone. Four tiers use `.card-grid--four`, which gives 2 columns at tablet and 4 at 1280px. That avoids a lone orphan card.
-- **Test widths**: check 360, 768, 1024, 1280, and 2560. At 2560 the content should stay centered at 1280px, which is intentional.
-- I didn't have Quillmark's stylesheet or markup in this environment, so these are standalone. Map the class names onto your existing components. If you share the current CSS, I can show you what to change.
+- **Measure:** 68ch depends on the body font. If you change the font or `--body-size`, check that the line length still lands around 66–72 characters.
+- **Big monitors:** the container stays at 1280px, so the page doesn't widen past it. If the marketing hero needs a full-bleed background, bleed the background color, not the content.
+- **Docs main column:** on a wide screen the 68ch article sits centered inside the remaining space. If you want it left-aligned next to the sidebar, that's a one-line change to `.docs-main .article`.
+- **Not verified:** I haven't seen your existing stylesheet or markup, so the class names here may need to match what you already use. I haven't rendered any of this. Check it at 375, 768, 1024, 1440 and 1920px, and confirm that no page scrolls horizontally and the pricing grid never shows 3 tiers plus an orphan.

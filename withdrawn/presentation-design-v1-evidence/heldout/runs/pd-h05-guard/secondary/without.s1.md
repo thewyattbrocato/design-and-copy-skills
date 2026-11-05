@@ -1,0 +1,1 @@
+Patients say they floss because they know they're supposed to, and we've all learned to nod along. But the nod is the problem: what they're telling us is a story about intention, and it's the one we're in a position to change.

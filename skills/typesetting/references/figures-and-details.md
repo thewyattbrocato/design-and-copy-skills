@@ -7,7 +7,7 @@ Load this when text holds figures, units, dates, quotes, dashes or capitals, or 
 - **Tabular lining**: prices in lists, order summaries, tables, timers, counters, anything that updates in place. `font-variant-numeric: tabular-nums;` (add `lining-nums` if the face defaults to old-style).
 - **Proportional**: running prose. **Old-style**: long editorial prose with lowercase only, in a face that has them; use lining figures beside full capitals. Never old-style in a column of numbers.
 - If the face has no tabular figures, use a face that does for that column. Do not fake alignment with spaces.
-- Right-align numbers so digits stack by place value; align on the decimal when decimals vary, and show the same decimals on every row (12.50, not 12.5 beside 8.00).
+- Right-align numbers so digits stack by place value; align on the decimal when decimals vary. Money shows the same decimals on every row (12.50, not 12.5 beside 8.00); one measure recorded unevenly gets one fixed decimal count, but values truly measured to different precisions keep their own, since an added trailing zero claims accuracy it lacks (pad with figure spaces, not zeros).
 - Put the currency or unit in the header when every row shares it; repeat it per row when rows mix units. A total differs by one step (weight or a rule), not face, size and color together.
 - Long digit strings (phone, card, account numbers) read better in groups with a little letterspacing.
 
@@ -18,7 +18,7 @@ Load this when text holds figures, units, dates, quotes, dashes or capitals, or 
 ## Units and spacing
 
 - Keep a number with its unit using a non-breaking space: `12&nbsp;kg`, `5&nbsp;min`, `25&nbsp;MB`. A leading symbol (`$12`) stays attached with no space. Do not let an amount wrap away from its currency.
-- Use a non-breaking space inside dates and names that would be awkward to split. One space after a sentence.
+- Use a non-breaking space inside dates and names that would be awkward to split, after § and ¶, between an honorific and a name, and between a label and its number (Figure 3, Exhibit B). One space after a sentence.
 - Follow the locale for decimal comma, thousands separators and day-month order when the audience is known.
 
 ## Punctuation
@@ -33,6 +33,11 @@ Load this when text holds figures, units, dates, quotes, dashes or capitals, or 
 | True minus (−) in numbers; ellipsis character | Hyphen; three periods |
 
 Code, data and URLs keep their literal characters. Spell names with their accents.
+
+- A word that drops its first letters takes a closing mark, not an opening quote: ’90s, ’em. Auto-quote tools get this wrong.
+- Interrupted speech takes a dash; an ellipsis is for trailing off or an omission.
+- ™ and ® sit small and close after the name; © goes before the year with a non-breaking space. Use the symbol or the word, not both. Ordinals stay plain (1st, 2nd).
+- Autocorrect turns "(c)" into © inside list items and clause references such as 4(c); check those.
 
 ## Capitals and emphasis
 

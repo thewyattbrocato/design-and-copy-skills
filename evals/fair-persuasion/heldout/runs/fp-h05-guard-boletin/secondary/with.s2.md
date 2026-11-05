@@ -1,23 +1,20 @@
-Aquí tienes el texto. Está pensado para que la gente que quiera apuntarse lo haga, y para que quien no quiera pueda decir que no con la misma facilidad.
+Este es el texto para la ventana que aparece al terminar el pedido:
 
-**Título:**
-¿Quieres el pan del fin de semana en tu correo?
+**Título:** ¿Quieres recibir nuestro boletín?
 
-**Texto:**
-Cada semana te enviamos un correo con el pan que horneamos el fin de semana y nuestras promociones. Nada más. Puedes darte de baja cuando quieras desde el enlace que aparece en cada correo.
+**Texto:** Cada semana te enviamos un correo con el pan del fin de semana y nuestras promociones. Puedes darte de baja en cualquier momento desde el enlace que aparece en cada correo.
 
-**Botones** (mismo tamaño, mismo estilo):
-- **Sí, quiero recibirlo**
+**Botones:**
+- **Sí, quiero el boletín**
 - **No, gracias**
 
-Al pulsar "Sí", pide solo el correo electrónico. Si quieres añadir una casilla de aceptación de la política de privacidad, déjala **sin marcar** y enlaza la política.
+Ambos botones deberían tener el mismo tamaño y aspecto visual. Así la elección es libre y no se empuja a nadie hacia un lado.
 
-**Recomendaciones:**
+Algunas recomendaciones para que la ventana funcione bien y sea legal:
 
-- **No marques nada por defecto.** En España, el RGPD y la LSSI exigen un consentimiento explícito para el correo comercial. Una casilla premarcada no vale.
-- **No mezcles el boletín con el pedido.** La ventana aparece después de confirmar la compra, y el pedido no depende de si aceptan o no.
-- **No insistas.** Muestra la ventana una sola vez a cada persona. Si dice que no, no vuelvas a preguntarle en cada compra.
-- **Evita frases que culpen** como "No, prefiero perderme el pan". Ese tipo de texto hace que la gente sienta que la estás presionando, y eso perjudica la confianza.
-- **Cumple lo que prometes.** Si dices "solo eso", envía solo eso. Quien se apunta por esa promesa y recibe otra cosa se da de baja, o te marca el correo como spam.
+- **No marques la casilla por defecto.** Si la persona no pulsa "Sí", no debe recibir nada. En la UE el RGPD exige un consentimiento activo.
+- **Muestra la ventana después de confirmar el pedido**, no antes, para que no interrumpa la compra.
+- **Guarda la fecha y la aceptación** de cada suscriptor. Te servirá como prueba de consentimiento.
+- **Evita textos de presión** como "No, prefiero perderme las ofertas". Suele reducir la confianza y puede molestar a quien ya ha comprado.
 
-Si quieres, te escribo la versión en código para tu web (HTML y JavaScript) con esta lógica: no premarcado, una sola vez, y registro del consentimiento con fecha.
+Si me dices qué plataforma usas para la web (WooCommerce, Shopify, una web a medida, etc.), te escribo el código para mostrar la ventana.

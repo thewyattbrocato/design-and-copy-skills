@@ -1,21 +1,50 @@
-Your cofounder's "off" is that nothing on this page is about boatyards. Replace "Slipway" with any other name and every line still works. That's why it feels off: a yard manager reading it can't tell whether it's for them.
+Your cofounder is right, and the reason is that nothing on the page is about boatyards. Swap "Slipway" for any other name and it would still read as a page for any SaaS product. Your audience is a yard manager with a whiteboard, a phone that won't stop ringing, and one travel lift, so they'd see no sign that this is for them.
 
-**What's wrong**
+## What's causing the "off" feeling
 
-- **Hero:** "Work smarter, not harder" and "streamline their workflow and unlock their full potential" say nothing. "Teams" and "all-in-one platform" are the opposite of your actual pitch, which is a specific tool for a specific problem. The hero should name the problem: the travel lift, the haul-out schedule, the whiteboard in the office.
-- **Features:** "Powerful / Simple / Secure" are adjectives every product claims. "Cutting-edge technology" and "enterprise-grade security" are especially off for a small yard, since they signal software that wasn't built for them. The cards should be things Slipway does, like booking the lift, scheduling a haul-out, and seeing the week's launches.
-- **Testimonial:** "John Doe, CEO at Acme Inc." reads as placeholder text, and "changed the way we work" could be about anything. If you don't have a real quote yet, leave the section out. A yard owner saying "we stopped double-booking the lift" would do more than the rest of the page combined.
-- **CTA:** "Join thousands of happy customers" is probably untrue at this stage, and boatyard owners will notice. "Get Started" and "Sign Up Free" also differ from each other, and neither says what happens next (demo, trial, or call).
-- **Nav and structure:** "Learn More" has nothing to lead to. There's no product screenshot, so a visitor never sees the schedule view, which is the thing you're selling.
+**1. The hero says nothing.** "Work smarter, not harder" and "streamline their workflow and unlock their full potential" could describe a thousand products. Neither line says what Slipway does or who it's for. A visitor should know within three seconds that it's scheduling for boatyards.
 
-**What to do**
+**2. The feature cards are adjectives, not features.** "Powerful," "Simple," and "Secure" are claims anyone can make. "Enterprise-grade security" is also the wrong thing to promise a 6-person yard. They care about whether the travel lift is double-booked on Friday.
 
-1. **Hero:** lead with the pain and the outcome. For example: *"Know who's on the travel lift, and when."* Then one line: *"Slipway is scheduling for small boatyards: haul-outs, launches, and yard crews, in one view instead of a whiteboard and a group text."* Adjust this to what the product actually does.
-2. **Screenshot:** put an image of the schedule right under the hero.
-3. **Features:** rewrite them around yard jobs. The ones I'd try are lift and equipment conflicts, haul-out and launch calendar, customer notifications ("your boat goes in Thursday"), and seasonal rush planning (spring launch, fall haul-out).
-4. **Voice:** use the words yards use: haul-out, launch, blocking, travel lift, slings, the season. Using their words tells them you know the work.
-5. **Social proof:** use one real yard, with a real name and place, or cut the section. A pilot yard saying "we run our spring launch schedule on it" beats any generic quote.
-6. **CTA:** make it one action with one label, and say what happens next, such as "Book a 15-minute demo" or "Start a free trial".
-7. **Cut:** "Join thousands" and the Acme quote. Both are things you'd have to defend.
+**3. The testimonial reads as a placeholder.** "John Doe, CEO at Acme Inc." is the giveaway, and "Highly recommend!" says nothing specific. Visitors will trust this less than having no testimonial at all.
 
-If you tell me what Slipway does that a whiteboard or spreadsheet doesn't, I can draft the hero and feature copy.
+**4. "Join thousands of happy customers" is probably untrue.** If you're early, this is the line that will hurt you most with a small, word-of-mouth industry. Everyone in that world knows everyone else.
+
+**5. The copy is written for "teams."** Boatyards have a yard manager, a lift operator, a bottom-paint crew, and customers who call asking when their boat goes in.
+
+**6. The CTAs are inconsistent and vague.** The page uses "Get Started," "Learn More," and "Sign Up Free" for what should be one action. Pick one, and make it concrete (for example "Book a demo" or "Try it for this season").
+
+## What to do instead
+
+Build the page around the real problems:
+
+- Double-booked travel lift or slip
+- A whiteboard or spreadsheet that only one person understands
+- Tide and weather windows
+- The spring launch and fall haul-out rushes
+- Customers phoning to ask "when's my boat going in?"
+- Tracking who's blocking whom, such as a boat that can't launch until another one moves
+
+Here's a possible rewrite:
+
+```html
+<h1>Know who's on the travel lift, and when.</h1>
+<p>Slipway is scheduling for small boatyards: haul-outs, launches, and
+   blocking, all in one place. It replaces the whiteboard and the phone tag.</p>
+<a class="btn">Book a demo</a> <a class="btn-secondary">See a sample schedule</a>
+```
+
+For features, use things the product does:
+
+- **Travel lift calendar:** drag a haul-out onto the day and see conflicts before they happen.
+- **Launch & haul-out queue:** the spring rush as an ordered list, not a pile of sticky notes.
+- **Customer updates:** boat owners get a text when their slot is confirmed or moves.
+- **Works from the yard:** usable on a phone, in gloves, with spotty signal. (Only claim this if it's true.)
+
+For the testimonial, use a real yard manager, a real yard name, and a specific result ("We stopped double-booking the lift"). If you don't have one yet, cut the section. A screenshot of the actual schedule view will do more for you than a fake quote.
+
+For the closing CTA, drop "thousands of customers." Something like "Get your yard on one schedule before next season" works, with a note on how long setup takes.
+
+Also add a real product screenshot near the top. For scheduling software, seeing the calendar does more persuading than any copy.
+
+If you tell me what Slipway actually does today and whether you have any real customers or pilots, I can draft the full page copy.

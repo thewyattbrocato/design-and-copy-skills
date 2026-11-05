@@ -1,39 +1,39 @@
-Here's the cleaned-up SVG. The geometry, gradient, drop shadow, and wordmark are unchanged.
+Here's the cleaned-up version. The mountain, gradient, summit dot, highlight line, and wordmark are unchanged in concept.
 
 ```svg
-<svg viewBox="0 0 330 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="bl-title">
-  <title id="bl-title">Boulderline, indoor climbing and training</title>
+<svg viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">Boulderline — Indoor Climbing &amp; Training</title>
   <defs>
-    <linearGradient id="bl-grad" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="boulderline-grad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#ff5a36"/>
       <stop offset="1" stop-color="#ffd23f"/>
     </linearGradient>
-    <filter id="bl-shadow">
+    <filter id="boulderline-shadow">
       <feDropShadow dx="3" dy="3" stdDeviation="2" flood-color="#000" flood-opacity=".5"/>
     </filter>
   </defs>
 
-  <path d="M10 100 L45 30 L65 62 L82 40 L112 100 Z" fill="url(#bl-grad)" stroke="#222" stroke-width="1" filter="url(#bl-shadow)"/>
-  <path d="M25 100 L45 58 L58 80" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 100 L45 30 L65 62 L82 40 L112 100 Z"
+        fill="url(#boulderline-grad)" stroke="#222" stroke-width="1"
+        filter="url(#boulderline-shadow)"/>
+  <path d="M25 100 L45 58 L58 80" fill="none" stroke="#fff" stroke-width="1"/>
   <circle cx="45" cy="30" r="4" fill="#ff5a36"/>
 
-  <!-- Wordmark is live text in Papyrus. Outline it in your design tool before sending final files. -->
-  <text x="128" y="72" font-family="Papyrus, fantasy" font-size="34" fill="#222" letter-spacing="1">Boulderline</text>
-  <text x="128" y="96" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#666">INDOOR CLIMBING &amp; TRAINING</text>
+  <text x="128" y="72" font-family="Papyrus, 'Trebuchet MS', fantasy" font-size="34"
+        fill="#222" letter-spacing="1">Boulderline</text>
+  <text x="128" y="96" font-family="Arial, Helvetica, sans-serif" font-size="10"
+        fill="#666" letter-spacing="0.5">INDOOR CLIMBING &amp; TRAINING</text>
 </svg>
 ```
 
-Changes:
+**What changed**
+- **Unique IDs:** `g` and `s` are now `boulderline-grad` and `boulderline-shadow`, so they won't collide with other SVGs when inlined on a page.
+- **Viewbox widened to 360:** At 34px, "Boulderline" with letter-spacing is likely wider than the old 320 width and would clip at the right edge. I estimated this without rendering it, so check it in a browser and trim if there's too much room.
+- **Subtitle aligned:** It now starts at x=128 to match the wordmark (it was at 130).
+- **Subtitle legibility:** Bumped from 8px to 10px and darkened from `#888` to `#666`, which has better contrast on white.
+- **Font fallbacks:** Papyrus isn't installed on most machines, so the stack now falls back to Trebuchet MS before the generic `fantasy`.
+- **Accessibility:** Added `role="img"` and a `<title>`.
 
-- **Added a title and role.** The SVG now has an accessible name.
-- **Renamed the gradient and filter IDs** to `bl-grad` and `bl-shadow`, so they won't collide if the SVG is inlined on a page.
-- **Widened the viewBox from 320 to 330.** The wordmark's right edge was probably clipping. I estimated the width without rendering it, so check it.
-- **Aligned the tagline to the wordmark's x-position** (128, previously 130).
-- **Darkened the tagline from #888 to #666** for contrast on white, and bumped it from 8 to 9 so it's legible at display sizes.
-- **Thickened the white inner line from 1 to 2** and rounded its caps and joins so it survives at small sizes.
-- **Added fallback fonts** to the tagline stack.
-
-Two things I left alone:
-
-- **Papyrus.** It isn't installed on most Windows, Linux, and Android machines, so the wordmark will fall back to whatever "fantasy" resolves to. The fix is to outline the text in Illustrator or Figma. I can't do that from the SVG alone without the font file.
-- **Gradient and shadow.** You asked to keep them, so they stay in this full-color version. For small sizes, single-color uses, or the favicon, you'll want a flat, one-color variant. I can make that version next if you'd like.
+**Still open**
+- **Papyrus:** The wordmark will look different on any machine without it. Convert the text to outlines in Illustrator or Figma before using this as the master file. Papyrus also reads as dated, so it's worth a look if you want the wordmark to feel more current.
+- **Gradient and drop shadow:** These are effects, so they won't survive one-color printing, embroidery, or small favicon sizes. If you need those versions, I can make a flat, solid-color variant that keeps the same shapes.

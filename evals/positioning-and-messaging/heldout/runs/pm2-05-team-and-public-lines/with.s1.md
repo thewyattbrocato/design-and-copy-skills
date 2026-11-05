@@ -1,34 +1,37 @@
-## Homepage line
+**Homepage line**
 
-**Replacement parts for your dishwasher, dryer or oven. Ships from Ohio within a day, with a video showing how to fit it.**
+> **Fix it this weekend. Parts ship within a day, and every part page has a repair video.**
 
-Under it, in smaller type: *Wrong part? Send it back within a month.*
+This line is for someone with a broken dishwasher, so it says nothing about the mission. The mission shows up in the doc below.
 
-The mission stays off the homepage because a customer with a broken dishwasher doesn't need it. The line sticks to what you can prove: shipping speed, the video on every part page, and the return window. I left out "fixed by the weekend" because you control when it ships, not when it arrives.
+---
 
-## For the team: why we exist and how we decide
+**Spindle: what we're for (team doc)**
 
-**What we're for.** We want fixing things to be normal. Appliances are built to die, and we sell the part and the know-how that lets someone repair one instead of replacing it.
+**Who we're for.** Someone whose dishwasher, dryer or oven just stopped working. Their default is to buy a new one, or to live with the broken one. They want it working again soon, and most would rather not call a repair person. [assumed: confirm against your order and support history.]
 
-**What a customer is buying.** They want the appliance working again, soon. Our mission only matters to them if the repair works. So everything we do is measured by whether the fix holds.
+**What we say.** The appliance isn't dead, and you can fix it this weekend. That is our one message, and every page, email and support reply should repeat it.
 
-**What we do about it, in order of how much it shows.**
-- We ship within a day from Ohio.
+**Why we're different.** These are the facts we can point to:
+- Parts ship within a day from our Ohio warehouse.
 - Every part page links to a repair video.
-- You can return a part for a month.
-- We don't carry brands that refuse to sell to resellers. This is a real limit: some people will have to look elsewhere for those appliances. Say so plainly and don't apologize for it.
+- You can send a part back within a month.
 
-**The rule for disputes, such as cheap parts that sell.**
-"It sells" is not a reason to stock a part, and "it's cheap" is not a reason to refuse one. The question is: **will this part fix the appliance and keep it fixed?**
+**What we don't do.** We don't carry brands that refuse to sell parts to resellers. Say this plainly to customers when they ask.
 
-1. A lower-priced part that does the job is good for the mission. Cheaper repairs make fixing normal.
-2. A part that fails early undoes the mission, because the customer ends up buying a new appliance. We don't stock it, however well it sells.
-3. When we don't know, we decide on our own data (return rate, repeat orders for the same repair, customer reports of failure), not on opinion.
+**The mission behind it.** We want fixing things to be normal, and we're against products built to die. Customers don't need to hear that. It's how we decide things.
 
-[add: the return and failure numbers by part. This is the evidence that settles most arguments, and I don't have it. Someone should pull return rates for the parts currently in dispute.]
+**How we settle priority arguments.** Ask these in order about any product, feature or page:
+1. Does it help a customer get a broken appliance working again by the weekend? If not, it's low priority.
+2. Does the fix last? A part that fails in a month puts the customer back at a dead appliance, adds a return, and works against what we exist to do.
+3. Can we ship it fast and back it with a video and the 30-day return? If not, we're not ready to sell it.
 
-[add: a threshold the owner chooses, for example the return rate above which a part is reviewed. Without a number, the rule will keep being argued.]
+**Cheap knockoff parts.** Sales alone don't justify stocking one. We stock a cheaper alternative only if it fixes the appliance as well as the original and holds up, and we label it clearly on the page so the customer knows what they're buying. This rule is my proposal. It's the team's call whether to adopt it. To apply it, we need return and failure data by part: [add: return rate and reasons for the knockoffs we already sell, or for a test batch]. Without that data the argument stays opinion against opinion.
 
-**How to use this page.** When someone proposes a part, a brand or a feature, ask whether it helps a customer get a repair done that lasts. If the answer is no, or we can't tell yet, it doesn't ship until we know.
+**Who we're not for.** Anyone who wants brands that won't sell to resellers, and anyone who wants a new appliance rather than a repair.
 
-I wrote rule 2 as a position, not a finding. I don't know whether the knockoffs you have in mind actually fail more often. Confirm you're comfortable with it before it goes to the team, because it will be used to say no to things that sell.
+---
+
+Two things to check:
+- Replace "within a day" with a measured figure (for example, share of orders shipped same or next day) once you have it, and cite the source and date.
+- If you want a tagline that carries the mission, say so. I'd keep it off the homepage line and use it on the About page.

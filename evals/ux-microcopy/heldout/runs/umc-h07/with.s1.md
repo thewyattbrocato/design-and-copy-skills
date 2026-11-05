@@ -1,33 +1,40 @@
-**Term table**
+**Standardise on these terms**
 
-| Concept | Today | Pick | Why |
-|---|---|---|---|
-| A scheduled slot with a patient | Appointments (nav), Bookings (page title), Visits (tooltip), Session (patient email) | **Appointment** everywhere | It's the word patients and clinics already use. The nav and page title must match the screen they open. |
-| End your login | Log off, Exit, Sign in | **Sign in / Sign out** | These are true opposites. "Exit" doesn't say what it does, and it could mean leaving the page. |
-| People who use the clinic | Practitioners (staff), Your therapist (patient app) | **Practitioner** on staff screens. "Your practitioner" in the patient app. | Use one noun. The possessive in the patient app is fine because it's personal. |
-| The patient | Members | **Member**, as the founder decided | See the note below. |
-| Remove | Cancel, Remove, Delete, Discard | Split by what happens (below) | These are different actions, so they shouldn't all share one word. |
-
-**What to fix**
-
-1. **Appointment / Bookings / Visits / Session.** This is the biggest problem. Four names for one thing will make people assume there are four things. Use "Appointment" in the nav, page title, tooltip and patient email. Don't keep "Session" for treatment sessions unless you really have a second concept. If you do, define it and use it only for that.
-2. **Log off / Exit / Sign in.** Change "Log off" to **Sign out**. Change the settings "Exit" button to **Sign out** if that's what it does. If it only closes settings, call it **Close** or **Back to calendar**. Keep "Sign in" on the login screen.
-3. **Therapist / Practitioner.** Change "Your therapist" to **Your practitioner**. Don't drop the possessive. It reads well in the patient app.
-4. **Removing things.** Leave the four verbs distinct, because each means something different. Make sure each one matches what happens:
-
-| Object | Verb | Rule |
+| Concept | Use | Replace |
 |---|---|---|
-| Appointment | **Cancel appointment** | The appointment stops happening. Pair it with a neutral decline, **Keep appointment**. Plain "Cancel" is ambiguous because it also means "close this dialog". |
-| Note | **Delete note** | Use "Delete" for anything permanently removed. Change "Remove" to "Delete" unless the note is only detached and still exists elsewhere. |
-| Patient record | **Delete record** | This is the most serious one. Name the member and the consequence, for example what happens to their appointment history. Say whether it can be undone. |
-| Draft | **Discard draft** | "Discard" is fine here. It's the standard word for unsaved work and it's low stakes. |
+| The thing you book | **Appointment** | "Bookings", "Visits", "Session" |
+| Starting access | **Sign in** | (already consistent) |
+| Ending access | **Sign out** | "Log off", "Exit" |
+| The person receiving care | **Member** | "patient" anywhere in the UI |
+| The person giving care | **Practitioner** | "Your therapist" |
 
-The key decision is "Remove" versus "Delete". Pick one meaning for each and keep it. I'd use "Delete" for permanent and "Remove" only for taking something out of a list while it still exists. Appointments are the exception, because "Cancel" tells the patient and the clinic it won't happen.
+**Strings to fix**
 
-**On "Members"**
+- Page title "Bookings" → **"Appointments"**, to match the nav.
+- Calendar tooltip "Visits" → **"Appointments"**, for example "3 appointments".
+- Member email "Session" → **"Appointment"**, for example "Your appointment is confirmed".
+- Menu item "Log off" → **"Sign out"**. It should pair with "Sign in".
+- Settings button "Exit" → **"Sign out"** if it ends the session. If it only leaves the page, use **"Back"** or **"Close"**. "Exit" fails either way because it doesn't say what it exits.
+- Member app "Your therapist" → **"Your practitioner"**. Staff and members see the same person under the same name.
+- Anything reading "patient" in the UI → **"member"**, for example "Member record" and "Delete member". The brand decision covers the whole product, and your own descriptions of the strings still say "patient". Clinics that say "clients" can keep saying it in conversation. The interface stays on "Member".
 
-I'm treating this as settled. Use **Member** consistently in the product. The only open question is how to handle clinics that say "clients". Keep the product word fixed, and don't mix "client" into some screens. If clinics push back, the cleanest fix is for the brand to appear in the product but for clinic-facing patient communications to be controlled by the clinic. That's a product decision for you and the founder, not something I'd decide here. Since "Members" is the brand, check that it reads naturally in clinical contexts, like "Member record", before you ship it.
+**Removal verbs: keep them different, but make each one exact**
 
-**Next step**
+These are different actions with different consequences, so one verb for all four would mislead. The fix is to define each verb and always pair it with its object:
 
-If you share the real strings, including the confirmation dialogs for the four removal actions, I can rewrite them in full with the consequence text. The delete-record dialog needs the most care. I'd also check that the patient email says "Appointment" to match the app.
+| Action | Button | Keep option |
+|---|---|---|
+| Cancel an appointment | **Cancel appointment** | Keep appointment |
+| Delete a note | **Delete note** | Keep note |
+| Delete a member record | **Delete member** | Keep member |
+| Discard a draft | **Discard draft** | Keep editing |
+
+- **Cancel** is for appointments only, because they can be cancelled and the member is notified.
+- **Delete** means permanent, so use it only when that's true.
+- **Discard** is only for unsaved drafts.
+- **Remove** goes away, because it's vague. If removing a note is permanent, call it "Delete". If the note is only detached or archived, call it "Archive" or "Remove from [place]".
+- A bare "Cancel" shouldn't be a dialog's dismiss button. It collides with "Cancel appointment", so use "Keep appointment".
+
+**Notes**
+- Check what "Delete" does on a member record. If clinical records must be retained, "Archive member" may be the accurate verb. I haven't assumed a policy.
+- Pick one term list, put it in a short glossary, and search the codebase and email templates for the old words. Emails and tooltips are where drift usually hides.

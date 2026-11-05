@@ -1,29 +1,44 @@
-**Pick: the left sidebar.** It's the designer's option, with one borrowing from the dev's. The sidebar lists the groups, and each group is a single scrolling page of sections with its own anchor links.
+**Pick: the left sidebar, with one change. Only one group's content shows at a time, and the sidebar becomes a drill-down list on phones.**
 
-**Why not the other two**
-- **Top tabs:** you have 9 groups (company, billing, team, vehicles and drivers, alerts, notifications, integrations, export, security). That's too many for a tab row. On a laptop they'd crowd or truncate, and on a phone they'd become a horizontal scroller where people miss the tabs off-screen. Tabs also can't nest, so integrations (6 of them) would need a second tab row.
-- **One long page:** with 40 settings, people would have to scroll past billing to find a security toggle. Browser find and deep links work, but the page has no sense of place. Long forms also make "unsaved changes" ambiguous.
+The PM's tabs and the dev's single page both break down at your size.
 
-**Laptop (about 1280px)**
-- **Sidebar:** about 14–16rem wide, fixed in view, with the 9 groups in the order people use them. Put the rarely changed ones (company, billing) and the sensitive ones (security) toward the ends. The active group is clearly marked.
-- **Content column:** it starts at the same left edge as the page title. Forms are capped at about 40–60ch, with labels above fields. Extra width stays empty rather than stretching the controls.
-- **Inside a group:** a heading and a one-sentence purpose, then the controls. Big groups get a small "On this page" list at the top. Alerts, team and integrations are the likely ones. This is the dev's anchors idea, applied locally.
-- **Integrations:** a list of 6 equal rows or cards, each with a status and a Connect or Manage button. Each opens its own detail view instead of adding more controls to the page.
-- **Team members and vehicles/drivers:** these are tables, not forms. They can use the full content width.
-- **Saving:** either each section saves on its own, or a sticky save bar appears when something changes. Pick one pattern for the whole area.
+- **Top tabs** work for about 5 flat destinations. You have about 10 groups. Several of them (integrations, team and roles, alert rules) have their own sub-lists. Tabs would overflow on a laptop and become a horizontal scroll on a phone, and a user can't tell what's hidden.
+- **One long page** with anchors gives you about 40 controls in one scroll. Users would have to remember where things are, and anchor links would only help them jump. Save behavior also gets muddy, because it's unclear what "Save" covers. The dev's idea does have one good use, described below.
 
-**Phone (about 390px)**
-- **Level 1:** the settings screen opens as a plain list of the 9 groups. Each row has an icon, a name, a one-line summary and a chevron. Nothing else is on screen.
-- **Level 2:** tapping a row opens that group full-screen with a back arrow and the group name in the header. This is a standard drill-down, so the sidebar doesn't become a hamburger menu.
-- **Within a group:** a single column with full-width fields. The "On this page" list collapses into a jump menu at the top. Tables turn into stacked cards, one per member or vehicle.
-- **Saving:** the save button sticks to the bottom of the screen, above the keyboard.
+The sidebar scales to the 10 groups and nests if you add more. It shows the whole map at once, so people can find "where do I change alert thresholds?" without hunting.
 
-**Checks before you build**
-- **Worst case:** a long company name, a team with 100 members, zero integrations connected, and German labels about 35% longer. The sidebar and rows should survive all of these.
-- **Roles:** if non-admins can't see billing or security, hide those rows for them instead of showing a locked page.
-- **Search:** at 40 settings, a search box above the sidebar (and at the top of the phone list) is worth adding. It's the only thing here that removes the need to know which group a setting lives in.
+## Laptop (about 1280px wide)
 
-**For the meeting**
-- **Designer:** gets the sidebar.
-- **Dev:** gets anchor links and deep-linkable URLs for every group and section (`/settings/alerts#escalation`).
-- **PM:** the top-level navigation stays flat and quick to scan. If they want tabs, use them inside a group, for example Members / Roles / Invitations under Team.
+- **Header:** the app's global nav, with "Settings" as the page title.
+- **Sidebar:** about 15rem wide, left-aligned with the app's content edge and sticky while the main area scrolls. It lists the groups in this order:
+  - Company profile
+  - Team and roles
+  - Vehicles and drivers
+  - Alert rules
+  - Notification channels
+  - Integrations
+  - Billing and invoices
+  - Data export
+  - Security
+- **Order:** it follows how often people visit and what they do. Daily-ish operations come first, billing and security later. Putting a small divider before the account-level items (Billing, Data export, Security) is optional, but I'd do it. Style the sidebar quieter than the global nav so the two don't read as the same thing.
+- **Main area:** one group at a time, with a page title and a one-sentence purpose. The form column is capped at about 40–60ch, with labels above fields. Leave the extra width empty. Don't stretch fields across it.
+- **Wide content:** tables are the exception to the cap and can fill the width. That covers team members, vehicles and drivers, and alert rules. Give them frozen name columns.
+- **Save:** each group has its own save bar, pinned at the bottom of the main area and always visible. It's disabled until something changes.
+- **Integrations:** a grid of 6 equal cells, each with logo, name, status and Connect/Manage. A cell opens its own detail view.
+- **The dev's idea, used well:** inside a long group such as Alert rules or Security, an "on this page" list can sit at the top, or on the right on wide screens. That gives the dev anchor links where they help.
+
+## Phone (about 390px wide)
+
+- **First screen:** the sidebar becomes the screen. Settings opens as a full-width list of the 9 groups, with a one-line summary under each name (for example "Alert rules · 12 active") and a chevron.
+- **Tapping a group:** it pushes a full-screen view with a back arrow labeled "Settings". The group's page title is next to the arrow.
+- **Forms:** single column, full width, labels above fields, tap targets at least 44px.
+- **Tables:** they become stacked cards (one per person, vehicle or rule), not sideways-scrolling grids.
+- **Save:** a sticky bar at the bottom of the screen, shown only when there are unsaved changes. Leaving with unsaved changes asks first.
+- **Integrations:** one column of 6 cells instead of a grid.
+- **Why not a hamburger or a dropdown:** a list as the landing screen keeps the map visible and keeps the main action near the top. A drawer would hide it.
+
+## Things to settle before building
+
+1. Per-group save versus per-field autosave. I'd use per-group save for anything with consequences (roles, billing, security) and apply toggles immediately only for simple on/off switches.
+2. Whether Security needs its own re-authentication step on entry. That's common for this kind of group.
+3. Search across settings. At 40 items it isn't required, but a small search box at the top of the sidebar is cheap and would settle the designer/dev/PM debate for users who don't know the group names.

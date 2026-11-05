@@ -1,25 +1,27 @@
-## Hero
+**Hero**
 
-**Headline:** Four weeks of Portuguese, built around your move to Lisbon.
+> **Your first four weeks of Portuguese, one on one.**
+> Live video lessons with a native speaker from Porto, built around what you'll need in Lisbon: ordering, renting, getting around, small talk with neighbours.
+> [Book a first lesson], €38 for 45 minutes
 
-**Subhead:** One-on-one video lessons with a native speaker from Porto. 45 minutes, €38 a lesson.
+I didn't use "get fluent in four weeks". It's a promise you know most students won't hit, and a student who pays and isn't fluent at week four has a refund or review complaint against you. In the EU, an outcome claim you can't back is also an unfair-practice risk. The version above keeps the four-week hook as the start of a plan, not a guaranteed result. If you want a stronger outcome line, use something you can show, like "Order dinner, talk to your landlord, and follow a conversation in your first month" once a real student has done it.
 
-**Button:** Book your first lesson
+**Positioning line**
 
-This keeps your four-week hook as a description of the plan, not a promise of fluency. "Get fluent in four weeks" is a result you'd be promising to every reader, and you've said it varies. Fluency is also the claim an unhappy student would quote back to you. If you want a punchier alternative: *"Arrive in Lisbon able to speak Portuguese."*
+> Portuguese lessons for adults moving to Lisbon: one on one, over video, with a native speaker, so you practise the conversations you'll actually have, not a group syllabus or an app's phrasebook.
 
-## Positioning line
+**About me**
 
-Portuguese lessons for adults moving to Lisbon: one-on-one over video with a native speaker from Porto, so every 45 minutes goes on the Portuguese you'll need when you arrive, not a generic syllabus.
+> I'm [Name], a native Portuguese speaker from Porto. I've been teaching for about a year, and I work with a small number of students at a time (six right now), so every lesson is planned around you and what you need in Lisbon. Lessons are 45 minutes, one on one, over video, at €38 each. You'll speak from the first lesson, and I'll correct you as you go.
 
-This assumes your students are the kind who've tried apps or group classes [assumed: confirm with your students]. It also implies you're not for people who want a classroom or a casual hobby course.
+**Testimonial**
 
-## About me
+I won't write an invented student quote with a name and city. Presented as real, it's a fake review, and that's illegal in the EU and Portugal however unlikely anyone is to check. You have six actual students, and that's enough. Message two or three with something like: *"Could you describe in a sentence or two what you could do in Portuguese before our lessons versus now?"* Then use their words, with permission and a first name and city. Until then, leave this slot empty or put a placeholder in it:
 
-Olá, I'm [Name]. I'm from Porto, and Portuguese is my first language. For the past year I've taught adults who are about to move to Lisbon, one-on-one over video. I currently teach six students, so each lesson is planned around you: your job, your neighbourhood, the conversations you're nervous about. Lessons are 45 minutes and cost €38.
+> "[Real student sentence]" — [First name], [City], [lesson count or weeks]
 
-## Student quote
+Your own example, "zero to ordering dinner in a week", works fine if a real student says it.
 
-**[add: a real quote, first name and city, from one of your six students]**
-
-I haven't written a made-up quote. Presented as a real student's words, it would mislead the people deciding whether to pay you. It's also unlawful under consumer-protection rules in Portugal, the EU and most other places. You don't need it either. With six students, you can message one or two and ask for a sentence about what changed for them, plus permission to use their first name. Send me whatever they say and I'll help you trim it without changing what they meant. A real "I ordered dinner in Portuguese in week two" will convert better than an invented one.
+**Two notes**
+- "About a year" and "six students" are honest and small. Say them plainly, because they make the "personal attention" claim believable.
+- Your Porto background is a selling point. Don't imply Lisbon roots, and mention European Portuguese so people know it's the right variety.

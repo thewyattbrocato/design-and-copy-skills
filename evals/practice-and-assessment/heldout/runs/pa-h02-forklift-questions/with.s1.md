@@ -1,118 +1,137 @@
-I wrote 8 scenario questions, one per topic in the session, each asking what the person would do next. I assumed the audience is new hires with no forklift experience. Every wrong answer has its own feedback, because new hires often pick the right answer for the wrong reason. Use only the numbers from your session; I added none.
+I wrote 8 scenario questions, one for each point in the session. Each asks what the driver should do next, and each wrong option is a mistake new drivers really make. Every answer has feedback, so the quiz can be used as practice as well as a check.
+
+I assumed the hires are new to forklifts and will take this right after the session. Only the facts you gave are used.
 
 ---
 
-**1. Carrying a load**
-Dani is driving a loaded pallet down an aisle. The forks are high, and Dani likes the extra view. What should Dani do?
+**1. Travel position**
+Marcus has a loaded pallet and is heading down Aisle 6 to the staging area. Some floor seams are ahead. How should he carry it?
 
-- A. Lower the forks to 10–15 cm off the floor and tilt the mast slightly back.
-- B. Keep the forks high, but drive slowly.
-- C. Lower the forks until they almost touch the floor and keep the mast upright.
+- A. Forks about 30 cm up so they clear the seams, mast upright
+- B. Forks 10 to 15 cm off the floor, mast tilted slightly back
+- C. Forks on the floor, mast tilted forward to press the load down
+- D. Forks at eye level so he can see past the pallet
 
-**Answer: A.**
-- **A:** Correct. At 10–15 cm the load rides low, and the backward tilt helps hold it on the forks.
-- **B:** Driving slowly doesn't fix it. A raised load is still high and unstable, and a bump or a turn can shift it. The height matters, not only the speed.
-- **C:** Dani is right to go low, but near-floor forks can catch on the floor surface, and an upright mast doesn't cradle the load. Use 10–15 cm with a slight backward tilt.
+**Answer: B**
+- A: At that height the load is top-heavy, and the tilted-back mast is what keeps it from sliding off. Keep forks 10 to 15 cm up and slow down for the seams.
+- B: Right. Low forks keep the truck stable, and the slight back-tilt holds the load against the mast.
+- C: Forks on the floor catch on seams, and a forward tilt pushes the load off the forks. Lift 10 to 15 cm and tilt back.
+- D: Raised forks make the truck unstable, and a pallet that high is likely to tip. If the load blocks your view, drive in reverse (see Q7).
 
 ---
 
-**2. Entering the freezer**
-Marcus is driving an empty forklift down the aisle at 8 km/h. He now enters a freezer chamber. What speed should he be at inside?
+**2. Speed**
+Priya is doing 8 km/h down a clear aisle with a late order to fill. She's about to enter a freezer chamber. What does she do at the door?
 
-- A. 8 km/h, because the truck is empty.
-- B. 5 km/h.
-- C. 8 km/h, slowing to 5 km/h only when he picks up a load.
+- A. Keep 8 km/h, since the chamber is also clear
+- B. Slow to 5 km/h
+- C. Slow to 5 km/h only if she is carrying a load
+- D. Slow to 5 km/h only once she sees ice on the floor
 
-**Answer: B.**
-- **A:** Being empty doesn't change the limit. The freezer limit is 5 km/h whether or not you carry a load.
-- **B:** Correct. Inside the freezer chambers the limit is 5 km/h, loaded or empty.
-- **C:** The limit depends on where you are, not on the load. Slow to 5 km/h as you enter the chamber.
+**Answer: B**
+- A: Being late doesn't change the limit. Inside the chamber it is 5 km/h, however clear it looks.
+- B: Right. 8 km/h applies in aisles and 5 km/h inside freezer chambers, loaded or empty.
+- C: The limit doesn't depend on the load, so an empty truck also does 5 km/h. Slow down at the door every time.
+- D: Waiting to see ice means braking on it. Slow down before you cross the threshold.
 
 ---
 
 **3. Blind corner**
-Priya is approaching a corner where she can't see what's on the other side. What does she do?
+Dev is approaching a corner where racking hides the cross-aisle. He can't see anyone coming. What does he do?
 
-- A. Slow to a crawl and sound the horn.
-- B. Sound the horn and keep her speed, because the horn warns people.
-- C. Slow to a crawl and listen for people, without using the horn.
+- A. Sound the horn and keep his speed, since the horn warns people
+- B. Slow to a crawl and sound the horn
+- C. Slow to a crawl without the horn, so he doesn't startle anyone
+- D. Stop, switch off, and wait until someone comes and waves him through
 
-**Answer: A.**
-- **A:** Correct. The horn warns others and the crawl gives her time to stop. She needs both.
-- **B:** A horn only helps if the other person hears it and reacts. At full speed she can't stop if someone steps out anyway. Slow down as well.
-- **C:** Slowing is right, but nobody on the other side knows she's coming. The horn is how they find out.
-
----
-
-**4. The ride request**
-A coworker's shift is ending and the far dock is on your route. They ask, "Mind if I hop on and ride over with you?" What do you do?
-
-- A. Say yes, if they stand clear of the forks.
-- B. Say yes this once, since you'll drive slowly.
-- C. Say no. Nobody rides, so they walk.
-
-**Answer: C.**
-- **A:** There is no safe place on the truck to stand. The rule has no exceptions for where a passenger stands.
-- **B:** Slow speed doesn't make it safe. A stop, a bump or a turn can throw a rider off. The rule is never, with no exception for a short trip.
-- **C:** Correct. No passengers, ever. It's easier to say no pleasantly than to explain an injury afterward.
+**Answer: B**
+- A: A pedestrian who hears the horn may step out, and Dev can't stop in time at speed. The horn only works together with a crawl.
+- B: Right. The horn tells people you're coming, and the crawl gives you time to stop for whoever appears.
+- C: Without the horn, someone just past the corner has no warning. Sound it at every blind corner.
+- D: Switching off and waiting leaves the truck stalled in the aisle, and nobody knows to wave you through. Horn, crawl, and check the cross-aisle.
 
 ---
 
-**5. The heavy pallet**
-Sam is about to lift a pallet that looks heavier than the maximum load on the capacity plate. A coworker says, "It's only a bit over, just lift it." What does Sam do?
+**4. Passengers**
+It's the end of the shift, and Aisha's coworker has sore feet. They ask for a lift to the far dock. What does Aisha say?
 
-- A. Lift it a few centimeters to test it, and put it down if it feels heavy.
-- B. Lift it and drive slowly.
-- C. Leave it on the floor and not lift it.
+- A. "Stand on the forks, and I'll keep them low."
+- B. "Stand on the back of the truck and hold on."
+- C. "Sit on the pallet, and I'll go slowly."
+- D. "No. No passengers, even for a short ride. I'll go get you a chair." (assumes a chair is available; edit if not)
 
-**Answer: C.**
-- **A:** A test lift is still lifting it. Over the plate's limit, the truck may not hold it, and you can't feel the problem until it happens.
-- **B:** Slow speed doesn't change what the truck can carry. The plate's limit is the limit.
-- **C:** Correct. If the load is heavier than the capacity plate allows, don't lift it. "Only a bit over" is still over.
-
----
-
-**6. Person in the aisle**
-Lena is driving to a rack when a coworker wearing headphones steps into the aisle ahead. The coworker hasn't looked her way. What does Lena do?
-
-- A. Honk once and keep rolling, since they'll hear it and move.
-- B. Stop, and move again only after making eye contact with them.
-- C. Steer around behind them quickly while they're facing away.
-
-**Answer: B.**
-- **A:** Headphones mean the horn may not be heard, and a horn doesn't give you the right of way. Pedestrians always have it.
-- **B:** Correct. Pedestrians have right of way, and eye contact is how you know they've seen you.
-- **C:** Passing close behind a person who doesn't know you're there is the situation to avoid. They can step back into your path.
+**Answer: D**
+- A: A rider on the forks can fall off or be crushed, even at low height and slow speed.
+- B: A rider on the back can be thrown off in a turn or a stop, even at walking pace.
+- C: A rider on the load can fall, and the load can shift. Slow isn't safe enough.
+- D: Right. Passengers are never allowed, regardless of distance or speed.
 
 ---
 
-**7. Ramp with a load**
-Omar has a tall load that blocks his view forward, and he has to go down a ramp with it. How does he go down?
+**5. Capacity plate**
+Tomás pulls up to a pallet that looks heavier than usual. The shipping label says it weighs more than the maximum on his truck's capacity plate. A coworker says, "I've lifted bigger on this truck." What does he do?
 
-- A. Forward, forks pointing downhill, leaning out to see around the load.
-- B. In reverse, with the forks pointing uphill.
-- C. Forward, with the load raised high so he can see under it.
+- A. Lift it a few centimetres to see how the truck feels
+- B. Lift it, but drive at 5 km/h
+- C. Leave it on the floor and not lift it
+- D. Take the coworker's word, since they have more experience
 
-**Answer: B.**
-- **A:** Leaning out is the sign of a blocked view. Forks pointing downhill also risk the load sliding off the front.
-- **B:** Correct. If the load blocks your view, drive in reverse. On a ramp with a load, the forks point uphill.
-- **C:** Raising the load makes it less stable, and the wrong direction on a ramp. Reverse solves both the view and the ramp.
-
----
-
-**8. The weak horn**
-At the start of the shift, Ravi's pre-shift check finds forks, tires, brakes, lights and hydraulics all fine, but the horn barely makes a sound. The other trucks are in use, and he's behind on picks. What does he do?
-
-- A. Use the truck, and shout at corners instead.
-- B. Use the truck, and report the horn at the end of the shift.
-- C. Tag the truck out and report it.
-
-**Answer: C.**
-- **A:** The horn is a required safety item, and shouting won't carry over the noise at a blind corner. A failed check means the truck doesn't run.
-- **B:** The horn would be weak all shift, including at blind corners. Reporting afterward leaves the next driver with the same truck.
-- **C:** Correct. Any failure means tag it out and report it. Being behind on picks doesn't change that.
+**Answer: C**
+- A: A test lift can tip the truck or strain the mast before you feel any warning. The plate sets the limit, not the feel.
+- B: Slow speed doesn't make an overweight lift safe. The lift itself is the risk.
+- C: Right. If the load is heavier than the capacity plate allows, do not lift it. Tell your supervisor so the pallet gets handled another way.
+- D: The coworker's experience may be on a different truck, and the plate on yours still governs. Check the plate each time.
 
 ---
 
-- **Retesting:** Give the same 8 again tomorrow with the options reshuffled and the details changed (for example, a different person or location). That shows whether they remember it. A same-day pass doesn't.
-- **Beyond the quiz:** The quiz only shows they know the rules. Have a supervisor watch each hire do a pre-shift check and a loaded drive, and sign them off on what they see.
+**6. Pedestrians**
+Jo is pulling out of a bay. A pedestrian in hi-vis is crossing ahead, wearing headphones and looking at their phone. What does Jo do?
+
+- A. Sound the horn and continue, since they'll hear it
+- B. Wait for them to pass, since they'll see the truck
+- C. Stop, make eye contact, and move only once they've seen the truck
+- D. Steer around behind them at low speed
+
+**Answer: C**
+- A: Headphones may block the horn, and the pedestrian hasn't looked up. The horn is not eye contact.
+- B: They may be looking at their phone and walk straight on. Waiting only helps if you know they've seen you.
+- C: Right. Pedestrians always have right of way, and eye contact is how you know they've seen you.
+- D: Steering behind them puts the truck close to someone who doesn't know it's there. Stop first.
+
+---
+
+**7. Blocked view and ramps**
+Lena has a tall pallet that blocks her view forward, and the dock is down a ramp. How does she take it down?
+
+- A. Drive forward and lean out to look around the load
+- B. Drive in reverse with the forks pointing uphill
+- C. Drive forward with the forks pointing downhill
+- D. Drive forward with a coworker walking ahead to guide her
+
+**Answer: B**
+- A: Leaning out still leaves a blind spot dead ahead, so she may not see someone on the ramp. If the load blocks your view, drive in reverse.
+- B: Right. Reversing gives a clear view, and on a ramp with a load the forks point uphill so the load can't slide off.
+- C: Forks pointing downhill let the load slide forward off the forks, and her view is still blocked.
+- D: A pedestrian walking ahead of a moving truck is in the path she can't see. Reverse instead.
+
+---
+
+**8. Pre-shift check**
+Sam finishes the pre-shift check. Forks, tires, horn, brakes, and lights all pass, but there's a small puddle of hydraulic fluid under the mast. The previous shift said the truck was fine, and orders are backed up. What does he do?
+
+- A. Use the truck and mention the puddle at the end of the shift
+- B. Wipe it up and keep going, since it's small
+- C. Use the truck for light loads only
+- D. Tag the truck out and report it
+
+**Answer: D**
+- A: A leak can get worse mid-shift, and the lift could fail under a load. Anything failing the check means tag out and report before use.
+- B: Wiping hides the sign without fixing the cause, and the next driver gets no warning.
+- C: Light loads still depend on the hydraulics, so the risk remains. A leak is a fail.
+- D: Right. Any failing item means tag it out and report it, however small and whatever the previous shift said.
+
+---
+
+**Two notes:**
+- Reuse a few of these tomorrow with changed details (different aisle, different hazard) before anyone is called competent. Same-day scores only show they remember the session.
+- Question 4 assumes a chair is available. Change that line to match the site.

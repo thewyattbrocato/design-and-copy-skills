@@ -1,20 +1,15 @@
-**Ship (c), the interactive setup.**
+**Ship (c), the interactive setup.** It's the only option that teaches the thing new users get wrong. They don't lack a definition of "swell height." They don't know what a good range is for their break, or how their wind limit interacts with that break's exposure. A carousel or video explains the settings, but the user still has to guess their values afterward. The interactive flow lets them pick values against today's real conditions.
 
-- **It teaches the part people get wrong.** The hard part isn't knowing what a swell height or wind limit is. It's combining four settings so the alert fires at the right times. A carousel explains each setting alone, and users can read all four cards and still set the wrong combination.
-- **The live preview gives feedback on the actual choice.** Seeing "today, this setup would have fired at 7am" or "no matches this week" shows whether the alert is too strict or too loose before the user saves it. That's the feedback loop the other two options don't provide.
-- **It delivers value in the first session.** The user leaves with a working alert, not just an understanding of one. Video and carousels are passive, and first-launch content is often skipped.
+For example, the setup could show: "Today at Pleasure Point: 4–6 ft swell, wind W at 12 kt. Your alert would have fired at 3 PM." The user sees what each setting does while making the choice, and they leave with a working alert, which is the outcome you care about.
 
-**Why not (a) or (b):** Both are cheap, but both depend on users choosing to watch or swipe and then applying what they learned. A 90-second video is also expensive to produce and hard to update when settings change.
+The other two options are weaker for this specific problem:
 
-**Risks with (c):**
-- It's the most work, and the live preview depends on your conditions data being reliable and fast. Check that before committing.
-- Handle the empty states: no matching conditions today, no data for a beach, and the user changing settings mid-flow.
-- Let users skip it with sensible defaults, so it doesn't become a new onboarding wall.
+- **(a) Intro video:** The most expensive to make and maintain. It goes stale as the app changes, and first-launch users skip videos. It also can't show live conditions.
+- **(b) Carousel:** Cheap, and a reasonable fallback. But it's passive. Users swipe through four cards and still face the same blank form.
 
-**Since you have no data yet, measure it from day one:**
-- First-session completion rate of the alert setup
-- Share of users who create an alert within 7 days
-- Edits within 24 hours of creation (a proxy for "the first setup was wrong")
-- Alerts that fired vs. were dismissed or turned off
+**Risks of (c) to plan for:**
+- **Dependence on live data.** If a spot has no current forecast, the preview breaks. Fall back to typical conditions for that spot and label them as such.
+- **Dropout mid-flow.** Pre-fill sensible defaults for each step (e.g., the spot's typical swell range) and offer a "use suggested" button, so the flow is quick to finish.
+- **Build cost.** It's more work than (b). Reuse the carousel's copy as the step-level helper text so the cheap version isn't wasted.
 
-If the preview data isn't dependable enough to build in one sprint, fall back to (b). It's the lowest-risk option, and it can be written in a day.
+**Measuring it, since you have no data yet:** Track first-session alert creation rate, alerts still enabled at 7 days, and how often an alert actually fires. The last one matters most. An alert that never fires is a sign the user set it wrong. If you can't build the full flow, run a prototype test with 5–8 surfers before committing to the whole sprint.

@@ -1,46 +1,66 @@
-**What's going on:** nobody chose these values. They accumulated. Almost every property has several values that sit a pixel or two apart, so nobody can name the difference, but everyone senses it. Counts from your snippet:
+## What's going on
 
-| Property | Values in use | Problem |
+Nobody made a wrong decision here. The same decision was made many times, slightly differently each time. Every value in this chunk is a one-off, so nothing is shared and nothing can be wrong in a way anyone can point to. These are the specific symptoms (counts are from this chunk only, so rerun them on the full stylesheet):
+
+| Area | What's in the chunk | Problem |
 |---|---|---|
-| Radius | 7 (4, 5, 6, 7, 9, 10, 12) | Input is 6px and select is 4px, so adjacent form controls don't match. |
-| Control height | 2 (38, 40) | Input and select sit side by side at different heights. |
-| Muted text gray | 3 (`#8a8f98`, `#8d929b`, `#858a93`) | Three names for one color. They likely fail AA contrast on white, so check them. |
-| Border gray | 2 (`#e3e5e8`, `#e1e4e8`) | `card` and `panel` differ by 2 hex steps. |
-| Primary blue | 2 (`#2f6fed`, `#2e6dea`) | `btn` and `btn-big` are different blues. |
-| Success green | 4 (two backgrounds, two text colors) | `alert-ok` and `badge-ok` should be the same role. |
-| Shadow | 3 | `card` and `panel` differ only by a few hundredths of opacity. |
-| Component padding | 7 (9, 11, 12, 13, 17, 18, 22, 26) | Near-duplicates, not a scale. |
-| Row spacing | 3 (14, 19, 34) | No scale. 14 and 19 are indistinguishable at a glance. |
-| Heading sizes | 4 (31, 23, 19, 17) | `h4` is 17px, the same as `btn-big`, so the type roles collide. |
+| Radius | 4, 5, 6, 7, 9, 10, 12 (7 values) | Neighbors are 1px apart, so the eye reads them as a mistake instead of a hierarchy. `.input` is 6px and `.select` is 4px, side by side in forms. |
+| Blue | `#2f6fed` and `#2e6dea` | A near-identical pair. `.btn-big` is a slightly different blue than `.btn`. |
+| Secondary text | `#8a8f98`, `#8d929b`, `#858a93` | Three names for one gray. It's also roughly 3.3:1 on white, which is probably below AA for body text. Verify that. |
+| Border and success colors | `#e3e5e8` and `#e1e4e8`; two green pairs (`.alert-ok`, `.badge-ok`) | Same duplication as the blues and grays. |
+| Card, panel | Padding 18 and 22, radius 9 and 12, shadows `.12` and `.10` with different blur | These are one component with two accidental settings. |
+| Control heights | `.input` is 38px and `.select` is 40px | Misaligned in any row that contains both. |
+| Spacing | Margins 14, 19, 34; paddings 9, 11, 12, 13, 17, 18, 22, 26 | There's no scale. |
+| Type | 14, 17, 19, 23, 31 | `.btn-big` (17) equals `h4` (17), which is coincidence, not design. The heading steps are irregular. |
 
-Two deeper causes:
+So the inconsistency is real, but no individual value is the cause. The cause is that there are no tokens, so every author picks values by eye.
 
-1. **Values are copied from mockups, so nothing is shared.** `card` vs `panel` and `btn` vs `btn-big` look like two components each, but they are one component with drifted numbers.
-2. **Components hold raw values.** There are no tokens or semantic roles, so every new component adds more near-duplicates.
+## What I'd do, in order
 
-**What I'd do, in order:**
+**1. Inventory the whole stylesheet (first, before changing anything).** Count distinct colors, font sizes, spacings, radii and shadows. Group them by purpose. The numbers tell you how big the cleanup is. I'm only working from this chunk, so I'm not guessing the totals.
 
-1. **Decide the scales on paper first, without touching code.** These are proposals, so adjust them to your brand.
-   - Radius: 4 / 8 / 12.
-   - Spacing: 4, 8, 12, 16, 24, 32, 48.
-   - Type: 5 roles. Keep 14 for body and move the rest to a ratio-spaced set, for example 12, 14, 16, 20, 24, 32.
-   - Shadow: 2 levels, raised and overlay.
-   - Control height: 40, plus 32 if you need a compact size.
-   - Create a merge map from every old value to its new token.
-2. **Fix colors first.** The change is nearly invisible to users, so it's low risk.
-   - Collapse the three grays into one `text-muted`, and darken it enough to pass 4.5:1 on your surfaces. Check the actual ratio.
-   - Collapse the two borders into `border-subtle`.
-   - Collapse the two blues into `accent`.
-   - Collapse the greens into `success-surface` and `success-text`.
-   - Define these as CSS custom properties in two tiers: raw values, then semantic roles. Components read only the semantic roles.
-3. **Fix form controls.** Input and select get the same height and radius. This is the most visible inconsistency, so do it early.
-4. **Merge `card` and `panel` into one component.** Use one padding value and one radius. If you need a second look, make it a variant tied to real behavior, not to the page it first appeared on. `modal` keeps the overlay shadow and takes its radius from the scale.
-5. **Merge `btn` and `btn-big` into one button with size variants.** They share the same color and differ only in padding and font size.
-6. **Move spacing and type onto the scales.** Doing this last makes it the riskiest step, because it shifts layouts. Roll it out screen by screen and check visually.
-7. **Stop the drift.** Add a stylelint rule that rejects raw hex colors, off-scale pixel values and unlisted radii outside the token file. Name an owner who can say no to new values, and require any new value to replace or merge with an existing one.
+**2. Fix short scales and merge into them.** Proposed targets, to be adjusted against the full inventory:
 
-**Assumptions and trade-off:**
-- I assumed a web product with one brand and a small team. This is only a snippet, so the real counts will be higher. Run the same inventory over the full stylesheet before you fix the scales.
-- Steps 2–5 change pixels by a few units, and some screens will shift slightly. That's the cost of consistency, so tell the team before you start.
+- **Radius:** 4 (controls), 8 (surfaces), 12 (large surfaces and modals).
+  - Mapping: 4, 5, 6 → 4; 7, 9, 10 → 8; 12 → 12.
+- **Spacing:** 4, 8, 12, 16, 24, 32, 48.
+  - Mapping: 9, 11, 12 → 8 or 12; 13, 14 → 12; 17, 18 → 16; 19, 22 → 24 (check by eye); 26 → 24; 34 → 32.
+- **Type:** 14, 16, 20, 24, 32, which is five roles instead of five arbitrary sizes. The button sizes map to 14 and 16.
+- **Shadow:** two or three elevations: raised (card and panel) and overlay (modal).
+- **Control height:** one value, probably 40, with 32 as an optional compact size.
+- **Colors:** one accent, one muted text color, one border color and one success pair.
+  - Mapping: `#2f6fed` and `#2e6dea` → one accent. The three grays → one `text-secondary`, darkened until it passes 4.5:1 on your surfaces. Both greens → one pair.
 
-I can write out the token file and merge map for this snippet next if you'd like.
+**3. Name the values by role, not by color.** Define them as CSS custom properties in two tiers:
+
+- Raw values: the scales above.
+- Semantic roles: `--color-accent`, `--color-text-secondary`, `--color-border-subtle`, `--color-success-bg`, `--space-3`, `--radius-surface`, `--shadow-raised`.
+- Components read only the semantic roles, never raw values.
+
+```css
+:root {
+  --color-accent: #2f6fed;
+  --color-text-secondary: #6b7079; /* proposal: verify contrast */
+  --radius-control: 4px;
+  --radius-surface: 8px;
+  --shadow-raised: 0 2px 8px rgba(0,0,0,.10);
+}
+.card { padding: var(--space-4); border-radius: var(--radius-surface); box-shadow: var(--shadow-raised); }
+```
+
+**4. Collapse the duplicate components.**
+- `.card` and `.panel` become one component, with a padding modifier only if you really need two.
+- `.btn-big` becomes a size variant of `.btn`, not a separate class with its own color.
+- `.alert-ok` and `.badge-ok` share the success tokens.
+- Make `.input` and `.select` share height, radius and padding.
+
+**5. Migrate in order of visibility and risk.** Start with the elements on every screen (buttons, inputs, text colors), then cards and panels, then spacing, which touches the most layout. Do each as its own small change and compare screenshots before and after. Expect small visible shifts, because that's the point of merging values.
+
+**6. Lock it in.**
+- Add a stylelint rule that rejects raw hex colors and off-scale pixel values outside the token file.
+- Write one page that states who owns the tokens and how to add one. The rule is that a new value replaces or merges into an existing one.
+- Document every state for buttons and inputs (hover, focus, disabled, error), not just the default. This chunk shows none of them, so check that they exist.
+
+Do steps 1 to 3 first. They're cheap and they stop the problem from growing, and everything after them is mechanical.
+
+My assumptions are a single-brand web app with a small team and no existing token system. If you already have a design system or component library, tell me, because then this becomes a theming job instead.

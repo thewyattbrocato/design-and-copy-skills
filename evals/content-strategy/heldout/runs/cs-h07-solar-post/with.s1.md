@@ -1,17 +1,9 @@
-Here's a draft (about 105 words):
+Finished last week: a rooftop solar install on the Hollis Valley grange hall. It's the first community hall project for our crew of 9 at Aldercreek Solar.
 
----
+The moment that stuck with us came this past Sunday. The hall's kitchen is where the monthly pancake breakfast gets cooked, and this month's batch ran on the new panels.
 
-Last week, our crew of 9 at Aldercreek Solar finished a rooftop solar install on the Hollis Valley grange hall. It's our first community hall project, and it won't be our last.
+The grange volunteers made it a team effort. They held ladders and made lunch for the crew, which is the kind of help you remember.
 
-The moment that stuck with us came this past Sunday. The hall's kitchen is where the monthly pancake breakfast gets cooked, and this time it ran on the new panels.
+Thank you, Hollis Valley Grange, for trusting us with your hall. We're proud to have been part of it, and we hope to do more projects like this one.
 
-Thank you to the grange volunteers, who held ladders and made lunch for the whole crew. We felt like part of the community, not just contractors on the roof.
-
-Here's to many more breakfasts in the sun.
-
----
-
-Two notes:
-- I added "it won't be our last" as a light forward-looking line. If you'd rather not imply more hall projects are planned, cut it.
-- I left out system size and savings, as you said. You can add them in a follow-up post once you have them.
+(Word count: about 100.)

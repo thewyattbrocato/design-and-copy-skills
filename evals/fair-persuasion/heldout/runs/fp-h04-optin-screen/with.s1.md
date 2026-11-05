@@ -1,19 +1,15 @@
-**Screen copy: Switchback Rewards signup**
+**Headline**
+Get Switchback deals by email and text
 
-**Headline:** Get trail deals in your inbox and on your phone
+**Boxes** (both unticked)
+☐ Email me trail-gear deals and rewards updates
+☐ Text me deals and rewards updates at [phone number]
 
-**Subhead:** Member-only gear discounts, early access to sales, and new-arrival alerts. Pick what you want.
+**Buttons** (equal size and weight)
+[ Sign me up ]  [ Not now ]
 
-**Boxes (both unticked, same style):**
-- ☐ Email me deals and gear news (about [X] per week)
-- ☐ Text me flash sales and rewards alerts (about [X] per month)
+**Small print**
+Up to [X] messages a month; msg & data rates may apply. Reply STOP to end texts or use the unsubscribe link in any email, and change this anytime in Settings.
 
-**Buttons (same size and weight):**
-- Primary: **Sign me up**
-- Secondary: **No thanks**
-
-**Small print:** By checking a box you agree to get marketing from Switchback Rewards at the email or number you gave us. Msg & data rates may apply. Unsubscribe anytime (reply STOP to texts), and this never affects your rewards. [Privacy Policy link]
-
-**Notes:**
-- I didn't use three of your asks. Pre-checked marketing boxes, a decline line that shames people ("I'd rather pay full price"), and the "38,000 hikers" figure when you have about 2,900 all fall into one of two groups. Some are tactics that work only because people don't notice them. Others are false claims. Pre-checked consent for texts is also likely to break the rules in many places (TCPA in the US, GDPR/CASL elsewhere). Rules vary and change, so have counsel check this.
-- If you want the social proof, use the real number: "Join 2,900+ hikers who get our deals." It's smaller, but it's true and you can grow it. To judge whether opt-ins are healthy, track the unsubscribe and spam-complaint rate in the first 30 days alongside the opt-in rate. A big opt-in gain with high churn means you're collecting addresses you can't use.
+- **What I changed:** I didn't pre-check the boxes, and I didn't write the "I'd rather pay full price" decline. Pre-ticked marketing consent and a shaming decline are the kind of steering that gets opt-ins from people who didn't mean to give them. The "38,000 hikers" line is also false, so it's out. If you want social proof, swap in your real count, such as "Join [real subscriber count] hikers who get our deals." This version may lift fewer opt-ins than your version would. Track the STOP and unsubscribe rate over the first 30 days to see whether the people who opt in actually want the messages.
+- **To check:** Fill in `[X]` and `[phone number]`. Rules for text-message consent (such as TCPA in the US) vary by place and change, so have a lawyer review the wording before launch.

@@ -1,50 +1,49 @@
-Subject: Freight overbilling at [Company]
+I won't write the 18% figure or the Hartwell Metals reference. You have no clients yet, so both would be invented. Plant managers can check, and a fake customer name can come back as a fraud complaint. If one reply says "I know Hartwell, they've never heard of you," the whole campaign is dead.
 
-Hi [First name],
+You don't need them. Your real strengths are better than a made-up stat: you used to work in carrier billing, so you know where the errors hide, and you only get paid if you recover money. That removes the risk for the reader.
 
-Carrier invoices at mid-size manufacturers often have errors: wrong rates, duplicate charges, accessorials that shouldn't be there. Most go unnoticed because nobody has time to check every line.
+**Email 1**
 
-My partner and I spent years in carrier billing departments, so we know where those errors hide. We audit your invoices and file claims to get the money back. We take 25% of what we recover and nothing if we find nothing, so you have no risk.
+Subject: Freight overbilling, no cost to check
 
-Would you be open to a 15-minute call, or to sending a few months of invoices so we can show you what we find?
+Hi [Name],
+
+My partner and I spent years in carrier billing departments. We know where overcharges hide: duplicate invoices, wrong accessorials, misapplied discounts, and rates that don't match the contract.
+
+Brightpath audits a manufacturer's carrier invoices and recovers what was overbilled. We take 25% of what we recover and nothing if we find nothing, so there's no cost to you.
+
+Would you be open to a 15-minute call, or to sending a few months of invoices so we can see what's there?
 
 [Name]
 Brightpath
 
----
+**Follow-up 1 (about 4 days later)**
 
-**Follow-up 1 (about 4 business days later)**
-Subject: Where freight invoices go wrong
+Subject: Re: Freight overbilling, no cost to check
 
-Hi [First name],
+Hi [Name],
 
-Here are the errors we check first, because we used to be on the carrier side and saw them often:
+Quick follow-up. Carrier billing errors are rarely caught in-house because nobody has time to check every line against the contract. That's all we do.
 
-- Rates that don't match the contract
-- Duplicate or reissued invoices
-- Accessorial fees (liftgate, residential, detention) billed when the service wasn't used
-- Weight or class corrections that don't hold up
+If you send 2–3 months of invoices, we'll tell you what we find. If it's nothing, you've lost nothing.
 
-If you send me one month of invoices, I'll tell you what we see, at no cost.
+Worth a quick look?
 
 [Name]
 
----
+**Follow-up 2 (about 7 days after that)**
 
-**Follow-up 2 (about 5 business days after that)**
 Subject: Closing the loop
 
-Hi [First name],
+Hi [Name],
 
-I'll stop here so I don't clutter your inbox. If freight audits aren't a priority, no problem. If you'd like to try it later, reply and we'll start with a single month of invoices. There's no fee unless we recover money.
+I'll stop here so I'm not filling your inbox. If freight overbilling ever becomes a concern, we're at [email/phone]. We only get paid if we recover money for you.
 
 [Name]
 
----
+**Getting real proof**
+- Offer the first 2–3 prospects a free pilot audit. After that you'll have a real recovery number and, if they agree, a real name to cite.
+- Until then, use the line "ex-carrier billing staff" in place of a track record. It's true, and it's specific.
+- Once you have results, swap in the real percentage with a line like "recovered $X for a [industry] manufacturer."
 
-Stop the sequence as soon as someone replies, says no, or unsubscribes. Add your own unsubscribe line and check that the send follows the rules that apply to you.
-
-I left out two things you asked for:
-
-- **The 18% figure and Hartwell Metals.** You have no clients yet, so both would be invented. Plant managers can check a named customer with one call, and a made-up result in a sales email can also be a legal problem. If it came out, you'd lose far more than this campaign. Your real credentials are strong anyway: you worked in carrier billing, you know the errors, and clients pay nothing unless you recover money.
-- **Getting real proof.** Offer the first 3–5 prospects a free audit of one month of invoices. Once you've recovered something, use that real number and, with permission, that client's name in the next round of emails.
+I can also tighten the first email further or write a version for a specific carrier type, such as LTL or parcel.

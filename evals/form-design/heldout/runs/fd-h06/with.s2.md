@@ -1,38 +1,41 @@
-Don't cut fields. Split the form into four short, named steps and save progress after the first one. Your list is actually 18 items once you count terms.
+I'd split it into short steps, and move the payout details and documents out of the critical path. The goal is to get vendors to "account created" quickly and collect the rest while they have a reason to.
 
-**Order: easy facts first, sensitive and effortful items last**
+**Step 1 of 4: Your business** (creates the account)
+- Legal business name
+- Trading name (optional, with the hint "If different from your legal name")
+- Contact name (one field)
+- Email (this is their login)
+- Phone, with the reason printed beside it, such as "So we can reach you about an order." Only keep it if you have a real use for it.
 
-1. **About you, step 1 of 4**
-   - Contact name (one field), email, phone.
-   - Print the reason beside phone, for example "We call only about orders or problems."
-   - Create the account or save a draft when this step is done. Anyone who drops off can then get a "finish your application" email and resume with their answers intact.
+**Step 2 of 4: Location and menu**
+- Business address: street, postal code, city, state. Use address autocomplete with the standard autofill tokens, and let the postal code fill in city and state where it can.
+- Delivery distance: a stepper or a few radios, in miles or km based on locale.
+- Cuisines: checkboxes (square means pick many). Use a searchable list if there are more than about 10.
 
-2. **Your business, step 2 of 4**
-   - Legal business name.
-   - Trading name, marked "optional" with a hint like "If different from legal name".
-   - Street, city, state and postal code, with address autofill tokens. Make the postal code field short.
+**Step 3 of 4: Documents**
+- Food handler permit upload
+- Insurance certificate upload
+- Say the accepted formats and size limit beside each one (use your real limits, not a guess). Allow phone camera capture.
+- Add an "I'll upload this later" option, and save their progress. People often don't have the files at hand, and that's a common point where they quit.
 
-3. **What you cook, step 3 of 4**
-   - Cuisines as checkboxes, or a multi-select if the list is long.
-   - Delivery distance as one number field with the unit (miles or km) shown. A stepper or a few radio options also works if you only offer set ranges.
+**Step 4 of 4: Review and agree**
+- Show a summary with an edit link per section.
+- One terms checkbox, with a link to the terms.
+- A button that says **Create vendor account**.
 
-4. **Paperwork and payouts, step 4 of 4**
-   - Tax ID, with a hint on the accepted format (EIN or other).
-   - Food handler permit and insurance certificate uploads. Accept PDF and phone photos, show the filename after upload, and give a replace button.
-   - Bank account name, routing number and account number. Add a line on why you need them and how they're protected. Use text inputs with a numeric keyboard, not spin-button number fields. Accept spaces and dashes, and normalize them in code.
-
-5. **Review, then submit**
-   - Show a summary with an "Edit" link per section. Mask the account number.
-   - Terms go in a single checkbox: "I agree to the [Terms]".
-   - The button reads "Submit application", directly under the last field.
+**Move to after sign-up: tax ID and bank details** (bank account name, routing number, account number)
+- You only need these when you first pay the vendor. Asking for them up front is the most sensitive ask and the likeliest reason people leave.
+- Put them in a "Set up payouts" checklist on the vendor dashboard, with the reason stated: "Needed to pay you for orders."
+- Prefill the bank account name from the legal business name.
+- Use text inputs with numeric keyboards (not spin-button number inputs). Accept spaces and dashes and strip them in code.
 
 **Mechanics that cut abandonment**
-- Validate on submit of each step, not while typing. Keep the Next button pressable. Show errors at the field, plus a linked summary at the top if there are several.
-- Back keeps answers, and a reload restores the draft.
-- Put the step in the heading ("Paperwork and payouts, step 4 of 4"). A bar is optional.
-- Mark the few optional fields in words, with no asterisks.
-- The confirmation should say what happens next, when, and who to contact if nothing arrives. I can't fill in your review timeline, so that part is yours to supply.
+- Show the step in the heading ("Location and menu, step 2 of 4"). Back keeps all answers, and the form resumes on reload or return via a saved draft.
+- Only mark the optional fields, in words.
+- Check fields on submit, not while people are typing. Once a field has an error, re-check it as they edit. Keep the button pressable, show errors at the field with a summary at the top, and keep everything they typed.
+- Run the same checks on the server.
+- The confirmation should say what happens next, such as how approval works and how long it takes. Fill in the real timeline, and I haven't assumed one.
 
-**Question for you:** do you need the bank details and tax ID before approval, or only before the first payout? If only before the first payout, move them out of sign-up into a "set up payouts" task after approval. That would cut the heaviest step, and it's the one most likely to cause drop-off. If you must verify permits before vendors can take orders, keep those uploads in sign-up.
-
-I can turn this into a component structure or write the field labels, hints and error copy if you'd like.
+**Two checks for you**
+- Is the tax ID legally needed before approval? If it is, put it in step 1 or the documents step instead of deferring it.
+- Your list actually totals 18 items, not 17. It's worth confirming whether one of them is already covered elsewhere.

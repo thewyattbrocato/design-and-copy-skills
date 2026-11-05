@@ -1,54 +1,59 @@
-# Start with a flat.
+# Bring the Flat
 
-**The idea:** The most common first visit to Spoke Yard is a flat tire, so we make the flat the way in. A flat is the small, fixable problem that gets people through the door, and $9 a month is how they keep coming back.
+**The idea:** The most common first visit to Spoke Yard is a flat tire, so we invite people to come with exactly that. Your first visit doesn't need a plan, just a bike that's stuck. For $9 a month, you fix it yourself, with a volunteer next to you.
 
 ## Why it fits us
 
-- **It's true and it's ours.** The volunteer sign-in sheet says a flat tire is the most common first visit. No other bike shop can say that about itself.
-- **It lowers the stakes.** Someone who has never touched a bike tool doesn't need a big ambition, just one flat. We already have a 30-minute walkthrough for beginners, so the promise is real: bring the flat, learn to fix it.
-- **It shows what $9 buys.** The stand, the tools and the shelf of free donated used parts are what a flat needs. The pitch is a flat tire and the means to fix it.
-- **It suits volunteers.** Everyone teaching is a volunteer, so the tone is people helping people with a flat. It doesn't need to sound like a shop with a sales pitch.
-- **It gives us a visible target.** We have 64 members and want 100 by December 31, so we need 36 more. We can show that number openly and update it by hand.
+- **It's true and it's ours.** The line comes from our own sign-in sheet, not from a slogan. Anyone who checks will find it holds.
+- **It makes joining small.** People hesitate over a membership because it sounds like a commitment to a hobby. "Bring the flat" turns it into one errand on one afternoon. Beginners get a 30-minute walkthrough on their first visit, so no experience is needed.
+- **It uses what we really are.** All our instructors are volunteers, and the shop is in the back of an old laundromat on Pell Street. We don't need to hide that or dress it up. A neighbor who gives their time to help you is part of the pitch.
+- **It gives the goal a shape.** We have 64 members and want 100 by December 31, so we need 36 more. That's a number people can watch move.
+
+[assumed: many people have a bike sitting somewhere with a flat they've been meaning to deal with. Check this by asking a few current members at the next open day.]
 
 ## How it shows up
 
-The four pieces share one line, "Start with a flat.", and each works if the others never run.
+Each piece works without the others. All of them end with the same practical line: **Wednesdays and Saturdays, 10 to 4, back of the old laundromat on Pell Street.**
 
-**Poster**
-- **Headline:** Start with a flat.
-- **Subhead:** The most common first visit to Spoke Yard is a flat tire. Bring yours. Beginners get a 30-minute walkthrough.
-- **Detail block:** $9 a month. Use of the stand and tools. Free donated used parts. Wednesday and Saturday, 10 to 4, in the back of the old laundromat on Pell Street.
-- **Footer:** Run entirely by volunteers. 64 members so far. Help us reach 100 by December 31.
-- **Design:** One bold image of a wheel with the tire off, plenty of white space, and the sign-up link or QR code at the bottom. It should be readable from across a street and printable in black and white.
+### Poster
+Large type on a plain background: **BRING THE FLAT.** Below it, in smaller type: *It's the most common first visit we get. Our sign-in sheet says so.*
 
-**Email** (to the existing list)
-- **Subject:** The most common first visit here is a flat
-- **Body:**
-  - Open with the fact: "We checked the sign-in sheet. The most common first visit to Spoke Yard is a flat tire."
-  - Then the point: "If you've been meaning to learn, a flat is a good place to start. Come Wednesday or Saturday, 10 to 4. Beginners get a 30-minute walkthrough. Membership is $9 a month and includes the stand, the tools and the shelf of free used parts."
-  - Then the ask: "We have 64 members and want 100 by December 31. If you're on the fence, now helps. If you know someone with a bike and a flat, send them this."
-- **Sign-off:** A volunteer's name [add: who signs it].
-- **Length:** Short, with one button to join.
+Three short lines follow:
+- $9 a month. Stand and tools during open hours.
+- 30-minute walkthrough your first time.
+- A shelf of donated used parts, free with membership.
 
-**Instagram**
-- **Image:** One photo of a bike on the stand with the wheel off, or a close-up of the tire lever and patch kit. No stock imagery.
-- **Caption:** "The most common first visit to Spoke Yard is a flat tire. Start there. $9 a month, tools and stand included, free used parts, a 30-minute walkthrough if you're new. Wed and Sat, 10 to 4, back of the old laundromat on Pell Street."
-- **Follow-up posts:** A simple progress graphic ("64 of 100") updated when the number changes, with the same line each time. A member photo is optional and only with their consent.
-- **Disclosure:** Everything posted is from us, so there's nothing to disclose. No quotes until we have permission.
+Along the bottom: *Run by volunteers. Join us — 64 of 100 members.* Reprint the number as it changes. Put the poster up at laundromat-adjacent spots, bike racks and anywhere with a corkboard.
 
-**Shop window**
-- **Main message:** "Start with a flat." in large letters, with the hours below.
-- **Visual:** A real tire or wheel on display, ideally one with a patched inner tube [owner to confirm what's available].
-- **Counter:** A hand-lettered "64 of 100 members by Dec 31" that a volunteer updates after each open day. It only works if we keep it current.
-- **Day-of cue:** An "Open today" sign on Wednesdays and Saturdays.
+### Email
+**Subject:** Got a flat? Good. Bring it.
 
-## What this needs from the owner
+> The most common first visit to Spoke Yard is a flat tire. We know because we read the sign-in sheet.
+>
+> If you've got a bike that's been waiting on a repair, this fall is a good time. Membership is $9 a month and includes the stand and tools during open hours. Your first visit starts with a 30-minute walkthrough, so you don't need to know anything yet. A volunteer will get you started. If you need a part, there's a shelf of donated used ones, free with membership.
+>
+> We're at 64 members and want to reach 100 by December 31. Come Wednesday or Saturday, 10 to 4, in the back of the old laundromat on Pell Street.
 
-- **Ask the owner:** Can a first-timer come in once without joining, or is the walkthrough for members only? The campaign invites people in, and the poster and email must match our actual policy. I haven't promised anything beyond what you gave me.
-- **Ask the owner:** Is the board comfortable publishing the sign-in-sheet finding and the member count? Both are accurate as of this month, so the counter must be updated, not left stale.
-- **Ask the owner:** Who updates the counter and who signs the email? Both are placeholders.
-- **No member quotes yet.** Nothing here depends on one. If we get consent later, one real line from a member whose first visit was a flat would fit the poster and the email.
+Send it to the current list with one added line: *Know someone with a bike that's stuck? Forward this.* That asks members to help without us inventing a referral deal.
+
+### Instagram
+One image: a bike wheel on the stand, tire off, with a hand holding a tire lever. Caption:
+
+> The most common first visit at Spoke Yard? A flat tire. So bring yours. $9 a month, a 30-minute walkthrough, and volunteers who'll stand beside you while you learn it. Wed & Sat, 10–4, Pell Street. 64 members so far. We're aiming for 100 by Dec 31.
+
+Follow up with a monthly update post showing the real count (for example "70 of 100"). Only post it when the number is true.
+
+### Shop window
+Paint or tape a large tire on the glass, big enough to read from across the street, with the words **BRING THE FLAT** inside it. Next to it, a simple tally: 100 small circles, one for each member we're aiming for, with 64 filled in. A volunteer fills in more as people join.
+
+This is the most useful piece on the street because it shows the goal and the progress at once. Put the open hours on the glass too, so someone walking past knows when to come back.
+
+## What this needs from you
+
+- **Ask the owner:** Is the window tally okay to update by hand each week? If not, a fixed "64 of 100" sign still works. Update it only when someone actually sets it.
+- **Ask the owner:** Do you have a photo of the shop or stand you're allowed to use? If it includes a member or volunteer, get their consent first. Otherwise use a close-up of a wheel or tools.
+- **[add: real member line]** You mentioned there are no quotes you can use yet, so I've left them out. If a member agrees to be quoted later, it would fit well on the poster or in the email. Without one, the piece still works as written.
 
 ## Plain fallback
 
-If the board wants something less pointed, use "Fix your own bike. $9 a month." with the same details: stand and tools during open hours, free used parts, a 30-minute walkthrough for beginners, Wednesday and Saturday 10 to 4 on Pell Street, and the 64-of-100 counter. It works in all four places and needs no extra decisions, but it's easier to ignore. The flat-tire line is the stronger one because it comes from what people actually do when they first come in.
+If "Bring the Flat" feels too narrow or too cute for the board, use a straightforward version: **"Fix your own bike. $9 a month."** Keep the same facts in the same four places. It's clearer but less memorable, and it loses the sign-in-sheet detail that makes the idea ours.

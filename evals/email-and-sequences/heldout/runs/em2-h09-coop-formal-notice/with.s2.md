@@ -1,24 +1,29 @@
 **From:** Dunmore Housing Co-op Board
+**To:** All members of the Dunmore Housing Co-op
 **Subject:** Notice of change to 2027 monthly charges
 
 Dear Members,
 
-The Board of Directors of the Dunmore Housing Co-op writes to give formal notice of a change to the monthly charges.
+This is formal notice that the monthly charge will change effective January 1, 2027.
 
-**Change to the monthly charge**
+**Change in monthly charge**
 
-Effective January 1, 2027, the monthly charge will increase from $412 to $438. This is an increase of $26 per month.
+The monthly charge will increase from $412 to $438, an increase of $26 per month. The new amount takes effect on January 1, 2027.
 
 **Reasons for the change**
 
-The Board has made this change for two reasons:
+The board has made this change for two reasons:
 
 1. The premium for the building insurance has increased.
-2. The Board is making an additional contribution to the roof replacement reserve.
+2. The board is adding to the roof replacement reserve.
 
 **Members' meeting**
 
-The Board will hold a members' meeting on November 19 at 7:00 pm in the community room. At the meeting, the Board will explain the change and answer members' questions. Members are encouraged to attend.
+The board will hold a members' meeting to explain the change and answer questions:
+
+- Date: November 19
+- Time: 7:00 pm
+- Location: the community room
 
 **Questions and the full budget**
 
@@ -30,6 +35,4 @@ Dunmore Housing Co-op Board
 
 ---
 
-Notes:
-- I left out the day of the week for the meeting because you didn't give one. You may want to add it.
-- The $26 figure is just the difference between $412 and $438. Delete that sentence if the lawyer prefers to state only the two amounts.
+I didn't state a year for the meeting or a day of the week, since you didn't give either. The $26 figure is the difference between $412 and $438. Delete that line if the board doesn't want it stated.

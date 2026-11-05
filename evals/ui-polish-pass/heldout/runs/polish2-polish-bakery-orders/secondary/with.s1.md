@@ -2,167 +2,134 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Orders</title>
 <style>
-body{font-family:system-ui,sans-serif;margin:0;padding:24px;background:#fff;color:#222}
-table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
-th{white-space:nowrap}td:last-child{white-space:nowrap}
-.scroll{overflow-x:auto}
-.sub{display:block;font-size:13px;color:#555}
-.status{padding:2px 8px;border-radius:10px;background:#e5e7eb;white-space:nowrap}
-.toolbar{margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-button,input,select{font:inherit;padding:6px 12px}
-input,select{border:1px solid #888;border-radius:4px}
-button{cursor:pointer;border:1px solid #888;border-radius:4px;background:#fff}
-button.primary{background:#222;color:#fff;border-color:#222}
+body{font-family:system-ui,sans-serif;margin:0;padding:24px;background:#fff;color:#222;line-height:1.4}
+h1{margin:0 0 16px;font-size:1.6rem}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+input,select,button{font:inherit;padding:8px 12px;border:1px solid #767676;border-radius:6px;background:#fff;color:#222}
+input{flex:1 1 220px;min-width:0}
+button{cursor:pointer}
+button:hover{background:#f3f4f6}
+.danger{background:#b91c1c;color:#fff;border-color:#b91c1c}
+.danger:hover{background:#991b1b}
 :focus-visible{outline:3px solid #2563eb;outline-offset:2px}
-#msg{margin:16px 0;padding:8px 12px;border-radius:4px;background:#e5e7eb}
-#msg:focus{outline-offset:0}
-#none,#empty{margin:16px 0}
-dialog{border:1px solid #888;border-radius:6px;max-width:440px;width:calc(100% - 32px)}
-dialog form{display:grid;gap:12px}
-.field{display:grid;gap:4px;font-weight:600}
-.field input,.field select{font-weight:400}
-.err{color:#b91c1c;font-weight:400;font-size:14px}
-.actions{display:flex;gap:8px;justify-content:flex-end}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{border-bottom:1px solid #ddd;padding:10px 8px;text-align:left;vertical-align:middle}
+th{font-size:.85rem;text-transform:uppercase;letter-spacing:.03em;color:#555;border-bottom:2px solid #bbb}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.status{display:inline-block;padding:2px 10px;border-radius:10px;background:#e5e7eb;font-size:.9rem;white-space:nowrap}
+.actions{white-space:nowrap}
+.actions button{padding:4px 10px;font-size:.9rem}
+.note{padding:16px 8px;color:#444}
+.msg{margin-top:16px;padding:10px 12px;border-radius:6px;background:#e5e7eb}
+dialog{border:1px solid #888;border-radius:8px;padding:20px;max-width:420px;color:#222}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+.dialog-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style></head>
 <body>
 <h1>Orders</h1>
-<div class="toolbar">
-<input id="q" type="search" placeholder="Search café or item" aria-label="Search orders">
-<select id="filter" aria-label="Filter by status"><option value="">All statuses</option><option>Pending</option><option>Baking</option><option>Ready</option><option>Delivered</option></select>
-<button class="primary" id="add">Add Order</button>
+
+<div class="toolbar" role="search">
+  <input id="q" type="search" placeholder="Search café, item or order #" aria-label="Search orders">
+  <select id="status" aria-label="Filter by status">
+    <option value="all">All statuses</option>
+    <option value="pending">Pending</option>
+    <option value="complete">Complete</option>
+  </select>
+  <button type="button" id="add" class="primary">Add Order</button>
 </div>
-<div class="scroll">
-<table id="orders">
-<thead><tr><th>#</th><th>Café</th><th>Item</th><th>Qty</th><th>Status</th><th>Actions</th></tr></thead>
-<tbody></tbody>
+
+<div class="table-wrap" tabindex="0" aria-label="Orders table, scrolls sideways on small screens">
+<table>
+  <thead>
+    <tr><th scope="col">#</th><th scope="col">Café</th><th scope="col">Item</th><th scope="col" class="num">Qty</th><th scope="col">Status</th><th scope="col">Actions</th></tr>
+  </thead>
+  <tbody id="rows">
+    <tr data-status="pending"><td>1</td><td>Harbor Café</td><td>Sourdough loaf</td><td class="num">10</td><td><span class="status">Pending</span></td>
+      <td class="actions"><button type="button" aria-label="Edit order 1 for Harbor Café">Edit</button> <button type="button" class="danger" data-delete aria-label="Delete order 1 for Harbor Café">Delete</button></td></tr>
+    <tr data-status="complete"><td>2</td><td>Main St Café</td><td>Croissant</td><td class="num">25</td><td><span class="status">Complete</span></td>
+      <td class="actions"><button type="button" aria-label="Edit order 2 for Main St Café">Edit</button> <button type="button" class="danger" data-delete aria-label="Delete order 2 for Main St Café">Delete</button></td></tr>
+  </tbody>
 </table>
 </div>
-<p id="empty" hidden>No orders yet. <button id="add-first">Add the first order</button></p>
-<p id="none" hidden>No orders match. <button id="clear">Show all orders</button></p>
-<div id="msg" role="status" tabindex="-1" hidden></div>
 
-<dialog id="editor" aria-labelledby="editor-title">
-<form id="editor-form" novalidate>
-<h2 id="editor-title">Add order</h2>
-<div class="field"><label for="f-customer">Café</label><input id="f-customer" name="customer" autocomplete="off" aria-describedby="e-customer"><span class="err" id="e-customer" hidden></span></div>
-<div class="field"><label for="f-address">Delivery address</label><input id="f-address" name="address" autocomplete="off" aria-describedby="e-address"><span class="err" id="e-address" hidden></span></div>
-<div class="field"><label for="f-item">Item</label><input id="f-item" name="item" list="products" autocomplete="off" aria-describedby="e-item"><span class="err" id="e-item" hidden></span></div>
-<div class="field"><label for="f-qty">Quantity</label><input id="f-qty" name="qty" type="number" min="1" step="1" aria-describedby="e-qty"><span class="err" id="e-qty" hidden></span></div>
-<div class="field"><label for="f-status">Status</label><select id="f-status" name="status"><option>Pending</option><option>Baking</option><option>Ready</option><option>Delivered</option></select></div>
-<div class="actions"><button type="button" id="e-cancel">Cancel</button><button class="primary">Save order</button></div>
-</form>
+<p id="empty" class="note" hidden>No orders yet. Add the first order to start today's bake list.</p>
+<p id="none" class="note" hidden>No orders match your search. <button type="button" id="clear">Clear search and filter</button></p>
+<div id="msg" class="msg" role="status" hidden></div>
+
+<dialog id="confirm" aria-labelledby="confirm-title">
+  <h2 id="confirm-title" style="font-size:1.1rem;margin:0 0 8px">Delete this order?</h2>
+  <p id="confirm-text" style="margin:0"></p>
+  <div class="dialog-actions">
+    <button type="button" id="keep" autofocus>Keep order</button>
+    <button type="button" id="do-delete" class="danger">Delete order</button>
+  </div>
 </dialog>
-
-<dialog id="confirm" aria-labelledby="confirm-text">
-<form method="dialog">
-<p id="confirm-text"></p>
-<div class="actions"><button value="cancel">Keep order</button><button class="primary" value="ok">Delete order</button></div>
-</form>
-</dialog>
-
-<datalist id="products"><option>Sourdough loaf</option><option>Baguette</option><option>Croissant</option><option>Pain au chocolat</option><option>Cinnamon roll</option><option>Rye loaf</option><option>Focaccia</option></datalist>
 
 <script>
-const $=s=>document.querySelector(s);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let orders=[
-{id:1,customer:'Blue Door Café',address:'214 Mill St',item:'Sourdough loaf',qty:12,status:'Baking'},
-{id:2,customer:'Hollis & Vine',address:'9 Orchard Ave',item:'Croissant',qty:48,status:'Pending'},
-{id:3,customer:'Corner Perk',address:'77 Harbor Rd',item:'Pain au chocolat',qty:24,status:'Ready'},
-{id:4,customer:'The Rye House Coffee',address:'1520 Pine Ct',item:'Rye loaf',qty:6,status:'Delivered'},
-{id:5,customer:'Juniper Coffee Co.',address:'300 Elm Blvd, Suite 2',item:'Cinnamon roll',qty:18,status:'Pending'}
-];
-let nextId=6,editId=null,pendingId=null,msgTimer;
+const q = document.getElementById('q'), statusSel = document.getElementById('status');
+const rows = document.getElementById('rows'), none = document.getElementById('none'), empty = document.getElementById('empty');
+const msg = document.getElementById('msg'), dlg = document.getElementById('confirm'), dlgText = document.getElementById('confirm-text');
+let pendingRow = null, opener = null;
 
-function render(){
-  const q=$('#q').value.trim().toLowerCase(),st=$('#filter').value;
-  const rows=orders.filter(o=>(!st||o.status===st)&&(!q||(o.customer+' '+o.item).toLowerCase().includes(q)));
-  $('#orders tbody').innerHTML=rows.map(o=>`<tr>
-<td>${o.id}</td>
-<td>${esc(o.customer)}<span class="sub">${esc(o.address)}</span></td>
-<td>${esc(o.item)}</td><td>${o.qty}</td>
-<td><span class="status">${o.status}</span></td>
-<td><button data-act="edit" data-id="${o.id}" aria-label="Edit order ${o.id} for ${esc(o.customer)}">Edit</button> <button data-act="delete" data-id="${o.id}" aria-label="Delete order ${o.id} for ${esc(o.customer)}">Delete</button></td></tr>`).join('');
-  $('#orders').hidden=orders.length===0;
-  $('#empty').hidden=orders.length>0;
-  $('#none').hidden=!(orders.length>0&&rows.length===0);
-}
-
-function say(t){
-  const m=$('#msg');m.textContent=t;m.hidden=false;m.focus();
-  clearTimeout(msgTimer);msgTimer=setTimeout(()=>m.hidden=true,5000);
-}
-
-function clearErrors(){
-  document.querySelectorAll('#editor-form .err').forEach(s=>s.hidden=true);
-  document.querySelectorAll('#editor-form [aria-invalid]').forEach(i=>{i.removeAttribute('aria-invalid');i.removeAttribute('aria-describedby')});
-  document.querySelectorAll('#editor-form input[aria-describedby]').forEach(i=>i.setAttribute('aria-describedby','e-'+i.name));
-}
-
-function openEditor(o){
-  editId=o?o.id:null;
-  const f=$('#editor-form');
-  f.reset();clearErrors();
-  $('#editor-title').textContent=o?`Edit order #${o.id}`:'Add order';
-  if(o){f.customer.value=o.customer;f.address.value=o.address;f.item.value=o.item;f.qty.value=o.qty;f.status.value=o.status;}
-  $('#editor').showModal();
-  f.customer.focus();
-}
-
-function askDelete(o){
-  pendingId=o.id;
-  $('#confirm').returnValue='';
-  $('#confirm-text').textContent=`Delete order #${o.id} for ${o.customer} (${o.qty} ${o.item})? It will be removed from the bake list and the route. This cannot be undone.`;
-  $('#confirm').showModal();
-}
-
-$('#orders tbody').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  const o=orders.find(x=>x.id==b.dataset.id);if(!o)return;
-  if(b.dataset.act==='edit')openEditor(o);else askDelete(o);
-});
-
-$('#confirm').addEventListener('close',()=>{
-  if($('#confirm').returnValue!=='ok'||pendingId==null)return;
-  const o=orders.find(x=>x.id===pendingId);
-  orders=orders.filter(x=>x.id!==pendingId);pendingId=null;
-  render();say(`Order #${o.id} for ${o.customer} deleted.`);
-});
-
-$('#editor-form').addEventListener('submit',e=>{
-  e.preventDefault();
-  const f=e.target;clearErrors();
-  const data={customer:f.customer.value.trim(),address:f.address.value.trim(),item:f.item.value.trim(),qty:Number(f.qty.value),status:f.status.value};
-  const errs=[];
-  if(!data.customer)errs.push(['customer','Enter the café name.']);
-  if(!data.address)errs.push(['address','Enter the delivery address for the driver.']);
-  if(!data.item)errs.push(['item','Enter what to bake.']);
-  if(!Number.isInteger(data.qty)||data.qty<1)errs.push(['qty','Enter a quantity of 1 or more.']);
-  if(errs.length){
-    for(const [k,msg] of errs){
-      const s=$('#e-'+k);s.textContent=msg;s.hidden=false;
-      f.elements[k].setAttribute('aria-invalid','true');
-    }
-    f.elements[errs[0][0]].focus();
-    return;
+function applyFilters() {
+  const term = q.value.trim().toLowerCase(), s = statusSel.value;
+  let shown = 0;
+  for (const r of rows.rows) {
+    const ok = (!term || r.textContent.toLowerCase().includes(term)) && (s === 'all' || r.dataset.status === s);
+    r.hidden = !ok;
+    if (ok) shown++;
   }
-  let text;
-  if(editId==null){const id=nextId++;orders.push({id,...data});text=`Order #${id} added.`;}
-  else{Object.assign(orders.find(o=>o.id===editId),data);text=`Order #${editId} saved.`;}
-  $('#editor').close();
-  render();say(text);
+  empty.hidden = rows.rows.length > 0;
+  none.hidden = rows.rows.length === 0 || shown > 0;
+}
+
+q.addEventListener('input', applyFilters);
+statusSel.addEventListener('change', applyFilters);
+document.getElementById('clear').addEventListener('click', () => { q.value = ''; statusSel.value = 'all'; applyFilters(); q.focus(); });
+
+rows.addEventListener('click', e => {
+  const b = e.target.closest('button[data-delete]');
+  if (!b) return;
+  opener = b;
+  pendingRow = b.closest('tr');
+  const c = pendingRow.cells;
+  dlgText.textContent = `${c[0].textContent}: ${c[3].textContent} × ${c[2].textContent} for ${c[1].textContent}. This can't be undone.`;
+  dlg.showModal();
 });
 
-$('#e-cancel').onclick=()=>$('#editor').close();
-$('#q').addEventListener('input',render);
-$('#filter').addEventListener('change',render);
-$('#add').onclick=$('#add-first').onclick=()=>openEditor(null);
-$('#clear').onclick=()=>{$('#q').value='';$('#filter').value='';render();$('#q').focus();};
-render();
+document.getElementById('keep').addEventListener('click', () => dlg.close());
+dlg.addEventListener('close', () => { if (opener && opener.isConnected) opener.focus(); });
+
+document.getElementById('do-delete').addEventListener('click', () => {
+  const id = pendingRow.cells[0].textContent;
+  pendingRow.remove();
+  pendingRow = null; opener = null;
+  dlg.close();
+  applyFilters();
+  msg.textContent = `Order ${id} deleted.`;
+  msg.hidden = false;
+  document.getElementById('add').focus();
+});
+
+applyFilters();
 </script>
 </body></html>
 ```
 
-What changed: the placeholders are now real café orders, with a delivery address under each café name for the driver. Statuses are Pending, Baking, Ready, and Delivered, which replaces the original "Complete". Search, the status filter, Add/Edit, and Delete all work. Delete asks for confirmation and names the order, and the success message is announced. The no-results and empty-list states now have a way out. Errors appear beside the field and move focus to the first problem. Every Edit and Delete button names its order. Visible focus rings are restored, and the table scrolls sideways on narrow screens. The look, palette, and layout are unchanged.
+**What changed**
+- Columns now name the bakery's nouns: "Café" instead of "Customer Name". Sample rows use placeholder cafés and products; replace them with real data.
+- Qty is right-aligned with tabular numbers so the column scans at 4am.
+- Status filter options are real statuses. Search and filter work together, and the "No results" message offers a one-click clear.
+- Empty list shows a first-use message instead of an empty table.
+- Edit and Delete have names that include the order and café, so they're distinct to a screen reader.
+- Delete opens a real modal dialog (native, so Escape and focus handling work). It states the consequence and uses the verbs "Delete order" / "Keep order". Keep is focused by default. Focus returns to the row's Delete button on cancel and to Add Order after a delete.
+- The success message is a live region and names the deleted order.
+- The table scrolls sideways on narrow screens instead of breaking the layout. Focus rings are visible on every control.
 
-Not done: the page has no backend, so Add, Edit, and Delete only last until reload. I also didn't run it in a browser or with a screen reader, so those checks are still open. I also did not add a bake-totals summary, since that would be a new feature.
+**Notes**
+- Kept the original neutral palette, type and layout. The only new color is the red Delete button, because it's a destructive action.
+- Edit and Add Order had no defined behavior, so they're still unwired. Tell me what they should do and I'll add it.
+- Not tested in a browser or with a screen reader. I checked the code by reading it.

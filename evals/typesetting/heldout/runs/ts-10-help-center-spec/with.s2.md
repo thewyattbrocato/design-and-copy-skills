@@ -1,99 +1,124 @@
 ```css
-:root {
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+/* Help-center article: type styles
+   Desktop is the default. Mobile overrides below 40rem (640px). */
 
-  /* Desktop scale, ratio about 1.25 */
-  --fs-h1: 2.5rem;       /* 40px */
-  --fs-h2: 1.75rem;      /* 28px */
-  --fs-h3: 1.25rem;      /* 20px */
-  --fs-body: 1.125rem;   /* 18px */
-  --fs-quote: 1.5rem;    /* 24px */
-  --fs-code: 0.9375rem;  /* 15px */
-  --fs-caption: 0.875rem;/* 14px */
-}
+.article {
+  --text-h1: 2.5rem;       /* 40px */
+  --text-h2: 1.875rem;     /* 30px */
+  --text-h3: 1.375rem;     /* 22px */
+  --text-body: 1.0625rem;  /* 17px */
+  --text-quote: 1.5rem;    /* 24px */
+  --text-small: 0.875rem;  /* 14px: captions, code */
 
-@media (max-width: 640px) {
-  :root {
-    --fs-h1: 1.75rem;    /* 28px */
-    --fs-h2: 1.375rem;   /* 22px */
-    --fs-h3: 1.125rem;   /* 18px */
-    --fs-body: 1rem;     /* 16px */
-    --fs-quote: 1.25rem; /* 20px */
-    --fs-code: 0.875rem; /* 14px */
-    --fs-caption: 0.875rem;
-  }
-}
-
-body {
-  font-family: var(--font-body);
-  font-size: var(--fs-body);
-  line-height: 1.55;
+  font-size: var(--text-body);
+  line-height: 1.5;
   font-synthesis: none;
 }
 
-h1, h2, h3 {
-  font-weight: 700;
+.article h1,
+.article h2,
+.article h3 {
   text-wrap: balance;
+  font-weight: 700;
 }
 
-h1 {
-  font-size: var(--fs-h1);
+.article h1 {
+  font-size: var(--text-h1);
   line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 1rem;
+}
+
+.article h2 {
+  font-size: var(--text-h2);
+  line-height: 1.2;
   letter-spacing: -0.01em;
-  margin: 0 0 1.5rem;
+  margin: 2.5rem 0 0.75rem;
 }
 
-h2 {
-  font-size: var(--fs-h2);
-  line-height: 1.25;
-  margin: 2.5rem 0 1.25rem;
-}
-
-h3 {
-  font-size: var(--fs-h3);
+.article h3 {
+  font-size: var(--text-h3);
   line-height: 1.3;
-  margin: 2rem 0 0.75rem;
+  margin: 2rem 0 0.5rem;
 }
 
-p, li {
+.article p {
+  font-size: var(--text-body);
+  line-height: 1.5;
   max-width: 65ch;
+  margin: 0 0 1rem;
   text-wrap: pretty;
 }
 
-p {
-  margin: 0 0 1em;
-}
-
-code, pre {
-  font-family: var(--font-mono);
-  font-size: var(--fs-code);
-}
-
-pre {
+/* Code snippet (block) and inline code */
+.article pre,
+.article code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.9375rem;    /* 15px */
   line-height: 1.5;
-  margin: 1.5rem 0;
-  overflow-x: auto;
-  white-space: pre;
 }
 
-figcaption {
-  font-size: var(--fs-caption);
+.article pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  white-space: pre;        /* keep unwrapped; scroll instead */
+  tab-size: 2;
+}
+
+.article :not(pre) > code {
+  font-size: 0.9em;
+}
+
+/* Image caption */
+.article figcaption {
+  font-size: var(--text-small);
   line-height: 1.4;
   margin-top: 0.5rem;
   max-width: 65ch;
 }
 
-blockquote {
-  font-size: var(--fs-quote);
+/* Pull quote */
+.article blockquote,
+.article .pull-quote {
+  font-size: var(--text-quote);
   line-height: 1.35;
   font-weight: 500;
   max-width: 40ch;
-  margin: 2rem 0;
-  padding-left: 1.25rem;
+  margin: 2.5rem 0;
   text-wrap: balance;
+}
+
+/* Mobile */
+@media (max-width: 40rem) {
+  .article {
+    --text-h1: 1.875rem;   /* 30px */
+    --text-h2: 1.5rem;     /* 24px */
+    --text-h3: 1.25rem;    /* 20px */
+    --text-body: 1rem;     /* 16px */
+    --text-quote: 1.25rem; /* 20px */
+    --text-small: 0.875rem;
+  }
+
+  .article h1 { line-height: 1.2; margin-bottom: 0.75rem; }
+  .article h2 { margin: 2rem 0 0.5rem; }
+  .article h3 { margin: 1.5rem 0 0.5rem; }
+
+  .article pre,
+  .article code { font-size: 0.875rem; } /* 14px */
+
+  .article pre {
+    padding: 0.875rem 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .article blockquote,
+  .article .pull-quote {
+    line-height: 1.4;
+    margin: 2rem 0;
+  }
 }
 ```
 
-- I used element selectors (`blockquote`, `figcaption`, `pre`) since I haven't seen the template's markup. Swap in the developers' class names as needed.
-- I left color out because no palette was given. Make sure the caption's color still has enough contrast, since it's the smallest text.
+- **Assumptions:** I scoped everything under `.article` and used element selectors, so swap in your template's real class names. I also left out typefaces and colors, so the developers will need to add those.
+- **Scale:** The sizes follow roughly a 1.25 ratio on desktop. The code snippet and caption are the small sizes. Space above each heading is about double the space below it.

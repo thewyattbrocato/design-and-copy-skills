@@ -1,16 +1,22 @@
-The chart is honest and nearly ready to send. I checked the geometry: the axis is zero-based, and the 410 and 521 points sit at the right heights (y=103 and y=66 on your scale). Here is what I'd change, most important first.
+This chart is close to ready. I'd change the headline, and I'd check one other thing before it goes out.
 
-1. **Fix the title's arithmetic.** 410 to 521 is +27%, which is closer to "more than a quarter" than "about a quarter". Someone on the board will do the division. Also, January to June is five months of change, not six, because there are six data points. Suggested title: *"Weekly active members grew 27% from January to June"*.
+**Change the headline.** The drawing matches your numbers: both endpoints land on the right pixels for the axis, and the y-axis starts at zero. The title is the weak part, in two ways:
+- **"About a quarter":** 410 to 521 is +27%. That is a little over a quarter, and a board member with a calculator will get 27%. Use the exact figure.
+- **"In six months":** January to June is six data points but only five months of change. "From January to June" avoids the question.
 
-2. **Say what the unlabeled middle points are.** Feb to May (about 432, 456, 471 and 498, judging from the line) have no values on the chart. That's fine for a line, but the board can't check them. Either label every point, or put the figures in a line of text under the chart.
+Suggested title: **Weekly active members rose 27% from January to June 2026**
 
-3. **Add a comparison if you have one.** The chart shows growth but nothing to measure it against: the same months in 2025, a membership target, or capacity. A swim club's numbers are often seasonal, so someone may ask whether this is just the usual January-to-June pattern. If you have last year's data, add it as a gray line. If you don't, expect the question.
+**Check before sending:**
+- **No seasonality comparison.** A swim club's membership may climb every spring, whatever the club does. The chart can't show whether this is growth or the usual pattern. If you have January to June 2025, a faint gray line for it would answer that question before the board asks. If you don't, consider softening the title to describe the rise without implying a cause.
+- **The data may look stale.** It ends in June and the board meets in late October. If you have July to October, they'll likely ask where it is. If you don't, a note such as "Data through June 2026" would help.
 
-4. **Note that this is a one-week sample each month.** Your subtitle already says "first week of each month", which is good. A single week can be noisy, so check that none of the six weeks was unusual, such as a holiday week or a gala. If one was, mention it.
+**Optional polish:**
+- Label the y-axis in the caption or axis as "members per week." The caption nearly says it, so this is minor.
+- Label the middle points, or leave them off. The unlabeled middle is fine if the endpoints are the story, and your direct labels on 410 and 521 already do that.
 
-5. **Optional polish.**
-   - Add a "Members" label to the y-axis, or the word "members" after the first value.
-   - Put the data in a `<desc>` or a short sentence for screen readers, since the `aria-label` only gives the endpoints.
-   - 12px chart text is small if this will be projected.
-
-I'd leave everything else as it is. The zero baseline, the light gridlines, the two direct labels with the end value in bold, and the single accent color are all what you want here. I can send back the revised markup with the new title and the middle values labeled if you'd like.
+Everything else holds up:
+- The chart uses a single accent color.
+- The gridlines are faint.
+- The chart has no legend, 3D or dual axis.
+- The `aria-label` gives screen-reader users the endpoints.
+- The caption states the definition, the sampling and the source.

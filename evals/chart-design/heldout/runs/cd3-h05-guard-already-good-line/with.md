@@ -1,21 +1,17 @@
-This is in good shape to send. The data and drawing match, and I only have a few optional edits.
+This is ready to send. The chart is honest, and I only have a few optional tweaks.
 
 **What I checked**
-- **Numbers:** The 410 and 521 points sit at the right heights on your axis. The unlabeled months fall in a plausible rising sequence.
-- **Axis:** It starts at zero, so the rise isn't exaggerated.
-- **Title:** It states the finding.
-- **Subtitle:** It defines "active", the sampling week and the source.
-- **Styling:** Gridlines are faint, the endpoints are labeled directly, and there is no legend.
+- **Scale:** The y-axis starts at 0, and the point positions match the axis. 410 lands at y≈103 and 521 at y≈66, both correct for the 0/200/400/600 ticks. The rise looks as big as it is.
+- **Labels:** Only the endpoints are labeled, and the labels don't collide with the line.
+- **Styling:** The gridlines are faint, there's one accent color, and there's no legend to look up.
+- **Context:** The subtitle gives the metric, the sampling (first week of each month) and the source. The `aria-label` is present.
 
-**Worth changing**
-1. **Title wording.** Jan to Jun is five months of change, not six. 410 to 521 is +27%, which "about a quarter" covers loosely. Either of these is safer if a board member checks:
-   - "Weekly active members rose 27% from January to June 2026"
-   - "Weekly active members are up by about a quarter since January"
-2. **Seasonality.** A swim club's membership may well rise from winter to summer anyway. A board member may ask "is that just the season?" If you have January to June 2025, add it as a gray line behind this one. If not, consider a one-line note, or be ready to answer it.
-3. **Accessibility.** The `aria-label` only gives the two endpoints. If you have the Feb to May values, put them in a short data table under the chart or in a `<desc>`. I only have the pixel positions for those months, so I haven't guessed the numbers.
+**Worth changing before it goes out**
+1. **Check the headline against the numbers.** 410 → 521 is +27%, so "about a quarter" is slightly low. A board may do the math. "Weekly active members rose 27% in six months" is more precise and still short. If you prefer the softer wording, "more than a quarter" is accurate.
+2. **Expect a seasonality question.** January to June is only six months, and swim clubs often have seasonal patterns. The chart has nothing to compare against, such as the same months in 2025 or a target. If you have that data, a faint gray line for last year would answer the question before it's asked. If not, be ready to answer it.
 
-**Optional polish**
-- Add a "Members" label to the y-axis, since the unit now lives only in the subtitle.
-- Label the Feb to May points lightly, or leave them as they are. The two-endpoint labeling works for a story about start versus finish.
+**Minor, optional**
+- Add a "Members" unit label at the top of the y-axis, so the chart reads without the subtitle.
+- Label the middle points (about 432, 456, 471, 498, going by the pixel positions) if the board will want exact figures. I derived those from the geometry, so check them against your data first. Otherwise, include a small table or the numbers in the email.
 
-I haven't changed any of the markup. If you'd like, I can make the title edit and add the `<desc>` or the prior-year line once you give me the numbers.
+I'd make change 1 and decide on change 2 based on whether you have last year's data.

@@ -1,22 +1,27 @@
-**Coordinator, no shifts posted yet**
+**Coordinator: no shifts posted yet**
+
 Title: No shifts yet
-Body: Post your first shift and parents can sign up for it.
+Body: Post your first shift and parents can sign up for it. You'll see who's signed up right here.
 Button: Post a shift
 
-**Parent, no open shifts**
-Title: No open shifts right now
-Body: Every shift is taken, or none have been posted yet. Check back soon.
+**Parent: no open shifts**
 
-**Push notification prompt (before the browser's own dialog)**
+Title: No open shifts right now
+Body: All shifts are filled, or none have been posted yet. Check back soon. If you turn on reminders, you'll hear about shifts you sign up for.
+(No button. Nothing for the parent to do here.)
+
+**Push notification prompt (shown before the browser's own request)**
+
 Title: Get shift reminders?
-Body: We'll send a reminder to this device before a shift you've signed up for. You can turn reminders off anytime in your browser settings.
+Body: We'll send a reminder before each shift you sign up for. You can turn this off anytime in your browser settings.
 Buttons: Turn on reminders / Not now
 
-**Shift just taken**
-Title: This shift was just taken
-Body: Someone else signed up a moment ago. You haven't been signed up for it. Pick another open shift.
+**Shift already taken**
+
+Title: Someone just took this shift
+Body: Another parent signed up a moment before you, so you're not signed up for this one. Other open shifts are still available.
 Button: See open shifts
 
 Notes:
-- I didn't promise a time for the reminders, because you haven't told me when they go out. If you have a fixed lead time, add it, for example "the day before".
-- On the parent empty screen, "Check back soon" is the only next step available. If a parent can't get alerts about new shifts yet, don't hint that they can.
+- The parent empty state avoids promising that new shifts will notify them, since reminders only cover shifts they've signed up for. If you later add new-shift alerts, that line can change.
+- "Turn off in your browser settings" assumes there's no in-app toggle yet. If you add one, point to it instead.

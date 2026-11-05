@@ -1,21 +1,22 @@
-**Pick: "Not creative? Perfect. Bring that to Tuesday."**
+**Pick: "I'm not creative" becomes the sign-up line.** Most people who email you say it before they sign up, so the campaign says it back to them first: *Not creative? Good. Tuesdays, 6:30.* The ad talks to the doubt your students already voice, instead of promising "unleash your creativity."
 
-Most skill-class ads promise you'll discover your creative side. Your students already have a line for why they can't, and they send it to you before they sign up. The campaign says that line out loud and answers it with what you can actually offer: six Tuesday evenings, 8 seats, and up to 4 pieces fired and handed back.
+**Three forms**
+- **Post or poster:** The headline is "I'm not creative." underneath it, small: "Six Tuesdays. 8 seats. Clay and firing of up to 4 pieces included. $240." No photos of perfect pots. Use a close-up of hands in wet clay.
+- **Your reply to inquiry emails:** When someone writes "I'm not creative, but...", answer in the same spirit and include the class details. This one needs no ad spend.
+- **Studio door or sign-up table:** A card that reads "Not creative? You're in the right place. Dunmore Street, above the hardware store, parking behind." It gives people the directions and the same permission to start.
 
-**Three forms (each works alone)**
-- **Poster and post:** The line "I'm not creative." sits alone in big type. Underneath, smaller: "Six Tuesdays. Eight seats. Four pieces. Kilnside Studio, above the hardware store on Dunmore." Use a photo of a real student's first bowl, with their consent [add: photo].
-- **Your reply email:** Many people already email you this line, so turn your reply into the campaign. Subject: "Not creative? Good, that's who this class is for." The body is the details, including $240 with clay and firing, Oct 21, and parking behind the building. You can send the same text to the whole list.
-- **Handout at the studio:** A small card with "I'm not creative" on the front. On the back: "Week one you throw. About a week later it comes back from the kiln." The second kiln makes that true now, where it used to take about three weeks.
+**Needs from you**
+- Ask the owner: would any past student let you use their "I'm not creative" line, with their name or anonymized and with their OK? If not, paraphrase it yourself ("a lot of people tell me this before they sign up"), as the copy above already does.
+- Ask the owner: do you want to state the 31 of 46 re-sign-up as proof? It's true, and it makes a good line: "31 of last spring's 46 students signed up again."
+- **Check the date.** Today is Oct 29, 2026, so an Oct 21 start looks like it has passed. If that's a typo or you mean next year, fix it before anything goes out.
 
-**Other directions, one line each**
-- **"Back in a week":** The new kiln is the news. Pieces return in about a week instead of three, so you see results during the class. This is the most concrete angle, and it works well as the supporting fact.
-- **"31 of 46 signed up again":** The strongest proof you have. Beginners who return at that rate liked it. This is a good line for the registration email.
-- **"Eight seats, one class":** An honest scarcity message, since it's the only class this fall. It works best as a closing line, not as the whole idea.
-- **"Above the hardware store":** A wayfinding campaign that plays on where you are. It's charming, but it only sells the address.
+**Plain fallback:** A straight announcement built on your facts: six-week beginner wheel class, Tuesdays 6:30–9, 8 seats, $240 with clay and firing included, second kiln so pieces come back in about a week.
 
-**Plain fallback:** A straightforward announcement built on the facts. "Fall wheel-throwing: Tuesdays 6:30–9, starts Oct 21, 8 seats, $240 with clay and firing of up to 4 pieces. Pieces now come back in about a week. 31 of last spring's 46 students signed up again." It needs nothing more from you.
+**Other directions, if you want to choose**
+1. **One week, not three.** Lead with the second kiln: you make something and have it back in about a week. It's a strong practical hook, but it speaks to people who already want a class.
+2. **Eight stools.** Lead with the small room: 8 seats, one class this fall. The scarcity is real, so it's honest, but it works better as a closing line than as the idea.
+3. **31 of 46.** Let the re-sign-up rate carry the whole campaign. It's credible, but it's a stat, and it gives people less to feel.
+4. **Above the hardware store.** Lead with the place: find the studio above the hardware store on Dunmore Street, with parking behind. It's charming and local, but it doesn't give anyone a reason to sign up.
+5. **Say less.** A one-line card with the date, the seats and the price. It's the plainest option and almost the same as the fallback.
 
-**Ask the owner**
-- Can you quote the "I'm not creative" emails? Without the sender's name, or with their okay, they'd make a strong second wave of posts. Right now the campaign uses only the phrase, not anyone's actual words.
-- Do you have a photo of a student's first piece, and does the student agree to its use?
-- Registration opens next week, but class starts Oct 21, which is next Tuesday. Check the dates before anything goes out.
+I'd pick the "not creative" idea because it's the only one that starts from something your future students already say. Directions 1–3 work well as supporting lines under it.

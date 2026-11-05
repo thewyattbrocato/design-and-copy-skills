@@ -1,15 +1,18 @@
-This is already good, so I'd ship it nearly as is. It's three short screens, each tied to a real task. Each screen's text sits next to the thing it describes, and Skip is on every screen. I'd change one line.
+I'd ship it nearly as is. It already follows the practices that matter:
 
-**Screen 2 (the only edit)**
-- Title: Add your walking area
-- Text: ~~"Draw a circle on the map where you walk."~~ **"Drag the circle to where you walk."** We'll only offer you walks inside it.
+- **It teaches by doing.** Each screen shows the real form or map with the relevant part highlighted, and there's no tour of controls.
+- **It's short and has one idea per screen.** Each screen has one sentence of instruction plus the reason for it ("We'll only offer you walks inside it").
+- **People can skip it.** Skip is on every screen.
+- **The last screen says what now works and what to do next.** It doesn't use confetti or a "Got it!" gate.
 
-The circle is already on the map and draggable, so "Draw" tells people to do something they can't. Someone may look for a drawing tool that isn't there. If the circle can be resized, add "and resize" here, but I can't tell that from what you've sent.
+Your numbers (finished in under a minute, fewer setup tickets) back this up. I can't check them from here.
 
-Screens 1 and 3 stay unchanged.
+**One wording change, on screen 2:**
+- Current: "Draw a circle on the map where you walk. We'll only offer you walks inside it."
+- Suggested: "Drag the circle to where you walk. We'll only offer you walks inside it."
 
-**Check before tomorrow**
-- **Screen 3 can be false.** "Your first walk is on the calendar" is only true if the walk was saved on screen 1. Test pressing Next with the form empty or half-filled. Either block Next until the walk exists, or show a different line when it doesn't, such as "Add your first walk any time from [where the add button lives]".
-- **The way back to help after Skip is untested.** I can't see whether one exists. If it doesn't, add a "Replay setup" entry somewhere findable, such as [settings or help menu].
+The circle is already placed, so "draw" describes an action the person doesn't take. Someone might look for a draw tool that isn't there.
 
-**How to judge it later:** the drop in setup tickets is a good sign. The stronger check is how many new users have a saved walk and a walking area a few days after sign-up, without having opened help again. Split that by people who finished the flow and people who skipped it.
+**One thing to check before tomorrow:** screen 3 says "Your first walk is on the calendar." Make sure that's true if someone taps Next on screen 1 without filling in the form, or skips. If a walk might not exist, either block Next until the form is filled, or show different text on screen 3, such as "You're ready. Add a walk from the calendar any time."
+
+**Later:** the real test is whether people add their second walk unaided a few days after setup, so I'd track that alongside completion.

@@ -1,42 +1,38 @@
-I haven't invented any patient quotes or outcome numbers. You've been open five weeks, and made-up testimonials on a health-care site would mislead patients. They would also likely breach advertising rules for health practitioners, and many regulators and Google's review policies prohibit them. Below is a version that's honest and still builds trust, with slots for real quotes as they come in.
+I haven't invented any patient quotes or outcome numbers. You've been open five weeks, and fabricated testimonials on a health site would mislead people and could get you in trouble with your regulator or the FTC. The section below is honest for a new clinic, and it has slots for real quotes as they come in.
 
 ---
 
 ## Results and what patients say
 
-**We're new, so we'll be straight with you about what we can show.**
+**We're new, so we'll show you how we measure results instead of making claims.**
 
-Northgate Physio opened this fall. We'd rather earn your trust with a clear plan than with numbers we can't back up. Here's what you can count on.
+Northgate Physio opened this fall, and we'd rather earn your trust with specifics than borrow it with big promises. Here's how we track whether your rehab is working:
 
-**What you can expect from your care**
-- **A full assessment at your first visit.** We look at how you move, what's driving your pain, and what you want to get back to, whether that's stairs, a run, or reaching a high shelf.
-- **A written plan with measurable goals.** You'll know what we're working toward and how we'll check progress, such as range of motion, strength, and function.
-- **Your own physiotherapist, 45 minutes of real time.** No handoffs and no being left on a machine.
-- **Honest advice.** If something looks like it needs a surgeon, imaging, or a doctor, we'll tell you and refer you on.
+- **A baseline at your first visit.** Your full assessment records your range of motion, strength, pain levels, and the specific things you want to get back to, whether that's reaching a high shelf, climbing stairs, or returning to a sport.
+- **The same measures, re-checked as you go.** You'll see your numbers change, or not, and we'll adjust the plan if they don't.
+- **Honest timelines.** Some knee and shoulder problems settle in weeks. Others take months. We'll tell you what we expect after your assessment, and we'll tell you if we think you need imaging or a referral.
 
 **What patients say**
 
-*[Insert 2–3 real quotes here as they come in. Ask for written permission, and use first name and initial only unless the patient agrees to more.]*
+> *[Placeholder: add a real patient quote here, with first name and initial and, if they agree, the injury treated. Example format: "Quote text." — Name L., knee rehab]*
 
-> "[Patient quote]" — *[First name, initial], [knee/shoulder] rehab*
+> *[Placeholder: second quote]*
 
-*Not enough reviews yet? Say so: "We're collecting patient feedback as we grow. Check back soon, or see our Google reviews."*
+> *[Placeholder: third quote]*
 
-**Early days, real commitment.** After each course of care, we'll ask how you're doing against the goals we set together. Once we have enough completed cases, we'll publish what we see.
+We'll add patient feedback here as it comes in. Every quote is shared with the patient's permission.
 
 ---
 
 ## About Northgate Physio
 
-Northgate Physio is a two-physiotherapist clinic on the east side, in a converted bakery. We focus on knee and shoulder rehab, so we see these injuries every day. Whether you're recovering from surgery, a sports injury, or pain that won't go away, we'll find out what's going on and build a plan you can follow.
+Northgate Physio is a two-physiotherapist clinic in a converted bakery on the east side, focused on knee and shoulder rehabilitation. Every session is a full 45 minutes of one-on-one time with your physiotherapist, not a handoff between assistants. Your first visit includes a complete assessment, so your plan starts from what's going on with you. Sessions are $95.
 
-Sessions are 45 minutes and $95. Your first visit includes a full assessment. We keep the clinic small so you get time, clear answers, and a plan that makes sense to you.
-
-**Book your first visit.**
+We started Northgate because we wanted a place where people could take their time recovering from an injury and understand what's happening in their body. Come in, see the space, and ask us anything.
 
 ---
 
-**Before launch**
-1. **Collect real quotes.** Ask your first few patients (with consent) for a sentence or two. Even three genuine quotes beat a section of generic claims.
-2. **Check your regulator's rules.** Testimonial rules vary by province, state, and country. Confirm what's allowed in your area.
-3. **Add credentials.** Your names, qualifications, and registration numbers would strengthen the About blurb. Send them over and I'll work them in.
+**Before you publish:**
+- **Collect real quotes.** Ask your first happy patients, in person or by a short follow-up message, whether you can quote them. Get permission in writing (a reply email is enough). In the meantime, you can delete the placeholder blocks so no brackets show on the live page.
+- **Check the claims.** I left out phrases like "proven results" and "guaranteed recovery" on purpose. Physio regulators in most places restrict outcome claims and testimonial use, so check your licensing body's advertising rules.
+- **Add details.** If you tell me the practitioners' names and credentials, the neighborhood or street, and your booking method, I can work them into the About blurb. I can also write a shorter version for the page footer or a Google listing.

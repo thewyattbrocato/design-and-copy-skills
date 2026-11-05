@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumber Rack Comparison</title>
+<style>
+  :root {
+    --bg: #f6f4ef; --card: #ffffff; --text: #26231f; --muted: #6f685e;
+    --line: #e4dfd5; --accent: #9a5b25; --bar: #d9a066; --good: #2f7d4f; --goodbg: #e4f3ea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1a17; --card: #26231f; --text: #efe9df; --muted: #a39b8d;
+      --line: #3a362f; --accent: #e0a064; --bar: #8a5a2c; --good: #7fd1a0; --goodbg: #1f3a2a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2rem 1rem; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.45;
+  }
+  main { max-width: 1000px; margin: 0 auto; }
+  h1 { margin: 0 0 .25rem; font-size: 1.6rem; }
+  p.sub { margin: 0 0 1.25rem; color: var(--muted); font-size: .92rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-bottom: 1rem; font-size: .9rem; }
+  .controls label { color: var(--muted); }
+  select {
+    font: inherit; padding: .35rem .6rem; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text);
+  }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { padding: .7rem .85rem; text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th {
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted);
+    border-bottom: 1px solid var(--line); cursor: pointer; user-select: none; font-weight: 600;
+  }
+  thead th:hover { color: var(--accent); }
+  thead th.active { color: var(--accent); }
+  thead th .arrow { display: inline-block; width: .8em; }
+  tbody tr + tr td { border-top: 1px solid var(--line); }
+  tbody tr:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+  td.name { font-weight: 600; }
+  td.best { color: var(--good); background: var(--goodbg); font-weight: 600; }
+  .barcell { min-width: 150px; }
+  .bar { display: flex; align-items: center; gap: .5rem; justify-content: flex-end; }
+  .bar span.track { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; min-width: 60px; }
+  .bar span.fill { display: block; height: 100%; background: var(--bar); border-radius: 4px; }
+  .bar b { min-width: 3.9em; font-weight: 500; }
+  .note { margin-top: 1rem; color: var(--muted); font-size: .82rem; }
+  .legend-best { color: var(--good); font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Lumber Rack Comparison</h1>
+  <p class="sub">8 boards measured in the garage. Click any column header to sort.</p>
+
+  <div class="controls">
+    <label for="sort">Sort by</label>
+    <select id="sort">
+      <option value="name">Name</option>
+      <option value="thick">Thickness</option>
+      <option value="len">Length</option>
+      <option value="lb">Weight</option>
+      <option value="price">Total price</option>
+      <option value="ppf" selected>Price per ft</option>
+      <option value="ppl">Price per lb</option>
+      <option value="lpf">Weight per ft</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr id="head"></tr>
+      </thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <p class="note">
+    <span class="legend-best">Green</span> marks the lowest value in a price column (or the lowest weight per ft).
+    Widths weren't measured, so price per board-foot isn't included; per-ft and per-lb figures are derived from your numbers.
+  </p>
+</main>
+
+<script>
+  const boards = [
+    { name: "Walnut plank",   thick: 3,    len: 8,     lb: 41,     price: 96 },
+    { name: "Red oak board",  thick: 1.5,  len: 10.5,  lb: 28.4,   price: 54.5 },
+    { name: "Maple slab",     thick: 2.25, len: 6.25,  lb: 37.125, price: 138.75 },
+    { name: "Pine 2x4",       thick: 1.5,  len: 12,    lb: 9.5,    price: 7.25 },
+    { name: "Cherry board",   thick: 0.75, len: 8,     lb: 12.2,   price: 62 },
+    { name: "Ash beam",       thick: 3.5,  len: 9.125, lb: 52,     price: 120 },
+    { name: "Birch plywood",  thick: 0.5,  len: 4,     lb: 18.75,  price: 38.5 },
+    { name: "Cedar plank",    thick: 1.25, len: 14,    lb: 16,     price: 44.2 }
+  ].map(b => ({ ...b, ppf: b.price / b.len, ppl: b.price / b.lb, lpf: b.lb / b.len }));
+
+  const cols = [
+    { key: "name",  label: "Board" },
+    { key: "thick", label: "Thickness", fmt: v => v + " in" },
+    { key: "len",   label: "Length",    fmt: v => v + " ft" },
+    { key: "lb",    label: "Weight",    fmt: v => v + " lb" },
+    { key: "price", label: "Price",     fmt: v => "$" + v.toFixed(2), best: "min" },
+    { key: "ppf",   label: "$ / ft",    fmt: v => "$" + v.toFixed(2), best: "min", bar: true },
+    { key: "ppl",   label: "$ / lb",    fmt: v => "$" + v.toFixed(2), best: "min" },
+    { key: "lpf",   label: "lb / ft",   fmt: v => v.toFixed(2), best: "min" }
+  ];
+
+  let sortKey = "ppf", dir = 1;
+  const head = document.getElementById("head");
+  const body = document.getElementById("body");
+  const sel = document.getElementById("sort");
+
+  function render() {
+    head.innerHTML = cols.map(c =>
+      `<th data-k="${c.key}" class="${c.key === sortKey ? "active" : ""}">${c.label}<span class="arrow">${c.key === sortKey ? (dir > 0 ? " ▲" : " ▼") : ""}</span></th>`
+    ).join("");
+
+    const rows = [...boards].sort((a, b) => {
+      const x = a[sortKey], y = b[sortKey];
+      return (typeof x === "string" ? x.localeCompare(y) : x - y) * dir;
+    });
+
+    const mins = {}, maxPpf = Math.max(...boards.map(b => b.ppf));
+    cols.filter(c => c.best).forEach(c => mins[c.key] = Math.min(...boards.map(b => b[c.key])));
+
+    body.innerHTML = rows.map(b => "<tr>" + cols.map(c => {
+      if (c.key === "name") return `<td class="name">${b.name}</td>`;
+      const v = b[c.key], isBest = c.best && v === mins[c.key];
+      if (c.bar) {
+        return `<td class="barcell ${isBest ? "best" : ""}"><div class="bar"><span class="track"><span class="fill" style="width:${(v / maxPpf * 100).toFixed(1)}%"></span></span><b>${c.fmt(v)}</b></div></td>`;
+      }
+      return `<td class="${isBest ? "best" : ""}">${c.fmt(v)}</td>`;
+    }).join("") + "</tr>").join("");
+
+    sel.value = sortKey;
+  }
+
+  head.addEventListener("click", e => {
+    const th = e.target.closest("th");
+    if (!th) return;
+    const k = th.dataset.k;
+    if (k === sortKey) dir = -dir; else { sortKey = k; dir = 1; }
+    render();
+  });
+  sel.addEventListener("change", () => { sortKey = sel.value; dir = 1; render(); });
+
+  render();
+</script>
+</body>
+</html>

@@ -1,50 +1,36 @@
 # Pocketlane first-run walkthrough
 
-## Screen 1: Welcome
+**Screen 1: Welcome**
+- **Headline:** Hi, let's get your money in one place.
+- **Body:** Pocketlane helps you see where your money goes and keep spending on track. Setup takes about five minutes, and you can skip any step.
+- **Buttons:** Let's go · Skip for now
 
-**Heading:** Hi, welcome to Pocketlane!
+**Screen 2: Link your bank (optional)**
+- **Headline:** Connect your bank?
+- **Body:** Linking takes one to two minutes. Pocketlane gets read-only access, so it can see your transactions but can't move money. Your transactions will fill in automatically.
+- **Buttons:** Link my bank · Do this later
 
-**Body:** Let's get your money in one place. This takes about two minutes, and you can skip any step.
+**Screen 3: Set a monthly budget**
+- **Headline:** Give your spending a limit.
+- **Body:** Pick a category, like Groceries or Eating out, and set how much you want to spend on it. Budgets reset on the 1st of every month, so you start fresh each month.
+- **Buttons:** Set a budget · Do this later
 
-**Buttons:** Let's go · Skip for now
-
-## Screen 2: Connect your bank
-
-**Heading:** Link your bank
-
-**Body:** Connect a bank account and we'll pull in your transactions automatically. It takes one to two minutes. We get read-only access, so we can see your transactions but we can't move any money.
-
-**Buttons:** Link a bank · I'll do this later
-
-## Screen 3: Set a budget
-
-**Heading:** Give your spending a target
-
-**Body:** Pick a category like Groceries or Dining and set a monthly amount. We'll show you how much is left as you go. Budgets reset on the 1st of every month, so each month starts fresh.
-
-**Buttons:** Set a budget · Maybe later
-
-## Screen 4: Add an expense
-
-**Heading:** Track cash and the rest
-
-**Body:** Not everything shows up from your bank. Add an expense by hand with an amount and a category. A note is optional, but it helps when you look back later.
-
-**Buttons:** Add an expense · Finish setup
+**Screen 4: Add an expense (or finish)**
+- **Headline:** You're all set!
+- **Body:** Got cash spending or a purchase that isn't showing up yet? Add it by hand with an amount and a category. A note is optional. You can change any of this later under Settings.
+- **Buttons:** Add an expense · Go to my dashboard
 
 ## Tooltips
 
-**Link a bank account**
-Read-only access. We can see transactions but can't move money. Takes 1–2 minutes.
+**Linking a bank account**
+> Takes about 1–2 minutes. We get read-only access: we can see your transactions, but we can't move money.
 
-**Set a monthly budget**
-Budgets reset on the 1st of each month.
+**Setting a monthly budget**
+> Budgets reset on the 1st of each month. Pick a category and set a limit you'd like to stay under.
 
-**Add an expense**
-You'll need an amount and a category. A note is optional.
+**Adding an expense by hand**
+> You'll need an amount and a category. A note is optional, so add one only if it helps you remember.
 
----
-
-Notes:
-- I wrote "Settings" nowhere in the copy. If you want a hint on the skip path, add something like "You can find this walkthrough anytime under Settings" on Screen 1, and use your exact menu label there.
-- "Read-only" is the only security claim here. If you want to mention encryption or a data provider, send me the specifics so I don't overstate them.
+## Notes
+- The "Do this later" and "Skip for now" wording is there so skipping feels like a choice, not a dead end. Each skipped step should link back to Settings. Right now the copy doesn't say where to find it, so you may want to add "You can find this anytime under Settings" to Screen 1 or the footer of each screen.
+- The button labels and example categories are my placeholders. Swap in your own if the app uses different names.

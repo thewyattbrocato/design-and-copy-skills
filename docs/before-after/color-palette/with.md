@@ -1,19 +1,17 @@
-**Pick: deep forest green, `#1F4D3A`.**
+**Pick: deep forest green.** No brand color was given, so I chose it for three reasons:
+- It matches the name, Fernhollow.
+- It reads as local and member-owned. Navy is the default for banks, and plum is memorable but gets awkward next to rates and status messages.
+- It supports a warm contrasting action color, so the Join button is the only thing that pops.
 
-- **Why green:** "Fern" and "hollow" already put green in the name. Navy is what nearly every bank uses, so it would make Fernhollow look like all of them. Green still reads as money and trust, and it suits a local, member-owned place.
-[...]
+I couldn't run code, so the contrast ratios below are hand-calculated estimates.
+
 ## Palette
 
-| Role | Value | Use | Contrast (estimated) |
-|---|---|---|---|
-| Lead | `#1F4D3A` | Hero ground, icons, link and hover accents | White on it: about 9.6:1 |
-| Accent (once) | `#F2C14E` | "Join today" button only, with `#14211B` text | About 9.9:1 |
-| Ink | `#17261F` | Headlines, rate numbers, body text | High on all light grounds |
-| Secondary text | `#4A5D52` | Rate labels, captions | About 6.1:1 on `#EAF0EA` |
-| Page and cards | `#FFFFFF` / `#F4F7F3` | Green-tinted off-white, not gray | n/a |
-| Rates band | `#EAF0EA` | Strip background | n/a |
-| Hairlines | `#D5DED7` | Card borders, dividers | n/a |
-| Footer | `#14211B` | Green-tinted near-black | n/a |
-| Footer text | `#E8EEE9`, `#A9BDB1` | Primary and secondary text | About 14:1 and 8.4:1 |
+| Role | Value | Notes |
+|---|---|---|
+| Lead green | `#1F4D3A` | Hero ground and key accents. White on it is about 9.6:1. |
+| Action | `#E9B949` (marigold) | Join button only, with `#14231C` text at about 8.8:1. It sits on the green hero at about 5.3:1, and the lightness gap keeps the edge crisp. |
 [...]
-I couldn't run a contrast checker, so the ratios are hand-calculated estimates. Please verify them before you ship.
+- **Rate strip:** Use the pale tint ground, with the rate numerals in near-black text. Green appears only in small labels, such as "Auto loan", and a thin top rule. Don't use red or green to show whether a rate went up or down. If you show a change, use an arrow and a word.
+[...]
+- The brand green is never used for success or error states. Use a separate red for errors and a separate, lighter green for confirmations. Always pair them with an icon or label.

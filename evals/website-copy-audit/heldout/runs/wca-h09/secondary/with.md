@@ -1,82 +1,44 @@
-**Findings**
+## Findings
 
-**1. Major. Hero, subhead and button: the platform limit is buried and away from the CTA.**
-Quoted: "It works on iPhone and Android. There is no web version yet." sits mid-subhead, and the only button is "Download the app."
-Reader consequence: a desktop visitor clicks, finds nothing to download, and leaves. A phone user has to read past two sentences of mechanics to learn whether the app is for their phone.
-Fix: move the platform line directly under the button (rewrite below).
+**1. Major: PRICE, "Larger households are $2 a month."**
+A household of five could read this as $2 per household or $2 per person, and nothing says whether the charge goes through the App Store or Google Play. The price decides whether someone with a family of five keeps reading, so the unclear part is the one that matters. The fix needs facts only the owner has, so the rewrite below uses placeholders.
+- Rewrite: "Free for households of up to 4 people. Households of 5 or more pay $2 a month. [Confirm: per household or per person; billed through App Store / Google Play?]"
 
-**2. Major. Price: the unit and the boundary are unclear.**
-Quoted: "Larger households are $2 a month."
-Reader consequence: the reader can't tell whether $2 is per household or per person, or what it covers. "Larger" is vague: a household of 5 is larger than 4, but the reader has to work that out. This is the decision point, and the page leaves it open.
-Fix: state the exact threshold and unit. This needs your founder to confirm the facts. Do not publish until they do.
+**2. Major: HERO button, "Download the app."**
+The button promises a download without saying for which platform. A visitor on a laptop, or on a device without an app, clicks and hits a dead end. The limit is stated, but only in the middle of the subhead, after the audience line.
+- Rewrite of the button: "Get Tidewell for iPhone or Android"
+- Move the limit directly under the button as a short line: "No web version yet."
 
-**3. Major. Hero: the audience excludes people who live alone.**
-Quoted: "Tidewell is a shared list for people who live together."
-Reader consequence: a one-person household reads the hero and concludes the app isn't for them. The FAQ says otherwise, but it sits at the bottom of the page.
-Fix: name solo use in the hero (rewrite below). The FAQ supports this, so it's not a new claim.
+**3. Major: HERO subhead, "Everyone adds items, and you see them as they're added. Tidewell is a shared list for people who live together. It works on iPhone and Android. There is no web version yet."**
+The subhead does four jobs in four sentences. The first sentence restates the "everyone sees it" point that "How it works" repeats almost word for word ("Everyone sees the list update straight away"). The platform point is buried at the end, after the audience line.
+- Rewrite: "Add things as you think of them and everyone sees the list update straight away. Tidewell is a shared list for people who live together."
+- The platform and "no web version" lines move to the button area (finding 2).
 
-**4. Minor. Hero repeats the how-it-works copy.**
-Quoted: "you see them as they're added" (hero) and "Everyone sees the list update straight away" (step 2).
-Reader consequence: the hero spends its words on mechanics the next section repeats, and it pushes the audience line later.
-Fix: keep the live-update point once, in the hero, or once in step 2. The rewrite below keeps it in the hero.
+**4. Minor: HOW IT WORKS, step 1, "Make a household."**
+The word "household" is used as a term before the page defines it. The subhead covers it, so this is polish only. Leave it unless the subhead changes.
 
-**5. Minor. Button: "Download the app" doesn't say which app.**
-Reader consequence: the iPhone and Android split is hidden, so the button promises something not every visitor can use.
-Fix: if separate store links exist, use one button per platform. Otherwise keep one button and put the platform line under it.
+**5. Minor: FAQ, one question only.**
+The page answers the solo-use question well, but a stranger's next questions are about price and billing (finding 1). Add those answers once the owner confirms them. Do not write them before then.
 
-**6. Minor. FAQ wording.**
-Quoted: "Yes, a household can be one person."
-Reader consequence: it reads as a rule, not an answer to "can I use it on my own?"
-Fix: "Yes. A household can be just you."
+## What works
 
-**Also noticed:** the FAQ has one question. Likely unanswered questions include what happens to the list when someone leaves a household and what counts as "larger." Answer them only if your founder confirms the facts.
+- "One grocery list for the whole household" is concrete and says who it is for. Keep it.
+- "Add things as you think of them." Keep it, since it describes the habit the app serves.
+- "Tick things off in the shop. They disappear from everyone's list so nobody buys the milk twice." This is the strongest line on the page. The reader sees the benefit at once. Keep it exactly.
+- "There is no web version yet." It is honest and a stranger needs it. Move it, don't cut it.
+- "Yes, a household can be one person." Plain and answers a real doubt. Keep it.
 
-**No blockers found.** Nothing on the page is a false or unsupported claim stated as fact, and there is no fake urgency or trick flow. The price is stated, so it is not hidden.
+The founder's voice is plain and concrete, and that works for a household app. Leave it alone.
 
----
+## Fix order
 
-**What works (keep these)**
+1. **Price terms.** Owner confirms per household or per person, and the billing route. Then update the PRICE line. Effort: small (owner decision needed).
+2. **Button and platform line.** Change the button to name the platforms and put "No web version yet." under it. Effort: small.
+3. **Subhead.** Cut to two sentences and drop the repeated "everyone sees" point. Effort: small.
+4. **Check the store links.** Confirm the iPhone and Android buttons go to live listings before Friday. Effort: small.
+5. **FAQ.** Add price and billing questions once the owner has the answers. Effort: medium.
 
-- "Tick things off in the shop. They disappear from everyone's list so nobody buys the milk twice." Concrete, names the household problem, and is the strongest line on the page.
-- "Invite the people you live with by link or code." Plain, and tells the reader how.
-- "There is no web version yet." Honest and specific. Keep it, but move it (finding 1).
-- "Free for households of up to 4." Clear. Keep the first half as it is.
-- "One grocery list for the whole household" as the headline. It names the category and the audience in the reader's words.
+## Notes
 
----
-
-**Rewrites (flagged lines only)**
-
-*Subhead (findings 3, 4):*
-Current: "Everyone adds items, and you see them as they're added. Tidewell is a shared list for people who live together. It works on iPhone and Android. There is no web version yet."
-Proposed: "A shared list for the people you live with, or just you. Add an item and everyone in the household sees it straight away."
-
-*Under the button (findings 1, 5):*
-Add: "Available for iPhone and Android. No web version yet."
-
-*Button (finding 5, only if separate store links exist):*
-"Download the app" → "Download for iPhone" / "Download for Android"
-
-*Price (finding 2), once your founder confirms the facts:*
-Current: "Free for households of up to 4. Larger households are $2 a month."
-Proposed: "Free for households of up to 4. Households of 5 or more pay $2 a month [per household / per person — confirm]."
-
-*FAQ (finding 6):*
-"Yes, a household can be one person." → "Yes. A household can be just you."
-
----
-
-**Fix order**
-
-1. **Confirm the price facts, then rewrite the price line.** Small effort once your founder answers. Blocks launch in practice because the price is the decision point.
-2. **Move the platform line under the button.** Small.
-3. **Rewrite the subhead to name solo use and drop the repeated mechanics.** Small.
-4. **Split the button by store, if store links exist.** Small to medium, depending on the links.
-5. **Answer the unanswered FAQ questions, if your founder confirms them.** Medium.
-
----
-
-**Notes**
-
-- Not reviewed: the other pages, the sign-up screens, the app store listings, and the first emails. The FAQ and "how it works" are the only supporting copy I had.
-- Needs a source on file: the live-update claim ("you see them as they're added," "straight away"). It is a product behaviour, not something I can verify from the copy, so keep it only if the team can back it up.
+- Not reviewed: the App Store and Google Play listings, the sign-up and invite screens, and the first email. The "Invite by link or code" step is only checkable there.
+- "Everyone sees the list update straight away" is a product claim. Confirm it holds in both directions and on weak signal before launch, and keep it only if it does.

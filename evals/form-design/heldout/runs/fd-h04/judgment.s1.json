@@ -2,23 +2,23 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "ca926c05aef0db8f",
+    "with": "0990ddd8dcbe0a33",
     "without": "ff0e483cd0c8c315"
   },
   "result": {
-    "winner": "with",
-    "judge_notes": "pass 1 (A=with, B=without): Both answers prefill location, date, times, role and break from the given context, leave the employee blank for a good reason, and say prefilled values must stay editable without overwriting manual edits. B gives sharper reasons, such as a blank employee meaning an open shift and old notes being stale. However, its date fallback ('the day after their most recently created shift') could land in the past, and it brings in pay overrides the context doesn't support. A stays safer on dates, though it assumes availability data and adds a bit of general advice about button labels. | pass 2 (A=without, B=with): Both answers prefill a solid set of fields from the given context, leave the employee blank for well-argued reasons, and require prefilled values to stay visible, editable and safe from overwriting manual edits. Answer A's date fallback, 'the day after their most recently created shift', could land in the past, which the rubric rules out; B uses the source view's day or today. B has its own flaws: it says it left thresholds out right after suggesting about 60%, it assumes availability data the context doesn't provide, and it drifts slightly into button labels.",
+    "winner": "tie",
+    "judge_notes": "pass 1 (A=with, B=without): Both answers prefill the same core fields from the given context and correctly keep the employee field blank with good reasons. B is better on the rubric's editability point: it says plainly that prefilled values stay visible and change in one tap, and it adds useful safeguards such as not overwriting manual edits, skipping prefill when there is little data, and ordering fields so choices cascade. Neither answer shows where a suggestion came from, and both date fallbacks (A: the last created shift's date; B: the day after it) could land in the past. | pass 2 (A=without, B=with): Both answers prefill location, date, times, role and break from sources the request supports, and both leave the employee blank for a well-argued reason. A is stronger on item 3: fields stay editable, cascade sensibly and don't overwrite manual edits, though it never says to show where a suggestion came from. B's same-styling advice hides that source; its date fallback can still land in the past, but it guards the picker against past dates, which A's 'day after last shift' fallback does not, so the trade-offs balance out.",
     "rubric_scores": {
-      "with": 4.4,
+      "with": 4.2,
       "without": 4.3
     },
     "rubric_items": {
       "with": [
         5.0,
         5.0,
-        4.0,
-        4.0,
-        4.0
+        3.0,
+        3.5,
+        4.5
       ],
       "without": [
         5.0,
@@ -28,25 +28,25 @@
         4.5
       ]
     },
-    "position_consistent": true,
+    "position_consistent": false,
     "passes": [
       {
         "order": [
           "with",
           "without"
         ],
-        "raw_verdict": "A",
-        "winner": "with",
-        "notes": "Both answers prefill location, date, times, role and break from the given context, leave the employee blank for a good reason, and say prefilled values must stay editable without overwriting manual edits. B gives sharper reasons, such as a blank employee meaning an open shift and old notes being stale. However, its date fallback ('the day after their most recently created shift') could land in the past, and it brings in pay overrides the context doesn't support. A stays safer on dates, though it assumes availability data and adds a bit of general advice about button labels."
+        "raw_verdict": "B",
+        "winner": "without",
+        "notes": "Both answers prefill the same core fields from the given context and correctly keep the employee field blank with good reasons. B is better on the rubric's editability point: it says plainly that prefilled values stay visible and change in one tap, and it adds useful safeguards such as not overwriting manual edits, skipping prefill when there is little data, and ordering fields so choices cascade. Neither answer shows where a suggestion came from, and both date fallbacks (A: the last created shift's date; B: the day after it) could land in the past."
       },
       {
         "order": [
           "without",
           "with"
         ],
-        "raw_verdict": "B",
-        "winner": "with",
-        "notes": "Both answers prefill a solid set of fields from the given context, leave the employee blank for well-argued reasons, and require prefilled values to stay visible, editable and safe from overwriting manual edits. Answer A's date fallback, 'the day after their most recently created shift', could land in the past, which the rubric rules out; B uses the source view's day or today. B has its own flaws: it says it left thresholds out right after suggesting about 60%, it assumes availability data the context doesn't provide, and it drifts slightly into button labels."
+        "raw_verdict": "tie",
+        "winner": "tie",
+        "notes": "Both answers prefill location, date, times, role and break from sources the request supports, and both leave the employee blank for a well-argued reason. A is stronger on item 3: fields stay editable, cascade sensibly and don't overwrite manual edits, though it never says to show where a suggestion came from. B's same-styling advice hides that source; its date fallback can still land in the past, but it guards the picker against past dates, which A's 'day after last shift' fallback does not, so the trade-offs balance out."
       }
     ]
   }

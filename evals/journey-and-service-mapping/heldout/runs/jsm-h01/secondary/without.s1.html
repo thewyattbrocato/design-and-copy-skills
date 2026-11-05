@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiln & Co. — The Member Journey</title>
+<style>
+  :root {
+    --ink: #2b2420;
+    --ink-2: #5d534c;
+    --ink-3: #8a7f77;
+    --surface: #fbf8f4;
+    --card: #ffffff;
+    --rule: #e6ded5;
+    --clay: #9a4a2e;
+    --clay-soft: #f3e3da;
+    --clay-bar: #c0714f;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f3ece6;
+      --ink-2: #cdc2b9;
+      --ink-3: #9d928a;
+      --surface: #1c1816;
+      --card: #26201d;
+      --rule: #3a322d;
+      --clay: #e0a68a;
+      --clay-soft: #3a2a23;
+      --clay-bar: #d18a6c;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.45;
+    padding: 48px 56px 64px;
+    min-height: 100vh;
+  }
+  header { max-width: 1280px; margin: 0 auto 36px; }
+  .eyebrow {
+    font-size: 15px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--clay); font-weight: 600; margin: 0 0 8px;
+  }
+  h1 { font-size: 44px; line-height: 1.1; margin: 0 0 12px; font-weight: 700; }
+  .lede { font-size: 20px; color: var(--ink-2); margin: 0; max-width: 820px; }
+  .note { font-size: 14px; color: var(--ink-3); margin-top: 12px; }
+
+  main { max-width: 1280px; margin: 0 auto; }
+
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    counter-reset: stage;
+    position: relative;
+  }
+  .stage {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 22px 20px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .stage-num {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--clay-soft); color: var(--clay);
+    font-weight: 700; display: grid; place-items: center; font-size: 16px;
+  }
+  .stage h2 { font-size: 22px; margin: 4px 0 0; }
+  .stage .when { font-size: 14px; color: var(--ink-3); margin: 0; }
+  .stage ul { margin: 4px 0 0; padding-left: 18px; font-size: 16px; color: var(--ink-2); }
+  .stage li { margin-bottom: 8px; }
+  .stage li strong { color: var(--ink); }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 40px 0 16px;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 22px 22px 20px;
+  }
+  .stat .big { font-size: 48px; font-weight: 700; color: var(--clay); line-height: 1; }
+  .stat .big small { font-size: 22px; color: var(--ink-3); font-weight: 600; }
+  .stat p { margin: 10px 0 0; font-size: 16px; color: var(--ink-2); }
+
+  h3.section {
+    font-size: 26px; margin: 48px 0 6px;
+  }
+  .section-sub { margin: 0 0 20px; color: var(--ink-3); font-size: 16px; }
+
+  .bars { display: grid; gap: 14px; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 340px 1fr 80px;
+    align-items: center;
+    gap: 16px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 14px 18px;
+  }
+  .bar-label { font-size: 17px; color: var(--ink); }
+  .bar-track {
+    height: 18px; border-radius: 9px;
+    background: var(--clay-soft);
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 9px;
+    background: var(--clay-bar);
+  }
+  .bar-count { font-size: 18px; font-weight: 700; text-align: right; color: var(--ink); }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 24px 26px;
+  }
+  .panel h3 { margin: 0 0 10px; font-size: 22px; }
+  .panel p, .panel li { font-size: 17px; color: var(--ink-2); margin: 0 0 10px; }
+  .panel ul { margin: 0; padding-left: 20px; }
+  .tag {
+    display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--clay);
+    background: var(--clay-soft); border-radius: 6px; padding: 3px 8px; margin-bottom: 10px;
+  }
+
+  footer {
+    margin-top: 40px; font-size: 14px; color: var(--ink-3);
+  }
+
+  @media (max-width: 1100px) {
+    .journey { grid-template-columns: 1fr 1fr; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    .bar-row { grid-template-columns: 1fr 60px; }
+    .bar-row .bar-track { grid-column: 1 / -1; grid-row: 2; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Kiln &amp; Co. · Staff meeting</p>
+  <h1>What it's like to become a member</h1>
+  <p class="lede">From the first Google search to the third month, as six new members described it to us over the last month.</p>
+  <p class="note">Based on conversations with 6 new members. Small sample; treat the counts as signals, not measurements.</p>
+</header>
+
+<main>
+
+  <section class="journey" aria-label="Member journey stages">
+    <article class="stage">
+      <div class="stage-num">1</div>
+      <h2>Finding us</h2>
+      <p class="when">Before the first visit</p>
+      <ul>
+        <li>Mostly a <strong>friend's Instagram post</strong> or a <strong>local search</strong>.</li>
+        <li><strong>2 of 6</strong> nearly didn't come: our site's class times were out of date.</li>
+      </ul>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">2</div>
+      <h2>Trial class</h2>
+      <p class="when">$35, first visit</p>
+      <ul>
+        <li>Nearly everyone <strong>loved it</strong>.</li>
+        <li>The teacher made them feel <strong>it's okay to be bad at it</strong>. That's the moment people stayed.</li>
+      </ul>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">3</div>
+      <h2>Choosing a plan</h2>
+      <p class="when">After the trial</p>
+      <ul>
+        <li><strong>4 of 6</strong> were confused by the membership options page.</li>
+        <li>Most common question: <strong>does the monthly plan include glaze and firing?</strong></li>
+      </ul>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">4</div>
+      <h2>Joining</h2>
+      <p class="when">Front desk or at home</p>
+      <ul>
+        <li><strong>2 joined</strong> on the spot at the front desk.</li>
+        <li><strong>4 went home</strong> to think it over.</li>
+        <li>One of those <strong>never got a follow-up email</strong> and only joined after a friend nudged her.</li>
+      </ul>
+    </article>
+
+    <article class="stage">
+      <div class="stage-num">5</div>
+      <h2>First months</h2>
+      <p class="when">Weeks 1 to 12</p>
+      <ul>
+        <li>Love the <strong>open studio hours</strong>.</li>
+        <li><strong>3 of 6</strong> felt in the way of regulars.</li>
+        <li><strong>2 of 6</strong> couldn't work out the shelf system for unfinished pieces.</li>
+        <li><strong>2 of 6</strong> thought their pieces were lost during firing.</li>
+      </ul>
+    </article>
+  </section>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="big">4<small> of 6</small></div>
+      <p>confused by the membership options page</p>
+    </div>
+    <div class="stat">
+      <div class="big">2<small> of 6</small></div>
+      <p>joined on the spot at the front desk</p>
+    </div>
+    <div class="stat">
+      <div class="big">2–3<small> wks</small></div>
+      <p>firing time, which two members were never told about</p>
+    </div>
+    <div class="stat">
+      <div class="big">3<small> of 6</small></div>
+      <p>thought about not renewing at month three</p>
+    </div>
+  </div>
+
+  <h3 class="section">Where people hit friction</h3>
+  <p class="section-sub">Count of the six members who mentioned each point.</p>
+  <div class="bars">
+    <div class="bar-row">
+      <div class="bar-label">Membership page unclear about glaze and firing</div>
+      <div class="bar-track"><div class="bar-fill" style="width: 67%"></div></div>
+      <div class="bar-count">4</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Felt in the way of regular members</div>
+      <div class="bar-track"><div class="bar-fill" style="width: 50%"></div></div>
+      <div class="bar-count">3</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Out-of-date class times on the website</div>
+      <div class="bar-track"><div class="bar-fill" style="width: 33%"></div></div>
+      <div class="bar-count">2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Not told firing takes 2 to 3 weeks</div>
+      <div class="bar-track"><div class="bar-fill" style="width: 33%"></div></div>
+      <div class="bar-count">2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Couldn't figure out the unfinished-shelf system</div>
+      <div class="bar-track"><div class="bar-fill" style="width: 33%"></div></div>
+      <div class="bar-count">2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">No follow-up email after the trial</div>
+      <div class="bar-track"><div class="bar-fill" style="width: 17%"></div></div>
+      <div class="bar-count">1</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <span class="tag">Keep</span>
+      <h3>What's working</h3>
+      <ul>
+        <li>The $35 trial is doing its job. People leave wanting more.</li>
+        <li>Teachers set a tone where being a beginner is fine.</li>
+        <li>Open studio hours are what members came for.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <span class="tag">Fix</span>
+      <h3>Where to start</h3>
+      <ul>
+        <li>Put the glaze and firing answer on the membership page, plainly.</li>
+        <li>Update class times on the website now.</li>
+        <li>Send a follow-up email to everyone who took a trial.</li>
+        <li>Tell new members up front that firing takes 2 to 3 weeks.</li>
+        <li>Label the unfinished-piece shelves and brief regulars on open-studio etiquette.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>Kiln &amp; Co. member journey · Prepared for Thursday's staff meeting</footer>
+</main>
+
+</body>
+</html>

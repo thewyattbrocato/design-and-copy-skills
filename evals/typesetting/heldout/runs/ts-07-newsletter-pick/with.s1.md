@@ -1,8 +1,7 @@
 **Option B.**
 
-- **Size:** 17px is comfortable on both laptops and phones. A is 14px, which is too small for long reading. C is 22px, which is oversized for body text.
-- **Line length:** 36rem is about 65 characters per line at this size, which is right for reading. A has no cap, so lines would run very long on a laptop. C's 30rem at 22px gives roughly 35 characters per line, which is choppy for 600–900 word stories.
-- **Line height:** 1.55 suits body text. A's 1.3 is cramped. C's 1.95 is so loose that the lines stop reading as a paragraph.
-- **Typeface:** Georgia suits long-form reading and fits a newsletter.
+- **Size:** 17px is in the comfortable 15–18px range for long-form reading on laptops and phones. A is too small, and C is oversized.
+- **Line length:** 36rem is about 576px, which is roughly 60–70 characters per line in Georgia. That's the best range for 600–900 words of continuous reading. A has no cap, so lines run across the whole laptop screen. C's 30rem gives about 45 characters at 22px, which is short and choppy.
+- **Line height:** 1.55 is right for body text at this measure. A's 1.3 is cramped, and C's 1.95 is loose enough that lines stop reading as a block.
 
-One optional tweak is to use `font-size: 1.0625rem` instead of `17px`, so the text respects users' browser font settings. On phones, B's 36rem cap won't apply because the column will be narrower than that.
+One optional tweak: write the size as `1.0625rem` instead of `17px` so it respects users' browser font settings.

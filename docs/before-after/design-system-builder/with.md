@@ -1,27 +1,18 @@
+**What's going on:** there's no shared set of decisions. Each rule was written by eye, so every value is close to its neighbors but not equal to them. No single difference is visible, but together they make everything look slightly off.
 [...]
-
-Roughly 40 distinct values are doing the work of about 12 decisions. The inconsistency comes from the drift, not from any single bad choice. That's why nobody can point at it.
-
+2. **Fix the scales on paper.** Use short scales. These are proposals to adjust against your inventory:
+   - Spacing: 4, 8, 12, 16, 24, 32, 48.
+   - Radius: 4, 8, 12.
+   - Elevation: 2 or 3 levels, such as raised and overlay.
+   - Type: 5 or 6 roles (caption, body, body-large, h3, h2, h1).
+   - Control height: 40 for all form controls.
 [...]
+4. **Migrate in order of least visible change first.**
+   1. Colors. Merging the blues, grays, greens and borders is nearly invisible. Collapse `.muted`, `.hint` and `.caption` into one role.
+   2. Radius, border and shadow.
+   3. Spacing and type. These shift layouts, so go screen by screen.
+   4. Merge `.card` and `.panel` into one component, and align `.input` and `.select` to one control spec. `.btn` and `.btn-big` become one button with a size variant.
 
-2. **Fix the scales on paper.** Pick short scales and a merge map (old → new). A starting proposal:
-   - Spacing: 4, 8, 12, 16, 24, 32, 48
-   - Radius: 4, 8, 12 (control, container, overlay)
-   - Elevation: 2 levels (raised, overlay)
-   - Type: 5 roles, such as caption 12, body 14, lead 17, heading 23, display 31
-   - Colors: one value per role. Pick the most-used one from the inventory, not an average.
-   - Control height: one value, so inputs, selects and buttons align.
-
+   Write the merge map (old value → token) before you touch anything, so each change is mechanical and reviewable.
 [...]
-
-4. **Migrate in blast-radius order.**
-   1. Colors, which are mechanical and nearly invisible.
-   2. Radius and control heights, where you'll see small, visible alignment changes.
-   3. Spacing, which shifts layouts, so do it screen by screen with visual diffs.
-   4. Type and shadows last.
-
-[...]
-
-Don't start with a redesign or a component library. The bulk of the problem is value drift, and steps 1–3 remove most of it without changing the intended look.
-
-[...]
+**Assumptions:** a single-brand web app with a small team, and no existing design system or token file. If you already have one, I'd extend it instead of building this.

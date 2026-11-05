@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quarry · Run status</title>
+<style>
+  :root{
+    --bg:#f6f5f1; --surface:#ffffff; --ink:#1d2321; --muted:#5d6762; --line:#dcdad2;
+    --accent:#1f5f4a; --accent-ink:#ffffff; --accent-soft:#e3efe9;
+    --warn-bg:#fff4dc; --warn-line:#c98a12; --warn-ink:#5a3b00;
+    --track:#e6e4dc;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#141816; --surface:#1d2321; --ink:#eceee9; --muted:#9aa49e; --line:#333b37;
+      --accent:#6cc4a1; --accent-ink:#0c1612; --accent-soft:#23332c;
+      --warn-bg:#33290f; --warn-line:#e0a52e; --warn-ink:#f5deaa;
+      --track:#2e3632;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  main{max-width:760px;margin:0 auto;padding:28px 20px 56px}
+  .brand{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+  h1{font-size:22px;line-height:1.3;margin:0 0 10px;font-weight:600}
+  .state{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;color:var(--muted);font-size:15px}
+  .pill{display:inline-flex;align-items:center;gap:8px;color:var(--ink);font-weight:600}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  @media (prefers-reduced-motion:reduce){.dot{animation:none}}
+
+  .decision{margin:24px 0;background:var(--warn-bg);border:1px solid var(--warn-line);
+    border-left-width:6px;border-radius:8px;padding:18px 20px;color:var(--warn-ink)}
+  .decision h2{margin:0 0 4px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+  .decision .q{font-size:18px;font-weight:600;margin:0 0 8px;line-height:1.35}
+  .decision p{margin:0 0 14px}
+  .actions{display:flex;flex-wrap:wrap;gap:10px}
+  button{font:inherit;font-weight:600;padding:10px 16px;border-radius:6px;cursor:pointer;
+    border:1px solid var(--warn-line);background:transparent;color:inherit;min-height:44px}
+  button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  button:hover{filter:brightness(1.07)}
+  button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .decision.done{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+  .decision.done .actions{display:none}
+  .undo{display:none;margin-top:4px;background:none;border:none;text-decoration:underline;padding:0;min-height:0;font-weight:500}
+  .decision.done .undo{display:inline}
+
+  section.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin-bottom:16px}
+  h3{margin:0 0 14px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+  .time{display:flex;flex-wrap:wrap;gap:10px 32px}
+  .time div{min-width:120px}
+  .big{font-size:26px;font-weight:600;line-height:1.2;font-variant-numeric:tabular-nums}
+  .lbl{font-size:14px;color:var(--muted)}
+
+  ol.steps{list-style:none;margin:0;padding:0}
+  ol.steps li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+  ol.steps li:first-child{border-top:none}
+  .ico{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;
+    border:2px solid var(--line);color:var(--muted)}
+  .done .ico{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .now .ico{border-color:var(--accent);color:var(--accent)}
+  .step-t{font-weight:600}
+  .step-d{color:var(--muted);font-size:15px}
+  li.next .step-t{color:var(--muted);font-weight:500}
+  .bar{height:10px;background:var(--track);border-radius:5px;overflow:hidden;margin:8px 0 4px;max-width:420px}
+  .bar i{display:block;height:100%;background:var(--accent);width:36.8%}
+  .tag{font-size:12px;font-weight:600;background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:2px}
+
+  .counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px}
+  .counts .big{font-size:30px}
+  footer{color:var(--muted);font-size:14px;margin-top:20px}
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">Quarry · Literature scan</p>
+  <h1>GLP-1 agonists and kidney outcomes in type 2 diabetes, trials since 2018</h1>
+  <div class="state">
+    <span class="pill"><span class="dot" aria-hidden="true"></span>Running: reading full papers</span>
+    <span>Started 1 h 40 min ago</span>
+  </div>
+
+  <div class="decision" id="decision" role="region" aria-labelledby="dh">
+    <h2 id="dh">Needs your decision</h2>
+    <p class="q" id="dq">Include two trials that only have conference abstracts?</p>
+    <p id="dp">Neither trial has a full paper yet, so Quarry can only work from the abstracts. Reading of the other papers continues meanwhile, but Quarry needs your answer before it drafts the summary table.</p>
+    <div class="actions">
+      <button class="primary" data-choice="Include both trials (flagged as abstract-only in the table)">Include both</button>
+      <button data-choice="Exclude both trials">Exclude both</button>
+    </div>
+    <button class="undo" id="undo" type="button">Change answer</button>
+  </div>
+
+  <section class="card" aria-labelledby="t">
+    <h3 id="t">Time</h3>
+    <div class="time">
+      <div><div class="big" id="elapsed">1 h 40 min</div><div class="lbl">elapsed</div></div>
+      <div><div class="big">≈ 1 h 20 min</div><div class="lbl">remaining, rough estimate (typical run is about 3 h)</div></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="p">
+    <h3 id="p">Progress</h3>
+    <ol class="steps">
+      <li class="done"><span class="ico" aria-hidden="true">✓</span><div><div class="step-t">Search databases <span class="sr" style="position:absolute;left:-9999px">complete</span></div><div class="step-d">Complete</div></div></li>
+      <li class="done"><span class="ico" aria-hidden="true">✓</span><div><div class="step-t">Screen abstracts</div><div class="step-d">Complete: 412 screened, 38 kept</div></div></li>
+      <li class="now" aria-current="step"><span class="ico" aria-hidden="true">●</span><div><div class="step-t">Read full papers <span class="tag">In progress</span></div>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="38" aria-valuenow="14" aria-label="Full papers read"><i></i></div>
+        <div class="step-d">14 of 38 papers read</div></div></li>
+      <li class="next"><span class="ico" aria-hidden="true">4</span><div><div class="step-t">Draft summary table</div><div class="step-d">Not started</div></div></li>
+    </ol>
+  </section>
+
+  <section class="card" aria-labelledby="c">
+    <h3 id="c">So far</h3>
+    <div class="counts">
+      <div><div class="big">412</div><div class="lbl">abstracts screened</div></div>
+      <div><div class="big">38</div><div class="lbl">kept for full reading</div></div>
+      <div><div class="big">14</div><div class="lbl">full papers read</div></div>
+    </div>
+  </section>
+
+  <footer>This page shows the state of the run as of when you opened it.</footer>
+</main>
+<script>
+(function(){
+  var start=Date.now()-100*60000, el=document.getElementById('elapsed');
+  function tick(){var m=Math.floor((Date.now()-start)/60000);el.textContent=Math.floor(m/60)+' h '+(m%60)+' min'}
+  tick(); setInterval(tick,30000);
+
+  var d=document.getElementById('decision'),q=document.getElementById('dq'),p=document.getElementById('dp');
+  var q0=q.textContent,p0=p.textContent;
+  document.querySelectorAll('[data-choice]').forEach(function(b){
+    b.addEventListener('click',function(){
+      d.classList.add('done');
+      q.textContent='Your answer: '+b.getAttribute('data-choice');
+      p.textContent='Quarry will apply this when it drafts the summary table.';
+      document.getElementById('dh').textContent='Decision recorded';
+    });
+  });
+  document.getElementById('undo').addEventListener('click',function(){
+    d.classList.remove('done');q.textContent=q0;p.textContent=p0;
+    document.getElementById('dh').textContent='Needs your decision';
+  });
+})();
+</script>
+</body>
+</html>

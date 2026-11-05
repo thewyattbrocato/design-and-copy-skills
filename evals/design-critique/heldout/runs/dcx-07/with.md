@@ -1,27 +1,25 @@
-**Ship Version B, with its visual layer fixed.** I'm fairly confident, because the difference is in the content and not the styling. The caveat is that I'm judging from your descriptions, not the rendered screens.
+**Ship Version B's content and structure, with Version A's visual polish applied to it.** If you can only ship one as-is, ship B. I'm fairly confident, because the difference is in function, not taste.
 
 **Why B wins**
 
-- **A doesn't say what the tab holds or what the button does.** "Nothing here yet" and "Get Started" could be on any app's empty state. "Get started" with what? Booking, onboarding, or a profile? A new user has to guess. **Severity: major**, and it hits every user who sees the screen.
-- **A's copy is filler.** "Your journey" and "We can't wait to see where..." say nothing about dogs, walks, or what happens next. The polish makes the emptiness look intentional, but it doesn't help the user.
-- **B names the outcome and gives one tap to reach it.** "Book Marta for Tuesday" is a specific action, with a named person, a time, and a place (Pell Park). The photo halfway through is a concrete reason to book. For a trust-based marketplace, that specificity is the strongest thing on either screen.
-- **B's vetting link answers the obvious worry.** Someone about to hand over their dog will wonder who these walkers are.
+- **B tells the owner what to do next.** "Book Marta for Tuesday" is one tap to the goal. A's "Get Started" doesn't say what starts, and an owner who already has an account may not know what "started" means. A has one button and B has two, but B's primary action names the outcome.
+- **B has a reason to act.** It names a walker, a place (Pell Park), a time (Tuesday and Thursday mornings) and a payoff (a photo halfway through). A's copy would fit any app. "Your journey" and "We can't wait to see where…" are filler and say nothing about dog walking.
+- **B answers the trust question.** The vetted and local link speaks to the main worry of someone handing over their dog. A has nothing on this.
+- **A's heading says "Nothing here yet" and stops.** It reads as a dead end rather than a next step.
 
-**What I'd change in B, in order**
+**What B gets wrong**
 
-1. **Fix the buttons (moderate).** Default web buttons look unfinished and weaken trust in an app that handles people's pets. Make "Book Marta for Tuesday" a filled primary button. Make "See other walkers" a clearly secondary outline or text button. Right now the two seem to carry equal weight, so the primary action isn't obvious. Take the polish from A's button treatment: size, radius, and full width on mobile.
-2. **Handle the case where Marta isn't a known walker (major, to check).** The copy assumes the user has a relationship with Marta. A first-time user with no history would see an unexplained name. Either gate this version to users with a past or favorite walker, or use a generic fallback for everyone else: "Book a walk with a vetted local walker near you."
-3. **Make the heading and body hold up when the data changes (moderate).** "This week" and "Tuesday" must be generated from real availability. If Marta has no openings, the button can't promise Tuesday. Decide the fallback before launch.
-4. **Replace the emoji (minor, taste).** A small dog emoji looks different on every OS. Use one consistent icon or a simple illustration. A's paw-in-a-square is a fine starting point if you want to borrow from the design team.
-5. **Reword the vetting link (minor).** "Why only a few walkers?" raises a doubt the user may not have had. Try "All walkers are vetted and local" as plain reassurance, or keep the link and make the destination useful.
-6. **Check text size and contrast (not checked).** I can't verify these from a description, so check body and link text against your accessibility targets.
+1. **Severity: major. Default-looking buttons.** Two buttons that look like browser defaults signal "unfinished" on the screen where someone decides whether to book. Fix: make "Book Marta for Tuesday" a filled primary button in A's style, and make "See other walkers" a secondary (outline or text) button. This matters more than any other visual change, because it shows which button to press.
+2. **Severity: major. Hard-coded Marta.** I'm assuming Marta is a real, relevant walker for this user. If the screen shows her to someone who has never booked with her, or who lives far from Pell Park, "Book Marta for Tuesday" reads as random. Fix: use her only when she's the user's previous or nearest walker. Otherwise fall back to the nearest available walker, or to a generic "Find a walker" line. Also say what happens when Tuesday has passed or Marta has no openings.
+3. **Severity: minor. The "Why only a few walkers?" link.** It raises a question the user hadn't asked, and "only a few" sounds like a limitation. Fix: reword it as a reassurance, such as "Every Brindle walker is vetted and local," with "How we vet" as the link. Keep it small.
+4. **Severity: minor. Emoji and left alignment.** The small dog emoji is weak and looks accidental. Fix: a small version of A's paw-print illustration, or a photo of Marta, would be better. A photo would carry the most trust. Left alignment is fine for a text-led screen, so keep it.
+5. **Severity: minor. "No walks booked this week."** This is accurate, but it's wrong if the user has walks booked next week or has never booked. Fix: show it only when it's true, and have a first-time variant ("Book your first walk") for new users.
 
-**What to keep from A**
+**What to keep**
 
-- The generous spacing and clear hierarchy.
-- The illustration, if it's swapped in for the emoji.
-- The full-width primary button treatment.
+- **From A:** the spacing, type scale, filled full-width primary button and illustration quality. These make the screen feel like part of the same app as the rest.
+- **From B:** the concrete copy, the named walker and place, the photo promise, and the two-path choice between a specific walker and browsing.
 
-**Cheapest way to settle it if the team still disagrees:** show both to 3–5 people who have never used Brindle. Ask each "What would you tap, and what do you expect to happen?" I expect most to be unsure what A's button does. That would be your evidence for B.
+**Not checked:** contrast, tap-target sizes and dark mode, since I only have your descriptions and no screens. The Marta personalization depends on your data, and I don't know how it behaves for new users.
 
-**Assumption:** this is a returning user who has booked before. If it's the first-run screen, B's copy needs the fallback in item 2 before it ships.
+**Cheapest test before Friday:** show each version to three or four dog owners who haven't used the app. Ask each of them, "What would you tap, and what happens next?" If they can answer for B and hesitate on A, that settles it.

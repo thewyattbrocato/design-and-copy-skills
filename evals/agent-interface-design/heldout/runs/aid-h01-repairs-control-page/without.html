@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repairs desk · Kestrel Lettings</title>
+<style>
+:root{
+  --bg:#f5f4f1; --surface:#fff; --ink:#1d2127; --muted:#5f6670; --line:#e3e0da;
+  --emerg:#b42318; --emerg-bg:#fdecea;
+  --urgent:#9a5b00; --urgent-bg:#fff3dc;
+  --routine:#1f5f8b; --routine-bg:#e6f1f8;
+  --low:#555d66; --low-bg:#eceae6;
+  --ok:#1d6b45; --ok-bg:#e3f3ea;
+  --focus:#1f5f8b;
+}
+@media (prefers-color-scheme:dark){
+:root{
+  --bg:#15181c; --surface:#1e2227; --ink:#eceef0; --muted:#9aa2ab; --line:#32373e;
+  --emerg:#ff8a7d; --emerg-bg:#3b1d1a;
+  --urgent:#f0b45a; --urgent-bg:#3a2b12;
+  --routine:#7db9e3; --routine-bg:#16293a;
+  --low:#a8afb7; --low-bg:#2a2e34;
+  --ok:#6fcf9b; --ok-bg:#17301f;
+  --focus:#7db9e3;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 20px 60px}
+header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+h1{font-size:20px;margin:0}
+h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:28px 0 10px;display:flex;gap:8px;align-items:center}
+.meta{color:var(--muted);font-size:13px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.count{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.count b{font-size:26px;display:block;line-height:1.1;font-variant-numeric:tabular-nums}
+.count span{font-size:13px;color:var(--muted)}
+.count.hot{border-color:var(--emerg);background:var(--emerg-bg)}
+.count.hot b{color:var(--emerg)}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.u-emergency{background:var(--emerg-bg);color:var(--emerg);border:1px solid var(--emerg)}
+.u-urgent{background:var(--urgent-bg);color:var(--urgent)}
+.u-routine{background:var(--routine-bg);color:var(--routine)}
+.u-low{background:var(--low-bg);color:var(--low)}
+.s-ok{background:var(--ok-bg);color:var(--ok)}
+.s-warn{background:var(--urgent-bg);color:var(--urgent)}
+.s-bad{background:var(--emerg-bg);color:var(--emerg)}
+.s-neutral{background:var(--low-bg);color:var(--low)}
+.attn{display:grid;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--urgent);border-radius:8px;padding:12px 14px}
+.card.emergency{border-left-color:var(--emerg)}
+.card .top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+.card .why{font-weight:600}
+.card p{margin:4px 0}
+.card .small{color:var(--muted);font-size:13px}
+.actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+button{font:inherit;font-size:14px;padding:6px 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+button.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:hover{border-color:var(--muted)}
+button:focus-visible,summary:focus-visible,tr:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:8px;padding:16px;color:var(--muted)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tablewrap{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--bg)}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.row{cursor:pointer}
+tr.row:hover td{background:var(--bg)}
+tr:last-child td{border-bottom:0}
+.flat{font-weight:600}
+.sub{color:var(--muted);font-size:13px}
+tr.detail td{background:var(--bg);padding:12px 16px 16px}
+.detail dl{display:grid;grid-template-columns:130px 1fr;gap:4px 12px;margin:0}
+.detail dt{color:var(--muted);font-size:13px}
+.detail dd{margin:0}
+blockquote{margin:0;padding-left:10px;border-left:3px solid var(--line);font-style:italic}
+.conf{font-variant-numeric:tabular-nums}
+@media (max-width:720px){
+  th.hide,td.hide{display:none}
+  .detail dl{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Repairs desk <span class="meta">· Kestrel Lettings</span></h1>
+    <div class="meta"><span class="dot"></span>Agent running · last checked 14:52 · Tue 27 Oct 2026</div>
+  </header>
+
+  <div class="counts" id="counts"></div>
+
+  <h2>Needs you <span id="attnCount" class="badge s-bad"></span></h2>
+  <div class="attn" id="attn"></div>
+
+  <h2>All requests today and still open</h2>
+  <div class="filters" id="filters" role="group" aria-label="Filter requests"></div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th>Urgency</th><th>Flat and problem</th><th class="hide">Vendor and slot</th><th>Status</th><th class="hide">Received</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="meta" style="margin-top:12px">Click a row to see the tenant's message and why the agent chose that urgency. Sample data.</p>
+</div>
+
+<script>
+const U = {emergency:"Emergency", urgent:"Urgent", routine:"Routine", low:"Low"};
+const UORDER = {emergency:0, urgent:1, routine:2, low:3};
+
+const reqs = [
+ {id:1, t:"14:31", flat:"Flat 3, 14 Alder Court", tenant:"Priya Nair", phone:"01632 960118",
+  msg:"There's a strong smell of gas in the kitchen, started about 20 mins ago. I've opened the windows.",
+  title:"Smell of gas in kitchen", urgency:"emergency", cat:"Gas", status:"Vendor on the way", sc:"s-ok",
+  vendor:"Hartley Gas & Heating", slot:"Today, arriving by 15:20", conf:98,
+  reason:"Gas smell is always treated as an emergency. Agent told tenant to leave the flat and call the National Gas Emergency line on 0800 111 999.",
+  attn:"Gas emergency. Agent has acted, but please confirm Hartley has arrived.", attnAction:"Call Hartley"},
+ {id:2, t:"13:58", flat:"Flat 9, 2 Brook Street", tenant:"Tom Ellery", phone:"01632 960245",
+  msg:"Pipe under the kitchen sink has split and water is going everywhere. I've turned the stopcock off but the floor is soaked.",
+  title:"Burst pipe under sink", urgency:"emergency", cat:"Plumbing", status:"Vendor not confirmed", sc:"s-bad",
+  vendor:"Marlow Plumbing", slot:"Asked 14:05, no reply", conf:94,
+  reason:"Active leak with water on the floor. Stopcock is off, so no further flooding, but there's a flat below (Flat 5).",
+  attn:"Marlow hasn't replied in 47 minutes. Agent will try Dunmore Plumbing at 15:30 if nothing comes back.", attnAction:"Try Dunmore now"},
+ {id:3, t:"12:40", flat:"Flat 12, Priory Mews", tenant:"Gemma Walsh", phone:"01632 960377",
+  msg:"Ceiling in the bathroom is bubbling and a bit damp. Not dripping yet.",
+  title:"Damp, bubbling bathroom ceiling", urgency:"urgent", cat:"Plumbing / Roof", status:"Agent unsure", sc:"s-warn",
+  vendor:"None chosen", slot:"-", conf:46,
+  reason:"Could be a leak from Flat 15 above, or a roof problem. A plumber and a roofer are both plausible and the agent would be guessing.",
+  attn:"Agent can't tell if this is a plumber or roofer job. Is Flat 15 reporting anything?", attnAction:"Send plumber"},
+ {id:4, t:"11:15", flat:"Flat 1, 37 Calder Road", tenant:"Margaret Osei", phone:"01632 960402",
+  msg:"No hot water or heating since last night. I'm 81 and it's very cold in here.",
+  title:"No heating or hot water", urgency:"emergency", cat:"Heating", status:"No vendor available", sc:"s-bad",
+  vendor:"Hartley and Calder Boilers both full", slot:"Earliest: tomorrow 09:00", conf:90,
+  reason:"Vulnerable tenant, no heating, overnight temperatures near 4°C. Treated as an emergency. Both approved heating firms are booked until tomorrow.",
+  attn:"No heating engineer free today for an 81-year-old tenant. Needs a phone call to find one.", attnAction:"Call tenant"},
+
+ {id:5, t:"14:12", flat:"Flat 6, Orchard House", tenant:"Daniel Rowe", phone:"01632 960511",
+  msg:"Half the sockets in the living room have stopped working. Lights are fine.",
+  title:"Sockets dead in living room", urgency:"urgent", cat:"Electrical", status:"Booked", sc:"s-ok",
+  vendor:"Spark & Co Electrical", slot:"Wed 28 Oct, 08:00 to 12:00", conf:87,
+  reason:"Likely a tripped or faulty circuit. No burning smell or sparks mentioned, so not an emergency. Agent told tenant not to use extension leads on that circuit."},
+ {id:6, t:"13:20", flat:"Flat 4, 14 Alder Court", tenant:"Aisha Karim", phone:"01632 960129",
+  msg:"Toilet keeps running and won't stop filling. It's also very loud at night.",
+  title:"Toilet cistern constantly running", urgency:"routine", cat:"Plumbing", status:"Booked", sc:"s-ok",
+  vendor:"Marlow Plumbing", slot:"Fri 30 Oct, 13:00 to 17:00", conf:92,
+  reason:"Faulty fill valve most likely. Wasting water but not flooding. Another toilet is working in the flat."},
+ {id:7, t:"12:05", flat:"Flat 2, Priory Mews", tenant:"Luke Barrett", phone:"01632 960620",
+  msg:"Front door lock is sticking and I had to force it this morning. Worried I'll get locked out.",
+  title:"Front door lock sticking", urgency:"urgent", cat:"Locks", status:"Awaiting confirmation", sc:"s-warn",
+  vendor:"Keyline Locksmiths", slot:"Proposed: Wed 28 Oct, PM", conf:81,
+  reason:"Security risk and lockout risk, but the door still works today. Booked for next day."},
+ {id:8, t:"10:48", flat:"Flat 8, 2 Brook Street", tenant:"Fatima Yusuf", phone:"01632 960731",
+  msg:"Mould has come back on the bedroom wall by the window. Third time this year.",
+  title:"Recurring mould in bedroom", urgency:"routine", cat:"Damp & mould", status:"Booked", sc:"s-ok",
+  vendor:"DryRight Surveys", slot:"Mon 2 Nov, 10:00 to 12:00", conf:78,
+  reason:"Recurring, so agent booked a survey instead of another clean. Flagged for property manager as a possible ventilation problem."},
+ {id:9, t:"10:02", flat:"Flat 11, Orchard House", tenant:"Chris Pemberton", phone:"01632 960854",
+  msg:"Oven fan-assisted heating isn't working, the top element works fine.",
+  title:"Oven fan not working", urgency:"low", cat:"Appliance", status:"Booked", sc:"s-ok",
+  vendor:"Whiteline Appliance Repair", slot:"Tue 3 Nov, 09:00 to 13:00", conf:93,
+  reason:"Oven is still usable. Not safety-related."},
+ {id:10, t:"09:30", flat:"Flat 5, 2 Brook Street", tenant:"Nadia Petrov", phone:"01632 960966",
+  msg:"Smoke alarm in the hallway is beeping every minute or so.",
+  title:"Smoke alarm chirping", urgency:"urgent", cat:"Safety", status:"In progress", sc:"s-ok",
+  vendor:"Spark & Co Electrical", slot:"Today, on site now", conf:89,
+  reason:"Likely a low battery, but alarms are a legal requirement so agent didn't wait for the routine slot."},
+ {id:11, t:"09:12", flat:"Flat 7, Calder Road", tenant:"Owen Mathers", phone:"01632 960073",
+  msg:"Bedroom window won't close properly, draught coming in.",
+  title:"Bedroom window won't close", urgency:"routine", cat:"Windows", status:"Awaiting confirmation", sc:"s-warn",
+  vendor:"Greenway Joinery", slot:"Proposed: Thu 5 Nov, AM", conf:84,
+  reason:"Comfort issue, window is on an upper floor but still latches. Not a security problem."},
+ {id:12, t:"Mon 17:44", flat:"Flat 10, Priory Mews", tenant:"Hannah Cho", phone:"01632 960318",
+  msg:"Paint is peeling in the hallway near the radiator.",
+  title:"Peeling paint in hallway", urgency:"low", cat:"Decorating", status:"Queued", sc:"s-neutral",
+  vendor:"Waiting for quarterly decorating batch", slot:"Week of 16 Nov", conf:95,
+  reason:"Cosmetic only. Agent groups these into one decorating visit per building."},
+ {id:13, t:"Mon 15:10", flat:"Flat 3, Orchard House", tenant:"Ben Adeyemi", phone:"01632 960442",
+  msg:"Kitchen tap drips constantly.",
+  title:"Dripping kitchen tap", urgency:"routine", cat:"Plumbing", status:"Completed", sc:"s-ok",
+  vendor:"Marlow Plumbing", slot:"Done today, 11:20", conf:96,
+  reason:"Washer replacement. Marlow marked it as completed and the tenant has not replied to say otherwise."}
+];
+
+const handled = new Set();
+let filter = "All";
+
+function el(tag, attrs, html){
+  const e = document.createElement(tag);
+  for (const k in (attrs||{})) e.setAttribute(k, attrs[k]);
+  if (html!==undefined) e.innerHTML = html;
+  return e;
+}
+
+function renderCounts(){
+  const open = reqs.filter(r=>r.status!=="Completed");
+  const att = reqs.filter(r=>r.attn && !handled.has(r.id));
+  const booked = reqs.filter(r=>["Booked","Vendor on the way","In progress"].includes(r.status)).length;
+  const wait = reqs.filter(r=>["Awaiting confirmation","Vendor not confirmed"].includes(r.status)).length;
+  const done = reqs.filter(r=>r.status==="Completed").length;
+  const c = document.getElementById("counts");
+  c.innerHTML = "";
+  [
+    [att.length,"Need you",att.length?"hot":""],
+    [open.length,"Open requests",""],
+    [booked,"Booked or in progress",""],
+    [wait,"Waiting on a vendor",""],
+    [done,"Completed today",""]
+  ].forEach(([n,l,cls])=>c.appendChild(el("div",{class:"count "+cls},`<b>${n}</b><span>${l}</span>`)));
+}
+
+function renderAttn(){
+  const box = document.getElementById("attn");
+  box.innerHTML = "";
+  const list = reqs.filter(r=>r.attn && !handled.has(r.id)).sort((a,b)=>UORDER[a.urgency]-UORDER[b.urgency] || a.id-b.id);
+  document.getElementById("attnCount").textContent = list.length;
+  if(!list.length){ box.appendChild(el("div",{class:"empty"},"Nothing needs you right now. The agent will flag anything it can't handle.")); return; }
+  list.forEach(r=>{
+    const c = el("div",{class:"card "+(r.urgency==="emergency"?"emergency":"")});
+    c.innerHTML = `
+      <div class="top"><span class="badge u-${r.urgency}">${U[r.urgency]}</span>
+        <strong>${r.flat}</strong><span class="small">· ${r.title} · ${r.t}</span></div>
+      <p class="why">${r.attn}</p>
+      <p class="small">Tenant: ${r.tenant}, ${r.phone}. Agent confidence <span class="conf">${r.conf}%</span>.</p>
+      <div class="actions">
+        <button class="primary" data-act="${r.id}">${r.attnAction}</button>
+        <button data-done="${r.id}">Mark as dealt with</button>
+      </div>`;
+    box.appendChild(c);
+  });
+  box.querySelectorAll("[data-done]").forEach(b=>b.onclick=()=>{handled.add(+b.dataset.done);renderAll();});
+  box.querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>{
+    b.textContent = "Noted. Not sent in this demo"; b.disabled = true;
+  });
+}
+
+function renderFilters(){
+  const f = document.getElementById("filters");
+  f.innerHTML = "";
+  ["All","Emergency","Urgent","Routine","Low"].forEach(n=>{
+    const b = el("button",{"aria-pressed":String(filter===n)},n);
+    b.onclick=()=>{filter=n;renderFilters();renderRows();};
+    f.appendChild(b);
+  });
+}
+
+function renderRows(){
+  const body = document.getElementById("rows");
+  body.innerHTML = "";
+  reqs.filter(r=>filter==="All"||U[r.urgency]===filter)
+   .sort((a,b)=>(a.status==="Completed")-(b.status==="Completed") || UORDER[a.urgency]-UORDER[b.urgency] || a.id-b.id)
+   .forEach(r=>{
+    const tr = el("tr",{class:"row",tabindex:"0","aria-expanded":"false"});
+    tr.innerHTML = `
+      <td><span class="badge u-${r.urgency}">${U[r.urgency]}</span></td>
+      <td><div class="flat">${r.flat}</div><div class="sub">${r.title}</div></td>
+      <td class="hide"><div>${r.vendor}</div><div class="sub">${r.slot}</div></td>
+      <td><span class="badge ${r.sc}">${r.status}</span></td>
+      <td class="hide sub">${r.t}</td>`;
+    const d = el("tr",{class:"detail"});
+    d.hidden = true;
+    d.innerHTML = `<td colspan="5"><dl>
+      <dt>Tenant said</dt><dd><blockquote>${r.msg}</blockquote></dd>
+      <dt>Tenant</dt><dd>${r.tenant}, ${r.phone}</dd>
+      <dt>Why this urgency</dt><dd>${r.reason}</dd>
+      <dt>Agent confidence</dt><dd class="conf">${r.conf}%${r.conf<60?" (low)":""}</dd>
+      <dt>Category</dt><dd>${r.cat}</dd>
+    </dl></td>`;
+    const toggle=()=>{d.hidden=!d.hidden;tr.setAttribute("aria-expanded",String(!d.hidden));};
+    tr.onclick=toggle;
+    tr.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle();}};
+    body.appendChild(tr);body.appendChild(d);
+  });
+}
+
+function renderAll(){renderCounts();renderAttn();renderFilters();renderRows();}
+renderAll();
+</script>
+</body>
+</html>

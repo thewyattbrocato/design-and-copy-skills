@@ -1,46 +1,31 @@
-The structure is solid and the prices are clear. The main problem is that the copy is generic in the places where a studio owner will decide whether to trust you, especially the unit you charge by and the security answer.
+The structure is clean and the trial line is strong. The copy is generic in most places, though, and the FAQ answers are the weakest part. A studio owner evaluating this will want specifics, and "Absolutely" and "friendly team" don't give them any.
 
 ## Biggest issues
 
-**1. "Items" is undefined, and it's the pricing unit.** Basic caps at 100 items and Pro is unlimited, but a studio owner can't tell what an item is. Members? Wheels and kilns? Bookings? Pick the unit that matches how studios think about their business and name it in both tiers: "Up to 100 members" or "Up to 6 wheels and kilns." If the limit is fuzzy, owners will guess, and a wrong guess turns into a support ticket or an angry upgrade.
+**1. "Items" is undefined.** The Basic limit is "up to 100 items," and that's the main thing a pottery studio owner will want to compare. Does an item mean a member, a wheel, a kiln, a booking, or a time slot? Name the unit, e.g. "Up to 100 members" or "Up to 4 wheels and 2 kilns."
 
-**2. The security answer says nothing.** "Absolutely. We take security very seriously" is the phrase people skim past or distrust. Member names, contact details, and payment info are at stake. Replace it with specifics you can back up, such as where data is hosted, whether it's encrypted, how payments are handled, whether backups run, and whether they can export their data. If you can't make a specific claim yet, say what you do have, such as "Member data is encrypted in transit and at rest," and leave out the rest. Don't promise certifications you don't hold.
+**2. The Enterprise tier doesn't fit the audience.** "For large organizations" suggests a chain or institution, not a studio renting a few wheels. If Enterprise is for multi-location studios or community arts centers, say that. Otherwise you may be selling a tier to people who don't need it.
 
-**3. "How does it work?" doesn't answer the question.** "Simply sign up and start using Kilnbook right away" describes nothing. Describe the actual flow: set up your wheels and kilns, members book time slots, and you track usage and payments. Two or three concrete sentences do more than the current answer.
+**3. Pro is described by what it isn't.** "Everything in Basic, plus more" and "Advanced analytics" don't tell anyone what they get. "Plus more" is filler. Analytics for what? Utilization of kiln time, member retention, revenue? Name the outcome.
 
-**4. The support answer doesn't match the tiers.** "Our friendly team is here to help" doesn't tell anyone what they'll get. Basic has email support and Pro has priority support, so the FAQ should say what each means: channels, hours, and response time if you can commit to one. Drop "friendly"; it's filler.
+**4. The FAQ answers are placeholders.**
+- **"How does it work?"** says "sign up and start," which doesn't answer the question. Describe the flow: owner sets up schedules and rates, members book and pay, and so on.
+- **"Is my data secure?"** "Absolutely. We take security very seriously" is the kind of line readers skip, and it's weakest where trust matters most, since you're holding member contact info and possibly payment data. Name the concrete things: encryption, payment processor, who can see member data, data export.
+- **"Do you offer support?"** This should match the tiers. Basic includes email support, so say what that means (response time, hours) and what Pro's priority support adds.
 
-**5. "Everything in Basic, plus more" is weak.** The "more" is the entire reason to upgrade, so name it in the Pro card and skip the generic line. "Advanced analytics" should say what it shows, such as wheel and kiln utilization or revenue by member.
+## Smaller issues
 
-**6. The Enterprise tier targets the wrong buyer.** "Large organizations" probably doesn't describe your typical customer, a single studio or a small group of studios. Consider "For multi-location studios and studio networks" or similar, and make sure "dedicated account manager" and "custom integrations" are things you'll actually deliver.
+- **"Can I cancel anytime?"** The "Yes!" exclamation point undercuts the tone. Also address what happens to the trial (does it auto-convert? is a card needed later?), whether there are refunds or prorating, and what happens to member data after cancellation.
+- **"Perfect for getting started"** is vague. Say who Basic is for, e.g. "For studios with a small membership."
+- **Missing questions** a studio owner would likely ask: Can members book and pay themselves? Is there annual billing? Can I switch plans later? Does it integrate with my payment processor or calendar? Can I import my existing member list?
+- **The subheading** "Choose the plan that's right for you" is standard filler. "Start with a 14-day trial. Upgrade when your studio grows." is more specific.
 
-## Smaller items
+## Suggested rewrites (fill in the brackets with real facts)
 
-- **Subheading:** "Choose the plan that's right for you" could be cut or made specific: "Start free for 14 days. Upgrade when you outgrow your limits."
-- **"Perfect for getting started":** filler. Replace it with who Basic is for, such as "For a single studio with a small member list."
-- **"Simple, transparent pricing":** fine, but generic. It's an acceptable heading.
-- **"Yes!" in the cancel answer:** the exclamation point reads oddly next to a trust question. Add what actually happens: whether cancellation is self-serve, whether it takes effect at period end, and whether members' data stays accessible or gets deleted.
-- **Trial terms:** "No credit card required" is good. Add what happens when the trial ends, such as whether it converts to paid automatically or stops. This is one of the first questions people search for.
+- **Basic:** "For small studios. Up to [100 members / 4 wheels and 2 kilns]. Email support ([response time])."
+- **Pro:** "For growing studios. Unlimited [members / resources]. Priority support and analytics on [kiln usage, member retention, revenue]."
+- **FAQ, how it works:** "Set your wheel and kiln availability and rates. Members book and pay online. You see everything in one calendar." (Adjust to the real flow.)
+- **FAQ, security:** "Payments are handled by [processor], so we never store card numbers. Member data is encrypted at rest and in transit, and you can export it at any time."
+- **FAQ, support:** "Email support on Basic, priority support on Pro. Our team responds within [timeframe], [days and hours]."
 
-## FAQ questions you're probably missing
-
-- **Can I import my existing members and schedule?** Owners with an existing studio will ask this first.
-- **Can members book their own time?** This is the core of renting wheel and kiln time, so state it plainly.
-- **Can I change plans later?** Covers upgrades and downgrades, including mid-cycle billing.
-- **What counts toward my item limit?** This ties back to point 1.
-
-## Rewritten FAQ (fill in the brackets with facts you can confirm)
-
-**How does Kilnbook work?**
-Set up your wheels and kilns, then members book time slots online. You can see usage at a glance and [manage payments / track balances / whatever is true].
-
-**Can I cancel anytime?**
-Yes. Cancel from your account settings at any time. [It takes effect at the end of your billing period / your data is exportable for X days after cancelling.]
-
-**How is my data protected?**
-[Member data is encrypted in transit and at rest. Payments are processed by ___. Backups run ___. You can export your data at any time.] Only include what's true.
-
-**What support do you offer?**
-Basic plans include email support. Pro plans include priority support with [response time]. [Enterprise plans include a dedicated account manager.]
-
-If you tell me which of the bracketed facts are true, I can finish those answers. I can also tighten the pricing cards once you've settled what "items" means.
+If you tell me the real limits, pricing unit, and payment setup, I can tighten these into final copy.

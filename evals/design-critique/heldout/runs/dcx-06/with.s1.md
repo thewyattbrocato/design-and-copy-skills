@@ -1,40 +1,47 @@
-**The flow reads like three different voices.** The first two pages talk like a club, the payment page like a checkout template, and the confirmation like a webshop. Each page passes on its own, but the seams show when you read them in order. This is a text-only review, so layout, visuals, errors and contrast were not checked.
+**The pages are fine on their own. The flow has no consistent voice or vocabulary, and the details that matter either arrive too late or disappear.** That's probably the thing the manager can't name.
 
-## Findings, in priority order
+## Findings, ranked
 
-**1. Major: the price changes and the cancellation terms appear only at the last step.**
-- Page 1 shows "$24". The tax ($1.92) and the real total ($25.92) first appear on page 3, after the person has entered their details.
-- The cancellation rule is small print under the pay button. For this slot, the cutoff is 18:00 on Fri 13 Nov. Nobody sees that before committing, and late cancellations are not refunded.
-- Fix: show "$24 + tax" or the total on page 1. Move the cancellation rule into the page 3 summary box as plain text with the actual cutoff date and time.
+**1. The no-refund policy only appears after the customer has decided to pay (Major).**
+- The rule is "24 hours before, or no refund". It's small print under "Complete purchase" on page 3, and it doesn't appear on page 1 or 2.
+- Someone booking a Saturday evening slot on a whim learns the terms when their card is already out.
+- Fix: put a one-line version next to the price on page 1 ("Free cancellation until Fri 13 Nov, 18:00"). Keep the full text on page 3 as normal-size body copy above the button. Repeat it on the confirmation.
 
-**2. Major: the confirmation page doesn't confirm anything.**
-- It has no court, date, time, total paid or cancellation deadline. It only gives "#HC-2231" and says the email is "on its way".
-- If the email is late, the person can't verify their booking. The only exit is "Back to home".
-- Fix: repeat the booking summary and the cancellation deadline, and add "Add to calendar". Replace the button with "View my bookings" or similar.
+**2. The price changes between page 1 and page 3 (Major).**
+- Page 1 shows "$24". Page 3 shows $25.92 because of $1.92 tax. That's 8% (computed from the numbers you gave), and page 1 doesn't say it's excluded.
+- It's an 8% jump at the last step, which is small but feels like a surprise.
+- Fix: label page 1 "$24 + tax", or show the $25.92 total there.
 
-**3. Moderate: the same thing has five names.**
-- Page 1 says "Reserve", page 3 says "booking" and "purchase", and page 4 says "order" and "reservation".
-- "Order confirmed" and "Thanks for your purchase!" describe buying goods. This is probably what the manager senses.
-- Fix: pick one noun and one verb, such as "booking" and "Book court". Use them on every page, including the button ("Pay $25.92" or "Book court"), and drop "order" and "purchase".
+**3. The same things are called different names on every page (Moderate, on every page).**
+- The action is a "reserve", then a "booking", a "purchase", an "order", and a "reservation".
+- It reads like a generic shop checkout pasted onto a neighborhood club. "Order confirmed" and "Thanks for your purchase!" are retail phrases for something someone will turn up and play.
+- Fix: pick one noun, "booking", and use it everywhere. For example: "Pay for your booking", "Confirm and pay", "You're booked: Court 3, Sat 14 Nov".
 
-**4. Moderate: dates and times are formatted three ways.**
-- Page 1 uses "Sat 14 Nov" and "18:00-19:00", a 24-hour clock.
-- Page 3 uses "Sat 14 November" and "6:00 PM to 7:00 PM", a 12-hour clock.
-- Page 4 has no date at all.
-- A US neighborhood club probably wants 12-hour time throughout. Choose one format and apply it everywhere.
+**4. The date and time are written three ways (Moderate).**
+- Page 1 has "Sat 14 Nov" and "18:00-19:00". Page 3 has "Sat 14 November, 6:00 PM to 7:00 PM".
+- A 24-hour clock followed by a 12-hour clock makes people re-check that it's the same slot.
+- Fix: choose one format, probably "Sat 14 Nov, 6:00-7:00 PM", and use it on all four pages.
 
-**5. Moderate: what you chose drops out along the way.**
-- The sport (tennis or pickleball) is never shown after page 1. The summary says only "Court 3".
-- The guest count and name from page 2 aren't on the payment summary, so nothing lets you check them before paying.
-- Fix: the summary should read sport, court, date, time, guests and total, and it should look the same on pages 3 and 4.
+**5. The confirmation doesn't confirm anything (Major).**
+- It shows a reference number and "on its way to your inbox". It doesn't show the court, date, time, sport, total paid, or which email address it went to.
+- A mistyped email means no way to find out. There's no calendar link, no manage or cancel link, and no cancellation deadline.
+- The only exit is "Back to home".
+- Fix: restate the booking summary, the email address used, and the cancellation deadline. Add "Add to calendar" and "Manage booking".
 
-**6. Minor: page 2's heading promises more than the form asks.**
-"Who's playing?" collects only the booker's name and a number. If guests' names don't matter, retitle it "Your details", which is the page's own name. Also say whether guests change the price. The "0-3" limit is unexplained.
+**6. Details from earlier pages are lost along the way (Moderate).**
+- Sport is chosen on page 1 but never appears again. "Court 3" doesn't say whether it's tennis or pickleball.
+- Page 2 asks "Who's playing?" but only collects a guest count, and that count is missing from the page 3 summary.
+- Fix: put sport and guest count in the page 3 summary and on the confirmation. Change the page 2 heading to "Your details", or collect guest names.
 
-## What works and should stay
-- **Four steps with no account wall.** There is no forced signup, so the path is short.
-- **The page 3 line items.** Rental, tax and total are itemized, so the final price is honest once it appears.
-- **The page 1 result row.** Court, time and price sit together, and "Select" is a clear single action.
-- **The "Continue to payment" button.** It says what happens next. Make the pay button as specific.
+## What to keep
+- **Short flow.** Four steps with one action each, and nothing is asked twice.
+- **Itemized payment page.** Rental, tax and total are separate, and the summary box is placed right where it's needed.
+- **Plain button labels.** "Continue to payment" tells people what happens next.
+- **Guest cap of 0-3.** It probably matches the four-player court limit.
 
-**Quick win:** fix findings 3 and 4 in one copy pass, then add the summary box and cancellation cutoff (findings 1, 2 and 5). I'd expect that to settle the manager's unease.
+## Fix order
+1. Items 1 and 2: show the cancellation terms and the tax up front.
+2. Item 5: make the confirmation a real receipt.
+3. Items 3, 4 and 6: a single copy pass for terms, formats and carried-over details.
+
+**Not checked:** visual design, any step indicator or back navigation, error states and validation, accessibility. I only had the pasted text.

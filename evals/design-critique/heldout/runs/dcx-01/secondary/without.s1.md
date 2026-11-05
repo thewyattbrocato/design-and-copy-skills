@@ -1,27 +1,36 @@
-The page reads like a generic SaaS template. The layout is fine, but the words could belong to any product, which is probably why your cofounder can't pin it down.
+The page feels off because it could be the marketing page for any software product. Nothing on it tells a boatyard manager what Slipway does for them.
 
-**What's making it feel off**
+**What's causing the "off" feeling**
 
-1. **It never says what Slipway does.** "Streamline their workflow and unlock their full potential" describes no task. A boatyard manager should see haul-outs, launches, and travel-lift time in the first sentence.
-2. **The feature cards are adjectives.** "Powerful," "Simple," and "Secure" are claims, not features. "Built with cutting-edge technology" is the kind of line that makes a practical yard owner stop reading.
-3. **The testimonial looks fake.** "John Doe, CEO at Acme Inc." is a placeholder. Even if you swap it, an unattributed quote with no yard name or location reads as invented. Remove it until you have a real one.
-4. **"Join thousands of happy customers" is unverifiable.** If you don't have thousands, it damages trust. Use a number you can back up, or none.
-5. **"Enterprise-grade" is the wrong register.** Small yards buy from people who sound like they've stood on a dock.
-6. **The CTAs are inconsistent.** "Get Started" appears twice, then "Sign Up Free." Pick one primary action and one secondary.
-7. **The audience isn't addressed.** The page never mentions the travel lift, the slings, the tide, the crew, or the customer calling about their boat. Those are what your buyer thinks about.
-8. **No product visual.** A screenshot of the lift schedule would do more than any paragraph here.
+- **No boatyard vocabulary.** There's no mention of haul-outs, launches, the travel lift, or yard schedules. Your target reader is someone who thinks in those terms, and they'll bounce when they don't see them.
+- **The copy is interchangeable.** "Work smarter, not harder," "streamline their workflow," and "unlock their full potential" are phrases that appear on thousands of SaaS sites. They signal template, not a product built for a specific job.
+- **The feature cards are adjectives, not features.** "Powerful," "Simple," and "Secure" are claims anyone can make. "Built with cutting-edge technology" says nothing about the product.
+- **The testimonial hurts more than it helps.** "John Doe, CEO at Acme Inc." reads as placeholder. Even if it's real, a generic quote from a generic company makes readers doubt the rest of the page.
+- **"Join thousands of happy customers"** is vague and unverifiable. If you're early, it can also read as a stretch.
+- **The CTA labels are inconsistent.** "Get Started," "Sign Up Free," and "Learn More" are three different asks. Pick one primary action and make it the same everywhere.
+- **No product visual.** A schedule view showing a haul-out sequence would do more than any of the copy.
 
-**Possible rewrite** (the feature claims are my inventions, so replace them with what the product actually does)
+**A direction for the copy**
 
-- **H1:** Know who's on the travel lift today.
-- **Sub:** Slipway schedules haul-outs, launches, and lift time for small boatyards, so the lift, the crew, and the customer are never double-booked.
-- **Buttons:** *Start scheduling* (primary) · *See a haul-out walkthrough* (secondary)
-- **Features:**
-  - **One board for the yard.** Every haul-out, launch, and blocking job by day and by bay.
-  - **Conflict checks before the slings.** The lift can only be in one place. Slipway flags overlaps first.
-  - **Customers see their own dates.** *(Only if this exists.)*
-- **Testimonial:** Remove, or replace with a real quote: name, yard, town.
-- **Closing CTA:** "Put your next haul-out on the board." Button: *Start scheduling*.
-- **Nav:** Add a *Log in* link. Real visitors will look for it.
+Name the real problem and the real users. Only use numbers you can back up; I've left placeholders where you need real figures.
 
-**What I'd need to tighten this further:** the actual feature list, whether there's a free tier or trial (the "Sign Up Free" button depends on it), and one real customer quote if you have one. If you can share those, I can write the full copy.
+> **Hero:** *Know who's on the travel lift before the tide does.*
+> Slipway keeps your haul-outs, launches, and yard equipment on one schedule, so your crew, your customers, and your lift are never double-booked.
+> [Start your yard's schedule] · [See how a haul-out is planned]
+
+> **Features** (describe what the thing does, in the yard's terms):
+> - **Lift and slip scheduling:** Book haul-outs and launches against the travel lift and slip availability, with conflicts flagged before they happen.
+> - **Crew and equipment view:** See who's assigned, what equipment is free, and what's blocked for maintenance, by day.
+> - **Customer updates:** Send owners their haul-out and launch dates without a phone call. [Confirm this is built before you ship it.]
+
+> **Testimonial:** Replace with a real quote from a yard, with the yard's name and the person's role. If you don't have one yet, use a "Who it's for" section (e.g., "Built for independent yards, marinas with dry storage, and family-run boatyards") instead of a fake quote.
+
+> **Final CTA:** *Set up your yard's schedule this week.*
+> [Start free trial] (use the same label as the nav button)
+
+**Two things to check before you publish**
+
+1. Every feature described should exist today. If "customer updates" is on the roadmap, label it that way or leave it out.
+2. Keep "thousands of customers" and similar claims out until they're true. A small, specific claim ("Used by 12 yards on the Chesapeake") is more persuasive than a large vague one.
+
+If you tell me what Slipway actually does today and who your first customers are, I can rewrite the full page with the real features and tighten the HTML structure to match.

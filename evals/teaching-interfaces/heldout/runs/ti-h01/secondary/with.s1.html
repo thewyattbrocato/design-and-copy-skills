@@ -6,300 +6,229 @@
 <title>Welcome to Kilnbook</title>
 <style>
   :root {
-    --bg: #faf7f2;
+    --bg: #f7f3ee;
     --card: #ffffff;
     --ink: #2b2420;
-    --muted: #6b5d55;
-    --line: #e6dcd2;
-    --accent: #a4502f;
+    --muted: #6b5e55;
+    --line: #e4dbd2;
+    --accent: #9a4a2b;
     --accent-ink: #ffffff;
-    --accent-soft: #f6e9e1;
-    --ok: #3f6b4a;
-    --focus: #1f5fbf;
+    --accent-soft: #f3e4dc;
+    --sample: #fff7d6;
+    --sample-ink: #6b5200;
+    --focus: #1f5fa8;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--ink);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
+    color: var(--ink);
+    background: var(--bg);
   }
   a { color: var(--accent); }
   :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-
-  header.top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--line);
-    background: var(--card);
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px; background: var(--card); border-bottom: 1px solid var(--line);
   }
-  .brand { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.01em; }
-  .skip-link { font-size: 0.95rem; }
-
+  .brand { font-weight: 700; letter-spacing: .01em; }
+  .topbar .skip { font-size: 14px; color: var(--muted); }
   main {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 32px 24px 64px;
+    max-width: 880px; margin: 0 auto; padding: 32px 20px 56px;
+    display: grid; gap: 20px;
   }
-
-  .progress-label { font-size: 0.9rem; color: var(--muted); margin: 0 0 8px; }
-  .progress {
-    height: 6px;
-    background: var(--line);
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 24px;
-  }
-  .progress > span {
-    display: block;
-    height: 100%;
-    width: 50%;
-    background: var(--accent);
-  }
-  .progress-steps {
-    display: flex;
-    gap: 16px;
-    font-size: 0.9rem;
-    color: var(--muted);
-    margin: 0 0 28px;
-    list-style: none;
-    padding: 0;
-  }
-  .progress-steps li.done::before { content: "\2713  "; color: var(--ok); font-weight: 700; }
-  .progress-steps li.current { color: var(--ink); font-weight: 600; }
-
-  h1 { font-size: 1.75rem; line-height: 1.2; margin: 0 0 8px; }
-  .lede { margin: 0 0 24px; color: var(--muted); max-width: 60ch; }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 20px;
-  }
-  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
-
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 6px; }
+  h2 { font-size: 18px; margin: 0 0 6px; }
+  p { margin: 0; }
+  .muted { color: var(--muted); }
   .card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 20px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px;
   }
-  .card h2 { font-size: 1.05rem; margin: 0 0 4px; }
-  .card .hint { margin: 0 0 16px; font-size: 0.9rem; color: var(--muted); }
-
+  .task-head { display: grid; gap: 4px; }
+  .steps { display: flex; gap: 8px; list-style: none; padding: 0; margin: 14px 0 0; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+  .steps li { padding: 4px 10px; border-radius: 999px; background: #efe9e2; }
+  .steps li[aria-current="step"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+  .option {
+    text-align: left; font: inherit; color: inherit; cursor: pointer;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px;
+    display: grid; gap: 4px;
+  }
+  .option strong { font-size: 16px; }
+  .option[aria-pressed="true"] { border: 2px solid var(--accent); background: var(--accent-soft); padding: 15px; }
   .sample-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--accent);
-    background: var(--accent-soft);
-    border-radius: 4px;
-    padding: 2px 6px;
-    vertical-align: middle;
-    margin-left: 6px;
+    display: inline-block; justify-self: start; font-size: 12px; font-weight: 600;
+    background: var(--sample); color: var(--sample-ink); padding: 2px 8px; border-radius: 6px;
   }
-
-  .slots { display: grid; gap: 10px; margin: 0 0 18px; padding: 0; list-style: none; }
-  .slot {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    font: inherit;
-    color: inherit;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 12px 14px;
-    cursor: pointer;
+  .times { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .time {
+    font: inherit; font-size: 15px; cursor: pointer; padding: 8px 12px;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink);
   }
-  .slot:hover { border-color: var(--accent); }
-  .slot[aria-pressed="true"] {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-    box-shadow: inset 0 0 0 1px var(--accent);
-  }
-  .slot .when { font-weight: 600; }
-  .slot .detail { font-size: 0.875rem; color: var(--muted); }
-
+  .time[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .actions { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
   .btn {
-    font: inherit;
-    font-weight: 600;
-    border: 0;
-    border-radius: 8px;
-    padding: 11px 18px;
-    background: var(--accent);
-    color: var(--accent-ink);
-    cursor: pointer;
+    font: inherit; font-weight: 600; cursor: pointer; border-radius: 8px; padding: 10px 18px;
+    border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
   }
-  .btn:disabled { background: #d9cfc6; color: #7a6d65; cursor: not-allowed; }
-
-  .confirm {
-    margin-top: 16px;
-    padding: 12px 14px;
-    border-radius: 8px;
-    background: #eaf3ec;
-    color: #224a2e;
-    font-size: 0.95rem;
-  }
-  .confirm[hidden] { display: none; }
-
-  .notes { margin: 0; padding-left: 20px; font-size: 0.95rem; }
-  .notes li + li { margin-top: 10px; }
-
-  .dashboard { margin-top: 40px; }
-  .dashboard h2 { font-size: 1.2rem; margin: 0 0 12px; }
-  .empty {
-    border: 1px dashed #cdbfb3;
-    border-radius: 12px;
-    padding: 24px;
-    background: var(--card);
-  }
-  .empty p { margin: 0 0 12px; }
-  .empty .purpose { margin: 0 0 14px; color: var(--muted); }
-  .booked-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-  .booked-list li {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 12px 14px;
-  }
-  .booked-list .detail { font-size: 0.875rem; color: var(--muted); }
-  .help-line { margin-top: 24px; font-size: 0.9rem; color: var(--muted); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-quiet { background: transparent; color: var(--accent); border-color: transparent; padding: 10px 6px; }
+  .hint { font-size: 14px; color: var(--muted); }
+  .note { font-size: 14px; background: var(--sample); color: var(--sample-ink); padding: 10px 12px; border-radius: 8px; }
+  .upcoming-empty { display: grid; gap: 8px; }
+  .booked { display: none; border-left: 4px solid var(--accent); padding-left: 14px; margin-top: 12px; }
+  .booked.show { display: block; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .tips li { margin-bottom: 6px; }
+  .tips { padding-left: 20px; margin: 8px 0 0; }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } h1 { font-size: 24px; } }
 </style>
 </head>
 <body>
-
-<header class="top">
+<header class="topbar">
   <span class="brand">Kilnbook</span>
-  <a class="skip-link" href="#dashboard">Skip for now</a>
+  <a class="skip" href="#">Explore on my own</a>
 </header>
 
 <main>
-  <p class="progress-label">Setup: 1 of 2 done</p>
-  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="2" aria-valuenow="1" aria-label="Setup progress">
-    <span></span>
-  </div>
-  <ol class="progress-steps">
-    <li class="done">Account created</li>
-    <li class="current">Book your first session</li>
-  </ol>
+  <section>
+    <h1>Welcome, Sam. Book your first session.</h1>
+    <p class="muted">Afterwards you'll be able to reserve time at a wheel or a kiln at Ember Road Pottery, in about a minute.</p>
+  </section>
 
-  <h1>Book your first wheel session</h1>
-  <p class="lede">
-    Pick a time below and you'll have a wheel reserved. After that, your bookings show up on your dashboard, where you can move or cancel them.
-  </p>
+  <section class="card task-head" aria-labelledby="task-title">
+    <h2 id="task-title">Your first booking</h2>
+    <ol class="steps" aria-label="Progress">
+      <li id="s1" aria-current="step">1. Choose what to book</li>
+      <li id="s2">2. Pick a time</li>
+      <li id="s3">3. Confirm</li>
+    </ol>
 
-  <div class="grid">
-    <section class="card" aria-labelledby="pick-title">
-      <h2 id="pick-title">Choose a time <span class="sample-tag">Sample studio</span></h2>
-      <p class="hint">Harbor Clay Co-op. These times are examples; yours will be the studio's real schedule.</p>
-
-      <ul class="slots" role="list">
-        <li>
-          <button class="slot" type="button" aria-pressed="false" data-when="Tuesday, 6:00–8:00 pm" data-where="Wheel 4">
-            <span>
-              <span class="when">Tuesday, 6:00–8:00 pm</span><br>
-              <span class="detail">Wheel 4 · 2 spots free</span>
-            </span>
-          </button>
-        </li>
-        <li>
-          <button class="slot" type="button" aria-pressed="false" data-when="Wednesday, 10:00 am–12:00 pm" data-where="Wheel 1">
-            <span>
-              <span class="when">Wednesday, 10:00 am–12:00 pm</span><br>
-              <span class="detail">Wheel 1 · 4 spots free</span>
-            </span>
-          </button>
-        </li>
-        <li>
-          <button class="slot" type="button" aria-pressed="false" data-when="Saturday, 9:00–11:00 am" data-where="Wheel 2">
-            <span>
-              <span class="when">Saturday, 9:00–11:00 am</span><br>
-              <span class="detail">Wheel 2 · 1 spot free</span>
-            </span>
-          </button>
-        </li>
-      </ul>
-
-      <button class="btn" id="book-btn" type="button" disabled>Book this session</button>
-
-      <div class="confirm" id="confirm" role="status" aria-live="polite" hidden></div>
-    </section>
-
-    <aside class="card" aria-labelledby="rules-title">
-      <h2 id="rules-title">Two things to know</h2>
-      <p class="hint">Sample rules for this studio.</p>
-      <ul class="notes">
-        <li><strong>Wheel sessions are two hours.</strong> Book the whole block; you can't split it.</li>
-        <li><strong>Kiln slots are fired by staff.</strong> You book the slot, and the studio loads and fires it for you.</li>
-      </ul>
-    </aside>
-  </div>
-
-  <section class="dashboard" id="dashboard" aria-labelledby="dash-title">
-    <h2 id="dash-title">Your sessions</h2>
-
-    <div class="empty" id="empty-state">
-      <p><strong>No sessions booked yet.</strong></p>
-      <p class="purpose">Wheel and kiln bookings you make will appear here, so you can see what's coming up.</p>
-      <a class="btn" href="#top" style="display:inline-block;text-decoration:none" data-focus-book>Book your first session</a>
+    <div id="step1">
+      <p style="margin-top:16px">Wheel time is a reserved seat at a shared wheel for throwing. A kiln slot means we fire a batch of your work for you. Pick the one you want to try first.</p>
+      <div class="options" role="group" aria-label="What to book">
+        <button class="option" type="button" aria-pressed="false" data-kind="Wheel time">
+          <span class="sample-tag">Sample times</span>
+          <strong>Wheel time</strong>
+          <span class="muted">Reserve a wheel for a 2-hour session. Bring your own tools or borrow ours.</span>
+        </button>
+        <button class="option" type="button" aria-pressed="false" data-kind="Kiln slot">
+          <span class="sample-tag">Sample times</span>
+          <strong>Kiln slot</strong>
+          <span class="muted">Book a firing. Drop off dry, finished work and we fire it on the day you choose.</span>
+        </button>
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="next1" disabled>Next</button>
+        <span class="hint" id="hint1">Choose one to continue.</span>
+      </div>
     </div>
 
-    <ul class="booked-list" id="booked-list" hidden></ul>
+    <div id="step2" hidden>
+      <p style="margin-top:16px">Pick a time for your <strong id="kindLabel"></strong>. These are sample times, not live availability.</p>
+      <div class="times" role="group" aria-label="Sample times">
+        <button class="time" type="button" aria-pressed="false">Tue 6:00 pm</button>
+        <button class="time" type="button" aria-pressed="false">Thu 10:00 am</button>
+        <button class="time" type="button" aria-pressed="false">Sat 1:00 pm</button>
+        <button class="time" type="button" aria-pressed="false">Sun 9:00 am</button>
+      </div>
+      <div class="actions">
+        <button class="btn-quiet" type="button" id="back2">Back</button>
+        <button class="btn" type="button" id="next2" disabled>Next</button>
+        <span class="hint" id="hint2">Choose a time to continue.</span>
+      </div>
+    </div>
 
-    <p class="help-line">
-      New to booking here? <a href="#help">How booking works</a> &middot; <a href="#help">Replay this intro</a>
-    </p>
+    <div id="step3" hidden>
+      <p style="margin-top:16px">Check the details, then confirm.</p>
+      <p class="muted" id="summary" style="margin-top:8px"></p>
+      <div class="note" style="margin-top:12px">Sample booking. Nothing is reserved until your studio confirms it.</div>
+      <div class="actions">
+        <button class="btn-quiet" type="button" id="back3">Back</button>
+        <button class="btn" type="button" id="confirm">Confirm booking</button>
+      </div>
+    </div>
   </section>
+
+  <div class="grid-2">
+    <section class="card" aria-labelledby="up-title">
+      <h2 id="up-title">Your upcoming sessions</h2>
+      <div class="upcoming-empty" id="emptyUp">
+        <p class="muted">Nothing booked yet. Your wheel times and kiln firings will appear here, so you can find them in one place.</p>
+        <p class="hint">Start with the booking above.</p>
+      </div>
+      <div class="booked" id="booked" role="status">
+        <strong id="bookedTitle"></strong>
+        <p class="muted" id="bookedDetail"></p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="how-title">
+      <h2 id="how-title">Before you come in</h2>
+      <ul class="tips">
+        <li>Arrive a few minutes early to get set up at your station.</li>
+        <li>Kiln drop-off works best with work that is fully dry.</li>
+        <li>Find cancellation details any time under My bookings.</li>
+      </ul>
+      <p class="hint" style="margin-top:12px"><a href="#">How booking works</a> &middot; you can come back to this anytime.</p>
+    </section>
+  </div>
 </main>
 
 <script>
-  (function () {
-    var slots = document.querySelectorAll('.slot');
-    var bookBtn = document.getElementById('book-btn');
-    var confirmBox = document.getElementById('confirm');
-    var emptyState = document.getElementById('empty-state');
-    var bookedList = document.getElementById('booked-list');
-    var chosen = null;
+  var state = { kind: null, time: null };
+  var $ = function (id) { return document.getElementById(id); };
+  var step1 = $('step1'), step2 = $('step2'), step3 = $('step3');
 
-    slots.forEach(function (slot) {
-      slot.addEventListener('click', function () {
-        slots.forEach(function (s) { s.setAttribute('aria-pressed', 'false'); });
-        slot.setAttribute('aria-pressed', 'true');
-        chosen = slot;
-        bookBtn.disabled = false;
-      });
+  function setStep(n) {
+    step1.hidden = n !== 1; step2.hidden = n !== 2; step3.hidden = n !== 3;
+    ['s1', 's2', 's3'].forEach(function (id, i) {
+      $(id).setAttribute('aria-current', i + 1 === n ? 'step' : 'false');
     });
+  }
 
-    bookBtn.addEventListener('click', function () {
-      if (!chosen) return;
-      var when = chosen.getAttribute('data-when');
-      var where = chosen.getAttribute('data-where');
-
-      confirmBox.textContent = 'Booked: ' + where + ', ' + when + ' (sample). It now appears under Your sessions.';
-      confirmBox.hidden = false;
-
-      var item = document.createElement('li');
-      item.innerHTML = '<strong></strong><div class="detail"></div>';
-      item.querySelector('strong').textContent = when;
-      item.querySelector('.detail').textContent = where + ' · Harbor Clay Co-op (sample)';
-      bookedList.appendChild(item);
-      bookedList.hidden = false;
-      emptyState.hidden = true;
-
-      bookBtn.disabled = true;
-      slots.forEach(function (s) { s.setAttribute('aria-pressed', 'false'); });
-      chosen = null;
+  document.querySelectorAll('.option').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.option').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true');
+      state.kind = btn.getAttribute('data-kind');
+      $('next1').disabled = false;
+      $('hint1').textContent = state.kind + ' selected.';
     });
-  })();
+  });
+
+  $('next1').addEventListener('click', function () {
+    $('kindLabel').textContent = state.kind.toLowerCase();
+    setStep(2);
+  });
+
+  document.querySelectorAll('.time').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.time').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true');
+      state.time = btn.textContent;
+      $('next2').disabled = false;
+      $('hint2').textContent = 'Selected ' + state.time + '.';
+    });
+  });
+
+  $('back2').addEventListener('click', function () { setStep(1); });
+  $('next2').addEventListener('click', function () {
+    $('summary').textContent = state.kind + ' on ' + state.time + ' at Ember Road Pottery (sample).';
+    setStep(3);
+  });
+  $('back3').addEventListener('click', function () { setStep(2); });
+
+  $('confirm').addEventListener('click', function () {
+    $('emptyUp').hidden = true;
+    $('bookedTitle').textContent = state.kind + ', ' + state.time;
+    $('bookedDetail').textContent = 'Sample booking. Find it and any changes under My bookings.';
+    $('booked').classList.add('show');
+    $('step3').innerHTML = '<p style="margin-top:16px"><strong>Booked.</strong> You will see this session under Your upcoming sessions. Next, read how to prepare for it.</p>';
+    $('s3').setAttribute('aria-current', 'step');
+  });
 </script>
 </body>
 </html>

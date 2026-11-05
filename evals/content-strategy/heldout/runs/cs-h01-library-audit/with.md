@@ -1,56 +1,54 @@
-# Auditing a large library site in six weeks
+Don't read every page. Read every *group* of pages, and read closely only where a decision depends on it. The audit's output is a decision for each page: keep, fix, merge, retire, or "needs an owner."
 
-**The decision behind "audit the content":** what to keep, merge, or retire, and who answers for what stays. You don't read every page. You build a list, sort it with rules, and only read the pages the rules can't settle.
+## Weeks 1–2: Build the inventory and agree on rules
 
-## Week 1: Build the inventory
-Crawl the site, or export from your CMS, into one spreadsheet. One row per URL, with a stable ID. Columns:
-- URL, title, page type (event, branch, blog, other)
-- Branch it belongs to
-- Last edited, and the author if the CMS records it
-- Page views for the last 12 months (from your analytics)
-- Inbound links, and whether it's in the main navigation
-- Columns to fill in later: **Verdict**, **Owner**, **Notes**
+1. **Ask your director what the audit is for.** Examples are "less to maintain," "patrons find things," or "nothing wrong or outdated." The answer sets how aggressively you cut. Get it in writing, even as a two-line email.
+2. **Export a page list** from your CMS or a crawler into a spreadsheet. Give every page a stable ID. Columns: ID, URL, title, type (event, branch, blog, other), branch, last edited, author, 12-month page views, and blank columns for decision, owner, and notes.
+3. **Pull usage data** from your analytics tool. Use it as a hint only. Low traffic can mean nobody can find the page, and "last edited" says nothing about whether the content is right.
+4. **Write decision rules before looking at pages**, so you and your helper judge the same way:
+   - **Past events:** retire or archive, unless they're a recurring program.
+   - **Branch pages:** check them against a source of truth (hours, address, phone, services). Keep one page per branch.
+   - **Blog:** keep evergreen posts, retire time-bound ones, and decide separately whether the blog continues.
+   - **Duplicates:** merge into one page and redirect the rest.
+   - **Anything with legal or policy content** (borrowing rules, fines, accessibility) stays, even if nobody reads it.
 
-Don't judge anything yet. The total row count is your first finding. Write it down.
+## Weeks 2–4: Sort, sample, decide
 
-## Week 2: Sort by type and apply bulk rules
-Page types make most of the decisions for you.
-- **Past events:** these are usually the bulk. Propose one rule, such as "events over [X months] old are archived or removed, unless they're a recurring program." Your director sets the cutoff, so ask for it now.
-- **Blog:** group posts by whether they're evergreen (how-tos, reading lists) or dated (news, announcements). Dated posts get retired. Evergreen posts get a quick check.
-- **Branch pages:** these are the highest-risk pages, because hours, addresses, and phone numbers going stale hurts patrons. Compare all 11 against the real current facts. Check for duplicate or overlapping branch pages.
+- **Sort by type, then work through one type at a time.** Events are likely the biggest pile and the quickest to clear, since most will be past-dated. Do those in bulk.
+- **Helper:** mechanical checks such as broken links, past dates, duplicate titles, and pages with no recent edits or views. Have them mark candidates, not make final calls.
+- **You:** judgment calls. Branch pages take real reading, and 11 of them is manageable. For the blog, read titles and skim a sample, then decide by batch.
+- **Record a decision and a one-line reason** for every page. This is what lets your director trust the result without checking your work.
+- **Pages you can't classify** go in a "needs owner" pile. Don't agonize over them.
 
-Don't delete on traffic alone. A page with low views may just be unfindable, and some pages (policies, accessibility info) must stay regardless.
+## Week 5: Ownership and upkeep
 
-## Weeks 3–4: Review by sample and exception
-Your helper handles bulk-rule pages and flags anything unclear. You review only:
-1. Everything in the main navigation
-2. Everything with meaningful traffic or inbound links
-3. Branch pages (all 11, in full)
-4. A sample of each remaining type, to check that the bulk rules hold
+Cutting without fixing ownership means the site is a mess again in two years. Make a short table:
 
-Give every page one verdict: **Keep**, **Update**, **Merge** (into which page), or **Retire** (and redirect where?). Record why in a few words. Retired pages that have links or traffic get a redirect, not a bare 404.
+| Content type | Owner (a named person, not a department) | Review trigger |
+|---|---|---|
+| Each branch page | Branch manager or whoever handles that branch's info today | Any change in hours or services, plus a check twice a year |
+| Events | Whoever runs programming | Retire after the event date |
+| Blog | A named owner, or a decision to pause it | Review once a year |
+| Policies | Whoever owns the policy | When the policy changes |
 
-## Week 5: Assign owners and freshness rules
-Content goes stale because nobody answers for it. Add an owner per group of pages, using whoever does that work today:
-- Each branch page, to that branch's manager or designee
-- Events, to whoever schedules programs
-- Blog, to someone, or a decision to stop it
+If a type has no owner who can realistically do the work, say so in the report. That's a finding in itself.
 
-For each type, set a trigger and a review date. For example, branch pages get checked whenever hours change and at least twice a year. Events auto-expire after the date passes. If the blog has no owner, the honest recommendation may be to freeze it, keep the evergreen posts, and say so on the page.
+Also make the easy changes this week: bulk-retire past events with redirects, and fix obvious errors on branch pages. Save contested decisions for your director.
 
-## Week 6: Write up and present
-Hand your director a short report, not the spreadsheet. The spreadsheet is the appendix. The report covers:
+## Week 6: What to hand your director
 
-1. **What we found:** total pages, counts by type, and counts by verdict. Use real numbers from your sheet.
-2. **What I recommend:** retire X, merge Y, update Z, with the bulk rules listed so they can approve or change them.
-3. **Risks found:** wrong hours, dead contact info, or duplicate branch pages, with examples.
-4. **Who owns what:** a table of content groups and named owners. Where there's no owner, mark "needed" and ask the director to assign one.
-5. **Decisions needed from you:** the event cutoff, the blog's future, and who signs off on retirements.
-6. **Upkeep plan:** the review triggers, plus a short monthly check that takes one person under an hour.
+Keep it to 2–3 pages plus the spreadsheet as an appendix:
 
-## Pacing and scope
-- Aim for a decision on every page, not a perfect one. Anything unresolved by week 5 gets "Update, owner to review," and goes to its owner.
-- Do the retirements after the director approves, not during the audit. The audit produces the list; the cleanup is a separate step.
-- Mention anything you didn't cover (PDFs, linked third-party pages, the catalog) in the report, so the gap is visible.
+1. **Summary:** what you reviewed, the method (inventory, rules, sampling), and what you did *not* review.
+2. **Results:** counts by decision (keep, fix, merge, retire, needs owner), broken down by type. Take these from your spreadsheet, not estimates.
+3. **Already done:** what you changed or retired, with the redirect list.
+4. **Decisions needed from them:** the blog's future, ownership gaps, and anything that crosses departments.
+5. **Proposed upkeep:** the ownership table, the review triggers, and a rule for new pages ("every new page has a named owner and a review date").
+6. **Remaining work:** what's left, with a rough hours estimate from how long the first weeks took.
 
-**Two things to settle this week:** ask your director what counts as "done" (a report, or the cleanup too), and confirm what analytics access you have. Both change the plan.
+## Notes
+
+- **Back up and test before bulk deletions.** Retire with redirects instead of deleting outright, so old links and search results don't break.
+- **Check your capacity at the end of week 2.** If you're behind, narrow the scope (for example, branch and event pages first, blog second) and tell your director early instead of rushing the report.
+
+I don't know your page counts or CMS, so I left numbers out. Your inventory will give you real ones. If you tell me which CMS and analytics tool you use, I can suggest how to export the page list, or I can draft the spreadsheet columns and the director summary template.

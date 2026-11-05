@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repairs desk · Kestrel Lettings</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --gridline: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --series-1: #2a78d6;
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --control: #ffffff;
+    --hover: rgba(11, 11, 11, 0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface-1: #1a1a19;
+      --text-primary: #f0efec;
+      --text-secondary: #c3c2b7;
+      --text-muted: #898781;
+      --gridline: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --series-1: #3987e5;
+      --good: #0ca30c;
+      --warning: #fab219;
+      --serious: #ec835a;
+      --critical: #d03b3b;
+      --control: #222221;
+      --hover: rgba(255, 255, 255, 0.05);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --gridline: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --series-1: #3987e5;
+    --control: #222221;
+    --hover: rgba(255, 255, 255, 0.05);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  main { max-width: 1280px; margin: 0 auto; padding: 24px 20px 48px; }
+
+  header.top {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    gap: 8px 16px; margin-bottom: 16px;
+  }
+  header.top h1 { font-size: 20px; font-weight: 600; margin: 0; }
+  header.top .meta { color: var(--text-secondary); font-size: 13px; }
+
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: end;
+    margin-bottom: 16px;
+  }
+  .filters label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text-secondary); }
+  .filters select {
+    font: inherit; color: var(--text-primary); background: var(--control);
+    border: 1px solid var(--border); border-radius: 6px; padding: 6px 28px 6px 10px; min-width: 170px;
+  }
+  .filters select:focus-visible { outline: 2px solid var(--series-1); outline-offset: 2px; }
+  .filters .count { margin-left: auto; color: var(--text-secondary); font-size: 13px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .tile {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+  }
+  .tile .label { font-size: 12px; color: var(--text-secondary); }
+  .tile .value { font-size: 28px; font-weight: 600; margin-top: 4px; }
+  .tile .sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 860px) { .charts { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+  }
+  .card h2 { font-size: 14px; font-weight: 600; margin: 0 0 2px; }
+  .card .caption { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
+
+  .hbar { display: grid; grid-template-columns: 110px 1fr 36px; gap: 8px; align-items: center; margin: 6px 0; font-size: 13px; }
+  .hbar .track { height: 10px; background: var(--gridline); border-radius: 0 4px 4px 0; overflow: hidden; }
+  .hbar .fill { height: 100%; background: var(--series-1); border-radius: 0 4px 4px 0; min-width: 2px; }
+  .hbar .num { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-secondary); }
+
+  .days { display: flex; align-items: flex-end; gap: 6px; height: 170px; border-bottom: 1px solid var(--baseline); padding-top: 18px; }
+  .day { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; min-width: 0; }
+  .day .bar { width: 100%; background: var(--series-1); border-radius: 4px 4px 0 0; min-height: 2px; }
+  .day .v { font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; font-variant-numeric: tabular-nums; }
+  .day .d { font-size: 11px; color: var(--text-muted); margin-top: 4px; white-space: nowrap; }
+
+  .table-card { padding: 0; overflow: hidden; }
+  .table-card .head { padding: 14px 16px 10px; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 9px 12px; border-top: 1px solid var(--gridline); vertical-align: top; }
+  th { font-size: 12px; font-weight: 600; color: var(--text-secondary); border-top: 1px solid var(--baseline); white-space: nowrap; }
+  tbody tr:hover { background: var(--hover); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td .sub { color: var(--text-muted); font-size: 12px; }
+  .ref { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .urg { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-weight: 500; }
+  .urg .ico { display: inline-block; width: 16px; text-align: center; font-weight: 700; }
+  .urg.critical .ico { color: var(--critical); }
+  .urg.serious .ico { color: var(--serious); }
+  .urg.warning .ico { color: var(--warning); }
+  .urg.good .ico { color: var(--good); }
+
+  .status { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); white-space: nowrap; }
+  .status.review { font-weight: 600; border-color: var(--critical); }
+  .status.review::before { content: "! "; color: var(--critical); font-weight: 700; }
+
+  .conf { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .conf.low { color: var(--critical); font-weight: 600; }
+
+  .empty { padding: 24px 16px; color: var(--text-secondary); text-align: center; }
+  footer { margin-top: 16px; font-size: 12px; color: var(--text-muted); }
+  :focus-visible { outline: 2px solid var(--series-1); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <h1>Repairs desk</h1>
+    <div class="meta">Kestrel Lettings · 300 flats · Agent last run 27 Oct 2026, 08:00</div>
+  </header>
+
+  <div class="filters" role="search">
+    <label>Urgency
+      <select id="f-urgency"><option value="">All urgencies</option></select>
+    </label>
+    <label>Trade
+      <select id="f-trade"><option value="">All trades</option></select>
+    </label>
+    <div class="count" id="count" aria-live="polite"></div>
+  </div>
+
+  <section class="tiles" aria-label="Summary">
+    <div class="tile"><div class="label">Open requests</div><div class="value" id="t-open">–</div><div class="sub" id="t-open-sub"></div></div>
+    <div class="tile"><div class="label">Emergencies open</div><div class="value" id="t-emerg">–</div><div class="sub">Same-day attendance</div></div>
+    <div class="tile"><div class="label">Need a human decision</div><div class="value" id="t-review">–</div><div class="sub">Agent confidence under 70%</div></div>
+    <div class="tile"><div class="label">Booked, awaiting visit</div><div class="value" id="t-booked">–</div><div class="sub" id="t-avg"></div></div>
+  </section>
+
+  <section class="charts">
+    <div class="card">
+      <h2>Requests by trade</h2>
+      <div class="caption">Current filter, all statuses</div>
+      <div id="trade-chart"></div>
+    </div>
+    <div class="card">
+      <h2>Requests received per day</h2>
+      <div class="caption">Last 14 days, all flats</div>
+      <div class="days" id="day-chart" role="img" aria-label="Requests received per day, last 14 days"></div>
+    </div>
+  </section>
+
+  <section class="card table-card" aria-label="Repair requests">
+    <div class="head">
+      <h2 style="font-size:14px;font-weight:600;margin:0">Agent decisions</h2>
+      <div class="caption" style="font-size:12px;color:var(--text-secondary)">Urgency and booking chosen by the agent. Rows marked "Needs review" are waiting for Dede.</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Received</th>
+            <th>Ref</th>
+            <th>Property</th>
+            <th>Tenant report</th>
+            <th>Urgency</th>
+            <th>Trade &amp; vendor</th>
+            <th>Slot</th>
+            <th>Status</th>
+            <th class="num">Confidence</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="empty" hidden>No requests match these filters.</div>
+  </section>
+
+  <footer>Sample data for layout only. Connect the agent's booking log to replace it.</footer>
+</main>
+
+<script>
+  const URGENCY = {
+    Emergency: { cls: "critical", icon: "▲", order: 0 },
+    Urgent:    { cls: "serious",  icon: "◆", order: 1 },
+    Soon:      { cls: "warning",  icon: "●", order: 2 },
+    Routine:   { cls: "good",     icon: "○", order: 3 }
+  };
+
+  const REQUESTS = [
+    { ref: "KL-4812", received: "27 Oct 07:42", day: "27 Oct", property: "Flat 3, 14 Harbour Road", issue: "No hot water since last night", urgency: "Emergency", trade: "Plumber", vendor: "Brightwater Plumbing", slot: "Today 16:00–18:00", status: "Booked", confidence: 94 },
+    { ref: "KL-4809", received: "27 Oct 06:15", day: "27 Oct", property: "Flat 1, 22 Mill Lane", issue: "Smell of gas near cooker. Tenant told to leave the flat and call the gas emergency line", urgency: "Emergency", trade: "Heating", vendor: "Fenwick Heating", slot: "Today 09:00–10:30", status: "Booked", confidence: 97 },
+    { ref: "KL-4806", received: "26 Oct 21:03", day: "26 Oct", property: "Flat 2, 8 Station Terrace", issue: "Front door lock jammed, tenant locked out", urgency: "Urgent", trade: "Locksmith", vendor: "Quickfix Locksmiths", slot: "Tomorrow 08:00–10:00", status: "Booked", confidence: 88 },
+    { ref: "KL-4801", received: "26 Oct 16:30", day: "26 Oct", property: "Flat 5, 40 Orchard Close", issue: "Water coming through kitchen ceiling", urgency: "Emergency", trade: "Plumber", vendor: "Brightwater Plumbing", slot: "Today 11:00–13:00", status: "Booked", confidence: 91 },
+    { ref: "KL-4798", received: "26 Oct 10:12", day: "26 Oct", property: "Flat 4, 3 Queens Court", issue: "Kitchen socket sparking when kettle is on", urgency: "Emergency", trade: "Electrician", vendor: "Sparks & Co Electrical", slot: "Today 14:00–15:30", status: "Booked", confidence: 96 },
+    { ref: "KL-4795", received: "25 Oct 17:48", day: "25 Oct", property: "Flat 6, 17 Harbour Road", issue: "Bathroom extractor fan not working", urgency: "Routine", trade: "Electrician", vendor: "Sparks & Co Electrical", slot: "3 Nov, am", status: "Booked", confidence: 82 },
+    { ref: "KL-4790", received: "25 Oct 12:20", day: "25 Oct", property: "Flat 2, 61 Ashdown Avenue", issue: "Boiler showing F28 error, heating off", urgency: "Urgent", trade: "Heating", vendor: "Fenwick Heating", slot: "Tomorrow 10:00–12:00", status: "Booked", confidence: 85 },
+    { ref: "KL-4788", received: "25 Oct 09:05", day: "25 Oct", property: "Flat 9, 5 Mill Lane", issue: "Cracked double-glazed pane in lounge window", urgency: "Soon", trade: "Glazier", vendor: "Ashdown Glass", slot: "30 Oct", status: "Awaiting vendor", confidence: 79 },
+    { ref: "KL-4784", received: "24 Oct 15:37", day: "24 Oct", property: "Flat 1, 22 Mill Lane", issue: "Mice seen in the kitchen", urgency: "Soon", trade: "Pest control", vendor: "Pell Pest Control", slot: "29 Oct", status: "Booked", confidence: 90 },
+    { ref: "KL-4781", received: "24 Oct 11:02", day: "24 Oct", property: "Flat 7, 12 Station Terrace", issue: "Wardrobe door hinge broken", urgency: "Routine", trade: "Joiner", vendor: "Keystone Joinery", slot: "6 Nov", status: "Awaiting vendor", confidence: 74 },
+    { ref: "KL-4779", received: "24 Oct 08:44", day: "24 Oct", property: "Flat 3, 40 Orchard Close", issue: "Oven element not heating", urgency: "Soon", trade: "Electrician", vendor: "Sparks & Co Electrical", slot: "28 Oct", status: "Completed", confidence: 86 },
+    { ref: "KL-4776", received: "23 Oct 18:10", day: "23 Oct", property: "Flat 8, 3 Queens Court", issue: "Damp patch on bedroom wall (photo attached). Could be condensation or a leak", urgency: "Routine", trade: "Other", vendor: "No vendor chosen", slot: "–", status: "Needs review", confidence: 52 },
+    { ref: "KL-4772", received: "23 Oct 14:26", day: "23 Oct", property: "Flat 2, 14 Harbour Road", issue: "Shower head leaking into the ceiling below", urgency: "Urgent", trade: "Plumber", vendor: "Brightwater Plumbing", slot: "28 Oct, pm", status: "Booked", confidence: 89 },
+    { ref: "KL-4769", received: "22 Oct 19:15", day: "22 Oct", property: "Flat 5, 61 Ashdown Avenue", issue: "Intercom not connecting visitors", urgency: "Soon", trade: "Electrician", vendor: "Sparks & Co Electrical", slot: "31 Oct", status: "Booked", confidence: 83 },
+    { ref: "KL-4766", received: "22 Oct 09:31", day: "22 Oct", property: "Flat 4, 8 Station Terrace", issue: "Radiator cold at the top. Could be air or a failing valve", urgency: "Soon", trade: "Heating", vendor: "Fenwick Heating", slot: "Not booked", status: "Needs review", confidence: 61 },
+    { ref: "KL-4762", received: "21 Oct 16:58", day: "21 Oct", property: "Flat 10, 22 Mill Lane", issue: "Loud banging in pipes when taps are run", urgency: "Routine", trade: "Plumber", vendor: "Brightwater Plumbing", slot: "4 Nov", status: "Completed", confidence: 80 }
+  ];
+
+  const DAILY = [
+    { d: "14 Oct", n: 3 }, { d: "15 Oct", n: 2 }, { d: "16 Oct", n: 4 }, { d: "17 Oct", n: 1 },
+    { d: "18 Oct", n: 5 }, { d: "19 Oct", n: 3 }, { d: "20 Oct", n: 2 }, { d: "21 Oct", n: 4 },
+    { d: "22 Oct", n: 3 }, { d: "23 Oct", n: 4 }, { d: "24 Oct", n: 3 }, { d: "25 Oct", n: 4 },
+    { d: "26 Oct", n: 5 }, { d: "27 Oct", n: 3 }
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  function fillSelect(el, values) {
+    for (const v of values) {
+      const o = document.createElement("option");
+      o.value = v; o.textContent = v;
+      el.appendChild(o);
+    }
+  }
+  fillSelect($("f-urgency"), Object.keys(URGENCY).sort((a, b) => URGENCY[a].order - URGENCY[b].order));
+  fillSelect($("f-trade"), [...new Set(REQUESTS.map((r) => r.trade))].sort());
+
+  function statusHtml(r) {
+    if (r.status === "Needs review") return `<span class="status review">Needs review</span>`;
+    return `<span class="status">${esc(r.status)}</span>`;
+  }
+
+  function renderStats(rows, all) {
+    const open = rows.filter((r) => r.status !== "Completed");
+    const emerg = open.filter((r) => r.urgency === "Emergency");
+    const review = rows.filter((r) => r.status === "Needs review");
+    const booked = rows.filter((r) => r.status === "Booked");
+    const avg = rows.length ? Math.round(rows.reduce((s, r) => s + r.confidence, 0) / rows.length) : 0;
+    $("t-open").textContent = open.length;
+    $("t-open-sub").textContent = `${rows.length} received in the last 14 days`;
+    $("t-emerg").textContent = emerg.length;
+    $("t-review").textContent = review.length;
+    $("t-booked").textContent = booked.length;
+    $("t-avg").textContent = rows.length ? `Agent average confidence ${avg}%` : "";
+  }
+
+  function renderTrades(rows) {
+    const counts = {};
+    for (const r of rows) counts[r.trade] = (counts[r.trade] || 0) + 1;
+    const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const max = Math.max(1, ...entries.map((e) => e[1]));
+    $("trade-chart").innerHTML = entries.length
+      ? entries.map(([t, n]) =>
+          `<div class="hbar" title="${esc(t)}: ${n}">
+             <span>${esc(t)}</span>
+             <span class="track"><span class="fill" style="display:block;width:${(n / max) * 100}%"></span></span>
+             <span class="num">${n}</span>
+           </div>`).join("")
+      : `<div class="empty">No requests</div>`;
+  }
+
+  function renderDaily() {
+    const max = Math.max(...DAILY.map((x) => x.n));
+    $("day-chart").innerHTML = DAILY.map((x) =>
+      `<div class="day" title="${esc(x.d)}: ${x.n} requests">
+         <div class="v">${x.n}</div>
+         <div class="bar" style="height:${(x.n / max) * 100}%"></div>
+         <div class="d">${esc(x.d.slice(0, 6))}</div>
+       </div>`).join("");
+  }
+
+  function renderRows(rows) {
+    $("empty").hidden = rows.length > 0;
+    $("rows").innerHTML = rows.map((r) => {
+      const u = URGENCY[r.urgency];
+      const low = r.confidence < 70;
+      return `<tr>
+        <td class="ref">${esc(r.received)}</td>
+        <td class="ref">${esc(r.ref)}</td>
+        <td>${esc(r.property)}</td>
+        <td>${esc(r.issue)}</td>
+        <td><span class="urg ${u.cls}"><span class="ico" aria-hidden="true">${u.icon}</span>${esc(r.urgency)}</span></td>
+        <td>${esc(r.trade)}<div class="sub">${esc(r.vendor)}</div></td>
+        <td>${esc(r.slot)}</td>
+        <td>${statusHtml(r)}</td>
+        <td class="num conf ${low ? "low" : ""}">${low ? "! " : ""}${r.confidence}%</td>
+      </tr>`;
+    }).join("");
+  }
+
+  function render() {
+    const u = $("f-urgency").value;
+    const t = $("f-trade").value;
+    const rows = REQUESTS
+      .filter((r) => !u || r.urgency === u)
+      .filter((r) => !t || r.trade === t)
+      .sort((a, b) => URGENCY[a.urgency].order - URGENCY[b.urgency].order);
+    $("count").textContent = `Showing ${rows.length} of ${REQUESTS.length}`;
+    renderStats(rows);
+    renderTrades(rows);
+    renderRows(rows);
+  }
+
+  $("f-urgency").addEventListener("change", render);
+  $("f-trade").addEventListener("change", render);
+  renderDaily();
+  render();
+</script>
+</body>
+</html>

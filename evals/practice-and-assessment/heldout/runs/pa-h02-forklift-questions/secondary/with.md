@@ -1,151 +1,159 @@
-# Forklift Safety: Post-Session Quiz
+# Forklift Safety Check: Post-Session Quiz
 
-Learners may check the session notes or the capacity plate before answering. Each option has feedback, so the quiz also works as review after a wrong answer. Bracketed items are placeholders to fill in for your site.
+**Use:** Give after the session. Hires may look at the session notes and the capacity plate reference while answering. Answers and feedback are below each item for the trainer. Bracketed items need your facts before use.
+
+**Assumption:** These are the first-day hires at Kestrel Ridge, working the aisles and freezer chambers on sit-down or standard counterbalance trucks. Only the rules you listed are used.
 
 ---
 
-**1.** You're carrying an empty pallet jack's worth of product, loaded, across [area name] to the dock. The load is on the forks. Which setup do you travel with?
+## Items
 
-- A) Forks raised to shelf height so the load clears the floor by a wide margin, mast upright
-- B) Forks 10 to 15 cm off the floor, mast tilted slightly back
-- C) Forks lowered to the floor so the load rides low, mast tilted forward
-- D) Forks at 10 to 15 cm, mast upright so the load sits square
+**1. Carrying a pallet across the dock**
+You have a pallet on the forks and are heading to the aisle. What do you set before you move?
+
+- A. Forks lifted about 40 cm, mast upright, so the load clears dock plates.
+- B. Forks 10 to 15 cm off the floor, mast tilted slightly back.
+- C. Forks on the floor, mast tilted fully forward so the load sits level.
+- D. Forks 10 to 15 cm off the floor, mast tilted slightly forward.
 
 **Answer: B**
-
-- A: Raised forks make the truck top-heavy and move the load's center of gravity out. Travel low.
-- B: Correct. Low forks keep the load stable and the tilt keeps it from sliding forward.
-- C: Forks on the floor scrape and catch on the surface, and a forward tilt pushes the load off the forks.
-- D: The height is right, but an upright mast lets a loaded pallet slide forward when you brake.
+- A: High forks make the truck top-heavy and raise the load's centre of gravity. Keep the load low while travelling.
+- B: Correct. Low forks and a slight back tilt keep the load stable while travelling.
+- C: Forks on the floor can catch on the floor and damage the truck. Tilting forward pushes the load off the forks.
+- D: A forward tilt lets the load slide off. The mast tilts back when loaded.
 
 ---
 
-**2.** You're driving a loaded truck through a freezer chamber, and the chamber is clear. Your speed should be:
+**2. Freezer chamber speed**
+You are driving to the back of a freezer chamber with no one else around. What is your top speed?
 
-- A) 8 km/h, the aisle limit, since the chamber is clear
-- B) As fast as the truck allows, since no one is around
-- C) 5 km/h, the chamber limit
-- D) Walking pace, which is slower than 5 km/h
+- A. 8 km/h, the same as the aisles.
+- B. 5 km/h.
+- C. 10 km/h, since the chamber is empty.
+- D. Whatever feels safe at the time.
+
+**Answer: B**
+- A: The aisle limit does not apply inside freezer chambers. Use the lower limit.
+- B: Correct. Freezer chambers are limited to 5 km/h.
+- C: An empty area does not raise the limit. Speed limits are fixed.
+- D: No set limit means no limit to check against. Use the posted figure, 5 km/h.
+
+---
+
+**3. Blind corner in the aisle**
+You are approaching a corner in a rack aisle and cannot see what is past it. What do you do?
+
+- A. Keep your speed and rely on the horn when you reach the corner.
+- B. Sound the horn and slow to a crawl before the corner.
+- C. Sound the horn once you're through the corner.
+- D. Pull out slowly and watch for anything coming.
+
+**Answer: B**
+- A: The horn at the corner is too late if someone is already there. Sound it before the corner, not at it.
+- B: Correct. Horn first, then crawl speed so you can stop if someone steps out.
+- C: The warning has to come before you reach the corner, not after.
+- D: Pulling out slowly still gives no warning. Sound the horn and slow to a crawl first.
+
+---
+
+**4. Passenger request**
+A coworker asks you to take them up on the forks to reach a high shelf. "It's only across the aisle, thirty seconds." What do you do?
+
+- A. Agree, as long as they hold onto the mast.
+- B. Agree, if you drive slowly.
+- C. Decline. Passengers are never allowed.
+- D. Agree, if the shelf is directly across.
 
 **Answer: C**
-
-- A: The aisle limit doesn't apply inside a freezer chamber. Chambers have their own lower limit.
-- B: Empty chambers still hide people around corners and racks, and the limit applies whether or not anyone is visible.
-- C: Correct. Freezer chambers are limited to 5 km/h.
-- D: Going slower than the limit is allowed and safe, but the limit to meet is 5 km/h, and "walking pace" isn't a site standard. Drive at 5 km/h or below.
-
----
-
-**3.** You're approaching a blind corner in [aisle name] with a load on the forks. What do you do?
-
-- A) Sound the horn and slow to a crawl before the corner
-- B) Keep your speed and sound the horn as you turn
-- C) Slow down only if you see someone coming
-- D) Speed up to clear the corner before anyone can step out
-
-**Answer: A**
-
-- A: Correct. The horn warns people you can't see, and slowing to a crawl gives you time to stop.
-- B: Sounding the horn while still moving fast doesn't give anyone around the corner time to move, and you may not have time to stop.
-- C: You can't see the person until it's too late. The slowdown has to happen before the corner.
-- D: Speeding up at a blind corner is the most dangerous choice listed here.
+- A: Holding the mast does not make it safe. No one rides on the truck.
+- B: Speed does not change the rule. No passengers, ever.
+- C: Correct. Never carry passengers, even for a short trip. Offer to get a ladder or ask a supervisor for another way to reach the shelf.
+- D: Distance does not change the rule. No passengers, ever.
 
 ---
 
-**4.** A coworker asks you for a ride to the far end of the dock, which is a short distance. What do you do?
+**5. Overloaded pallet**
+A pallet's label shows a weight above the capacity plate on the mast, which reads [capacity plate rating]. What do you do?
 
-- A) Give the ride if they hold the overhead guard
-- B) Give the ride if you drive slowly
-- C) Give the ride if it's only a short distance
-- D) Say no. Forklifts never carry passengers, however short the trip
-
-**Answer: D**
-
-- A: Holding on doesn't make a passenger safe. Passengers are never allowed on the truck.
-- B: Slow speed doesn't make a passenger safe. The rule covers every trip.
-- C: Distance doesn't change the rule. Passengers are never carried.
-- D: Correct. No passengers, no exceptions. Offer to walk with them or ask a supervisor for a ride in a proper vehicle, if the site has one.
-
----
-
-**5.** A pallet is tagged at [weight] kg, but the capacity plate on your mast gives a lower maximum. What should you do?
-
-- A) Lift it slowly and keep the forks low
-- B) Lift it, since the tag is probably right and the plate is out of date
-- C) Do not lift it. Tell your supervisor, who decides how to handle it
-- D) Lift it with the mast fully tilted back to balance it
+- A. Lift it slowly and keep the forks low.
+- B. Lift it and move it to the nearest rack.
+- C. Do not lift it. Tell your supervisor.
+- D. Lift it only if two people are watching.
 
 **Answer: C**
-
-- A: Lifting slowly doesn't change the weight limit. An overloaded truck can tip.
-- B: The plate sets the maximum. Assuming it's out of date is a guess, and guessing with a load is how trucks tip.
-- C: Correct. The capacity plate is the maximum. Don't lift; report it.
-- D: Tilting the mast back doesn't make an overloaded truck safe.
-
----
-
-**6.** You're about to back out of a bay. A worker in a high-visibility vest is walking in the same aisle, about [distance] away. What do you do first?
-
-- A) Sound the horn and keep moving so they step aside
-- B) Stop, make eye contact with the worker, and wait until they've cleared before moving
-- C) Drive slowly past them so you don't have to stop
-- D) Wait for them to look at you, then keep moving
-
-**Answer: B**
-
-- A: The horn alone doesn't confirm the worker has seen you. Stop first, and don't rely on sound.
-- B: Correct. Pedestrians always have right of way. Eye contact confirms they know you're there.
-- C: Driving past a pedestrian, even slowly, takes the right of way from them.
-- D: Waiting for them to look isn't enough. Stop, make eye contact, and wait until they've passed.
+- A: Slow lifting does not make an overload safe. Do not lift.
+- B: Moving it is still lifting it, and it is over the limit.
+- C: Correct. The capacity plate sets the maximum. Don't lift a load heavier than that, and report it.
+- D: Watching does not change the limit. Do not lift it.
 
 ---
 
-**7.** You're carrying a load, and the load blocks your view of the path ahead. What should you do?
+**6. Pedestrian in the aisle**
+You see a worker walking ahead in the same aisle, and your path crosses theirs. What do you do?
 
-- A) Drive forward slowly and look around the load
-- B) Drive forward and sound the horn
-- C) Drive in reverse, looking over your shoulder
-- D) Ask a coworker to stand on the other side of the load
+- A. Sound the horn and keep moving, since they should hear you.
+- B. Speed up so you pass before they cross.
+- C. Stop and make eye contact before moving near them. Pedestrians have right of way.
+- D. Slow down but keep moving, and wave when you're close.
 
 **Answer: C**
-
-- A: Looking around a load is unreliable. You can't see what's directly in front of the truck.
-- B: The horn warns people, but it doesn't show you what's in your path.
-- C: Correct. Reverse with a clear view behind you, which is the rule when a load blocks forward view.
-- D: Relying on a coworker to direct you from the other side means you're still driving blind, and the coworker may not be visible to you.
+- A: A horn does not give right of way to the truck. Stop and make eye contact first.
+- B: Speeding up puts the pedestrian at risk. They have right of way.
+- C: Correct. Pedestrians always have right of way. Stop, make eye contact, and wait until it is clear.
+- D: Moving close while waving does not confirm they have seen you. Stop and make eye contact first.
 
 ---
 
-**8.** You're going down a ramp with a load. Which way should the forks point?
+**7. Load blocks the view**
+You are carrying a tall load that blocks your view ahead. What do you do?
 
-- A) Downhill
-- B) Uphill
-- C) Sideways, so the load balances across the forks
-- D) It doesn't matter as long as the mast is tilted back
+- A. Drive forward slowly and watch the edges of the load.
+- B. Drive in reverse.
+- C. Ask someone to stand at the front and guide you.
+- D. Raise the forks to see over the load.
 
 **Answer: B**
-
-- A: Forks pointing downhill put the load in front of the truck where it can slide off.
-- B: Correct. Forks point uphill going down a ramp with a load.
-- C: Sideways forks aren't a ramp technique and can tip the truck.
-- D: Mast tilt matters, but it doesn't replace the fork direction. Forks point uphill.
+- A: Slow forward travel still leaves you blind. Drive in reverse when the load blocks your view.
+- B: Correct. When the load blocks your view, you travel in reverse.
+- C: A guide may help, but the rule is to drive in reverse. Do not rely on a spotter in its place.
+- D: Raising the forks raises the load and does not improve your view. Drive in reverse.
 
 ---
 
-**9.** During your pre-shift check, you find a small hydraulic leak and a horn that doesn't sound. The brakes, lights, forks, and tires pass. What do you do?
+**8. Ramp with a load**
+You are taking a loaded truck down a ramp. Which way do the forks point?
 
-- A) Run the shift and report the leak at the end of the day
-- B) Tag the truck out, report both problems, and do not operate it
-- C) Fix the horn yourself, then report only the leak
-- D) Use the truck for light work and tag it out after lunch
+- A. Forks downhill, so the load can't slide back.
+- B. Forks uphill.
+- C. Forks level, with the mast upright.
+- D. The direction does not matter if you go slowly.
 
 **Answer: B**
-
-- A: A leak can't wait until the end of the shift. Any failing check means the truck is tagged out now.
-- B: Correct. Any failure means tag it out and report it. Both the leak and the horn count.
-- C: Repairs aren't part of the pre-shift check. Tag the truck out and report it.
-- D: Partial use isn't allowed. A truck with a failing check stays out of service until it's cleared.
+- A: Forks downhill is the wrong direction for a loaded ramp descent.
+- B: Correct. Going down a ramp with a load, the forks point uphill.
+- C: Level forks do not follow the ramp rule. Point the forks uphill.
+- D: Speed does not change the rule. Forks point uphill.
 
 ---
 
-**Scoring suggestion:** Ask learners to answer all nine, then review any wrong answers with the matching feedback before the next session. For mastery, repeat the same situations in a few days with different details, such as a different aisle or a different failed check, and see whether learners still choose the right move.
+**9. Pre-shift check finds faults**
+During your pre-shift check, the horn does not sound and you see fresh fluid under the mast. What do you do?
+
+- A. Use the truck carefully and report the faults at the end of your shift.
+- B. Tag the truck out, report both faults, and do not operate it.
+- C. Use the truck for light jobs only and tell a coworker to report the horn.
+- D. Clean the fluid, then operate the truck if the horn is fixed.
+
+**Answer: B**
+- A: A failing check means the truck is tagged out right away. Do not use it, and report now.
+- B: Correct. Anything failing means tag it out and report it. Do not operate it until it is cleared.
+- C: Light jobs still use a faulty truck. Tag it out.
+- D: Cleaning the fluid does not fix a leak or a faulty horn. Tag it out and report.
+
+---
+
+## Trainer notes
+
+- **Pass standard:** [your pass mark, e.g. 8 of 9]. The standard is yours to set. This quiz is a first check, not proof of skill.
+- **Follow-up:** Re-ask three items in a mixed set after a few days, using changed details (for example, a different load, a different corner). A single same-day score does not show that the rules are remembered.
+- **Practice:** On the floor, observe new hires doing the pre-shift check and driving a loaded travel run, and score them against the rules above.

@@ -1,32 +1,39 @@
-**Subject:** $18,600 in matching funds expires December 31
+**Subject:** Your gift is doubled until December 31. $18,600 of the match is still unclaimed.
 
-Friend,
+Dear Friend,
 
-Last January, we turned away 212 families. Our shelves were empty, and we had nothing to put in their hands. Those were people standing at our door, and we had to send them home without food.
+Last January, we had to turn away 212 families. Their shelves were empty, and we had nothing to give them.
 
-We can't let that happen again, and this year you can help us prevent it.
+Those were 212 households. Parents who skipped their own dinner so their children could eat. Grandparents stretching a fixed income until the end of the month. Families who had never asked for help before and didn't know where else to turn. We could not say yes to them. I still think about them.
 
-A local foundation will match every donation dollar for dollar, up to $25,000, until 11:59 pm on December 31. Your gift gets doubled. Every $1 buys about 4 meals at our purchasing prices, so a matched dollar feeds twice as many people. A $25 gift becomes $50 and buys about 200 meals.
+This year, we are asking you to make sure that doesn't happen again.
 
-Only $6,400 of that $25,000 has been claimed so far. **That leaves $18,600 in matching funds that disappears at midnight on December 31.** It doesn't roll over, and it doesn't wait for January. If no one claims it, it's gone, and so are the meals it would have paid for.
+A local foundation has pledged to match every dollar you give, dollar for dollar, up to $25,000. Until December 31 at 11:59 pm, your gift is doubled. That match is real, and so is the deadline. When the year ends, unclaimed match money is gone.
 
-We are asking you to give now, while the match is still waiting for your gift. Don't put it off until the holidays are over. By then, the money will be gone.
+So far, $6,400 of the $25,000 has been claimed. That leaves **$18,600 still on the table**. If we claim it, every dollar donated this year becomes two, and every dollar buys about 4 meals at our purchasing prices.
+
+Here is what that means:
+- A gift of $25 becomes $50, which is about 200 meals.
+- A gift of $100 becomes $200, which is about 800 meals.
+- A gift of $500 becomes $1,000, which is about 4,000 meals.
+
+Not one of those meals is abstract. Each one is a child who doesn't go to bed hungry, a parent who doesn't have to choose between rent and groceries, a family who gets through a hard winter without losing their footing.
+
+Last January, the shelves ran empty and we turned families away. This year, we can fill them.
 
 **[DONATE LINK]**
 
-Last January, 212 families went home with nothing. This January, we want our shelves full and our doors open. Whether that happens depends on what we raise in the next eleven weeks.
+Please give today, while the match is still waiting for you. If you can give more, please do. If you can give only a little, a little is still a meal, and with the match it is two.
 
-With urgency and gratitude,
+With gratitude, and with hope for the families who are counting on us,
 
 Marguerite Holt
 Executive Director
 Eastgate Pantry Network
 
-**P.S.** The match closes at 11:59 pm on December 31. Give before then, and your gift is worth twice as much.
-
 ---
 
-**Before you send:**
-- **Confirm the match mechanics with the foundation.** The "doubles your gift" and "$25 buys about 200 meals" lines assume the match is on donor dollars up to the $25,000 cap. If it works differently, adjust those sentences.
-- **Update the $6,400 figure** on the day you send. The $18,600 remaining is calculated from it.
-- **Consider adding one real, consented story** from a family or volunteer in place of the general opening. Specific people move donors more than numbers do, and I left that out rather than invent one.
+**Notes on choices I made:**
+- **Urgency is tied to the real deadline and the real remaining amount** ($18,600 unclaimed). I didn't add invented countdowns or "only X spots left" language. Since today is October 28, the deadline is about two months out, so I framed it as "until December 31" rather than "hours left."
+- **The match math assumes the foundation's match covers each gift until the pool runs out.** Gift examples are doubled, and the meal counts follow from your "about 4 meals per $1" figure. Please confirm the match applies to all gift sizes and that the foundation is OK with the "$18,600 unclaimed" figure being shared publicly.
+- **The 212 families** is used as you gave it. If you have a source for that number, it would help to keep it on hand in case a donor asks.

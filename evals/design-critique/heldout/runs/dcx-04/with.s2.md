@@ -1,37 +1,30 @@
-**Verdict: it's clean and readable, but it could be copy for any SaaS product. Nothing in it says pottery, wheels, kilns, or members, so a studio owner can't tell which plan fits them.**
-
-Assuming the reader is a studio owner or manager comparing plans, and this is the first pricing page they see.
+**Verdict: the copy is clean but generic. Nothing in it says "pottery studio," and the plan limits don't match how a studio would think about size.** You could paste it onto any SaaS product and it would still read fine. That's the main problem. Each finding has a severity.
 
 **Findings, ranked**
 
-1. **Major: the tiers are measured in "items," and a studio owner can't map that to anything.** Basic is "Up to 100 items." Is an item a member, a booking, a wheel, or a kiln? Pro says "Unlimited items." The owner has to guess whether 100 covers a 40-member studio. Gate on the units they already count, like members, wheels/kilns, or bookings per month, and name the unit on the card. This is the main thing the page has to settle.
+1. **Major: "Up to 100 items" is undefined.** Is an item a member, a booking, a kiln firing, or a wheel? A studio owner can't tell which plan fits. This is the one number that decides Basic vs. Pro, so it has to be in studio terms, e.g. "Up to 25 members" or "Up to 100 bookings/month." The same applies to "Unlimited items."
 
-2. **Major: the plans don't say what the software does.** "Everything in Basic, plus more" and "Advanced analytics" say nothing concrete. Neither does the FAQ answer "Simply sign up… and start using Kilnbook right away." No card mentions booking wheel time, kiln firing slots, membership billing, waitlists, or glaze/firing tracking. Replace the vague bullets with 3–5 studio-specific features per tier. If analytics is the Pro differentiator, say what it shows, for example "see which wheels and kiln slots are booked most."
+2. **Major: Pro is "Everything in Basic, plus more."** "More" is empty, and the real differences are a vague "priority" support level and "advanced analytics." Say what the analytics show. For example: "kiln utilization, peak wheel hours, member no-shows." That's a reason to pay $20 more.
 
-3. **Major: the FAQ dodges the questions people actually ask.**
-   - "Is my data secure?" gets "Absolutely. We take security very seriously." That is a claim with no content, and it reads as filler. Say something checkable: where data is stored, who handles card payments, whether members' payment details touch your servers.
-   - "Do you offer support?" repeats the pricing card, and the two disagree. Basic gets email support, Pro gets priority support, and the FAQ implies everyone gets a friendly team. Say what each tier gets and the expected response time.
-   - "Can I cancel anytime?" is good to answer but thin. Say what happens to their data and bookings afterward, and whether billing stops immediately or at the end of the period.
+3. **Major: Enterprise reads as the wrong audience.** "Large organizations" doesn't describe most pottery studios. A multi-location studio chain, a school, or a community arts center would want to see themselves there. Name them: "For multi-location studios and arts centers." Also, "Dedicated account manager" and "Custom integrations" are features from a generic template. Say which integrations (payments, accounting, door access?) if they're real.
 
-4. **Moderate: the FAQ is missing the questions a studio owner would ask first.**
-   - Do members pay or book through it, and are there fees on member payments?
-   - Can I import my current schedule or member list?
-   - What happens when I go over the Basic limit?
-   - Is there a discount for annual billing?
-   - Will it work for a small studio with one kiln?
-   
-   Swap "How does it work?" for these. It's the weakest entry, since it repeats the trial line.
+4. **Major: The FAQ answers dodge the questions.** "Is my data secure? Absolutely. We take security very seriously" says nothing a skeptical reader can use. Replace it with facts: where data is stored, how payments are handled (e.g. via Stripe, so you never see card numbers), and whether members' personal info can be exported or deleted. Likewise:
+   - "How does it work?" is the weakest answer. Show the actual flow: members book a wheel or kiln slot, the studio sets rules and pricing, and the system handles waitlists and charges. This is your chance to explain the product.
+   - "Can I cancel anytime?" should say what happens next: do they keep access until the billing period ends, and can they export their data? Drop the "Yes!"
+   - "Do you offer support?" repeats the pricing cards without detail. Give hours, response times, and how Basic's email-only support differs from Pro's priority support.
 
-5. **Moderate: the heading and subheading are generic.** "Simple, transparent pricing" and "Choose the plan that's right for you" appear on thousands of pricing pages. The subheading carries no information. This is lower priority than 1–4, but it's the easiest place to add some personality. For example: "Pricing for studios of every size, from one wheel to a whole kiln room."
+5. **Minor: Filler lines carry no information.** "Simple, transparent pricing," "Choose the plan that's right for you," "Perfect for getting started," and "friendly team" are all interchangeable with any competitor's. The heading and subheading are taste calls, but both could carry something specific, e.g. "Pricing for studios of any size" with a subheading about the 14-day trial.
 
-6. **Minor: the card taglines are filler.** "Perfect for getting started" and "Everything in Basic, plus more" don't tell anyone who the plan is for. Name the audience instead, such as "For small studios and home setups" and "For studios with a full member roster."
+6. **Minor: The two Select buttons and the Contact Sales button don't say what happens.** The trial copy ("14-day free trial") is below the cards, but the buttons say "Select." Try "Start free trial" on Basic and Pro. It tells people the commitment is low at the moment they click.
 
-7. **Minor: Enterprise may not suit this market.** "Large organizations" and "Dedicated account manager" read as corporate for a pottery-studio product. If multi-location studios or art centers are a real segment, say so ("Multiple locations or art centers"). If not, consider dropping the tier for now. A "Contact us" card that implies nobody can see the price can also make the page feel less transparent than the heading claims.
+7. **Question to settle (possible gap): what happens after the trial?** "No credit card required" is a strong promise, but the copy doesn't say what happens on day 15. State it: is the account paused, downgraded, or locked? Leaving it out can feel like a trap even if it isn't.
 
-**What to keep**
-- **The trial line**, "14-day free trial. No credit card required." It's specific and removes a real objection. Consider moving it closer to the buttons.
-- **The three-tier structure with "Most Popular" on the middle plan.** It guides the choice without pressure.
-- **Price points shown up front.** The "transparent" claim holds for Basic and Pro.
-- **The short, plain tone.** The copy is easy to scan. It just needs more substance.
+**What works and should stay**
+- **"14-day free trial. No credit card required."** It lowers the risk of signing up, and it's specific.
+- **Three tiers with Pro marked "Most Popular."** It's a familiar pattern that steers people to the middle plan. I'd keep it, but only if it's true, or word it as "Recommended for most studios."
+- **Short FAQ in plain language.** It's easy to scan. It just needs real content inside it.
+- **Clear price anchors ($9, $29).** Low enough for a small studio to try without a budget meeting.
 
-**Not checked:** visual layout, button hierarchy, and mobile behavior, since I only had the text. Also, I don't know your real limits or features, so the replacement examples above are placeholders.
+**Fix order:** (1) define "items" in studio terms, (2) rewrite the Pro and Enterprise differentiators, (3) rewrite the security and how-it-works answers with specifics, (4) fix the button labels and add the post-trial line.
+
+Assumptions: your audience is small studio owners deciding whether to sign up, and the page is live-site copy rather than a mockup. I didn't check layout, visual hierarchy, or whether the prices fit the market, because I only had the text.

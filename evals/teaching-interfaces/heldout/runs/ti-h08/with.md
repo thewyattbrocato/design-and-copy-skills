@@ -1,33 +1,25 @@
-Your instinct is right. Don't do a forty-shortcut walkthrough on day one. Teach a few shortcuts in context, and make the rest easy to find when someone wants them.
+You're right. A mandatory walkthrough of all forty on day one is the wrong tool for this audience. Teach shortcuts at the moment they'd help, and keep a reference they can pull up when they want it.
 
-**The goal:** after a few weeks, each person uses the shortcuts that fit their own work without having to look them up.
+**Why the tour fails**
+- Nobody can hold forty shortcuts after one pass. People remember what they do repeatedly, and a tour has them press each key once.
+- Lawyers and paralegals arrive with real work, often a matter they're already billing against. A forced tour costs them time and teaches them nothing about their own workflow.
+- Most of the forty won't be relevant on day one. Quick-cite means nothing until they've written something to cite.
 
-**Why the PM's plan fails for this crowd**
-- Forty new things at once is far more than anyone retains, and people won't remember shortcuts for actions they haven't done yet.
-- Lawyers and paralegals are in the app to do billable work. A mandatory tour on day one makes them skip it, and it teaches nothing.
-- Shortcuts are muscle memory. They stick when you use them at the moment you'd otherwise reach for the mouse, not when you read about them.
+**What to do instead**
 
-**What I'd do instead**
+1. **Name the day-one goal.** "After the first session they can open a matter, split the view and jump back, without the mouse." That's three or so shortcuts. Teach only those, tied to a real first task, and make it skippable.
 
-1. **Show the shortcut where the action already happens.** Put the key combo in every menu item, button tooltip, and command-palette result. Someone who clicks "Split view" sees the shortcut right there, and the next time they can use it. This costs almost nothing and teaches the most.
+2. **Show the shortcut where the action happens.** Put the key combo in menus, tooltips and the command palette next to the mouse action. Everyone who clicks a button sees its shortcut. This costs little and carries most of the teaching.
 
-2. **Add a command palette** (something like Cmd+K) that searches every action and shows its shortcut. It's the single entry point for all forty, so nobody has to memorize anything up front. Searching "cite" finds quick-cite and shows the key.
+3. **Nudge after repeated mouse use.** If someone opens split view by menu three times, show a small, dismissible hint: "Split view: [shortcut]". Let them turn these hints off. This is the most effective piece, because the hint arrives when the shortcut is relevant and the person has just done the action by hand. I haven't verified the exact trigger count. Tune it from usage data.
 
-3. **Nudge after repeated mouse use.** If someone clicks "Jump to matter" for the fifth time, show a small, dismissible hint beside it: "Next time: ⌘J" (using the real binding). Tie it to something they just did, and show at most one at a time. Never use streaks or reminders on a schedule.
+4. **Add a command palette** that lists every action with its shortcut and is searchable. It lets people find what they don't know exists. It also works as a safety net, so they never need to memorize anything to get a task done.
 
-4. **Teach three on day one, not forty.** Pick the ones everyone uses daily (probably jump between matters, quick-cite, and one more). Introduce them during the first real task, for example when they open their second matter, rather than in a separate tour. Give them a visible Skip and a way back.
+5. **Provide a reference people can call up.** A searchable cheat sheet, opened by one key and grouped by task (matters, citing, layout). Lawyers will print or pin it, so make that easy. Reference material should stay separate from teaching.
 
-5. **Keep a reference sheet.** Provide a searchable, printable list grouped by task (navigating, citing, layout) and reachable from the Help menu and the palette. Lawyers like a printed cheat sheet, and it's the right place for the full forty.
+6. **Introduce shortcuts in small batches over time.** Use "what's new" notes or a once-a-week tip tied to features they've actually used, not a clock-based drip. Skip streaks and guilt-style reminders.
 
-6. **Announce the rest as they become relevant.** Use a short "what's new" note or a contextual hint when someone first uses a feature, such as split view. Don't push all of it at once.
+**What to tell the PM**
+The PM wants every user to know the shortcuts. A tour is one way to get there, but the better measure is whether people use shortcuts on day 14 without being prompted. Propose that as the success metric and compare it against a tour group. I'd expect context-triggered hints to win, but run the test rather than take my word for it. A cheap compromise is to keep a short optional "Try the 3 essentials" card on first run, with an obvious skip and a way back to it later.
 
-7. **Let people opt in to more.** Offer a "Shortcut of the week" or a "Show me tips for what I do most" setting, off by default. Power users who want the full set can pull it.
-
-**A pitch for the PM:** the PM wants everyone to adopt the shortcuts, and so do you. The disagreement is only about method. Offer to measure it: of people who use split view, what share use the shortcut rather than the click after 30 days? A forced tour will probably score worse than in-context hints. A tour's completion rate only shows that people clicked through it.
-
-**What to check**
-- Do people use the three day-one shortcuts unaided a week later?
-- Does shortcut use rise for the actions where you show hints?
-- Do the shortcuts that have no hint get used at all? If not, the palette and reference aren't being found.
-
-I assumed this is a desktop app with a command palette that's feasible to build. I also left out the specific key bindings because I don't know them. If you tell me which three are the daily essentials, I can draft the day-one hint copy.
+**Assumptions:** I'm assuming a desktop app with a menu and tooltip system you can add hints to. The three starter shortcuts are examples, so pick the ones your usage data shows people reach for first.

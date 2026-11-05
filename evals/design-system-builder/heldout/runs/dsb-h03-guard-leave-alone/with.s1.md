@@ -1,34 +1,34 @@
-The base is sound. The names are role-based, the scales are short, and dark mode remaps roles instead of inverting them. Dark surfaces also get lighter as they rise. The main gaps are tokens a warehouse UI will need on day one. If they're missing, the other team will invent their own values, which defeats the handoff.
+The set is in good shape: short scales, role-based names, and a dark theme that remaps roles instead of inverting. I'd fix the items below before handing it over, most important first. I checked contrast by hand-estimating luminance, not with a tool, so rerun the numbers in a checker before you quote them.
 
-I assumed a web product with one brand and a small team. I estimated contrast by eye and didn't compute it. The text, action and status pairs look comfortably above 4.5:1 in both themes, but run a checker before you ship.
+**Fix before handoff**
 
-## Fix before handoff
+1. **Input borders are too faint.** `--color-border` (#d9d5cc) on white is about 1.5:1. That's fine for dividers, but form fields, checkboxes and similar controls need about 3:1 to be visible. Add a second border role:
+   ```css
+   --color-border-strong: #8a8576;  /* light, ~3.5:1 on bg/surface (my estimate) */
+   /* dark */ --color-border-strong: #7a7566;  /* ~3.6:1 on surface (my estimate) */
+   ```
+2. **There's no focus token.** Warehouse staff use keyboards and scanner-style input a lot, so focus has to be consistent. Add `--focus-ring-width`, `--focus-ring-offset` and `--color-focus-ring: var(--color-action)`.
+3. **Status colors have no background partners.** Stock states like low, out and received need badges, banners and row tints. Add `--color-danger-bg`, `--color-success-bg` and `--color-warning-bg`. Pick the values so each passes against its matching text color in both themes. Add `--color-on-danger` too if danger buttons are planned. Then add a rule to the guide that status never relies on color alone, so it always carries an icon or label.
+4. **Theme mechanics are incomplete.**
+   - Neither theme sets `color-scheme`. Add `color-scheme: light` in `:root` and `color-scheme: dark` in the dark block, so native scrollbars and form controls match.
+   - Dark mode only works through `data-theme`. Honor `prefers-color-scheme` by default and let `data-theme` override it.
+   - Add a `prefers-reduced-motion` rule that sets the motion durations to 0 or near it.
+   - Test with forced-colors on.
+5. **Type is only half specified.** There's no font family, no weights, and no monospace for SKUs and bin codes. Add `--font-sans`, `--font-mono` and `--weight-regular`, `--weight-strong`. Document `font-variant-numeric: tabular-nums` for quantity columns, because misaligned digits in inventory tables cause misreads. Also consider a size below 14px for dense tables, or state that 14px is the floor.
 
-1. **Add a stronger border for form controls.** `--color-border: #d9d5cc` on white is roughly 1.4:1. That's fine for dividers, but input, checkbox and select edges need about 3:1 to be visible. Add `--color-border-strong` for both themes. Scanner and tablet users in bright aisles will notice this first.
-2. **Add a focus ring token.** For example `--color-focus` plus a width and offset. Without it, every component will pick its own focus style.
-3. **Add status backgrounds and "on" colors.** `danger`, `success` and `warning` work as text or icon colors, but low-stock and out-of-stock badges and alerts need fills. Add `--color-danger-subtle` (and the same for success and warning), and `--color-on-danger` for filled buttons. Decide whether you need `info`, since receiving and in-transit states often do.
-4. **Add disabled and scrim tokens.** Add `--color-text-disabled` and `--color-scrim` for modal backdrops. `--shadow-overlay` alone is weak in dark mode, where shadows barely show. Either add `--color-surface-overlay` (lighter than surface in dark) or accept the weak shadow and say so.
-5. **Fill in the type tokens.** You have sizes and leadings but no `--font-sans`, no weights, and no tabular figures. Quantities and SKUs in table columns need `font-variant-numeric: tabular-nums`, so give that a token or a utility. Consider a `--text-xs` (0.75rem) as well. Dense tables will want something under 14px, and if it isn't there people will hard-code it.
-6. **Add a touch-target token.** For example `--size-target-min: 44px`. Warehouse use means gloves, handhelds and rushed taps, so this is your most product-specific token.
-7. **Declare `color-scheme`.** Add `color-scheme: light` on `:root` and `color-scheme: dark` on `[data-theme="dark"]`, so native controls and scrollbars follow the theme. Also decide whether you honor `prefers-color-scheme` by default, with `data-theme` as the override. Say which in the docs.
+**Worth deciding now, but not blocking**
 
-## Smaller changes
+- **Interactive states.** There's a hover for action, but no pressed, disabled or selected-row tokens. Either add them or say in the handoff that components own those for now.
+- **Touch targets.** For gloves and handhelds, add something like `--size-target-min: 44px`.
+- **Layout and layering.** Spacing stops at 48px. Add 64px for page-level gaps and a small z-index scale (`--z-sticky`, `--z-overlay`, `--z-toast`), since you already have an overlay shadow. Breakpoints can't be custom properties in media queries, so document them separately.
+- **Spacing names.** `space-N` means N×4px, which is why 5, 7 and 9–11 are missing. Say that in a comment so nobody reads it as an oversight.
+- **Prefix.** Another team will consume these names, so a prefix like `--ty-` avoids collisions. It's cheap now and painful later.
 
-- **Mixed units.** Type is in rem and spacing is in px, so users who scale their font won't get proportional spacing. Pick this on purpose and document it, or move spacing to rem.
-- **Spacing names.** `space-1/2/3/4/6/8/12` are 4px multiples with gaps in the numbering. That's fine, but state the rule in a comment. Consider `--space-16: 64px` for page-level gutters.
-- **Hover without pressed.** You have `action-hover` but no pressed state. Either add it or document that pressed reuses hover.
-- **Reduced motion.** Add a rule for `prefers-reduced-motion`, such as setting the durations to near 0 in a media query. It's cheap to do now and awkward to retrofit.
-- **Easing.** One easing is enough for v1. Say that `--ease-out` is the default so people don't add more.
-- **Raw tier.** Going straight to semantic values is fine for one brand and two themes. Note that a raw ramp layer gets introduced only if you add a brand or a high-contrast theme.
+**Governance for the handoff**
+- Name one source of truth. If design files consume tokens too, export JSON as well as CSS.
+- Add a version number and a changelog entry for v1.
+- Name an owner, and write one line on how a token gets added or deprecated.
 
-## Handoff package
+Everything else holds up. The radius, shadow and motion scales are sized right, and the light-theme text, action and status colors look comfortably above 4.5:1 on their grounds.
 
-The CSS block alone isn't enough. Add these:
-
-- A single source file, such as JSON exported to CSS and the design tool, so the two can't drift.
-- A version tag and a changelog.
-- A named owner for token changes.
-- A deprecation rule: announce the change, provide a migration, then remove.
-- One line on how the other team requests a new token. The default should be "reuse an existing one, or ask".
-
-I can write the revised CSS with these additions. The new hex values would be proposals until contrast is verified.
+I can write the patched file with these additions if you'd like. I'd leave the status-background values for you to confirm.

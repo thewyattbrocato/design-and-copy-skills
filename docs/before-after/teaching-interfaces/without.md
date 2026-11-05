@@ -1,12 +1,15 @@
-Here's a tidied version. I kept it close to your original, since it's already short and clear.
+# Recommended layout
 
+**Lead with the idea, then the diagram, then the details.** Most homeowners get stuck on one point: the unit *moves* heat instead of *making* it. Say that before anything else.
 [...]
-
-**Changes**
-- **Screen 1:** I added the Oxford comma. I left the rest alone.
-- **Screen 2:** The title now says "Set" instead of "Add", because the circle is already placed and the user adjusts it. The text now tells them what to do ("Drag the circle...") instead of "Draw a circle", since there's nothing to draw.
-- **Skip:** I'd make the link a bit larger than "small". Small top-right links are easy to miss and hard to tap on mobile. Keep it a quiet text link, but give it a tap target of about 44px.
-
-**One thing to check before you ship:** Screen 3 says "Your first walk is on the calendar." That's only true if the user actually filled in the form on screen 1. As you described it, screen 1 just highlights the form and offers Next, and every screen has Skip. A user who skips or taps Next without saving a walk will see a false statement, then land on an empty calendar. Your metrics show people finish fast and tickets dropped, but that wouldn't show this case.
-
+## 2. The diagram, large and early
+- Put it right after the summary, full width on desktop. On mobile, make sure it's legible without pinching to zoom.
+- **Number the steps directly on the diagram** (①–④) and match them to numbered text below. This ties the picture to the words.
+- **Color-code temperature.** Use blue for cool air and cold water, and orange/red for warm refrigerant and hot water. Your arrows will then carry meaning without being read.
+- **Label parts in plain language:** "Fan pulls in room air," "Evaporator coil (absorbs heat)," "Compressor (concentrates the heat)," "Condenser coil (releases heat into the water)."
+- **Consider adding an expansion valve and a dashed refrigerant loop.** Your diagram doesn't list the valve, and without it the loop doesn't close.
 [...]
+## 3. Step-by-step walkthrough (the core of your 600 words)
+Use 4 short numbered steps next to or under the diagram, 2–3 sentences each:
+[...]
+I can draft the page copy, or build the HTML/CSS layout, if you share the 600 words and the diagram file.

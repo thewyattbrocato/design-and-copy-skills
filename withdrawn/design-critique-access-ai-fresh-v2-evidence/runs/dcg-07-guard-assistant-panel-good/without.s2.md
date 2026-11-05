@@ -1,0 +1,3 @@
+**Change before shipping:** don't rely on hover alone for the "check this" hint. Make it work on keyboard focus and touch too, and add a non-color cue, since a dotted underline is easy to miss. Also make sure a sentence with no source passage gets flagged as unsure rather than left unmarked, because that's where agents will otherwise trust it blindly.
+
+**Worth a second look:** "use draft" is a one-click path to sending unverified text, so consider a light nudge when unsure sentences remain (for example, a count on the button). Also confirm the off-switch is saved per agent, not per shared inbox, so one person's choice doesn't change it for everyone.

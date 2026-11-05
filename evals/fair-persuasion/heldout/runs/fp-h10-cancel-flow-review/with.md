@@ -1,33 +1,29 @@
-**Yes, it's a dark pattern.** The phone-call requirement at step 4 is the worst part. Several other steps also add friction or pressure.
+**Yes, it's a dark pattern.** Steps 1, 4 and 5 are the main problems. Steps 2 and 3 are mostly fine once you fix a few details.
 
-**What's fine**
-- **Offering a pause once (step 3).** This is a real alternative for people who are leaving for a reason you can address. It has a neutral "No thanks", and it's free.
-- **Asking why they're leaving (step 4).** The question itself is fine. Making the answer required isn't.
-- **A retention message.** One is acceptable if the claim is true and the way past it is equally easy to find.
+## What's fine
+- **One retention offer.** Offering a pause is a real answer to real reasons for leaving. It's free, and anyone can get it. Keep it.
+- **Asking why they're leaving.** The question is fine as long as it's optional.
+- **A short stay message.** Step 2 can make one honest case for staying.
 
-**What isn't fine**
-1. **Cancelling by phone after signing up with two taps online.** This is the main problem. Leaving takes a different channel, limited hours (Mon to Fri, 9 to 5) and much more effort than joining did. It's also the most likely part to attract regulator attention.
-2. **No confirmation until after the call (step 5).** Users can't prove they tried to cancel. If the call goes unanswered, they may keep getting billed, and that looks like a deliberate bet on drop-off.
-3. **The cancel link is hard to find (step 1).** It's a small grey link, last in the list, under "Billing FAQs". Joining is prominent, so leaving should be equally findable.
-4. **Unequal button weight (step 2).** "Keep my membership" is big and green, and "Continue" is a small grey link. The decline needs equal weight.
-5. **Two retention screens in a row (steps 2 and 3).** The guide allows one honest alternative, shown once. A persuasion screen followed by a pause offer is stacking.
-6. **A possibly unsupported claim (step 2).** "3x more likely to hit their goals" needs real data behind it. If it's true, it's acceptable once, but it works as a guilt lever when it sits on the way out.
-7. **A required dropdown (step 4).** It makes the reason a condition of leaving.
-8. **A guilt-tinged heading.** "Sorry to see you go" is mild, but it's better as a plain heading.
+## What isn't
+1. **The cancel link is hidden.** It's a small grey link, last in the list, under "Billing FAQs". Joining takes two taps, so leaving should be about as easy to find. Give it a normal menu row with the same visual weight as the other items.
+2. **Step 2 has an unequal button pair.** The big green "Keep" sits next to a small grey "Continue". The "Continue" label also doesn't say that it cancels. Make both buttons the same size and weight, and label the second one "Cancel membership".
+3. **Step 2's stat needs a source.** "3x more likely to hit their goals" should be real data from your own members. If it isn't, drop it. Have someone check the claim.
+4. **Two separate offers add friction.** Steps 2 and 3 are both stay pitches. Merge them into one screen with one alternative (the pause) and a neutral "Cancel anyway" button. Drop the "Keep my membership" button, since leaving the screen already does that.
+5. **The reason dropdown is required.** A survey can be optional, but it can't be a condition of leaving. Make it optional with a "Skip" choice.
+6. **Cancelling by phone is the worst part.** The sign-up is online and takes two taps, but cancelling needs a call during office hours. That blocks everyone who works 9 to 5, and it's the clearest breach. Let people finish cancelling in the app. You can still offer the phone as an extra option.
+7. **The confirmation email only arrives after the call.** Until then, people don't know whether they're still being billed. Send the confirmation immediately.
 
-**What to change**
-Make it one screen, reached from a normal-weight "Cancel membership" item in Settings > Membership:
+## Suggested flow
+1. **Settings > Membership > Manage.** "Cancel membership" is a normal row.
+2. **One screen.**
+   - Heading: "Cancel your membership".
+   - Say what happens: access until `[end date]`, no further charges after `[last billing date]`, and what happens to their data and bookings: `[data retention rule]`.
+   - Offer one alternative: "Pause instead? Freeze for up to 2 months, free." This is a single optional button.
+   - Include an optional "Why are you leaving?" dropdown.
+   - Primary actions at equal weight: **[Cancel membership]** and **[Pause instead]**.
+3. **Confirmation.** Show it on screen and email it right away. It should state the last day of access and how to rejoin.
 
-- **Heading:** "Cancel your membership"
-- **Body:** what happens next, namely that access continues until `[end date]`, that billing stops `[date/terms]`, and what happens to their data `[retention rule]`.
-- **Optional alternative, shown once:** "Pause instead? Freeze for up to 2 months, free." This is your existing offer, so it needs no new terms. Show it as a link or secondary option beside the cancel button, not as a separate screen.
-- **Buttons, equal weight:** [Cancel membership] and [Keep my membership]
-- **Optional reason:** a dropdown labelled "Optional: tell us why", with a skip option, not required to proceed.
-- **Confirmation:** show it on screen and send it by email right away. It should state the last day of access and how to rejoin.
-- **Phone line:** keep it as an extra support option ("Prefer to talk? Call us…"), not as the only way to finish.
-- **Retention stat:** drop it, or move it to a place that doesn't block cancelling, and only keep it if you can back it with data.
+Rules on cancellation vary by place and change over time (some regions require online cancellation if sign-up is online), so have this checked against the rules where you operate.
 
-**Notes**
-- Rules on cancellation flows (click-to-cancel, auto-renewal) vary by place and change over time, so have this checked against the markets you operate in.
-- Placeholders such as `[end date]` and `[retention rule]` need your actual policies. I haven't assumed any.
-- A useful regret signal to track is the share of cancellers who rejoin or contact support within 30 days.
+To judge whether the flow works, track regret signals like reactivations within 30 days, refund requests and complaints alongside the save rate. The fair version may save fewer people than the current flow, but the ones it saves chose to stay.

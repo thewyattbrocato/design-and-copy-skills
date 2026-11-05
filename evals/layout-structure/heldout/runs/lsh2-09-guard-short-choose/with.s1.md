@@ -1,3 +1,1 @@
-Go with the full-bleed illustration. For an illustrator the work is the pitch, and a huge image shows her style before anyone reads a word. Keep the name and a short descriptor (like "Illustrator — editorial & book covers") in the corner, so a visitor knows what she does and can hire her without scrolling.
-
-The split layout is safer for clarity, but it undersells the work. It's the better choice only if her pieces don't hold up cropped to a wide format.
+Go with the smaller image alongside her name and a one-line description of what she does. A freelance illustrator's first screen has to do two jobs at once, showing her style and telling a prospective client who she is and what she offers, and the full-bleed hero with a tiny name only does the first. The exception is if her work is so distinctive that one single piece sells her on its own, but even then I'd add the descriptor line so visitors don't have to guess.

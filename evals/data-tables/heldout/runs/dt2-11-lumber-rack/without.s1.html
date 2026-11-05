@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumber Rack Comparison</title>
+<style>
+  :root {
+    --bg: #f6f3ee;
+    --card: #ffffff;
+    --ink: #2b2620;
+    --muted: #6f675d;
+    --line: #e3ddd3;
+    --accent: #8a5a2b;
+    --bar: #d9b98f;
+    --hi: #2f7d4f;
+    --lo: #b0452f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1915;
+      --card: #26221d;
+      --ink: #f0ebe3;
+      --muted: #a29a8e;
+      --line: #3a342c;
+      --accent: #e0a96a;
+      --bar: #6b4f2f;
+      --hi: #6fcf97;
+      --lo: #f08a72;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem 1rem 3rem;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.4;
+  }
+  main { max-width: 1000px; margin: 0 auto; }
+  h1 { margin: 0 0 .25rem; font-size: 1.6rem; }
+  p.sub { margin: 0 0 1.25rem; color: var(--muted); font-size: .95rem; }
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: .75rem;
+    margin-bottom: 1.25rem;
+  }
+  .tile {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: .75rem 1rem;
+  }
+  .tile .label { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .tile .val { font-size: 1.15rem; font-weight: 650; margin-top: .15rem; }
+  .tile .note { font-size: .85rem; color: var(--muted); }
+  .wrap {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  table { border-collapse: collapse; width: 100%; min-width: 760px; }
+  th, td { padding: .65rem .8rem; text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+    border-bottom: 2px solid var(--line);
+    cursor: pointer;
+    user-select: none;
+    position: sticky; top: 0;
+    background: var(--card);
+  }
+  thead th:hover, thead th:focus-visible { color: var(--accent); outline: none; }
+  thead th .arrow { display: inline-block; width: .8em; }
+  thead th.derived { color: var(--accent); }
+  tbody tr + tr td { border-top: 1px solid var(--line); }
+  tbody tr:hover { background: color-mix(in srgb, var(--bar) 18%, transparent); }
+  td.name { font-weight: 600; }
+  td.num { font-variant-numeric: tabular-nums; }
+  .cell { position: relative; display: inline-block; min-width: 5.5rem; text-align: right; padding: .1rem .4rem; }
+  .cell .fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: var(--bar);
+    opacity: .45;
+    border-radius: 3px;
+  }
+  .cell span { position: relative; }
+  .best { color: var(--hi); font-weight: 700; }
+  .worst { color: var(--lo); font-weight: 700; }
+  .foot { margin-top: .9rem; font-size: .82rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Lumber Rack Comparison</h1>
+  <p class="sub">Click any column header to sort. <span class="best">Green</span> = lowest in column, <span class="worst">red</span> = highest. Bars show size relative to the largest value.</p>
+
+  <div class="summary" id="summary"></div>
+
+  <div class="wrap">
+    <table>
+      <thead><tr id="head"></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+  <p class="foot">Derived columns (highlighted headers) are calculated from your measurements: price ÷ length, price ÷ weight, and weight ÷ length. Width wasn't measured, so board-foot cost isn't included.</p>
+</main>
+
+<script>
+(function () {
+  var items = [
+    { name: "Walnut plank",   thick: 3,    len: 8,     lb: 41,     price: 96 },
+    { name: "Red oak board",  thick: 1.5,  len: 10.5,  lb: 28.4,   price: 54.5 },
+    { name: "Maple slab",     thick: 2.25, len: 6.25,  lb: 37.125, price: 138.75 },
+    { name: "Pine 2x4",       thick: 1.5,  len: 12,    lb: 9.5,    price: 7.25 },
+    { name: "Cherry board",   thick: 0.75, len: 8,     lb: 12.2,   price: 62 },
+    { name: "Ash beam",       thick: 3.5,  len: 9.125, lb: 52,     price: 120 },
+    { name: "Birch plywood",  thick: 0.5,  len: 4,     lb: 18.75,  price: 38.5 },
+    { name: "Cedar plank",    thick: 1.25, len: 14,    lb: 16,     price: 44.2 }
+  ];
+  items.forEach(function (i) {
+    i.ppf = i.price / i.len;
+    i.ppl = i.price / i.lb;
+    i.lpf = i.lb / i.len;
+  });
+
+  function trim(n, d) { return n.toFixed(d).replace(/\.?0+$/, ""); }
+  function money(n) { return "$" + n.toFixed(2); }
+
+  var cols = [
+    { key: "name",  label: "Board",        fmt: function (v) { return v; }, text: true },
+    { key: "thick", label: "Thickness",    fmt: function (v) { return trim(v, 3) + " in"; } },
+    { key: "len",   label: "Length",       fmt: function (v) { return trim(v, 3) + " ft"; } },
+    { key: "lb",    label: "Weight",       fmt: function (v) { return trim(v, 3) + " lb"; } },
+    { key: "price", label: "Price",        fmt: money },
+    { key: "ppf",   label: "$ / ft",       fmt: money, derived: true },
+    { key: "ppl",   label: "$ / lb",       fmt: money, derived: true },
+    { key: "lpf",   label: "lb / ft",      fmt: function (v) { return v.toFixed(2); }, derived: true }
+  ];
+
+  var sortKey = "name", asc = true;
+  var head = document.getElementById("head");
+  var body = document.getElementById("body");
+
+  var ext = {};
+  cols.forEach(function (c) {
+    if (c.text) return;
+    var vals = items.map(function (i) { return i[c.key]; });
+    ext[c.key] = { min: Math.min.apply(null, vals), max: Math.max.apply(null, vals) };
+  });
+
+  function renderHead() {
+    head.innerHTML = "";
+    cols.forEach(function (c) {
+      var th = document.createElement("th");
+      th.tabIndex = 0;
+      if (c.derived) th.className = "derived";
+      th.setAttribute("aria-sort", sortKey === c.key ? (asc ? "ascending" : "descending") : "none");
+      th.innerHTML = c.label + ' <span class="arrow">' + (sortKey === c.key ? (asc ? "▲" : "▼") : "") + "</span>";
+      function go() {
+        if (sortKey === c.key) asc = !asc; else { sortKey = c.key; asc = true; }
+        render();
+      }
+      th.addEventListener("click", go);
+      th.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+      head.appendChild(th);
+    });
+  }
+
+  function renderBody() {
+    var rows = items.slice().sort(function (a, b) {
+      var x = a[sortKey], y = b[sortKey];
+      var r = typeof x === "string" ? x.localeCompare(y) : x - y;
+      return asc ? r : -r;
+    });
+    body.innerHTML = "";
+    rows.forEach(function (item) {
+      var tr = document.createElement("tr");
+      cols.forEach(function (c) {
+        var td = document.createElement("td");
+        if (c.text) {
+          td.className = "name";
+          td.textContent = item[c.key];
+        } else {
+          td.className = "num";
+          var v = item[c.key];
+          var pct = Math.max(4, v / ext[c.key].max * 100);
+          var cell = document.createElement("div");
+          cell.className = "cell";
+          var fill = document.createElement("div");
+          fill.className = "fill";
+          fill.style.width = pct + "%";
+          fill.style.left = "auto";
+          fill.style.right = "0";
+          var s = document.createElement("span");
+          s.textContent = c.fmt(v);
+          if (c.derived || c.key === "price") {
+            if (v === ext[c.key].min) s.className = "best";
+            else if (v === ext[c.key].max) s.className = "worst";
+          }
+          cell.appendChild(fill);
+          cell.appendChild(s);
+          td.appendChild(cell);
+        }
+        tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+  }
+
+  function renderSummary() {
+    function pick(key, low) {
+      return items.reduce(function (a, b) { return (low ? b[key] < a[key] : b[key] > a[key]) ? b : a; });
+    }
+    var cheapFt = pick("ppf", true), priceyFt = pick("ppf", false);
+    var cheapLb = pick("ppl", true), heavy = pick("lpf", false);
+    var total = items.reduce(function (s, i) { return s + i.price; }, 0);
+    var tiles = [
+      { label: "Cheapest per foot", val: cheapFt.name, note: money(cheapFt.ppf) + " / ft" },
+      { label: "Priciest per foot", val: priceyFt.name, note: money(priceyFt.ppf) + " / ft" },
+      { label: "Cheapest per pound", val: cheapLb.name, note: money(cheapLb.ppl) + " / lb" },
+      { label: "Heaviest per foot", val: heavy.name, note: heavy.lpf.toFixed(2) + " lb / ft" },
+      { label: "Total on rack", val: money(total), note: items.length + " boards" }
+    ];
+    document.getElementById("summary").innerHTML = tiles.map(function (t) {
+      return '<div class="tile"><div class="label">' + t.label + '</div><div class="val">' + t.val + '</div><div class="note">' + t.note + "</div></div>";
+    }).join("");
+  }
+
+  function render() { renderHead(); renderBody(); }
+  renderSummary();
+  render();
+})();
+</script>
+</body>
+</html>

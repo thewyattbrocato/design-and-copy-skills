@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halcyon Skate Hall</title>
+<style>
+:root{
+  --purple:#6b21d8;--pink:#e83e8c;--lilac:#e9d5ff;--floor:#f5eaff;
+  --ink:#1e1b2e;--muted:#4b4560;--board:#241a3d;
+  --stripe:linear-gradient(90deg,var(--purple),var(--pink));
+  --stripe-v:linear-gradient(180deg,var(--purple),var(--pink));
+  --s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:64px;
+  --head:"Arial Narrow","Helvetica Neue Condensed","Franklin Gothic Medium","Arial Black",Impact,sans-serif;
+  --body:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--body);background:var(--floor);color:var(--ink);line-height:1.5}
+a{color:inherit}
+a:focus-visible{outline:3px solid var(--purple);outline-offset:3px}
+
+nav{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);flex-wrap:wrap;padding:var(--s2) var(--s4);background:var(--ink);border-bottom:8px solid transparent;border-image:var(--stripe) 1}
+.logo{font-family:var(--head);font-weight:900;font-size:26px;letter-spacing:.14em;text-transform:uppercase;color:var(--lilac);text-decoration:none}
+.links{display:flex;gap:var(--s3);flex-wrap:wrap}
+.links a{color:var(--lilac);text-decoration:none;font-weight:600;font-size:15px;padding:4px 0;border-bottom:2px solid transparent}
+.links a:hover{border-bottom-color:var(--pink)}
+.btn{display:inline-block;padding:12px 28px;border-radius:4px;color:#fff;font-family:var(--head);font-weight:900;font-size:18px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;background:var(--stripe);border:2px solid #fff0}
+.btn:hover{filter:brightness(1.1)}
+nav .btn{padding:9px 22px;font-size:16px}
+nav .btn:focus-visible{outline-color:var(--lilac)}
+
+/* the rink: boards, lilac floor, painted stripe down the middle */
+.rink{max-width:1160px;margin:var(--s4) auto;padding:0 var(--s4)}
+.floor{position:relative;display:grid;grid-template-columns:1fr 36px 1fr;align-items:center;background:var(--lilac);border:8px solid var(--ink);border-radius:90px 90px 90px 90px / 90px 90px 90px 90px;overflow:hidden}
+.floor .stripe{align-self:stretch;background:var(--stripe-v)}
+.lead{padding:var(--s5) var(--s4) var(--s5) var(--s5)}
+.since{font-family:var(--head);font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:14px;color:var(--purple);margin:0 0 var(--s2)}
+h1{font-family:var(--head);font-weight:900;font-size:68px;line-height:.98;text-transform:uppercase;letter-spacing:.01em;margin:0 0 var(--s2)}
+.sub{color:var(--muted);font-size:18px;max-width:30rem;margin:0}
+.side{padding:var(--s5) var(--s5) var(--s5) var(--s4)}
+.side p{margin:0 0 var(--s2)}
+.note{font-weight:700;color:var(--ink)}
+.addr{color:var(--muted)}
+.side .btn{margin-top:var(--s1)}
+
+/* schedule board */
+.board-wrap{max-width:1160px;margin:0 auto;padding:0 var(--s4) var(--s4)}
+.board{background:var(--board);color:var(--lilac);border-radius:6px;border:6px solid var(--ink);box-shadow:0 0 0 2px var(--purple)}
+.row{display:grid;grid-template-columns:240px 1fr 1fr;gap:var(--s3);align-items:center;padding:var(--s3) var(--s4) var(--s3) var(--s3);border-left:12px solid transparent;border-image:var(--stripe-v) 1;border-top:2px dashed #5b4a86}
+.row:first-child{border-top:0}
+.row h3{font-family:var(--head);font-weight:900;font-size:32px;text-transform:uppercase;letter-spacing:.06em;margin:0;color:#fff}
+.row p{margin:0}
+.desc{color:#d9c6f5;font-size:15px;margin-bottom:6px!important}
+.when{font-family:var(--head);font-weight:700;font-size:26px;letter-spacing:.04em;color:#fff}
+.price{font-size:16px;color:var(--lilac)}
+
+.info{max-width:1160px;margin:0 auto;padding:0 var(--s4) var(--s5);display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+.box{background:#fff;border:3px solid var(--ink);border-top:12px solid var(--purple);border-radius:4px;padding:var(--s3)}
+.box h3{font-family:var(--head);font-weight:900;font-size:24px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 var(--s1)}
+.box p{margin:0;color:var(--muted);font-size:17px}
+
+footer{background:var(--ink);color:var(--lilac);text-align:center;padding:var(--s3);font-size:14px;border-top:8px solid transparent;border-image:var(--stripe) 1}
+
+@media (max-width:860px){
+  nav{padding:var(--s2)}
+  .rink,.board-wrap,.info{padding-left:var(--s2);padding-right:var(--s2)}
+  .floor{grid-template-columns:1fr;border-radius:48px}
+  .floor .stripe{height:20px;align-self:auto;background:var(--stripe)}
+  .lead,.side{padding:var(--s4) var(--s3)}
+  h1{font-size:48px}
+  .row{grid-template-columns:1fr;gap:var(--s1);padding-right:var(--s2)}
+  .info{grid-template-columns:1fr}
+}
+</style></head><body>
+<nav><a class="logo" href="#">Halcyon Skate Hall</a><div class="links"><a href="#sessions">Skate sessions</a><a href="#sessions">Parties</a><a href="#sessions">Adult night</a><a href="#visit">Visit</a></div><a class="btn" href="#">Book now</a></nav>
+
+<main>
+<section class="rink">
+<div class="floor">
+<div class="lead">
+<p class="since">Dunmore &middot; Since 1994</p>
+<h1>Lace up and skate the stripe</h1>
+<p class="sub">Public skate, birthday parties and adult night on the same purple and pink floor we've rolled on since 1994.</p>
+</div>
+<div class="stripe" aria-hidden="true"></div>
+<div class="side">
+<p class="note">Sessions can now be booked online.</p>
+<p class="addr">41 Mill Race Road, Dunmore.<br>Free parking behind the hall.</p>
+<a class="btn" href="#">Book now</a>
+</div>
+</div>
+</section>
+
+<section class="board-wrap" id="sessions">
+<div class="board">
+<div class="row"><h3>Public skate</h3><div><p class="desc">Fun for the whole family, every weekend.</p><p class="when">Fri 7-10pm, Sat and Sun 1-5pm</p></div><p class="price">$9 kids, $11 adults, skate hire $5</p></div>
+<div class="row"><h3>Birthday parties</h3><div><p class="desc">Make memories that last a lifetime.</p><p class="when">Sat and Sun mornings</p></div><p class="price">$210 for up to 12 skaters, skates included</p></div>
+<div class="row"><h3>Adult night</h3><div><p class="desc">Unleash your inner skater with an unforgettable night out.</p><p class="when">Thursdays 8-11pm, 18+</p></div><p class="price">$12, skate hire $5</p></div>
+</div>
+</section>
+
+<section class="info" id="visit">
+<div class="box"><h3>Visit us</h3><p>41 Mill Race Road, Dunmore. Free parking behind the hall.</p></div>
+<div class="box"><h3>Questions?</h3><p>Call (555) 016-3390 or message us on Instagram.</p></div>
+</section>
+</main>
+<footer>&copy; Halcyon Skate Hall. All rights reserved.</footer>
+</body></html>

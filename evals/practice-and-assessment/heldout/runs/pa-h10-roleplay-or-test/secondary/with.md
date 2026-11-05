@@ -1,14 +1,17 @@
-**Go with B, but run the role-plays as paired practice with the team lead coaching, not as 1:1 sessions.** A 40-question test can check whether reps know the right response to an objection. It can't check whether they can deliver it under pressure, and that's the skill you're onboarding for.
+**Do B, but cut the lead's load and keep a short written check for the VP.**
 
-The 1:1 version is too expensive for your lead. Fifteen reps × three 20-minute sessions is 45 sessions, roughly 20 hours of lead time once you add feedback and transitions.
+A 40-question test measures whether reps can recognize good objection responses. It doesn't show whether they can deliver one under pressure on a call, which is what onboarding needs. Your VP's scaling concern is fair, so the fix is to make the role-play scale rather than drop it.
 
-A workable version:
+**Cost of B as written:** 15 reps × 3 sessions × 20 min is about 15 hours of the lead's time, plus feedback. That's the real problem.
 
-- **Pairs run the role-plays.** Reps take turns as rep and customer, with a short scenario card and a 5-point rubric (acknowledged, probed, reframed, asked for next step, stayed on Halvorsen's value props). Each run is about 20 minutes including a peer debrief.
-- **The lead runs the first round live** with a few pairs so the rubric and feedback standard are set. After that, the lead circulates or drops in on one or two pairs per round.
-- **Every rep gets one lead-observed session** in the three rounds, so the lead's time goes to the people who most need coaching.
-- **Prep is the first 20–30 minutes:** objection cards, the product and pricing facts they'll need, and a short written version of the scenarios.
+**Proposed structure:**
 
-If you want the VP's scalability argument addressed, use a short scenario-based check at the end instead of a 40-question MC test. Ten to fifteen questions asking "a customer says X, what do you say?" is auto-gradable, scales to any cohort size, and tests what you actually want. Keep the MC test only for product facts, which can be checked more cheaply anyway.
+1. **Short knowledge gate (cheap, scales):** 10–12 questions on the objection framework and the approved responses, auto-scored. Reps must pass before the role-plays. This gives the VP a metric and costs the lead nothing.
+2. **Peer role-plays with a rubric:** Pair reps and have them run the 20-minute scenarios themselves, scored on a 4–5 item rubric (acknowledged the objection, asked a clarifying question, tied the answer to the customer's stated need, handled the close, stayed under a time limit). Pairs swap roles, so each rep plays customer and rep.
+3. **Lead reviews, doesn't run:** Have the lead sit in on one live role-play per rep (about 5 hours total), or review recordings of the peer sessions and score them against the same rubric. Reps who score below the bar get a second session with the lead.
 
-What to tell the VP: the test scales, but it measures recall, and the role-plays measure the behavior. The cost of the paired version is the lead's first round plus a few drop-ins, not 45 sessions.
+**Why this works:** the lead's time drops from about 15 hours to about 5, the rubric makes peer feedback consistent, and the gate plus rubric scores give the VP the scalable data they want.
+
+**Pitch to the VP:** "The test tells us who knows the objections. The role-play tells us who can handle them. We'll use the test as the gate and the scored role-play as the real measure."
+
+If the lead can't do even the 5 hours, the next fallback is to train two senior reps as peer facilitators with the rubric and have the lead spot-check a sample.

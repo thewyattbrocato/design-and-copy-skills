@@ -1,51 +1,52 @@
-**The idea:** *The Practice Exam.* Each part reads one piece of a dental practice's finances the way a dentist reads a patient: chief complaint, history, findings, plan. It's one sentence a stranger could repeat: "the accountant who explains your books in the language you already use all day."
+**The idea:** Dentists spend their days running exams, so you run an exam on the practice's finances: six parts, each one a step of a checkup (the "Practice Exam").
 
-**Why this works for you:** Dentists are expert clinicians who got handed a business with no training. The tension is that they can read a full-mouth series at a glance but guess at a P&L. Borrowing their vocabulary makes you recognizable in the feed without a single client story, because the example practice is a labeled hypothetical.
+**The series**
 
-## The six parts
+1. **Chief complaint:** "Busy, but the bank account doesn't show it." Why profit and cash differ.
+2. **History:** What your books say about you. Categories, lab fees, supplies, and what a messy history hides.
+3. **Imaging:** Reading a P&L the way you read a radiograph, and the three lines worth looking at first.
+4. **The bite:** Owner pay, distributions, and loan payments. Where the money you "made" actually went.
+5. **Treatment plan:** A 30-minute monthly review that replaces a once-a-year surprise.
+6. **Recall:** The year-end calendar. What to do in Q4 so tax season isn't an emergency.
 
-1. **Chief complaint: "I had a great month but the bank account doesn't agree."** Production vs. collections.
-2. **Health history: where the money goes between collections and your paycheck.** Profit isn't cash: loan principal, tax payments, owner draws.
-3. **The X-ray: what overhead looks like under the surface.** Supplies, lab fees and payroll as a share of collections, and what's normal to question.
-4. **The hygiene department.** Whether it's earning its keep, and how to tell from the books.
-5. **The treatment plan: the equipment or second-location decision.** What to look at in the numbers before saying yes.
-6. **Recall: the 30-minute monthly review.** What to look at every month so there are no surprises in March.
+It isn't tax tips because each part is about reading your own numbers, and none of them depend on a client story. Everything is explained from how practices work, so there's nothing to anonymize. It also leaves you room to bring in tax content later where it fits.
 
-## Part one (LinkedIn post, also the email body)
+**Part 1 (LinkedIn post)**
 
-**Your software says you had a $95,000 month. Your bank account says otherwise. Both are right.**
+> **Chief complaint: "I'm busy, but the money isn't there."**
+>
+> If you own a dental practice, you may have said this to your spouse, your office manager, or the ceiling at 11pm.
+>
+> The schedule is full. Production looks good. And the account balance doesn't match the story.
+>
+> Usually nothing is broken. Profit and cash are two different measurements, and your P&L only shows one of them.
+>
+> Four things that move cash but never show up as an expense:
+>
+> **1. Loan principal.** Your practice loan payment has two parts. Interest is an expense. Principal is not. It leaves your bank account and never touches the P&L.
+>
+> **2. Equipment.** That new scanner may be spread over years on paper (or deducted all at once, depending on the choices made). Either way, the cash left the day you paid for it.
+>
+> **3. Owner pay.** Depending on how your practice is set up, what you take out may not be an expense either. Profit can look healthy while you've already spent it.
+>
+> **4. Taxes.** If nobody set money aside during the year, the bill arrives in one piece.
+>
+> None of these are mistakes. They're just invisible if you only look at one report.
+>
+> The first step of any exam is asking what hurts. Over the next six posts, I'll walk through a financial checkup for a dental practice, one step at a time.
+>
+> Next up: your books' medical history, and what they say about you.
+>
+> *If you want to know which of these four hits your practice hardest, reply "exam" and I'll point you to where to look.*
 
-Here's a made-up practice to show why.
+**Part 1 (monthly email version)**
 
-Production: $95,000. That's the full fee for everything you did this month.
-Collections: $78,000. That's what actually arrived.
+- **Subject:** Why you're busy but the account looks thin
+- **Body:** The same four points, expanded by a sentence or two each, ending with: "Reply with the one that surprised you most." That reply tells you what to write about in part 2, and it starts real conversations without any case studies.
 
-The $17,000 gap isn't one thing. It's three:
+**What I need from you**
+- Ask the owner (you): which entity types you mostly work with (S corp, sole prop, etc.), so the owner-pay point is accurate rather than hedged. Also have someone check the equipment and tax statements against current rules before posting.
+- [Add: one line from your own eight years, such as the question you hear most from new clients. It makes the post sound like you without exposing anyone.]
+- [Assumed: that "busy but thin" is the most common complaint from your clients. Check it against your own intake calls.]
 
-**1. Contractual write-offs.** The difference between your full fee and what an in-network insurer agreed to pay. That money was never coming. It's the cost of being on the plan.
-
-**2. Money still owed.** Open insurance claims and patient balances. This is real money, but it's sitting in someone else's account.
-
-**3. Money that's drifting.** Old claims nobody followed up on. The longer they sit, the less likely they get paid.
-
-Most practice owners I talk to treat the gap as one lump. But the first is a business decision, the second is a timing issue, and the third is a leak. They need three different responses.
-
-Three questions to ask your office manager this week:
-
-- What were production and collections last month, and what's the gap?
-- How much of the gap is write-offs vs. outstanding claims and balances?
-- What's in the aging report past 60 days?
-
-If nobody can answer the second question quickly, that's your finding. Nothing is broken yet, but you're flying without a chart.
-
-This is Part 1 of *The Practice Exam*, six short readings of your practice's finances in the same order you'd examine a patient. Next month: the health history, and why "profit" and "cash in my pocket" aren't the same number.
-
-*[Email only: add a one-line opener such as "This is the first in a monthly series, and I'll keep each one under three minutes." Reply to this email if you want me to look at your version of these three numbers.]*
-
-## What I need from you
-
-- **Check the terms.** "Contractual write-off" and "aging report" are standard, but confirm they match the software your clients use (Dentrix, Eaze, Open Dental, etc.). Swap in the right name if not.
-- **Optional, only if true:** one line from your eight years, like "In eight years of doing dental books, the most common thing I find first is [add: your real observation]." No client details needed. It makes the post sound like you and not a template.
-- **Ask the owner:** are you comfortable inviting replies for a look at someone's numbers? If not, cut the last email line.
-
-**Plain fallback:** if the exam framing feels too cute, keep the same six topics and title the series "Six Numbers Every Dental Owner Should Be Able to Explain." The content works either way.
+**Plain fallback:** Skip the exam metaphor and run it as "Six numbers every practice owner should know," with the same topics and a straightforward title. It's less memorable but needs nothing from you.

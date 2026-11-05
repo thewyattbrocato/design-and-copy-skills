@@ -2,23 +2,23 @@
   "key": {
     "spec": "claude:opus",
     "seed": 0,
-    "with": "940c3f9fd08530e4",
+    "with": "c8874d4a5d3bc1ef",
     "without": "8317d62c57305a92"
   },
   "result": {
-    "winner": "tie",
-    "judge_notes": "pass 1 (A=with, B=without): A does more of what the request is about: it turns spacing, font sizes, weights, radii, colors and motion into tokens, with role-based names that components use. It also correctly keeps 12/14 and 18/20 as separate values and explains the 2px shift that merging them would cause. B is leaner and its summary is clearer, but it leaves spacing and font sizes as literals, which fits the request less well. A loses points for an unrequested raw-plus-semantic token layer, for dropping `.btn-danger`'s white text color, and for a confusing note about `border:0`. | pass 2 (A=without, B=with): Answer A keeps every computed value identical, derives the secondary button's padding from the border width with calc, and stays lean. Its weak spot is leaving spacing and font sizes as literals, saying they don't repeat, when 10px, 14px and 18px do. Answer B tokenizes much more thoroughly and explains the snapping trade-offs well, but it adds a raw-palette layer and dark-theme framing nobody asked for. B also drops `color:#fff` from `.btn-danger`, which could change a combined `.btn-secondary.btn-danger`, and its note about `border:0` being inherited is wrong.",
+    "winner": "with",
+    "judge_notes": "pass 1 (A=with, B=without): Answer A puts every repeated value into a variable, including spacing and font sizes, which the request specifically asked for. Each variable maps to exactly one original value, so nothing changes visually, and the variable names describe a role or a step on a scale. Answer B handles colors, radii and the secondary-button border math well, but it leaves spacing and font sizes as hard-coded numbers and uses button-only padding variables. That leaves less to reuse when building new components, even though B gives a sensible reason for the choice. | pass 2 (A=without, B=with): Both answers keep every class name and computed value, and both derive the secondary button's padding with calc() so its size matches .btn. Rubric item 1 explicitly asks for spacing and font sizes as variables: B tokenizes them with step and role names, while A leaves them as literals and gives a reason. B also notes which spacing steps could later be merged and what that would cost, without snapping anything.",
     "rubric_scores": {
-      "with": 4.2,
+      "with": 5.0,
       "without": 4.6
     },
     "rubric_items": {
       "with": [
         5.0,
-        4.0,
         5.0,
-        3.0,
-        4.0
+        5.0,
+        5.0,
+        5.0
       ],
       "without": [
         3.0,
@@ -28,7 +28,7 @@
         5.0
       ]
     },
-    "position_consistent": false,
+    "position_consistent": true,
     "passes": [
       {
         "order": [
@@ -37,16 +37,16 @@
         ],
         "raw_verdict": "A",
         "winner": "with",
-        "notes": "A does more of what the request is about: it turns spacing, font sizes, weights, radii, colors and motion into tokens, with role-based names that components use. It also correctly keeps 12/14 and 18/20 as separate values and explains the 2px shift that merging them would cause. B is leaner and its summary is clearer, but it leaves spacing and font sizes as literals, which fits the request less well. A loses points for an unrequested raw-plus-semantic token layer, for dropping `.btn-danger`'s white text color, and for a confusing note about `border:0`."
+        "notes": "Answer A puts every repeated value into a variable, including spacing and font sizes, which the request specifically asked for. Each variable maps to exactly one original value, so nothing changes visually, and the variable names describe a role or a step on a scale. Answer B handles colors, radii and the secondary-button border math well, but it leaves spacing and font sizes as hard-coded numbers and uses button-only padding variables. That leaves less to reuse when building new components, even though B gives a sensible reason for the choice."
       },
       {
         "order": [
           "without",
           "with"
         ],
-        "raw_verdict": "A",
-        "winner": "without",
-        "notes": "Answer A keeps every computed value identical, derives the secondary button's padding from the border width with calc, and stays lean. Its weak spot is leaving spacing and font sizes as literals, saying they don't repeat, when 10px, 14px and 18px do. Answer B tokenizes much more thoroughly and explains the snapping trade-offs well, but it adds a raw-palette layer and dark-theme framing nobody asked for. B also drops `color:#fff` from `.btn-danger`, which could change a combined `.btn-secondary.btn-danger`, and its note about `border:0` being inherited is wrong."
+        "raw_verdict": "B",
+        "winner": "with",
+        "notes": "Both answers keep every class name and computed value, and both derive the secondary button's padding with calc() so its size matches .btn. Rubric item 1 explicitly asks for spacing and font sizes as variables: B tokenizes them with step and role names, while A leaves them as literals and gives a reason. B also notes which spacing steps could later be merged and what that would cost, without snapping anything."
       }
     ]
   }

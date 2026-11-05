@@ -1,31 +1,26 @@
-# Fall wheel-throwing campaign: three directions and a pick
+# Pick: "Bring your 'I'm not creative.'"
 
-## Directions
+**The idea:** Kilnside's beginner class is for people who've said "I'm not creative." That sentence is the entry ticket, not the obstacle.
 
-**A. "Not creative? Good." (my pick).** You open with the sentence most of your students say before they sign up. The ad answers it: you don't need to be creative to start, you need six Tuesdays. The tension is that people think creativity is a prerequisite, when it's a skill taught in a class.
+You told me most people who email you say some version of it before they sign up. Most "learn a new skill" ads promise you'll discover your creative side. This one starts from what people already believe about themselves.
 
-**B. "Eight stools."** The campaign is about the room: one class, eight seats, one teacher, Tuesday night. Both numbers are true, so the scarcity is real. It's a good second line, but it doesn't address the hesitation.
+**Three forms (each works without the others):**
 
-**C. "Pieces back in a week."** The new kiln is the news. Week-by-week, you throw something and it comes back fired in about a week instead of three. This is the most concrete door, and it shows what the class feels like. It's a feature story, though, and it doesn't speak to "I'm not creative."
+1. **Post or flyer:** "Not creative? Perfect. Six Tuesday nights, 8 seats, one wheel each. Fall beginner wheel-throwing starts Oct 21. $240, clay and firing of 4 pieces included." The headline can be the line itself, set large and plain.
+2. **Registration form:** The first field reads "Finish the sentence: 'I'm not creative, but…'" It's optional, and it's for you to read. It tells you who's walking in and gives you material for next season. [Ask the owner: do you want to quote any answers publicly? If so, only with each person's okay, anonymous or credited.]
+3. **Reply to the emails:** A short template for the people who write "I'm not creative." For example: "You're who this class is for. Here's what Tuesday looks like." Then it covers the time, the 8-person room, and that pieces come back from the kiln in about a week now, so you hold last week's work next week. That last part is true because of the second kiln.
 
-I'd skip a campaign built on the 31-of-46 return rate. It's your best proof, but it's a supporting line and not a concept.
+**Proof you can use:** 31 of 46 spring students signed up again. That's about two-thirds. State it as a fact, and don't claim to know why. The "I'm not creative" line sits well beside it, because those people mostly came back.
 
-## The pick: A, with C as the proof
+**What it needs from you:** Only the quote permission above. I haven't written any customer quotes. Use real ones from your emails, with consent.
 
-**The idea in one sentence:** "You're not creative? Perfect. It's six Tuesdays, and you take home up to four pieces."
+## Other ways to go
 
-It stays true if anyone checks, and it uses only what you've told me. The kiln and the return rate then back up the claim without becoming the headline.
+- **Six Tuesdays, four pieces:** The kiln is the story. Each week a piece comes back, so the class is a shelf that fills up. It's concrete and true, but less distinctive.
+- **Eight chairs:** One class, 8 seats, and that's all there is this fall. The small room is the pitch. It's honest scarcity, but it tells people to hurry, not why they'd want to come.
+- **Two-thirds came back:** Lead with 31 of 46 and let retention carry it. It's strong proof, but it reads better as a supporting line than as the campaign.
+- **Upstairs from the hardware store:** Own the location. Dunmore Street, parking out back, and "learn to make the one thing the hardware store doesn't sell." It's charming and local, but it's a tone, not an argument.
 
-### Three forms (each works without the others)
+**Plain fallback:** A facts-first announcement. It gives the class, the times, the 8 seats, $240 with clay and firing of 4 pieces, the faster kiln, and the parking behind the building. It needs nothing from you and will work fine.
 
-1. **Post or poster.** Large type: "'I'm not creative.' We hear it a lot. Come anyway." Below it: Tuesdays 6:30–9, starts Oct 21, 8 seats, $240 with clay and firing included. Add "Above the hardware store on Dunmore, parking behind." The address line is part of the charm. Use a photo of a lopsided first bowl [add: your own photo, with the student's OK].
-2. **Your reply to the emails.** Write a short reply template to "I'm not creative" that you can send now and also use as the confirmation email. For example: "Most people here say that first. 31 of last spring's 46 students signed up again." Use the number, not a quote from any one person.
-3. **The shelf.** A week-by-week post series, six Tuesdays, showing what a student could have in hand by each week. The new kiln is why this works now, since pieces come back in about a week. Use your own studio pieces [add: photos], and don't present them as student work unless they are.
-
-### Needs from you
-- Ask the owner: do you want to quote or paraphrase the emails publicly? Anonymize them and get consent, or keep it to your own voice, as above.
-- Ask the owner: is there a registration close date? Don't announce one unless it's real. "Eight seats, one class" is honest scarcity without it.
-- Add: your registration open date, and photos.
-
-### Plain fallback
-A straight announcement with no hook: "Fall beginner wheel class: Tuesdays, Oct 21, six weeks, 8 seats, $240 with clay and firing of up to 4 pieces. New second kiln means pieces come back in about a week. Above the hardware store on Dunmore, parking behind." It's accurate and needs nothing more from you, but it looks like every other class ad.
+**One check:** Oct 21 is a Wednesday in 2026 and has already passed, but it's a Tuesday in 2025. Please confirm the start date before anything goes out.

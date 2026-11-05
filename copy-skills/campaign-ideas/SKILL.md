@@ -70,3 +70,4 @@ Deliver the concept first, with nothing before it: the idea in one sentence, thr
 ## References
 
 - [directions-and-gates.md](references/directions-and-gates.md): load when generating directions for a hard or dull category, or judging a supplied concept; has the doors to vary, the gate list with failures and a short bad-to-better set.
+- [from-strategy-to-series.md](references/from-strategy-to-series.md): load when the idea must run as a series or follow earlier work, the product matches its rivals', a concept could belong to any brand, or directions bunch up; has extra doors, a name-swap gate and the series decisions.

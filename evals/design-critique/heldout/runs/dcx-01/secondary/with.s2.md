@@ -1,25 +1,27 @@
-**Verdict: the page is a generic SaaS template with the boatyard details removed, and that mismatch is probably what your cofounder is sensing.** A boatyard manager landing here can't tell in the first screen that this is about haul-outs, launches, or the travel lift.
+**Verdict: it feels off because it could be the homepage of any SaaS tool.** Nothing on the page mentions boats, boatyards, haul-outs, launches, or the travel lift, and the product never appears. A yard manager landing here can't tell whether Slipway is for them.
 
-**Findings, by severity**
+**Findings, ranked**
 
-1. **Blocker: the hero doesn't name the product.** "Work smarter, not harder" and "all-in-one platform that helps teams streamline their workflow" could describe project management, a CRM, or a fitness app. The one thing that matters, scheduling the yard's lift and launches, appears nowhere above the fold. Fix: say the job in the headline, using the words yard staff already use, e.g. "Know who's on the travel lift today." Then support it with one line on haul-outs, launches, and lift time.
+1. **Blocker: the hero says nothing specific.** "Work smarter, not harder" and "streamline their workflow and unlock their full potential" are generic phrases that fit any product. The subhead should name the job. A draft, assuming these features exist: *"Schedule every haul-out, launch, and travel-lift move in one place."* Supporting line: *"See who's on the lift, what's in the yard, and what launches next, without the whiteboard or the text thread."* Confirm the claims before using them.
 
-2. **High: the page shows no product.** It's a scheduling tool, but there is no screenshot, schedule view, or diagram of a lift calendar. Visitors can't see what they'd be buying. Fix: put a real screenshot of the schedule in the hero, using realistic yard data.
+2. **Blocker: the product is never shown.** A scheduling tool sells on seeing the schedule. Add a screenshot or simple illustration of a yard calendar or lift schedule directly under the hero. This is probably the biggest missing piece.
 
-3. **High: the testimonial reads as a placeholder.** "John Doe, CEO at Acme Inc." is a recognizable dummy, and a placeholder quote on a live page damages trust more than having no quote. Fix: remove it until you have a real customer's quote with their name, role, and yard. Don't write one for a made-up person.
+3. **Major: the feature cards are abstract adjectives.** "Powerful: built with cutting-edge technology," "Simple: an intuitive interface," and "Secure: enterprise-grade" describe no capability and no yard task. Replace them with three things the tool does: haul-out and launch scheduling, travel-lift/crew assignment, and a view of what's in the yard now. "Enterprise-grade" also reads wrong for a family-run yard. Mark the "Simple" card's "anyone can use in minutes" as a claim to verify, not copy to keep.
 
-4. **High: "Join thousands of happy customers" is an unsupported claim.** If you don't have that number, it's false advertising. Even if you do, a vague count is weaker than a specific one. Fix: use a verifiable fact ("Used by N yards on the [coast/river]") or cut the line.
+4. **Major: the proof is a placeholder or unverified.** "John Doe, CEO at Acme Inc." and "Join thousands of happy customers" will destroy trust if they ship, and they read as fake even as drafts. Use a real quote from a real yard with a name and yard name, or cut the section until you have one. Drop "thousands" unless you can count them.
 
-5. **Medium: the feature cards say nothing concrete.** "Built with cutting-edge technology to handle anything you throw at it," "An intuitive interface," and "Enterprise-grade security" are adjectives, not features. "Enterprise-grade" is also the wrong register for a small yard. The section title "Everything you need" promises more than three adjectives deliver. Fix: name three real capabilities (for example, lift scheduling, launch and haul-out calendar, crew assignments), each with one sentence on the problem it solves. Say what "secure" protects (boat owner data, invoices, payments) if you keep that card.
+5. **Moderate: three labels for one action.** "Get Started," "Sign Up Free," and "Get Started" again, with "Learn More" beside the hero button. Pick one primary label ("Start your yard's schedule" or "Sign up free") and use it throughout. "Learn More" needs a clear destination, such as a demo video or the features page.
 
-6. **Medium: the calls to action are inconsistent.** The page uses "Get Started" (nav and hero), "Learn More," and "Sign Up Free" for what is essentially the same action. "Learn More" also gives no hint of where it leads. Fix: one primary label across the page, and make the secondary link go somewhere specific, such as a short demo video or the features section.
+6. **Minor: no way to reach a human.** Yard owners buying software often want a phone number or email. Add a contact link in the footer. The footer also lacks a company address, which is fine for an early product but worth deciding.
 
-7. **Low: the nav and footer are missing common yard-software needs.** There's no login link for existing customers, and no contact or support link. Staff who already use the tool will look for these first.
+7. **Taste, labeled as such:** the voice ("unlock their full potential," "Join thousands") is startup SaaS. Boatyard operators tend to respond to plain, concrete talk. Short sentences about their actual day would fit better.
 
-**What works and should stay**
-- The section order (hero, features, proof, call to action, footer) is a familiar pattern, so visitors can scan it quickly.
-- The copy is short and easy to read.
-- The three-card layout is fine once the cards carry real content.
-- A call to action appears early and again at the bottom.
+**Fix order:** 1 (hero copy), 2 (product visual), 3 (feature cards), 4 (proof), then 5–7.
 
-**Not checked:** I only saw the markup, not the rendered page or the CSS you said is fine. I don't know your actual features, pricing, or who your early customers are, so the rewrites above are structure, not final copy. Ask a few boatyard managers what they'd search for to find a tool like this; their words should replace "workflow" and "teams."
+**What to keep**
+- The section order (hero, features, proof, closing CTA, footer) is conventional and sound.
+- One `h1`, with `h2` and `h3` used in order, gives a clean structure.
+- The primary and secondary buttons in the hero establish a clear hierarchy, even though the labels need work.
+- The closing CTA repeats the primary action after the reader has read the page, which is right.
+
+**Not checked:** I judged the HTML only, not the rendered page, and I don't know which features Slipway actually has. The copy drafts above depend on that. If you tell me the three things yards use it for most, I can write the feature cards and hero against them.

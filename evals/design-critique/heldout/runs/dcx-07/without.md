@@ -1,26 +1,25 @@
-**Ship Version B**, with some edits.
+**Ship Version B, with a few changes.**
 
 **Why B wins**
 
-- **It's specific and gives a next action.** It names a walker, days, and a place, and the button ("Book Marta for Tuesday") completes the task in one tap. A is a generic placeholder that only says "get started."
-- **It sells the product.** The photo halfway through the walk is the reason an owner books. A says nothing about what Brindle does.
-- **A's copy is filler.** "Nothing here yet" and "Where your journey takes you" could belong to any app. "Get Started" doesn't say what happens next.
-- **The trust line is in the right place.** "Vetted and local" answers the question an owner has before handing over their dog.
+- **It's specific.** B names a person, a place, days, and a concrete benefit (a photo halfway through). A's copy could belong to any app.
+- **Every element leads to an action.** "Book Marta for Tuesday" is one tap to the thing the user came for. A's "Get Started" is vague, and it's unclear what it starts.
+- **It handles the real objection.** In a marketplace for strangers with your dog, trust is the hesitation. The vetted-and-local line answers that at the moment of doubt.
+- **A's copy is filler.** "Nothing here yet" restates the obvious, and "where your journey takes you" is generic. A's visual polish is real, but it's wrapping content that does nothing.
 
 **What I'd change in B**
 
-1. **Make the visual design look finished.** B's weakness is craft, not content. Use A's spacing, type scale, and button styling. Replace the default web buttons with a filled primary button and an outlined secondary one. Swap the emoji for a small version of A's illustration, or for Marta's photo.
-2. **Check that "this week" and Marta's availability are real.** The copy only works if it's generated from live data. Decide the fallback for these cases:
-   - Marta isn't free.
-   - The user has no walkers nearby.
-   - The user is brand new and hasn't set a location.
+1. **Keep the design team's craft, not their copy.** B's default-looking buttons and cramped layout will read as unfinished. Apply the design system: real button styles, proper spacing, type scale. Make "Book Marta for Tuesday" the filled primary button and "See other walkers" a secondary or outlined one.
+2. **Fix the heading.** "No walks booked this week" is fine but a little cold. It's also wrong if the user has walks booked next week or has past walks. Check which empty-state conditions it covers, and consider a different variant for first-time users versus lapsed users.
+3. **Handle the Marta dependency.** This copy only works if Marta is real, available, and relevant to this user. Decide what happens if:
+   - the user has never booked with her (why her?),
+   - she isn't free Tuesday,
+   - she's out of range.
+   Pull the walker and days from live availability, with a sensible fallback to generic copy.
+4. **Reword the trust link.** "Why only a few walkers?" raises a question the user wasn't asking and hints at scarcity. Try "All Brindle walkers are vetted and local" with a "How we vet" link. It's reassurance rather than an FAQ entry.
+5. **Make the photo promise true.** "She'll send you a photo halfway through" is the best line in either version. Confirm it's something walkers reliably do, or soften it to "walkers send photo updates."
+6. **Drop or replace the emoji.** A small dog emoji looks accidental. Use a small, simple illustration, perhaps a trimmed version of A's paw mark, if you want visual warmth.
 
-   In those cases, fall back to something like "No walks booked yet" plus "Find a walker near you."
-3. **Reword the heading.** "No walks booked this week" suggests the user has a history and fell behind. A first-time user might read it oddly. Consider "No walks booked yet" for new users and keep the "this week" version for returning ones.
-4. **Fix the small link.** "Why only a few walkers?" raises a doubt the user may not have had. Rephrase it as a reassurance, such as "Every Brindle walker is vetted and local," and don't phrase it as a question. Don't use link styling for it unless it goes somewhere.
-5. **Tighten the body.** For example: "Marta's usually free Tuesday and Thursday mornings near Pell Park. She'll send a photo halfway through the walk."
-6. **Left-align deliberately.** It reads fine, but make sure the alignment matches the rest of the tab.
+**One caution**
 
-**Caveat:** Version B personalizes by hard-coding one walker. If you can't ship the data-driven version by Friday, ship B's structure with generic copy ("Book your first walk. Your walker sends a photo halfway through.") and the polished visuals. That still beats A.
-
-I'm judging from the descriptions, not from seeing the screens, so test the Marta variant with a few real users if you can.
+I'm judging from the copy and your description, not from seeing the screens or any usage data. If you have time before Friday, a quick test with five or so users, or a split test if you can ship both, would confirm this. I'd still expect B to win on specificity.

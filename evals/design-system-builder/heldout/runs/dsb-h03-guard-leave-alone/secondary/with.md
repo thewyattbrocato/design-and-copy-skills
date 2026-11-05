@@ -1,32 +1,36 @@
-Mostly solid. The palette is well-tuned and the muted text and action colors pass contrast in both themes. I'd fix these before handing off, since v1 names become a contract:
+**Verdict: close, but fix three gaps before handoff.** The scales and theme parity are sound. The gaps are a border that fails contrast for inputs, no focus token, and no typography family or weight tokens.
 
-**Fix before v1**
+**Blockers**
 
-1. **Borders fail non-text contrast.** `--color-border` (#d9d5cc) is about 1.4:1 against `--color-bg`, and the dark border is about 1.5:1. WCAG 1.4.11 asks for 3:1 on borders that are the only cue for a control, such as inputs, checkboxes, and table dividers in a warehouse form-heavy UI. Keep `--color-border` for decorative dividers and add something like `--color-border-strong` (3:1) for input and control outlines.
+1. **`--color-border` fails for form controls.** `#d9d5cc` on `#fbfaf8` is about 1.4:1. That is fine for decorative dividers but fails WCAG 1.4.11 (3:1) if it outlines inputs, which a warehouse tool has many of. Split it:
+   - Keep `--color-border` for dividers and table rules.
+   - Add `--color-border-strong` for control edges. Proposed: light `#8a8474` (about 3.6:1 on bg), dark `#7d7768` (about 3.8:1 on surface). I checked these by hand against the WCAG formula, not in a browser.
+   - Dark `--color-border` (`#3a372d`) is similarly faint. Keep it as a divider only.
 
-2. **No focus token.** Keyboard focus is a requirement, and there's nothing for it. Add `--color-focus` (and maybe `--focus-ring-width`). Dark focus will need its own value.
+2. **No focus token.** Keyboard focus is unspecified, and scanner and keyboard users depend on it. Add `--color-focus` (light: `var(--color-action)`, dark: `var(--color-action)`, which already reads at about 7:1 in both themes) and a width token such as `--border-width-focus: 2px`. Add `--border-width-default: 1px` at the same time, since borders are currently unscaled.
 
-3. **Status colors have no backgrounds or on-colors.** `--color-danger`, `--color-success`, and `--color-warning` are text/icon colors only. Badges, alerts, and row highlights need `*-subtle` backgrounds and an on-color for each. Right now every team will invent these, which is the drift you're trying to prevent. Only `--color-on-action` exists, so the set is incomplete.
+3. **No typography family or weight tokens.** The type tokens cover size and leading only. Add:
+   - `--font-sans` and `--font-mono` (SKUs, bin codes, lot numbers)
+   - `--font-weight-regular`, `--font-weight-medium`, `--font-weight-semibold`
+   - `--font-numeric: tabular-nums`, for quantity columns that must align
 
-4. **No font tokens.** There's no family, weight, or mono face. For inventory data (SKUs, bin IDs, quantities), add `--font-sans`, `--font-mono`, and ideally tabular-numeric guidance. Also consider `--text-xs` (12px) for dense table metadata. 14px is the floor right now.
+**Should fix in v1**
 
-5. **Dark theme isn't fully declared.** Add `color-scheme: dark` to `[data-theme="dark"]` so native form controls and scrollbars match. Decide whether dark also follows `prefers-color-scheme` or only the attribute, and document it.
+4. **Status colors lack on-colors and subtle backgrounds.** `--color-danger`, `--color-success` and `--color-warning` have no text-on-fill pair and no tint for row or badge backgrounds. Stock-level rows (low, out, overstock) will need them. Add `--color-on-danger` / `-success` / `-warning` and `-subtle` variants, and check each pair. Brand-new pairs are the most likely to fail contrast.
 
-**Should fix, low effort**
+5. **Mixed units.** Type is in `rem` and spacing and radii are in `px`. Type scales with user font settings, but spacing does not. Pick one policy and document it. If you keep `px` for spacing, say so in the handoff.
 
-6. **Hover direction flips between themes.** Light hover darkens the action color, and dark hover lightens it. That's correct for contrast, but it's non-obvious. Document it so nobody assumes "hover = darker."
+**Minor, can wait**
 
-7. **Spacing gaps.** The scale jumps from 16 to 24, with no 20px step, and nothing above 48. Add `--space-5: 20px`, and consider `--space-16: 64px` for page-level layout.
+6. **Naming.** `--ease-out` breaks the `--motion-*` prefix. Use `--motion-ease-out`.
+7. **Dark hover direction.** Light `action-hover` darkens and dark `action-hover` lightens. Both are defensible, but document the reason.
+8. **Dark shadows.** Black shadows barely show on near-black. Elevation in dark should rely mainly on surface lightness. This is a documentation note, not a bug.
+9. **Missing metadata.** The handoff needs a version number, a changelog line, an owner, and a note on which tokens are stable versus provisional.
 
-8. **Naming consistency.** `--motion-fast`/`--motion-base` and `--ease-out` use different prefixes. Pick one (`--duration-fast` / `--ease-out` is a common pairing). Also `--space-N` is an index, not a pixel value; that's fine if the team knows it, but say so in the docs.
+**Passing**
 
-9. **Shadows on dark.** Black shadows at these opacities are barely visible on `#15140f`. Surface elevation in dark usually relies on a lighter surface tone or a border instead. Check this visually.
+- Spacing (7 steps, not 1px increments), type (5 sizes), radii and elevations are all within reasonable counts.
+- Dark theme overrides every light-theme role, so parity is complete.
+- Body text, muted text, action, danger and warning all pass AA in both themes by my hand checks: about 6.5:1 or higher on light, 6.6:1 or higher on dark.
 
-10. **Raw hex in the semantic layer.** Adding a primitive tier (`--blue-600: #1b5e8a`, etc.) makes dark-mode overrides and future brands cheaper. Not required for v1, but it's easier to add now than later.
-
-**Process, before handoff**
-
-- Add a version header and a short changelog, and mark which names are stable.
-- Add a reduced-motion rule to the docs, even if it isn't a token. The motion tokens need it.
-
-Contrast figures above are my hand calculations, so run them through a checker before you publish them. I haven't changed any files. If you want, I can apply items 1–8 to the file and draft the docs, or run the design-system-builder skill for a fuller pass.
+**Notes:** I did not run an automated contrast checker or render these in a browser. The ratios above are my own WCAG calculations and should be confirmed with a tool. The one trade-off is that adding `--color-border-strong` and the status variants widens the semantic set, so keep the list short and resist adding more before the other team uses v1.

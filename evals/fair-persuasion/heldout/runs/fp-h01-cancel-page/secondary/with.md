@@ -1,46 +1,27 @@
-**Cancel page: pause version** (use once eng confirms pause is built)
+**Cancel page**
 
-**Heading:** Cancel your Pennywise Pantry plan?
+**Heading:** Cancel your Pennywise Pantry subscription?
 
-**Body:**
-You'll keep full access until [last day of access]. You won't be charged after that date.
-Your meal plans and saved receipts stay in your account until [data deletion date]. If you come back, pick up where you left off.
+**Body:** You'll keep full access until [access end date]. After that, your plan stops and you won't be charged again. Your receipts and meal plans are kept for [retention period] after that, then deleted. You can come back anytime.
 
-**Optional question:** What's making you cancel? *(optional)*
+**Optional, not required:** "What's not working? (optional)"
 - Too expensive
-- I'm not using it as much
-- Something's missing
-- Other
+- I'm not using it enough
+- Receipts didn't import well → links to the import help page
+- Something else
 
-**Buttons (same size and weight):**
-- **Pause for up to 3 months**
+**One alternative, shown at the same size as the buttons.** Use A if pause is built. Use B if it isn't.
+
+- **A (pause built):** "Want a break instead? Pause for up to 3 months. You won't be charged during the pause, and your plans and history stay put." Button: **Pause for [pause length]**
+- **B (pause not built):** "Switch to yearly and save $29 a year: $79 billed once, about $6.58/month, instead of $9/month." Button: **Switch to yearly**
+
+**Buttons, equal weight:**
 - **Cancel subscription**
+- **Keep my plan**
 
-**Pause sub-text:** No charges during the pause. Your receipts and plans will be waiting when you return.
-
-**Neutral exit (text link):** Keep my plan
-
-**Confirmation after cancelling:**
-Your subscription is cancelled. You have access until [last day of access]. To return, sign in at [location] and resubscribe any time. Your receipts and plans are kept until [data deletion date].
+**Confirmation screen:** "Your subscription is cancelled. You have access until [access end date]. To come back, log in and choose a plan. If you return within [retention period], your receipts and meal plans will still be there."
 
 ---
 
-**Cancel page: no-pause version** (use until pause is confirmed)
-
-Same heading, body, question, and confirmation. Replace the pause button and sub-text with this offer:
-
-**Offer (one, optional):**
-Switch to yearly and save $29. That's $79 a year, about $6.58 a month, versus $108 paid monthly. [Refund terms for annual plans.]
-
-**Buttons (same size and weight):**
-- **Switch to yearly**
-- **Cancel subscription**
-
-**Neutral exit (text link):** Keep my plan
-
----
-
-**Notes**
-- Don't ship the pause button until eng confirms it's built and billing handles it correctly. Use the no-pause version until then.
-- Fill in the bracketed dates, locations, and refund terms. Cancellation-flow rules vary by location and change over time, so have counsel check the final text.
-- Track reactivations within 90 days and cancel reasons by month, not just the save rate. A save that ends in another cancellation isn't a win.
+- Fill the brackets from your actual terms, and don't show the pause option until eng confirms it works. Use B until then.
+- Track cancel-then-resubscribe within 60 days and refund requests alongside cancellations, so you can tell whether the page is keeping people or just making them hard to lose. Rules on auto-renewal and cancellation vary by place and change over time, so have counsel check this flow.

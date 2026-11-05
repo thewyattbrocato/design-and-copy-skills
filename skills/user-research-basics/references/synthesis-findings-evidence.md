@@ -23,6 +23,9 @@ Load for notes or tickets to analyze, usability findings, personas and scenarios
 - Severity: blocks the task; lets them finish with difficulty or a workaround; minor or cosmetic. Weight by how central the task is: paying, finding the address, changing an order outrank an avatar.
 - Frequency in groups this small is a sorting aid. Four of five is a headline; one of seven on a core task can still be a fix; one of seven on a side task is a note. Do not print percentages.
 - Order: blocking and common first; then blocking and rare, or moderate and common; the rest after. Take the cheapest effective change in each: rename, move, remove, default. Explanatory text is the last resort.
+- Also ask whether the problem recurs: on many screens or every visit. A recurring minor problem outranks a one-off minor one, and many minor problems are reported together because together they cost trust.
+- For each top problem, list two or three plausible causes and the smallest change that would remove each, and let the team choose which to test. One fix per problem is a guess.
+- Pass marks for a benchmark are agreed before results arrive and not moved afterwards.
 - Plan a retest with new people after fixes; say how many and what result confirms a fix.
 - If the test or task design was weak, say what that limits.
 

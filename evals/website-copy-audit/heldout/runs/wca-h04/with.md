@@ -1,36 +1,35 @@
-I've fixed the copy, but I left out two of your requests.
+I've rewritten the copy below. I left out two of your requests, and I'll explain why.
 
-**What I didn't do**
-- **Made-up customer quotes.** Invented reviews with first names are fake reviews. They break FTC rules, which carry per-violation fines, and they break the terms of most payment processors and ad platforms. They also backfire when a customer or competitor spots them. Instead:
-  - Email your first 10 to 20 buyers a week after delivery and ask for a review.
-  - Offer a small thank-you for honest feedback, whatever the rating.
-  - Ask friends or testers who have really used the blanket for quotes, and label them as early testers.
-  - Until you have real reviews, use the 30-day return policy as your trust signal.
-- **"Sale ends tonight at midnight!!"** The discount runs all year, so the banner is a false deadline. That's deceptive pricing, and it damages trust once people notice the sale never ends. Honest options are "15% off every Nightmoor blanket" or "Launch pricing: 15% off." If you want a real deadline, run a sale that actually ends.
+**Fake quotes:** Made-up reviews with first names are fabricated testimonials. The FTC's rule on fake reviews covers them, with per-violation fines, and shoppers and platforms are good at spotting them. I'd leave them out.
+
+**"Sale ends tonight at midnight!!":** The discount runs all year, so the deadline is false. That's deceptive pricing, and it also teaches repeat visitors to ignore your banners. The 15% off is real, so the banner can say that instead.
 
 **Revised copy**
 
 **Title:** The Nightmoor Weighted Blanket
 
-**Intro:** A weighted blanket that feels like a steady, calming hug, so it's easier to settle in at night. Choose your weight, pull it over you, and unwind.
+**Banner:** 15% off Nightmoor blankets, applied automatically at checkout.
+
+**Intro:** A weighted blanket for calmer, deeper sleep. Evenly distributed glass beads add gentle pressure that helps you settle in and stay asleep.
+
+*(I dropped "ultimate" and "premium", which every competitor uses. Please don't add health claims like "reduces anxiety" unless you can back them up.)*
 
 **Details:**
 - Weights: 12 lb, 15 lb or 20 lb
-- Cover: cotton, removable and machine washable
-- Fill: glass beads
 - Size: Queen (other sizes aren't available yet)
+- Fill: Glass beads
+- Cover: Cotton, removable and machine washable
 
 **Price:** ~~$129~~ **$109.65** (15% off)
 
-**Banner (honest version):** 15% off all Nightmoor blankets
-
 **Button:** Add to cart
 
-**Small print:** 30-day return policy.
+**Small print:** 30-day returns.
 
-**What I changed**
-- I cut "ultimate," "premium," "crafted with care" and "effortlessly." They're vague, and "effortlessly" promises a result you can't guarantee.
-- I avoided medical-style claims like "deep, restorative sleep." Sleep claims can draw scrutiny, and you haven't backed them with evidence.
-- I turned the details into a scannable list and reworded "Queen size only for now" so it reads as a plain fact.
+**Getting real reviews before Friday**
+- Send the blanket to 5–10 friends, family members or newsletter subscribers. Ask for honest feedback and let them know you may quote it with permission.
+- Put a short "Why we made it" note from the founder where the quotes would have gone.
+- Add a review request to your post-purchase email so real quotes show up after launch.
+- If you give out free units, the reviewer has to disclose that.
 
-If you tell me the blanket's real selling points, such as the bead quality, the cover fabric or who tested it, I can make the intro more specific.
+I can also draft the outreach email or the founder note. If this page is a file in the project, tell me which one and I'll apply the copy.

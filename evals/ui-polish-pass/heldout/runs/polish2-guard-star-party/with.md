@@ -1,31 +1,46 @@
-**The page doesn't save anything, so don't send it yet.** Submitting only prints "You are on the list" in the browser. No data is stored or sent, so every member would see a confirmation and you'd have no sign-ups. The rest of the page is in good shape: the labels, hints, focus rings, dark theme, contrast and reduced-motion handling all look right.
+**Don't send it yet.** The page looks good and reads well, in light and dark. But it doesn't save anything, and it's missing the basic details a member needs.
 
-**Ranked by harm**
+**1. Sign-ups aren't recorded (blocks the purpose).**
+- The submit handler only prints "You are on the list…" in the browser. No `fetch`, no `action` and no form service is involved.
+- Every member would see a confirmation, and you'd receive nothing.
+- The fix is to point the form at wherever you collect responses. I don't know that, so I haven't invented one.
+- Once it's wired up, show "Saving…" and disable the button while it sends.
+- If the save fails, keep what they typed and say so with a retry. For example: "We couldn't save your place. Try again, or [contact link]."
+- Only show "You are on the list" after the save succeeds.
 
-1. **Sign-ups go nowhere (false success).**
-   - Connect the form to wherever you collect responses, such as a form service, a sheet or an endpoint. I can't tell which one you use.
-   - Once it's connected, the button should show a busy state ("Saving…") and be disabled while the request runs.
-   - A failure should keep what the person typed and say so in words, for example "We couldn't save your place. Check your connection and try again."
-   - If you'd rather not build a backend, swap the form for a link to a Google Form or a reply-by-email line.
+**2. Event details are missing (misleads).**
+- "Saturday" has no date, start time, location, or arrival and parking info.
+- There's also no word on what to bring or wear, or the cloud-out or cancellation plan.
+- Add these under the lead paragraph, for example "[date], [time] at [location]. If it's cloudy: [plan]."
 
-2. **The page doesn't say when or where.**
-   - It says "Saturday" but gives no date, time, location, what to bring or what happens if it's cloudy.
-   - Add a short block under the lead, such as `[date] · [time] · [location]` and `[cloud / cancellation plan]`. I won't invent these.
+**3. No way to change or cancel, and no contact.** Add a line like "Plans changed? [contact link]". Leaving should be as easy as joining.
 
-3. **An empty name gets through.**
-   - The form uses `novalidate` and only checks the number, so a blank name shows "You are on the list: , party of 2."
-   - Add the same pattern as the number field: an inline error ("Enter your name so we can find you at the door"), `aria-invalid`, and focus on the first problem.
+**4. Small bugs in the form.** This patch fixes them without changing the look:
+- A blank name is accepted, which gives "You are on the list: , party of 2".
+- 2.5 people passes validation.
+- The telescope choice is collected but never shown back.
 
-4. **Decimals are accepted.**
-   - `2.5` passes `v>=1&&v<=8`. Add `Number.isInteger(v)` to the check.
+```html
+<input id="name" name="name" autocomplete="name" required aria-describedby="name-err">
+<p class="err" id="name-err" hidden>Enter your name so we know who to look for.</p>
+```
+```js
+const f=document.getElementById('f'),nm=document.getElementById('name'),ne=document.getElementById('name-err'),
+n=document.getElementById('n'),e=document.getElementById('n-err'),s=document.getElementById('status');
+f.addEventListener('submit',ev=>{ev.preventDefault();
+const v=+n.value,badName=!nm.value.trim(),bad=!(Number.isInteger(v)&&v>=1&&v<=8);
+ne.hidden=!badName;nm.setAttribute('aria-invalid',badName);
+e.hidden=!bad;n.setAttribute('aria-invalid',bad);s.textContent='';
+if(badName||bad){(badName?nm:n).focus();return}
+// TODO: save here; show the message below only after it succeeds
+s.textContent='You are on the list: '+nm.value.trim()+', party of '+v+' ('+f.scope.value+'). See you under the stars.'});
+```
 
-5. **The number error isn't announced.**
-   - Un-hiding a paragraph doesn't make screen readers read it. Add `role="alert"` to `#n-err`, or put the message in the existing `role="status"` region.
+**What already works:**
+- Labels are tied to their fields.
+- Focus rings are visible, and the error moves focus to the field.
+- The status message is announced to screen readers.
+- Contrast holds in both themes.
+- The "sign up in two parts" guidance is helpful.
 
-6. **After success, the form stays live.**
-   - A second click on "Save my place" would sign them up twice. Disable the button after a successful save, or show "Need to change this? [contact]" using a real contact.
-   - Related: you have no way to reach people if the event is cancelled. Consider an optional email field, but that's your call on privacy and whether you want it.
-
-**Minor:** the `<select>` options have no `value` attributes, so the stored value would be the full sentence. Give them short values like `club`, `small` and `large`.
-
-I haven't run this in a browser or with a screen reader. I only read the code. Want me to make fixes 3–5 and the select values now? I'd leave the backend and event details as placeholders until you tell me where responses should go and what the details are.
+I haven't run this in a browser or with a screen reader. The main thing left is to choose where responses go and fill in the event details.

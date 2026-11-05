@@ -1,31 +1,20 @@
-Your draft already works. It says what it is, gives the price up front, and has a real "what we can't do" section. I kept most of it and changed four things.
+**Plan:** Your draft already works. The hero is concrete, the price is up front, and the catch is stated honestly. I kept most of it and fixed four things: a timing contradiction, unanswered cost questions, a misplaced price, and a missing second ask.
 
-**What I changed**
-1. **The timing claim.** "Back at your door in about a week" doesn't match your own steps. The box takes 2 to 3 days to arrive, then there's transit to you, then 5 business days of sharpening, then return transit. A customer who counts will feel misled. I replaced it with the number you can stand behind.
-2. **The price.** It was buried in a sentence. I moved it to its own line and added a worked example. The six-knife total is just arithmetic on your numbers.
-3. **Wording.** I tightened a few lines and made the serrated price a plain statement.
-4. **Steps 1 and 3.** I trimmed them lightly. Step 2 is unchanged.
+---
 
-## Copy deck
+**Mail us your knives. We mail them back sharp.**
 
-**Hero**
-# Mail us your knives. We mail them back sharp.
+Send up to six kitchen knives in the box we ship you. We sharpen each one by hand on water stones and send them back to your door. $9 a knife, plus $12 flat for return shipping. No subscription.
 
-Send up to six kitchen knives in the box we ship you. We sharpen each one by hand on water stones and ship them back within 5 business days of receiving them.
-
-$9 a knife, plus $12 flat for return shipping. No subscription.
-
-**[Get a shipping box]**
+[Get a shipping box]
 
 **How it works**
 1. **Order a box.** It arrives in 2 to 3 days with a prepaid label inside.
-2. **Pack your knives** and drop the box at any carrier location.
-3. **We sharpen, wrap and ship them back** within 5 business days of receiving them.
+2. **Pack your knives and drop the box at any [carrier name] location.**
+3. **We sharpen, wrap and ship back.** Turnaround is 5 business days from when we receive them.
 
 **What it costs**
-$9 per knife. Serrated bread knives are $14 each. Return shipping is $12 flat. Six knives come to $66.
-
-**[Get a shipping box]**
+$9 per knife. Serrated bread knives are $14 each. Return shipping is $12 flat, however many knives you send. [State whether the box and outbound shipping are free.]
 
 **What we can't do**
 We don't repair chipped tips bigger than a grain of rice. If yours is chipped, email us a photo first and we'll tell you honestly whether it's worth it.
@@ -33,10 +22,22 @@ We don't repair chipped tips bigger than a grain of rice. If yours is chipped, e
 **What customers say**
 [add two real quotes before launch]
 
-**Questions?** hello@sharpmail.example
+[Get a shipping box]
 
-## Questions to answer before it goes to the designer
-- **Is the box free?** If so, make the button "Get a free shipping box". If not, the price needs to be on the page. I didn't add either.
-- **Does the $12 cover only the return trip?** The prepaid label implies you pay nothing outbound, but the page never says so.
-- **What if a knife comes back not sharp?** Customers will wonder, and a one-line guarantee would help. Only add one if it's true.
-- **Is the $66 example correct?** It assumes six regular knives. If the $12 isn't flat regardless of count, change it.
+Questions? hello@sharpmail.example
+
+---
+
+**What I kept:** the headline, the "hand on water stones" line, "No subscription", the grain-of-rice line and the photo-first offer. They're specific and honest, and I wouldn't touch them.
+
+**What I changed, and why:**
+- **Timing contradiction.** I cut "back at your door in about a week" from the intro. Step 1 says 2–3 days for the box, and step 3 says 5 business days after you receive the knives, plus transit both ways. Door to door is closer to two weeks. A customer who reads "about a week" and then waits two will be annoyed. If you want a headline number, use the real total, or say "5 business days on our bench".
+- **Serrated price.** It was under "What we can't do", but you can do it. It's a price, so it now sits with the other prices.
+- **Second button.** The page only asked once, at the top. I repeated the same button after the proof section.
+- **Bold step labels.** This makes the three steps scannable. It's optional.
+
+**Fix before it goes to the designer:**
+1. **Who pays for the box and the trip to you?** The copy doesn't say. "Get a shipping box" will make people wonder if it's free. Put the answer in the button area or the cost section.
+2. **Which carrier?** A prepaid label usually means one carrier, so "any carrier location" may be wrong. I left a placeholder.
+3. **Quotes.** Don't ship the placeholder. If you don't have two real quotes by launch, delete that section. An empty testimonial block looks worse than none.
+4. **More than six knives?** People will ask. One line like "More than six? Order a second box" would cover it, if that's true.

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saltrow: trip log and tide windows for sea kayakers</title>
+<meta name="description" content="Log every sea kayak trip and see the tide and current windows for your saved launch spots. Coming to iPhone and Android in the spring.">
+<style>
+:root{
+  --paper:#f2ede1;
+  --paper-2:#e9e2d2;
+  --ink:#14232b;
+  --ink-2:#4a5a60;
+  --rule:#b9b19d;
+  --sea:#1f5f6b;
+  --buoy:#b8431a;
+  --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --s1:.5rem;--s2:1rem;--s3:1.5rem;--s4:2.5rem;--s5:4.5rem;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:1.0625rem/1.55 var(--sans)}
+.wrap{max-width:62rem;margin:0 auto;padding:0 var(--s3)}
+a{color:var(--sea)}
+:focus-visible{outline:3px solid var(--buoy);outline-offset:2px}
+
+header.top{border-bottom:2px solid var(--ink);padding:var(--s2) 0}
+header.top .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s2);flex-wrap:wrap}
+.name{font:700 1.35rem/1 var(--serif);letter-spacing:.01em}
+.meta{font:.78rem/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+
+.hero{padding:var(--s5) 0 var(--s4);display:grid;grid-template-columns:1.05fr 1fr;gap:var(--s4);align-items:start}
+h1{font:700 clamp(2.2rem,5.2vw,3.6rem)/1.05 var(--serif);margin:0 0 var(--s3);letter-spacing:-.01em}
+.lede{font-size:1.2rem;max-width:34rem;margin:0 0 var(--s3)}
+.lede+.lede{font-size:1.0625rem;color:var(--ink-2)}
+.cta{display:inline-block;margin-top:var(--s1);font:600 1rem var(--sans);color:var(--paper);background:var(--ink);padding:.8rem 1.3rem;text-decoration:none;border-radius:2px}
+.cta:hover{background:var(--sea)}
+
+/* logbook entry */
+.entry{background:#f9f6ee;border:1px solid var(--rule);border-top:4px solid var(--ink);padding:var(--s2) var(--s3) var(--s3);box-shadow:3px 3px 0 var(--paper-2)}
+.entry .tag{font:.72rem/1 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--buoy);margin:0 0 var(--s2)}
+.entry dl{margin:0;display:grid;grid-template-columns:7.2rem 1fr;row-gap:.45rem}
+.entry dt{font:.75rem/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.entry dd{margin:0;border-bottom:1px dotted var(--rule);padding-bottom:.3rem}
+.entry dd.n{font-family:var(--mono)}
+
+section{padding:var(--s4) 0;border-top:2px solid var(--ink)}
+h2{font:700 1.7rem/1.15 var(--serif);margin:0 0 var(--s3)}
+.label{font:.78rem/1 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--ink-2);margin:0 0 var(--s1)}
+
+/* what it does */
+.does{display:grid;grid-template-columns:1fr 1.15fr;gap:var(--s4)}
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:2.6rem 1fr;padding:var(--s2) 0;border-top:1px solid var(--rule)}
+ol.steps li:first-child{border-top:0;padding-top:0}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font:700 1rem/1.6 var(--mono);color:var(--buoy)}
+ol.steps h3{font:700 1.15rem/1.3 var(--serif);margin:0 0 .25rem}
+ol.steps p{margin:0;color:var(--ink-2)}
+
+figure{margin:0}
+.chart{background:#f9f6ee;border:1px solid var(--rule);padding:var(--s2)}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--ink-2)}
+.chart text.k{fill:var(--ink);font-weight:700}
+figcaption{font:.78rem/1.4 var(--mono);color:var(--ink-2);margin-top:var(--s1)}
+
+/* price */
+.price{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink);background:#f9f6ee}
+.price>div{padding:var(--s3)}
+.price>div+div{border-left:2px solid var(--ink)}
+.price h3{font:700 1.3rem/1.2 var(--serif);margin:0}
+.amt{font:700 2.4rem/1.2 var(--mono);margin:.4rem 0 var(--s2)}
+.amt small{font-size:.95rem;font-weight:400;color:var(--ink-2)}
+.price ul{margin:0;padding:0;list-style:none}
+.price li{padding:.4rem 0;border-top:1px dotted var(--rule)}
+.price li::before{content:"\2014\00a0";color:var(--buoy)}
+.fine{color:var(--ink-2);font-size:.95rem;margin:var(--s2) 0 0}
+
+/* waitlist */
+.wait{background:var(--ink);color:var(--paper);border-top:0;padding:var(--s5) 0}
+.wait h2{color:var(--paper);max-width:30rem}
+.wait p{max-width:34rem;margin:0 0 var(--s3);color:#d8d2c2}
+form{display:flex;gap:var(--s1);flex-wrap:wrap;max-width:34rem}
+label{position:absolute;left:-9999px}
+input[type=email]{flex:1 1 15rem;font:inherit;padding:.8rem .9rem;border:2px solid var(--paper);background:var(--paper);color:var(--ink);border-radius:2px;min-width:0}
+button{font:600 1rem var(--sans);padding:.8rem 1.3rem;border:2px solid var(--buoy);background:var(--buoy);color:#fff;border-radius:2px;cursor:pointer}
+button:hover{background:#d05424;border-color:#d05424}
+#thanks{display:none;margin-top:var(--s2);font-weight:600;color:var(--paper)}
+
+footer{padding:var(--s3) 0 var(--s4);font:.85rem/1.5 var(--mono);color:var(--ink-2)}
+footer .wrap{display:flex;justify-content:space-between;gap:var(--s2);flex-wrap:wrap}
+.wait+footer{background:var(--paper)}
+
+@media(max-width:760px){
+  .hero,.does,.price{grid-template-columns:1fr}
+  .hero{padding-top:var(--s4)}
+  .price>div+div{border-left:0;border-top:2px solid var(--ink)}
+  .entry dl{grid-template-columns:6rem 1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="name">Saltrow</span>
+    <span class="meta">Made in Gannet Sound &middot; iPhone &amp; Android, spring</span>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <div>
+    <h1>Log the trip. Know the tide before you launch.</h1>
+    <p class="lede">Saltrow is a trip log for sea kayakers. Write down where you put in, the route, the distance, the conditions and who came along. Save your launch spots and it shows the tide and current windows for each one, so you can see when it makes sense to go out and when you need to be back.</p>
+    <p class="lede">Two of us built it, and we paddle out of Gannet Sound.</p>
+    <a class="cta" href="#waitlist">Join the waitlist</a>
+  </div>
+
+  <aside class="entry" aria-label="Sample trip log entry">
+    <p class="tag">Sample entry</p>
+    <dl>
+      <dt>Launch</dt><dd>Gannet Sound, north ramp</dd>
+      <dt>Route</dt><dd>Out along the point, across the mouth, back on the lee shore</dd>
+      <dt>Distance</dt><dd class="n">11.4 km</dd>
+      <dt>Conditions</dt><dd>Light wind, small chop on the crossing, current picking up late</dd>
+      <dt>Paddled with</dt><dd>Two others</dd>
+      <dt>Back by</dt><dd class="n">before the ebb builds</dd>
+    </dl>
+  </aside>
+</div>
+
+<section>
+  <div class="wrap does">
+    <div>
+      <p class="label">What it does</p>
+      <h2>Three jobs, done properly</h2>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>Logs every trip</h3>
+            <p>Launch spot, route, distance, conditions and who you paddled with. Over a season it becomes your own record of what the water was actually like.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Remembers your launch spots</h3>
+            <p>Save the places you put in. Each one keeps its own tide and current information, so you aren't looking it up from scratch each time.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Shows the window</h3>
+            <p>For a saved spot you see when it's sensible to go out and when you need to be back on the beach.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <figure>
+      <div class="chart">
+        <svg viewBox="0 0 600 210" role="img" aria-label="Sample tide curve for one day with a shaded paddling window and a back-by line">
+          <line x1="0" y1="170" x2="600" y2="170" stroke="#b9b19d"/>
+          <rect x="290" y="14" width="190" height="156" fill="#1f5f6b" opacity=".16"/>
+          <line x1="480" y1="14" x2="480" y2="170" stroke="#b8431a" stroke-width="2.5" stroke-dasharray="6 4"/>
+          <path d="M0,70 C30,46 60,34 90,34 C190,34 290,140 390,140 C460,140 540,70 600,50" fill="none" stroke="#14232b" stroke-width="2.5"/>
+          <text x="90" y="26" text-anchor="middle">high</text>
+          <text x="390" y="158" text-anchor="middle">low</text>
+          <text x="298" y="32" class="k">GO WINDOW</text>
+          <text x="474" y="32" text-anchor="end" fill="#b8431a" class="k" style="fill:#b8431a">BACK BY</text>
+          <text x="2" y="190">morning</text>
+          <text x="300" y="190" text-anchor="middle">midday</text>
+          <text x="598" y="190" text-anchor="end">evening</text>
+        </svg>
+      </div>
+      <figcaption>Sample drawing for illustration. Not real tide data.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="label">Price</p>
+    <h2>Logging is free. Charts offline cost $4 a month.</h2>
+    <div class="price">
+      <div>
+        <h3>Saltrow</h3>
+        <p class="amt">Free</p>
+        <ul>
+          <li>Log your trips</li>
+          <li>Save launch spots</li>
+          <li>Tide and current windows for saved spots</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Saltrow Pro</h3>
+        <p class="amt">$4 <small>/ month</small></p>
+        <ul>
+          <li>Everything in the free app</li>
+          <li>Offline charts</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">Launching on iPhone and Android in the spring.</p>
+  </div>
+</section>
+
+<section class="wait" id="waitlist">
+  <div class="wrap">
+    <p class="label" style="color:#d8d2c2">Waitlist</p>
+    <h2>Tell us where to send word when it's ready.</h2>
+    <p>One email when Saltrow is in the app stores. Nothing else.</p>
+    <!-- Wire this form to your own signup endpoint: set action/method and remove the preventDefault handler below. -->
+    <form id="wl" action="#" method="post">
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+      <button type="submit">Add me</button>
+    </form>
+    <p id="thanks" role="status">Thanks. You're on the list.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Saltrow &middot; Gannet Sound</span>
+    <span>Check the water yourself before you go out.</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('wl').addEventListener('submit',function(e){
+  e.preventDefault();
+  this.style.display='none';
+  document.getElementById('thanks').style.display='block';
+});
+</script>
+</body>
+</html>

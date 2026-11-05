@@ -4,7 +4,6 @@
 3. Licensed & Insured Locksmith (28)
 
 **Description**
-Quillhook Lock & Key comes to you for car and home lockouts in Dunmore and nearby towns. (88)
+Car and home lockouts? Quillhook Lock & Key comes to you in Dunmore and nearby towns. (85)
 
-- **Brand name:** The headlines don't name the business. If you want it in one, "Quillhook Lock & Key" is 20 characters. I'd swap it in for headline 3, since the description already carries the name.
-- **Character counts:** I counted these by hand, spaces included. Google's ad editor will confirm them when you paste the lines in.
+I counted the characters, spaces included. Headline 1 speaks to the searcher's situation, headline 2 says the locksmith travels to them, and headline 3 gives the trust signal. The brand name is in the description. At 20 characters it would also fit in a headline slot if you'd rather show it there.

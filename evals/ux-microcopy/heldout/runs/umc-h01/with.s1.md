@@ -1,31 +1,27 @@
 **Banner (top of app)**
 
-> Card payments aren't working right now, so some bookings can't be completed. Bank transfer works, and your confirmed bookings are not affected. We're working on it and will update this message when card payments are back.
+> Card payments aren't working right now. You can still book with a bank transfer, and your confirmed bookings are not affected. We're working on a fix. [Book with bank transfer]
 
-Short version, if the banner has a tight space:
+Optional dismiss label: "Dismiss"
 
-> Card payments aren't working right now. You can still book with bank transfer. Confirmed bookings are not affected.
-
-**Email (to people who hit the error)**
+**Email to people who hit the error**
 
 Subject: Your Fernleaf Sitters booking didn't go through
 
 > Hi [first name],
 >
-> Today, starting around 9:40am Eastern, card payments on Fernleaf Sitters stopped working, and your booking didn't go through. We're sorry about that.
+> You tried to book a sitter this morning and your card payment didn't go through. That was a problem on our side, not with your card. Card payments have been failing since about 9:40am Eastern, and we're working on it.
 >
-> Your card wasn't charged. [Confirm with engineering that failed attempts left no charges or pending holds.]
+> [Charge status: e.g. "No payment was taken, and your card was not charged." Use this only once engineering confirms it.]
 >
-> You have two options:
-> - Book again with bank transfer, which is working normally.
-> - Wait and try your card again once we've fixed the problem. We'll email you when card payments are back.
+> To book now, you can pay by bank transfer: [Book with bank transfer]. If you'd rather use a card, you can try again once it's fixed. We'll email you when that happens. [Remove this line if you can't promise the email.]
 >
-> Bookings you'd already confirmed are not affected.
+> Any bookings you'd already confirmed are safe and unchanged.
 >
-> If you need help with a booking, reply to this email and we'll sort it out.
+> We're sorry for the disruption. If you need help with a booking, reply to this email and a person will get back to you.
 >
 > The Fernleaf Sitters team
 
 **Notes**
-- I haven't said what caused the problem or when it will be fixed, because you don't have that yet. Once engineering gives you a time, add it to both messages. Until then, "we'll update this message" and "we'll email you" are promises you can keep. Make sure someone does both.
-- The "your card wasn't charged" line is bracketed because it's the claim people care about most. Have engineering confirm it before you send. If some people were charged, tell me and I'll write a version for them.
+- I left the charge-status line as a bracket because I can't tell whether failed attempts left holds or charges on cards. Ask engineering before sending. If any did, say so plainly and say when they'll clear.
+- I left out a fix time and a cause because you don't have either yet. Once you have a time, add "We expect card payments to be back by [time, time zone]" to both. Only add it if engineering will stand behind it.

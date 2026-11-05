@@ -1,22 +1,26 @@
-I won't write these as described. Fake customer experiences, an invented "4.9 stars from 2,000+ reviews," and a weight-loss result from a box that hasn't shipped are fabricated testimonials. Having the team post them from personal accounts so they don't look like yours is the part that makes it deceptive. It also breaks FTC rules on endorsements and fake reviews, which carry real fines. Instagram can pull the posts or the account. And a made-up weight-loss claim is the kind that gets scrutiny. If it unravels in launch week, it will cost you more than the posts could earn.
+I won't write these as described. The posts would be fake reviews. You'd be claiming results nobody has had (12 pounds lost on a box that hasn't shipped) and a rating that doesn't exist (4.9 stars from 2,000+ reviews). Having friends and staff post them as if they were unconnected customers also hides that you're behind them. That breaks the FTC's rules on fake reviews and undisclosed endorsements, and it breaks Instagram's rules too. Weight-loss claims add their own legal exposure. It's also a bad launch risk. One person asking "wait, when did you get a box?" could sink the brand in week one.
 
-You can still get the organic feel, with real content from real people.
+You can still get the organic feel with a campaign built on true things.
 
-**Campaign idea: "First Box" (the founding table)**
+## Campaign idea: "The First 100 Tables"
 
-Before you launch, send free or discounted boxes to 30–50 friends, team members and local food people. They cook, post honestly and tag you. You get real reviews, real photos and real quotes, and later you can say "4.9 stars" because it's true.
+Before launch, ship the first boxes free or discounted to 100 people. That group can be friends, team, and local food people. Ask them to share their real first-cook moment, with a disclosure line such as "I work at Fennel & Fig" or "#gifted." Your launch story becomes the first 100 dinners, and you can repost the real photos. The 4.9-star claim can come later, once real reviews exist.
 
-The one rule is a visible disclosure like #gifted or "I work at Fennel & Fig." That's fine, and it doesn't hurt the content. Insiders posting openly about the launch reads as authentic.
+## 8 posts (honest, first person, disclosure built in)
 
-**Posts that are true today** (team, friends and founders can post these from personal accounts, with disclosure)
+Team and friends can post these now. Edit them to match what's true for each person.
 
-1. "I work at Fennel & Fig and we launch in 2 weeks. I've eaten the test recipes for months. Ask me anything about what's in the box."
-2. "Testing tonight's Fennel & Fig recipe. Prep time was 22 minutes and I only dirtied two pans. Full verdict tomorrow. #gifted"
-3. "Why we started Fennel & Fig: [founder's real story, 2–3 sentences]. First boxes ship [date]."
-4. "Behind the scenes: this is where your fennel comes from. [photo of the real supplier or farm]"
-5. "Taste-test day. We cut 3 recipes and kept 7. Which one would you try first? Vote in the comments."
-6. "Founding table: we're sending our first 50 boxes to people who'll tell us the truth. Want in? Link in bio."
-7. "Unboxing a pre-launch Fennel & Fig box. Here's what's inside and what I'd change. #gifted"
-8. "Two weeks out. Here's the menu for week one, and who's cooking what at the team dinner."
+1. **Team, pre-launch:** "I work at Fennel & Fig, and we launch in two weeks. I've tested 30 recipes so far, and the fennel-orange chicken made the cut. Ask me anything. #teamfennelandfig"
+2. **Team, behind the scenes:** "Day in the life at a meal kit startup: 6 a.m. produce sourcing, 2 p.m. recipe tasting, 9 p.m. still arguing about fig jam. I work at Fennel & Fig."
+3. **Friend, tasting:** "Got to taste-test a Fennel & Fig recipe before launch (my friend works there, so I'm biased). The roasted fig and goat cheese flatbread was great. Honest note: it needs more salt. They know."
+4. **Founder, story:** "Two weeks until Fennel & Fig launches. Here's why we started it, and what we're still figuring out."
+5. **Team, first-cook (after first boxes ship):** "I work at Fennel & Fig and cooked our box at home tonight, same as a customer would. Prep took 28 minutes. Photos below, including the messy ones."
+6. **Gifted recipient:** "#gifted I got a free Fennel & Fig box to try. What I liked: the portions and the clear instructions. What I'd change: [real feedback]."
+7. **Question post:** "Fennel & Fig founding-member signups are open. What would make a meal kit worth it for you? Tell me, and I'll pass it to the team." (Post as the company or a team member.)
+8. **Launch day:** "We're live. Our first boxes ship this week, and the first 100 orders get [offer]. We'll share real reviews as they come in, good and bad."
 
-Once real customers have posted, I can write caption templates and a review-request flow, and help you turn actual reviews into ads. If you want, I can also draft the founding-table invite and the disclosure guidelines for your friends and team.
+## Next steps
+- Add a one-line disclosure rule for everyone who posts: they say they work at Fennel & Fig, or that they were gifted the box.
+- Collect real reviews after the first shipments, then use the real numbers.
+
+I can also draft the disclosure guidelines for the team, the first-box invite message, or a caption template for the First 100 recipients.

@@ -1,48 +1,52 @@
-**Headlines**
+## Headlines
 
-1. "We Stopped Guessing Which Projector Belongs to Which Room" (the team lead's own words)
-2. Five People Labeled the Equipment in 41 Classrooms in About Two Weeks (the plain numbers)
-3. Masking Tape and a Spreadsheet Gave Way to Labels on Every Classroom's Equipment (the old way versus the new)
-4. How Do You Label 41 Classrooms' Equipment Before Summer Inventory? (the reader's real question)
-5. A Midwest School District Labeled 41 Classrooms Before Summer Inventory. Here's How. (the straight news line)
-6. Which Projector Goes in Which Room? One Facilities Team Stopped Guessing (the problem, then the change)
-7. Dana R. and a Team of Five Retired the Masking-Tape Label (a person-led version)
-8. Five People, Two Weeks, 41 Classrooms (the short version)
-9. Before Summer Inventory, One District Gave Every Piece of Classroom Equipment a Proper Label (the sequence, for readers who plan inventories)
-10. The Spreadsheet Said One Room. The Tape Said Another. (cut this one, because the notes don't say records ever conflicted)
+**Plain outcome**
+1. How a Midwest school district labeled equipment in 41 classrooms in about two weeks
+2. Five people, 41 classrooms, about two weeks: a school district's summer inventory prep
 
-**Opening sentences**
+**Customer's words**
+3. "We stopped guessing which projector belongs to which room"
+4. Dana R. on ending the guessing game over classroom equipment
 
-- **A (the quote):** "We stopped guessing which projector belongs to which room," says Dana R., facilities lead at a mid-sized Midwest school district.
-- **B (the scene):** Last June, a five-person facilities team spent about two weeks labeling equipment in 41 classrooms.
-- **C (the old way):** Until last June, one district's classroom equipment records lived in a spreadsheet and on handwritten strips of masking tape.
-- **D (the question):** Which projector belongs to which room? For one district's facilities team, the honest answer used to be a guess.
+**Contrast with the old way**
+5. Out went the spreadsheet and the masking tape: a facilities team's summer inventory
+6. From handwritten tape labels to Tagwren labels in 41 classrooms
 
-**My pick**
+**The reader's real question**
+7. Summer inventory coming up? Here's how a five-person facilities team handled 41 classrooms
+8. Which projector belongs to which room? One facilities team stopped guessing
 
-Use headline 1 with opener B.
+**Story-first**
+9. What a school facilities team did differently before last summer's inventory
+10. The five-person team behind a 41-classroom labeling job
+11. A facilities lead explains what changed once the labels went on
+12. Summer inventory without the guesswork
 
-- The quote is the actual change in the team's work. A facilities reader will recognize the problem in it.
-- A headline that is a quote needs the numbers right below it, and opener B gives them.
-- Don't pair headline 1 with opener A. That would say the same thing twice.
+## Openings
 
-Suggested subhead: *A five-person facilities team replaced a spreadsheet and masking-tape labels before the summer inventory.*
+**A. Quote first.** "We stopped guessing which projector belongs to which room," says Dana R., facilities lead for a mid-sized public school district in the Midwest.
 
-**The test**
+**B. The situation.** Last June, a five-person facilities team had 41 classrooms to get through before the summer inventory. Their tools were a spreadsheet and handwritten masking-tape labels.
 
-Test headline 1 against headline 2. They make different bets:
+**C. The result.** Over about two weeks last June, a five-person facilities team labeled equipment in 41 classrooms with Tagwren.
 
-- **Headline 1** bets that a peer's voice and a familiar problem draw readers in.
-- **Headline 2** bets that concrete scale (five people, 41 rooms, two weeks) does.
+**D. The old way.** Until last June, one Midwest school district tracked classroom equipment with a spreadsheet and handwritten masking-tape labels.
 
-If one wins, you learn which kind of proof to lead with in future issues.
+## My pick
 
-**Setup**
+I'd go with **headline 2** and **opening A**. The headline gives scope in numbers, so a skimmer knows who it's for and what happened. The quote then opens the story with Dana R.'s own words, which is the most human line in your notes. The headline would also work with opening C if you want the facts first. Don't use 3 as a headline unless it sits above a subhead naming the district's job. Alone, it doesn't say who it's for.
 
-1. **Change only the headline.** The subhead, opener, photo, placement and subject line stay identical in both versions. Opener B repeats the numbers from headline 2, so version 2 will feel slightly redundant. That's a small cost for a clean comparison.
-2. **Split the list at random.** Don't split by customer type, region or signup date. Send both versions at the same time.
-3. **Pick your measure before you send.** Don't use opens, since the headline doesn't affect them. Use clicks through to the full story, if the newsletter teases it. If you can track it, also use clicks from the story to the Tagwren product page.
-4. **Write down your prediction first.** For example: "The quote wins on story clicks, the numbers win on product-page clicks." That keeps you from explaining away the result afterward.
-5. **Treat a small gap as no result.** If your list is small, a few clicks either way is noise. In that case, run the same pair in the next issue with a different story before you draw a conclusion.
+One catch: your brief said "every classroom's equipment," but the notes only support 41 classrooms. I kept to 41 throughout.
 
-**One thing to check:** Dana R. gave permission to be named. Confirm they're also fine with the exact quote as a headline, since it now carries more weight than a pull quote would.
+## The test
+
+Test **headline 2 against headline 3**. They take different approaches: concrete scope versus customer voice. If the split is clean, you learn which kind of headline your readers respond to, and you can reuse that on future stories.
+
+- **Change only the headline.** Keep the opening, subject line, send time, images and layout identical. Use opening A in both, or the test is muddied.
+- **Split at random**, not by region or customer type. An even 50/50 split is fine.
+- **Pick the success measure before you send.** Use clicks through to the full story, or a click on whatever action the story ends with. If the whole story sits inside the email, use the end-of-story click or replies. Don't judge on opens. The headline sits inside the email, so it can't affect opens.
+- **Write down your guess first**, for example "scope will win because readers want to see if it applies to them." Then you'll learn something even if the result is a tie.
+- **Be careful reading small gaps.** With a small list, a difference of a few clicks is probably noise. Note the sample size, and treat a close result as "no clear difference" rather than a winner.
+- **Confirm it next issue.** If one approach wins, run the same pairing, scope versus customer voice, on a different story. If it wins again, you have a real finding.
+
+If you'd rather test the opening, hold the headline fixed at 2 and compare **A against C**. Do that as a second test, not in the same send.

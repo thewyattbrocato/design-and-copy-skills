@@ -1,336 +1,350 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kelpie themes: light, dark, high contrast</title>
+<title>Kelpie themes</title>
 <style>
-  /*
-    Each theme only redefines design tokens. Components below reference
-    tokens exclusively, so adding a theme means adding one block.
-  */
+/*
+  Theme tokens. Each theme only sets variables; every component below reads
+  from them, so there are no per-theme component overrides.
+*/
+.theme-light {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #f6f7f6;
+  --text: #141614;
+  --muted: #5b6360;
+  --line: #e2e5e3;
+  --line-w: 1px;
+  --primary: #1f7a4d;
+  --primary-hover: #17603d;
+  --on-primary: #ffffff;
+  --gain: #1f7a4d;
+  --spend: #b3412f;
+  --focus: #1f7a4d;
+  --radius: 12px;
+}
 
-  *, *::before, *::after { box-sizing: border-box; }
+.theme-dark {
+  color-scheme: dark;
+  --bg: #0f1211;
+  --surface: #171b1a;
+  --text: #e9edeb;
+  --muted: #9aa5a0;
+  --line: #2a302e;
+  --line-w: 1px;
+  --primary: #5cc48f;
+  --primary-hover: #7ad6a6;
+  --on-primary: #0b130f;
+  --gain: #5cc48f;
+  --spend: #ef8a76;
+  --focus: #8fd9b3;
+  --radius: 12px;
+}
 
-  body {
-    margin: 0;
-    padding: 32px 24px;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: #f3f3f1;
-    color: #1a1a1a;
-    -webkit-font-smoothing: antialiased;
-  }
+.theme-contrast {
+  color-scheme: dark;
+  --bg: #000000;
+  --surface: #000000;
+  --text: #ffffff;
+  --muted: #e6e6e6;
+  --line: #ffffff;
+  --line-w: 2px;
+  --primary: #3dff9e;
+  --primary-hover: #9dffc8;
+  --on-primary: #000000;
+  --gain: #3dff9e;
+  --spend: #ff8a75;
+  --focus: #ffd60a;
+  --radius: 8px;
+}
 
-  h1 { font-size: 20px; margin: 0 0 4px; }
-  .intro { margin: 0 0 24px; color: #555; font-size: 14px; }
+/* Page chrome (not themed) */
+* { box-sizing: border-box; }
 
-  .themes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    align-items: start;
-  }
+body {
+  margin: 0;
+  padding: 32px 24px;
+  background: #eceeed;
+  color: #141614;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
 
-  .theme-label {
-    margin: 0 0 8px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: #555;
-  }
+.page-title {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+}
 
-  /* ---- Theme tokens ---- */
+.page-note {
+  margin: 0 0 24px;
+  font-size: 14px;
+  color: #4a504d;
+}
 
-  .theme-light {
-    color-scheme: light;
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --frame: #d9dcda;
-    --border: #d9dcda;
-    --border-w: 1px;
-    --text: #1a1a1a;
-    --text-muted: #5c5c5c;
-    --primary: #1f7a4d;
-    --primary-hover: #186140;
-    --on-primary: #ffffff;
-    --gain: #1f7a4d;
-    --spend: #b3412f;
-    --focus: #1f7a4d;
-  }
+.themes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
 
-  .theme-dark {
-    color-scheme: dark;
-    --bg: #121412;
-    --surface: #1a1d1b;
-    --frame: #353b37;
-    --border: #353b37;
-    --border-w: 1px;
-    --text: #ecefed;
-    --text-muted: #a3aaa6;
-    --primary: #3a9d6c;
-    --primary-hover: #46ac7a;
-    --on-primary: #0b0f0c;
-    --gain: #5fc38f;
-    --spend: #e0735f;
-    --focus: #7fd6a8;
-  }
+.theme-col h2 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2b302d;
+}
 
-  .theme-contrast {
-    color-scheme: dark;
-    --bg: #000000;
-    --surface: #000000;
-    --frame: #ffffff;
-    --border: #ffffff;
-    --border-w: 2px;
-    --text: #ffffff;
-    --text-muted: #d9d9d9;
-    --primary: #7ff0b4;
-    --primary-hover: #c2f9dc;
-    --on-primary: #000000;
-    --gain: #7ff0b4;
-    --spend: #ff8a7a;
-    --focus: #ffe14d;
-  }
+/* Shared components, themed only through tokens */
+.kelpie {
+  background: var(--bg);
+  color: var(--text);
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+}
 
-  /* ---- Shared components (token-only) ---- */
+.k-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
 
-  .theme {
-    background: var(--bg);
-    color: var(--text);
-    border: var(--border-w) solid var(--frame);
-    border-radius: 16px;
-    padding: 20px;
-  }
+.k-app {
+  font-weight: 700;
+}
 
-  .card {
-    background: var(--surface);
-    border: var(--border-w) solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-  }
+.k-month {
+  color: var(--muted);
+}
 
-  .balance-label { font-size: 13px; color: var(--text-muted); }
+.k-balance {
+  background: var(--surface);
+  border: var(--line-w) solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+}
 
-  .balance-value {
-    margin: 4px 0 12px;
-    font-size: 32px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-  }
+.k-label {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
 
-  .summary { display: flex; gap: 24px; font-size: 14px; }
-  .summary-label { display: block; font-size: 12px; color: var(--text-muted); }
+.k-amount {
+  margin: 0 0 6px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
 
-  .tx-list { list-style: none; margin: 16px 0 0; padding: 0; }
+.k-delta {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gain);
+}
 
-  .tx {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0;
-  }
+.k-tx {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+}
 
-  .tx + .tx { border-top: var(--border-w) solid var(--border); }
+.k-tx li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: var(--line-w) solid var(--line);
+}
 
-  .tx-name { font-size: 14px; font-weight: 600; }
-  .tx-meta { font-size: 12px; color: var(--text-muted); }
+.k-tx li:first-child {
+  border-top: 0;
+}
 
-  .amt {
-    font-size: 14px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-  .amt.gain { color: var(--gain); }
-  .amt.spend { color: var(--spend); }
+.k-name {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+}
 
-  .btn {
-    display: block;
-    width: 100%;
-    margin-top: 16px;
-    padding: 12px 16px;
-    font: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--on-primary);
-    background: var(--primary);
-    border: var(--border-w) solid var(--primary);
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  .btn:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
-  .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.k-meta {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.amt {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.amt.gain { color: var(--gain); }
+.amt.spend { color: var(--spend); }
+
+.k-btn {
+  display: block;
+  width: 100%;
+  padding: 13px 18px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--on-primary);
+  background: var(--primary);
+  border: var(--line-w) solid var(--primary);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.k-btn:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.k-btn:focus-visible,
+.kelpie a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .themes { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
+  <h1 class="page-title">Kelpie themes</h1>
+  <p class="page-note">Same sample screen rendered in Light, Dark, and High contrast. Themes differ only in design tokens.</p>
 
-<h1>Kelpie</h1>
-<p class="intro">Same sample screen rendered in three themes.</p>
+  <div class="themes">
+    <section class="theme-col">
+      <h2>Light</h2>
+      <div class="theme-light">
+        <article class="kelpie">
+          <header class="k-head">
+            <span class="k-app">Kelpie</span>
+            <span class="k-month">October</span>
+          </header>
 
-<div class="themes">
+          <section class="k-balance">
+            <p class="k-label">Total balance</p>
+            <p class="k-amount">$4,286.40</p>
+            <p class="k-delta">+$312.00 this month</p>
+          </section>
 
-  <div>
-    <p class="theme-label">Light</p>
-    <section class="theme theme-light" aria-label="Light theme sample">
-      <div class="card">
-        <div class="balance-label">Total balance</div>
-        <div class="balance-value">$4,812.40</div>
-        <div class="summary">
-          <div>
-            <span class="summary-label">In this month</span>
-            <span class="amt gain">+$3,200.00</span>
-          </div>
-          <div>
-            <span class="summary-label">Out this month</span>
-            <span class="amt spend">&minus;$1,184.15</span>
-          </div>
-        </div>
+          <ul class="k-tx">
+            <li>
+              <div><span class="k-name">Paycheck</span><span class="k-meta">Oct 24 · Income</span></div>
+              <span class="amt gain">+$2,150.00</span>
+            </li>
+            <li>
+              <div><span class="k-name">Groceries</span><span class="k-meta">Oct 23 · Food</span></div>
+              <span class="amt spend">−$84.12</span>
+            </li>
+            <li>
+              <div><span class="k-name">Coffee</span><span class="k-meta">Oct 22 · Dining</span></div>
+              <span class="amt spend">−$4.75</span>
+            </li>
+            <li>
+              <div><span class="k-name">Utilities</span><span class="k-meta">Oct 21 · Bills</span></div>
+              <span class="amt spend">−$126.40</span>
+            </li>
+          </ul>
 
-        <ul class="tx-list">
-          <li class="tx">
-            <div>
-              <div class="tx-name">Paycheck</div>
-              <div class="tx-meta">Income &middot; Oct 1</div>
-            </div>
-            <span class="amt gain">+$2,100.00</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Trader Joe's</div>
-              <div class="tx-meta">Groceries &middot; Today</div>
-            </div>
-            <span class="amt spend">&minus;$86.42</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Electric utility</div>
-              <div class="tx-meta">Bills &middot; Sep 30</div>
-            </div>
-            <span class="amt spend">&minus;$142.07</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Refund, outdoor shop</div>
-              <div class="tx-meta">Shopping &middot; Sep 28</div>
-            </div>
-            <span class="amt gain">+$38.00</span>
-          </li>
-        </ul>
+          <button class="k-btn" type="button">Add transaction</button>
+        </article>
+      </div>
+    </section>
 
-        <button class="btn" type="button">Add transaction</button>
+    <section class="theme-col">
+      <h2>Dark</h2>
+      <div class="theme-dark">
+        <article class="kelpie">
+          <header class="k-head">
+            <span class="k-app">Kelpie</span>
+            <span class="k-month">October</span>
+          </header>
+
+          <section class="k-balance">
+            <p class="k-label">Total balance</p>
+            <p class="k-amount">$4,286.40</p>
+            <p class="k-delta">+$312.00 this month</p>
+          </section>
+
+          <ul class="k-tx">
+            <li>
+              <div><span class="k-name">Paycheck</span><span class="k-meta">Oct 24 · Income</span></div>
+              <span class="amt gain">+$2,150.00</span>
+            </li>
+            <li>
+              <div><span class="k-name">Groceries</span><span class="k-meta">Oct 23 · Food</span></div>
+              <span class="amt spend">−$84.12</span>
+            </li>
+            <li>
+              <div><span class="k-name">Coffee</span><span class="k-meta">Oct 22 · Dining</span></div>
+              <span class="amt spend">−$4.75</span>
+            </li>
+            <li>
+              <div><span class="k-name">Utilities</span><span class="k-meta">Oct 21 · Bills</span></div>
+              <span class="amt spend">−$126.40</span>
+            </li>
+          </ul>
+
+          <button class="k-btn" type="button">Add transaction</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="theme-col">
+      <h2>High contrast</h2>
+      <div class="theme-contrast">
+        <article class="kelpie">
+          <header class="k-head">
+            <span class="k-app">Kelpie</span>
+            <span class="k-month">October</span>
+          </header>
+
+          <section class="k-balance">
+            <p class="k-label">Total balance</p>
+            <p class="k-amount">$4,286.40</p>
+            <p class="k-delta">+$312.00 this month</p>
+          </section>
+
+          <ul class="k-tx">
+            <li>
+              <div><span class="k-name">Paycheck</span><span class="k-meta">Oct 24 · Income</span></div>
+              <span class="amt gain">+$2,150.00</span>
+            </li>
+            <li>
+              <div><span class="k-name">Groceries</span><span class="k-meta">Oct 23 · Food</span></div>
+              <span class="amt spend">−$84.12</span>
+            </li>
+            <li>
+              <div><span class="k-name">Coffee</span><span class="k-meta">Oct 22 · Dining</span></div>
+              <span class="amt spend">−$4.75</span>
+            </li>
+            <li>
+              <div><span class="k-name">Utilities</span><span class="k-meta">Oct 21 · Bills</span></div>
+              <span class="amt spend">−$126.40</span>
+            </li>
+          </ul>
+
+          <button class="k-btn" type="button">Add transaction</button>
+        </article>
       </div>
     </section>
   </div>
-
-  <div>
-    <p class="theme-label">Dark</p>
-    <section class="theme theme-dark" aria-label="Dark theme sample">
-      <div class="card">
-        <div class="balance-label">Total balance</div>
-        <div class="balance-value">$4,812.40</div>
-        <div class="summary">
-          <div>
-            <span class="summary-label">In this month</span>
-            <span class="amt gain">+$3,200.00</span>
-          </div>
-          <div>
-            <span class="summary-label">Out this month</span>
-            <span class="amt spend">&minus;$1,184.15</span>
-          </div>
-        </div>
-
-        <ul class="tx-list">
-          <li class="tx">
-            <div>
-              <div class="tx-name">Paycheck</div>
-              <div class="tx-meta">Income &middot; Oct 1</div>
-            </div>
-            <span class="amt gain">+$2,100.00</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Trader Joe's</div>
-              <div class="tx-meta">Groceries &middot; Today</div>
-            </div>
-            <span class="amt spend">&minus;$86.42</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Electric utility</div>
-              <div class="tx-meta">Bills &middot; Sep 30</div>
-            </div>
-            <span class="amt spend">&minus;$142.07</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Refund, outdoor shop</div>
-              <div class="tx-meta">Shopping &middot; Sep 28</div>
-            </div>
-            <span class="amt gain">+$38.00</span>
-          </li>
-        </ul>
-
-        <button class="btn" type="button">Add transaction</button>
-      </div>
-    </section>
-  </div>
-
-  <div>
-    <p class="theme-label">High contrast</p>
-    <section class="theme theme-contrast" aria-label="High contrast theme sample">
-      <div class="card">
-        <div class="balance-label">Total balance</div>
-        <div class="balance-value">$4,812.40</div>
-        <div class="summary">
-          <div>
-            <span class="summary-label">In this month</span>
-            <span class="amt gain">+$3,200.00</span>
-          </div>
-          <div>
-            <span class="summary-label">Out this month</span>
-            <span class="amt spend">&minus;$1,184.15</span>
-          </div>
-        </div>
-
-        <ul class="tx-list">
-          <li class="tx">
-            <div>
-              <div class="tx-name">Paycheck</div>
-              <div class="tx-meta">Income &middot; Oct 1</div>
-            </div>
-            <span class="amt gain">+$2,100.00</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Trader Joe's</div>
-              <div class="tx-meta">Groceries &middot; Today</div>
-            </div>
-            <span class="amt spend">&minus;$86.42</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Electric utility</div>
-              <div class="tx-meta">Bills &middot; Sep 30</div>
-            </div>
-            <span class="amt spend">&minus;$142.07</span>
-          </li>
-          <li class="tx">
-            <div>
-              <div class="tx-name">Refund, outdoor shop</div>
-              <div class="tx-meta">Shopping &middot; Sep 28</div>
-            </div>
-            <span class="amt gain">+$38.00</span>
-          </li>
-        </ul>
-
-        <button class="btn" type="button">Add transaction</button>
-      </div>
-    </section>
-  </div>
-
-</div>
-
 </body>
 </html>

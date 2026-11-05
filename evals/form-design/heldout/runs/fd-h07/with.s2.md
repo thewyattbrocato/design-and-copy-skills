@@ -1,20 +1,20 @@
-Neither is fully right. I'd use the designer's approach as the base, with two exceptions for the developer's instinct.
+Neither is fully right, but your designer is closer. I'd go with validate on submit, then re-check live once a field has shown an error. There are two exceptions.
 
-**Default: validate on submit, then re-check live.**
-- Don't show errors while someone is still typing. The first characters of a valid value aren't valid yet. "Enter an email with an @" appearing after the first letter is noise, and it feels like being scolded mid-sentence.
-- Once a field has shown an error, re-check it on every keystroke. The message then disappears the moment the problem is fixed. This keeps most of what the developer wants, which is instant feedback, without the premature errors.
-- Don't validate on blur. Autofill and tabbing away fire it mid-task.
+**Why not every keystroke (the developer's approach):**
+- The first characters of a valid value aren't valid yet. Someone typing `sam@` gets an "invalid email" error mid-thought. That's noise and it feels like scolding.
+- Autofill and tabbing away also fire field-level checks while the person is still working.
 
-**Two exceptions where live feedback is better than the designer's rule:**
-1. **Password:** show the rule before they type ("At least [N] characters") and tick it off as it's met. It's guidance, not an error, so nothing red appears.
-2. **Username uniqueness:** check after a short pause in typing (about 400–500 ms), not on every keystroke, and show "Checking…", then "Available" or "Taken, try another". This is the one check the person can't predict, so waiting until submit would send them back to redo work. It also avoids a server request per keystroke.
+**Why not submit-only (the designer's approach):**
+- If errors only appear on submit and stay until the next submit, people fix a problem and don't know whether it worked. The fix is to re-check a field live once it has shown an error, so the message disappears the moment it's true.
 
-**Other details:**
-- Keep the "Create account" button pressable at all times. A button that's disabled until the form is valid gives no reason and is often unreachable by keyboard. After a press with problems, put the message at each field and, if there are two or more, a summary at the top that links to each one.
-- Run every check on the server too. The availability check can go stale between typing and submit.
-- Keep what they typed after any error.
-- Email: use `type="email"` and `autocomplete="email"`. Turn off autocapitalize and autocorrect on email and username. Password gets `autocomplete="new-password"`, allow paste, and add a show-password control.
+**What I'd do per field:**
 
-**Settling the disagreement:** the developer is right that feedback should be immediate once it's useful (during a fix, for the password rule, for username availability). The designer is right that it shouldn't come before the person has had a chance to finish. If you want to test it, A/B the error timing on completion rate and time to submit.
+| Field | Behavior |
+|---|---|
+| **Email** | Check on submit only. If it fails, re-check as they edit. Message: "Enter an email address with an @, like name@example.com". |
+| **Username (unique)** | This is the exception where live checking helps. Run an availability check after a short pause in typing (about 400–500 ms), not on every keystroke. Show "Checking…", then "Available" or "Taken. Try another." The server must still enforce uniqueness on submit, because someone else can claim the name in between. |
+| **Password (min length)** | The other exception. Show the rule before they type ("At least [N] characters") and let it tick off as they meet it. That's a checklist, not an error. Also allow paste and add a show-password toggle. |
 
-I haven't seen your code, so this is based on the field list you gave. I left the minimum password length as [N] because you didn't say what it is.
+**Submit button:** keep it pressable the whole time. A button that's disabled until the form is valid gives no reason and is often unreachable by keyboard. If there are two or more problems after pressing it, put a summary at the top that links to each field. Keep everything the person typed, including after a server error.
+
+So the developer gets live feedback where it actually helps (username, password), and the designer gets calm, error-free typing everywhere else. I haven't seen your form's code. If you want, point me at it and I can check it against this.

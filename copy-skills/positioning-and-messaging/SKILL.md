@@ -11,8 +11,9 @@ A position is a choice a reader can repeat: who this is for, what they would use
 
 - Category soup ("a smart, unified solution that helps businesses thrive"): it names no one and no alternative.
 - A fill-in-the-blank positioning sentence as the deliverable.
-- "Easy to use", "great support", "powerful" or "innovative" as a difference. They are claims until measured.
+- "Easy to use", "great support", "powerful" or "innovative" as a difference, or a premium or eco "story" no supplied fact backs. They are claims until measured.
 - "The X of Y" in place of a category, or an invented category word with no plain descriptor beside it.
+- A name list of near-identical coinages (dropped vowels, "-ly", "-io" endings), or a name a listener must have spelled for them.
 - A voice guide made only of adjectives ("friendly, professional, bold").
 - A customer quote, pain, number, rival fact, market size or "teams like yours" the user did not give.
 - A rank or superlative ("number one", "best rated", "leading") the supplied facts do not show. Write the smaller true claim with its count and a [source, date] placeholder, and say why in one line.
@@ -34,7 +35,7 @@ Work toward the one-sentence idea, then test it and name its category.
 
 1. **Know who it is for.** If the user has customer data, look at the customers who got value soonest and kept using it, and what they share. If not, describe the likely best fit by situation and need ("runs a clinic's rota on a whiteboard"), label it an assumption, and say who it is not for. Company size alone is not a segment.
 2. **Write the line.** The single idea people should repeat, rooted in something the buyer already feels or says (from supplied quotes or tickets), with features as its proof. A real limit that follows from the strength is stated once, plainly. A teammate should be able to use it to reject a feature request or a headline; if not, it is too vague.
-3. **Name the habit it replaces**: what the buyer does today, including putting up with it. Use the one they actually rely on, including the unglamorous one, not the rivals the user admires. List what that habit lacks and say what each difference lets the customer do, in the customer's words.
+3. **Name the alternative at the moment of need.** Default to what the buyer does when the need arises, whatever kind of thing that is: a person, a spreadsheet, a rival, or putting up with it and doing nothing. Use the one they actually rely on, including the unglamorous one, not the rivals the user admires. Change when the buyer runs a formal shortlist inside one category (a tender, a procurement review); then those named rivals are the set. List what the alternative lacks and say what each difference lets the customer do, in the customer's words.
 4. **Prove each clause.** Proof is a figure the user gave, a feature anyone can check, or a third-party statement. If a difference has no proof, keep it but mark it [unproven: how it could be shown] so the user sees the gap.
 5. **Name the shelf a stranger would put it on.** Use a category word a stranger knows, with a plain modifier if the slice is narrower. A coined label only with a plain descriptor beside it, every time.
 6. **Check the wording against four questions.** Could a rival put their name on it and stay truthful? Would someone in the group recognize their own situation, and place the product in a known category within seconds? Can every clause be backed by what the user gave? Does it use the customer's words rather than internal ones? Fix what fails; do not report passes.
@@ -42,11 +43,12 @@ Work toward the one-sentence idea, then test it and name its category.
 Voice and naming follow from the position, not before it.
 
 - **Voice.** Three or four traits, each written as a habit with a boundary (this, but not that) and a say / don't-say pair. Task text defaults to clear first, brief second, human third. Voice stays constant while tone shifts: plain and direct in errors, billing, security and anything irreversible, lighter only in low-stakes moments. Show one example per surface the user names. If the user has no voice yet, derive it from their own writing, not a famous brand's.
-- **Naming.** A literal name, or a plain modifier on a familiar word, beats a coined one. A coined name carries a one-line plain definition wherever it appears. Say it aloud, check it means one thing, and reject names that need decoding, names that only add a suffix to an earlier one and internal codenames. You cannot search the web or a trademark register for the user, so never say a name is available or clear; tell them to check.
+- **Naming.** Default to a literal name, or a plain modifier on a familiar word, for features, plans and anything inside the interface; a coined name carries a one-line plain definition wherever it appears. For a product or company name, or any list of options, follow the naming reference. You cannot search the web or a trademark register, so never say a name is available or clear; tell them what to check.
 
 ## Judgment calls
 
-- **Narrow or broad.** Default to the narrowest group that meets the near-term goal; broaden later with its own message. Change when that group is too small for the goal the user stated.
+- **Narrow or broad.** Default to the narrowest group that meets the near-term goal; broaden later with its own message. Change when that group is too small for the goal the user stated, or when rivals in a mature category sell to the same buyers (see the parity reference).
+- **Difference or recognition.** Default to difference-first. Change when the category is established, rivals sell alike to the same buyers and no checkable difference was supplied; then lead with the category word, the moment of need and a repeatable cue, and say why in one clause.
 - **Segment by situation or by company type.** Default to need and situation. Use size or industry only as a filter on top.
 - **One message or several.** Default to one controlling idea. Role and stage variants change emphasis and proof, never the claim.
 - **Plain or clever.** Default to plain and specific; a reader who has to decode a line has already left.
@@ -68,7 +70,7 @@ Deliver the requested thing first, with nothing before it. A one-liner request g
 
 ## Quick checks
 
-- The category word is one a stranger knows; the alternative is named; who it is not for is stated.
+- The category word is one a stranger knows; the alternative is named as what the buyer does at the moment of need, doing nothing included; who it is not for is stated.
 - Each difference has proof from the user or is marked unproven; no invented evidence anywhere.
 - One controlling idea, in the customer's words, that a rival could not truthfully sign.
 - Voice guidance has say / don't-say examples; names are plain or defined.
@@ -76,4 +78,6 @@ Deliver the requested thing first, with nothing before it. A one-liner request g
 ## References
 
 - [brief-and-voice.md](references/brief-and-voice.md): load when producing a full message brief or a voice guide; has the field list, the voice-habit format and a short worked pair.
+- [naming.md](references/naming.md): load when generating, ranking, screening or renaming a product, company, feature or plan name; has strictness by surface, where to find candidates, the pass/fail screen, the shortlist format and what you cannot check.
+- [parity-categories.md](references/parity-categories.md): load when the product sits beside look-alike rivals, a differentiating story has no supplied fact behind it, or a gap against the leader is being read as a message problem; has the context test, the evidence check and the parity-mode message rules.
 - [truth-and-proof-families.md](references/truth-and-proof-families.md): load when rooting the idea in buyer language, stating a real trade-off, handling a rank or superlative request, choosing practical, felt or vouched-for messages, or deriving a voice from customer and company vocabulary.

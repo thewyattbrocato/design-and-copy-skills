@@ -1,70 +1,83 @@
-I assumed a web product, one brand and a small team. I haven't checked any colors for contrast. These three scales are deliberately shorter than the usual ranges, because the brand has little depth or motion to express.
+Your brand uses very few values here, so the sets below are deliberately small and well under the usual scale sizes.
 
-## Shape
+## Radius: 1 token
 
-| Token | Value | Use |
-|---|---|---|
-| `radius.none` | `0` | Every surface, control, image, tag, and focus ring. |
+| Token | Value |
+|---|---|
+| `radius.none` | `0` |
 
-- Define one token, not a scale. Components still reference it, so a future change happens in one place.
-- Round things such as radio buttons and status dots are the only exceptions. Keep them local and marked as exceptions, not as a `radius.full` token.
+Every component reads this one token, so a rounded corner can't appear by accident. If you ever soften the brand, you change one value. I'd leave out `sm`, `md` and `lg`. Unused scale steps invite exceptions.
 
-## Depth
+## Elevation: 3 levels, built from rules instead of shadows
 
-Depth comes from rule weight and hard offsets, never blur.
-
-| Token | Value | Use |
-|---|---|---|
-| `border.width.thin` | `1px` | Table rows, dividers inside a panel. |
-| `border.width.base` | `2px` | Default outline for cards, inputs, and buttons. |
-| `border.width.heavy` | `4px` | Section rules, masthead, and emphasis. |
-| `elevation.flat` | `none` | The page and most content. |
-| `elevation.raised` | `border.width.base` solid `color.border.strong` | Cards and inputs. |
-| `elevation.overlay` | `raised` plus `4px 4px 0 0 color.border.strong` | Menus, dialogs, and toasts. |
-
-- **Hard shadow:** the zero-blur offset on `elevation.overlay` is a proposal. It is the only "shadow" in the system. If you want no shadows at all, make overlay a `heavy` border on a paper ground.
-- **Focus:** use a 3px `color.border.strong` outline with a 2px offset, so it is visible on both paper and tomato. Don't rely on the accent for focus until you've checked its contrast.
-
-## Motion
+Depth comes from rule weight, not blur. First define the rule widths:
 
 | Token | Value | Use |
 |---|---|---|
-| `motion.duration.none` | `0ms` | Default for hover and pressed (hard color flips). |
-| `motion.duration.fast` | `100ms` | Focus, disclosure toggles, and input state changes. |
-| `motion.duration.base` | `200ms` | Menus, dialogs, and toasts appearing. |
-| `motion.easing.standard` | `cubic-bezier(0, 0, 0.2, 1)` | The only easing. |
+| `border.width.thin` | `1px` | Table rows, list dividers |
+| `border.width.medium` | `2px` | Inputs, cards, buttons |
+| `border.width.thick` | `4px` | Section rules, overlays, masthead |
 
-- Animate only `color`, `background-color`, and `opacity`. Nothing slides, scales, bounces, or parallaxes.
-- No loops or decorative motion. A loading state is static text or a stepped indicator.
-- Under `prefers-reduced-motion: reduce`, every duration becomes `0ms`.
-- There is no `slow` duration and no second easing. Asking for one is a sign the brand is drifting.
+Then the elevation roles. Components use these, not the raw widths:
+
+| Token | Value | Use |
+|---|---|---|
+| `elevation.flat` | no border, no shadow | Content on the page |
+| `elevation.raised` | `2px` solid ink | Cards, inputs, buttons |
+| `elevation.overlay` | `4px` solid ink | Menus, dialogs, toasts |
+
+- **Overlays:** A thick rule over off-white may not separate an overlay from busy content behind it. If it doesn't, add one hard offset shadow, `4px 4px 0 ink`, with zero blur, to `elevation.overlay` only. That is a proposal. I'd test it on a real page first.
+- **Scrim:** If dialogs need one, use a solid ink at about 60% opacity, not a blur.
+- **Focus:** Use a `3px` ink outline with a `2px` offset, so it stays visible against the tomato accent. Don't use tomato for focus.
+
+## Motion: 2 durations, 1 easing
+
+| Token | Value | Use |
+|---|---|---|
+| `duration.instant` | `0ms` | The default. Hover, press and selection are hard cuts. |
+| `duration.fast` | `120ms` | Only for things that appear or disappear: menus, dialogs, toasts, disclosure. |
+| `easing.standard` | `cubic-bezier(0, 0, 0.2, 1)` | Used with `fast`. |
+
+- **Rules:** Animate opacity only. Don't animate position, scale or size. No springs, no bounce, no page-load choreography.
+- **Reduced motion:** `prefers-reduced-motion: reduce` sets `duration.fast` to `0ms`. Nothing else needs to change, because the default is already no motion.
 
 ## CSS
 
 ```css
 :root {
-  --radius-none: 0;
+  /* raw */
+  --rule-1: 1px;
+  --rule-2: 2px;
+  --rule-4: 4px;
 
-  --border-width-thin: 1px;
-  --border-width-base: 2px;
-  --border-width-heavy: 4px;
+  /* semantic: components read these */
+  --radius-none: 0;
+  --border-width-thin: var(--rule-1);
+  --border-width-medium: var(--rule-2);
+  --border-width-thick: var(--rule-4);
 
   --elevation-flat: none;
-  --elevation-raised: 0 0 0 var(--border-width-base) var(--color-border-strong);
-  --elevation-overlay: var(--elevation-raised), 4px 4px 0 0 var(--color-border-strong);
+  --elevation-raised: var(--border-width-medium) solid var(--color-border-strong);
+  --elevation-overlay: var(--border-width-thick) solid var(--color-border-strong);
 
-  --motion-duration-none: 0ms;
-  --motion-duration-fast: 100ms;
-  --motion-duration-base: 200ms;
-  --motion-easing-standard: cubic-bezier(0, 0, 0.2, 1);
+  --focus-ring: 3px solid var(--color-border-strong);
+  --focus-offset: 2px;
+
+  --duration-instant: 0ms;
+  --duration-fast: 120ms;
+  --easing-standard: cubic-bezier(0, 0, 0.2, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    --motion-duration-fast: 0ms;
-    --motion-duration-base: 0ms;
-  }
+  :root { --duration-fast: 0ms; }
 }
 ```
 
-`--color-border-strong` is a semantic color role (black) that your color tokens need to define. Components read these tokens and never raw values like `2px` or `#000`.
+`--color-border-strong` is your ink black. It belongs to the color tokens, not this set.
+
+## Decisions for you
+
+- **Circles:** Radio buttons and avatars are the one place "square everywhere" gets tested. I'd keep radios square-ish too, such as a filled square, and make any circle a named exception, not a second radius token.
+- **Dark theme:** If you add one, the rules remap to the light ink. Elevation tokens keep their names and widths.
+
+I assumed a web product with one brand and a small team. I haven't contrast-checked anything, because these tokens don't set any colors.

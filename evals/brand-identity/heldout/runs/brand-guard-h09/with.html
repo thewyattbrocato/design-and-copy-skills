@@ -2,73 +2,106 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Quokka wordmark</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quokka wordmark</title>
 <style>
-  :root { --ink: #1f2a37; --accent: #d9692b; --paper: #faf8f5; }
+  :root {
+    --ink: #1f2a37;
+    --paper: #ffffff;
+    --accent: #0f766e;
+  }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    background: #eceae6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--ink);
+    background: #f3f4f6;
   }
+
+  /* The wordmark: one idea, a quiet smile under "kka" (the quokka's famous grin). */
   .wordmark {
     display: inline-block;
-    position: relative;
     font-weight: 800;
-    font-size: 48px;
+    letter-spacing: -0.045em;
     line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-    padding-bottom: 0.3em;
+    color: inherit;
     text-decoration: none;
+    white-space: nowrap;
+    padding-bottom: 0.2em;
   }
-  /* the one idea: a quokka's smile, set under the name */
-  .wordmark::after {
+  .wordmark .smile {
+    position: relative;
+    display: inline-block;
+  }
+  .wordmark .smile::after {
     content: "";
     position: absolute;
-    left: 18%;
-    right: 18%;
-    bottom: 0.02em;
-    height: 0.2em;
-    border-bottom: 0.075em solid var(--accent);
+    left: 0.1em;
+    right: 0.1em;
+    bottom: -0.14em;
+    height: 0.13em;
+    border-bottom: 0.065em solid var(--accent);
     border-radius: 0 0 100% 100% / 0 0 100% 100%;
   }
-  .wordmark.sm { font-size: 22px; }
-  .wordmark.lg { font-size: 72px; }
-  .wordmark.mono, .wordmark.mono::after { color: #000; border-color: #000; }
-  .wordmark.rev { color: #fff; }
-  .wordmark.rev::after { border-color: #fff; }
+  .wordmark.mono .smile::after { border-bottom-color: currentColor; }
 
-  .panel { padding: 40px; display: flex; align-items: center; justify-content: center; }
-  .login { background: var(--paper); min-height: 240px; flex-direction: column; gap: 20px; }
-  .login .box { width: 260px; height: 36px; border: 1px solid #cfcac3; border-radius: 6px; background: #fff; }
-  .login .btn { width: 260px; height: 36px; border-radius: 6px; background: var(--ink); }
-  .wiki { background: #fff; justify-content: flex-start; border-bottom: 1px solid #ddd; padding: 20px 40px 8px; }
-  .row { display: flex; gap: 0; flex-wrap: wrap; }
-  .row > .panel { flex: 1 1 280px; }
-  .dark { background: var(--ink); }
-  .light { background: #fff; }
-  .label { font-size: 12px; color: #777; padding: 8px 40px; background: #fff; }
+  .stage { max-width: 960px; margin: 0 auto; padding: 24px; display: grid; gap: 24px; }
+  .card { background: var(--paper); border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; }
+  .label { font-size: 12px; color: #6b7280; padding: 10px 16px 0; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Login page */
+  .login { display: grid; place-items: center; gap: 28px; padding: 56px 24px 64px; }
+  .login .wordmark { font-size: 64px; }
+  .login form { display: grid; gap: 10px; width: 260px; }
+  .login input, .login button {
+    font: inherit; font-size: 14px; padding: 10px 12px; border-radius: 6px; border: 1px solid #d1d5db;
+  }
+  .login button { background: var(--ink); color: #fff; border-color: var(--ink); cursor: pointer; }
+
+  /* Wiki header */
+  .wiki-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #e5e7eb; }
+  .wiki-head .wordmark { font-size: 26px; padding-bottom: 0.18em; }
+  .wiki-head nav { display: flex; gap: 18px; font-size: 14px; color: #4b5563; }
+  .wiki-body { padding: 20px; font-size: 14px; color: #4b5563; }
+
+  /* Reversed and small */
+  .row { display: grid; grid-template-columns: 1fr 1fr; }
+  .dark { background: var(--ink); color: #fff; display: grid; place-items: center; padding: 36px 16px; }
+  .dark .wordmark { font-size: 40px; }
+  .dark { --accent: #5eead4; }
+  .small { display: grid; place-items: center; padding: 36px 16px; }
+  .small .wordmark { font-size: 16px; }
 </style>
 </head>
 <body>
+<div class="stage">
 
-<div class="panel login">
-  <span class="wordmark lg">Quokka</span>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="btn"></div>
+  <div class="card">
+    <div class="label">Login page</div>
+    <div class="login">
+      <span class="wordmark" role="img" aria-label="Quokka">Quo<span class="smile">kka</span></span>
+      <form onsubmit="return false">
+        <input type="email" placeholder="Email" aria-label="Email">
+        <input type="password" placeholder="Password" aria-label="Password">
+        <button type="submit">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Wiki header</div>
+    <div class="wiki-head">
+      <a class="wordmark" href="#" aria-label="Quokka">Quo<span class="smile">kka</span></a>
+      <nav><span>Dashboards</span><span>Metrics</span><span>Docs</span></nav>
+    </div>
+    <div class="wiki-body">Quokka analytics wiki: how we define, query and share numbers.</div>
+  </div>
+
+  <div class="card row">
+    <div class="dark"><span class="wordmark" role="img" aria-label="Quokka, reversed">Quo<span class="smile">kka</span></span></div>
+    <div class="small"><span class="wordmark mono" role="img" aria-label="Quokka, one color, small">Quo<span class="smile">kka</span></span></div>
+  </div>
+
 </div>
-
-<div class="label">Wiki header</div>
-<div class="panel wiki"><span class="wordmark sm">Quokka</span></div>
-
-<div class="row">
-  <div class="panel dark"><span class="wordmark rev">Quokka</span></div>
-  <div class="panel light"><span class="wordmark mono">Quokka</span></div>
-</div>
-
 </body>
 </html>

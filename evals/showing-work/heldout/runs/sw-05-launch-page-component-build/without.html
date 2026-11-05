@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time Slot Picker · Lumen Health Design System</title>
+<style>
+  :root {
+    --bg: #f6f8f9;
+    --surface: #ffffff;
+    --ink: #14262b;
+    --ink-2: #4a5f65;
+    --line: #d6e0e3;
+    --brand: #0b6e6e;
+    --brand-ink: #ffffff;
+    --brand-tint: #e3f3f2;
+    --focus: #1a4fd6;
+    --ok-bg: #e2f4e8;
+    --ok-ink: #14532d;
+    --warn-bg: #fdf0d9;
+    --warn-ink: #6b4204;
+    --radius: 10px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font); line-height: 1.55; font-size: 16px;
+  }
+  a { color: var(--brand); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 16px; }
+  .brand { font-weight: 700; letter-spacing: .01em; display: flex; align-items: center; gap: 8px; }
+  .brand i { width: 14px; height: 14px; border-radius: 50%; background: var(--brand); display: inline-block; }
+  .topbar nav { display: flex; gap: 20px; font-size: 14px; }
+  .topbar nav a { color: var(--ink-2); text-decoration: none; }
+  .topbar nav a:hover { color: var(--brand); text-decoration: underline; }
+  .crumbs { font-size: 14px; color: var(--ink-2); margin: 32px 0 8px; }
+  .crumbs a { color: var(--ink-2); }
+
+  header.hero { padding-bottom: 32px; }
+  h1 { font-size: clamp(2rem, 4vw, 2.75rem); line-height: 1.15; margin: 0 0 12px; letter-spacing: -.02em; }
+  .lede { font-size: 1.15rem; color: var(--ink-2); max-width: 62ch; margin: 0 0 20px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 11px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+  .badge.stable { background: var(--ok-bg); color: var(--ok-ink); }
+  .badge.stable::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #1f8a4c; }
+  .badge.replace { background: var(--warn-bg); color: var(--warn-ink); }
+
+  section { padding: 36px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 1.5rem; margin: 0 0 8px; letter-spacing: -.01em; }
+  h3 { font-size: 1.05rem; margin: 0 0 6px; }
+  p { margin: 0 0 12px; }
+  .sub { color: var(--ink-2); max-width: 66ch; }
+
+  /* Demo stage */
+  .stage { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-top: 20px; }
+  .stage-bar { display: flex; flex-wrap: wrap; gap: 20px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: #fafcfc; align-items: center; }
+  .ctl { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+  .ctl .lbl { color: var(--ink-2); font-weight: 600; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+  .seg button {
+    font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--ink);
+    padding: 6px 14px; cursor: pointer; border-right: 1px solid var(--line);
+  }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: var(--brand); color: var(--brand-ink); }
+  .stage-body { padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  .card { width: 100%; max-width: 560px; }
+  .card h3.card-title { font-size: 1.1rem; margin-bottom: 2px; }
+  .card .hint { color: var(--ink-2); font-size: 14px; margin-bottom: 16px; }
+  .summary { margin-top: 16px; padding: 10px 14px; border-radius: 8px; background: var(--brand-tint); font-size: 15px; min-height: 44px; display: flex; align-items: center; }
+  .summary.none { background: #f0f3f4; color: var(--ink-2); }
+
+  /* === Time Slot Picker component === */
+  .tsp { --tsp-gap: 8px; --tsp-h: 44px; --tsp-fs: 15px; --tsp-min: 96px; --tsp-day-gap: 20px; }
+  .tsp[data-density="compact"] { --tsp-gap: 6px; --tsp-h: 32px; --tsp-fs: 13px; --tsp-min: 78px; --tsp-day-gap: 12px; }
+  .tsp-day { margin-bottom: var(--tsp-day-gap); }
+  .tsp-day:last-child { margin-bottom: 0; }
+  .tsp-day-h { font-size: 14px; font-weight: 700; margin: 0 0 8px; display: flex; gap: 8px; align-items: baseline; }
+  .tsp-day-h span { font-weight: 400; color: var(--ink-2); font-size: 13px; }
+  .tsp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--tsp-min), 1fr)); gap: var(--tsp-gap); }
+  .tsp-slot {
+    font: inherit; font-size: var(--tsp-fs); min-height: var(--tsp-h);
+    border: 1.5px solid var(--line); background: #fff; color: var(--ink);
+    border-radius: 8px; cursor: pointer; padding: 0 8px; font-variant-numeric: tabular-nums;
+    transition: background .12s, border-color .12s;
+  }
+  .tsp-slot:hover { border-color: var(--brand); background: var(--brand-tint); }
+  .tsp-slot[aria-checked="true"] { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); font-weight: 600; }
+  .tsp-slot:focus-visible, .seg button:focus-visible, .btn:focus-visible {
+    outline: 3px solid var(--focus); outline-offset: 2px;
+  }
+  .tsp-empty { border: 1.5px dashed var(--line); border-radius: 12px; padding: 24px; text-align: center; background: #fbfcfc; }
+  .tsp-empty h4 { margin: 0 0 4px; font-size: 1.05rem; }
+  .tsp-empty p { color: var(--ink-2); margin-bottom: 14px; font-size: 15px; }
+  .btn {
+    font: inherit; font-weight: 600; font-size: 15px; background: var(--brand); color: var(--brand-ink);
+    border: 0; border-radius: 8px; padding: 10px 18px; min-height: 44px; cursor: pointer;
+  }
+  .btn:hover { background: #095858; }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Feature cards */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px; }
+  .feat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+  .feat p { color: var(--ink-2); font-size: 15px; margin: 0; }
+
+  /* Density compare */
+  .dens { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 20px; }
+  .dens .box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+  .dens .tag { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2); font-weight: 700; margin-bottom: 10px; }
+  .dens ul { margin: 14px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 14px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 16px; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: #fafcfc; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-2); }
+  tr:last-child td { border-bottom: 0; }
+  kbd { font-family: var(--mono); font-size: 13px; background: #eef2f3; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; white-space: nowrap; }
+
+  .dd { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+  .dd > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; border-top: 4px solid var(--brand); }
+  .dd > div.dont { border-top-color: #b4531a; }
+  .dd ul { margin: 8px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 15px; }
+  .dd li { margin-bottom: 4px; }
+
+  .note { background: var(--warn-bg); color: var(--warn-ink); border-radius: var(--radius); padding: 14px 18px; margin-top: 16px; font-size: 15px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--ink-2); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+  @media (max-width: 600px) { .topbar nav { display: none; } .stage-body { padding: 16px; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand"><i aria-hidden="true"></i> Lumen Health Design System</div>
+    <nav aria-label="Primary">
+      <a href="#demo">Live demo</a>
+      <a href="#features">Features</a>
+      <a href="#density">Density</a>
+      <a href="#keyboard">Keyboard</a>
+      <a href="#guidance">Guidance</a>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="crumbs">Components &rsaquo; Scheduling &rsaquo; Time Slot Picker</div>
+
+  <header class="hero">
+    <h1>Time Slot Picker</h1>
+    <p class="lede">A grid of selectable appointment times, grouped by day. Built for keyboard and screen reader use from the start, with a helpful empty state and two densities.</p>
+    <div class="meta">
+      <span class="badge stable">Stable &middot; v2.1</span>
+      <span class="badge replace">Replaces Dropdown Time Select</span>
+    </div>
+  </header>
+
+  <section id="demo" aria-labelledby="demo-h">
+    <h2 id="demo-h">Live demo</h2>
+    <p class="sub">This is the real component. Try it with a mouse, or tab into the grid and use the arrow keys. Switch density or simulate a fully booked range with the controls.</p>
+
+    <div class="stage">
+      <div class="stage-bar">
+        <div class="ctl" role="group" aria-labelledby="ctl-density">
+          <span class="lbl" id="ctl-density">Density</span>
+          <span class="seg">
+            <button type="button" data-density="comfortable" aria-pressed="true">Comfortable</button>
+            <button type="button" data-density="compact" aria-pressed="false">Compact</button>
+          </span>
+        </div>
+        <div class="ctl" role="group" aria-labelledby="ctl-state">
+          <span class="lbl" id="ctl-state">Availability</span>
+          <span class="seg">
+            <button type="button" data-state="times" aria-pressed="true">Times available</button>
+            <button type="button" data-state="empty" aria-pressed="false">No times</button>
+          </span>
+        </div>
+      </div>
+      <div class="stage-body">
+        <div class="card">
+          <h3 class="card-title">Choose a time</h3>
+          <p class="hint">Annual physical &middot; 30 minutes</p>
+          <div id="main-picker"></div>
+          <div class="summary none" id="main-summary">No time selected</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" aria-labelledby="feat-h">
+    <h2 id="feat-h">What it does</h2>
+    <div class="grid-2">
+      <div class="feat">
+        <h3>Keyboard arrow navigation</h3>
+        <p>The grid is a single tab stop. Arrow keys move between times, including across day groups, so people don't tab through every slot.</p>
+      </div>
+      <div class="feat">
+        <h3>Announces selection</h3>
+        <p>Choosing a time updates a polite live region, so screen reader users hear the day and time they picked.</p>
+      </div>
+      <div class="feat">
+        <h3>Empty state with a next step</h3>
+        <p>When nothing is open, the picker says so and offers the next date with openings instead of leaving a blank area.</p>
+      </div>
+      <div class="feat">
+        <h3>Two densities</h3>
+        <p>Comfortable for patient-facing flows and touch. Compact for tighter layouts where space is limited.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="density" aria-labelledby="dens-h">
+    <h2 id="dens-h">Density</h2>
+    <p class="sub">Both densities share the same behavior, markup, and accessibility semantics. Only spacing and size change.</p>
+    <div class="dens">
+      <div class="box">
+        <div class="tag">Comfortable (default)</div>
+        <div id="dens-comfortable"></div>
+        <ul>
+          <li>44px tall targets</li>
+          <li>Use in patient-facing and mobile flows</li>
+        </ul>
+      </div>
+      <div class="box">
+        <div class="tag">Compact</div>
+        <div id="dens-compact"></div>
+        <ul>
+          <li>32px tall targets, smaller type</li>
+          <li>Use where vertical space is constrained, such as side panels</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="keyboard" aria-labelledby="kb-h">
+    <h2 id="kb-h">Keyboard and screen reader behavior</h2>
+    <p class="sub">The picker is a radio group: one time can be selected at a time. Focus uses a roving tab stop, so Tab enters the grid once and leaves it once.</p>
+    <table>
+      <thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>Tab</kbd></td><td>Moves focus into the grid (to the selected time, or the first one) and out again.</td></tr>
+        <tr><td><kbd>&larr;</kbd> <kbd>&rarr;</kbd></td><td>Previous or next time, continuing into the neighboring day.</td></tr>
+        <tr><td><kbd>&uarr;</kbd> <kbd>&darr;</kbd></td><td>Moves to the nearest time in the row above or below, including in another day.</td></tr>
+        <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>First or last available time.</td></tr>
+        <tr><td><kbd>Space</kbd> <kbd>Enter</kbd></td><td>Selects the focused time.</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th scope="col">Element</th><th scope="col">Semantics</th></tr></thead>
+      <tbody>
+        <tr><td>Grid container</td><td><code>role="radiogroup"</code> with an accessible name</td></tr>
+        <tr><td>Each day</td><td><code>role="group"</code> labeled by its day heading</td></tr>
+        <tr><td>Each time</td><td><code>role="radio"</code> with <code>aria-checked</code></td></tr>
+        <tr><td>Selection feedback</td><td>Visually hidden <code>aria-live="polite"</code> region, e.g. &ldquo;Selected Tuesday, November 3 at 9:30 AM&rdquo;</td></tr>
+        <tr><td>Focus</td><td>3px high-contrast outline, never removed</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="guidance" aria-labelledby="guide-h">
+    <h2 id="guide-h">Guidance</h2>
+    <div class="dd">
+      <div class="do">
+        <h3>Use it when</h3>
+        <ul>
+          <li>People choose one appointment time from a known set of openings.</li>
+          <li>Seeing several times at once helps them compare options.</li>
+          <li>You need to support keyboard and screen reader users equally well.</li>
+        </ul>
+      </div>
+      <div class="dont">
+        <h3>Don't use it when</h3>
+        <ul>
+          <li>The person is choosing a date. Pair the picker with a date control instead.</li>
+          <li>The user must enter an arbitrary time. Use a time input.</li>
+          <li>You would hide the empty state. Always let people know why nothing is shown.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top:28px">Migrating from Dropdown Time Select</h3>
+    <p class="sub">The Time Slot Picker replaces the Dropdown Time Select for choosing appointment times. Times are now visible at once instead of hidden in a menu, and selection is announced to assistive tech. Swap the component, choose a density, and make sure your flow handles the empty state.</p>
+    <div class="note"><strong>Heads up:</strong> we haven't yet measured the impact of this component, so there are no adoption or performance numbers on this page. We'll add them once we have real data.</div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Lumen Health Design System &middot; Time Slot Picker &middot; Stable, v2.1</div>
+</footer>
+
+<script>
+(function () {
+  var uid = 0;
+
+  // Sample data (illustrative scheduling data for the demo)
+  var WEEK = [
+    { label: 'Mon, Nov 2', long: 'Monday, November 2', times: ['9:00 AM','9:30 AM','10:30 AM','11:00 AM','1:00 PM','1:30 PM','3:00 PM'] },
+    { label: 'Tue, Nov 3', long: 'Tuesday, November 3', times: ['8:30 AM','9:30 AM','10:00 AM','12:30 PM','2:00 PM','2:30 PM','4:00 PM','4:30 PM'] },
+    { label: 'Wed, Nov 4', long: 'Wednesday, November 4', times: ['9:00 AM','11:30 AM','1:00 PM','3:30 PM'] }
+  ];
+  var LATER = [
+    { label: 'Thu, Nov 12', long: 'Thursday, November 12', times: ['9:00 AM','9:30 AM','10:00 AM','1:30 PM','2:00 PM','3:30 PM'] }
+  ];
+  var NEXT_OPEN = { label: 'Thu, Nov 12', count: 6 };
+
+  function createPicker(root, opts) {
+    var id = ++uid;
+    var state = { days: opts.days, selected: null };
+    var density = opts.density || 'comfortable';
+    var live = document.createElement('div');
+    live.className = 'sr-only';
+    live.setAttribute('aria-live', 'polite');
+    live.setAttribute('role', 'status');
+
+    var host = document.createElement('div');
+    host.className = 'tsp';
+    host.dataset.density = density;
+    root.appendChild(host);
+    root.appendChild(live);
+
+    function announce(msg) {
+      live.textContent = '';
+      setTimeout(function () { live.textContent = msg; }, 30);
+    }
+
+    function render(focusFirst) {
+      host.innerHTML = '';
+      if (!state.days || !state.days.length) {
+        var e = document.createElement('div');
+        e.className = 'tsp-empty';
+        e.innerHTML = '<h4>No times available</h4><p>There are no openings from Mon, Nov 2 to Wed, Nov 4. The next date with openings is <strong>' +
+          NEXT_OPEN.label + '</strong> (' + NEXT_OPEN.count + ' times).</p>';
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'btn';
+        b.textContent = 'Show ' + NEXT_OPEN.label;
+        b.addEventListener('click', function () {
+          state.days = LATER; state.selected = null;
+          render(true);
+          announce('Showing ' + LATER[0].long + '. ' + LATER[0].times.length + ' times available.');
+          opts.onChange && opts.onChange(null);
+        });
+        e.appendChild(b);
+        host.appendChild(e);
+        announce('No times available. Next date with openings is ' + NEXT_OPEN.label + '.');
+        return;
+      }
+      var group = document.createElement('div');
+      group.setAttribute('role', 'radiogroup');
+      group.setAttribute('aria-label', opts.label || 'Appointment time');
+      state.days.forEach(function (d, di) {
+        var day = document.createElement('div');
+        day.className = 'tsp-day';
+        day.setAttribute('role', 'group');
+        var hid = 'tsp' + id + '-d' + di;
+        day.setAttribute('aria-labelledby', hid);
+        var h = document.createElement('h4');
+        h.className = 'tsp-day-h'; h.id = hid;
+        h.innerHTML = d.label + ' <span>' + d.times.length + ' times</span>';
+        day.appendChild(h);
+        var grid = document.createElement('div');
+        grid.className = 'tsp-grid';
+        d.times.forEach(function (t) {
+          var s = document.createElement('button');
+          s.type = 'button';
+          s.className = 'tsp-slot';
+          s.setAttribute('role', 'radio');
+          var key = d.label + '|' + t;
+          s.dataset.key = key;
+          s.dataset.long = d.long + ' at ' + t;
+          s.dataset.short = d.label + ' · ' + t;
+          s.setAttribute('aria-checked', state.selected === key ? 'true' : 'false');
+          s.tabIndex = -1;
+          s.textContent = t;
+          grid.appendChild(s);
+        });
+        day.appendChild(grid);
+        group.appendChild(day);
+      });
+      host.appendChild(group);
+      var slots = all();
+      var start = slots.filter(function (s) { return s.getAttribute('aria-checked') === 'true'; })[0] || slots[0];
+      start.tabIndex = 0;
+      if (focusFirst) start.focus();
+    }
+
+    function all() { return Array.prototype.slice.call(host.querySelectorAll('[role="radio"]')); }
+
+    function moveTo(target) {
+      all().forEach(function (s) { s.tabIndex = -1; });
+      target.tabIndex = 0;
+      target.focus();
+    }
+
+    function vertical(cur, dir, slots) {
+      var cr = cur.getBoundingClientRect();
+      var cx = cr.left + cr.width / 2;
+      var cand = slots.filter(function (s) {
+        var r = s.getBoundingClientRect();
+        return dir > 0 ? r.top > cr.top + 2 : r.top < cr.top - 2;
+      });
+      if (!cand.length) return null;
+      var rowTop = cand.reduce(function (m, s) {
+        var t = s.getBoundingClientRect().top;
+        return dir > 0 ? Math.min(m, t) : Math.max(m, t);
+      }, dir > 0 ? Infinity : -Infinity);
+      var row = cand.filter(function (s) { return Math.abs(s.getBoundingClientRect().top - rowTop) < 3; });
+      var best = row[0], bd = Infinity;
+      row.forEach(function (s) {
+        var r = s.getBoundingClientRect();
+        var d = Math.abs(r.left + r.width / 2 - cx);
+        if (d < bd) { bd = d; best = s; }
+      });
+      return best;
+    }
+
+    function select(el) {
+      state.selected = el.dataset.key;
+      all().forEach(function (s) { s.setAttribute('aria-checked', s === el ? 'true' : 'false'); });
+      announce('Selected ' + el.dataset.long);
+      opts.onChange && opts.onChange(el.dataset);
+    }
+
+    host.addEventListener('click', function (e) {
+      var el = e.target.closest('[role="radio"]');
+      if (!el) return;
+      moveTo(el);
+      select(el);
+    });
+
+    host.addEventListener('keydown', function (e) {
+      var el = e.target.closest('[role="radio"]');
+      if (!el) return;
+      var slots = all(), i = slots.indexOf(el), next = null;
+      switch (e.key) {
+        case 'ArrowRight': next = slots[Math.min(i + 1, slots.length - 1)]; break;
+        case 'ArrowLeft': next = slots[Math.max(i - 1, 0)]; break;
+        case 'ArrowDown': next = vertical(el, 1, slots) || el; break;
+        case 'ArrowUp': next = vertical(el, -1, slots) || el; break;
+        case 'Home': next = slots[0]; break;
+        case 'End': next = slots[slots.length - 1]; break;
+        default: return;
+      }
+      e.preventDefault();
+      moveTo(next);
+    });
+
+    render(false);
+
+    return {
+      setDensity: function (d) { host.dataset.density = d; },
+      setDays: function (days) { state.days = days; state.selected = null; render(false); opts.onChange && opts.onChange(null); }
+    };
+  }
+
+  // Main demo
+  var summary = document.getElementById('main-summary');
+  var main = createPicker(document.getElementById('main-picker'), {
+    days: WEEK,
+    label: 'Appointment time',
+    onChange: function (d) {
+      if (!d) { summary.className = 'summary none'; summary.textContent = 'No time selected'; return; }
+      summary.className = 'summary';
+      summary.innerHTML = '';
+      var s = document.createElement('span');
+      s.innerHTML = 'Selected: <strong></strong>';
+      s.querySelector('strong').textContent = d.short;
+      summary.appendChild(s);
+    }
+  });
+
+  function wireSeg(attr, fn) {
+    var btns = document.querySelectorAll('.seg button[data-' + attr + ']');
+    Array.prototype.forEach.call(btns, function (b) {
+      b.addEventListener('click', function () {
+        Array.prototype.forEach.call(btns, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        fn(b.dataset[attr]);
+      });
+    });
+  }
+  wireSeg('density', function (v) { main.setDensity(v); });
+  wireSeg('state', function (v) { main.setDays(v === 'empty' ? [] : WEEK); });
+
+  // Density examples (single day each)
+  var one = [{ label: 'Tue, Nov 3', long: 'Tuesday, November 3', times: ['8:30 AM','9:30 AM','10:00 AM','12:30 PM','2:00 PM','2:30 PM'] }];
+  createPicker(document.getElementById('dens-comfortable'), { days: one, density: 'comfortable', label: 'Appointment time, comfortable example' });
+  createPicker(document.getElementById('dens-compact'), { days: one, density: 'compact', label: 'Appointment time, compact example' });
+})();
+</script>
+</body>
+</html>

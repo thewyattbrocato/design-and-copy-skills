@@ -6,12 +6,12 @@
 <title>Harbor Line Ferry – Sailing Delays</title>
 <style>
   :root {
-    --ink: #000;
-    --paper: #fff;
-    --line: #000;
-    --warn: #ffd000;
-    --ok: #005a1e;
-    --bad: #a30000;
+    --ink: #0b0b0b;
+    --paper: #ffffff;
+    --rule: #0b0b0b;
+    --warn: #ffc21a;
+    --ok: #0a5c2a;
+    --bad: #a30f0f;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -20,184 +20,162 @@
     background: var(--paper);
     color: var(--ink);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.125rem;
+    font-size: 18px;
     line-height: 1.35;
   }
-  .wrap { max-width: 40rem; margin: 0 auto; }
+  .wrap { max-width: 640px; margin: 0 auto; }
 
   .brand {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    padding: 12px 16px;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: .08em;
     text-transform: uppercase;
-    background: var(--ink);
-    color: var(--paper);
   }
 
   .banner {
     background: var(--warn);
-    color: var(--ink);
-    border-bottom: 6px solid var(--ink);
-    padding: 1.25rem 1rem;
+    color: #000;
+    padding: 18px 16px 20px;
+    border-top: 6px solid #000;
+    border-bottom: 6px solid #000;
   }
   .banner h1 {
-    margin: 0 0 0.4rem;
-    font-size: 1.75rem;
+    margin: 0 0 8px;
+    font-size: 28px;
     line-height: 1.15;
+    font-weight: 900;
+  }
+  .banner p { margin: 0; font-size: 19px; font-weight: 600; }
+  .banner .updated { margin-top: 10px; font-size: 16px; font-weight: 700; }
+
+  h2 {
+    margin: 24px 16px 8px;
+    font-size: 20px;
     font-weight: 800;
   }
-  .banner p { margin: 0; font-size: 1.125rem; font-weight: 500; }
-
-  main { padding: 1.25rem 1rem 0; }
-  h2 { margin: 0 0 0.75rem; font-size: 1.35rem; font-weight: 800; }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    border: 3px solid var(--line);
   }
-  caption {
-    text-align: left;
-    padding: 0 0 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  th, td {
-    padding: 0.8rem 0.6rem;
-    text-align: left;
-    vertical-align: middle;
-    border-bottom: 2px solid var(--line);
-  }
+  caption { position: absolute; left: -9999px; }
   thead th {
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 0.95rem;
+    text-align: left;
+    font-size: 14px;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
-  tbody th {
-    font-size: 1.4rem;
+    letter-spacing: .08em;
     font-weight: 800;
-    white-space: nowrap;
+    padding: 6px 8px;
+    border-bottom: 3px solid var(--rule);
+  }
+  thead th:first-child, tbody td:first-child { padding-left: 16px; }
+  thead th:last-child, tbody td:last-child { padding-right: 16px; }
+  tbody td {
+    padding: 14px 8px;
+    border-bottom: 2px solid var(--rule);
+    vertical-align: middle;
+  }
+  .time {
+    font-size: 26px;
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
-  td.boat { font-size: 1.1rem; font-weight: 600; }
-
+  .boat { font-size: 19px; font-weight: 700; }
   .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 0.6rem;
-    font-size: 1.05rem;
+    display: inline-block;
+    padding: 6px 10px;
+    border: 3px solid currentColor;
+    border-radius: 8px;
+    font-size: 17px;
     font-weight: 800;
-    border: 3px solid var(--ink);
-    border-radius: 0.5rem;
     line-height: 1.15;
   }
-  .status .icon {
-    font-size: 1.2rem;
-    line-height: 1;
-  }
-  .on-time { color: var(--ok); border-color: var(--ok); background: var(--paper); }
-  .delayed { color: var(--ink); background: var(--warn); }
-  .cancelled { color: var(--paper); background: var(--bad); border-color: var(--bad); }
-  tr.is-cancelled th { text-decoration: line-through; text-decoration-thickness: 3px; }
-  tr.is-cancelled td.boat { color: #333; }
+  .on-time { color: var(--ok); background: #fff; }
+  .delayed { color: #000; background: var(--warn); border-color: #000; }
+  .cancelled { color: #fff; background: var(--bad); border-color: var(--bad); }
+  tr.is-cancelled .time,
+  tr.is-cancelled .boat { text-decoration: line-through; text-decoration-thickness: 3px; }
 
-  footer { padding: 1.5rem 1rem 2.5rem; }
-  footer p { margin: 0 0 0.75rem; font-size: 1.125rem; font-weight: 600; }
+  footer { padding: 24px 16px 40px; }
+  footer p { margin: 0 0 12px; font-size: 19px; font-weight: 700; }
   .call {
     display: block;
     text-align: center;
-    padding: 1rem;
-    min-height: 3.5rem;
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 1.6rem;
-    font-weight: 800;
+    background: #000;
+    color: #fff;
     text-decoration: none;
-    border-radius: 0.6rem;
+    font-size: 28px;
+    font-weight: 900;
+    padding: 18px 12px;
+    border-radius: 10px;
     font-variant-numeric: tabular-nums;
   }
   .call:focus-visible { outline: 4px solid var(--warn); outline-offset: 3px; }
-  .call small {
-    display: block;
-    font-size: 0.95rem;
-    font-weight: 600;
-    opacity: 0.9;
-  }
 
-  @media (max-width: 380px) {
-    body { font-size: 1.05rem; }
-    tbody th { font-size: 1.2rem; }
-    th, td { padding: 0.7rem 0.4rem; }
+  @media (max-width: 360px) {
+    .time { font-size: 23px; }
+    .boat { font-size: 17px; }
+    .status { font-size: 15px; padding: 5px 7px; }
+    .banner h1 { font-size: 25px; }
   }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="brand">Harbor Line Ferry</div>
+<div class="wrap">
+  <div class="brand">Harbor Line Ferry</div>
 
-    <section class="banner" role="alert" aria-labelledby="banner-title">
-      <h1 id="banner-title">Some sailings are delayed or cancelled</h1>
-      <p>Check your departure below before you board. Times and status may change, so listen for dock announcements.</p>
-    </section>
+  <section class="banner" role="alert" aria-live="polite">
+    <h1>Delays today: fog on the harbor</h1>
+    <p>Some sailings are running 15 minutes late and one is cancelled. Check the list below before you board.</p>
+    <p class="updated">Updated 7:42 AM</p>
+  </section>
 
-    <main>
-      <h2>Next 6 departures</h2>
-      <table>
-        <caption>Upcoming sailings, earliest first</caption>
-        <thead>
-          <tr>
-            <th scope="col">Time</th>
-            <th scope="col">Boat</th>
-            <th scope="col">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">9:00 AM</th>
-            <td class="boat">Harbor Star</td>
-            <td><span class="status on-time"><span class="icon" aria-hidden="true">✔</span>On time</span></td>
-          </tr>
-          <tr>
-            <th scope="row">9:30 AM</th>
-            <td class="boat">Gull</td>
-            <td><span class="status delayed"><span class="icon" aria-hidden="true">⚠</span>Delayed 15 min</span></td>
-          </tr>
-          <tr class="is-cancelled">
-            <th scope="row">10:00 AM</th>
-            <td class="boat">Kittiwake</td>
-            <td><span class="status cancelled"><span class="icon" aria-hidden="true">✖</span>Cancelled</span></td>
-          </tr>
-          <tr>
-            <th scope="row">10:30 AM</th>
-            <td class="boat">Harbor Star</td>
-            <td><span class="status delayed"><span class="icon" aria-hidden="true">⚠</span>Delayed 15 min</span></td>
-          </tr>
-          <tr>
-            <th scope="row">11:00 AM</th>
-            <td class="boat">Gull</td>
-            <td><span class="status on-time"><span class="icon" aria-hidden="true">✔</span>On time</span></td>
-          </tr>
-          <tr>
-            <th scope="row">11:30 AM</th>
-            <td class="boat">Kittiwake</td>
-            <td><span class="status on-time"><span class="icon" aria-hidden="true">✔</span>On time</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </main>
+  <h2>Next 6 departures</h2>
+  <table>
+    <caption>Next six ferry departures with boat and status</caption>
+    <thead>
+      <tr><th scope="col">Time</th><th scope="col">Boat</th><th scope="col">Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="time">8:00 AM</td>
+        <td class="boat">Osprey</td>
+        <td><span class="status delayed">! Delayed 15 min</span></td>
+      </tr>
+      <tr>
+        <td class="time">8:30 AM</td>
+        <td class="boat">Heron</td>
+        <td><span class="status delayed">! Delayed 15 min</span></td>
+      </tr>
+      <tr class="is-cancelled">
+        <td class="time">9:00 AM</td>
+        <td class="boat">Osprey</td>
+        <td><span class="status cancelled">✕ Cancelled</span></td>
+      </tr>
+      <tr>
+        <td class="time">9:30 AM</td>
+        <td class="boat">Kittiwake</td>
+        <td><span class="status delayed">! Delayed 15 min</span></td>
+      </tr>
+      <tr>
+        <td class="time">10:00 AM</td>
+        <td class="boat">Heron</td>
+        <td><span class="status on-time">✓ On time</span></td>
+      </tr>
+      <tr>
+        <td class="time">10:30 AM</td>
+        <td class="boat">Kittiwake</td>
+        <td><span class="status on-time">✓ On time</span></td>
+      </tr>
+    </tbody>
+  </table>
 
-    <footer>
-      <p>Questions? Call the terminal:</p>
-      <a class="call" href="tel:+15550100142">
-        <small>Terminal office – tap to call</small>
-        (555) 010-0142
-      </a>
-    </footer>
-  </div>
+  <footer>
+    <p>Questions? Call the terminal:</p>
+    <a class="call" href="tel:+15555550142">(555) 555-0142</a>
+  </footer>
+</div>
 </body>
 </html>

@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kilnbook · Book your first session</title>
+<title>Kilnbook: book your first session</title>
 <style>
   :root {
-    --bg: #faf7f2;
+    --bg: #f6f3ee;
     --card: #ffffff;
     --ink: #2b2620;
-    --muted: #6b6259;
-    --line: #e6dfd4;
-    --accent: #9a4f2b;
+    --muted: #6b6258;
+    --line: #e2dbd1;
+    --accent: #a5522c;
     --accent-ink: #ffffff;
-    --accent-soft: #f4e6dc;
-    --ok: #2f6b45;
-    --ok-soft: #e4f1e8;
+    --soft: #f1e6dc;
+    --ok: #2f6b4a;
+    --focus: #1d4f8c;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
   }
+  a { color: var(--accent); }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
   header.top {
     display: flex;
     align-items: center;
@@ -34,296 +37,254 @@
     border-bottom: 1px solid var(--line);
     background: var(--card);
   }
-  .brand { font-weight: 700; letter-spacing: .01em; }
-  .brand span { color: var(--accent); }
-  .me {
-    display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px;
-  }
-  .avatar {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--accent-soft); color: var(--accent);
-    display: grid; place-items: center; font-weight: 600; font-size: 13px;
-  }
+  .brand { font-weight: 700; font-size: 1.1rem; letter-spacing: .01em; }
+  .studio { color: var(--muted); font-size: .9rem; }
+
   main {
-    max-width: 880px;
+    max-width: 960px;
     margin: 0 auto;
-    padding: 32px 24px 64px;
-  }
-  h1 { font-size: 26px; margin: 0 0 8px; line-height: 1.25; }
-  h2 { font-size: 18px; margin: 0 0 6px; }
-  p { margin: 0 0 12px; }
-  .lede { color: var(--muted); max-width: 60ch; }
-  .step-note {
-    display: inline-block;
-    font-size: 13px;
-    color: var(--accent);
-    background: var(--accent-soft);
-    padding: 3px 10px;
-    border-radius: 999px;
-    margin-bottom: 14px;
-  }
-  .grid {
+    padding: 32px 24px 48px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-    margin: 24px 0 8px;
+    gap: 24px;
+    grid-template-columns: 1fr;
   }
+  @media (min-width: 760px) {
+    main { grid-template-columns: 1.6fr 1fr; }
+  }
+
+  h1 { font-size: 1.6rem; margin: 0 0 6px; line-height: 1.25; }
+  h2 { font-size: 1.15rem; margin: 0 0 8px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+  .small { font-size: .88rem; }
+
   .card {
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 20px;
+    padding: 22px;
   }
-  .card .meta { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
-  .tag {
-    font-size: 12px; color: var(--muted);
-    border: 1px dashed var(--line); border-radius: 6px;
-    padding: 1px 6px; margin-left: 6px; vertical-align: 1px;
+
+  .progress {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+    font-size: .88rem;
+    color: var(--muted);
   }
-  button, .btn {
-    font: inherit;
-    cursor: pointer;
+  .progress li {
+    flex: 1;
+    border-top: 4px solid var(--line);
+    padding-top: 6px;
+  }
+  .progress li.done { border-color: var(--ok); color: var(--ink); }
+  .progress li.now { border-color: var(--accent); color: var(--ink); font-weight: 600; }
+
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 18px 0 0;
+  }
+  legend {
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding: 0;
+  }
+  .slot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
     border-radius: 8px;
-    padding: 10px 16px;
-    border: 1px solid var(--accent);
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  .slot:has(input:checked) { border-color: var(--accent); background: var(--soft); }
+  .slot input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
+  .slot .when { flex: 1; }
+  .slot .where { color: var(--muted); font-size: .88rem; }
+
+  .tag {
+    display: inline-block;
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    background: var(--soft);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-bottom: 10px;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  button.primary {
+    font: inherit;
+    font-weight: 600;
     background: var(--accent);
     color: var(--accent-ink);
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 18px;
+    cursor: pointer;
   }
-  button.secondary {
-    background: transparent;
-    color: var(--ink);
-    border-color: var(--line);
+  button.primary:disabled { background: #cdbfb3; cursor: not-allowed; }
+  button.link {
+    font: inherit;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    padding: 0;
+    text-decoration: underline;
+    cursor: pointer;
   }
-  button:focus-visible { outline: 3px solid #d9a58a; outline-offset: 2px; }
-  button[disabled] { opacity: .45; cursor: not-allowed; }
-  .link {
-    background: none; border: none; color: var(--accent);
-    padding: 0; text-decoration: underline; font: inherit; cursor: pointer;
+
+  .confirmed {
+    display: none;
+    border-left: 4px solid var(--ok);
+    padding: 12px 14px;
+    background: #eef6f1;
+    border-radius: 8px;
+    margin-top: 18px;
   }
-  .slots { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 18px; }
-  .slot {
-    background: var(--card);
-    color: var(--ink);
-    border: 1px solid var(--line);
-    padding: 8px 12px;
-  }
-  .slot[aria-pressed="true"] {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-    box-shadow: inset 0 0 0 1px var(--accent);
-  }
-  .panel { display: none; }
-  .panel.show { display: block; }
-  .picked {
-    font-size: 14px; color: var(--muted); min-height: 1.5em; margin-bottom: 8px;
-  }
-  .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .notice {
-    background: var(--ok-soft);
-    border: 1px solid #bfdcc8;
-    color: var(--ok);
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin: 16px 0;
-  }
-  .sample-note { font-size: 13px; color: var(--muted); margin-top: 6px; }
-  .bookings {
-    margin-top: 40px;
-    border-top: 1px solid var(--line);
-    padding-top: 24px;
-  }
+  .confirmed.show { display: block; }
+
+  .concept dt { font-weight: 600; margin-top: 12px; }
+  .concept dt:first-child { margin-top: 0; }
+  .concept dd { margin: 2px 0 0; color: var(--muted); }
+
   .empty {
     border: 1px dashed var(--line);
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 8px;
+    padding: 16px;
     color: var(--muted);
-    background: var(--card);
+    margin-top: 10px;
   }
-  .row {
-    display: flex; justify-content: space-between; align-items: center; gap: 12px;
-    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-    padding: 14px 16px; margin-bottom: 10px;
-  }
-  .row small { color: var(--muted); display: block; }
+
   .hidden { display: none !important; }
-  .skip-row { margin-top: 20px; font-size: 14px; color: var(--muted); }
-  @media (max-width: 480px) {
-    h1 { font-size: 22px; }
-    main { padding: 24px 16px 48px; }
+
+  .help {
+    grid-column: 1 / -1;
+    font-size: .92rem;
+    color: var(--muted);
   }
 </style>
 </head>
 <body>
 
 <header class="top">
-  <div class="brand">Kiln<span>book</span></div>
-  <div class="me">
-    <span>Hollow Oak Pottery Co-op</span>
-    <div class="avatar" aria-hidden="true">JM</div>
-  </div>
+  <div class="brand">Kilnbook</div>
+  <div class="studio">Harbor Clay Co-op (sample studio)</div>
 </header>
 
 <main>
+  <section>
+    <h1>Welcome to Kilnbook</h1>
+    <p class="muted">Book your first wheel session. It takes about two minutes.</p>
 
-  <!-- Step 1: choose -->
-  <section id="choose" class="panel show" aria-labelledby="h-choose">
-    <span class="step-note">Step 1 of 2 · Choose</span>
-    <h1 id="h-choose">Welcome, Jordan. Book your first session in about a minute.</h1>
-    <p class="lede">
-      Pick a wheel or a kiln slot below. Next you'll choose a time, and the booking appears under
-      <strong>My bookings</strong>, where you can change or cancel it.
-    </p>
+    <div class="card" id="guide">
+      <span class="tag">Sample times</span>
+      <h2>Book a wheel</h2>
+      <p>A wheel is a throwing station you reserve for a set time. Pick a time below and confirm it.</p>
 
-    <div class="grid">
-      <article class="card">
-        <h2>Wheel session</h2>
-        <div class="meta">Throw on one of our 6 wheels · 2 hours<span class="tag">sample</span></div>
-        <p>Good for a first visit. A studio member will be on the floor during every session.</p>
-        <button type="button" data-pick="wheel">Book a wheel</button>
-      </article>
+      <ol class="progress" aria-label="Your progress">
+        <li class="now" aria-current="step">1. Pick a time</li>
+        <li id="p2">2. Confirm</li>
+        <li>3. Come in and throw</li>
+      </ol>
 
-      <article class="card">
-        <h2>Kiln firing slot</h2>
-        <div class="meta">Drop off bisque or glaze work for a firing<span class="tag">sample</span></div>
-        <p>Use this once you have dry, finished pieces. Slots fill quickly before weekends.</p>
-        <button type="button" data-pick="kiln">Book a kiln slot</button>
-      </article>
+      <form id="bookForm" style="margin-top:18px">
+        <fieldset>
+          <legend>Choose a wheel and time</legend>
+          <label class="slot">
+            <input type="radio" name="slot" value="Wheel 3, Thu 5 Nov, 6:00 to 7:30 pm">
+            <span class="when">Thu 5 Nov, 6:00 to 7:30 pm<br><span class="where">Wheel 3, beginner-friendly</span></span>
+          </label>
+          <label class="slot">
+            <input type="radio" name="slot" value="Wheel 1, Sat 7 Nov, 10:00 to 11:30 am">
+            <span class="when">Sat 7 Nov, 10:00 to 11:30 am<br><span class="where">Wheel 1, near the glaze shelf</span></span>
+          </label>
+          <label class="slot">
+            <input type="radio" name="slot" value="Wheel 5, Sun 8 Nov, 2:00 to 3:30 pm">
+            <span class="when">Sun 8 Nov, 2:00 to 3:30 pm<br><span class="where">Wheel 5, quiet corner</span></span>
+          </label>
+        </fieldset>
+
+        <div class="actions">
+          <button class="primary" type="submit" id="confirmBtn" disabled>Confirm booking</button>
+          <button class="link" type="button" id="skipBtn">Skip for now</button>
+        </div>
+      </form>
+
+      <p class="confirmed" id="confirmed" role="status" aria-live="polite"></p>
     </div>
-
-    <p class="skip-row">
-      Not ready yet? <button type="button" class="link" data-go="dashboard">Look around first</button>.
-      You can book from the dashboard any time.
-    </p>
   </section>
 
-  <!-- Step 2: confirm -->
-  <section id="confirm" class="panel" aria-labelledby="h-confirm">
-    <span class="step-note">Step 2 of 2 · Confirm</span>
-    <h1 id="h-confirm">Pick a time for your <span id="kind-name">wheel session</span></h1>
-    <p class="lede">These are sample times for Hollow Oak. Choose one, then confirm.</p>
-
+  <aside>
     <div class="card">
-      <div class="slots" id="slots" role="group" aria-label="Available times"></div>
-      <div class="picked" id="picked" aria-live="polite">No time selected yet.</div>
-      <div class="actions">
-        <button type="button" id="confirm-btn" disabled>Confirm booking</button>
-        <button type="button" class="secondary" data-go="choose">Back</button>
+      <h2>My bookings</h2>
+      <div class="empty">
+        No bookings yet. Your confirmed sessions will appear here.
       </div>
     </div>
-  </section>
 
-  <!-- Step 3 / dashboard -->
-  <section id="dashboard" class="panel" aria-labelledby="h-dash">
-    <div id="done" class="notice hidden" role="status"></div>
-
-    <h1 id="h-dash">My bookings</h1>
-    <p class="lede">Your upcoming sessions and firings show here.</p>
-
-    <div id="list" class="bookings-list"></div>
-
-    <div id="empty" class="empty" style="margin-top:16px">
-      <strong>No bookings yet.</strong>
-      <p style="margin:6px 0 12px">Bookings you make appear on this list. Book a wheel or a kiln slot to start.</p>
-      <button type="button" data-go="choose">Book your first session</button>
+    <div class="card" style="margin-top:24px">
+      <h2>Two terms you will see</h2>
+      <dl class="concept">
+        <dt>Wheel</dt>
+        <dd>A throwing station you book for one session.</dd>
+        <dt>Kiln slot</dt>
+        <dd>A firing window in the studio kiln for finished work. Book one once you have pieces to fire.</dd>
+      </dl>
     </div>
+  </aside>
 
-    <div class="bookings">
-      <h2>Your studio</h2>
-      <p class="lede" style="margin-bottom:0">Hollow Oak Pottery Co-op · Open daily 9:00 to 21:00 (sample hours)</p>
-    </div>
-  </section>
-
+  <p class="help">Stuck? <a href="#help">Help: booking your first session</a></p>
 </main>
 
 <script>
-  const OPTIONS = {
-    wheel: {
-      name: "wheel session",
-      times: ["Sat 17 Oct, 10:00", "Sat 17 Oct, 13:00", "Mon 19 Oct, 18:30"],
-      label: "Wheel session"
-    },
-    kiln: {
-      name: "kiln firing slot",
-      times: ["Mon 19 Oct, drop off 09:00", "Wed 21 Oct, drop off 09:00", "Fri 23 Oct, drop off 14:00"],
-      label: "Kiln firing slot"
-    }
-  };
+  (function () {
+    var form = document.getElementById('bookForm');
+    var btn = document.getElementById('confirmBtn');
+    var confirmed = document.getElementById('confirmed');
+    var guide = document.getElementById('guide');
+    var p2 = document.getElementById('p2');
+    var radios = form.querySelectorAll('input[name="slot"]');
 
-  let kind = null;
-  let chosenTime = null;
-  const bookings = [];
-
-  function show(id) {
-    document.querySelectorAll("main > section").forEach(s => {
-      s.classList.toggle("show", s.id === id);
+    form.addEventListener('change', function () {
+      btn.disabled = !form.querySelector('input[name="slot"]:checked');
     });
-    const first = document.querySelector("#" + id + " h1");
-    if (first) first.setAttribute("tabindex", "-1"), first.focus();
-    window.scrollTo(0, 0);
-  }
 
-  function renderSlots() {
-    const wrap = document.getElementById("slots");
-    wrap.innerHTML = "";
-    chosenTime = null;
-    document.getElementById("confirm-btn").disabled = true;
-    document.getElementById("picked").textContent = "No time selected yet.";
-    OPTIONS[kind].times.forEach(t => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "slot";
-      b.textContent = t;
-      b.setAttribute("aria-pressed", "false");
-      b.addEventListener("click", () => {
-        chosenTime = t;
-        wrap.querySelectorAll(".slot").forEach(x => x.setAttribute("aria-pressed", "false"));
-        b.setAttribute("aria-pressed", "true");
-        document.getElementById("picked").textContent = "Selected: " + OPTIONS[kind].label + ", " + t;
-        document.getElementById("confirm-btn").disabled = false;
-      });
-      wrap.appendChild(b);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var chosen = form.querySelector('input[name="slot"]:checked');
+      if (!chosen) return;
+      confirmed.innerHTML = 'Booked: ' + chosen.value + '. It now appears under My bookings. ' +
+        'Next, you can look at kiln slots once you have work to fire.';
+      confirmed.classList.add('show');
+      p2.classList.add('done');
+      btn.disabled = true;
+      radios.forEach(function (r) { r.disabled = true; });
     });
-  }
 
-  function renderBookings(justAdded) {
-    const list = document.getElementById("list");
-    list.innerHTML = "";
-    bookings.forEach(b => {
-      const row = document.createElement("div");
-      row.className = "row";
-      row.innerHTML = "<div><strong></strong><small></small></div><span></span>";
-      row.querySelector("strong").textContent = b.label;
-      row.querySelector("small").textContent = b.time + " · Hollow Oak (sample)";
-      row.querySelector("span").textContent = "Booked";
-      list.appendChild(row);
+    document.getElementById('skipBtn').addEventListener('click', function () {
+      guide.classList.add('hidden');
+      var note = document.createElement('p');
+      note.className = 'muted small';
+      note.innerHTML = 'Guide hidden. You can book any time from the Book tab, or <a href="#help">open the help article</a> later.';
+      document.querySelector('main > section').appendChild(note);
     });
-    document.getElementById("empty").classList.toggle("hidden", bookings.length > 0);
-  }
-
-  document.querySelectorAll("[data-pick]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      kind = btn.dataset.pick;
-      document.getElementById("kind-name").textContent = OPTIONS[kind].name;
-      renderSlots();
-      show("confirm");
-    });
-  });
-
-  document.querySelectorAll("[data-go]").forEach(btn => {
-    btn.addEventListener("click", () => show(btn.dataset.go));
-  });
-
-  document.getElementById("confirm-btn").addEventListener("click", () => {
-    if (!chosenTime) return;
-    bookings.push({ label: OPTIONS[kind].label, time: chosenTime });
-    renderBookings();
-    const note = document.getElementById("done");
-    note.textContent = "Booked: " + OPTIONS[kind].label + ", " + chosenTime + ". It now appears under My bookings. You can change or cancel it there.";
-    note.classList.remove("hidden");
-    show("dashboard");
-  });
-
-  renderBookings();
+  })();
 </script>
+
 </body>
 </html>

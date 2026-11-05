@@ -1,13 +1,13 @@
-**Ship Version B**, but restyle it before it goes out.
+**Ship Version B.** It's the stronger empty state, and the problems it has are fixable in a day.
 
-Version A is a generic placeholder. "Get Started" on a Walks tab doesn't say what happens next, and "where your journey takes you" is filler. Version B does the job an empty state should do: it tells the owner what's available and gives them one concrete action. Naming Marta and Pell Park makes the app feel local and real, and "she'll send you a photo halfway through" answers the anxious question every owner has before handing over their dog.
+Version A is generic. The copy could sit in any app, and "your journey" and "we can't wait" don't tell the owner what to do next. The clean illustration and full-width button look finished, but the screen gives no reason to tap. Version B answers the owner's real question, "what happens with my dog this week?", and offers two specific actions. The photo detail sets expectations for the product, and the vetting line answers the trust question before it's asked.
 
-Changes I'd make to B:
+Changes I'd make to B before shipping:
 
-1. **Use the design system's buttons.** Make "Book Marta for Tuesday" the filled, primary button and make "See other walkers" a secondary or text button. Right now they look like browser defaults, which undercuts the trust the copy builds.
-2. **Replace the emoji with the paw-print illustration from A.** It keeps the warmth and brand consistency without the generic feel of a dog emoji. Keep the left alignment and the simpler layout from B.
-3. **Turn the trust link into a statement.** "Why only a few walkers? They're all vetted and local" reads as a question the user didn't ask. Try a plain line such as "Every walker is vetted and lives nearby," or move that message to the walker list.
-4. **Handle the other states.** The heading "No walks booked this week" fits a user who has booked before. A brand-new user needs different copy, and so does an area with no available walkers. Don't ship Marta's name until the data behind it is live.
-5. **Verify the promises before Friday.** Confirm that Marta's availability is real and updates, and that the halfway photo feature exists. If either is not built yet, the copy will make a false promise on day one.
+1. **Restyle the buttons and icon.** The default web buttons and the emoji are the weakest parts. Use the product's primary and secondary button styles, with "Book Marta for Tuesday" as the filled one. Replace the emoji with A's paw mark at small size so the two versions share a visual language.
+2. **Keep the Marta line only when it's true.** It should come from real availability for this owner's location, and it should drop out cleanly when no walker is free. Then the fallback is just "See other walkers," not a made-up slot.
+3. **Add a separate state for first-time owners.** "No walks booked this week" assumes a history. A new owner with zero walks needs something like "Book your first walk," and that's where A's "Get Started" pattern fits. Don't ship B's copy to people who've never booked.
+4. **Move the vetting line.** "Why only a few walkers?" answers a question people rarely ask on an empty screen. It belongs beside the walker list or in onboarding. If it stays, reword it as a statement ("Every walker is vetted and local") rather than a question.
+5. **Tighten the body.** "Marta usually has Tuesday and Thursday mornings free near Pell Park" reads more naturally than "Marta's usually free."
 
-If you have time before Friday, show both versions to five or six real owners and ask what they would do next. If B wins on that question too, the decision is settled.
+If you have a day before Friday, show both versions to five or so dog owners and ask what they'd do next. That's a quick check on whether the specificity lands, and it's the thing most likely to change the call.

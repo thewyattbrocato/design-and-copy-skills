@@ -1,7 +1,9 @@
-Here are options that keep "Rent less, roam more" intact, with character counts including spaces:
+Here are three versions that keep the locked line intact. Counts include spaces.
 
-1. **Rent less, roam more: weekend deals!** (36)
-2. **Rent less, roam more: Saturday deals!** (37)
-3. **Rent less, roam more. Weekend deals Sat!** (40)
+| Draft | Characters |
+|---|---|
+| Rent less, roam more: weekend deals! | 36 |
+| Rent less, roam more: Saturday deals! | 37 |
+| Rent less, roam more. Deals this Sat! | 37 |
 
-I'd go with #2. It keeps the "this Saturday" timing from your draft and leaves a few characters of margin. #3 fits exactly, but it reads a bit clipped.
+I'd go with the second. "Saturday" keeps the timing from your original, and "weekend deals" would drop it. If the offer runs all weekend and not only Saturday, use the first.

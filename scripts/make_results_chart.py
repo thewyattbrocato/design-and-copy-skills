@@ -5,8 +5,17 @@ One row per listed skill, best first: a bar from zero for the mean rubric differ
 the loaded-only wins / losses / ties and the number of tasks that had a loaded sample. The numbers come from
 evals/*/heldout/results.json through the functions of scripts/results_table.py, including its marginal rule; a marginal
 pass is drawn as a hollow bar and tagged. Output is deterministic. With --check nothing is written; the exit code is 1
-when the committed SVG differs from what the results files produce (CI uses this). With --png the SVG is also
-rendered at 2x with scripts/render.py (needs Chrome). Standard library only.
+when the committed SVG differs from what the results files produce, or when the committed 2x PNG copy
+(docs/img/results.png) is missing or was rendered from another SVG (CI uses this). With --png the SVG is also rendered
+at 2x with scripts/render.py (needs Chrome) and the PNG is stamped with the digest of the SVG it shows
+(scripts/pngstamp.py), which is what --check compares, so no Chrome is needed to check it.
+
+It also writes the chart's alt text, read from the same rows, into two blocks, and --check fails when either is stale:
+
+  README.md   <!-- results-chart:alt:start --> ... <!-- results-chart:alt:end -->   (the image line)
+  ALT.md      <!-- results-chart:alt:start --> ... <!-- results-chart:alt:end -->   (its row)
+
+Standard library only.
 """
 import argparse
 import math
@@ -16,10 +25,15 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import before_after_gallery as gallery  # noqa: E402
+import pngstamp  # noqa: E402
 import render  # noqa: E402
 import results_table as rt  # noqa: E402
 
 DEFAULT_OUT = Path("docs") / "img" / "results.svg"
+DEFAULT_PNG = Path("docs") / "img" / "results.png"
+ALT_MD = Path("docs") / "img" / "ALT.md"
+BLOCK = "results-chart:alt"
 WIDTH = 960
 MARGIN = 24
 NAME_X = MARGIN
@@ -94,6 +108,46 @@ def signed(value):
 
 def fmt(x):
     return f"{x:.1f}".rstrip("0").rstrip(".")
+
+
+def alt_text(rows, pending):
+    """Plain-words alt text for the chart, with the facts a reader would otherwise only get from the bars."""
+    n = len(rows)
+    lower = [r for r in rows if signed(r["diff"]) == "0.00" or r["diff"] < 0]
+    more_wins = sum(1 for r in rows if r["wins"] > r["losses"])
+    n_marginal = sum(1 for r in rows if r["marginal"])
+    parts = ["Horizontal bar chart of the held-out results for every listed skill, loaded runs only. Each bar shows the "
+             "mean rubric score with the skill minus without it, starting at zero and ordered from the largest gain to "
+             "the smallest. Beside each bar are the skill's wins, losses and ties and its number of loaded tasks."]
+    if not lower:
+        scored = f"All {n} skills scored higher with the skill than without"
+    else:
+        what = "; ".join(f"{r['name']} at {r['diff']:+.2f}, drawn as a {'hollow' if r['marginal'] else 'solid'} loss bar"
+                         + (' tagged "marginal"' if r["marginal"] else "") for r in lower)
+        scored = (f"{n - len(lower)} of the {n} skills scored higher with the skill than without, and "
+                  f"{NUMBER_WORDS.get(len(lower), len(lower))} {'is' if len(lower) == 1 else 'are'} not higher ({what})")
+    won = ("every skill won more tasks than it lost" if more_wins == n
+           else f"{more_wins} of the {n} skills won more tasks than they lost")
+    parts.append(f"{scored}; {won}. The {n_marginal} marginal passes are drawn as hollow bars tagged \"marginal\".")
+    if pending:
+        parts.append(f"No held-out result yet: {', '.join(pending)}.")
+    return " ".join(parts)
+
+
+def alt_blocks(rows, pending, svg_rel):
+    """{'README.md': lines, 'docs/img/ALT.md': lines} for the chart's two alt-text blocks."""
+    text = alt_text(rows, pending)
+    png = DEFAULT_PNG.as_posix()
+    return {"README.md": [f"![{gallery.alt(text)}]({svg_rel})"],
+            ALT_MD.as_posix(): ["| File | Alt text |", "|---|---|", f"| `{svg_rel}` (2x copy: `{png}`) | {rt.cell(text)} |"]}
+
+
+def replace_block(text, lines, where):
+    start, end = f"<!-- {BLOCK}:start -->", f"<!-- {BLOCK}:end -->"
+    i, j = text.find(start), text.find(end)
+    if i < 0 or j < i:
+        raise ValueError(f"{where} is missing the {start} ... {end} markers")
+    return text[:i + len(start)] + "\n" + "\n".join(lines) + "\n" + text[j:]
 
 
 def draw(rows, pending):
@@ -186,25 +240,54 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--root", default=str(Path(__file__).resolve().parent.parent))
     p.add_argument("--out", default=None, help=f"SVG path relative to --root (default {DEFAULT_OUT})")
-    p.add_argument("--check", action="store_true", help="exit 1 if the SVG differs from what the results files produce")
-    p.add_argument("--png", help="also render the SVG at 2x to this PNG path (needs Chrome)")
+    p.add_argument("--check", action="store_true",
+                   help="exit 1 if the SVG, or the PNG copy of the default SVG, differs from what the results files produce")
+    p.add_argument("--png", help=f"also render the SVG at 2x to this PNG path, relative to --root (needs Chrome); "
+                                 f"the README's copy is {DEFAULT_PNG.as_posix()}")
     args = p.parse_args(argv)
-    out = Path(args.root) / (args.out or DEFAULT_OUT)
-    new = draw(*stats(args.root))
+    root = Path(args.root)
+    out = root / (args.out or DEFAULT_OUT)
+    rows, pending = stats(args.root)
+    new = draw(rows, pending)
     current = out.read_text(encoding="utf-8") if out.is_file() else None
+    blocks = {}
+    if args.out is None:
+        try:
+            for rel, lines in alt_blocks(rows, pending, DEFAULT_OUT.as_posix()).items():
+                old = (root / rel).read_text(encoding="utf-8")
+                blocks[rel] = (old, replace_block(old, lines, rel))
+        except (OSError, ValueError) as e:
+            print(f"error: {e}", file=sys.stderr)
+            return 2
+    stale_alt = [rel for rel, (old, text) in blocks.items() if old != text]
     if args.check:
         if current != new:
             print(f"{out.name} is out of date; run: python3 scripts/make_results_chart.py")
             return 1
+        if stale_alt:
+            print(f"the results chart alt text in {', '.join(stale_alt)} is out of date; run: "
+                  "python3 scripts/make_results_chart.py")
+            return 1
+        if args.out is None:
+            reason = pngstamp.stale(root / DEFAULT_PNG, new, out.parent)
+            if reason:
+                print(f"{DEFAULT_PNG.as_posix()} {reason}; run: python3 scripts/make_results_chart.py "
+                      f"--png {DEFAULT_PNG.as_posix()}")
+                return 1
         print(f"{out.name} is up to date")
         return 0
     if current != new:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(new, encoding="utf-8")
     print(f"{out.name} {'written' if current != new else 'unchanged'}")
+    for rel in stale_alt:
+        (root / rel).write_text(blocks[rel][1], encoding="utf-8")
+        print(f"{rel}: results chart alt text updated")
     if args.png:
+        png = root / args.png
         try:
-            to_png(out, args.png)
+            to_png(out, png)
+            pngstamp.stamp(png, pngstamp.source_digest(new, out.parent))
         except render.RenderError as e:
             print(f"render failed: {e}", file=sys.stderr)
             return 1

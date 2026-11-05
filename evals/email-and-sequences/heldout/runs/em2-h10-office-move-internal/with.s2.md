@@ -1,18 +1,19 @@
-**Subject: Office move this weekend: pack by 5 pm Friday**
+**Subject: Office move this weekend – pack by 5 pm Friday**
 
 Hi all,
 
-We're moving desks from the first floor to the second floor this weekend. Here's what you need to know:
+We're moving from the first floor to the second floor of our building this weekend. Here's what you need to know:
 
 **By 5 pm Friday**
-Pack your personal items and monitors into the crate labeled with your name. The crates are in the kitchen. Movers come Saturday and will take it from there.
+Pack your personal items and monitors into the crate labeled with your name. Crates are in the kitchen.
 
 **Saturday**
-Please don't come in. The elevator will be out all day.
+The movers will do the move. The elevator will be out of service, so please don't come in.
 
 **Monday**
-The second floor opens at 8:30 am. Desks are assigned using the floor plan pinned in #general, so check it before you head up.
+The second floor opens at 8:30 am. Desks are assigned using the floor plan pinned in #general.
 
-Questions? Ask Ines in ops.
+**Questions?**
+Ask Ines in ops.
 
-Thanks, everyone!
+Thanks, everyone, and thanks for getting packed on time!

@@ -1,45 +1,37 @@
-**Verdict: the copy is warm and clear, but the page contradicts itself on the one rule it leads with, and it never says where you are.** Fix those two before printing.
+**Verdict: the copy is good, but the page contradicts itself on its main promise, and the snippet has a mobile problem that would hit every QR scan.**
 
-I assumed a first-time visitor on a phone who has just scanned the flyer. I only saw the HTML, so I haven't checked CSS, contrast or tap size.
+Assumptions: the visitor is a first-timer who scanned the flyer on a phone and is deciding whether to join. You haven't shown the CSS, so I judged markup and copy only.
 
-## Blockers
+### Findings, worst first
 
-1. **Monday 5pm return doesn't fit your opening hours.**
-   - The H1 says "back by Monday 5pm", but you're open Saturday 10-1 and Wednesday 6-8. Nobody is there on Monday.
-   - Is there a drop box or a key arrangement? If not, the deadline is unmeetable. A new member will either worry about it or turn up Wednesday and feel late.
-   - The same problem shows in the popular list. Post hole digger "3 days" from a Saturday lands on Tuesday, which is also closed.
-   - Fix: state the real return window, such as "return Wednesday 6-8" or "drop box by the door". Make every loan length in the list end on an open session. Then rewrite the H1 around that.
+1. **Blocker: the return time doesn't fit the opening hours.** The headline says "back by Monday 5pm", and the tile saw is "2 days, back by Monday". But you're open Saturdays 10-1 and Wednesday evenings 6-8. Nobody can return anything on Monday. Taken literally, a borrower either keeps the saw until Saturday or turns up to a locked hall. Pick one:
+   - Add a Monday drop-off, such as a locked box or a volunteer slot.
+   - Change the rule to "back Wednesday 6-8 or Saturday by 1".
+   - If Monday is already handled somewhere, say how.
 
-2. **There is no address, map or next open date.**
-   - "The back of the Eastgate Methodist hall" is the only location, and it's the only thing a QR scanner needs to act on. There's no street, door, parking or map link.
-   - Fix: add an address line and a map link directly under the hours. Add "next open: Sat 17 Oct" if you can keep it current.
+   The committee will spot this in seconds.
 
-## Major
+2. **Blocker: the head is missing, so the page will probably render badly on phones.** There is no `<!doctype>`, no `<meta name="viewport">`, no `<title>` and no `lang`. Without the viewport tag, phones typically show a zoomed-out desktop layout with tiny text. Every QR visitor is on a phone. Check this on a real phone before printing.
 
-3. **The button says "Join for $20" but the body says "pay what you can".**
-   - The people who most need pay-what-you-can will see $20 on the only join button and leave.
-   - Fix: make the label "Join ($20, or pay what you can)", and check that `/join` actually offers that option.
+3. **Major: the join step is unclear and the price is inconsistent.**
+   - The button says "Join for $20", but the paragraph says "or pay what you can". The button undercuts the pay-what-you-can offer, and that's the line that stops people being put off. Try "Join: $20, or pay what you can".
+   - "Bring photo ID the first time" is step 1 of a list below the fold. It's unclear whether `/join` is an online signup and the ID is checked later, or whether joining happens in person. Someone could pay online and then find out they also have to come with ID. Say where and when each part happens.
 
-4. **No viewport meta tag, `<title>`, `lang` or `<main>` (the snippet may be a fragment).** On a QR page, nearly every visitor is on a phone. Without `<meta name="viewport" content="width=device-width, initial-scale=1">`, mobile browsers render a shrunken desktop layout. If that tag lives in your template, ignore this. Test by scanning the printed flyer on a real phone.
+4. **Major: there's no address and no "next open" date.** "The back of the Eastgate Methodist hall" has no street, no map link and no entrance hint. A QR flyer is often scanned away from the hall. A visitor who wants to come this weekend has to work out where to go and whether you're open. At minimum add the street address and "Next open: Saturday 10-1".
 
-5. **Joining is unclear.**
-   - Step 1 says "Join (bring photo ID the first time)". Do you join online at `/join` and then show ID in person? Can you borrow on the day you join? Which ID counts?
-   - ID is the biggest barrier in the whole flow and it's tucked in brackets.
-   - Fix: split it into "Join online, then bring photo ID to your first visit" and say which ID works.
+5. **Moderate: the headline leads with a rule.** "Return it clean by Monday 5pm" is the most prominent thing on the page, and it's an obligation. The sentence saying what Loan Shed is (a free tool library for members, 400 tools) sits in the paragraph below. Someone glancing at the flyer would get the penalty before the offer. Consider "Borrow a tile saw for the weekend." as the headline, with the return rule moved into the how-it-works section. That's a judgment call, and fixing finding 1 may change the wording anyway.
 
-## Minor
+6. **Minor, grouped:**
+   - The email is plain text. Make it a `mailto:` link so it's tappable on a phone.
+   - "Popular this month" will go stale unless a volunteer updates it every month. Either name an owner or rename it to something that doesn't expire.
+   - "2 days", "3 days" and "1 week" don't say they're loan lengths. Add a label or "Loan:".
+   - The popular tools don't link to their catalogue entries.
 
-6. **The loan lengths in "Popular this month" are unlabeled.** "Wet tile saw: 2 days" reads as a description, not a loan period. Use "Loan: 2 days". Also, the list is stale by design, so decide who updates it each month. Otherwise cut the "this month" framing.
+### Keep
+- **The headline names a concrete tool and a concrete time.** "Tile saw for the weekend" tells people straight away what this is for. That's better than a generic "Welcome to our tool library".
+- **The tone.** "If something breaks, tell us, it happens" removes the main fear about borrowing. Don't tidy it into policy language.
+- **Two actions with clear priority.** The filled "Join" button and the secondary "See what we have" button fit people who are either ready or browsing.
+- **The page is short.** There's one scroll, four sections and no clutter.
 
-7. **The email address is plain text.** Wrap it in `mailto:`. Phone users can't tap it otherwise.
-
-8. **The two buttons are the same class family.** I can't see the CSS, so check that "Join" clearly outranks "See what we have". Whether browsing should come first for sceptical visitors is a taste call. I'd keep Join primary.
-
-## Keep
-
-- **The specific headline.** A tile saw for the weekend is concrete in a way "Borrow tools, save money" never is. Keep the example and fix the rule.
-- **"400-odd tools, run by volunteers, free for members".** It's honest, human and states the offer in one line.
-- **The three-step "How borrowing works".** It's short, in order, and "If something breaks, tell us, it happens" reduces borrowing anxiety.
-- **Naming Renata and the Saturday desk.** It gives a nervous newcomer a person to look for.
-
-**Fix order:** 1 and 2 first, since both are factual and take minutes. Then 3 and 5, then the viewport tag, then the rest.
+### Not checked
+Contrast, font sizes, button tap-target size and spacing, and whether the QR code scans at its printed size. You didn't supply the CSS or the flyer. Test the code on a couple of phones, one of them older, before you send it to print.

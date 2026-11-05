@@ -3,589 +3,498 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tool Library · Front Desk</title>
+<title>Tool library desk</title>
+<!--
+  Front-desk screen: lend tools out and take them back.
+  - Sample tools and loan data live in DEFAULT_TOOLS below; replace them with your real inventory.
+  - LOAN_DAYS_DEFAULT is a placeholder. Set it to your library's loan period.
+  - Loans are saved in this browser's localStorage. Data does not sync between computers.
+  - Not tested with a screen reader or on a real device.
+-->
 <style>
-  :root {
-    --bg: #f4f3ef;
-    --surface: #ffffff;
-    --text: #1d2125;
-    --muted: #5a626b;
-    --line: #d9d7d0;
-    --accent: #2c6a4f;
-    --accent-hover: #245741;
-    --accent-ink: #ffffff;
-    --focus: #1a56db;
-    --warn-ink: #7a5000;
-    --warn-bg: #fff3d1;
-    --late-ink: #9b1c1c;
-    --late-bg: #fde6e4;
-    --ok-ink: #1d6b3a;
-    --ok-bg: #e2f3e8;
-    --info-ink: #1f4f8a;
-    --info-bg: #e4eefb;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color-scheme: light dark;
-  }
+:root {
+  --bg: #f6f5f1;
+  --panel: #ffffff;
+  --text: #1c1c1a;
+  --muted: #55554f;
+  --line: #d6d4cc;
+  --accent: #1f5f3b;
+  --accent-hover: #184c2f;
+  --accent-text: #ffffff;
+  --error: #9b1c1c;
+  --error-bg: #fdecec;
+  --warn-text: #7a4300;
+  --warn-bg: #fff4dc;
+  --focus: #0b57d0;
+  --radius: 8px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-size: 16px;
+  line-height: 1.5;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #161a1d;
-      --surface: #1f2427;
-      --text: #e8eaec;
-      --muted: #9aa3ad;
-      --line: #384047;
-      --accent: #4f9d7a;
-      --accent-hover: #5fb08b;
-      --accent-ink: #0f1613;
-      --focus: #7ca8ff;
-      --warn-ink: #ffd27a;
-      --warn-bg: #3d2f10;
-      --late-ink: #ff9b93;
-      --late-bg: #3f1d1b;
-      --ok-ink: #8fe0ad;
-      --ok-bg: #173423;
-      --info-ink: #9cc2ff;
-      --info-bg: #1a2c45;
-    }
-  }
+.skip-link {
+  position: absolute; left: 1rem; top: -3rem;
+  background: var(--panel); color: var(--text);
+  padding: .5rem .75rem; border: 2px solid var(--focus); border-radius: var(--radius);
+  z-index: 10; text-decoration: none;
+}
+.skip-link:focus { top: 1rem; }
 
-  * { box-sizing: border-box; }
+header.top { background: var(--accent); color: var(--accent-text); padding: 1rem 1.25rem; }
+header.top h1 { margin: 0; font-size: 1.4rem; }
 
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 16px;
-    line-height: 1.45;
-  }
+main {
+  max-width: 64rem; margin: 0 auto; padding: 1.25rem;
+  display: grid; gap: 1.25rem; grid-template-columns: 1fr;
+}
+main:focus { outline: none; }
+@media (min-width: 52rem) {
+  main { grid-template-columns: 1fr 1fr; }
+  .wide { grid-column: 1 / -1; }
+}
 
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--line);
-    padding: 16px 24px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 8px 24px;
-  }
+section {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.25rem; min-width: 0;
+}
+h2 { font-size: 1.15rem; margin: 0 0 .5rem; }
+.hint { color: var(--muted); margin: 0 0 1rem; font-size: .95rem; }
 
-  header h1 { margin: 0; font-size: 1.35rem; }
-  header p { margin: 0; color: var(--muted); }
+form { display: grid; gap: 1rem; }
+label { display: block; font-weight: 600; margin-bottom: .25rem; }
+input, select {
+  width: 100%; font: inherit; color: var(--text); background: #fff;
+  min-height: 2.6rem; padding: .55rem .65rem;
+  border: 1px solid #8a8a82; border-radius: 6px;
+}
+input[aria-invalid="true"], select[aria-invalid="true"] { border: 2px solid var(--error); }
 
-  .summary {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    font-weight: 600;
-  }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 24px;
-    display: grid;
-    gap: 24px;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  }
+.help { color: var(--muted); font-size: .9rem; margin-top: .25rem; }
+.field-error { color: var(--error); font-weight: 600; font-size: .92rem; margin-top: .25rem; }
+.reason {
+  color: var(--warn-text); background: var(--warn-bg);
+  padding: .5rem .65rem; border-radius: 6px; font-size: .92rem; margin-top: .4rem;
+}
 
-  @media (max-width: 800px) {
-    main { grid-template-columns: 1fr; padding: 16px; }
-  }
+button {
+  font: inherit; font-weight: 600; min-height: 2.6rem; padding: .55rem 1rem;
+  border-radius: 6px; border: 1px solid var(--accent);
+  background: var(--accent); color: var(--accent-text); cursor: pointer;
+}
+button:hover:not(:disabled) { background: var(--accent-hover); }
+button:disabled { opacity: .6; cursor: wait; }
+.stack-buttons { display: flex; flex-wrap: wrap; gap: .5rem; }
 
-  section {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 20px;
-    min-width: 0;
-  }
+.result { margin: 0; border-radius: 6px; font-weight: 500; }
+.result.ok { padding: .65rem .8rem; background: #e8f3ec; color: #14452a; border: 1px solid #b9d9c4; }
+.result.bad { padding: .65rem .8rem; background: var(--error-bg); color: var(--error); border: 1px solid #efbcbc; }
 
-  section.wide { grid-column: 1 / -1; }
+.undo-bar {
+  display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; justify-content: space-between;
+  background: #1c1c1a; color: #ffffff; padding: .6rem .8rem; border-radius: 6px; margin-top: 1rem;
+}
+.undo-bar[hidden] { display: none; }
+.undo-bar button { background: #ffffff; color: #1c1c1a; border-color: #ffffff; }
+.undo-bar button:hover:not(:disabled) { background: #e6e6e6; }
+.undo-bar button:focus-visible { outline-color: #ffffff; }
 
-  h2 { margin: 0 0 4px; font-size: 1.1rem; }
-  .hint { margin: 0 0 16px; color: var(--muted); font-size: 0.92rem; }
+.badge {
+  display: inline-block; font-size: .8rem; font-weight: 700;
+  padding: .05rem .45rem; border-radius: 999px; margin-left: .35rem;
+  background: var(--error-bg); color: var(--error);
+}
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; }
+table { width: 100%; border-collapse: collapse; min-width: 26rem; }
+th, td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .85rem; color: var(--muted); background: #faf9f6; }
+td.long { overflow-wrap: anywhere; }
+.empty { color: var(--muted); margin: 0; }
 
-  form { display: grid; gap: 14px; }
-
-  label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
-
-  .help { font-weight: 400; color: var(--muted); font-size: 0.85rem; }
-
-  input, select {
-    font: inherit;
-    font-weight: 400;
-    color: var(--text);
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 10px 12px;
-    min-height: 44px;
-    width: 100%;
-  }
-
-  input[aria-invalid="true"], select[aria-invalid="true"] {
-    border-color: var(--late-ink);
-  }
-
-  input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
-    outline: 3px solid var(--focus);
-    outline-offset: 2px;
-  }
-
-  button {
-    font: inherit;
-    font-weight: 600;
-    min-height: 44px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    background: var(--accent);
-    color: var(--accent-ink);
-  }
-
-  button:hover { background: var(--accent-hover); }
-
-  button.secondary {
-    background: transparent;
-    color: var(--text);
-    border-color: var(--line);
-  }
-
-  button.secondary:hover { background: var(--bg); }
-
-  button.small {
-    min-height: 36px;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-  }
-
-  button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .field-error {
-    color: var(--late-ink);
-    font-size: 0.88rem;
-    font-weight: 600;
-    min-height: 1.2em;
-    margin: 0;
-  }
-
-  .status {
-    margin-top: 16px;
-    padding: 12px 14px;
-    border-radius: 8px;
-    font-weight: 600;
-    display: none;
-  }
-
-  .status.show { display: block; }
-  .status.ok { background: var(--ok-bg); color: var(--ok-ink); }
-  .status.warn { background: var(--warn-bg); color: var(--warn-ink); }
-  .status.error { background: var(--late-bg); color: var(--late-ink); }
-
-  .table-wrap { overflow-x: auto; }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.95rem;
-  }
-
-  th, td {
-    text-align: left;
-    padding: 10px 8px;
-    border-bottom: 1px solid var(--line);
-    vertical-align: middle;
-  }
-
-  th {
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--muted);
-    font-weight: 600;
-  }
-
-  td.num, th.num { white-space: nowrap; }
-
-  td.action { text-align: right; }
-
-  .tool-id { color: var(--muted); font-size: 0.85rem; }
-
-  .badge {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 999px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  .badge.overdue { background: var(--late-bg); color: var(--late-ink); }
-  .badge.today { background: var(--warn-bg); color: var(--warn-ink); }
-  .badge.onloan { background: var(--info-bg); color: var(--info-ink); }
-
-  .empty {
-    color: var(--muted);
-    text-align: center;
-    padding: 28px 12px;
-    margin: 0;
-  }
-
-  .toolbar {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: end;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
-  .toolbar label { flex: 1 1 260px; }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top"><h1>Tool library desk</h1></header>
 
-<header>
-  <div>
-    <h1>Tool Library · Front Desk</h1>
-    <p id="today-label"></p>
-  </div>
-  <div class="summary" aria-live="polite" id="counts"></div>
-</header>
+<main id="main" tabindex="-1">
 
-<main>
-
-  <section aria-labelledby="lend-heading">
-    <h2 id="lend-heading">Lend a tool</h2>
-    <p class="hint">Pick an available tool and record who is borrowing it.</p>
-
+  <section aria-labelledby="lend-h">
+    <h2 id="lend-h">Lend a tool</h2>
+    <p class="hint">Enter the member number, choose a tool, and confirm the return date.</p>
     <form id="lend-form" novalidate>
-      <label>
-        Borrower name or member number
-        <input id="member" name="member" type="text" autocomplete="off" required aria-describedby="member-err">
-      </label>
-      <p id="member-err" class="field-error"></p>
-
-      <label>
-        Tool
-        <select id="tool" name="tool" required aria-describedby="tool-err"></select>
-      </label>
-      <p id="tool-err" class="field-error"></p>
-
-      <label>
-        Return by
-        <span class="help">Defaults to one week from today.</span>
-        <input id="due" name="due" type="date" required aria-describedby="due-err">
-      </label>
-      <p id="due-err" class="field-error"></p>
-
       <div>
+        <label for="lend-member">Member number</label>
+        <input id="lend-member" type="text" autocomplete="off">
+        <div id="lend-member-err" class="field-error" hidden></div>
+      </div>
+      <div>
+        <label for="lend-tool">Tool</label>
+        <select id="lend-tool"></select>
+        <div id="lend-tool-err" class="field-error" hidden></div>
+        <div id="lend-reason" class="reason" hidden></div>
+      </div>
+      <div>
+        <label for="lend-due">Return by</label>
+        <input id="lend-due" type="date">
+        <div class="help">Set to a week from today by default.</div>
+        <div id="lend-due-err" class="field-error" hidden></div>
+      </div>
+      <div class="stack-buttons">
         <button type="submit" id="lend-btn">Lend tool</button>
       </div>
+      <p id="lend-result" class="result" role="status"></p>
     </form>
   </section>
 
-  <section aria-labelledby="return-heading">
-    <h2 id="return-heading">Check in a return</h2>
-    <p class="hint">Search by tool name, ID, or borrower to find what is out.</p>
-
-    <div class="toolbar">
-      <label>
-        <span class="sr-only">Search tools on loan</span>
-        <input id="search" type="search" placeholder="Search tools on loan…" autocomplete="off">
-      </label>
+  <section aria-labelledby="return-h">
+    <h2 id="return-h">Take a tool back</h2>
+    <p class="hint">Choose the tool being returned, then check it in.</p>
+    <form id="return-form" novalidate>
+      <div>
+        <label for="return-tool">Tool being returned</label>
+        <select id="return-tool"></select>
+        <div id="return-tool-err" class="field-error" hidden></div>
+        <div id="return-reason" class="reason" hidden></div>
+      </div>
+      <div class="stack-buttons">
+        <button type="submit" id="return-btn">Check in tool</button>
+      </div>
+      <p id="return-result" class="result" role="status"></p>
+    </form>
+    <div id="undo-bar" class="undo-bar" hidden>
+      <span id="undo-text"></span>
+      <button type="button" id="undo-btn">Undo check-in</button>
     </div>
+  </section>
 
-    <div class="table-wrap">
+  <section class="wide" aria-labelledby="out-h">
+    <h2 id="out-h">Tools out now</h2>
+    <p class="hint" id="out-count"></p>
+    <p id="out-empty" class="empty">Nothing is out right now. Lent tools will appear here.</p>
+    <div id="out-wrap" class="table-wrap" role="region" aria-labelledby="out-h" tabindex="0" hidden>
       <table>
+        <caption class="sr-only">Tools currently lent out, earliest return date first</caption>
         <thead>
           <tr>
             <th scope="col">Tool</th>
-            <th scope="col">Borrower</th>
-            <th scope="col" class="num">Due</th>
-            <th scope="col">Status</th>
-            <th scope="col"><span class="sr-only">Action</span></th>
+            <th scope="col">Member</th>
+            <th scope="col">Return by</th>
           </tr>
         </thead>
         <tbody id="out-body"></tbody>
       </table>
     </div>
-    <div id="out-empty"></div>
   </section>
 
 </main>
 
-<div id="status" class="status" role="status" aria-live="polite"></div>
-
 <script>
-  const KEY = "toolLibraryDesk.v1";
-  const DAY_MS = 86400000;
+(() => {
+  const STORE_KEY = 'toolLibraryDesk.v1';
+  const LOAN_DAYS_DEFAULT = 7; // Placeholder. Set to your library's loan period.
+  const UNDO_MS = 8000;
 
-  const $ = (sel) => document.querySelector(sel);
+  // Sample inventory. Replace with the real tool list.
+  const DEFAULT_TOOLS = [
+    { id: 'T-001', name: 'Cordless drill' },
+    { id: 'T-002', name: 'Extension ladder, 24 ft' },
+    { id: 'T-003', name: 'Circular saw' },
+    { id: 'T-004', name: 'Wheelbarrow' },
+    { id: 'T-005', name: 'Pressure washer' },
+    { id: 'T-006', name: 'Hedge trimmer' },
+  ];
 
-  function esc(value) {
-    return String(value).replace(/[&<>"']/g, (c) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-    }[c]));
-  }
+  // Elements
+  const lendForm = document.getElementById('lend-form');
+  const lendMember = document.getElementById('lend-member');
+  const lendMemberErr = document.getElementById('lend-member-err');
+  const lendTool = document.getElementById('lend-tool');
+  const lendToolErr = document.getElementById('lend-tool-err');
+  const lendReason = document.getElementById('lend-reason');
+  const lendDue = document.getElementById('lend-due');
+  const lendDueErr = document.getElementById('lend-due-err');
+  const lendBtn = document.getElementById('lend-btn');
+  const lendResult = document.getElementById('lend-result');
 
-  // Local calendar date as YYYY-MM-DD
-  function dateStr(d = new Date()) {
-    const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
-    return local.toISOString().slice(0, 10);
-  }
+  const returnForm = document.getElementById('return-form');
+  const returnTool = document.getElementById('return-tool');
+  const returnToolErr = document.getElementById('return-tool-err');
+  const returnReason = document.getElementById('return-reason');
+  const returnBtn = document.getElementById('return-btn');
+  const returnResult = document.getElementById('return-result');
+  const undoBar = document.getElementById('undo-bar');
+  const undoText = document.getElementById('undo-text');
+  const undoBtn = document.getElementById('undo-btn');
 
-  function addDays(n) {
-    const d = new Date();
-    d.setDate(d.getDate() + n);
-    return dateStr(d);
-  }
+  const outCount = document.getElementById('out-count');
+  const outEmpty = document.getElementById('out-empty');
+  const outWrap = document.getElementById('out-wrap');
+  const outBody = document.getElementById('out-body');
 
-  // Whole days from b to a (both YYYY-MM-DD)
-  function daysBetween(a, b) {
-    return Math.round((Date.parse(a) - Date.parse(b)) / DAY_MS);
-  }
-
-  function formatDate(s) {
-    const [y, m, d] = s.split("-").map(Number);
-    return new Date(y, m - 1, d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
-  }
-
-  function plural(n, word) {
-    return `${n} ${word}${n === 1 ? "" : "s"}`;
-  }
-
-  function seedData() {
-    return [
-      { id: "T-101", name: "Cordless drill", category: "Power tools", borrower: null },
-      { id: "T-102", name: "Circular saw", category: "Power tools", borrower: { name: "Dana Ruiz", lentOn: addDays(-5), due: addDays(-2) } },
-      { id: "T-103", name: "Extension ladder", category: "Ladders & access", borrower: null },
-      { id: "T-104", name: "Pressure washer", category: "Cleaning", borrower: { name: "M-0412 · Chen", lentOn: addDays(-1), due: addDays(0) } },
-      { id: "T-105", name: "Wheelbarrow", category: "Garden", borrower: null },
-      { id: "T-106", name: "Post-hole digger", category: "Garden", borrower: { name: "M-0088 · Okafor", lentOn: addDays(-3), due: addDays(4) } },
-      { id: "T-107", name: "Tile cutter", category: "Hand tools", borrower: null },
-      { id: "T-108", name: "Shop vac", category: "Cleaning", borrower: null }
-    ];
-  }
+  // State
+  let state = load();
+  let pending = null;   // last check-in that can be undone
+  let undoTimer = null;
 
   function load() {
     try {
-      const saved = JSON.parse(localStorage.getItem(KEY));
-      if (Array.isArray(saved)) return saved;
-    } catch (e) { /* ignore corrupt or unavailable storage */ }
-    return seedData();
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        const s = JSON.parse(raw);
+        if (s && Array.isArray(s.tools) && s.loans && typeof s.loans === 'object') return s;
+      }
+    } catch (e) { /* unreadable saved data: start from the sample inventory */ }
+    return { tools: DEFAULT_TOOLS.map(t => ({ ...t })), loans: {} };
   }
 
   function save() {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state)); // throws if storage is full or blocked
+  }
+
+  // Dates (local calendar, ISO yyyy-mm-dd strings compare correctly)
+  const pad = n => String(n).padStart(2, '0');
+  function isoFromDate(d) {
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  }
+  function todayISO() { return isoFromDate(new Date()); }
+  function addDaysISO(iso, n) {
+    const [y, m, d] = iso.split('-').map(Number);
+    return isoFromDate(new Date(y, m - 1, d + n));
+  }
+  function fmtDate(iso) {
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString(undefined, {
+      weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+    });
+  }
+  const isOverdue = iso => iso < todayISO();
+  const toolById = id => state.tools.find(t => t.id === id);
+
+  // Helpers
+  function showResult(el, kind, text) {
+    el.className = kind ? `result ${kind}` : 'result';
+    el.textContent = text;
+  }
+  function setFieldError(input, errEl, msg) {
+    if (msg) {
+      errEl.textContent = msg;
+      errEl.hidden = false;
+      input.setAttribute('aria-invalid', 'true');
+    } else {
+      errEl.textContent = '';
+      errEl.hidden = true;
+      input.removeAttribute('aria-invalid');
+    }
+  }
+  function setReason(el, msg) {
+    el.textContent = msg;
+    el.hidden = !msg;
+  }
+  function fillSelect(sel, options, placeholder) {
+    const prev = sel.value;
+    sel.replaceChildren(new Option(placeholder, ''));
+    options.forEach(o => sel.append(new Option(o.label, o.value)));
+    if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
+  }
+
+  // Rendering
+  function renderOut() {
+    const rows = Object.entries(state.loans)
+      .map(([id, loan]) => ({ id, ...loan, tool: toolById(id) }))
+      .filter(r => r.tool)
+      .sort((a, b) => a.due.localeCompare(b.due));
+
+    outBody.replaceChildren();
+    for (const r of rows) {
+      const tr = document.createElement('tr');
+
+      const tdTool = document.createElement('td');
+      tdTool.className = 'long';
+      tdTool.textContent = r.tool.name;
+
+      const tdMember = document.createElement('td');
+      tdMember.textContent = r.member;
+
+      const tdDue = document.createElement('td');
+      tdDue.textContent = fmtDate(r.due);
+      if (isOverdue(r.due)) {
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.textContent = 'Overdue';
+        tdDue.append(badge);
+      }
+
+      tr.append(tdTool, tdMember, tdDue);
+      outBody.append(tr);
+    }
+
+    outEmpty.hidden = rows.length > 0;
+    outWrap.hidden = rows.length === 0;
+    outCount.textContent = rows.length ? `${rows.length} ${rows.length === 1 ? 'tool' : 'tools'} out.` : '';
+  }
+
+  function renderAll() {
+    const available = state.tools.filter(t => !state.loans[t.id]);
+    const out = state.tools.filter(t => state.loans[t.id]);
+
+    fillSelect(lendTool, available.map(t => ({ value: t.id, label: t.name })), 'Choose a tool');
+    fillSelect(returnTool, out.map(t => {
+      const l = state.loans[t.id];
+      const overdue = isOverdue(l.due) ? ' (overdue)' : '';
+      return { value: t.id, label: `${t.name}: member ${l.member}, return by ${fmtDate(l.due)}${overdue}` };
+    }), 'Choose a tool');
+
+    setReason(lendReason, available.length === 0
+      ? 'Every tool is out right now. Check one back in to lend it.' : '');
+    setReason(returnReason, out.length === 0 ? 'No tools are out right now.' : '');
+
+    renderOut();
+  }
+
+  // Lend
+  lendForm.addEventListener('submit', e => {
+    e.preventDefault();
+    setFieldError(lendMember, lendMemberErr, '');
+    setFieldError(lendTool, lendToolErr, '');
+    setFieldError(lendDue, lendDueErr, '');
+
+    const member = lendMember.value.trim();
+    const toolId = lendTool.value;
+    const due = lendDue.value;
+    const anyAvailable = state.tools.some(t => !state.loans[t.id]);
+
+    const errors = [];
+    if (!member) {
+      errors.push(() => setFieldError(lendMember, lendMemberErr, 'Enter the member number.'));
+    }
+    if (!toolId) {
+      const msg = anyAvailable ? 'Choose a tool to lend.' : 'No tool is available to lend right now.';
+      errors.push(() => setFieldError(lendTool, lendToolErr, msg));
+    }
+    if (!due) {
+      errors.push(() => setFieldError(lendDue, lendDueErr, 'Choose a return date.'));
+    } else if (due < todayISO()) {
+      errors.push(() => setFieldError(lendDue, lendDueErr, 'The return date is in the past. Choose today or a later date.'));
+    }
+
+    if (errors.length) {
+      errors.forEach(show => show());
+      showResult(lendResult, 'bad', 'Fix the fields marked above to lend this tool.');
+      const firstInvalid = lendForm.querySelector('[aria-invalid="true"]');
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
+
+    const tool = toolById(toolId);
+    lendBtn.disabled = true;
+    lendBtn.setAttribute('aria-busy', 'true');
+    lendBtn.textContent = 'Saving…';
     try {
-      localStorage.setItem(KEY, JSON.stringify(state));
-    } catch (e) { /* storage unavailable; keep working in memory */ }
-  }
-
-  let state = load();
-
-  const els = {
-    today: $("#today-label"),
-    counts: $("#counts"),
-    lendForm: $("#lend-form"),
-    member: $("#member"),
-    tool: $("#tool"),
-    due: $("#due"),
-    memberErr: $("#member-err"),
-    toolErr: $("#tool-err"),
-    dueErr: $("#due-err"),
-    search: $("#search"),
-    outBody: $("#out-body"),
-    outEmpty: $("#out-empty"),
-    status: $("#status")
-  };
-
-  let statusTimer = null;
-
-  function announce(message, kind = "ok") {
-    els.status.className = `status show ${kind}`;
-    els.status.textContent = message;
-    clearTimeout(statusTimer);
-    statusTimer = setTimeout(() => { els.status.className = "status"; }, 6000);
-  }
-
-  function setFieldError(input, errEl, message) {
-    errEl.textContent = message;
-    input.setAttribute("aria-invalid", message ? "true" : "false");
-  }
-
-  function statusFor(tool, today) {
-    const diff = daysBetween(tool.borrower.due, today);
-    if (diff < 0) return { cls: "overdue", label: `Overdue ${plural(-diff, "day")}` };
-    if (diff === 0) return { cls: "today", label: "Due today" };
-    return { cls: "onloan", label: `Due in ${plural(diff, "day")}` };
-  }
-
-  function render() {
-    const today = dateStr();
-    const byName = (a, b) => a.name.localeCompare(b.name);
-
-    const available = state.filter((t) => !t.borrower).sort(byName);
-    const onLoan = state.filter((t) => t.borrower);
-    const overdue = onLoan.filter((t) => daysBetween(today, t.borrower.due) > 0);
-
-    els.today.textContent = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
-    els.counts.innerHTML = `
-      <span>${available.length} available</span>
-      <span aria-hidden="true">·</span>
-      <span>${onLoan.length} out</span>
-      <span aria-hidden="true">·</span>
-      <span class="${overdue.length ? "" : ""}" style="${overdue.length ? "color: var(--late-ink)" : ""}">${overdue.length} overdue</span>`;
-
-    const selected = els.tool.value;
-    els.tool.innerHTML = available.length
-      ? `<option value="">Choose a tool…</option>` +
-        available.map((t) => `<option value="${esc(t.id)}">${esc(t.name)} (${esc(t.id)})</option>`).join("")
-      : `<option value="">No tools available right now</option>`;
-    els.tool.disabled = available.length === 0;
-    if (available.some((t) => t.id === selected)) els.tool.value = selected;
-    $("#lend-btn").disabled = available.length === 0;
-
-    const query = els.search.value.trim().toLowerCase();
-    const matches = onLoan
-      .filter((t) => {
-        if (!query) return true;
-        return [t.name, t.id, t.category, t.borrower.name].some((v) => v.toLowerCase().includes(query));
-      })
-      .sort((a, b) => a.borrower.due.localeCompare(b.borrower.due));
-
-    els.outBody.innerHTML = matches.map((t) => {
-      const s = statusFor(t, today);
-      return `
-        <tr>
-          <td>
-            <strong>${esc(t.name)}</strong><br>
-            <span class="tool-id">${esc(t.id)} · ${esc(t.category)}</span>
-          </td>
-          <td>${esc(t.borrower.name)}</td>
-          <td class="num">${esc(formatDate(t.borrower.due))}</td>
-          <td><span class="badge ${s.cls}">${esc(s.label)}</span></td>
-          <td class="action">
-            <button type="button" class="small secondary" data-return="${esc(t.id)}">
-              Check in<span class="sr-only"> ${esc(t.name)}</span>
-            </button>
-          </td>
-        </tr>`;
-    }).join("");
-
-    if (matches.length) {
-      els.outEmpty.innerHTML = "";
-    } else {
-      els.outEmpty.innerHTML = `<p class="empty">${
-        query ? "No tools on loan match that search." : "Nothing is out right now."
-      }</p>`;
+      state.loans[toolId] = { member, due, lentOn: todayISO() };
+      save();
+      showResult(lendResult, 'ok', `Lent ${tool.name} to member ${member}. Return by ${fmtDate(due)}.`);
+      lendMember.value = '';
+      lendTool.value = '';
+      lendDue.value = addDaysISO(todayISO(), LOAN_DAYS_DEFAULT);
+    } catch (err) {
+      delete state.loans[toolId];
+      showResult(lendResult, 'bad', 'Could not save this loan. Your entries are still here. Try again.');
+    } finally {
+      lendBtn.disabled = false;
+      lendBtn.removeAttribute('aria-busy');
+      lendBtn.textContent = 'Lend tool';
+      renderAll();
+      if (lendResult.classList.contains('ok')) lendMember.focus();
     }
+  });
+
+  // Take back
+  function hideUndo() {
+    clearTimeout(undoTimer);
+    const hadFocus = undoBar.contains(document.activeElement);
+    undoBar.hidden = true;
+    pending = null;
+    if (hadFocus) returnTool.focus();
   }
 
-  function lend(event) {
-    event.preventDefault();
+  function showUndo(name) {
+    clearTimeout(undoTimer);
+    undoText.textContent = `${name} checked in.`;
+    undoBar.hidden = false;
+    undoTimer = setTimeout(hideUndo, UNDO_MS);
+  }
 
-    const member = els.member.value.trim();
-    const toolId = els.tool.value;
-    const due = els.due.value;
-    const today = dateStr();
+  undoBtn.addEventListener('click', () => {
+    if (!pending) return;
+    const { toolId, loan, name } = pending;
+    if (state.loans[toolId]) {
+      showResult(returnResult, 'bad', `${name} has been lent again, so this check-in cannot be undone.`);
+      hideUndo();
+      return;
+    }
+    state.loans[toolId] = loan;
+    try {
+      save();
+    } catch (err) {
+      delete state.loans[toolId];
+      showResult(returnResult, 'bad', `Could not undo. ${name} is still checked in. Try again.`);
+      return; // keep the undo bar so the desk can retry
+    }
+    showResult(returnResult, 'ok', `Check-in undone. ${name} is out to member ${loan.member} again.`);
+    hideUndo();
+    renderAll();
+  });
 
-    setFieldError(els.member, els.memberErr, member ? "" : "Enter a borrower name or member number.");
-    setFieldError(els.tool, els.toolErr, toolId ? "" : "Choose a tool to lend.");
-    setFieldError(els.due, els.dueErr,
-      !due ? "Pick a return date." :
-      due < today ? "Return date can't be in the past." : "");
+  returnForm.addEventListener('submit', e => {
+    e.preventDefault();
+    setFieldError(returnTool, returnToolErr, '');
 
-    const firstInvalid = [[els.member, els.memberErr], [els.tool, els.toolErr], [els.due, els.dueErr]]
-      .find(([, err]) => err.textContent);
-    if (firstInvalid) {
-      firstInvalid[0].focus();
-      announce("Please fix the highlighted fields.", "error");
+    const toolId = returnTool.value;
+    if (!toolId) {
+      const msg = state.tools.some(t => state.loans[t.id])
+        ? 'Choose the tool being returned.'
+        : 'No tools are out right now, so there is nothing to check in.';
+      setFieldError(returnTool, returnToolErr, msg);
+      showResult(returnResult, 'bad', 'Choose a tool to check in.');
+      returnTool.focus();
       return;
     }
 
-    const tool = state.find((t) => t.id === toolId);
-    if (!tool || tool.borrower) {
-      announce("That tool is no longer available. Please choose another.", "error");
-      render();
+    const tool = toolById(toolId);
+    const loan = state.loans[toolId];
+    delete state.loans[toolId];
+    try {
+      save();
+    } catch (err) {
+      state.loans[toolId] = loan;
+      showResult(returnResult, 'bad', `Could not check in ${tool.name}. It is still listed as out. Try again.`);
+      renderAll();
       return;
     }
 
-    tool.borrower = { name: member, lentOn: today, due };
-    save();
-    render();
+    hideUndo();
+    pending = { toolId, loan, name: tool.name };
+    showResult(returnResult, 'ok', `${tool.name} is back on the shelf. It was out to member ${loan.member}.`);
+    showUndo(tool.name);
+    renderAll();
+    returnTool.focus();
+  });
 
-    announce(`${tool.name} lent to ${member}. Return by ${formatDate(due)}.`, "ok");
-
-    els.member.value = "";
-    els.tool.value = "";
-    els.due.value = addDays(7);
-    els.member.focus();
-  }
-
-  function checkIn(id) {
-    const tool = state.find((t) => t.id === id);
-    if (!tool || !tool.borrower) return;
-
-    const today = dateStr();
-    const late = daysBetween(today, tool.borrower.due);
-    const name = tool.borrower.name;
-
-    tool.borrower = null;
-    save();
-
-    const row = document.querySelector("#out-body");
-    render();
-
-    if (late > 0) {
-      announce(`${tool.name} checked in from ${name}, ${plural(late, "day")} late.`, "warn");
-    } else {
-      announce(`${tool.name} checked in from ${name}. Thank you!`, "ok");
-    }
-
-    els.search.focus();
-  }
-
-  function init() {
-    els.due.value = addDays(7);
-    els.due.min = dateStr();
-
-    els.lendForm.addEventListener("submit", lend);
-
-    els.search.addEventListener("input", render);
-
-    els.outBody.addEventListener("click", (event) => {
-      const btn = event.target.closest("[data-return]");
-      if (btn) checkIn(btn.dataset.return);
-    });
-
-    [els.member, els.tool, els.due].forEach((input) => {
-      input.addEventListener("input", () => {
-        input.setAttribute("aria-invalid", "false");
-        const err = input.parentElement.parentElement.querySelector(".field-error") ||
-          document.getElementById(input.getAttribute("aria-describedby"));
-        if (err) err.textContent = "";
-      });
-    });
-
-    render();
-  }
-
-  init();
+  // Init
+  lendDue.min = todayISO();
+  lendDue.value = addDaysISO(todayISO(), LOAN_DAYS_DEFAULT);
+  renderAll();
+})();
 </script>
 </body>
 </html>

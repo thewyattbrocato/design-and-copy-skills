@@ -1,37 +1,40 @@
 ## What's wrong with the three comments
 
-1. **"Good job!"** praises without saying what was good, and it misses the two real issues: `SELECT *` and the subquery that runs three times slower than a join. A student reading it learns nothing and may think the query is fine.
-2. **"Your query is wrong. See the solution."** says that something is wrong but not what. The student can't tell whether the problem is the join, the count, or the output. Pointing to the solution skips the learning, and the student still has to work out why their rows are missing.
-3. **"Great effort... 6/10"** gives a score with no reason. "Needs improvement on joins" is wrong about this submission, since the joins were correct. The real problem was the aliases and column names, which the comment never mentions. A bare 6/10 can't be checked or acted on.
+**1. "Good job!"** tells the student nothing they can act on. The query is correct, so the praise is accurate, but it hides the two things that matter most: `SELECT *` pulls columns nobody asked for, and the subquery is slower than a join on the same data. A student reading this has no reason to revisit the query.
 
-All three share the same gap: they describe the grade or the feeling about the work, not the specific thing in the query.
+**2. "Your query is wrong. See the solution."** says the query is wrong but not why. The real problem is conceptual: an INNER JOIN drops customers with no orders, and the exercise asked for them. The comment also points the student to the answer, so they copy it without learning the join behavior. That is the most likely reason they'd call it useless.
+
+**3. "Great effort. Needs improvement on joins. 6/10"** has three problems. "Great effort" is filler. "Needs improvement on joins" is wrong for this submission, since the joins were correct and the weak points were the aliases and output column names. The 6/10 has no explanation, so the student can't tell what earned or lost points.
 
 ## Rewrites
 
 **1.**
-> Your query returns the right rows, so the logic is sound. Two things to work on:
+> Your query returns the right rows, and the logic is clear. Two things to tighten:
 >
-> - `SELECT *` pulls every column. List the columns you need. This also makes the output clearer to the next person who reads it.
-> - The subquery could be a join. On the sample data, the join version runs about 3× faster than yours. Rewrite the subquery as a join and compare the timings. Then think about when a subquery is still the better choice.
+> - **`SELECT *`**: List the columns you need. It makes the output explicit and keeps the query working if the table changes.
+> - **Subquery vs. join**: Your version runs about three times slower than a join on the sample data. Try rewriting the subquery as a JOIN and compare the timings. Which one does the database have to do more work for, and why?
+>
+> Once you've tried it, tell me what you found.
 
 **2.**
-> Your query is missing customers who have never ordered. The requirement asks for every customer, but `INNER JOIN` only keeps customers with at least one matching order, so the customers with zero orders are dropped.
->
-> Look at which join type keeps every row from the customers table even when there's no match. Then check what `COUNT` should count so that a customer with no orders shows 0, not 1. Once you've changed the query, check it: does your result have as many rows as the customers table?
+> The exercise asks for every customer, including those with zero orders. Check what your JOIN does to a customer who has no rows in `orders`. Which join type keeps rows from the left table even when there's no match on the right? Look that up in the course notes and try it.
+
+The comment names the requirement, points to the exact place the error happens, and gives the join type to look up without writing the query.
 
 **3.**
-> Your joins and results are correct, and the query is easy to follow. The main thing to fix is the aliases. `a` and `b` don't tell a reader which table is which, and you'll have to look them up when you return to this query. Use short names that mean something, like `c` for customers and `o` for orders. Also name your output columns the way the requirement does (for example, `order_count` rather than `count`).
+> Your joins are correct, and the result is right. The main improvements are in readability:
 >
-> Score: [X]/10. Correctness [full], readability [X/Y] (aliases and column names). The score should map to the rubric so you can see which part lost points.
+> - **Aliases**: `a` and `b` make it hard to tell which table each column comes from. Use short names that mean something, like `c` for customers and `o` for orders.
+> - **Output column names**: The result headers are hard to read. Use `AS` to label them, e.g., `AS order_count`.
+>
+> This is a good foundation. Clear names will matter more as your queries get longer.
 
-Note: I don't know your rubric, so the score line in #3 is a placeholder. The breakdown is the important part. If the 6/10 really came from the aliasing alone, the breakdown should show that.
+*Score:* If you grade with a rubric, state what the points were for, e.g., "Correct results (4/4), readability (1/2: aliases and column names), efficiency (not scored this week)." A bare number without a breakdown is what made this comment feel arbitrary. If you don't have a rubric, consider dropping the number and using the feedback alone.
 
-## The pattern to use every time
+## Principles behind the rewrites
 
-- **Name the specific thing** in the submission ("the `INNER JOIN` on line 4," not "joins").
-- **Say why it matters**: correctness, speed, or readability.
-- **Give a next step** the student can do, such as a hint, a question, or a test to run. Save the full solution for after the exercise is submitted and graded.
-- **Praise specifically** when you give it ("the `WHERE` clause is clear and correct"), so the student knows what to keep doing.
-- **Tie any score to a rubric item** so the student knows what to fix to improve it.
-
-If it helps, I can turn this into a short TA guide with a few before-and-after examples for other common SQL mistakes like `GROUP BY` errors or `NULL` handling.
+- **Lead with what's specific.** Name the exact line, column, or behavior, not the overall quality.
+- **Explain why, not just what.** "Use a LEFT JOIN" teaches less than "an INNER JOIN drops rows with no match."
+- **Ask, don't answer.** A question or a hint keeps the student doing the thinking. Withhold the solution until they've tried.
+- **End with one next step.** Students need to know what to do next, not just what went wrong.
+- **Match the feedback to the work.** A correct query with style issues should get style feedback, not a critique of joins.

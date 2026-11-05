@@ -1,37 +1,29 @@
-**Mostly not yet.** The structure is clean, but the content reads like a generic marketplace template, not a seed library. Fix the domain questions before handing it over, or the developer will build the wrong thing.
+The structure is sound, but a few things need fixing before a developer can build it. The biggest problem is that the content is generic app boilerplate, so the spec doesn't yet say what Seedlend does on this screen.
 
-**Biggest issues**
+**Fix before handoff**
 
-1. **The content doesn't match the domain.** "Discover, connect and grow," "Featured," "Explore," and `$0.00` prices all suggest a store. A seed library probably lends or gives seeds away. Before the developer builds anything, decide:
-   - Is anything paid, or is everything free?
-   - Are items borrowed and returned, taken and kept, or swapped?
-   - What is on a card: variety, quantity available, seed year, which cupboard, or something else?
+1. **The price field doesn't fit a seed library.** Items are presumably lent or shared for free, so "$0.00" on every card is confusing. Replace it with availability, such as "Available", "Checked out, back by Mar 3", or "Ask a neighbor."
+2. **"Featured" isn't defined.** Who features an item, and how? Is it staff-picked, most requested, or newest? Without a rule, the developer will guess or hardcode placeholders that never get replaced.
+3. **"Your Activity" is undefined.** Activity could mean items you've borrowed, requests you've made, items you've lent out, or messages. The empty state and the "Get Started" button only make sense once that's decided.
+4. **"Get Started" has no destination.** Say where it goes: the add-item flow, a how-it-works page, or the search tab.
+5. **"Explore" has no destination either.** Hero copy like "Discover, connect and grow" could describe any app. Something like "Browse the seed library" or "See what's in the cupboard" would tell the developer and the user what the app is for.
+6. **The Profile row duplicates the Profile tab.** Keep one. If you keep the row, remove the email. Showing a neighbor's email on the home screen is a privacy problem for a community app.
+7. **"Add" is ambiguous.** Does it mean donating seeds, listing an item, or starting a request? The developer needs to know, since it's a core action.
 
-2. **"Featured" has no defined source.** Who decides what's featured, and what happens when nothing is? A more useful home section might be "Available now at the cupboard" or "Upcoming seed swap at the hall."
+**Missing for a seed library**
 
-3. **The hero card works against the home screen.** A welcome banner that appears every time takes up the top of the screen for returning users. Make it a one-time onboarding, or drop it. "Explore" also duplicates the Search tab.
-
-4. **Several destinations are undefined.** The spec doesn't say where these go:
-   - the gear icon
-   - "Explore" and "Get Started"
-   - the "Add" tab (add a seed? a listing? a return?)
-   - "Messages" (who is messaging whom about what?)
-   - tapping a card
-
-5. **The profile row duplicates the Profile tab.** It also shows the user's email on the home screen, which is a privacy concern in a neighborhood app. Consider removing the row, or showing only the name.
-
-**Missing states**
-
-- Populated "Your Activity" (what counts as activity, and what does a row look like?)
-- Loading, error, and offline states
-- A first-run state for a brand-new neighbor with no history
-- Whether "Your Activity" should include things like seeds currently checked out, return dates, or seed-saving reminders
+- **Library status.** The cupboard's hours or the next open session at the community hall is probably the most useful thing on the home tab.
+- **Seasonal relevance.** A planting-season or "what to sow this month" section would fit the domain better than a generic featured list.
+- **Item details the cards need.** Seed variety, year harvested (viability matters for seeds), who has it, and pickup location.
+- **Missing states.** Loading, offline, logged-out, and error states, plus what happens when Featured has zero items.
+- **Tap behavior.** Where each card and the gear icon go. The gear icon's destination (settings, or a profile edit screen) isn't stated.
 
 **Smaller points**
 
-- "Home" in the title bar is redundant on the Home tab.
-- Use realistic placeholder content, such as "Brandywine Tomato, 2026 harvest," not "Item Title." Testers react very differently to real-looking content.
-- "Nothing to see here yet" is vague. Something like "No seeds checked out yet" tells the user what the section is for.
-- Add alt text requirements for the image placeholders.
+- The hero card takes the most space on the screen, but it's welcome copy for new users. Consider showing it only during onboarding or making it dismissible.
+- "Nothing to see here yet." reads as dismissive. Something like "No activity yet. Borrow or list your first seeds" is more helpful.
+- The title bar "Home" repeats the active tab label. That's fine, but a title that says the library name would be more useful.
 
-If you tell me whether seeds are lent, given, or swapped, and what a card should show, I can rewrite the spec with a domain-correct home screen and a list of open questions for you to answer.
+**Suggested next step**
+
+I'd rewrite the spec around three things: the library status at the top, a featured or seasonal section with defined rules, and a single "My seeds" section showing what you've borrowed or lent. Then add the tap destinations and states. If you tell me how Featured is meant to be chosen and what "Activity" should cover, I can draft that revision.

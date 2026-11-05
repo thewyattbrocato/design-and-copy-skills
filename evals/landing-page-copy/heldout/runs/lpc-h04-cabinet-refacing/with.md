@@ -1,83 +1,79 @@
-**Plan.** The reader is a homeowner who arrived from search. They're worried about cost and about losing their kitchen. The one idea is that you keep the boxes and layout, so it costs less and takes about a week. The sections run in this order: hero, how it works, the disruption, price, proof, limits and warranty, and the ask. The ask is the free in-home measure, repeated in the same words.
+**Plan.** The reader is a Calder Ridge-area homeowner who found us by searching. They're worried about cost and about losing their kitchen. The page argues that refacing keeps the layout and the boxes, so it costs less and takes days. It states the price, the 3-to-5-day limit and the warranty exclusion up front. Order: hero with the ask, what it is, the time and kitchen disruption, price and payment, who it isn't for and the warranty, proof, final ask.
 
 ---
 
-## Hero
+**HERO**
 
-**Headline:** New cabinet doors and fronts for your kitchen in 5 to 7 working days, from $4,800
+# New cabinet doors and fronts in 5 to 7 working days, from $4,800
 
-**Subhead:** Marrow Creek Cabinet Refacing helps Calder Ridge-area homeowners keep their existing cabinet boxes and layout. We replace the doors and drawer fronts and cover the visible frames with matching veneer. New hinges and pulls are included.
+Marrow Creek Cabinet Refacing keeps your existing cabinet boxes and replaces everything you see. You get new doors, new drawer fronts, matching veneer on the visible frames, and new hinges and pulls. Standard 10 by 10 kitchen. 14 years serving homeowners in and around Calder Ridge.
 
-**Button:** Book my free in-home measure
-
-**Under button:** Or call 555-0143
-
----
-
-## We reface cabinets, not rebuild kitchens
-
-**Heading:** Your cabinet boxes stay. Everything you see changes.
-
-**Body:**
-- We keep your existing cabinet boxes.
-- We replace the doors and drawer fronts.
-- We cover the visible frames with matching veneer.
-- New hinges and pulls are included.
-
-Because your layout stays, you're not paying to tear out and rebuild what's already sound. Marrow Creek has done this work for 14 years.
+**[Book my free in-home measure]**  
+Or call 555-0143.
 
 ---
 
-## Living without a kitchen
+**WHAT YOU GET**
 
-**Heading:** You'll have a working sink and fridge for part of the job
+## We replace what you see and keep the boxes underneath
 
-**Body:** Refacing typically takes 5 to 7 working days. On days 3 to 5 the cabinet doors are off the boxes, and during that stretch your kitchen is usable for the sink and fridge only. Plan meals around that window.
+- New doors and drawer fronts
+- Matching veneer over the visible frames
+- New hinges and pulls, included in the price
 
-**Proof, beside the claim:**
-> "They were out of my kitchen faster than the tile guy." — Rosalind, Calder Ridge
+Your layout stays as it is. Your cabinet boxes stay where they are.
 
----
-
-## What it costs
-
-**Heading:** From $4,800 for a standard 10 by 10 kitchen
-
-**Body:** That's the starting price. Your final price is set at the free in-home measure, so you'll know the number before you commit to anything.
-
-**How payment works:**
-- 30% deposit to book
-- The rest on the final walkthrough
-
-**Proof, beside the claim:**
 > "It looks like we replaced everything. We kept our layout and saved a lot." — Anil, Eastbrook
 
-**Button:** Book my free in-home measure
+---
+
+**TIME AND DISRUPTION**
+
+## Most jobs take 5 to 7 working days, and you'll have a sink and fridge for part of it
+
+Typical timeline: 5 to 7 working days.
+
+On days 3 to 5 the cabinet doors are off the boxes. During that stretch, the kitchen is usable for the sink and fridge only. Plan meals around that window.
+
+> "They were out of my kitchen faster than the tile guy." — Rosalind, Calder Ridge
+
+**[Book my free in-home measure]**
 
 ---
 
-## What we can't do, and what the warranty covers
+**PRICE AND PAYMENT**
 
-**Heading:** We'll tell you at the measure if refacing isn't right for your kitchen
+## From $4,800 for a standard 10 by 10 kitchen, with the final price set at your free measure
 
-**Body:** We can't reface boxes that are water-damaged or sagging. Those need replacing, and we'll tell you at the measure.
-
-**Warranty:** 5 years on doors, finish and hardware. The warranty does not cover the existing cabinet boxes underneath.
-
----
-
-## Next step
-
-**Heading:** Start with a free measure at your house
-
-**Body:** We come to you, measure, and set your final price. Call 555-0143 or use the form below.
-
-**Form button:** Book my free in-home measure
-
-**Form fields:** [add the fields your form collects]
+- **Starting price:** from $4,800 for a standard 10 by 10 kitchen.
+- **Final price:** we set it at the free in-home measure, when we've seen your kitchen.
+- **Included:** new doors, drawer fronts, veneer on visible frames, hinges and pulls.
+- **Payment:** 30% deposit to book. The rest is due at the final walkthrough.
 
 ---
 
-**Notes:**
-- The form fields are a placeholder, because I wasn't given what the form asks for.
-- "We come to you, measure, and set your final price" restates your facts. Nothing in the facts says how long the measure takes, so the copy doesn't say.
+**LIMITS**
+
+## Refacing doesn't suit every kitchen, and we'll tell you at the measure
+
+We can't reface boxes that are water-damaged or sagging. Those need replacing. If yours are in that condition, we'll tell you at the measure.
+
+**The warranty:** 5 years on doors, finish and hardware. It does not cover the existing cabinet boxes underneath.
+
+---
+
+**NEXT STEP**
+
+## Book the free in-home measure
+
+We measure your kitchen, check the condition of your boxes and set your final price. Call 555-0143 or use the form below.
+
+**[Book my free in-home measure]**
+
+*[Form: name, phone, address]*
+
+---
+
+Notes:
+- I put the two quotes beside the claims they support, word for word. Both are from your supplied facts.
+- The form fields are my suggestion. Change them to match your form.

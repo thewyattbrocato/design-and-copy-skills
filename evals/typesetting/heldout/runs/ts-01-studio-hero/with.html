@@ -3,208 +3,170 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fernwick Ceramics — Hand-thrown dinnerware &amp; weekend glazing classes</title>
+<title>Fernwick Ceramics</title>
 <style>
   :root {
-    --cream: #f5ede2;
-    --ink: #2a1e18;
-    --muted: #5e4d43;
-    --clay: #a2442a;
-    --clay-dark: #823420;
-    --sage: #8a9a80;
-    --sand: #e4d3bd;
+    --clay: #f4ede4;
+    --ink: #2b2420;
+    --muted: #5e5249;
+    --terracotta: #b4532f;
+    --terracotta-dark: #8f3f22;
+    --fern: #4a5d46;
+    --serif: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: var(--cream);
+    background: var(--clay);
     color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-family: var(--sans);
     -webkit-font-smoothing: antialiased;
   }
-
   .hero {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
     overflow: hidden;
   }
-
-  header {
+  nav {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 28px clamp(24px, 6vw, 96px);
+    align-items: center;
+    padding: 32px 64px;
+    position: relative;
+    z-index: 2;
   }
   .brand {
-    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
-    font-size: 1.35rem;
+    font-family: var(--serif);
+    font-size: 1.375rem;
     font-weight: 700;
     letter-spacing: 0.01em;
     color: var(--ink);
     text-decoration: none;
   }
-  nav { display: flex; gap: 32px; }
-  nav a {
+  nav ul { display: flex; gap: 36px; list-style: none; }
+  nav a.link {
     color: var(--muted);
     text-decoration: none;
     font-size: 1rem;
-    padding: 6px 0;
-    border-bottom: 2px solid transparent;
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
   }
-  nav a:hover { color: var(--ink); border-bottom-color: var(--clay); }
+  nav a.link:hover { color: var(--ink); border-bottom-color: var(--terracotta); }
 
   .content {
     flex: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    display: flex;
     align-items: center;
-    gap: clamp(32px, 5vw, 80px);
-    padding: 0 clamp(24px, 6vw, 96px) 72px;
-    max-width: 1440px;
-    width: 100%;
-    margin: 0 auto;
+    padding: 0 64px 96px;
+    position: relative;
+    z-index: 2;
   }
-
+  .copy { max-width: 760px; }
   .eyebrow {
-    margin: 0 0 24px;
     font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--clay-dark);
+    color: var(--fern);
+    margin-bottom: 28px;
   }
   h1 {
-    margin: 0;
-    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
-    font-weight: 700;
-    font-size: clamp(3rem, 6.2vw, 5.75rem);
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 7.2vw, 6.5rem);
     line-height: 1.02;
     letter-spacing: -0.025em;
+    font-weight: 700;
     text-wrap: balance;
   }
-  h1 em { font-style: italic; color: var(--clay); }
+  h1 em { font-style: italic; color: var(--terracotta); }
   .lede {
-    margin: 28px 0 0;
-    max-width: 34em;
-    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
-    line-height: 1.55;
+    margin-top: 32px;
+    font-size: 1.375rem;
+    line-height: 1.5;
     color: var(--muted);
+    max-width: 34em;
     text-wrap: pretty;
   }
-
-  .actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 44px; }
+  .actions { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 16px; }
   .btn {
     display: inline-block;
-    padding: 18px 30px;
-    border-radius: 999px;
+    font-family: var(--sans);
     font-size: 1.0625rem;
     font-weight: 600;
     text-decoration: none;
-    border: 2px solid var(--clay);
-    transition: background-color .15s, color .15s, transform .15s;
+    padding: 18px 32px;
+    border-radius: 999px;
+    border: 2px solid var(--terracotta);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
   }
-  .btn-primary { background: var(--clay); color: #fff; }
-  .btn-primary:hover { background: var(--clay-dark); border-color: var(--clay-dark); }
-  .btn-secondary { background: transparent; color: var(--clay-dark); }
-  .btn-secondary:hover { background: var(--clay); color: #fff; }
-  .btn:active { transform: translateY(1px); }
-  .btn:focus-visible, nav a:focus-visible, .brand:focus-visible {
-    outline: 3px solid var(--ink);
-    outline-offset: 3px;
-  }
+  .btn-primary { background: var(--terracotta); color: #fff; }
+  .btn-primary:hover { background: var(--terracotta-dark); border-color: var(--terracotta-dark); }
+  .btn-secondary { background: transparent; color: var(--terracotta-dark); }
+  .btn-secondary:hover { background: var(--ink); border-color: var(--ink); color: var(--clay); }
+  .btn:focus-visible, nav a:focus-visible { outline: 3px solid var(--fern); outline-offset: 3px; }
 
-  /* Decorative CSS-only tableware */
-  .art {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    width: 100%;
-    max-width: 520px;
-    justify-self: center;
-  }
-  .art > * { position: absolute; }
-  .disc {
-    inset: 4% 4% 4% 4%;
-    border-radius: 50%;
-    background: var(--sand);
+  /* Decorative pottery forms, pure CSS */
+  .art { position: absolute; right: -8vw; top: 50%; transform: translateY(-46%); width: 46vw; max-width: 760px; aspect-ratio: 1; z-index: 1; }
+  .plate, .rim, .bowl {
+    position: absolute; border-radius: 50%;
   }
   .plate {
-    left: 8%; bottom: 10%;
-    width: 62%; height: 62%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%, #f9f3ea 0 52%, #e9dcc9 53% 58%, #f9f3ea 59% 100%);
-    box-shadow: 0 18px 30px -12px rgba(42,30,24,.35);
+    inset: 0;
+    background: radial-gradient(circle at 38% 32%, #d98a63, var(--terracotta) 60%, #94421f);
+    box-shadow: 0 40px 80px rgba(43,36,32,0.18);
+  }
+  .rim {
+    inset: 9%;
+    border: 3px solid rgba(244,237,228,0.55);
   }
   .bowl {
-    right: 6%; bottom: 14%;
-    width: 44%; height: 30%;
-    background: var(--clay);
-    border-radius: 0 0 220px 220px / 0 0 200px 200px;
-    box-shadow: 0 18px 28px -12px rgba(42,30,24,.4);
+    width: 38%; aspect-ratio: 1; left: -6%; bottom: 4%;
+    background: radial-gradient(circle at 40% 35%, #7a8c75, var(--fern) 65%, #33432f);
+    box-shadow: 0 24px 50px rgba(43,36,32,0.22);
   }
-  .bowl::before {
-    content: "";
-    position: absolute; left: 0; right: 0; top: 0; height: 16%;
-    background: #7c3220;
-    border-radius: 50%;
-    transform: translateY(-50%);
-  }
-  .vase {
-    left: 22%; top: 8%;
-    width: 24%; height: 50%;
-    background: var(--sage);
-    border-radius: 38% 38% 44% 44% / 14% 14% 30% 30%;
-    box-shadow: 0 14px 24px -10px rgba(42,30,24,.35);
-  }
-  .vase::before {
-    content: "";
-    position: absolute; left: 28%; right: 28%; top: -10%; height: 16%;
-    background: var(--sage);
-    border-radius: 6px 6px 0 0;
-  }
-  .vase::after {
-    content: "";
-    position: absolute; left: 0; right: 0; top: 46%; height: 8%;
-    background: rgba(255,255,255,.35);
+  .bowl::after {
+    content: ""; position: absolute; inset: 14%; border-radius: 50%;
+    background: radial-gradient(circle at 60% 65%, #33432f, #5d7058);
   }
 
-  @media (max-width: 860px) {
-    .content { grid-template-columns: 1fr; padding-bottom: 56px; }
-    .art { max-width: 340px; }
-    nav { gap: 20px; }
+  @media (max-width: 900px) {
+    nav, .content { padding-left: 24px; padding-right: 24px; }
+    nav ul { gap: 20px; }
+    .art { opacity: 0.25; width: 90vw; right: -30vw; }
   }
 </style>
 </head>
 <body>
-  <section class="hero">
-    <header>
+  <header class="hero">
+    <nav aria-label="Main">
       <a class="brand" href="#">Fernwick Ceramics</a>
-      <nav aria-label="Primary">
-        <a href="#">Shop</a>
-        <a href="#">Classes</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-      </nav>
-    </header>
+      <ul>
+        <li><a class="link" href="#">Shop</a></li>
+        <li><a class="link" href="#">Classes</a></li>
+        <li><a class="link" href="#">Our studio</a></li>
+        <li><a class="link" href="#">Contact</a></li>
+      </ul>
+    </nav>
 
     <div class="content">
-      <div>
-        <p class="eyebrow">Hand-thrown dinnerware &middot; Weekend glazing classes</p>
-        <h1>Plates and bowls with <em>fingerprints</em> on them.</h1>
-        <p class="lede">Two of us throw, glaze, and fire every piece in our studio, so your table gets dinnerware made to be used daily. Come glaze a set of your own on a weekend.</p>
+      <div class="copy">
+        <p class="eyebrow">Hand-thrown dinnerware</p>
+        <h1>Made by hand, meant for <em>every&nbsp;meal.</em></h1>
+        <p class="lede">Two potters, one small studio. We throw every plate and bowl on the wheel, and on weekends we teach you to glaze your own.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#">Shop the spring collection</a>
           <a class="btn btn-secondary" href="#">Book a class</a>
         </div>
       </div>
-
-      <div class="art" aria-hidden="true">
-        <div class="disc"></div>
-        <div class="vase"></div>
-        <div class="plate"></div>
-        <div class="bowl"></div>
-      </div>
     </div>
-  </section>
+
+    <div class="art" aria-hidden="true">
+      <div class="plate"></div>
+      <div class="rim"></div>
+      <div class="bowl"></div>
+    </div>
+  </header>
 </body>
 </html>

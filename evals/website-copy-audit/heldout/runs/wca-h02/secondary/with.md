@@ -1,30 +1,27 @@
-Here's a rewrite that uses only the facts you gave me. I left out "best in the business," "treat every pet like family," and "community built on trust," since nothing in your list backs them up and they could be said by any pet site.
+Here's a rewrite that states what Hollowpaw does and uses only the facts you gave me. I didn't add claims like sitter counts or insurance.
 
 **HERO**
-> **Pet sitting in Portland, booked by the night.**
-> Message a sitter before you book. Every sitter is background checked by a third-party screening company, and each sitter sets their own nightly rate.
+- **Headline:** Trusted pet sitting in Portland, booked by the night.
+- **Subhead:** Hollowpaw connects Portland pet owners with background-checked sitters. Message a sitter before you book, and choose whether your pet stays at the sitter's home or the sitter comes to yours.
+- **BUTTON:** Find a sitter
 
-**BUTTON**
-> See how it works
+**SECTION: How it works**
+- **Heading:** How Hollowpaw works
+1. **Browse sitters.** Every sitter is background checked by a third-party screening company.
+2. **Message before you book.** Ask questions and get a feel for a sitter before you commit.
+3. **Book by the night.** Each sitter sets their own nightly rate. Your pet can stay at the sitter's home, or the sitter can come to yours.
 
-**SECTION "How it works"**
-> **1. Message a sitter.** Ask questions and get to know them before you commit.
-> **2. Book by the night.** Each sitter sets their own price, so you can compare rates.
-> **3. Choose where your pet stays.** Your pet can stay at the sitter's home or the sitter can come to yours.
-
-**SECTION "Our sitters"**
-> **Every sitter is background checked.** Our sitters pass a background check through a third-party screening company before they can take bookings.
+**SECTION: Our sitters**
+- **Heading:** Sitters who set their own terms
+- **Body:** Each sitter chooses their own nightly rate and whether to host or do home visits. All of them have passed a background check through a third-party screening company.
 
 **FOOTER**
-> Find a sitter in Portland.
+- Hollowpaw launched in Portland in March 2026. Find a sitter for your next night away.
 
 **What changed and why**
-- **The hero now says what the product is.** "Where pets feel at home" could describe any pet service. "Pet sitting in Portland, booked by the night" tells a visitor the category, the location, and the booking model in one line.
-- **"How it works" now lists steps.** "Find. Connect. Relax." is a mood, not a process. The three steps show the actual flow, and the third one covers the sitter-home vs. owner-home option, which is easy to miss.
-- **The trust claim is specific.** "Background checked through a third-party screening company" is more credible than "the best in the business," and it answers the first question a pet owner will have.
-- **The button and footer are clearer.** "Learn more" doesn't tell people what they'll get. "See how it works" does. The footer now names the action and the city.
+- **"Where pets feel at home," "best in the business," and "family"** were claims any competitor could make. Visitors skim past them, so I replaced them with specifics about the service.
+- **"Find. Connect. Relax."** didn't say what the steps were. The three numbered steps now match the way booking actually works.
+- **"Learn more"** gives visitors no idea what they'll get. "Find a sitter" tells them what the click does.
+- **The launch date** helps a newer service look credible, and the footer is a natural place for it.
 
-**Things to check before you publish**
-- **"Launched in March" isn't in the copy.** It can help credibility, for example "Launched in Portland in March 2026." I left it out because a launch date rarely sells a service on its own, but you can add it under the hero if you want it.
-- **Screening scope.** I wrote that sitters pass a background check "before they can take bookings." If checks can run after a sitter is approved, or only some sitters are screened, change that line so it matches your process.
-- **Messaging.** I wrote "Ask questions and get to know them before you commit." If you want to make the pre-booking message a feature, you could say "Message any sitter before you book."
+I don't have your site files in this directory, only the copy you pasted. If you send me the files or tell me where they live, I'll apply these changes directly. Before you publish, confirm that every sitter is background checked (not just some) and that "Portland" is the only market you serve.

@@ -1,71 +1,56 @@
-For a flat, blunt brand, the shape, depth, and motion systems should be small. Most tokens should resolve to zero or near-zero, so the real content is the few rules about what's allowed.
-
 ## Shape
 
-Define one radius scale step, plus an explicit exception for circles.
-
 ```css
---radius-none: 0;      /* default for everything: buttons, cards, inputs, images, tags */
---radius-round: 50%;   /* exception: avatars, radio dots, status pips only */
+--radius-none: 0;
 ```
 
-Don't define `radius-sm`, `radius-md`, and so on. Those invite soft corners back in.
+Define one radius and no others. The skill's scale guidance is 2 to 4 steps, but the brand is a single deliberate value, so a second radius would only invite use. Add a lint rule that `border-radius` must resolve to `--radius-none`. Circular avatars or images, if you ever need them, are an explicit exception, not a token.
 
-## Depth (elevation)
+## Depth
 
-Use hard, offset, solid shadows with no blur, or use no shadow at all. Use the ink color so the depth reads as a printed rule, not a glow.
+Three levels, all hard-edged, no blur. Depth is a rule, not a haze.
 
 ```css
---ink: #111;                        /* same value as your rule/text black */
-
---elevation-0: none;                /* default */
---elevation-1: 0 4px 0 var(--ink);  /* raised: card or button at rest, if needed */
---elevation-2: 0 8px 0 var(--ink);  /* overlays: menus, dialogs */
-
---z-base: 0;
---z-sticky: 100;
---z-overlay: 200;
---z-modal: 300;
+--elevation-0: none;                          /* flat: the default for everything */
+--elevation-1: 0 0 0 2px var(--color-ink);    /* ruled: hover, selected, current item */
+--elevation-2: 4px 4px 0 var(--color-ink);    /* lifted: menus, popovers, featured card */
 ```
 
-The rules that go with these:
-
-- **No blur shadows, ever.** Keep `blur` at 0 and `spread` at 0 in all shadow tokens.
-- **Pressed state** is a `translate(4px, 4px)` with the shadow removed, so the element appears to press into the page. It can be instant.
-- **Hover** swaps color (for example, to the tomato accent or inverts the rule color), not elevation.
-- **Structure comes from thick rules** (`--rule-thick: 3px solid var(--ink)`) and `--rule-thin: 1px solid var(--ink)`, not shadows. Put these in the depth set because they do the separation work.
+`--color-ink` is a semantic role from your color tokens, so it remaps in any theme. Pressing a control should sink it onto its shadow: `transform: translate(4px, 4px)` with `--elevation-0`. That is the one interaction pattern for depth, and it keeps the flat brand physical.
 
 ## Motion
 
-Keep durations short and the list of allowed effects tiny.
+Three durations and three easings, with the default being no motion.
 
 ```css
---duration-instant: 0ms;
---duration-fast: 80ms;     /* hover color swap, pressed state */
---duration-base: 120ms;    /* the longest transition you should use */
+--duration-none: 0ms;          /* default, and what reduced motion resolves to */
+--duration-quick: 120ms;       /* state change: hover, press, focus */
+--duration-standard: 240ms;    /* open or close: menu, dialog, drawer */
 
---ease-standard: cubic-bezier(0.2, 0, 0, 1);
---ease-snap: steps(2, end); /* optional: a stepped, print-like change for toggles */
-```
+--ease-standard: cubic-bezier(0.2, 0, 0, 1);  /* things arriving */
+--ease-exit: cubic-bezier(0.4, 0, 1, 1);      /* things leaving */
+--ease-snap: steps(2, end);                   /* one hard, print-like change */
 
-Rules for motion:
-
-- **Animate only `color`, `background-color`, and `transform`.** Don't animate layout, size, or blur.
-- **Cap at 120ms** for UI feedback. Anything longer needs a specific reason in the spec.
-- **No looping, no entrance animations, no parallax, no scroll-linked effects.**
-- **Respect `prefers-reduced-motion`** by setting all durations to `0ms` in a media query. With this little motion, the cost is nearly zero.
-
-```css
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --duration-fast: 0ms;
-    --duration-base: 0ms;
+    --duration-quick: 0ms;
+    --duration-standard: 0ms;
   }
 }
 ```
 
-## What to document with the tokens
+Motion rules for the spec:
+- Nothing animates on page load, and nothing is scroll-linked.
+- Animate only state changes that the user caused, never decoration.
+- `--ease-snap` is for a single deliberate reveal, such as a stamp-like confirmation. Drop it if you want no stepped motion at all.
 
-Write the reasons next to the values, because the restrictions are the point. A short line like "no blur shadows: brand is printed-rule flat" stops a future contributor from adding a soft shadow "just for this one card."
+## Counts
 
-If you want, I can write these into your design-system token files and add a lint rule that flags `border-radius` values other than 0 or 50%, and `box-shadow` values containing blur. Let me know where the tokens live (I don't see a repo in the current directory).
+- Radius: 1 value (deliberate, below the 2 to 4 range)
+- Elevation: 3 levels
+- Duration: 3 values
+- Easing: 3 values
+
+No existing tokens or colors were provided, so there is no merge map yet. The ink color is referenced by name only, and I have not proposed any hex values here.
+
+Two notes: I chose offset hard shadows for elevation-2 as the one place "depth" is more than a rule. If the brand wants strictly rules and no offset, delete `--elevation-2` and use `--elevation-1` for everything raised. I did not check the durations against a real component set, so tune them once the first menu and button are built.

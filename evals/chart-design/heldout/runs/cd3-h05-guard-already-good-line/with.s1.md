@@ -1,13 +1,17 @@
-The chart is honest and clean, and I'd only make small changes. I checked the plotted positions against the axis (0 at y=240, 600 at y=40), and 410 and 521 land where they should. The axis starts at zero and the line isn't exaggerated. The points are dotted and labeled at both ends, with no legend or clutter.
+This chart is close to ready. The axis starts at zero, the line is the right form, the endpoints are labeled directly, and the colors and gridlines are restrained. I checked the plotted positions against the axis scale. The 410 and 521 endpoints land where they should, and the in-between points look consistent. I can't check the middle months against your source data, so confirm those against the check-in system.
 
-**Worth changing**
-1. **Title understates the number.** 410 to 521 is +27%, which is more than "about a quarter". A board member who checks it will get 27%. Use "Weekly active members rose 27% in six months", or "from 410 to 521" if you want the raw numbers.
-2. **Data stops at June, and you're sending this in October.** The board may ask about July to September. If you have those weeks, add them. If not, add a short note on why the chart ends in June, such as "Data through June 2026".
-3. **No comparison, so seasonality is an open question.** For a swim club, a rise from winter to early summer could be seasonal. If you have January to June 2025, a faint gray line behind the blue one would answer that before anyone asks. If the rise is seasonal, the title shouldn't imply growth.
+Changes I'd make, most important first:
 
-**Optional**
-- The four middle points are unlabeled. That's fine for a trend, but if someone wants March's figure they can only estimate it from the line. The values are about 432, 456, 471 and 498, read off the geometry, so confirm them against your source before labeling. A small data table or a line of text under the chart would also help accessibility.
-- The `aria-label` gives only the endpoints. You could add "steady increase each month" if that's true of your data, since the line does rise every month.
-- The axis has no unit label. The subtitle covers it, so this is fine as is.
+1. **Tighten the title.** 410 to 521 is a 27% rise, which is more than "about a quarter." A board member who does the division may notice. Either of these works:
+   - "Weekly active members rose 27% in six months"
+   - "Weekly active members grew from 410 to 521 between January and June"
 
-If you can confirm that the 27% figure and the June cutoff are intentional, the rest can go out as written.
+2. **Add a comparison if you have one.** Right now the chart shows growth but not whether it's good. A swim club likely has seasonality, so the obvious board question is whether January to June always looks like this. If you have the same months for 2025, or a membership target, add it as a gray line or a reference mark. Only add it if you have the real numbers.
+
+3. **Label the unit on the y-axis.** Add "Members checking in per week" as a small label above the axis. The subtitle covers it, but a board reader may only look at the chart.
+
+4. **Make the accessibility text carry the finding.** The current `aria-label` describes the chart type and endpoints. I'd use something like: "Weekly active members rose 27%, from 410 in January to 521 in June 2026." If the board packet will be read as a PDF or on a screen reader, add a small table of the six values below the chart.
+
+5. **Optional: label the middle months.** Labeling only the endpoints is clean and fine for a trend story. With only six points, adding values (432, 456, 471, 498 by my read of the positions, so verify) would let people check exact figures without asking. If you add them, do it for all months, not just some.
+
+Everything else I'd leave alone.

@@ -9,9 +9,10 @@ Copy that states a fact or makes a promise needs a true basis, and the strongest
 
 ## Do not produce
 
-- A number, name, quote, rating, logo, award, press mention or study result the user did not give.
+- A number, name, quote, rating, logo, award, press mention, study result or customer story the user did not give; a blend of cases presented as one customer.
 - "Studies show", "experts agree" or "trusted by thousands" with no source behind it.
 - A countdown, "only N left", "ends soon" or "reserved for you" with no real cause the user gave.
+- A "N viewing" or "just bought" line, or a review, with no record the user gave; an incentivized review without its label.
 - A "was" price that was never charged, or a "value" for something never sold.
 - "Guaranteed" with no condition and no remedy.
 - A mild extra the facts do not carry ("no contract", "cancel anytime", "still warm", "every one of them") when the sheet is silent.
@@ -43,9 +44,9 @@ Do the work anyway. Ask once, in one short list with a default for each item, on
 - **Scope every number.** Keep its basis, date and conditions ("in our tests", "as of May"). Round against the claim: down for results, savings and counts, up for prices, fees and risks; never make a figure more exact than the evidence. Keep every true qualifier ("typical", "weekdays"); drop one only if the user's evidence supports the flat claim.
 - **A measured result is not a cause.** What happened after the product is not what the product did. Write the measurement, or "we think", unless the user states the cause.
 - **Typical, not best.** Show the typical result; label an exceptional one as exceptional, with the typical range if known.
-- **Quotes** are the user's words, trimmed, never reworded, spliced or composed. If asked to write testimonials, give a short request message to real customers plus placeholders.
+- **Quotes** are the user's words, trimmed, never reworded, spliced or composed, in a retold story too. If asked to write testimonials, give a short request message to real customers plus placeholders.
 - **Urgency** only with a real cause and exact end the user gave; state both, plainly and confidently. Otherwise lead with the real benefit or the true cost of waiting. A timer that resets, a rolling end date or a banner that never changes is decoration.
-- **Counts and "most popular"** only from data, with basis and date; a perfect rating reads as fake, so show the sample. With none, use true growth, a softer true label, or no proof line. Never present a bad habit as the norm; say what people like the reader do, or name the step.
+- **Counts, live messages and "most popular"** only from data, with what is counted, where and over what window; a perfect rating reads as fake, so show the sample. With none, use true growth, a softer true label, or no proof line. Never present a bad habit as the norm; say what people like the reader do, or name the step.
 - **Comparisons** use real alternatives on one dimension, dated, crediting a rival where it wins. Do not name or characterize a rival without a fact the user gave; with none, state the differentiator without naming anyone, or ask for the checkable fact when interactive.
 - **Fear** needs a documented risk at true scale beside a step the reader can take now. No invented statistic, no shame, no hint of a cover-up.
 - **Terms sit beside the claim** at similar weight: "free", trials, renewals, fees, "was" prices, and guarantees stated as what the buyer must do, by when, and what the business does if the result doesn't show, with where to claim. A condition in fine print or a tooltip does not count.
@@ -64,13 +65,13 @@ Deliver the requested text first, with nothing before it. When a count or a set 
 
 - **Strength.** Default to the strongest true claim, not the safest. Change for health, money, safety and children: state limits plainly there.
 - **User-supplied facts.** Default to using them as given, with their scope. Change for high-risk categories (health outcomes, earnings, "guaranteed", "#1", "only", "first", environmental, named rivals): use them, plus one line to have the claim checked.
-- **Proof source.** Default to outside proof (a customer, a test, a third party) over the seller's say-so. Outcome, rank and rival claims need a basis; descriptions do not.
+- **Proof source.** Default to outside proof (a customer, a test, a third party) over the seller's say-so. Outcome, rank, rival and praise claims need a basis; plain descriptions do not. Ask of a praise word "in whose opinion?": an attributed customer line or a supplied fact keeps the point, otherwise say what it does or drop the word. Change when the user's chosen voice or product name uses the word as style.
 - **Urgency.** Default to none. A real deadline is good copy; use it.
 
 ## Common failures
 
 - A proof line with an invented count → a dated real count, a placeholder, or none.
-- "Industry-leading", "#1", "best" → what it does, measured if known.
+- "Industry-leading", "#1", "best", "seamless" → ask "in whose opinion?"; a supplied fact or attributed quote, else what it does.
 - "Satisfaction guaranteed" → condition, remedy, how to claim.
 - A result presented as caused by a method the user never credited → the measurement, or "we think".
 - A quote polished into brand voice → their words, trimmed only.
@@ -90,3 +91,5 @@ Deliver the requested text first, with nothing before it. When a count or a set 
 
 - [claim-fixes.md](references/claim-fixes.md): load for a device-by-device honest form (urgency, proof, comparisons, interface tactics), the customer request message, or high-risk categories.
 - [substantiation-ladder.md](references/substantiation-ladder.md): load when a claim's strength is the question ("make it stronger", one customer's result, a comparison, thin proof) or for pressure-request replacements.
+- [live-messages-and-reviews.md](references/live-messages-and-reviews.md): load for viewer, stock or recent-purchase badges and pop-ups, or when reviews, ratings and review requests are written or shown (incentive labels, who gets asked, what is published).
+- [stories-and-hooks.md](references/stories-and-hooks.md): load when a customer story, case study or anecdote is written or retold (composites, anonymising, reconstructed speech), or when a hook, video opener or subject line could promise more than the content delivers.

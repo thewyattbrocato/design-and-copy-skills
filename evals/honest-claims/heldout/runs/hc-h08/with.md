@@ -1,19 +1,17 @@
 **DUNE & DIME: The First Bank on Mars™**
-*Your money, 225 million kilometers from anyone who can audit it.*
+*Your money, but with a view of two moons.*
 
-Why trust your savings to Earth banks, with their "oceans" and "regulations"? At Dune & Dime, we are 100% FDIC-insured*, 100% Mars-based, and 100% certain we are right about everything.
+Why trust your savings to Earth banks, which are 140 million miles away and frankly a little clingy? At Dune & Dime, we've held 100% of Martian deposits for 100% of Martian history. That's a perfect record, and also our only record.
 
-**The numbers speak for themselves (loudly, we trained them):**
-- 99.998% of our customers are still alive
-- Interest rates 41,000% higher than a Martian can comprehend
-- Zero bank robberies, because there is nowhere to run
+**Our numbers speak for themselves (loudly, since there's no atmosphere):**
+- 99.9997% customer satisfaction, based on a survey of Gerald
+- Interest rates up to 14,000% APR, payable in Earth years or whatever's handy
+- Zero bank runs, because there's nowhere to run to
 
-**Don't take our word for it:**
-"I deposited one dime and now I have eleven dimes. Is this legal?" — Gary, Sol 412
-"The vault is a crater. I feel safe." — A Rover Named Kevin
+"I deposited one dollar and now I have a bank-issued pen. Financial freedom!" — **Gerald, Our Only Customer**
 
-**Award-winning!** Voted *Best Bank on a Planet We Are the Only Bank On* three years running by the Dune & Dime Board of Excellence (our Board).
+"Safer than a vault. Honestly, safer than most of Mars." — **Dust Storm Quarterly**
 
-Open an account today and receive a free toaster, a complimentary dust storm, and a 14-minute head start on the next dust storm.
+*Winner: Best Bank on Mars (6 years running, by default). Voted Most Likely to Survive Re-Entry.*
 
-*\*FDIC is a feeling.*
+**Dune & Dime. We're not just in the red. We're in the red *planet*.**
