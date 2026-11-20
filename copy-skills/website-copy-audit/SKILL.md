@@ -1,6 +1,7 @@
 ---
 name: website-copy-audit
-description: Use whenever someone wants existing site or product copy judged rather than written, in any language and at any length - "what's wrong with our website", "why don't visitors get it", "roast my homepage", "is this ready to launch", "does our copy sound like everyone else", "how do we compare with competitors", "did my rewrite fix it". Covers audits of a page, a set of pages, a sign-up path or a sample of interface strings: ranked findings with quoted evidence, what works, rewrites of flagged lines only, and a fix order. Not for writing new pages (landing-page-copy), line editing alone, or reviewing visual design.
+description: >-
+  Use whenever someone wants existing site or product copy judged rather than written, in any language and at any length - "what's wrong with our website", "why don't visitors get it", "roast my homepage", "is this ready to launch", "does our copy sound like everyone else", "how do we compare with competitors", "did my rewrite fix it". Covers audits of a page, a set of pages, a sign-up path or a sample of interface strings: ranked findings with quoted evidence, what works, rewrites of flagged lines only, and a fix order. Not for writing new pages (landing-page-copy), line editing alone, or reviewing visual design.
 ---
 
 # Website copy audit

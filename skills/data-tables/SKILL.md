@@ -1,6 +1,7 @@
 ---
 name: data-tables
-description: Use when you build, style or review a table of data in a page, app, document or report, in any words - "make this table readable", "the numbers don't line up", "who is behind", "make it work on a phone or on paper", "add a typical value": an invoice list, order or admin table, plan or product comparison, ranked list, financial statement. Covers column and row order, alignment, number formats, units, missing values, headers, summaries, sorting, row separation, density, narrow screens, print, markup, empty and loading states. Not for charts, whole dashboards, page grids, short lists that are not tabular, or editing inside spreadsheet engines.
+description: >-
+  Use when you build, style or review a table of data in a page, app, document or report, in any words - "make this table readable", "the numbers don't line up", "who is behind", "make it work on a phone or on paper", "add a typical value": an invoice list, order or admin table, plan or product comparison, ranked list, financial statement. Covers column and row order, alignment, number formats, units, missing values, headers, summaries, sorting, row separation, density, narrow screens, print, markup, empty and loading states. Not for charts, whole dashboards, page grids, short lists that are not tabular, or editing inside spreadsheet engines.
 ---
 
 # Data tables

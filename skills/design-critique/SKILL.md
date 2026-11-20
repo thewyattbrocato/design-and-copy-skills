@@ -1,6 +1,7 @@
 ---
 name: design-critique
-description: Use whenever someone wants a design judged, in any words, any length or language: "what do you think", "is this good", "why does it feel off", "tear this apart", "will people get it", "which one is better", "give me feedback"; critique, review, audit, score or compare a screenshot, mockup, wireframe, HTML page, live site, flow, dashboard, chart, form or a described design; findings with severity, anchored scores, a fix order, what to keep; not for building or applying fixes, even a final polish pass (do the work instead), logo or identity critique (brand-identity) or code review.
+description: >-
+  Use whenever someone wants a design judged, in any words, any length or language: "what do you think", "is this good", "why does it feel off", "tear this apart", "will people get it", "which one is better", "give me feedback"; critique, review, audit, score or compare a screenshot, mockup, wireframe, HTML page, live site, flow, dashboard, chart, form or a described design; findings with severity, anchored scores, a fix order, what to keep; not for building or applying fixes, even a final polish pass (do the work instead), logo or identity critique (brand-identity) or code review.
 ---
 
 # Design critique

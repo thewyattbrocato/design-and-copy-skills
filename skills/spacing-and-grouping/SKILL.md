@@ -1,6 +1,7 @@
 ---
 name: spacing-and-grouping
-description: Use when you design, build, restyle or review any interface or page where several items sit near each other - a settings screen, a form, a card grid, a feature section, a list, a toolbar, a dashboard panel or an article page - and whenever you set or fix whitespace: padding, gaps, margins, density, spacing scales, and whether items are grouped by space, a rule, a tinted region, or a card. Also for interfaces that look cramped, uniformly padded, or boxed-in. Not for choosing emphasis, palettes, page grids, CSS layout mechanics, or expressive posters.
+description: >-
+  Use when you design, build, restyle or review any interface or page where several items sit near each other - a settings screen, a form, a card grid, a feature section, a list, a toolbar, a dashboard panel or an article page - and whenever you set or fix whitespace: padding, gaps, margins, density, spacing scales, and whether items are grouped by space, a rule, a tinted region, or a card. Also for interfaces that look cramped, uniformly padded, or boxed-in. Not for choosing emphasis, palettes, page grids, CSS layout mechanics, or expressive posters.
 ---
 
 # Spacing and grouping

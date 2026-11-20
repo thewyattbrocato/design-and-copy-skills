@@ -36,6 +36,7 @@ Evidence-only folders in `withdrawn/` are archived as they are: the scripts neve
 
 - Frontmatter has `name` and `description`. `name` is kebab-case, at most 64 characters, and equals the folder name.
 - `description` is at most 1024 characters. It is the only thing the model sees before it decides to load the skill, so it has to say when the skill applies and end with what it is not for. Keep it narrow: a description that matches everything gets loaded for everything and then competes with better-fitting skills.
+- Frontmatter is valid YAML for strict parsers, which skip a skill they cannot parse. An unquoted one-line value that holds a colon followed by a space fails; quote it or use the folded form (`description: >-`, then the text indented two spaces).
 - The body is at most 500 lines, and it has a heading containing `When not to use`.
 - Every file under `references/` is linked from `SKILL.md`, and no relative link in the skill is broken.
 

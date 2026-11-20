@@ -40,6 +40,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import pngstamp  # noqa: E402
 import render  # noqa: E402
 import results_table as rt  # noqa: E402
+import validate_skills as vs  # noqa: E402
 
 NAME = "skills-at-work"
 OUT = Path("docs") / "launch"
@@ -130,7 +131,7 @@ def skill_names(root):
 def first_clause(root, skill):
     """The skill's own description up to its first ` - ` (the part before the example phrases)."""
     text = (rt.find_skill(root, skill)[1] / "SKILL.md").read_text(encoding="utf-8")
-    desc = re.search(r"^description:\s*(.+)$", text, re.M).group(1).strip()
+    desc = vs.unquote(vs.parse_frontmatter(text)[0]["description"].strip())
     return desc.split(" - ")[0].strip().rstrip(".")
 
 

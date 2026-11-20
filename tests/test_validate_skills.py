@@ -26,6 +26,22 @@ class ValidateSkillsTest(unittest.TestCase):
             code, out = self.run_root(t)
             self.assertEqual(code, 0, out)
 
+    def test_unquoted_description_with_colon_space_fails(self):
+        with TempRoot() as t:
+            t.write("skills/demo/SKILL.md", skill_md(description="Use when asked: what to do next."))
+            code, out = self.run_root(t)
+            self.assertEqual(code, 1, out)
+            self.assertIn("'description' is unquoted and contains a colon followed by a space", out)
+
+    def test_description_with_colon_space_passes_when_folded_or_quoted(self):
+        folded = "---\nname: demo\ndescription: >-\n  Use when asked: what to do next.\n---\n\n# Demo\n\n## When not to use\n\nNever.\n"
+        for text in (folded, skill_md(description="'Use when asked: what to do next.'"),
+                     skill_md(description="Use when asked, then do it (a:b is fine).")):
+            with TempRoot() as t:
+                t.write("skills/demo/SKILL.md", text)
+                code, out = self.run_root(t)
+                self.assertEqual(code, 0, out)
+
     def test_withdrawn_skill_is_validated_and_counted_separately(self):
         with TempRoot() as t:
             t.write("withdrawn/demo/SKILL.md", skill_md(body="# Demo\n\n## When Not To Use\n\nNo.\n"))

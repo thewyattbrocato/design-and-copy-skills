@@ -1,6 +1,7 @@
 ---
 name: responsive-layout
-description: Use whenever CSS layout has to hold up on any screen, container or setting, in any language and at any length: the page breaks on phones, overflows, scrolls sideways, clips, is cramped when zoomed or stretched too wide, the headline is huge on a short or landscape screen, or someone asks to make it responsive, fluid or mobile-friendly. Covers stacks, sidebars, wrapping grids, heroes, modals, scroll strips, app shells, units, clamp, container versus media queries, long-text overflow, zoom, right-to-left, safe areas; not for page structure (layout-structure), spacing values (spacing-and-grouping) or type scales (typesetting); dialog focus semantics are out of scope.
+description: >-
+  Use whenever CSS layout has to hold up on any screen, container or setting, in any language and at any length: the page breaks on phones, overflows, scrolls sideways, clips, is cramped when zoomed or stretched too wide, the headline is huge on a short or landscape screen, or someone asks to make it responsive, fluid or mobile-friendly. Covers stacks, sidebars, wrapping grids, heroes, modals, scroll strips, app shells, units, clamp, container versus media queries, long-text overflow, zoom, right-to-left, safe areas; not for page structure (layout-structure), spacing values (spacing-and-grouping) or type scales (typesetting); dialog focus semantics are out of scope.
 ---
 
 # Responsive layout

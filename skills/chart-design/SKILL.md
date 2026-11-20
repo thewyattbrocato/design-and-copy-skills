@@ -1,6 +1,7 @@
 ---
 name: chart-design
-description: Use when you make, choose, fix or review a single chart, graph, sparkline or simple map (HTML, SVG, canvas or a chart library), in any words - "chart this", "does this graph mislead", "show who is over budget", "make it clearer", "they want a funnel or donut": a chart card, a report or newsletter trend line, a survey result chart. Covers form for the question, honest axes and baselines, variance and target displays, money and time handling, direct labels, restrained color, small multiples and accessibility. Not for multi-chart dashboards or KPI screens, data tables, interface or brand palettes, diagrams that explain a mechanism, or statistical analysis.
+description: >-
+  Use when you make, choose, fix or review a single chart, graph, sparkline or simple map (HTML, SVG, canvas or a chart library), in any words - "chart this", "does this graph mislead", "show who is over budget", "make it clearer", "they want a funnel or donut": a chart card, a report or newsletter trend line, a survey result chart. Covers form for the question, honest axes and baselines, variance and target displays, money and time handling, direct labels, restrained color, small multiples and accessibility. Not for multi-chart dashboards or KPI screens, data tables, interface or brand palettes, diagrams that explain a mechanism, or statistical analysis.
 ---
 
 # Chart design

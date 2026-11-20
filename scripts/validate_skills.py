@@ -37,6 +37,26 @@ def parse_frontmatter(text):
     return fields, lines[end + 1:]
 
 
+def plain_scalar_problems(text):
+    """Front matter keys whose unquoted one-line value holds a colon and a space.
+
+    YAML reads that as the start of a nested key, so strict parsers reject the file even though the
+    line reader above accepts it. Quote the value or use the folded form (`key: >-`, then the text indented).
+    """
+    lines = text.splitlines()
+    if not lines or lines[0].strip() != "---":
+        return []
+    end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), len(lines))
+    problems = []
+    for raw in lines[1:end]:
+        m = KEY.match(raw)
+        if m and not raw.startswith((" ", "\t")):
+            value = m.group(2).strip()
+            if value and value[0] not in "\"'>|" and ": " in value:
+                problems.append(m.group(1))
+    return problems
+
+
 def unquote(value):
     if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
         return value[1:-1]
@@ -51,6 +71,12 @@ def validate_skill(skill_dir):
     fields, rest = parse_frontmatter(skill_md.read_text(encoding="utf-8"))
     if fields is None:
         return [rest]
+
+    for key in plain_scalar_problems(skill_md.read_text(encoding="utf-8")):
+        errors.append(
+            f"frontmatter '{key}' is unquoted and contains a colon followed by a space, which strict YAML "
+            f"parsers reject; use the folded form ('{key}: >-' then the text indented two spaces)"
+        )
 
     name = unquote(fields.get("name", ""))
     if not name:
